@@ -61,18 +61,20 @@ OscWidget::OscWidget( QWidget* parent , Oscope* oscope )
     {
         QString color = m_oscope->getColor( i ).name();
         channelGroup->button( i )->setStyleSheet( "background-color:"+color );
+        channelGroup->button( i )->adjustSize();
         autoGroup->button( i )->setStyleSheet( "background-color:"+color );
         triggerGroup->button( i )->setStyleSheet( "background-color:"+color );
         hideGroup->button( i )->setStyleSheet( "background-color:"+color );
     }
     mainLayout->setDirection( QBoxLayout::RightToLeft );
 
-    /*double fontScale = MainWindow::self()->fontScale();
+    //double fontScale = MainWindow::self()->fontScale();
     QFont font = timeDivLabel->font();
     font.setFamily("Ubuntu");
     font.setBold( true );
 
-    font.setPixelSize( 14*fontScale );
+    //font.setPixelSize( 14*fontScale );
+    font.setPointSize( 10 );
     timeDivLabel->setFont( font );
     timePosLabel->setFont( font );
     voltDivLabel->setFont( font );
@@ -84,7 +86,8 @@ OscWidget::OscWidget( QWidget* parent , Oscope* oscope )
     hideLabel->setFont( font );
     trackLabel->setFont( font );
 
-    font.setPixelSize( 10*fontScale );
+    //font.setPixelSize( 10*fontScale );
+    font.setPointSize( 8 );
     timeDivBox->setFont( font );
     timePosBox->setFont( font );
     voltDivBox->setFont( font );
@@ -98,7 +101,7 @@ OscWidget::OscWidget( QWidget* parent , Oscope* oscope )
     chButton1->setFont( font );
     chButton2->setFont( font );
     chButton3->setFont( font );
-    chButton4->setFont( font );*/
+    chButton4->setFont( font );
 }
 OscWidget::~OscWidget(){}
 

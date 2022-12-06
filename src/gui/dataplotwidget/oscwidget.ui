@@ -70,14 +70,14 @@
        <item>
         <widget class="QPushButton" name="chButton1">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
          <property name="maximumSize">
           <size>
-           <width>36</width>
+           <width>16777215</width>
            <height>16777215</height>
           </size>
          </property>
@@ -108,14 +108,14 @@
        <item>
         <widget class="QPushButton" name="chButton2">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
          <property name="maximumSize">
           <size>
-           <width>36</width>
+           <width>16777215</width>
            <height>16777215</height>
           </size>
          </property>
@@ -146,14 +146,14 @@
        <item>
         <widget class="QPushButton" name="chButton3">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
          <property name="maximumSize">
           <size>
-           <width>36</width>
+           <width>16777215</width>
            <height>16777215</height>
           </size>
          </property>
@@ -181,14 +181,14 @@
        <item>
         <widget class="QPushButton" name="chButton4">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
          <property name="maximumSize">
           <size>
-           <width>36</width>
+           <width>16777215</width>
            <height>16777215</height>
           </size>
          </property>
@@ -216,14 +216,14 @@
        <item>
         <widget class="QPushButton" name="allButton">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
          <property name="maximumSize">
           <size>
-           <width>36</width>
+           <width>16777215</width>
            <height>16777215</height>
           </size>
          </property>
@@ -256,7 +256,7 @@
      <item>
       <widget class="Line" name="line_2">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
@@ -304,20 +304,20 @@
          <item>
           <widget class="QLabel" name="timeDivLabel">
            <property name="sizePolicy">
-            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
            <property name="minimumSize">
             <size>
-             <width>70</width>
+             <width>0</width>
              <height>0</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
-             <width>83</width>
+             <width>16777215</width>
              <height>16777215</height>
             </size>
            </property>
@@ -335,14 +335,14 @@
          <item>
           <widget class="QDoubleSpinBox" name="timeDivBox">
            <property name="sizePolicy">
-            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
            <property name="maximumSize">
             <size>
-             <width>83</width>
+             <width>16777215</width>
              <height>16777215</height>
             </size>
            </property>
@@ -403,20 +403,20 @@
          <item>
           <widget class="QLabel" name="timePosLabel">
            <property name="sizePolicy">
-            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
            <property name="minimumSize">
             <size>
-             <width>70</width>
+             <width>0</width>
              <height>0</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
-             <width>83</width>
+             <width>16777215</width>
              <height>16777215</height>
             </size>
            </property>
@@ -434,14 +434,14 @@
          <item>
           <widget class="QDoubleSpinBox" name="timePosBox">
            <property name="sizePolicy">
-            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
            <property name="maximumSize">
             <size>
-             <width>83</width>
+             <width>16777215</width>
              <height>16777215</height>
             </size>
            </property>
@@ -521,23 +521,29 @@
        </item>
        <item>
         <layout class="QVBoxLayout" name="verticalLayout_4">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>6</number>
+         </property>
          <item>
           <widget class="QLabel" name="voltDivLabel">
            <property name="sizePolicy">
-            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
            <property name="minimumSize">
             <size>
-             <width>70</width>
+             <width>0</width>
              <height>0</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
-             <width>83</width>
+             <width>16777215</width>
              <height>16777215</height>
             </size>
            </property>
@@ -555,14 +561,14 @@
          <item>
           <widget class="QDoubleSpinBox" name="voltDivBox">
            <property name="sizePolicy">
-            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
            <property name="maximumSize">
             <size>
-             <width>83</width>
+             <width>16777215</width>
              <height>16777215</height>
             </size>
            </property>
@@ -623,20 +629,20 @@
          <item>
           <widget class="QLabel" name="voltPosLabel">
            <property name="sizePolicy">
-            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
            <property name="minimumSize">
             <size>
-             <width>70</width>
+             <width>0</width>
              <height>0</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
-             <width>83</width>
+             <width>16777215</width>
              <height>16777215</height>
             </size>
            </property>
@@ -654,14 +660,14 @@
          <item>
           <widget class="QDoubleSpinBox" name="voltPosBox">
            <property name="sizePolicy">
-            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
            <property name="maximumSize">
             <size>
-             <width>83</width>
+             <width>16777215</width>
              <height>16777215</height>
             </size>
            </property>
@@ -702,7 +708,7 @@
      <item>
       <widget class="Line" name="line_3">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
@@ -757,7 +763,7 @@
        <item>
         <widget class="QDoubleSpinBox" name="filterBox">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
@@ -806,7 +812,7 @@
      <item>
       <widget class="Line" name="line_7">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
@@ -837,7 +843,7 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>70</width>
+           <width>80</width>
            <height>0</height>
           </size>
          </property>
@@ -989,7 +995,7 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>70</width>
+           <width>80</width>
            <height>0</height>
           </size>
          </property>
@@ -1110,7 +1116,7 @@
      <item>
       <widget class="Line" name="line_6">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
@@ -1141,7 +1147,7 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>70</width>
+           <width>80</width>
            <height>0</height>
           </size>
          </property>
@@ -1271,7 +1277,7 @@
      <item>
       <widget class="Line" name="line_5">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
@@ -1302,7 +1308,7 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>70</width>
+           <width>80</width>
            <height>0</height>
           </size>
          </property>
@@ -1419,10 +1425,9 @@
  <resources/>
  <connections/>
  <buttongroups>
-  <buttongroup name="trackGroup"/>
-  <buttongroup name="hideGroup">
+  <buttongroup name="channelGroup">
    <property name="exclusive">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
   </buttongroup>
   <buttongroup name="triggerGroup">
@@ -1430,14 +1435,15 @@
     <bool>true</bool>
    </property>
   </buttongroup>
-  <buttongroup name="channelGroup">
+  <buttongroup name="trackGroup"/>
+  <buttongroup name="autoGroup">
    <property name="exclusive">
     <bool>true</bool>
    </property>
   </buttongroup>
-  <buttongroup name="autoGroup">
+  <buttongroup name="hideGroup">
    <property name="exclusive">
-    <bool>true</bool>
+    <bool>false</bool>
    </property>
   </buttongroup>
  </buttongroups>
