@@ -115,7 +115,9 @@ int McuCreator::processFile( QString fileName, bool main )
     if( root.hasAttribute("data") )       createDataMem( root.attribute("data").toUInt(0,0) );
     if( root.hasAttribute("prog") )       createProgMem( root.attribute("prog").toUInt(0,0) );
     if( root.hasAttribute("eeprom") )     createRomMem( root.attribute("eeprom").toUInt(0,0) );
-    if( root.hasAttribute("freq") )       mcu->setFreq( root.attribute("freq").toDouble() );
+    if( root.hasAttribute("freq") )       m_mcuComp->setFreq( root.attribute("freq").toDouble() );
+    else if( m_core == "AVR")             m_mcuComp->setFreq( 16*1e6 );
+    else if( m_core.startsWith("Pic") )   m_mcuComp->setFreq( 20*1e6 );
 
     int error = 0;
     QDomNode node = root.firstChild();
