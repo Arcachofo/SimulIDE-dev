@@ -54,6 +54,7 @@ class MAINMODULE_EXPORT TextComponent : public Component
         qreal m_opac;
         
         int  m_fontSize;
+        int  m_docMargin;
         int  m_margin;
         int  m_border;
 

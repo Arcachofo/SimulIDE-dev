@@ -58,8 +58,9 @@ TextComponent::TextComponent( QObject* parent, QString type, QString id )
     m_text->setCursor( Qt::OpenHandCursor );
     //m_text->installEventFilter( this );
 
-    m_context = false;
     m_margin = 5;
+    m_docMargin = m_text->document()->documentMargin();
+    m_context = false;
     m_border = 1;
     updateGeometry( 0, 0, 0 );
     
@@ -69,7 +70,7 @@ TextComponent::TextComponent( QObject* parent, QString type, QString id )
                            this, SLOT( updateGeometry(int, int, int )), Qt::UniqueConnection );
 
     addPropGroup( { tr("Main"), {
-new IntProp <TextComponent>( "Margin" , tr("Margin") ,"_Pixels", this, &TextComponent::margin, &TextComponent::setMargin, "uint" ),
+new IntProp <TextComponent>( "Margin" , tr("Margin") ,"_Pixels", this, &TextComponent::margin, &TextComponent::setMargin ),
 new IntProp <TextComponent>( "Border" , tr("Border") ,"_Pixels", this, &TextComponent::border, &TextComponent::setBorder, "uint" ),
 new DoubProp<TextComponent>( "Opacity", tr("Opacity"),""       , this, &TextComponent::opac,   &TextComponent::setOpac )
     }} );
@@ -90,6 +91,7 @@ void TextComponent::updateGeometry(int, int, int)
     m_text->document()->setTextWidth(-1);
     
     int margin = m_margin;
+    if( margin < 0 ) margin = 0;
     if( m_hidden ) m_area = QRect( 0, 0, 0, 0 );
     else m_area = QRect( -margin, -margin, m_text->boundingRect().width()+margin*2, m_text->boundingRect().height()+margin*2 );
     
@@ -100,7 +102,10 @@ int TextComponent::margin() { return m_margin; }
 
 void TextComponent::setMargin( int margin )
 {
-    if( margin < 0 ) margin = 0;
+    //if( margin < 0 ) margin = 0;
+    // Maintain compatibility with older versions:
+    if( margin < 0 ) m_text->document()->setDocumentMargin( m_docMargin+margin );
+    else             m_text->document()->setDocumentMargin( m_docMargin );
     m_margin = margin;
     updateGeometry( 0, 0, 0 );
 }
