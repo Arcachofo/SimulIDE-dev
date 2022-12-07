@@ -14,9 +14,13 @@ class MAINMODULE_EXPORT PlotSpinBox : public QDoubleSpinBox
         PlotSpinBox( QWidget* parent );
         ~PlotSpinBox();
 
+        void setUnitStr( QString u ) { m_unit = u; }
+
         QValidator::State validate( QString& text, int& n ) const override;
 
     private:
         QDoubleSpinBox* m_this;
+
+        QString m_unit;
 };
 #endif

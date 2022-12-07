@@ -68,6 +68,11 @@ OscWidget::OscWidget( QWidget* parent , Oscope* oscope )
     }
     mainLayout->setDirection( QBoxLayout::RightToLeft );
 
+    timeDivBox->setUnitStr( "s" );
+    timePosBox->setUnitStr( "s" );
+    voltDivBox->setUnitStr( "V" );
+    voltPosBox->setUnitStr( "V" );
+
     //double fontScale = MainWindow::self()->fontScale();
     QFont font = timeDivLabel->font();
     font.setFamily("Ubuntu");
