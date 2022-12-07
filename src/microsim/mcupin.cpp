@@ -130,7 +130,17 @@ void McuPin::controlPin( bool outCtrl, bool dirCtrl )
 void McuPin::setPullup( bool up )
 {
     IoPin::setPullup( up );
+    if( up == m_puMask ) return;
     m_puMask = up;
+
+    if( m_pinMode < output && !this->isConnected() ) // Input Pin not connected
+    {
+        m_inpState = up;
+        uint8_t val = up ? m_pinMask : 0;
+        m_port->pinChanged( m_pinMask, val );
+        if     ( m_pinMode == openCo ) setPinState( up? open_high  : open_low  ); // High : Low colors
+        else if( m_pinMode == input  ) setPinState( up? input_high : input_low ); // High : Low colors
+    }
 }
 
 void McuPin::setExtraSource( double vddAdmit, double gndAdmit ) // Comparator Vref out to Pin for example
