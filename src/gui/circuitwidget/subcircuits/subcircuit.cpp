@@ -446,10 +446,10 @@ void SubCircuit::setLogicSymbol( bool ls )
                 pin->setVisible( false );
                 pin->setLabelText( "" );
     }   }   }
-    if( m_subcType >= Board ){
+    /*if( m_subcType >= Board ){ // This doesn't work for "Tools" group
         for( Component* c : m_compList )
             if( c->isGraphical() ) c->setVisible( !m_isLS );
-    }
+    }*/
 }
 
 void SubCircuit::remove()
