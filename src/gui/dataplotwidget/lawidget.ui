@@ -247,7 +247,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QDoubleSpinBox" name="timeDivBox">
+        <widget class="PlotSpinBox" name="timeDivBox">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
            <horstretch>0</horstretch>
@@ -377,7 +377,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QDoubleSpinBox" name="timePosBox">
+        <widget class="PlotSpinBox" name="timePosBox">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
            <horstretch>0</horstretch>
@@ -510,7 +510,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QDoubleSpinBox" name="voltDivBox">
+        <widget class="PlotSpinBox" name="voltDivBox">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
            <horstretch>0</horstretch>
@@ -568,6 +568,11 @@
    <extends>QWidget</extends>
    <header>plotdisplay.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>PlotSpinBox</class>
+   <extends>QDoubleSpinBox</extends>
+   <header location="global">plotspinbox.h</header>
   </customwidget>
  </customwidgets>
  <resources/>
