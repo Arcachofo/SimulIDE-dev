@@ -770,7 +770,7 @@
          </property>
          <property name="maximumSize">
           <size>
-           <width>73</width>
+           <width>16777215</width>
            <height>16777215</height>
           </size>
          </property>
@@ -822,6 +822,15 @@
          <width>182</width>
          <height>9</height>
         </size>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Sunken</enum>
+       </property>
+       <property name="lineWidth">
+        <number>1</number>
+       </property>
+       <property name="midLineWidth">
+        <number>1</number>
        </property>
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
@@ -1288,6 +1297,15 @@
          <height>9</height>
         </size>
        </property>
+       <property name="frameShadow">
+        <enum>QFrame::Sunken</enum>
+       </property>
+       <property name="lineWidth">
+        <number>1</number>
+       </property>
+       <property name="midLineWidth">
+        <number>1</number>
+       </property>
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
@@ -1430,16 +1448,6 @@
  <resources/>
  <connections/>
  <buttongroups>
-  <buttongroup name="channelGroup">
-   <property name="exclusive">
-    <bool>true</bool>
-   </property>
-  </buttongroup>
-  <buttongroup name="triggerGroup">
-   <property name="exclusive">
-    <bool>true</bool>
-   </property>
-  </buttongroup>
   <buttongroup name="trackGroup"/>
   <buttongroup name="autoGroup">
    <property name="exclusive">
@@ -1449,6 +1457,16 @@
   <buttongroup name="hideGroup">
    <property name="exclusive">
     <bool>false</bool>
+   </property>
+  </buttongroup>
+  <buttongroup name="channelGroup">
+   <property name="exclusive">
+    <bool>true</bool>
+   </property>
+  </buttongroup>
+  <buttongroup name="triggerGroup">
+   <property name="exclusive">
+    <bool>true</bool>
    </property>
   </buttongroup>
  </buttongroups>
