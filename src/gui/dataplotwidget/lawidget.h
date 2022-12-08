@@ -51,6 +51,8 @@ class MAINMODULE_EXPORT LaWidget : public QDialog, private Ui::LaWidget
         void on_condEdit_editingFinished();
         void setConds( QString conds ) { condEdit->setText( conds ); }
 
+        void on_exportData_clicked();
+
     protected:
         void mousePressEvent( QMouseEvent* event );
         void mouseMoveEvent( QMouseEvent* event );
@@ -66,6 +68,8 @@ class MAINMODULE_EXPORT LaWidget : public QDialog, private Ui::LaWidget
         action_t m_action;
 
         bool m_blocked;
+
+        QString m_lastVcdDir;
 
         LAnalizer* m_analizer;
 };

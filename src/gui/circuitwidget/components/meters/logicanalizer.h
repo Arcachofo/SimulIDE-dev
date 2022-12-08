@@ -13,6 +13,11 @@ class LaChannel;
 class LaWidget;
 class DataLaWidget;
 
+struct sample_t{
+    double value;
+    uint channel;
+};
+
 class MAINMODULE_EXPORT LAnalizer : public PlotBase
 {
         Q_OBJECT
@@ -50,6 +55,8 @@ class MAINMODULE_EXPORT LAnalizer : public PlotBase
         virtual void setTunnels( QString tunnels ) override;
 
         virtual void expand( bool e ) override;
+
+        void dumpData( const QString& fn );
 
     private:
         double m_voltDiv;

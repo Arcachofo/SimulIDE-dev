@@ -173,6 +173,16 @@
         </widget>
        </item>
        <item>
+        <widget class="QPushButton" name="exportData">
+         <property name="text">
+          <string>Export Data</string>
+         </property>
+         <property name="autoDefault">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="Line" name="line_5">
          <property name="orientation">
           <enum>Qt::Vertical</enum>

@@ -244,3 +244,43 @@ void LAnalizer::setTunnels( QString tunnels )
         m_channel[i]->m_chTunnel = list.at(i);
         m_dataWidget->setTunnel( i, list.at(i) );
 }   }
+
+void LAnalizer::dumpData( const QString &fn )
+{
+    QChar identifiers[8] = {'*', '"', '#', '$', '%', '&', '(', ')'};
+
+    QFile file(fn);
+    if( !file.open( QIODevice::WriteOnly | QIODevice::Text ) ) return;
+
+    QTextStream out( &file );
+    out.setLocale( QLocale::C );
+    out <<"$timescale "<< 1 <<"ps $end"<< endl<< endl;
+
+    QMultiMap<uint64_t, sample_t> samples; // collect timing data, use QMap to implicitely sort it
+
+    uint64_t startTime = m_display->startTime()+m_timePos;
+    uint64_t endTime   = m_display->endTime()+m_timePos;
+
+    for( uint ch=0; ch<8; ++ch )
+    {
+        if( !m_channel[ch]->m_connected ) continue;
+        out << "$var wire 1 " << identifiers[ch] <<" D"<< ch <<" $end"<< endl;
+
+        for( int pos=0; pos<m_bufferSize; ++pos )
+        {
+            uint64_t time = m_channel[ch]->m_time[pos];
+            if( time < startTime || time > endTime ) continue;
+            time -= startTime;
+            samples.insert( time, { m_channel[ch]->m_buffer[pos], ch } );
+        }
+    }
+    out << endl <<"$enddefinitions $end"<< endl;
+
+    for( uint64_t time : samples.uniqueKeys() )
+    {
+        out << endl <<"#"<< time;
+        for( sample_t sample : samples.values( time ) )
+            out <<" "<<((sample.value > m_threshold) ? "1" : "0")<<identifiers[sample.channel];
+    }
+    file.close();
+}

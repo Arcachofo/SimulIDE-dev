@@ -4,11 +4,13 @@
  ***( see copyright.txt file at root folder )*******************************/
 
 #include <QMouseEvent>
+#include <QFileDialog>
 
 #include "lawidget.h"
 #include "logicanalizer.h"
-#include "utils.h"
 #include "mainwindow.h"
+#include "circuit.h"
+#include "utils.h"
 
 LaWidget::LaWidget( QWidget* parent , LAnalizer* la )
         : QDialog( parent )
@@ -36,6 +38,8 @@ LaWidget::LaWidget( QWidget* parent , LAnalizer* la )
     voltDivBox->setFont( font );
     triggerBox->setFont( font );
     condEdit->setFont( font );*/
+
+    m_lastVcdDir = changeExt( Circuit::self()->getFilePath(), ".vcd" );
 }
 LaWidget::~LaWidget(){}
 
@@ -153,6 +157,19 @@ void LaWidget::on_triggerBox_currentIndexChanged( int index )
 
 void LaWidget::on_condEdit_editingFinished()
 { m_analizer->updateConds( condEdit->text() ); }
+
+void LaWidget::on_exportData_clicked()
+{
+    QString fileName = QFileDialog::getSaveFileName( this, tr("Save Circuit"), m_lastVcdDir,
+                                                     tr("VCD files (*.vcd);;All files (*.*)") );
+    if( fileName.isEmpty() ) return;
+
+    QFileInfo fi = QFileInfo( fileName );
+    m_lastVcdDir = fi.absoluteDir().absolutePath();
+    if( fi.suffix() != "vcd" ) fileName += ".vcd";
+
+    m_analizer->dumpData( fileName );
+}
 
 void LaWidget::closeEvent( QCloseEvent* event )
 {
