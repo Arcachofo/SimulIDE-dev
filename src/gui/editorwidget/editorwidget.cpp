@@ -17,6 +17,7 @@
 
 #include "editorwidget.h"
 #include "findreplace.h"
+#include "scrollbar.h"
 #include "editorprop.h"
 #include "basedebugger.h"
 #include "mainwindow.h"
@@ -63,6 +64,8 @@ bool EditorWidget::close()
 void EditorWidget::newFile()
 {
     CodeEditor* codeEditor = new CodeEditor( this, &m_outPane );
+
+    codeEditor->setVerticalScrollBar( new scrollWidget( codeEditor, Qt::Vertical ) );
 
     m_docWidget->addTab( codeEditor, "New" );
     m_docWidget->setCurrentWidget( codeEditor );

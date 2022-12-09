@@ -23,7 +23,7 @@ class EditorWidget : public QWidget
     Q_OBJECT
 
     public:
-        EditorWidget( QWidget *parent );
+        EditorWidget( QWidget* parent );
         ~EditorWidget();
 
         bool close();

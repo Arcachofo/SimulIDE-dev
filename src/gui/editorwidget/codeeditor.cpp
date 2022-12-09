@@ -274,7 +274,11 @@ void CodeEditor::addBreakPoint( QTextBlock* block )
     if( EditorWindow::self()->debugState() == DBG_RUNNING ) return;
     if( EditorWindow::self()->debugState() > DBG_STOPPED )
         line = m_compiler->getValidLine( line );
-    if( !m_brkPoints.contains( line ) ) m_brkPoints.append( line );
+    if( !m_brkPoints.contains( line ) )
+    {
+        m_brkPoints.append( line );
+        this->update();
+    }
 }
 
 void CodeEditor::remBreakPoint( QTextBlock* block )
@@ -282,6 +286,7 @@ void CodeEditor::remBreakPoint( QTextBlock* block )
     int line = block->userState();
     m_brkPoints.removeOne( line );
     block->setUserState( 0 );
+    update();
 }
 
 void CodeEditor::startDebug()
