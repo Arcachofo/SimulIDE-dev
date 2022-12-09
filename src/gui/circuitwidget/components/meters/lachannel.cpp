@@ -61,11 +61,11 @@ void LaChannel::voltChanged()
 
     double volt = m_ePin[0]->getVoltage();
 
-    if( volt > m_analizer->threshold() ) // High
+    if( volt > m_analizer->thresholdR() ) // High
     {
         if( !m_rising )     // Rising Edge
         {
-            addReading( 5 );
+            addReading( 1 );
             m_rising = true;
             m_risEdge = simTime;
 
@@ -77,7 +77,7 @@ void LaChannel::voltChanged()
             m_analizer->conditonMet( m_channel, C_HIGH );
             m_lastCond = C_HIGH;
     }   }
-    else                                // Low
+    else if( volt < m_analizer->thresholdF() )   // Low
     {
         if( m_rising  )    // Falling Edge
         {

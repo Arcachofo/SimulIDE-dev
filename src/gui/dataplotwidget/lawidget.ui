@@ -10,6 +10,12 @@
     <height>347</height>
    </rect>
   </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
   <property name="minimumSize">
    <size>
     <width>550</width>
@@ -19,10 +25,10 @@
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
+  <property name="locale">
+   <locale language="C" country="AnyCountry"/>
+  </property>
   <layout class="QHBoxLayout" name="mainLayout">
-   <property name="spacing">
-    <number>6</number>
-   </property>
    <property name="leftMargin">
     <number>4</number>
    </property>
@@ -259,7 +265,7 @@
        <item>
         <widget class="PlotSpinBox" name="timeDivBox">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
@@ -272,7 +278,7 @@
          </property>
          <property name="maximumSize">
           <size>
-           <width>80</width>
+           <width>16777215</width>
            <height>16777215</height>
           </size>
          </property>
@@ -296,10 +302,10 @@
           <string notr="true"> ms</string>
          </property>
          <property name="decimals">
-          <number>0</number>
+          <number>3</number>
          </property>
          <property name="maximum">
-          <double>1000.000000000000000</double>
+          <double>100000.000000000000000</double>
          </property>
         </widget>
        </item>
@@ -389,7 +395,7 @@
        <item>
         <widget class="PlotSpinBox" name="timePosBox">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
@@ -402,7 +408,7 @@
          </property>
          <property name="maximumSize">
           <size>
-           <width>80</width>
+           <width>16777215</width>
            <height>16777215</height>
           </size>
          </property>
@@ -426,13 +432,13 @@
           <string notr="true"> ms</string>
          </property>
          <property name="decimals">
-          <number>0</number>
+          <number>3</number>
          </property>
          <property name="minimum">
-          <double>-1000.000000000000000</double>
+          <double>-100000.000000000000000</double>
          </property>
          <property name="maximum">
-          <double>1000.000000000000000</double>
+          <double>100000.000000000000000</double>
          </property>
         </widget>
        </item>
@@ -470,7 +476,7 @@
         <number>2</number>
        </property>
        <item>
-        <widget class="QLabel" name="voltDivLabel">
+        <widget class="QLabel" name="thrDivLabel">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
            <horstretch>0</horstretch>
@@ -490,7 +496,7 @@
           </font>
          </property>
          <property name="text">
-          <string notr="true">Volt Div</string>
+          <string notr="true">Threshold</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
@@ -498,73 +504,162 @@
         </widget>
        </item>
        <item>
-        <widget class="QDial" name="voltDivDial">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Ignored" vsizetype="Expanding">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>0</height>
-          </size>
-         </property>
-         <property name="wrapping">
-          <bool>true</bool>
-         </property>
-         <property name="notchesVisible">
-          <bool>true</bool>
-         </property>
-        </widget>
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <item>
+          <widget class="QLabel" name="voltDivLabel_2">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>10</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string notr="true">↑</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QDoubleSpinBox" name="rThresholdBox">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>80</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>8</pointsize>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true"/>
+           </property>
+           <property name="keyboardTracking">
+            <bool>false</bool>
+           </property>
+           <property name="prefix">
+            <string notr="true"/>
+           </property>
+           <property name="suffix">
+            <string notr="true"> V</string>
+           </property>
+           <property name="decimals">
+            <number>3</number>
+           </property>
+           <property name="maximum">
+            <double>1000.000000000000000</double>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </item>
        <item>
-        <widget class="PlotSpinBox" name="voltDivBox">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>80</width>
-           <height>0</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>80</width>
-           <height>16777215</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <pointsize>8</pointsize>
-           <weight>75</weight>
-           <bold>true</bold>
-          </font>
-         </property>
-         <property name="styleSheet">
-          <string notr="true"/>
-         </property>
-         <property name="keyboardTracking">
-          <bool>false</bool>
-         </property>
-         <property name="prefix">
-          <string notr="true"/>
-         </property>
-         <property name="suffix">
-          <string notr="true"> ms</string>
-         </property>
-         <property name="decimals">
-          <number>0</number>
-         </property>
-         <property name="maximum">
-          <double>1000.000000000000000</double>
-         </property>
-        </widget>
+        <layout class="QHBoxLayout" name="horizontalLayout_3">
+         <item>
+          <widget class="QLabel" name="voltDivLabel_3">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>10</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string notr="true">↓</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QDoubleSpinBox" name="fThresholdBox">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>80</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>8</pointsize>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true"/>
+           </property>
+           <property name="keyboardTracking">
+            <bool>false</bool>
+           </property>
+           <property name="prefix">
+            <string notr="true"/>
+           </property>
+           <property name="suffix">
+            <string notr="true"> V</string>
+           </property>
+           <property name="decimals">
+            <number>3</number>
+           </property>
+           <property name="maximum">
+            <double>1000.000000000000000</double>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </item>
       </layout>
      </item>

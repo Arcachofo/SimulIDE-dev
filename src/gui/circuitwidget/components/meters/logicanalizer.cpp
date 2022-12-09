@@ -18,7 +18,6 @@
 #include "e-node.h"
 
 #include "doubleprop.h"
-#include "intprop.h"
 
 Component* LAnalizer::construct( QObject* parent, QString type, QString id )
 { return new LAnalizer( parent, type, id ); }
@@ -62,26 +61,30 @@ LAnalizer::LAnalizer( QObject* parent, QString type, QString id )
 
         m_display->setChannel( i, m_channel[i] );
         m_display->setColor( i, m_color[i%4] );
-        m_display->setLimits( i, 5, 0 );
-        m_display->setVPos( i, -2.5 );
+        m_display->setLimits( i, 1, 0 );
+        m_display->setVPos( i, -0.5 );
 
         m_dataWidget->setColor( i, m_color[i%4] );
     }
     m_updtCount = 0;
 
-    m_threshold = 2.5;
+    setThresholdR( 2.5 );
+    setThresholdF( 2.5 );
 
     setTimePos( 0 );
-    setTimeDiv( 1e9 ); // 1 ms
-    setVoltDiv( 0.6 );
+    setTimeDiv( 1e9 );   // 1 ms
+    setVoltDiv( 0.6/5 ); // For Logic values 0 : 1
 
     setLabelPos(-90,-100, 0);
     expand( false );
     setTrigger( 9 ); // Trigger = None
 
-    addPropGroup( { tr("Electric"), {
-new DoubProp<LAnalizer>( "Treshold",tr("Logic Threshold"),"V", this, &LAnalizer::threshold, &LAnalizer::setThreshold )
-    } } );
+    addProperty(  "Hidden", {
+new DoubProp<LAnalizer>( "TresholdR","TresholdR","V", this, &LAnalizer::thresholdR, &LAnalizer::setThresholdR )
+    } );
+    addProperty(  "Hidden", {
+new DoubProp<LAnalizer>( "TresholdF","TresholdF","V", this, &LAnalizer::thresholdF, &LAnalizer::setThresholdF )
+    } );
 }
 LAnalizer::~LAnalizer()
 {
@@ -199,6 +202,20 @@ void LAnalizer::setTimeDiv( uint64_t td )
     m_laWidget->updateTimeDivBox( td );
 }
 
+void LAnalizer::setThresholdR( double thr )
+{
+    if( thr < m_thresholdF ) thr = m_thresholdF;
+    m_thresholdR = thr;
+    m_laWidget->updateThresholdR( thr );
+}
+
+void LAnalizer::setThresholdF( double thr )
+{
+    if( thr > m_thresholdR ) thr = m_thresholdR;
+    m_thresholdF = thr;
+    m_laWidget->updateThresholdF( thr );
+}
+
 void LAnalizer::setTimePos( int64_t tp )
 {
     m_timePos = tp;
@@ -215,9 +232,8 @@ void LAnalizer::moveTimePos( int64_t delta )
 
 void LAnalizer::setVoltDiv( double vd )
 {
-    m_voltDiv = vd;
-    for( int i=0; i<8; i++ ) m_display->setVTick( i, vd );
-    m_laWidget->updateVoltDivBox( vd );
+    m_voltDiv = 0.6/5; // For Logic values 0 : 1
+    for( int i=0; i<8; i++ ) m_display->setVTick( i, m_voltDiv );
 }
 
 void LAnalizer::setTrigger( int ch )
@@ -280,7 +296,7 @@ void LAnalizer::dumpData( const QString &fn )
     {
         out << endl <<"#"<< time;
         for( sample_t sample : samples.values( time ) )
-            out <<" "<<((sample.value > m_threshold) ? "1" : "0")<<identifiers[sample.channel];
+            out <<" "<< sample.value <<identifiers[sample.channel];
     }
     file.close();
 }

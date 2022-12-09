@@ -47,8 +47,11 @@ class MAINMODULE_EXPORT LAnalizer : public PlotBase
 
         virtual void setTrigger( int ch ) override;
 
-        double threshold() { return m_threshold; }
-        void setThreshold( double thr ) { m_threshold = thr; }
+        double thresholdR() { return m_thresholdR; }
+        void setThresholdR( double thr );
+
+        double thresholdF() { return m_thresholdF; }
+        void setThresholdF( double thr );
 
         virtual void setConds( QString conds ) override;
 
@@ -60,7 +63,8 @@ class MAINMODULE_EXPORT LAnalizer : public PlotBase
 
     private:
         double m_voltDiv;
-        double m_threshold;
+        double m_thresholdR;
+        double m_thresholdF;
 
         int m_updtCount;
 

@@ -21,23 +21,29 @@ LaWidget::LaWidget( QWidget* parent , LAnalizer* la )
     m_blocked = false;
     m_action = actNone;
 
-    /*double fontScale = MainWindow::self()->fontScale();
+    timeDivBox->setUnitStr( "s" );
+    timePosBox->setUnitStr( "s" );
+
+    //double fontScale = MainWindow::self()->fontScale();
     QFont font = timeDivLabel->font();
     font.setFamily("Ubuntu");
     font.setBold( true );
 
-    font.setPixelSize( 14*fontScale );
+    //font.setPixelSize( 14*fontScale );
+    font.setPointSize( 10 );
     timeDivLabel->setFont( font );
     timePosLabel->setFont( font );
-    voltDivLabel->setFont( font );
+    thrDivLabel->setFont( font );
     trigLabel->setFont( font );
 
-    font.setPixelSize( 10*fontScale );
+    //font.setPixelSize( 10*fontScale );
+    font.setPointSize( 8 );
     timeDivBox->setFont( font );
     timePosBox->setFont( font );
-    voltDivBox->setFont( font );
+    rThresholdBox->setFont( font );
+    fThresholdBox->setFont( font );
     triggerBox->setFont( font );
-    condEdit->setFont( font );*/
+    condEdit->setFont( font );
 
     m_lastVcdDir = changeExt( Circuit::self()->getFilePath(), ".vcd" );
 }
@@ -116,38 +122,29 @@ void LaWidget::updateTimePosBox( int64_t timePos )
     m_blocked = false;
 }
 
-void LaWidget::on_voltDivDial_valueChanged( int DialPos )
-{
-    double voltDiv = m_analizer->voltDiv();
-    double delta = voltDiv/100;
-    if( DialPos < m_voltDivDialPos ) voltDiv += delta;
-    else                             voltDiv -= delta;
-
-    m_analizer->setVoltDiv( voltDiv );
-    m_voltDivDialPos = DialPos;
-}
-
-void LaWidget::on_voltDivBox_valueChanged( double voltDiv )
+void LaWidget::on_rThresholdBox_valueChanged( double v )
 {
     if( m_blocked ) return;
-
-    QString unit = voltDivBox->suffix().remove("V");
-    unitToVal( voltDiv, unit );
-    m_analizer->setVoltDiv( voltDiv/1e12 );
+    m_analizer->setThresholdR( v );
 }
 
-void LaWidget::updateVoltDivBox( double voltDiv )
+void LaWidget::updateThresholdR( double v )
 {
     m_blocked = true;
+    rThresholdBox->setValue( v );
+    m_blocked = false;
+}
 
-    double val  = voltDiv*1e12;
-    QString unit = " p";
-    int Vdecimals = 0;
-    valToUnit( val, unit, Vdecimals );
+void LaWidget::on_fThresholdBox_valueChanged( double v )
+{
+    if( m_blocked ) return;
+    m_analizer->setThresholdF( v );
+}
 
-    voltDivBox->setDecimals( Vdecimals );
-    voltDivBox->setValue( val );
-    voltDivBox->setSuffix( unit+"V" );
+void LaWidget::updateThresholdF( double v )
+{
+    m_blocked = true;
+    fThresholdBox->setValue( v );
     m_blocked = false;
 }
 

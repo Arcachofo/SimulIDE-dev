@@ -35,7 +35,8 @@ class MAINMODULE_EXPORT LaWidget : public QDialog, private Ui::LaWidget
 
         void updateTimeDivBox( uint64_t timeDiv);
         void updateTimePosBox( int64_t timePos );
-        void updateVoltDivBox( double voltDiv);
+        void updateThresholdR( double v );
+        void updateThresholdF( double v );
 
     public slots:
         void on_timeDivDial_valueChanged( int DialPos );
@@ -43,8 +44,8 @@ class MAINMODULE_EXPORT LaWidget : public QDialog, private Ui::LaWidget
         void on_timePosDial_valueChanged( int DialPos );
         void on_timePosBox_valueChanged( double val );
 
-        void on_voltDivDial_valueChanged( int DialPos );
-        void on_voltDivBox_valueChanged( double voltDiv );
+        void on_rThresholdBox_valueChanged( double v );
+        void on_fThresholdBox_valueChanged( double v );
 
         void on_triggerBox_currentIndexChanged( int index );
 
