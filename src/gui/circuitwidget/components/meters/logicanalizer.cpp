@@ -270,7 +270,7 @@ void LAnalizer::dumpData( const QString &fn )
 
     QTextStream out( &file );
     out.setLocale( QLocale::C );
-    out <<"$timescale "<< 1 <<"ps $end"<< endl<< endl;
+    out <<"$timescale "<< 1000 <<"ps $end"<< endl<< endl;
 
     QMultiMap<uint64_t, sample_t> samples; // collect timing data, use QMap to implicitely sort it
 
@@ -287,7 +287,7 @@ void LAnalizer::dumpData( const QString &fn )
             uint64_t time = m_channel[ch]->m_time[pos];
             if( time < startTime || time > endTime ) continue;
             time -= startTime;
-            samples.insert( time, { m_channel[ch]->m_buffer[pos], ch } );
+            samples.insert( time/1000, { m_channel[ch]->m_buffer[pos], ch } );
         }
     }
     out << endl <<"$enddefinitions $end"<< endl;
