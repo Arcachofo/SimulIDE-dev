@@ -18,6 +18,8 @@
 #include "e-node.h"
 
 #include "doubleprop.h"
+#include "boolprop.h"
+#include "intprop.h"
 
 Component* LAnalizer::construct( QObject* parent, QString type, QString id )
 { return new LAnalizer( parent, type, id ); }
@@ -73,11 +75,20 @@ LAnalizer::LAnalizer( QObject* parent, QString type, QString id )
 
     setTimePos( 0 );
     setTimeDiv( 1e9 );   // 1 ms
-    setVoltDiv( 0.6/5 ); // For Logic values 0 : 1
+    setVoltDiv( 0.6/4 ); // For Logic values 0 : 1
 
     setLabelPos(-90,-100, 0);
     expand( false );
     setTrigger( 9 ); // Trigger = None
+
+    m_timeStep = 1000;
+    m_autoExport = false;
+
+    addPropGroup( { tr("Export"), {
+new IntProp <LAnalizer>( "TimeStep"  ,tr("Base Time Step") ,"_ps", this, &LAnalizer::timeStep,   &LAnalizer::setTimeStep, "uint" ),
+new BoolProp<LAnalizer>( "AutoExport",tr("Export at pause"),""   , this, &LAnalizer::autoExport, &LAnalizer::setAutoExport ),
+//new IntProp <PlotBase>( "BufferSize" ,tr("Buffer Size")  ,tr("Samples"), this, &PlotBase::bufferSize, &PlotBase::setBufferSize, "uint" ),
+    }} );
 
     addProperty(  "Hidden", {
 new DoubProp<LAnalizer>( "TresholdR","TresholdR","V", this, &LAnalizer::thresholdR, &LAnalizer::setThresholdR )
@@ -232,7 +243,7 @@ void LAnalizer::moveTimePos( int64_t delta )
 
 void LAnalizer::setVoltDiv( double vd )
 {
-    m_voltDiv = 0.6/5; // For Logic values 0 : 1
+    m_voltDiv = 0.6/4; // For Logic values 0 : 1
     for( int i=0; i<8; i++ ) m_display->setVTick( i, m_voltDiv );
 }
 
@@ -267,36 +278,95 @@ void LAnalizer::dumpData( const QString &fn )
 
     QFile file(fn);
     if( !file.open( QIODevice::WriteOnly | QIODevice::Text ) ) return;
+    m_exportFile = fn;
 
     QTextStream out( &file );
     out.setLocale( QLocale::C );
-    out <<"$timescale "<< 1000 <<"ps $end"<< endl<< endl;
 
     QMultiMap<uint64_t, sample_t> samples; // collect timing data, use QMap to implicitely sort it
 
-    uint64_t startTime = m_display->startTime()+m_timePos;
-    uint64_t endTime   = m_display->endTime()+m_timePos;
+    uint64_t startTime = m_display->startTime();
+    if( (int64_t)startTime+m_timePos >= 0 ) startTime += m_timePos;
+    else                                    startTime  = 1;
+
+    uint64_t endTime = m_display->endTime()+m_timePos;
+    uint64_t lastTime = (endTime-startTime)/m_timeStep;
+    uint64_t pTime;
+    double pVal=-1;
+
+    QString varDef;
+    QString dumpVars = "\n$dumpvars\n";
+    uint64_t gcd = 0;
 
     for( uint ch=0; ch<8; ++ch )
     {
         if( !m_channel[ch]->m_connected ) continue;
-        out << "$var wire 1 " << identifiers[ch] <<" D"<< ch <<" $end"<< endl;
 
-        for( int pos=0; pos<m_bufferSize; ++pos )
+        QString name = m_channel[ch]->getChName();             // Get channel name
+        if( name.isEmpty() ) name = "D"+QString::number( ch ); // If name is empty set name = Dn
+
+        varDef += "$var wire 1 " + QString( identifiers[ch] )+" "+name+" $end\n";
+
+        bool init = false;
+        double initVal = 0;
+        int index = m_channel[ch]->m_bufferCounter; // Start with the first sample (circular buffer)
+
+        for( int i=0; i<m_bufferSize; ++i )
         {
-            uint64_t time = m_channel[ch]->m_time[pos];
-            if( time < startTime || time > endTime ) continue;
-            time -= startTime;
-            samples.insert( time/1000, { m_channel[ch]->m_buffer[pos], ch } );
+            index++;
+            if( index >= m_bufferSize ) index -= m_bufferSize; // It's a circular buffer
+
+            double   val  = m_channel[ch]->m_buffer[index];
+            uint64_t time = m_channel[ch]->m_time[index];
+
+            if( pTime == time ) continue;                      // Avoid repeated times
+            pTime = time;
+
+            if( time == 0 ) continue;                            // Empty samples: Simulation times start at 1 ps
+            if( time <= startTime ) { initVal = val; continue; } // Previous value from first valid sample
+            if( time > endTime ) { time = endTime; val = pVal; } // Add final value (screen edge)
+            if( !init ) {
+                dumpVars += QString::number(initVal)+identifiers[ch]+"\n"; // Add initial value
+                init = true;
+            }
+            pVal = val;
+            time = (time-startTime)/m_timeStep;
+
+            if( gcd > 0 ) gcd = getGcd( gcd, time ); // Get Greatest Common Denominator
+            else          gcd = time;
+
+            samples.insert( time, { val, ch } );
+            if( time == lastTime ) break;            // All samples before endTime already registered
         }
     }
-    out << endl <<"$enddefinitions $end"<< endl;
+    dumpVars += "$end\n";
+    if( gcd < 1 ) gcd = 1; // This should not happen
 
+    out <<"$timescale "<< gcd*m_timeStep <<"ps $end"<< endl<< endl;
+    out << varDef;
+    out << endl <<"$enddefinitions $end"<< endl;
+    out << dumpVars;
+
+    uint64_t timeStamp;
     for( uint64_t time : samples.uniqueKeys() )
     {
-        out << endl <<"#"<< time;
+        timeStamp = time/gcd;
+        out << endl <<"#"<< timeStamp;
         for( sample_t sample : samples.values( time ) )
             out <<" "<< sample.value <<identifiers[sample.channel];
     }
+    out << endl <<"#"<< timeStamp+1; // last time stamp
     file.close();
+}
+
+uint64_t LAnalizer::getGcd( uint64_t a, uint64_t b )  // Greatest Common Denominator
+{
+    uint64_t h;
+    do {
+        h = a % b;
+        a = b;
+        b = h;
+    } while (b != 0);
+
+    return a;
 }

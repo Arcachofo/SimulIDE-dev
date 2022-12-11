@@ -299,7 +299,8 @@ void PlotDisplay::paintEvent( QPaintEvent* /* event */ )
 
                     lastX = x1;
             }   }
-            if( time <= timeStart ) break;
+            if( time <= timeStart )
+                break;
 
             x2 = x1; y2 = y1;
             //p2Volt = p1Volt;

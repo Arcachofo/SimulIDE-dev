@@ -8,6 +8,7 @@
 #include "simulator.h"
 #include "circuit.h"
 #include "circuitwidget.h"
+#include "utils.h"
 
 #include "stringprop.h"
 #include "doubleprop.h"
@@ -53,6 +54,8 @@ PlotBase::PlotBase( QObject* parent, QString type, QString id )
         m_condTo["ch"+n+"f"] = "(pb.ch"+n+"==4)";
     }
     Simulator::self()->addToUpdateList( this );
+
+    m_exportFile = changeExt( Circuit::self()->getFilePath(), "_"+id+".vcd" );
 
     addPropGroup( { tr("Main"), {
 new IntProp<PlotBase>( "Basic_X"    ,tr("Screen Size X"),tr("_Pixels"), this, &PlotBase::baSizeX,    &PlotBase::setBaSizeX, "uint" ),
@@ -120,8 +123,8 @@ void PlotBase::setTimDiv( QString td )
 
 void PlotBase::setTimeDiv( uint64_t td )
 {
-    m_timeDiv = td;
     m_display->setTimeDiv( td );
+    m_timeDiv = m_display->m_timeDiv;
 }
 
 QString PlotBase::tunnels()
@@ -150,6 +153,7 @@ void PlotBase::updateConds( QString conds )
         conds.replace( "ch"+n+"f", m_condTo.value("ch"+n+"f") );
     }
     m_script = "void pause() { pb.m_pause = "+conds+";}";
+    qDebug() << m_script <<endl;
     int r = compileScript();
     if( r < 0 ) { qDebug() << "PlotBase::updateConds Failed to compile expression:"<<conds; return; }
 
@@ -180,6 +184,7 @@ void PlotBase::conditonMet( int ch, cond_t cond )
     {
         m_risEdge = Simulator::self()->circTime();
         CircuitWidget::self()->pauseSim();
+        if( m_autoExport ) QTimer::singleShot( 50, this, &PlotBase::dump );
     }
 
     //if( m_trigger != 8 ) return;

@@ -70,8 +70,6 @@ class MAINMODULE_EXPORT LaWidget : public QDialog, private Ui::LaWidget
 
         bool m_blocked;
 
-        QString m_lastVcdFile;
-
         LAnalizer* m_analizer;
 };
 

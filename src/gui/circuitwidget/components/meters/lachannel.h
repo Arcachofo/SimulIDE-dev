@@ -9,7 +9,6 @@
 #include "datachannel.h"
 #include "logicanalizer.h"
 
-
 class MAINMODULE_EXPORT LaChannel : public DataChannel
 {
         friend class LAnalizer;

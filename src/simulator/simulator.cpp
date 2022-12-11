@@ -210,7 +210,7 @@ void Simulator::resetSim()
     m_lastStep = 0;
     m_tStep    = 0;
     m_lastRefT = 0;
-    m_circTime = 0;
+    m_circTime = 1;
     m_NLstep   = 0;
     ///m_pauseCirc = false;
     m_realPsPF = 1;

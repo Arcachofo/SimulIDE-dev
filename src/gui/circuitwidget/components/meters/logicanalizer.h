@@ -59,9 +59,11 @@ class MAINMODULE_EXPORT LAnalizer : public PlotBase
 
         virtual void expand( bool e ) override;
 
-        void dumpData( const QString& fn );
+        virtual void dumpData( const QString& fn ) override;
 
     private:
+        uint64_t getGcd( uint64_t a, uint64_t b ); // greatest Common Denominator
+
         double m_voltDiv;
         double m_thresholdR;
         double m_thresholdF;

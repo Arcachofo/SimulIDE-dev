@@ -6,9 +6,6 @@
 #ifndef PLOTBASE_H
 #define PLOTBASE_H
 
-//#include <QScriptEngine>
-//#include <QScriptProgram>
-
 #include "component.h"
 #include "scriptmodule.h"
 #include "datachannel.h"
@@ -61,6 +58,15 @@ class MAINMODULE_EXPORT PlotBase : public Component, public ScriptModule
         virtual void setConds( QString conds ){;}
         void updateConds( QString conds );
 
+        int timeStep() { return m_timeStep; }
+        void setTimeStep( int t ) { m_timeStep = t; }
+
+        bool autoExport() { return m_autoExport; }
+        void setAutoExport( bool a ) { m_autoExport = a; }
+        QString getExportFile() { return m_exportFile; }
+        void dump() { dumpData( m_exportFile ); }
+        virtual void dumpData( const QString& fn ){;}
+
         virtual void channelChanged( int ch, QString name ) { m_channel[ch]->m_chTunnel = name; }
 
         PlotDisplay* display() { return m_display; }
@@ -101,10 +107,13 @@ class MAINMODULE_EXPORT PlotBase : public Component, public ScriptModule
         int m_condCh7;
         int m_condCh8;
         bool m_pause;
+
+        int m_timeStep;    // For export
+        bool m_autoExport;
+        QString m_exportFile;
+
         asIScriptFunction* m_pauseFunc;
         QString m_conditions;
-        //QScriptProgram m_condProgram;
-        //QScriptEngine m_engine;
 
         QHash<QString, QString> m_condTo;
 

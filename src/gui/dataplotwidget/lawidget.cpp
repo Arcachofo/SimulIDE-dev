@@ -44,8 +44,6 @@ LaWidget::LaWidget( QWidget* parent , LAnalizer* la )
     fThresholdBox->setFont( font );
     triggerBox->setFont( font );
     condEdit->setFont( font );
-
-    m_lastVcdFile = changeExt( Circuit::self()->getFilePath(), ".vcd" );
 }
 LaWidget::~LaWidget(){}
 
@@ -157,11 +155,10 @@ void LaWidget::on_condEdit_editingFinished()
 
 void LaWidget::on_exportData_clicked()
 {
-    QString fileName = QFileDialog::getSaveFileName( this, tr("Save Circuit"), m_lastVcdFile,
+    QString fileName = QFileDialog::getSaveFileName( this, tr("Save Circuit"), m_analizer->getExportFile(),
                                                      tr("VCD files (*.vcd);;All files (*.*)") );
     if( fileName.isEmpty() ) return;
     if( !fileName.endsWith(".vcd") ) fileName += ".vcd";
-    m_lastVcdFile = fileName;
 
     m_analizer->dumpData( fileName );
 }
