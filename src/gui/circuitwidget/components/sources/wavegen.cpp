@@ -39,11 +39,17 @@ LibraryItem* WaveGen::libraryItem()
 WaveGen::WaveGen( QObject* parent, QString type, QString id )
        : ClockBase( parent, type, id )
 {
+    m_bipolar  = false;
+    m_floating = false;
     m_voltBase = 0;
-    m_voltMid  = 0;
+    m_voltMid  = 2.5;
     m_lastVout = 0;
     m_waveType = Sine;
     m_wavePixmap = NULL;
+
+    m_pin.resize(2);
+    m_pin[1] = m_gndpin = new IoPin( 0, QPoint(16,4), id+"-gndnod", 0, this, source );
+    m_gndpin->setVisible( false );
 
     m_enumUids = QStringList()
         << "Sine"
@@ -64,6 +70,8 @@ WaveGen::WaveGen( QObject* parent, QString type, QString id )
     setSteps( 100 );
     setDuty( 50 );
 
+    Simulator::self()->addToUpdateList( this );
+
     remPropGroup( tr("Main") );
     addPropGroup( { tr("Main"), {
 new StringProp<WaveGen>( "Wave_Type", tr("Wave Type"),""     , this, &WaveGen::waveType, &WaveGen::setWaveType, "enum" ),
@@ -74,6 +82,8 @@ new StringProp<WaveGen>( "File"    , tr("File"),""           , this, &WaveGen::f
 new BoolProp <WaveGen>( "Always_On", tr("Always On"),""      , this, &WaveGen::alwaysOn, &WaveGen::setAlwaysOn )
     }} );
     addPropGroup( { tr("Electric"), {
+new BoolProp <WaveGen>( "Bipolar"  , tr("Bipolar")       ,"" , this, &WaveGen::bipolar,   &WaveGen::setBipolar ),
+new BoolProp <WaveGen>( "Floating" , tr("Floating")      ,"" , this, &WaveGen::floating,  &WaveGen::setFloating ),
 new DoubProp<WaveGen>( "Semi_Ampli", tr("Semi Amplitude"),"V", this, &WaveGen::semiAmpli, &WaveGen::setSemiAmpli ),
 new DoubProp<WaveGen>( "Mid_Volt"  , tr("Middle Voltage"),"V", this, &WaveGen::midVolt,   &WaveGen::setMidVolt )
     }} );
@@ -97,6 +107,28 @@ void WaveGen::stamp()
     ClockBase::stamp();
     m_lastVout = m_vOut = 0;
     m_index = 0;
+
+    if( m_bipolar && m_floating )
+    {
+        m_outpin->skipStamp( true );
+        m_gndpin->skipStamp( true );
+
+        m_outpin->setEnodeComp( m_gndpin->getEnode() );
+        m_gndpin->setEnodeComp( m_outpin->getEnode() );
+
+        m_outpin->createCurrent();
+        m_gndpin->createCurrent();
+
+        m_outpin->setImp( 1/cero_doub );
+        m_gndpin->setImp( 1/cero_doub );
+    }
+    else{
+        m_outpin->skipStamp( false );
+        m_gndpin->skipStamp( false );
+
+        m_outpin->setImp( cero_doub );
+        m_gndpin->setImp( cero_doub );
+    }
 }
 
 void WaveGen::runEvent()
@@ -114,15 +146,20 @@ void WaveGen::runEvent()
     {
         m_lastVout = m_vOut;
 
-        if( m_waveType == Square )
+        if( m_bipolar )
         {
-            m_outpin->setOutHighV( m_voltBase+m_voltage );
-            m_outpin->setOutLowV( m_voltBase );
-            m_outpin->sheduleState( m_vOut, 0 );
-        }else{
-            m_outpin->setOutHighV( m_voltBase+m_voltage*m_vOut );
-            m_outpin->setOutState( true );
+            if( m_floating )
+            {
+                double volt = m_voltage*m_vOut;
+                m_outpin->setVoltage( volt );
+                m_gndpin->setVoltage(-volt );
+            }
+            else{
+                m_outpin->setVoltage( m_voltMid+m_voltage*m_vOut/2 );
+                m_gndpin->setVoltage( m_voltMid-m_voltage*m_vOut/2 );
+            }
         }
+        else m_outpin->setVoltage( m_voltBase+m_voltage*m_vOut );
     }
     m_remainder += m_fstepsPC-(double)m_stepsPC;
     uint64_t remainerInt = m_remainder;
@@ -210,6 +247,30 @@ void WaveGen::setMidVolt( double v )
     m_voltMid = v;
 }
 
+void WaveGen::setBipolar(bool b )
+{
+    if( m_bipolar == b ) return;
+    m_bipolar = b;
+
+    m_gndpin->setVisible( b );
+    if( !b ) m_gndpin->removeConnector();
+
+    if( b ) m_outpin->setY( -4 );
+    else    m_outpin->setY( 0 );
+
+    udtProperties();
+}
+
+void WaveGen::setFloating( bool f )
+{
+    if( m_floating == f ) return;
+    m_floating = f;
+
+    if( Simulator::self()->isRunning() ) CircuitWidget::self()->powerCircOff();
+
+    udtProperties();
+}
+
 void WaveGen::setWaveType( QString t )
 {
     int type = getEnumIndex( t );
@@ -249,6 +310,9 @@ void WaveGen::udtProperties()
     m_propDialog->showProp("File", showFile );
     m_propDialog->showProp("Duty", showDuty );
     m_propDialog->showProp("Steps", showSteps );
+
+    m_propDialog->showProp("Mid_Volt", !m_bipolar || !m_floating );
+    m_propDialog->showProp("Floating", m_bipolar );
 }
 
 void WaveGen::slotProperties()

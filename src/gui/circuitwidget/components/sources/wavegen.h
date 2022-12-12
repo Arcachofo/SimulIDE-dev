@@ -52,6 +52,12 @@ class MAINMODULE_EXPORT WaveGen : public ClockBase
         QString fileName() { return m_fileName; }
         void setFile( QString fileName );
 
+        bool bipolar() { return m_bipolar; }
+        void setBipolar( bool b );
+
+        bool floating() { return m_floating; }
+        void setFloating( bool f );
+
         virtual void setFreq( double freq ) override;
 
         virtual void updtValues() override;
@@ -77,6 +83,9 @@ class MAINMODULE_EXPORT WaveGen : public ClockBase
 
         double normalize( double data );
         
+        bool m_bipolar;
+        bool m_floating;
+
         wave_type m_waveType;
         double m_duty;
         double m_vOut;
@@ -102,6 +111,8 @@ class MAINMODULE_EXPORT WaveGen : public ClockBase
         double m_mult;
         std::vector<double> m_data;
         QString m_fileName;
+
+        IoPin* m_gndpin;
 
         QStringList m_waves;
         QPixmap* m_wavePixmap;

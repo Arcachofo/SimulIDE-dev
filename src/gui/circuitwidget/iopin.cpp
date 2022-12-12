@@ -17,6 +17,7 @@ IoPin::IoPin( int angle, const QPoint pos, QString id, int index, Component* par
 {
     m_outState = false;
     m_stateZ   = false;
+    m_skipStamp = false;
 
     m_inpHighV = 2.5;
     m_inpLowV  = 2.5;
@@ -55,6 +56,8 @@ void IoPin::initialize()
 
 void IoPin::stamp()
 {
+    if( m_skipStamp ) return;
+
     ePin::setEnodeComp( &m_gndEnode );
     ePin::createCurrent();
     setPinMode( m_pinMode );

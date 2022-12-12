@@ -86,6 +86,8 @@ class MAINMODULE_EXPORT IoPin : public Pin, public eElement
 
         virtual void controlPin( bool outCtrl , bool dirCtrl ){;}
 
+        void skipStamp( bool s ) { m_skipStamp = s; }
+
         void setRiseTime( double time ) { m_timeRis = time; }
         void setFallTime( double time ) { m_timeFal = time; }
 
@@ -115,6 +117,7 @@ class MAINMODULE_EXPORT IoPin : public Pin, public eElement
         bool m_outState;
         bool m_stateZ;
         bool m_nextState;
+        bool m_skipStamp;
 
         int m_steps;
         uint64_t m_timeRis;  // Time for Output voltage to switch from 0% to 100%
