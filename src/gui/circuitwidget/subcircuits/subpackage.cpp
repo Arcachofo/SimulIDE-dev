@@ -171,7 +171,7 @@ void SubPackage::mousePressEvent( QGraphicsSceneMouseEvent* event )
         m_eventPin->setLabelPos();
         if( m_p2X == m_p1X+1) m_eventPin->setLength( 1 );
         else                  m_eventPin->setLabelText( "Name" );
-        m_unusedPins.append( m_eventPin );
+        m_pkgePins.append( m_eventPin );
 
         editPin();
         Circuit::self()->update();
@@ -229,7 +229,7 @@ void SubPackage::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
 
     m_eventPin = NULL;
 
-    for( Pin* pin : m_unusedPins )
+    for( Pin* pin : m_pkgePins )
     {
         int xPin = pin->x();
         int yPin = pin->y();
@@ -386,6 +386,8 @@ Pin* SubPackage::addPin( QString id, QString type, QString label, int pos, int x
     pin->setLabelText( label );
     pin->setInverted( type == "inverted" || type == "inv" );
     pin->setFlag( QGraphicsItem::ItemStacksBehindParent, false );
+
+    m_pkgePins.append( pin );
     return pin;
 }
 
@@ -421,7 +423,7 @@ void SubPackage::deleteEventPin()
     if( !m_eventPin ) return;
     m_changed = true;
 
-    m_unusedPins.removeOne( m_eventPin );
+    m_pkgePins.removeOne( m_eventPin );
     m_eventPin = NULL;
     
     Circuit::self()->update();
@@ -503,7 +505,13 @@ void SubPackage::setPackage( QString package )
 {
     m_pkgeFile = package;
 
+    m_pkgePins.clear();
+    for( Pin* pin : m_pin ) deletePin( pin );
+
     Chip::initChip();
+
+    m_pkgePins += m_unusedPins;
+
     //m_name = QFileInfo( m_pkgeFile ).baseName().remove(".package").remove("_LS");
     m_label.setPlainText( m_name );
     
@@ -524,7 +532,7 @@ void SubPackage::setLogicSymbol( bool ls )
         m_color = m_icColor;
         labelColor = QColor( 250, 250, 200 );
     }
-    for( Pin* pin : m_unusedPins ) pin->setLabelColor( labelColor );
+    for( Pin* pin : m_pkgePins ) pin->setLabelColor( labelColor );
 
     Circuit::self()->update();
 }
@@ -596,7 +604,7 @@ void SubPackage::savePackage( QString fileName )
            +"\" >\n\n";
     
     int pP = 1;
-    for( Pin* pin : m_unusedPins ) { out << pinEntry( pin ); pP++; }
+    for( Pin* pin : m_pkgePins ) { out << pinEntry( pin ); pP++; }
 
     out << "    \n";
     out << "</packageB>\n";

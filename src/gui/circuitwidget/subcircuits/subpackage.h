@@ -92,6 +92,7 @@ class MAINMODULE_EXPORT SubPackage : public Chip
         QAction* m_boardModeAction;
 
         Pin* m_eventPin;
+        QList<Pin*> m_pkgePins;
 };
 
 #include <QDialog>

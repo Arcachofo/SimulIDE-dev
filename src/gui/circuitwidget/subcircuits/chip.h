@@ -39,7 +39,6 @@ class MAINMODULE_EXPORT Chip : public Component, public eElement
         QString subcTypeStr() { return m_enumUids.at( (int)m_subcType ); }
         virtual void setSubcTypeStr( QString s ){;}
 
-
         int pkgWidth() { return m_width; }
 
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
