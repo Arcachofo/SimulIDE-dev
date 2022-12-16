@@ -83,12 +83,12 @@ void AvrTwi::configureA( uint8_t newTWCR ) // TWCR is being written
         masterStart();
     }
 
-    bool ack = getRegBitsBool( newTWCR, m_TWEA );
+    bool twea = getRegBitsBool( newTWCR, m_TWEA );
     bool addrSet = ( m_address != 0b01111111);
-    if( addrSet && ack && !clearTwint && !newStop && !newStart )
+    if( addrSet && twea && !clearTwint && !newStop && !newStart )
     {
         if( m_mode != TWI_SLAVE ) setMode( TWI_SLAVE );
-        m_sendACK = ack;
+        m_sendACK = twea;
         return;
     }
 
@@ -99,13 +99,11 @@ void AvrTwi::configureA( uint8_t newTWCR ) // TWCR is being written
 
         if( (m_twiState == TWI_MRX_ADR_ACK)    // We sent Slave Address + R and received ACK
          || (m_twiState == TWI_MRX_DATA_ACK) ) // We sent data and received ACK
-            masterRead( ack );     // Read a byte and send ACK/NACK
+            masterRead( twea );     // Read a byte and send ACK/NACK
     }
     else if( m_mode == TWI_SLAVE )
     {
-        bool data = clearTwint && !newStop; // No stop and TWINT cleared, receive data
-        if( !data ) return;
-        m_sendACK = ack;
+        m_enabled = enable && twea && !newStart && !newStop;
 }   }
 
 void AvrTwi::configureB( uint8_t val ) // TWBR is being written

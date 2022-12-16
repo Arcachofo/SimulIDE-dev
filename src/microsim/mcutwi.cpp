@@ -26,3 +26,9 @@ void McuTwi::initialize()
     m_prescaler = 1;
     updateFreq();
 }
+
+void McuTwi::writeByte() // Read from Data Register
+{
+    m_txReg = *m_dataReg;
+    TwiModule::writeByte();
+}

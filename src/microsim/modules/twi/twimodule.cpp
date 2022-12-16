@@ -14,6 +14,7 @@ TwiModule::TwiModule( QString name )
     m_scl = NULL;
     m_addrBits = 7;
     m_address = m_cCode = 0;
+    m_enabled = true;
 
     setFreqKHz( 100 );
 }
@@ -173,20 +174,23 @@ void TwiModule::voltChanged() // Used by slave
 
                 if( m_addrMatch || genCall )   // Address match or General Call
                 {
-                    m_sendACK = true;
-                    if( rw )                   // Master is Reading
+                    if( m_enabled )
                     {
-                        m_nextState = TWI_STX_ADR_ACK;
-                        m_i2cState = I2C_READ;
-                        writeByte();
+                        m_sendACK = true;
+                        if( rw )                   // Master is Reading
+                        {
+                            m_nextState = TWI_STX_ADR_ACK;
+                            m_i2cState = I2C_READ;
+                            writeByte();
+                        }
+                        else{                      // Master is Writting
+                            m_nextState = m_addrMatch ? TWI_SRX_ADR_ACK : TWI_SRX_GEN_ACK;
+                            m_i2cState = I2C_WRITE;
+                            m_bitPtr = 0;
+                            startWrite();          // Notify posible child class
+                        }
+                        ACK();
                     }
-                    else{                      // Master is Writting
-                        m_nextState = m_addrMatch ? TWI_SRX_ADR_ACK : TWI_SRX_GEN_ACK;
-                        m_i2cState = I2C_WRITE;
-                        m_bitPtr = 0;
-                        startWrite();          // Notify posible child class
-                    }
-                    ACK();
                 }
                 else {
                     m_i2cState = I2C_STOP;
@@ -210,7 +214,7 @@ void TwiModule::voltChanged() // Used by slave
             }
             else m_i2cState = I2C_IDLE;
     }   }
-    else if( m_clkState == Clock_Falling )
+    else if( m_enabled && m_clkState == Clock_Falling )
     {
         if( m_i2cState == I2C_ACK ) {             // Send ACK
             sheduleSDA( !m_sendACK );

@@ -89,6 +89,7 @@ class MAINMODULE_EXPORT TwiModule : public eClockedDevice
         bool m_sendACK;
         bool m_addrMatch;
         bool m_genCall;
+        bool m_enabled;
 
         int m_bitPtr;       // Bit Pointer
 
