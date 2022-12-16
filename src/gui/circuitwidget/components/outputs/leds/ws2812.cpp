@@ -42,7 +42,8 @@ WS2812::WS2812( QObject* parent, QString type, QString id )
     setClockInv( false ); //Don't Invert Clock pin
 
     m_cols = 1;
-    setRows( 1 );
+    m_rows = 1;
+    updateLeds();
 
     Simulator::self()->addToUpdateList( this );
 
