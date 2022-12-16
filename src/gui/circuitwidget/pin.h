@@ -12,7 +12,7 @@
 
 enum pinState_t{
     undef_state=0,
-    driven_low,
+    driven_low,    // State is open high, but driven low externally
     open_low,
     open_high,
     out_low,

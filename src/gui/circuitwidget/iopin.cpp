@@ -168,8 +168,12 @@ bool IoPin::getInpState()
     if     ( volt > m_inpHighV ) m_inpState = true;
     else if( volt < m_inpLowV )  m_inpState = false;
 
-    if     ( m_pinMode == openCo ) setPinState( m_inpState? open_high : driven_low ); // High : Low colors
-    else if( m_pinMode == input  ) setPinState( m_inpState? input_high : input_low ); // High : Low colors
+    if( m_pinMode == openCo )
+    {
+        pinState_t low = m_outState ? driven_low : open_low;
+        setPinState( m_inpState? open_high  : low ); // High : Low colors
+    }
+    else if( m_pinMode == input  ) setPinState( m_inpState? input_high : input_low  ); // High : Low colors
 
     return m_inverted ? !m_inpState : m_inpState;
 }

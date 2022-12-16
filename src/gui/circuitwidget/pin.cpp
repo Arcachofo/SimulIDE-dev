@@ -74,6 +74,7 @@ Pin::Pin( int angle, const QPoint pos, QString id, int index, Component* parent 
     setFlag( QGraphicsItem::ItemIsSelectable, false );
 
     Circuit::self()->addPin( this, id );
+    animate( Circuit::self()->animate() );
 
     connect( parent, SIGNAL( moved() ),
                this, SLOT( isMoved() ), Qt::UniqueConnection );
@@ -387,7 +388,7 @@ void Pin::paint( QPainter* painter, const QStyleOptionGraphicsItem* option, QWid
 
     painter->setPen(pen);
     if( m_length > 1 ) painter->drawLine( 0, 0, m_length-1, 0);
-    else painter->drawLine( QPointF(-0.01, 0 ), QPointF( 0.03, 0 ));
+    else               painter->drawLine( QPointF(-0.01, 0 ), QPointF( 0.03, 0 ));
 
     if( m_inverted )
     {
