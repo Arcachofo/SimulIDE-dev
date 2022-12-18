@@ -27,6 +27,8 @@ class MAINMODULE_EXPORT AvrTwi : public McuTwi
         virtual void writeStatus( uint8_t newTWSR ) override;
         virtual void writeTwiReg( uint8_t newTWDR ) override;
 
+        virtual void writeByte() override;
+
     protected:
         virtual void setTwiState( twiState_t state ) override;
         uint8_t getStaus() { return *m_statReg &= 0b11111000; }

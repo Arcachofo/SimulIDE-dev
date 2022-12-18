@@ -26,8 +26,6 @@ class MAINMODULE_EXPORT McuTwi : public McuPrescaled, public TwiModule
         virtual void writeStatus( uint8_t val ){;}
         virtual void writeTwiReg( uint8_t val ){;}
 
-        virtual void writeByte() override;
-
     protected:
         virtual void updateFreq() {;}
 

@@ -124,7 +124,7 @@ void AvrTwi::writeStatus( uint8_t newTWSR ) // TWSR Status Register is being wri
     /// Done by masking //m_mcu->m_regOverride = newTWSR | (*m_statReg & 0b11111100); // Preserve Status bits
 }
 
-void AvrTwi::writeTwiReg(uint8_t newTWDR ) // TWDR is being written
+void AvrTwi::writeTwiReg( uint8_t newTWDR ) // TWDR is being written
 {
     if( m_mode != TWI_MASTER ) return;
 
@@ -169,11 +169,18 @@ void AvrTwi::setTwiState( twiState_t state )  // Set new AVR Status value
         else{ // Slave
             if( state == TWI_SRX_ADR_DATA_ACK || state == TWI_SRX_ADR_DATA_NACK
              || state == TWI_SRX_GEN_DATA_ACK || state == TWI_SRX_GEN_DATA_NACK )
-                *m_dataReg = m_txReg = m_rxReg; // Save data received into TWDR
+                *m_dataReg = m_rxReg; // Save data received into TWDR
 }   }   }
 
 void AvrTwi::updateFreq()
 {
     double freq = m_mcu->freq()/(16+2*m_bitRate*m_prescaler);
     setFreqKHz( freq/1e3 );
+}
+
+
+void AvrTwi::writeByte() // Read from Data Register
+{
+    if( m_mode == TWI_SLAVE ) m_txReg = *m_dataReg;
+    TwiModule::writeByte();
 }
