@@ -88,7 +88,7 @@ void AvrTwi::configureA( uint8_t newTWCR ) // TWCR is being written
     if( addrSet && twea && !clearTwint && !newStop && !newStart )
     {
         if( m_mode != TWI_SLAVE ) setMode( TWI_SLAVE );
-        m_sendACK = twea;
+        m_enabled = twea;
         return;
     }
 
@@ -101,10 +101,7 @@ void AvrTwi::configureA( uint8_t newTWCR ) // TWCR is being written
          || (m_twiState == TWI_MRX_DATA_ACK) ) // We sent data and received ACK
             masterRead( twea );     // Read a byte and send ACK/NACK
     }
-    else if( m_mode == TWI_SLAVE )
-    {
-        m_enabled = enable && twea && !newStart && !newStop;
-}   }
+}
 
 void AvrTwi::configureB( uint8_t val ) // TWBR is being written
 {
@@ -157,7 +154,7 @@ void AvrTwi::setTwiState( twiState_t state )  // Set new AVR Status value
     *m_statReg &= 0b00000111;      // Clear old state
     *m_statReg |= state;           // Write new state
 
-    if( (state == TWI_NO_STATE) && (m_i2cState == I2C_STOP) ) // Stop Condition sent
+    if( state == TWI_NO_STATE && m_i2cState == I2C_STOP ) // Stop Condition sent
     {
         clearRegBits( m_TWSTO ); // Clear TWSTO bit
     }
@@ -166,14 +163,13 @@ void AvrTwi::setTwiState( twiState_t state )  // Set new AVR Status value
 
         if( m_mode == TWI_MASTER )
         {
-            if( (state == TWI_MRX_DATA_ACK) || (state == TWI_MRX_DATA_NACK) ) // Data received
-            {
+            if( state == TWI_MRX_DATA_ACK || state == TWI_MRX_DATA_NACK ) // Data received
                 *m_dataReg = m_rxReg; // Save data received into TWDR
-        }   }
+        }
         else{ // Slave
-            if( (state == TWI_SRX_ADR_DATA_ACK) || (state == TWI_SRX_ADR_DATA_NACK)
-             || (state == TWI_SRX_GEN_DATA_ACK) || (state == TWI_SRX_GEN_DATA_NACK) )
-                *m_dataReg = m_rxReg; // Save data received into TWDR
+            if( state == TWI_SRX_ADR_DATA_ACK || state == TWI_SRX_ADR_DATA_NACK
+             || state == TWI_SRX_GEN_DATA_ACK || state == TWI_SRX_GEN_DATA_NACK )
+                *m_dataReg = m_txReg = m_rxReg; // Save data received into TWDR
 }   }   }
 
 void AvrTwi::updateFreq()
