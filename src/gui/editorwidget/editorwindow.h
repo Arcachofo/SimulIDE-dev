@@ -64,13 +64,13 @@ class EditorWindow : public EditorWidget, public Updatable
         virtual void step() override;
         virtual void stepOver() override;
         virtual void reset() override;
-
         virtual bool upload();
+
+        void initDebbuger();
 
     private:
  static EditorWindow*  m_pSelf;
         bool uploadFirmware( bool debug );
-        bool initDebbuger();
         void stepDebug( bool over=false );
         void stopDebbuger();
 

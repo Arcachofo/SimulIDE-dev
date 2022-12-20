@@ -195,7 +195,6 @@ void Chip::deletePin( Pin* pin )
     if( !pin ) return;
 
     pin->removeConnector();
-    if( pin->scene() ) Circuit::self()->removeItem( pin );
     delete pin;
 }
 

@@ -522,10 +522,10 @@
        <item>
         <layout class="QVBoxLayout" name="verticalLayout_4">
          <property name="spacing">
-          <number>0</number>
+          <number>6</number>
          </property>
          <property name="bottomMargin">
-          <number>6</number>
+          <number>0</number>
          </property>
          <item>
           <widget class="QLabel" name="voltDivLabel">
@@ -1448,23 +1448,23 @@
  <resources/>
  <connections/>
  <buttongroups>
-  <buttongroup name="trackGroup"/>
-  <buttongroup name="autoGroup">
-   <property name="exclusive">
-    <bool>true</bool>
-   </property>
-  </buttongroup>
   <buttongroup name="hideGroup">
    <property name="exclusive">
     <bool>false</bool>
    </property>
   </buttongroup>
-  <buttongroup name="channelGroup">
+  <buttongroup name="autoGroup">
    <property name="exclusive">
     <bool>true</bool>
    </property>
   </buttongroup>
   <buttongroup name="triggerGroup">
+   <property name="exclusive">
+    <bool>true</bool>
+   </property>
+  </buttongroup>
+  <buttongroup name="trackGroup"/>
+  <buttongroup name="channelGroup">
    <property name="exclusive">
     <bool>true</bool>
    </property>

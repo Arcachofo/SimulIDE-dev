@@ -18,7 +18,7 @@ class MAINMODULE_EXPORT Inductor : public Reactive
         ~Inductor();
 
  static Component* construct( QObject* parent, QString type, QString id );
- static LibraryItem *libraryItem();
+ static LibraryItem* libraryItem();
 
         double indCurrent() { return m_curSource; }
 

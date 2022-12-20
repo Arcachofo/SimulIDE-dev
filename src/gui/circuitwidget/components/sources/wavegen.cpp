@@ -119,8 +119,8 @@ void WaveGen::stamp()
         m_outpin->createCurrent();
         m_gndpin->createCurrent();
 
-        m_outpin->setImp( 1/cero_doub );
-        m_gndpin->setImp( 1/cero_doub );
+        m_outpin->setImp( cero_doub );
+        m_gndpin->setImp( cero_doub );
     }
     else{
         m_outpin->skipStamp( false );

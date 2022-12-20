@@ -161,7 +161,7 @@ void CircMatrix::factorMatrix( int n, int group ) // factors a matrix into upper
         if( j != n-1 )               // Normalize this column respect to a[j][j]
         {
             double div = a[j][j];
-            if( div != 0.0 ) //a[j][j] = div = 1e-18; // avoid zeros in a[j][j]
+            if( div != 0.0 )         //a[j][j] = div = 1e-18; // avoid zeros in a[j][j]
                 for( i=j+1; i<n; ++i ) a[i][j] /= div;
         }
     }
@@ -175,8 +175,8 @@ void CircMatrix::factorMatrix( int n, int group ) // factors a matrix into upper
 
 bool CircMatrix::luSolve( int n, int group ) // Solves the set of n linear equations using a LU factorization previously performed by solveMatrix.
 {                                            // On input, b[0..n-1] is the right hand side of the equations, and on output, contains the solution.
-    const d_matrix_t&  a    = m_aFaList[group];
-    const dp_vector_t& bp   = m_bList[group];
+    const d_matrix_t&  a  = m_aFaList[group];
+    const dp_vector_t& bp = m_bList[group];
 
     d_vector_t b;
     b.resize( n , 0 );
@@ -187,8 +187,9 @@ bool CircMatrix::luSolve( int n, int group ) // Solves the set of n linear equat
     {
         tot = *(bp[i]);
         b[i] = tot;
-        if( b[i] != 0 ) break; // find first nonzero b element
+        if( tot != 0 ) break; // find first nonzero b element
     }
+
     int bi = i++;
     for( ; i<n; ++i )
     {

@@ -1,10 +1,10 @@
 /***************************************************************************
- *   Copyright (C) 2020 by Santiago González                               *
+ *   Copyright (C) 2022 by Santiago González                               *
  *                                                                         *
  ***( see copyright.txt file at root folder )*******************************/
 
-#ifndef Csource_H
-#define Csource_H
+#ifndef CSOURCE_H
+#define CSOURCE_H
 
 #include "e-resistor.h"
 #include "component.h"

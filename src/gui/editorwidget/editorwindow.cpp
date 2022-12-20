@@ -4,6 +4,7 @@
  ***( see copyright.txt file at root folder )*******************************/
 
 #include <QDomDocument>
+#include <QTimer>
 
 #include "editorwindow.h"
 #include "circuitwidget.h"
@@ -66,18 +67,11 @@ bool EditorWindow::uploadFirmware( bool debug )
 
 void EditorWindow::debug()
 {
-    if( initDebbuger() )
-    {
-        m_editorToolBar->setVisible( false );
-        m_compileToolBar->setVisible( false );
-        m_debuggerToolBar->setVisible( true );
-
-        runAct->setEnabled( true );
-        stepAct->setEnabled( true );
-        stepOverAct->setEnabled( true );
-        resetAct->setEnabled( true );
-        pauseAct->setEnabled( false );
-}   }
+    m_outPane.appendLine( "-------------------------------------------------------\n" );
+    m_outPane.appendLine( tr("Starting Debbuger...")+"\n" );
+    m_outPane.repaint();
+    initDebbuger();
+}
 
 void EditorWindow::run()
 { 
@@ -141,11 +135,8 @@ void EditorWindow::stop()
     m_editorToolBar->setVisible( true);
 }
 
-bool EditorWindow::initDebbuger()
+void EditorWindow::initDebbuger()
 {
-    m_outPane.appendLine( "-------------------------------------------------------\n" );
-    m_outPane.appendLine( tr("Starting Debbuger...")+"\n" );
-
     m_debugDoc = NULL;
     m_debugger = NULL;
     m_state = DBG_STOPPED;
@@ -166,15 +157,23 @@ bool EditorWindow::initDebbuger()
         m_debugDoc->setDebugLine( 1 );
         setDriveCirc( m_driveCirc );
 
+        m_outPane.appendLine("\n"+tr("Debugger Started")+"\n");
+        m_editorToolBar->setVisible( false );
+        m_compileToolBar->setVisible( false );
+        m_debuggerToolBar->setVisible( true );
+
+        runAct->setEnabled( true );
+        stepAct->setEnabled( true );
+        stepOverAct->setEnabled( true );
+        resetAct->setEnabled( true );
+        pauseAct->setEnabled( false );
+
         Simulator::self()->addToUpdateList( this );
         CircuitWidget::self()->powerCircDebug( m_driveCirc );
-
-        m_outPane.appendLine("\n"+tr("Debugger Started")+"\n");
     }else{
         m_outPane.appendLine( "\n"+tr("Error Starting Debugger")+"\n" );
         stopDebbuger();
     }
-    return ok;
 }
 
 void EditorWindow::stepDebug( bool over )

@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2020 by Santiago González                               *
+ *   Copyright (C) 2022 by Santiago González                               *
  *                                                                         *
  ***( see copyright.txt file at root folder )*******************************/
 
