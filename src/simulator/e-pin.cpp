@@ -37,6 +37,16 @@ void ePin::setEnodeComp( eNode* enode )
     if( m_enode ) m_enode->addConnection( this, enodeConNum );
 }
 
+void ePin::addSingAdm( int node, double admit )
+{
+    if( m_enode ) m_enode->addSingAdm( this, node, admit );
+}
+
+void ePin::stampSingAdm( double admit )
+{
+    if( m_enode ) m_enode->stampSingAdm( this, admit );
+}
+
 void ePin::createCurrent()
 {
     if( m_enode ) m_enode->createCurrent( this );

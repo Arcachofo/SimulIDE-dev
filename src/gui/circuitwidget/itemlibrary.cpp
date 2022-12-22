@@ -105,6 +105,7 @@
 #include "thermistor.h"
 #include "textcomponent.h"
 #include "touchpad.h"
+#include "transformer.h"
 #include "triac.h"
 #include "tunnel.h"
 #include "varresistor.h"
@@ -174,6 +175,7 @@ void ItemLibrary::loadItems()
     addItem( Capacitor::libraryItem() );
     addItem( elCapacitor::libraryItem() );
     addItem( Inductor::libraryItem() );
+    addItem( Transformer::libraryItem() );
     // Active
     addItem( new LibraryItem( QObject::tr("Rectifiers"), QObject::tr("Active"), "rectifiers.png","", NULL ) );
     addItem( Diode::libraryItem() );

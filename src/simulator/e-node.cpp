@@ -14,11 +14,12 @@ eNode::eNode( QString id )
     m_id = id;
     m_nodeNum = 0;
 
-    m_voltChEl = NULL;
-    m_nonLinEl = NULL;
-    m_firstAdmit  = NULL;
+    m_voltChEl     = NULL;
+    m_nonLinEl     = NULL;
+    m_firstAdmit   = NULL;
+    m_firstSingAdm = NULL;
     m_firstCurrent = NULL;
-    m_nodeAdmit = NULL;
+    m_nodeAdmit    = NULL;
 
     if( !id.isEmpty() ) Simulator::self()->addToEnodeList( this );
 }
@@ -27,6 +28,7 @@ eNode::~eNode()
     clearElmList( m_voltChEl );
     clearElmList( m_nonLinEl );
     clearConnList( m_firstAdmit );
+    clearConnList( m_firstSingAdm );
     clearConnList( m_firstCurrent );
     clearConnList( m_nodeAdmit );
 }
@@ -49,6 +51,9 @@ void eNode::initialize()
 
     clearConnList( m_firstAdmit );
     m_firstAdmit = NULL;
+
+    clearConnList( m_firstSingAdm );
+    m_firstSingAdm = NULL;
 
     clearConnList( m_firstCurrent );
     m_firstCurrent = NULL;
@@ -82,7 +87,7 @@ void eNode::addConnection( ePin* epin, int node )
     conn->next = m_nodeAdmit;  // Prepend
     m_nodeAdmit = conn;
 
-    m_nodeList[epin] = node; // Used by CircMatrix
+    if( !m_nodeList.contains( node ) ) m_nodeList.append( node ); // Used by CircMatrix
 }
 
 void eNode::stampAdmitance( ePin* epin, double admit ) // Be sure msg doesn't come from this node
@@ -95,11 +100,43 @@ void eNode::stampAdmitance( ePin* epin, double admit ) // Be sure msg doesn't co
 
     if( admit == 0 ) m_switched = true;
     m_admitChanged = true;
+    changed();
+}
 
-    if( !m_changed ){
-        m_changed = true;
-        Simulator::self()->addToChangedNodes( this );
-}   }
+void eNode::addSingAdm( ePin* epin, int node, double admit )
+{
+    Connection* conn = new Connection( epin, node );
+    conn->next = m_firstSingAdm;  // Prepend
+    m_firstSingAdm = conn;
+    conn->value = admit;
+
+    conn = NULL;
+    Connection* first = m_nodeAdmit;   // Create list of admitances to nodes (reusing Connection class)
+    while( first ){
+        if( first->node == node )  { conn = first; break; }// Node already in the list
+        first = first->next;
+    }
+    if( !conn ){
+        conn = new Connection( epin, node );
+        conn->next = m_nodeAdmit;  // Prepend
+        m_nodeAdmit = conn;
+    }
+    if( !m_nodeList.contains( node ) ) m_nodeList.append( node ); // Used by CircMatrix
+    m_admitChanged = true;
+    changed();
+}
+
+void eNode::stampSingAdm( ePin* epin, double admit )
+{
+    Connection* conn = m_firstSingAdm;
+    while( conn ){
+        if( conn->epin == epin ) { conn->value = admit; break; } // Connection found
+        conn = conn->next;
+    }
+    /// if( admit == 0 ) m_switched = true;
+    m_admitChanged = true;
+    changed();
+}
 
 void eNode::createCurrent( ePin* epin )
 {
@@ -122,11 +159,15 @@ void eNode::stampCurrent( ePin* epin, double current ) // Be sure msg doesn't co
         conn = conn->next;
     }
     m_currChanged = true;
+    changed();
+}
 
-    if( !m_changed ){
-        m_changed = true;
-        Simulator::self()->addToChangedNodes( this );
-}   }
+void eNode::changed()
+{
+    if( m_changed ) return;
+    m_changed = true;
+    Simulator::self()->addToChangedNodes( this );
+}
 
 void eNode::stampMatrix()
 {
@@ -145,12 +186,12 @@ void eNode::stampMatrix()
             Connection* na = m_nodeAdmit;
             while( na ){ na->value = 0; na = na->next; } // Clear nodeAdmit
 
-            Connection* conn = m_firstAdmit;
+            Connection* conn = m_firstAdmit; // Full Admitances
             while( conn ){
                 double adm = conn->value;
                 int  enode = conn->node;
 
-                if( enode > 0 ){         // Calculate admitances to nodes
+                if( enode > 0 ){        // Calculate admitances to nodes
                     na = m_nodeAdmit;
                     while( na ){
                         if( na->node == enode ){ na->value += adm; break; }
@@ -160,10 +201,24 @@ void eNode::stampMatrix()
                 m_totalAdmit += adm;    // Calculate total admitance
                 conn = conn->next;
             }
-            CircMatrix::self()->stampMatrix( m_nodeNum, m_nodeNum, m_totalAdmit );
+            CircMatrix::self()->stampMatrix( m_nodeNum, m_nodeNum, m_totalAdmit ); // Stamp diagonal
 
+            conn = m_firstSingAdm;      // Single admitance values
+            while( conn ){
+                double adm = conn->value;
+                int  enode = conn->node;
+
+                if( enode > 0 ){        // Add sinle admitance to node
+                    na = m_nodeAdmit;
+                    while( na ){
+                        if( na->node == enode ){ na->value += adm; break; }
+                        na = na->next;
+                    }
+                }
+                conn = conn->next;
+            }
             na = m_nodeAdmit;
-            while( na ){
+            while( na ){                  // Stamp non diagonal
                 int    enode = na->node;
                 double admit = na->value;
                 if( enode > 0 ) CircMatrix::self()->stampMatrix( m_nodeNum, enode, -admit );
@@ -234,7 +289,7 @@ void eNode::clear()
 }   }
 
 QList<int> eNode::getConnections()
-{ return m_nodeList.values(); }
+{ return m_nodeList; }
 
 void eNode::voltChangedCallback( eElement* el )
 {

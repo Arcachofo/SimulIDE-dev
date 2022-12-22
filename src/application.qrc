@@ -114,11 +114,12 @@
         <file alias="battery.png">../src/icons/components/battery.png</file>
         <file alias="capacitor.png">../src/icons/components/capacitor.png</file>
         <file alias="elcapacitor.png">../src/icons/components/elcapacitor.png</file>
+        <file alias="inductor.png">../src/icons/components/inductor.png</file>
+        <file alias="transformer.png">../src/icons/components/transformer.png</file>
         <file alias="seven_segment.png">../src/icons/components/seven_segment.png</file>
         <file alias="7segbcd.png">../src/icons/components/7segbcd.png</file>
         <file alias="switch.png">../src/icons/components/switch.png</file>
         <file alias="switchdip.png">../src/icons/components/switchdip.png</file>
-        <file alias="inductor.png">../src/icons/components/inductor.png</file>
         <file alias="buffer.png">../src/icons/components/buffer.png</file>
         <file alias="andgate.png">../src/icons/components/andgate.png</file>
         <file alias="orgate.png">../src/icons/components/orgate.png</file>

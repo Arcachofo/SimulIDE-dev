@@ -29,8 +29,11 @@ class MAINMODULE_EXPORT eNode
         void addToNoLinList( eElement* el );
         //void remFromNoLinList( eElement* el );
 
-        //void createAdmitance( ePin* epin, int node );
+        void addConnection( ePin* epin, int node );
         void stampAdmitance( ePin* epin, double admit );
+
+        void addSingAdm( ePin* epin, int node, double admit );
+        void stampSingAdm( ePin* epin, double admit );
 
         void createCurrent( ePin* epin );
         void stampCurrent( ePin* epin, double current );
@@ -51,7 +54,6 @@ class MAINMODULE_EXPORT eNode
 
         QList<ePin*> getEpins() { return m_ePinList; }
 
-        void addConnection( ePin* epin, int enodeNum );
         QList<int> getConnections();
 
         eNode* nextCH;
@@ -78,6 +80,8 @@ class MAINMODULE_EXPORT eNode
                 eElement* element;
         };
 
+        inline void changed();
+
         inline void solveSingle();
 
         void clearElmList( LinkedElement* first );
@@ -89,17 +93,13 @@ class MAINMODULE_EXPORT eNode
 
         LinkedElement* m_voltChEl;
         LinkedElement* m_nonLinEl;
-        //QList<eElement*> m_changedFast;
-        //QList<eElement*> m_nonLinear;
 
-        Connection* m_firstAdmit;
-        Connection* m_firstCurrent;
+        Connection* m_firstAdmit;   // Stamp full admitance in Admitance Matrix
+        Connection* m_firstSingAdm; // Stamp single value   in Admitance Matrix
+        Connection* m_firstCurrent; // Stamp value in Current Vector
         Connection* m_nodeAdmit;
 
-        //QHash<ePin*, double> m_admitList;
-        //QHash<ePin*, double> m_currList;
-        QHash<ePin*, int>    m_nodeList;
-        //QHash<int, double>   m_admit;
+        QList<int> m_nodeList;
 
         double m_totalCurr;
         double m_totalAdmit;
