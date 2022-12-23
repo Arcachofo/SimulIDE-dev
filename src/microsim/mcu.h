@@ -69,7 +69,7 @@ class MAINMODULE_EXPORT Mcu : public Chip
         bool saveEepr() { return m_eMcu.m_saveEepr; }
         void setSaveEepr( bool s ) { m_eMcu.m_saveEepr = s; }
 
-        int serialMon() { return m_serialMon; }
+        int serialMon();
         void setSerialMon( int s );
 
         virtual void initialize() override;

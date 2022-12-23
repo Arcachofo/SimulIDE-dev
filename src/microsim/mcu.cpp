@@ -459,6 +459,13 @@ void Mcu::slotOpenTerm( int num )
     m_serialMon = num;
 }
 
+int Mcu::serialMon()
+{
+    if( m_serialMon < 0 ) return -1;
+    if( m_eMcu.m_usarts.at( m_serialMon-1 )->serialMon() ) return m_serialMon;
+    return -1;
+}
+
 void Mcu::setSerialMon( int s )
 {
     if( s>=0 ) slotOpenTerm( s );
