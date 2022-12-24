@@ -212,8 +212,8 @@ void Transformer::createCoils()
 
     m_pin.clear();
 
-    if( priTopo == m_primary.topology )    modify( &m_primary );
-    else                                   create( &m_primary );
+    if( priTopo == m_primary.topology   ) modify( &m_primary );
+    else                                  create( &m_primary );
 
     if( secTopo == m_secondary.topology ) modify( &m_secondary );
     else                                  create( &m_secondary );

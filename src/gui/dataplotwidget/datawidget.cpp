@@ -31,7 +31,7 @@ DataWidget::DataWidget( QWidget* parent, Oscope* oscope )
     for( int i=0; i<4; ++i )
     {
         m_chNames.at( i )->setFont( font );
-        setData( i, "0.000 Hz" );
+        setData( i, "0 Hz" );
     }
 
     this->adjustSize();

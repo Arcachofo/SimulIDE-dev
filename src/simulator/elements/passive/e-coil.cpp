@@ -3,9 +3,6 @@
  *                                                                         *
  ***( see copyright.txt file at root folder )*******************************/
 
-// Inductor model using backward euler  approximation
-// consists of a current source in parallel with a resistor.
-
 #include "simulator.h"
 #include "e-coil.h"
 #include "e-node.h"
