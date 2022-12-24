@@ -239,7 +239,7 @@
                bits="TXB81,RXB81,UCSZ12,TXEN1,RXEN1,UDRIE1,TXCIE1,RXCIE1" />
     
     <register  name="UCSR1C"  addr="0x00CA"  reset="00000110"  mask="" 
-               bits="UCPOL1,UCPHA1,UDORD1,USBS1,UPM10,UPM11,UMSEL10,UMSEL11" />
+               bits="UCPOL1,UCSZ10,UCSZ11,USBS1,UPM10,UPM11,UMSEL10,UMSEL11" />
     
     <register  name="UBRR1L"  addr="0x00CC"  />
     <register  name="UBRR1H"  addr="0x00CD"  reset=""  mask="00001111"  />

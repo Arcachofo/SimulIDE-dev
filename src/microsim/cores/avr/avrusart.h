@@ -42,6 +42,9 @@ class MAINMODULE_EXPORT AvrUsart : public McuUsart
         uint8_t*  m_UBRRnH;
         uint8_t  m_UBRRHval;
 
+        uint8_t m_ucsz01;
+        uint8_t m_ucsz2;
+
         regBits_t m_bit9Tx;
         regBits_t m_bit9Rx;
 
@@ -51,7 +54,8 @@ class MAINMODULE_EXPORT AvrUsart : public McuUsart
         regBits_t m_modeRB;
         regBits_t m_pariRB;
         regBits_t m_stopRB;
-        regBits_t m_dataRB;
+        regBits_t m_UCSZ01;
+        regBits_t m_UCSZ2;
         regBits_t m_u2xn;
 
         regBits_t m_UDRIE;
