@@ -179,6 +179,7 @@ void Transformer::setBaseInd( double i )
 void Transformer::setPrimary( QString p )
 {
     if( m_primary.definition == p ) return;
+    if( p.isEmpty() ) p = " ";
     m_primary.definition = p;
     createCoils();
 }
@@ -186,6 +187,7 @@ void Transformer::setPrimary( QString p )
 void Transformer::setSecondary( QString s )
 {
     if( m_secondary.definition == s ) return;
+    if( s.isEmpty() ) s = " ";
     m_secondary.definition = s;
     createCoils();
 }
@@ -224,11 +226,7 @@ int Transformer::getLeght( winding_t* w )
     QStringList sectsStr = w->definition.split(":");
     sectsStr.removeAll("");
     int nSections = sectsStr.size();
-    if( !nSections )
-    {
-        w->topology = "";
-        return 0;
-    }
+
     w->topology.clear();
     int nCoils = 0;
     for( int s=0; s<nSections; ++s )
@@ -245,6 +243,7 @@ int Transformer::getLeght( winding_t* w )
         }
     }
     w->nCoils = nCoils;
+    if( !nSections ) return 0;
     return nCoils*3+nSections-1;
 }
 
