@@ -34,7 +34,11 @@ OutPanelText::~OutPanelText(){}
 void OutPanelText::appendLine( const QString text )
 {
     m_textBuffer.append( text+"\n" );
-    if( !Simulator::self() || !Simulator::self()->isRunning() ) updateStep();
+    if( !Simulator::self() || !Simulator::self()->isRunning() )
+    {
+        updateStep();
+        repaint();
+    }
 }
 
 void OutPanelText::updateStep()

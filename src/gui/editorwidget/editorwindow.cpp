@@ -69,7 +69,6 @@ void EditorWindow::debug()
 {
     m_outPane.appendLine( "-------------------------------------------------------\n" );
     m_outPane.appendLine( tr("Starting Debbuger...")+"\n" );
-    m_outPane.repaint();
     initDebbuger();
 }
 
