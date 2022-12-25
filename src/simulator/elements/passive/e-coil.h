@@ -13,7 +13,7 @@ class eNode;
 class MAINMODULE_EXPORT eCoil : public eResistor
 {
     public:
-        eCoil( int i, int s, int t, double h, QString id );
+        eCoil( int i, int s, int t, double h, double r, QString id );
         ~eCoil();
 
         virtual void initialize() override;

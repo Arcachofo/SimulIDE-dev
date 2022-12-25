@@ -164,6 +164,7 @@ void Transformer::setupInducts( winding_t* w )  // Setup Inductances
         coil->setEnode( 0, w->pins.at( pinIndex )->getEnode() );
         pinIndex++;
         coil->setEnode( 1, w->pins.at( pinIndex )->getEnode() );
+        coil->setBaseInd( m_baseInd );
 
         m_coils.append( coil );
     }
@@ -171,8 +172,9 @@ void Transformer::setupInducts( winding_t* w )  // Setup Inductances
 
 void Transformer::setBaseInd( double i )
 {
+    if( m_baseInd == i ) return;
+    if( Simulator::self()->isRunning() ) CircuitWidget::self()->powerCircOff();
     m_baseInd = i;
-    for( eCoil* coil : m_coils ) coil->setBaseInd( i );
 }
 
 
@@ -194,6 +196,8 @@ void Transformer::setSecondary( QString s )
 
 void Transformer::setCoupCoeff( double c )
 {
+    if( m_coupCoeff == c ) return;
+    if( Simulator::self()->isRunning() ) CircuitWidget::self()->powerCircOff();
     if( c > 0.9999 ) c = 0.9999;
     if( c < 0.0001 ) c = 0.0001;
     m_coupCoeff = c;
@@ -353,7 +357,7 @@ void Transformer::create( winding_t* w  )
             double rel = coilsStr.at( coilN ).toDouble();
             int sign = rel>=0 ? 1:-1;
 
-            eCoil* coil = new eCoil( coilN, sign, coilSize, m_baseInd*rel*rel, id+"Coil" );
+            eCoil* coil = new eCoil( coilN, sign, coilSize, m_baseInd, rel, id+"Coil" );
             coils->push_back( coil );
         }
         y += 8;

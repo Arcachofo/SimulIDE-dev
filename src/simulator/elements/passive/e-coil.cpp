@@ -10,7 +10,7 @@
 
 #include <math.h>
 
-eCoil::eCoil( int i, int s, int t, double h, QString id )
+eCoil::eCoil( int i, int s, int t, double h, double r, QString id )
      : eResistor( id )
      , m_resistor0( id+"resistor0")
      , m_resistor1( id+"resistor1")
@@ -18,7 +18,8 @@ eCoil::eCoil( int i, int s, int t, double h, QString id )
     index = i;
     sign  = s;
     size = t;
-    inductance = h; // H
+    relation = r;
+    inductance = h*r*r; // H
 
     setNumEpins( 2 );
     m_resistor0.setNumEpins( 2 );
