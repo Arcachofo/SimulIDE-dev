@@ -414,7 +414,7 @@ void Esp01::setSerialMon( bool s )
 
 void Esp01::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
 {
-    QAction* openSerMon = menu->addAction( QIcon(":/terminal.png"),tr("Open Serial Monitor.") );
+    QAction* openSerMon = menu->addAction( QIcon(":/terminal.svg"),tr("Open Serial Monitor.") );
     connect( openSerMon, SIGNAL(triggered()),
                    this, SLOT(slotOpenTerm()), Qt::UniqueConnection );
 

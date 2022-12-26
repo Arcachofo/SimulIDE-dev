@@ -336,7 +336,7 @@ void WaveGen::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
 {
     if( m_waveType == Wav )
     {
-        QAction* loadAction = menu->addAction( QIcon(":/load.png"),tr("Load Wav File") );
+        QAction* loadAction = menu->addAction( QIcon(":/load.svg"),tr("Load Wav File") );
         connect( loadAction, SIGNAL(triggered()),
                        this, SLOT(slotLoad()), Qt::UniqueConnection );
 

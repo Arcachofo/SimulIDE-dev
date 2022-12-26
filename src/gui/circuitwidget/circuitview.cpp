@@ -234,31 +234,31 @@ void CircuitView::contextMenuEvent(QContextMenuEvent* event)
 
         QMenu menu;
 
-        QAction* zoomToFitAction = menu.addAction( QIcon(":/zoomfit.png"),tr("Zoom to Fit") );
+        /*QAction* zoomToFitAction = menu.addAction( QIcon(":/zoomfit.svg"),tr("Zoom to Fit") );
                 connect( zoomToFitAction, SIGNAL( triggered()),
-                                    this, SLOT( zoomToFit() ), Qt::UniqueConnection  );
+                                    this, SLOT( zoomToFit() ), Qt::UniqueConnection  );*/
 
         menu.addSeparator();
 
-        QAction* pasteAction = menu.addAction(QIcon(":/paste.png"),tr("Paste")+"\tCtrl+V");
+        QAction* pasteAction = menu.addAction(QIcon(":/paste.svg"),tr("Paste")+"\tCtrl+V");
         connect( pasteAction, SIGNAL( triggered()),
                         this, SLOT(slotPaste()), Qt::UniqueConnection );
 
-        QAction* undoAction = menu.addAction(QIcon(":/undo.png"),tr("Undo")+"\tCtrl+Z");
+        QAction* undoAction = menu.addAction(QIcon(":/undo.svg"),tr("Undo")+"\tCtrl+Z");
         connect( undoAction, SIGNAL( triggered()),
                   m_circuit, SLOT(undo()), Qt::UniqueConnection );
 
-        QAction* redoAction = menu.addAction(QIcon(":/redo.png"),tr("Redo")+"\tCtrl+Y");
+        QAction* redoAction = menu.addAction(QIcon(":/redo.svg"),tr("Redo")+"\tCtrl+Y");
         connect( redoAction, SIGNAL( triggered()),
                   m_circuit, SLOT(redo()), Qt::UniqueConnection );
 
         menu.addSeparator();
 
-        QAction* importCircAct = menu.addAction(QIcon(":/opencirc.png"), tr("Import Circuit") );
+        QAction* importCircAct = menu.addAction(QIcon(":/open.svg"), tr("Import Circuit") );
         connect(importCircAct, SIGNAL(triggered()),
                          this, SLOT(importCirc()), Qt::UniqueConnection );
 
-        QAction* saveImgAct = menu.addAction( QIcon(":/saveimage.png"), tr("Save Circuit as Image") );
+        QAction* saveImgAct = menu.addAction( QIcon(":/saveimage.svg"), tr("Save Circuit as Image") );
         connect( saveImgAct, SIGNAL(triggered()),
                        this, SLOT(saveImage()), Qt::UniqueConnection );
 
@@ -273,6 +273,21 @@ void CircuitView::zoomToFit()
 {
     QRectF r = m_circuit->itemsBoundingRect();
     fitInView( r, Qt::KeepAspectRatio );
+}
+
+void CircuitView::zoomSelected()
+{
+    QRectF r;
+    for( QGraphicsItem *item : m_circuit->items() )
+      if( item->isSelected() ) r |= item->sceneBoundingRect();
+
+    fitInView( r, Qt::KeepAspectRatio );
+}
+
+void CircuitView::zoomOne()
+{
+    resetMatrix();
+    m_scale = 1;
 }
 
 void CircuitView::importCirc()

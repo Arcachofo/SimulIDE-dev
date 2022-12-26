@@ -7,15 +7,14 @@
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
-   xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="22"
    height="22"
    id="svg6662"
    version="1.1"
-   inkscape:version="0.91 r13725"
-   sodipodi:docname="gtk-properties.svg">
+   inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)"
+   sodipodi:docname="properties.svg">
   <defs
      id="defs6664">
     <linearGradient
@@ -32,16 +31,6 @@
          stop-color="#363636"
          offset="1" />
     </linearGradient>
-    <linearGradient
-       inkscape:collect="always"
-       xlink:href="#linearGradient1022-8-8-3-0-06-59"
-       id="linearGradient3101"
-       gradientUnits="userSpaceOnUse"
-       gradientTransform="matrix(1.6799908,0,0,1.5097214,-348.975,-1036.2603)"
-       x1="214.86725"
-       y1="1369.5391"
-       x2="214.86725"
-       y2="1382.7866" />
   </defs>
   <sodipodi:namedview
      id="base"
@@ -51,16 +40,16 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="22.4"
-     inkscape:cx="14.411838"
+     inkscape:cx="4.8136237"
      inkscape:cy="13.624267"
      inkscape:document-units="px"
      inkscape:current-layer="capa1"
      showgrid="true"
      inkscape:showpageshadow="false"
-     inkscape:window-width="1280"
-     inkscape:window-height="976"
-     inkscape:window-x="0"
-     inkscape:window-y="24"
+     inkscape:window-width="1920"
+     inkscape:window-height="1049"
+     inkscape:window-x="1920"
+     inkscape:window-y="0"
      inkscape:window-maximized="1"
      inkscape:snap-bbox="true">
     <inkscape:grid
@@ -94,7 +83,7 @@
        style="opacity:0.6;color:black;fill:white;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.66666675;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
        inkscape:connector-curvature="0" />
     <path
-       style="opacity:0.7;color:black;fill:url(#linearGradient3101);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       style="opacity:0.7;color:black;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
        d="m 5,1031.3622 -3,3 0,14 3,3 12,0 3,-3 0,-14 -3,-3 -12,0 z m 1,2 10,0 2,2 0,12 -2,2 -10,0 -2,-2 0,-12 2,-2 z m 5,2 -1,1 0,1 -1,1 -1,-1 -1,0 0,1 1,1 -1,1 -1,0 -1,1 1,1 1,0 1,1 -1,1 0,1 1,0 1,-1 1,1 0,1 1,1 1,-1 0,-1 1,-1 1,1 1,0 0,-1 -1,-1 1,-1 1,0 1,-1 -1,-1 -1,0 -1,-1 1,-1 0,-1 -1,0 -1,1 -1,-1 0,-1 -1,-1 z m -1,4 2,0 1,1 0,2 -1,1 -2,0 -1,-1 0,-2 1,-1 z"
        id="path3082"
        inkscape:connector-curvature="0" />

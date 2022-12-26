@@ -32,7 +32,7 @@ Image::Image( QObject* parent, QString type, QString id )
      : Shape( parent, type, id )
 {
     m_background = "";
-    m_image = QPixmap( ":/saveimage.png" );
+    m_image = QPixmap( ":/saveimage.svg" );
     m_hSize = 80;
     m_vSize = 80;
     m_area = QRectF( -40, -40, 80, 80 );
@@ -58,7 +58,7 @@ void Image::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
 
 void Image::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
 {
-    QAction* loadAction = menu->addAction( QIcon(":/load.png"),tr("Load Image") );
+    QAction* loadAction = menu->addAction( QIcon(":/load.svg"),tr("Load Image") );
     connect( loadAction, SIGNAL(triggered()),
                    this, SLOT(slotLoad()), Qt::UniqueConnection );
 
@@ -116,7 +116,7 @@ void Image::setBackground( QString bck )
         Shape::setHSize( m_image.width() );
         Shape::setVSize( m_image.height() );
     }
-    else if( m_background.isEmpty() ) m_image = QPixmap( ":/saveimage.png" );
+    else if( m_background.isEmpty() ) m_image = QPixmap( ":/saveimage.svg" );
     else                              m_image = QPixmap( m_background );
 }
 

@@ -137,10 +137,10 @@ void RamTable::slotContextMenu( const QPoint& point )
 {
     QMenu menu;
 
-    QAction *clearSelected = menu.addAction( QIcon(":/remove.png"),tr("Clear Selected") );
+    QAction *clearSelected = menu.addAction( QIcon(":/remove.svg"),tr("Clear Selected") );
     connect( clearSelected, SIGNAL(triggered()), this, SLOT(clearSelected()), Qt::UniqueConnection );
 
-    QAction *clearTable = menu.addAction( QIcon(":/remove.png"),tr("Clear Table") );
+    QAction *clearTable = menu.addAction( QIcon(":/remove.svg"),tr("Clear Table") );
     connect( clearTable, SIGNAL(triggered()), this, SLOT(clearTable()), Qt::UniqueConnection );
 
     menu.addSeparator();

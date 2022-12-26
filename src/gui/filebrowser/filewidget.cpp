@@ -166,7 +166,7 @@ void FileWidget::contextMenuEvent( QContextMenuEvent* event )
         QPoint eventPos = event->globalPos();
         QMenu menu;
 
-        QAction* remBookMarkAction = menu.addAction(QIcon(":/remove.png"),tr("Remove Bookmark"));
+        QAction* remBookMarkAction = menu.addAction(QIcon(":/remove.svg"),tr("Remove Bookmark"));
         connect( remBookMarkAction, SIGNAL( triggered()), 
                  this,              SLOT(   remBookMark() ) );
                  

@@ -7,27 +7,38 @@
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="22"
    height="22"
    id="svg6662"
    version="1.1"
-   inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)"
-   sodipodi:docname="vflip.svg">
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="lxfind.svg">
   <defs
      id="defs6664">
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient1022-8-8-3-0-27"
+       id="linearGradient4382"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(1.679991,0,0,1.5097216,-51.475043,1478.3667)"
+       x1="39.271069"
+       y1="-296.74573"
+       x2="39.271069"
+       y2="-281.84232" />
     <linearGradient
        y2="11.02436"
        y1="3.0069399"
        x2="0"
-       id="linearGradient1022-8-8-3-0-1-1"
+       id="linearGradient1022-8-8-3-0-27"
        gradientUnits="userSpaceOnUse">
       <stop
-         id="stop3001-0-9-4-2-4"
+         id="stop3001-0-9-4-6"
          offset="0" />
       <stop
-         id="stop3003-5-6-6-2-15"
+         id="stop3003-5-6-6-01"
          stop-color="#363636"
          offset="1" />
     </linearGradient>
@@ -39,22 +50,21 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="11.2"
-     inkscape:cx="2.0082524"
-     inkscape:cy="7.5662684"
+     inkscape:zoom="15.839192"
+     inkscape:cx="21.580541"
+     inkscape:cy="9.6526553"
      inkscape:document-units="px"
      inkscape:current-layer="capa1"
      showgrid="true"
      inkscape:showpageshadow="false"
-     inkscape:window-width="1920"
-     inkscape:window-height="1019"
+     inkscape:window-width="1366"
+     inkscape:window-height="704"
      inkscape:window-x="0"
-     inkscape:window-y="0"
-     inkscape:window-maximized="1"
-     width="22px">
+     inkscape:window-y="27"
+     inkscape:window-maximized="1">
     <inkscape:grid
        type="xygrid"
-       id="grid4139" />
+       id="grid4144" />
   </sodipodi:namedview>
   <metadata
      id="metadata6667">
@@ -74,16 +84,16 @@
      id="capa1"
      transform="translate(0,-1030.3622)">
     <path
-       style="color:#000000;display:inline;overflow:visible;visibility:visible;opacity:0.6;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.6666972;marker:none;enable-background:accumulate"
-       d="m 11.00695,1031.3622 -5.0000064,5 0,3 5.0000064,-5 4.999991,5 0,-3 z m -0.0075,4.9986 -0.99258,1.0014 0,10 1.000005,1 0.999989,-1 0,-10 z m -4.9925814,9.0014 0,3 5.0000064,5 4.999991,-5 0,-3 -4.999991,5 z"
-       id="path6476"
+       sodipodi:nodetypes="cccccccccccccccccccc"
        inkscape:connector-curvature="0"
-       sodipodi:nodetypes="ccccccccccccccccccccc" />
+       id="path6323"
+       d="m 4,1032.3622 -2,2 0,11 2,2 11,0 5,5 2,-2 -5,-5 0,-10.5 -2.5,-2.5 z m 1,2 9,0 1,1 0,9 -1,1 -9,0 -1,-1 0,-9 z"
+       style="color:#000000;display:inline;overflow:visible;visibility:visible;opacity:0.6;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;marker:none;enable-background:accumulate" />
     <path
-       sodipodi:nodetypes="ccccccccccccccccccccc"
+       style="color:#000000;display:inline;overflow:visible;visibility:visible;opacity:0.7;fill:url(#linearGradient4382);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;marker:none;enable-background:accumulate"
+       d="m 4,1031.3622 -2,2 0,11 2,2 11,0 5,5 2,-2 -5,-5 0,-10.5 -2.5,-2.5 z m 1,2 9,0 1,1 0,9 -1,1 -9,0 -1,-1 0,-9 z"
+       id="rect4518"
        inkscape:connector-curvature="0"
-       id="path6851"
-       d="m 11.006875,1030.3622 -5.0000064,5 0,3 5.0000064,-5 4.999991,5 0,-3 z m -0.0075,4.9986 -0.99258,1.0014 0,10 1.000005,1 0.999989,-1 0,-10 z m -4.9925814,9.0014 0,3 5.0000064,5 4.999991,-5 0,-3 -4.999991,5 z"
-       style="color:#000000;display:inline;overflow:visible;visibility:visible;opacity:0.7;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;marker:none;enable-background:accumulate" />
+       sodipodi:nodetypes="cccccccccccccccccccc" />
   </g>
 </svg>

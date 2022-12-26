@@ -218,7 +218,7 @@ void Function::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
 void Function::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
 {
     menu->addSeparator();
-    QAction* loadDaAction = menu->addAction( QIcon(":/load.png"),tr("Load Functions") );
+    QAction* loadDaAction = menu->addAction( QIcon(":/load.svg"),tr("Load Functions") );
     connect( loadDaAction, SIGNAL(triggered()),
                      this, SLOT(loadData()), Qt::UniqueConnection );
 

@@ -114,7 +114,6 @@ class EditorWidget : public QWidget
         QAction* openAct;
         QAction* saveAct;
         QAction* saveAsAct;
-        QAction* exitAct;
         QAction* aboutAct;
         QAction* aboutQtAct;
         QAction* undoAct;

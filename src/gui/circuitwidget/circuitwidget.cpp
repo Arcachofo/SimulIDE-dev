@@ -99,25 +99,40 @@ void CircuitWidget::createActions()
                  this,              SLOT( openRecentFile() ), Qt::UniqueConnection );
     }
 
-    newCircAct = new QAction( QIcon(":/newcirc.png"), tr("New C&ircuit\tCtrl+N"), this);
+    newCircAct = new QAction( QIcon(":/new.svg"), tr("New C&ircuit\tCtrl+N"), this);
     newCircAct->setStatusTip( tr("Create a new Circuit"));
     connect( newCircAct, SIGNAL( triggered()),
                    this, SLOT( newCircuit()), Qt::UniqueConnection );
 
-    openCircAct = new QAction( QIcon(":/opencirc.png"), tr("&Open Circuit\tCtrl+O"), this);
+    openCircAct = new QAction( QIcon(":/open.svg"), tr("&Open Circuit\tCtrl+O"), this);
     openCircAct->setStatusTip( tr("Open an existing Circuit"));
     connect( openCircAct, SIGNAL( triggered()),
                     this, SLOT(openCirc()), Qt::UniqueConnection );
 
-    saveCircAct = new QAction( QIcon(":/savecirc.png"), tr("&Save Circuit\tCtrl+S"), this);
+    saveCircAct = new QAction( QIcon(":/save.svg"), tr("&Save Circuit\tCtrl+S"), this);
     saveCircAct->setStatusTip( tr("Save the Circuit to disk"));
     connect( saveCircAct, SIGNAL( triggered()),
                     this, SLOT(saveCirc()), Qt::UniqueConnection );
 
-    saveCircAsAct = new QAction( QIcon(":/savecircas.png"),tr("Save Circuit &As...\tCtrl+Shift+S"), this);
+    saveCircAsAct = new QAction( QIcon(":/saveas.svg"),tr("Save Circuit &As...\tCtrl+Shift+S"), this);
     saveCircAsAct->setStatusTip( tr("Save the Circuit under a new name"));
     connect( saveCircAsAct, SIGNAL( triggered()),
                       this, SLOT(saveCircAs()), Qt::UniqueConnection );
+
+    zoomFitAct = new QAction( QIcon(":/zoomfit.svg"),tr("Zoom to fit"), this);
+    zoomFitAct->setStatusTip( tr("Zoom Circuit to fit all components"));
+    connect( zoomFitAct, SIGNAL( triggered()),
+                      CircuitView::self(), SLOT(zoomToFit()), Qt::UniqueConnection );
+
+    zoomSelAct = new QAction( QIcon(":/zoomsel.svg"),tr("Zoom to selected"), this);
+    zoomSelAct->setStatusTip( tr("Zoom Circuit to fit all selected components"));
+    connect( zoomSelAct, SIGNAL( triggered()),
+                      CircuitView::self(), SLOT(zoomSelected()), Qt::UniqueConnection );
+
+    zoomOneAct = new QAction( QIcon(":/zoomone.svg"),tr("Zoom to Scale 1"), this);
+    zoomOneAct->setStatusTip( tr("Zoom Circuit to Scale 1:1"));
+    connect( zoomOneAct, SIGNAL( triggered()),
+                      CircuitView::self(), SLOT(zoomOne()), Qt::UniqueConnection );
 
     powerCircAct = new QAction( QIcon(":/poweroff.png"),tr("Power Circuit"), this);
     powerCircAct->setStatusTip(tr("Power the Circuit"));
@@ -130,22 +145,22 @@ void CircuitWidget::createActions()
     connect( pauseSimAct, SIGNAL( triggered()),
              this, SLOT(pauseSim()), Qt::UniqueConnection );
 
-    settAppAct = new QAction( QIcon(":/config.png"),tr("Settings"), this);
+    settAppAct = new QAction( QIcon(":/config.svg"),tr("Settings"), this);
     settAppAct->setStatusTip(tr("Settings"));
     connect( settAppAct, SIGNAL( triggered()),
                    this, SLOT(settApp()), Qt::UniqueConnection );
 
-    infoAct = new QAction( QIcon(":/help.png"),tr("SimulIDE Website"), this);
+    infoAct = new QAction( QIcon(":/help.svg"),tr("SimulIDE Website"), this);
     infoAct->setStatusTip(tr("SimulIDE Website"));
     connect( infoAct, SIGNAL( triggered()),
                 this, SLOT(openInfo()), Qt::UniqueConnection );
     
-    aboutAct = new QAction( QIcon(":/about.png"),tr("About SimulIDE"), this);
+    aboutAct = new QAction( QIcon(":/about.svg"),tr("About SimulIDE"), this);
     aboutAct->setStatusTip(tr("About SimulIDE"));
     connect( aboutAct, SIGNAL( triggered()),
                  this, SLOT(about()), Qt::UniqueConnection );
     
-    aboutQtAct = new QAction( QIcon(":/about.png"),tr("About Qt"), this);
+    aboutQtAct = new QAction( QIcon(":/about.svg"),tr("About Qt"), this);
     aboutQtAct->setStatusTip(tr("About Qt"));
     connect( aboutQtAct, SIGNAL(triggered()),
                    qApp, SLOT(aboutQt()), Qt::UniqueConnection );
@@ -153,23 +168,41 @@ void CircuitWidget::createActions()
 
 void CircuitWidget::createToolBars()
 {
+    m_circToolBar.setObjectName( "m_circToolBar" );
+
+    //double fs = MainWindow::self()->fontScale();
+    //m_circToolBar.setIconSize( QSize(32,32) );
+
     m_circToolBar.addAction( settAppAct );
+    QWidget* spacer = new QWidget();
+    spacer->setFixedWidth( 15 );
+    m_circToolBar.addWidget( spacer );
     m_circToolBar.addSeparator();//..........................
 
     for( int i=0; i<MaxRecentFiles; i++ ) m_fileMenu.addAction( recentFileActs[i] );
     QToolButton* fileButton = new QToolButton( this );
     fileButton->setToolTip( tr("Last Circuits") );
     fileButton->setMenu( &m_fileMenu );
-    fileButton->setIcon( QIcon(":/lastfiles.png") );
+    fileButton->setIcon( QIcon(":/lastfiles.svg") );
     fileButton->setPopupMode( QToolButton::InstantPopup );
     m_circToolBar.addWidget( fileButton );
 
-    m_circToolBar.setObjectName( "m_circToolBar" );
     m_circToolBar.addAction( newCircAct );
 
     m_circToolBar.addAction( openCircAct );
     m_circToolBar.addAction( saveCircAct );
     m_circToolBar.addAction( saveCircAsAct );
+    spacer = new QWidget();
+    spacer->setFixedWidth( 15 );
+    m_circToolBar.addWidget( spacer );
+    m_circToolBar.addSeparator();//..........................
+
+    m_circToolBar.addAction( zoomFitAct );
+    m_circToolBar.addAction( zoomSelAct );
+    m_circToolBar.addAction( zoomOneAct );
+    spacer = new QWidget();
+    spacer->setFixedWidth( 15 );
+    m_circToolBar.addWidget( spacer );
     m_circToolBar.addSeparator();//..........................
     m_circToolBar.addAction( powerCircAct );
     m_circToolBar.addAction( pauseSimAct );
@@ -190,7 +223,7 @@ void CircuitWidget::createToolBars()
     QToolButton* infoButton = new QToolButton( this );
     infoButton->setToolTip( tr("Info") );
     infoButton->setMenu( &m_infoMenu );
-    infoButton->setIcon( QIcon(":/help.png") );
+    infoButton->setIcon( QIcon(":/help.svg") );
     infoButton->setPopupMode( QToolButton::InstantPopup );
     m_circToolBar.addWidget( infoButton );
     

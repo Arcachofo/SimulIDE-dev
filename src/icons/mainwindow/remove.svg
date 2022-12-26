@@ -11,23 +11,23 @@
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="22"
    height="22"
-   id="svg3330"
+   id="svg6662"
    version="1.1"
    inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)"
-   sodipodi:docname="terminal.svg">
+   sodipodi:docname="dialog-no.svg">
   <defs
-     id="defs3332">
+     id="defs6664">
     <linearGradient
        y2="11.02436"
        y1="3.0069399"
        x2="0"
-       id="linearGradient1022-8-8-3-0-06-59-5-5"
+       id="linearGradient1022-8-8-3-0-06-7"
        gradientUnits="userSpaceOnUse">
       <stop
-         id="stop3001-0-9-4-9-02-5-6"
+         id="stop3001-0-9-4-9-91"
          offset="0" />
       <stop
-         id="stop3003-5-6-6-5-70-2-9"
+         id="stop3003-5-6-6-5-8"
          stop-color="#363636"
          offset="1" />
     </linearGradient>
@@ -39,34 +39,29 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="24.24787"
-     inkscape:cx="6.9652818"
-     inkscape:cy="11.505259"
+     inkscape:zoom="22.4"
+     inkscape:cx="5.6012297"
+     inkscape:cy="13.406038"
      inkscape:document-units="px"
-     inkscape:current-layer="capa1"
+     inkscape:current-layer="dialog-no"
      showgrid="true"
      inkscape:showpageshadow="false"
      inkscape:window-width="1920"
-     inkscape:window-height="1019"
-     inkscape:window-x="0"
+     inkscape:window-height="1049"
+     inkscape:window-x="1920"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
-     inkscape:snap-center="false"
-     inkscape:snap-object-midpoints="false"
-     inkscape:snap-page="true"
-     inkscape:snap-midpoints="false"
-     inkscape:snap-to-guides="false"
      inkscape:snap-bbox="true">
     <inkscape:grid
        type="xygrid"
-       id="grid3124"
+       id="grid2990"
        empspacing="5"
        visible="true"
        enabled="true"
        snapvisiblegridlinesonly="true" />
   </sodipodi:namedview>
   <metadata
-     id="metadata3335">
+     id="metadata6667">
     <rdf:RDF>
       <cc:Work
          rdf:about="">
@@ -82,17 +77,21 @@
      inkscape:groupmode="layer"
      id="capa1"
      transform="translate(0,-1030.3622)">
-    <path
-       sodipodi:nodetypes="ccccccccccccccccccccccccccccccccc"
-       id="path3043"
-       d="m 5,1032.3622 -2,2 0,10 2,2 5,0 0,3 -8,0 -1,1 1,1 18,0 1,-1 -1,-1 -8,0 0,-3 5,0 2,-2 0,-10 -2,-2 z m 1,2 10,0 1,1 0,7 -1,1 -10,0 -1,-1 0,-7 z m 8,10 2,0 0,1 -2,0 z"
-       style="opacity:0.6;color:#000000;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
-       inkscape:connector-curvature="0" />
-    <path
-       inkscape:connector-curvature="0"
-       style="opacity:0.7;color:#000000;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
-       d="m 5,1031.3622 -2,2 0,10 2,2 5,0 0,3 -8,0 -1,1 1,1 18,0 1,-1 -1,-1 -8,0 0,-3 5,0 2,-2 0,-10 -2,-2 z m 1,2 10,0 1,1 0,7 -1,1 -10,0 -1,-1 0,-7 z m 8,10 2,0 0,1 -2,0 z"
-       id="path2996"
-       sodipodi:nodetypes="ccccccccccccccccccccccccccccccccc" />
+    <g
+       id="dialog-no"
+       transform="matrix(1.4999998,0,0,1.4999998,-382.49995,343.81902)">
+      <path
+         sodipodi:nodetypes="ccccccccccccccccc"
+         inkscape:connector-curvature="0"
+         style="opacity:0.6;color:black;fill:white;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.66666675;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+         d="m 258.33333,461.69552 0,1.33333 2.66668,2.66667 -2.66668,2.66667 0,1.33333 1.33334,0 2.66667,-2.66666 2.66666,2.66666 1.33334,0 0,-1.33333 -2.66667,-2.66667 2.66668,-2.66667 0,-1.33333 -1.33334,0 -2.66669,2.66593 -2.66665,-2.66593 z"
+         id="path2992" />
+      <path
+         id="path6913"
+         d="m 258.33334,461.02885 0,1.33333 2.66668,2.66667 -2.66668,2.66667 0,1.33333 1.33334,0 2.66667,-2.66666 2.66666,2.66666 1.33334,0 0,-1.33333 -2.66667,-2.66667 2.66668,-2.66667 0,-1.33333 -1.33334,0 -2.66669,2.66593 -2.66665,-2.66593 z"
+         style="opacity:0.7;color:black;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+         inkscape:connector-curvature="0"
+         sodipodi:nodetypes="ccccccccccccccccc" />
+    </g>
   </g>
 </svg>

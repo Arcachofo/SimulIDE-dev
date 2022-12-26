@@ -317,7 +317,7 @@ void Memory::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
 
 void Memory::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
 {
-    QAction* loadAction = menu->addAction( QIcon(":/load.png"),tr("Load data") );
+    QAction* loadAction = menu->addAction( QIcon(":/load.svg"),tr("Load data") );
     connect( loadAction, SIGNAL(triggered()),
                    this, SLOT(loadData()), Qt::UniqueConnection );
 

@@ -23,40 +23,34 @@
         
         <file alias="simulide.png">../src/icons/simulide.png</file>
         <file alias="null-0.png">../src/icons/components/null-0.png</file>
-        <file alias="newcirc.png">../src/icons/mainwindow/new.png</file>
-        <file alias="opencirc.png">../src/icons/mainwindow/open.png</file>
-        <file alias="savecirc.png">../src/icons/mainwindow/save.png</file>
-        <file alias="savecircas.png">../src/icons/mainwindow/saveas.png</file>
-        <file alias="help.png">../src/icons/mainwindow/help.png</file>
-        <file alias="about.png">../src/icons/mainwindow/about.png</file>
-        <file alias="config.png">../src/icons/mainwindow/config.png</file>
+        <file alias="new.svg">../src/icons/mainwindow/new.svg</file>
+        <file alias="open.svg">../src/icons/mainwindow/open.svg</file>
+        <file alias="save.svg">../src/icons/mainwindow/save.svg</file>
+        <file alias="saveas.svg">../src/icons/mainwindow/saveas.svg</file>
+        <file alias="help.svg">../src/icons/mainwindow/help.svg</file>
+        <file alias="about.svg">../src/icons/mainwindow/about.svg</file>
+        <file alias="config.svg">../src/icons/mainwindow/config.svg</file>
         
-        <file alias="new.png">../src/icons/mainwindow/new.png</file>
-        <file alias="open.png">../src/icons/mainwindow/open.png</file>
-        <file alias="save.png">../src/icons/mainwindow/save.png</file>
-        <file alias="saveas.png">../src/icons/mainwindow/saveas.png</file>
-        
-        <file alias="cut.png">../src/icons/mainwindow/cut.png</file>
-        <file alias="copy.png">../src/icons/mainwindow/copy.png</file>
-        <file alias="paste.png">../src/icons/mainwindow/paste.png</file>
+        <file alias="cut.svg">../src/icons/mainwindow/cut.svg</file>
+        <file alias="copy.svg">../src/icons/mainwindow/copy.svg</file>
+        <file alias="paste.svg">../src/icons/mainwindow/paste.svg</file>
         
         <file alias="cdup.png">../src/icons/mainwindow/cdup.png</file>
-        <file alias="undo.png">../src/icons/mainwindow/rotateCCW.png</file>
-        <file alias="redo.png">../src/icons/mainwindow/rotateCW.png</file>
-        <file alias="find.png">../src/icons/mainwindow/find.png</file>
+        <file alias="undo.svg">../src/icons/mainwindow/rotateccw.svg</file>
+        <file alias="redo.svg">../src/icons/mainwindow/rotatecw.svg</file>
+        <file alias="find.svg">../src/icons/mainwindow/find.svg</file>
+        <file alias="upload.svg">../src/icons/mainwindow/upload.svg</file>
         
-        <file alias="compile.png">../src/icons/mainwindow/verify.png</file>
+        <file alias="verify.svg">../src/icons/mainwindow/verify.svg</file>
         <file alias="setroot.png">../src/icons/mainwindow/verify.png</file>
         
-        <file alias="finish.png">../src/icons/mainwindow/finish.png</file>
-        <file alias="step.png">../src/icons/mainwindow/step.png</file>
-        <file alias="stepover.png">../src/icons/mainwindow/stepover.png</file>
-        <file alias="play.png">../src/icons/mainwindow/play.png</file>
+        <file alias="step.svg">../src/icons/mainwindow/step.svg</file>
+        <file alias="debug.svg">../src/icons/mainwindow/debug.svg</file>
         <file alias="brkpoint.png">../src/icons/mainwindow/brkpoint.png</file>
         <file alias="runtobk.png">../src/icons/mainwindow/runtobk.png</file>
-        <file alias="pause.png">../src/icons/mainwindow/pause.png</file>
-        <file alias="reset.png">../src/icons/mainwindow/reset.png</file>
-        <file alias="stop.png">../src/icons/mainwindow/stop.png</file>
+        <file alias="pause.svg">../src/icons/mainwindow/pause.svg</file>
+        <file alias="reset.svg">../src/icons/mainwindow/reset.svg</file>
+        <file alias="stop.svg">../src/icons/mainwindow/stop.svg</file>
         
         <file alias="poweroff.png">../src/icons/mainwindow/poweroff.png</file>
         <file alias="poweron.png">../src/icons/mainwindow/poweron.png</file>
@@ -64,21 +58,21 @@
         <file alias="pausesim.png">../src/icons/mainwindow/pausesim.png</file>
         <file alias="simpaused.png">../src/icons/mainwindow/simpaused.png</file>
         
-        <file alias="remove.png">../src/icons/mainwindow/remove.png</file>
-        <file alias="properties.png">../src/icons/mainwindow/properties.png</file>
-        <file alias="rotateCW.png">../src/icons/mainwindow/rotateCW.png</file>
-        <file alias="rotateCCW.png">../src/icons/mainwindow/rotateCCW.png</file>
-        <file alias="rotate180.png">../src/icons/mainwindow/rotate180.png</file>
-        <file alias="hflip.png">../src/icons/mainwindow/hflip.png</file>
-        <file alias="vflip.png">../src/icons/mainwindow/vflip.png</file>
-        <file alias="load.png">../src/icons/mainwindow/load.png</file>
-        <file alias="lastfiles.png">../src/icons/mainwindow/lastfiles.png</file>
-        <file alias="reload.png">../src/icons/mainwindow/reload.png</file>
-        <file alias="terminal.png">../src/icons/mainwindow/terminal.png</file>
+        <file alias="remove.svg">../src/icons/mainwindow/remove.svg</file>
+        <file alias="properties.svg">../src/icons/mainwindow/properties.svg</file>
+        <file alias="rotatecw.svg">../src/icons/mainwindow/rotatecw.svg</file>
+        <file alias="rotateccw.svg">../src/icons/mainwindow/rotateccw.svg</file>
+        <file alias="rotate180.svg">../src/icons/mainwindow/rotate180.svg</file>
+        <file alias="hflip.svg">../src/icons/mainwindow/hflip.svg</file>
+        <file alias="vflip.svg">../src/icons/mainwindow/vflip.svg</file>
+        <file alias="load.svg">../src/icons/mainwindow/load.svg</file>
+        <file alias="lastfiles.svg">../src/icons/mainwindow/lastfiles.svg</file>
+        <file alias="reload.svg">../src/icons/mainwindow/reload.svg</file>
+        <file alias="terminal.svg">../src/icons/mainwindow/terminal.svg</file>
         <file alias="closeterminal.png">../src/icons/mainwindow/closeterminal.png</file>
-        <file alias="saveimage.png">../src/icons/mainwindow/saveimage.png</file>
+        <file alias="saveimage.svg">../src/icons/mainwindow/saveimage.svg</file>
         
-        <file alias="rename.png">../src/icons/mainwindow/rename.png</file>
+        <file alias="rename.svg">../src/icons/mainwindow/rename.svg</file>
         <file alias="invert.png">../src/icons/mainwindow/invert.png</file>
         <file alias="unuse.png">../src/icons/mainwindow/unuse.png</file>
         
@@ -88,7 +82,9 @@
         <file alias="attach.png">../src/icons/mainwindow/attach.png</file>
         <file alias="detach.png">../src/icons/mainwindow/detach.png</file>
         
-        <file alias="zoomfit.png">../src/icons/mainwindow/zoomfit.png</file>
+        <file alias="zoomfit.svg">../src/icons/mainwindow/zoomfit.svg</file>
+        <file alias="zoomsel.svg">../src/icons/mainwindow/zoomsel.svg</file>
+        <file alias="zoomone.svg">../src/icons/mainwindow/zoomone.svg</file>
     
         <file alias="csource.png">../src/icons/components/csource.png</file>
         <file alias="led.png">../src/icons/components/led.png</file>

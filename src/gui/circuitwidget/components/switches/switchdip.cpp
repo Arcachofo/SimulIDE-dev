@@ -106,7 +106,7 @@ void SwitchDip::onbuttonclicked()
             button->setIcon(QIcon(":/switchbut.png"));
             m_state |= 1<<i;
         }else{
-            button->setIcon(QIcon(":/stop.png"));
+            button->setIcon(QIcon(":/stop.svg"));
             m_state &= ~(1<<i);
         }
         i++;
@@ -152,7 +152,7 @@ void SwitchDip::createSwitches( int c )
         font.setPixelSize(5);
         button->setFont(font);
         //button->setText( "O");
-        button->setIcon(QIcon(":/stop.png"));
+        button->setIcon(QIcon(":/stop.svg"));
         button->setCheckable( true );
         button->setChecked( true );
         button->setIcon(QIcon(":/switchbut.png"));

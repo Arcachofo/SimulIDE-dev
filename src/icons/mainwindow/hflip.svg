@@ -7,15 +7,14 @@
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
-   xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="22"
    height="22"
    id="svg6662"
    version="1.1"
-   inkscape:version="0.91 r13725"
-   sodipodi:docname="object-flip-horizontal.svg">
+   inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)"
+   sodipodi:docname="hflip.svg">
   <defs
      id="defs6664">
     <linearGradient
@@ -32,16 +31,6 @@
          stop-color="#363636"
          offset="1" />
     </linearGradient>
-    <linearGradient
-       y2="21.129047"
-       x2="107.13226"
-       y1="11.192986"
-       x1="107.13226"
-       gradientTransform="matrix(1.6799141,0,0,1.5096525,-165.96748,1016.4647)"
-       gradientUnits="userSpaceOnUse"
-       id="linearGradient8612"
-       xlink:href="#linearGradient1022-8-8-3-0-1-6"
-       inkscape:collect="always" />
   </defs>
   <sodipodi:namedview
      id="base"
@@ -57,9 +46,9 @@
      inkscape:current-layer="capa1"
      showgrid="false"
      inkscape:showpageshadow="false"
-     inkscape:window-width="730"
+     inkscape:window-width="860"
      inkscape:window-height="702"
-     inkscape:window-x="484"
+     inkscape:window-x="485"
      inkscape:window-y="29"
      inkscape:window-maximized="0" />
   <metadata
@@ -90,6 +79,6 @@
        inkscape:connector-curvature="0"
        id="path6797"
        d="m 5.0055034,1036.3622 -5.00000595,5 5.00000595,5 2.9999976,0 -5.000006,-5 5.000006,-5 z m 8.9999926,0 5.000006,5 -5.000006,5 2.999998,0 5.000006,-5 -5.000006,-5 z m -8.0000034,4 -0.9999892,1 0.9999892,1 10.0000124,0 0.999989,-1 -0.999989,-1 z"
-       style="color:#000000;display:inline;overflow:visible;visibility:visible;opacity:0.7;fill:url(#linearGradient8612);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;marker:none;enable-background:accumulate" />
+       style="color:#000000;display:inline;overflow:visible;visibility:visible;opacity:0.7;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;marker:none;enable-background:accumulate" />
   </g>
 </svg>

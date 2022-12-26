@@ -184,7 +184,7 @@ void I2CRam::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
 
 void I2CRam::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
 {
-    QAction* loadAction = menu->addAction( QIcon(":/load.png"),tr("Load data") );
+    QAction* loadAction = menu->addAction( QIcon(":/load.svg"),tr("Load data") );
     connect( loadAction, SIGNAL(triggered()),
                    this, SLOT(loadData()), Qt::UniqueConnection );
 

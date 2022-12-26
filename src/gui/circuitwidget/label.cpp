@@ -60,15 +60,15 @@ void Label::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
         event->accept();
         QMenu menu;
 
-        QAction* rotateCWAction = menu.addAction(QIcon(":/rotateCW.png"),"Rotate CW");
+        QAction* rotateCWAction = menu.addAction(QIcon(":/rotatecw.svg"),"Rotate CW");
         connect(rotateCWAction, SIGNAL(triggered()),
                           this, SLOT(rotateCW()), Qt::UniqueConnection );
 
-        QAction* rotateCCWAction = menu.addAction(QIcon(":/rotateCCW.png"),"Rotate CCW");
+        QAction* rotateCCWAction = menu.addAction(QIcon(":/rotateccw.svg"),"Rotate CCW");
         connect(rotateCCWAction, SIGNAL(triggered()),
                            this, SLOT(rotateCCW()), Qt::UniqueConnection );
 
-        QAction* rotate180Action = menu.addAction(QIcon(":/rotate180.png"),"Rotate 180º");
+        QAction* rotate180Action = menu.addAction(QIcon(":/rotate180.svg"),"Rotate 180º");
         connect(rotate180Action, SIGNAL(triggered()),
                            this, SLOT(rotate180()), Qt::UniqueConnection );
 

@@ -314,7 +314,7 @@ void Component::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu 
 {
     if( !event && m_isMainComp ) // Main Component in Subcircuit
     {
-        QAction* propertiesAction = menu->addAction( QIcon( ":/properties.png"),tr("Properties") );
+        QAction* propertiesAction = menu->addAction( QIcon( ":/properties.svg"),tr("Properties") );
         connect( propertiesAction, SIGNAL( triggered()),
                              this, SLOT(slotProperties()), Qt::UniqueConnection );
         menu->addSeparator();
@@ -322,44 +322,44 @@ void Component::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu 
     }
     m_eventpoint = mapToScene( togrid(event->pos()) );
 
-    QAction* copyAction = menu->addAction(QIcon(":/copy.png"),tr("Copy")+"\tCtrl+C");
+    QAction* copyAction = menu->addAction(QIcon(":/copy.svg"),tr("Copy")+"\tCtrl+C");
     connect( copyAction, SIGNAL( triggered()),
                    this, SLOT(slotCopy()), Qt::UniqueConnection );
 
-    QAction* cutAction = menu->addAction(QIcon(":/cut.png"),tr("Cut")+"\tCtrl+X");
+    QAction* cutAction = menu->addAction(QIcon(":/cut.svg"),tr("Cut")+"\tCtrl+X");
     connect( cutAction, SIGNAL( triggered()),
                    this, SLOT(slotCut()), Qt::UniqueConnection );
 
-    QAction* removeAction = menu->addAction( QIcon( ":/remove.png"),tr("Remove")+"\tDel" );
+    QAction* removeAction = menu->addAction( QIcon( ":/remove.svg"),tr("Remove")+"\tDel" );
     connect( removeAction, SIGNAL( triggered()),
                      this, SLOT(slotRemove()), Qt::UniqueConnection );
 
-    QAction* groupAction = menu->addAction( QIcon( ":/group.png"),tr("Group") );
+    /*QAction* groupAction = menu->addAction( QIcon( ":/group.png"),tr("Group") );
     connect( groupAction, SIGNAL( triggered()),
-                     this, SLOT(slotGroup()), Qt::UniqueConnection );
+                     this, SLOT(slotGroup()), Qt::UniqueConnection );*/
     
-    QAction* propertiesAction = menu->addAction( QIcon( ":/properties.png"),tr("Properties") );
+    QAction* propertiesAction = menu->addAction( QIcon( ":/properties.svg"),tr("Properties") );
     connect( propertiesAction, SIGNAL( triggered()),
                          this, SLOT(slotProperties()), Qt::UniqueConnection );
     menu->addSeparator();
 
-    QAction* rotateCWAction = menu->addAction( QIcon( ":/rotateCW.png"),tr("Rotate CW") );
+    QAction* rotateCWAction = menu->addAction( QIcon( ":/rotatecw.svg"),tr("Rotate CW") );
     connect( rotateCWAction, SIGNAL( triggered()),
                        this, SLOT(rotateCW()), Qt::UniqueConnection );
 
-    QAction* rotateCCWAction = menu->addAction(QIcon( ":/rotateCCW.png"),tr("Rotate CCW") );
+    QAction* rotateCCWAction = menu->addAction(QIcon( ":/rotateccw.svg"),tr("Rotate CCW") );
     connect( rotateCCWAction, SIGNAL( triggered()),
                         this, SLOT(rotateCCW()), Qt::UniqueConnection );
 
-    QAction* rotateHalfAction = menu->addAction(QIcon(":/rotate180.png"),tr("Rotate 180") );
+    QAction* rotateHalfAction = menu->addAction(QIcon(":/rotate180.svg"),tr("Rotate 180") );
     connect( rotateHalfAction, SIGNAL( triggered()),
                          this, SLOT(rotateHalf()), Qt::UniqueConnection );
     
-    QAction* H_flipAction = menu->addAction(QIcon(":/hflip.png"),tr("Horizontal Flip") );
+    QAction* H_flipAction = menu->addAction(QIcon(":/hflip.svg"),tr("Horizontal Flip") );
     connect( H_flipAction, SIGNAL( triggered()),
                      this, SLOT(H_flip()), Qt::UniqueConnection );
     
-    QAction* V_flipAction = menu->addAction(QIcon(":/vflip.png"),tr("Vertical Flip") );
+    QAction* V_flipAction = menu->addAction(QIcon(":/vflip.svg"),tr("Vertical Flip") );
     connect( V_flipAction, SIGNAL( triggered()),
                      this, SLOT(V_flip()), Qt::UniqueConnection );
 

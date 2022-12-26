@@ -382,11 +382,11 @@ void Mcu::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
 
     if( m_deviceType == typeMCU )
     {
-        QAction* loadAction = menu->addAction( QIcon(":/load.png"),tr("Load firmware") );
+        QAction* loadAction = menu->addAction( QIcon(":/load.svg"),tr("Load firmware") );
         connect( loadAction, SIGNAL(triggered()),
                        this, SLOT(slotLoad()), Qt::UniqueConnection );
 
-        QAction* reloadAction = menu->addAction( QIcon(":/reload.png"),tr("Reload firmware") );
+        QAction* reloadAction = menu->addAction( QIcon(":/reload.svg"),tr("Reload firmware") );
         connect( reloadAction, SIGNAL(triggered()),
                          this, SLOT(slotReload()), Qt::UniqueConnection );
 
@@ -404,7 +404,7 @@ void Mcu::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
     {
         menu->addSeparator();
 
-        QAction* openRamTab = menu->addAction( QIcon(":/terminal.png"),tr("Open Mcu Monitor.") );
+        QAction* openRamTab = menu->addAction( QIcon(":/terminal.svg"),tr("Open Mcu Monitor.") );
         connect( openRamTab, SIGNAL(triggered()),
                        this, SLOT(slotOpenMcuMonitor()), Qt::UniqueConnection );
     }
@@ -421,16 +421,11 @@ void Mcu::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
         }
         connect( sm, SIGNAL(mapped(int)), this, SLOT(slotOpenTerm(int)) );
     }
-
-    /*QAction* openSerial = menu->addAction( QIcon(":/terminal.png"),tr("Open Serial Port.") );
-    connect( openSerial, SIGNAL(triggered()),
-                   this, SLOT(slotOpenSerial()), Qt::UniqueConnection );*/
-
     menu->addSeparator();
 
     if( !event )
     {
-        QAction* propertiesAction = menu->addAction( QIcon( ":/properties.png"),tr("Properties") );
+        QAction* propertiesAction = menu->addAction( QIcon( ":/properties.svg"),tr("Properties") );
         connect( propertiesAction, SIGNAL( triggered()),
                              this, SLOT(slotProperties()), Qt::UniqueConnection );
         menu->addSeparator();

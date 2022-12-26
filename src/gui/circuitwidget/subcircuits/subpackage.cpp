@@ -254,13 +254,13 @@ void SubPackage::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu
 {
     if( m_eventPin )
     {
-        QAction* moveAction = menu->addAction( QIcon(":/hflip.png"),tr("Move Pin ")+m_eventPin->getLabelText() );
+        QAction* moveAction = menu->addAction( QIcon(":/hflip.svg"),tr("Move Pin ")+m_eventPin->getLabelText() );
         connect( moveAction, SIGNAL( triggered()), this, SLOT( movePin() ), Qt::UniqueConnection );
 
-        QAction* editAction = menu->addAction( QIcon(":/rename.png"),tr("Edit Pin ")+m_eventPin->getLabelText() );
+        QAction* editAction = menu->addAction( QIcon(":/rename.svg"),tr("Edit Pin ")+m_eventPin->getLabelText() );
         connect( editAction, SIGNAL( triggered()), this, SLOT( editPin() ), Qt::UniqueConnection );
 
-        QAction* deleteAction = menu->addAction( QIcon(":/remove.png"),tr("Delete Pin ")+m_eventPin->getLabelText() );
+        QAction* deleteAction = menu->addAction( QIcon(":/remove.svg"),tr("Delete Pin ")+m_eventPin->getLabelText() );
         connect( deleteAction, SIGNAL( triggered()), this, SLOT( deleteEventPin() ), Qt::UniqueConnection );
 
         menu->exec( event->screenPos() );

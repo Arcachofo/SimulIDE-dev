@@ -447,7 +447,7 @@ void CodeEditor::contextMenuEvent( QContextMenuEvent* event )
     QMenu *menu = createStandardContextMenu();
     menu->addSeparator();
 
-    QAction* reloadAction = menu->addAction( QIcon(":/reload.png"), tr("Reload Document") );
+    QAction* reloadAction = menu->addAction( QIcon(":/reload.svg"), tr("Reload Document") );
     connect( reloadAction, SIGNAL( triggered()),
              EditorWindow::self(), SLOT(reload()), Qt::UniqueConnection );
 
@@ -664,7 +664,7 @@ void LineNumberArea::contextMenuEvent( QContextMenuEvent *event)
 
     menu.addSeparator();
 
-    QAction* clrBrkAction = menu.addAction( QIcon(":/remove.png"),tr( "Clear All BreakPoints" ) );
+    QAction* clrBrkAction = menu.addAction( QIcon(":/remove.svg"),tr( "Clear All BreakPoints" ) );
     connect( clrBrkAction, SIGNAL( triggered()),
                m_codeEditor, SLOT(slotClearBreak()), Qt::UniqueConnection );
 

@@ -85,6 +85,9 @@ class MAINMODULE_EXPORT CircuitWidget : public QWidget
         QAction* openCircAct;
         QAction* saveCircAct;
         QAction* saveCircAsAct;
+        QAction* zoomFitAct;
+        QAction* zoomSelAct;
+        QAction* zoomOneAct;
         QAction* powerCircAct;
         QAction* pauseSimAct;
         QAction* settAppAct;
