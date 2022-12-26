@@ -83,12 +83,13 @@ void AvrTwi::configureA( uint8_t newTWCR ) // TWCR is being written
         masterStart();
     }
 
+    m_enabled = false;
     bool twea = getRegBitsBool( newTWCR, m_TWEA );
     bool addrSet = ( m_address != 0b01111111);
-    if( addrSet && twea && !clearTwint && !newStop && !newStart )
+    if( addrSet && twea && !newStop && !newStart )
     {
-        if( m_mode != TWI_SLAVE ) setMode( TWI_SLAVE );
-        m_enabled = twea;
+        if( m_mode != TWI_SLAVE && !clearTwint ) setMode( TWI_SLAVE );
+        m_enabled = true;
         return;
     }
 
