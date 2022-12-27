@@ -23,6 +23,7 @@ McuAdc::~McuAdc(){}
 void McuAdc::initialize()
 {
     m_channel = 0;
+    m_chOffset = 0;
     m_enabled = false;
     m_converting = false;
     m_leftAdjust = false;
@@ -43,12 +44,11 @@ void McuAdc::runEvent()
 void McuAdc::startConversion()
 {
     if( !m_enabled ) return;
-    if( m_channel >= m_adcPin.size() ) { specialConv(); return; }
     m_converting = true;
 
     updtVref();
 
-    double volt = m_adcPin[m_channel]->getVoltage() - m_vRefN;
+    double volt = m_adcPin[m_channel+m_chOffset]->getVoltage() - m_vRefN;
     if( volt < 0       ) volt = 0;
     if( volt > m_vRefP ) volt = m_vRefP;
 

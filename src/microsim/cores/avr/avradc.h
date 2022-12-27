@@ -59,8 +59,8 @@ class MAINMODULE_EXPORT AvrAdc : public McuAdc
         IoPin* m_aRefPin;
         IoPin* m_aVccPin;
 
-        AvrTimer800*     m_timer0;
-        AvrTimer16bit*  m_timer1;
+        AvrTimer800*   m_timer0;
+        AvrTimer16bit* m_timer1;
 
         McuOcUnit* m_t0OCA;
         McuOcUnit* m_txOCB;
@@ -71,11 +71,6 @@ class MAINMODULE_EXPORT AvrAdc00 : public AvrAdc
     public:
         AvrAdc00( eMcu* mcu, QString name );
         ~AvrAdc00();
-
-        //virtual void initialize() override;
-
-        //virtual void configureA( uint8_t newADCSRA ) override;
-        //virtual void configureB( uint8_t newADCSRB ) override;
 
     protected:
         virtual void autotriggerConf() override;
@@ -108,8 +103,24 @@ class MAINMODULE_EXPORT AvrAdc03 : public AvrAdc00
         AvrAdc03( eMcu* mcu, QString name );
         ~AvrAdc03();
 
+        virtual void startConversion() override;
+
     protected:
         virtual void specialConv() override;
+};
+
+class MAINMODULE_EXPORT AvrAdc04 : public AvrAdc03
+{
+    public:
+        AvrAdc04( eMcu* mcu, QString name );
+        ~AvrAdc04();
+
+        virtual void configureB( uint8_t newADCSRB ) override;
+
+    protected:
+
+        // ADCSB
+        regBits_t m_MUX5;
 };
 
 class MAINMODULE_EXPORT AvrAdc10 : public AvrAdc

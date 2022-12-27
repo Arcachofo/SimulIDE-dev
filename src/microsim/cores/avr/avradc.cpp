@@ -16,6 +16,8 @@ AvrAdc* AvrAdc::createAdc( eMcu* mcu, QString name, int type )
         case 00: return new AvrAdc00( mcu, name ); break;
         case 01: return new AvrAdc01( mcu, name ); break;
         case 02: return new AvrAdc02( mcu, name ); break;
+        case 03: return new AvrAdc03( mcu, name ); break;
+        case 04: return new AvrAdc04( mcu, name ); break;
         case 10: return new AvrAdc10( mcu, name ); break;
         case 11: return new AvrAdc11( mcu, name ); break;
         default: return NULL;
@@ -198,10 +200,17 @@ AvrAdc03::AvrAdc03( eMcu* mcu, QString name )
 }
 AvrAdc03::~AvrAdc03(){}
 
+void AvrAdc03::startConversion()
+{
+    if( !m_enabled ) return;
+    if( m_channel >= 8 /*m_adcPin.size()*/ ) specialConv();
+    else                                     McuAdc::startConversion();
+}
+
 void AvrAdc03::specialConv()
 {
-    if     ( m_channel == 30) ;
-    else if( m_channel == 31) ;
+    if     ( m_channel == 30) m_adcValue = 1.22*512/m_vRefP;
+    else if( m_channel == 31) m_adcValue = 0;
     else{
         updtVref();
 
@@ -225,12 +234,31 @@ void AvrAdc03::specialConv()
             if( m_channel < 24 ) chN = 1;
             else                 chN = 2;
         }
-        double voltP = m_adcPin[chP]->getVoltage();
-        double voltN = m_adcPin[chN]->getVoltage();
+        double voltP = m_adcPin[chP+m_chOffset]->getVoltage();
+        double voltN = m_adcPin[chN+m_chOffset]->getVoltage();
         if( voltP < 0 ) voltP = 0;
         if( voltN < 0 ) voltN = 0;
         m_adcValue = (voltP-voltN)*gain*512/m_vRefP;
     }
+}
+
+//------------------------------------------------------
+//-- AVR ADC Type 04 -----------------------------------
+
+AvrAdc04::AvrAdc04( eMcu* mcu, QString name )
+        : AvrAdc03( mcu, name )
+{
+    m_MUX5  = getRegBits( "MUX5", mcu );
+}
+AvrAdc04::~AvrAdc04(){}
+
+void AvrAdc04::configureB( uint8_t newADCSRB ) // ADCSRB
+{
+    AvrAdc::configureB( newADCSRB );
+
+    bool mux5 = getRegBitsBool( newADCSRB, m_MUX5 );
+    if( mux5 ) m_chOffset = 8;
+    else       m_chOffset = 0;
 }
 
 //------------------------------------------------------

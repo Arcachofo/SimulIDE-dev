@@ -25,7 +25,7 @@ class MAINMODULE_EXPORT McuAdc : public McuPrescaled, public eElement
 
         virtual void setChannel( uint8_t val ){;}
 
-        void startConversion();
+        virtual void startConversion();
 
     protected:
         virtual void updtVref();
@@ -51,6 +51,7 @@ class MAINMODULE_EXPORT McuAdc : public McuPrescaled, public eElement
 
         //int m_bits;                  // ADC resolution in bits
         uint m_channel;                // Channel number for current conversion
+        uint m_chOffset;
 
         double m_fixedVref;
         double m_vRefP;                // Positive Reference Voltage
