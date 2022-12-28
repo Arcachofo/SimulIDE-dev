@@ -1,4 +1,4 @@
-/***************************************************************************
+﻿/***************************************************************************
  *   Copyright (C) 2018 by Santiago González                               *
  *                                                                         *
  ***( see copyright.txt file at root folder )*******************************/
@@ -247,7 +247,7 @@ void LedMatrix::setRes( double resist )
             m_led[row][col]->setRes( resist ); 
 }   }
 
-void LedMatrix::setHidden( bool hid, bool hidLabel )
+/*void LedMatrix::setHidden( bool hid, bool hidArea=false, bool hidLabel=false )
 {
     m_hidden = hid;
 
@@ -257,7 +257,7 @@ void LedMatrix::setHidden( bool hid, bool hidLabel )
     if( hidLabel ){
         setShowId( false );
         m_showProperty = "";
-}   }
+}   }*/
 
 void LedMatrix::remove()
 {

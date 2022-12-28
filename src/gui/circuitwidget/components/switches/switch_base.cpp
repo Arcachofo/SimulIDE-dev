@@ -55,8 +55,10 @@ void SwitchBase::setHidden( bool hide, bool hidArea, bool hidLabel )
 {
     Component::setHidden( hide, hidArea, hidLabel );
     if  ( hidArea ) m_area = QRectF( 0, 0,-4,-4 );
-    else if( hide ) m_area = QRectF( -8,-2, 16, 4 );
-    else            m_area = QRectF( -13,-16*m_numPoles, 26, 16*m_numPoles );
+    else if( hide ) m_area = QRectF(-6, 6, 12, 12 );
+    else            m_area = QRectF(-13,-16*m_numPoles, 26, 16*m_numPoles );
+
+    m_proxy->setFlag( QGraphicsItem::ItemStacksBehindParent, hide && !hidArea );
 }
 
 void SwitchBase::onbuttonclicked()
