@@ -57,7 +57,6 @@ class MAINMODULE_EXPORT CircuitWidget : public QWidget
 
     signals:
         void dataAvailable( int uart, const QByteArray &data );
-        void saving();
         
     private:
         void createActions();

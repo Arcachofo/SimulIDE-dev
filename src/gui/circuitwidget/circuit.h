@@ -21,6 +21,7 @@ enum stateMode{
 };
 
 class CircuitView;
+class SubPackage;
 class Simulator;
 class Node;
 
@@ -89,6 +90,9 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
 
         bool is_constarted() { return m_conStarted ; }
 
+        SubPackage* getBoard() { return m_board; }
+        void setBoard( SubPackage* b ) { m_board = b; }
+
         bool pasting() { return m_pasting; }
         bool isBusy()  { return m_busy || m_pasting | m_deleting; }
         bool isSubc()  { return m_createSubc; }
@@ -122,19 +126,17 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
         void dropEvent( QGraphicsSceneDragDropEvent* event );
 
     private:
-        struct compState{
+        struct compState{       // Component State to be restored by Undo/Redo
             QString component;
             QString property;
             QString valStr;
         };
-        struct circState{
+        struct circState{       // Circuit State to be restored by Undo/Redo
                 QList<compState> remove;
                 QList<compState> create;
                 int size() { return remove.size()+create.size(); }
                 void clear() { remove.clear(); create.clear(); }
         };
-
-        //typedef QList<compState> circState;
 
         void restoreState( circState step );
         void loadStrDoc( QString &doc );
@@ -180,6 +182,7 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
         QList<Component*> m_compList;   // Component list
         QList<Connector*> m_conList;    // Connector list
         QList<Node*> m_nodeList;        // Node list
+        SubPackage* m_board;
         
         QHash<QString, Pin*> m_pinMap;    // Pin list
         QHash<QString, Pin*> m_LdPinMap;  // Pin list while loading/pasting/importing

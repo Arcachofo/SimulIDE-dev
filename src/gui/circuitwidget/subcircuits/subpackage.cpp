@@ -15,6 +15,7 @@
 #include <QDialogButtonBox>
 #include <QPushButton>
 #include <QComboBox>
+#include <QDebug>
 
 #include "subpackage.h"
 #include "itemlibrary.h"
@@ -63,17 +64,13 @@ SubPackage::SubPackage( QObject* parent, QString type, QString id )
     m_color = m_lsColor;
 
     m_boardModeAction = new QAction( tr("Board Mode"), this );
-    m_boardModeAction->setCheckable(true);
+    m_boardModeAction->setCheckable( true );
     m_boardMode = false;
     
     setAcceptHoverEvents( true );
     setZValue(-3 );
     
     m_pkgeFile = "";
-    //if( m_lastPkg == "" ) m_lastPkg = m_pkgeFile;
-
-    connect( CircuitWidget::self(), SIGNAL( saving() ),
-             this, SLOT( savingCirc() ), Qt::UniqueConnection );
 
     addPropGroup( { tr("Main"), {
 new StringProp<SubPackage>( "SubcType"    ,tr("Type")        ,""      , this, &SubPackage::subcTypeStr,&SubPackage::setSubcTypeStr,"enum" ),
@@ -90,7 +87,22 @@ SubPackage::~SubPackage(){}
 void SubPackage::setSubcTypeStr( QString s )
 {
     int index = getEnumIndex( s.remove("subc") );
-    m_subcType = (subcType_t)index;
+    subcType_t type = (subcType_t)index;
+    if( m_subcType == type ) return;
+
+    if( type >= Board )
+    {
+        if( Circuit::self()->getBoard() ) // Only one board Package can be in the circuit
+        {
+            qDebug() << "SubPackage::setSubcTypeStr: ERROR: Only one Board allowed";
+            return;
+        }
+        Circuit::self()->setBoard( this );
+    }
+    else if( Circuit::self()->getBoard() == this ) Circuit::self()->setBoard( NULL );
+
+    m_subcType = type;
+
     if( m_showVal && (m_showProperty == "SubcType") )
         setValLabelText( m_enumNames.at( index ) );
 }
@@ -278,7 +290,7 @@ void SubPackage::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu
             m_boardModeAction->setChecked( m_boardMode );
             menu->addAction( m_boardModeAction );
             connect( m_boardModeAction, SIGNAL( triggered()),
-                                  this, SLOT( boardMode() ), Qt::UniqueConnection );
+                                  this, SLOT( boardModeSlot() ), Qt::UniqueConnection );
 
             QAction* mainCompAction = menu->addAction( QIcon(":/subcl.png"),tr("Select Main Component") );
             connect( mainCompAction, SIGNAL( triggered()),
@@ -288,28 +300,29 @@ void SubPackage::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu
     }
 }
 
-void SubPackage::boardMode()
+void SubPackage::boardModeSlot()
 {
     m_boardMode = m_boardModeAction->isChecked();
-    setBoardMode();
+    setBoardMode( m_boardMode );
+    Circuit::self()->update();
 }
 
-void SubPackage::setBoardMode()
+void SubPackage::setBoardMode( bool mode )
 {
     for( Connector* con : *Circuit::self()->conList() )
     {
-        if( con ) con->setVisib( !m_boardMode );
+        if( con ) con->setVisib( !mode );
     }
-    for( Node* nod : *Circuit::self()->nodeList() ) nod->setHidden( m_boardMode );
+    for( Node* nod : *Circuit::self()->nodeList() ) nod->setHidden( mode );
 
     for( Component* comp : *Circuit::self()->compList() )
     {
         if( comp->itemType() == "Package" ) continue;
-        if( m_boardMode )
+        if( mode )
         {
             comp->setCircPos( comp->pos() );
-            comp->setCircRot(comp->rotation() );
-            if( comp->boardRot() != -1e+6 )
+            comp->setCircRot( comp->rotation() );
+            if( comp->boardRot() != -1e+6 )  // Board Position already defined
             {
                 comp->setPos( comp->boardPos() + this->pos() );
                 comp->setRotation( comp->boardRot() );
@@ -320,15 +333,8 @@ void SubPackage::setBoardMode()
             comp->setPos( comp->circPos() );
             comp->setRotation( comp->circRot() );
         }
-        comp->setHidden( m_boardMode );
+        comp->setHidden( mode );
     }
-    Circuit::self()->update();
-}
-
-void SubPackage::savingCirc()
-{
-    if( m_subcType >= Board ) m_saveBoard = true;
-    if( m_boardMode ) { m_boardMode = false; setBoardMode(); }
 }
 
 void SubPackage::remove()

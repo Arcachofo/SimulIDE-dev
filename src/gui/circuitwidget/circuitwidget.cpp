@@ -332,8 +332,6 @@ void CircuitWidget::saveCircAs()
 
 void CircuitWidget::saveCirc( QString file )
 {
-    emit saving(); // Used by SubPackage
-
     if     (  file.endsWith(".simu") ) file = changeExt( file, ".sim1" );
     else if( !file.endsWith(".sim1") ) file.append(".sim1");
 

@@ -6,9 +6,8 @@
 #include <QDomDocument>
 
 #include "compbase.h"
+#include "circuit.h"
 #include "comproperty.h"
-
-bool CompBase::m_saveBoard = false;
 
 CompBase::CompBase( QObject* parent, QString type, QString id )
         : QObject( parent )
@@ -88,7 +87,7 @@ QString CompBase::toString() // Used to save circuit
     QString item = "\n<item ";
     for( propGroup pg : m_propGroups )
     {
-        if( !m_saveBoard )
+        if( !Circuit::self()->getBoard() )
         {
             if( pg.name == "Board") continue;
             /// Error saving if package type is not set to board and have Main comp.

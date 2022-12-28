@@ -18,6 +18,7 @@
 #include "node.h"
 #include "utils.h"
 #include "subcircuit.h"
+#include "subpackage.h"
 #include "mcu.h"
 #include "simulator.h"
 #include "e-node.h"
@@ -49,6 +50,7 @@ Circuit::Circuit( qreal x, qreal y, qreal width, qreal height, CircuitView*  par
     m_createSubc = false;
     m_acceptKeys = true;
 
+    m_board = NULL;
     m_newConnector = NULL;
     m_seqNumber = 0;
     m_undoIndex = -1;
@@ -423,11 +425,15 @@ QString Circuit::circuitHeader()
 }
 QString Circuit::circuitToString()
 {
+    if( m_board && m_board->m_boardMode ) m_board->setBoardMode( false );
+
     QString circuit = circuitHeader();
     for( Component* comp : m_compList ) circuit += comp->toString();
     for( Node* node      : m_nodeList ) circuit += node->toString();
     for( Connector* conn : m_conList )  circuit += conn->toString();
     circuit += "\n</circuit>";
+
+    if( m_board && m_board->m_boardMode ) m_board->setBoardMode( true );
     return circuit;
 }
 
@@ -467,7 +473,6 @@ bool Circuit::saveCircuit( QString fileName )
     }
     else m_filePath = oldFilePath;
 
-    CompBase::m_saveBoard  = false;
     QApplication::restoreOverrideCursor();
     return saved;
 }
@@ -675,10 +680,15 @@ void Circuit::undo()
     if( m_busy || m_deleting || m_conStarted || m_undoIndex < 0 ) return;
 //qDebug() << "\nCircuit::undo"<<m_undoIndex<<m_redoIndex;
     m_undo = true;
+
     restoreState( m_undoStack.at( m_undoIndex ) );
     m_undoIndex--;
     m_redoIndex++;
     saveState();
+
+    if(  m_board && m_board->m_boardMode )
+        for( Connector* con : m_conList  ) con->setVisib( false );
+
     m_undo = false;
 //qDebug() << "Circuit::undo-----------------------\n";
 }
@@ -688,11 +698,16 @@ void Circuit::redo()
     if( m_busy || m_deleting || m_conStarted || m_redoIndex < 0 ) return;
 //qDebug() << "\nCircuit::redo"<<m_undoIndex<<m_redoIndex;
     m_redo = true;
+
     circState step = m_redoStack.at( m_redoIndex );
     restoreState( step );
     m_redoIndex--;
     m_undoIndex++;
     if( m_redoIndex < 0 ) m_redoStack.clear();
+
+    if(  m_board && m_board->m_boardMode )
+        for( Connector* con : m_conList  ) con->setVisib( false );
+
     m_redo = false;
 //qDebug() << "Circuit::redo-----------------------\n";
 }
@@ -765,7 +780,6 @@ void Circuit::restoreState( circState step )
     }
     m_LdPinMap.clear();
     m_busy = false;
-
     update();
 }
 

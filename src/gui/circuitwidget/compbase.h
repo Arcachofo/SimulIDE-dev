@@ -54,8 +54,6 @@ class MAINMODULE_EXPORT CompBase : public QObject
         virtual QString showProp(){return "";}
         virtual void setShowProp( QString prop ){;}
 
-        static bool m_saveBoard;
-
     protected:
         int getEnumIndex( QString prop );
 

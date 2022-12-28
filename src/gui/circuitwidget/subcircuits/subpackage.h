@@ -13,6 +13,8 @@ class QAction;
 
 class MAINMODULE_EXPORT SubPackage : public Chip
 {
+        friend class Circuit;
+
     Q_OBJECT
 
     public:
@@ -45,8 +47,8 @@ class MAINMODULE_EXPORT SubPackage : public Chip
         void setPinName( QString name );
         void setPinType( QString type );
         void setPinAngle( int i);
-        void boardMode();
-        void savingCirc();
+        void boardModeSlot();
+        void setBoardMode( bool mode );
         void mainComp() { Component::m_selMainCo = true; }
     
     private slots:
@@ -73,8 +75,6 @@ class MAINMODULE_EXPORT SubPackage : public Chip
     private:
         QString pinEntry( Pin* pin );
         QString adjustSize( QString str, int size );
-
-        void setBoardMode();
 
  static QString m_lastPkg;
 
