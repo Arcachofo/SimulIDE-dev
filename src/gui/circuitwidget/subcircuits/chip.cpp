@@ -113,7 +113,7 @@ void Chip::initChip()
 
         if( root.hasAttribute("type") ) setSubcTypeStr( root.attribute( "type") );
         if( root.hasAttribute("background") ) setBackground( root.attribute( "background") );
-        if( m_subcType >= Board ) setTransformOriginPoint( togrid( boundingRect().center()) );
+        if( m_subcType >= Board ) setTransformOriginPoint( toGrid( boundingRect().center()) );
         if( root.hasAttribute("name"))
         {
             QString name = root.attribute("name");

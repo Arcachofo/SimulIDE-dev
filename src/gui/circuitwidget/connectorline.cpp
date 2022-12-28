@@ -192,7 +192,7 @@ void ConnectorLine::mousePressEvent( QGraphicsSceneMouseEvent* event )
         
         else if( event->modifiers() & Qt::ShiftModifier ) // Move Corner
         {
-            QPoint evPoint = togrid( event->scenePos() ).toPoint();
+            QPoint evPoint = toGrid( event->scenePos() ).toPoint();
             
             if     ( evPoint==p1() ) m_moveP1 = true;
             else if( evPoint==p2() ) m_moveP2 = true;
@@ -204,7 +204,7 @@ void ConnectorLine::mousePressEvent( QGraphicsSceneMouseEvent* event )
                if( con == this->connector() ) return;
                if( con->isBus() != m_isBus ) { event->ignore(); return; } // Avoid connect Bus with no-Bus
            }
-           QPoint point1 = togrid( event->scenePos() ).toPoint();
+           QPoint point1 = toGrid( event->scenePos() ).toPoint();
 
            if( connectToWire( point1 ) ) event->accept();
            else                          event->ignore();
@@ -271,7 +271,7 @@ void ConnectorLine::mouseMoveEvent( QGraphicsSceneMouseEvent* event )
 {
     event->accept();
 
-    QPoint delta = togrid( event->scenePos() ).toPoint() - togrid(event->lastScenePos()).toPoint();
+    QPoint delta = toGrid( event->scenePos() ).toPoint() - toGrid(event->lastScenePos()).toPoint();
 
     if( !m_moving && !Circuit::self()->is_constarted() )
     {

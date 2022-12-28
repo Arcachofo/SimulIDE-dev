@@ -218,7 +218,7 @@ void SubPackage::mouseMoveEvent( QGraphicsSceneMouseEvent* event )
         else if( m_angle == 90 )  { Ymin -= pinLenth; Ymax -= pinLenth; } // Top
         else if( m_angle == 270 ) { Ymin += pinLenth; Ymax += pinLenth; } // Bottom
 
-        QPointF delta = toCompGrid(event->scenePos()) - toCompGrid(event->lastScenePos());
+        QPointF delta = toGrid(event->scenePos()) - toGrid(event->lastScenePos());
         int deltaX = delta.x();
         int deltaY = delta.y();
         int pinX = m_eventPin->pos().x() + deltaX;

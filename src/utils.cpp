@@ -199,7 +199,7 @@ QPointF toCompGrid( QPointF point )
     point.ry() = (float)valor;
     return point;
 }
-QPointF togrid( QPointF point )
+QPointF toGrid( QPointF point )
 {
     int valor;
     valor = snapToGrid( (int)point.x() );
@@ -208,7 +208,7 @@ QPointF togrid( QPointF point )
     point.ry() = (float)valor;
     return point;
 }
-QPoint togrid( QPoint point )
+QPoint toGrid( QPoint point )
 {
     int valor;
     valor = snapToGrid( (int)point.x() );

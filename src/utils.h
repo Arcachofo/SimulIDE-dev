@@ -76,8 +76,8 @@ QByteArray   fileToByteArray( const QString &fileName, const QString &caller );
 int roundDown( int x, int roundness );
 int snapToGrid( int x );
 int snapToCompGrid( int x );
-QPointF togrid( QPointF point );
-QPoint  togrid( QPoint point );
+QPointF toGrid( QPointF point );
+QPoint  toGrid( QPoint point );
 QPointF toCompGrid( QPointF point );
 
 bool lessPinX( Pin* pinA, Pin* pinB );

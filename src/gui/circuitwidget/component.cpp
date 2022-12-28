@@ -211,7 +211,7 @@ void Component::mouseMoveEvent( QGraphicsSceneMouseEvent* event )
     }
     event->accept();
     
-    QPointF delta = togrid(event->scenePos()) - togrid(event->lastScenePos());
+    QPointF delta = toGrid(event->scenePos()) - toGrid(event->lastScenePos());
     if( !(fabs( delta.x() )> 0) && !(fabs( delta.y() )> 0) ) return;
 
     if( !m_moving ) // Get lists of elements to move and save Undo state
@@ -320,7 +320,7 @@ void Component::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu 
         menu->addSeparator();
         return;
     }
-    m_eventpoint = mapToScene( togrid(event->pos()) );
+    m_eventpoint = mapToScene( toGrid(event->pos()) );
 
     QAction* copyAction = menu->addAction(QIcon(":/copy.svg"),tr("Copy")+"\tCtrl+C");
     connect( copyAction, SIGNAL( triggered()),

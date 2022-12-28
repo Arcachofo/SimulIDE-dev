@@ -482,7 +482,7 @@ void Circuit::importCirc(  QPointF eventpoint  )
     if( m_conStarted ) return;
     m_pasting = true;
 
-    m_deltaMove = QPointF( 160, 160 );//togrid(eventpoint);
+    m_deltaMove = QPointF( 160, 160 );//toGrid(eventpoint);
 
     const QString dir = m_filePath;
     QString fileName = QFileDialog::getOpenFileName( 0l, tr("Load Circuit"), dir,
@@ -787,7 +787,7 @@ void Circuit::copy( QPointF eventpoint )
 {
     if( m_conStarted ) return;
 
-    m_eventpoint = togrid(eventpoint);
+    m_eventpoint = toGrid(eventpoint);
 
     QList<CompBase*> complist;
     QList<CompBase*> conlist;
@@ -824,7 +824,7 @@ void Circuit::paste( QPointF eventpoint )
     m_pasting = true;
     for( QGraphicsItem*item : selectedItems() ) item->setSelected( false );
 
-    m_deltaMove = togrid(eventpoint) - m_eventpoint;
+    m_deltaMove = toGrid(eventpoint) - m_eventpoint;
 
     QString circuit = circuitHeader();
     circuit += QApplication::clipboard()->text();

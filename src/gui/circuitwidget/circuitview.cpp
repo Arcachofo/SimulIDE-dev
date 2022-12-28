@@ -175,7 +175,7 @@ void CircuitView::dragEnterEvent( QDragEnterEvent* event )
 void CircuitView::dragMoveEvent( QDragMoveEvent* event )
 {
     event->accept();
-    if( m_enterItem ) m_enterItem->moveTo( togrid( mapToScene( event->pos() ) ) );
+    if( m_enterItem ) m_enterItem->moveTo( toGrid( mapToScene( event->pos() ) ) );
 }
 
 void CircuitView::dragLeaveEvent( QDragLeaveEvent* event )

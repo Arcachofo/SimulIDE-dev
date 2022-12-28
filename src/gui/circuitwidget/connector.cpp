@@ -214,7 +214,7 @@ void Connector::updateConRoute( Pin* pin, QPointF thisPoint )
         line = m_conLineList.last();
         diagonal = line->isDiagonal();
         
-        line->sSetP2( togrid( thisPoint ).toPoint() );
+        line->sSetP2( toGrid( thisPoint ).toPoint() );
         
         m_lastindex = length-1;
 
