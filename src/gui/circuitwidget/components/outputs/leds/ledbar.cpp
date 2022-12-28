@@ -32,7 +32,7 @@ LibraryItem* LedBar::libraryItem()
 LedBar::LedBar( QObject* parent, QString type, QString id )
       : Component( parent, type, id )
 {
-    m_area = QRect( -8, -28, 16, 64 );
+    m_area = QRect(-8,-28, 16, 64 );
     m_graphical = true;
     m_color = QColor(0,0,0);
     m_size = 0;
@@ -74,7 +74,7 @@ void LedBar::createLeds( int c )
         Pin* pin1 = new Pin( 0, QPoint( 16,-32+8+i*8 ), ledid+"-pinN", 0, this );
         m_pin[index+1] = pin1;
 
-        m_led[i] = new LedSmd( this, "LEDSMD", ledid, QRectF(0, 0, 4, 4), pin0, pin1 );
+        m_led[i] = new LedSmd( this, "LEDSMD", ledid, QRectF( 0, 0, 4, 4), pin0, pin1 );
         m_led[i]->setParentItem(this);
         m_led[i]->setPos( 0,-28+2+i*8 );
         m_led[i]->setFlag( QGraphicsItem::ItemIsSelectable, false );
@@ -131,7 +131,7 @@ void LedBar::setSize( int size )
     if     ( size < m_size ) deleteLeds( m_size-size );
     else if( size > m_size ) createLeds( size-m_size );
     
-    m_area = QRect( -8, -28, 16, m_size*8 );
+    m_area = QRect(-8,-28, 16, m_size*8 );
 
     Circuit::self()->update();
 }
@@ -156,11 +156,22 @@ bool LedBar::grounded() { return m_led[0]->grounded(); }
 void LedBar::setGrounded( bool grounded )
 { for( int i=0; i<m_size; i++ ) m_led[i]->setGrounded( grounded ); }
 
-void LedBar::setHidden( bool hid, bool hidLabel )
+void LedBar::setHidden( bool hid, bool hidArea, bool hidLabel )
 {
-    Component::setHidden( hid, hidLabel );
-    if( !hid && m_led[0]->grounded() )
-    { for( int i=0; i<m_size; i++ ) m_pin[i*2+1]->setVisible( false ); }
+    Component::setHidden( hid, hidArea, hidLabel );
+    if( hid )
+    {
+        m_area = QRect(-6,-26, 4, m_size*8-4 ); // -2 pixels so boundingRect fits exactly
+        for( int i=0; i<m_size; i++ )
+            m_led[i]->setPos(-6,-28+2+i*8 );
+    }else{
+        m_area = QRect(-8,-28, 16, m_size*8 );
+        for( int i=0; i<m_size; i++ )
+        {
+            m_led[i]->setPos( 0,-28+2+i*8 );
+            if( m_led[0]->grounded() ) m_pin[i*2+1]->setVisible( false );
+        }
+    }
 }
 
 void LedBar::remove()

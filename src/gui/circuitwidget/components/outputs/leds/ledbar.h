@@ -42,7 +42,7 @@ class MAINMODULE_EXPORT LedBar : public Component
         void createLeds( int c );
         void deleteLeds( int d );
 
-        virtual void setHidden( bool hid, bool hidLabel=false );
+        virtual void setHidden( bool hid, bool hidArea=false, bool hidLabel=false ) override;
 
         virtual void remove() override;
 
