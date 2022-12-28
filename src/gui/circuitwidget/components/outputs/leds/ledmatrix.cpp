@@ -130,7 +130,7 @@ void LedMatrix::createMatrix()
         pinId.append( QString("-pinCol"+QString::number(col)));
         QPoint nodpos = QPoint( col*8, m_rows*8+8 );
         m_colPin[col] = new Pin( 270, nodpos, pinId, 1, this);
-        m_pin[m_rows+col-1] = m_colPin[col];
+        m_pin[m_rows+col] = m_colPin[col];
 }   }
 
 void LedMatrix::deleteMatrix()
