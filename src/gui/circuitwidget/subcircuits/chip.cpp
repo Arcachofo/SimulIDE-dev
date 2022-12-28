@@ -82,7 +82,7 @@ void Chip::initChip()
     QFile pfile( fileNameAbs );
     if( !pfile.exists() )   // Check if package file exist, if not try LS or no LS
     {
-        if( m_initialized ) return;
+        if( m_initialized ) { m_error = 1; return; }
         if     ( m_pkgeFile.endsWith("_LS.package")) m_pkgeFile.replace( "_LS.package", ".package" );
         else if( m_pkgeFile.endsWith(".package"))    m_pkgeFile.replace( ".package", "_LS.package" );
         else{
@@ -218,6 +218,15 @@ void Chip::setLogicSymbol( bool ls )
 void Chip::setBackground( QString bck )
 {
     m_background = bck;
+
+    if( bck.startsWith("color") )
+    {
+        bck.remove("color").remove("(").remove(")").remove(" ");
+        QStringList rgb = bck.split(",");
+        if( rgb.size() < 3 ) return;
+
+        m_color = QColor( rgb.at(0).toInt(), rgb.at(1).toInt(), rgb.at(2).toInt() );
+    }
     if( m_BackPixmap )
     {
         delete m_BackPixmap;
@@ -245,7 +254,7 @@ void Chip::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* 
     if( m_BackPixmap ) p->drawPixmap( m_area.x(), m_area.y(),m_width*8, m_height*8, *m_BackPixmap );
     else{
         p->drawRoundedRect( m_area, 1, 1);
-        if( !m_isLS )
+        if( !m_isLS && m_background.isEmpty() )
         {
             p->setPen( QColor( 170, 170, 150 ) );
             if( m_width == m_height ) p->drawEllipse( 4, 4, 4, 4);
