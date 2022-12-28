@@ -47,6 +47,8 @@ class MAINMODULE_EXPORT LedRgb : public Component, public eElement
         void setComCathode( bool ct );
 
         virtual void stamp();
+
+        virtual void setHidden( bool hid, bool hidArea=false, bool hidLabel=false ) override;
         
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
 

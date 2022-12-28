@@ -34,9 +34,9 @@ LedRgb::LedRgb( QObject* parent, QString type, QString id )
 {
     m_graphical = true;
     m_color = QColor(0,0,0);
-    bright[0] = 0;
-    bright[1] = 0;
-    bright[2] = 0;
+    bright[0] = 15;
+    bright[1] = 15;
+    bright[2] = 15;
 
     setComCathode( true );
 
@@ -100,12 +100,12 @@ void LedRgb::updateStep()
 
     for( int i=0; i<3; ++i )
     {
-        double brg = m_led[i]->brightness();
+        double brg = m_led[i]->brightness()*255+15;
         m_led[i]->updateBright();
         m_warning |= m_led[i]->overCurrent() > 1.5;
         m_crashed |= m_led[i]->overCurrent() > 2;
-        bright[i] = m_led[i]->brightness();
-        if( bright[i] > 1 ) bright[i] = 1;
+        bright[i] = m_led[i]->brightness()*255+15;
+        if( bright[i] > 255 ) bright[i] = 255;
         updt |= (brg != bright[i]) | m_warning;
     }
     if( updt ) update();
@@ -175,6 +175,16 @@ void LedRgb::setRes_B( double resist )
     m_led[2]->setRes( resist );
 }
 
+void LedRgb::setHidden( bool hid, bool hidArea, bool hidLabel )
+{
+    Component::setHidden( hid, hidArea, hidLabel );
+    if( hid ) m_area = QRect(-8, -8, 16, 16 ); // -2 pixels so boundingRect fits exactly
+    else{
+        if( m_commonCathode ) m_area = QRect(-8, -10, 20, 20 );
+        else                  m_area = QRect(-12, -10, 20, 20 );
+    }
+}
+
 void LedRgb::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
 {
     Component::paint( p, option, widget );
@@ -194,7 +204,7 @@ void LedRgb::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget
         color = QColor( Qt::white );
         pen.setColor( color );
     }else{
-        color = QColor( 255*bright[0], 255*bright[1], 255*bright[2] );
+        color = QColor( bright[0], bright[1], bright[2] );
     }
     p->setPen( pen );
     p->drawRoundedRect( m_area, 2, 2 );
