@@ -26,7 +26,7 @@ class MAINMODULE_EXPORT ConnBase : public Component, public eElement
 
         virtual void registerEnode( eNode*, int n=-1 ) override;
 
-        virtual void setHidden( bool hid, bool hidLabel=false ) override;
+        virtual void setHidden( bool hid, bool hidArea=false, bool hidLabel=false ) override;
 
         void createPins( int c );
         void deletePins( int d );

@@ -546,7 +546,7 @@ void Component::setflip()
     emit moved();
 }
 
-void Component::setHidden( bool hid, bool hidLabel )
+void Component::setHidden(bool hid, bool hidArea, bool hidLabel )
 {
     m_hidden = hid;
 

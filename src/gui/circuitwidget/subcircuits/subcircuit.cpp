@@ -300,7 +300,7 @@ void SubCircuit::loadSubCircuit( QString fileName )
                     }
                     comp->setParentItem( this );
 
-                    if( comp->isGraphical() )
+                    if( m_subcType >= Board && comp->isGraphical() )
                     {
                         QPointF pos = comp->boardPos();
                         if( pos == QPointF( -1e6, -1e6 ) ) // Don't show Components not placed
@@ -316,11 +316,12 @@ void SubCircuit::loadSubCircuit( QString fileName )
                             comp->moveTo( pos );
                             comp->setVisible( false );
                         }
+                        comp->setHidden( true, true, true ); // Boards: hide non graphical
                     }
-                    else comp->moveTo( QPointF(20, 20) );
-
-                    if( m_subcType > Logic ) comp->setHidden( true, true ); // Boards: hide non graphical
-                    else                     comp->setVisible( false );     // Not Boards: Don't show any component
+                    else{
+                        comp->moveTo( QPointF(20, 20) );
+                        comp->setVisible( false );     // Not Boards: Don't show any component
+                    }
 
                     if( comp->itemType() == "MCU" )
                     {
@@ -433,23 +434,24 @@ void SubCircuit::setLogicSymbol( bool ls )
 {
     if( !m_initialized ) return;
     if( m_isLS == ls ) return;
-    Chip::setLogicSymbol( ls );
 
-    if( m_isLS )
+    Chip::setLogicSymbol( ls );
+    if( m_isLS != ls ) return; // Change not done
+
+    if( m_isLS )               // Don't show unused Pins in LS
     {
         for( QString tNam : m_pinTunnels.keys() )
         {
             Tunnel* tunnel = m_pinTunnels.value( tNam );
             Pin* pin = tunnel->getPin();
-            if( pin->unused() )
-            {
-                pin->setVisible( false );
-                pin->setLabelText( "" );
-    }   }   }
-    /*if( m_subcType >= Board ){ // This doesn't work for "Tools" group
+            if( pin->unused() ) { pin->setVisible( false ); pin->setLabelText( "" ); }
+        }
+    }
+    if( m_subcType >= Board ) // Don't show graphical components in LS if Board
+    {
         for( Component* c : m_compList )
             if( c->isGraphical() ) c->setVisible( !m_isLS );
-    }*/
+    }
 }
 
 void SubCircuit::remove()

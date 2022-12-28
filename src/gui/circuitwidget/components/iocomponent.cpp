@@ -410,14 +410,14 @@ void IoComponent::remove()
     Component::remove();
 }
 
-void IoComponent::setHidden( bool hid, bool hidLabel )
+void IoComponent::setHidden( bool hid, bool hidArea, bool hidLabel )
 {
     if( m_graphical ){
         for( IoPin* pin : m_inPin )    pin->setVisible( !hid );
         for( IoPin* pin : m_outPin )   pin->setVisible( !hid );
         for( IoPin* pin : m_otherPin ) pin->setVisible( !hid );
     }
-    Component::setHidden( hid, hidLabel );
+    Component::setHidden( hid, hidArea, hidLabel );
 }
 
 void IoComponent::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget )

@@ -83,7 +83,7 @@ class MAINMODULE_EXPORT IoComponent : public Component
 
         virtual void remove() override;
 
-        virtual void setHidden( bool hid , bool hidLabel=false ) override;
+        virtual void setHidden( bool hid, bool hidArea=false, bool hidLabel=false ) override;
 
         virtual void paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget );
 

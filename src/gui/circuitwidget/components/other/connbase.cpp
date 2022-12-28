@@ -101,9 +101,9 @@ void ConnBase::setSize( int size )
     Circuit::self()->update();
 }
 
-void ConnBase::setHidden( bool hid, bool hidLabel )
+void ConnBase::setHidden( bool hid, bool hidArea, bool hidLabel )
 {
-    Component::setHidden( hid, hidLabel );
+    Component::setHidden( hid, hidArea, hidLabel );
 
     for( int i=0; i<m_size; i++ )
     {

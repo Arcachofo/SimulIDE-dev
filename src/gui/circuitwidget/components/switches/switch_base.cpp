@@ -51,12 +51,12 @@ void SwitchBase::updateStep()
         update();
 }   }
 
-void SwitchBase::setHidden( bool hide, bool hidLabel )
+void SwitchBase::setHidden( bool hide, bool hidArea, bool hidLabel )
 {
-    Component::setHidden( hide, hidLabel );
-
-    if( hide ) m_area = QRectF( -8,-2, 16, 4 );
-    else       m_area = QRectF( -13,-16*m_numPoles, 26, 16*m_numPoles );
+    Component::setHidden( hide, hidArea, hidLabel );
+    if  ( hidArea ) m_area = QRectF( 0, 0,-4,-4 );
+    else if( hide ) m_area = QRectF( -8,-2, 16, 4 );
+    else            m_area = QRectF( -13,-16*m_numPoles, 26, 16*m_numPoles );
 }
 
 void SwitchBase::onbuttonclicked()

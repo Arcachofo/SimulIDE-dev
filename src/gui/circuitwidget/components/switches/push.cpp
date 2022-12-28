@@ -43,7 +43,7 @@ new StringProp<Push>( "Key"       , tr("Key")            ,""      , this, &Push:
 }
 Push::~Push(){}
 
-void Push::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget )
+void Push::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
 {
     if( m_hidden ) return;
 

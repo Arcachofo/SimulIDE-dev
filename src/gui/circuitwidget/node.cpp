@@ -140,7 +140,7 @@ void Node::joinConns( int c0, int c1 )
     con1->remove();
 }
 
-void Node::setHidden( bool hid, bool )
+void Node::setHidden(bool hid, bool , bool )
 {
     m_hidden = hid;
 

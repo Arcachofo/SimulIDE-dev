@@ -101,7 +101,7 @@ class MAINMODULE_EXPORT Component : public CompBase, public QGraphicsItem, publi
         QString print();
 
         bool isHidden() { return m_hidden; }
-        virtual void setHidden( bool hid, bool hidLabel=false );
+        virtual void setHidden( bool hid, bool hidArea=false, bool hidLabel=false );
 
         virtual void setBackground( QString bck ) { m_background = bck;}
         //virtual void setSubcDir( QString dir ) {;}
