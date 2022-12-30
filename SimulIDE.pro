@@ -113,7 +113,7 @@ DEFINES += REVNO=\\\"$$REV_NO\\\"
 DEFINES += MAINMODULE_EXPORT=
 DEFINES += APP_VERSION=\\\"$$VERSION$$RELEASE\\\"
 
-BUILD_DATE = $$system(date +\"\\\"%d-%m-%y\\\"\")
+BUILD_DATE = $$system($(which date) +\"\\\"%d-%m-%y\\\"\")
 DEFINES += BUILDDATE=\\\"$$BUILD_DATE\\\"
 
 
@@ -158,7 +158,8 @@ message( "-----------------------------------")
 message( "    "                               )
 message( "    "$$TARGET_NAME for $$OS         )
 message( "    "                               )
-message( "          Qt version: "$$QT_VERSION )
+message( "    Date:      "$$BUILD_DATE        )
+message( "    Qt version: "$$QT_VERSION       )
 message( "    "                               )
 message( "    Destination Folder:"            )
 message( $$TARGET_PREFIX                      )
