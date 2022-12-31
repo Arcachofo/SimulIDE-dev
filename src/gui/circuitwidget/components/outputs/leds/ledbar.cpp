@@ -161,9 +161,9 @@ void LedBar::setHidden( bool hid, bool hidArea, bool hidLabel )
     Component::setHidden( hid, hidArea, hidLabel );
     if( hid )
     {
-        m_area = QRect(-6,-26, 4, m_size*8-4 ); // -2 pixels so boundingRect fits exactly
+        m_area = QRect( 2,-26, 4, m_size*8-4 ); // -2 pixels so boundingRect fits exactly
         for( int i=0; i<m_size; i++ )
-            m_led[i]->setPos(-6,-28+2+i*8 );
+            m_led[i]->setPos( 2,-28+2+i*8 );
     }else{
         m_area = QRect(-8,-28, 16, m_size*8 );
         for( int i=0; i<m_size; i++ )

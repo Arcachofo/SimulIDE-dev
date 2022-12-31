@@ -178,10 +178,10 @@ void LedRgb::setRes_B( double resist )
 void LedRgb::setHidden( bool hid, bool hidArea, bool hidLabel )
 {
     Component::setHidden( hid, hidArea, hidLabel );
-    if( hid ) m_area = QRect(-8, -8, 16, 16 ); // -2 pixels so boundingRect fits exactly
+    if( hid ) m_area = QRect(-10,-10, 20, 20 );
     else{
-        if( m_commonCathode ) m_area = QRect(-8, -10, 20, 20 );
-        else                  m_area = QRect(-12, -10, 20, 20 );
+        if( m_commonCathode ) m_area = QRect( -8,-10, 20, 20 );
+        else                  m_area = QRect(-12,-10, 20, 20 );
     }
 }
 

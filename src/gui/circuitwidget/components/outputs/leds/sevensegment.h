@@ -48,6 +48,8 @@ class MAINMODULE_EXPORT SevenSegment : public Component, public eElement
         virtual QStringList getEnumUids( QString ) override;
         virtual QStringList getEnumNames( QString ) override;
 
+        virtual void setHidden( bool hid, bool hidArea=false, bool hidLabel=false ) override;
+
         virtual void paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget );
 
     private:

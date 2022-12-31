@@ -269,6 +269,13 @@ void SevenSegment::createDisplay(int n )
     m_segment[n*8+7]->setPos( x+12, 19 );
 }
 
+void SevenSegment::setHidden( bool hid, bool hidArea, bool hidLabel )
+{
+    Component::setHidden( hid, hidArea, hidLabel );
+    if( hid ) m_area = QRect(-16,-24  , 32*m_numDisplays, 48 );
+    else      m_area = QRect(-18,-24-4, 32*m_numDisplays+4, 48+8 );
+}
+
 void SevenSegment::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
 {
     Component::paint( p, option, widget );

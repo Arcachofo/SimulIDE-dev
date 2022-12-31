@@ -247,17 +247,15 @@ void LedMatrix::setRes( double resist )
             m_led[row][col]->setRes( resist ); 
 }   }
 
-/*void LedMatrix::setHidden( bool hid, bool hidArea=false, bool hidLabel=false )
+void LedMatrix::setHidden( bool hid, bool hidArea, bool hidLabel )
 {
-    m_hidden = hid;
-
-    for( int row=0; row<m_rows; ++row ) m_rowPin[row]->setVisible( !hid );
-    for( int col=0; col<m_cols; ++col ) m_colPin[col]->setVisible( !hid );
-
-    if( hidLabel ){
-        setShowId( false );
-        m_showProperty = "";
-}   }*/
+    Component::setHidden( hid, hidArea, hidLabel );
+    if( hid ) m_area = QRect(-4,-4, m_cols*8, m_rows*8 );
+    else{
+        if( m_verticalPins ) m_area = QRect(-4,-8, m_cols*8,   m_rows*8+8 );
+        else                 m_area = QRect(-8,-8, m_cols*8+8, m_rows*8+8 );
+    }
+}
 
 void LedMatrix::remove()
 {

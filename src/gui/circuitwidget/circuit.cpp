@@ -188,9 +188,7 @@ void Circuit::loadStrDoc( QString &doc )
                     continue;
                 }
                 else if( prop.endsWith("/>") ) continue;
-                if( !mComp->setPropStr( propName, prop.toString() ) ){
-                    if( propName.toLower()  != "tristate" )               // TODELETE
-                        qDebug() << "Circuit: Wrong Property: "<<mComp->itemType()<<propName; }
+                mComp->setPropStr( propName, prop.toString() );
 
                 propName = "";
             }
@@ -322,24 +320,7 @@ void Circuit::loadStrDoc( QString &doc )
                 m_newComp = joint;
                 m_compMap[newUid] = joint;
             }
-            else if( type == "Plotter" ) ;   // Old Plotter widget
-            else if( type == "SerialTerm") ; // Old SerialTerm
             else{
-                bool oldArduino = false;
-                if( type == "Arduino" ){
-                    oldArduino = true;
-                    type = "Subcircuit";
-                    newUid = newUid.remove( "Arduino " );
-                }
-                else if( type == "AVR" ){
-                    type = "MCU";
-                    newUid = newUid.replace( "at", "" );
-                }
-                else if( type == "PIC" ){
-                    type = "MCU";
-                    newUid = newUid.replace( "pic", "p" );
-                }
-                else if( type == "Frequencimeter" ) type = "FreqMeter";
                 lastComp = NULL;
                 Component* comp = createItem( type, newUid );
                 if( comp )
@@ -348,13 +329,7 @@ void Circuit::loadStrDoc( QString &doc )
                     lastComp = comp;
                     if( m_pasting ) m_idMap[uid] = newUid;
 
-                    Mcu* mcu = NULL;
-                    if( oldArduino )
-                    {
-                        SubCircuit* subci = static_cast<SubCircuit*>(comp);
-                        mcu = static_cast<Mcu*>( subci->getMainComp() );
-                    }
-                    else if( comp->itemType() == "Subcircuit")
+                    if( comp->itemType() == "Subcircuit")
                     {
                         ShieldSubc* shield = static_cast<ShieldSubc*>(comp);
                         if( shield->subcType() >= Chip::Shield ) shieldList.append( shield );
@@ -364,22 +339,7 @@ void Circuit::loadStrDoc( QString &doc )
                     for( QStringRef prop : properties )
                     {
                         if( propName.isEmpty() ) { propName = prop.toString(); continue; }
-                        QString value = prop.toString();
-                        if( !comp->setPropStr( propName, value ) ) // SUBSTITUTIONS
-                        {
-                            if( propName == "Propagation_Delay_ns") { propName = "Tpd_ps"; value.append("000"); }
-                            else                                    Component::substitution( propName );
-
-                            if( !comp->setPropStr( propName, value ) )
-                            {
-                                bool ok = false;
-                                if( oldArduino && mcu ) ok = mcu->setPropStr( propName, value );
-                                if( !ok ){
-                                    if( propName.toLower()  != "tristate"
-                                     && propName.toLower()  != "rndpd" )   // TODELETE
-                                        qDebug() << "Circuit: Wrong Property: "<<type<<newUid<<propName<<value;}
-                            }
-                        }
+                        comp->setPropStr( propName, prop.toString() );
                         propName = "";
                     }
                     int number = comp->objectName().split("-").last().toInt();

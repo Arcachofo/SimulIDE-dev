@@ -46,7 +46,7 @@ class MAINMODULE_EXPORT LedMatrix : public Component, public eElement
         virtual void stamp() override;
         virtual void remove() override;
 
-        //virtual void setHidden( bool hid, bool hidArea=false, bool hidLabel=false ) override;
+        virtual void setHidden( bool hid, bool hidArea=false, bool hidLabel=false ) override;
 
         virtual QStringList getEnumUids( QString ) override;
         virtual QStringList getEnumNames( QString ) override;

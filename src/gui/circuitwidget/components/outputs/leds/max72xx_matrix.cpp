@@ -197,6 +197,13 @@ void Max72xx_matrix::setColorStr( QString color )
         setValLabelText( m_enumNames.at( m_ledColor ) );
 }
 
+void Max72xx_matrix::setHidden( bool hid, bool hidArea, bool hidLabel )
+{
+    Component::setHidden( hid, hidArea, hidLabel );
+    if( hid ) m_area = QRectF(-32,-40, 64*m_numDisplays,     64 );
+    else      m_area = QRectF(-36,-44, 4+64*m_numDisplays+4, 88 );
+}
+
 void Max72xx_matrix::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
 {
     Component::paint( p, option, widget );

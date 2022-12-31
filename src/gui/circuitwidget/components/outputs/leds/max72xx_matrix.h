@@ -33,6 +33,8 @@ class MAINMODULE_EXPORT Max72xx_matrix : public LogicComponent
         virtual void voltChanged() override;
         virtual void updateStep() override;
 
+        virtual void setHidden( bool hid, bool hidArea=false, bool hidLabel=false ) override;
+
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
 
     private:
