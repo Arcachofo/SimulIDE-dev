@@ -629,7 +629,10 @@ void EditorWidget::createToolBars()
     fileButton->setIcon( QIcon(":/lastfiles.svg") );
     fileButton->setPopupMode( QToolButton::InstantPopup );
 
+    double fs = MainWindow::self()->fontScale()*20;
+
     m_editorToolBar = new QToolBar( this );
+    m_editorToolBar->setIconSize( QSize( fs, fs ) );
     m_editorToolBar->addWidget( settingsButton );
     QWidget* spacer = new QWidget();
     spacer->setFixedWidth( 15 );
@@ -644,16 +647,19 @@ void EditorWidget::createToolBars()
     m_editorToolBar->addSeparator();
 
     m_findToolBar = new QToolBar( this );
+    m_findToolBar->setIconSize( QSize( fs, fs ) );
     m_findToolBar->addAction(findQtAct);
     m_findToolBar->addSeparator();
 
     m_compileToolBar = new QToolBar( this );
+    m_compileToolBar->setIconSize( QSize( fs, fs ) );
     m_compileToolBar->addAction(compileAct);
     m_compileToolBar->addAction(loadAct);
     m_compileToolBar->addSeparator();
     m_compileToolBar->addAction(debugAct);
 
     m_debuggerToolBar = new QToolBar( this );
+    m_debuggerToolBar->setIconSize( QSize( fs, fs ) );
     m_debuggerToolBar->addAction(stepAct);
     m_debuggerToolBar->addAction(stepOverAct);
     m_debuggerToolBar->addAction(runAct);

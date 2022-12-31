@@ -170,8 +170,8 @@ void CircuitWidget::createToolBars()
 {
     m_circToolBar.setObjectName( "m_circToolBar" );
 
-    //double fs = MainWindow::self()->fontScale();
-    //m_circToolBar.setIconSize( QSize(32,32) );
+    double fs = MainWindow::self()->fontScale()*20;
+    m_circToolBar.setIconSize( QSize( fs, fs ) );
 
     m_circToolBar.addAction( settAppAct );
     QWidget* spacer = new QWidget();
