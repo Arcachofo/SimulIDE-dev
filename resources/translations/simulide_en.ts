@@ -665,10 +665,6 @@ p, li { white-space: pre-wrap; }
         <source>Save as Image</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Zoom to Fit</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>CircuitWidget</name>
@@ -796,6 +792,30 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Circuits (*.sim1);;All files (*.*)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Zoom to fit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Zoom Circuit to fit all components</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Zoom to selected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Zoom Circuit to fit all selected components</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Zoom to Scale 1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Zoom Circuit to Scale 1:1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1042,10 +1062,6 @@ p, li { white-space: pre-wrap; }
         <source>Cut</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Group</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>ComponentPlugins</name>
@@ -1087,6 +1103,45 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Size</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Csource</name>
+    <message>
+        <source>Controlled Source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sources</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Main</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Current Source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Current Controlled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use Control Pins</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Gain</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Current</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1567,14 +1622,6 @@ Do you want to save your changes?
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>E&amp;xit</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Exit the application</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Cu&amp;t	Ctrl+X</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1742,6 +1789,10 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Error Loading Compiler at:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Time us: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1939,10 +1990,6 @@ Can&apos;t find file:
         <source>Logic/Memory</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Main</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>FlipFlopT</name>
@@ -2055,10 +2102,6 @@ Can&apos;t find file:
 </context>
 <context>
     <name>Gate</name>
-    <message>
-        <source>Randomize PD</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>Initial High State</source>
         <translation type="unfinished"></translation>
@@ -2375,11 +2418,15 @@ Can&apos;t find file:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Electric</source>
+        <source>Export</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Logic Threshold</source>
+        <source>Base Time Step</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export at pause</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2427,6 +2474,18 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Condition</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export Data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save Circuit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VCD files (*.vcd);;All files (*.*)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2936,6 +2995,10 @@ Can&apos;t find file:
         <source>Logic Symbol</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>EEPROM persitent</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>McuMonitor</name>
@@ -3165,11 +3228,11 @@ Can&apos;t find file:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Show Supply Pins</source>
+        <source>Switch Supply Pins</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Switch Supply Pins</source>
+        <source>Use Supply Pins</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3517,12 +3580,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Error:
-Not valid Package file:
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Rectifiers</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3584,6 +3641,26 @@ Not valid Package file:
     </message>
     <message>
         <source>White</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cpu</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Producer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>CMOS</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Single cycle I/O</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Interrupt Vector 0xFF</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3805,54 +3882,6 @@ Not valid Package file:
     </message>
     <message>
         <source>Rectifiers</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>Scripted</name>
-    <message>
-        <source>Scripted</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Logic/Arithmetic</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Main</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Invert Outputs</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Script</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Script Editor</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Evaluate Script</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Electric</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Load script</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Save script</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot write file %1:
-%2.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4482,6 +4511,37 @@ Do you want to save your changes?
     </message>
 </context>
 <context>
+    <name>Transformer</name>
+    <message>
+        <source>Transformer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reactive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Main</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Coupling Coefficient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Base Inductance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Primary</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Secondary</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Triac</name>
     <message>
         <source>Triac</source>
@@ -4705,6 +4765,14 @@ Do you want to save your changes?
         <source>Wav files (*.wav);;All files (*.*)</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Bipolar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Floating</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>XorGate</name>
@@ -4734,69 +4802,6 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Edges</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>Z80CPU</name>
-    <message>
-        <source>Z80CPU</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Micro/Z80</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Zilog</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>NEC</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ST</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Main</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>External clock source</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Frequency</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Producer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>CMOS</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Single cycle I/O</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Interrupt Vector 0xFF</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Electric</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Edges</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Open Z80CPU Monitor</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
