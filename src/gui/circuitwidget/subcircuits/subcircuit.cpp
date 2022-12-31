@@ -29,6 +29,7 @@ QString SubCircuit::m_subcDir = "";
 Component* SubCircuit::construct( QObject* parent, QString type, QString id )
 {
     m_error = 0;
+    m_subcDir = "";
 
     QString name;
     QStringList list = id.split("-");
@@ -42,18 +43,14 @@ Component* SubCircuit::construct( QObject* parent, QString type, QString id )
         n.toInt(&ok);
         if( ok ) name = list.at( 1 );
     }
-
-    QString pkgeFile;
-    QString subcFile;
     QString dataFile = ComponentSelector::self()->getXmlFile( name );
-    QDir circuitDir  = QFileInfo( Circuit::self()->getFilePath() ).absoluteDir();
 
-    if( dataFile == "" )
+    if( dataFile == "" ) // Component is not in SimulIDE, search in Circuit folder
     {
+        QDir circuitDir  = QFileInfo( Circuit::self()->getFilePath() ).absoluteDir();
         m_subcDir = circuitDir.absoluteFilePath( "data/"+name );
-        pkgeFile = m_subcDir+"/"+name+".package";
-        subcFile = m_subcDir+"/"+name+".sim1";
-    }else{
+    }
+    else{
         QDomDocument domDoc = fileToDomDoc( dataFile, "SubCircuit::construct");
         if( domDoc.isNull() ) return NULL; // m_error = 1;
 
@@ -67,8 +64,7 @@ Component* SubCircuit::construct( QObject* parent, QString type, QString id )
             QDomNode    node    = itemSet.firstChild();
 
             QString folder = "";
-            if( itemSet.hasAttribute( "folder") )
-                folder = itemSet.attribute( "folder" );
+            if( itemSet.hasAttribute("folder") ) folder = itemSet.attribute("folder");
 
             while( !node.isNull() )         // Find the "package", for example 628A is package: 627A, Same pins
             {
@@ -76,78 +72,48 @@ Component* SubCircuit::construct( QObject* parent, QString type, QString id )
 
                 if( element.attribute("name") == name )
                 {
-                    QDir dataDir( dataFile );
-                    dataDir.cdUp();             // Indeed it doesn't cd, just take out file name
-
-                    QString path = "";
-
-                    if( folder != "" )
-                    {
-                        path = folder+"/"+name+"/"+name;
-                        pkgeFile = dataDir.filePath( path+".package" );
-                        subcFile = dataDir.filePath( path+".sim1" );
-                    }
-                    if( element.hasAttribute( "folder") )
-                    {
-                        path = element.attribute( "folder" )+"/"+name+"/"+name;
-                        pkgeFile = dataDir.filePath( path+".package" );
-                        subcFile = dataDir.filePath( path+".sim1" );
-                    }
-
-                    if( element.hasAttribute( "package") )
-                        pkgeFile = dataDir.filePath( element.attribute( "package" ) );
-
-                    if( !pkgeFile.endsWith( ".package" ) ) pkgeFile += ".package" ;
-
-                    if( element.hasAttribute( "subcircuit") )
-                    {
-                        subcFile = dataDir.filePath( element.attribute( "subcircuit" ) );
-                        if( subcFile.endsWith( ".simu" ) ) subcFile= changeExt( subcFile, ".sim1" );
-                        if( !subcFile.endsWith( ".sim1" )) subcFile += ".sim1" ;
-                    }
-                    if( !QFile::exists( subcFile) ) subcFile = changeExt( subcFile, ".simu" );
-
-                    dataDir.setPath( subcFile );
-                    dataDir.cdUp();             // Indeed it doesn't cd, just take out file name
-                    m_subcDir = dataDir.absolutePath();
-
+                    if( element.hasAttribute("folder") ) folder = element.attribute("folder");
+                    QFileInfo fi( dataFile );
+                    m_subcDir = fi.absolutePath()+"/"+folder+"/"+name;
                     found = true;
                 }
-                if( !found ) node = node.nextSibling();
-                else break;
+                if( found ) break;
+                node = node.nextSibling();
             }
-            if( !found ) rNode = rNode.nextSibling();
-            else break;
+            if( found ) break;
+            rNode = rNode.nextSibling();
         }
     }
-    QString fileNameAbs = circuitDir.absoluteFilePath( pkgeFile );
+    if( m_subcDir.isEmpty() ){
+        qDebug() << "SubCircuit::construct: No package files found for"+name+"\n";
+        return NULL;
+    }
+    QString pkgeFile  = m_subcDir+"/"+name+".package";
+    QString pkgFileLS = m_subcDir+"/"+name+"_LS.package";
+    QString subcFile  = m_subcDir+"/"+name+".sim1";
 
-    QFile pfile( fileNameAbs );
-    if( !pfile.exists() )   // Check if package file exist, if not try LS or no LS
-    {
-        if     ( pkgeFile.endsWith("_LS.package")) pkgeFile.replace( "_LS.package", ".package" );
-        else if( pkgeFile.endsWith(".package"))    pkgeFile.replace( ".package", "_LS.package" );
-        else{
-            //m_error = 1;
-            qDebug() << "SubCircuit::construct: No package files found.\n";
+    bool dip = QFile::exists( pkgeFile );
+    bool ls  = QFile::exists( pkgFileLS );
+
+    if( !dip ){        // Check if package file exist, if not try LS
+        if( !ls ){
+            qDebug() << "SubCircuit::construct: No package files found for"+name+"\n";
             return NULL;
         }
-        fileNameAbs = circuitDir.absoluteFilePath( pkgeFile );
+        pkgeFile = pkgFileLS;
     }
-
-    QDomDocument domDoc1 = fileToDomDoc( fileNameAbs, "SubCircuit::construct" );
+    QDomDocument domDoc1 = fileToDomDoc( pkgeFile, "SubCircuit::construct" );
     QDomElement   root1  = domDoc1.documentElement();
 
     QString subcTyp = "None";
     if( root1.hasAttribute("type") ) subcTyp = root1.attribute("type").remove("subc");
 
     SubCircuit* subcircuit = NULL;
-    if     ( subcTyp == "None"  )  subcircuit = new SubCircuit( parent, type, id );
-    else if( subcTyp == "Logic" )  subcircuit = new LogicSubc( parent, type, id );
-    else if( subcTyp == "Board" )  subcircuit = new BoardSubc( parent, type, id );
+    if     ( subcTyp == "Logic"  ) subcircuit = new LogicSubc( parent, type, id );
+    else if( subcTyp == "Board"  ) subcircuit = new BoardSubc( parent, type, id );
     else if( subcTyp == "Shield" ) subcircuit = new ShieldSubc( parent, type, id );
     else if( subcTyp == "Module" ) subcircuit = new ModuleSubc( parent, type, id );
-    else return NULL; //m_error = 1;
+    else                           subcircuit = new SubCircuit( parent, type, id );
 
     if( m_error != 0 )
     {
@@ -158,15 +124,18 @@ Component* SubCircuit::construct( QObject* parent, QString type, QString id )
         subcircuit->m_pkgeFile = pkgeFile;
         subcircuit->initChip();
         if( m_error == 0 ) subcircuit->loadSubCircuit( subcFile );
+
+        if( dip && ls ) // If no both files exist, this prop. is not needed
+        subcircuit->addPropGroup( { tr("Main"), {
+        new BoolProp<SubCircuit>( "Logic_Symbol", tr("Logic Symbol"),"", subcircuit, &SubCircuit::logicSymbol, &SubCircuit::setLogicSymbol ),
+        }} );
         Circuit::self()->m_createSubc = false;
     }
-
     if( m_error > 0 )
     {
         Circuit::self()->compList()->removeOne( subcircuit );
         subcircuit->deleteLater();
-        subcircuit = NULL;
-        m_error = 0;
+        return NULL;
     }
     return subcircuit;
 }
@@ -186,10 +155,6 @@ SubCircuit::SubCircuit( QObject* parent, QString type, QString id )
 {
     m_icColor = QColor( 20, 30, 60 );
     m_mainComponent = NULL;
-
-    addPropGroup( { tr("Main"), {
-    new BoolProp<SubCircuit>( "Logic_Symbol", tr("Logic Symbol"),"", this, &SubCircuit::logicSymbol, &SubCircuit::setLogicSymbol ),
-    }} );
 }
 SubCircuit::~SubCircuit(){}
 
@@ -257,8 +222,8 @@ void SubCircuit::loadSubCircuit( QString fileName )
                 startPinId = startPinId.replace("Pin-", "Pin_"); // Old TODELETE
                 endPinId   =   endPinId.replace("Pin-", "Pin_"); // Old TODELETE
 
-                Pin* startPin = circ->m_LdPinMap.value( startPinId ); //getConPin( startPinId );
-                Pin* endPin   = circ->m_LdPinMap.value( endPinId ); //getConPin( endPinId );
+                Pin* startPin = circ->m_LdPinMap.value( startPinId );
+                Pin* endPin   = circ->m_LdPinMap.value( endPinId );
 
                 if( startPin && endPin )    // Create Connector
                 {
@@ -282,20 +247,7 @@ void SubCircuit::loadSubCircuit( QString fileName )
                     for( QStringRef prop : properties )
                     {
                         if( propName.isEmpty() ) { propName = prop.toString(); continue; }
-                        QString value = prop.toString();
-
-                        if( !graphProps.contains( propName ) ){
-                            if( !comp->setPropStr( propName, value ) ) // SUBSTITUTIONS
-                            {
-                                if( propName == "Propagation_Delay_ns") { propName = "Tpd_ps"; value.append("000"); } // ns to ps
-                                else                                    Component::substitution( propName );
-
-                                if( !comp->setPropStr( propName, value ) ){
-                                    if( propName.toLower()  != "tristate"
-                                     && propName.toLower()  != "rndpd" )   // TODELETE
-                                        qDebug() << "SubCircuit:"<<m_name<<m_id<<"Wrong Property: "<<type<<uid<<propName<<value; }
-                            }
-                        }
+                        if( !graphProps.contains( propName ) ) comp->setPropStr( propName, prop.toString() );
                         propName = "";
                     }
                     comp->setParentItem( this );
@@ -325,7 +277,7 @@ void SubCircuit::loadSubCircuit( QString fileName )
 
                     if( comp->itemType() == "MCU" )
                     {
-                        comp->removeProperty( "Main", "Logic_Symbol" );
+                        comp->removeProperty("Logic_Symbol");
                         Mcu* mcu = (Mcu*)comp;
                         QString program = mcu->program();
                         if( !program.isEmpty() ) mcu->load( m_subcDir+"/"+program );
@@ -333,6 +285,18 @@ void SubCircuit::loadSubCircuit( QString fileName )
                     if( comp->isMainComp() )
                     {
                         m_mainComponent = comp; // This component will add it's Context Menu
+                        /*if( m_getProps ) /// Does not work: Properties need to be copied
+                        {
+                            QList<propGroup> props = comp->propeties();
+                            for( propGroup pg : props )
+                            {
+                                if( pg.name.startsWith("Hid") ) continue;
+                                if( pg.name.startsWith("Mai") ) continue;
+                                if( pg.name.startsWith("Comp") ) continue;
+                                if( pg.name.startsWith("Boar") ) continue;
+                                addPropGroup( pg );
+                            }
+                        }*/
                         //qDebug() <<comp->itemType();
                     }
                     m_compList.append( comp );
@@ -458,7 +422,6 @@ void SubCircuit::remove()
 {
     for( Component* comp : m_compList )
     {
-        //if( comp->itemType()=="Node" ) continue;
         comp->setParentItem( NULL );
         Circuit::self()->removeComp( comp );
     }
