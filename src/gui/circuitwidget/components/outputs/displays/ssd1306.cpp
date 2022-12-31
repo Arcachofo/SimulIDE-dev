@@ -85,7 +85,6 @@ Ssd1306::~Ssd1306(){}
 
 void Ssd1306::stamp()
 {
-    //TwiModule::stamp();
     setMode( TWI_SLAVE );
 }
 
@@ -103,21 +102,6 @@ void Ssd1306::initialize()
     updateStep();
 }
 
-/*void Ssd1306::voltChanged()                 // Called when En Pin changes
-{
-    if( m_pinRst.getVolt()<2.5 ) reset();            // Reset Pin is Low
-    else                         m_reset = false;
-
-    bool sa0 = (m_pinDC.getVolt()>2.5);
-
-    m_address = 0b00111100; // 60
-    if( sa0 ) m_address++;
-
-    eI2C::voltChanged();
-
-    //m_input = 0;
-}*/
-
 void Ssd1306::I2Cstop()
 {
     TwiModule::I2Cstop();
@@ -125,7 +109,6 @@ void Ssd1306::I2Cstop()
     m_command = false;
     m_data    = false;
     m_continue = false;
-    //m_readBytes = 0;
 }
 
 void Ssd1306::readByte()
@@ -220,7 +203,7 @@ void Ssd1306::proccessCommand()
         }
         else if( m_lastCommand == 0xA3 ) // A3 163 Set Vertical Scroll Area
         {
-            ;
+            ; /// TODO
         }
         m_readBytes--;
         return;
@@ -295,8 +278,8 @@ void Ssd1306::clearLcd()
 
 void Ssd1306::clearDDRAM() 
 {
-    for(int row=0;row<8;row++) 
-        for( int col=0;col<128;col++ ) 
+    for( int row=0; row<8; row++ )
+        for( int col=0; col<128; col++ )
             m_aDispRam[col][row] = 0;
 }
 
@@ -352,8 +335,6 @@ void Ssd1306::reset()
     m_scroll  = false;
     m_scrollR = false;
     m_scrollV = false;
-
-    //m_reset = true;
 
     clearLcd();
 }
@@ -426,7 +407,7 @@ void Ssd1306::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidge
     QPen pen( Qt::black, 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin );
     p->setPen( pen );
     
-    p->setBrush( QColor(50, 70, 100) );
-    p->drawRoundedRect( m_area,2,2 );
-    p->drawImage(-64,-42,*m_pdisplayImg );
+    p->setBrush( QColor( 50, 70, 100 ) );
+    p->drawRoundedRect( m_area, 2, 2 );
+    p->drawImage(-64,-42, *m_pdisplayImg );
 }

@@ -362,8 +362,11 @@ void Pin::paint( QPainter* painter, const QStyleOptionGraphicsItem* option, QWid
 {
     if( !isVisible() ) return;
     //m_PinChanged = false;
-    //painter->setBrush( Qt::red );
-    //painter->drawRect( boundingRect() );
+
+    /*QPen pen0( m_color[0], 0, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin );
+    painter->setPen(pen0);
+    painter->setBrush( Qt::red );
+    painter->drawRect( boundingRect() );*/
 
     if( m_overScore > -1 )
     {

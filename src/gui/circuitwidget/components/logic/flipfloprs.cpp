@@ -44,7 +44,7 @@ FlipFlopRS::FlipFlopRS( QObject* parent, QString type, QString id )
     setClockInv( false );                        //Don't Invert Clock pin
     setTrigger( Clock );
 
-    removeProperty(tr("Main"),"UseRS");
+    removeProperty("UseRS");
 }
 FlipFlopRS::~FlipFlopRS(){}
 

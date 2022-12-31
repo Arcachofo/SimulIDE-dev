@@ -111,8 +111,8 @@ void Chip::initChip()
         m_ePin.clear();
         m_pin.clear();
 
-        if( root.hasAttribute("type") ) setSubcTypeStr( root.attribute( "type") );
-        if( root.hasAttribute("background") ) setBackground( root.attribute( "background") );
+        if( root.hasAttribute("type") ) setSubcTypeStr( root.attribute("type") );
+        if( root.hasAttribute("background") ) setBackground( root.attribute("background") );
         if( m_subcType >= Board ) setTransformOriginPoint( toGrid( boundingRect().center()) );
         if( root.hasAttribute("name"))
         {

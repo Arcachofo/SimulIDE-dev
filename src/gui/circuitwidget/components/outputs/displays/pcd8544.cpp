@@ -221,7 +221,6 @@ void Pcd8544::reset()
 void Pcd8544::remove()
 {
     delete m_pdisplayImg;
-    
     Component::remove();
 }
 

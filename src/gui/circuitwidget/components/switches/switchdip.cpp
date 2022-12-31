@@ -88,7 +88,6 @@ void SwitchDip::updateStep()
         int pin = i*2;
         m_pin[pin]->stampAdmitance( admit );
         m_pin[pin+1]->stampAdmitance( admit );
-       
        i++;
     }
     m_changed = false;
@@ -118,8 +117,7 @@ void SwitchDip::setState( int state )
 {
     if( m_state == state ) return;
     m_state = state;
-    
-    int i = 0;
+
     for( QPushButton* button : m_buttons ) 
     {
         bool switchState = state&1;
@@ -128,9 +126,7 @@ void SwitchDip::setState( int state )
         button->setChecked( switchState );
         
         if( switchState  ) button->setIcon(QIcon(":/switchbut.png"));
-        else               button->setIcon(QIcon(":/stop.png"));
-        
-        i++;
+        else               button->setIcon(QIcon(":/stop.svg"));
     }
     m_changed = true;
 }
@@ -146,13 +142,9 @@ void SwitchDip::createSwitches( int c )
         int index = i*2;
         QString butId = m_id + QString("-switch"+QString::number(i));
         QPushButton* button = new QPushButton( );
-        button->setMaximumSize( 6,6 );
-        button->setGeometry(-6,-6,6,6);
-        QFont font = button->font();
-        font.setPixelSize(5);
-        button->setFont(font);
-        //button->setText( "O");
-        button->setIcon(QIcon(":/stop.svg"));
+        button->setMaximumSize( 6, 6 );
+        button->setGeometry(-6,-6, 6, 6);
+
         button->setCheckable( true );
         button->setChecked( true );
         button->setIcon(QIcon(":/switchbut.png"));
@@ -209,7 +201,7 @@ void SwitchDip::setSize( int size )
     if     ( size < m_size ) deleteSwitches( m_size-size );
     else if( size > m_size ) createSwitches( size-m_size );
     
-    m_area = QRectF( -3, -28, 14, m_size*8 );
+    m_area = QRectF(-3,-28, 14, m_size*8 );
 
     Circuit::self()->update();
 }

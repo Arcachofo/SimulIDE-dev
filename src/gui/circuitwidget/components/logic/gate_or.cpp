@@ -35,7 +35,7 @@ new BoolProp<OrGate>( "Open_Collector", tr("Open Drain")   ,""       , this, &Or
     addPropGroup( { tr("Electric"), IoComponent::inputProps()+IoComponent::outputProps() } );
     addPropGroup( { tr("Edges")   , Gate::edgeProps() } );
 
-    removeProperty(tr("Edges"),"pd_n");
+    removeProperty("pd_n");
 }
 OrGate::~OrGate(){}
 

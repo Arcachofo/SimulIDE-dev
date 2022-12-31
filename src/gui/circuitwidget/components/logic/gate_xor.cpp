@@ -33,7 +33,7 @@ new BoolProp<XorGate>( "Open_Collector", tr("Open Drain")   ,"", this, &XorGate:
     addPropGroup( { tr("Electric"), IoComponent::inputProps()+IoComponent::outputProps() } );
     addPropGroup( { tr("Edges")   , Gate::edgeProps() } );
 
-    removeProperty(tr("Edges"),"pd_n");
+    removeProperty("pd_n");
 }
 XorGate::~XorGate(){}
 
