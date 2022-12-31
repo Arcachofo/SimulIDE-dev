@@ -79,7 +79,7 @@ new IntProp   <SubPackage>( "Height"      ,tr("Height")      ,"_Cells", this, &S
 new StringProp<SubPackage>( "Name"        ,tr("Name")        ,""      , this, &SubPackage::name,       &SubPackage::setName ),
 new StringProp<SubPackage>( "Package_File",tr("Package File"),""      , this, &SubPackage::package,    &SubPackage::setPackage),
 new StringProp<SubPackage>( "Background"  ,tr("Background")  ,""      , this, &SubPackage::background, &SubPackage::setBackground ),
-new BoolProp  <SubPackage>( "Logic_Symbol",tr("Logic Symbol"),""      , this, &SubPackage::logicSymbol, &SubPackage::setLogicSymbol ),
+new BoolProp  <SubPackage>( "Logic_Symbol",tr("Logic Symbol"),""      , this, &SubPackage::logicSymbol,&SubPackage::setLogicSymbol ),
     }} );
 }
 SubPackage::~SubPackage(){}
@@ -177,6 +177,7 @@ void SubPackage::mousePressEvent( QGraphicsSceneMouseEvent* event )
         m_fakePin = false;
 
         m_eventPin = new Pin( m_angle, QPoint(m_p1X,m_p1Y ), "name", 0, this );
+        m_eventPin->setEnabled( false );
         m_eventPin->setFlag( QGraphicsItem::ItemStacksBehindParent, false );
         m_eventPin->setPinId( "Id" );
         m_eventPin->setLabelColor( QColor( Qt::black ) );
@@ -380,6 +381,7 @@ void SubPackage::setHeight( int height )
 Pin* SubPackage::addPin( QString id, QString type, QString label, int pos, int xpos, int ypos, int angle, int length  )
 {
     Pin* pin = new Pin( angle, QPoint(xpos, ypos), m_id+"-"+id, pos-1, this ); // pos in package starts at 1
+    pin->setEnabled( false );
 
     QColor color = Qt::black;
     if( !m_isLS ) color = QColor( 250, 250, 200 );
