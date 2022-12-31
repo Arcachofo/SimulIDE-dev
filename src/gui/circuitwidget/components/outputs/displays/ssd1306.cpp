@@ -8,6 +8,7 @@
 #include "ssd1306.h"
 #include "itemlibrary.h"
 #include "simulator.h"
+#include "circuit.h"
 #include "iopin.h"
 
 #include "doubleprop.h"
@@ -20,7 +21,7 @@ Component* Ssd1306::construct( QObject* parent, QString type, QString id )
 LibraryItem* Ssd1306::libraryItem()
 {
     return new LibraryItem(
-        "Ssd1306",
+        "SSD1306",
         tr( "Displays" ),
         "ssd1306.png",
         "Ssd1306",
@@ -35,7 +36,9 @@ Ssd1306::Ssd1306( QObject* parent, QString type, QString id )
        //, m_pinCS ( 270, QPoint(-16, 48), id+"-PinCS"  , 0, this )
 {
     m_graphical = true;
-    m_area = QRectF( -70, -48, 140, 88 );
+    m_width = 128;
+    m_height = 64;
+    m_area = QRectF( -70, -m_height/2-16, m_width+12, m_height+24 );
     m_address = m_cCode = 0b00111100; // 0x3A - 60
 
     m_enumUids = QStringList()
@@ -76,9 +79,10 @@ Ssd1306::Ssd1306( QObject* parent, QString type, QString id )
     initialize();
 
     addPropGroup( { tr("Main"), {
-new StringProp<Ssd1306>( "Color"       , tr("Color")       ,""    ,this,&Ssd1306::colorStr,&Ssd1306::setColorStr, "enum" ),
-new IntProp   <Ssd1306>( "Control_Code",tr("I2C Address")  ,""    ,this,&Ssd1306::cCode,   &Ssd1306::setCcode,"uint" ),
-new DoubProp  <Ssd1306>( "Frequency"   ,tr("I2C Frequency"),"_KHz",this,&Ssd1306::freqKHz, &Ssd1306::setFreqKHz ),
+new StringProp<Ssd1306>( "Color"    ,tr("Color")        ,""    ,this,&Ssd1306::colorStr,&Ssd1306::setColorStr, "enum" ),
+new IntProp   <Ssd1306>( "Width"    ,tr("Width")        ,""    ,this,&Ssd1306::width,   &Ssd1306::setWidth,"uint" ),
+new IntProp   <Ssd1306>( "Height"   ,tr("Height")       ,""    ,this,&Ssd1306::height,  &Ssd1306::setHeight,"uint" ),
+new DoubProp  <Ssd1306>( "Frequency",tr("I2C Frequency"),"_KHz",this,&Ssd1306::freqKHz, &Ssd1306::setFreqKHz ),
     }} );
 }
 Ssd1306::~Ssd1306(){}
@@ -402,6 +406,34 @@ void Ssd1306::setColorStr( QString color )
         setValLabelText( m_enumNames.at( c ) );
 }
 
+void Ssd1306::setWidth( int w )
+{
+    if     ( w > 128 ) w = 128;
+    else if( w < 32  ) w = 32;
+    if( m_width == w ) return;
+    m_width = w;
+    updateSize();
+}
+
+void Ssd1306::setHeight( int h )
+{
+    if     ( h > 64 ) h = 64;
+    else if( h < 16 ) h = 16;
+    if( m_height == h ) return;
+    m_height = h;
+    updateSize();
+}
+
+void Ssd1306::updateSize()
+{
+    m_area = QRectF( -70, -m_height/2-16, m_width+12, m_height+24 );
+    m_clkPin->setPos( QPoint(-48, m_height/2+16) );
+    m_clkPin->isMoved();
+    m_pinSda->setPos( QPoint(-40, m_height/2+16) );
+    m_pinSda->isMoved();
+    Circuit::self()->update();
+}
+
 void Ssd1306::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
 {
     QPen pen( Qt::black, 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin );
@@ -409,5 +441,5 @@ void Ssd1306::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidge
     
     p->setBrush( QColor( 50, 70, 100 ) );
     p->drawRoundedRect( m_area, 2, 2 );
-    p->drawImage(-64,-42, *m_pdisplayImg );
+    p->drawImage(-64,-m_height/2-10, *m_pdisplayImg, 0, 0, m_width, m_height );
 }

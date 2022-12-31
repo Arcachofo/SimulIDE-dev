@@ -34,6 +34,12 @@ class MAINMODULE_EXPORT Ssd1306 : public Component, public TwiModule
         QString colorStr() { return m_enumUids.at((int)m_dColor ); }
         void setColorStr( QString color );
 
+        int width() { return m_width; }
+        void setWidth( int w );
+
+        int height() { return m_height; }
+        void setHeight( int h );
+
         virtual void initialize() override;
         virtual void stamp() override;
         virtual void updateStep() override;
@@ -51,6 +57,7 @@ class MAINMODULE_EXPORT Ssd1306 : public Component, public TwiModule
         void incrementPointer();
         void reset();
         void clearDDRAM();
+        void updateSize();
         
         QImage* m_pdisplayImg;    //Visual representation of the LCD
         dispColor m_dColor;
@@ -61,6 +68,9 @@ class MAINMODULE_EXPORT Ssd1306 : public Component, public TwiModule
         int m_mr;                 // Multiplex Ratio
         int m_fosc;               // Oscillator Frequency
         int m_frm;                // Frame Frequency
+
+        int m_width;
+        int m_height;
 
         int m_addrX;              // X RAM address
         int m_addrY;              // Y RAM address
