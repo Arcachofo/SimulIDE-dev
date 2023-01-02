@@ -133,7 +133,7 @@ void Simulator::timerEvent( QTimerEvent* e )  //update at m_timerTick rate (50 m
         m_lastStep = m_tStep;
         m_lastRefT = m_refTime;
     }
-    CircuitView::self()->setCircTime( m_tStep );
+    CircuitWidget::self()->setCircTime( m_tStep );
 }
 
 void Simulator::runCircuit()
@@ -215,7 +215,7 @@ void Simulator::resetSim()
     ///m_pauseCirc = false;
     m_realPsPF = 1;
 
-    CircuitView::self()->setCircTime( 0 );
+    CircuitWidget::self()->setCircTime( 0 );
     clearEventList();
     m_changedNode = NULL;
     m_voltChanged = NULL;
@@ -396,6 +396,8 @@ void Simulator::setPsPerSec( uint64_t psPs )
         fps = psPs;
     }
     m_timerTick = 1000/fps;  // in ms
+
+    CircuitWidget::self()->setTargetSpeed( 100*m_psPerSec/1e12 );
 }
 
 double Simulator::NLaccuracy() { return 1/pow(10,m_noLinAcc)/2; }

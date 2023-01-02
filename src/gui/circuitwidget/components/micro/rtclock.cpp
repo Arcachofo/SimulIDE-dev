@@ -24,11 +24,6 @@ void RtClock::initialize()
     m_tCount = 1;
     m_sCount = m_freqBase*2;
 
-    m_date = QDate::currentDate();
-    m_time = QTime::currentTime();
-    //m_time.setHMS( 0, 0, 0 );
-    //m_date.setDate( 0, 0, 0 );
-
     Simulator::self()->addEvent( m_halfPeriod, this );
 }
 
@@ -46,6 +41,12 @@ void RtClock::runEvent()
         if( m_time == QTime( 0, 0, 0 ) ) m_date = m_date.addDays( 1 );
     }
     Simulator::self()->addEvent( m_halfPeriod, this );
+}
+
+void RtClock::getCurrentTime()
+{
+    m_date = QDate::currentDate();
+    m_time = QTime::currentTime();
 }
 
 void RtClock::setFreq( uint64_t freq )

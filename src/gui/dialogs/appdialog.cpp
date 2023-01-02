@@ -9,6 +9,7 @@
 #include "mainwindow.h"
 #include "simulator.h"
 #include "circuit.h"
+#include "circuitwidget.h"
 
 AppDialog::AppDialog( QWidget* parent )
          : QDialog( parent )

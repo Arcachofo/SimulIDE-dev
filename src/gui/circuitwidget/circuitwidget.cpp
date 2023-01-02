@@ -16,6 +16,7 @@
 #include "circuit.h"
 #include "appdialog.h"
 #include "filebrowser.h"
+#include "infowidget.h"
 #include "about.h"
 #include "utils.h"
 
@@ -43,24 +44,31 @@ CircuitWidget::CircuitWidget( QWidget *parent  )
 
     m_verticalLayout.addWidget( &m_circToolBar );
 
-    m_splitter = new QSplitter( this );
-    m_splitter->setObjectName("CircuitSplitter");
-    m_splitter->setOrientation( Qt::Vertical );
-    m_verticalLayout.addWidget( m_splitter );
+    m_mainSplitter = new QSplitter( this );
+    m_mainSplitter->setObjectName("CircuitSplitter");
+    m_mainSplitter->setOrientation( Qt::Vertical );
+    m_verticalLayout.addWidget( m_mainSplitter );
 
-    m_splitter->addWidget( &m_circView );
-    m_splitter->addWidget( &m_outPane );
-    m_splitter->setSizes( {500, 100} );
+    m_infoWidget = new InfoWidget( this );
+    m_infoWidget->setTargetSpeed( 100 );
 
-    m_rateLabel = new QLabel( this );
-    QFont font( "Arial", 10, QFont::Normal );
+    m_panelSplitter = new QSplitter( this );
+    m_panelSplitter->setObjectName("Panelplitter");
+    m_panelSplitter->setOrientation( Qt::Horizontal );
+    m_panelSplitter->addWidget( m_infoWidget );
+    m_panelSplitter->addWidget( &m_outPane );
+    m_panelSplitter->setSizes( {170, 500} );
+
+    m_mainSplitter->addWidget( &m_circView );
+    m_mainSplitter->addWidget( m_panelSplitter );
+    m_mainSplitter->setSizes( {500, 100} );
+
+    QFont font( "Ubuntu", 10, QFont::Bold );
     double fontScale = MainWindow::self()->fontScale();
-    font.setPixelSize( int(10*fontScale) );
-    m_rateLabel->setFont( font );
-
+    font.setPixelSize( 14*fontScale );
     m_msgLabel  = new QLabel( this );
     m_msgLabel->setFont( font );
-    m_msgLabel->setMaximumSize( 200, 15 );
+    m_msgLabel->setMaximumSize( 200, 20*fontScale );
 
     createActions();
     updateRecentFileActions();
@@ -86,7 +94,7 @@ void CircuitWidget::clear()
         m_appPropW = NULL;
     }
     m_circView.clear();
-    m_circView.setCircTime( 0 );
+    setCircTime( 0 );
 }
 
 void CircuitWidget::createActions()
@@ -201,20 +209,23 @@ void CircuitWidget::createToolBars()
     m_circToolBar.addAction( zoomSelAct );
     m_circToolBar.addAction( zoomOneAct );
     spacer = new QWidget();
-    spacer->setFixedWidth( 15 );
+    spacer->setFixedWidth( 20 );
     m_circToolBar.addWidget( spacer );
     m_circToolBar.addSeparator();//..........................
+
     m_circToolBar.addAction( powerCircAct );
     m_circToolBar.addAction( pauseSimAct );
     m_circToolBar.addSeparator();//..........................
-    m_circToolBar.addWidget( m_rateLabel );
-    //m_circToolBar.addSeparator();
+
+    spacer = new QWidget();
+    spacer->setFixedWidth( 15 );
+    m_circToolBar.addWidget( spacer );
     m_circToolBar.addWidget( m_msgLabel );
 
-    QWidget* spacerWidget = new QWidget( this );
-    spacerWidget->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Preferred );
-    spacerWidget->setVisible( true );
-    m_circToolBar.addWidget( spacerWidget );
+    spacer = new QWidget( this );
+    spacer->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Preferred );
+    spacer->setVisible( true );
+    m_circToolBar.addWidget( spacer );
 
     m_infoMenu.addAction( infoAct );
     m_infoMenu.addAction( aboutAct );
@@ -311,7 +322,7 @@ void CircuitWidget::loadCirc( QString path )
 
         updateRecentFiles();
 
-        m_circView.setCircTime( 0 );
+        setCircTime( 0 );
 }   }
 
 void CircuitWidget::saveCirc()
@@ -387,7 +398,7 @@ void CircuitWidget::powerCircDebug( bool paused )
     MainWindow::self()->setState("▶");
 
     Simulator::self()->startSim( paused );
-    if( paused ) m_rateLabel->setText( tr("    Speed: Debugger") );
+    if( paused ) m_infoWidget->setRate( -1, 0 );  //m_rateLabel->setText( tr("Speed: Debugger") );
 }
 
 void CircuitWidget::pauseSim()
@@ -438,21 +449,8 @@ void CircuitWidget::about()
 
 void CircuitWidget::setRate( double rate, int load )
 {
-    if( rate < 0 ) m_rateLabel->setText( tr("Circuit ERROR!!!") );
-    else
-    {
-        //if( (load > 150) || (load < 0) ) load = 0;
-        double speed = (double)rate/100;
-        QString Srate = QString::number( speed,'f', 2 );
-        if( speed < 100 ) Srate = "0"+Srate;
-        if( speed < 10 )  Srate = "0"+Srate;
-        QString Sload = QString::number( load );
-        if( load < 100 ) Sload = "0"+Sload;
-        if( load < 10 )  Sload = "0"+Sload;
-
-        m_rateLabel->setText( tr("    Speed: ")+Srate+" %"
-                            + tr("    Load: "      )+Sload+" %    ");
-}   }
+    m_infoWidget->setRate( rate, load );
+}
 
 void CircuitWidget::setError( QString error )
 {
@@ -466,6 +464,16 @@ void CircuitWidget::setMsg( QString msg, int type )
     else if( type == 1 ) m_msgLabel->setStyleSheet("QLabel { background-color: orange;     color: white;  font-weight: bold;}");
     else if( type == 2 ) m_msgLabel->setStyleSheet("QLabel { background-color: red;        color: yellow; font-weight: bold;}");
     m_msgLabel->setText( "   "+msg+"   " );
+}
+
+void CircuitWidget::setCircTime( uint64_t tStep )
+{
+    m_infoWidget->setCircTime( tStep );
+}
+
+void CircuitWidget::setTargetSpeed( double s )
+{
+    m_infoWidget->setTargetSpeed( s );
 }
 
 void CircuitWidget::updateRecentFiles()

@@ -27,6 +27,8 @@ OutPanelText::OutPanelText( QWidget* parent )
     font.setPixelSize( 13*MainWindow::self()->fontScale() );
     setFont( font );
 
+    this->document()->setDocumentMargin( 9 );
+
     setMaximumBlockCount( 1000 );
 }
 OutPanelText::~OutPanelText(){}

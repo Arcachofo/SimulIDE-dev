@@ -34,15 +34,15 @@ PlotBase::PlotBase( QObject* parent, QString type, QString id )
     m_pauseFunc = NULL;
     m_aEngine->RegisterObjectType("PlotBase",0, asOBJ_REF | asOBJ_NOCOUNT );
     m_aEngine->RegisterGlobalProperty("PlotBase pb", this );
-    r = m_aEngine->RegisterObjectProperty("PlotBase", "bool m_pause", asOFFSET(PlotBase,m_pause)); assert( r >= 0 );
-    r = m_aEngine->RegisterObjectProperty("PlotBase", "int ch1", asOFFSET(PlotBase,m_condCh1)); assert( r >= 0 );
-    r = m_aEngine->RegisterObjectProperty("PlotBase", "int ch2", asOFFSET(PlotBase,m_condCh2)); assert( r >= 0 );
-    r = m_aEngine->RegisterObjectProperty("PlotBase", "int ch3", asOFFSET(PlotBase,m_condCh3)); assert( r >= 0 );
-    r = m_aEngine->RegisterObjectProperty("PlotBase", "int ch4", asOFFSET(PlotBase,m_condCh4)); assert( r >= 0 );
-    r = m_aEngine->RegisterObjectProperty("PlotBase", "int ch5", asOFFSET(PlotBase,m_condCh5)); assert( r >= 0 );
-    r = m_aEngine->RegisterObjectProperty("PlotBase", "int ch6", asOFFSET(PlotBase,m_condCh6)); assert( r >= 0 );
-    r = m_aEngine->RegisterObjectProperty("PlotBase", "int ch7", asOFFSET(PlotBase,m_condCh7)); assert( r >= 0 );
-    r = m_aEngine->RegisterObjectProperty("PlotBase", "int ch8", asOFFSET(PlotBase,m_condCh8)); assert( r >= 0 );
+    r = m_aEngine->RegisterObjectProperty("PlotBase", "bool m_pause", asOFFSET(PlotBase,m_pause)); //assert( r >= 0 );
+    r = m_aEngine->RegisterObjectProperty("PlotBase", "int ch1", asOFFSET(PlotBase,m_condCh1)); //assert( r >= 0 );
+    r = m_aEngine->RegisterObjectProperty("PlotBase", "int ch2", asOFFSET(PlotBase,m_condCh2)); //assert( r >= 0 );
+    r = m_aEngine->RegisterObjectProperty("PlotBase", "int ch3", asOFFSET(PlotBase,m_condCh3)); //assert( r >= 0 );
+    r = m_aEngine->RegisterObjectProperty("PlotBase", "int ch4", asOFFSET(PlotBase,m_condCh4)); //assert( r >= 0 );
+    r = m_aEngine->RegisterObjectProperty("PlotBase", "int ch5", asOFFSET(PlotBase,m_condCh5)); //assert( r >= 0 );
+    r = m_aEngine->RegisterObjectProperty("PlotBase", "int ch6", asOFFSET(PlotBase,m_condCh6)); //assert( r >= 0 );
+    r = m_aEngine->RegisterObjectProperty("PlotBase", "int ch7", asOFFSET(PlotBase,m_condCh7)); //assert( r >= 0 );
+    r = m_aEngine->RegisterObjectProperty("PlotBase", "int ch8", asOFFSET(PlotBase,m_condCh8)); //assert( r >= 0 );
 
     QString n;
     for( int i=1; i<9; ++i ) // Condition simple to script: ch1l to (ch1==1)

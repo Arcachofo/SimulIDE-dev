@@ -1,4 +1,4 @@
-/***************************************************************************
+﻿/***************************************************************************
  *   Copyright (C) 2021 by Santiago González                               *
  *                                                                         *
  ***( see copyright.txt file at root folder )*******************************/
@@ -21,6 +21,9 @@ class MAINMODULE_EXPORT DS1307 : public Component, public TwiModule
         static Component* construct( QObject* parent, QString type, QString id );
         static LibraryItem* libraryItem();
 
+        bool timeUpdtd() { return m_timeUpdtd; }
+        void setTimeUpdtd( bool u ) { m_timeUpdtd = u; }
+
         virtual void initialize() override;
         virtual void stamp() override;
 
@@ -37,6 +40,8 @@ class MAINMODULE_EXPORT DS1307 : public Component, public TwiModule
         void updtTime();
         void updtDate();
         void updtCtrl();
+
+        bool m_timeUpdtd;
 
         uint8_t m_addrPtr;
         uint8_t m_data[64];

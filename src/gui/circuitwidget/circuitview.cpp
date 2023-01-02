@@ -13,12 +13,11 @@
 #include "circuit.h"
 #include "mainwindow.h"
 #include "component.h"
-#include "mcu.h"
 #include "subcircuit.h"
 #include "utils.h"
 #include "e-diode.h"
 
-CircuitView*  CircuitView::m_pSelf = 0l;
+CircuitView*  CircuitView::m_pSelf = NULL;
 
 CircuitView::CircuitView( QWidget *parent )
            : QGraphicsView( parent )
@@ -52,77 +51,8 @@ CircuitView::CircuitView( QWidget *parent )
     setDragMode( RubberBandDrag );
 
     setAcceptDrops(true);
-    
-    m_info = new QPlainTextEdit( this );
-    m_info->setReadOnly( true );
-    m_info->setObjectName( "m_info" );
-    m_info->setLineWrapMode( QPlainTextEdit::NoWrap );
-    m_info->setPlainText( "Time: 00:00:00.000000" );
-    m_info->setWindowFlags( Qt::FramelessWindowHint );
-    m_info->setAttribute( Qt::WA_NoSystemBackground );
-    m_info->setAttribute( Qt::WA_TranslucentBackground );
-    m_info->setAttribute( Qt::WA_TransparentForMouseEvents );
-    m_info->setStyleSheet( "color: #884433;background-color: rgba(0,0,0,0)" );
-    m_info->setVerticalScrollBarPolicy( Qt::ScrollBarAlwaysOff  );
-    m_info->setHorizontalScrollBarPolicy( Qt::ScrollBarAlwaysOff  );
-    
-    double fontScale = MainWindow::self()->fontScale();
-    QFont font = m_info->font();
-    font.setBold( true );
-    font.setPixelSize( int(10*fontScale) );
-    m_info->setFont( font );
-    
-    //m_info->setMaximumSize( 500*fontScale, 80*fontScale );
-    m_info->setMaximumHeight( 40*fontScale );
-    m_info->setMinimumSize( 500*fontScale, 40*fontScale );
-    m_info->show();
 }
 CircuitView::~CircuitView() { }
-
-void CircuitView::setCircTime( uint64_t tStep )
-{
-    double step = tStep/1e6;
-    int hours = step/3600e6;
-    step -= hours*3600e6;
-    int mins  = step/60e6;
-    step -= mins*60e6;
-    int secs  = step/1e6;
-    step -= secs*1e6;
-    int mSecs = step/1e3;
-    step -= mSecs*1e3;
-    int uSecs = step;
-    step -= uSecs;
-    int nSecs = step*1e3;
-    step -= nSecs/1e3;
-    step += 1e-7;
-    int pSecs = step*1e6;
-
-    QString strH = QString::number( hours );
-    if( strH.length() < 2 ) strH = "0"+strH;
-    QString strM = QString::number( mins );
-    if( strM.length() < 2 ) strM = "0"+strM;
-    QString strS = QString::number( secs );
-    if( strS.length() < 2 ) strS = "0"+strS;
-    QString strMS = QString::number( mSecs );
-    while( strMS.length() < 3 ) strMS = "0"+strMS;
-    QString strUS = QString::number( uSecs );
-    while( strUS.length() < 3 ) strUS = "0"+strUS;
-    QString strNS = QString::number( nSecs );
-    while( strNS.length() < 3 ) strNS = "0"+strNS;
-    QString strPS = QString::number( pSecs );
-    while( strPS.length() < 3 ) strPS = "0"+strPS;
-    
-    QString strMcu = " ";
-    
-    if( Mcu::self() )
-    {
-        QString device = Mcu::self()->device();
-        QString freq = QString::number( Mcu::self()->freq()*1e-6 );
-        strMcu = "      Mcu: "+device+" at "+freq+" MHz";
-    }
-    m_info->setPlainText( tr("Time: ")+strH+":"+strM+":"+strS+" s  "
-                          +strMS+" ms  "+strUS+" µs  "+strNS+" ns  "+strPS+" ps "+strMcu );
-}
 
 void CircuitView::clear()
 {

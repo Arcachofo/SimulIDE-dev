@@ -116,7 +116,6 @@ DEFINES += APP_VERSION=\\\"$$VERSION$$RELEASE\\\"
 BUILD_DATE = $$system($(which date) +\"\\\"%d-%m-%y\\\"\")
 DEFINES += BUILDDATE=\\\"$$BUILD_DATE\\\"
 
-
 TARGET_NAME   = SimulIDE_$$VERSION$$RELEASE
 TARGET_PREFIX = $$BUILD_DIR/executables/$$TARGET_NAME
 

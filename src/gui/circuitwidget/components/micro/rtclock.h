@@ -21,6 +21,7 @@ class MAINMODULE_EXPORT RtClock : public eElement
         virtual void initialize() override;
         virtual void runEvent() override;
 
+        void getCurrentTime();
         void enable( bool en );
         void setDisOut( bool d );
         void setFreq( uint64_t freq );

@@ -32,8 +32,6 @@ class CircuitView : public QGraphicsView
 
         void mousePressEvent( QMouseEvent* event );
         void mouseReleaseEvent( QMouseEvent* event );
-        
-        void setCircTime( uint64_t tStep );
 
         qreal getScale() { return m_scale; }
 
@@ -53,7 +51,6 @@ class CircuitView : public QGraphicsView
 
         qreal m_scale;
         QString m_help;
-        QPlainTextEdit* m_info;
  
         Component*  m_enterItem;
         Circuit*    m_circuit;

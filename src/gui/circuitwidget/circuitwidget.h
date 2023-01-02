@@ -17,6 +17,7 @@ class QSplitter;
 class QLabel;
 class AboutDialog;
 class AppDialog;
+class InfoWidget;
 
 class MAINMODULE_EXPORT CircuitWidget : public QWidget
 {
@@ -33,13 +34,16 @@ class MAINMODULE_EXPORT CircuitWidget : public QWidget
         void setRate( double rate , int load );
         void setError( QString error );
         void setMsg(QString msg , int type);
+        void setCircTime( uint64_t tStep );
+        void setTargetSpeed( double s );
+
         void powerCircOn();
         void powerCircOff();
         void powerCircDebug( bool paused );
 
         void simDebug( QString msg ) { m_outPane.appendLine( msg.remove("\"") ); }
 
-        QSplitter* splitter() { return m_splitter; }
+        QSplitter* splitter() { return m_mainSplitter; }
         
     public slots:
         bool newCircuit();
@@ -75,9 +79,12 @@ class MAINMODULE_EXPORT CircuitWidget : public QWidget
         OutPanelText m_outPane;
         
         QToolBar m_circToolBar;
-        QLabel*  m_rateLabel;
-        QLabel*  m_msgLabel;
-        QSplitter* m_splitter;
+
+        QLabel* m_msgLabel;
+        InfoWidget* m_infoWidget;
+
+        QSplitter* m_mainSplitter;
+        QSplitter* m_panelSplitter;
 
         QAction* recentFileActs[MaxRecentFiles];
         QAction* newCircAct;
