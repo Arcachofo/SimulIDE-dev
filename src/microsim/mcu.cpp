@@ -88,6 +88,7 @@ Mcu::Mcu( QObject* parent, QString type, QString id )
     m_mcuMonitor = NULL;
     m_autoLoad   = false;
     m_extClock   = false;
+    m_scripted   = false;
 
     m_serialMon = -1;
 
@@ -104,27 +105,38 @@ Mcu::Mcu( QObject* parent, QString type, QString id )
         QDomElement root  = domDoc.documentElement();
         QDomNode    rNode = root.firstChild();
 
+        bool found = false;
         while( !rNode.isNull() )
         {
-            QDomElement element = rNode.toElement();
-            QDomNode    node    = element.firstChild();
+            QDomElement itemSet = rNode.toElement();
+            QDomNode    node    = itemSet.firstChild();
+
+            QString folder = "";
+            if( itemSet.hasAttribute("folder") ) folder = itemSet.attribute("folder");
 
             while( !node.isNull() )
             {
                 QDomElement element = node.toElement();
                 if( element.attribute("name") == m_device )
                 {
-                    // Get package file
-                    QDir dataDir( xmlFile );
-                    dataDir.cdUp();             // Indeed it doesn't cd, just take out file name
-                    m_pkgeFile = dataDir.filePath( element.attribute( "package" ) )+".package";
+                    if( element.hasAttribute("folder") ) folder = element.attribute("folder");
 
-                    // Get data file
-                    m_dataFile = dataDir.filePath( element.attribute( "data" ) )+".mcu";
-                    break;
+                    QFileInfo fi( xmlFile );
+                    if( !folder.isEmpty() )
+                    {
+                        QString stripped = fi.absolutePath()+"/"+folder+"/"+m_device+"/"+m_device;
+                        m_pkgeFile = stripped+".package";
+                        m_dataFile = stripped+".mcu";
+                    }else{
+                        m_pkgeFile = fi.absolutePath()+"/"+ element.attribute("package")+".package";
+                        m_dataFile = fi.absolutePath()+"/"+ element.attribute("data")+".mcu";
+                    }
+                    found = true;
                 }
+                if( found ) break;
                 node = node.nextSibling();
             }
+            if( found ) break;
             rNode = rNode.nextSibling();
         }
     }else // Try to find a "data" folder in Circuit folder
@@ -144,6 +156,8 @@ Mcu::Mcu( QObject* parent, QString type, QString id )
             return;
         }
     }
+
+
     QSettings* settings = MainWindow::self()->settings();
     m_lastFirmDir = settings->value("lastFirmDir").toString();
 
@@ -162,7 +176,8 @@ void Mcu::setup( QString type )
     else if( type == "mcu" ) m_deviceType = typeMCU;
     else                     m_deviceType = typeNONE;
 
-    if( m_deviceType >= typeMPU ) slotmain(); //m_pSelf = this;
+    //if( m_deviceType >= typeMPU )
+        slotmain(); //m_pSelf = this;
 
     if( m_deviceType == typeMCU )
     {
@@ -191,7 +206,8 @@ new IntProp   <Mcu>("SerialMon","","", this, &Mcu::serialMon, &Mcu::setSerialMon
 addProperty(tr("Main"),new BoolProp<Mcu>( "Logic_Symbol", tr("Logic Symbol"),"", this, &Mcu::logicSymbol, &Mcu::setLogicSymbol ) );
 
     addPropGroup( {"Hidden", {
-new StringProp<Mcu>( "cpuRegs", "","", this, &Mcu::cpuRegs,   &Mcu::setCpuRegs),
+new StringProp<Mcu>("varList", "","", this, &Mcu::varList,   &Mcu::setVarList),
+new StringProp<Mcu>("cpuRegs", "","", this, &Mcu::cpuRegs,   &Mcu::setCpuRegs),
     }} );
     }
 }
@@ -373,7 +389,7 @@ void Mcu::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
 
 void Mcu::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
 {
-    if( m_deviceType >= typeMPU )
+    //if( m_deviceType >= typeMPU )
     {
         QAction* mainAction = menu->addAction( QIcon(":/subc.png"),tr("Main Mcu") );
         connect( mainAction, SIGNAL(triggered()),
