@@ -21,6 +21,11 @@ void PicPort::configureA( uint8_t newANSEL ) // Analog pins
         m_pins[i]->setAnalog( newANSEL & 1<<i );
 }
 
+void PicPort::readPort( uint8_t )
+{
+    m_mcu->m_regOverride = m_pinState;
+}
+
 McuPin* PicPort::createPin( int i, QString id , Component* mcu )
 {
     return new PicPin( this, i, id, mcu );

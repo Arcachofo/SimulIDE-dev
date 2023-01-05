@@ -132,9 +132,9 @@ class MAINMODULE_EXPORT Mcs65Cpu : public CpuBase, public eElement
         pinMode_t m_dataMode;
 
         // Timing
-        uint64_t m_tHR = 10+5;     // 10 Read Data Hold Time: Time to release Data Bus (set Data Bus is inmediate)
-        uint64_t m_tHA = 15+5;     // 15 Address Hold Time:   Time to set Address Bus
-        uint64_t m_tHW = 30+5;     // 30 RW Hold Time:        Time to set RW PinC;
+        uint64_t m_tHR = 1000*10; // 10 ns Read Data Hold Time: Time to release Data Bus
+        uint64_t m_tHA = 1000*25; // 25 ns Address delay Time:  Time to set Address Bus
+        uint64_t m_tHW = 1000*20; // 20 ns Write delay Time:    Time to set RW, Address, Sync;
 
         typedef void (Mcs65Cpu::* funcPtr_t)();
         funcPtr_t m_EXEC;   // Pointer to function execute instruction

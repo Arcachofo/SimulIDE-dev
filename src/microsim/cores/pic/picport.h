@@ -21,6 +21,8 @@ class MAINMODULE_EXPORT PicPort : public McuPort
 
         virtual void configureA( uint8_t newANSEL ) override;
 
+        virtual void readPort( uint8_t ) override;
+
     protected:
         virtual McuPin* createPin( int i, QString id , Component* mcu ) override;
 };

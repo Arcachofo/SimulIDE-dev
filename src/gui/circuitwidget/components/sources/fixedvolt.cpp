@@ -84,7 +84,10 @@ void FixedVolt::updateStep()
 void FixedVolt::onbuttonclicked()
 {
     if( Simulator::self()->isRunning() ) m_changed = true;
-    else m_outpin->setOutState( m_button->isChecked() );
+    else{
+        m_outpin->setOutState( m_button->isChecked() );
+        update();
+    }
 }
 
 void FixedVolt::updateOutput()

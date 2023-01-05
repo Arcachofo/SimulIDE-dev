@@ -204,7 +204,7 @@ QStringList RamTable::getVarSet()
     for( int row=m_numRegs-1; row>=0; --row )
     {
         QString name = table->item( row, 1 )->text();
-        if( !name.isEmpty() ) empty = false;
+        if( !name.isEmpty() ) empty = false;          // Find first non empty
         if( empty ) continue;
         varset.prepend( name );
     }

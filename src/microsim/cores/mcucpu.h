@@ -45,20 +45,20 @@ class MAINMODULE_EXPORT McuCpu : public CpuBase
             m_mcu->cyclesDone = m_retCycles;
         }
 
-        virtual uint8_t GET_RAM( uint16_t addr )                // All MCUs should use this
+        virtual uint8_t GET_RAM( uint16_t addr )                   // All MCUs should use this
         {
-            if( addr > m_lowDataMemEnd && addr <= m_regEnd ) // Read Register
-                return m_mcu->readReg( addr );               // and call Watchers
+            if( addr >= m_mcu->m_regStart && addr <= m_regEnd )    // Read Register
+                return m_mcu->readReg( addr );                     // and call Watchers
 
-            else if( addr <= m_dataMemEnd ) return m_dataMem[addr]; // Read Ram
+            else if( addr <= m_dataMemEnd ) return m_dataMem[addr];// Read Ram
             return 0;
         }
-        virtual void SET_RAM( uint16_t addr, uint8_t v )         // All MCUs should use this
+        virtual void SET_RAM( uint16_t addr, uint8_t v )           // All MCUs should use this
         {
-            if( (addr > m_lowDataMemEnd) && (addr <= m_regEnd) ) // Write Register
-                m_mcu->writeReg( addr, v );                      // and call Watchers
+            if( (addr >= m_mcu->m_regStart) && (addr <= m_regEnd) )// Write Register
+                m_mcu->writeReg( addr, v );                        // and call Watchers
 
-            else if( addr <= m_dataMemEnd ) m_dataMem[addr] = v;     // Write Ram
+            else if( addr <= m_dataMemEnd ) m_dataMem[addr] = v;   // Write Ram
         }
 
         void SET_REG16_LH( uint16_t addr, uint16_t val )

@@ -21,7 +21,13 @@ void I51Port::reset()
     /// for( McuPin* pin : m_pins ) pin->reset();
 }
 
+void I51Port::readPort( uint8_t )
+{
+    m_mcu->m_regOverride = m_pinState;
+}
+
 McuPin* I51Port::createPin( int i, QString id , Component* mcu )
 {
     return new I51Pin( this, i, id, mcu );
 }
+

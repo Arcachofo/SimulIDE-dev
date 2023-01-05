@@ -17,6 +17,8 @@ class MAINMODULE_EXPORT I51Port : public McuPort
 
         virtual void reset() override;
 
+        virtual void readPort( uint8_t ) override;
+
     protected:
         virtual McuPin* createPin( int i, QString id , Component* mcu ) override;
 };

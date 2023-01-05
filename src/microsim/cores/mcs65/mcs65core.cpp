@@ -101,13 +101,23 @@ void Mcs65Cpu::stamp()
     m_soPin->setPinMode( input );
 }
 
-void Mcs65Cpu::runEvent() // Clock Falling delayed: Set AddressBus
+void Mcs65Cpu::runEvent()
 {
-    m_addrBus->setOutState( m_busAddr );
+    if( m_nextClock ) // Clock Falling delayed: Set Address Bus
+    {
+        m_addrBus->setOutState( m_busAddr );
 
-    if( m_dataMode == output ){
-        m_dataMode = input;
-        m_dataBus->setPinMode( input ); // Data Bus to input if last Write
+        if( m_dataMode == output ){
+            m_dataMode = input;
+            m_dataBus->setPinMode( input ); // Data Bus to input if last Write
+        }
+    }else            // Clock Rising delayed: Set Data Bus
+    {
+        if( m_dataMode == input ){
+            m_dataMode = output;
+            m_dataBus->setPinMode( output );
+        }
+        m_dataBus->setOutState( m_op0 );
     }
 }
 
@@ -116,12 +126,12 @@ void Mcs65Cpu::extClock( bool clkState )
     if( clkState == m_nextClock ) runStep();
 }
 
-void Mcs65Cpu::runStep() // Called every 1 full Clock cycle
+void Mcs65Cpu::runStep()
 {
     if( m_nextClock ) clkRisingEdge();
     else              clkFallingEdge();
 
-    m_phi2Pin->sheduleState( m_nextClock, 5 );
+    m_phi2Pin->sheduleState( m_nextClock, 5000 );
     m_nextClock = !m_nextClock;
 }
 
@@ -130,11 +140,7 @@ void Mcs65Cpu::clkRisingEdge()
     if( m_state != cWRITE ) return;
     m_state = m_nextState;
 
-    if( m_dataMode == input ){
-        m_dataMode = output;
-        m_dataBus->setPinMode( output ); // Write Data Bus exactly at rising edge
-    }
-    m_dataBus->setOutState( m_op0 );
+    Simulator::self()->addEvent( m_tHW, this ); // Set Data Port
 }
 
 void Mcs65Cpu::clkFallingEdge()
@@ -166,9 +172,9 @@ void Mcs65Cpu::clkFallingEdge()
         if( m_EXEC ) (this->*m_EXEC)();
         else qDebug() << "ERROR: Instruction not implemented: 0x"+QString::number( m_IR, 16 ).toUpper(); //
     }
-    if( m_state == cWRITE ) m_rwPin->sheduleState( false, m_tHW ); // Write result and fetch at next cycle //m_busAddr = m_opAddr Done in instruction
+    if( m_state == cWRITE ) m_rwPin->sheduleState( false, m_tHA ); // Write result and fetch at next cycle //m_busAddr = m_opAddr Done in instruction
     else{
-        m_rwPin->sheduleState( true, m_tHW );
+        m_rwPin->sheduleState( true, m_tHA );
 
         if( m_state == cFETCH )  // If no Write op. fetch next inst. at execute cycle
         {
