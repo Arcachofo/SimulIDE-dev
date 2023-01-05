@@ -126,8 +126,9 @@ void CodeEditor::setFile( const QString filePath )
         m_hlighter->readSyntaxFile( m_syntaxPath + "cpp.syntax" );
         if( extension == ".ino" )
         {   if( !m_compiler ) m_compiler = EditorWindow::self()->createDebugger( "Arduino", this );}
-        else if( extension == ".cpp" || extension == ".c")
-            code = "10";
+        else if( extension == ".as" )
+        {   if( !m_compiler ) m_compiler = EditorWindow::self()->createDebugger( "AScript", this );}
+        else if( extension == ".cpp" || extension == ".c") code = "10";
     }
     /*else if( extension == ".s" )
     {
@@ -476,6 +477,14 @@ void CodeEditor::resizeEvent( QResizeEvent* e )
     m_lNumArea->setGeometry( QRect( cr.left(), cr.top(), lineNumberAreaWidth(), cr.height() ) );
 }
 
+QList<int> CodeEditor::getFound()
+{
+    QList<int> found;
+    for( QTextEdit::ExtraSelection es : m_found )
+        found.append( es.cursor.blockNumber() );
+    return found;
+}
+
 void CodeEditor::setFound( QList<QTextEdit::ExtraSelection> sel )
 {
     m_found = sel;
@@ -496,6 +505,7 @@ void CodeEditor::highlightCurrentLine()
         selection.format.setBackground( lineColor );
         selection.format.setProperty( QTextFormat::FullWidthSelection, true );
         selection.cursor = textCursor();
+        selection.cursor.blockNumber();
         //selection.cursor.clearSelection();
         extraSelections.prepend( selection );
     }

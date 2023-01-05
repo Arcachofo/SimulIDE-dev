@@ -40,6 +40,7 @@ class CodeEditor : public QPlainTextEdit
         BaseDebugger* getCompiler() { return m_compiler; }
         void setCompiler( BaseDebugger* comp );
 
+        QList<int> getFound();
         void setFound( QList<QTextEdit::ExtraSelection> sel );
 
         void updateScreen();
