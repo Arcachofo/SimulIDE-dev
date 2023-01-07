@@ -64,11 +64,12 @@ int main( int argc, char *argv[] )
         locale = QLocale::system().name().split("_").first();
         langF = langFile( locale );
     }
-    if( langF == "" ) langF = ":/simulide_en.qm";
-    
-    QTranslator translator;
-    translator.load( langF );
-    app.installTranslator( &translator );
+    if( !langF.isEmpty() )
+    {
+        QTranslator translator;
+        translator.load( langF );
+        app.installTranslator( &translator );
+    }
     app.setApplicationVersion( APP_VERSION );
 
     MainWindow window;

@@ -176,10 +176,14 @@ void MainWindow::setLoc( QString loc )
     m_lang = lang;
 }
 
-void MainWindow::setLang( Langs lang )
+void MainWindow::setLang( Langs lang ) // From appDialog
 {
+    Langs ml = m_lang;
     m_lang = lang;
-    settings()->setValue( "language", loc() );
+
+    QString langF = ":/simulide_"+loc()+".qm";
+    if( !QFileInfo::exists( langF) ) m_lang = ml;
+    else settings()->setValue( "language", loc() );
 }
 
 void MainWindow::setFile( QString file )
@@ -272,8 +276,8 @@ QString MainWindow::getHelp( QString name )
     name= name.toLower().replace( " ", "" );
     QString dfPath = getFilePath("data/help/"+localeFolder+name+locale+".txt");
 
-    if( dfPath == "" ) dfPath = getFilePath( "data/help/"+name+".txt" );
-    if( dfPath != "" )
+    if( !QFileInfo::exists( dfPath ) ) dfPath = getFilePath( "data/help/"+name+".txt" );
+    if( QFileInfo::exists( dfPath ) )
     {
         QFile file( dfPath );
 
@@ -284,8 +288,8 @@ QString MainWindow::getHelp( QString name )
             help = s1.readAll();
             file.close();
         }
-        else qDebug() << "Warning: MainWindow::getHelp: File not found\n"<<dfPath;
     }
+    else qDebug() << "Warning: MainWindow::getHelp: File not found\n"<<dfPath;
     m_help[name] = help;
     return help;
 }
