@@ -1,0 +1,41 @@
+<!DOCTYPE SimulIDE>
+
+<iou name="6520" core="scripted" script="6520_core.as" data="8" clkpin="P2" >
+
+    <regblock name="REGs" start="0x00" end="0x07" >
+        <register name="DDRA" addr="0x00" />
+        <register name="CRA"  addr="0x01"  mask="00111111" bits="CA10,CA11,PRA0,CA20,CA21,CA22,IRQA2,IRQA1"/>
+        <register name="DDRB" addr="0x02" />
+        <register name="CRB"  addr="0x03"  mask="00111111" bits="CB10,CB11,PRB0,CB20,CB21,CB22,IRQB2,IRQB1"/>
+        <register name="ORA"  addr="0x04" />
+        <register name="ORB"  addr="0x06" />
+    </regblock>
+    
+    <interrupts enable="">
+        <interrupt name="IRQA1"  enable="CA10"  flag="IRQA1"  priority="1" vector="0x000"/>
+        <interrupt name="IRQA2"  enable="CA20"  flag="IRQA2"  priority="1" vector="0x000"/>
+        <interrupt name="IRQB1"  enable="CB10"  flag="IRQB1"  priority="1" vector="0x001"/>
+        <interrupt name="IRQB2"  enable="CB20"  flag="IRQB2"  priority="1" vector="0x001"/>
+    </interrupts>
+    
+    <mcuport name="PORTA" pins="8" outreg="ORA" dirreg="DDRA"
+                          pullups="11111111" opencol="11111111"/>
+                          
+    <mcuport name="PORTB" pins="8" outreg="ORB" dirreg="DDRB"/>
+    
+    <ioport  name="PORTC" pins="CS0,CS1,CS2" />
+    
+    <ioport  name="PORTD" pins="8" />
+    
+    <mcuport name="PORTE" pins="CA1,CA2,CB1,CB2" >
+      <extint name="IRQA1" pin="CA1" />
+      <extint name="IRQA2" pin="CA2" />
+      <extint name="IRQB1" pin="CB1" />
+      <extint name="IRQB2" pin="CB2" />
+    </mcuport>
+    
+    <ioport name="PORTI" pins="RW,IRQA,IRQB,P2" />
+    
+    <ioport name="PORTR" pins="2" />
+    
+</iou>
