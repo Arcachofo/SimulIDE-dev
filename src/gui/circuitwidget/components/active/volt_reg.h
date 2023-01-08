@@ -30,11 +30,8 @@ class MAINMODULE_EXPORT VoltReg : public Component, public eResistor
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
 
     protected:
-        double m_accuracy;
         double m_vRef;
-        double m_voltPos;
-        double m_voltNeg;
-        double m_lastOut;
+        double m_lastCurrent;
 };
 
 #endif

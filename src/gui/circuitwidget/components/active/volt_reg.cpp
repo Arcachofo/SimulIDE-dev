@@ -34,10 +34,9 @@ VoltReg::VoltReg( QObject* parent, QString type, QString id )
 {
     m_area = QRect( -11, -8, 22, 19 );
 
-    setValLabelPos( 15, 12, 0 );
+    m_admit = 1e6;
 
-    m_voltPos = 0;
-    m_voltNeg = 0;
+    setValLabelPos( 15, 12, 0 );
     
     m_pin.resize( 3 );
     m_ePin.resize( 3 );
@@ -68,45 +67,43 @@ VoltReg::~VoltReg(){}
 
 void VoltReg::stamp()
 {
-    if( m_ePin[0]->isConnected() ) m_ePin[0]->getEnode()->addToNoLinList(this);
-    if( m_ePin[1]->isConnected() ) m_ePin[1]->getEnode()->addToNoLinList(this);
-    if( m_ePin[2]->isConnected() ) m_ePin[2]->getEnode()->addToNoLinList(this);
+    if( m_ePin[0]->isConnected()
+     && m_ePin[1]->isConnected()
+     && m_ePin[2]->isConnected() )
+    {
+        m_ePin[0]->getEnode()->addToNoLinList(this);
+        m_ePin[1]->getEnode()->addToNoLinList(this);
+        m_ePin[2]->getEnode()->addToNoLinList(this);
 
-    m_ePin[0]->createCurrent();
-    m_ePin[1]->createCurrent();
-
+        m_ePin[0]->createCurrent();
+        m_ePin[1]->createCurrent();
+    }
     eResistor::stamp();
-    eResistor::setRes( 1e-6 );
-    m_accuracy = Simulator::self()->NLaccuracy();
-    m_lastOut = 0;
+    m_lastCurrent = 0;
 }
 
 void VoltReg::voltChanged()
 {
-    double inVolt = m_pin[0]->getVoltage();
-
-    m_voltPos = inVolt;
-    if( m_voltPos > 0.7 ) m_voltPos -= 0.7;
-    else                  m_voltPos = 0;
-
+    double inVolt  = m_ePin[0]->getVoltage();
     double outVolt = m_ePin[2]->getVoltage()+m_vRef;
 
-    if     ( outVolt > m_voltPos ) outVolt = m_voltPos;
-    else if( outVolt < m_voltNeg ) outVolt = m_voltNeg;
-
-    double current = (inVolt-outVolt)*m_admit;
-
-    if( qFabs(current-m_lastOut)<m_accuracy ) return;
-    m_lastOut = current;
-
+    if( inVolt < 1e-6 ) inVolt = 0;
+    double delta = inVolt-outVolt;
+    if( delta < 0.7 )
+    {
+        if( inVolt < 0.7 ) delta = inVolt;
+        else               delta = 0.7;
+    }
+    double current = delta*m_admit;
+    if( qFabs( m_lastCurrent-current ) < 1e-3 ) return;
+    m_lastCurrent = current;
     Simulator::self()->notCorverged();
 
     m_pin[0]->stampCurrent( current );
     m_pin[1]->stampCurrent(-current );
 }
 
-
-void VoltReg::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget )
+void VoltReg::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
 {
     Component::paint( p, option, widget );
     p->drawRect( m_area );
