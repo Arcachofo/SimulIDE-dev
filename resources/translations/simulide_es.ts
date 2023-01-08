@@ -35,6 +35,10 @@
 <context>
     <name>AboutDialog</name>
     <message>
+        <source> Compiled:</source>
+        <translation type="unfinished"> Compilado:</translation>
+    </message>
+    <message>
         <source>Dialog</source>
         <translation type="unfinished"></translation>
     </message>
@@ -45,10 +49,6 @@
     <message>
         <source>TextLabel</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source> Compiled:</source>
-        <translation type="unfinished"> Compilado:</translation>
     </message>
 </context>
 <context>
@@ -144,10 +144,6 @@
         <translation>Configuración</translation>
     </message>
     <message>
-        <source>App</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>App Settings</source>
         <translation>Cofiguración de Aplicación</translation>
     </message>
@@ -158,6 +154,78 @@
     <message>
         <source>Language</source>
         <translation>Idioma</translation>
+    </message>
+    <message>
+        <source>Font Scale</source>
+        <translation>Escalar Fuente</translation>
+    </message>
+    <message>
+        <source>Circuit</source>
+        <translation>Circuito</translation>
+    </message>
+    <message>
+        <source>Circuit Canvas</source>
+        <translation type="unfinished">Circuito</translation>
+    </message>
+    <message>
+        <source>Draw Grid</source>
+        <translation>Mostrar Rejilla</translation>
+    </message>
+    <message>
+        <source>Show ScrollBars</source>
+        <translation>Mostrar ScrollBars</translation>
+    </message>
+    <message>
+        <source>Animate</source>
+        <translation>Animar</translation>
+    </message>
+    <message>
+        <source>Canvas Refresh</source>
+        <translation>Refresco Circuito</translation>
+    </message>
+    <message>
+        <source>Other</source>
+        <translation>Otros</translation>
+    </message>
+    <message>
+        <source>Seconds</source>
+        <translation>Segundos</translation>
+    </message>
+    <message>
+        <source>Simulation</source>
+        <translation>Simulacion</translation>
+    </message>
+    <message>
+        <source>Simulation Speed</source>
+        <translation>Velocidad de Simulacion</translation>
+    </message>
+    <message>
+        <source>Speed % Real</source>
+        <translation type="vanished">Velocidad % Real</translation>
+    </message>
+    <message>
+        <source>Simulation Step</source>
+        <translation type="vanished">Paso de Simulacion</translation>
+    </message>
+    <message>
+        <source>Steps per Second</source>
+        <translation type="vanished">Pasos por Segundo</translation>
+    </message>
+    <message>
+        <source>Logic Outputs Edges</source>
+        <translation>Frentes Salidas Lógicas</translation>
+    </message>
+    <message>
+        <source>Slope Steps</source>
+        <translation>Pasos de Pendiente</translation>
+    </message>
+    <message>
+        <source>Reactive</source>
+        <translation type="unfinished">Reactivos</translation>
+    </message>
+    <message>
+        <source>App</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>English</source>
@@ -204,56 +272,16 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Font Scale</source>
-        <translation>Escalar Fuente</translation>
-    </message>
-    <message>
-        <source>Circuit</source>
-        <translation>Circuito</translation>
-    </message>
-    <message>
-        <source>Circuit Canvas</source>
-        <translation type="unfinished">Circuito</translation>
-    </message>
-    <message>
-        <source>Draw Grid</source>
-        <translation>Mostrar Rejilla</translation>
-    </message>
-    <message>
-        <source>Show ScrollBars</source>
-        <translation>Mostrar ScrollBars</translation>
-    </message>
-    <message>
-        <source>Animate</source>
-        <translation>Animar</translation>
-    </message>
-    <message>
-        <source>Canvas Refresh</source>
-        <translation>Refresco Circuito</translation>
-    </message>
-    <message>
         <source>FPS</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Other</source>
-        <translation>Otros</translation>
     </message>
     <message>
         <source>Auto Backup</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Seconds</source>
-        <translation>Segundos</translation>
-    </message>
-    <message>
-        <source>Simulation</source>
-        <translation>Simulacion</translation>
-    </message>
-    <message>
-        <source>Simulation Speed</source>
-        <translation>Velocidad de Simulacion</translation>
+        <source> 0%</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>0%</source>
@@ -268,12 +296,8 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Speed % Real</source>
-        <translation type="vanished">Velocidad % Real</translation>
-    </message>
-    <message>
-        <source>Simulation Step</source>
-        <translation type="vanished">Paso de Simulacion</translation>
+        <source>Steps per Second    </source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>ps</source>
@@ -296,35 +320,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Steps per Second</source>
-        <translation type="vanished">Pasos por Segundo</translation>
-    </message>
-    <message>
         <source>NonLinear</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Logic Outputs Edges</source>
-        <translation>Frentes Salidas Lógicas</translation>
-    </message>
-    <message>
-        <source>Slope Steps</source>
-        <translation>Pasos de Pendiente</translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source> 0%</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Steps per Second    </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -332,11 +328,15 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Reactive</source>
-        <translation type="unfinished">Reactivos</translation>
+        <source>Reactive Step</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Reactive Step</source>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -665,7 +665,7 @@ p, li { white-space: pre-wrap; }
     <name>CircuitView</name>
     <message>
         <source>Time: </source>
-        <translation>Tiempo: </translation>
+        <translation type="vanished">Tiempo: </translation>
     </message>
     <message>
         <source>Paste</source>
@@ -801,19 +801,19 @@ Quiere guardar los cambios?</translation>
     </message>
     <message>
         <source>    Speed: Debugger</source>
-        <translation>    Velocidad: Debugger</translation>
+        <translation type="vanished">    Velocidad: Debugger</translation>
     </message>
     <message>
         <source>Circuit ERROR!!!</source>
-        <translation>ERROR de Circuito!!!</translation>
+        <translation type="vanished">ERROR de Circuito!!!</translation>
     </message>
     <message>
         <source>    Speed: </source>
-        <translation>    Velocidad: </translation>
+        <translation type="vanished">    Velocidad: </translation>
     </message>
     <message>
         <source>    Load: </source>
-        <translation>    Carga: </translation>
+        <translation type="vanished">    Carga: </translation>
     </message>
     <message>
         <source>&amp;%1 %2</source>
@@ -973,18 +973,6 @@ Can&apos;t find file:
         <translation>Configuración de Compilador</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Set if Debugger should drive Circuit simulation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Drive Circuit</source>
         <translation type="unfinished">Controlar Circuito</translation>
     </message>
@@ -995,26 +983,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Select Arduino Board</source>
         <translation>Seleccionar Placa Arduino</translation>
-    </message>
-    <message>
-        <source>Uno</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Mega</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Nano</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Duemilanove</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Leonardo</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Custom</source>
@@ -1039,10 +1007,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Select tool path</source>
         <translation>Seleccionar ruta al compilador:</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Compiler:</source>
@@ -1071,6 +1035,42 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Family</source>
         <translation>Familia</translation>
+    </message>
+    <message>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set if Debugger should drive Circuit simulation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Uno</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mega</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Nano</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Duemilanove</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Leonardo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>...</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1252,6 +1252,13 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Edges</source>
         <translation>Frentes</translation>
+    </message>
+</context>
+<context>
+    <name>DS1307</name>
+    <message>
+        <source>Set current time at start</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1566,10 +1573,6 @@ p, li { white-space: pre-wrap; }
         <translation>Editor / Depurador</translation>
     </message>
     <message>
-        <source>Editor</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Show Help</source>
         <translation>Mostar Ayuda</translation>
     </message>
@@ -1580,10 +1583,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Tab Size</source>
         <translation>Tamaño Tab</translation>
-    </message>
-    <message>
-        <source>Pixels</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Tabs as Spaces</source>
@@ -1598,11 +1597,19 @@ p, li { white-space: pre-wrap; }
         <translation>Espacios</translation>
     </message>
     <message>
+        <source>Editor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pixels</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1914,10 +1921,6 @@ Can&apos;t find file:
 <context>
     <name>FindReplace</name>
     <message>
-        <source>Dialog</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Previous</source>
         <translation>Anterior</translation>
     </message>
@@ -1972,6 +1975,10 @@ Can&apos;t find file:
     <message>
         <source>Replaced %1 occurrence(s)</source>
         <translation>Reeplazadas %1 coincidencia(s)</translation>
+    </message>
+    <message>
+        <source>Dialog</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2353,6 +2360,17 @@ Can&apos;t find file:
     </message>
 </context>
 <context>
+    <name>InfoWidget</name>
+    <message>
+        <source>Speed: Debugger</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Circuit ERROR!!!</source>
+        <translation type="unfinished">ERROR de Circuito!!!</translation>
+    </message>
+</context>
+<context>
     <name>InoDebugger</name>
     <message>
         <source>Found Board definition in file: </source>
@@ -2528,6 +2546,22 @@ Can&apos;t find file:
 <context>
     <name>LaWidget</name>
     <message>
+        <source>None</source>
+        <translation>Ninguno</translation>
+    </message>
+    <message>
+        <source>Condition</source>
+        <translation>Condicion</translation>
+    </message>
+    <message>
+        <source>Save Circuit</source>
+        <translation type="unfinished">Guardar circuito</translation>
+    </message>
+    <message>
+        <source>VCD files (*.vcd);;All files (*.*)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Dialog</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2564,23 +2598,7 @@ Can&apos;t find file:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>None</source>
-        <translation>Ninguno</translation>
-    </message>
-    <message>
-        <source>Condition</source>
-        <translation>Condicion</translation>
-    </message>
-    <message>
         <source>Export Data</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Save Circuit</source>
-        <translation type="unfinished">Guardar circuito</translation>
-    </message>
-    <message>
-        <source>VCD files (*.vcd);;All files (*.*)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3178,16 +3196,16 @@ Can&apos;t find file:
 <context>
     <name>McuMonitor</name>
     <message>
-        <source>Dialog</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Byte PC</source>
         <translation>PC en Bytes</translation>
     </message>
     <message>
         <source>Jump to active Address</source>
         <translation>Saltar A Direccion activa</translation>
+    </message>
+    <message>
+        <source>Dialog</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3576,12 +3594,12 @@ Can&apos;t find file:
         <translation>Basico</translation>
     </message>
     <message>
-        <source>Tab 2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>    Show</source>
         <translation>    Mostar</translation>
+    </message>
+    <message>
+        <source>Tab 2</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -3916,10 +3934,6 @@ Archivo packae no valido:</translation>
 <context>
     <name>RamTable</name>
     <message>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Addr</source>
         <translation>Direccion</translation>
     </message>
@@ -3968,6 +3982,10 @@ Archivo packae no valido:</translation>
 %2.</source>
         <translation>No se pudo escribir el archivo %1:
 %2.</translation>
+    </message>
+    <message>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4176,10 +4194,6 @@ Archivo packae no valido:</translation>
 <context>
     <name>SerialMonitor</name>
     <message>
-        <source>Dialog</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Send Text:</source>
         <translation>Enviar Texto:</translation>
     </message>
@@ -4198,6 +4212,10 @@ Archivo packae no valido:</translation>
     <message>
         <source> Output</source>
         <translation> Salida</translation>
+    </message>
+    <message>
+        <source>Dialog</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4450,11 +4468,23 @@ Archivo packae no valido:</translation>
     </message>
     <message>
         <source>I2C Address</source>
-        <translation>Dirección I2C</translation>
+        <translation type="vanished">Dirección I2C</translation>
     </message>
     <message>
         <source>I2C Frequency</source>
         <translation>Frecuencia I2C</translation>
+    </message>
+    <message>
+        <source>Width</source>
+        <translation type="unfinished">Ancho</translation>
+    </message>
+    <message>
+        <source>_Pixels</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Height</source>
+        <translation type="unfinished">Alto</translation>
     </message>
 </context>
 <context>
@@ -5193,6 +5223,56 @@ Quiere guardar los cambios?
     <message>
         <source>Rectifiers</source>
         <translation>Rectificadores</translation>
+    </message>
+</context>
+<context>
+    <name>asDebugger</name>
+    <message>
+        <source>Error uploading Script to </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Script Uploaded to </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error: script file doesn&apos;t exist:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error: No Scripted Device Found... </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>     SUCCESS!!! Compilation Ok</source>
+        <translation type="unfinished">     SUCCESS!!! Compilacion Correcta</translation>
+    </message>
+    <message>
+        <source>     ERROR!!! Compilation Failed</source>
+        <translation type="unfinished">     ERROR!!! Compilacion fallida</translation>
+    </message>
+</context>
+<context>
+    <name>infoWidget</name>
+    <message>
+        <source>Simulation Time:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Target Speed:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Real Speed: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Main MCU:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

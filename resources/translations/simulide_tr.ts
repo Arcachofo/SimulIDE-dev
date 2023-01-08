@@ -39,12 +39,12 @@
         <translation type="unfinished">Diyalog</translation>
     </message>
     <message>
-        <source> Version:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>TextLabel</source>
         <translation type="unfinished">Etiket</translation>
+    </message>
+    <message>
+        <source> Version:</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source> Compiled:</source>
@@ -135,10 +135,6 @@
         <translation type="unfinished">Ayarlar</translation>
     </message>
     <message>
-        <source>App</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>App Settings</source>
         <translation type="unfinished">Uygulama Ayarları</translation>
     </message>
@@ -153,10 +149,6 @@
     <message>
         <source>English</source>
         <translation type="unfinished">İngilizce</translation>
-    </message>
-    <message>
-        <source>Czech</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Dutch</source>
@@ -183,16 +175,8 @@
         <translation type="unfinished">İspanyolca</translation>
     </message>
     <message>
-        <source>Portuguese</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Pt_Brasil</source>
         <translation type="unfinished">Brezilya dili</translation>
-    </message>
-    <message>
-        <source>Turkish</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Font Scale</source>
@@ -247,6 +231,42 @@
         <translation type="unfinished">Simülasyon hızı</translation>
     </message>
     <message>
+        <source>Speed % Real</source>
+        <translation type="obsolete">Hız % Gerçek</translation>
+    </message>
+    <message>
+        <source>Simulation Step</source>
+        <translation type="obsolete">Simülasyon adımı</translation>
+    </message>
+    <message>
+        <source>Steps per Second</source>
+        <translation type="obsolete">Saniyedeki adım sayısı</translation>
+    </message>
+    <message>
+        <source>NonLinear</source>
+        <translation type="unfinished">Lineer olmayan</translation>
+    </message>
+    <message>
+        <source>App</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Czech</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Portuguese</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Turkish</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source> 0%</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>0%</source>
         <translation type="unfinished"></translation>
     </message>
@@ -259,12 +279,8 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Speed % Real</source>
-        <translation type="obsolete">Hız % Gerçek</translation>
-    </message>
-    <message>
-        <source>Simulation Step</source>
-        <translation type="obsolete">Simülasyon adımı</translation>
+        <source>Steps per Second    </source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>ps</source>
@@ -287,12 +303,16 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Steps per Second</source>
-        <translation type="obsolete">Saniyedeki adım sayısı</translation>
+        <source>Max. Iterations</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>NonLinear</source>
-        <translation type="unfinished">Lineer olmayan</translation>
+        <source>Reactive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reactive Step</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Logic Outputs Edges</source>
@@ -308,26 +328,6 @@
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source> 0%</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Steps per Second    </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Max. Iterations</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Reactive</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Reactive Step</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -651,7 +651,7 @@ p, li { white-space: pre-wrap; }
     <name>CircuitView</name>
     <message>
         <source>Time: </source>
-        <translation type="unfinished">Süre: </translation>
+        <translation type="obsolete">Süre: </translation>
     </message>
     <message>
         <source>Paste</source>
@@ -783,20 +783,12 @@ Değişiklikler kaydedilsin mi?
         <translation type="unfinished">Devreyi Kaydet</translation>
     </message>
     <message>
-        <source>    Speed: Debugger</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Circuit ERROR!!!</source>
-        <translation type="unfinished">Devre Hatası!!!</translation>
-    </message>
-    <message>
-        <source>    Speed: </source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Devre Hatası!!!</translation>
     </message>
     <message>
         <source>    Load: </source>
-        <translation type="unfinished">    Yükle: </translation>
+        <translation type="obsolete">    Yükle: </translation>
     </message>
     <message>
         <source>&amp;%1 %2</source>
@@ -951,32 +943,12 @@ Can&apos;t find file:
 <context>
     <name>CompilerProp</name>
     <message>
-        <source>Compiler Settings</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Set if Debugger should drive Circuit simulation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Drive Circuit</source>
         <translation type="unfinished">Devreyi çalıştır</translation>
     </message>
     <message>
         <source>Board</source>
         <translation type="unfinished">Kart</translation>
-    </message>
-    <message>
-        <source>Select Arduino Board</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Uno</source>
@@ -1003,6 +975,30 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Özel</translation>
     </message>
     <message>
+        <source>Custom Board</source>
+        <translation type="unfinished">Özel kart</translation>
+    </message>
+    <message>
+        <source>Compiler Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set if Debugger should drive Circuit simulation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select Arduino Board</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Tool Path:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1013,10 +1009,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Set custom Arduino Board</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Custom Board</source>
-        <translation type="unfinished">Özel kart</translation>
     </message>
     <message>
         <source>Select tool path</source>
@@ -1229,6 +1221,13 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Edges</source>
         <translation type="unfinished">Edges</translation>
+    </message>
+</context>
+<context>
+    <name>DS1307</name>
+    <message>
+        <source>Set current time at start</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1899,6 +1898,14 @@ Can&apos;t find file:
         <translation type="unfinished">Diyalog</translation>
     </message>
     <message>
+        <source>Found %1 occurrence(s)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Replaced %1 occurrence(s)</source>
+        <translation type="unfinished">%1 eşleşme değiştirildi</translation>
+    </message>
+    <message>
         <source>Previous</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1945,14 +1952,6 @@ Can&apos;t find file:
     <message>
         <source>Replace + Find </source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Found %1 occurrence(s)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Replaced %1 occurrence(s)</source>
-        <translation type="unfinished">%1 eşleşme değiştirildi</translation>
     </message>
 </context>
 <context>
@@ -2321,6 +2320,17 @@ Can&apos;t find file:
     </message>
 </context>
 <context>
+    <name>InfoWidget</name>
+    <message>
+        <source>Speed: Debugger</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Circuit ERROR!!!</source>
+        <translation type="unfinished">Devre Hatası!!!</translation>
+    </message>
+</context>
+<context>
     <name>InoDebugger</name>
     <message>
         <source>Found Board definition in file: </source>
@@ -2492,6 +2502,14 @@ Can&apos;t find file:
         <translation type="unfinished">Diyalog</translation>
     </message>
     <message>
+        <source>Save Circuit</source>
+        <translation type="unfinished">Devreyi Kaydet</translation>
+    </message>
+    <message>
+        <source>VCD files (*.vcd);;All files (*.*)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Ch 1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2524,23 +2542,15 @@ Can&apos;t find file:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>None</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Condition</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Export Data</source>
+        <source>None</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Save Circuit</source>
-        <translation type="unfinished">Devreyi Kaydet</translation>
-    </message>
-    <message>
-        <source>VCD files (*.vcd);;All files (*.*)</source>
+        <source>Export Data</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4314,7 +4324,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>I2C Address</source>
-        <translation type="unfinished">I2C Adresi</translation>
+        <translation type="obsolete">I2C Adresi</translation>
     </message>
     <message>
         <source>I2C Frequency</source>
@@ -4327,6 +4337,18 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Yellow</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Width</source>
+        <translation type="unfinished">Genişlik</translation>
+    </message>
+    <message>
+        <source>_Pixels</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Height</source>
+        <translation type="unfinished">Yükseklik</translation>
     </message>
 </context>
 <context>
@@ -5054,6 +5076,56 @@ Değişiklikler kaydedilsin mi?
     </message>
     <message>
         <source>Rectifiers</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>asDebugger</name>
+    <message>
+        <source>Error uploading Script to </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Script Uploaded to </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error: script file doesn&apos;t exist:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error: No Scripted Device Found... </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>     SUCCESS!!! Compilation Ok</source>
+        <translation type="unfinished">     Başarılı! Derleme tamamlandı</translation>
+    </message>
+    <message>
+        <source>     ERROR!!! Compilation Failed</source>
+        <translation type="unfinished">     Hata! Derlenemedi</translation>
+    </message>
+</context>
+<context>
+    <name>infoWidget</name>
+    <message>
+        <source>Simulation Time:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Target Speed:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Real Speed: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Main MCU:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

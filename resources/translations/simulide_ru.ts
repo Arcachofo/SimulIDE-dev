@@ -159,48 +159,8 @@
         <translation>Язык</translation>
     </message>
     <message>
-        <source>English</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Czech</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Dutch</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>French</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>German</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Italian</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Russian</source>
         <translation>Русский</translation>
-    </message>
-    <message>
-        <source>Spanish</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Portuguese</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pt_Brasil</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Turkish</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Font Scale</source>
@@ -255,18 +215,6 @@
         <translation>Скорость симуляции</translation>
     </message>
     <message>
-        <source>0%</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>50%</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>100%</source>
-        <translation></translation>
-    </message>
-    <message>
         <source>Speed % Real</source>
         <translation type="vanished">Скорость % от реальной</translation>
     </message>
@@ -315,15 +263,63 @@
         <translation type="unfinished">Число ступеней</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation></translation>
+        <source>Reactive</source>
+        <translation type="unfinished">Реактивный</translation>
+    </message>
+    <message>
+        <source>English</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Czech</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dutch</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>French</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>German</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Italian</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Spanish</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Portuguese</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pt_Brasil</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Turkish</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source> 0%</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>0%</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>50%</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>100%</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -335,11 +331,15 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Reactive</source>
-        <translation type="unfinished">Реактивный</translation>
+        <source>Reactive Step</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Reactive Step</source>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -668,7 +668,7 @@ p, li { white-space: pre-wrap; }
     <name>CircuitView</name>
     <message>
         <source>Time: </source>
-        <translation>Bремя: </translation>
+        <translation type="vanished">Bремя: </translation>
     </message>
     <message>
         <source>Paste</source>
@@ -805,19 +805,19 @@ Do you want to save your changes?
     </message>
     <message>
         <source>    Speed: Debugger</source>
-        <translation> Скорость: Отладчик</translation>
+        <translation type="vanished"> Скорость: Отладчик</translation>
     </message>
     <message>
         <source>Circuit ERROR!!!</source>
-        <translation>Ошибка в схеме!!!</translation>
+        <translation type="vanished">Ошибка в схеме!!!</translation>
     </message>
     <message>
         <source>    Speed: </source>
-        <translation> Скорость: </translation>
+        <translation type="vanished"> Скорость: </translation>
     </message>
     <message>
         <source>    Load: </source>
-        <translation>    Загрузка: </translation>
+        <translation type="vanished">    Загрузка: </translation>
     </message>
     <message>
         <source>&amp;%1 %2</source>
@@ -979,14 +979,6 @@ Can&apos;t find file:
         <translation>Настройки компилятора</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation></translation>
-    </message>
-    <message>
         <source>Set if Debugger should drive Circuit simulation</source>
         <translation>Установите, если отладчик должен управлять симуляцией схемы</translation>
     </message>
@@ -1001,26 +993,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Select Arduino Board</source>
         <translation>Выбрать плату Arduino</translation>
-    </message>
-    <message>
-        <source>Uno</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Mega</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Nano</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Duemilanove</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Leonardo</source>
-        <translation></translation>
     </message>
     <message>
         <source>Custom</source>
@@ -1045,10 +1017,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Select tool path</source>
         <translation>Выбрать каталог инструментов</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation></translation>
     </message>
     <message>
         <source>Compiler:</source>
@@ -1077,6 +1045,38 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Family</source>
         <translation>Семейство</translation>
+    </message>
+    <message>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Uno</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mega</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Nano</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Duemilanove</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Leonardo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>...</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1258,6 +1258,13 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Edges</source>
         <translation>Фронты</translation>
+    </message>
+</context>
+<context>
+    <name>DS1307</name>
+    <message>
+        <source>Set current time at start</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1613,7 +1620,7 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2363,6 +2370,17 @@ Can&apos;t find file:
     </message>
 </context>
 <context>
+    <name>InfoWidget</name>
+    <message>
+        <source>Speed: Debugger</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Circuit ERROR!!!</source>
+        <translation type="unfinished">Ошибка в схеме!!!</translation>
+    </message>
+</context>
+<context>
     <name>InoDebugger</name>
     <message>
         <source>Found Board definition in file: </source>
@@ -2582,15 +2600,15 @@ Can&apos;t find file:
         <translation>Состояние</translation>
     </message>
     <message>
-        <source>Export Data</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Save Circuit</source>
         <translation type="unfinished">Сохранить схему</translation>
     </message>
     <message>
         <source>VCD files (*.vcd);;All files (*.*)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export Data</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3580,7 +3598,7 @@ Can&apos;t find file:
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4481,11 +4499,23 @@ Not valid Package file:
     </message>
     <message>
         <source>I2C Address</source>
-        <translation>I2C адрес</translation>
+        <translation type="vanished">I2C адрес</translation>
     </message>
     <message>
         <source>I2C Frequency</source>
         <translation>I2C частота</translation>
+    </message>
+    <message>
+        <source>Width</source>
+        <translation type="unfinished">Ширина</translation>
+    </message>
+    <message>
+        <source>_Pixels</source>
+        <translation type="unfinished">_Пиксел.</translation>
+    </message>
+    <message>
+        <source>Height</source>
+        <translation type="unfinished">Высота</translation>
     </message>
 </context>
 <context>
@@ -5233,6 +5263,56 @@ Do you want to save your changes?
     <message>
         <source>Rectifiers</source>
         <translation>Выпрямители</translation>
+    </message>
+</context>
+<context>
+    <name>asDebugger</name>
+    <message>
+        <source>Error uploading Script to </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Script Uploaded to </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error: script file doesn&apos;t exist:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error: No Scripted Device Found... </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>     SUCCESS!!! Compilation Ok</source>
+        <translation type="unfinished">     УСПЕШНО!!! Компиляция завершена</translation>
+    </message>
+    <message>
+        <source>     ERROR!!! Compilation Failed</source>
+        <translation type="unfinished">     ОШИБКА! Неудачная компиляция</translation>
+    </message>
+</context>
+<context>
+    <name>infoWidget</name>
+    <message>
+        <source>Simulation Time:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Target Speed:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Real Speed: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Main MCU:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

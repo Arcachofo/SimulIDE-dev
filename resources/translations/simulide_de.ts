@@ -35,20 +35,20 @@
 <context>
     <name>AboutDialog</name>
     <message>
+        <source> Compiled:</source>
+        <translation type="unfinished"> Kompiliert am:</translation>
+    </message>
+    <message>
         <source>Dialog</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source> Version:</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>TextLabel</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source> Compiled:</source>
-        <translation type="unfinished"> Kompiliert am:</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -159,10 +159,6 @@
         <translation type="unfinished">Einstellungen</translation>
     </message>
     <message>
-        <source>App</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>App Settings</source>
         <translation type="unfinished">Programmeinstellungen</translation>
     </message>
@@ -263,12 +259,44 @@
         <translation type="unfinished">Sekunden</translation>
     </message>
     <message>
+        <source>Simulation Speed</source>
+        <translation type="unfinished">Simulationsgeschw.</translation>
+    </message>
+    <message>
+        <source>Speed % Real</source>
+        <translation type="obsolete">Geschw. % real</translation>
+    </message>
+    <message>
+        <source>Simulation Step</source>
+        <translation type="obsolete">Simulationsschritt</translation>
+    </message>
+    <message>
+        <source>Steps per Second</source>
+        <translation type="obsolete">Schritte pro Sekunde</translation>
+    </message>
+    <message>
+        <source>NonLinear</source>
+        <translation type="unfinished">NichtLinear</translation>
+    </message>
+    <message>
+        <source>NL. Max. Steps</source>
+        <translation type="obsolete">NL. Max. Schritte</translation>
+    </message>
+    <message>
+        <source>Reactive</source>
+        <translation type="unfinished">Impedanzen</translation>
+    </message>
+    <message>
+        <source>App</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Simulation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Simulation Speed</source>
-        <translation type="unfinished">Simulationsgeschw.</translation>
+        <source> 0%</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>0%</source>
@@ -283,12 +311,8 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Speed % Real</source>
-        <translation type="obsolete">Geschw. % real</translation>
-    </message>
-    <message>
-        <source>Simulation Step</source>
-        <translation type="obsolete">Simulationsschritt</translation>
+        <source>Steps per Second    </source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>ps</source>
@@ -311,16 +335,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Steps per Second</source>
-        <translation type="obsolete">Schritte pro Sekunde</translation>
+        <source>Max. Iterations</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>NonLinear</source>
-        <translation type="unfinished">NichtLinear</translation>
-    </message>
-    <message>
-        <source>NL. Max. Steps</source>
-        <translation type="obsolete">NL. Max. Schritte</translation>
+        <source>Reactive Step</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Logic Outputs Edges</source>
@@ -336,26 +356,6 @@
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source> 0%</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Steps per Second    </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Max. Iterations</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Reactive</source>
-        <translation type="unfinished">Impedanzen</translation>
-    </message>
-    <message>
-        <source>Reactive Step</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -876,7 +876,7 @@ p, li { white-space: pre-wrap; }
     <name>CircuitView</name>
     <message>
         <source>Time: </source>
-        <translation>Zeit: </translation>
+        <translation type="vanished">Zeit: </translation>
     </message>
     <message>
         <source>Paste</source>
@@ -1025,19 +1025,19 @@ Sollen die Änderungen gespeichert werden?
     </message>
     <message>
         <source>    Speed: Debugger</source>
-        <translation>    Geschwindigkeit: Debugger</translation>
+        <translation type="vanished">    Geschwindigkeit: Debugger</translation>
     </message>
     <message>
         <source>Circuit ERROR!!!</source>
-        <translation>Fehler in Schaltung!</translation>
+        <translation type="vanished">Fehler in Schaltung!</translation>
     </message>
     <message>
         <source>    Speed: </source>
-        <translation>    Geschwindigkeit: </translation>
+        <translation type="vanished">    Geschwindigkeit: </translation>
     </message>
     <message>
         <source>    Load: </source>
-        <translation>    Laden: </translation>
+        <translation type="vanished">    Laden: </translation>
     </message>
     <message>
         <source>&amp;%1 %2</source>
@@ -1205,14 +1205,6 @@ Can&apos;t find file:
         <translation>Kompiler Einstellungen</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation></translation>
-    </message>
-    <message>
         <source>Set if Debugger should drive Circuit simulation</source>
         <translation>Auswählen, ob Debugger die Schaltung steuert</translation>
     </message>
@@ -1227,26 +1219,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Select Arduino Board</source>
         <translation>Arduino Board auswählen</translation>
-    </message>
-    <message>
-        <source>Uno</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Mega</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Nano</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Duemilanove</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Leonardo</source>
-        <translation></translation>
     </message>
     <message>
         <source>Custom</source>
@@ -1271,10 +1243,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Select tool path</source>
         <translation>Tool Pfad auswählen</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation></translation>
     </message>
     <message>
         <source>Compiler:</source>
@@ -1303,6 +1271,38 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Family</source>
         <translation>Familie</translation>
+    </message>
+    <message>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Uno</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mega</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Nano</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Duemilanove</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Leonardo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>...</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1480,6 +1480,13 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Edges</source>
         <translation>Flankenparameter</translation>
+    </message>
+</context>
+<context>
+    <name>DS1307</name>
+    <message>
+        <source>Set current time at start</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1798,14 +1805,6 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>EditorProp</name>
     <message>
-        <source>Editor / Debugger</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Editor</source>
-        <translation></translation>
-    </message>
-    <message>
         <source>Show Help</source>
         <translation>Hilfe zeigen</translation>
     </message>
@@ -1816,10 +1815,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Tab Size</source>
         <translation>Tab Länge</translation>
-    </message>
-    <message>
-        <source>Pixels</source>
-        <translation></translation>
     </message>
     <message>
         <source>Tabs as Spaces</source>
@@ -1834,12 +1829,24 @@ p, li { white-space: pre-wrap; }
         <translation>Leerzeichen</translation>
     </message>
     <message>
+        <source>Editor / Debugger</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Editor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pixels</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2159,10 +2166,6 @@ Can&apos;t find file:
 <context>
     <name>FindReplace</name>
     <message>
-        <source>Dialog</source>
-        <translation></translation>
-    </message>
-    <message>
         <source>Previous</source>
         <translation>vorheriger</translation>
     </message>
@@ -2195,10 +2198,6 @@ Can&apos;t find file:
         <translation>ersetzen:</translation>
     </message>
     <message>
-        <source>Case sensitive.</source>
-        <translation></translation>
-    </message>
-    <message>
         <source>Whole words only.</source>
         <translation>nur ganze Wörter.</translation>
     </message>
@@ -2217,6 +2216,14 @@ Can&apos;t find file:
     <message>
         <source>Replaced %1 occurrence(s)</source>
         <translation>%1 Ersetzung(en) vorgenommen</translation>
+    </message>
+    <message>
+        <source>Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Case sensitive.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2590,6 +2597,17 @@ Can&apos;t find file:
     </message>
 </context>
 <context>
+    <name>InfoWidget</name>
+    <message>
+        <source>Speed: Debugger</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Circuit ERROR!!!</source>
+        <translation type="unfinished">Fehler in Schaltung!</translation>
+    </message>
+</context>
+<context>
     <name>InoDebugger</name>
     <message>
         <source>Found Board definition in file: </source>
@@ -2765,10 +2783,6 @@ Can&apos;t find file:
 <context>
     <name>LaWidget</name>
     <message>
-        <source>Dialog</source>
-        <translation></translation>
-    </message>
-    <message>
         <source>Ch 1</source>
         <translation>K 1</translation>
     </message>
@@ -2809,10 +2823,6 @@ Can&apos;t find file:
         <translation>Bedingung</translation>
     </message>
     <message>
-        <source>Export Data</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Save Circuit</source>
         <translation type="unfinished">Schaltung speichern</translation>
     </message>
@@ -2820,12 +2830,20 @@ Can&apos;t find file:
         <source>VCD files (*.vcd);;All files (*.*)</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export Data</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LabelVal</name>
     <message>
         <source>TextLabel</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3395,16 +3413,16 @@ Can&apos;t find file:
 <context>
     <name>McuMonitor</name>
     <message>
-        <source>Dialog</source>
-        <translation></translation>
-    </message>
-    <message>
         <source>Byte PC</source>
         <translation>PC-Byte</translation>
     </message>
     <message>
         <source>Jump to active Address</source>
         <translation>Zu aktiver Adresse springen</translation>
+    </message>
+    <message>
+        <source>Dialog</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3683,7 +3701,7 @@ Can&apos;t find file:
     <name>OscWidget</name>
     <message>
         <source>Dialog</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3789,20 +3807,20 @@ Can&apos;t find file:
         <translation>Hilfe</translation>
     </message>
     <message>
-        <source>Label: </source>
-        <translation></translation>
-    </message>
-    <message>
         <source>Main</source>
         <translation>Hauptparameter</translation>
     </message>
     <message>
-        <source>Tab 2</source>
-        <translation></translation>
-    </message>
-    <message>
         <source>    Show</source>
         <translation>    Zeige</translation>
+    </message>
+    <message>
+        <source>Label: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tab 2</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -3810,7 +3828,7 @@ Can&apos;t find file:
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4134,10 +4152,6 @@ Keine valide Package Datei:
 <context>
     <name>RamTable</name>
     <message>
-        <source>Form</source>
-        <translation></translation>
-    </message>
-    <message>
         <source>Addr</source>
         <translation>Adr</translation>
     </message>
@@ -4186,6 +4200,10 @@ Keine valide Package Datei:
 %2.</source>
         <translation>Datei &quot;%1&quot; kann nicht gespeichert werden:
 %2.</translation>
+    </message>
+    <message>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4422,10 +4440,6 @@ Keine valide Package Datei:
 <context>
     <name>SerialMonitor</name>
     <message>
-        <source>Dialog</source>
-        <translation></translation>
-    </message>
-    <message>
         <source>Send Text:</source>
         <translation>Sende Text:</translation>
     </message>
@@ -4444,6 +4458,10 @@ Keine valide Package Datei:
     <message>
         <source>MCU Output</source>
         <translation type="vanished">MCU Ausgabe</translation>
+    </message>
+    <message>
+        <source>Dialog</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source> Input</source>
@@ -4789,11 +4807,23 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>I2C Address</source>
-        <translation>I2C Adresse</translation>
+        <translation type="vanished">I2C Adresse</translation>
     </message>
     <message>
         <source>I2C Frequency</source>
         <translation>I2C Frequenz</translation>
+    </message>
+    <message>
+        <source>Width</source>
+        <translation type="unfinished">Breite</translation>
+    </message>
+    <message>
+        <source>_Pixels</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Height</source>
+        <translation type="unfinished">Höhe</translation>
     </message>
 </context>
 <context>
@@ -4874,7 +4904,7 @@ p, li { white-space: pre-wrap; }
     <name>StringVal</name>
     <message>
         <source>TextLabel</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5523,6 +5553,56 @@ Sollen die Änderungen gespeichert werden?
     </message>
     <message>
         <source>Rectifiers</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>asDebugger</name>
+    <message>
+        <source>Error uploading Script to </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Script Uploaded to </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error: script file doesn&apos;t exist:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error: No Scripted Device Found... </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>     SUCCESS!!! Compilation Ok</source>
+        <translation type="unfinished">     erfolgreich! Kompilieren Ok</translation>
+    </message>
+    <message>
+        <source>     ERROR!!! Compilation Failed</source>
+        <translation type="unfinished">     Fehler! Kompilieren fehlgeschlagen</translation>
+    </message>
+</context>
+<context>
+    <name>infoWidget</name>
+    <message>
+        <source>Simulation Time:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Target Speed:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Real Speed: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Main MCU:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

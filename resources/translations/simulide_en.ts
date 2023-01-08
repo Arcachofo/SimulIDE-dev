@@ -247,6 +247,10 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source> 0%</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>0%</source>
         <translation type="unfinished"></translation>
     </message>
@@ -256,6 +260,10 @@
     </message>
     <message>
         <source>100%</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Steps per Second    </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -283,6 +291,18 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Max. Iterations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reactive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reactive Step</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Logic Outputs Edges</source>
         <translation type="unfinished"></translation>
     </message>
@@ -296,26 +316,6 @@
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source> 0%</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Steps per Second    </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Max. Iterations</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Reactive</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Reactive Step</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -634,10 +634,6 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>CircuitView</name>
     <message>
-        <source>Time: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Paste</source>
         <translation type="unfinished"></translation>
     </message>
@@ -753,22 +749,6 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Save Circuit</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>    Speed: Debugger</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Circuit ERROR!!!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>    Speed: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>    Load: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1200,6 +1180,13 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
+    <name>DS1307</name>
+    <message>
+        <source>Set current time at start</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>DS1621</name>
     <message>
         <source>DS1621</source>
@@ -1515,6 +1502,14 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Show Help</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1540,14 +1535,6 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Spaces</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1848,6 +1835,14 @@ Can&apos;t find file:
 <context>
     <name>FindReplace</name>
     <message>
+        <source>Found %1 occurrence(s)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Replaced %1 occurrence(s)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Dialog</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1897,14 +1892,6 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Replace + Find </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Found %1 occurrence(s)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Replaced %1 occurrence(s)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2270,6 +2257,17 @@ Can&apos;t find file:
     </message>
 </context>
 <context>
+    <name>InfoWidget</name>
+    <message>
+        <source>Speed: Debugger</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Circuit ERROR!!!</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>InoDebugger</name>
     <message>
         <source>Found Board definition in file: </source>
@@ -2433,6 +2431,14 @@ Can&apos;t find file:
 <context>
     <name>LaWidget</name>
     <message>
+        <source>Save Circuit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VCD files (*.vcd);;All files (*.*)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Dialog</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2469,23 +2475,15 @@ Can&apos;t find file:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>None</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Condition</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>None</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Export Data</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Save Circuit</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>VCD files (*.vcd);;All files (*.*)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3377,6 +3375,10 @@ Can&apos;t find file:
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>    Show</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Label: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -3386,10 +3388,6 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Tab 2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>    Show</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3701,10 +3699,6 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>RamTable</name>
     <message>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Addr</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3747,6 +3741,10 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Cannot write file %1:
 %2.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4144,10 +4142,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>I2C Address</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>I2C Frequency</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4157,6 +4151,18 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Yellow</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Width</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>_Pixels</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Height</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4813,6 +4819,56 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Rectifiers</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>asDebugger</name>
+    <message>
+        <source>Error uploading Script to </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Script Uploaded to </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error: script file doesn&apos;t exist:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error: No Scripted Device Found... </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>     SUCCESS!!! Compilation Ok</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>     ERROR!!! Compilation Failed</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>infoWidget</name>
+    <message>
+        <source>Simulation Time:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Target Speed:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Real Speed: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Main MCU:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
