@@ -147,7 +147,9 @@ QMAKE_LINK = /usr/local/Cellar/gcc@7/7.5.0_4/bin/g++-7
         $(COPY_DIR) ../resources/examples $$TARGET_PREFIX/simulide.app/Contents/MacOs;
 }
 
-runLrelease.commands = lrelease ../resources/translations/*.ts;
+runLrelease.commands = lrelease ../resources/translations/*.ts; \
+                        $(MOVE) ../resources/translations/*.qm ../resources/qm;
+
 QMAKE_EXTRA_TARGETS += runLrelease
 QMAKE_EXTRA_TARGETS += copy2dest
 PRE_TARGETDEPS      += runLrelease

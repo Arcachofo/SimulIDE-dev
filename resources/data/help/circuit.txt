@@ -1,5 +1,6 @@
 Property: (default value)
 
+Circuit Canvas
 - Draw Grid: (true)
 
 - Show Scrollbar: (false)
@@ -11,10 +12,11 @@ Property: (default value)
 - Canvas Refresh: (20)
    Number of Circuit updates/redraws per second.
 
+Other
 - Auto Backup Secs: (15)
-   Time interval in seconds for Circuit to check for changes.
+   Time interval in seconds for Circuit to Circuit backup.
    Save Circuit backup if there are changes.
-   Setting time to 0 disables Auto Backup.
+   0 disables Auto Backup.
 
 More Info:
 http://simulide.blogspot.com/p/blog-page_15.html

@@ -7,17 +7,16 @@
         <file alias="UbuntuMono-R.ttf">../resources/fonts/UbuntuMono-R.ttf</file>
         <file alias="UbuntuMono-RI.ttf">../resources/fonts/UbuntuMono-RI.ttf</file>
         
-        <file alias="simulide_cz.qm">../resources/translations/simulide_cz.qm</file>
-        <file alias="simulide_de.qm">../resources/translations/simulide_de.qm</file>
-        <file alias="simulide_en.qm">../resources/translations/simulide_en.qm</file>
-        <file alias="simulide_es.qm">../resources/translations/simulide_es.qm</file>
-        <file alias="simulide_fr.qm">../resources/translations/simulide_fr.qm</file>
-        <file alias="simulide_it.qm">../resources/translations/simulide_it.qm</file>
-        <file alias="simulide_nl.qm">../resources/translations/simulide_nl.qm</file>
-        <file alias="simulide_pt_BR.qm">../resources/translations/simulide_pt_BR.qm</file>
-        <file alias="simulide_pt_PT.qm">../resources/translations/simulide_pt_PT.qm</file>
-        <file alias="simulide_ru.qm">../resources/translations/simulide_ru.qm</file>
-        <file alias="simulide_tr.qm">../resources/translations/simulide_tr.qm</file>
+        <file alias="simulide_cz.qm">../resources/qm/simulide_cz.qm</file>
+        <file alias="simulide_de.qm">../resources/qm/simulide_de.qm</file>
+        <file alias="simulide_es.qm">../resources/qm/simulide_es.qm</file>
+        <file alias="simulide_fr.qm">../resources/qm/simulide_fr.qm</file>
+        <file alias="simulide_it.qm">../resources/qm/simulide_it.qm</file>
+        <file alias="simulide_nl.qm">../resources/qm/simulide_nl.qm</file>
+        <file alias="simulide_pt_BR.qm">../resources/qm/simulide_pt_BR.qm</file>
+        <file alias="simulide_pt_PT.qm">../resources/qm/simulide_pt_PT.qm</file>
+        <file alias="simulide_ru.qm">../resources/qm/simulide_ru.qm</file>
+        <file alias="simulide_tr.qm">../resources/qm/simulide_tr.qm</file>
     
         <file alias="null.png">../src/icons/components/null.png</file>
         

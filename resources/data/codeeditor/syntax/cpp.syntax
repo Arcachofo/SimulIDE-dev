@@ -8,7 +8,7 @@ keyword1-style: #202060 default true false
 keyword1: class explicit friend inline namespace operator private protected public signals slots template typedef typename
 
 keyword2-style: #300050 default true false
-keyword2: for if else while continue break switch case return true false this new delete
+keyword2: for if else do while continue break switch case return true false this new delete
 
 preprocessor-style: #505090 default true false
 preprocessor: "#[define|endif|ifdef|ifndef|include]+[^\n]*"

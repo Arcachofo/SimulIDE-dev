@@ -32,5 +32,10 @@ void scrollWidget::paintEvent( QPaintEvent* event )
         qreal y = (line-1)*h/lines+w;
         painter.fillRect( QRectF( 0, y, w, 2 ), QColor(255,100,0) );
     }
+    for( int line : m_editor->getFound() )
+    {
+        qreal y = (line-1)*h/lines+w;
+        painter.fillRect( QRectF( 0, y, w, 2 ), QColor(200,200,50) );
+    }
     painter.end();
 }

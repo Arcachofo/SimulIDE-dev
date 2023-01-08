@@ -85,7 +85,8 @@ bool BaseDebugger::postProcess()
     QString lstLine;
     int lstLineNumber = 0;
     int srcLineNumber = 0;
-    int lastListLine = lstLines.size();
+    int listFileSize = lstLines.size();
+    int lastListLine = 0;
 
     if( m_langLevel )                     // High level language
     {
@@ -145,10 +146,11 @@ bool BaseDebugger::postProcess()
             srcLine = srcLine.replace("\t", " ").remove(" ");
             if( isNoValid( srcLine ) ) continue;
             srcLine = srcLine.split(";").first();
+            lastListLine = lstLineNumber;
 
             while( true )
             {
-                if( ++lstLineNumber >= lastListLine ) break;      // End of lst file
+                if( ++lstLineNumber >= listFileSize ) break;   // End of lst file
                 lstLine = lstLines.at( lstLineNumber-1 );
                 lstLine = lstLine.replace("\t", " ");
                 if( isNoValid( lstLine ) ) continue;
@@ -158,39 +160,41 @@ bool BaseDebugger::postProcess()
                 line = line.remove(" ");
                 if( line.contains( srcLine ) ) break;          // Line found
             }
-            if( lstLineNumber >= lastListLine ) lstLineNumber = 0;
-            else{
-                if( m_lstType & 1 )
-                {
-                    QStringList l = lstLine.split(":");
-                    if( l.size() > 1 ) lstLine = lstLine.split(":").at( 1 );
-                    else continue;
-                }
-                QStringList words = lstLine.split(" ");
-                words.removeAll("");
+            if( lstLineNumber >= listFileSize )
+            {
+                lstLineNumber = lastListLine; /// lstLineNumber = 0;
+                continue;
+            }
+            if( m_lstType & 1 )
+            {
+                QStringList l = lstLine.split(":");
+                if( l.size() > 1 ) lstLine = lstLine.split(":").at( 1 );
+                else continue;
+            }
+            QStringList words = lstLine.split(" ");
+            words.removeAll("");
 
-                if( words.size() < 3 ){
-                    if( srcLine.contains( ":" ) )                 // Find Subroutines
-                    {
-                        funcName = srcLine.left( srcLine.indexOf(":") ).toUpper();
-                        if( !m_functions.contains( funcName ) ) funcName = "";
-                    }
-                    continue;
-                }
-                int index = (m_lstType & 2)>>1 ;
-                bool ok = false;
-                words.at( index+1 ).toInt( &ok, 16 ); // Avoid things like "8: E = %10000000" (vasm)
-                if( !ok ) continue;
-
-                int address = m_codeStart+words.at( index ).toInt( &ok, 16 );
-                if( ok )
+            if( words.size() < 3 ){
+                if( srcLine.contains( ":" ) )                 // Find Subroutines
                 {
-                    setLineToFlash( srcLineNumber, address );
-                    if( !funcName.isEmpty() )                  // Subroutine starting here
-                    {
-                        m_functions[funcName] = address;
-                        funcName = "";
-                    }
+                    funcName = srcLine.left( srcLine.indexOf(":") ).toUpper();
+                    if( !m_functions.contains( funcName ) ) funcName = "";
+                }
+                continue;
+            }
+            int index = (m_lstType & 2)>>1 ;
+            bool ok = false;
+            words.at( index+1 ).toInt( &ok, 16 ); // Avoid things like "8: E = %10000000" (vasm)
+            if( !ok ) continue;
+
+            int address = m_codeStart+words.at( index ).toInt( &ok, 16 );
+            if( ok )
+            {
+                setLineToFlash( srcLineNumber, address );
+                if( !funcName.isEmpty() )                  // Subroutine starting here
+                {
+                    m_functions[funcName] = address;
+                    funcName = "";
                 }
             }
         }
