@@ -28,6 +28,7 @@ McuPin::McuPin( McuPort* port, int i, QString id, Component* mcu )
     m_outMask  = false;
     m_inpMask  = true;  // Inverted: true means inactive
     m_changeCB = true;  // Always call VoltChanged()
+    m_pinState = input_low;
 
     setOutHighV( 5 );
     initialize();
@@ -63,10 +64,11 @@ void McuPin::voltChanged()
         bool raise = true;
         bool trigger = false;
         switch( m_extIntTrigger ) { // Trigger pinLow without pin change at simulation start
-            case pinLow:     raise = !newState; trigger = (Simulator::self()->circTime() == 0);
+            case pinLow:     trigger = (Simulator::self()->circTime() == 0); raise = !newState;
             case pinChange:  trigger |= (oldState != newState); break;
             case pinFalling: trigger = (oldState && !newState); break;
             case pinRising:  trigger = (!oldState && newState); break;
+            case pinDisabled:                                   break;
         }
         if( trigger ) m_extInt->raise( raise );
     }
@@ -154,4 +156,58 @@ void McuPin::ConfExtInt( uint8_t bits )
 {
     m_extIntTrigger = (extIntTrig_t)getRegBitsVal( bits, m_extIntBits );
     m_extInt->setAutoClear( m_extIntTrigger != pinLow );
+}
+
+void McuPin::setExtInt( uint mode )
+{
+    m_extIntTrigger = (extIntTrig_t)mode;
+}
+
+// ---- Script Engine -------------------
+#include "angelscript.h"
+void McuPin::registerScript( asIScriptEngine* engine )
+{
+    int r=0;
+    engine->RegisterObjectType("McuPin", 0, asOBJ_REF | asOBJ_NOCOUNT );
+
+    r = engine->RegisterObjectMethod("McuPin", "void setDirection( bool o )"
+                                       , asMETHODPR( McuPin, setDirection, (bool), void)
+                                       , asCALL_THISCALL );
+
+    r = engine->RegisterObjectMethod("McuPin", "void setPortState( bool s )"
+                                       , asMETHODPR( McuPin, setPortState, (bool), void)
+                                       , asCALL_THISCALL );
+
+    r = engine->RegisterObjectMethod("McuPin", "void controlPin( bool outCtrl, bool dirCtrl )"
+                                       , asMETHODPR( McuPin, controlPin, (bool,bool), void)
+                                       , asCALL_THISCALL );
+
+    r = engine->RegisterObjectMethod("McuPin", "void setExtInt( uint mode )"
+                                       , asMETHODPR( McuPin, setExtInt, (uint), void)
+                                       , asCALL_THISCALL );
+
+    // IoPin ------------
+    r = engine->RegisterObjectMethod("McuPin", "void setPinMode(uint m)"
+                                       , asMETHODPR( McuPin, setPinMode, (uint), void)
+                                       , asCALL_THISCALL );
+
+    r = engine->RegisterObjectMethod("McuPin", "bool getInpState()"
+                                       , asMETHODPR( McuPin, getInpState, (), bool)
+                                       , asCALL_THISCALL );
+
+    r = engine->RegisterObjectMethod("McuPin", "void setOutState(bool s)"
+                                       , asMETHODPR( McuPin, setOutState, (bool), void)
+                                       , asCALL_THISCALL );
+
+    r = engine->RegisterObjectMethod("McuPin", "double getVoltage()"
+                                       , asMETHODPR( McuPin, getVoltage, (), double)
+                                       , asCALL_THISCALL );
+
+    r = engine->RegisterObjectMethod("McuPin", "void setVoltage(double v)"
+                                       , asMETHODPR( McuPin, setVoltage, (double), void)
+                                       , asCALL_THISCALL );
+
+    r = engine->RegisterObjectMethod("McuPin", "void changeCallBack(eElement@ p, bool s)"
+                                       , asMETHODPR( McuPin, changeCallBack, (eElement*, bool), void)
+                                       , asCALL_THISCALL );
 }

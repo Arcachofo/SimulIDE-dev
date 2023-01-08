@@ -9,7 +9,7 @@
 #include "mcumodule.h"
 #include "e-element.h"
 
-class McuPin;
+class IoPin;
 
 class MAINMODULE_EXPORT IntMemModule : public McuModule, public eElement
 {
@@ -39,6 +39,7 @@ class MAINMODULE_EXPORT IntMemModule : public McuModule, public eElement
         virtual void voltChanged() override;
         virtual void runEvent() override;
 
+        void step();
         virtual void reset() override;
 
     protected:
@@ -62,14 +63,14 @@ class MAINMODULE_EXPORT IntMemModule : public McuModule, public eElement
 
         memState_t m_memState;
 
-        McuPin* m_rwPin;  // !Write / Read Pin
-      //McuPin* m_rePin;  // !Read Pin
-        McuPin* m_cshPin; // Enable Pin
-        McuPin* m_cslPin; // !Enable Pin
-        McuPin* m_clkPin; // Clock Pin
+        IoPin* m_rwPin;  // !Write / Read Pin
+      //IoPin* m_rePin;  // !Read Pin
+        IoPin* m_cshPin; // Enable Pin
+        IoPin* m_cslPin; // !Enable Pin
+        IoPin* m_clkPin; // Clock Pin
 
-        std::vector<McuPin*> m_addrPin;
-        std::vector<McuPin*> m_dataPin;
+        std::vector<IoPin*> m_addrPin;
+        std::vector<IoPin*> m_dataPin;
 };
 
 #endif

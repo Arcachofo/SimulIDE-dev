@@ -78,6 +78,8 @@ class MAINMODULE_EXPORT Mcu : public Chip
         virtual void voltChanged() override;
 
         QString device() { return m_device; }
+        bool isScripted() { return m_scripted; }
+        CpuBase* cpu() { return m_eMcu.cpu; }
 
         void reset() { m_eMcu.hardReset( true ); }
 
@@ -113,6 +115,7 @@ class MAINMODULE_EXPORT Mcu : public Chip
 
         bool m_autoLoad;
         bool m_extClock;
+        bool m_scripted;
 
         int m_serialMon;
 

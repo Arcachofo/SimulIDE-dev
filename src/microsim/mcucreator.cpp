@@ -93,7 +93,7 @@ int McuCreator::createMcu( Mcu* mcuComp, QString name )
     mcu = &(mcuComp->m_eMcu);
     QString dataFile = mcuComp->m_dataFile;
     m_basePath = QFileInfo( dataFile ).absolutePath();
-    dataFile = QFileInfo( dataFile ).fileName();
+    dataFile   = QFileInfo( dataFile ).fileName();
 
     int error = processFile( dataFile, true );
 
@@ -131,7 +131,8 @@ int McuCreator::processFile( QString fileName, bool main )
         else if( part == "progblock" )  createProgBlock( &el );
         else if( part == "stack" )      { m_stackEl = el; m_newStack = true; }
         else if( part == "interrupts" ) createInterrupts( &el );
-        else if( part == "port" )       createPort( &el );
+        else if( part == "port" )       createMcuPort( &el );
+        else if( part == "mcuport" )    createMcuPort( &el );
         else if( part == "ioport" )     createIoPort( &el );
         else if( part == "timer" )      createTimer( &el );
         else if( part == "ocm" )        createOcm( &el );
@@ -166,10 +167,11 @@ int McuCreator::processFile( QString fileName, bool main )
         {
             ScriptCpu* cpu = new ScriptCpu( mcu );
             mcu->cpu = cpu;
+            m_mcuComp->m_scripted = true;
             QString script = root.attribute("script");
             cpu->setScript( fileToString( m_basePath+"/"+script, "McuCreator::processFile" ) );
         }
-        else if( m_core == "intmem" )
+        /*else if( m_core == "intmem" )
         {
             IntMemCore* intMem = new IntMemCore( mcu );
             mcu->cpu = intMem;
@@ -198,7 +200,7 @@ int McuCreator::processFile( QString fileName, bool main )
             intMem->m_cshPin = mcu->getPin( root.attribute("cshpin") );
             intMem->m_cslPin = mcu->getPin( root.attribute("cslpin") );
             intMem->m_clkPin = mcu->getPin( root.attribute("clkpin") );
-        }
+        }*/
         if( m_newStack ) createStack( &m_stackEl );
     }
     if( root.hasAttribute("clkpin") )
@@ -412,7 +414,7 @@ void McuCreator::createIoPort( QDomElement* p )
     port->createPins( m_mcuComp, p->attribute("pins"), 0xFFFFFFFF );
 }
 
-void McuCreator::createPort( QDomElement* p )
+void McuCreator::createMcuPort( QDomElement* p )
 {
     QString name = p->attribute("name");
 
@@ -426,7 +428,7 @@ void McuCreator::createPort( QDomElement* p )
         {
             port = new ScriptPort( mcu, name );
             ScriptPort* sPort = (ScriptPort*)port;
-            sPort->setScript( fileToString( m_basePath+"/"+p->attribute("script"), "McuCreator::createPort" ) );
+            sPort->setScript( fileToString( m_basePath+"/"+p->attribute("script"), "McuCreator::createMcuPort" ) );
         }
         else port = new McuPort( mcu, name );
     }
@@ -1025,30 +1027,30 @@ void McuCreator::createIntMem( QDomElement* e )
 
     mcu->m_modules.emplace_back( intMem );
 
-    McuPort* addrPort = mcu->getPort( e->attribute("addrport") );
+    IoPort* addrPort = mcu->getIoPort( e->attribute("addrport") );
     for( int i=0; i<addrPort->m_numPins; ++i )
     {
-        McuPin* pin = addrPort->getPinN( i );
+        IoPin* pin = addrPort->getPinN( i );
         if( pin ){
             intMem->m_addrPin.emplace_back( pin );
-            pin->setDirection( true );
-            pin->controlPin( true, true );
+            pin->setPinMode( input );
+            //pin->controlPin( true, true );
         }
     }
-    McuPort* dataPort = mcu->getPort( e->attribute("dataport") );
+    IoPort* dataPort = mcu->getIoPort( e->attribute("dataport") );
     for( int i=0; i<dataPort->m_numPins; ++i )
     {
-        McuPin* pin = dataPort->getPinN( i );
+        IoPin* pin = dataPort->getPinN( i );
         if( pin ){
             intMem->m_dataPin.emplace_back( pin );
-            pin->setDirection( false );
-            pin->controlPin( true, true );
+            pin->setPinMode( input );
+            //pin->controlPin( true, true );
         }
     }
-    intMem->m_rwPin  = mcu->getPin( e->attribute("rwpin") );
-    intMem->m_cshPin = mcu->getPin( e->attribute("cshpin") );
-    intMem->m_cslPin = mcu->getPin( e->attribute("cslpin") );
-    intMem->m_clkPin = mcu->getPin( e->attribute("clkpin") );
+    intMem->m_rwPin  = mcu->getIoPin( e->attribute("rwpin") );
+    intMem->m_cshPin = mcu->getIoPin( e->attribute("cshpin") );
+    intMem->m_cslPin = mcu->getIoPin( e->attribute("cslpin") );
+    intMem->m_clkPin = mcu->getIoPin( e->attribute("clkpin") );
 }
 
 void McuCreator::createStack( QDomElement* s )

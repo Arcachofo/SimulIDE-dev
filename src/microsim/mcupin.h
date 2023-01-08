@@ -26,7 +26,8 @@ class MAINMODULE_EXPORT McuPin : public IoPin
             pinLow=0,
             pinChange,
             pinFalling,
-            pinRising
+            pinRising,
+            pinDisabled
         };
 
         virtual void initialize() override;
@@ -47,6 +48,10 @@ class MAINMODULE_EXPORT McuPin : public IoPin
         virtual void setPullup( bool up ) override;
         virtual void setAnalog( bool an ) {;}
         virtual void ConfExtInt( uint8_t bits );
+
+        void setExtInt( uint mode );
+
+        static void registerScript( asIScriptEngine* engine );
 
     protected:
         QString m_id;

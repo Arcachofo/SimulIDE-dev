@@ -21,6 +21,7 @@ enum pinMode_t{
 };
 
 class eNode;
+class asIScriptEngine;
 
 class MAINMODULE_EXPORT IoPin : public Pin, public eElement
 {
@@ -90,6 +91,8 @@ class MAINMODULE_EXPORT IoPin : public Pin, public eElement
 
         void setRiseTime( double time ) { m_timeRis = time; }
         void setFallTime( double time ) { m_timeFal = time; }
+
+        static void registerScript( asIScriptEngine* engine );
 
     protected:
         void updtState();

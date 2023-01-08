@@ -19,11 +19,15 @@ class MAINMODULE_EXPORT ScriptModule : public eElement
         ScriptModule( QString name );
         ~ScriptModule();
 
+        int compileScript();
+
+        void setScriptFile( QString scriptFile );
         virtual void setScript( QString script );
 
     protected:
-        int compileScript();
         void callFunction( asIScriptFunction* func, asIScriptContext* ctx=NULL );
+        void prepare( asIScriptFunction* func, asIScriptContext* ctx=NULL );
+        void execute( asIScriptContext* ctx=NULL );
 
         QString m_script;
 

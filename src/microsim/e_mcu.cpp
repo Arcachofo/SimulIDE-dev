@@ -131,9 +131,10 @@ void eMcu::reset()
     cyclesDone = 0;
 
     for( McuModule* module : m_modules ) module->reset();
-    cpu->reset();
+    //cpu->reset();
     m_interrupts.resetInts();
     DataSpace::initialize();
+    cpu->reset(); ///
 
     if( !m_saveEepr )
         for( uint i=0; i<m_romSize; ++i ) setRomValue( i, 0xFF );
@@ -222,7 +223,8 @@ McuPin* eMcu::getPin( QString pinName )
 
 IoPort* eMcu::getIoPort( QString name )
 {
-    return m_ioPorts.value( name );
+    IoPort* port = m_ioPorts.value( name );
+    return port;
 }
 
 IoPin*  eMcu::getIoPin( QString pinName )
@@ -235,8 +237,7 @@ IoPin*  eMcu::getIoPin( QString pinName )
         pin = port->getPin( pinName );
         if( pin ) break;
     }
-    if( !pin )
-        pin = getPin( pinName );
+    if( !pin ) pin = getPin( pinName );
 
     if( !pin )
         qDebug() << "ERROR: eMcu::getIoPin NULL Pin:"<< pinName;

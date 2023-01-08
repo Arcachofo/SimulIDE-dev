@@ -7,6 +7,7 @@
 
 #include "scriptmodule.h"
 #include "scriptstdstring.h"
+#include "utils.h"
 
 using namespace std;
 
@@ -37,6 +38,7 @@ ScriptModule::ScriptModule( QString name )
     if( m_context == 0 ) { qDebug() << "Failed to create the context."; return; }
 
     m_aEngine->SetEngineProperty( asEP_BUILD_WITHOUT_LINE_CUES, true );
+    m_aEngine->SetEngineProperty( asEP_OPTIMIZE_BYTECODE, true );
 
     m_aEngine->SetMessageCallback( asFUNCTION( MessageCallback ), 0, asCALL_CDECL );
     RegisterStdString( m_aEngine );
@@ -57,6 +59,11 @@ ScriptModule::~ScriptModule()
     if( m_jit )     delete m_jit;
 }
 
+void ScriptModule::setScriptFile( QString scriptFile )
+{
+    m_script = fileToString( scriptFile, "ScriptModule::setScriptFile" );
+}
+
 void ScriptModule::setScript( QString script )
 {
 
@@ -64,29 +71,42 @@ void ScriptModule::setScript( QString script )
 
 int ScriptModule::compileScript()
 {
+    if( !m_aEngine ) return -1;
+
     std::string script = m_script.toStdString();
     int len = m_script.size();
 
-    asIScriptModule* mod = m_aEngine->GetModule(0, asGM_ALWAYS_CREATE);
-    int r = mod->AddScriptSection("script", &script[0], len);
-    if( r < 0 ) { qDebug() << "ScriptModule::compileScript: AddScriptSection() failed"; return -1; }
+    asIScriptModule* mod = m_aEngine->GetModule( 0, asGM_ALWAYS_CREATE );
+    int r = mod->AddScriptSection("script", &script[0], len );
+    if( r < 0 ) { qDebug() << "\nScriptModule::compileScript: AddScriptSection() failed\n"; return -1; }
 
     r = mod->Build();
-    if( r < 0 ) { qDebug() << "ScriptModule::compileScript: Build() failed"; return -1; }
+    if( r < 0 ) { qDebug() << "\nScriptModule::compileScript: Build() Error\n"; return -1; }
 
+    qDebug() << "\nScriptModule::compileScript: Build() Success\n";
     return 0;
 }
 
 void ScriptModule::callFunction( asIScriptFunction* func, asIScriptContext* ctx )
 {
+    prepare( func, ctx );
+    execute( ctx );
+}
+
+void ScriptModule::prepare( asIScriptFunction* func, asIScriptContext* ctx )
+{
     if( !func ) return;
     if( !ctx ) ctx = m_context;
     if( !ctx ) return;
 
-    int r = ctx->Prepare(func);
+    int r = ctx->Prepare( func );
     if( r < 0 ) { qDebug() << "Failed to prepare context."; return; }
+}
 
-    r = ctx->Execute();
+void ScriptModule::execute( asIScriptContext* ctx )
+{
+    if( !ctx ) ctx = m_context;
+    int r = ctx->Execute();
     if( r != asEXECUTION_FINISHED ) // The execution didn't finish as we had planned. Determine why.
     {
         if( r == asEXECUTION_ABORTED )
@@ -96,12 +116,12 @@ void ScriptModule::callFunction( asIScriptFunction* func, asIScriptContext* ctx 
             qDebug() << "The script ended with an exception." ;
 
             // Write some information about the script exception
-            asIScriptFunction* func = m_context->GetExceptionFunction();
+            asIScriptFunction* func = ctx->GetExceptionFunction();
             qDebug() << "func:" << func->GetDeclaration();
             qDebug() << "modl:" << func->GetModuleName();
             qDebug() << "sect:" << func->GetScriptSectionName();
-            qDebug() << "line:" << m_context->GetExceptionLineNumber();
-            qDebug() << "desc:" << m_context->GetExceptionString();
+            qDebug() << "line:" << ctx->GetExceptionLineNumber();
+            qDebug() << "desc:" << ctx->GetExceptionString();
         }
         else qDebug() << "The script ended for some unforeseen reason " << r;
     }

@@ -107,6 +107,7 @@ IoPin* IoPort::createPin( int i, QString id, Component* comp )
 {
     IoPin* pin = new IoPin( 0, QPoint(0,0), comp->getUid()+"-"+id, i, comp, input );
     pin->setOutHighV( 5 );
+    pin->setPinState( input_low );
     return pin;
 }
 
@@ -136,4 +137,28 @@ IoPin* IoPort::getPin( QString pinName )
     //if( !pin )
     //    qDebug() << "ERROR: IoPort::getPin NULL Pin:"<< pinName;
     return pin;
+}
+
+// ---- Script Engine -------------------
+#include "angelscript.h"
+void IoPort::registerScript( asIScriptEngine* engine )
+{
+    int r=0;
+    engine->RegisterObjectType("IoPort", 0, asOBJ_REF | asOBJ_NOCOUNT );
+
+    r = engine->RegisterObjectMethod("IoPort", "void setPinMode(uint m)"
+                                       , asMETHODPR( IoPort, setPinMode, (uint), void)
+                                       , asCALL_THISCALL );
+
+    r = engine->RegisterObjectMethod("IoPort", "uint getInpState()"
+                                       , asMETHODPR( IoPort, getInpState, (), uint)
+                                       , asCALL_THISCALL );
+
+    r = engine->RegisterObjectMethod("IoPort", "void setOutState(uint s)"
+                                       , asMETHODPR( IoPort, setOutState, (uint), void)
+                                       , asCALL_THISCALL );
+
+    r = engine->RegisterObjectMethod("IoPort", "void changeCallBack(eElement@ s, bool s)"
+                                       , asMETHODPR( IoPort, changeCallBack, (eElement*, bool), void)
+                                       , asCALL_THISCALL );
 }

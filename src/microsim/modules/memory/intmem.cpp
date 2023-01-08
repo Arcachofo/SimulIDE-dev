@@ -35,7 +35,7 @@ void IntMemModule::stamp()
     m_cs = false;
 
     enableOutputs( false );
-    m_clkPin->changeCallBack( this );
+    if( m_clkPin ) m_clkPin->changeCallBack( this );
 }
 
 void IntMemModule::reset()  // NO: Reset happens after initialize() in Pins.
@@ -45,6 +45,11 @@ void IntMemModule::reset()  // NO: Reset happens after initialize() in Pins.
 }
 
 void IntMemModule::voltChanged()
+{
+    step();
+}
+
+void IntMemModule::step()
 {
     bool CS = true;
     if( m_cshPin ) CS = CS && m_cshPin->getInpState();
@@ -65,12 +70,12 @@ void IntMemModule::voltChanged()
     }
     if( m_we ){                             // Write
         write( true );
-        Simulator::self()->addEvent( m_propDelay, this );
+        //Simulator::self()->addEvent( m_propDelay, this );
     }
     else{                                   // Read
-        write( false );
         m_nextOutVal = m_mcu->readReg( m_addr );
-        sheduleOutPuts();
+        write( false );
+        //sheduleOutPuts();
 }   }
 
 void IntMemModule::runEvent()
@@ -92,6 +97,20 @@ void IntMemModule::runEvent()
 void IntMemModule::write( bool w )
 {
     m_write = w;
+
+    if( m_write )
+    {
+        int value = 0;
+        for( uint i=0; i<m_dataPin.size(); ++i )
+        {
+            bool state = m_dataPin[i]->getInpState();
+            if( state ) value += pow( 2, i );
+            m_dataPin[i]->setPinState( state? input_high:input_low ); // High-Low colors
+        }
+        m_mcu->writeReg( m_addr, value );
+    }
+    else sheduleOutPuts();
+
     for( IoPin* pin : m_dataPin )
     {
         pin->setPinMode( w ? input : output );

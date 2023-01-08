@@ -46,12 +46,15 @@ class MAINMODULE_EXPORT McuPort : public McuModule//, public eElement
         virtual void readPort( uint8_t );
 
         void controlPort( bool outCtrl, bool dirCtrl ); // Direct control
+        void setDirection( uint val );       // Direct control over pins
         void setOutState( uint val );        // Direct control over pins
-        uint getInpState();                 // Direct control over pins
+        uint getInpState();                  // Direct control over pins
         void setPinMode( pinMode_t mode );   // Direct control over pins
 
         uint16_t getOutAddr() { return m_outAddr; }
         uint16_t getInAddr() { return m_inAddr; }
+
+        static void registerScript( asIScriptEngine* engine );
 
     protected:
         void createPins( Mcu* mcuComp, QString pins, uint32_t pinMask );

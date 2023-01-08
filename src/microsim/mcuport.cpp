@@ -82,7 +82,6 @@ void McuPort::dirChanged( uint8_t val )
 
 void McuPort::readPort( uint8_t )
 {
-    m_mcu->m_regOverride = m_pinState;
 }
 
 // Direct Control---------------------------------------------------
@@ -91,6 +90,12 @@ void McuPort::controlPort( bool outCtrl, bool dirCtrl )
 {
     for( int i=0; i<m_numPins; ++i )
         m_pins[i]->controlPin( outCtrl, dirCtrl );
+}
+
+void McuPort::setDirection( uint val )
+{
+    for( int i=0; i<m_numPins; ++i )
+        m_pins[i]->setDirection( val & (1<<i) );
 }
 
 void McuPort::setOutState( uint val )
@@ -148,13 +153,13 @@ void McuPort::createPins( Mcu* mcuComp, QString pins, uint32_t pinMask )
                 m_pins[i] = createPin( i, mcuComp->getUid()+"-"+m_name+QString::number(i) , mcuComp );//new McuPin( this, i, m_name+QString::number(i), mcuComp );
         }
     }else{
-        int i = 0;
         QStringList pinList = pins.split(",");
+        pinList.removeAll("");
         for( QString pinName : pinList )
         {
-            McuPin* pin = createPin( i, mcuComp->getUid()+"-"+m_name+pinName , mcuComp );//new McuPin( this, i, m_name+pinName, mcuComp );
+            McuPin* pin = createPin( m_numPins, mcuComp->getUid()+"-"+m_name+pinName , mcuComp );//new McuPin( this, i, m_name+pinName, mcuComp );
             m_pins.emplace_back( pin );
-            i++;
+            m_numPins++;
         }
     }
 }
@@ -193,3 +198,22 @@ McuPin* McuPort::getPin( QString pinName )
     return pin;
 }
 
+// ---- Script Engine -------------------
+#include "angelscript.h"
+void McuPort::registerScript( asIScriptEngine* engine )
+{
+    int r=0;
+    engine->RegisterObjectType("McuPort", 0, asOBJ_REF | asOBJ_NOCOUNT );
+
+    r = engine->RegisterObjectMethod("McuPort", "void setDirection( uint d )"
+                                       , asMETHODPR( McuPort, setDirection, (uint), void)
+                                       , asCALL_THISCALL );
+
+    r = engine->RegisterObjectMethod("McuPort", "uint getInpState()"
+                                       , asMETHODPR( McuPort, getInpState, (), uint)
+                                       , asCALL_THISCALL );
+
+    r = engine->RegisterObjectMethod("McuPort", "void setOutState(uint s)"
+                                       , asMETHODPR( McuPort, setOutState, (uint), void)
+                                       , asCALL_THISCALL );
+}

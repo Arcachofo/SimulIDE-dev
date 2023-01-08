@@ -12,6 +12,7 @@
 
 class IoPin;
 class Component;
+class asIScriptEngine;
 
 class MAINMODULE_EXPORT IoPort
 {
@@ -37,6 +38,8 @@ class MAINMODULE_EXPORT IoPort
         IoPin* getPin( QString pinName );
 
         QString name() { return m_name; }
+
+        static void registerScript( asIScriptEngine* engine );
 
     protected:
         void createPins( Component* comp, QString pins, uint32_t pinMask );

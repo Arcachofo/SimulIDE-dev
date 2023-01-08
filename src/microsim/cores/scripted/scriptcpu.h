@@ -26,6 +26,7 @@ class MAINMODULE_EXPORT ScriptCpu : public ScriptModule, public McuCpu
         virtual void extClock( bool clkState ) override;
 
         virtual void setScript( QString script ) override;
+        void startScript();
 
         void addEvent( uint time );
         void cancelEvents();
@@ -40,14 +41,18 @@ class MAINMODULE_EXPORT ScriptCpu : public ScriptModule, public McuCpu
         IoPort* getPort( const string portName );
         IoPin*  getPin( const string pinName );
 
-        virtual void INTERRUPT( uint32_t vector ) override;
+        McuPort* getMcuPort( const string portName );
+        McuPin*  getMcuPin( const string pinName );
+
+        virtual void INTERRUPT( uint vector ) override;
 
     protected:
         asIScriptFunction* m_reset;
         asIScriptFunction* m_voltChanged;
         asIScriptFunction* m_runEvent;
+        asIScriptFunction* m_INTERRUPT;
 
-        asIScriptContext* m_extClockCtx;
+        //asIScriptContext* m_extClockCtx;
         asIScriptFunction* m_extClock;
 };
 #endif

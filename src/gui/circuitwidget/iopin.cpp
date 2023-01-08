@@ -189,10 +189,10 @@ void IoPin::setOutState( bool high ) // Set Output to Hight or Low
     {
         if( high ){
             m_gndAdmit = 1/1e8;
-            setPinState( open_high ); // Z-Low colors
+            setPinState( open_high ); // Z-high colors
          }else{
             m_gndAdmit = 1/m_outputImp;
-            setPinState( open_low ); // Z-Low colors
+            setPinState( open_low );  // Z-Low colors
         }
         updtState();
     }else{
@@ -262,4 +262,36 @@ void IoPin::stampAll()
 {
     ePin::stampAdmitance( m_admit );
     stampVolt( m_outVolt );
+}
+
+// ---- Script Engine -------------------
+#include "angelscript.h"
+void IoPin::registerScript( asIScriptEngine* engine )
+{
+    int r=0;
+    engine->RegisterObjectType("IoPin", 0, asOBJ_REF | asOBJ_NOCOUNT );
+
+    r = engine->RegisterObjectMethod("IoPin", "void setPinMode(uint m)"
+                                       , asMETHODPR( IoPin, setPinMode, (uint), void)
+                                       , asCALL_THISCALL );
+
+    r = engine->RegisterObjectMethod("IoPin", "bool getInpState()"
+                                       , asMETHODPR( IoPin, getInpState, (), bool)
+                                       , asCALL_THISCALL );
+
+    r = engine->RegisterObjectMethod("IoPin", "void setOutState(bool s)"
+                                       , asMETHODPR( IoPin, setOutState, (bool), void)
+                                       , asCALL_THISCALL );
+
+    r = engine->RegisterObjectMethod("IoPin", "double getVoltage()"
+                                       , asMETHODPR( IoPin, getVoltage, (), double)
+                                       , asCALL_THISCALL );
+
+    r = engine->RegisterObjectMethod("IoPin", "void setVoltage(double v)"
+                                       , asMETHODPR( IoPin, setVoltage, (double), void)
+                                       , asCALL_THISCALL );
+
+    r = engine->RegisterObjectMethod("IoPin", "void changeCallBack(eElement@ p, bool s)"
+                                       , asMETHODPR( IoPin, changeCallBack, (eElement*, bool), void)
+                                       , asCALL_THISCALL );
 }
