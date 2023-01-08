@@ -8,6 +8,7 @@
 #include <QFileDialog>
 #include <QDir>
 #include <QtMath>
+#include <QDebug>
 
 #include "wavegen.h"
 #include "iopin.h"
@@ -155,8 +156,8 @@ void WaveGen::runEvent()
                 m_gndpin->setVoltage(-volt );
             }
             else{
-                m_outpin->setVoltage( m_voltMid+m_voltage*m_vOut/2 );
-                m_gndpin->setVoltage( m_voltMid-m_voltage*m_vOut/2 );
+                m_outpin->setVoltage( m_voltMid+m_voltage*(m_vOut-0.5) );
+                m_gndpin->setVoltage( m_voltMid-m_voltage*(m_vOut-0.5) );
             }
         }
         else m_outpin->setVoltage( m_voltBase+m_voltage*m_vOut );
