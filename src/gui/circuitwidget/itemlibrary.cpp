@@ -305,27 +305,20 @@ void ItemLibrary::addItem( LibraryItem* item )
 LibraryItem *ItemLibrary::itemByName( QString name )
 {
     for( LibraryItem* item : m_items )
-    {
         if( item->name() == name ) return item;
-    }
+
     return NULL;
 }
 
 // CLASS LIBRARYITEM *********************************************************
 
-LibraryItem::LibraryItem( QString name,
-                          QString category,
-                          QString iconName,
-                          QString type,
-                          createItemPtr _createItem )
+LibraryItem::LibraryItem( QString name, QString category, QString iconName,
+                          QString type, createItemPtr _createItem )
 {
     m_name      = name;
     m_category  = category;
     m_iconfile  = iconName;
     m_type      = type;
     createItem  = _createItem;
-
 }
-
 LibraryItem::~LibraryItem() { }
-

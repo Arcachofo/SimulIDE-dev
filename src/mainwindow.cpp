@@ -131,7 +131,7 @@ void MainWindow::writeSettings()
     QList<QTreeWidgetItem*> list = m_components->findItems( "", Qt::MatchStartsWith | Qt::MatchRecursive );
 
     for( QTreeWidgetItem* item : list  )
-        m_settings->setValue( item->text(0)+"/collapsed", !item->isExpanded() );
+        m_settings->setValue( item->data( 0, Qt::UserRole ).toString()+"/collapsed", !item->isExpanded() );
 
     FileWidget::self()->writeSettings();
 }

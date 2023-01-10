@@ -50,7 +50,18 @@ ComponentSelector::~ComponentSelector(){}
 
 void ComponentSelector::LoadLibraryItems()
 {
-    for( LibraryItem* item : m_itemLibrary.items() ) addItem( item );
+    for( LibraryItem* item : m_itemLibrary.items() )
+    {
+        QString category = item->category();
+
+        QString icon = ":/"+item->iconfile();
+        if( item->createItemFnPtr() )
+        {
+            QTreeWidgetItem* catItem = getCategory( category );
+            if( catItem ) addItem( item->name(), catItem, icon, item->type() );
+        }
+        else addCategory( item->name(), item->type(), category, icon );
+    }
 }
 
 void ComponentSelector::LoadCompSetAt( QDir compSetDir )
@@ -142,25 +153,9 @@ void ComponentSelector::loadXml( const QString &setFile )
                     reader.skipCurrentElement();
     }   }   }   }
     QString compSetName = setFile.split( "/").last();
-    m_compSetUnique.append( compSetName );
+    //m_compSetUnique.append( compSetName );
     qDebug() << tr("        Loaded Component set:           ") << compSetName;
 }
-
-void ComponentSelector::addItem( LibraryItem* item )
-{
-    QString category = item->category();
-    //if( category != "")
-    {
-        QString icon = ":/"+item->iconfile();
-        if( item->createItemFnPtr() )
-        {
-            QTreeWidgetItem* catItem = getCategory( category );
-            if( !catItem )
-                return;
-             addItem( item->name(), catItem, icon, item->type() );
-        }
-        else addCategory( item->name(), item->type(), category, icon );
-}   }
 
 void ComponentSelector::addItem( QString caption, QTreeWidgetItem* catItem, QString icon, QString type )
 {
@@ -169,16 +164,12 @@ void ComponentSelector::addItem( QString caption, QTreeWidgetItem* catItem, QStr
     QString info = "";
     if( nameFull.size() > 1 ) info = "   "+nameFull.last();
 
-    bool hidden = MainWindow::self()->settings()->value( name+"/hidden" ).toBool();
-
     QTreeWidgetItem* item = new QTreeWidgetItem(0);
     QFont font;
     font.setFamily("Ubuntu");
     font.setBold( true );
-    
-    double fontScale = MainWindow::self()->fontScale();
-    if( type == "" ) font.setPixelSize( 12*fontScale );
-    else             font.setPixelSize( 11*fontScale );
+
+    font.setPixelSize( 11*MainWindow::self()->fontScale() );
     
     item->setFlags( QFlag(32) );
     item->setFont( 0, font );
@@ -190,13 +181,14 @@ void ComponentSelector::addItem( QString caption, QTreeWidgetItem* catItem, QStr
          item->setData( 0, Qt::WhatsThisRole, name );
     else item->setData( 0, Qt::WhatsThisRole, type );
 
-    catItem->addChild( item );
+    bool hidden = MainWindow::self()->settings()->value( name+"/hidden" ).toBool();
     item->setHidden( hidden );
-    if( MainWindow::self()->settings()->contains( name+"/collapsed" ) )
-    {
-        bool expanded = !MainWindow::self()->settings()->value( name+"/collapsed" ).toBool();
-        item->setExpanded( expanded );
-}   }
+
+    bool expanded = !MainWindow::self()->settings()->value( type+"/collapsed" ).toBool();
+    item->setExpanded( expanded );
+
+    catItem->addChild( item );
+}
 
 QTreeWidgetItem* ComponentSelector::getCategory( QString category )
 {
@@ -212,9 +204,13 @@ QTreeWidgetItem* ComponentSelector::getCategory( QString category )
 
 QTreeWidgetItem* ComponentSelector::addCategory( QString nameTr, QString name, QString parent, QString icon )
 {
-    bool c_hidden = false;
-    bool expanded = false;
     QTreeWidgetItem* catItem = NULL;
+
+    QFont font;
+    font.setFamily("Ubuntu");
+    font.setBold( true );
+    float fontScale = MainWindow::self()->fontScale();
+    bool expanded = false;
 
     if( parent.isEmpty() )                              // Is Main Category
     {
@@ -222,15 +218,15 @@ QTreeWidgetItem* ComponentSelector::addCategory( QString nameTr, QString name, Q
         catItem->setIcon( 0, QIcon(":/null-0.png") );
         catItem->setTextColor( 0, QColor( 110, 95, 50 ) );
         catItem->setBackground( 0, QBrush(QColor(240, 235, 245)) );
+        font.setPixelSize( 13*fontScale );
         expanded = true;
     }else{
         catItem = new QTreeWidgetItem(0);
         catItem->setIcon( 0, QIcon( QPixmap( icon ) ) );
+        font.setPixelSize( 12*fontScale );
     }
     catItem->setFlags( QFlag(32) );
-    QFont font = catItem->font(0);
-    font.setPixelSize( 13*MainWindow::self()->fontScale() );
-    font.setWeight(75);
+
     catItem->setFont( 0, font );
     catItem->setText( 0, nameTr );
     catItem->setChildIndicatorPolicy( QTreeWidgetItem::ShowIndicator );
@@ -241,14 +237,12 @@ QTreeWidgetItem* ComponentSelector::addCategory( QString nameTr, QString name, Q
     else if( m_categories.contains( parent ) )
         m_categories.value( parent )->addChild( catItem );
 
-    if( MainWindow::self()->settings()->contains( name+"/hidden" ) )
-        c_hidden =  MainWindow::self()->settings()->value( name+"/hidden" ).toBool();
+    bool hidden = MainWindow::self()->settings()->value( name+"/hidden" ).toBool();;
+    catItem->setHidden( hidden );
 
-    if( MainWindow::self()->settings()->contains( name+"/collapsed" ) )
+    if( MainWindow::self()->settings()->contains(name+"/collapsed") )
         expanded = !MainWindow::self()->settings()->value( name+"/collapsed" ).toBool();
-
     catItem->setExpanded( expanded );
-    catItem->setHidden( c_hidden );
 
     return catItem;
 }
@@ -295,16 +289,11 @@ void ComponentSelector::search( QString filter )
     {
         item->setHidden( true );
 
-        if( item->childCount() > 0 ) continue;
-        if( cList.contains( item ) )
-        {
-            item->setHidden( false );
+        if( item->childCount() > 0  ) continue;
+        if( !cList.contains( item ) ) continue;
 
-            QTreeWidgetItem* parent = item->parent();
-            while( parent )
-            {
-                parent->setHidden( false );
-                parent = parent->parent();
-}   }   }   }
+        while( item ){ item->setHidden( false ); item = item->parent(); }
+    }
+}
 
 #include "moc_componentselector.cpp"

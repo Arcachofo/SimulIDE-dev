@@ -40,7 +40,7 @@ class MAINMODULE_EXPORT ItemLibrary
 class MAINMODULE_EXPORT LibraryItem
 {
     public:
-        LibraryItem(QString name, QString category, QString iconName,
+        LibraryItem( QString name, QString category, QString iconName,
                      QString type, createItemPtr createItem );
         
         ~LibraryItem();
