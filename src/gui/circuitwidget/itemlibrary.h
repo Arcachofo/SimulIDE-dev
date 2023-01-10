@@ -14,7 +14,7 @@ class LibraryItem;
 
 class MAINMODULE_EXPORT ItemLibrary
 {
-    Q_DECLARE_TR_FUNCTIONS( ItemLibrary )
+    //Q_DECLARE_TR_FUNCTIONS( ItemLibrary )
     
     public:
         ItemLibrary();
@@ -22,43 +22,35 @@ class MAINMODULE_EXPORT ItemLibrary
 
  static ItemLibrary* self() { return m_pSelf; }
 
-        const QList<LibraryItem*> items() const;
+        QList<LibraryItem*> items() { return m_items; }
 
-        LibraryItem*  libraryItem( const QString type ) const;
-
-        LibraryItem*  itemByName( const QString name ) const;
+        LibraryItem* itemByName( const QString name );
 
         void addItem( LibraryItem* item );
         
         void loadItems();
-        
-        //void loadPlugins();
 
-    
     protected:
  static ItemLibrary* m_pSelf;
 
         QList<LibraryItem*> m_items;
-        //QStringList m_plugins;
-        
-        friend ItemLibrary*  itemLibrary();
 };
 
 
 class MAINMODULE_EXPORT LibraryItem
 {
     public:
-        LibraryItem( const QString &name, const QString &category, const QString &iconName,
-                     const QString type, createItemPtr createItem );
+        LibraryItem(QString name, QString category, QString iconName,
+                     QString type, createItemPtr createItem );
         
         ~LibraryItem();
 
-        QString name()     const { return m_name; }
-        QString category() const { return m_category; }
-        QString iconfile() const { return m_iconfile; }
-        QString type()     const { return m_type; }
+        QString name()     { return m_name; }
+        QString category() { return m_category; }
+        QString iconfile() { return m_iconfile; }
+        QString type()     { return m_type; }
 
-        createItemPtr createItemFnPtr() const { return createItem; }
+        createItemPtr createItemFnPtr() { return createItem; }
 
     private:
         QString m_name;

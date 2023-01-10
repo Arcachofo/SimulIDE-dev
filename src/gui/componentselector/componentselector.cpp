@@ -37,7 +37,6 @@ ComponentSelector::ComponentSelector( QWidget* parent )
     setIconSize( QSize( 36, 24 ));
 
     LoadLibraryItems();
-    //LoadCompSet();
 
     setContextMenuPolicy( Qt::CustomContextMenu );
 
@@ -51,15 +50,8 @@ ComponentSelector::~ComponentSelector(){}
 
 void ComponentSelector::LoadLibraryItems()
 {
-    for( LibraryItem* libItem : m_itemLibrary.items() ) addItem( libItem );
+    for( LibraryItem* item : m_itemLibrary.items() ) addItem( item );
 }
-
-/*void ComponentSelector::LoadCompSet()
-{
-    QDir compSetDir = SIMUAPI_AppPath::self()->RODataFolder();
-
-    if( compSetDir.exists() ) LoadCompSetAt( compSetDir );
-}*/
 
 void ComponentSelector::LoadCompSetAt( QDir compSetDir )
 {
@@ -84,7 +76,7 @@ void ComponentSelector::loadXml( const QString &setFile )
     QFile file( setFile );
     if( !file.open(QFile::ReadOnly | QFile::Text) )
     {
-          QMessageBox::warning(0, "ComponentSelector::loadXml", tr("Cannot read file %1:\n%2.").arg(setFile).arg(file.errorString()));
+          QMessageBox::warning( 0, "ComponentSelector::loadXml", tr("Cannot read file %1:\n%2.").arg(setFile).arg(file.errorString()));
           return;
     }
     QXmlStreamReader reader(&file);
@@ -101,17 +93,6 @@ void ComponentSelector::loadXml( const QString &setFile )
         {
             if( reader.name() != "itemset" ) { reader.skipCurrentElement(); continue;}
 
-            QString category = reader.attributes().value("category").toString();
-
-            QStringList catPath = category.split( "/" );
-            category = "";
-            for( QString cat : catPath )
-            {
-                cat = QObject::tr( cat.toLocal8Bit() );
-                category.append( "/"+cat );
-            }
-            category.remove( 0, 1 ); // convert "/rootCat/category" to "rootCat/category"
-
             QString icon = "";
             if( reader.attributes().hasAttribute("icon") )
             {
@@ -119,7 +100,24 @@ void ComponentSelector::loadXml( const QString &setFile )
                 if( !icon.startsWith(":/") )
                     icon.prepend( MainWindow::self()->getFilePath("data/images") + "/");
             }
-            QTreeWidgetItem* catItem = getCategory( category, icon );
+
+            QString category = reader.attributes().value("category").toString();
+            QStringList catPath = category.split( "/" );
+
+            QTreeWidgetItem* catItem = NULL;
+            QString parent = "";
+            category = "";
+            while( !catPath.isEmpty() )
+            {
+                parent = category;
+                category = catPath.takeFirst();
+                catItem = getCategory( category );
+                if( !catItem && !parent.isEmpty() )
+                {
+                    QString catTr = QObject::tr( category.toLocal8Bit() );
+                    catItem = addCategory( catTr, category, parent, icon );
+                }
+            }
 
             QString type = reader.attributes().value("type").toString();
 
@@ -140,7 +138,7 @@ void ComponentSelector::loadXml( const QString &setFile )
                     if( reader.attributes().hasAttribute("info") )
                         name += "???"+reader.attributes().value("info").toString();
 
-                    addItem( name, catItem, icon, type );
+                    if( catItem ) addItem( name, catItem, icon, type );
                     reader.skipCurrentElement();
     }   }   }   }
     QString compSetName = setFile.split( "/").last();
@@ -148,20 +146,20 @@ void ComponentSelector::loadXml( const QString &setFile )
     qDebug() << tr("        Loaded Component set:           ") << compSetName;
 }
 
-/*void ComponentSelector::addLibraryItem( LibraryItem* libItem ) // Used By Plugins
+void ComponentSelector::addItem( LibraryItem* item )
 {
-    m_itemLibrary.addItem( libItem );
-    this->addItem( libItem );
-}*/
-
-void ComponentSelector::addItem( LibraryItem* libItem )
-{
-    QString category = libItem->category();
-    if( category != "")
+    QString category = item->category();
+    //if( category != "")
     {
-        QString icon = ":/"+libItem->iconfile();
-        QTreeWidgetItem* catItem = getCategory( category );
-        addItem( libItem->name(), catItem, icon, libItem->type() );
+        QString icon = ":/"+item->iconfile();
+        if( item->createItemFnPtr() )
+        {
+            QTreeWidgetItem* catItem = getCategory( category );
+            if( !catItem )
+                return;
+             addItem( item->name(), catItem, icon, item->type() );
+        }
+        else addCategory( item->name(), item->type(), category, icon );
 }   }
 
 void ComponentSelector::addItem( QString caption, QTreeWidgetItem* catItem, QString icon, QString type )
@@ -170,8 +168,6 @@ void ComponentSelector::addItem( QString caption, QTreeWidgetItem* catItem, QStr
     QString         name = nameFull.first();
     QString info = "";
     if( nameFull.size() > 1 ) info = "   "+nameFull.last();
-    if( !m_categories.contains( name, Qt::CaseSensitive ) )
-        m_categories.append( name );
 
     bool hidden = MainWindow::self()->settings()->value( name+"/hidden" ).toBool();
 
@@ -193,7 +189,7 @@ void ComponentSelector::addItem( QString caption, QTreeWidgetItem* catItem, QStr
     if( ( type == "Subcircuit" )||( type == "MCU" ) )
          item->setData( 0, Qt::WhatsThisRole, name );
     else item->setData( 0, Qt::WhatsThisRole, type );
-    
+
     catItem->addChild( item );
     item->setHidden( hidden );
     if( MainWindow::self()->settings()->contains( name+"/collapsed" ) )
@@ -202,65 +198,58 @@ void ComponentSelector::addItem( QString caption, QTreeWidgetItem* catItem, QStr
         item->setExpanded( expanded );
 }   }
 
-QTreeWidgetItem* ComponentSelector::getCategory( QString _category, QString icon )
+QTreeWidgetItem* ComponentSelector::getCategory( QString category )
 {
     QTreeWidgetItem* catItem = NULL;
-
-    QStringList catPath = _category.split( "/" );
-    bool      isRootCat = (catPath.size() == 1);
-    QString    category = catPath.takeLast();
-
-    if( m_categories.contains( category, Qt::CaseSensitive ) )    // Find Category
-    {
-        QList<QTreeWidgetItem*> list = findItems( category, Qt::MatchExactly | Qt::MatchRecursive );
-        if( !list.isEmpty() ) catItem = list.first();
+    if( m_categories.contains( category ) ) catItem = m_categories.value( category );
+    else{
+        category = m_catTr.value( category );
+        if( !category.isEmpty() && m_categories.contains( category ) )
+            catItem = m_categories.value( category );
     }
-    else                                            // Create new Category
+    return catItem;
+}
+
+QTreeWidgetItem* ComponentSelector::addCategory( QString nameTr, QString name, QString parent, QString icon )
+{
+    bool c_hidden = false;
+    bool expanded = false;
+    QTreeWidgetItem* catItem = NULL;
+
+    if( parent.isEmpty() )                              // Is Main Category
     {
-        bool c_hidden = false;
-        bool expanded = false;
-
-        if( isRootCat )                              // Is Main Category
-        {
-            catItem = new QTreeWidgetItem( this );
-            catItem->setTextColor( 0, QColor( 110, 95, 50 )/*QColor(255, 230, 200)*/ );
-            catItem->setBackground( 0, QBrush(QColor(240, 235, 245)) );
-            expanded = true;
-        }
-        else catItem = new QTreeWidgetItem(0);
-
+        catItem = new QTreeWidgetItem( this );
+        catItem->setIcon( 0, QIcon(":/null-0.png") );
+        catItem->setTextColor( 0, QColor( 110, 95, 50 ) );
+        catItem->setBackground( 0, QBrush(QColor(240, 235, 245)) );
+        expanded = true;
+    }else{
+        catItem = new QTreeWidgetItem(0);
         catItem->setIcon( 0, QIcon( QPixmap( icon ) ) );
-        catItem->setFlags( QFlag(32) );
-        QFont font = catItem->font(0);
-        font.setPixelSize( 13*MainWindow::self()->fontScale() );
-        font.setWeight(75);
-        catItem->setFont( 0, font );
-        catItem->setText( 0, category );
-        catItem->setChildIndicatorPolicy( QTreeWidgetItem::ShowIndicator );
-        m_categories.append( category );
-
-        if( !catPath.isEmpty() )
-        {
-            QString topCat = catPath.takeLast();
-
-            QList<QTreeWidgetItem*> list = findItems( topCat, Qt::MatchExactly | Qt::MatchRecursive );
-            if( list.isEmpty() ) catPath.clear(); // Error: root category doesn't exist, force addTopLevelItem( catItem )
-            else{
-                QTreeWidgetItem* topItem = list.first();
-                topItem->addChild( catItem );
-            }
-        }
-        if( catPath.isEmpty() ) addTopLevelItem( catItem ); // Is root category or root category doesn't exist
-
-        if( MainWindow::self()->settings()->contains( category+"/hidden" ) )
-            c_hidden =  MainWindow::self()->settings()->value( category+"/hidden" ).toBool();
-
-        if( MainWindow::self()->settings()->contains( category+"/collapsed" ) )
-            expanded = !MainWindow::self()->settings()->value( category+"/collapsed" ).toBool();
-
-        catItem->setExpanded( expanded );
-        catItem->setHidden( c_hidden );
     }
+    catItem->setFlags( QFlag(32) );
+    QFont font = catItem->font(0);
+    font.setPixelSize( 13*MainWindow::self()->fontScale() );
+    font.setWeight(75);
+    catItem->setFont( 0, font );
+    catItem->setText( 0, nameTr );
+    catItem->setChildIndicatorPolicy( QTreeWidgetItem::ShowIndicator );
+    m_categories.insert( name, catItem );
+    m_catTr.insert( nameTr, name );
+
+    if( parent.isEmpty() ) addTopLevelItem( catItem ); // Is root category or root category doesn't exist
+    else if( m_categories.contains( parent ) )
+        m_categories.value( parent )->addChild( catItem );
+
+    if( MainWindow::self()->settings()->contains( name+"/hidden" ) )
+        c_hidden =  MainWindow::self()->settings()->value( name+"/hidden" ).toBool();
+
+    if( MainWindow::self()->settings()->contains( name+"/collapsed" ) )
+        expanded = !MainWindow::self()->settings()->value( name+"/collapsed" ).toBool();
+
+    catItem->setExpanded( expanded );
+    catItem->setHidden( c_hidden );
+
     return catItem;
 }
 
@@ -288,11 +277,6 @@ void ComponentSelector::slotContextMenu( const QPoint& point )
     QAction* managePluginAction = menu.addAction( QIcon(":/fileopen.png"),tr("Manage Components") );
     connect( managePluginAction, SIGNAL(triggered()), this, SLOT(slotManageComponents()) );
     
-    //QAction* installAction = menu.addAction( QIcon(":/fileopen.png"),tr("Install New Component") );
-    //connect( installAction, SIGNAL(triggered()), this, SLOT(slotIstallItem()) );
-
-    //menu->addSeparator();
-    
     menu.exec( mapToGlobal(point) );
 }
 
@@ -304,7 +288,7 @@ void ComponentSelector::slotManageComponents()
 
 void ComponentSelector::search( QString filter )
 {
-    QList<QTreeWidgetItem*> cList = findItems( filter, Qt::MatchContains|Qt::MatchRecursive, 0 );
+    QList<QTreeWidgetItem*>    cList = findItems( filter, Qt::MatchContains|Qt::MatchRecursive, 0 );
     QList<QTreeWidgetItem*> allItems = findItems( "", Qt::MatchContains|Qt::MatchRecursive, 0 );
 
     for( QTreeWidgetItem* item : allItems )
@@ -322,84 +306,5 @@ void ComponentSelector::search( QString filter )
                 parent->setHidden( false );
                 parent = parent->parent();
 }   }   }   }
-
-/*void ComponentSelector::unistallPlugin( QString item )
-{
-    qDebug() << "    Unloading Plugin:" << item;
-    
-    QFile fIn( "data/plugins/"+item+"uninstall" );
-    if( fIn.open( QFile::ReadOnly | QFile::Text ) ) // Read unistall file
-    {
-        QTextStream sIn(&fIn);
-        while (!sIn.atEnd())                    // Remove installed files
-        {
-            QString pluginPath = sIn.readLine();
-            if( pluginPath.contains("plugin") )
-            {
-                QString pluginName = pluginPath.split("/").last().split(".").first().remove("lib").remove("plugin").toUpper();
-                MainWindow::self()->unLoadPugin( pluginName );
-            }
-            QFile file( pluginPath );
-            file.remove();
-        }
-        fIn.close();
-        fIn.remove();
-        //reLoadItems();
-        qDebug() << "        Plugin Unloaded Successfully:\t" << item << "\n";
-    } 
-    else 
-    { 
-        qDebug() << "ComponentSelector::slotUnistallItem:\n Error Opening UnInstall File\n";
-        qDebug()<<fIn.errorString();
-    }
-}*/
-
-/*void ComponentSelector::istallPlugin( QString item )
-{
-    //qDebug() << "ComponentSelector::istallItem" << item;
-
-    QString dir = "plugins/"+item+"plugin";
-
-    QFile fOut("data/plugins/"+item+"uninstall");      // Create unistall File
-    if( fOut.open( QFile::WriteOnly | QFile::Text ) )
-    {
-        QTextStream fileList(&fOut);
-    
-        QDirIterator it(dir, QDirIterator::Subdirectories);
-        while(it.hasNext()) 
-        {
-            QString origFile = it.next();
-            if( it.fileInfo().isFile() )           // Copy Plugin Files to data/
-            {
-                QString destFile = origFile;
-                destFile = destFile.remove(dir+"/");
-                
-                QFileInfo fi( destFile );
-                QDir destDir = fi.dir();
-
-                destDir.mkpath( destDir.absolutePath() );
-                
-                QFile::copy( origFile, destFile );
-                
-                fileList << destFile << '\n';
-                //qDebug() << destFile;
-            }
-        }
-        fOut.close();
-        MainWindow::self()->loadPlugins();
-        //reLoadItems();
-    }
-    else { qDebug() << "ComponentSelector::slotIstallItem:\n Error Opening Output File\n"; }
-}*/
-
-/*void ComponentSelector::reLoadItems()
-{
-    clear();
-    m_categories.clear();
-    m_itemLibrary.loadItems();
-    //m_itemLibrary.loadPlugins();
-    LoadLibraryItems();
-    LoadCompSet();
-}*/
 
 #include "moc_componentselector.cpp"

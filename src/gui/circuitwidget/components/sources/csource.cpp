@@ -27,8 +27,8 @@ LibraryItem* Csource::libraryItem()
 }
 
 Csource::Csource( QObject* parent, QString type, QString id )
-      : Component( parent, type, id )
-      , eResistor( id )
+       : Component( parent, type, id )
+       , eResistor( id )
 {
     m_area = QRect(-16,-16, 32, 32 );
 

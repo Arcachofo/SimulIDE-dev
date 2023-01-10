@@ -9,6 +9,7 @@
         
         <file alias="simulide_cz.qm">../resources/qm/simulide_cz.qm</file>
         <file alias="simulide_de.qm">../resources/qm/simulide_de.qm</file>
+        <file alias="simulide_en.qm">../resources/qm/simulide_en.qm</file>
         <file alias="simulide_es.qm">../resources/qm/simulide_es.qm</file>
         <file alias="simulide_fr.qm">../resources/qm/simulide_fr.qm</file>
         <file alias="simulide_it.qm">../resources/qm/simulide_it.qm</file>

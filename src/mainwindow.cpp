@@ -178,12 +178,11 @@ void MainWindow::setLoc( QString loc )
 
 void MainWindow::setLang( Langs lang ) // From appDialog
 {
-    Langs ml = m_lang;
     m_lang = lang;
 
     QString langF = ":/simulide_"+loc()+".qm";
-    if( !QFileInfo::exists( langF) ) m_lang = ml;
-    else settings()->setValue( "language", loc() );
+    if( !QFileInfo::exists( langF) ) m_lang = English;
+    settings()->setValue( "language", loc() );
 }
 
 void MainWindow::setFile( QString file )

@@ -19,7 +19,7 @@ Component* Rail::construct( QObject* parent, QString type, QString id )
 LibraryItem* Rail::libraryItem()
 {
     return new LibraryItem(
-        tr( "Rail." ),
+        tr( "Rail" ),
         tr( "Sources" ),
         "voltage.png",
         "Rail",

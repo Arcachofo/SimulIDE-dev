@@ -14,7 +14,7 @@ LibraryItem* FullAdder::libraryItem()
 {
     return new LibraryItem(
         tr( "Full Adder" ),
-        tr("Logic/Arithmetic"),
+        tr("Arithmetic"),
         "2to2.png",
         "FullAdder",
         FullAdder::construct );

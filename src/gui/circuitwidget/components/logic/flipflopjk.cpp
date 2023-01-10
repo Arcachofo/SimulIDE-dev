@@ -14,7 +14,7 @@ LibraryItem* FlipFlopJK::libraryItem()
 {
     return new LibraryItem(
         tr( "FlipFlop JK" ),
-        tr( "Logic/Memory" ),
+        tr( "Memory" ),
         "3to2.png",
         "FlipFlopJK",
         FlipFlopJK::construct );

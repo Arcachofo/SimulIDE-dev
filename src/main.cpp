@@ -50,7 +50,6 @@ int main( int argc, char *argv[] )
 {
     qInstallMessageHandler( myMessageOutput );
 
-    //QApplication::setGraphicsSystem( "raster" );//native, raster, opengl
     QApplication app( argc, argv );
 
     QSettings settings( QStandardPaths::standardLocations( QStandardPaths::DataLocation).first()+"/simulide.ini",  QSettings::IniFormat, 0l );
@@ -64,12 +63,11 @@ int main( int argc, char *argv[] )
         locale = QLocale::system().name().split("_").first();
         langF = langFile( locale );
     }
-    if( !langF.isEmpty() )
-    {
-        QTranslator translator;
-        translator.load( langF );
-        app.installTranslator( &translator );
-    }
+    if( langF == "" ) langF = ":/simulide_en.qm";
+
+    QTranslator translator;
+    translator.load( langF );
+    app.installTranslator( &translator );
     app.setApplicationVersion( APP_VERSION );
 
     MainWindow window;
@@ -82,7 +80,6 @@ int main( int argc, char *argv[] )
          || circ.endsWith(".sim1") ) CircuitWidget::self()->loadCirc( circ );
     }
     window.show();
-    //QTimer::singleShot( 100, &window, &MainWindow::readSettings ); // Some DE forze window geometry, so restore geometry later
 
     return app.exec();
 }
