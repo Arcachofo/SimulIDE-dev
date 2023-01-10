@@ -43,6 +43,8 @@ class CodeEditor : public QPlainTextEdit
         QList<int> getFound();
         void setFound( QList<QTextEdit::ExtraSelection> sel );
 
+        void showMsg( QString msg );
+
         void updateScreen();
 
  static void readSettings();

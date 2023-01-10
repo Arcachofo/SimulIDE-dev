@@ -14,16 +14,6 @@ FindReplace::FindReplace( QWidget* parent )
     m_editor = NULL;
 }
 
-/*void FindReplace::on_findEdit_textEdited( QString text )
-{
-
-}
-
-void FindReplace::on_replaceEdit_textEdited( QString text )
-{
-
-}*/
-
 void FindReplace::on_prevButton_clicked()
 {
     QList<QTextEdit::ExtraSelection> extraSelections;
@@ -54,7 +44,7 @@ void FindReplace::on_allButton_clicked()
         extraSelections.append( extra );
         i++;
     }
-    showMsg( tr("Found %1 occurrence(s)").arg(i) );
+    m_editor->showMsg( tr("Found %n occurrence(s)", "", i) );
 
     tc.setPosition( pos );
     m_editor->setTextCursor( tc );
@@ -94,7 +84,7 @@ void FindReplace::on_replAllButton_clicked()
         m_editor->textCursor().insertText( replaceEdit->text() );
         i++;
     }
-    showMsg( tr("Replaced %1 occurrence(s)").arg(i) );
+    m_editor->showMsg( tr("Replaced %n occurrence(s)", "", i) );
 }
 
 void FindReplace::on_closeButton_clicked()
@@ -102,21 +92,6 @@ void FindReplace::on_closeButton_clicked()
     QList<QTextEdit::ExtraSelection> extraSelections;
     m_editor->setFound( extraSelections );
     hide();
-}
-
-void FindReplace::on_caseS_toggled( bool c )
-{
-
-}
-
-void FindReplace::on_whole_toggled( bool w )
-{
-
-}
-
-void FindReplace::on_regexp_toggled( bool w )
-{
-
 }
 
 bool FindReplace::find( bool next )
@@ -142,9 +117,4 @@ bool FindReplace::find( bool next )
     else result = m_editor->find( toSearch, flags );
 
     return result;
-}
-
-void FindReplace::showMsg( QString msg )
-{
-
 }

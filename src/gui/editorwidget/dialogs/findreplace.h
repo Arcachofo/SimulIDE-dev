@@ -23,10 +23,6 @@ class FindReplace : public QDialog, private Ui::FindReplace
         void setTextToFind( QString text ) { findEdit->setText( text ); }
 
     public slots:
-
-        //void on_findEdit_textEdited( QString text );
-        //void on_replaceEdit_textEdited( QString text );
-
         void on_prevButton_clicked();
         void on_nextButton_clicked();
         void on_allButton_clicked();
@@ -35,14 +31,8 @@ class FindReplace : public QDialog, private Ui::FindReplace
         void on_replAllButton_clicked();
         void on_closeButton_clicked();
 
-
-        void on_caseS_toggled( bool c );
-        void on_whole_toggled( bool w );
-        void on_regexp_toggled( bool w );
-
     private:
         bool find( bool next );
-        void showMsg( QString msg );
 
         QTextCursor m_textCursor;
         CodeEditor* m_editor;

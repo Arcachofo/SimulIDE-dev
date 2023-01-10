@@ -310,6 +310,11 @@ void CodeEditor::stopDebug()
     update();
 }
 
+void CodeEditor::showMsg( QString msg )
+{
+    m_outPane->appendLine( msg+"\n" );
+}
+
 void CodeEditor::updateScreen()
 {
     setTextCursor( QTextCursor(document()->findBlockByLineNumber( m_debugLine-1 )));
