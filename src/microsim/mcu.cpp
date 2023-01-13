@@ -367,7 +367,7 @@ bool Mcu::load( QString fileName )
     qDebug() << "Firmware succesfully loaded\n";
 
     m_eMcu.m_firmware = circuitDir.relativeFilePath( cleanPathAbs );
-    m_lastFirmDir = cleanPathAbs;
+    m_lastFirmDir = QFileInfo( cleanPathAbs ).absolutePath();
     if( m_propDialog ) m_propDialog->updtValues();
 
     QSettings* settings = MainWindow::self()->settings();
