@@ -3,6 +3,8 @@
  *                                                                         *
  ***( see copyright.txt file at root folder )*******************************/
 
+#include <math.h>
+
 #include "bjt.h"
 #include "itemlibrary.h"
 #include "circuitwidget.h"
@@ -59,8 +61,8 @@ void BJT::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* w
 {
     Component::paint( p, option, widget );
     
-    if( Circuit::self()->animate() && m_baseCurr > 0 ) p->setBrush( Qt::yellow );
-    else                                               p->setBrush( Qt::white );
+    if( Circuit::self()->animate() && fabs(m_baseCurr) > 1e-4 ) p->setBrush( Qt::yellow );
+    else                                                        p->setBrush( Qt::white );
 
     p->drawEllipse( m_area );
     p->drawLine( -12, 0,-4, 0 );
