@@ -9,6 +9,7 @@
     <item name="74HC02"  info="quad 2-input NOR gate" ></item>
     <item name="74HC04"  info="hex inverter gate" ></item>
     <item name="74HC08"  info="quad 2-input AND gate" ></item>
+    <item name="74XX11"  info="triple 3-input AND gate" ></item>
     <item name="74HC32"  info="quad 2-input OR gate" ></item>
     <item name="74HC42"  info="BCD to decimal decoder " ></item>
     <item name="74XX45"  info="BCD to decimal decoder " ></item>
