@@ -97,8 +97,8 @@ void reset() // Executed at Simulation start
     m_pulseCA2 = false;
     m_pulseCB2 = false;
     
-    m_latchA = false
-    m_latchB = false
+    m_latchA = false;
+    m_latchB = false;
     
     m_CA2ctrl = -1;
     m_CB2ctrl = -1;
@@ -173,7 +173,7 @@ uint readREG()
             IRA = data;
         }break;
         case 1:{
-            if( m_latchA ) data = IRA // Latched at CA1 change
+            if( m_latchA ) data = IRA;          // Latched at CA1 change
             else           data = PortA.getInpState();
             IRA = data;
         }break;
@@ -204,7 +204,7 @@ void writeREG( uint data )
         case 3: DDRA = data; break;
         case 4: T1LL = data; break; // T1CL Load data into latch Low
         case 5:{                    // T1CH
-            T1LH = data; break;     // load data into latch High
+            T1LH = data;            // load data into latch High
             T1CH = T1LH;
             T1CL = T1LL;
             // initiates countdown
@@ -252,11 +252,11 @@ void writePCR()
     {
         m_CA2ctrl = -1;
         if( (PCR & CA21) > 0 ) ca2Pin.setPortState( (PCR & CA20) > 0 ); // Manual Output
-        else                   m_CA2ctrl = PCR & Cx20;// Handshake/Pulse Output
+        else                   m_CA2ctrl = PCR & CA20;// Handshake/Pulse Output
     }else{
         if( (PCR & CA21) > 0 ) ca2Pin.setExtInt( 3 ); // Interrupt at CA1 Rising edge
         else                   ca2Pin.setExtInt( 2 ); // Interrupt at CA1 Falling edge
-        if( (PCR & CA20) > 0 ) ;//Independent interrupt
+        /// if( (PCR & CA20) > 0 ) ;//Independent interrupt
     }
     
     if( (PCR & CB1c) > 0 ) cb1Pin.setExtInt( 3 ); // Interrupt at CA1 Rising edge
@@ -266,11 +266,11 @@ void writePCR()
     {
         m_CB2ctrl = -1;
         if( (PCR & CB21) > 0 ) cb2Pin.setPortState( (PCR & CB20) > 0 ); // Manual Output
-        else                   m_CB2ctrl = PCR & Cx20;// Handshake/Pulse Output
+        else                   m_CB2ctrl = PCR & CB20;// Handshake/Pulse Output
     }else{
         if( (PCR & CB21) > 0 ) cb2Pin.setExtInt( 3 ); // Interrupt at CA1 Rising edge
         else                   cb2Pin.setExtInt( 2 ); // Interrupt at CA1 Falling edge
-        if( (PCR & CB20) > 0 ) ;//Independent interrupt
+        /// if( (PCR & CB20) > 0 ) ;//Independent interrupt
     }
 }
 

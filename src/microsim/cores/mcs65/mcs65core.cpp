@@ -67,8 +67,12 @@ void Mcs65Cpu::reset()
     m_cycle = 0;
     m_SP = 0;
 
+    m_IsrH = 0xFF;
+    m_IsrL = 0;
+
     m_dataMode = input;
     m_nextClock = true;
+    m_halt = false;
 
     stamp();
 }
@@ -82,13 +86,9 @@ void Mcs65Cpu::stamp()
     m_addrBus->setPinMode( output );
     m_dataBus->setPinMode( input );
 
-    //m_rwPin->controlPin( true, true );
     m_rwPin->setPinMode( output );
     m_rwPin->setOutState( true );
 
-    //m_phi1Pin->controlPin( true, true );
-    //m_phi2Pin->controlPin( true, true );
-    //m_syncPin->controlPin( true, true );
     m_phi1Pin->setPinMode( output );
     m_phi2Pin->setPinMode( output );
     m_syncPin->setPinMode( output );
@@ -137,6 +137,9 @@ void Mcs65Cpu::runStep()
 
 void Mcs65Cpu::clkRisingEdge()
 {
+    if( m_halt ) return;
+    if( !m_soPin->getInpState() ) SET_OVERFLOW( 1 );
+
     if( m_state != cWRITE ) return;
     m_state = m_nextState;
 
@@ -145,6 +148,9 @@ void Mcs65Cpu::clkRisingEdge()
 
 void Mcs65Cpu::clkFallingEdge()
 {
+     m_halt = !m_rdyPin->getInpState();
+    if( m_halt ) return;
+
     m_mcu->cyclesDone = 1;
     m_cycle++;
 
@@ -159,7 +165,17 @@ void Mcs65Cpu::clkFallingEdge()
 
         m_syncPin->sheduleState( false, m_tHA ); // Reset SYNC Signal
         m_IR = readDataBus();
-        decode();
+        if( !m_IsrL && !m_nmiPin->getInpState() ) // NMI
+        {
+            m_IsrL = 0xFA;
+            m_EXEC = &Mcs65Cpu::BRK;
+        }
+        else if( !m_IsrL && !m_irqPin->getInpState() ) // IRQ
+        {
+            m_IsrL = 0xFE;
+            m_EXEC = &Mcs65Cpu::BRK;
+        }
+        else decode();
     }
     if( m_state == cREAD ) // Read Operand: When all Operands ready state changes to EXEC
     {
@@ -215,7 +231,7 @@ void Mcs65Cpu::decode()
 
     switch( m_IR )                     // Irregular Instructions
     {
-        case 0x00: m_EXEC = &Mcs65Cpu::BRK;                  return; // BRK
+        case 0x00: m_EXEC = &Mcs65Cpu::BRK; m_IsrL = 0xFE;   return; // BRK
         case 0x08: m_EXEC = &Mcs65Cpu::PHP;                  return; // PHP
         case 0x18: m_EXEC = &Mcs65Cpu::CLC; return; // CLC
         case 0x20: m_EXEC = &Mcs65Cpu::JSR; m_aMode = aABSO; return; // JSR abs Execution controls PC
@@ -430,7 +446,7 @@ void Mcs65Cpu::BRK() // Break/Interrupt : 1 byte, 7 cycles
         case 4: pushStack8( *m_STATUS );       m_nextState = cEXEC; break; // Status -> Stack
         case 5: readMem( m_IsrH );                 m_state = cEXEC; break; // Read IsrH
         case 6: readMem( m_IsrL ); m_tmp0 = m_op0; m_state = cEXEC; break; // Read IsrL
-        case 7: m_PC = (m_tmp0 << 8) + m_op0;                              // Jump to Isr
+        case 7: m_PC = (m_tmp0 << 8) + m_op0; m_IsrL = 0;                  // Jump to Isr
 }   }
 
 void Mcs65Cpu::CLC() { SET_CARRY(0);     }

@@ -81,6 +81,7 @@ class MAINMODULE_EXPORT Mcs65Cpu : public CpuBase, public eElement
         uint32_t m_debugPC; // PC for dDebugger
 
         bool m_nextClock;
+        bool m_halt;
 
         //uint64_t m_psStep;
         int m_cycle;
