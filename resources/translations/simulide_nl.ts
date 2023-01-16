@@ -8,10 +8,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Logic/Other Logic</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Main</source>
         <translation type="unfinished"></translation>
     </message>
@@ -30,6 +26,10 @@
     <message>
         <source>Edges</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Other Logic</source>
+        <translation type="unfinished">Overige logica</translation>
     </message>
 </context>
 <context>
@@ -90,7 +90,7 @@
     </message>
     <message>
         <source>Logic/Gates</source>
-        <translation type="unfinished">Logica/Poorten</translation>
+        <translation type="obsolete">Logica/Poorten</translation>
     </message>
     <message>
         <source>Main</source>
@@ -115,6 +115,10 @@
     <message>
         <source>Edges</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Gates</source>
+        <translation type="unfinished">Poorten</translation>
     </message>
 </context>
 <context>
@@ -427,7 +431,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Logic/Converters</source>
-        <translation type="unfinished">Logica/Omzetters</translation>
+        <translation type="obsolete">Logica/Omzetters</translation>
     </message>
     <message>
         <source>Main</source>
@@ -445,6 +449,10 @@ p, li { white-space: pre-wrap; }
         <source>Edges</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Converters</source>
+        <translation type="unfinished">Omzetters</translation>
+    </message>
 </context>
 <context>
     <name>BcdToDec</name>
@@ -454,7 +462,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Logic/Converters</source>
-        <translation type="unfinished">Logica/Omzetters</translation>
+        <translation type="obsolete">Logica/Omzetters</translation>
     </message>
     <message>
         <source>Main</source>
@@ -476,6 +484,10 @@ p, li { white-space: pre-wrap; }
         <source>Edges</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Converters</source>
+        <translation type="unfinished">Omzetters</translation>
+    </message>
 </context>
 <context>
     <name>BinCounter</name>
@@ -485,7 +497,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Logic/Arithmetic</source>
-        <translation type="unfinished">Logica/Rekenkundig</translation>
+        <translation type="obsolete">Logica/Rekenkundig</translation>
     </message>
     <message>
         <source>Main</source>
@@ -515,6 +527,10 @@ p, li { white-space: pre-wrap; }
         <source>Edges</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Arithmetic</source>
+        <translation type="unfinished">Rekenkundig</translation>
+    </message>
 </context>
 <context>
     <name>BoolVal</name>
@@ -531,7 +547,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Logic/Gates</source>
-        <translation type="unfinished">Logica/Poorten</translation>
+        <translation type="obsolete">Logica/Poorten</translation>
     </message>
     <message>
         <source>Main</source>
@@ -556,6 +572,10 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Edges</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Gates</source>
+        <translation type="unfinished">Poorten</translation>
     </message>
 </context>
 <context>
@@ -1184,10 +1204,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">DAC</translation>
     </message>
     <message>
-        <source>Logic/Other Logic</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Main</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1206,6 +1222,10 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Edges</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Other Logic</source>
+        <translation type="unfinished">Overige logica</translation>
     </message>
 </context>
 <context>
@@ -1291,7 +1311,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Logic/Converters</source>
-        <translation type="unfinished">Logica/Omzetters</translation>
+        <translation type="obsolete">Logica/Omzetters</translation>
     </message>
     <message>
         <source>Main</source>
@@ -1313,6 +1333,10 @@ p, li { white-space: pre-wrap; }
         <source>Edges</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Converters</source>
+        <translation type="unfinished">Omzetters</translation>
+    </message>
 </context>
 <context>
     <name>Demux</name>
@@ -1322,7 +1346,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Logic/Converters</source>
-        <translation type="unfinished">Logica/Omzetters</translation>
+        <translation type="obsolete">Logica/Omzetters</translation>
     </message>
     <message>
         <source>Main</source>
@@ -1343,6 +1367,10 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Edges</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Converters</source>
+        <translation type="unfinished">Omzetters</translation>
     </message>
 </context>
 <context>
@@ -1998,7 +2026,11 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Logic/Memory</source>
-        <translation type="unfinished">Logica/Geheugen</translation>
+        <translation type="obsolete">Logica/Geheugen</translation>
+    </message>
+    <message>
+        <source>Memory</source>
+        <translation type="unfinished">Geheugen</translation>
     </message>
 </context>
 <context>
@@ -2009,7 +2041,11 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Logic/Memory</source>
-        <translation type="unfinished">Logica/Geheugen</translation>
+        <translation type="obsolete">Logica/Geheugen</translation>
+    </message>
+    <message>
+        <source>Memory</source>
+        <translation type="unfinished">Geheugen</translation>
     </message>
 </context>
 <context>
@@ -2020,7 +2056,11 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Logic/Memory</source>
-        <translation type="unfinished">Logica/Geheugen</translation>
+        <translation type="obsolete">Logica/Geheugen</translation>
+    </message>
+    <message>
+        <source>Memory</source>
+        <translation type="unfinished">Geheugen</translation>
     </message>
 </context>
 <context>
@@ -2031,7 +2071,11 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Logic/Memory</source>
-        <translation type="unfinished">Logica/Geheugen</translation>
+        <translation type="obsolete">Logica/Geheugen</translation>
+    </message>
+    <message>
+        <source>Memory</source>
+        <translation type="unfinished">Geheugen</translation>
     </message>
 </context>
 <context>
@@ -2061,7 +2105,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Logic/Arithmetic</source>
-        <translation type="unfinished">Logica/Rekenkundig</translation>
+        <translation type="obsolete">Logica/Rekenkundig</translation>
     </message>
     <message>
         <source>Electric</source>
@@ -2070,6 +2114,10 @@ Can&apos;t find file:
     <message>
         <source>Edges</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Arithmetic</source>
+        <translation type="unfinished">Rekenkundig</translation>
     </message>
 </context>
 <context>
@@ -2080,7 +2128,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Logic/Arithmetic</source>
-        <translation type="unfinished">Logica/Rekenkundig</translation>
+        <translation type="obsolete">Logica/Rekenkundig</translation>
     </message>
     <message>
         <source>Main</source>
@@ -2131,6 +2179,10 @@ Can&apos;t find file:
 %2.</source>
         <translation type="unfinished">Kan niet schrijven naar bestand %1:
 %2.</translation>
+    </message>
+    <message>
+        <source>Arithmetic</source>
+        <translation type="unfinished">Rekenkundig</translation>
     </message>
 </context>
 <context>
@@ -2190,7 +2242,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Logic/Memory</source>
-        <translation type="unfinished">Logica/Geheugen</translation>
+        <translation type="obsolete">Logica/Geheugen</translation>
     </message>
     <message>
         <source>Main</source>
@@ -2224,6 +2276,10 @@ Can&apos;t find file:
         <source>Show Memory Table</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Memory</source>
+        <translation type="unfinished">Geheugen</translation>
+    </message>
 </context>
 <context>
     <name>I2CToParallel</name>
@@ -2233,7 +2289,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Logic/Converters</source>
-        <translation type="unfinished">Logica/Omzetters</translation>
+        <translation type="obsolete">Logica/Omzetters</translation>
     </message>
     <message>
         <source>Main</source>
@@ -2246,6 +2302,10 @@ Can&apos;t find file:
     <message>
         <source>I2C Frequency</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Converters</source>
+        <translation type="unfinished">Omzetters</translation>
     </message>
 </context>
 <context>
@@ -2571,7 +2631,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Logic/Memory</source>
-        <translation type="unfinished">Logica/Geheugen</translation>
+        <translation type="obsolete">Logica/Geheugen</translation>
     </message>
     <message>
         <source>Main</source>
@@ -2600,6 +2660,10 @@ Can&apos;t find file:
     <message>
         <source>Edges</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Memory</source>
+        <translation type="unfinished">Geheugen</translation>
     </message>
 </context>
 <context>
@@ -2831,8 +2895,8 @@ Can&apos;t find file:
         <translation type="unfinished">LM555</translation>
     </message>
     <message>
-        <source>Logic/Other Logic</source>
-        <translation type="unfinished"></translation>
+        <source>Other Logic</source>
+        <translation type="unfinished">Overige logica</translation>
     </message>
 </context>
 <context>
@@ -3110,7 +3174,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Logic/Memory</source>
-        <translation type="unfinished">Logica/Geheugen</translation>
+        <translation type="obsolete">Logica/Geheugen</translation>
     </message>
     <message>
         <source>Main</source>
@@ -3155,6 +3219,10 @@ Can&apos;t find file:
     <message>
         <source>Asynchronous</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Memory</source>
+        <translation type="unfinished">Geheugen</translation>
     </message>
 </context>
 <context>
@@ -3211,7 +3279,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Logic/Converters</source>
-        <translation type="unfinished">Logica/Omzetters</translation>
+        <translation type="obsolete">Logica/Omzetters</translation>
     </message>
     <message>
         <source>Main</source>
@@ -3232,6 +3300,10 @@ Can&apos;t find file:
     <message>
         <source>Edges</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Converters</source>
+        <translation type="unfinished">Omzetters</translation>
     </message>
 </context>
 <context>
@@ -3308,7 +3380,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Logic/Gates</source>
-        <translation type="unfinished">Logica/Poorten</translation>
+        <translation type="obsolete">Logica/Poorten</translation>
     </message>
     <message>
         <source>Main</source>
@@ -3333,6 +3405,10 @@ Can&apos;t find file:
     <message>
         <source>Edges</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Gates</source>
+        <translation type="unfinished">Poorten</translation>
     </message>
 </context>
 <context>
@@ -3728,6 +3804,54 @@ p, li { white-space: pre-wrap; }
         <source>Interrupt Vector 0xFF</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Switches</source>
+        <translation type="unfinished">Schakelaars</translation>
+    </message>
+    <message>
+        <source>Connectors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Other</source>
+        <translation type="unfinished">Overig</translation>
+    </message>
+    <message>
+        <source>Ternary</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Digital Potentiometer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>IC 74</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>IC CD</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>USSR IC</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Other IC</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Keys</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Led display</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tools</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RTD</name>
@@ -3748,7 +3872,7 @@ p, li { white-space: pre-wrap; }
     <name>Rail</name>
     <message>
         <source>Rail.</source>
-        <translation type="unfinished">Rail</translation>
+        <translation type="obsolete">Rail</translation>
     </message>
     <message>
         <source>Sources</source>
@@ -3761,6 +3885,10 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Voltage</source>
         <translation type="unfinished">Spanning</translation>
+    </message>
+    <message>
+        <source>Rail</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4152,8 +4280,8 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">7 Seg BCD</translation>
     </message>
     <message>
-        <source>Logic/Other Logic</source>
-        <translation type="unfinished"></translation>
+        <source>Other Logic</source>
+        <translation type="unfinished">Overige logica</translation>
     </message>
 </context>
 <context>
@@ -4206,7 +4334,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Logic/Arithmetic</source>
-        <translation type="unfinished">Logica/Rekenkundig</translation>
+        <translation type="obsolete">Logica/Rekenkundig</translation>
     </message>
     <message>
         <source>Main</source>
@@ -4227,6 +4355,10 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Edges</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Arithmetic</source>
+        <translation type="unfinished">Rekenkundig</translation>
     </message>
 </context>
 <context>
@@ -4917,7 +5049,7 @@ Wijzigingen opslaan?
     </message>
     <message>
         <source>Logic/Gates</source>
-        <translation type="unfinished">Logica/Poorten</translation>
+        <translation type="obsolete">Logica/Poorten</translation>
     </message>
     <message>
         <source>Main</source>
@@ -4938,6 +5070,10 @@ Wijzigingen opslaan?
     <message>
         <source>Edges</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Gates</source>
+        <translation type="unfinished">Poorten</translation>
     </message>
 </context>
 <context>

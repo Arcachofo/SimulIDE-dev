@@ -9,7 +9,7 @@
     </message>
     <message>
         <source>Logic/Other Logic</source>
-        <translation>Логика/Другое (Логика)</translation>
+        <translation type="vanished">Логика/Другое (Логика)</translation>
     </message>
     <message>
         <source>Main</source>
@@ -30,6 +30,10 @@
     <message>
         <source>Edges</source>
         <translation>Фронты</translation>
+    </message>
+    <message>
+        <source>Other Logic</source>
+        <translation type="unfinished">Другое (Логика)</translation>
     </message>
 </context>
 <context>
@@ -98,7 +102,7 @@
     </message>
     <message>
         <source>Logic/Gates</source>
-        <translation>Логика/Логические элементы</translation>
+        <translation type="vanished">Логика/Логические элементы</translation>
     </message>
     <message>
         <source>Main</source>
@@ -123,6 +127,10 @@
     <message>
         <source>Edges</source>
         <translation>Фронты</translation>
+    </message>
+    <message>
+        <source>Gates</source>
+        <translation type="unfinished">Логические элементы</translation>
     </message>
 </context>
 <context>
@@ -451,7 +459,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Logic/Converters</source>
-        <translation>Логика/Конвертеры</translation>
+        <translation type="vanished">Логика/Конвертеры</translation>
     </message>
     <message>
         <source>Main</source>
@@ -469,6 +477,10 @@ p, li { white-space: pre-wrap; }
         <source>Edges</source>
         <translation>Фронты</translation>
     </message>
+    <message>
+        <source>Converters</source>
+        <translation type="unfinished">Конвертеры</translation>
+    </message>
 </context>
 <context>
     <name>BcdToDec</name>
@@ -478,7 +490,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Logic/Converters</source>
-        <translation>Логика/Конвертеры</translation>
+        <translation type="vanished">Логика/Конвертеры</translation>
     </message>
     <message>
         <source>Main</source>
@@ -500,6 +512,10 @@ p, li { white-space: pre-wrap; }
         <source>Edges</source>
         <translation>Фронты</translation>
     </message>
+    <message>
+        <source>Converters</source>
+        <translation type="unfinished">Конвертеры</translation>
+    </message>
 </context>
 <context>
     <name>BinCounter</name>
@@ -509,7 +525,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Logic/Arithmetic</source>
-        <translation>Логика/Арифметика</translation>
+        <translation type="vanished">Логика/Арифметика</translation>
     </message>
     <message>
         <source>Main</source>
@@ -539,6 +555,10 @@ p, li { white-space: pre-wrap; }
         <source>Edges</source>
         <translation>Фронты</translation>
     </message>
+    <message>
+        <source>Arithmetic</source>
+        <translation type="unfinished">Арифметика</translation>
+    </message>
 </context>
 <context>
     <name>BoolVal</name>
@@ -555,7 +575,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Logic/Gates</source>
-        <translation>Логика/Логические элементы</translation>
+        <translation type="vanished">Логика/Логические элементы</translation>
     </message>
     <message>
         <source>Main</source>
@@ -580,6 +600,10 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Edges</source>
         <translation>Фронты</translation>
+    </message>
+    <message>
+        <source>Gates</source>
+        <translation type="unfinished">Логические элементы</translation>
     </message>
 </context>
 <context>
@@ -1237,7 +1261,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Logic/Other Logic</source>
-        <translation>Логика/Другое (Логика)</translation>
+        <translation type="vanished">Логика/Другое (Логика)</translation>
     </message>
     <message>
         <source>Main</source>
@@ -1258,6 +1282,10 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Edges</source>
         <translation>Фронты</translation>
+    </message>
+    <message>
+        <source>Other Logic</source>
+        <translation type="unfinished">Другое (Логика)</translation>
     </message>
 </context>
 <context>
@@ -1343,7 +1371,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Logic/Converters</source>
-        <translation>Логика/Конвертеры</translation>
+        <translation type="vanished">Логика/Конвертеры</translation>
     </message>
     <message>
         <source>Main</source>
@@ -1365,6 +1393,10 @@ p, li { white-space: pre-wrap; }
         <source>Edges</source>
         <translation>Фронты</translation>
     </message>
+    <message>
+        <source>Converters</source>
+        <translation type="unfinished">Конвертеры</translation>
+    </message>
 </context>
 <context>
     <name>Demux</name>
@@ -1374,7 +1406,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Logic/Converters</source>
-        <translation>Логика/Конвертеры</translation>
+        <translation type="vanished">Логика/Конвертеры</translation>
     </message>
     <message>
         <source>Main</source>
@@ -1395,6 +1427,10 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Edges</source>
         <translation>Фронты</translation>
+    </message>
+    <message>
+        <source>Converters</source>
+        <translation type="unfinished">Конвертеры</translation>
     </message>
 </context>
 <context>
@@ -2053,7 +2089,11 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Logic/Memory</source>
-        <translation>Логика/Память</translation>
+        <translation type="vanished">Логика/Память</translation>
+    </message>
+    <message>
+        <source>Memory</source>
+        <translation type="unfinished">Память</translation>
     </message>
 </context>
 <context>
@@ -2064,7 +2104,11 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Logic/Memory</source>
-        <translation>Логика/Память</translation>
+        <translation type="vanished">Логика/Память</translation>
+    </message>
+    <message>
+        <source>Memory</source>
+        <translation type="unfinished">Память</translation>
     </message>
 </context>
 <context>
@@ -2075,11 +2119,15 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Logic/Memory</source>
-        <translation>Логика/Память</translation>
+        <translation type="vanished">Логика/Память</translation>
     </message>
     <message>
         <source>Main</source>
         <translation type="vanished">Основные</translation>
+    </message>
+    <message>
+        <source>Memory</source>
+        <translation type="unfinished">Память</translation>
     </message>
 </context>
 <context>
@@ -2090,7 +2138,11 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Logic/Memory</source>
-        <translation>Логика/Память</translation>
+        <translation type="vanished">Логика/Память</translation>
+    </message>
+    <message>
+        <source>Memory</source>
+        <translation type="unfinished">Память</translation>
     </message>
 </context>
 <context>
@@ -2120,7 +2172,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Logic/Arithmetic</source>
-        <translation>Логика/Арифметика</translation>
+        <translation type="vanished">Логика/Арифметика</translation>
     </message>
     <message>
         <source>Electric</source>
@@ -2129,6 +2181,10 @@ Can&apos;t find file:
     <message>
         <source>Edges</source>
         <translation>Фронты</translation>
+    </message>
+    <message>
+        <source>Arithmetic</source>
+        <translation type="unfinished">Арифметика</translation>
     </message>
 </context>
 <context>
@@ -2139,7 +2195,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Logic/Arithmetic</source>
-        <translation>Логика/Арифметика</translation>
+        <translation type="vanished">Логика/Арифметика</translation>
     </message>
     <message>
         <source>Main</source>
@@ -2190,6 +2246,10 @@ Can&apos;t find file:
 %2.</source>
         <translation>Не удаётся записать файл %1:
 %2.</translation>
+    </message>
+    <message>
+        <source>Arithmetic</source>
+        <translation type="unfinished">Арифметика</translation>
     </message>
 </context>
 <context>
@@ -2257,7 +2317,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Logic/Memory</source>
-        <translation>Логика/Память</translation>
+        <translation type="vanished">Логика/Память</translation>
     </message>
     <message>
         <source>Main</source>
@@ -2291,6 +2351,10 @@ Can&apos;t find file:
         <source>Show Memory Table</source>
         <translation>Просмотр содержимого памяти</translation>
     </message>
+    <message>
+        <source>Memory</source>
+        <translation type="unfinished">Память</translation>
+    </message>
 </context>
 <context>
     <name>I2CToParallel</name>
@@ -2300,7 +2364,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Logic/Converters</source>
-        <translation>Логика/Конвертеры</translation>
+        <translation type="vanished">Логика/Конвертеры</translation>
     </message>
     <message>
         <source>Main</source>
@@ -2313,6 +2377,10 @@ Can&apos;t find file:
     <message>
         <source>I2C Frequency</source>
         <translation>I2C частота</translation>
+    </message>
+    <message>
+        <source>Converters</source>
+        <translation type="unfinished">Конвертеры</translation>
     </message>
 </context>
 <context>
@@ -2650,7 +2718,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Logic/Memory</source>
-        <translation>Логика/Память</translation>
+        <translation type="vanished">Логика/Память</translation>
     </message>
     <message>
         <source>Main</source>
@@ -2679,6 +2747,10 @@ Can&apos;t find file:
     <message>
         <source>Edges</source>
         <translation>Фронты</translation>
+    </message>
+    <message>
+        <source>Memory</source>
+        <translation type="unfinished">Память</translation>
     </message>
 </context>
 <context>
@@ -2927,7 +2999,11 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Logic/Other Logic</source>
-        <translation>Логика/Другое (Логика)</translation>
+        <translation type="vanished">Логика/Другое (Логика)</translation>
+    </message>
+    <message>
+        <source>Other Logic</source>
+        <translation type="unfinished">Другое (Логика)</translation>
     </message>
 </context>
 <context>
@@ -3222,7 +3298,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Logic/Memory</source>
-        <translation>Логика/Память</translation>
+        <translation type="vanished">Логика/Память</translation>
     </message>
     <message>
         <source>Main</source>
@@ -3267,6 +3343,10 @@ Can&apos;t find file:
     <message>
         <source>Asynchronous</source>
         <translation>Асинхронный</translation>
+    </message>
+    <message>
+        <source>Memory</source>
+        <translation type="unfinished">Память</translation>
     </message>
 </context>
 <context>
@@ -3335,7 +3415,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Logic/Converters</source>
-        <translation>Логика/Конвертеры</translation>
+        <translation type="vanished">Логика/Конвертеры</translation>
     </message>
     <message>
         <source>Main</source>
@@ -3356,6 +3436,10 @@ Can&apos;t find file:
     <message>
         <source>Edges</source>
         <translation>Фронты</translation>
+    </message>
+    <message>
+        <source>Converters</source>
+        <translation type="unfinished">Конвертеры</translation>
     </message>
 </context>
 <context>
@@ -3440,7 +3524,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Logic/Gates</source>
-        <translation>Логика/Логические элементы</translation>
+        <translation type="vanished">Логика/Логические элементы</translation>
     </message>
     <message>
         <source>Main</source>
@@ -3465,6 +3549,10 @@ Can&apos;t find file:
     <message>
         <source>Edges</source>
         <translation>Фронты</translation>
+    </message>
+    <message>
+        <source>Gates</source>
+        <translation type="unfinished">Логические элементы</translation>
     </message>
 </context>
 <context>
@@ -3774,19 +3862,19 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Other IC</source>
-        <translation type="obsolete">Другие ИС</translation>
+        <translation type="unfinished">Другие ИС</translation>
     </message>
     <message>
         <source>Keys</source>
-        <translation type="obsolete">Ключи</translation>
+        <translation type="unfinished">Ключи</translation>
     </message>
     <message>
         <source>Ternary</source>
-        <translation type="obsolete">Троичная логика</translation>
+        <translation type="unfinished">Троичная логика</translation>
     </message>
     <message>
         <source>Tools</source>
-        <translation type="obsolete">Инструменты</translation>
+        <translation type="unfinished">Инструменты</translation>
     </message>
     <message>
         <source>Warning: elf file doesn&apos;t exist:</source>
@@ -3891,6 +3979,38 @@ Not valid Package file:
         <source>Interrupt Vector 0xFF</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Switches</source>
+        <translation type="unfinished">Переключатели</translation>
+    </message>
+    <message>
+        <source>Connectors</source>
+        <translation type="unfinished">Соединители</translation>
+    </message>
+    <message>
+        <source>Other</source>
+        <translation type="unfinished">Другое</translation>
+    </message>
+    <message>
+        <source>Digital Potentiometer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>IC 74</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>IC CD</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>USSR IC</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Led display</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RTD</name>
@@ -3911,7 +4031,7 @@ Not valid Package file:
     <name>Rail</name>
     <message>
         <source>Rail.</source>
-        <translation>Линия питания.</translation>
+        <translation type="vanished">Линия питания.</translation>
     </message>
     <message>
         <source>Sources</source>
@@ -3924,6 +4044,10 @@ Not valid Package file:
     <message>
         <source>Voltage</source>
         <translation>Напряжение</translation>
+    </message>
+    <message>
+        <source>Rail</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4380,7 +4504,11 @@ Not valid Package file:
     </message>
     <message>
         <source>Logic/Other Logic</source>
-        <translation>Логика/Другое (Логика)</translation>
+        <translation type="vanished">Логика/Другое (Логика)</translation>
+    </message>
+    <message>
+        <source>Other Logic</source>
+        <translation type="unfinished">Другое (Логика)</translation>
     </message>
 </context>
 <context>
@@ -4433,7 +4561,7 @@ Not valid Package file:
     </message>
     <message>
         <source>Logic/Arithmetic</source>
-        <translation>Логика/Арифметика</translation>
+        <translation type="vanished">Логика/Арифметика</translation>
     </message>
     <message>
         <source>Main</source>
@@ -4454,6 +4582,10 @@ Not valid Package file:
     <message>
         <source>Edges</source>
         <translation>Фронты</translation>
+    </message>
+    <message>
+        <source>Arithmetic</source>
+        <translation type="unfinished">Арифметика</translation>
     </message>
 </context>
 <context>
@@ -5231,7 +5363,7 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Logic/Gates</source>
-        <translation>Логика/Логические элементы</translation>
+        <translation type="vanished">Логика/Логические элементы</translation>
     </message>
     <message>
         <source>Main</source>
@@ -5252,6 +5384,10 @@ Do you want to save your changes?
     <message>
         <source>Edges</source>
         <translation>Фронты</translation>
+    </message>
+    <message>
+        <source>Gates</source>
+        <translation type="unfinished">Логические элементы</translation>
     </message>
 </context>
 <context>

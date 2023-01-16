@@ -8,10 +8,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Logic/Other Logic</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Main</source>
         <translation type="unfinished"></translation>
     </message>
@@ -29,6 +25,10 @@
     </message>
     <message>
         <source>Edges</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Other Logic</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -89,10 +89,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Logic/Gates</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Main</source>
         <translation type="unfinished"></translation>
     </message>
@@ -114,6 +110,10 @@
     </message>
     <message>
         <source>Edges</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Gates</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -426,10 +426,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Logic/Converters</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Main</source>
         <translation type="unfinished"></translation>
     </message>
@@ -445,15 +441,15 @@ p, li { white-space: pre-wrap; }
         <source>Edges</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Converters</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>BcdToDec</name>
     <message>
         <source>Decoder(4 to 10/16)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Logic/Converters</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -476,15 +472,15 @@ p, li { white-space: pre-wrap; }
         <source>Edges</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Converters</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>BinCounter</name>
     <message>
         <source>Counter</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Logic/Arithmetic</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -515,6 +511,10 @@ p, li { white-space: pre-wrap; }
         <source>Edges</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Arithmetic</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>BoolVal</name>
@@ -527,10 +527,6 @@ p, li { white-space: pre-wrap; }
     <name>Buffer</name>
     <message>
         <source>Buffer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Logic/Gates</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -555,6 +551,10 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Edges</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Gates</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1155,10 +1155,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Logic/Other Logic</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Main</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1176,6 +1172,10 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Edges</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Other Logic</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1261,10 +1261,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Logic/Converters</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Main</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1284,15 +1280,15 @@ p, li { white-space: pre-wrap; }
         <source>Edges</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Converters</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Demux</name>
     <message>
         <source>Demux</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Logic/Converters</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1313,6 +1309,10 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Edges</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Converters</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1952,7 +1952,7 @@ Can&apos;t find file:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Logic/Memory</source>
+        <source>Memory</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1963,7 +1963,7 @@ Can&apos;t find file:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Logic/Memory</source>
+        <source>Memory</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1974,7 +1974,7 @@ Can&apos;t find file:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Logic/Memory</source>
+        <source>Memory</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1985,7 +1985,7 @@ Can&apos;t find file:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Logic/Memory</source>
+        <source>Memory</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2015,10 +2015,6 @@ Can&apos;t find file:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Logic/Arithmetic</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Electric</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2026,15 +2022,15 @@ Can&apos;t find file:
         <source>Edges</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Arithmetic</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Function</name>
     <message>
         <source>Function</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Logic/Arithmetic</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2084,6 +2080,10 @@ Can&apos;t find file:
     <message>
         <source>Cannot write file %1:
 %2.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Arithmetic</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2143,10 +2143,6 @@ Can&apos;t find file:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Logic/Memory</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Main</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2178,15 +2174,15 @@ Can&apos;t find file:
         <source>Show Memory Table</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Memory</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>I2CToParallel</name>
     <message>
         <source>I2C to Parallel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Logic/Converters</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2199,6 +2195,10 @@ Can&apos;t find file:
     </message>
     <message>
         <source>I2C Frequency</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Converters</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2524,10 +2524,6 @@ Can&apos;t find file:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Logic/Memory</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Main</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2553,6 +2549,10 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Edges</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Memory</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2785,7 +2785,7 @@ Can&apos;t find file:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Logic/Other Logic</source>
+        <source>Other Logic</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3043,10 +3043,6 @@ Can&apos;t find file:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Logic/Memory</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Main</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3088,6 +3084,10 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Asynchronous</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Memory</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3144,10 +3144,6 @@ Can&apos;t find file:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Logic/Converters</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Main</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3165,6 +3161,10 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Edges</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Converters</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3241,10 +3241,6 @@ Can&apos;t find file:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Logic/Gates</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Main</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3266,6 +3262,10 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Edges</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Gates</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3661,6 +3661,54 @@ p, li { white-space: pre-wrap; }
         <source>Interrupt Vector 0xFF</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Switches</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Connectors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Other</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ternary</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Digital Potentiometer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>IC 74</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>IC CD</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>USSR IC</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Other IC</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Keys</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Led display</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tools</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RTD</name>
@@ -3680,10 +3728,6 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>Rail</name>
     <message>
-        <source>Rail.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Sources</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3693,6 +3737,10 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rail</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4035,7 +4083,7 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Logic/Other Logic</source>
+        <source>Other Logic</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4088,10 +4136,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Logic/Arithmetic</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Main</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4109,6 +4153,10 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Edges</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Arithmetic</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4787,10 +4835,6 @@ Do you want to save your changes?
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Logic/Gates</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Main</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4808,6 +4852,10 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Edges</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Gates</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

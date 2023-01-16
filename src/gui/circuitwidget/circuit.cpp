@@ -321,6 +321,21 @@ void Circuit::loadStrDoc( QString &doc )
                 m_compMap[newUid] = joint;
             }
             else{
+                bool oldArduino = false;
+                if( type == "Arduino" ){
+                    oldArduino = true;
+                    type = "Subcircuit";
+                    newUid = newUid.remove( "Arduino " );
+                }
+                else if( type == "AVR" ){
+                    type = "MCU";
+                    newUid = newUid.replace( "at", "" );
+                }
+                else if( type == "PIC" ){
+                    type = "MCU";
+                    newUid = newUid.replace( "pic", "p" );
+                }
+                else if( type == "Frequencimeter" ) type = "FreqMeter";
                 lastComp = NULL;
                 Component* comp = createItem( type, newUid );
                 if( comp )
@@ -329,6 +344,12 @@ void Circuit::loadStrDoc( QString &doc )
                     lastComp = comp;
                     if( m_pasting ) m_idMap[uid] = newUid;
 
+                    Mcu* mcu = NULL;
+                    if( oldArduino )
+                    {
+                        SubCircuit* subci = static_cast<SubCircuit*>(comp);
+                        mcu = static_cast<Mcu*>( subci->getMainComp() );
+                    }
                     if( comp->itemType() == "Subcircuit")
                     {
                         ShieldSubc* shield = static_cast<ShieldSubc*>(comp);
@@ -339,7 +360,15 @@ void Circuit::loadStrDoc( QString &doc )
                     for( QStringRef prop : properties )
                     {
                         if( propName.isEmpty() ) { propName = prop.toString(); continue; }
-                        comp->setPropStr( propName, prop.toString() );
+                        QString value = prop.toString();
+                        if( !comp->setPropStr( propName, value ) ) // SUBSTITUTIONS
+                        {
+                            if( propName == "Propagation_Delay_ns") { propName = "Tpd_ps"; value.append("000"); }
+                            else                                    Component::substitution( propName );
+
+                            if( !comp->setPropStr( propName, value ) )
+                                if( oldArduino && mcu ) mcu->setPropStr( propName, value );
+                        }
                         propName = "";
                     }
                     int number = comp->objectName().split("-").last().toInt();
@@ -458,14 +487,15 @@ void Circuit::importCirc(  QPointF eventpoint  )
 Component* Circuit::createItem( QString type, QString id )
 {
     Component* comp = NULL;
-    for( LibraryItem* libItem : ItemLibrary::self()->items() )
+    for( LibraryItem* item : ItemLibrary::self()->items() )
     {
-        if( libItem->type() != type ) continue;
+        if( !item->createItemFnPtr() ) continue; // Is category
+        if( item->type() != type ) continue;;
 
-        comp = libItem->createItemFnPtr()( this, type, id );
+        comp = item->createItemFnPtr()( this, type, id );
         if( comp )
         {
-            QString category = libItem->category();
+            QString category = item->category();
             if( ( category != "Meters" )
             &&  ( category != "Sources" )
             &&  ( category != "Other" ) )

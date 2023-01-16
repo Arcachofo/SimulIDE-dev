@@ -9,7 +9,7 @@
     </message>
     <message>
         <source>Logic/Other Logic</source>
-        <translation type="unfinished">Logica/Varie</translation>
+        <translation type="obsolete">Logica/Varie</translation>
     </message>
     <message>
         <source>Main</source>
@@ -30,6 +30,10 @@
     <message>
         <source>Edges</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Other Logic</source>
+        <translation type="unfinished">Logica/Varie</translation>
     </message>
 </context>
 <context>
@@ -89,10 +93,6 @@
         <translation type="unfinished">Porta And</translation>
     </message>
     <message>
-        <source>Logic/Gates</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Main</source>
         <translation type="unfinished"></translation>
     </message>
@@ -115,6 +115,10 @@
     <message>
         <source>Edges</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Gates</source>
+        <translation type="unfinished">Porte</translation>
     </message>
 </context>
 <context>
@@ -426,10 +430,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">BCD to 7-Segment.</translation>
     </message>
     <message>
-        <source>Logic/Converters</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Main</source>
         <translation type="unfinished"></translation>
     </message>
@@ -445,16 +445,16 @@ p, li { white-space: pre-wrap; }
         <source>Edges</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Converters</source>
+        <translation type="unfinished">Convertitori</translation>
+    </message>
 </context>
 <context>
     <name>BcdToDec</name>
     <message>
         <source>Decoder(4 to 10/16)</source>
         <translation type="unfinished">Decoder(4 to 10/16)</translation>
-    </message>
-    <message>
-        <source>Logic/Converters</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Main</source>
@@ -476,6 +476,10 @@ p, li { white-space: pre-wrap; }
         <source>Edges</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Converters</source>
+        <translation type="unfinished">Convertitori</translation>
+    </message>
 </context>
 <context>
     <name>BinCounter</name>
@@ -485,7 +489,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Logic/Arithmetic</source>
-        <translation type="unfinished">Logica/Aritmetica</translation>
+        <translation type="obsolete">Logica/Aritmetica</translation>
     </message>
     <message>
         <source>Main</source>
@@ -515,6 +519,10 @@ p, li { white-space: pre-wrap; }
         <source>Edges</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Arithmetic</source>
+        <translation type="unfinished">Aritmetica</translation>
+    </message>
 </context>
 <context>
     <name>BoolVal</name>
@@ -528,10 +536,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Buffer</source>
         <translation type="unfinished">Buffer</translation>
-    </message>
-    <message>
-        <source>Logic/Gates</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Main</source>
@@ -556,6 +560,10 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Edges</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Gates</source>
+        <translation type="unfinished">Porte</translation>
     </message>
 </context>
 <context>
@@ -1185,7 +1193,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Logic/Other Logic</source>
-        <translation type="unfinished">Logica/Varie</translation>
+        <translation type="obsolete">Logica/Varie</translation>
     </message>
     <message>
         <source>Main</source>
@@ -1206,6 +1214,10 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Edges</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Other Logic</source>
+        <translation type="unfinished">Logica/Varie</translation>
     </message>
 </context>
 <context>
@@ -1290,10 +1302,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Encoder(10/16 to 4)</translation>
     </message>
     <message>
-        <source>Logic/Converters</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Main</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1313,16 +1321,16 @@ p, li { white-space: pre-wrap; }
         <source>Edges</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Converters</source>
+        <translation type="unfinished">Convertitori</translation>
+    </message>
 </context>
 <context>
     <name>Demux</name>
     <message>
         <source>Demux</source>
         <translation type="unfinished">Demultiplexer</translation>
-    </message>
-    <message>
-        <source>Logic/Converters</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Main</source>
@@ -1343,6 +1351,10 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Edges</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Converters</source>
+        <translation type="unfinished">Convertitori</translation>
     </message>
 </context>
 <context>
@@ -1998,7 +2010,11 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Logic/Memory</source>
-        <translation type="unfinished">Logica/Memorie</translation>
+        <translation type="obsolete">Logica/Memorie</translation>
+    </message>
+    <message>
+        <source>Memory</source>
+        <translation type="unfinished">memoria</translation>
     </message>
 </context>
 <context>
@@ -2009,7 +2025,11 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Logic/Memory</source>
-        <translation type="unfinished">Logica/Memorie</translation>
+        <translation type="obsolete">Logica/Memorie</translation>
+    </message>
+    <message>
+        <source>Memory</source>
+        <translation type="unfinished">memoria</translation>
     </message>
 </context>
 <context>
@@ -2020,7 +2040,11 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Logic/Memory</source>
-        <translation type="unfinished">Logica/Memorie</translation>
+        <translation type="obsolete">Logica/Memorie</translation>
+    </message>
+    <message>
+        <source>Memory</source>
+        <translation type="unfinished">memoria</translation>
     </message>
 </context>
 <context>
@@ -2031,7 +2055,11 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Logic/Memory</source>
-        <translation type="unfinished">Logica/Memorie</translation>
+        <translation type="obsolete">Logica/Memorie</translation>
+    </message>
+    <message>
+        <source>Memory</source>
+        <translation type="unfinished">memoria</translation>
     </message>
 </context>
 <context>
@@ -2061,7 +2089,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Logic/Arithmetic</source>
-        <translation type="unfinished">Logica/Aritmetica</translation>
+        <translation type="obsolete">Logica/Aritmetica</translation>
     </message>
     <message>
         <source>Electric</source>
@@ -2070,6 +2098,10 @@ Can&apos;t find file:
     <message>
         <source>Edges</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Arithmetic</source>
+        <translation type="unfinished">Aritmetica</translation>
     </message>
 </context>
 <context>
@@ -2080,7 +2112,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Logic/Arithmetic</source>
-        <translation type="unfinished">Logica/Aritmetica</translation>
+        <translation type="obsolete">Logica/Aritmetica</translation>
     </message>
     <message>
         <source>Main</source>
@@ -2131,6 +2163,10 @@ Can&apos;t find file:
 %2.</source>
         <translation type="unfinished">Non posso scrivere il file %1:
 %2.</translation>
+    </message>
+    <message>
+        <source>Arithmetic</source>
+        <translation type="unfinished">Aritmetica</translation>
     </message>
 </context>
 <context>
@@ -2190,7 +2226,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Logic/Memory</source>
-        <translation type="unfinished">Logica/Memorie</translation>
+        <translation type="obsolete">Logica/Memorie</translation>
     </message>
     <message>
         <source>Main</source>
@@ -2224,16 +2260,16 @@ Can&apos;t find file:
         <source>Show Memory Table</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Memory</source>
+        <translation type="unfinished">memoria</translation>
+    </message>
 </context>
 <context>
     <name>I2CToParallel</name>
     <message>
         <source>I2C to Parallel</source>
         <translation type="unfinished">Da I2C a Parallelo</translation>
-    </message>
-    <message>
-        <source>Logic/Converters</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Main</source>
@@ -2246,6 +2282,10 @@ Can&apos;t find file:
     <message>
         <source>I2C Frequency</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Converters</source>
+        <translation type="unfinished">Convertitori</translation>
     </message>
 </context>
 <context>
@@ -2571,7 +2611,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Logic/Memory</source>
-        <translation type="unfinished">Logica/Memorie</translation>
+        <translation type="obsolete">Logica/Memorie</translation>
     </message>
     <message>
         <source>Main</source>
@@ -2600,6 +2640,10 @@ Can&apos;t find file:
     <message>
         <source>Edges</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Memory</source>
+        <translation type="unfinished">memoria</translation>
     </message>
 </context>
 <context>
@@ -2832,6 +2876,10 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Logic/Other Logic</source>
+        <translation type="obsolete">Logica/Varie</translation>
+    </message>
+    <message>
+        <source>Other Logic</source>
         <translation type="unfinished">Logica/Varie</translation>
     </message>
 </context>
@@ -3110,7 +3158,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Logic/Memory</source>
-        <translation type="unfinished">Logica/Memorie</translation>
+        <translation type="obsolete">Logica/Memorie</translation>
     </message>
     <message>
         <source>Main</source>
@@ -3155,6 +3203,10 @@ Can&apos;t find file:
     <message>
         <source>Asynchronous</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Memory</source>
+        <translation type="unfinished">memoria</translation>
     </message>
 </context>
 <context>
@@ -3210,10 +3262,6 @@ Can&apos;t find file:
         <translation type="unfinished">Mux</translation>
     </message>
     <message>
-        <source>Logic/Converters</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Main</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3232,6 +3280,10 @@ Can&apos;t find file:
     <message>
         <source>Edges</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Converters</source>
+        <translation type="unfinished">Convertitori</translation>
     </message>
 </context>
 <context>
@@ -3307,10 +3359,6 @@ Can&apos;t find file:
         <translation type="unfinished">Porta OR</translation>
     </message>
     <message>
-        <source>Logic/Gates</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Main</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3333,6 +3381,10 @@ Can&apos;t find file:
     <message>
         <source>Edges</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Gates</source>
+        <translation type="unfinished">Porte</translation>
     </message>
 </context>
 <context>
@@ -3728,6 +3780,54 @@ p, li { white-space: pre-wrap; }
         <source>Interrupt Vector 0xFF</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Switches</source>
+        <translation type="unfinished">Contatti</translation>
+    </message>
+    <message>
+        <source>Connectors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Other</source>
+        <translation type="unfinished">Varie</translation>
+    </message>
+    <message>
+        <source>Ternary</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Digital Potentiometer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>IC 74</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>IC CD</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>USSR IC</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Other IC</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Keys</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Led display</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tools</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RTD</name>
@@ -3748,7 +3848,7 @@ p, li { white-space: pre-wrap; }
     <name>Rail</name>
     <message>
         <source>Rail.</source>
-        <translation type="unfinished">Alimentazione sempre ON.</translation>
+        <translation type="obsolete">Alimentazione sempre ON.</translation>
     </message>
     <message>
         <source>Sources</source>
@@ -3761,6 +3861,10 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Voltage</source>
         <translation type="unfinished">Tensione</translation>
+    </message>
+    <message>
+        <source>Rail</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4153,6 +4257,10 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Logic/Other Logic</source>
+        <translation type="obsolete">Logica/Varie</translation>
+    </message>
+    <message>
+        <source>Other Logic</source>
         <translation type="unfinished">Logica/Varie</translation>
     </message>
 </context>
@@ -4206,7 +4314,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Logic/Arithmetic</source>
-        <translation type="unfinished">Logica/Aritmetica</translation>
+        <translation type="obsolete">Logica/Aritmetica</translation>
     </message>
     <message>
         <source>Main</source>
@@ -4227,6 +4335,10 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Edges</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Arithmetic</source>
+        <translation type="unfinished">Aritmetica</translation>
     </message>
 </context>
 <context>
@@ -4916,10 +5028,6 @@ Vuoi salvare le modifiche?
         <translation type="unfinished">Porta XOR</translation>
     </message>
     <message>
-        <source>Logic/Gates</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Main</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4938,6 +5046,10 @@ Vuoi salvare le modifiche?
     <message>
         <source>Edges</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Gates</source>
+        <translation type="unfinished">Porte</translation>
     </message>
 </context>
 <context>

@@ -9,7 +9,7 @@
     </message>
     <message>
         <source>Logic/Other Logic</source>
-        <translation>Logikkomponenten/weitere</translation>
+        <translation type="vanished">Logikkomponenten/weitere</translation>
     </message>
     <message>
         <source>Main</source>
@@ -30,6 +30,10 @@
     <message>
         <source>Edges</source>
         <translation>Flankenparameter</translation>
+    </message>
+    <message>
+        <source>Other Logic</source>
+        <translation type="unfinished">weitere Logikkomponenten</translation>
     </message>
 </context>
 <context>
@@ -90,7 +94,7 @@
     </message>
     <message>
         <source>Logic/Gates</source>
-        <translation>Logikkomponenten/Gatter</translation>
+        <translation type="vanished">Logikkomponenten/Gatter</translation>
     </message>
     <message>
         <source>Main</source>
@@ -115,6 +119,10 @@
     <message>
         <source>Edges</source>
         <translation>Flankenparameter</translation>
+    </message>
+    <message>
+        <source>Gates</source>
+        <translation type="unfinished">Gatter</translation>
     </message>
 </context>
 <context>
@@ -562,7 +570,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Logic/Converters</source>
-        <translation>Logikkomponenten/Wandler</translation>
+        <translation type="vanished">Logikkomponenten/Wandler</translation>
     </message>
     <message>
         <source>Main</source>
@@ -580,6 +588,10 @@ p, li { white-space: pre-wrap; }
         <source>Edges</source>
         <translation>Flankenparameter</translation>
     </message>
+    <message>
+        <source>Converters</source>
+        <translation type="unfinished">Wandler</translation>
+    </message>
 </context>
 <context>
     <name>BcdToDec</name>
@@ -589,7 +601,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Logic/Converters</source>
-        <translation>Logikkomponenten/Wandler</translation>
+        <translation type="vanished">Logikkomponenten/Wandler</translation>
     </message>
     <message>
         <source>Main</source>
@@ -611,6 +623,10 @@ p, li { white-space: pre-wrap; }
         <source>Edges</source>
         <translation>Flankenparameter</translation>
     </message>
+    <message>
+        <source>Converters</source>
+        <translation type="unfinished">Wandler</translation>
+    </message>
 </context>
 <context>
     <name>BinCounter</name>
@@ -620,7 +636,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Logic/Arithmetic</source>
-        <translation>Logikkomponenten/Arithmetik</translation>
+        <translation type="vanished">Logikkomponenten/Arithmetik</translation>
     </message>
     <message>
         <source>Main</source>
@@ -650,6 +666,10 @@ p, li { white-space: pre-wrap; }
         <source>Edges</source>
         <translation>Flankenparameter</translation>
     </message>
+    <message>
+        <source>Arithmetic</source>
+        <translation type="unfinished">Arithmetik</translation>
+    </message>
 </context>
 <context>
     <name>BoolVal</name>
@@ -666,7 +686,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Logic/Gates</source>
-        <translation>Logikkomponenten/Gatter</translation>
+        <translation type="vanished">Logikkomponenten/Gatter</translation>
     </message>
     <message>
         <source>Main</source>
@@ -691,6 +711,10 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Edges</source>
         <translation>Flankenparameter</translation>
+    </message>
+    <message>
+        <source>Gates</source>
+        <translation type="unfinished">Gatter</translation>
     </message>
 </context>
 <context>
@@ -1459,7 +1483,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Logic/Other Logic</source>
-        <translation>Logikkomponenten/weitere</translation>
+        <translation type="vanished">Logikkomponenten/weitere</translation>
     </message>
     <message>
         <source>Main</source>
@@ -1480,6 +1504,10 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Edges</source>
         <translation>Flankenparameter</translation>
+    </message>
+    <message>
+        <source>Other Logic</source>
+        <translation type="unfinished">weitere Logikkomponenten</translation>
     </message>
 </context>
 <context>
@@ -1565,7 +1593,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Logic/Converters</source>
-        <translation>Logikkomponenten/Wandler</translation>
+        <translation type="vanished">Logikkomponenten/Wandler</translation>
     </message>
     <message>
         <source>Main</source>
@@ -1587,6 +1615,10 @@ p, li { white-space: pre-wrap; }
         <source>Edges</source>
         <translation>Flankenparameter</translation>
     </message>
+    <message>
+        <source>Converters</source>
+        <translation type="unfinished">Wandler</translation>
+    </message>
 </context>
 <context>
     <name>Demux</name>
@@ -1596,7 +1628,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Logic/Converters</source>
-        <translation>Logikkomponenten/Wandler</translation>
+        <translation type="vanished">Logikkomponenten/Wandler</translation>
     </message>
     <message>
         <source>Main</source>
@@ -1617,6 +1649,10 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Edges</source>
         <translation>Flankenparameter</translation>
+    </message>
+    <message>
+        <source>Converters</source>
+        <translation type="unfinished">Wandler</translation>
     </message>
 </context>
 <context>
@@ -2288,7 +2324,11 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Logic/Memory</source>
-        <translation>Logikkomponenten/Speicher</translation>
+        <translation type="vanished">Logikkomponenten/Speicher</translation>
+    </message>
+    <message>
+        <source>Memory</source>
+        <translation type="unfinished">Speicher</translation>
     </message>
 </context>
 <context>
@@ -2299,7 +2339,11 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Logic/Memory</source>
-        <translation>Logikkomponenten/Speicher</translation>
+        <translation type="vanished">Logikkomponenten/Speicher</translation>
+    </message>
+    <message>
+        <source>Memory</source>
+        <translation type="unfinished">Speicher</translation>
     </message>
 </context>
 <context>
@@ -2310,11 +2354,15 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Logic/Memory</source>
-        <translation>Logikkomponenten/Speicher</translation>
+        <translation type="vanished">Logikkomponenten/Speicher</translation>
     </message>
     <message>
         <source>Main</source>
         <translation type="obsolete">Hauptparameter</translation>
+    </message>
+    <message>
+        <source>Memory</source>
+        <translation type="unfinished">Speicher</translation>
     </message>
 </context>
 <context>
@@ -2325,7 +2373,11 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Logic/Memory</source>
-        <translation type="unfinished">Logikkomponenten/Speicher</translation>
+        <translation type="obsolete">Logikkomponenten/Speicher</translation>
+    </message>
+    <message>
+        <source>Memory</source>
+        <translation type="unfinished">Speicher</translation>
     </message>
 </context>
 <context>
@@ -2355,7 +2407,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Logic/Arithmetic</source>
-        <translation>Logikkomponenten/Arithmetik</translation>
+        <translation type="vanished">Logikkomponenten/Arithmetik</translation>
     </message>
     <message>
         <source>Electric</source>
@@ -2364,6 +2416,10 @@ Can&apos;t find file:
     <message>
         <source>Edges</source>
         <translation>Flankenparameter</translation>
+    </message>
+    <message>
+        <source>Arithmetic</source>
+        <translation type="unfinished">Arithmetik</translation>
     </message>
 </context>
 <context>
@@ -2374,7 +2430,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Logic/Arithmetic</source>
-        <translation>Logikkomponenten/Arithmetik</translation>
+        <translation type="vanished">Logikkomponenten/Arithmetik</translation>
     </message>
     <message>
         <source>Main</source>
@@ -2425,6 +2481,10 @@ Can&apos;t find file:
 %2.</source>
         <translation type="unfinished">Datei &quot;%1&quot; kann nicht gespeichert werden:
 %2.</translation>
+    </message>
+    <message>
+        <source>Arithmetic</source>
+        <translation type="unfinished">Arithmetik</translation>
     </message>
 </context>
 <context>
@@ -2484,7 +2544,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Logic/Memory</source>
-        <translation>Logikkomponenten/Speicher</translation>
+        <translation type="vanished">Logikkomponenten/Speicher</translation>
     </message>
     <message>
         <source>Main</source>
@@ -2518,6 +2578,10 @@ Can&apos;t find file:
         <source>Show Memory Table</source>
         <translation>Speicher Tabelle anzeigen</translation>
     </message>
+    <message>
+        <source>Memory</source>
+        <translation type="unfinished">Speicher</translation>
+    </message>
 </context>
 <context>
     <name>I2CToParallel</name>
@@ -2527,7 +2591,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Logic/Converters</source>
-        <translation>Logikkomponenten/Wandler</translation>
+        <translation type="vanished">Logikkomponenten/Wandler</translation>
     </message>
     <message>
         <source>Main</source>
@@ -2540,6 +2604,10 @@ Can&apos;t find file:
     <message>
         <source>I2C Frequency</source>
         <translation>I2C Frequenz</translation>
+    </message>
+    <message>
+        <source>Converters</source>
+        <translation type="unfinished">Wandler</translation>
     </message>
 </context>
 <context>
@@ -2877,7 +2945,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Logic/Memory</source>
-        <translation>Logikkomponenten/Speicher</translation>
+        <translation type="vanished">Logikkomponenten/Speicher</translation>
     </message>
     <message>
         <source>Main</source>
@@ -2906,6 +2974,10 @@ Can&apos;t find file:
     <message>
         <source>Edges</source>
         <translation>Flankenparameter</translation>
+    </message>
+    <message>
+        <source>Memory</source>
+        <translation type="unfinished">Speicher</translation>
     </message>
 </context>
 <context>
@@ -3146,7 +3218,11 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Logic/Other Logic</source>
-        <translation>Logikkomponenten/weitere</translation>
+        <translation type="vanished">Logikkomponenten/weitere</translation>
+    </message>
+    <message>
+        <source>Other Logic</source>
+        <translation type="unfinished">weitere Logikkomponenten</translation>
     </message>
 </context>
 <context>
@@ -3457,7 +3533,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Logic/Memory</source>
-        <translation>Logikkomponenten/Speicher</translation>
+        <translation type="vanished">Logikkomponenten/Speicher</translation>
     </message>
     <message>
         <source>Main</source>
@@ -3502,6 +3578,10 @@ Can&apos;t find file:
     <message>
         <source>Asynchronous</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Memory</source>
+        <translation type="unfinished">Speicher</translation>
     </message>
 </context>
 <context>
@@ -3569,7 +3649,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Logic/Converters</source>
-        <translation>Logikkomponenten/Wandler</translation>
+        <translation type="vanished">Logikkomponenten/Wandler</translation>
     </message>
     <message>
         <source>Main</source>
@@ -3590,6 +3670,10 @@ Can&apos;t find file:
     <message>
         <source>Edges</source>
         <translation>Flankenparameter</translation>
+    </message>
+    <message>
+        <source>Converters</source>
+        <translation type="unfinished">Wandler</translation>
     </message>
 </context>
 <context>
@@ -3670,7 +3754,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Logic/Gates</source>
-        <translation>Logikkomponenten/Gatter</translation>
+        <translation type="vanished">Logikkomponenten/Gatter</translation>
     </message>
     <message>
         <source>Main</source>
@@ -3695,6 +3779,10 @@ Can&apos;t find file:
     <message>
         <source>Edges</source>
         <translation>Flankenparameter</translation>
+    </message>
+    <message>
+        <source>Gates</source>
+        <translation type="unfinished">Gatter</translation>
     </message>
 </context>
 <context>
@@ -4012,11 +4100,11 @@ Keine valide Package Datei:
     </message>
     <message>
         <source>Other IC</source>
-        <translation type="vanished">weitere ICs</translation>
+        <translation>weitere ICs</translation>
     </message>
     <message>
         <source>Led display</source>
-        <translation type="vanished">LED Display</translation>
+        <translation>LED Display</translation>
     </message>
     <message>
         <source>Warning: elf file doesn&apos;t exist:</source>
@@ -4114,6 +4202,46 @@ Keine valide Package Datei:
         <source>Interrupt Vector 0xFF</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Switches</source>
+        <translation type="unfinished">Schalter</translation>
+    </message>
+    <message>
+        <source>Connectors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Other</source>
+        <translation type="unfinished">sonstige Komponenten</translation>
+    </message>
+    <message>
+        <source>Ternary</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Digital Potentiometer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>IC 74</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>IC CD</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>USSR IC</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Keys</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tools</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RTD</name>
@@ -4134,7 +4262,7 @@ Keine valide Package Datei:
     <name>Rail</name>
     <message>
         <source>Rail.</source>
-        <translation>Festspannung</translation>
+        <translation type="vanished">Festspannung</translation>
     </message>
     <message>
         <source>Sources</source>
@@ -4147,6 +4275,10 @@ Keine valide Package Datei:
     <message>
         <source>Voltage</source>
         <translation>Spannung</translation>
+    </message>
+    <message>
+        <source>Rail</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4603,7 +4735,11 @@ Keine valide Package Datei:
     </message>
     <message>
         <source>Logic/Other Logic</source>
-        <translation>Logikkomponenten/weitere</translation>
+        <translation type="vanished">Logikkomponenten/weitere</translation>
+    </message>
+    <message>
+        <source>Other Logic</source>
+        <translation type="unfinished">weitere Logikkomponenten</translation>
     </message>
 </context>
 <context>
@@ -4656,7 +4792,7 @@ Keine valide Package Datei:
     </message>
     <message>
         <source>Logic/Arithmetic</source>
-        <translation>Logikkomponenten/Arithmetik</translation>
+        <translation type="vanished">Logikkomponenten/Arithmetik</translation>
     </message>
     <message>
         <source>Main</source>
@@ -4677,6 +4813,10 @@ Keine valide Package Datei:
     <message>
         <source>Edges</source>
         <translation>Flankenparameter</translation>
+    </message>
+    <message>
+        <source>Arithmetic</source>
+        <translation type="unfinished">Arithmetik</translation>
     </message>
 </context>
 <context>
@@ -5499,7 +5639,7 @@ Sollen die Änderungen gespeichert werden?
     </message>
     <message>
         <source>Logic/Gates</source>
-        <translation>Logikkomponenten/Gatter</translation>
+        <translation type="vanished">Logikkomponenten/Gatter</translation>
     </message>
     <message>
         <source>Main</source>
@@ -5520,6 +5660,10 @@ Sollen die Änderungen gespeichert werden?
     <message>
         <source>Edges</source>
         <translation>Flankenparameter</translation>
+    </message>
+    <message>
+        <source>Gates</source>
+        <translation type="unfinished">Gatter</translation>
     </message>
 </context>
 <context>

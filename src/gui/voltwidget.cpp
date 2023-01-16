@@ -3,7 +3,6 @@
  *                                                                         *
  ***( see copyright.txt file at root folder )*******************************/
 
-#include <QVariant>
 #include <QDial>
 #include <QPushButton>
 #include <QVBoxLayout>
