@@ -123,7 +123,7 @@ void ComponentSelector::loadXml( const QString &setFile )
                 parent = category;
                 category = catPath.takeFirst();
                 catItem = getCategory( category );
-                if( !catItem && !parent.isEmpty() )
+                if( !catItem /*&& !parent.isEmpty()*/ )
                 {
                     QString catTr = QObject::tr( category.toLocal8Bit() );
                     catItem = addCategory( catTr, category, parent, icon );
@@ -170,7 +170,7 @@ void ComponentSelector::addItem( QString caption, QTreeWidgetItem* catItem, QStr
     font.setBold( true );
 
     font.setPixelSize( 11*MainWindow::self()->fontScale() );
-    
+
     item->setFlags( QFlag(32) );
     item->setFont( 0, font );
     item->setIcon( 0, QIcon( QPixmap( icon ) ) );
@@ -237,8 +237,8 @@ QTreeWidgetItem* ComponentSelector::addCategory( QString nameTr, QString name, Q
     else if( m_categories.contains( parent ) )
         m_categories.value( parent )->addChild( catItem );
 
-    bool hidden = MainWindow::self()->settings()->value( name+"/hidden" ).toBool();;
-    catItem->setHidden( hidden );
+    //bool hidden = MainWindow::self()->settings()->value( name+"/hidden" ).toBool();
+    //catItem->setHidden( hidden );
 
     if( MainWindow::self()->settings()->contains(name+"/collapsed") )
         expanded = !MainWindow::self()->settings()->value( name+"/collapsed" ).toBool();
@@ -250,7 +250,7 @@ QTreeWidgetItem* ComponentSelector::addCategory( QString nameTr, QString name, Q
 void ComponentSelector::slotItemClicked( QTreeWidgetItem* item, int  )
 {
     if( !item ) return;
-    
+
     QString type = item->data( 0, Qt::UserRole ).toString();
     if( type == "" ) return;
 
@@ -258,21 +258,21 @@ void ComponentSelector::slotItemClicked( QTreeWidgetItem* item, int  )
     QMimeData* mimeData = new QMimeData;
     mimeData->setText( name );
     mimeData->setHtml( type );              // esto hay que revisarlo
-    
+
     QDrag* drag = new QDrag( this );
     drag->setMimeData( mimeData );
     drag->exec( Qt::CopyAction | Qt::MoveAction, Qt::CopyAction );
 }
 
-void ComponentSelector::slotContextMenu( const QPoint& point )
+/*void ComponentSelector::slotContextMenu( const QPoint& point )
 {
     QMenu menu;
-    
+
     QAction* managePluginAction = menu.addAction( QIcon(":/fileopen.png"),tr("Manage Components") );
     connect( managePluginAction, SIGNAL(triggered()), this, SLOT(slotManageComponents()) );
-    
+
     menu.exec( mapToGlobal(point) );
-}
+}*/
 
 void ComponentSelector::slotManageComponents()
 {

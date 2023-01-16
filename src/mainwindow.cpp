@@ -128,11 +128,11 @@ void MainWindow::writeSettings()
     m_settings->setValue( "Centralsplitter/geometry", m_Centralsplitter->saveState() );
     m_settings->setValue( "Circsplitter/geometry", CircuitWidget::self()->splitter()->saveState() );
     
-    QList<QTreeWidgetItem*> list = m_components->findItems( "", Qt::MatchStartsWith | Qt::MatchRecursive );
-
-    for( QTreeWidgetItem* item : list  )
-        m_settings->setValue( item->data( 0, Qt::UserRole ).toString()+"/collapsed", !item->isExpanded() );
-
+    for( QString name : m_components->getCategories() )
+    {
+        QTreeWidgetItem* item = m_components->getCategory( name );
+        m_settings->setValue( name+"/collapsed", !item->isExpanded() );
+    }
     FileWidget::self()->writeSettings();
 }
 

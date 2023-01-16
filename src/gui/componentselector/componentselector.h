@@ -14,7 +14,7 @@
 class MAINMODULE_EXPORT ComponentSelector : public QTreeWidget
 {
     Q_OBJECT
-    
+
     public:
         ComponentSelector( QWidget* parent );
         ~ComponentSelector();
@@ -27,9 +27,12 @@ class MAINMODULE_EXPORT ComponentSelector : public QTreeWidget
 
         void search( QString filter );
 
+        QTreeWidgetItem* getCategory( QString category );
+        QStringList getCategories(){ return m_categories.keys(); }
+
     private slots:
         void slotItemClicked( QTreeWidgetItem* item, int );
-        void slotContextMenu( const QPoint& );
+        //void slotContextMenu( const QPoint& );
         void slotManageComponents();
 
     private:
@@ -41,7 +44,6 @@ class MAINMODULE_EXPORT ComponentSelector : public QTreeWidget
 
         void LoadLibraryItems();
 
-        QTreeWidgetItem* getCategory( QString category );
         QTreeWidgetItem* addCategory( QString nameTr, QString name, QString parent, QString icon );
 
         //QStringList m_compSetUnique;
