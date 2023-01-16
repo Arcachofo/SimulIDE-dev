@@ -130,10 +130,11 @@ bool Component::setPropStr( QString prop, QString val )
         if( !val.isEmpty() )
         {
             ComProperty* p =  m_propHash.value( m_showProperty );
-            if( p )
-            {
-                if( val != p->unit() ) p->setUnit( val );
-            }
+            if( !p ) return true;
+            QString un = p->unit();
+            if( val == un ) return true;
+            QString vstr = p->getValStr().replace( un, val );
+            p->setValStr( vstr );
         }
     }
     else return CompBase::setPropStr( prop, val );
