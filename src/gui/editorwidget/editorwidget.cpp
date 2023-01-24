@@ -74,6 +74,8 @@ void EditorWidget::newFile()
              this,                   SLOT(   documentWasModified()), Qt::UniqueConnection);
 
     m_fileList << "New";
+    codeEditor->document()->setModified( true );
+    documentWasModified();
     enableFileActs( true );
     enableDebugActs( true );
 }

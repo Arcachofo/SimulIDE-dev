@@ -41,7 +41,7 @@ CodeEditor::CodeEditor( QWidget* parent, OutPanelText* outPane )
     m_lNumArea  = new LineNumberArea( this );
     m_hlighter  = new Highlighter( document() );
     
-    m_compiler = NULL;
+    m_compiler = EditorWindow::self()->createDebugger( "", this, "00" );
     m_debugLine = 0;
     m_errorLine = -1;
     m_brkAction = 0;
