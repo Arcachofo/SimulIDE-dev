@@ -134,8 +134,8 @@ void Memory::voltChanged()        // Some Pin Changed State, Manage it
     else{                                  // Read
         write( false );
         m_nextOutVal = m_ram[m_address];
-        //IoComponent::sheduleOutPuts( this );
-        Simulator::self()->addEvent( m_propDelay*m_propSize, this );
+        IoComponent::sheduleOutPuts( this );
+        //Simulator::self()->addEvent( m_propDelay*m_propSize, this );
 }   }
 
 void Memory::runEvent()
@@ -151,15 +151,15 @@ void Memory::runEvent()
         }
         m_ram[m_address] = value;
     }
-    else{ //IoComponent::runOutputs();
-        for( int i=0; i<m_dataBits; ++i )
+    else{ IoComponent::runOutputs();
+        /*for( int i=0; i<m_dataBits; ++i )
         {
             bool state = m_nextOutVal & (1<<i);
             bool oldst = m_outPin[i]->getOutState();
             if( state == oldst ) continue;
 
             m_outPin[i]->setOutStatFast( state );
-        }
+        }*/
     }
 }
 
