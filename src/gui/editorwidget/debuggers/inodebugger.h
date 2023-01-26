@@ -47,10 +47,12 @@ class InoDebugger : public AvrGccDebugger
         QString getBoard();
         virtual void setBoardName( QString board ) override;
 
+        int m_version;
         int m_lastInoLine;
         int m_loopInoLine;
         
         QString m_arduinoPath;
+        QString m_builder;
         QString m_sketchBook;
         QString m_customBoard;
         board_t m_Ardboard;
