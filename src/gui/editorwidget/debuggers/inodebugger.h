@@ -11,9 +11,6 @@
 class InoDebugger : public AvrGccDebugger
 {
     Q_OBJECT
-    Q_PROPERTY( board_t Board        READ board       WRITE setBoard       DESIGNABLE true USER true )
-    Q_PROPERTY( QString Custom_Board READ customBoard WRITE setCustomBoard DESIGNABLE true USER true )
-
     public:
         InoDebugger( CodeEditor* parent, OutPanelText* outPane );
         ~InoDebugger();

@@ -12,16 +12,9 @@
 #include "circuit.h"
 #include "utils.h"
 
-static const char* InoDebugger_properties[] = {
-    QT_TRANSLATE_NOOP("App::Property","Board"),
-    QT_TRANSLATE_NOOP("App::Property","Custom Board")
-};
-
 InoDebugger::InoDebugger( CodeEditor* parent, OutPanelText* outPane )
            : AvrGccDebugger( parent, outPane )
 {
-    Q_UNUSED( InoDebugger_properties );
-
     m_version = 0;
     m_Ardboard = Uno;
     m_ArdboardList << "uno" << "megaADK" << "nano" << "diecimila" << "leonardo" << "custom";
@@ -39,6 +32,22 @@ void InoDebugger::setToolPath( QString path )
     {
         m_version = 1;
         m_toolPath = path+"hardware/tools/avr/bin/";
+
+        // Find sketchBook
+        QString Scommand = path+"arduino";
+        #ifndef Q_OS_UNIX
+        Scommand += "_debug.exe";
+        #endif
+        Scommand = addQuotes( Scommand );
+        Scommand += " --get-pref sketchbook.path";
+
+        QProcess getSkBook( this );  // Get sketchBook Path
+        getSkBook.start( Scommand );
+        getSkBook.waitForFinished();
+        m_sketchBook = getSkBook.readAllStandardOutput();
+        m_sketchBook = m_sketchBook.remove("\r").remove("\n");
+        getSkBook.close();
+
         m_outPane->appendLine( "Found Arduino Version 1" );
     }
     else{
@@ -105,9 +114,9 @@ int InoDebugger::compile( bool )
 
     QDir dir( m_buildPath );
     bool b = dir.cd( "build" );
-    if( b ) dir.removeRecursively(); // Remove old files
-    dir.mkpath( cCachePath );  // Create cache folder ( if doesn't exist )
+    if( b ) dir.removeRecursively();   // Remove old files
     dir.mkpath( cBuildPath );  // Create build folder
+    dir.mkpath( cCachePath );  // Create cache folder ( if doesn't exist )
 
     if( !QFile::exists( cBuildPath ) || !QFile::exists( cCachePath ) )
     {
@@ -131,22 +140,6 @@ int InoDebugger::compile( bool )
     QString command = addQuotes( m_arduinoPath+m_builder );
     if( m_version == 1 )
     {
-        QString Scommand = m_arduinoPath+"arduino";
-        if( m_sketchBook.isEmpty() ) // Find sketchBook
-        {
-            #ifndef Q_OS_UNIX
-            Scommand += "_debug.exe";
-            #endif
-            Scommand = addQuotes( Scommand );
-            Scommand += " --get-pref sketchbook.path";
-
-            QProcess getSkBook( this );  // Get sketchBook Path
-            getSkBook.start( Scommand );
-            getSkBook.waitForFinished();
-            m_sketchBook = getSkBook.readAllStandardOutput();
-            m_sketchBook = m_sketchBook.remove("\r").remove("\n");
-            getSkBook.close();
-        }
         QString hardware   = addQuotes( m_arduinoPath+"hardware" );
         QString toolsBuild = addQuotes( m_arduinoPath+"tools-builder" );
         QString toolsAvr   = addQuotes( m_arduinoPath+"hardware/tools/avr" );

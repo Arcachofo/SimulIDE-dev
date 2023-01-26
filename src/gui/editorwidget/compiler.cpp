@@ -229,7 +229,7 @@ QString Compiler::getPath( QString msg )
 {
     QString path = QFileDialog::getExistingDirectory( NULL
                          , msg
-                         , m_toolPath
+                         , toolPath()
                          , QFileDialog::ShowDirsOnly
                          | QFileDialog::DontResolveSymlinks);
 
