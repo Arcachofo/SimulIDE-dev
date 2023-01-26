@@ -68,7 +68,7 @@ void IoComponent::initState()
         m_outPin[i]->setStateZ( false );
         m_outPin[i]->setOutState( false );
     }
-    m_outValue = 0;
+    m_nextOutVal = m_outValue = 0;
     while( !m_outQueue.empty()  ) m_outQueue.pop();
     while( !m_timeQueue.empty() ) m_timeQueue.pop();
 }

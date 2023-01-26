@@ -1,21 +1,7 @@
 /***************************************************************************
- *   Copyright (C) 2012 by santiago González                               *
- *   santigoro@gmail.com                                                   *
+ *   Copyright (C) 2012 by Santiago González                               *
  *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 3 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- *   This program is distributed in the hope that it will be useful,       *
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
- *   GNU General Public License for more details.                          *
- *                                                                         *
- *   You should have received a copy of the GNU General Public License     *
- *   along with this program; if not, see <http://www.gnu.org/licenses/>.  *
- *                                                                         *
- ***************************************************************************/
+ ***( see copyright.txt file at root folder )*******************************/
 
 #include <QApplication>
 #include <QSettings>
@@ -202,7 +188,7 @@ int InoDebugger::compile( bool )
     if( !p_stdout.isEmpty() ) m_outPane->appendLine( p_stdout );
 
     int error = 0;
-    if( !p_stderr.isEmpty() ) error = getError( p_stderr )+1;
+    if( !p_stderr.isEmpty() ) error = getError( p_stderr );
     else{
         m_fileList.clear();
         m_fileList.append( m_fileName+m_fileExt );

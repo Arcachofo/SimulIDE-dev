@@ -159,7 +159,7 @@ void SerialPort::open()
 void SerialPort::close()
 {
     if( m_serial->isOpen() ) m_serial->close();
-    m_button->setText( "Open" );
+    m_button->setText( tr("Open") );
     m_receiving = false;
     m_sending = false;
     update();

@@ -356,6 +356,9 @@
            <property name="styleSheet">
             <string notr="true"/>
            </property>
+           <property name="accelerated">
+            <bool>false</bool>
+           </property>
            <property name="keyboardTracking">
             <bool>false</bool>
            </property>
@@ -1448,14 +1451,19 @@
  <resources/>
  <connections/>
  <buttongroups>
-  <buttongroup name="hideGroup">
+  <buttongroup name="channelGroup">
    <property name="exclusive">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
   </buttongroup>
   <buttongroup name="autoGroup">
    <property name="exclusive">
     <bool>true</bool>
+   </property>
+  </buttongroup>
+  <buttongroup name="hideGroup">
+   <property name="exclusive">
+    <bool>false</bool>
    </property>
   </buttongroup>
   <buttongroup name="triggerGroup">
@@ -1464,10 +1472,5 @@
    </property>
   </buttongroup>
   <buttongroup name="trackGroup"/>
-  <buttongroup name="channelGroup">
-   <property name="exclusive">
-    <bool>true</bool>
-   </property>
-  </buttongroup>
  </buttongroups>
 </ui>
