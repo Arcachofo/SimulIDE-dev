@@ -38,7 +38,6 @@ SevenSegment::SevenSegment( QObject* parent, QString type, QString id )
     setLabelPos( 20,-44, 0 );
 
     m_color = QColor(0,0,0);
-    m_ledColor = 0;
     m_commonCathode = true;
     m_verticalPins  = false;
     m_numDisplays = 0;
@@ -108,11 +107,9 @@ QString SevenSegment::colorStr()
 
 void SevenSegment::setColorStr( QString color )
 {
-    m_ledColor = m_enumUids.indexOf( color );
     for( LedSmd* segment : m_segment ) segment->setColorStr( color );
-
     if( m_showVal && (m_showProperty == "Color") )
-        setValLabelText( m_enumNames.at( m_ledColor ) );
+        setValLabelText( m_enumNames.at( m_segment[0]->getEnumIndex( color ) ) );
 }
 
 QStringList SevenSegment::getEnumUids( QString ) { return m_segment[0]->getEnumUids(""); }

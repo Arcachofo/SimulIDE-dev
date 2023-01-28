@@ -107,17 +107,17 @@ void LedBar::deleteLeds( int d )
     m_pin.resize( m_size*2 );
 }
 
-void LedBar::setColorStr( QString color )
-{
-    for( LedSmd* led : m_led ) led->setColorStr( color );
-    if( m_showVal && (m_showProperty == "Color") )
-        setValLabelText( m_enumNames.at( m_enumUids.indexOf( color ) ) );
-}
-
 QString LedBar::colorStr()
 {
     if( m_led[0] ) return m_led[0]->colorStr();
     else           return "Yellow";
+}
+
+void LedBar::setColorStr( QString color )
+{
+    for( LedSmd* led : m_led ) led->setColorStr( color );
+    if( m_showVal && (m_showProperty == "Color") )
+        setValLabelText( m_enumNames.at( m_led[0]->getEnumIndex( color ) ) );
 }
 
 QStringList LedBar::getEnumUids( QString ) { return m_led[0]->getEnumUids(""); }

@@ -36,12 +36,12 @@ class MAINMODULE_EXPORT CompBase : public QObject
 
         virtual QStringList getEnumUids( QString ) { return m_enumUids;}
         virtual QStringList getEnumNames( QString ) { return m_enumNames; }
+        int getEnumIndex( QString prop );
 
         virtual bool    setPropStr( QString prop, QString val );
         virtual QString getPropStr( QString prop );
 
         virtual QString toString();
-
 
         QString getUid() { return m_id; }
         void setUid( QString uid ) { m_id = uid; }
@@ -55,8 +55,6 @@ class MAINMODULE_EXPORT CompBase : public QObject
         virtual void setShowProp( QString prop ){;}
 
     protected:
-        int getEnumIndex( QString prop );
-
         QString m_id;
         QString m_type;
 

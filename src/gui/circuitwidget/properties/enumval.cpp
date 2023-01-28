@@ -51,10 +51,7 @@ void EnumVal::on_valueBox_currentIndexChanged( QString val )
 {
     if( m_blocked ) return;
     int index = valueBox->currentIndex();
-
-    //if( m_property->type() == "string" )
-        m_property->setValStr( m_enums.at( index ) );
-    //else m_property->setValStr( QString::number( index ) );
+    m_property->setValStr( m_enums.at( index ) );
 
     if( showVal->isChecked() ) m_component->setValLabelText( val );
 }

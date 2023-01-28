@@ -65,8 +65,6 @@ class MAINMODULE_EXPORT SevenSegment : public Component, public eElement
         double m_maxCurrent;
         double m_resistance;
 
-        int m_ledColor;
-
         std::vector<Pin*>   m_commonPin;
         std::vector<ePin*>  m_cathodePin;
         std::vector<ePin*>  m_anodePin;

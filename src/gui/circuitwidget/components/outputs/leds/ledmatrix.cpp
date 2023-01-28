@@ -169,7 +169,7 @@ void LedMatrix::setColorStr( QString color )
             m_led[row][col]->setColorStr( color );
 
     if( m_showVal && (m_showProperty == "Color") )
-        setValLabelText( m_enumNames.at( m_enumUids.indexOf( color ) ) );
+        setValLabelText( m_enumNames.at( m_led[0][0]->getEnumIndex( color ) ) );
 }
 
 QStringList LedMatrix::getEnumUids( QString ){ return m_led[0][0]->getEnumUids(""); }
