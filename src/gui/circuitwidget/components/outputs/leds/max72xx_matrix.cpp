@@ -165,7 +165,7 @@ void Max72xx_matrix::proccessCommand()
             m_decodemode = m_rxReg & 0xFF;
             break;
         case 10: // Intensity (0-15)
-            m_intensity[m_inDisplay] = m_rxReg & 0x0F;
+            m_intensity[m_inDisplay] = 1+(m_rxReg & 0x0F);
             break;
         case 11: // Scan limit (0-7)
             m_scanlimit = m_rxReg & 0x07;
@@ -222,9 +222,8 @@ void Max72xx_matrix::paint( QPainter* p, const QStyleOptionGraphicsItem* option,
         p->setBrush( QColor(Qt::black) );
         p->drawRoundedRect( 64*display-32, -40, 64, 64, 2, 2 );
 
-        QColor color = m_colors[m_ledColor];
-        int factor = 100 + (15-m_intensity[display])*3;
-        color = color.darker(factor);
+        int factor = 25+(220/16)*m_intensity[display];
+        QColor color = QColor( QColor(factor, factor, factor/4) );
 
         for( int row=0; row<8; row++ )
         {
@@ -238,8 +237,8 @@ void Max72xx_matrix::paint( QPainter* p, const QStyleOptionGraphicsItem* option,
                     p->setBrush( color );
                     pen.setColor( color );
                 }else{
-                    p->setBrush( QColor(50, 50, 50) );
-                    pen.setColor( QColor(50, 50, 50) );
+                    p->setBrush( QColor( 25, 25, 25) );
+                    pen.setColor( QColor(25, 25, 25) );
                 }
                 p->setPen( pen );
                 p->drawEllipse( x, y, 6, 6 );
