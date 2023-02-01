@@ -79,6 +79,7 @@ class CodeEditor : public QPlainTextEdit
         void contextMenuEvent(QContextMenuEvent* event);
 
     private:
+        QString changeCompilerFromCode();
         int  getSyntaxCoincidences();
         void addBreakPoint( QTextBlock* block );
         void remBreakPoint( QTextBlock* block );

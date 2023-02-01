@@ -102,15 +102,9 @@ void CodeEditor::setFile( const QString filePath )
 
     QString extension = getFileExt( filePath );
 
-    QString line = this->document()->findBlockByLineNumber(0).text();//  fileToStringList( filePath, "CodeEditor::setFile" );
+    QString compiler = changeCompilerFromCode();
 
     QString code = "00";
-    QString compiler = BaseDebugger::getValue( line, "compiler" );
-    if( compiler.isEmpty() ) compiler = "None";
-    else{
-        m_outPane->appendLine( tr("Found Compiler definition in file: ") + compiler );
-        m_compiler = EditorWindow::self()->createDebugger( compiler, this );
-    }
 
     if( extension == ".gcb" )
     {
@@ -191,7 +185,6 @@ void CodeEditor::setFile( const QString filePath )
         //m_compiler = new B16AsmDebugger( this, m_outPane );
     }*/
     if( !m_compiler ) m_compiler = EditorWindow::self()->createDebugger( compiler, this, code );
-    m_compiler->getInfoInFile( line );
     m_outPane->appendLine( "-------------------------------------------------------" );
 }
 
@@ -240,7 +233,10 @@ int CodeEditor::getSyntaxCoincidences()
 
 bool CodeEditor::compile( bool debug )
 {
-    if( document()->isModified() ){
+    if( document()->isModified() )
+    {
+        changeCompilerFromCode();
+
         if( !EditorWindow::self()->save() )
         {
             m_outPane->appendLine( "Error: File not saved" );
@@ -248,7 +244,7 @@ bool CodeEditor::compile( bool debug )
     }   }
     m_errorLine  = -1;
     update();
-    
+
     m_outPane->appendLine( "-------------------------------------------------------" );
     int error = m_compiler->compile( debug );
 
@@ -458,6 +454,24 @@ void CodeEditor::contextMenuEvent( QContextMenuEvent* event )
              EditorWindow::self(), SLOT(reload()), Qt::UniqueConnection );
 
     menu->exec( event->globalPos() );
+}
+
+QString CodeEditor::changeCompilerFromCode()
+{
+    QString line = this->document()->findBlockByLineNumber(0).text();
+    QString compiler = BaseDebugger::getValue( line, "compiler" );
+    if( compiler.isEmpty() ) compiler = "None";
+    else{
+        m_outPane->appendLine( tr("Found Compiler definition in file: ") + compiler );
+        if( m_compiler != NULL )
+        {
+            if( m_compiler->compName()==compiler ) return compiler;
+            delete m_compiler;
+        }
+        m_compiler = EditorWindow::self()->createDebugger( compiler, this );
+        m_compiler->getInfoInFile( line );
+    }
+    return compiler;
 }
 
 int CodeEditor::lineNumberAreaWidth()
