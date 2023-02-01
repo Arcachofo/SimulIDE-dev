@@ -276,19 +276,21 @@ QString MainWindow::getHelp( QString name )
     QString dfPath = getFilePath("data/help/"+localeFolder+name+locale+".txt");
 
     if( !QFileInfo::exists( dfPath ) ) dfPath = getFilePath( "data/help/"+name+".txt" );
-    if( QFileInfo::exists( dfPath ) )
-    {
-        QFile file( dfPath );
+    if( !QFileInfo::exists( dfPath ) ) return help;
 
-        if( file.open( QFile::ReadOnly | QFile::Text) ) // Get Text from Help File
+    help.clear();
+    QStringList lines = fileToStringList( dfPath, "MainWindow::getHelp" );
+    for( QString line : lines )
+    {
+        if( line.startsWith("#include") )
         {
-            QTextStream s1( &file );
-            s1.setCodec("UTF-8");
-            help = s1.readAll();
-            file.close();
+            QString file = line.remove("#include ");
+            line = getHelp( file );
         }
+        help.append( line+"\n" );
     }
-    else qDebug() << "Warning: MainWindow::getHelp: File not found\n"<<dfPath;
+    //else qDebug() << "Warning: MainWindow::getHelp: File not found\n"<<dfPath;
+
     m_help[name] = help;
     return help;
 }
