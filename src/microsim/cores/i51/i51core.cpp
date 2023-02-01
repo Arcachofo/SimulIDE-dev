@@ -28,15 +28,81 @@ void I51Core::reset()
     CpuBase::reset();
     m_tmpPC = 0;
     m_cycle = 0;
-    m_cpuState = cpu_FETCH;
+    m_cpuState = cpu_RESET;
 
-    m_psStep = m_mcu->psCycle()/12;  // We are running at 2 cycles per Machine cycle
+    m_psStep = m_mcu->psCycle()/12;  // We are doing 2 Read cycles per Machine cycle
 
-    m_mcu->extMem->setLaEnSetTime(  0*m_psStep );  // LA 1
-    m_mcu->extMem->setAddrSetTime(  3*m_psStep );  // Addr pins
-    m_mcu->extMem->setLaEnEndTime(  4*m_psStep );  // LA 0
-    m_mcu->extMem->setReadSetTime(  6*m_psStep );  // PSEN 0
+    m_mcu->extMem->setLaEnSetTime(  0*m_psStep+1 );  // LA 1
+    m_mcu->extMem->setAddrSetTime(  3*m_psStep );    // Addr pins
+    m_mcu->extMem->setLaEnEndTime(  4*m_psStep );    // LA 0
+    m_mcu->extMem->setReadSetTime(  6*m_psStep );    // PSEN 0
     m_mcu->extMem->setReadBusTime( 12*m_psStep-10 ); // PSEN 1, Read data Bus
+}
+
+void I51Core::runStep()
+{
+    m_mcu->cyclesDone = 1;
+    m_cycle++;
+
+    bool extPGM = !m_eaPin->getInpState();
+
+    if( extPGM ) m_pgmData = m_mcu->extMem->getData(); // Read from External
+    else         m_pgmData = m_progMem[m_tmpPC];       // Read from Internal ROM
+
+    if( m_cpuState == cpu_FETCH )     // Read cycle 1
+    {
+        m_opcode = m_pgmData;
+        m_cycle = 0;
+        m_tmpPC++;
+        Decode();
+        m_cpuState = cpu_OPERAND;
+    }
+    else if( m_cpuState == cpu_OPERAND ) // Read cycle > 1
+    {
+        if( !m_dataEvent.isEmpty() ) // Read next operand
+        {
+            readOperand();
+            m_tmpPC++;
+        }
+        else m_cpuState = cpu_EXEC; // All operands ready
+    }
+    else if( m_cpuState == cpu_RESET ) m_cpuState = cpu_FETCH; // First cycle used fetching first instruction
+
+    if( m_cpuState == cpu_EXEC )  // Execute Instruction
+    {
+        m_PC = m_tmpPC;
+        Exec();
+        m_tmpPC = m_PC;
+        m_cpuState = cpu_FETCH;
+    }
+    if( extPGM ) m_mcu->extMem->read( m_tmpPC, ExtMemModule::EN | ExtMemModule::LA ); //Start next Read cycle
+}
+
+void I51Core::readOperand()
+{
+    uint8_t addrMode = m_dataEvent.takeFirst();
+
+    if( addrMode & aIMME ){
+        if( addrMode & aORIG ) m_op0 = m_opAddr = m_pgmData;
+        else{
+            if     ( m_cycle == 1 ) m_opAddr = (uint16_t)m_pgmData << 8; /// 16 bit addrs
+            else if( m_cycle == 2 ) m_opAddr |= m_pgmData;
+        }
+    }
+    else if( addrMode & aDIRE ){
+        if( addrMode & aORIG ) m_op0 = GET_RAM( m_pgmData );
+        else                   m_opAddr = m_pgmData;
+    }
+    else if( addrMode & aRELA ){
+        if( addrMode & aORIG ) m_op2 = m_pgmData;
+        else                   m_opAddr = m_pgmData;
+    }
+    else if( addrMode & aBIT ){   // Get bit mask an Reg address
+        m_bitAddr = m_pgmData;
+        m_bitMask = 1 << (m_pgmData & 7);
+        if( m_bitAddr > m_lowDataMemEnd ) m_bitAddr &= 0xF8;
+        else{ m_bitAddr >>= 3; m_bitAddr += 0x20; }
+    }
 }
 
 void I51Core::operRgx() { m_op0 = m_RxAddr; }//{ m_op0 = m_dataMem[m_RxAddr]; }
@@ -48,7 +114,7 @@ void I51Core::operRel() { m_dataEvent.append( aRELA | aORIG | aPGM );       // m
 
 void I51Core::addrRgx() { m_opAddr = m_RxAddr; }
 void I51Core::addrInd() { m_opAddr = checkAddr( I_RX_VAL );}             //
-void I51Core::addrI08() { m_dataEvent.append( aIMME | aPGM ); }            // m_opAddr = data;
+void I51Core::addrI08() { m_dataEvent.append( aIMME | aORIG ); }            // m_opAddr = data;
 void I51Core::addrDir() { m_dataEvent.append( aDIRE | aPGM ); }            // m_opAddr = data;
 void I51Core::addrBit( bool invert ) { m_dataEvent.append( aBIT  | aPGM ); // m_opAddr = addr, m_op0 = bitMask
                                        m_invert = invert; }
@@ -330,81 +396,11 @@ void I51Core::movx_indir_rx_a()
     else { if( aCPU->mExtData ) aCPU->mExtData[address &( aCPU->mExtDataSize - 1 )] = ACC; }*/
 }
 
-void I51Core::runStep()
-{
-    m_mcu->cyclesDone = 1;
-    m_cycle++;
-
-    if( m_cpuState == cpu_EXEC )  // Execute previous instruction
-    {
-        m_PC = m_tmpPC;
-        Exec();
-        m_tmpPC = m_PC;
-        m_cpuState = cpu_FETCH;
-    }
-
-    if( m_eaPin->getInpState() ) m_pgmData = m_progMem[m_tmpPC]; // Read from Internal ROM
-    else{                                                     // Read from External
-        m_pgmData = m_mcu->extMem->getData();
-        m_mcu->extMem->read( m_tmpPC+1, ExtMemModule::EN | ExtMemModule::LA ); //Start next Read cycle
-    }
-
-    if( m_cpuState == cpu_FETCH )     // Read cycle 1
-    {
-        m_opcode = m_progMem[m_tmpPC] = m_pgmData;
-        m_cycle = 0;
-        m_tmpPC++;
-        Decode();
-        m_cpuState = cpu_OPERAND;
-    }
-    else if( m_cpuState == cpu_OPERAND ) // Read cycle > 1
-    {
-        if( !m_dataEvent.isEmpty() ) // Read next operand
-        {
-            readOperand();
-            m_tmpPC++;
-        }
-        if( m_dataEvent.isEmpty() )  // All operands ready
-        {
-            /// Don't pulse PSEN
-            m_cpuState = cpu_EXEC;
-        }
-    }
-}
-
-void I51Core::readOperand()
-{
-    uint8_t addrMode = m_dataEvent.takeFirst();
-
-    if( addrMode & aIMME ){
-        if( addrMode & aORIG ) m_op0 = m_pgmData;
-        else{
-            if     ( m_cycle == 1 ) m_opAddr = (uint16_t)m_pgmData << 8; /// 16 bit addrs
-            else if( m_cycle == 2 ) m_opAddr |= m_pgmData;
-        }
-    }
-    else if( addrMode & aDIRE ){
-        if( addrMode & aORIG ) m_op0 = GET_RAM( m_pgmData );
-        else                   m_opAddr = m_pgmData;
-    }
-    else if( addrMode & aRELA ){
-        if( addrMode & aORIG ) m_op2 = m_pgmData;
-        else                   m_opAddr = m_pgmData;
-    }
-    else if( addrMode & aBIT ){   // Get bit mask an Reg address
-        m_bitAddr = m_pgmData;
-        m_bitMask = 1 << (m_pgmData & 7);
-        if( m_bitAddr > m_lowDataMemEnd ) m_bitAddr &= 0xF8;
-        else{ m_bitAddr >>= 3; m_bitAddr += 0x20; }
-    }
-}
-
 void I51Core::Decode()
 {
+    m_dataEvent.clear();
     if( m_opcode & 8 ) // Rx
     {
-        m_dataEvent.clear();
-
         uint8_t nibbleH = (m_opcode & 0xF0) >> 4;
         m_RxAddr        = (m_opcode & 0x07) + 8*BANK;
 

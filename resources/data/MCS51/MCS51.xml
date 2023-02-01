@@ -79,7 +79,7 @@
         <trunit type="rx" pin="PORT30" enable="REN"    interrupt="USART_R" />
     </usart>
     
-    <port name="CPORT0" pins="ALE,PSEN,EA" />
+    <port name="PORTE" pins="ALE,PSEN,EA" />
     <extmem name="MemCtrl" 
         addrport="PORT2"
         dataport="PORT0"

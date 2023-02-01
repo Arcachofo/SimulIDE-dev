@@ -37,7 +37,8 @@ class MAINMODULE_EXPORT I51Core : public McuCpu
         };
 
         enum cpuState_t{
-            cpu_FETCH=0,
+            cpu_RESET=0,
+            cpu_FETCH,
             cpu_OPERAND,
             cpu_EXEC,
             cpu_WRITE
