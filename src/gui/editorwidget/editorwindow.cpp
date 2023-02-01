@@ -151,7 +151,7 @@ void EditorWindow::initDebbuger()
         stepOverAct->setVisible( true /*m_stepOver*/ );
         eMcu::self()->setDebugging( true );
         ///reset();
-        m_lastCycle = 0;
+        m_lastCycle = -1;
         m_lastTime = 0;
         m_state = DBG_PAUSED;
         m_debugDoc->setDebugLine( 1 );
@@ -169,7 +169,7 @@ void EditorWindow::initDebbuger()
         pauseAct->setEnabled( false );
 
         Simulator::self()->addToUpdateList( this );
-        CircuitWidget::self()->powerCircDebug( m_driveCirc );
+
     }else{
         m_outPane.appendLine( "\n"+tr("Error Starting Debugger")+"\n" );
         stopDebbuger();
@@ -182,8 +182,12 @@ void EditorWindow::stepDebug( bool over )
 
     m_state = DBG_STEPING;
     m_debugger->stepFromLine( over );
-    if( m_driveCirc ) Simulator::self()->resumeSim();
-
+    if( m_lastCycle >= 0 )
+        Simulator::self()->resumeSim();
+    else{
+        CircuitWidget::self()->powerCircDebug( true );
+        lineReached();
+    }
 }
 
 void EditorWindow::lineReached() // Processor reached PC related to source line

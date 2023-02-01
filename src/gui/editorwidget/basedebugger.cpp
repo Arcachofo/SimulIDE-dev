@@ -216,9 +216,15 @@ void BaseDebugger::pause()
 
 void BaseDebugger::stepFromLine( bool over )
 {
+    m_prevLine = m_document->debugLine();
+    if( m_prevLine == 1 )
+    {
+        m_prevLine = m_flashToSource.value( 0 );
+        m_document->setDebugLine( m_prevLine );
+        return;
+    }
     m_over = over;
     m_exitPC = 0;
-    m_prevLine = m_document->debugLine();
     m_debugStep = true;
     m_brkPoints = m_document->getBreakPoints();
 }
