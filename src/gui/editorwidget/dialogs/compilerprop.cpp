@@ -93,11 +93,6 @@ void CompilerProp::on_customBoard_textEdited( QString board )
     m_compiler->setProperty( "Custom_Board", board );
 }
 
-void CompilerProp::on_driveCirc_toggled( bool drive )
-{
-    EditorWindow::self()->setDriveCirc( drive );
-}
-
 void CompilerProp::updateDialog()
 {
     toolPathLabel->setVisible( true );
@@ -119,9 +114,6 @@ void CompilerProp::updateDialog()
     deviceText->setVisible( useDevice );
     deviceLabel->setVisible( useDevice );
     deviceText->setText( m_compiler->device() );
-
-    /// driveCirc->setVisible( true );
-    driveCirc->setChecked( EditorWindow::self()->driveCirc() );
 }
 
 void CompilerProp::setCompiler( Compiler* compiler )
@@ -170,7 +162,6 @@ void CompilerProp::setCompiler( Compiler* compiler )
         ardBoard->setVisible( false );
         customLabel->setVisible( false );
         customBoard->setVisible( false );
-        driveCirc->setVisible( false );
     }
     m_blocked = false;
 }

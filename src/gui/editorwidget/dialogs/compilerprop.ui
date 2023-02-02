@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>300</width>
-    <height>390</height>
+    <width>297</width>
+    <height>372</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -50,30 +50,14 @@
     <bool>false</bool>
    </property>
    <property name="html">
-    <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+    <string notr="true">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Ubuntu'; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Ubuntu'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans Serif'; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
    <property name="textInteractionFlags">
     <set>Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
-   </property>
-  </widget>
-  <widget class="QCheckBox" name="driveCirc">
-   <property name="geometry">
-    <rect>
-     <x>8</x>
-     <y>350</y>
-     <width>134</width>
-     <height>20</height>
-    </rect>
-   </property>
-   <property name="toolTip">
-    <string>Set if Debugger should drive Circuit simulation</string>
-   </property>
-   <property name="text">
-    <string>Drive Circuit</string>
    </property>
   </widget>
   <widget class="QLabel" name="boardLabel">
@@ -81,7 +65,7 @@ p, li { white-space: pre-wrap; }
     <rect>
      <x>11</x>
      <y>276</y>
-     <width>123</width>
+     <width>135</width>
      <height>16</height>
     </rect>
    </property>
@@ -199,7 +183,7 @@ p, li { white-space: pre-wrap; }
     <rect>
      <x>10</x>
      <y>314</y>
-     <width>103</width>
+     <width>133</width>
      <height>16</height>
     </rect>
    </property>
@@ -223,7 +207,7 @@ p, li { white-space: pre-wrap; }
     <locale language="C" country="AnyCountry"/>
    </property>
    <property name="text">
-    <string>...</string>
+    <string notr="true">...</string>
    </property>
    <property name="autoDefault">
     <bool>false</bool>
@@ -258,7 +242,7 @@ p, li { white-space: pre-wrap; }
     <locale language="C" country="AnyCountry"/>
    </property>
    <property name="text">
-    <string>...</string>
+    <string notr="true">...</string>
    </property>
    <property name="autoDefault">
     <bool>false</bool>
@@ -322,7 +306,7 @@ p, li { white-space: pre-wrap; }
     <rect>
      <x>12</x>
      <y>226</y>
-     <width>103</width>
+     <width>132</width>
      <height>16</height>
     </rect>
    </property>
@@ -354,7 +338,7 @@ p, li { white-space: pre-wrap; }
     <rect>
      <x>12</x>
      <y>196</y>
-     <width>103</width>
+     <width>129</width>
      <height>16</height>
     </rect>
    </property>

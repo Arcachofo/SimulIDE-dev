@@ -39,8 +39,6 @@ class CompilerProp : public QDialog, private Ui::CompilerProp
         void on_ardBoard_currentIndexChanged( int index );
         void on_customBoard_textEdited( QString board );
 
-        void on_driveCirc_toggled( bool drive );
-
     private:
         void updateDialog();
 

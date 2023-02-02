@@ -12,9 +12,16 @@
 #include "circuit.h"
 #include "utils.h"
 
+static const char* InoDebugger_properties[] = {
+    QT_TRANSLATE_NOOP("App::Property","Board"),
+    QT_TRANSLATE_NOOP("App::Property","Custom Board")
+};
+
 InoDebugger::InoDebugger( CodeEditor* parent, OutPanelText* outPane )
            : AvrGccDebugger( parent, outPane )
 {
+    Q_UNUSED( InoDebugger_properties );
+
     m_version = 0;
     m_Ardboard = Uno;
     m_ArdboardList << "uno" << "megaADK" << "nano" << "diecimila" << "leonardo" << "custom";
