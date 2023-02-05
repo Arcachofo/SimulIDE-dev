@@ -100,22 +100,15 @@ void LedBase::updateStep()
 void LedBase::setGrounded( bool grounded )
 {
     if( grounded == m_grounded ) return;
+    m_grounded = grounded;
 
     if( Simulator::self()->isRunning() )  CircuitWidget::self()->powerCircOff();
 
-    if( grounded )
-    {
-        Pin* pin1 = static_cast<Pin*>(m_ePin[1]);
-        pin1->removeConnector();
-        pin1->setEnabled( false );
-        pin1->setVisible( false );
-    }else{
-        Pin* pin1 = static_cast<Pin*>(m_ePin[1]);
-        pin1->setEnabled( true );
-        pin1->setVisible( true );
-        m_ePin[1]->setEnode( NULL );
-    }
-    m_grounded = grounded;
+    Pin* pin1 = static_cast<Pin*>(m_ePin[1]);
+    pin1->setEnabled( !grounded );
+    pin1->setVisible( !grounded );
+    if( grounded ) pin1->removeConnector();
+    else           pin1->setEnode( NULL );
 }
 
 void LedBase::setColorStr( QString color )

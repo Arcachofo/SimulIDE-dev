@@ -318,14 +318,8 @@ void WaveGen::udtProperties()
 
 void WaveGen::slotProperties()
 {
-    if( !m_propDialog )
-    {
-        m_help = MainWindow::self()->getHelp("WaveGen");
-        m_propDialog = new PropDialog( CircuitWidget::self(), m_help );
-        m_propDialog->setComponent( this );
-    }
+    Component::slotProperties();
     udtProperties();
-    m_propDialog->show();
 }
 
 void WaveGen::updtValues()

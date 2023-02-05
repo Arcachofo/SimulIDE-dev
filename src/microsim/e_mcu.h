@@ -34,7 +34,6 @@ class IoPort;
 class McuPort;
 class McuVref;
 class Component;
-class ExtMemModule;
 
 class MAINMODULE_EXPORT eMcu : public DataSpace, public eElement
 {
@@ -100,7 +99,6 @@ class MAINMODULE_EXPORT eMcu : public DataSpace, public eElement
         bool setCfgWord( uint16_t addr, uint16_t data );
         uint16_t getCfgWord( uint16_t addr=0 );
 
-        ExtMemModule* extMem; /// REMOVE
         CpuBase* cpu;
         int cyclesDone;
 
@@ -139,7 +137,7 @@ class MAINMODULE_EXPORT eMcu : public DataSpace, public eElement
 
         QHash<QString, McuTimer*> m_timerList;// Access TIMERS by name
         QHash<QString, McuPort*>  m_mcuPorts; // Access PORTS by name
-        QHash<QString, IoPort*>   m_ioPorts; // Access ioPORTS by name
+        QHash<QString, IoPort*>   m_ioPorts;  // Access ioPORTS by name
 
         IoPin*  m_clkPin;
         McuSleep* m_sleepModule;
@@ -148,7 +146,7 @@ class MAINMODULE_EXPORT eMcu : public DataSpace, public eElement
 
         double m_freq;           // Clock Frequency in MegaHerzs
         double m_cPerInst;       // Clock ticks per Instruction Cycle
-        uint64_t m_psCycle;     // Simulation cycles per Instruction Cycle
+        uint64_t m_psCycle;      // Simulation cycles per Instruction Cycle
 
         RamTable* m_cpuTable;
 
