@@ -12,9 +12,14 @@
 #include "pin.h"
 #include "e-resistor.h"
 #include "label.h"
+#include "propdialog.h"
+#include "mainwindow.h"
 
 #include "doubleprop.h"
 #include "intprop.h"
+#include "boolprop.h"
+
+eNode ResistorDip::m_puEnode("");
 
 Component* ResistorDip::construct( QObject* parent, QString type, QString id )
 { return new ResistorDip( parent, type, id ); }
@@ -40,15 +45,33 @@ ResistorDip::ResistorDip( QObject* parent, QString type, QString id )
     setValLabelPos( 5,-26, 90 );
     m_valLabel->setAcceptedMouseButtons( 0 );
 
+    m_pullUp = false;
+    m_puVolt = 5;
+
     addPropGroup( { tr("Main"), {
 new DoubProp<ResistorDip>( "Resistance", tr("Resistance"),"Ω"       , this, &ResistorDip::getRes, &ResistorDip::setRes ),
-new IntProp <ResistorDip>( "Size"      , tr("Size")      ,"_Resist.", this, &ResistorDip::size,   &ResistorDip::setSize, "uint" )
+new IntProp <ResistorDip>( "Size"      , tr("Size")      ,"_Resist.", this, &ResistorDip::size,   &ResistorDip::setSize, "uint" ),
+new BoolProp<ResistorDip>( "PullUp"    , tr("Pullup")    ,""        , this, &ResistorDip::pullUp, &ResistorDip::setPullUp ),
+new DoubProp<ResistorDip>( "PuVolt", tr("Pullup Voltage"),"V"       , this, &ResistorDip::puVolt, &ResistorDip::setPuVolt ),
     } } );
 
     setShowProp("Resistance");
     setPropStr( "Resistance", "100" );
 }
 ResistorDip::~ResistorDip(){}
+
+void ResistorDip::stamp()
+{
+    if( !m_pullUp ) return;
+    m_puEnode.setVolt( m_puVolt );
+    for( int i=0; i<m_size; i++ )
+    {
+        int index = i*2;
+        m_pin[index+1]->setEnode( &m_puEnode );
+        m_pin[index]->createCurrent();
+        m_pin[index]->stampCurrent( m_puVolt/m_resist );
+    }
+}
 
 void ResistorDip::createResistors( int c )
 {
@@ -95,14 +118,39 @@ void ResistorDip::setRes( double resist )
 
 void ResistorDip::setSize( int size )
 {
+    if( size == m_size || size < 1 ) return;
     if( Simulator::self()->isRunning() )  CircuitWidget::self()->powerCircOff();
-    
-    if( size == 0 ) size = 8;
+
     if     ( size < m_size ) deleteResistors( m_size-size );
     else if( size > m_size ) createResistors( size-m_size );
     
     m_area = QRect( -10, -30, 20, m_size*8+4 );
     Circuit::self()->update();
+}
+
+void ResistorDip::setPullUp( bool p )
+{
+    if( m_pullUp == p ) return;
+    m_pullUp = p;
+
+    if( Simulator::self()->isRunning() )  CircuitWidget::self()->powerCircOff();
+
+    if( m_propDialog ) m_propDialog->showProp("PuVolt", p );
+
+    for( int i=0; i<m_size; i++ )
+    {
+        int index = i*2+1;
+        m_pin[index]->setEnabled( !p );
+        m_pin[index]->setVisible( !p );
+        if( p ) m_pin[index]->removeConnector();
+        else    m_pin[index]->setEnode( NULL );
+    }
+}
+
+void ResistorDip::slotProperties()
+{
+    Component::slotProperties();
+    m_propDialog->showProp("PuVolt", m_pullUp );
 }
 
 void ResistorDip::remove()

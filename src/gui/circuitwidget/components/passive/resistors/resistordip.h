@@ -20,14 +20,22 @@ class MAINMODULE_EXPORT ResistorDip : public Component, public eElement
         ResistorDip( QObject* parent, QString type, QString id );
         ~ResistorDip();
 
-        static Component* construct( QObject* parent, QString type, QString id );
-        static LibraryItem *libraryItem();
+ static Component* construct( QObject* parent, QString type, QString id );
+ static LibraryItem *libraryItem();
+
+        virtual void stamp() override;
 
         int size() { return m_size; }
         void setSize( int size );
 
         double getRes() { return m_resist; }
         void setRes( double resist );
+
+        bool pullUp() { return m_pullUp; }
+        void setPullUp( bool p );
+
+        double puVolt() { return m_puVolt; }
+        void setPuVolt( double pv ) { m_puVolt = pv; }
 
         void createResistors( int c );
         void deleteResistors( int d );
@@ -36,12 +44,20 @@ class MAINMODULE_EXPORT ResistorDip : public Component, public eElement
         
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
 
+    protected slots:
+        virtual void slotProperties() override;
+
     private:
         double m_resist;
         int m_size;
 
+        bool m_pullUp;
+        double m_puVolt;
+
         std::vector<Pin*> m_pin;
         std::vector<eResistor*> m_resistor;
+
+        static eNode m_puEnode;
 };
 
 #endif
