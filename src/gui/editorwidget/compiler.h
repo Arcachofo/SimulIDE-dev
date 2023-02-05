@@ -61,7 +61,10 @@ class Compiler : public QObject
         virtual void preProcess(){;}
         virtual bool postProcess(){return false;}
 
-        int getError( QString txt );
+        int getErrors();
+        virtual int getErrorLine( QString txt );
+        int getFirstNumber( QString txt );
+        void compiled( QString firmware );
 
         int runBuildStep( QString fullCommand );
         QString replaceData( QString str );

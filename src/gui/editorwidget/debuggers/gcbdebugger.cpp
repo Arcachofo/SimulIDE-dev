@@ -23,6 +23,24 @@ GcbDebugger::GcbDebugger( CodeEditor* parent, OutPanelText* outPane )
 }
 GcbDebugger::~GcbDebugger(){}
 
+int GcbDebugger::getErrorLine( QString txt )
+{
+    m_outPane->appendLine( txt );
+
+    int error = 0;
+    bool found = false;
+    if( m_compProcess.exitCode() )
+    {
+        for( QString line : txt.split("\n") )
+        {
+            if( line.contains("Compiling") ) continue;
+            if( found ){ error = getFirstNumber( line ); break; }
+            found = line.contains( m_fileName+m_fileExt );
+        }
+    }
+    return error;
+}
+
 bool GcbDebugger::postProcess()
 {
     getProcType(); // Determine Pic or Avr

@@ -170,59 +170,68 @@ int Compiler::compile( bool debug )
         error = runBuildStep( command + arguments );
         if( error > 0 ) break;
     }
-    if( error == 0 )
-    {
-        m_fileList.clear();
-        m_fileList.append( m_fileName+m_fileExt );
-        if( m_fileExt == ".hex" ) m_uploadHex = true;
-        if( m_uploadHex ) m_firmware = m_buildPath+m_fileName+".hex";
-        else              m_firmware = "";
+    if( error == 0 ) compiled( m_buildPath+m_fileName+".hex" );
 
-        if( m_compName != "None" && !m_command.isEmpty()  )
-            m_outPane->appendLine( "\n"+tr("     SUCCESS!!! Compilation Ok")+"\n" );
-    }
-    else if( error ==-1 ) m_outPane->appendLine( "\n"+tr("     WARNING: Compilation Not Done")+"\n" );
-    else if( error >  0 ) m_outPane->appendLine( "\n"+tr("     ERROR!!! Compilation Failed")+"\n" );
     QApplication::restoreOverrideCursor();
     return error;
 }
 
 int Compiler::runBuildStep( QString fullCommand )
 {
-    int error = 0;
     m_outPane->appendLine( "Executing:\n"+fullCommand+"\n" );
     m_compProcess.setWorkingDirectory( m_fileDir );
     m_compProcess.start( fullCommand  );
     m_compProcess.waitForFinished(-1);
 
-    QString p_stderr = m_compProcess.readAllStandardError();
-    QString p_stdout = m_compProcess.readAllStandardOutput();
+    return getErrors();
+}
 
-    if( !p_stdout.isEmpty() ) error = getError( p_stdout );
+void Compiler::compiled( QString firmware )
+{
+    m_fileList.clear();
+    m_fileList.append( m_fileName+m_fileExt );
+    if( m_fileExt == ".hex" ) m_uploadHex = true;
+    if( m_uploadHex ) m_firmware = firmware;
+    else              m_firmware = "";
+}
+
+int Compiler::getErrors()
+{
+    int error = 0;
+    QString p_stdout = m_compProcess.readAllStandardOutput();
+    if( !p_stdout.isEmpty() ) error = getErrorLine( p_stdout );
     if( error ) return error;
 
-    if( !p_stderr.isEmpty() ) error = getError( p_stderr );
+    QString p_stderr = m_compProcess.readAllStandardError();
+    if( !p_stderr.isEmpty() ) error = getErrorLine( p_stderr );
     return error;
 }
 
-int Compiler::getError( QString txt )
+int Compiler::getErrorLine( QString txt )
 {
     m_outPane->appendLine( txt );
+
     int error = 0;
-    QStringList lines = txt.split("\n");
-    for( QString line : lines )
+    if( m_compProcess.exitCode() )
     {
-        line = line.toLower();
-        if( !line.contains( QRegExp("\\berror\\b") ) ) continue;
-        error = 1;
-        QStringList words = line.remove(":\\").split(":");
-        if( words.size() < 2 ) break;
-        bool ok = false;
-        int e = words.at(1).toInt( &ok );
-        if( ok && e>0 ) error = e;
-        break;
+        for( QString line : txt.split("\n") )
+        {
+            if( !line.contains( m_fileName+m_fileExt ) ) continue;
+            line = line.split( m_fileName+m_fileExt ).last();
+            error = getFirstNumber( line );
+            if( error) break;
+        }
     }
     return error;
+}
+
+int Compiler::getFirstNumber( QString txt )
+{
+    int number = 0;
+    QRegularExpression rx("[0-9]+");
+    QRegularExpressionMatch match = rx.match( txt );
+    if ( match.hasMatch()  ) number = match.captured(0).toInt();
+    return number;
 }
 
 QString Compiler::getPath( QString msg )
@@ -289,13 +298,8 @@ void Compiler::compProps()
 
 bool Compiler::checkCommand( QString executable )
 {
-    //QString executable = c.split(" ").first();
-
     if( QFile::exists( executable ) ) return true;
-    /*if( c.contains(":") || c.contains("/") ) // Full Path
-    {
-        return QFile::exists( executable );
-    }*/
+
     QProcess check;
     check.start( executable  );
     bool started = check.waitForStarted();

@@ -15,6 +15,7 @@ class GcbDebugger : public BaseDebugger
         ~GcbDebugger();
 
     protected:
+        virtual int getErrorLine( QString txt ) override;
         virtual bool postProcess() override;
         virtual void getSubs() override;
 

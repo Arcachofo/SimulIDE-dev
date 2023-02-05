@@ -113,7 +113,7 @@ bool InoDebugger::upload() // Copy hex file to Circuit folder, then upload
 
 int InoDebugger::compile( bool )
 {
-    if( m_version == 0 ) return -1;
+    if( m_version == 0 ) { toolChainNotFound(); return -1; }
     QApplication::setOverrideCursor(Qt::WaitCursor);
 
     QString cBuildPath = m_buildPath+"/build";
@@ -183,20 +183,10 @@ int InoDebugger::compile( bool )
     m_outPane->appendLine( boardSource+" Board "+addQuotes( boardName ) );
     m_outPane->appendLine( "" );
 
-    QString p_stderr = m_compProcess.readAllStandardError();
-    QString p_stdout = m_compProcess.readAllStandardOutput();
-    if( !p_stdout.isEmpty() ) m_outPane->appendLine( p_stdout );
+    int error = getErrors();
+    if( error == 0 ) compiled( m_buildPath+"/build/"+m_fileName+".ino.hex");
 
-    int error = 0;
-    if( !p_stderr.isEmpty() ) error = getError( p_stderr );
-    else{
-        m_fileList.clear();
-        m_fileList.append( m_fileName+m_fileExt );
-        m_firmware = m_buildPath+"/build/"+m_fileName+".ino.hex";
-        m_outPane->appendLine( "\n"+tr("     SUCCESS!!! Compilation Ok")+"\n" );
-    }
     QApplication::restoreOverrideCursor();
-
     return error;
 }
 

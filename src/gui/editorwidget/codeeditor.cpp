@@ -254,6 +254,7 @@ bool CodeEditor::compile( bool debug )
         m_errorLine = error; // Show arrow in error line
         updateScreen();
     }
+    else m_outPane->appendLine( "\n"+tr("     WARNING: Compilation Not Done")+"\n" );
     return false;
 }
 
