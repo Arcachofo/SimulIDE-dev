@@ -146,7 +146,7 @@ int McuCreator::processFile( QString fileName, bool main )
         else if( part == "wdt" )        createWdt( &el );
         else if( part == "rom" )        createEeprom( &el );
         else if( part == "sleep" )      createSleep( &el );
-        else if( part == "extmem" )     createExtMem( &el );
+        //else if( part == "extmem" )     createExtMem( &el );
         else if( part == "intmem" )     createIntMem( &el );
         else if( part == "include" )
         {
@@ -984,7 +984,7 @@ void McuCreator::createSleep( QDomElement* e )
     setConfigRegs( e, sleep );
 }
 
-void McuCreator::createExtMem( QDomElement* e )
+/*void McuCreator::createExtMem( QDomElement* e )
 {
     QString name = e->attribute( "name" );
     ExtMemModule* extMem = new ExtMemModule( mcu, name );
@@ -1018,7 +1018,7 @@ void McuCreator::createExtMem( QDomElement* e )
     extMem->m_rePin = mcu->getPin( e->attribute("repin") );
     extMem->m_enPin = mcu->getPin( e->attribute("enpin") );
     extMem->m_laPin = mcu->getPin( e->attribute("lapin") );
-}
+}*/
 
 void McuCreator::createIntMem( QDomElement* e )
 {

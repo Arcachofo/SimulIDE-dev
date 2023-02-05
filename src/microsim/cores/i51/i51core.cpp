@@ -4,7 +4,8 @@
  ***( see copyright.txt file at root folder )*******************************/
 
 #include "i51core.h"
-#include "extmem.h"
+#include "simulator.h"
+#include "mcuport.h"
 #include "mcupin.h"
 
 #define ACC  m_acc[0]
@@ -14,14 +15,26 @@
 
 I51Core::I51Core( eMcu* mcu  )
        : McuCpu( mcu  )
+       , eElement( mcu->getId()+"-I51Core" )
 {
-    m_eaPin = mcu->getPin("EA");
+    m_eaPin = mcu->getIoPin("EA");
+    //m_rwPin = mcu->getPin("RW");
+    //m_rePin = mcu->getPin("EA");
+    m_enPin = mcu->getIoPin("PSEN");
+    m_laPin = mcu->getIoPin("ALE");
+
+    m_dataPort = mcu->getPort("PORT0");
+    m_addrPort = mcu->getPort("PORT2");
 
     m_acc = m_mcu->getReg( "ACC" );
 
     m_upperData = (m_dataMemEnd > m_regEnd);
 }
 I51Core::~I51Core() {}
+
+void I51Core::stamp()
+{
+}
 
 void I51Core::reset()
 {
@@ -30,13 +43,91 @@ void I51Core::reset()
     m_cycle = 0;
     m_cpuState = cpu_RESET;
 
-    m_psStep = m_mcu->psCycle()/12;  // We are doing 2 Read cycles per Machine cycle
+    m_extPGM = false;
 
-    m_mcu->extMem->setLaEnSetTime(  0*m_psStep+1 );  // LA 1
-    m_mcu->extMem->setAddrSetTime(  3*m_psStep );    // Addr pins
-    m_mcu->extMem->setLaEnEndTime(  4*m_psStep );    // LA 0
-    m_mcu->extMem->setReadSetTime(  6*m_psStep );    // PSEN 0
-    m_mcu->extMem->setReadBusTime( 12*m_psStep-10 ); // PSEN 1, Read data Bus
+    Simulator::self()->cancelEvents( this );
+    //m_memState = mem_IDLE;
+    //m_read = true;
+
+    /*if( m_rwPin ){
+        m_rwPin->controlPin( true, true );
+        m_rwPin->setPinMode( output );
+        m_rwPin->setOutState( true );
+    }
+    if( m_rePin ) m_rePin->sheduleState( true, 0 );*/
+
+    m_enPin->setPinMode( output );
+    m_enPin->setOutState( true );
+    m_enPin->updateStep();
+
+    m_laPin->setPinMode( output );
+    m_laPin->setOutState( false );
+    m_laPin->updateStep();
+
+    m_psStep = m_mcu->psCycle()/12;  // We are doing 2 Read cycles per Machine cycle
+    m_addrSetTime = 3*m_psStep;    // Addr pins
+    m_laEnEndTime = 4*m_psStep;    // LA 0
+    m_readSetTime = 6*m_psStep;    // PSEN 0
+    // m_writeSetTime ???
+    m_readBusTime = 12*m_psStep-10; // PSEN 1, Read data Bus
+}
+
+void I51Core::runEvent()
+{
+    switch( m_memState ) {
+        case mem_IDLE: break;
+        case mem_LAEN:            // Enable Latch for Low addr
+        {
+            //m_laPin->sheduleState( true, 0 );
+            m_laPin->setOutState( true );
+            Simulator::self()->addEvent( m_addrSetTime, this );
+            m_memState = mem_ADDR;
+        }break;
+        case mem_ADDR:            // Set Address Bus
+        {
+            //if( m_readMode & RW ) m_rwPin->sheduleState( m_read, 0 ); // Set RW Pin Hi/Lo
+
+            // We are latching Low Address byte in Data Bus
+            m_dataPort->setOutState( m_addr ); // Low  addr byte to Data Pins
+            m_addrPort->setOutState( m_addrH );// High addr byte to Addr Pins
+
+            Simulator::self()->addEvent( m_laEnEndTime - m_addrSetTime, this );
+            m_memState = mem_LADI;
+        } break;
+        case mem_LADI:           // Disable Latch
+        {
+            //m_laPin->sheduleState( false, 0 );
+            m_laPin->setOutState( false );
+
+            m_dataTime = m_read ? m_readSetTime : m_writeSetTime;
+            uint64_t time = m_dataTime -m_laEnEndTime;
+            Simulator::self()->addEvent( time, this );
+            m_memState = mem_DATA;
+        }break;
+        case mem_DATA:           // Set Data Bus for Read or Write
+        {
+            /// if( m_readMode & RW ) m_rwPin->setOutState( m_read ); // Set RW Pin Hi/Lo
+
+            if( m_read )
+            {
+                m_dataPort->setOutState( 0xFF ); // Input
+                m_enPin->sheduleState( false, 1 ); // Set EN  Pin Low
+                uint64_t time = m_readBusTime - m_dataTime;
+
+                Simulator::self()->addEvent( time, this );
+                m_memState = mem_READ;
+            }else{
+                m_dataPort->setOutState( m_data );// setDataBus( m_data ); // Set data Pins States
+                m_memState = mem_IDLE;
+            }
+        } break;
+        case mem_READ:           // Read Data Bus
+        {
+            m_data = m_dataPort->getInpState();
+            m_enPin->setOutState( true ); // Set EN  Pin High
+            m_memState = mem_IDLE;
+        } break;
+    }
 }
 
 void I51Core::runStep()
@@ -45,9 +136,15 @@ void I51Core::runStep()
     m_cycle++;
 
     bool extPGM = !m_eaPin->getInpState();
+    if( m_extPGM != extPGM )
+    {
+        m_dataPort->controlPort( extPGM, extPGM );
+        m_addrPort->controlPort( extPGM, extPGM );
+        m_extPGM = extPGM;
+    }
 
-    if( extPGM ) m_pgmData = m_mcu->extMem->getData(); // Read from External
-    else         m_pgmData = m_progMem[m_tmpPC];       // Read from Internal ROM
+    if( extPGM ) m_pgmData = m_data;             // Read from External
+    else         m_pgmData = m_progMem[m_tmpPC]; // Read from Internal ROM
 
     if( m_cpuState == cpu_FETCH )     // Read cycle 1
     {
@@ -75,7 +172,14 @@ void I51Core::runStep()
         m_tmpPC = m_PC;
         m_cpuState = cpu_FETCH;
     }
-    if( extPGM ) m_mcu->extMem->read( m_tmpPC, ExtMemModule::EN | ExtMemModule::LA ); //Start next Read cycle
+    if( extPGM )// m_mcu->extMem->read( m_tmpPC, ExtMemModule::EN | ExtMemModule::LA );
+    {
+        m_read = true;
+        m_addr = m_tmpPC;
+        m_addrH = m_tmpPC >> 8;
+        m_memState = mem_LAEN;
+        runEvent();//Start next Read cycle
+    }
 }
 
 void I51Core::readOperand()

@@ -8,8 +8,6 @@
 
 #include "mcucpu.h"
 
-class ExtMemModule;
-
 /*enum EM8051_EXCEPTION
 {
     EXCEPTION_STACK,             // stack address > 127 with no upper memory, or roll over
@@ -20,7 +18,7 @@ class ExtMemModule;
     EXCEPTION_ILLEGAL_OPCODE     // for the single 'reserved' opcode in the architecture
 };*/
 
-class MAINMODULE_EXPORT I51Core : public McuCpu
+class MAINMODULE_EXPORT I51Core : public McuCpu, public eElement
 {
     public:
         I51Core( eMcu* mcu );
@@ -56,6 +54,9 @@ class MAINMODULE_EXPORT I51Core : public McuCpu
             aBIT =1<<6
         };
 
+        virtual void stamp() override;
+        virtual void runEvent() override;
+
         virtual void reset() override;
         virtual void runStep() override;
 
@@ -85,7 +86,47 @@ class MAINMODULE_EXPORT I51Core : public McuCpu
 
         bool m_upperData;
 
-        McuPin* m_eaPin;
+        IoPin* m_eaPin;
+
+        //McuPin* m_rwPin; // !Write / Read Pin
+        //McuPin* m_rePin; // !Read Pin
+        IoPin* m_enPin; // !Enable Pin
+        IoPin* m_laPin; //  Latch Enable in Low+High Address mode (8051 ALE)
+                        //  Acting on Data Pins. Active High
+
+        McuPort* m_dataPort;
+        McuPort* m_addrPort;
+
+        enum memState_t{
+            mem_IDLE=0,
+            mem_LAEN,
+            mem_ADDR,
+            mem_LADI,
+            mem_DATA,
+            mem_READ
+        };
+        memState_t m_memState;
+        bool m_read;
+        bool m_extPGM;
+
+        uint8_t  m_addrH;
+        uint32_t m_addr;
+        uint32_t m_data;
+
+        // All these times Respect to cycle start:
+        // |--CYCLE-----------------------------------|
+        //NO uint64_t m_laEnSetTime; // |--laEnSet--|
+        uint64_t m_addrSetTime; // |--addrSet------|
+        uint64_t m_laEnEndTime; // |--laEnEnd----------|
+        uint64_t m_readSetTime; // |--readSet--------------|...|
+        uint64_t m_writeSetTime;// |--writeSet-------------|...|
+        uint64_t m_readBusTime; // |--readBus-------------------------|
+        uint64_t m_dataTime;    // to store previous times
+
+
+
+
+
 
         inline void readOperand();
         inline void Exec();
