@@ -23,27 +23,6 @@ LaWidget::LaWidget( QWidget* parent , LAnalizer* la )
 
     timeDivBox->setUnitStr( "s" );
     timePosBox->setUnitStr( "s" );
-
-    //double fontScale = MainWindow::self()->fontScale();
-    QFont font = timeDivLabel->font();
-    font.setFamily("Ubuntu");
-    font.setBold( true );
-
-    //font.setPixelSize( 14*fontScale );
-    font.setPointSize( 10 );
-    timeDivLabel->setFont( font );
-    timePosLabel->setFont( font );
-    thrDivLabel->setFont( font );
-    trigLabel->setFont( font );
-
-    //font.setPixelSize( 10*fontScale );
-    font.setPointSize( 8 );
-    timeDivBox->setFont( font );
-    timePosBox->setFont( font );
-    rThresholdBox->setFont( font );
-    fThresholdBox->setFont( font );
-    triggerBox->setFont( font );
-    condEdit->setFont( font );
 }
 LaWidget::~LaWidget(){}
 

@@ -109,6 +109,11 @@
        </item>
        <item>
         <widget class="QComboBox" name="triggerBox">
+         <property name="font">
+          <font>
+           <pointsize>8</pointsize>
+          </font>
+         </property>
          <item>
           <property name="text">
            <string>Ch 1</string>
@@ -175,6 +180,11 @@
            <width>100</width>
            <height>0</height>
           </size>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>8</pointsize>
+          </font>
          </property>
         </widget>
        </item>

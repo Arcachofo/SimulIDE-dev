@@ -1354,7 +1354,7 @@
          </property>
          <property name="font">
           <font>
-           <pointsize>7</pointsize>
+           <pointsize>8</pointsize>
            <weight>75</weight>
            <bold>true</bold>
           </font>
@@ -1383,7 +1383,7 @@
          </property>
          <property name="font">
           <font>
-           <pointsize>7</pointsize>
+           <pointsize>8</pointsize>
            <weight>75</weight>
            <bold>true</bold>
           </font>
@@ -1412,7 +1412,7 @@
          </property>
          <property name="font">
           <font>
-           <pointsize>7</pointsize>
+           <pointsize>8</pointsize>
           </font>
          </property>
          <property name="styleSheet">
@@ -1456,14 +1456,15 @@
     <bool>true</bool>
    </property>
   </buttongroup>
-  <buttongroup name="autoGroup">
-   <property name="exclusive">
-    <bool>true</bool>
-   </property>
-  </buttongroup>
   <buttongroup name="hideGroup">
    <property name="exclusive">
     <bool>false</bool>
+   </property>
+  </buttongroup>
+  <buttongroup name="trackGroup"/>
+  <buttongroup name="autoGroup">
+   <property name="exclusive">
+    <bool>true</bool>
    </property>
   </buttongroup>
   <buttongroup name="triggerGroup">
@@ -1471,6 +1472,5 @@
     <bool>true</bool>
    </property>
   </buttongroup>
-  <buttongroup name="trackGroup"/>
  </buttongroups>
 </ui>
