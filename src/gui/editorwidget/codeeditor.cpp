@@ -43,7 +43,6 @@ CodeEditor::CodeEditor( QWidget* parent, OutPanelText* outPane )
     
     m_compiler = EditorWindow::self()->createDebugger( "", this, "00" );
     m_debugLine = 0;
-    m_errorLine = -1;
     m_brkAction = 0;
     m_help = "";
 
@@ -90,6 +89,8 @@ void CodeEditor::setSyntaxFile( QString file )
 void CodeEditor::setFile( const QString filePath )
 {
     if( m_file == filePath ) return;
+
+    m_numLines = document()->blockCount();
 
     if( m_compiler ) delete m_compiler;
     m_compiler = NULL;
@@ -242,33 +243,24 @@ bool CodeEditor::compile( bool debug )
             m_outPane->appendLine( "Error: File not saved" );
             return false;
     }   }
-    m_errorLine  = -1;
-    update();
-
     m_outPane->appendLine( "-------------------------------------------------------" );
+    m_errors.clear();
+    m_warnings.clear();
     int error = m_compiler->compile( debug );
+    update();
 
     if( error == 0 ) return true;
     if( error > 0 ) // goto error line number
     {
-        m_errorLine = error; // Show arrow in error line
-        updateScreen();
+        setTextCursor( QTextCursor(document()->findBlockByNumber( error-1 )));
+        ensureCursorVisible();
     }
     else m_outPane->appendLine( "\n"+tr("     WARNING: Compilation Not Done")+"\n" );
     return false;
 }
 
-void CodeEditor::addBreakPointAt( int line )
+void CodeEditor::addBreakPoint( int line )
 {
-    QTextBlock block = document()->findBlockByLineNumber( line-1 );
-    addBreakPoint( &block );
-}
-
-void CodeEditor::addBreakPoint( QTextBlock* block )
-{
-    int line = block->blockNumber() + 1;
-    block->setUserState( line );
-
     if( EditorWindow::self()->debugState() == DBG_RUNNING ) return;
     if( EditorWindow::self()->debugState() > DBG_STOPPED )
         line = m_compiler->getValidLine( line );
@@ -279,11 +271,9 @@ void CodeEditor::addBreakPoint( QTextBlock* block )
     }
 }
 
-void CodeEditor::remBreakPoint( QTextBlock* block )
+void CodeEditor::remBreakPoint( int line )
 {
-    int line = block->userState();
     m_brkPoints.removeOne( line );
-    block->setUserState( 0 );
     update();
 }
 
@@ -426,7 +416,7 @@ void CodeEditor::keyPressEvent( QKeyEvent* event )
         else textCursor().movePosition( QTextCursor::PreviousCharacter, QTextCursor::MoveAnchor , m_tab.size() );
     }
     else{
-        int tabs = 0;
+        QString tabs;
         if( event->key() == Qt::Key_Return )
         {
             int n0 = 0;
@@ -436,13 +426,12 @@ void CodeEditor::keyPressEvent( QKeyEvent* event )
             while(1)
             {
                 QString part = line.mid( n0, n );
-                if( part == m_tab ) { n0 += n; tabs += 1; }
+                if( part == m_tab ) { n0 += n; tabs += m_tab; }
                 else break;
         }   }
         QPlainTextEdit::keyPressEvent( event );
-        
-        if( event->key() == Qt::Key_Return )
-            for( int i=0; i<tabs; i++ ) insertPlainText( m_tab );
+
+        if( event->key() == Qt::Key_Return ) insertPlainText( tabs );
 }   }
 
 void CodeEditor::contextMenuEvent( QContextMenuEvent* event )
@@ -525,8 +514,6 @@ void CodeEditor::highlightCurrentLine()
         selection.format.setBackground( lineColor );
         selection.format.setProperty( QTextFormat::FullWidthSelection, true );
         selection.cursor = textCursor();
-        selection.cursor.blockNumber();
-        //selection.cursor.clearSelection();
         extraSelections.prepend( selection );
     }
     setExtraSelections( extraSelections );
@@ -542,37 +529,70 @@ void CodeEditor::lineNumberAreaPaintEvent( QPaintEvent* event )
     int top       = (int)blockBoundingGeometry( block ).translated( contentOffset() ).top();
     int fontSize  = fontMetrics().height();
 
-    while( block.isValid() && top <= event->rect().bottom() )
+    int numLines = document()->blockCount();
+    if( m_numLines != numLines )                 // Line added or removed: move or remove points
+    {
+        int delta = m_numLines - numLines;
+        m_numLines = numLines;
+        bool found = false;
+        QTextBlock cBlock = textCursor().block().next();
+
+        QList<int> errors    = m_errors;  // Copy lists to make substitutions
+        QList<int> warnings  = m_warnings;
+        QList<int> brkPoints = m_brkPoints;
+
+        while( block.isValid() )
+        {
+            int newLine = block.blockNumber() + 1;
+            int oldLine = newLine + delta;
+            if( block == cBlock )
+            {
+                if( delta > 0 ) // Line removed, check if point at cursor line and remove it
+                {
+                    if( m_brkPoints.contains( newLine ) ) brkPoints.removeOne( newLine );
+                    if( m_errors.contains( newLine )    ) errors.removeOne( newLine );
+                    if( m_warnings.contains( newLine )  ) warnings.removeOne( newLine );
+                }
+                found = true;
+            }
+            if( found ) // Replace lines
+            {
+                if( m_brkPoints.contains( oldLine ) ) brkPoints.replace( m_brkPoints.indexOf( oldLine ), newLine ); // Replace breakpoint line
+                if( m_errors.contains( oldLine )    ) errors.replace(    m_errors.indexOf( oldLine )   , newLine ); // Replace error line
+                if( m_warnings.contains( oldLine )  ) warnings.replace(  m_warnings.indexOf( oldLine ) , newLine ); // Replace warning line
+            }
+            block = block.next();
+        }
+        m_errors    = errors;      // Replace old lists with new ones
+        m_warnings  = warnings;
+        m_brkPoints = brkPoints;
+
+        block = firstVisibleBlock();
+    }
+    while( block.isValid() )
     {
         int blockSize = (int)blockBoundingRect( block ).height();
         int bottom = top + blockSize;
+        int lineNumber = block.blockNumber() + 1;
 
-        if( block.isVisible() && bottom >= event->rect().top() )
+        if( block.isVisible() )
         {
-            int lineNumber = block.blockNumber() + 1;
             if( m_compiler )                            // Breakpoints an error indicator
             {
-                int brkLine = block.userState();
-                if( (brkLine > 0) && (brkLine != block.blockNumber()+1) )
-                {
-                    remBreakPoint( &block );
-                    addBreakPoint( &block );
-                }
                 int pos = m_lNumArea->lastPos;
                 if( pos > top && pos < bottom ) // Check if there is a new breakpoint request from context menu
                 {
-                    if     ( m_brkAction == 1 ) addBreakPoint( &block );
-                    else if( m_brkAction == 2 ) remBreakPoint( &block );
+                    if     ( m_brkAction == 1 ) addBreakPoint( lineNumber );
+                    else if( m_brkAction == 2 ) remBreakPoint( lineNumber );
                     else if( m_brkAction == 3 ){
-                        if( m_brkPoints.contains( lineNumber ) ) remBreakPoint( &block );
-                        else                                     addBreakPoint( &block );
+                        if( m_brkPoints.contains( lineNumber ) ) remBreakPoint( lineNumber );
+                        else                                     addBreakPoint( lineNumber );
                     }
                     m_brkAction = 0;
                     m_lNumArea->lastPos = 0;
                 }
 
-                if( m_brkPoints.contains( lineNumber )
-                && (block.userState() == lineNumber) ) // Draw breakPoint icon
+                if( m_brkPoints.contains( lineNumber ) ) // Draw breakPoint icon
                 {
                     painter.setBrush( QColor(Qt::yellow) );
                     painter.setPen( Qt::NoPen );
@@ -588,11 +608,23 @@ void CodeEditor::lineNumberAreaPaintEvent( QPaintEvent* event )
                 if( lineNumber == m_debugLine ) // Draw debug line icon
                     painter.drawImage( QRectF( 0, top, fontSize, fontSize ), QImage(":/brkpoint.png") );
 
-                if( lineNumber == m_errorLine ) // Draw error line icon
+                if( m_warnings.contains( lineNumber ) ) // Draw warning
+                {
+                    painter.setBrush( QColor(220, 120, 0) ); // Orange
+                    painter.setPen( Qt::NoPen );
+                    QPolygon polygon;
+                    polygon << QPoint(1,bottom-2) << QPoint(fontSize/2,top+1) << QPoint(fontSize-1,bottom-2);
+                    painter.drawPolygon( polygon );
+                    painter.setPen( Qt::white );
+                    painter.drawText( 3, top+4, fontSize-6, fontSize-6, Qt::AlignCenter, "!");
+                }
+                if( m_errors.contains( lineNumber ) ) // Draw error
                 {
                     painter.setBrush( QColor(Qt::red) );
                     painter.setPen( Qt::NoPen );
                     painter.drawEllipse( 2, top+2, fontSize-4, fontSize-4 );
+                    painter.setPen( Qt::white );
+                    painter.drawText( 3, top+3, fontSize-6, fontSize-6, Qt::AlignCenter, "!");
                 }
             }
             QString number = QString::number( lineNumber ); // Draw line number
@@ -601,16 +633,6 @@ void CodeEditor::lineNumberAreaPaintEvent( QPaintEvent* event )
         }
         block = block.next();
         top = bottom;
-    }
-    while( block.isValid() )
-    {
-        int brkLine = block.userState();
-        if( (brkLine > 0) && (brkLine != block.blockNumber()+1) )
-        {
-            remBreakPoint( &block );
-            addBreakPoint( &block );
-        }
-        block = block.next();
     }
 }
 

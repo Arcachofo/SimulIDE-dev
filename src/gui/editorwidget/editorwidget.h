@@ -98,7 +98,7 @@ class EditorWidget : public QWidget
 
         FindReplace* m_findRepDialog;
         EditorProp* m_editDialog;
-        
+
         QMenu m_settingsMenu;
         QMenu m_fileMenu;
 

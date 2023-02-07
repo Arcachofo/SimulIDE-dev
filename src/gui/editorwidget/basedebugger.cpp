@@ -88,28 +88,20 @@ bool BaseDebugger::postProcess()
     int listFileSize = lstLines.size();
     int lastListLine = 0;
 
-    if( m_langLevel )                     // High level language
+    if( m_langLevel ) // High level language
     {
         QString file = m_fileName+m_fileExt;
         bool found = false;
         for( QString lstLine : lstLines )
         {
-            if( lstLine.contains( file ) )
-            {
-                QString str = lstLine.split( file ).takeLast();
-                QStringList words = str.remove(":").split(" ");
-                words.removeAll("");
-                if( words.isEmpty() ) continue;
-                str = words.first();
-                bool ok = false;
-                srcLineNumber = str.toInt( &ok );
-                if( ok ) found = true;
-            }
+            lstLineNumber++;
             if( found )
             {
+                found = false;
                 if( m_lstType & 1 ) lstLine = lstLine.split(":").last();
                 QStringList words = lstLine.split(" ");
                 words.removeAll("");
+                if( words.size() < 4 ) continue;
 
                 bool ok = false;
                 int addrIndex = (m_lstType & 2)>>1;
@@ -123,9 +115,21 @@ bool BaseDebugger::postProcess()
                 if( ok )
                 {
                     setLineToFlash( srcLineNumber, m_codeStart+address );
-                    found = false;
                     continue;
-    }   }   }   }
+            }   }
+            if( lstLine.contains( file ) )
+            {
+                QString str = lstLine.split( file ).takeLast();
+                QStringList words = str.remove(":").split(" ");
+                words.removeAll("");
+                if( words.isEmpty() ) continue;
+                str = words.first();
+                bool ok = false;
+                srcLineNumber = str.toInt( &ok );
+                if( ok ) found = true;
+            }
+        }
+    }
     else{                        // asm
         QString funcName;
         for( QString srcLine : srcLines ) // Get Functions
@@ -216,17 +220,17 @@ void BaseDebugger::pause()
 
 void BaseDebugger::stepFromLine( bool over )
 {
-    m_prevLine = m_document->debugLine();
+    m_prevLine = m_editor->debugLine();
     if( m_prevLine == 1 )
     {
         m_prevLine = m_flashToSource.value( 0 );
-        m_document->setDebugLine( m_prevLine );
+        m_editor->setDebugLine( m_prevLine );
         return;
     }
     m_over = over;
     m_exitPC = 0;
     m_debugStep = true;
-    m_brkPoints = m_document->getBreakPoints();
+    m_brkPoints = m_editor->getBreakPoints();
 }
 
 void BaseDebugger::stepDebug()
@@ -258,10 +262,10 @@ void BaseDebugger::stepDebug()
             if( line != m_prevLine )
             {
                 m_prevLine = line;
-                m_document->setDebugLine( line );
+                m_editor->setDebugLine( line );
 
-                if( m_running                       // We are running to Breakpoint
-                 && !m_brkPoints.contains( line ) ) // Breakpoint not reached, Keep stepping
+                if( m_running                        // We are running to Breakpoint
+                 && !m_brkPoints->contains( line ) ) // Breakpoint not reached, Keep stepping
                 { return; }
 
                 m_running = false;

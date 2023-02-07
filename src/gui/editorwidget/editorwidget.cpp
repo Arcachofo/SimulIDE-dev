@@ -258,8 +258,7 @@ bool EditorWidget::saveFile( const QString &fileName )
 
 void EditorWidget::saveBreakpoints( const QString &fileName )
 {
-    QList<int> brkList = getCodeEditor()->getBreakPoints();
-    if( brkList.isEmpty() ) return;
+    QList<int>* brkList = getCodeEditor()->getBreakPoints();
 
     QFile file( fileName +".brk" );
     if( !file.open( QFile::WriteOnly | QFile::Text) )
@@ -274,7 +273,7 @@ void EditorWidget::saveBreakpoints( const QString &fileName )
     out.setCodec("UTF-8");
 
     QString brkListStr;
-    for( int brk : brkList )
+    for( int brk : *brkList )
         brkListStr.append( QString::number( brk )+"," );
 
     out << brkListStr;
@@ -288,7 +287,7 @@ void EditorWidget::loadBreakpoints( const QString &fileName )
     list.removeOne("");
 
     CodeEditor* ce = getCodeEditor();
-    for( QString brk : list ) ce->addBreakPointAt( brk.toInt() );
+    for( QString brk : list ) ce->addBreakPoint( brk.toInt() );
 }
 
 bool EditorWidget::maybeSave()

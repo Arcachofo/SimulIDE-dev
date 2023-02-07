@@ -40,7 +40,7 @@ void FindReplace::on_allButton_clicked()
     {
         QTextEdit::ExtraSelection extra;
         extra.cursor = m_editor->textCursor();
-        extra.format.setBackground( QBrush(QColor(240,240,0)) );
+        extra.format.setBackground( QBrush(QColor(210,210,255)) );
         extraSelections.append( extra );
         i++;
     }

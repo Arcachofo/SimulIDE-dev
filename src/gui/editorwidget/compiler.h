@@ -1,4 +1,4 @@
-/***************************************************************************
+﻿/***************************************************************************
  *   Copyright (C) 2021 by Santiago González                               *
  *                                                                         *
  ***( see copyright.txt file at root folder )*******************************/
@@ -18,7 +18,7 @@ class Compiler : public QObject
     Q_OBJECT
 
     public:
-        Compiler( CodeEditor* parent, OutPanelText* outPane );
+        Compiler( CodeEditor* editor, OutPanelText* outPane );
         ~Compiler();
 
         void clearCompiler();
@@ -72,7 +72,7 @@ class Compiler : public QObject
         void toolChainNotFound();
 
         CompilerProp* m_compDialog;
-        CodeEditor* m_document;
+        CodeEditor* m_editor;
 
         bool m_useFamily;
         bool m_useDevice;

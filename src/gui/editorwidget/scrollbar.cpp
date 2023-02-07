@@ -8,6 +8,7 @@
 
 #include "scrollbar.h"
 #include "codeeditor.h"
+#include "basedebugger.h"
 
 scrollWidget::scrollWidget( CodeEditor* editor, Qt::Orientation o, QWidget* parent )
             : QScrollBar( o, parent)
@@ -23,19 +24,30 @@ void scrollWidget::paintEvent( QPaintEvent* event )
     QPainter painter;
     painter.begin(this);
 
-    qreal w = width();
-    qreal h = height()-2*w;
-
     qreal lines = m_editor->blockCount();
-    for( int line : m_editor->getBreakPoints() )
+    qreal w = width();
+    qreal h = (height()-2*w)/lines;
+
+    for( int line : *m_editor->getBreakPoints() )
     {
-        qreal y = (line-1)*h/lines+w;
-        painter.fillRect( QRectF( 0, y, w, 2 ), QColor(255,100,0) );
+        qreal y = (line-1)*h+w;
+        painter.fillRect( QRectF( 0, y, w, 2 ), QColor(210, 210, 0) );
     }
     for( int line : m_editor->getFound() )
     {
-        qreal y = (line-1)*h/lines+w;
-        painter.fillRect( QRectF( 0, y, w, 2 ), QColor(200,200,50) );
+        qreal y = (line-1)*h+w;
+        painter.fillRect( QRectF( 0, y, w, 2 ), QColor(Qt::blue) );
     }
+    for( int line : *m_editor->getErrors() )
+    {
+        qreal y = (line-1)*h+w;
+        painter.fillRect( QRectF( 0, y, w, 2 ), QColor(Qt::red) );
+    }
+    for( int line : *m_editor->getWarnings() )
+    {
+        qreal y = (line-1)*h+w;
+        painter.fillRect( QRectF( 0, y, w, 2 ), QColor(240, 140, 0) );
+    }
+
     painter.end();
 }

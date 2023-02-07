@@ -15,7 +15,7 @@
 SdccDebugger::SdccDebugger( CodeEditor* parent, OutPanelText* outPane )
             : cDebugger( parent, outPane )
 {
-    m_family = "pic14";
+    //m_family = "pic14";
 }
 SdccDebugger::~SdccDebugger(){}
 

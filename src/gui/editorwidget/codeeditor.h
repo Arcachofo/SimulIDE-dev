@@ -29,8 +29,14 @@ class CodeEditor : public QPlainTextEdit
         int debugLine() { return m_debugLine; }
         void setDebugLine( int line ) { m_debugLine = line; }
 
-        QList<int> getBreakPoints() { return m_brkPoints; }
-        void addBreakPointAt( int line );
+        void addBreakPoint( int line );
+        void addError( int e )   { if( !m_errors.contains( e )   ) m_errors.append( e ); }
+        void addWarning( int w ) { if( !m_warnings.contains( w ) ) m_warnings.append( w );}
+
+        QList<int>* getBreakPoints() { return &m_brkPoints; }
+        QList<int>* getErrors()   { return &m_errors; }
+        QList<int>* getWarnings() { return &m_warnings; }
+
         void startDebug();
         void stopDebug();
 
@@ -81,8 +87,7 @@ class CodeEditor : public QPlainTextEdit
     private:
         QString changeCompilerFromCode();
         int  getSyntaxCoincidences();
-        void addBreakPoint( QTextBlock* block );
-        void remBreakPoint( QTextBlock* block );
+        void remBreakPoint( int line );
 
         void indentSelection( bool unIndent );
 
@@ -98,10 +103,12 @@ class CodeEditor : public QPlainTextEdit
         QString m_help;
 
         QList<int> m_brkPoints;
+        QList<int> m_errors;
+        QList<int> m_warnings;
 
         int m_brkAction;    // 0 = no action, 1 = add brkpoint, 2 = rem brkpoint
         int m_debugLine;
-        int m_errorLine;
+        int m_numLines;
 
  static bool m_showSpaces;
  static bool m_spaceTabs;

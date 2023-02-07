@@ -16,16 +16,16 @@
 #include "mainwindow.h"
 #include "utils.h"
 
-Compiler::Compiler( CodeEditor* parent, OutPanelText* outPane )
-        : QObject( parent )
+Compiler::Compiler( CodeEditor* editor, OutPanelText* outPane )
+        : QObject( editor )
         , m_compProcess( this )
 {
-    m_document = parent;
+    m_editor = editor;
     m_outPane = outPane;
 
     m_compDialog = NULL;
 
-    m_file     = parent->getFilePath();
+    m_file     = editor->getFilePath();
     m_fileDir  = getFileDir( m_file );
     m_fileExt  = getFileExt( m_file );
     m_fileName = getBareName( m_file );
@@ -77,9 +77,9 @@ void Compiler::loadCompiler( QString file )
     m_uploadHex = compiler.attribute( "uploadhex" ) != "false";
     QString inclPath = "";
 
-    if( compiler.hasAttribute("name")   ) m_compName = compiler.attribute( "name" );
-    if( compiler.hasAttribute("type")   ) m_type = compiler.attribute( "type" );
-    if( compiler.hasAttribute("syntax") ) m_document->setSyntaxFile( compiler.attribute( "syntax" )+".syntax" );
+    m_compName = compiler.attribute( "name" );
+    m_type     = compiler.attribute( "type" );
+    if( compiler.hasAttribute("syntax") ) m_editor->setSyntaxFile( compiler.attribute( "syntax" )+".syntax" );
     if( compiler.hasAttribute("buildPath") )
     {
         QString path = replaceData( compiler.attribute( "buildPath" ) );
@@ -94,11 +94,11 @@ void Compiler::loadCompiler( QString file )
     if( compiler.hasAttribute("inclPath") ) inclPath = compiler.attribute( "inclPath" );
     if( !inclPath.isEmpty() ) m_inclPath = inclPath;
 
-    if( compiler.hasAttribute("useFamily")
-     && (compiler.attribute( "useFamily" ) == "true") ) m_useFamily = true;
+    m_useFamily = compiler.hasAttribute("useFamily")
+              && (compiler.attribute("useFamily") == "true");
 
-    if( compiler.hasAttribute("useDevice")
-     && (compiler.attribute( "useDevice" ) == "true") ) m_useDevice = true;
+    m_useDevice = compiler.hasAttribute("useDevice")
+              && (compiler.attribute("useDevice") == "true") ;
 
     QDomNode node = compiler.firstChild();
     while( !node.isNull() )
@@ -112,7 +112,7 @@ void Compiler::loadCompiler( QString file )
             if( argsDebug.isEmpty() ) argsDebug = arguments ;
 
             m_command.append( command );
-            m_arguments.append( arguments);
+            m_arguments.append( arguments );
             m_argsDebug.append( argsDebug );
         }
         node = node.nextSibling();
@@ -198,6 +198,7 @@ void Compiler::compiled( QString firmware )
 int Compiler::getErrors()
 {
     int error = 0;
+
     QString p_stdout = m_compProcess.readAllStandardOutput();
     if( !p_stdout.isEmpty() ) error = getErrorLine( p_stdout );
     if( error ) return error;
@@ -212,14 +213,21 @@ int Compiler::getErrorLine( QString txt )
     m_outPane->appendLine( txt );
 
     int error = 0;
-    if( m_compProcess.exitCode() )
+    for( QString line : txt.split("\n") )
     {
-        for( QString line : txt.split("\n") )
+        if( !line.contains( m_fileName+m_fileExt ) ) continue;
+        line = line.split( m_fileName+m_fileExt ).last();
+
+        int errorLine = getFirstNumber( line );
+        if( errorLine != 0 )
         {
-            if( !line.contains( m_fileName+m_fileExt ) ) continue;
-            line = line.split( m_fileName+m_fileExt ).last();
-            error = getFirstNumber( line );
-            if( error) break;
+            line = line.toLower();             // Make it case insensitive
+            if     ( line.contains("error")   )
+            {
+                if( error == 0 ) error = errorLine;
+                m_editor->addError( errorLine );
+            }
+            else if( line.contains("warning") ) m_editor->addWarning( errorLine );
         }
     }
     return error;
@@ -290,7 +298,7 @@ void Compiler::compProps()
 {
     if( !m_compDialog )
     {
-        m_compDialog = new CompilerProp( m_document );
+        m_compDialog = new CompilerProp( m_editor );
         m_compDialog->setCompiler( this );
     }
     m_compDialog->show();
@@ -309,4 +317,5 @@ bool Compiler::checkCommand( QString executable )
 
     return started;
 }
+
 #include "moc_compiler.cpp"

@@ -15,6 +15,10 @@
 AvrGccDebugger::AvrGccDebugger( CodeEditor* parent, OutPanelText* outPane )
               : cDebugger( parent, outPane )
 {
+    QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
+    env.insert( QStringLiteral("LANG"), QStringLiteral("C") );
+    env.insert( QStringLiteral("LC_MESSAGES"), QStringLiteral("C") );
+    m_compProcess.setProcessEnvironment( env );
     m_addrBytes = 1; // Default for avr-gcc
 }
 AvrGccDebugger::~AvrGccDebugger(){}

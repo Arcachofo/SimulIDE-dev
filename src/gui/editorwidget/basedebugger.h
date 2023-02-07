@@ -58,7 +58,7 @@ class BaseDebugger : public Compiler    // Base Class for all debuggers
         bool m_over;
         int  m_prevLine;
         int  m_exitPC;
-        QList<int> m_brkPoints;
+        QList<int>* m_brkPoints;
 
         int m_lastLine;
         int m_lstType;   // Bit0: 0 doesn't use ":" (gpasm ), 1 uses ":" (avra, gavrasm)

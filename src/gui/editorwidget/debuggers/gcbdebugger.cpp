@@ -6,6 +6,7 @@
 #include <QFileInfo>
 
 #include "gcbdebugger.h"
+#include "codeeditor.h"
 #include "e_mcu.h"
 #include "outpaneltext.h"
 #include "utils.h"
@@ -28,14 +29,21 @@ int GcbDebugger::getErrorLine( QString txt )
     m_outPane->appendLine( txt );
 
     int error = 0;
-    bool found = false;
     if( m_compProcess.exitCode() )
     {
         for( QString line : txt.split("\n") )
         {
             if( line.contains("Compiling") ) continue;
-            if( found ){ error = getFirstNumber( line ); break; }
-            found = line.contains( m_fileName+m_fileExt );
+            if( line.contains( m_fileName+m_fileExt ) )
+            {
+                line = line.split( m_fileName+m_fileExt ).last();
+                int errorLine = getFirstNumber( line );
+                if( errorLine != 0 )
+                {
+                    if( error == 0 ) error = errorLine;
+                    m_editor->addError( errorLine );
+                }
+            }
         }
     }
     return error;
