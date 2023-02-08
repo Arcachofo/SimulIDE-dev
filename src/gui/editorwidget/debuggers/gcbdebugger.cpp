@@ -33,17 +33,14 @@ int GcbDebugger::getErrorLine( QString txt )
     {
         for( QString line : txt.split("\n") )
         {
-            if( line.contains("Compiling") ) continue;
-            if( line.contains( m_fileName+m_fileExt ) )
-            {
-                line = line.split( m_fileName+m_fileExt ).last();
-                int errorLine = getFirstNumber( line );
-                if( errorLine != 0 )
-                {
-                    if( error == 0 ) error = errorLine;
-                    m_editor->addError( errorLine );
-                }
-            }
+            if( !line.contains( m_fileName+m_fileExt ) ) continue;
+
+            line = line.split( m_fileName+m_fileExt ).last();
+            int errorLine = getFirstNumber( line );
+            if( !errorLine  ) continue;
+
+            if( error == 0 ) error = errorLine;
+            m_editor->addError( errorLine );
         }
     }
     return error;
