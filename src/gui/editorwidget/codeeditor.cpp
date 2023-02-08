@@ -266,14 +266,23 @@ void CodeEditor::addBreakPoint( int line )
         line = m_compiler->getValidLine( line );
     if( !m_brkPoints.contains( line ) )
     {
+        //QTextBlock block = document()->findBlockByNumber( line-1 );
+        //UserData* data = (UserData*)block.userData();
+        //if( !data ) data = new UserData();
+        //data->breakp = true;
+        //block.setUserData( data );
+
         m_brkPoints.append( line );
-        this->update();
+        update();
     }
 }
 
 void CodeEditor::remBreakPoint( int line )
 {
     m_brkPoints.removeOne( line );
+    //QTextBlock block = document()->findBlockByNumber( line-1 );
+    //UserData* data = (UserData*)block.userData();
+    //data->breakp = false;
     update();
 }
 
@@ -414,15 +423,14 @@ void CodeEditor::keyPressEvent( QKeyEvent* event )
     {
         if( textCursor().hasSelection() ) indentSelection( true );
         else textCursor().movePosition( QTextCursor::PreviousCharacter, QTextCursor::MoveAnchor , m_tab.size() );
-    }
-    else{
+    }else{
         QString tabs;
         if( event->key() == Qt::Key_Return )
         {
             int n0 = 0;
             int n = m_tab.size();
             QString line = textCursor().block().text();
-            
+
             while(1)
             {
                 QString part = line.mid( n0, n );
@@ -579,6 +587,8 @@ void CodeEditor::lineNumberAreaPaintEvent( QPaintEvent* event )
         {
             if( m_compiler )                            // Breakpoints an error indicator
             {
+                //UserData* data = (UserData*)block.userData();
+
                 int pos = m_lNumArea->lastPos;
                 if( pos > top && pos < bottom ) // Check if there is a new breakpoint request from context menu
                 {
@@ -592,7 +602,7 @@ void CodeEditor::lineNumberAreaPaintEvent( QPaintEvent* event )
                     m_lNumArea->lastPos = 0;
                 }
 
-                if( m_brkPoints.contains( lineNumber ) ) // Draw breakPoint icon
+                if( m_brkPoints.contains( lineNumber ) ) // Draw breakPoint icon //( data && data->breakp ) //
                 {
                     painter.setBrush( QColor(Qt::yellow) );
                     painter.setPen( Qt::NoPen );
@@ -732,5 +742,6 @@ void LineNumberArea::mousePressEvent( QMouseEvent* event )
         this->repaint();
     }
 }
+
 
 #include "moc_codeeditor.cpp"

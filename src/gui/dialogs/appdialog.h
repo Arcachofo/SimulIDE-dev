@@ -10,7 +10,6 @@
 #ifndef APPDIALOG_H
 #define APPDIALOG_H
 
-class Component;
 class PropVal;
 
 class AppDialog : public QDialog, private Ui::AppDialog

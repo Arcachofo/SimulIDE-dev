@@ -222,7 +222,7 @@ int Compiler::getErrorLine( QString txt )
         if( errorLine != 0 )
         {
             line = line.toLower();             // Make it case insensitive
-            if     ( line.contains("error")   )
+            if( line.contains("error")   )
             {
                 if( error == 0 ) error = errorLine;
                 m_editor->addError( errorLine );

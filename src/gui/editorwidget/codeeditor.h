@@ -153,4 +153,21 @@ class LineNumberArea : public QWidget
         CodeEditor* m_codeEditor;
 };
 
+/*#include <QTextBlockUserData>
+class UserData : public QTextBlockUserData
+{
+    public:
+        UserData()
+        {
+            breakp = false;
+            error   = false;
+            warning = false;
+        }
+        ~UserData(){;}
+
+        bool breakp;
+        bool error;
+        bool warning;
+
+};*/
 #endif
