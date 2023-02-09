@@ -304,7 +304,7 @@ void WaveGen::udtProperties()
 
     switch( m_waveType ) {
     case Triangle: showDuty = true; break;
-    case Square:   showDuty = true; break;
+    case Square:   showDuty = true; showSteps = false; break;
     case Wav:      showFile = true; showSteps = false; break;
     default: break;
     }
