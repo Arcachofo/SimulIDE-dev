@@ -34,6 +34,6 @@ void AvrOcUnit::configure( uint8_t val ) // COMNX0,COMNX1
 
 void AvrOcUnit::setPinSate( bool state )
 {
-    if( m_ctrlPin )  m_ocPin->setOutState( state );
+    if( m_ctrlPin )  m_ocPin->setOutStatFast( state ); /// setOutState( state );
     else if( m_ocm ) m_ocm->setState( this, state );
 }
