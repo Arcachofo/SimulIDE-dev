@@ -6,6 +6,7 @@
 #include <QtGui>
 
 #include "highlighter.h"
+#include "mainwindow.h"
 #include "utils.h"
 
 Highlighter::Highlighter( QTextDocument* parent )
@@ -15,8 +16,16 @@ Highlighter::Highlighter( QTextDocument* parent )
 }
 Highlighter::~Highlighter(){}
 
-void Highlighter::readSyntaxFile( const QString &fileName )
+void Highlighter::readSyntaxFile( QString fileName )
 {
+    QString path = MainWindow::self()->getUserFilePath("codeeditor/syntax/");
+    if( path.isEmpty() || !QDir( path ).exists() )
+        path = MainWindow::self()->getFilePath("data/codeeditor/syntax/");
+
+    if( !QDir( path ).exists() ) return;
+
+    fileName = path+fileName;
+
     m_rules.clear();
 
     QTextCharFormat format;

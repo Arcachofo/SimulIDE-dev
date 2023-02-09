@@ -19,12 +19,12 @@ class Highlighter : public QSyntaxHighlighter
         Highlighter( QTextDocument* parent = 0);
         ~Highlighter();
 
-        void readSyntaxFile( const QString &fileName );
+        void readSyntaxFile( QString fileName );
 
         void addRegisters( QStringList patterns );
 
     protected:
-        void highlightBlock(const QString &text);
+        void highlightBlock( const QString &text );
 
     private:
         struct HighlightRule

@@ -30,6 +30,8 @@ class MAINMODULE_EXPORT FileWidget : public QSplitter
         
         void writeSettings();
 
+        void addEntry( QString name, QString path );
+
     private slots:
         void itemClicked( QListWidgetItem* );
         void remBookMark();
@@ -41,8 +43,6 @@ class MAINMODULE_EXPORT FileWidget : public QSplitter
 
     private:
  static FileWidget* m_pSelf;
-
-        void addEntry( QString name, QString path );
 
         QStringList m_bookmarkList;
         

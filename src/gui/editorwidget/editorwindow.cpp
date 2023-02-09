@@ -256,7 +256,12 @@ BaseDebugger* EditorWindow::createDebugger( QString name, CodeEditor* ce , QStri
 
 void EditorWindow::loadCompilers()
 {
-    QString compilsPath = MainWindow::self()->getFilePath("data/codeeditor/compilers/compilers");
+    QString compilsPath = MainWindow::self()->getUserFilePath("codeeditor/compilers/compilers");
+    loadCompilerSet( compilsPath, &m_compilers );
+    compilsPath = MainWindow::self()->getUserFilePath("codeeditor/compilers/assemblers");
+    loadCompilerSet( compilsPath, &m_assemblers );
+
+    compilsPath = MainWindow::self()->getFilePath("data/codeeditor/compilers/compilers");
     loadCompilerSet( compilsPath, &m_compilers );
     compilsPath = MainWindow::self()->getFilePath("data/codeeditor/compilers/assemblers");
     loadCompilerSet( compilsPath, &m_assemblers );
@@ -264,7 +269,10 @@ void EditorWindow::loadCompilers()
 
 void EditorWindow::loadCompilerSet( QString compilsPath, QMap<QString, compilData_t>* compList )
 {
+    if( compilsPath.isEmpty() ) return;
+
     QDir compilsDir = QDir( compilsPath );
+    if( !compilsDir.exists() ) return;
 
     compilsDir.setNameFilters( QStringList( "*.xml" ) );
 
@@ -286,6 +294,7 @@ void EditorWindow::loadCompilerSet( QString compilsPath, QMap<QString, compilDat
               && el.hasAttribute( "type" )  )
             {
                 QString compiler = el.attribute( "name" ) ;
+                if( compList->contains( compiler ) ) continue;
 
                 compilData_t compilData;
                 compilData.file = compilFilePath;

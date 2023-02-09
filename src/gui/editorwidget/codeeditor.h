@@ -117,11 +117,9 @@ class CodeEditor : public QPlainTextEdit
  static QStringList m_avrInstr;
  static QStringList m_i51Instr;
 
- static int   m_fontSize;
- static int   m_tabSize;
+ static int m_fontSize;
+ static int m_tabSize;
 
- static QString m_syntaxPath;
- static QString m_compilsPath;
  static QString m_tab;
 
  static QFont m_font;

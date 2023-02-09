@@ -66,6 +66,11 @@ class MAINMODULE_EXPORT MainWindow : public QMainWindow
         QString getConfigPath( QString file );
 
         QString getHelp( QString name );
+
+        QString getUserFilePath( QString f );
+        QString userPath() { return m_userDir; }
+        void setUserPath( QString p ) { m_userDir = p; }
+        void getUserPath();
         
         QTabWidget* m_sidepanel;
 
@@ -99,6 +104,7 @@ class MAINMODULE_EXPORT MainWindow : public QMainWindow
         QString m_styleSheet;
         QString m_state;
         QString m_file;
+        QString m_userDir;
 
         QHash<QString, QPluginLoader*>  m_plugins;
         QHash<QString, QString>  m_help;

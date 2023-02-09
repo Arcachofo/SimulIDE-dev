@@ -20,6 +20,7 @@ AppDialog::AppDialog( QWidget* parent )
     // App Settings
     language->setCurrentIndex( (int)MainWindow::self()->lang() );
     fontScale->setValue( MainWindow::self()->fontScale() );
+    userPath->setText( MainWindow::self()->userPath() );
 
     // Circuit Settings
     drawGrid->setChecked( Circuit::self()->drawGrid() );
@@ -107,6 +108,18 @@ void AppDialog::on_language_currentIndexChanged( int index )
 void AppDialog::on_fontScale_valueChanged( double scale )
 {
     MainWindow::self()->setFontScale( scale );
+}
+
+void AppDialog::on_setPathButton_clicked()
+{
+    MainWindow::self()->getUserPath();
+    userPath->setText( MainWindow::self()->userPath() );
+}
+
+void AppDialog::on_userPath_editingFinished()
+{
+    QString path = userPath->text();
+    MainWindow::self()->setUserPath( path );
 }
 
 // Circuit Settings ----------------------------

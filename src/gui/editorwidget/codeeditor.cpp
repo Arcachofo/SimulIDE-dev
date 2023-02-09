@@ -25,8 +25,6 @@ bool    CodeEditor::m_showSpaces = false;
 bool    CodeEditor::m_spaceTabs  = false;
 int     CodeEditor::m_fontSize = 13;
 int     CodeEditor::m_tabSize = 4;
-QString CodeEditor::m_syntaxPath;
-QString CodeEditor::m_compilsPath;
 QString CodeEditor::m_tab;
 QFont   CodeEditor::m_font = QFont();
 
@@ -83,7 +81,7 @@ void CodeEditor::setCompiler( BaseDebugger* compiler )
 
 void CodeEditor::setSyntaxFile( QString file )
 {
-    m_hlighter->readSyntaxFile( m_syntaxPath + file );
+    m_hlighter->readSyntaxFile( file );
 }
 
 void CodeEditor::setFile( const QString filePath )
@@ -109,7 +107,7 @@ void CodeEditor::setFile( const QString filePath )
 
     if( extension == ".gcb" )
     {
-        m_hlighter->readSyntaxFile( m_syntaxPath + "gcbasic.syntax" );
+        m_hlighter->readSyntaxFile("gcbasic.syntax");
         if( !m_compiler ) m_compiler = EditorWindow::self()->createDebugger( "GcBasic", this );
     }
     else if( extension == ".cpp"
@@ -118,7 +116,7 @@ void CodeEditor::setFile( const QString filePath )
           || extension == ".h"
           || extension == ".as" )
     {
-        m_hlighter->readSyntaxFile( m_syntaxPath + "cpp.syntax" );
+        m_hlighter->readSyntaxFile("cpp.syntax");
         if( extension == ".ino" )
         {   if( !m_compiler ) m_compiler = EditorWindow::self()->createDebugger( "Arduino", this );}
         else if( extension == ".as" )
@@ -127,13 +125,13 @@ void CodeEditor::setFile( const QString filePath )
     }
     /*else if( extension == ".s" )
     {
-        m_hlighter->readSyntaxFile( m_syntaxPath + "avrasm.syntax" );
+        m_hlighter->readSyntaxFile( "avrasm.syntax" );
         m_compiler = EditorWindow::self()->createDebugger( "Avrgcc-asm", this );
     }*/
     else if( extension == ".a51" ) // 8051
     {
         m_outPane->appendLine( "I51 asm\n" );
-        m_hlighter->readSyntaxFile( m_syntaxPath + "i51asm.syntax" );
+        m_hlighter->readSyntaxFile("i51asm.syntax");
     }
     else if( extension == ".asm" ) // We should identify if pic, avr or i51 asm
     {
@@ -143,17 +141,17 @@ void CodeEditor::setFile( const QString filePath )
         if( type == 1 )   // Is Pic
         {
             m_outPane->appendLine( "Pic asm\n" );
-            m_hlighter->readSyntaxFile( m_syntaxPath + "pic14asm.syntax" );
+            m_hlighter->readSyntaxFile("pic14asm.syntax");
         }
         else if( type == 2 )  // Is Avr
         {
             m_outPane->appendLine( "Avr asm\n" );
-            m_hlighter->readSyntaxFile( m_syntaxPath + "avrasm.syntax" );
+            m_hlighter->readSyntaxFile("avrasm.syntax");
         }
         else if( type == 3 )  // Is 8051
         {
             m_outPane->appendLine( "I51 asm\n" );
-            m_hlighter->readSyntaxFile( m_syntaxPath + "i51asm.syntax" );
+            m_hlighter->readSyntaxFile("i51asm.syntax");
         }
         else m_outPane->appendLine( "Unknown asm\n" );
     }
@@ -164,22 +162,22 @@ void CodeEditor::setFile( const QString filePath )
          ||  extension == ".sim1"
          ||  extension == ".simu" )
     {
-        m_hlighter->readSyntaxFile( m_syntaxPath + "xml.syntax" );
+        m_hlighter->readSyntaxFile("xml.syntax");
     }
     else if( getFileName( m_file ).toLower() == "makefile"  )
     {
-        m_hlighter->readSyntaxFile( m_syntaxPath + "makef.syntax" );
+        m_hlighter->readSyntaxFile("makef.syntax");
     }
     else if( extension == ".hex"
          ||  extension == ".ihx" )
     {
         m_font.setLetterSpacing( QFont::PercentageSpacing, 110 );
         setFont( m_font );
-        m_hlighter->readSyntaxFile( m_syntaxPath + "hex.syntax" );
+        m_hlighter->readSyntaxFile("hex.syntax");
     }
     else if( extension == ".js" )
     {
-        m_hlighter->readSyntaxFile( m_syntaxPath + "js.syntax" );
+        m_hlighter->readSyntaxFile("js.syntax");
     }
     /*else if( extension == ".sac" )
     {
@@ -320,12 +318,8 @@ void CodeEditor::updateScreen()
 
 void CodeEditor::readSettings() // Static
 {
-    m_syntaxPath  = MainWindow::self()->getFilePath("data/codeeditor/syntax/");
-    m_compilsPath = MainWindow::self()->getFilePath("data/codeeditor/compilers/");
-
     m_font.setFamily("Ubuntu Mono");
     m_font.setWeight( 50 );
-    //m_font.setFixedPitch( true );
     m_font.setPixelSize( m_fontSize );
 
     QSettings* settings = MainWindow::self()->settings();

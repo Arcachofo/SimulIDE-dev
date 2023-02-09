@@ -4,6 +4,7 @@
  ***( see copyright.txt file at root folder )*******************************/
 
 #include <QApplication>
+#include <QFileDialog>
 #include <QSettings>
 #include <QStandardPaths>
 #include <QDesktopWidget>
@@ -70,13 +71,17 @@ MainWindow::MainWindow()
     QApplication::setStyle( QStyleFactory::create("Fusion") ); //applyStyle();
     createWidgets();
 
+    m_userDir = m_settings->value( "userPath" ).toString();
+    QDir userDir( m_userDir );
+    if( userDir.exists() )
+    {
+        ComponentSelector::self()->LoadCompSetAt( m_userDir );
+        m_fileSystemTree->addEntry( "User Data", m_userDir );
+    }
+    else m_userDir = "";
+
     QDir compSetDir = m_filesDir.absoluteFilePath("data");
     if( compSetDir.exists() ) ComponentSelector::self()->LoadCompSetAt( compSetDir );
-
-    QString userAddonPath = getConfigPath("addons");
-    QDir pluginsDir( userAddonPath );
-    if( !pluginsDir.exists() ) pluginsDir.mkpath( userAddonPath );
-    else ComponentSelector::self()->LoadCompSetAt( userAddonPath );
 
     readSettings();
 
@@ -295,9 +300,29 @@ QString MainWindow::getHelp( QString name )
     return help;
 }
 
-QSettings* MainWindow::settings() { return m_settings; }
+void MainWindow::getUserPath()
+{
+    QString path = QFileDialog::getExistingDirectory( NULL
+                         , tr("Select User data directory")
+                         , m_userDir
+                         , QFileDialog::ShowDirsOnly
+                         | QFileDialog::DontResolveSymlinks);
+
+    if( !path.isEmpty())
+    {
+         if( !path.endsWith("/") ) path += "/";
+         m_settings->setValue("userPath", path);
+         m_userDir = path;
+    }
+}
+
+QString MainWindow::getUserFilePath( QString f )
+{
+    if( m_userDir.isEmpty() ) return "";
+    return QDir( m_userDir ).absoluteFilePath( f );
+}
 
 QString MainWindow::getFilePath( QString file )   { return m_filesDir.absoluteFilePath( file ); }
 QString MainWindow::getConfigPath( QString file ) { return m_configDir.absoluteFilePath( file ); }
-
+QSettings* MainWindow::settings() { return m_settings; }
 #include  "moc_mainwindow.cpp"
