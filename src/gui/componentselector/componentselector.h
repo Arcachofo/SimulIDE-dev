@@ -46,7 +46,7 @@ class MAINMODULE_EXPORT ComponentSelector : public QTreeWidget
 
         QTreeWidgetItem* addCategory( QString nameTr, QString name, QString parent, QString icon );
 
-        //QStringList m_compSetUnique;
+        QStringList m_components;
         QHash<QString, QTreeWidgetItem*> m_categories;
         QHash<QString, QString> m_catTr;
 

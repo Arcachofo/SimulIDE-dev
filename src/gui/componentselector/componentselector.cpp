@@ -144,6 +144,8 @@ void ComponentSelector::loadXml( const QString &setFile )
                             icon.prepend( MainWindow::self()->getFilePath("data/images") + "/");
                     }
                     QString name = reader.attributes().value("name").toString();
+                    if( m_components.contains( name ) ) continue;
+                    m_components.append( name );
 
                     m_xmlFileList[ name ] = setFile;   // Save xml File used to create this item
                     if( reader.attributes().hasAttribute("info") )
