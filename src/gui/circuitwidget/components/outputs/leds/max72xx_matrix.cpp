@@ -52,13 +52,13 @@ Max72xx_matrix::Max72xx_matrix( QObject* parent, QString type, QString id )
         << QObject::tr("Purple")
         << QObject::tr("White");
 
-    m_colors[0] = QColor( 255, 255,   0 ); // Yellow
-    m_colors[1] = QColor( 255, 140, 120 ); // Red
-    m_colors[2] = QColor(   0, 255, 100 ); // Green
-    m_colors[3] = QColor( 150, 150, 255 ); // Blue
-    m_colors[4] = QColor( 255, 200,  25 ); // Orange
-    m_colors[5] = QColor( 255,  75, 255 ); // Purple
-    m_colors[6] = QColor( 255, 255, 255 ); // White
+    m_colors[0] = QColor( 255-25, 255-25,   0    ); // Yellow
+    m_colors[1] = QColor( 255-25, 140-25, 100-25 ); // Red
+    m_colors[2] = QColor(   0   , 255-25, 100-25 ); // Green
+    m_colors[3] = QColor( 150-25, 150-25, 255-25 ); // Blue
+    m_colors[4] = QColor( 255-25, 200-25,  25    ); // Orange
+    m_colors[5] = QColor( 255-25,  75-25, 240-25 ); // Purple
+    m_colors[6] = QColor( 255-25, 255-25, 255-25 ); // White
     m_ledColor = 0;
 
     m_pinCS  = new Pin( 270, QPoint(-12, 52), id+"PinCS", 0, this );
@@ -222,8 +222,11 @@ void Max72xx_matrix::paint( QPainter* p, const QStyleOptionGraphicsItem* option,
         p->setBrush( QColor(Qt::black) );
         p->drawRoundedRect( 64*display-32, -40, 64, 64, 2, 2 );
 
-        int factor = 25+(220/16)*m_intensity[display];
-        QColor color = QColor( QColor(factor, factor, factor/4) );
+        int factor = m_intensity[display];
+        QColor color = m_colors[m_ledColor];
+        int r = color.red();
+        r = r*factor/16;
+        color = QColor( 25+color.red()*factor/16, 25+color.green()*factor/16, 25+color.blue()*factor/16);
 
         for( int row=0; row<8; row++ )
         {
