@@ -8,7 +8,7 @@
 
 #include "mech_contact.h"
 
-class QToolButton;
+class CustomButton;
 class QGraphicsProxyWidget;
 
 class MAINMODULE_EXPORT SwitchBase : public MechContact
@@ -25,7 +25,7 @@ class MAINMODULE_EXPORT SwitchBase : public MechContact
         QString key() { return m_key; }
         void setKey( QString key );
         
-        QToolButton* button() { return m_button; }
+        CustomButton* button() { return m_button; }
 
     public slots:
         virtual void onbuttonclicked();
@@ -34,7 +34,7 @@ class MAINMODULE_EXPORT SwitchBase : public MechContact
     protected:
         QString m_key;
         
-        QToolButton*          m_button;
+        CustomButton* m_button;
         QGraphicsProxyWidget* m_proxy;
 };
 

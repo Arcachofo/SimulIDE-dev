@@ -3,7 +3,6 @@
  *                                                                         *
  ***( see copyright.txt file at root folder )*******************************/
 
-#include <QToolButton>
 #include <QPainter>
 
 #include "fixedvolt.h"
@@ -11,6 +10,7 @@
 #include "itemlibrary.h"
 #include "simulator.h"
 #include "iopin.h"
+#include "custombutton.h"
 
 #include "doubleprop.h"
 #include "boolprop.h"
@@ -43,7 +43,7 @@ FixedVolt::FixedVolt( QObject* parent, QString type, QString id )
     setValLabelPos(-16, 8 , 0 ); // x, y, rot 
     setLabelPos(-64,-24 );
 
-    m_button = new QToolButton();
+    m_button = new CustomButton();
     m_button->setMaximumSize( 16,16 );
     m_button->setGeometry(-20,-16,16,16);
     m_button->setCheckable( true );

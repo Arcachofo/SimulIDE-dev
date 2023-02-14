@@ -51,18 +51,17 @@ Potentiometer::Potentiometer( QObject* parent, QString type, QString id )
     
     m_dialW.setupWidget();
     m_dialW.setFixedSize( 24, 24 );
-    m_dialW.dial->setMinimum(0);
-    m_dialW.dial->setMaximum(1000);
-    m_dialW.dial->setValue(500);
-    m_dialW.dial->setSingleStep(25);
+
+    m_dial = m_dialW.dial;
+    m_dial->setMinimum(0);
+    m_dial->setMaximum(1000);
+    m_dial->setValue(500);
+    m_dial->setSingleStep(25);
     
     m_proxy = Circuit::self()->addWidget( &m_dialW );
     m_proxy->setParentItem( this );
     m_proxy->setPos( QPoint( -12, -24-5) );
-    //m_proxy->setFlag(QGraphicsItem::ItemNegativeZStacksBehindParent, true );
 
-    m_dial = m_dialW.dial;
-    
     m_resA.setEpin( 0, &m_pinA );
     m_resA.setEpin( 1, &m_ePinA );
     m_resB.setEpin( 1, &m_pinB );

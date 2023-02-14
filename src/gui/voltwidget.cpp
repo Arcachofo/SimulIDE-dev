@@ -4,7 +4,7 @@
  ***( see copyright.txt file at root folder )*******************************/
 
 #include <QDial>
-#include <QPushButton>
+#include "custombutton.h"
 #include <QVBoxLayout>
 
 #include "voltwidget.h"
@@ -25,17 +25,15 @@ void VoltWidget::setupWidget()
     dial->setValue(000);
     dial->setSingleStep(10);
     
-    pushButton = new QPushButton(this);
-    pushButton->setObjectName( QString::fromUtf8("pushButton") );
+    pushButton = new CustomButton(this);
     pushButton->setCheckable(true);
-    pushButton->setForegroundRole( QPalette::BrightText );
-    pushButton->setFixedSize( 40, 17 );
 
-    QFont sansFont("Helvetica [Cronyx]", 8 );
-    sansFont.setPixelSize(8);
-    pushButton->setFont( sansFont );
+    QFont font;
+    font.setFamily("Ubuntu");
+    font.setPixelSize(9);
+    pushButton->setFont( font );
     
-    verticalLayout->addWidget(pushButton);
+    verticalLayout->addWidget( pushButton );
     verticalLayout->setAlignment( pushButton, Qt::AlignHCenter );
 }
 

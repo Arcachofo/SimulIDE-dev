@@ -23,6 +23,9 @@ class DialWidget : public QWidget
 
         QDial* dial;
         QVBoxLayout* verticalLayout;
+
+    private:
+        virtual void paintEvent( QPaintEvent* e) override;
 };
 #endif
 

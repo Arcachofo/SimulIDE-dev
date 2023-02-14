@@ -11,6 +11,7 @@
 #include "varsource.h"
 #include "simulator.h"
 #include "circuit.h"
+#include "custombutton.h"
 
 #include "boolprop.h"
 
@@ -37,6 +38,12 @@ VarSource::VarSource( QObject* parent, QString type, QString id )
 
     m_button = m_voltw.pushButton;
     m_button->setFixedSize( WIDTH-8,16 );
+    //m_button->setGeometry(-20,-16,16,16);
+    /*m_button->setStyleSheet(
+        "QPushButton {border: 1px solid #A0A0A0; border-radius: 2px;\n"
+        "padding: 0 3px; background: #F3F3F3;}\n"
+        "QPushButton:hover {background: #FAFAFA;}\n"
+        "QPushButton:checked {background: lightGray;}\n" );*/
 
     m_dial = m_voltw.dial;
     m_dial->setMaximum( 1000 );
@@ -66,8 +73,8 @@ void VarSource::updateButton()
     bool checked = m_button->isChecked();
     
     if( checked )
-          msg = QString("%1 "+m_unit).arg(float(int(m_outValue*100+0.5))/100);
-    else  msg = QString("--"+m_unit);
+          msg = QString::number( m_outValue,'f', 2 )+" "+m_unit;
+    else  msg = QString("---"+m_unit);
         
     m_button->setText( msg );
 }

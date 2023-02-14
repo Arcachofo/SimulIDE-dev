@@ -6,6 +6,7 @@
 #include "clock-base.h"
 #include "iopin.h"
 #include "simulator.h"
+#include "custombutton.h"
 
 #include "boolprop.h"
 

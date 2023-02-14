@@ -4,13 +4,13 @@
  ***( see copyright.txt file at root folder )*******************************/
 
 #include <QPainter>
-#include <QToolButton>
 #include <QGraphicsProxyWidget>
 
 #include "switch_base.h"
 #include "simulator.h"
 #include "circuit.h"
 #include "label.h"
+#include "custombutton.h"
 
 SwitchBase::SwitchBase( QObject* parent, QString type, QString id )
           : MechContact( parent, type, id )
@@ -23,7 +23,7 @@ SwitchBase::SwitchBase( QObject* parent, QString type, QString id )
     m_ePin.resize(2);
     m_idLabel->setPos(-12,-24);
 
-    m_button = new QToolButton( );
+    m_button = new CustomButton( );
     m_button->setMaximumSize( 16,16 );
     m_button->setGeometry(-20,-16,16,16);
     m_button->setCheckable( true );

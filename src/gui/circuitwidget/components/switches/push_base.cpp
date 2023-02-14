@@ -3,10 +3,9 @@
  *                                                                         *
  ***( see copyright.txt file at root folder )*******************************/
 
-#include <QToolButton>
-
 #include "push_base.h"
 #include "circuit.h"
+#include "custombutton.h"
 
 PushBase::PushBase( QObject* parent, QString type, QString id )
         : SwitchBase( parent, type, id )

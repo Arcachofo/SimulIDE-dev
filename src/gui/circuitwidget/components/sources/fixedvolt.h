@@ -14,7 +14,7 @@
 
 class IoPin;
 class LibraryItem;
-class QToolButton;
+class CustomButton;
 
 class MAINMODULE_EXPORT FixedVolt : public Component, public eElement
 {
@@ -47,7 +47,7 @@ class MAINMODULE_EXPORT FixedVolt : public Component, public eElement
 
         IoPin* m_outpin;
 
-        QToolButton* m_button;
+        CustomButton* m_button;
         QGraphicsProxyWidget* m_proxy;
 };
 

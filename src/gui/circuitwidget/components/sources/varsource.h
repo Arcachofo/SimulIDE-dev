@@ -47,7 +47,7 @@ class MAINMODULE_EXPORT VarSource : public Component, public eElement
         
         VoltWidget m_voltw;
 
-        QPushButton* m_button;
+        CustomButton* m_button;
         QDial* m_dial;
         QGraphicsProxyWidget* m_proxy;
 };

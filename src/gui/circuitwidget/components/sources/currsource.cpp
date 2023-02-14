@@ -3,12 +3,11 @@
  *                                                                         *
  ***( see copyright.txt file at root folder )*******************************/
 
-#include <QPushButton>
-
 #include "currsource.h"
 #include "itemlibrary.h"
 #include "propdialog.h"
 #include "simulator.h"
+#include "custombutton.h"
 #include "pin.h"
 
 #include "doubleprop.h"

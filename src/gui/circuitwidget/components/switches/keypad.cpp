@@ -191,5 +191,6 @@ void KeyPad::setflip()
 void KeyPad::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget )
 {
     Component::paint( p, option, widget );
+    p->setBrush( QColor( 240, 240, 240 ) );
     p->drawRoundedRect( m_area,2,2 );
 }

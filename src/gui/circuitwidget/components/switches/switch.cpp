@@ -4,13 +4,13 @@
  ***( see copyright.txt file at root folder )*******************************/
 
 #include <QGraphicsProxyWidget>
-#include <QToolButton>
 
 #include "switch.h"
 #include "itemlibrary.h"
 #include "simulator.h"
 #include "e-node.h"
 #include "pin.h"
+#include "custombutton.h"
 
 #include "stringprop.h"
 #include "boolprop.h"

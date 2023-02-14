@@ -8,7 +8,7 @@
 
 #include "dialwidget.h"
 
-class QPushButton;
+class CustomButton;
 
 class VoltWidget : public DialWidget
 {
@@ -18,7 +18,7 @@ class VoltWidget : public DialWidget
 
         void setupWidget();
 
-        QPushButton* pushButton;
+        CustomButton* pushButton;
 
 };
 #endif
