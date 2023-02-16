@@ -241,6 +241,7 @@ void Mcu::stamp()
             m_portRstPin->controlPin( true, true );
             m_portRstPin->setPinMode( input );
         }
+        m_resetPin->warning( !m_resetPin->connector() );
     }
     else m_eMcu.hardReset( false );
 

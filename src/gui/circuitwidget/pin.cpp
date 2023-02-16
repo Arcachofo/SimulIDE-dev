@@ -33,7 +33,7 @@ Pin::Pin( int angle, const QPoint pos, QString id, int index, Component* parent 
     m_isBus   = false;
     m_unused  = false;
     m_animate = false;
-    //m_PinChanged = false;
+    m_warning = false;
     
     my_connector = NULL;
     m_conPin     = NULL;
@@ -129,15 +129,17 @@ void Pin::registerEnode( eNode* enode, int n )     // Called by m_conPin
 
 void  Pin::setConnector( Connector* connector )
 {
-    if( connector )
+    my_connector = connector;
+    m_warning = false;
+
+    if( my_connector )
     {
         setCursor( Qt::ArrowCursor );
-        if( m_isBus ) connector->setIsBus( true );
+        if( m_isBus ) my_connector->setIsBus( true );
     }else{
         m_conPin = NULL;
         setCursor( Qt::CrossCursor );
     }
-    my_connector = connector;
 }
 
 void Pin::removeConnector()
@@ -341,13 +343,22 @@ void Pin::setVisible( bool visible )
     QGraphicsItem::setVisible( visible );
 }
 
+void Pin::warning( bool w )
+{
+    m_warning = w;
+    if     (  m_warning ) Simulator::self()->addToUpdateList( this );
+    else if( !m_animate ) Simulator::self()->remFromUpdateList( this );
+    update();
+}
+
 void Pin::animate( bool an )
 {
     if( m_unused || m_isBus ) return;
-
-    if( an ) Simulator::self()->addToUpdateList( this );
-    else     Simulator::self()->remFromUpdateList( this );
     m_animate = an;
+
+    if     (  m_animate ) Simulator::self()->addToUpdateList( this );
+    else if( !m_warning ) Simulator::self()->remFromUpdateList( this );
+
     update();
 }
 
@@ -367,6 +378,19 @@ void Pin::paint( QPainter* painter, const QStyleOptionGraphicsItem* option, QWid
     painter->setPen(pen0);
     painter->setBrush( Qt::red );
     painter->drawRect( boundingRect() );*/
+
+    if( m_warning )
+    {
+        static double opaci = 0.3;
+        static double speed = 0.05;
+        if( Simulator::self()->isRunning() ) m_opCount += speed;
+        else                                 m_opCount = 0.65;
+
+        painter->setOpacity( m_opCount+opaci );
+        if( m_opCount > 0.7 ) m_opCount = 0.0;
+
+        painter->fillRect( QRect(-4, -4, m_length+4, 8 ), QColor(200, 100, 0, 240) );
+    }
 
     if( m_overScore > -1 )
     {
@@ -402,7 +426,7 @@ void Pin::paint( QPainter* painter, const QStyleOptionGraphicsItem* option, QWid
         QRectF rect( 3.5,-2.2, 4.4, 4.4 );
         painter->drawEllipse(rect);
     }
-    if( m_animate )
+    if( !m_unused && m_animate )
     {
         pen.setWidth( 2 );
         painter->setPen(pen);

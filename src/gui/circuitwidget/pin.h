@@ -98,6 +98,7 @@ class MAINMODULE_EXPORT Pin : public QObject, public QGraphicsItem, public ePin,
 
         inline void setPinState( pinState_t st ) { m_pinState = st; /*m_PinChanged = true;*/ }
 
+        void warning( bool w );
         void animate( bool an );
         virtual void updateStep() override;
 
@@ -112,7 +113,6 @@ class MAINMODULE_EXPORT Pin : public QObject, public QGraphicsItem, public ePin,
 
         pinType_t m_pinType;
         pinState_t m_pinState;
-        //bool m_PinChanged;
 
         int m_angle;
         int m_length;
@@ -126,6 +126,9 @@ class MAINMODULE_EXPORT Pin : public QObject, public QGraphicsItem, public ePin,
         bool m_isBus;
         bool m_unused;
         bool m_animate;
+        bool m_warning;
+
+        double  m_opCount;
 
         QString m_labelText;
         QString m_packageType;
