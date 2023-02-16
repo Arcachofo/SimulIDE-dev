@@ -89,6 +89,7 @@ Mcu::Mcu( QObject* parent, QString type, QString id )
     m_autoLoad   = false;
     m_extClock   = false;
     m_scripted   = false;
+    m_resetPol   = false;
 
     m_serialMon = -1;
 
@@ -262,7 +263,7 @@ void Mcu::updateStep()
 
 void Mcu::voltChanged() // Reset Pin callBack
 {
-    m_eMcu.hardReset( !m_resetPin->getInpState() );
+    m_eMcu.hardReset( m_resetPin->getInpState() == m_resetPol );
 }
 
 void Mcu::setProgram( QString pro )
@@ -487,11 +488,12 @@ Pin* Mcu::addPin( QString id, QString type, QString label,
                   int pos, int xpos, int ypos, int angle, int length )
 {
     IoPin* pin = NULL;
-    if( type == "rst" )
+    if( type.contains("rst") )
     {
         if( !m_resetPin )
             m_resetPin = new IoPin( angle, QPoint(xpos, ypos), m_id+"-"+id, pos-1, this, input );
         pin = m_resetPin;
+        m_resetPol = type.startsWith("!") ;
     }
     else pin = m_eMcu.getIoPin( id ); // I/O Port
 

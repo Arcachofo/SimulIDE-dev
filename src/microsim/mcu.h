@@ -116,6 +116,7 @@ class MAINMODULE_EXPORT Mcu : public Chip
         bool m_autoLoad;
         bool m_extClock;
         bool m_scripted;
+        bool m_resetPol;
 
         int m_serialMon;
 
