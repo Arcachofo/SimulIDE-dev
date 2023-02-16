@@ -30,6 +30,7 @@ class MAINMODULE_EXPORT ScriptCpu : public ScriptModule, public McuCpu
 
         void addEvent( uint time );
         void cancelEvents();
+        uint64_t circTime();
 
         int  readPGM( uint addr );
         void writePGM( uint addr, int value );

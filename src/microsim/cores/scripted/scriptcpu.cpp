@@ -45,6 +45,10 @@ ScriptCpu::ScriptCpu( eMcu* mcu )
                                        , asMETHOD( ScriptCpu, cancelEvents )
                                        , asCALL_THISCALL );
 
+    r = m_aEngine->RegisterObjectMethod("ScriptCpu", "uint64 circTime()"
+                                       , asMETHODPR( ScriptCpu, circTime, (), uint64_t)
+                                       , asCALL_THISCALL );
+
     r = m_aEngine->RegisterObjectMethod("ScriptCpu", "int readPGM(uint n)"
                                        , asMETHODPR( ScriptCpu, readPGM, (uint), int)
                                        , asCALL_THISCALL );
@@ -138,6 +142,7 @@ void ScriptCpu::extClock( bool clkState )
 
 void ScriptCpu::addEvent( uint time ) { Simulator::self()->addEvent( time, this ); }
 void ScriptCpu::cancelEvents()        { Simulator::self()->cancelEvents( this ); }
+uint64_t ScriptCpu::circTime()        { return Simulator::self()->circTime(); }
 
 int  ScriptCpu::readPGM( uint addr )         { if( addr < m_progSize       ) return m_progMem[addr]; return -1; }
 void ScriptCpu::writePGM( uint addr, int v ) { if( addr < m_progSize       ) m_progMem[addr] = v; }
