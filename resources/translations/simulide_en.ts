@@ -318,6 +318,14 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>User data folder:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select tool path</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AudioOut</name>
@@ -844,6 +852,10 @@ Can&apos;t find file:
         <source>Reload Document</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>     WARNING: Compilation Not Done</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Compiler</name>
@@ -869,18 +881,6 @@ Can&apos;t find file:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>     SUCCESS!!! Compilation Ok</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>     WARNING: Compilation Not Done</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>     ERROR!!! Compilation Failed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Select Compiler Toolchain directory</source>
         <translation type="unfinished"></translation>
     </message>
@@ -901,22 +901,6 @@ Can&apos;t find file:
     <name>CompilerProp</name>
     <message>
         <source>Compiler Settings</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Set if Debugger should drive Circuit simulation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Drive Circuit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -969,10 +953,6 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Select tool path</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1041,13 +1021,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Cut</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>ComponentPlugins</name>
-    <message>
-        <source>Manage Components</source>
-        <translation></translation>
     </message>
 </context>
 <context>
@@ -1502,14 +1475,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Show Help</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1835,18 +1800,6 @@ Can&apos;t find file:
 <context>
     <name>FindReplace</name>
     <message>
-        <source>Found %1 occurrence(s)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Replaced %1 occurrence(s)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Dialog</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Previous</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1893,6 +1846,24 @@ Can&apos;t find file:
     <message>
         <source>Replace + Find </source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search and Replace</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>Found %n occurrence(s)</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>Replaced %n occurrence(s)</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -2881,6 +2852,10 @@ Can&apos;t find file:
     </message>
     <message>
         <source>No help available</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select User data directory</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3903,6 +3878,14 @@ p, li { white-space: pre-wrap; }
         <source>Size</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Pullup</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pullup Voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SCR</name>
@@ -3987,6 +3970,10 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Open Serial Monitor.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4917,6 +4904,21 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Main MCU:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>manCompDialog</name>
+    <message>
+        <source>Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ShortCut</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

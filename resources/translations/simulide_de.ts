@@ -366,6 +366,14 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>User data folder:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select tool path</source>
+        <translation type="unfinished">Tool Pfad auswählen</translation>
+    </message>
 </context>
 <context>
     <name>AppProp</name>
@@ -1160,6 +1168,10 @@ Can&apos;t find file:
         <source>Reload Document</source>
         <translation>Dokument nochmals laden</translation>
     </message>
+    <message>
+        <source>     WARNING: Compilation Not Done</source>
+        <translation type="unfinished">     Warnung: Kompilieren nicht ausgeführt</translation>
+    </message>
 </context>
 <context>
     <name>Compiler</name>
@@ -1187,15 +1199,15 @@ Can&apos;t find file:
     </message>
     <message>
         <source>     SUCCESS!!! Compilation Ok</source>
-        <translation>     erfolgreich! Kompilieren Ok</translation>
+        <translation type="vanished">     erfolgreich! Kompilieren Ok</translation>
     </message>
     <message>
         <source>     WARNING: Compilation Not Done</source>
-        <translation>     Warnung: Kompilieren nicht ausgeführt</translation>
+        <translation type="vanished">     Warnung: Kompilieren nicht ausgeführt</translation>
     </message>
     <message>
         <source>     ERROR!!! Compilation Failed</source>
-        <translation>     Fehler! Kompilieren fehlgeschlagen</translation>
+        <translation type="vanished">     Fehler! Kompilieren fehlgeschlagen</translation>
     </message>
     <message>
         <source>Select Compiler Toolchain directory</source>
@@ -1230,11 +1242,11 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Set if Debugger should drive Circuit simulation</source>
-        <translation>Auswählen, ob Debugger die Schaltung steuert</translation>
+        <translation type="vanished">Auswählen, ob Debugger die Schaltung steuert</translation>
     </message>
     <message>
         <source>Drive Circuit</source>
-        <translation>Treiberschaltung</translation>
+        <translation type="vanished">Treiberschaltung</translation>
     </message>
     <message>
         <source>Board</source>
@@ -1297,14 +1309,6 @@ Can&apos;t find file:
         <translation>Familie</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Uno</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1322,10 +1326,6 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Leonardo</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>...</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1372,7 +1372,7 @@ p, li { white-space: pre-wrap; }
     <name>ComponentPlugins</name>
     <message>
         <source>Manage Components</source>
-        <translation>Komponenten verwalten</translation>
+        <translation type="vanished">Komponenten verwalten</translation>
     </message>
 </context>
 <context>
@@ -1873,14 +1873,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Pixels</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2247,19 +2239,33 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Found %1 occurrence(s)</source>
-        <translation>%1 mal gefunden</translation>
+        <translation type="vanished">%1 mal gefunden</translation>
     </message>
     <message>
         <source>Replaced %1 occurrence(s)</source>
-        <translation>%1 Ersetzung(en) vorgenommen</translation>
-    </message>
-    <message>
-        <source>Dialog</source>
-        <translation type="unfinished"></translation>
+        <translation type="vanished">%1 Ersetzung(en) vorgenommen</translation>
     </message>
     <message>
         <source>Case sensitive.</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search and Replace</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>Found %n occurrence(s)</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>Replaced %n occurrence(s)</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -3353,6 +3359,10 @@ Can&apos;t find file:
     </message>
     <message>
         <source>No help available</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select User data directory</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4492,6 +4502,14 @@ Keine valide Package Datei:
         <source>Size</source>
         <translation>Größe</translation>
     </message>
+    <message>
+        <source>Pullup</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pullup Voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SCR</name>
@@ -4635,6 +4653,10 @@ Keine valide Package Datei:
     <message>
         <source>Open Serial Monitor.</source>
         <translation type="unfinished">Seriellen Monitor öffnen</translation>
+    </message>
+    <message>
+        <source>Open</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5747,6 +5769,21 @@ Sollen die Änderungen gespeichert werden?
     </message>
     <message>
         <source>Main MCU:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>manCompDialog</name>
+    <message>
+        <source>Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished">Name</translation>
+    </message>
+    <message>
+        <source>ShortCut</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
