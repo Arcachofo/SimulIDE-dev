@@ -86,7 +86,7 @@ class EditorWidget : public QWidget
 
         bool maybeSave();
         bool saveFile( const QString &fileName );
-        void saveBreakpoints( const QString &fileName );
+        void saveBreakpoints( QString fileName );
         void loadBreakpoints( const QString &fileName );
 
         OutPanelText m_outPane;

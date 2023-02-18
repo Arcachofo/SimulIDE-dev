@@ -256,26 +256,29 @@ bool EditorWidget::saveFile( const QString &fileName )
     return true;
 }
 
-void EditorWidget::saveBreakpoints( const QString &fileName )
+void EditorWidget::saveBreakpoints( QString fileName )
 {
-    QList<int>* brkList = getCodeEditor()->getBreakPoints();
+    fileName = fileName +".brk";
+    QFile file( fileName );
+    if( file.exists() ) file.remove();
 
-    QFile file( fileName +".brk" );
-    if( !file.open( QFile::WriteOnly | QFile::Text) )
-    {
-        QMessageBox::warning(this, "EditorWindow::saveBreakpoints",
-                             tr("Cannot write file %1:\n%2.")
-                             .arg(fileName +".brk")
-                             .arg(file.errorString()));
-        return;
-    }
-    QTextStream out( &file );
-    out.setCodec("UTF-8");
+    QList<int>* brkList = getCodeEditor()->getBreakPoints();
+    if( brkList->isEmpty() ) return;
 
     QString brkListStr;
     for( int brk : *brkList )
         brkListStr.append( QString::number( brk )+"," );
 
+    if( !file.open( QFile::WriteOnly | QFile::Text) )
+    {
+        QMessageBox::warning(this, "EditorWindow::saveBreakpoints",
+                             tr("Cannot write file %1:\n%2.")
+                             .arg( fileName )
+                             .arg( file.errorString() ));
+        return;
+    }
+    QTextStream out( &file );
+    out.setCodec("UTF-8");
     out << brkListStr;
     file.close();
 }
