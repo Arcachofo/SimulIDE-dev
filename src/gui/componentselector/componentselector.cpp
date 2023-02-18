@@ -20,12 +20,12 @@ ComponentSelector* ComponentSelector::m_pSelf = NULL;
 
 ComponentSelector::ComponentSelector( QWidget* parent )
                  : QTreeWidget( parent )
-                 , m_pluginsdDialog( this )
+                 , m_mcDialog( this )
                  , m_itemLibrary()
 {
     m_pSelf = this;
 
-    m_pluginsdDialog.setVisible( false );
+    m_mcDialog.setVisible( false );
 
     setDragEnabled(true);
     setDragDropMode( QAbstractItemView::DragOnly );
@@ -162,7 +162,7 @@ void ComponentSelector::loadXml( const QString &setFile )
 void ComponentSelector::addItem( QString caption, QTreeWidgetItem* catItem, QString icon, QString type )
 {
     QStringList nameFull = caption.split( "???" );
-    QString         name = nameFull.first();
+    QString       nameTr = nameFull.first();
     QString info = "";
     if( nameFull.size() > 1 ) info = "   "+nameFull.last();
 
@@ -176,20 +176,21 @@ void ComponentSelector::addItem( QString caption, QTreeWidgetItem* catItem, QStr
     item->setFlags( QFlag(32) );
     item->setFont( 0, font );
     item->setIcon( 0, QIcon( QPixmap( icon ) ) );
-    item->setText( 0, name+info );
+    item->setText( 0, nameTr+info );
     item->setData( 0, Qt::UserRole, type );
 
     if( ( type == "Subcircuit" )||( type == "MCU" ) )
-         item->setData( 0, Qt::WhatsThisRole, name );
+         item->setData( 0, Qt::WhatsThisRole, nameTr );
     else item->setData( 0, Qt::WhatsThisRole, type );
 
-    bool hidden = MainWindow::self()->settings()->value( name+"/hidden" ).toBool();
-    item->setHidden( hidden );
-
-    bool expanded = !MainWindow::self()->settings()->value( type+"/collapsed" ).toBool();
-    item->setExpanded( expanded );
-
     catItem->addChild( item );
+
+    QString name = item->data( 0, Qt::WhatsThisRole ).toString();
+    bool hidden = MainWindow::self()->compSettings()->value( name+"/hidden" ).toBool();
+    hideFromList( item, hidden );
+
+    QString shortCut = MainWindow::self()->compSettings()->value( name+"/shortcut" ).toString();
+    if( !shortCut.isEmpty() ) m_shortCuts[name] = shortCut;
 }
 
 QTreeWidgetItem* ComponentSelector::getCategory( QString category )
@@ -232,6 +233,7 @@ QTreeWidgetItem* ComponentSelector::addCategory( QString nameTr, QString name, Q
     catItem->setFont( 0, font );
     catItem->setText( 0, nameTr );
     catItem->setChildIndicatorPolicy( QTreeWidgetItem::ShowIndicator );
+    catItem->setData( 0, Qt::WhatsThisRole, name );
     m_categories.insert( name, catItem );
     m_catTr.insert( nameTr, name );
 
@@ -239,12 +241,13 @@ QTreeWidgetItem* ComponentSelector::addCategory( QString nameTr, QString name, Q
     else if( m_categories.contains( parent ) )
         m_categories.value( parent )->addChild( catItem );
 
-    //bool hidden = MainWindow::self()->settings()->value( name+"/hidden" ).toBool();
-    //catItem->setHidden( hidden );
-
-    if( MainWindow::self()->settings()->contains(name+"/collapsed") )
-        expanded = !MainWindow::self()->settings()->value( name+"/collapsed" ).toBool();
+    if( MainWindow::self()->compSettings()->contains(name+"/collapsed") )
+        expanded = !MainWindow::self()->compSettings()->value( name+"/collapsed" ).toBool();
     catItem->setExpanded( expanded );
+    catItem->setData( 0, Qt::UserRole+2, expanded );
+
+    bool hidden = MainWindow::self()->compSettings()->value( name+"/hidden" ).toBool();
+    hideFromList( catItem, hidden );
 
     return catItem;
 }
@@ -266,20 +269,26 @@ void ComponentSelector::slotItemClicked( QTreeWidgetItem* item, int  )
     drag->exec( Qt::CopyAction | Qt::MoveAction, Qt::CopyAction );
 }
 
-/*void ComponentSelector::slotContextMenu( const QPoint& point )
+void ComponentSelector::slotContextMenu( const QPoint& point )
 {
     QMenu menu;
 
-    QAction* managePluginAction = menu.addAction( QIcon(":/fileopen.png"),tr("Manage Components") );
-    connect( managePluginAction, SIGNAL(triggered()), this, SLOT(slotManageComponents()) );
+    QAction* manageComponents = menu.addAction( QIcon(":/fileopen.png"),tr("Manage Components") );
+    connect( manageComponents, SIGNAL(triggered()), this, SLOT(slotManageComponents()) );
 
     menu.exec( mapToGlobal(point) );
-}*/
+}
 
 void ComponentSelector::slotManageComponents()
 {
-    m_pluginsdDialog.setPluginList();
-    m_pluginsdDialog.setVisible( true );
+    m_mcDialog.initialize();
+    m_mcDialog.setVisible( true );
+}
+
+void ComponentSelector::hideFromList( QTreeWidgetItem* item, bool hide )
+{
+    item->setData( 0, Qt::UserRole+1, hide );
+    item->setHidden( hide );
 }
 
 void ComponentSelector::search( QString filter )
@@ -291,10 +300,19 @@ void ComponentSelector::search( QString filter )
     {
         item->setHidden( true );
 
-        if( item->childCount() > 0  ) continue;
+        if( item->childCount() > 0  )
+        {
+            item->setExpanded( item->data( 0, Qt::UserRole+2 ).toBool() );
+            continue;
+        }
         if( !cList.contains( item ) ) continue;
 
-        while( item ){ item->setHidden( false ); item = item->parent(); }
+        bool hidden = item->data( 0, Qt::UserRole+1 ).toBool();
+        while( item ){
+            item->setHidden( hidden );
+            if( item->childCount() > 0 && !hidden && !filter.isEmpty() ) item->setExpanded( true );
+            item = item->parent();
+        }
     }
 }
 

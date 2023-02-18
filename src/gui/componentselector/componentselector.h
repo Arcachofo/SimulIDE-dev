@@ -7,8 +7,9 @@
 #define COMPONENTSELECTOR_H
 
 #include <QDir>
+#include <QTreeWidget>
 
-#include "compplugindialog.h"
+#include "managecomps.h"
 #include "itemlibrary.h"
 
 class MAINMODULE_EXPORT ComponentSelector : public QTreeWidget
@@ -27,12 +28,17 @@ class MAINMODULE_EXPORT ComponentSelector : public QTreeWidget
 
         void search( QString filter );
 
+        void hideFromList( QTreeWidgetItem* item, bool hide );
+
         QTreeWidgetItem* getCategory( QString category );
         QStringList getCategories(){ return m_categories.keys(); }
 
+        void setShortCuts( QHash<QString, QString> s ) { m_shortCuts = s; }
+        QHash<QString, QString> getShortCuts() { return m_shortCuts; }
+
     private slots:
         void slotItemClicked( QTreeWidgetItem* item, int );
-        //void slotContextMenu( const QPoint& );
+        void slotContextMenu( const QPoint& );
         void slotManageComponents();
 
     private:
@@ -51,8 +57,9 @@ class MAINMODULE_EXPORT ComponentSelector : public QTreeWidget
         QHash<QString, QString> m_catTr;
 
         QHash<QString, QString> m_xmlFileList;
+        QHash<QString, QString> m_shortCuts;
 
-        CompPluginDialog m_pluginsdDialog;
+        manCompDialog m_mcDialog;
 
         ItemLibrary m_itemLibrary;
 };

@@ -15,6 +15,7 @@
 #include "mainwindow.h"
 #include "circuitwidget.h"
 #include "connectorline.h"
+#include "componentselector.h"
 #include "node.h"
 #include "utils.h"
 #include "subcircuit.h"
@@ -958,6 +959,31 @@ void Circuit::keyPressEvent( QKeyEvent* event )
         if( key == Qt::Key_Escape ) deleteNewConnector();
         else QGraphicsScene::keyPressEvent( event );
         return;
+    }
+    if( event->modifiers() & Qt::AltModifier )
+    {
+        QString str = event->text();
+        if( str.isEmpty() )
+        {
+            QGraphicsScene::keyPressEvent( event );
+            return;
+        }
+        QHash<QString, QString> shortCuts = ComponentSelector::self()->getShortCuts();
+        QStringList keys = shortCuts.values();
+        if( keys.contains( str ) )
+        {
+            QString compNam = shortCuts.key( str );
+
+            Component* enterItem = createItem( compNam, compNam+"-"+newSceneId() );
+            if( enterItem )
+            {
+                saveState();
+                QPoint cPos = QCursor::pos()-CircuitView::self()->mapToGlobal( QPoint(0,0));
+                enterItem->setPos( CircuitView::self()->mapToScene( cPos ) );
+                addItem( enterItem );
+                m_compList.append( enterItem );
+            }
+        }
     }
     if( event->modifiers() & Qt::ControlModifier )
     {

@@ -44,6 +44,7 @@ class MAINMODULE_EXPORT MainWindow : public QMainWindow
  static MainWindow* self() { return m_pSelf; }
 
         QSettings* settings();
+        QSettings* compSettings();
         
         void readSettings();
         
@@ -99,6 +100,7 @@ class MAINMODULE_EXPORT MainWindow : public QMainWindow
         QDir m_configDir;
 
         QSettings* m_settings;
+        QSettings* m_compSettings;
         
         QString m_version;
         QString m_styleSheet;

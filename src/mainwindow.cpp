@@ -48,7 +48,8 @@ MainWindow::MainWindow()
 
     m_configDir.setPath( QStandardPaths::writableLocation( QStandardPaths::DataLocation ) );
 
-    m_settings = new QSettings( getConfigPath("simulide.ini"), QSettings::IniFormat, this );
+    m_settings     = new QSettings( getConfigPath("simulide.ini"), QSettings::IniFormat, this );
+    m_compSettings = new QSettings( getConfigPath("compList.ini"), QSettings::IniFormat, this );
 
     // Fonts --------------------------------------
     QFontDatabase::addApplicationFont( ":/Ubuntu-B.ttf" );
@@ -136,7 +137,7 @@ void MainWindow::writeSettings()
     for( QString name : m_components->getCategories() )
     {
         QTreeWidgetItem* item = m_components->getCategory( name );
-        m_settings->setValue( name+"/collapsed", !item->isExpanded() );
+        m_compSettings->setValue( name+"/collapsed", !item->isExpanded() );
     }
     FileWidget::self()->writeSettings();
 }
@@ -325,4 +326,6 @@ QString MainWindow::getUserFilePath( QString f )
 QString MainWindow::getFilePath( QString file )   { return m_filesDir.absoluteFilePath( file ); }
 QString MainWindow::getConfigPath( QString file ) { return m_configDir.absoluteFilePath( file ); }
 QSettings* MainWindow::settings() { return m_settings; }
+QSettings* MainWindow::compSettings() { return m_compSettings; }
+
 #include  "moc_mainwindow.cpp"
