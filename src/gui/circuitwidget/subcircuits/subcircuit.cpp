@@ -66,7 +66,7 @@ Component* SubCircuit::construct( QObject* parent, QString type, QString id )
             QString folder = "";
             if( itemSet.hasAttribute("folder") ) folder = itemSet.attribute("folder");
 
-            while( !node.isNull() )         // Find the "package", for example 628A is package: 627A, Same pins
+            while( !node.isNull() )
             {
                 QDomElement element = node.toElement();
 
@@ -85,7 +85,7 @@ Component* SubCircuit::construct( QObject* parent, QString type, QString id )
         }
     }
     if( m_subcDir.isEmpty() ){
-        qDebug() << "SubCircuit::construct: No package files found for"+name+"\n";
+        qDebug() << "SubCircuit::construct: No Circuit files found for"+name+"\n";
         return NULL;
     }
     QString pkgeFile  = m_subcDir+"/"+name+".package";
@@ -97,7 +97,7 @@ Component* SubCircuit::construct( QObject* parent, QString type, QString id )
 
     if( !dip ){        // Check if package file exist, if not try LS
         if( !ls ){
-            qDebug() << "SubCircuit::construct: No package files found for"+name+"\n";
+            qDebug() << "SubCircuit::construct: No package files found for "+name+"\n"+pkgeFile+"\n";
             return NULL;
         }
         pkgeFile = pkgFileLS;
