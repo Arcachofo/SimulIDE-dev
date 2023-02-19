@@ -158,16 +158,15 @@ void LAnalizer::updateStep()
 void LAnalizer::expand( bool e )
 {
     m_expand = e;
+    m_screenSizeY = m_baSizeY+2*4;
     if( e ){
-        m_screenSizeY = m_baSizeY+2*4;
         m_display->setMaximumSize( 9999, 9999 );
         m_laWidget->getDispLayout()->insertWidget( 0, m_display );
         m_laWidget->setWindowTitle( idLabel() );
         m_laWidget->show();
-        m_screenSizeX = -4-2;
+        m_screenSizeX = 0;
     }else{
         m_screenSizeX = m_baSizeX+2*4;
-        m_screenSizeY = m_baSizeY+2*4;
         m_laWidget->hide();
         m_dataWidget->getLayout()->addWidget( m_display );
         m_display->setMaximumSize( m_screenSizeX, m_screenSizeY );

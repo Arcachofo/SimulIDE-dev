@@ -275,7 +275,7 @@
         </font>
        </property>
        <property name="styleSheet">
-        <string notr="true">background-color:#</string>
+        <string notr="true"/>
        </property>
       </widget>
      </item>

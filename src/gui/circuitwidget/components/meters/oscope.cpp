@@ -147,16 +147,15 @@ void Oscope::updateStep()
 void Oscope::expand( bool e )
 {
     m_expand = e;
+    m_screenSizeY = m_baSizeY+2*4;
     if( e ){
-        m_screenSizeY = m_baSizeY+2*4;
         m_display->setMaximumSize( 9999, 9999 );
         m_oscWidget->getLayout()->addWidget( m_display );
         m_oscWidget->setWindowTitle( idLabel() );
         m_oscWidget->show();
-        m_screenSizeX = -4-2;
+        m_screenSizeX = 0;
     }else{
         m_screenSizeX = m_baSizeX+2*4;
-        m_screenSizeY = m_baSizeY+2*4;
         m_oscWidget->hide();
         m_dataWidget->getLayout()->addWidget( m_display );
         m_display->setMaximumSize( m_screenSizeX, m_screenSizeY );
