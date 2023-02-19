@@ -212,7 +212,7 @@ void ItemLibrary::loadItems()
     addItem( DcMotor::libraryItem() );
     addItem( Stepper::libraryItem() );
     addItem( Servo::libraryItem() );
-    addItem( new LibraryItem( QObject::tr("Other Outputs"), "Outputs", "outputs.png","Other Outputs", NULL ) );
+    addItem( new LibraryItem( QObject::tr("Other Outputs"), "Outputs", "1to1.png","Other Outputs", NULL ) );
     addItem( AudioOut::libraryItem() );
     addItem( Lamp::libraryItem() );
     // Micro
