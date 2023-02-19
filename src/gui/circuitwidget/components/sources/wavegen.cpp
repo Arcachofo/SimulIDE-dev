@@ -149,16 +149,11 @@ void WaveGen::runEvent()
 
         if( m_bipolar )
         {
-            if( m_floating )
-            {
-                double volt = m_voltage*m_vOut;
-                m_outpin->setVoltage( volt );
-                m_gndpin->setVoltage(-volt );
-            }
-            else{
-                m_outpin->setVoltage( m_voltMid+m_voltage*(m_vOut-0.5)/2 );
-                m_gndpin->setVoltage( m_voltMid-m_voltage*(m_vOut-0.5)/2 );
-            }
+            double volt = m_voltage*(m_vOut-0.5);
+            if( !m_floating ) volt /= 2;
+
+            m_outpin->setVoltage( m_voltMid+volt );
+            m_gndpin->setVoltage( m_voltMid-volt );
         }
         else m_outpin->setVoltage( m_voltBase+m_voltage*m_vOut );
     }
@@ -312,7 +307,7 @@ void WaveGen::udtProperties()
     m_propDialog->showProp("Duty", showDuty );
     m_propDialog->showProp("Steps", showSteps );
 
-    m_propDialog->showProp("Mid_Volt", !m_bipolar || !m_floating );
+    //m_propDialog->showProp("Mid_Volt", !m_bipolar || !m_floating );
     m_propDialog->showProp("Floating", m_bipolar );
 }
 
