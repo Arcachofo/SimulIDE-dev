@@ -21,8 +21,5 @@ class GcbDebugger : public BaseDebugger
 
     private:
         bool mapFlashToSource();
-        void getProcType();
-
-        int m_processorType;
 };
 #endif

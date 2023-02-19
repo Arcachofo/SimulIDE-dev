@@ -48,7 +48,6 @@ int GcbDebugger::getErrorLine( QString txt )
 
 bool GcbDebugger::postProcess()
 {
-    getProcType(); // Determine Pic or Avr
     getSubs();
     bool ok = mapFlashToSource();
     return ok;
@@ -169,17 +168,13 @@ bool GcbDebugger::mapFlashToSource()  // Map asm_source_line <=> gcb_source_line
         else if( asmLine.startsWith(";") ) continue;
         else if( haveVariable )                                // Find Variable Addresses
         {
-            QStringList text;
-            if( m_processorType == 1 )
-            {
-                asmLine.remove( "EQU").replace( "\t", " ");
-                text = asmLine.split(" ");
-            }else{
-                asmLine.remove( ".EQU").remove("\t").remove(" ");
-                text = asmLine.split("=");
-            }
+            asmLine.remove( "EQU").replace( "\t", " ").replace( "=", " ").replace( ".", "");
+            QStringList text = asmLine.split(" ");
+            text.removeAll("");
             QString name = text.first().toLower();
-            int  address = text.last().toInt();
+            bool ok;
+            int address = text.last().toInt(&ok,0);
+
             QString type = "uint8";
             if( m_varTypes.contains( name ) ) type = m_varTypes.value( name );
             eMcu::self()->getRamTable()->addVariable( name, address ,type  );
@@ -255,19 +250,4 @@ bool GcbDebugger::mapFlashToSource()  // Map asm_source_line <=> gcb_source_line
 
     return !m_flashToSource.isEmpty();
 }
-
-void GcbDebugger::getProcType()
-{
-    QStringList lines = fileToStringList( m_buildPath+m_fileName+".asm", "CodeEditor::getProcType" );
-
-    for( QString line : lines )
-    {
-        line = line.toLower();
-        if( line.contains("include") )  // Find info in included header
-        {
-            line.remove("include").remove("#").remove(" ").remove("<").remove(">");
-            if(line.startsWith("p")) m_processorType = 1; // if mcu name starts with p then is Pic
-            else                     m_processorType = 2; // Avr
-            break;
-}   }   }
 
