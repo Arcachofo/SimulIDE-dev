@@ -28,7 +28,7 @@ LibraryItem* ResistorDip::libraryItem()
 {
     return new LibraryItem(
         tr( "ResistorDip" ),
-        tr( "Resistors" ),
+        "Resistors",
         "resistordip.png",
         "ResistorDip",
         ResistorDip::construct);

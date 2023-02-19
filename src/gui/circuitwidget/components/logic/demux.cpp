@@ -23,7 +23,7 @@ LibraryItem* Demux::libraryItem()
 {
     return new LibraryItem(
         tr( "Demux" ),
-        tr( "Converters" ),
+         "Converters" ,
         "demux.png",
         "Demux",
         Demux::construct );

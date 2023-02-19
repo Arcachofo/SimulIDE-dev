@@ -21,7 +21,7 @@ LibraryItem* Max72xx_matrix::libraryItem()
 {
     return new LibraryItem(
         tr( "Max72xx_matrix" ),
-        tr( "Leds" ),
+        "Leds",
         "max72xx.png",
         "Max72xx_matrix",
         Max72xx_matrix::construct);

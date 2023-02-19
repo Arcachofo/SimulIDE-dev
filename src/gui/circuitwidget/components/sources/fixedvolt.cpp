@@ -22,7 +22,7 @@ LibraryItem* FixedVolt::libraryItem()
 {
     return new LibraryItem(
         tr( "Fixed Volt." ),
-        tr( "Sources" ),
+        "Sources",
         "voltage.png",
         "Fixed Voltage",
         FixedVolt::construct );

@@ -21,7 +21,7 @@ LibraryItem* Stepper::libraryItem()
 {
     return new LibraryItem(
         tr("Stepper"),
-        tr("Motors"),
+        "Motors",
         "steeper.png",
         "Stepper",
         Stepper::construct );

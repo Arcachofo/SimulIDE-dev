@@ -20,7 +20,7 @@ LibraryItem* Inductor::libraryItem()
 {
     return new LibraryItem(
         tr( "Inductor" ),
-        tr( "Reactive" ),
+        "Reactive",
         "inductor.png",
         "Inductor",
         Inductor::construct);

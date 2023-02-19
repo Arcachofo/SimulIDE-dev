@@ -29,7 +29,7 @@ LibraryItem* Function::libraryItem()
 {
     return new LibraryItem(
         tr( "Function" ),
-        tr( "Arithmetic" ),
+        "Arithmetic",
         "subc.png",
         "Function",
         Function::construct );

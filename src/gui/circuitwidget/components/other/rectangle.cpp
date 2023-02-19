@@ -14,7 +14,7 @@ LibraryItem* Rectangle::libraryItem()
 {
     return new LibraryItem(
         QObject::tr( "Rectangle" ),
-        QObject::tr( "Graphical" ),
+        "Graphical",
         "rectangle.png",
         "Rectangle",
         Rectangle::construct);

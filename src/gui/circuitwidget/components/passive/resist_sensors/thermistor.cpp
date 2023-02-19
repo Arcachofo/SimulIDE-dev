@@ -19,7 +19,7 @@ LibraryItem* Thermistor::libraryItem()
 {
     return new LibraryItem(
         QObject::tr( "Thermistor" ),
-        QObject::tr( "Resistive Sensors" ),
+        "Resistive Sensors",
         "thermistor.png",
         "Thermistor",
         Thermistor::construct);

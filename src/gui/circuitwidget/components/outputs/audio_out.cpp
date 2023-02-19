@@ -24,7 +24,7 @@ LibraryItem* AudioOut::libraryItem()
 {
     return new LibraryItem(
         tr( "Audio Out" ),
-        tr( "Outputs" ),
+        "Other Outputs",
         "audio_out.png",
         "AudioOut",
         AudioOut::construct);

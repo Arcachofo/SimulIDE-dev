@@ -23,7 +23,7 @@ LibraryItem* SevenSegment::libraryItem()
 {
     return new LibraryItem(
         tr( "7 Segment" ),
-        tr( "Leds" ),
+        "Leds",
         "seven_segment.png",
         "Seven Segment",
         SevenSegment::construct );

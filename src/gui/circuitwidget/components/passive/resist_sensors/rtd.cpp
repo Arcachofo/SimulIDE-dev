@@ -24,7 +24,7 @@ LibraryItem* RTD::libraryItem()
 {
     return new LibraryItem(
         tr( "RTD" ),
-        tr( "Resistive Sensors" ),
+        "Resistive Sensors",
         "rtd.png",
         "RTD",
         RTD::construct );

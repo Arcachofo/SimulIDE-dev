@@ -17,7 +17,7 @@ LibraryItem* SR04::libraryItem()
 {
     return new LibraryItem(
         "HC-SR04",
-        QObject::tr( "Sensors" ),
+        "Sensors",
         "sr04.png",
         "SR04",
         SR04::construct);

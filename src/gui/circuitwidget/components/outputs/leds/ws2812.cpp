@@ -20,7 +20,7 @@ LibraryItem* WS2812::libraryItem()
 {
     return new LibraryItem(
         tr( "WS2812 Led" ),
-        tr( "Leds" ),
+        "Leds",
         "ws2812.png",
         "WS2812",
         WS2812::construct );

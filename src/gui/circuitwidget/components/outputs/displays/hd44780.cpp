@@ -21,7 +21,7 @@ LibraryItem* Hd44780::libraryItem()
 {
     return new LibraryItem(
         tr( "Hd44780" ),
-        tr( "Displays" ),
+        "Displays",
         "hd44780.png",
         "Hd44780",
         Hd44780::construct );

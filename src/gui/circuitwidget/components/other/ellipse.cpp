@@ -14,7 +14,7 @@ LibraryItem* Ellipse::libraryItem()
 {
     return new LibraryItem(
         QObject::tr( "Ellipse" ),
-        QObject::tr( "Graphical" ),
+        "Graphical",
         "ellipse.png",
         "Ellipse",
         Ellipse::construct);

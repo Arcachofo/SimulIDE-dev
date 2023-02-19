@@ -20,7 +20,7 @@ LibraryItem* DAC::libraryItem()
 {
     return new LibraryItem(
         tr( "DAC" ),
-        tr( "Other Logic" ),
+        "Other Logic",
         "3to1.png",
         "DAC",
         DAC::construct );

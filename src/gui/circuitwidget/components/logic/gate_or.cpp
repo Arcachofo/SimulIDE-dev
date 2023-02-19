@@ -18,7 +18,7 @@ LibraryItem* OrGate::libraryItem()
 {
     return new LibraryItem(
         tr( "Or Gate" ),
-        tr( "Gates" ),
+        "Gates",
         "orgate.png",
         "Or Gate",
         OrGate::construct );

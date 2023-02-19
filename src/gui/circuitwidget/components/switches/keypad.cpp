@@ -20,7 +20,7 @@ LibraryItem* KeyPad::libraryItem()
 {
     return new LibraryItem(
         tr( "KeyPad" ),
-        tr( "Switches" ),
+        "Switches",
         "keypad.png",
         "KeyPad",
         KeyPad::construct);

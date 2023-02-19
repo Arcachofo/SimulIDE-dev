@@ -20,7 +20,7 @@ LibraryItem* Ldr::libraryItem()
 {
     return new LibraryItem(
         tr( "LDR" ),
-        tr( "Resistive Sensors" ),
+        "Resistive Sensors",
         "ldr.png",
         "LDR",
         Ldr::construct);

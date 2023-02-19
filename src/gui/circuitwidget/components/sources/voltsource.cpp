@@ -19,7 +19,7 @@ LibraryItem* VoltSource::libraryItem()
 {
     return new LibraryItem(
         tr( "Voltage Source" ),
-        tr( "Sources" ),
+        "Sources",
         "voltsource.png",
         "Voltage Source",
         VoltSource::construct );

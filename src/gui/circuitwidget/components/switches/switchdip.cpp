@@ -25,7 +25,7 @@ LibraryItem* SwitchDip::libraryItem()
 {
     return new LibraryItem(
         tr( "Switch Dip" ),
-        tr( "Switches" ),
+        "Switches",
         "switchdip.png",
         "SwitchDip",
         SwitchDip::construct);

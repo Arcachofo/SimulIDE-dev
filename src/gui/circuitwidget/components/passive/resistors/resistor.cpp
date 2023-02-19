@@ -18,7 +18,7 @@ LibraryItem* Resistor::libraryItem()
 {
     return new LibraryItem(
         tr( "Resistor" ),
-        tr( "Resistors" ),
+        "Resistors",
         "resistor.png",
         "Resistor",
         Resistor::construct);

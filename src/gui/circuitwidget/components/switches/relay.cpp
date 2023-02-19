@@ -23,7 +23,7 @@ LibraryItem* Relay::libraryItem()
 {
     return new LibraryItem(
         tr( "Relay (all)" ),
-        tr( "Switches" ),
+        "Switches",
         "relay-spst.png",
         "RelaySPST",
         Relay::construct);

@@ -20,7 +20,7 @@ LibraryItem* Ks0108::libraryItem()
 {
     return new LibraryItem(
         "Ks0108",
-        tr( "Displays" ),
+        "Displays",
         "ks0108.png",
         "Ks0108",
         Ks0108::construct );

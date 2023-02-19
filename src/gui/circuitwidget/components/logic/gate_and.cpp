@@ -18,7 +18,7 @@ LibraryItem* AndGate::libraryItem()
 {
     return new LibraryItem(
         tr( "And Gate" ),
-        tr( "Gates" ),
+        "Gates",
         "andgate.png",
         "And Gate",
         AndGate::construct );

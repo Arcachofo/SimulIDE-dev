@@ -17,7 +17,7 @@ LibraryItem* XorGate::libraryItem()
 {
     return new LibraryItem(
         tr( "Xor Gate" ),
-        tr( "Gates" ),
+        "Gates",
         "xorgate.png",
         "Xor Gate",
         XorGate::construct );

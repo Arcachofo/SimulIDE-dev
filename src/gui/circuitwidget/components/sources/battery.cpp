@@ -18,7 +18,7 @@ LibraryItem* Battery::libraryItem()
 {
     return new LibraryItem(
         tr( "Battery" ),
-        tr( "Sources" ),
+        "Sources",
         "battery.png",
         "Battery",
         Battery::construct );

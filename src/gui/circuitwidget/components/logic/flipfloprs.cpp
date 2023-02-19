@@ -15,7 +15,7 @@ LibraryItem* FlipFlopRS::libraryItem()
 {
     return new LibraryItem(
         tr( "FlipFlop RS" ),
-        tr( "Memory" ),
+        "Memory",
         "2to2.png",
         "FlipFlopRS",
         FlipFlopRS::construct );

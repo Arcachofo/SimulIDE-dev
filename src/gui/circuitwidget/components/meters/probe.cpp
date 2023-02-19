@@ -24,7 +24,7 @@ LibraryItem* Probe::libraryItem()
 {
     return new LibraryItem(
         tr( "Probe" ),
-        tr( "Meters" ),
+        "Meters",
         "probe.png",
         "Probe",
         Probe::construct );

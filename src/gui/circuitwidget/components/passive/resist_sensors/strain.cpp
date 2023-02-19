@@ -25,7 +25,7 @@ LibraryItem* Strain::libraryItem()
 {
     return new LibraryItem(
         tr( "Force Strain Gauge" ),
-        tr( "Resistive Sensors" ),
+        "Resistive Sensors",
         "strain.png",
         "Strain",
         Strain::construct );

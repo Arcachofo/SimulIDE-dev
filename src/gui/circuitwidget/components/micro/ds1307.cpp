@@ -18,7 +18,7 @@ LibraryItem* DS1307::libraryItem()
 {
     return new LibraryItem(
         "DS1307",
-        QObject::tr( "Perifericals" ),
+        "Perifericals",
         "dsxxx_ico.png",
         "DS1307",
         DS1307::construct );

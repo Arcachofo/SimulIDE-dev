@@ -26,7 +26,7 @@ LibraryItem* Esp01::libraryItem()
 {
     return new LibraryItem(
         "Esp01 (TCP)",
-        tr("Perifericals"),
+        "Perifericals",
         "esp01_ico.png",
         "Esp01",
         Esp01::construct );

@@ -18,7 +18,7 @@ LibraryItem* SevenSegmentBCD::libraryItem()
 {
     return new LibraryItem(
         tr( "7 Seg BCD" ),
-        tr( "Other Logic" ),
+        "Other Logic",
         "7segbcd.png",
         "7-Seg BCD",
         SevenSegmentBCD::construct );

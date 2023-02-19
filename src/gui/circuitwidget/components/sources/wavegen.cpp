@@ -31,7 +31,7 @@ LibraryItem* WaveGen::libraryItem()
 {
     return new LibraryItem(
         tr( "Wave Gen." ),
-        tr( "Sources" ),
+        "Sources",
         "wavegen.png",
         "WaveGen",
         WaveGen::construct );

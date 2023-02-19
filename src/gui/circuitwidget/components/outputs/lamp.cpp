@@ -20,7 +20,7 @@ LibraryItem* Lamp::libraryItem()
 {
     return new LibraryItem(
         tr( "Incandescent lamp" ),
-        tr( "Outputs" ),
+        "Other Outputs",
         "lamp.png",
         "Lamp",
         Lamp::construct);

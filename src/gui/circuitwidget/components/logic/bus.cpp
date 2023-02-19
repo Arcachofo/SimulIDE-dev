@@ -22,7 +22,7 @@ LibraryItem* Bus::libraryItem()
 {
     return new LibraryItem(
         tr( "Bus" ),
-        tr( "Connectors" ),
+        "Connectors",
         "bus.png",
         "Bus",
         Bus::construct );

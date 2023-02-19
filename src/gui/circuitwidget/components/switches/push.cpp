@@ -21,7 +21,7 @@ LibraryItem* Push::libraryItem()
 {
     return new LibraryItem(
         tr( "Push" ),
-        tr( "Switches" ),
+        "Switches",
         "push.png",
         "Push",
         Push::construct);

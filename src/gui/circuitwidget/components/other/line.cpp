@@ -14,7 +14,7 @@ LibraryItem* Line::libraryItem()
 {
     return new LibraryItem(
         QObject::tr( "Line" ),
-        QObject::tr( "Graphical" ),
+        "Graphical",
         "line.png",
         "Line",
         Line::construct);

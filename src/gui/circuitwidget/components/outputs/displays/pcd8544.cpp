@@ -28,7 +28,7 @@ LibraryItem* Pcd8544::libraryItem()
 {
     return new LibraryItem(
         "Pcd8544",
-        QObject::tr( "Displays" ),
+        "Displays",
         "pcd8544.png",
         "Pcd8544",
         Pcd8544::construct );

@@ -28,7 +28,7 @@ LibraryItem* LAnalizer::libraryItem()
 {
     return new LibraryItem(
         tr( "Logic Analizer" ),
-        tr( "Meters" ),
+        "Meters",
         "lanalizer.png",
         "LAnalizer",
         LAnalizer::construct );

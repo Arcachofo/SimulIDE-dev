@@ -20,7 +20,7 @@ LibraryItem* Csource::libraryItem()
 {
     return new LibraryItem(
         tr("Controlled Source"),
-        tr("Sources"),
+        "Sources",
         "csource.png",
         "Csource",
         Csource::construct );

@@ -20,7 +20,7 @@ LibraryItem* Header::libraryItem()
 {
     return new LibraryItem(
         tr( "Header" ),
-        tr( "Connectors" ),
+        "Connectors",
         "header.png",
         "Header",
         Header::construct);

@@ -22,7 +22,7 @@ LibraryItem* Servo::libraryItem()
 {
     return new LibraryItem(
         tr( "Servo" ),
-        tr( "Motors" ),
+        "Motors",
         "servo.png",
         "Servo",
         Servo::construct );

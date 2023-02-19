@@ -37,7 +37,7 @@ LibraryItem* SubPackage::libraryItem()
 {
     return new LibraryItem(
         tr( "Package" ),
-        tr( "Other" ),
+        "Other",
         "subc2.png",
         "Package",
         SubPackage::construct );

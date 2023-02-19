@@ -22,7 +22,7 @@ LibraryItem* Image::libraryItem()
 {
     return new LibraryItem(
         tr( "Image" ),
-        tr( "Graphical" ),
+        "Graphical",
         "image.png",
         "Image",
         Image::construct);

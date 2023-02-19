@@ -17,7 +17,7 @@ LibraryItem* elCapacitor::libraryItem()
 {
     return new LibraryItem(
         QObject::tr( "Electrolytic Capacitor" ),
-        QObject::tr( "Reactive" ),
+        "Reactive",
         "elcapacitor.png",
         "elCapacitor",
         elCapacitor::construct);

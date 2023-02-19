@@ -25,7 +25,7 @@ LibraryItem *DS1621::libraryItem()
 {
     return new LibraryItem(
         tr("DS1621"),
-        tr("Sensors"),
+        "Sensors",
         "ic_comp.png",
         "DS1621",
         DS1621::construct);

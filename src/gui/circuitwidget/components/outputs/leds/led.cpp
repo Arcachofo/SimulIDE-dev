@@ -16,7 +16,7 @@ LibraryItem* Led::libraryItem()
 {
     return new LibraryItem(
         QObject::tr( "Led" ),
-        QObject::tr( "Leds" ),
+        "Leds",
         "led.png",
         "Led",
         Led::construct);

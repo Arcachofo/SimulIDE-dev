@@ -16,7 +16,7 @@ LibraryItem* Ground::libraryItem()
 {
     return new LibraryItem(
         QObject::tr( "Ground (0 V)" ),
-        QObject::tr( "Sources" ),
+        "Sources",
         "ground.png",
         "Ground",
         Ground::construct );

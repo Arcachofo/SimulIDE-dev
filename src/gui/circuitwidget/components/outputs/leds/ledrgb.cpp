@@ -22,7 +22,7 @@ LibraryItem* LedRgb::libraryItem()
 {
     return new LibraryItem(
         tr( "Led Rgb" ),
-        tr( "Leds" ),
+        "Leds",
         "ledrgb.png",
         "LedRgb",
         LedRgb::construct);

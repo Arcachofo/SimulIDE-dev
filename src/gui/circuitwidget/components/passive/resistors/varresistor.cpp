@@ -19,7 +19,7 @@ LibraryItem* VarResistor::libraryItem()
 {
     return new LibraryItem(
         tr( "Variable Resistor" ),
-        tr( "Resistors" ),
+        "Resistors",
         "varresistor.png",
         "VarResistor",
         VarResistor::construct);

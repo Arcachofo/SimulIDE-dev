@@ -14,7 +14,7 @@ LibraryItem* Voltimeter::libraryItem()
 {
     return new LibraryItem(
         QObject::tr( "Voltmeter" ),
-        QObject::tr( "Meters" ),
+        "Meters",
         "voltimeter.png",
         "Voltimeter",
         Voltimeter::construct);

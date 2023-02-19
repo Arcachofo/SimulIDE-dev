@@ -13,7 +13,7 @@ LibraryItem* Amperimeter::libraryItem()
 {
     return new LibraryItem(
         QObject::tr( "Ampmeter" ),
-        QObject::tr( "Meters" ),
+        "Meters",
         "amperimeter.png",
         "Amperimeter",
         Amperimeter::construct);

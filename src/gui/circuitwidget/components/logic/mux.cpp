@@ -23,7 +23,7 @@ LibraryItem* Mux::libraryItem()
 {
     return new LibraryItem(
         tr( "Mux" ),
-        tr( "Converters" ),
+         "Converters" ,
         "mux.png",
         "Mux",
         Mux::construct );

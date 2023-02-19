@@ -20,7 +20,7 @@ LibraryItem* Clock::libraryItem()
 {
     return new LibraryItem(
         tr( "Clock" ),
-        tr( "Sources" ),
+        "Sources",
         "clock.png",
         "Clock",
         Clock::construct );

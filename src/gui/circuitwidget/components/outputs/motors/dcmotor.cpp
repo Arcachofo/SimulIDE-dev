@@ -22,7 +22,7 @@ LibraryItem* DcMotor::libraryItem()
 {
     return new LibraryItem(
         tr("Dc Motor"),
-        tr("Motors"),
+        "Motors",
         "dcmotor.png",
         "DcMotor",
         DcMotor::construct );

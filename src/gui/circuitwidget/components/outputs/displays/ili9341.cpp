@@ -17,7 +17,7 @@ LibraryItem* Ili9341::libraryItem()
 {
     return new LibraryItem(
         "Ili9341" ,
-        QObject::tr( "Displays" ),
+        "Displays",
         "ili9341.png",
         "Ili9341",
         Ili9341::construct );

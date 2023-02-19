@@ -21,7 +21,7 @@ LibraryItem* LatchD::libraryItem()
 {
     return new LibraryItem(
         tr( "Latch" ),
-        tr( "Memory" ),
+        "Memory",
         "subc.png",
         "LatchD",
         LatchD::construct );

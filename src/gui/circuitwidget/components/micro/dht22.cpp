@@ -24,7 +24,7 @@ LibraryItem* Dht22::libraryItem()
 {
     return new LibraryItem(
         "DHt22/11",
-        tr( "Sensors" ),
+        "Sensors",
         "dht22.png",
         "Dht22",
         Dht22::construct );

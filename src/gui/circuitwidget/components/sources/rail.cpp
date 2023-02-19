@@ -20,7 +20,7 @@ LibraryItem* Rail::libraryItem()
 {
     return new LibraryItem(
         tr( "Rail" ),
-        tr( "Sources" ),
+        "Sources",
         "voltage.png",
         "Rail",
         Rail::construct );

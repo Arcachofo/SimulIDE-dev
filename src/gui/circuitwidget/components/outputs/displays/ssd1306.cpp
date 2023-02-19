@@ -22,7 +22,7 @@ LibraryItem* Ssd1306::libraryItem()
 {
     return new LibraryItem(
         "SSD1306",
-        tr( "Displays" ),
+        "Displays",
         "ssd1306.png",
         "Ssd1306",
         Ssd1306::construct );

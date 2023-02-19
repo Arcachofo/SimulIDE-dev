@@ -20,11 +20,11 @@ Component* Mosfet::construct( QObject* parent, QString type, QString id )
 LibraryItem* Mosfet::libraryItem()
 {
     return new LibraryItem(
-            tr( "Mosfet" ),
-            "Transistors",
-            "mosfet.png",
-            "Mosfet",
-            Mosfet::construct);
+        tr( "Mosfet" ),
+        "Transistors",
+        "mosfet.png",
+        "Mosfet",
+        Mosfet::construct);
 }
 
 Mosfet::Mosfet( QObject* parent, QString type, QString id )

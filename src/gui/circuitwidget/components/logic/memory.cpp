@@ -25,7 +25,7 @@ LibraryItem* Memory::libraryItem()
 {
     return new LibraryItem(
         tr( "Ram/Rom" ),
-        tr( "Memory" ),
+        "Memory",
         "2to3g.png",
         "Memory",
         Memory::construct );

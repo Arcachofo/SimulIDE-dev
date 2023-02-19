@@ -15,7 +15,7 @@ LibraryItem* Capacitor::libraryItem()
 {
     return new LibraryItem(
         QObject::tr( "Capacitor" ),
-        QObject::tr( "Reactive" ),
+        "Reactive",
         "capacitor.png",
         "Capacitor",
         Capacitor::construct);

@@ -23,7 +23,7 @@ LibraryItem* Transformer::libraryItem()
 {
     return new LibraryItem(
         tr("Transformer"),
-        tr("Reactive"),
+        "Reactive",
         "transformer.png",
         "Transformer",
         Transformer::construct );

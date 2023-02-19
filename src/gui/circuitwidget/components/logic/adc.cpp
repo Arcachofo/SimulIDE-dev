@@ -21,7 +21,7 @@ LibraryItem* ADC::libraryItem()
 {
     return new LibraryItem(
         tr( "ADC" ),
-        tr( "Other Logic" ),
+        "Other Logic",
         "1to3.png",
         "ADC",
         ADC::construct );

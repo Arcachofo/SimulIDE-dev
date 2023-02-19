@@ -14,7 +14,7 @@ LibraryItem* FlipFlopD::libraryItem()
 {
     return new LibraryItem(
         tr( "FlipFlop D" ),
-        tr( "Memory" ),
+        "Memory",
         "2to2.png",
         "FlipFlopD",
         FlipFlopD::construct );
