@@ -481,6 +481,11 @@ void CodeEditor::updateLineNumberArea( const QRect &rect, int dy )
     if( rect.contains( viewport()->rect() ) ) updateLineNumberAreaWidth( 0 );
 }
 
+void CodeEditor::dropEvent( QDropEvent* event )
+{
+    EditorWindow::self()->dropEvent( event );
+}
+
 void CodeEditor::resizeEvent( QResizeEvent* e )
 {
     QPlainTextEdit::resizeEvent( e );
