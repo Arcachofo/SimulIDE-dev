@@ -1,0 +1,25 @@
+
+#chip 16F883, 20 
+
+#define USART_BAUD_RATE 9600
+#define USART_BLOCKING
+#define SerInPort PORTc.7
+#define SerOutPort PORTc.6
+
+Dir PORTB out
+Dir SerOutPort Out
+Dir SerInPort In
+
+Dim data as byte
+
+for data = 0 to 255
+  PORTB = data
+  HSerSend data
+  wait 500 ms
+next
+
+Do
+Loop
+
+
+
