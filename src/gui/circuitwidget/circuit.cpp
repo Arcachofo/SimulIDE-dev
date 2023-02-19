@@ -1024,6 +1024,10 @@ void Circuit::keyPressEvent( QKeyEvent* event )
             for( Node*      nod : m_nodeList ) nod->setSelected( true );
             for( Connector* con : m_conList  ) con->setSelected( true );
         }
+        else if( key == Qt::Key_R )
+        {
+            for( Component* com : m_compList ) if (com->isSelected()) com->rotateCW();
+        }
         else QGraphicsScene::keyPressEvent( event );
     }
     else if( key == Qt::Key_Delete || key == Qt::Key_Backspace )

@@ -344,7 +344,7 @@ void Component::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu 
                          this, SLOT(slotProperties()), Qt::UniqueConnection );
     menu->addSeparator();
 
-    QAction* rotateCWAction = menu->addAction( QIcon( ":/rotatecw.svg"),tr("Rotate CW") );
+    QAction* rotateCWAction = menu->addAction( QIcon( ":/rotatecw.svg"),tr("Rotate CW")+"\tCtrl+R" );
     connect( rotateCWAction, SIGNAL( triggered()),
                        this, SLOT(rotateCW()), Qt::UniqueConnection );
 
