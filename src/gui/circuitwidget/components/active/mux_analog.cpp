@@ -24,7 +24,7 @@ LibraryItem* MuxAnalog::libraryItem()
 {
     return new LibraryItem(
         tr( "Analog Mux" ),
-        tr( "Active" ),
+        "Other Active",
         "1to3-c.png",
         "MuxAnalog",
         MuxAnalog::construct );

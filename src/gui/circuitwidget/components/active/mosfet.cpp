@@ -21,7 +21,7 @@ LibraryItem* Mosfet::libraryItem()
 {
     return new LibraryItem(
             tr( "Mosfet" ),
-            tr( "Active" ),
+            "Transistors",
             "mosfet.png",
             "Mosfet",
             Mosfet::construct);

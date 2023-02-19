@@ -184,8 +184,10 @@ void ItemLibrary::loadItems()
     addItem( SCR::libraryItem() );
     addItem( Diac::libraryItem() );
     addItem( Triac::libraryItem() );
+    addItem( new LibraryItem( QObject::tr("Transistors"), "Active", "transistors.png","Transistors", NULL ) );
     addItem( Mosfet::libraryItem() );
     addItem( BJT::libraryItem() );
+    addItem( new LibraryItem( QObject::tr("Other Active"), "Active", "2to2.png","Other Active", NULL ) );
     addItem( OpAmp::libraryItem() );
     addItem( VoltReg::libraryItem() );
     addItem( MuxAnalog::libraryItem() );

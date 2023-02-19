@@ -21,7 +21,7 @@ LibraryItem* Diode::libraryItem()
 {
     return new LibraryItem(
         tr( "Diode" ),
-        tr( "Rectifiers" ),
+        "Rectifiers",
         "diode.png",
         "Diode",
         Diode::construct);

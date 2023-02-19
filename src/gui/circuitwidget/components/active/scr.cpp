@@ -24,7 +24,7 @@ LibraryItem* SCR::libraryItem()
 {
     return new LibraryItem(
         tr( "SCR" ),
-        tr( "Rectifiers" ),
+        "Rectifiers",
         "scr.png",
         "SCR",
         SCR::construct );

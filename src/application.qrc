@@ -193,6 +193,7 @@
         <file alias="resistors.png">../src/icons/components/resistors.png</file>
         <file alias="resistorsensors.png">../src/icons/components/resistorsensors.png</file>
         <file alias="rectifiers.png">../src/icons/components/rectifiers.png</file>
+        <file alias="transistors.png">../src/icons/components/transistors.png</file>
         
         <file alias="switchbut.png">../src/icons/mainwindow/switchbut.png</file>
         

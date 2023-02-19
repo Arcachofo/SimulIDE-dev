@@ -24,7 +24,7 @@ LibraryItem* Diac::libraryItem()
 {
     return new LibraryItem(
         tr( "Diac" ),
-        tr( "Rectifiers" ),
+        "Rectifiers",
         "diac.png",
         "Diac",
         Diac::construct );

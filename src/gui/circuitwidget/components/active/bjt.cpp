@@ -23,7 +23,7 @@ LibraryItem* BJT::libraryItem()
 {
     return new LibraryItem(
         tr( "BJT" ),
-        tr( "Active" ),
+        "Transistors",
         "bjt.png",
         "BJT",
         BJT::construct );
