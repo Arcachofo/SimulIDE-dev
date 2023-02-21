@@ -441,7 +441,7 @@ void CodeEditor::contextMenuEvent( QContextMenuEvent* event )
     QMenu *menu = createStandardContextMenu();
     menu->addSeparator();
 
-    QAction* reloadAction = menu->addAction( QIcon(":/reload.svg"), tr("Reload Document") );
+    QAction* reloadAction = menu->addAction( QIcon(":/reload.svg"), tr("Reload Document")+"\tCtrl+R" );
     connect( reloadAction, SIGNAL( triggered()),
              EditorWindow::self(), SLOT(reload()), Qt::UniqueConnection );
 

@@ -24,8 +24,6 @@
 #include "simulator.h"
 #include "utils.h"
 
-#include "mcucreator.h" /// TODELETE
-
 EditorWidget::EditorWidget( QWidget* parent )
             : QWidget( parent )
             , m_outPane( this )
@@ -55,9 +53,8 @@ bool EditorWidget::close()
     writeSettings();
 
     for( int i=0; i<m_docWidget->count(); i++ )
-    {
         closeTab( m_docWidget->currentIndex() );
-    }
+
     return maybeSave();
 }
 
@@ -73,7 +70,7 @@ void EditorWidget::newFile()
     connect( codeEditor->document(), SIGNAL( contentsChanged()),
              this,                   SLOT(   documentWasModified()), Qt::UniqueConnection);
 
-    m_fileList << "New";
+    m_fileList["New"] = codeEditor;
     codeEditor->document()->setModified( true );
     documentWasModified();
     enableFileActs( true );
@@ -86,11 +83,7 @@ void EditorWidget::open()
     QString fileName = QFileDialog::getOpenFileName( this, tr("Load File"), dir,
                        tr("All files")+" (*);;Arduino (*.ino);;Asm (*.asm);;GcBasic (*.gcb)" );
 
-    if( !fileName.isEmpty() )
-    {
-        loadFile( fileName );
-        if( fileName.endsWith(".dat") ) McuCreator::convert( fileName ); /// TODELETE
-    }
+    if( !fileName.isEmpty() ) loadFile( fileName );
 }
 
 void EditorWidget::openRecentFile()
@@ -143,24 +136,37 @@ void EditorWidget::dropEvent( QDropEvent* event )
 
 void EditorWidget::keyPressEvent( QKeyEvent* event )
 {
-    if( event->key() == Qt::Key_N && (event->modifiers() & Qt::ControlModifier))
+    if( event->modifiers() & Qt::ControlModifier )
     {
-        newFile();
+        if( event->key() == Qt::Key_N )
+        {
+            newFile();
+        }
+        else if( event->key() == Qt::Key_S )
+        {
+            if( event->modifiers() & Qt::ShiftModifier) saveAs();
+            else                                        save();
+        }
+        else if( event->key() == Qt::Key_O )
+        {
+            open();
+        }
+        else if( event->key() == Qt::Key_R )
+        {
+            reload();
+        }
     }
-    else if( event->key() == Qt::Key_S && (event->modifiers() & Qt::ControlModifier))
-    {
-        if( event->modifiers() & Qt::ShiftModifier) saveAs();
-        else                                        save();
-    }
-    else if( event->key() == Qt::Key_O && (event->modifiers() & Qt::ControlModifier))
-    {
-        open();
-}   }
+}
 
 void EditorWidget::loadFile( const QString &fileName )
 {
+    if( !QFileInfo::exists( fileName ) )
+    {
+        m_outPane.appendLine( tr("File doesn't exist")+":\n"+fileName );
+        return;
+    }
     if( m_fileList.contains( fileName ) )
-        m_docWidget->setCurrentIndex( m_fileList.indexOf( fileName ) );
+        m_docWidget->setCurrentWidget( m_fileList.value( fileName ) );
 
     else newFile();
     QApplication::setOverrideCursor( Qt::WaitCursor );
@@ -173,9 +179,12 @@ void EditorWidget::loadFile( const QString &fileName )
     if( file.exists() ) loadBreakpoints( fileName +".brk" );
 
     m_lastDir = fileName;
+
     int index = m_docWidget->currentIndex();
-    m_fileList.replace( index, fileName );
+    m_fileList.remove("New");
+    m_fileList[fileName] = ce;
     m_docWidget->setTabText( index, getFileName(fileName) );
+
     enableFileActs( true );
     enableDebugActs( true );
 
@@ -192,7 +201,7 @@ void EditorWidget::loadFile( const QString &fileName )
 
 void EditorWidget::reload()
 {
-    QString fileName = m_fileList.at( m_docWidget->currentIndex() );
+    QString fileName = m_fileList.key( m_docWidget->currentWidget() );
     loadFile( fileName );
 }
 
@@ -219,7 +228,7 @@ bool EditorWidget::saveAs()
     QString fileName = QFileDialog::getSaveFileName( this, tr("Save Document As"), path, extensions );
     if( fileName.isEmpty() ) return false;
 
-    m_fileList.replace( m_docWidget->currentIndex(), fileName );
+    m_fileList[fileName] = ce;
 
     return saveFile( fileName );
 }
@@ -329,17 +338,15 @@ void EditorWidget::documentWasModified()
     if( doc->isUndoAvailable() ) undoAct->setEnabled( true );
 }
 
-void EditorWidget::tabChanged( int tab )
+/*void EditorWidget::tabChanged( int tab )
 {
     //qDebug() << "EditorWindow::tabChanged" << m_docWidget->currentIndex() << tab;
-}
+}*/
 
 void EditorWidget::closeTab( int index )
 {
     m_docWidget->setCurrentIndex( index );
     if( !maybeSave() ) return;
-
-    m_fileList.removeAt(index);
 
     if( m_fileList.isEmpty() )  // disable file actions
     {
@@ -348,9 +355,10 @@ void EditorWidget::closeTab( int index )
     }
     if( m_debuggerToolBar->isVisible() ) stop();
 
-    CodeEditor* doc = (CodeEditor*)m_docWidget->currentWidget();
+    CodeEditor* ce = getCodeEditor();
+    m_fileList.remove( m_fileList.key( ce ) );
     m_docWidget->removeTab( index );
-    delete doc;
+    delete ce;
 
     int last = m_docWidget->count()-1;
     if( index > last ) m_docWidget->setCurrentIndex( last );
@@ -482,7 +490,7 @@ void EditorWidget::createWidgets()
     double fontScale = MainWindow::self()->fontScale();
     QString fontSize = QString::number( int(10*fontScale) );
     m_docWidget->tabBar()->setStyleSheet("QTabBar { font-size:"+fontSize+"px; }");
-    //m_docWidget->setMovable( true );
+    m_docWidget->setMovable( true );
 
     splitter0->addWidget( m_docWidget );
     splitter0->addWidget( &m_outPane );
@@ -491,12 +499,7 @@ void EditorWidget::createWidgets()
     connect( m_docWidget, SIGNAL( tabCloseRequested(int)),
              this,        SLOT(   closeTab(int)), Qt::UniqueConnection);
 
-    /*connect( m_docWidget, SIGNAL( customContextMenuRequested(const QPoint &)),
-             this,        SLOT(   tabContextMenu(const QPoint &)), Qt::UniqueConnection);*/
-
-    connect( m_docWidget, SIGNAL(currentChanged(int)), this, SLOT(tabChanged(int)), Qt::UniqueConnection);
-
-    //setLayout( vLayout );
+    //connect( m_docWidget, SIGNAL(currentChanged(int)), this, SLOT(tabChanged(int)), Qt::UniqueConnection);
 
     m_findRepDialog = new FindReplace( this );
     m_findRepDialog->setModal( false );

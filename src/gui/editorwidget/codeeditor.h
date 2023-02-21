@@ -83,7 +83,7 @@ class CodeEditor : public QPlainTextEdit
         void dropEvent( QDropEvent* event );
         void resizeEvent( QResizeEvent* event );
         void keyPressEvent( QKeyEvent* event );
-        void contextMenuEvent (QContextMenuEvent* event );
+        void contextMenuEvent( QContextMenuEvent* event );
 
     private:
         QString changeCompilerFromCode();

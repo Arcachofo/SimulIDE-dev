@@ -49,7 +49,7 @@ class EditorWidget : public QWidget
         bool saveAs();
         void closeTab(int);
         void documentWasModified();
-        void tabChanged( int tab );
+        //void tabChanged( int tab );
         void reload();
 
         void cut()   { getCodeEditor()->cut(); }
@@ -93,7 +93,7 @@ class EditorWidget : public QWidget
         OutPanelText m_outPane;
 
         QString     m_lastDir;
-        QStringList m_fileList;
+        QHash<QString, QWidget*> m_fileList;
 
         QTabWidget*  m_docWidget;
 
