@@ -317,7 +317,7 @@
       </spacer>
      </item>
      <item>
-      <widget class="QPushButton" name="expandButton">
+      <widget class="CustomButton" name="expandButton">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
          <horstretch>0</horstretch>
@@ -355,6 +355,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>CustomButton</class>
+   <extends>QToolButton</extends>
+   <header location="global">custombutton.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>
