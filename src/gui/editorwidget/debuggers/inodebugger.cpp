@@ -101,13 +101,15 @@ void InoDebugger::setToolPath( QString path )
 bool InoDebugger::upload() // Copy hex file to Circuit folder, then upload
 {
     QString circDir  = Circuit::self()->getFilePath();
-    QString firmPath =  m_firmware;
+    if( !circDir.isEmpty() )
+    {
+        QString firmPath =  m_firmware;
 
-    QDir circuitDir = QFileInfo( circDir ).absoluteDir();
-    m_firmware = circuitDir.absolutePath()+"/"+m_fileName+".hex";
-    circuitDir.remove( m_fileName+".hex" );
-    QFile::copy( firmPath, m_firmware );
-
+        QDir circuitDir = QFileInfo( circDir ).absoluteDir();
+        m_firmware = circuitDir.absolutePath()+"/"+m_fileName+".hex";
+        circuitDir.remove( m_fileName+".hex" );
+        QFile::copy( firmPath, m_firmware );
+    }
     return BaseDebugger::upload();
 }
 
