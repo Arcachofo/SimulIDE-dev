@@ -29,10 +29,12 @@ void NumVal::setup()
 
     if( unit.isEmpty() || unit.startsWith("_") )
     {
+        m_useMult = false;
         unitBox->setStyleSheet( "QComboBox::drop-down {border-width: 0px;} \
                                  QComboBox::down-arrow {image: url(noimg); border-width: 0px;}");
-        if( unit.startsWith("_") ) unitBox->addItem( unit.remove("_") );
+        if( unit.startsWith("_") ) unitBox->addItem( unit.remove("_") ); // No multiplier
     }else{
+        m_useMult = true;
         QString un = unit;
         QRegExp r = QRegExp("^([pnµumkMGT])");
         if( r.indexIn( unit ) == 0 ) un.remove( 0, 1 ); // Remove multiplier
@@ -66,7 +68,8 @@ void NumVal::on_valueBox_valueChanged( double val )
     if( m_blocked ) return;
     m_blocked = true;
 
-    m_property->setValStr( getValWithUnit() );
+    if( m_useMult ) m_property->setValStr( getValWithUnit() );
+    else            m_property->setValStr( QString::number( valueBox->value() ) );
     m_blocked = false;
     m_propDialog->updtValues();
 }
@@ -89,7 +92,7 @@ void NumVal::updtValues()
     showVal->setChecked( m_component->showProp() == m_propName );
 
     double multiplier = 1;
-    if( unitBox->count() > 1 ) multiplier = getMultiplier( unitBox->currentText() );
+    if( m_useMult ) multiplier = getMultiplier( unitBox->currentText() );
     double val = m_property->getValue()/multiplier;
     valueBox->setValue( val );
 

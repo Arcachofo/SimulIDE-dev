@@ -32,6 +32,8 @@ class NumVal : public PropVal, private Ui::NumVal
 
     private:
         QString m_type;
+
+        bool m_useMult;
 };
 
 #endif
