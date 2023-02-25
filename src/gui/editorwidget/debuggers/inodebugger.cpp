@@ -26,7 +26,7 @@ InoDebugger::InoDebugger( CodeEditor* parent, OutPanelText* outPane )
     m_version = 0;
     m_Ardboard = Uno;
     m_ArdboardList << "uno" << "megaADK" << "nano" << "diecimila" << "leonardo" << "custom";
-    m_buildPath = MainWindow::self()->getFilePath("data/codeeditor/buildIno");
+    m_buildPath = MainWindow::self()->getConfigPath("codeeditor/buildIno");
 }
 InoDebugger::~InoDebugger() {}
 
