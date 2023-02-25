@@ -6,12 +6,12 @@
 #ifndef BATTERY_H
 #define BATTERY_H
 
-#include "e-element.h"
 #include "comp2pin.h"
+#include "e-resistor.h"
 
 class LibraryItem;
 
-class MAINMODULE_EXPORT Battery : public Comp2Pin, public eElement
+class MAINMODULE_EXPORT Battery : public Comp2Pin, public eResistor
 {
         Q_OBJECT
     public:
@@ -24,7 +24,10 @@ class MAINMODULE_EXPORT Battery : public Comp2Pin, public eElement
         double volt() { return m_volt; }
         void setVolt( double volt );
 
+        virtual void setRes( double resist ) override;
+
         virtual void stamp() override;
+        virtual void updateStep() override;
 
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
 

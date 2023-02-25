@@ -26,39 +26,59 @@ LibraryItem* Battery::libraryItem()
 
 Battery::Battery( QObject* parent, QString type, QString id )
        : Comp2Pin( parent, type, id )
-       , eElement( id )
+       , eResistor( id )
 {
     m_area = QRect( -10, -10, 20, 20 );
 
     m_volt = 5;
+    m_admit = 1e3;
+
+    m_ePin[0] = m_pin[0];
+    m_ePin[1] = m_pin[1];
 
     setLabelPos(-18,-22, 0 );
     setValLabelPos(-10, 10, 0 ); // x, y, rot
 
+    Simulator::self()->addToUpdateList( this );
+
     addPropGroup( { tr("Main"), {
-new DoubProp<Battery>( "Voltage", tr("Voltage"), "V", this, &Battery::volt, &Battery::setVolt )
+new DoubProp<Battery>( "Voltage"   , tr("Voltage")   ,"V", this, &Battery::volt, &Battery::setVolt ),
+new DoubProp<Battery>( "Resistance", tr("Resistance"),"Ω", this, &Battery::res,  &Battery::setRes ),
     } } );
 }
 Battery::~Battery() {}
 
 void Battery::stamp()
 {
-    m_pin[0]->setEnodeComp( m_pin[1]->getEnode() );
-    m_pin[1]->setEnodeComp( m_pin[0]->getEnode() );
-    m_pin[0]->stampAdmitance( 1/cero_doub );
-    m_pin[1]->stampAdmitance( 1/cero_doub );
-qDebug() <<"\nBattery::stamp"<<m_volt/cero_doub;
+    eResistor::stamp();
+
     m_pin[0]->createCurrent();
     m_pin[1]->createCurrent();
-    m_pin[0]->stampCurrent( m_volt/cero_doub );
-    m_pin[1]->stampCurrent(-m_volt/cero_doub );
+    m_pin[0]->stampCurrent( m_volt*m_admit );
+    m_pin[1]->stampCurrent(-m_volt*m_admit );
+}
+
+void Battery::updateStep()
+{
+    if( !m_changed ) return;
+
+    stampAdmit();
+    m_pin[0]->stampCurrent( m_volt*m_admit );
+    m_pin[1]->stampCurrent(-m_volt*m_admit );
 }
 
 void Battery::setVolt( double volt )
 {
-    if( Simulator::self()->isRunning() ) CircuitWidget::self()->powerCircOff();
     if( volt < 1e-12 ) volt = 1e-12;
     m_volt = volt;
+    m_changed = true;
+}
+
+void Battery::setRes( double resist )
+{
+    if( resist < 1e-14 ) resist = 1e-14;
+    m_admit = 1/resist;
+    m_changed = true;
 }
 
 void Battery::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
