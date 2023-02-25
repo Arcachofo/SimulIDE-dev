@@ -90,8 +90,6 @@ class MAINMODULE_EXPORT PlotBase : public Component, public ScriptModule
         int m_baSizeX;
         int m_baSizeY;
 
-        double m_dataSize;
-
         uint64_t m_timeDiv;
         uint64_t m_risEdge;
 

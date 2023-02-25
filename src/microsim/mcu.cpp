@@ -84,7 +84,7 @@ Mcu::Mcu( QObject* parent, QString type, QString id )
     m_clkPin[0]  = NULL;
     m_clkPin[1]  = NULL;
     m_resetPin   = NULL;
-    m_portRstPin  = NULL;
+    m_portRstPin = NULL;
     m_mcuMonitor = NULL;
     m_autoLoad   = false;
     m_extClock   = false;
@@ -157,7 +157,6 @@ Mcu::Mcu( QObject* parent, QString type, QString id )
             return;
         }
     }
-
 
     QSettings* settings = MainWindow::self()->settings();
     m_lastFirmDir = settings->value("lastFirmDir").toString();

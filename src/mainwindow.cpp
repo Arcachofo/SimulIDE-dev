@@ -73,8 +73,9 @@ MainWindow::MainWindow()
     createWidgets();
 
     m_userDir = m_settings->value( "userPath" ).toString();
-    QDir userDir( m_userDir );
-    if( userDir.exists() )
+    if( m_userDir.isEmpty() || !QDir( m_userDir ).exists() )
+        m_userDir = getConfigPath("addons");
+    if( !m_userDir.isEmpty() && QDir( m_userDir ).exists() )
     {
         ComponentSelector::self()->LoadCompSetAt( m_userDir );
         m_fileSystemTree->addEntry( "User Data", m_userDir );

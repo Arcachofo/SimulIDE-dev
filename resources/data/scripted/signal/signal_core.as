@@ -28,7 +28,7 @@ void reset() // Executed at Simulation start
     cycles = 1;
 }
 
-void extClock()  // Function called 1e6 times per sec.
+void extClock( bool clkState )  // Function called 1e6 times per sec.
 {
     if( cycles == 0 )
     {

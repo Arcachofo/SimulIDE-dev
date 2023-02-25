@@ -4,6 +4,7 @@
     <step 
         command="avr-gcc"
         arguments=" -mmcu=$device -Wall -g -Os -o $buildPath$fileName.elf $filePath"
+        argsDebug=" -mmcu=$device -Wall -g -Og -o $buildPath$fileName.elf $filePath"
     />
     <step 
         command="avr-objcopy"

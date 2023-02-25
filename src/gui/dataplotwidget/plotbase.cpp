@@ -55,6 +55,8 @@ PlotBase::PlotBase( QObject* parent, QString type, QString id )
     }
     Simulator::self()->addToUpdateList( this );
 
+    m_timeStep = 1000;
+    m_autoExport = false;
     m_exportFile = changeExt( Circuit::self()->getFilePath(), "_"+id+".vcd" );
 
     addPropGroup( { tr("Main"), {

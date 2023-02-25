@@ -81,13 +81,9 @@ LAnalizer::LAnalizer( QObject* parent, QString type, QString id )
     expand( false );
     setTrigger( 9 ); // Trigger = None
 
-    m_timeStep = 1000;
-    m_autoExport = false;
-
     addPropGroup( { tr("Export"), {
 new IntProp <LAnalizer>( "TimeStep"  ,tr("Base Time Step") ,"_ps", this, &LAnalizer::timeStep,   &LAnalizer::setTimeStep, "uint" ),
 new BoolProp<LAnalizer>( "AutoExport",tr("Export at pause"),""   , this, &LAnalizer::autoExport, &LAnalizer::setAutoExport ),
-//new IntProp <PlotBase>( "BufferSize" ,tr("Buffer Size")  ,tr("Samples"), this, &PlotBase::bufferSize, &PlotBase::setBufferSize, "uint" ),
     }} );
 
     addProperty(  "Hidden", {

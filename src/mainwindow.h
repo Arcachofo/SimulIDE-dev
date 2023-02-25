@@ -68,10 +68,10 @@ class MAINMODULE_EXPORT MainWindow : public QMainWindow
 
         QString getHelp( QString name );
 
-        QString getUserFilePath( QString f );
-        QString userPath() { return m_userDir; }
+        QString getUserFilePath( QString f );             // Get file path in user folder
+        QString userPath() { return m_userDir; }          // User folder path
         void setUserPath( QString p ) { m_userDir = p; }
-        void getUserPath();
+        void getUserPath();                               // File open Dialog
         
         QTabWidget* m_sidepanel;
 

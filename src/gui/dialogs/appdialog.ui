@@ -225,57 +225,57 @@
              </property>
              <item>
               <property name="text">
-               <string>English</string>
+               <string notr="true">English</string>
               </property>
              </item>
              <item>
               <property name="text">
-               <string>Czech</string>
+               <string notr="true">Čeština</string>
               </property>
              </item>
              <item>
               <property name="text">
-               <string>Dutch</string>
+               <string notr="true">Nederlands</string>
               </property>
              </item>
              <item>
               <property name="text">
-               <string>French</string>
+               <string notr="true">Français</string>
               </property>
              </item>
              <item>
               <property name="text">
-               <string>German</string>
+               <string notr="true">Deutsch</string>
               </property>
              </item>
              <item>
               <property name="text">
-               <string>Italian</string>
+               <string notr="true">Italiano</string>
               </property>
              </item>
              <item>
               <property name="text">
-               <string>Russian</string>
+               <string notr="true">Русский</string>
               </property>
              </item>
              <item>
               <property name="text">
-               <string>Spanish</string>
+               <string notr="true">Español</string>
               </property>
              </item>
              <item>
               <property name="text">
-               <string>Portuguese</string>
+               <string notr="true">Português</string>
               </property>
              </item>
              <item>
               <property name="text">
-               <string>Pt_Brasil</string>
+               <string notr="true">Brasileiro</string>
               </property>
              </item>
              <item>
               <property name="text">
-               <string>Turkish</string>
+               <string notr="true">Türkçe</string>
               </property>
              </item>
             </widget>

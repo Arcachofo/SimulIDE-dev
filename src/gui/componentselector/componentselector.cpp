@@ -123,7 +123,7 @@ void ComponentSelector::loadXml( const QString &setFile )
                 parent = category;
                 category = catPath.takeFirst();
                 catItem = getCategory( category );
-                if( !catItem && !parent.isEmpty() )
+                if( !catItem /*&& !parent.isEmpty()*/ )
                 {
                     QString catTr = QObject::tr( category.toLocal8Bit() );
                     catItem = addCategory( catTr, category, parent, icon );
