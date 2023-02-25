@@ -29,6 +29,7 @@ class EditorWidget : public QWidget
         bool close();
 
        CodeEditor* getCodeEditor();
+       //CodeEditor* getCodeEditor( QString file );
 
        void dropEvent( QDropEvent* event );
 

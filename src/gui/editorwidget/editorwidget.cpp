@@ -48,6 +48,11 @@ CodeEditor* EditorWidget::getCodeEditor()
     return (CodeEditor*)m_docWidget->currentWidget();
 }
 
+/*CodeEditor* EditorWidget::getCodeEditor( QString file )
+{
+    return (CodeEditor*)m_fileList.value( file );
+}*/
+
 bool EditorWidget::close()
 {
     writeSettings();
@@ -166,7 +171,10 @@ void EditorWidget::loadFile( const QString &fileName )
         return;
     }
     if( m_fileList.contains( fileName ) )
+    {
         m_docWidget->setCurrentWidget( m_fileList.value( fileName ) );
+        return;
+    }
 
     else newFile();
     QApplication::setOverrideCursor( Qt::WaitCursor );
@@ -631,7 +639,7 @@ void EditorWidget::createToolBars()
 
     for( int i=0; i<MaxRecentFiles; i++ ) m_fileMenu.addAction( recentFileActs[i] );
     QToolButton* fileButton = new QToolButton( this );
-    fileButton->setStatusTip( tr("Last Circuits") );
+    fileButton->setToolTip( tr("Last Files") );
     fileButton->setMenu( &m_fileMenu );
     fileButton->setIcon( QIcon(":/lastfiles.svg") );
     fileButton->setPopupMode( QToolButton::InstantPopup );

@@ -134,7 +134,7 @@ bool GputilsDebug::mapFlashToSource( BaseDebugger* debugger )
             int addr = words.at(2).toInt( &ok, 16 );
             if( !ok ) continue;
 
-            debugger->setLineToFlash( lineN, addr );
+            debugger->setLineToFlash( {debugger->file(), lineN }, addr );
             continue;
         }
         if( line.startsWith( ";") && line.contains(".line") )
@@ -201,7 +201,7 @@ bool GputilsDebug::mapFlashToAsm( BaseDebugger* debugger )
             int addr = words.at(2).toInt( &ok, 16 );
             if( !ok ) continue;
 
-            debugger->setLineToFlash( lineN, addr );
+            debugger->setLineToFlash( {debugger->file(), lineN }, addr );
             continue;
         }
         if( line.startsWith( ";") && line.contains(".line") )

@@ -67,9 +67,9 @@ void BaseDebugger::preProcess()
 
 bool BaseDebugger::postProcess()
 {
-    m_lastLine = 0;
+    //m_lastLine = 0;
     m_flashToSource.clear();
-    m_sourceToFlash.clear();
+    //m_sourceToFlash.clear();
 
     QString lstFile = m_buildPath+m_fileName+".lst";
     if( !QFileInfo::exists( lstFile ) )
@@ -114,7 +114,7 @@ bool BaseDebugger::postProcess()
                 int address = lstLine.toInt( &ok, 16 );
                 if( ok )
                 {
-                    setLineToFlash( srcLineNumber, m_codeStart+address );
+                    setLineToFlash( {srcFile, srcLineNumber}, m_codeStart+address );
                     continue;
             }   }
             if( lstLine.contains( file ) )
@@ -194,7 +194,7 @@ bool BaseDebugger::postProcess()
             int address = m_codeStart+words.at( index ).toInt( &ok, 16 );
             if( ok )
             {
-                setLineToFlash( srcLineNumber, address );
+                setLineToFlash( {srcFile, srcLineNumber}, address );
                 if( !funcName.isEmpty() )                  // Subroutine starting here
                 {
                     m_functions[funcName] = address;
@@ -216,21 +216,14 @@ void BaseDebugger::pause()
 {
     m_running = false;
     m_debugStep = false;
+    EditorWindow::self()->pauseAt( m_prevLine );
 }
 
 void BaseDebugger::stepFromLine( bool over )
 {
-    m_prevLine = m_editor->debugLine();
-    if( m_prevLine == 1 )
-    {
-        m_prevLine = m_flashToSource.value( 0 );
-        m_editor->setDebugLine( m_prevLine );
-        return;
-    }
     m_over = over;
     m_exitPC = 0;
     m_debugStep = true;
-    m_brkPoints = m_editor->getBreakPoints();
 }
 
 void BaseDebugger::stepDebug()
@@ -258,19 +251,11 @@ void BaseDebugger::stepDebug()
         }
         if( m_flashToSource.contains( PC ) )
         {
-            int line = m_flashToSource.value( PC );
+            codeLine_t line = m_flashToSource.value( PC );
             if( line != m_prevLine )
             {
                 m_prevLine = line;
-                m_editor->setDebugLine( line );
-
-                if( m_running                        // We are running to Breakpoint
-                 && !m_brkPoints->contains( line ) ) // Breakpoint not reached, Keep stepping
-                { return; }
-
-                m_running = false;
-                m_debugStep = false;
-                EditorWindow::self()->lineReached();
+                EditorWindow::self()->lineReached( line );
 }   }   }   }
 
 void BaseDebugger::getInfoInFile( QString line )
@@ -328,26 +313,39 @@ bool BaseDebugger::isNoValid( QString line )
            || line.startsWith(".") );
 }
 
-void BaseDebugger::setLineToFlash( int line, int addr )
+void BaseDebugger::setLineToFlash( codeLine_t line, int addr )
 {
-    if( !m_sourceToFlash.contains( line ) )
+    //int lineNumber = line.lineNumber;
+    if( !m_flashToSource.contains( addr ) )
     {
         //qDebug() << " line:" << line << "addr:" << addr;
-        if( line > m_lastLine ) m_lastLine = line;
+        //if( lineNumber > m_lastLine ) m_lastLine = lineNumber;
         m_flashToSource[ addr ] = line;
-        m_sourceToFlash[ line ] = addr;
+        ///qDebug() <<addr<<line.lineNumber<<line.file;
+        //m_sourceToFlash[ lineNumber ] = addr;
     }
 }
 
-int BaseDebugger::getValidLine( int line )
+int BaseDebugger::getValidLine( codeLine_t line )
 {
-    while( !m_sourceToFlash.contains(line) && line<=m_lastLine ) line++;
-    return line;
+    int lineNumber = line.lineNumber;
+    int lastLine = 0;
+    QList<int> lineList;
+    for( codeLine_t cd : m_flashToSource.values() ){
+        if( line.file == cd.file )
+        {
+            if( cd.lineNumber > lastLine ) lastLine = cd.lineNumber;
+            lineList.append( cd.lineNumber );
+        }
+    }
+    while( !lineList.contains( lineNumber ) && lineNumber<=lastLine ) lineNumber++;
+    if( lineNumber == lastLine && !lineList.contains( lineNumber ) ) return -1; // No valid line found
+    return lineNumber;
 }
 
-bool BaseDebugger::isMappedLine( int line )
+bool BaseDebugger::isMappedLine( codeLine_t line )
 {
-    return m_sourceToFlash.contains(line);
+    return m_flashToSource.values().contains(line);
 }
 
 QString BaseDebugger::getVarType( QString var )

@@ -130,6 +130,7 @@ int Compiler::compile( bool debug )
     int error = 0;
     QApplication::setOverrideCursor( Qt::WaitCursor );
 
+    m_fileList.clear();
     preProcess();
 
     for( int i=0; i<m_command.size(); ++i )
@@ -188,8 +189,8 @@ int Compiler::runBuildStep( QString fullCommand )
 
 void Compiler::compiled( QString firmware )
 {
-    m_fileList.clear();
-    m_fileList.append( m_fileName+m_fileExt );
+    //m_fileList.clear();
+    //m_fileList.append( m_file ); //( m_fileName+m_fileExt );
     if( m_fileExt == ".hex" ) m_uploadHex = true;
     if( m_uploadHex ) m_firmware = firmware;
     else              m_firmware = "";

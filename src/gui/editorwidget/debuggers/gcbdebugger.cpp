@@ -83,7 +83,8 @@ bool GcbDebugger::mapFlashToSource()  // Map asm_source_line <=> gcb_source_line
     QStringList varList;
     m_varTypes.clear();
 
-    QStringList gcbLines = fileToStringList( m_fileDir+m_fileName+".gcb", "GcbDebugger::mapFlashToSource" );
+    QString filePath = m_fileDir+m_fileName+".gcb";
+    QStringList gcbLines = fileToStringList( filePath, "GcbDebugger::mapFlashToSource" );
 
     int lineNum = 0;
     for( QString gcbLine : gcbLines )              // Get Declared Variables
@@ -138,7 +139,7 @@ bool GcbDebugger::mapFlashToSource()  // Map asm_source_line <=> gcb_source_line
     }   }   }   }
 
     m_flashToSource.clear();
-    m_sourceToFlash.clear();
+    //m_sourceToFlash.clear();
 
     QString lstFile = m_buildPath+m_fileName+".lst";
     if( !QFileInfo::exists( lstFile ) )
@@ -198,7 +199,7 @@ bool GcbDebugger::mapFlashToSource()  // Map asm_source_line <=> gcb_source_line
 
     int gcbLineNum = 0;
     bool hasCeroAddr = false; // Deal with Banksel addr=0
-    m_lastLine = 0;
+    //m_lastLine = 0;
     QString srcm = ";SOURCE:F1L";  // Gcbasic parses source lines to asm file
     QString funcName;
 
@@ -234,7 +235,7 @@ bool GcbDebugger::mapFlashToSource()  // Map asm_source_line <=> gcb_source_line
                         if( hasCeroAddr ) continue;
                         hasCeroAddr = true;
                     }
-                    setLineToFlash( gcbLineNum, flashAddr );
+                    setLineToFlash( {filePath, gcbLineNum}, flashAddr );
 
                     if( !funcName.isEmpty() ) // Subroutine starting here
                     {

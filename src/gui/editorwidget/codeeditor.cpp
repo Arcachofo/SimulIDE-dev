@@ -261,8 +261,8 @@ void CodeEditor::addBreakPoint( int line )
 {
     if( EditorWindow::self()->debugState() == DBG_RUNNING ) return;
     if( EditorWindow::self()->debugState() > DBG_STOPPED )
-        line = m_compiler->getValidLine( line );
-    if( !m_brkPoints.contains( line ) )
+        line = EditorWindow::self()->debugger()->getValidLine( {m_file, line} );
+    if( line > 0 && !m_brkPoints.contains( line ) )
     {
         //QTextBlock block = document()->findBlockByNumber( line-1 );
         //UserData* data = (UserData*)block.userData();
@@ -290,8 +290,8 @@ void CodeEditor::startDebug()
     QList<int> brkPoints;
     for( int line : m_brkPoints )
     {
-        line = EditorWindow::self()->debugger()->getValidLine( line );
-        if( !brkPoints.contains( line ) ) brkPoints.append( line );
+        line = EditorWindow::self()->debugger()->getValidLine( {m_file, line} );
+        if( line > 0 && !brkPoints.contains( line ) ) brkPoints.append( line );
     }
     m_brkPoints = brkPoints;
     update();
@@ -436,16 +436,50 @@ void CodeEditor::keyPressEvent( QKeyEvent* event )
         if( event->key() == Qt::Key_Return ) insertPlainText( tabs );
 }   }
 
+void CodeEditor::deleteSelected()
+{
+    textCursor().insertText( "" );
+}
+
 void CodeEditor::contextMenuEvent( QContextMenuEvent* event )
 {
-    QMenu *menu = createStandardContextMenu();
-    menu->addSeparator();
+    QMenu menu;
 
-    QAction* reloadAction = menu->addAction( QIcon(":/reload.svg"), tr("Reload Document")+"\tCtrl+R" );
+    QAction* undoAction = menu.addAction(QIcon(":/undo.svg"),tr("Undo")+"\tCtrl+Z");
+    connect( undoAction, SIGNAL( triggered()),
+              this, SLOT(undo()), Qt::UniqueConnection );
+
+    QAction* redoAction = menu.addAction(QIcon(":/redo.svg"),tr("Redo")+"\tCtrl+Y");
+    connect( redoAction, SIGNAL( triggered()),
+              this, SLOT(redo()), Qt::UniqueConnection );
+
+    menu.addSeparator();
+
+    QAction* cutAction = menu.addAction(QIcon(":/cut.svg"),tr("Cut")+"\tCtrl+X");
+    connect( cutAction, SIGNAL( triggered()),
+                   this, SLOT(cut()), Qt::UniqueConnection );
+
+    QAction* copyAction = menu.addAction(QIcon(":/copy.svg"),tr("Copy")+"\tCtrl+C");
+    connect( copyAction, SIGNAL( triggered()),
+                   this, SLOT(copy()), Qt::UniqueConnection );
+
+    QAction* pasteAction = menu.addAction(QIcon(":/paste.svg"),tr("Paste")+"\tCtrl+V");
+    connect( pasteAction, SIGNAL( triggered()),
+                    this, SLOT(paste()), Qt::UniqueConnection );
+
+    QAction* removeAction = menu.addAction( QIcon( ":/remove.svg"),tr("Remove") );
+    connect( removeAction, SIGNAL( triggered()),
+                     this, SLOT(deleteSelected()), Qt::UniqueConnection );
+
+    if( !textCursor().hasSelection() ) removeAction->setDisabled( true );
+
+    menu.addSeparator();
+
+    QAction* reloadAction = menu.addAction(QIcon(":/reload.svg"), tr("Reload Document")+"\tCtrl+R");
     connect( reloadAction, SIGNAL( triggered()),
              EditorWindow::self(), SLOT(reload()), Qt::UniqueConnection );
 
-    menu->exec( event->globalPos() );
+    menu.exec( event->globalPos() );
 }
 
 QString CodeEditor::changeCompilerFromCode()
@@ -584,6 +618,13 @@ void CodeEditor::lineNumberAreaPaintEvent( QPaintEvent* event )
 
         if( block.isVisible() )
         {
+            BaseDebugger* bd = EditorWindow::self()->debugger();
+            if( bd && bd->isMappedLine( {m_file,lineNumber} ) )
+            {
+                painter.setBrush( QColor( 180, 180, 170 ) );
+                painter.setPen( Qt::NoPen );
+                painter.drawRect( 0, top, fontSize, fontSize );
+            }
             if( m_compiler )                            // Breakpoints an error indicator
             {
                 //UserData* data = (UserData*)block.userData();
@@ -606,12 +647,6 @@ void CodeEditor::lineNumberAreaPaintEvent( QPaintEvent* event )
                     painter.setBrush( QColor(Qt::yellow) );
                     painter.setPen( Qt::NoPen );
                     painter.drawRect( 0, top+2, fontSize, fontSize-4 );
-                }
-                else if( m_compiler->isMappedLine( lineNumber ) )
-                {
-                    painter.setBrush( QColor( 180, 180, 170 ) );
-                    painter.setPen( Qt::NoPen );
-                    painter.drawRect( 0, top, fontSize, fontSize );
                 }
 
                 if( lineNumber == m_debugLine ) // Draw debug line icon

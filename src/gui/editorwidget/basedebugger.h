@@ -10,6 +10,15 @@
 
 #include "compiler.h"
 
+struct codeLine_t{
+    QString file;
+    int     lineNumber;
+    bool operator!=(const codeLine_t& lhs )
+    { return lhs.file != file || lhs.lineNumber != lineNumber; }
+    bool operator==(const codeLine_t& lhs )
+    { return lhs.file == file && lhs.lineNumber == lineNumber; }
+};
+
 class BaseDebugger : public Compiler    // Base Class for all debuggers
 {
         friend class eMcu;
@@ -29,10 +38,10 @@ class BaseDebugger : public Compiler    // Base Class for all debuggers
         void setLstType( int type ) { m_lstType = type; }
         void setLangLevel( int level ) { m_langLevel = level; }
 
-        void setLineToFlash( int line, int addr );
+        void setLineToFlash( codeLine_t line, int addr );
 
-        int getValidLine( int pc );
-        bool isMappedLine( int line );
+        int getValidLine( codeLine_t pc );
+        bool isMappedLine( codeLine_t line );
 
         QString getVarType( QString var );
 
@@ -56,11 +65,13 @@ class BaseDebugger : public Compiler    // Base Class for all debuggers
         bool m_debugStep;
         bool m_running;
         bool m_over;
-        int  m_prevLine;
-        int  m_exitPC;
-        QList<int>* m_brkPoints;
 
-        int m_lastLine;
+        codeLine_t m_prevLine;
+
+        int  m_exitPC;
+        //QList<int>* m_brkPoints;
+
+        //int m_lastLine;
         int m_lstType;   // Bit0: 0 doesn't use ":" (gpasm ), 1 uses ":" (avra, gavrasm)
                          // Bit1: position of flash address (0 or 1)
         int m_langLevel; // 0 for asm, 1 for high level
@@ -69,11 +80,11 @@ class BaseDebugger : public Compiler    // Base Class for all debuggers
         QString m_appPath;
         
         QHash<QString, QString> m_typesList;
-        QHash<QString, QString> m_varTypes; // Variable name-Type got from source file
-        QHash<int, int> m_flashToSource;    // Map flash adress to Source code line
-        QHash<int, int> m_sourceToFlash;    // Map .asm code line to flash adress
-        QHash<QString, int> m_functions;    // Function name list->start Address
-        QList<int>          m_funcAddr;     // Function start Address list
+        QHash<QString, QString> m_varTypes;     // Variable name-Type got from source file
+        QHash<int, codeLine_t> m_flashToSource; // Map flash adress to Source code line
+        //QHash<int, int> m_sourceToFlash;        // Map Source code line to flash adress
+        QHash<QString, int> m_functions;        // Function name list->start Address
+        QList<int>          m_funcAddr;         // Function start Address list
 };
 
 #endif

@@ -50,8 +50,8 @@ int SdccDebugger::compile( bool debug )
 bool SdccDebugger::postProcess()
 {
     m_flashToSource.clear();
-    m_sourceToFlash.clear();
-    m_lastLine = 0;
+    //m_sourceToFlash.clear();
+    //m_lastLine = 0;
 
     if( m_family.startsWith("pic") )
     {

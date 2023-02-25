@@ -39,7 +39,7 @@ bool AvrGccDebugger::postProcess()
     if( !ok ) return false;
 
     m_flashToSource.clear();
-    m_sourceToFlash.clear();
+    //m_sourceToFlash.clear();
     return mapFlashToSource();
 }
 
@@ -217,25 +217,27 @@ bool AvrGccDebugger::mapFlashToSource()
         flashToLine.closeWriteChannel();
         flashToLine.waitForFinished();
 
-        m_lastLine = 0;
+        //m_lastLine = 0;
         for( int flashAddr=0; flashAddr<flashSize; ++flashAddr ) // Map Flash Address to Source Line
         {
             QString p_stdout = flashToLine.readLine();
             if( p_stdout.isEmpty() ) continue;
             if( p_stdout.startsWith("?") ) continue;
 
-            //m_outPane->appendLine(p_stdout);
             int idx = p_stdout.lastIndexOf( ":" );
             if( idx == -1 ) continue;
 
-            QString fileName = QFileInfo( p_stdout.left( idx ) ).fileName();
-            if( m_fileList.contains( fileName ) )
+
+            QString filePath = QFileInfo( p_stdout.left( idx ) ).filePath();//  .fileName();
+            if( m_fileList.contains( filePath ) )
             {
                 bool ok = false;
                 int line = p_stdout.mid( idx+1 ).toInt( &ok );
                 if( !ok ) continue;
                 int addr = flashAddr*m_addrBytes/2;
-                setLineToFlash( line, addr );
+                //qDebug() << QString::number(flashAddr,16)<<addr<<line <<" -----> "<< p_stdout;
+
+                setLineToFlash( {filePath,line}, addr );
         }   }
         flashToLine.close();
     }

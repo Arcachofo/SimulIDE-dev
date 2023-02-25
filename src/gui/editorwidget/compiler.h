@@ -28,6 +28,7 @@ class Compiler : public QObject
         QString compName() { return m_compName; }
         QString fileName() { return m_fileName; }
         QString buildPath() { return m_buildPath; }
+        QString file() { return m_file ; }
 
         virtual QString toolPath() { return m_toolPath; }
         virtual void setToolPath( QString path );

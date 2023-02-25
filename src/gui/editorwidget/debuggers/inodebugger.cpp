@@ -5,6 +5,7 @@
 
 #include <QApplication>
 #include <QSettings>
+#include <QDebug>
 
 #include "inodebugger.h"
 #include "outpaneltext.h"
@@ -74,6 +75,7 @@ void InoDebugger::setToolPath( QString path )
             getConfig.waitForFinished();
             QString config = getConfig.readAllStandardOutput();
             getConfig.close();
+            //qDebug() << config;
 
             QStringList configLines = config.split( "\n" );
             QRegExp rx( "^  data: .*$" );
@@ -113,10 +115,14 @@ bool InoDebugger::upload() // Copy hex file to Circuit folder, then upload
     return BaseDebugger::upload();
 }
 
-int InoDebugger::compile( bool )
+int InoDebugger::compile( bool debug )
 {
     if( m_version == 0 ) { toolChainNotFound(); return -1; }
     QApplication::setOverrideCursor(Qt::WaitCursor);
+
+    m_fileList.clear();
+    m_fileList.append( m_file );
+    preProcess();
 
     QString cBuildPath = m_buildPath+"/build";
     QString cCachePath = m_buildPath+"/cache";
@@ -156,6 +162,7 @@ int InoDebugger::compile( bool )
         QString userLibrar = addQuotes( m_sketchBook+"/libraries" );
 
         command += " -compile";
+        //if( debug ) command += " -prefs={compiler.optimization_flags=-Og"};
         command += " -hardware "+hardware;
         command += " -tools "+toolsBuild;
         command += " -tools "+toolsAvr;
@@ -169,6 +176,7 @@ int InoDebugger::compile( bool )
     {
         command += " compile";
         command += " --no-color";
+        if( debug ) command += " --optimize-for-debug";
         command += " --fqbn="+boardName;
         command += " --build-path "+cBuildPath;
         command += " --build-cache-path "+cCachePath;

@@ -3,6 +3,8 @@
  *                                                                         *
  ***( see copyright.txt file at root folder )*******************************/
 
+#include <QDirIterator>
+
 #include "cdebugger.h"
 #include "utils.h"
 
@@ -30,6 +32,9 @@ void cDebugger::preProcess()
 {
     QStringList lines = fileToStringList( m_file, "BaseDebugger::preProcess" );
     getInfoInFile( lines.first() );
+
+    QDirIterator it( m_fileDir, {"*.c", "*.cpp", "*.h"}, QDir::Files, QDirIterator::Subdirectories);
+    while( it.hasNext() ) m_fileList.append( it.next() );
 
     m_varTypes.clear();
 

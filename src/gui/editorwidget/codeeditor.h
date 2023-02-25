@@ -78,6 +78,7 @@ class CodeEditor : public QPlainTextEdit
         void updateLineNumberAreaWidth(int) { setViewportMargins( lineNumberAreaWidth(), 0, 0, 0 ); }
         void updateLineNumberArea( const QRect &, int );
         void highlightCurrentLine();
+        void deleteSelected();
 
     protected:
         void dropEvent( QDropEvent* event );

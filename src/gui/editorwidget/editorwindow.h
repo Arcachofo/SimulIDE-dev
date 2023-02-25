@@ -8,6 +8,7 @@
 
 #include "editorwidget.h"
 #include "updatable.h"
+#include "basedebugger.h"
 
 enum bebugState_t{
     DBG_STOPPED = 0,
@@ -16,7 +17,6 @@ enum bebugState_t{
     DBG_RUNNING
 };
 
-class BaseDebugger;
 class Compiler;
 
 class EditorWindow : public EditorWidget, public Updatable
@@ -35,15 +35,13 @@ class EditorWindow : public EditorWidget, public Updatable
             QString type;
         };
 
-        bool driveCirc() { return m_driveCirc; }
-        void setDriveCirc( bool drive );
-
         BaseDebugger* debugger() { return m_debugger; }
 
         virtual void updateStep();
 
         bool debugStarted() { return (m_state > DBG_STOPPED); }
-        void lineReached();
+        void lineReached( codeLine_t line );
+        void pauseAt( codeLine_t line );
 
         bebugState_t debugState() { return m_state; }
 
@@ -80,10 +78,13 @@ class EditorWindow : public EditorWidget, public Updatable
         CodeEditor*   m_debugDoc;
         BaseDebugger* m_debugger;
         bool m_stepOver;
-        bool m_driveCirc;
+        //bool m_driveCirc;
         bool m_updateScreen;
         int m_lastCycle;
         double m_lastTime;
+
+        QString m_debugFile;
+        int     m_debugLine;
 
         bebugState_t m_state;
         bebugState_t m_resume;
