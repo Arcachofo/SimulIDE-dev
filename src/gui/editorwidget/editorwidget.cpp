@@ -356,17 +356,17 @@ void EditorWidget::closeTab( int index )
     m_docWidget->setCurrentIndex( index );
     if( !maybeSave() ) return;
 
+    CodeEditor* ce = getCodeEditor();
+    m_fileList.remove( m_fileList.key( ce ) );
+    m_docWidget->removeTab( index );
+    delete ce;
+
     if( m_fileList.isEmpty() )  // disable file actions
     {
         enableFileActs( false );
         enableDebugActs( false );
     }
     if( m_debuggerToolBar->isVisible() ) stop();
-
-    CodeEditor* ce = getCodeEditor();
-    m_fileList.remove( m_fileList.key( ce ) );
-    m_docWidget->removeTab( index );
-    delete ce;
 
     int last = m_docWidget->count()-1;
     if( index > last ) m_docWidget->setCurrentIndex( last );
