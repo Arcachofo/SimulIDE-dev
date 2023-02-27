@@ -83,8 +83,9 @@ void IoPin::runEvent()
         }else{
             double delta = m_step;
             if( m_step == 0 ) delta = 1e-5;
-            if( nextState ) stampVolt( m_outLowV+delta*(m_outHighV-m_outLowV)/m_steps ); // L to H
-            else            stampVolt( m_outHighV-delta*(m_outHighV-m_outLowV)/m_steps );// H to L
+            bool LtoH = (m_nextState && !m_inverted)||(!m_nextState && m_inverted);
+            if( LtoH ) stampVolt( m_outLowV+delta*(m_outHighV-m_outLowV)/m_steps ); // L to H
+            else       stampVolt( m_outHighV-delta*(m_outHighV-m_outLowV)/m_steps );// H to L
         }
         int time = nextState ? m_timeRis : m_timeFal;
         Simulator::self()->addEvent( time/m_steps, this );
