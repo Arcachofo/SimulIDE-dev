@@ -71,8 +71,7 @@ void IoPin::runEvent()
         m_step = 0;
         IoPin::setOutState( m_nextState );
     }else{
-        bool nextState = m_nextState;
-        if( m_inverted ) nextState = !nextState;
+        bool nextState = m_inverted ? !m_nextState : m_nextState;
 
         if( m_pinMode == openCo )
         {
@@ -83,9 +82,8 @@ void IoPin::runEvent()
         }else{
             double delta = m_step;
             if( m_step == 0 ) delta = 1e-5;
-            bool LtoH = (m_nextState && !m_inverted)||(!m_nextState && m_inverted);
-            if( LtoH ) stampVolt( m_outLowV+delta*(m_outHighV-m_outLowV)/m_steps ); // L to H
-            else       stampVolt( m_outHighV-delta*(m_outHighV-m_outLowV)/m_steps );// H to L
+            if( nextState ) stampVolt( m_outLowV+delta*(m_outHighV-m_outLowV)/m_steps ); // L to H
+            else            stampVolt( m_outHighV-delta*(m_outHighV-m_outLowV)/m_steps );// H to L
         }
         int time = nextState ? m_timeRis : m_timeFal;
         Simulator::self()->addEvent( time/m_steps, this );
@@ -103,8 +101,9 @@ void IoPin::sheduleState( bool state, uint64_t time )
         Simulator::self()->cancelEvents( this );
         m_step = m_steps-m_step;
     }
-    if( time ) Simulator::self()->addEvent( time, this );
-    else runEvent();
+    if     ( time )    Simulator::self()->addEvent( time, this );
+    else if( m_steps ) IoPin::runEvent();
+    else               IoPin::setOutState( m_nextState );
 }
 
 void IoPin::startLH()
