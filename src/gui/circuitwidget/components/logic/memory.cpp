@@ -57,7 +57,7 @@ Memory::Memory( QObject* parent, QString type, QString id )
     m_oePin->setInverted( true );
     m_otherPin[2] = m_oePin;
 
-    m_asynchro = false;
+    m_asynchro = true;
     m_dataBytes = 1;
     m_addrBits = 0;
     m_dataBits = 0;
