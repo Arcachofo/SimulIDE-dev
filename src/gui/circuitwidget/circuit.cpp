@@ -146,7 +146,8 @@ void Circuit::loadStrDoc( QString &doc )
     Component* lastComp = NULL;
     QList<ShieldSubc*> shieldList;
 
-    m_busy    = true;
+    int rev = 0;
+    m_busy  = true;
     if( !m_undo && !m_redo ) m_LdPinMap.clear();
 
     QVector<QStringRef> docLines = doc.splitRef("\n");
@@ -169,6 +170,7 @@ void Circuit::loadStrDoc( QString &doc )
                 else if( name == "NLsteps" ) m_simulator->setMaxNlSteps( val.toUInt() );
                 else if( name == "reaStep" ) m_simulator->setreactStep( val.toULongLong() );
                 else if( name == "animate" ) setAnimate( val.toInt() );
+                else if( name == "rev"     ) rev = val.toInt();
             }
         }
         else if( line.contains("<mainCompProps") )
@@ -287,8 +289,10 @@ void Circuit::loadStrDoc( QString &doc )
                     conList.append( con );
                     m_newComp = con;
                     m_compMap[newUid] = con;
-                    //startpin->isMoved();
-                    //endpin->isMoved();
+                    if( !rev ){
+                        startpin->isMoved();
+                        endpin->isMoved();
+                    }
                     int number = newUid.split("-").last().toInt();
                     if( number > m_seqNumber ) m_seqNumber = number; // Adjust item counter: m_seqNumber
                 }
