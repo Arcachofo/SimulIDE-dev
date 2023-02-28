@@ -187,10 +187,10 @@ McuPin* McuPort::getPin( QString pinName )
     }else{
         for( McuPin* mcuPin : m_pins )
         {
+            if( !mcuPin ) continue;
             QString pid = mcuPin->pinId();
             pid = pid.split("-").last().remove( m_name );
-            if( pid == pinName )
-                return mcuPin;
+            if( pid == pinName ) return mcuPin;
         }
     }
     //if( !pin )
