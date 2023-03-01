@@ -39,7 +39,7 @@ class MAINMODULE_EXPORT Tunnel : public Component
         void setTunnelUid( QString uid ) { m_tunUid = uid; }
 
         void setEnode( eNode* node );
-        void setPacked( bool p ){ m_packed = p; }
+        void setPacked( bool p );
         void removeTunnel();
 
         Pin* getPin() { return m_pin[0]; }

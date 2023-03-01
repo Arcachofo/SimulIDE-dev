@@ -136,6 +136,17 @@ void Tunnel::setRotated( bool rot )
     Circuit::self()->update();
 }
 
+void Tunnel::setPacked( bool p )
+{
+    m_packed = p;
+    if( this->parent() )
+    {
+        Component* comp = (Component*)parent();
+        connect( comp, SIGNAL( flip( int, int ) ),
+                   this, SIGNAL( flip( int, int ) ), Qt::UniqueConnection );
+    }
+}
+
 void Tunnel::removeTunnel()
 {
     if( m_name.isEmpty() ) return;
