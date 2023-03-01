@@ -610,13 +610,13 @@ void CodeEditor::lineNumberAreaPaintEvent( QPaintEvent* event )
 
         block = firstVisibleBlock();
     }
-    while( block.isValid() )
+    while( block.isValid()  && top <= event->rect().bottom() )
     {
         int blockSize = (int)blockBoundingRect( block ).height();
         int bottom = top + blockSize;
         int lineNumber = block.blockNumber() + 1;
 
-        if( block.isVisible() )
+        if( block.isVisible() && bottom >= event->rect().top() )
         {
             BaseDebugger* bd = EditorWindow::self()->debugger();
             if( bd && bd->isMappedLine( {m_file,lineNumber} ) )
