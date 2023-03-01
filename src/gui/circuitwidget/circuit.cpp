@@ -14,6 +14,7 @@
 #include "itemlibrary.h"
 #include "mainwindow.h"
 #include "circuitwidget.h"
+#include "comproperty.h"
 #include "connectorline.h"
 #include "componentselector.h"
 #include "node.h"
@@ -202,7 +203,7 @@ void Circuit::loadStrDoc( QString &doc )
 
             QStringRef name;
             QVector<QStringRef> props = line.split("\"");
-            QVector<QStringRef> properties;
+            QHash<QStringRef, QStringRef> properties;
             for( QStringRef prop : props )
             {
                 if( prop.size() > 1 && prop.endsWith("=") )
@@ -219,7 +220,7 @@ void Circuit::loadStrDoc( QString &doc )
                     else if( name == "objectName" ) uid   = prop.toString();
                     else if( name == "label"      ) label = prop.toString();
                     else if( name == "id"         ) label = prop.toString();
-                    else properties << name << prop ;
+                    else properties[name] = prop ;
             }   }
             if( type.isEmpty() ) { qDebug() << "ERROR: Component with no type:"<<label<< uid; continue;}
 
@@ -238,16 +239,17 @@ void Circuit::loadStrDoc( QString &doc )
                 QString startpinid, endpinid;
                 QStringList pointList;
 
-                QString name = "";
-                for( QStringRef prop : properties )
+                QString name;
+                QStringRef val;
+                for( QStringRef prop : properties.keys() )
                 {
-                    if( name.isEmpty() ) { name = prop.toString(); continue; }
+                    name = prop.toString();
+                    val  = properties.value( prop );
 
-                    if     ( name == "startpinid") startpinid = prop.toString();
-                    else if( name == "endpinid"  ) endpinid   = prop.toString();
-                    else if( name == "pointList" ) pointList  = prop.toString().split(",");
-                    else if( name == "uid"       ) uid   = prop.toString();
-                    name = "";
+                    if     ( name == "startpinid") startpinid = val.toString();
+                    else if( name == "endpinid"  ) endpinid   = val.toString();
+                    else if( name == "pointList" ) pointList  = val.toString().split(",");
+                    else if( name == "uid"       ) uid        = val.toString();
                 }
                 if( m_pasting )
                 {
@@ -309,14 +311,15 @@ void Circuit::loadStrDoc( QString &doc )
                     m_idMap[uid] = newUid; // Map simu id to new id
                     joint->setSelected( true );
                 }
-                QString name = "";
-                for( QStringRef prop : properties )
+                QString name;
+                QStringRef val;
+                for( QStringRef prop : properties.keys() )
                 {
-                    if( name.isEmpty() ) { name = prop.toString(); continue; }
-                    if     ( name == "Pos") joint->setPropStr( "Pos", prop.toString() );
-                    else if( name == "x"  ) joint->setX( prop.toInt() );
-                    else if( name == "y"  ) joint->setY( prop.toInt() );
-                    name = "";
+                    name = prop.toString();
+                    val  = properties.value( prop );
+                    if     ( name == "Pos") joint->setPropStr( "Pos", val.toString() );
+                    else if( name == "x"  ) joint->setX( val.toInt() );
+                    else if( name == "y"  ) joint->setY( val.toInt() );
                 }
                 int number = joint->objectName().split("-").last().toInt();
                 if( number > m_seqNumber ) m_seqNumber = number; // Adjust item counter: m_seqNumber
@@ -361,11 +364,29 @@ void Circuit::loadStrDoc( QString &doc )
                         if( shield->subcType() >= Chip::Shield ) shieldList.append( shield );
                     }
                     comp->setPropStr( "label", label ); //setIdLabel( label );
-                    QString propName = "";
-                    for( QStringRef prop : properties )
+
+                    QList<propGroup> groups = comp->propeties(); // Set properties in correct order
+                    for( propGroup group : groups )
                     {
-                        if( propName.isEmpty() ) { propName = prop.toString(); continue; }
-                        QString value = prop.toString();
+                        QList<ComProperty*> propList = group.propList;
+                        if( !propList.isEmpty() )
+                        {
+                            for( ComProperty* prop : propList )
+                            {
+                                QString qpn = prop->name();
+                                QStringRef pn( &qpn );
+                                if( !properties.contains( pn ) ) continue;
+                                prop->setValStr( properties.value( pn ).toString() );
+                                properties.remove( pn );
+                            }
+                        }
+                    }
+                    QString propName;
+                    QString value;
+                    for( QStringRef prop : properties.keys() )
+                    {
+                        propName = prop.toString();
+                        value    = properties.value( prop ).toString();
                         if( !comp->setPropStr( propName, value ) ) // SUBSTITUTIONS
                         {
                             if( propName == "Propagation_Delay_ns") { propName = "Tpd_ps"; value.append("000"); }
@@ -374,7 +395,6 @@ void Circuit::loadStrDoc( QString &doc )
                             if( !comp->setPropStr( propName, value ) )
                                 if( oldArduino && mcu ) mcu->setPropStr( propName, value );
                         }
-                        propName = "";
                     }
                     int number = comp->objectName().split("-").last().toInt();
                     if( number > m_seqNumber ) m_seqNumber = number;               // Adjust item counter: m_seqNumber
