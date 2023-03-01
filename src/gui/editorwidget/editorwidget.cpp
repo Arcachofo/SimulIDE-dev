@@ -458,13 +458,13 @@ void EditorWidget::enableDebugActs( bool enable )
     loadAct->setEnabled( enable );
 }
 
-void EditorWidget::setStepActs()
+void EditorWidget::setStepActs(  bool s )
 {
-    runAct->setEnabled( false );
-    stepAct->setEnabled( false );
-    stepOverAct->setEnabled( false );
-    resetAct->setEnabled( false );
-    pauseAct->setEnabled( true );
+    runAct->setEnabled( s );
+    stepAct->setEnabled( s );
+    stepOverAct->setEnabled( s );
+    resetAct->setEnabled( s );
+    pauseAct->setEnabled( !s );
 }
 
 void EditorWidget::createWidgets()

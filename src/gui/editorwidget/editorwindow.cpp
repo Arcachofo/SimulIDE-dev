@@ -78,7 +78,7 @@ void EditorWindow::debug()
 
 void EditorWindow::run()
 { 
-    setStepActs();
+    setStepActs( false );
 
     if( m_state == DBG_STOPPED ) return;
     m_state = DBG_RUNNING;
@@ -88,13 +88,13 @@ void EditorWindow::run()
 
 void EditorWindow::step()
 { 
-    setStepActs();
+    setStepActs( false );
     stepDebug();
 }
 
 void EditorWindow::stepOver()
 {
-    setStepActs();
+    setStepActs( false );
     stepDebug( true );
 }
 
@@ -108,11 +108,7 @@ void EditorWindow:: pause()
 
     m_debugger->pause();
 
-    runAct->setEnabled( true );
-    stepAct->setEnabled( true );
-    stepOverAct->setEnabled( true );
-    resetAct->setEnabled( true );
-    pauseAct->setEnabled( false );
+    setStepActs( true );
 }
 
 void EditorWindow::reset()
@@ -177,9 +173,13 @@ void EditorWindow::stepDebug( bool over )
 {
     if( m_state == DBG_RUNNING ) return;
 
-    m_state = DBG_STEPING;
-    m_debugger->stepFromLine( over );
-    Simulator::self()->resumeSim();
+    if( m_debugger->stepFromLine( over ) )
+    {
+        m_state = DBG_STEPING;
+        Simulator::self()->resumeSim();
+    }else{                                // First step to PC = 0
+        setStepActs( true );
+    }
 }
 
 void EditorWindow::lineReached( codeLine_t line ) // Processor reached PC related to source line

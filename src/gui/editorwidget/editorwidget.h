@@ -81,7 +81,7 @@ class EditorWidget : public QWidget
 
         void enableFileActs( bool enable );
         void enableDebugActs( bool enable );
-        void setStepActs();
+        void setStepActs( bool s );
 
         enum { MaxRecentFiles = 10 };
         void updateRecentFileActions();

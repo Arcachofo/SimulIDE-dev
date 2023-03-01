@@ -219,11 +219,24 @@ void BaseDebugger::pause()
     EditorWindow::self()->pauseAt( m_prevLine );
 }
 
-void BaseDebugger::stepFromLine( bool over )
+bool BaseDebugger::stepFromLine( bool over )
 {
+    bool ok = true;
+    if( m_prevLine.lineNumber == -1 ) // Jump from line 1 to flash addr = 0
+    {
+        if( m_flashToSource.keys().contains(0) )
+        {
+            codeLine_t l = m_flashToSource.value( 0 );
+            m_prevLine = l;
+            EditorWindow::self()->pauseAt( m_prevLine );
+            ok = false;
+        }
+    }
     m_over = over;
     m_exitPC = 0;
     m_debugStep = true;
+
+    return ok;
 }
 
 void BaseDebugger::stepDebug()

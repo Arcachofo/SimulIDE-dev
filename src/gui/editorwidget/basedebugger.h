@@ -32,7 +32,7 @@ class BaseDebugger : public Compiler    // Base Class for all debuggers
 
         void run();
         void pause();
-        void stepFromLine( bool over=false );
+        bool stepFromLine( bool over=false );
         void stepDebug();
 
         void setLstType( int type ) { m_lstType = type; }
