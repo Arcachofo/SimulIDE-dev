@@ -33,7 +33,7 @@ class MAINMODULE_EXPORT KeyPad : public Component, public eElement
         virtual void stamp() override;
         virtual void remove() override;
 
-        virtual void paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget );
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
 
     protected:
         virtual void setflip() override;

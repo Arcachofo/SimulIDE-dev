@@ -33,7 +33,7 @@
     </message>
     <message>
         <source>Other Logic</source>
-        <translation type="unfinished">weitere Logikkomponenten</translation>
+        <translation type="obsolete">weitere Logikkomponenten</translation>
     </message>
 </context>
 <context>
@@ -63,7 +63,7 @@
     </message>
     <message>
         <source>Displays</source>
-        <translation>Displays</translation>
+        <translation type="vanished">Displays</translation>
     </message>
     <message>
         <source>Main</source>
@@ -122,7 +122,7 @@
     </message>
     <message>
         <source>Gates</source>
-        <translation type="unfinished">Gatter</translation>
+        <translation type="obsolete">Gatter</translation>
     </message>
 </context>
 <context>
@@ -478,7 +478,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Outputs</source>
-        <translation>Ausgänge</translation>
+        <translation type="vanished">Ausgänge</translation>
     </message>
     <message>
         <source>Main</source>
@@ -501,7 +501,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Active</source>
-        <translation>Aktive Bauteile</translation>
+        <translation type="vanished">Aktive Bauteile</translation>
     </message>
     <message>
         <source>Main</source>
@@ -559,7 +559,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Sources</source>
-        <translation>Eingänge und Quellen</translation>
+        <translation type="vanished">Eingänge und Quellen</translation>
     </message>
     <message>
         <source>Main</source>
@@ -598,7 +598,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Converters</source>
-        <translation type="unfinished">Wandler</translation>
+        <translation type="obsolete">Wandler</translation>
     </message>
 </context>
 <context>
@@ -633,7 +633,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Converters</source>
-        <translation type="unfinished">Wandler</translation>
+        <translation type="obsolete">Wandler</translation>
     </message>
 </context>
 <context>
@@ -676,7 +676,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Arithmetic</source>
-        <translation type="unfinished">Arithmetik</translation>
+        <translation type="obsolete">Arithmetik</translation>
     </message>
 </context>
 <context>
@@ -722,7 +722,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Gates</source>
-        <translation type="unfinished">Gatter</translation>
+        <translation type="obsolete">Gatter</translation>
     </message>
 </context>
 <context>
@@ -746,10 +746,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Start Bit</source>
         <translation>Startbit</translation>
-    </message>
-    <message>
-        <source>Connectors</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1131,7 +1127,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Sources</source>
-        <translation>Eingänge und Quellen</translation>
+        <translation type="vanished">Eingänge und Quellen</translation>
     </message>
     <message>
         <source>Main</source>
@@ -1171,6 +1167,30 @@ Can&apos;t find file:
     <message>
         <source>     WARNING: Compilation Not Done</source>
         <translation type="unfinished">     Warnung: Kompilieren nicht ausgeführt</translation>
+    </message>
+    <message>
+        <source>Undo</source>
+        <translation type="unfinished">Rückgängig</translation>
+    </message>
+    <message>
+        <source>Redo</source>
+        <translation type="unfinished">Wiederholen</translation>
+    </message>
+    <message>
+        <source>Cut</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy</source>
+        <translation type="unfinished">Kopieren</translation>
+    </message>
+    <message>
+        <source>Paste</source>
+        <translation type="unfinished">Einfügen</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation type="unfinished">Löschen</translation>
     </message>
 </context>
 <context>
@@ -1421,7 +1441,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Sources</source>
-        <translation type="unfinished">Eingänge und Quellen</translation>
+        <translation type="obsolete">Eingänge und Quellen</translation>
     </message>
     <message>
         <source>Main</source>
@@ -1460,7 +1480,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Sources</source>
-        <translation>Eingänge und Quellen</translation>
+        <translation type="vanished">Eingänge und Quellen</translation>
     </message>
     <message>
         <source>Main</source>
@@ -1507,7 +1527,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Other Logic</source>
-        <translation type="unfinished">weitere Logikkomponenten</translation>
+        <translation type="obsolete">weitere Logikkomponenten</translation>
     </message>
 </context>
 <context>
@@ -1525,7 +1545,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Sensors</source>
-        <translation type="unfinished">Sensoren</translation>
+        <translation type="obsolete">Sensoren</translation>
     </message>
     <message>
         <source>Main</source>
@@ -1562,7 +1582,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Motors</source>
-        <translation>Motoren</translation>
+        <translation type="vanished">Motoren</translation>
     </message>
     <message>
         <source>Main</source>
@@ -1617,7 +1637,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Converters</source>
-        <translation type="unfinished">Wandler</translation>
+        <translation type="obsolete">Wandler</translation>
     </message>
 </context>
 <context>
@@ -1652,14 +1672,14 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Converters</source>
-        <translation type="unfinished">Wandler</translation>
+        <translation type="obsolete">Wandler</translation>
     </message>
 </context>
 <context>
     <name>Dht22</name>
     <message>
         <source>Sensors</source>
-        <translation>Sensoren</translation>
+        <translation type="vanished">Sensoren</translation>
     </message>
     <message>
         <source>Main</source>
@@ -1682,10 +1702,6 @@ Can&apos;t find file:
     <name>Diac</name>
     <message>
         <source>Diac</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Rectifiers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1759,16 +1775,12 @@ Can&apos;t find file:
         <source>Emission Coefficient</source>
         <translation>Emissionskoeffizient</translation>
     </message>
-    <message>
-        <source>Rectifiers</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>Ds18b20</name>
     <message>
         <source>Sensors</source>
-        <translation type="unfinished">Sensoren</translation>
+        <translation type="obsolete">Sensoren</translation>
     </message>
     <message>
         <source>Main</source>
@@ -2098,6 +2110,10 @@ Can&apos;t find file:
 </source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>File doesn&apos;t exist</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>EditorWindow</name>
@@ -2146,7 +2162,7 @@ Can&apos;t find file:
     <name>Esp01</name>
     <message>
         <source>Perifericals</source>
-        <translation type="unfinished">Peripherie</translation>
+        <translation type="obsolete">Peripherie</translation>
     </message>
     <message>
         <source>Baudrate</source>
@@ -2276,7 +2292,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Sources</source>
-        <translation>Eingänge und Quellen</translation>
+        <translation type="vanished">Eingänge und Quellen</translation>
     </message>
     <message>
         <source>Main</source>
@@ -2334,7 +2350,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Memory</source>
-        <translation type="unfinished">Speicher</translation>
+        <translation type="obsolete">Speicher</translation>
     </message>
 </context>
 <context>
@@ -2349,7 +2365,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Memory</source>
-        <translation type="unfinished">Speicher</translation>
+        <translation type="obsolete">Speicher</translation>
     </message>
 </context>
 <context>
@@ -2368,7 +2384,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Memory</source>
-        <translation type="unfinished">Speicher</translation>
+        <translation type="obsolete">Speicher</translation>
     </message>
 </context>
 <context>
@@ -2383,7 +2399,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Memory</source>
-        <translation type="unfinished">Speicher</translation>
+        <translation type="obsolete">Speicher</translation>
     </message>
 </context>
 <context>
@@ -2394,7 +2410,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Meters</source>
-        <translation>Messgeräte</translation>
+        <translation type="vanished">Messgeräte</translation>
     </message>
     <message>
         <source>Main</source>
@@ -2425,7 +2441,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Arithmetic</source>
-        <translation type="unfinished">Arithmetik</translation>
+        <translation type="obsolete">Arithmetik</translation>
     </message>
 </context>
 <context>
@@ -2490,7 +2506,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Arithmetic</source>
-        <translation type="unfinished">Arithmetik</translation>
+        <translation type="obsolete">Arithmetik</translation>
     </message>
 </context>
 <context>
@@ -2505,10 +2521,6 @@ Can&apos;t find file:
     <message>
         <source>Hd44780</source>
         <translation>HD 44780</translation>
-    </message>
-    <message>
-        <source>Displays</source>
-        <translation></translation>
     </message>
     <message>
         <source>Main</source>
@@ -2527,10 +2539,6 @@ Can&apos;t find file:
     <name>Header</name>
     <message>
         <source>Header</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Connectors</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2586,7 +2594,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Memory</source>
-        <translation type="unfinished">Speicher</translation>
+        <translation type="obsolete">Speicher</translation>
     </message>
 </context>
 <context>
@@ -2613,7 +2621,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Converters</source>
-        <translation type="unfinished">Wandler</translation>
+        <translation type="obsolete">Wandler</translation>
     </message>
 </context>
 <context>
@@ -2624,7 +2632,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Graphical</source>
-        <translation>Grafikelemente</translation>
+        <translation type="vanished">Grafikelemente</translation>
     </message>
     <message>
         <source>Image File</source>
@@ -2647,7 +2655,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Reactive</source>
-        <translation>Impedanzen</translation>
+        <translation type="vanished">Impedanzen</translation>
     </message>
     <message>
         <source>Main</source>
@@ -2751,7 +2759,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Perifericals</source>
-        <translation>Peripherie</translation>
+        <translation type="vanished">Peripherie</translation>
     </message>
 </context>
 <context>
@@ -2762,7 +2770,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Perifericals</source>
-        <translation type="unfinished">Peripherie</translation>
+        <translation type="obsolete">Peripherie</translation>
     </message>
     <message>
         <source>Main</source>
@@ -2785,7 +2793,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Switches</source>
-        <translation>Schalter</translation>
+        <translation type="vanished">Schalter</translation>
     </message>
     <message>
         <source>Main</source>
@@ -2811,10 +2819,6 @@ Can&apos;t find file:
 <context>
     <name>Ks0108</name>
     <message>
-        <source>Displays</source>
-        <translation></translation>
-    </message>
-    <message>
         <source>Main</source>
         <translation>Hauptparameter</translation>
     </message>
@@ -2831,7 +2835,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Meters</source>
-        <translation>Messgeräte</translation>
+        <translation type="vanished">Messgeräte</translation>
     </message>
     <message>
         <source>Electric</source>
@@ -2912,6 +2916,22 @@ Can&apos;t find file:
         <source>Export Data</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Trigger:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Time Div</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Time Pos</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Threshold</source>
+        <translation type="unfinished">Schwelle</translation>
+    </message>
 </context>
 <context>
     <name>LabelVal</name>
@@ -2928,7 +2948,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Outputs</source>
-        <translation type="unfinished">Ausgänge</translation>
+        <translation type="obsolete">Ausgänge</translation>
     </message>
     <message>
         <source>Main</source>
@@ -2983,7 +3003,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Memory</source>
-        <translation type="unfinished">Speicher</translation>
+        <translation type="obsolete">Speicher</translation>
     </message>
 </context>
 <context>
@@ -2994,7 +3014,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Resistive Sensors</source>
-        <translation>Widerstandssensoren</translation>
+        <translation type="vanished">Widerstandssensoren</translation>
     </message>
     <message>
         <source>Main</source>
@@ -3037,7 +3057,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Leds</source>
-        <translation>LEDs</translation>
+        <translation type="vanished">LEDs</translation>
     </message>
     <message>
         <source>Main</source>
@@ -3119,7 +3139,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Leds</source>
-        <translation>LEDs</translation>
+        <translation type="vanished">LEDs</translation>
     </message>
     <message>
         <source>Main</source>
@@ -3166,7 +3186,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Leds</source>
-        <translation>LEDs</translation>
+        <translation type="vanished">LEDs</translation>
     </message>
     <message>
         <source>Electric</source>
@@ -3228,7 +3248,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Other Logic</source>
-        <translation type="unfinished">weitere Logikkomponenten</translation>
+        <translation type="obsolete">weitere Logikkomponenten</translation>
     </message>
 </context>
 <context>
@@ -3374,7 +3394,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Leds</source>
-        <translation>LEDs</translation>
+        <translation type="vanished">LEDs</translation>
     </message>
     <message>
         <source>Main</source>
@@ -3591,7 +3611,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Memory</source>
-        <translation type="unfinished">Speicher</translation>
+        <translation type="obsolete">Speicher</translation>
     </message>
 </context>
 <context>
@@ -3624,7 +3644,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Active</source>
-        <translation>Aktive Bauteile</translation>
+        <translation type="vanished">Aktive Bauteile</translation>
     </message>
     <message>
         <source>Main</source>
@@ -3683,7 +3703,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Converters</source>
-        <translation type="unfinished">Wandler</translation>
+        <translation type="obsolete">Wandler</translation>
     </message>
 </context>
 <context>
@@ -3694,7 +3714,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Active</source>
-        <translation>Aktive Bauteile</translation>
+        <translation type="vanished">Aktive Bauteile</translation>
     </message>
     <message>
         <source>Main</source>
@@ -3717,7 +3737,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Active</source>
-        <translation>Aktive Bauteile</translation>
+        <translation type="vanished">Aktive Bauteile</translation>
     </message>
     <message>
         <source>Main</source>
@@ -3792,7 +3812,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Gates</source>
-        <translation type="unfinished">Gatter</translation>
+        <translation type="obsolete">Gatter</translation>
     </message>
 </context>
 <context>
@@ -3810,7 +3830,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Meters</source>
-        <translation>Messgeräte</translation>
+        <translation type="vanished">Messgeräte</translation>
     </message>
     <message>
         <source>Hidden1</source>
@@ -3856,7 +3876,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Resistors</source>
-        <translation>Widerstände</translation>
+        <translation type="vanished">Widerstände</translation>
     </message>
     <message>
         <source>Main</source>
@@ -3879,7 +3899,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Meters</source>
-        <translation>Messgeräte</translation>
+        <translation type="vanished">Messgeräte</translation>
     </message>
     <message>
         <source>Main</source>
@@ -3937,7 +3957,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Switches</source>
-        <translation>Schalter</translation>
+        <translation type="vanished">Schalter</translation>
     </message>
     <message>
         <source>Main</source>
@@ -4252,6 +4272,18 @@ Keine valide Package Datei:
         <source>Tools</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Transistors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Other Active</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Other Outputs</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RTD</name>
@@ -4261,7 +4293,7 @@ Keine valide Package Datei:
     </message>
     <message>
         <source>Resistive Sensors</source>
-        <translation>Widerstandssensoren</translation>
+        <translation type="vanished">Widerstandssensoren</translation>
     </message>
     <message>
         <source>Parameters</source>
@@ -4276,7 +4308,7 @@ Keine valide Package Datei:
     </message>
     <message>
         <source>Sources</source>
-        <translation>Eingänge und Quellen</translation>
+        <translation type="vanished">Eingänge und Quellen</translation>
     </message>
     <message>
         <source>Main</source>
@@ -4367,7 +4399,7 @@ Keine valide Package Datei:
     </message>
     <message>
         <source>Switches</source>
-        <translation type="unfinished">Schalter</translation>
+        <translation type="obsolete">Schalter</translation>
     </message>
     <message>
         <source>Main</source>
@@ -4469,7 +4501,7 @@ Keine valide Package Datei:
     </message>
     <message>
         <source>Resistors</source>
-        <translation>Widerstände</translation>
+        <translation type="vanished">Widerstände</translation>
     </message>
     <message>
         <source>Main</source>
@@ -4488,7 +4520,7 @@ Keine valide Package Datei:
     </message>
     <message>
         <source>Resistors</source>
-        <translation>Widerstände</translation>
+        <translation type="vanished">Widerstände</translation>
     </message>
     <message>
         <source>Main</source>
@@ -4515,10 +4547,6 @@ Keine valide Package Datei:
     <name>SCR</name>
     <message>
         <source>SCR</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Rectifiers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4667,7 +4695,7 @@ Keine valide Package Datei:
     </message>
     <message>
         <source>Motors</source>
-        <translation>Motoren</translation>
+        <translation type="vanished">Motoren</translation>
     </message>
     <message>
         <source>Main</source>
@@ -4710,7 +4738,7 @@ Keine valide Package Datei:
     </message>
     <message>
         <source>Leds</source>
-        <translation>LEDs</translation>
+        <translation type="vanished">LEDs</translation>
     </message>
     <message>
         <source>Main</source>
@@ -4761,7 +4789,7 @@ Keine valide Package Datei:
     </message>
     <message>
         <source>Other Logic</source>
-        <translation type="unfinished">weitere Logikkomponenten</translation>
+        <translation type="obsolete">weitere Logikkomponenten</translation>
     </message>
 </context>
 <context>
@@ -4838,7 +4866,7 @@ Keine valide Package Datei:
     </message>
     <message>
         <source>Arithmetic</source>
-        <translation type="unfinished">Arithmetik</translation>
+        <translation type="obsolete">Arithmetik</translation>
     </message>
 </context>
 <context>
@@ -4936,10 +4964,6 @@ p, li { white-space: pre-wrap; }
         <source>Socket</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Connectors</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>Ssd1306</name>
@@ -4954,10 +4978,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Yellow</source>
         <translation>gelb</translation>
-    </message>
-    <message>
-        <source>Displays</source>
-        <translation></translation>
     </message>
     <message>
         <source>Main</source>
@@ -4996,7 +5016,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Motors</source>
-        <translation>Motoren</translation>
+        <translation type="vanished">Motoren</translation>
     </message>
     <message>
         <source>Main</source>
@@ -5027,7 +5047,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Resistive Sensors</source>
-        <translation>Widerstandssensoren</translation>
+        <translation type="vanished">Widerstandssensoren</translation>
     </message>
     <message>
         <source>Main</source>
@@ -5104,7 +5124,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Other</source>
-        <translation>sonstige Komponenten</translation>
+        <translation type="vanished">sonstige Komponenten</translation>
     </message>
     <message>
         <source>Board Mode</source>
@@ -5199,7 +5219,7 @@ Sollen die Änderungen gespeichert werden?
     </message>
     <message>
         <source>Switches</source>
-        <translation>Schalter</translation>
+        <translation type="vanished">Schalter</translation>
     </message>
     <message>
         <source>Main</source>
@@ -5230,7 +5250,7 @@ Sollen die Änderungen gespeichert werden?
     </message>
     <message>
         <source>Switches</source>
-        <translation>Schalter</translation>
+        <translation type="vanished">Schalter</translation>
     </message>
     <message>
         <source>Main</source>
@@ -5253,7 +5273,7 @@ Sollen die Änderungen gespeichert werden?
     </message>
     <message>
         <source>Graphical</source>
-        <translation>Grafikelemente</translation>
+        <translation type="vanished">Grafikelemente</translation>
     </message>
     <message>
         <source>Main</source>
@@ -5338,7 +5358,7 @@ Sollen die Änderungen gespeichert werden?
     </message>
     <message>
         <source>Perifericals</source>
-        <translation type="unfinished">Peripherie</translation>
+        <translation type="obsolete">Peripherie</translation>
     </message>
     <message>
         <source>Main</source>
@@ -5385,7 +5405,7 @@ Sollen die Änderungen gespeichert werden?
     </message>
     <message>
         <source>Reactive</source>
-        <translation type="unfinished">Impedanzen</translation>
+        <translation type="obsolete">Impedanzen</translation>
     </message>
     <message>
         <source>Main</source>
@@ -5412,10 +5432,6 @@ Sollen die Änderungen gespeichert werden?
     <name>Triac</name>
     <message>
         <source>Triac</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Rectifiers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5457,10 +5473,6 @@ Sollen die Änderungen gespeichert werden?
         <source>Rotated</source>
         <translation type="vanished">gedreht</translation>
     </message>
-    <message>
-        <source>Connectors</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>VarResistor</name>
@@ -5470,7 +5482,7 @@ Sollen die Änderungen gespeichert werden?
     </message>
     <message>
         <source>Resistors</source>
-        <translation>Widerstände</translation>
+        <translation type="vanished">Widerstände</translation>
     </message>
     <message>
         <source>Main</source>
@@ -5501,7 +5513,7 @@ Sollen die Änderungen gespeichert werden?
     </message>
     <message>
         <source>Active</source>
-        <translation>Aktive Bauteile</translation>
+        <translation type="vanished">Aktive Bauteile</translation>
     </message>
     <message>
         <source>Main</source>
@@ -5520,7 +5532,7 @@ Sollen die Änderungen gespeichert werden?
     </message>
     <message>
         <source>Sources</source>
-        <translation>Eingänge und Quellen</translation>
+        <translation type="vanished">Eingänge und Quellen</translation>
     </message>
     <message>
         <source>Main</source>
@@ -5547,7 +5559,7 @@ Sollen die Änderungen gespeichert werden?
     </message>
     <message>
         <source>Leds</source>
-        <translation>LEDs</translation>
+        <translation type="vanished">LEDs</translation>
     </message>
     <message>
         <source>Main</source>
@@ -5590,7 +5602,7 @@ Sollen die Änderungen gespeichert werden?
     </message>
     <message>
         <source>Sources</source>
-        <translation>Eingänge und Quellen</translation>
+        <translation type="vanished">Eingänge und Quellen</translation>
     </message>
     <message>
         <source>Main</source>
@@ -5685,7 +5697,7 @@ Sollen die Änderungen gespeichert werden?
     </message>
     <message>
         <source>Gates</source>
-        <translation type="unfinished">Gatter</translation>
+        <translation type="obsolete">Gatter</translation>
     </message>
 </context>
 <context>
@@ -5716,10 +5728,6 @@ Sollen die Änderungen gespeichert werden?
     <message>
         <source>Active</source>
         <translation type="vanished">Aktive Bauteile</translation>
-    </message>
-    <message>
-        <source>Rectifiers</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5775,16 +5783,16 @@ Sollen die Änderungen gespeichert werden?
 <context>
     <name>manCompDialog</name>
     <message>
-        <source>Dialog</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Name</source>
         <translation type="unfinished">Name</translation>
     </message>
     <message>
         <source>ShortCut</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Manage Components</source>
+        <translation type="unfinished">Komponenten verwalten</translation>
     </message>
 </context>
 <context>

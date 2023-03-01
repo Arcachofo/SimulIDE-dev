@@ -29,7 +29,7 @@
     </message>
     <message>
         <source>Other Logic</source>
-        <translation type="unfinished">Diğer Mantık</translation>
+        <translation type="obsolete">Diğer Mantık</translation>
     </message>
 </context>
 <context>
@@ -56,10 +56,6 @@
     <message>
         <source>Aip31068_i2c</source>
         <translation type="unfinished">Aip31068_i2c</translation>
-    </message>
-    <message>
-        <source>Displays</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Main</source>
@@ -118,7 +114,7 @@
     </message>
     <message>
         <source>Gates</source>
-        <translation type="unfinished">Mantık Kapıları</translation>
+        <translation type="obsolete">Mantık Kapıları</translation>
     </message>
 </context>
 <context>
@@ -351,7 +347,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Outputs</source>
-        <translation type="unfinished">Çıktılar</translation>
+        <translation type="obsolete">Çıktılar</translation>
     </message>
     <message>
         <source>Main</source>
@@ -374,7 +370,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Active</source>
-        <translation type="unfinished">Aktif</translation>
+        <translation type="obsolete">Aktif</translation>
     </message>
     <message>
         <source>Main</source>
@@ -432,7 +428,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Sources</source>
-        <translation type="unfinished">Kaynaklar</translation>
+        <translation type="obsolete">Kaynaklar</translation>
     </message>
     <message>
         <source>Main</source>
@@ -471,7 +467,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Converters</source>
-        <translation type="unfinished">Dönüştürücüler</translation>
+        <translation type="obsolete">Dönüştürücüler</translation>
     </message>
 </context>
 <context>
@@ -506,7 +502,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Converters</source>
-        <translation type="unfinished">Dönüştürücüler</translation>
+        <translation type="obsolete">Dönüştürücüler</translation>
     </message>
 </context>
 <context>
@@ -549,7 +545,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Arithmetic</source>
-        <translation type="unfinished">Aritmetik</translation>
+        <translation type="obsolete">Aritmetik</translation>
     </message>
 </context>
 <context>
@@ -595,7 +591,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Gates</source>
-        <translation type="unfinished">Mantık Kapıları</translation>
+        <translation type="obsolete">Mantık Kapıları</translation>
     </message>
 </context>
 <context>
@@ -615,10 +611,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Start Bit</source>
         <translation type="unfinished">Başlangıç Biti</translation>
-    </message>
-    <message>
-        <source>Connectors</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -878,7 +870,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Sources</source>
-        <translation type="unfinished">Kaynaklar</translation>
+        <translation type="obsolete">Kaynaklar</translation>
     </message>
     <message>
         <source>Main</source>
@@ -917,6 +909,30 @@ Can&apos;t find file:
     </message>
     <message>
         <source>     WARNING: Compilation Not Done</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Undo</source>
+        <translation type="unfinished">Geri al</translation>
+    </message>
+    <message>
+        <source>Redo</source>
+        <translation type="unfinished">İşlemi yinele</translation>
+    </message>
+    <message>
+        <source>Cut</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy</source>
+        <translation type="unfinished">Kopyala</translation>
+    </message>
+    <message>
+        <source>Paste</source>
+        <translation type="unfinished">Yapıştır</translation>
+    </message>
+    <message>
+        <source>Remove</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1150,7 +1166,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Sources</source>
-        <translation type="unfinished">Kaynaklar</translation>
+        <translation type="obsolete">Kaynaklar</translation>
     </message>
     <message>
         <source>Main</source>
@@ -1189,7 +1205,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Sources</source>
-        <translation type="unfinished">Kaynaklar</translation>
+        <translation type="obsolete">Kaynaklar</translation>
     </message>
     <message>
         <source>Main</source>
@@ -1232,7 +1248,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Other Logic</source>
-        <translation type="unfinished">Diğer Mantık</translation>
+        <translation type="obsolete">Diğer Mantık</translation>
     </message>
 </context>
 <context>
@@ -1250,7 +1266,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Sensors</source>
-        <translation type="unfinished">Sensörler</translation>
+        <translation type="obsolete">Sensörler</translation>
     </message>
     <message>
         <source>Main</source>
@@ -1287,7 +1303,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Motors</source>
-        <translation type="unfinished">Motorlar</translation>
+        <translation type="obsolete">Motorlar</translation>
     </message>
     <message>
         <source>Main</source>
@@ -1342,7 +1358,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Converters</source>
-        <translation type="unfinished">Dönüştürücüler</translation>
+        <translation type="obsolete">Dönüştürücüler</translation>
     </message>
 </context>
 <context>
@@ -1377,14 +1393,14 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Converters</source>
-        <translation type="unfinished">Dönüştürücüler</translation>
+        <translation type="obsolete">Dönüştürücüler</translation>
     </message>
 </context>
 <context>
     <name>Dht22</name>
     <message>
         <source>Sensors</source>
-        <translation type="unfinished">Sensörler</translation>
+        <translation type="obsolete">Sensörler</translation>
     </message>
     <message>
         <source>Main</source>
@@ -1427,10 +1443,6 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Hold Current</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Rectifiers</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1480,16 +1492,12 @@ Can&apos;t find file:
         <source>Emission Coefficient</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Rectifiers</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>Ds18b20</name>
     <message>
         <source>Sensors</source>
-        <translation type="unfinished">Sensörler</translation>
+        <translation type="obsolete">Sensörler</translation>
     </message>
     <message>
         <source>Main</source>
@@ -1814,6 +1822,10 @@ Can&apos;t find file:
 </source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>File doesn&apos;t exist</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>EditorWindow</name>
@@ -1858,7 +1870,7 @@ Can&apos;t find file:
     <name>Esp01</name>
     <message>
         <source>Perifericals</source>
-        <translation type="unfinished">Periferik</translation>
+        <translation type="obsolete">Periferik</translation>
     </message>
     <message>
         <source>Baudrate</source>
@@ -1986,7 +1998,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Sources</source>
-        <translation type="unfinished">Kaynaklar</translation>
+        <translation type="obsolete">Kaynaklar</translation>
     </message>
     <message>
         <source>Main</source>
@@ -2040,7 +2052,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Memory</source>
-        <translation type="unfinished">Bellek</translation>
+        <translation type="obsolete">Bellek</translation>
     </message>
 </context>
 <context>
@@ -2055,7 +2067,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Memory</source>
-        <translation type="unfinished">Bellek</translation>
+        <translation type="obsolete">Bellek</translation>
     </message>
 </context>
 <context>
@@ -2074,7 +2086,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Memory</source>
-        <translation type="unfinished">Bellek</translation>
+        <translation type="obsolete">Bellek</translation>
     </message>
 </context>
 <context>
@@ -2089,7 +2101,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Memory</source>
-        <translation type="unfinished">Bellek</translation>
+        <translation type="obsolete">Bellek</translation>
     </message>
 </context>
 <context>
@@ -2100,7 +2112,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Meters</source>
-        <translation type="unfinished">Ölçerler</translation>
+        <translation type="obsolete">Ölçerler</translation>
     </message>
     <message>
         <source>Main</source>
@@ -2131,7 +2143,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Arithmetic</source>
-        <translation type="unfinished">Aritmetik</translation>
+        <translation type="obsolete">Aritmetik</translation>
     </message>
 </context>
 <context>
@@ -2195,7 +2207,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Arithmetic</source>
-        <translation type="unfinished">Aritmetik</translation>
+        <translation type="obsolete">Aritmetik</translation>
     </message>
 </context>
 <context>
@@ -2210,10 +2222,6 @@ Can&apos;t find file:
     <message>
         <source>Hd44780</source>
         <translation type="unfinished">Hd44780</translation>
-    </message>
-    <message>
-        <source>Displays</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Main</source>
@@ -2232,10 +2240,6 @@ Can&apos;t find file:
     <name>Header</name>
     <message>
         <source>Header</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Connectors</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2291,7 +2295,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Memory</source>
-        <translation type="unfinished">Bellek</translation>
+        <translation type="obsolete">Bellek</translation>
     </message>
 </context>
 <context>
@@ -2318,7 +2322,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Converters</source>
-        <translation type="unfinished">Dönüştürücüler</translation>
+        <translation type="obsolete">Dönüştürücüler</translation>
     </message>
 </context>
 <context>
@@ -2329,7 +2333,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Graphical</source>
-        <translation type="unfinished">Grafik</translation>
+        <translation type="obsolete">Grafik</translation>
     </message>
     <message>
         <source>Image File</source>
@@ -2349,10 +2353,6 @@ Can&apos;t find file:
     <message>
         <source>Inductor</source>
         <translation type="unfinished">İndüktör</translation>
-    </message>
-    <message>
-        <source>Reactive</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Main</source>
@@ -2452,7 +2452,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Perifericals</source>
-        <translation type="unfinished">Periferik</translation>
+        <translation type="obsolete">Periferik</translation>
     </message>
 </context>
 <context>
@@ -2463,7 +2463,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Perifericals</source>
-        <translation type="unfinished">Periferik</translation>
+        <translation type="obsolete">Periferik</translation>
     </message>
     <message>
         <source>Main</source>
@@ -2483,10 +2483,6 @@ Can&apos;t find file:
     <message>
         <source>KeyPad</source>
         <translation type="unfinished">Tuş Takımı</translation>
-    </message>
-    <message>
-        <source>Switches</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Main</source>
@@ -2512,10 +2508,6 @@ Can&apos;t find file:
 <context>
     <name>Ks0108</name>
     <message>
-        <source>Displays</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Main</source>
         <translation type="unfinished">Temel</translation>
     </message>
@@ -2532,7 +2524,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Meters</source>
-        <translation type="unfinished">Ölçerler</translation>
+        <translation type="obsolete">Ölçerler</translation>
     </message>
     <message>
         <source>Electric</source>
@@ -2609,6 +2601,22 @@ Can&apos;t find file:
         <source>Export Data</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Trigger:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Time Div</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Time Pos</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Threshold</source>
+        <translation type="unfinished">Eşik</translation>
+    </message>
 </context>
 <context>
     <name>LabelVal</name>
@@ -2625,7 +2633,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Outputs</source>
-        <translation type="unfinished">Çıktılar</translation>
+        <translation type="obsolete">Çıktılar</translation>
     </message>
     <message>
         <source>Main</source>
@@ -2680,7 +2688,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Memory</source>
-        <translation type="unfinished">Bellek</translation>
+        <translation type="obsolete">Bellek</translation>
     </message>
 </context>
 <context>
@@ -2691,7 +2699,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Resistive Sensors</source>
-        <translation type="unfinished">Direnç Sensörler</translation>
+        <translation type="obsolete">Direnç Sensörler</translation>
     </message>
     <message>
         <source>Main</source>
@@ -2734,7 +2742,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Leds</source>
-        <translation type="unfinished">Ledler</translation>
+        <translation type="obsolete">Ledler</translation>
     </message>
     <message>
         <source>Main</source>
@@ -2808,7 +2816,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Leds</source>
-        <translation type="unfinished">Ledler</translation>
+        <translation type="obsolete">Ledler</translation>
     </message>
     <message>
         <source>Main</source>
@@ -2855,7 +2863,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Leds</source>
-        <translation type="unfinished">Ledler</translation>
+        <translation type="obsolete">Ledler</translation>
     </message>
     <message>
         <source>Electric</source>
@@ -2913,7 +2921,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Other Logic</source>
-        <translation type="unfinished">Diğer Mantık</translation>
+        <translation type="obsolete">Diğer Mantık</translation>
     </message>
 </context>
 <context>
@@ -3038,7 +3046,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Leds</source>
-        <translation type="unfinished">Ledler</translation>
+        <translation type="obsolete">Ledler</translation>
     </message>
     <message>
         <source>Main</source>
@@ -3246,7 +3254,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Memory</source>
-        <translation type="unfinished">Bellek</translation>
+        <translation type="obsolete">Bellek</translation>
     </message>
 </context>
 <context>
@@ -3275,7 +3283,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Active</source>
-        <translation type="unfinished">Aktif</translation>
+        <translation type="obsolete">Aktif</translation>
     </message>
     <message>
         <source>Main</source>
@@ -3334,7 +3342,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Converters</source>
-        <translation type="unfinished">Dönüştürücüler</translation>
+        <translation type="obsolete">Dönüştürücüler</translation>
     </message>
 </context>
 <context>
@@ -3345,7 +3353,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Active</source>
-        <translation type="unfinished">Aktif</translation>
+        <translation type="obsolete">Aktif</translation>
     </message>
     <message>
         <source>Main</source>
@@ -3368,7 +3376,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Active</source>
-        <translation type="unfinished">Aktif</translation>
+        <translation type="obsolete">Aktif</translation>
     </message>
     <message>
         <source>Main</source>
@@ -3439,7 +3447,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Gates</source>
-        <translation type="unfinished">Mantık Kapıları</translation>
+        <translation type="obsolete">Mantık Kapıları</translation>
     </message>
 </context>
 <context>
@@ -3457,7 +3465,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Meters</source>
-        <translation type="unfinished">Ölçerler</translation>
+        <translation type="obsolete">Ölçerler</translation>
     </message>
     <message>
         <source>Filter</source>
@@ -3499,7 +3507,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Resistors</source>
-        <translation type="unfinished">Dirençler</translation>
+        <translation type="obsolete">Dirençler</translation>
     </message>
     <message>
         <source>Main</source>
@@ -3522,7 +3530,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Meters</source>
-        <translation type="unfinished">Ölçerler</translation>
+        <translation type="obsolete">Ölçerler</translation>
     </message>
     <message>
         <source>Main</source>
@@ -3577,10 +3585,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Push</source>
         <translation type="unfinished">Basmalı Anahtar</translation>
-    </message>
-    <message>
-        <source>Switches</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Main</source>
@@ -3886,6 +3890,18 @@ p, li { white-space: pre-wrap; }
         <source>Tools</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Transistors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Other Active</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Other Outputs</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RTD</name>
@@ -3895,7 +3911,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Resistive Sensors</source>
-        <translation type="unfinished">Direnç Sensörler</translation>
+        <translation type="obsolete">Direnç Sensörler</translation>
     </message>
     <message>
         <source>Parameters</source>
@@ -3906,7 +3922,7 @@ p, li { white-space: pre-wrap; }
     <name>Rail</name>
     <message>
         <source>Sources</source>
-        <translation type="unfinished">Kaynaklar</translation>
+        <translation type="obsolete">Kaynaklar</translation>
     </message>
     <message>
         <source>Main</source>
@@ -3995,10 +4011,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Röleler (Tümü)</translation>
     </message>
     <message>
-        <source>Switches</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Main</source>
         <translation type="unfinished">Temel</translation>
     </message>
@@ -4078,7 +4090,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Resistors</source>
-        <translation type="unfinished">Dirençler</translation>
+        <translation type="obsolete">Dirençler</translation>
     </message>
     <message>
         <source>Main</source>
@@ -4097,7 +4109,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Resistors</source>
-        <translation type="unfinished">Dirençler</translation>
+        <translation type="obsolete">Dirençler</translation>
     </message>
     <message>
         <source>Main</source>
@@ -4140,10 +4152,6 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Holding Current</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Rectifiers</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4263,7 +4271,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Motors</source>
-        <translation type="unfinished">Motorlar</translation>
+        <translation type="obsolete">Motorlar</translation>
     </message>
     <message>
         <source>Main</source>
@@ -4302,7 +4310,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Leds</source>
-        <translation type="unfinished">Ledler</translation>
+        <translation type="obsolete">Ledler</translation>
     </message>
     <message>
         <source>Main</source>
@@ -4349,7 +4357,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Other Logic</source>
-        <translation type="unfinished">Diğer Mantık</translation>
+        <translation type="obsolete">Diğer Mantık</translation>
     </message>
 </context>
 <context>
@@ -4426,17 +4434,13 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Arithmetic</source>
-        <translation type="unfinished">Aritmetik</translation>
+        <translation type="obsolete">Aritmetik</translation>
     </message>
 </context>
 <context>
     <name>Socket</name>
     <message>
         <source>Socket</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Connectors</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4448,10 +4452,6 @@ p, li { white-space: pre-wrap; }
     <name>Ssd1306</name>
     <message>
         <source>Blue</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Displays</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4499,7 +4499,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Motors</source>
-        <translation type="unfinished">Motorlar</translation>
+        <translation type="obsolete">Motorlar</translation>
     </message>
     <message>
         <source>Main</source>
@@ -4530,7 +4530,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Resistive Sensors</source>
-        <translation type="unfinished">Direnç Sensörler</translation>
+        <translation type="obsolete">Direnç Sensörler</translation>
     </message>
     <message>
         <source>Main</source>
@@ -4615,7 +4615,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Other</source>
-        <translation type="unfinished">Diğer</translation>
+        <translation type="obsolete">Diğer</translation>
     </message>
     <message>
         <source>Board Mode</source>
@@ -4708,10 +4708,6 @@ Değişiklikler kaydedilsin mi?
         <translation type="unfinished">Anahtarlar (tümü)</translation>
     </message>
     <message>
-        <source>Switches</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Main</source>
         <translation type="unfinished">Temel</translation>
     </message>
@@ -4739,10 +4735,6 @@ Değişiklikler kaydedilsin mi?
         <translation type="unfinished">Anahtar Dip</translation>
     </message>
     <message>
-        <source>Switches</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Main</source>
         <translation type="unfinished">Temel</translation>
     </message>
@@ -4763,7 +4755,7 @@ Değişiklikler kaydedilsin mi?
     </message>
     <message>
         <source>Graphical</source>
-        <translation type="unfinished">Grafik</translation>
+        <translation type="obsolete">Grafik</translation>
     </message>
     <message>
         <source>Main</source>
@@ -4851,7 +4843,7 @@ Değişiklikler kaydedilsin mi?
     </message>
     <message>
         <source>Perifericals</source>
-        <translation type="unfinished">Periferik</translation>
+        <translation type="obsolete">Periferik</translation>
     </message>
     <message>
         <source>Main</source>
@@ -4897,10 +4889,6 @@ Değişiklikler kaydedilsin mi?
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Reactive</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Main</source>
         <translation type="unfinished">Temel</translation>
     </message>
@@ -4943,10 +4931,6 @@ Değişiklikler kaydedilsin mi?
         <source>Holding Current</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Rectifiers</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>Tunnel</name>
@@ -4966,10 +4950,6 @@ Değişiklikler kaydedilsin mi?
         <source>Rotated</source>
         <translation type="obsolete">Döndürülmüş</translation>
     </message>
-    <message>
-        <source>Connectors</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>VarResistor</name>
@@ -4979,7 +4959,7 @@ Değişiklikler kaydedilsin mi?
     </message>
     <message>
         <source>Resistors</source>
-        <translation type="unfinished">Dirençler</translation>
+        <translation type="obsolete">Dirençler</translation>
     </message>
     <message>
         <source>Main</source>
@@ -5010,7 +4990,7 @@ Değişiklikler kaydedilsin mi?
     </message>
     <message>
         <source>Active</source>
-        <translation type="unfinished">Aktif</translation>
+        <translation type="obsolete">Aktif</translation>
     </message>
     <message>
         <source>Main</source>
@@ -5025,7 +5005,7 @@ Değişiklikler kaydedilsin mi?
     <name>VoltSource</name>
     <message>
         <source>Sources</source>
-        <translation type="unfinished">Kaynaklar</translation>
+        <translation type="obsolete">Kaynaklar</translation>
     </message>
     <message>
         <source>Main</source>
@@ -5052,7 +5032,7 @@ Değişiklikler kaydedilsin mi?
     </message>
     <message>
         <source>Leds</source>
-        <translation type="unfinished">Ledler</translation>
+        <translation type="obsolete">Ledler</translation>
     </message>
     <message>
         <source>Main</source>
@@ -5095,7 +5075,7 @@ Değişiklikler kaydedilsin mi?
     </message>
     <message>
         <source>Sources</source>
-        <translation type="unfinished">Kaynaklar</translation>
+        <translation type="obsolete">Kaynaklar</translation>
     </message>
     <message>
         <source>Main</source>
@@ -5190,7 +5170,7 @@ Değişiklikler kaydedilsin mi?
     </message>
     <message>
         <source>Gates</source>
-        <translation type="unfinished">Mantık Kapıları</translation>
+        <translation type="obsolete">Mantık Kapıları</translation>
     </message>
 </context>
 <context>
@@ -5216,10 +5196,6 @@ Değişiklikler kaydedilsin mi?
     <name>Zener</name>
     <message>
         <source>Zener Diode</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Rectifiers</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5277,7 +5253,7 @@ Değişiklikler kaydedilsin mi?
     <name>manCompDialog</name>
     <message>
         <source>Dialog</source>
-        <translation type="unfinished">Diyalog</translation>
+        <translation type="obsolete">Diyalog</translation>
     </message>
     <message>
         <source>Name</source>
@@ -5286,6 +5262,10 @@ Değişiklikler kaydedilsin mi?
     <message>
         <source>ShortCut</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Manage Components</source>
+        <translation type="unfinished">Elemanları ayarla</translation>
     </message>
 </context>
 </TS>

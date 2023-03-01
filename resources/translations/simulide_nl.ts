@@ -29,7 +29,7 @@
     </message>
     <message>
         <source>Other Logic</source>
-        <translation type="unfinished">Overige logica</translation>
+        <translation type="obsolete">Overige logica</translation>
     </message>
 </context>
 <context>
@@ -55,10 +55,6 @@
     <name>Aip31068_i2c</name>
     <message>
         <source>Aip31068_i2c</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Displays</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -118,7 +114,7 @@
     </message>
     <message>
         <source>Gates</source>
-        <translation type="unfinished">Poorten</translation>
+        <translation type="obsolete">Poorten</translation>
     </message>
 </context>
 <context>
@@ -339,7 +335,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Outputs</source>
-        <translation type="unfinished">Uitgangen</translation>
+        <translation type="obsolete">Uitgangen</translation>
     </message>
     <message>
         <source>Main</source>
@@ -362,7 +358,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Active</source>
-        <translation type="unfinished">Actief</translation>
+        <translation type="obsolete">Actief</translation>
     </message>
     <message>
         <source>Main</source>
@@ -420,7 +416,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Sources</source>
-        <translation type="unfinished">Bronnen</translation>
+        <translation type="obsolete">Bronnen</translation>
     </message>
     <message>
         <source>Main</source>
@@ -459,7 +455,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Converters</source>
-        <translation type="unfinished">Omzetters</translation>
+        <translation type="obsolete">Omzetters</translation>
     </message>
 </context>
 <context>
@@ -494,7 +490,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Converters</source>
-        <translation type="unfinished">Omzetters</translation>
+        <translation type="obsolete">Omzetters</translation>
     </message>
 </context>
 <context>
@@ -537,7 +533,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Arithmetic</source>
-        <translation type="unfinished">Rekenkundig</translation>
+        <translation type="obsolete">Rekenkundig</translation>
     </message>
 </context>
 <context>
@@ -583,7 +579,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Gates</source>
-        <translation type="unfinished">Poorten</translation>
+        <translation type="obsolete">Poorten</translation>
     </message>
 </context>
 <context>
@@ -603,10 +599,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Start Bit</source>
         <translation type="unfinished">Startbit</translation>
-    </message>
-    <message>
-        <source>Connectors</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -863,7 +855,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Sources</source>
-        <translation type="unfinished">Bronnen</translation>
+        <translation type="obsolete">Bronnen</translation>
     </message>
     <message>
         <source>Main</source>
@@ -903,6 +895,30 @@ Can&apos;t find file:
     <message>
         <source>     WARNING: Compilation Not Done</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Undo</source>
+        <translation type="unfinished">Ongedaan maken</translation>
+    </message>
+    <message>
+        <source>Redo</source>
+        <translation type="unfinished">Opnieuw uitvoeren</translation>
+    </message>
+    <message>
+        <source>Cut</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy</source>
+        <translation type="unfinished">Kopiëren</translation>
+    </message>
+    <message>
+        <source>Paste</source>
+        <translation type="unfinished">Plakken</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation type="unfinished">Verwijderen</translation>
     </message>
 </context>
 <context>
@@ -1135,7 +1151,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Sources</source>
-        <translation type="unfinished">Bronnen</translation>
+        <translation type="obsolete">Bronnen</translation>
     </message>
     <message>
         <source>Main</source>
@@ -1174,7 +1190,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Sources</source>
-        <translation type="unfinished">Bronnen</translation>
+        <translation type="obsolete">Bronnen</translation>
     </message>
     <message>
         <source>Main</source>
@@ -1217,7 +1233,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Other Logic</source>
-        <translation type="unfinished">Overige logica</translation>
+        <translation type="obsolete">Overige logica</translation>
     </message>
 </context>
 <context>
@@ -1235,7 +1251,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Sensors</source>
-        <translation type="unfinished">Sensoren</translation>
+        <translation type="obsolete">Sensoren</translation>
     </message>
     <message>
         <source>Main</source>
@@ -1269,10 +1285,6 @@ Can&apos;t find file:
     <message>
         <source>Dc Motor</source>
         <translation type="unfinished">DC Motor</translation>
-    </message>
-    <message>
-        <source>Motors</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Main</source>
@@ -1327,7 +1339,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Converters</source>
-        <translation type="unfinished">Omzetters</translation>
+        <translation type="obsolete">Omzetters</translation>
     </message>
 </context>
 <context>
@@ -1362,14 +1374,14 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Converters</source>
-        <translation type="unfinished">Omzetters</translation>
+        <translation type="obsolete">Omzetters</translation>
     </message>
 </context>
 <context>
     <name>Dht22</name>
     <message>
         <source>Sensors</source>
-        <translation type="unfinished">Sensoren</translation>
+        <translation type="obsolete">Sensoren</translation>
     </message>
     <message>
         <source>Main</source>
@@ -1412,10 +1424,6 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Hold Current</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Rectifiers</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1465,16 +1473,12 @@ Can&apos;t find file:
         <source>Emission Coefficient</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Rectifiers</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>Ds18b20</name>
     <message>
         <source>Sensors</source>
-        <translation type="unfinished">Sensoren</translation>
+        <translation type="obsolete">Sensoren</translation>
     </message>
     <message>
         <source>Main</source>
@@ -1800,6 +1804,10 @@ Can&apos;t find file:
 </source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>File doesn&apos;t exist</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>EditorWindow</name>
@@ -1842,10 +1850,6 @@ Can&apos;t find file:
 </context>
 <context>
     <name>Esp01</name>
-    <message>
-        <source>Perifericals</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>Baudrate</source>
         <translation type="unfinished"></translation>
@@ -1970,7 +1974,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Sources</source>
-        <translation type="unfinished">Bronnen</translation>
+        <translation type="obsolete">Bronnen</translation>
     </message>
     <message>
         <source>Main</source>
@@ -2024,7 +2028,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Memory</source>
-        <translation type="unfinished">Geheugen</translation>
+        <translation type="obsolete">Geheugen</translation>
     </message>
 </context>
 <context>
@@ -2039,7 +2043,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Memory</source>
-        <translation type="unfinished">Geheugen</translation>
+        <translation type="obsolete">Geheugen</translation>
     </message>
 </context>
 <context>
@@ -2054,7 +2058,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Memory</source>
-        <translation type="unfinished">Geheugen</translation>
+        <translation type="obsolete">Geheugen</translation>
     </message>
 </context>
 <context>
@@ -2069,7 +2073,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Memory</source>
-        <translation type="unfinished">Geheugen</translation>
+        <translation type="obsolete">Geheugen</translation>
     </message>
 </context>
 <context>
@@ -2080,7 +2084,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Meters</source>
-        <translation type="unfinished">Meters</translation>
+        <translation type="obsolete">Meters</translation>
     </message>
     <message>
         <source>Main</source>
@@ -2111,7 +2115,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Arithmetic</source>
-        <translation type="unfinished">Rekenkundig</translation>
+        <translation type="obsolete">Rekenkundig</translation>
     </message>
 </context>
 <context>
@@ -2176,7 +2180,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Arithmetic</source>
-        <translation type="unfinished">Rekenkundig</translation>
+        <translation type="obsolete">Rekenkundig</translation>
     </message>
 </context>
 <context>
@@ -2191,10 +2195,6 @@ Can&apos;t find file:
     <message>
         <source>Hd44780</source>
         <translation type="unfinished">Hd44780</translation>
-    </message>
-    <message>
-        <source>Displays</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Main</source>
@@ -2213,10 +2213,6 @@ Can&apos;t find file:
     <name>Header</name>
     <message>
         <source>Header</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Connectors</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2272,7 +2268,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Memory</source>
-        <translation type="unfinished">Geheugen</translation>
+        <translation type="obsolete">Geheugen</translation>
     </message>
 </context>
 <context>
@@ -2299,7 +2295,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Converters</source>
-        <translation type="unfinished">Omzetters</translation>
+        <translation type="obsolete">Omzetters</translation>
     </message>
 </context>
 <context>
@@ -2310,7 +2306,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Graphical</source>
-        <translation type="unfinished">Grafisch</translation>
+        <translation type="obsolete">Grafisch</translation>
     </message>
     <message>
         <source>Image File</source>
@@ -2330,10 +2326,6 @@ Can&apos;t find file:
     <message>
         <source>Inductor</source>
         <translation type="unfinished">Spoel</translation>
-    </message>
-    <message>
-        <source>Reactive</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Main</source>
@@ -2431,19 +2423,11 @@ Can&apos;t find file:
         <source>KY-023</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Perifericals</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>KY040</name>
     <message>
         <source>Rotary Encoder (relative)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Perifericals</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2467,7 +2451,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Switches</source>
-        <translation type="unfinished">Schakelaars</translation>
+        <translation type="obsolete">Schakelaars</translation>
     </message>
     <message>
         <source>Main</source>
@@ -2493,10 +2477,6 @@ Can&apos;t find file:
 <context>
     <name>Ks0108</name>
     <message>
-        <source>Displays</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Main</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2513,7 +2493,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Meters</source>
-        <translation type="unfinished">Meters</translation>
+        <translation type="obsolete">Meters</translation>
     </message>
     <message>
         <source>Export</source>
@@ -2586,6 +2566,22 @@ Can&apos;t find file:
         <source>Export Data</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Trigger:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Time Div</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Time Pos</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Threshold</source>
+        <translation type="unfinished">Drempel</translation>
+    </message>
 </context>
 <context>
     <name>LabelVal</name>
@@ -2602,7 +2598,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Outputs</source>
-        <translation type="unfinished">Uitgangen</translation>
+        <translation type="obsolete">Uitgangen</translation>
     </message>
     <message>
         <source>Main</source>
@@ -2657,7 +2653,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Memory</source>
-        <translation type="unfinished">Geheugen</translation>
+        <translation type="obsolete">Geheugen</translation>
     </message>
 </context>
 <context>
@@ -2665,10 +2661,6 @@ Can&apos;t find file:
     <message>
         <source>LDR</source>
         <translation type="unfinished">LDR</translation>
-    </message>
-    <message>
-        <source>Resistive Sensors</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Main</source>
@@ -2707,10 +2699,6 @@ Can&apos;t find file:
     <name>LedBar</name>
     <message>
         <source>Led Bar</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Leds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2784,10 +2772,6 @@ Can&apos;t find file:
         <translation type="unfinished">LEDmatrix</translation>
     </message>
     <message>
-        <source>Leds</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Main</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2828,10 +2812,6 @@ Can&apos;t find file:
     <name>LedRgb</name>
     <message>
         <source>Led Rgb</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Leds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2890,7 +2870,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Other Logic</source>
-        <translation type="unfinished">Overige logica</translation>
+        <translation type="obsolete">Overige logica</translation>
     </message>
 </context>
 <context>
@@ -3007,10 +2987,6 @@ Can&apos;t find file:
     <name>Max72xx_matrix</name>
     <message>
         <source>Max72xx_matrix</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Leds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3220,7 +3196,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Memory</source>
-        <translation type="unfinished">Geheugen</translation>
+        <translation type="obsolete">Geheugen</translation>
     </message>
 </context>
 <context>
@@ -3242,7 +3218,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Active</source>
-        <translation type="unfinished">Actief</translation>
+        <translation type="obsolete">Actief</translation>
     </message>
     <message>
         <source>Main</source>
@@ -3301,7 +3277,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Converters</source>
-        <translation type="unfinished">Omzetters</translation>
+        <translation type="obsolete">Omzetters</translation>
     </message>
 </context>
 <context>
@@ -3312,7 +3288,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Active</source>
-        <translation type="unfinished">Actief</translation>
+        <translation type="obsolete">Actief</translation>
     </message>
     <message>
         <source>Main</source>
@@ -3335,7 +3311,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Active</source>
-        <translation type="unfinished">Actief</translation>
+        <translation type="obsolete">Actief</translation>
     </message>
     <message>
         <source>Main</source>
@@ -3406,7 +3382,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Gates</source>
-        <translation type="unfinished">Poorten</translation>
+        <translation type="obsolete">Poorten</translation>
     </message>
 </context>
 <context>
@@ -3424,7 +3400,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Meters</source>
-        <translation type="unfinished">Meters</translation>
+        <translation type="obsolete">Meters</translation>
     </message>
     <message>
         <source>Filter</source>
@@ -3465,10 +3441,6 @@ Can&apos;t find file:
         <translation type="unfinished">Potmeter</translation>
     </message>
     <message>
-        <source>Resistors</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Main</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3489,7 +3461,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Meters</source>
-        <translation type="unfinished">Meters</translation>
+        <translation type="obsolete">Meters</translation>
     </message>
     <message>
         <source>Main</source>
@@ -3547,7 +3519,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Switches</source>
-        <translation type="unfinished">Schakelaars</translation>
+        <translation type="obsolete">Schakelaars</translation>
     </message>
     <message>
         <source>Main</source>
@@ -3850,15 +3822,23 @@ p, li { white-space: pre-wrap; }
         <source>Tools</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Transistors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Other Active</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Other Outputs</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RTD</name>
     <message>
         <source>RTD</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Resistive Sensors</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3874,7 +3854,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Sources</source>
-        <translation type="unfinished">Bronnen</translation>
+        <translation type="obsolete">Bronnen</translation>
     </message>
     <message>
         <source>Main</source>
@@ -3965,7 +3945,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Switches</source>
-        <translation type="unfinished">Schakelaars</translation>
+        <translation type="obsolete">Schakelaars</translation>
     </message>
     <message>
         <source>Main</source>
@@ -4050,10 +4030,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Weerstand</translation>
     </message>
     <message>
-        <source>Resistors</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Main</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4067,10 +4043,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>ResistorDip</source>
         <translation type="unfinished">WeerstandDip</translation>
-    </message>
-    <message>
-        <source>Resistors</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Main</source>
@@ -4113,10 +4085,6 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Holding Current</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Rectifiers</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4204,10 +4172,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Servo</translation>
     </message>
     <message>
-        <source>Motors</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Main</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4241,10 +4205,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>7 Segment</source>
         <translation type="unfinished">7 segment</translation>
-    </message>
-    <message>
-        <source>Leds</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Main</source>
@@ -4291,7 +4251,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Other Logic</source>
-        <translation type="unfinished">Overige logica</translation>
+        <translation type="obsolete">Overige logica</translation>
     </message>
 </context>
 <context>
@@ -4368,17 +4328,13 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Arithmetic</source>
-        <translation type="unfinished">Rekenkundig</translation>
+        <translation type="obsolete">Rekenkundig</translation>
     </message>
 </context>
 <context>
     <name>Socket</name>
     <message>
         <source>Socket</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Connectors</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4390,10 +4346,6 @@ p, li { white-space: pre-wrap; }
     <name>Ssd1306</name>
     <message>
         <source>Blue</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Displays</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4436,10 +4388,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Stepper</translation>
     </message>
     <message>
-        <source>Motors</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Main</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4464,10 +4412,6 @@ p, li { white-space: pre-wrap; }
     <name>Strain</name>
     <message>
         <source>Force Strain Gauge</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Resistive Sensors</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4537,7 +4481,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Other</source>
-        <translation type="unfinished">Overig</translation>
+        <translation type="obsolete">Overig</translation>
     </message>
     <message>
         <source>Board Mode</source>
@@ -4632,7 +4576,7 @@ Wijzigingen opslaan?
     </message>
     <message>
         <source>Switches</source>
-        <translation type="unfinished">Schakelaars</translation>
+        <translation type="obsolete">Schakelaars</translation>
     </message>
     <message>
         <source>Main</source>
@@ -4663,7 +4607,7 @@ Wijzigingen opslaan?
     </message>
     <message>
         <source>Switches</source>
-        <translation type="unfinished">Schakelaars</translation>
+        <translation type="obsolete">Schakelaars</translation>
     </message>
     <message>
         <source>Main</source>
@@ -4686,7 +4630,7 @@ Wijzigingen opslaan?
     </message>
     <message>
         <source>Graphical</source>
-        <translation type="unfinished">Grafisch</translation>
+        <translation type="obsolete">Grafisch</translation>
     </message>
     <message>
         <source>Main</source>
@@ -4747,10 +4691,6 @@ Wijzigingen opslaan?
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Perifericals</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Main</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4791,10 +4731,6 @@ Wijzigingen opslaan?
     <name>Transformer</name>
     <message>
         <source>Transformer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Reactive</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4840,10 +4776,6 @@ Wijzigingen opslaan?
         <source>Holding Current</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Rectifiers</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>Tunnel</name>
@@ -4859,20 +4791,12 @@ Wijzigingen opslaan?
         <source>Id</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Connectors</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>VarResistor</name>
     <message>
         <source>Variable Resistor</source>
         <translation type="unfinished">Variabele weerstand</translation>
-    </message>
-    <message>
-        <source>Resistors</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Main</source>
@@ -4903,7 +4827,7 @@ Wijzigingen opslaan?
     </message>
     <message>
         <source>Active</source>
-        <translation type="unfinished">Actief</translation>
+        <translation type="obsolete">Actief</translation>
     </message>
     <message>
         <source>Main</source>
@@ -4918,7 +4842,7 @@ Wijzigingen opslaan?
     <name>VoltSource</name>
     <message>
         <source>Sources</source>
-        <translation type="unfinished">Bronnen</translation>
+        <translation type="obsolete">Bronnen</translation>
     </message>
     <message>
         <source>Main</source>
@@ -4942,10 +4866,6 @@ Wijzigingen opslaan?
     <message>
         <source>WS2812 Led</source>
         <translation type="unfinished">WS2812 LED</translation>
-    </message>
-    <message>
-        <source>Leds</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Main</source>
@@ -4988,7 +4908,7 @@ Wijzigingen opslaan?
     </message>
     <message>
         <source>Sources</source>
-        <translation type="unfinished">Bronnen</translation>
+        <translation type="obsolete">Bronnen</translation>
     </message>
     <message>
         <source>Main</source>
@@ -5083,17 +5003,13 @@ Wijzigingen opslaan?
     </message>
     <message>
         <source>Gates</source>
-        <translation type="unfinished">Poorten</translation>
+        <translation type="obsolete">Poorten</translation>
     </message>
 </context>
 <context>
     <name>Zener</name>
     <message>
         <source>Zener Diode</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Rectifiers</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5150,16 +5066,16 @@ Wijzigingen opslaan?
 <context>
     <name>manCompDialog</name>
     <message>
-        <source>Dialog</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Name</source>
         <translation type="unfinished">Naam</translation>
     </message>
     <message>
         <source>ShortCut</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Manage Components</source>
+        <translation type="unfinished">Componenten beheren</translation>
     </message>
 </context>
 </TS>

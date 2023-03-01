@@ -369,16 +369,14 @@ void Circuit::loadStrDoc( QString &doc )
                     for( propGroup group : groups )
                     {
                         QList<ComProperty*> propList = group.propList;
-                        if( !propList.isEmpty() )
+                        if( propList.isEmpty() ) continue;
+                        for( ComProperty* prop : propList )
                         {
-                            for( ComProperty* prop : propList )
-                            {
-                                QString qpn = prop->name();
-                                QStringRef pn( &qpn );
-                                if( !properties.contains( pn ) ) continue;
-                                prop->setValStr( properties.value( pn ).toString() );
-                                properties.remove( pn );
-                            }
+                            QString qpn = prop->name();
+                            QStringRef pn( &qpn );
+                            if( !properties.contains( pn ) ) continue;
+                            prop->setValStr( properties.value( pn ).toString() );
+                            properties.remove( pn );
                         }
                     }
                     QString propName;

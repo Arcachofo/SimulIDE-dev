@@ -84,8 +84,8 @@ Max72xx_matrix::Max72xx_matrix( QObject* parent, QString type, QString id )
     initialize();
 
     addPropGroup( { tr("Main"), {
-new StringProp<Max72xx_matrix>( "Color"   , tr("Color")   ,""       , this, &Max72xx_matrix::colorStr,    &Max72xx_matrix::setColorStr, "enum" ),
-new IntProp   <Max72xx_matrix>( "NumDisplays", tr("Size"),"_8x8 Led", this, &Max72xx_matrix::numDisplays, &Max72xx_matrix::setNumDisplays, "uint" ),
+new StringProp<Max72xx_matrix>( "Color"      , tr("Color"),""       , this, &Max72xx_matrix::colorStr,    &Max72xx_matrix::setColorStr, "enum" ),
+new IntProp   <Max72xx_matrix>( "NumDisplays", tr("Size") ,"_8x8 Led", this, &Max72xx_matrix::numDisplays, &Max72xx_matrix::setNumDisplays, "uint" ),
     }} );
 }
 Max72xx_matrix::~Max72xx_matrix(){}

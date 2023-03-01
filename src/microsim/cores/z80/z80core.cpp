@@ -4,6 +4,7 @@
 #include "mcupin.h"
 #include "simulator.h"
 #include "ioport.h"
+#include "mcu.h"
 
 #include "boolprop.h"
 #include "stringprop.h"
