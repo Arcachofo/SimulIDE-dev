@@ -76,6 +76,7 @@ class MAINMODULE_EXPORT Pin : public QObject, public QGraphicsItem, public ePin,
         void setLabelColor( QColor color );
         void setFontSize( int size );
         int  labelSizeX() { return m_labelWidth; }
+        void setSpace( int s );
 
         void setPinId( QString id ) { m_id = id; }
         void setVisible( bool visible );
@@ -121,6 +122,7 @@ class MAINMODULE_EXPORT Pin : public QObject, public QGraphicsItem, public ePin,
         int m_overScore;
         int m_labelheight;
         int m_labelWidth;
+        int m_space;
 
         bool m_blocked;
         bool m_isBus;

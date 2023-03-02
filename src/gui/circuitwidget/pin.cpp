@@ -38,6 +38,7 @@ Pin::Pin( int angle, const QPoint pos, QString id, int index, Component* parent 
     my_connector = NULL;
     m_conPin     = NULL;
     m_angle      = angle;
+    m_space = 0;
     m_Hflip = 1;
     m_Vflip = 1;
     m_overScore = -1;
@@ -240,6 +241,12 @@ void Pin::setLabelText( QString label, bool over )
     setLabelPos();
 }
 
+void Pin::setSpace( int s )
+{
+    m_space = s;
+    setLabelPos();
+}
+
 void Pin::setLabelPos()
 {
     QFontMetrics fm( m_label.font() );
@@ -248,7 +255,7 @@ void Pin::setLabelPos()
     int ylabelpos = pos().y();
     m_labelheight = (fm.height()+1)/2;
     m_labelWidth  = fm.width(m_label.text());
-    int space = ( m_labelheight < 4 ) ? 2 : m_labelheight/2;
+    int space = m_space ? m_space : ( m_labelheight < 4 ) ? 2 : m_labelheight/2;
     int offset = m_length + space;
 
     if( m_angle == 0 )         // Right side
