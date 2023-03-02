@@ -25,7 +25,7 @@ Voltimeter::Voltimeter( QObject* parent, QString type, QString id )
 {
     m_unit = "V";
     setRes( high_imp );
-    m_display.setText( "0.000\nV");
+    m_display.setText( " 0.000\n V");
 }
 Voltimeter::~Voltimeter(){}
 

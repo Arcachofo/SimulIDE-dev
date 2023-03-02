@@ -45,6 +45,7 @@ SevenSegmentBCD::SevenSegmentBCD( QObject* parent, QString type, QString id )
     for( uint i=0; i<m_inPin.size(); ++i )
     {
         m_inPin[i]->setX( m_inPin[i]->x()-4);
+        m_inPin[i]->setSpace( 1 );
         m_inPin[i]->setFontSize( 4 );
         m_inPin[i]->setLabelColor( QColor( 250, 250, 200 ) );
         m_inPin[i]->setLabelText( QString::number( pow(2,i) ) );

@@ -36,9 +36,11 @@ Csource::Csource( QObject* parent, QString type, QString id )
     // Control Pins
     m_pin[0] = new Pin( 180, QPoint(-24,-8 ), id+"-cpPin", 0, this);
     m_pin[1] = new Pin( 180, QPoint(-24, 8 ), id+"-cmPin", 1, this);
-    m_pin[0]->setLabelText( "+" );
-    m_pin[1]->setLabelText( "-" );
-    m_pin[0]->setLabelColor( QColor( 0, 0, 0 ) );
+    m_pin[0]->setFontSize( 5 );
+    m_pin[0]->setLabelText("➕");
+    m_pin[0]->setLabelColor( Qt::red );
+    m_pin[1]->setFontSize( 5 );
+    m_pin[1]->setLabelText("➖");
     m_pin[1]->setLabelColor( QColor( 0, 0, 0 ) );
     m_ePin[0] = m_pin[0];
     m_ePin[1] = m_pin[1];
@@ -118,8 +120,8 @@ void Csource::updateStep()
         m_pin[1]->setLabelText( "" );
     }else{
         m_admit = cero_doub;
-        m_pin[0]->setLabelText( "+" );
-        m_pin[1]->setLabelText( "-" );
+        m_pin[0]->setLabelText("➕");
+        m_pin[1]->setLabelText("➖");
     }
     eResistor::stampAdmit();
 

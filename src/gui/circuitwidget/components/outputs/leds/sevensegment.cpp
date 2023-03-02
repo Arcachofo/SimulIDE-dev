@@ -53,12 +53,14 @@ SevenSegment::SevenSegment( QObject* parent, QString type, QString id )
     {
         pinid = m_id+"-pin_"+QString( 97+i ); // a..g
         m_ePin[i] = m_pin[i] = new Pin( 180, QPoint(-16-8,-24+i*8 ), pinid, 0, this );
+        m_pin[i]->setSpace( 1 );
         m_pin[i]->setLength( 6 );
         m_pin[i]->setFontSize( 4 );
         m_pin[i]->setLabelText( QChar('a'+i) );
     }
     // Pin dot
     m_ePin[7] = m_pin[7] = new Pin( 270, QPoint( -8, 24+8 ), m_id+"-pin_dot", 0, this );
+    m_pin[7]->setSpace( 1 );
     m_pin[7]->setLength( 4 );
     m_pin[7]->setFontSize( 4 );
     m_pin[7]->setLabelText( "." );
@@ -230,6 +232,7 @@ void SevenSegment::createDisplay(int n )
     QString pinid = m_id+"-pin_common"+QString( 97+n );
     m_commonPin[n] = m_pin[8+n]= new Pin( 270, QPoint( x+8, 24+8 ), pinid, 0, this );
     m_commonPin[n]->setLength( 4 );
+    m_commonPin[n]->setSpace( 1 );
     m_commonPin[n]->setFontSize( 4 );
     m_commonPin[n]->setLabelText( label );
 

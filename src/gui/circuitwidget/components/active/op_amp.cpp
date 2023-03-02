@@ -40,22 +40,26 @@ OpAmp::OpAmp( QObject* parent, QString type, QString id )
     
     m_pin.resize( 5 );
     m_pin[0] = m_inputP = new IoPin( 180, QPoint(-16-8,-8), id+"-inputNinv", 0, this, input );
-    m_pin[0]->setLabelText( "+" );
-    m_pin[0]->setLabelColor( QColor( 0, 0, 0 ) );
+    m_pin[0]->setFontSize( 5 );
+    m_pin[0]->setLabelText("➕");
+    m_pin[0]->setLabelColor( Qt::red );
 
     m_pin[1] = m_inputN = new IoPin( 180, QPoint(-16-8, 8), id+"-inputInv", 1, this, input );
-    m_pin[1]->setLabelText( "-" );
+    m_pin[1]->setFontSize( 5 );
+    m_pin[1]->setLabelText("➖");
     m_pin[1]->setLabelColor( QColor( 0, 0, 0 ) );
 
     m_output = new IoPin(   0, QPoint( 16+8, 0), id+"-output",   2, this, source );
     m_pin[2] = m_output;
 
     m_pin[3] = new Pin( 90, QPoint(0,-16), id+"-powerPos", 3, this );
-    m_pin[3]->setLabelText( "+" );
-    m_pin[3]->setLabelColor( QColor( 0, 0, 0 ) );
+    m_pin[3]->setFontSize( 5 );
+    m_pin[3]->setLabelText("➕");
+    m_pin[3]->setLabelColor( Qt::red );
 
     m_pin[4] = new Pin( 270, QPoint(0, 16), id+"-powerNeg", 4, this );
-    m_pin[4]->setLabelText( "-" );
+    m_pin[4]->setFontSize( 5 );
+    m_pin[4]->setLabelText("➖");
     m_pin[4]->setLabelColor( QColor( 0, 0, 0 ) );
     
     m_switchPins = false;

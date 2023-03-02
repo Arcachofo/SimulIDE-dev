@@ -43,12 +43,14 @@ DcMotor::DcMotor( QObject* parent, QString type, QString id )
 
     m_pin.resize( 2 );
     m_ePin[0] = m_pin[0] = new Pin( 180, QPoint(-40,0), m_id+"-lPin", 0, this);
-    m_pin[0]->setLength( 5 );
-    m_pin[0]->setLabelText("+");
+    m_pin[0]->setLength( 4 );
+    m_pin[0]->setFontSize( 5 );
+    m_pin[0]->setLabelText("➕");
 
     m_ePin[1] =m_pin[1] = new Pin( 0, QPoint(40,0), m_id+"-rPin", 1, this);
-    m_pin[1]->setLength( 5 );
-    m_pin[1]->setLabelText("-");
+    m_pin[1]->setLength( 4 );
+    m_pin[1]->setFontSize( 5 );
+    m_pin[1]->setLabelText("➖");
 
     setShowId( true );
     setLabelPos(-22,-48, 0);

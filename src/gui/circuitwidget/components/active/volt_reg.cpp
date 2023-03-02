@@ -42,17 +42,17 @@ VoltReg::VoltReg( QObject* parent, QString type, QString id )
     m_ePin.resize( 3 );
 
     m_ePin[0] = m_pin[0] = new Pin( 180, QPoint( -16, 0 ), id+"-input", 0, this );
-    m_pin[0]->setLength(6);
+    m_pin[0]->setLength(5);
     m_pin[0]->setLabelText( "I" );
     m_pin[0]->setLabelColor( QColor( 0, 0, 0 ) );
 
     m_ePin[1] = m_pin[1] = new Pin( 0, QPoint( 16, 0 ), id+"-output", 1, this );
-    m_pin[1]->setLength(6);
+    m_pin[1]->setLength(5);
     m_pin[1]->setLabelText( "O" );
     m_pin[1]->setLabelColor( QColor( 0, 0, 0 ) );
 
     m_ePin[2] = m_pin[2] = new Pin( 270, QPoint( 0, 16 ), id+"-ref", 2, this );
-    m_pin[2]->setLength(6);
+    m_pin[2]->setLength(5);
     m_pin[2]->setLabelText( "R" );
     m_pin[2]->setLabelColor( QColor( 0, 0, 0 ) );
 

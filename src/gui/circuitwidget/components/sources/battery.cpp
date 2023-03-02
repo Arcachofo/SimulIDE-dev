@@ -36,6 +36,8 @@ Battery::Battery( QObject* parent, QString type, QString id )
     m_ePin[0] = m_pin[0];
     m_ePin[1] = m_pin[1];
 
+    m_pin[0]->setColor( Qt::red );
+
     setLabelPos(-18,-22, 0 );
     setValLabelPos(-10, 10, 0 ); // x, y, rot
 
