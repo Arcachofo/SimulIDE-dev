@@ -21,12 +21,11 @@ OscWidget::OscWidget( QWidget* parent , Oscope* oscope )
     m_channel = 4;
     QString color = m_oscope->getColor( m_channel ).name();
 
-    channelGroup->addButton( chButton1, 0 );
-    channelGroup->addButton( chButton2, 1 );
-    channelGroup->addButton( chButton3, 2 );
-    channelGroup->addButton( chButton4, 3 );
-    channelGroup->addButton( allButton, 4 );
-    channelGroup->button( 4 )->setChecked( true );
+    channelGroup->setId( chButton1, 0 );
+    channelGroup->setId( chButton2, 1 );
+    channelGroup->setId( chButton3, 2 );
+    channelGroup->setId( chButton4, 3 );
+    channelGroup->setId( allButton, 4 );
 
     autoGroup->addButton( autoCheck1, 0 );
     autoGroup->addButton( autoCheck2, 1 );
@@ -60,7 +59,7 @@ OscWidget::OscWidget( QWidget* parent , Oscope* oscope )
     for( int i=0; i<5; ++i )
     {
         QString color = m_oscope->getColor( i ).name();
-        channelGroup->button( i )->setStyleSheet( "background-color:"+color );
+        channelGroup->button( i )->setStyleSheet( "QPushButton:checked{background-color:"+color+"; border: 2px solid gray; border-radius: 2px;}" );
         channelGroup->button( i )->adjustSize();
         autoGroup->button( i )->setStyleSheet( "background-color:"+color );
         triggerGroup->button( i )->setStyleSheet( "background-color:"+color );
@@ -72,6 +71,9 @@ OscWidget::OscWidget( QWidget* parent , Oscope* oscope )
     timePosBox->setUnitStr( "s" );
     voltDivBox->setUnitStr( "V" );
     voltPosBox->setUnitStr( "V" );
+
+    on_channelGroup_buttonClicked( 4 ); // Avoid size changes at first click
+    allButton->setChecked( true );
 }
 OscWidget::~OscWidget(){}
 
