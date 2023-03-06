@@ -28,13 +28,15 @@ Ground::Ground( QObject* parent, QString type, QString id )
     m_area = QRect(-10,-10, 20, 14 );
 
     m_pin.resize(1);
-    m_pin[0] = new IoPin( 90, QPoint( 0,-16 ), id+"-Gnd", 0, this, source );
+    IoPin* pin = new IoPin( 90, QPoint( 0,-16 ), id+"-Gnd", 0, this, source );
+    pin->setOutState( false );
+    m_pin[0] = pin;
     
     setLabelPos(-16, 8, 0);
 }
 Ground::~Ground() { /*delete m_out;*/ }
 
-void Ground::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget )
+void Ground::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
 {
     Component::paint( p, option, widget );
 
