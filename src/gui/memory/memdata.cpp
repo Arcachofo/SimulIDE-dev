@@ -12,6 +12,7 @@
 #include "simulator.h"
 #include "circuitwidget.h"
 #include "circuit.h"
+#include "mcuconfigword.h"
 #include "e_mcu.h"
 #include "utils.h"
 
@@ -114,7 +115,7 @@ bool MemData::loadDat( QVector<int>* toData, QString file, bool resize )
 
 bool MemData::loadHex( QVector<int>* toData, QString file, bool resize, int bits )
 {
-    qDebug() <<"Loading hex file:\n"<<file;
+    qDebug() <<"Loading hex file:\n"<<file<<"\n";
     QStringList lineList = fileToStringList( file, "MemData::loadHex" );
 
     int nLine = 0;
@@ -178,7 +179,7 @@ bool MemData::loadHex( QVector<int>* toData, QString file, bool resize, int bits
             if( type == 4 )
             {
                 addrBase = (line.mid( 8, 4 ).toInt( &ok, 16 ))<<16;
-                qDebug() <<"Extended Linear Address:"<< addrBase;
+                qDebug() <<"    Extended Linear Address:"<< "0x"+QString::number( addrBase, 16 ).toUpper();
                 continue;
             }
             if( resize ){
@@ -188,11 +189,11 @@ bool MemData::loadHex( QVector<int>* toData, QString file, bool resize, int bits
             //qDebug()<< "MemData::loadHex"<<addrBase/WordSize<< addr <<data;
             if( addr > dataEnd ){
                 bool ok = false;
-                if( m_eMcu ) ok = m_eMcu->setCfgWord( addr, data );
+                if( m_eMcu ) ok = m_eMcu->cfgWord()->setCfgWord( addr, data );
                 if( !ok )
                 {
                     qDebug() << "    Warning: PGM End reached at Line"<<QString::number( nLine )
-                             <<"\n    Address:"<<addr<<"> PMG End:"<<dataEnd
+                             <<"\n    Address:"<<"0x"+QString::number( addr, 16 )<<"> PMG End:"<<"0x"+QString::number( dataEnd, 16 ).toUpper()
                              <<"\n    TODO: Config word ??"<<"\n";
                     return true;
                 }
