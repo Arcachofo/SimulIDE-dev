@@ -71,7 +71,6 @@ INCLUDEPATH += ../src \
     ../src/angel/JIT \
     ../src/angel/src
 
-
 QMAKE_CXXFLAGS += -Wno-unused-parameter
 QMAKE_CXXFLAGS += -Wno-implicit-fallthrough
 QMAKE_CXXFLAGS += -fno-strict-aliasing      #AngelScript

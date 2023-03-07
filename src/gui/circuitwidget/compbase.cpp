@@ -64,6 +64,7 @@ void CompBase::removeProperty( QString prop )
             pg.propList.removeAll( p );
             m_propGroups.replace( i, pg );
             m_propHash.remove( prop );
+            delete p;
             return;
 }   }   }
 

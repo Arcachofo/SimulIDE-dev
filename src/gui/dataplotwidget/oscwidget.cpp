@@ -49,7 +49,7 @@ OscWidget::OscWidget( QWidget* parent , Oscope* oscope )
     hideGroup->addButton( hideCheck4, 3 );
     hideGroup->addButton( hideCheck5, 4 );
     hideGroup->button( 4 )->setChecked( true );
-    hideLabel->setStyleSheet( "background-color:"+color );
+    //hideLabel->setStyleSheet( "background-color:"+color );
 
     trackGroup->addButton( trackCheck1, 1 );
     trackGroup->addButton( trackCheck2, 2 );
@@ -339,8 +339,6 @@ void OscWidget::on_hideGroup_buttonClicked( int ch )
 void OscWidget::hideChannel( int ch, bool hide )
 {
     hideGroup->button( ch )->setChecked( hide );
-    QString color = m_oscope->getColor( ch ).name();
-    hideLabel->setStyleSheet( "background-color:"+color );
     if( ch<4 && hide ) hideGroup->button( 4 )->setChecked( false );
 }
 

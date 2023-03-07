@@ -101,20 +101,20 @@ void Strain::senseChanged( int val ) // Called when dial is rotated
 }
 
 
-double Strain::sensorFunction( double sense )
+double Strain::sensorFunction(double forceN )
 {
-  double r_sense;
+  double resisteance;
   m_k_long = 1+2.0*m_coef_poisson+m_cste_bridgman*(1-2*m_coef_poisson);
   //qDebug() << "K = " << m_k_long;
   m_k = m_k_long * (1 - m_coef_transverse);
   m_section_body = m_h_body * m_w_body;
-  m_delta_r = m_r0*m_k*sense/(m_young_modulus*m_section_body);
+  m_delta_r = m_r0*m_k*forceN/(m_young_modulus*m_section_body);
   m_delta_r_t = (m_alpha_r+m_k*(m_lambda_s - m_lambda_j)) * (m_temp - m_ref_temp) * m_r0;
-  r_sense = m_r0 + m_delta_r + m_delta_r_t;
-  return r_sense;
+  resisteance = m_r0 + m_delta_r + m_delta_r_t;
+  return resisteance;
 }
 
-void Strain::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget )
+void Strain::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
 {
     Component::paint( p, option, widget );
     p->drawRect( -10,-20, 20, 24 );

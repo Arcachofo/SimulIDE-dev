@@ -26,7 +26,6 @@ class MAINMODULE_EXPORT Strain : public VarResBase
 
     virtual void initialize() override;
     virtual void updateStep() override;
-    virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
 
     double refTemp()              { return m_ref_temp; }
     void   setRefTemp( double t ) { m_ref_temp = t; }
@@ -36,9 +35,11 @@ class MAINMODULE_EXPORT Strain : public VarResBase
     
     //public slots:
       void senseChanged( int val );
+
+      virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
       
  private:
-    double sensorFunction ( double sense );
+    double sensorFunction ( double forceN );
 
     uint64_t m_step;
     uint64_t m_last_step;
