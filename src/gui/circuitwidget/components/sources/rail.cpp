@@ -38,7 +38,7 @@ Rail::Rail( QObject* parent, QString type, QString id )
     m_pin.resize(1);
     m_pin[0] = m_out = new IoPin( 0, QPoint(16,0), id+"-outnod", 0, this, source );
 
-    setValLabelPos(-16, 8 , 0 ); // x, y, rot
+    setValLabelPos(-19, 0 , 0 ); // x, y, rot
     setLabelPos(-16,-24, 0);
 
     addPropGroup( { tr("Main"), {
@@ -65,9 +65,32 @@ void Rail::stamp()
     update();
 }
 
+QPainterPath Rail::shape() const
+{
+    QPainterPath path;
+
+    QVector<QPointF> points;
+
+    points << QPointF(-4,-8 )
+           << QPointF(-4, 8 )
+           << QPointF( 8,  1 )
+           << QPointF( 8, -1 );
+
+    path.addPolygon( QPolygonF(points) );
+    path.closeSubpath();
+    return path;
+}
+
 void Rail::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
 {
     Component::paint( p, option, widget );
     p->setBrush( QColor( 255, 166, 0 ) );
-    p->drawRoundedRect( QRectF( -8, -8, 16, 16 ), 2, 2);
+    //p->drawRoundedRect( QRectF( -8, -8, 16, 16 ), 2, 2);
+    static const QPointF points[4] = {
+        QPointF(-4,-8 ),
+        QPointF(-4, 8 ),
+        QPointF( 9,  1 ),
+        QPointF( 9, -1 )            };
+
+    p->drawPolygon(points, 4);
 }

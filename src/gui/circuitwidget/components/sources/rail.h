@@ -27,6 +27,7 @@ class MAINMODULE_EXPORT Rail : public Component, public eElement
 
         virtual void stamp() override;
 
+        virtual QPainterPath shape() const;
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
 
     private:
