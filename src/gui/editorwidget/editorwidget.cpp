@@ -353,6 +353,8 @@ void EditorWidget::documentWasModified()
 
 void EditorWidget::closeTab( int index )
 {
+    if( m_debuggerToolBar->isVisible() ) stop();
+
     m_docWidget->setCurrentIndex( index );
     if( !maybeSave() ) return;
 
@@ -366,7 +368,6 @@ void EditorWidget::closeTab( int index )
         enableFileActs( false );
         enableDebugActs( false );
     }
-    if( m_debuggerToolBar->isVisible() ) stop();
 
     int last = m_docWidget->count()-1;
     if( index > last ) m_docWidget->setCurrentIndex( last );
