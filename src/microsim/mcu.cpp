@@ -26,6 +26,7 @@
 #include "mcumonitor.h"
 #include "memdata.h"
 #include "mcuuart.h"
+#include "mcuintosc.h"
 #include "utils.h"
 
 #include "stringprop.h"
@@ -81,13 +82,10 @@ Mcu::Mcu( QObject* parent, QString type, QString id )
     }
     setName( m_device );
 
-    m_clkPin[0]  = NULL;
-    m_clkPin[1]  = NULL;
     m_resetPin   = NULL;
     m_portRstPin = NULL;
     m_mcuMonitor = NULL;
     m_autoLoad   = false;
-    m_extClock   = false;
     m_scripted   = false;
     m_resetPol   = false;
 
@@ -182,7 +180,7 @@ void Mcu::setup( QString type )
     if( m_deviceType == typeMCU )
     {
     addPropGroup( { tr("Main"), {
-new DoubProp  <Mcu>("Frequency", tr("Frequency"),"MHz" , this, &Mcu::freq,    &Mcu::setFreq ),
+new DoubProp  <Mcu>("Frequency", tr("Frequency"),"MHz" , this, &Mcu::extFreq, &Mcu::setExtFreq ),
 new StringProp<Mcu>("Program"  , tr("Firmware")  ,""   , this, &Mcu::program, &Mcu::setProgram ),
 new BoolProp  <Mcu>("Auto_Load", tr("Reload hex at Simulation Start"),"", this, &Mcu::autoLoad, &Mcu::setAutoLoad ),
 new BoolProp  <Mcu>("saveEepr", tr("EEPROM persitent"),"", this, &Mcu::saveEepr, &Mcu::setSaveEepr ),
@@ -537,36 +535,24 @@ void Mcu::enableRstPin( bool en )
     else m_resetPin = NULL;
 }
 
+bool Mcu::extOscEnabled()
+{
+    if( m_eMcu.m_intOsc ) return m_eMcu.m_intOsc->extClock();
+    return false;
+}
+
 void Mcu::enableExtOsc( bool en )
 {
-    m_extClock = en;
-    if( m_clkPin[0] == NULL ) return;
-
-    for( int i=0; i<2; ++i )
-        if( m_clkPin[i] ){
-            m_clkPin[i]->controlPin( en, en );
-            m_clkPin[i]->setUnused( en );
-        }
-
-    if( en ){
-        for( int i=0; i<2; ++i )
-            if( m_clkPin[i] ) m_clkPin[i]->setPinMode( input );
-    }
+    if( m_eMcu.m_intOsc ) m_eMcu.m_intOsc->enableExtOsc( en );
 }
 
 bool Mcu::wdtEnabled()
 {
-    if( !m_eMcu.m_wdt ) return false;
-    return m_eMcu.m_wdt->enabled();
+    if( m_eMcu.m_wdt ) return m_eMcu.m_wdt->enabled();
+    return false;
 }
 
 void Mcu::enableWdt( bool en ) { if( m_eMcu.m_wdt ) m_eMcu.m_wdt->enable( en ); }
-
-/*void Mcu::createCfgWord( QString name, uint16_t addr, uint16_t v )
-{
-
-    m_eMcu.m_cfgWords.insert( addr, v );
-}*/
 
 QStringList Mcu::getEnumUids( QString e) { return m_eMcu.cpu->getEnumUids( e ); }
 QStringList Mcu::getEnumNames( QString e) { return m_eMcu.cpu->getEnumNames( e ); }

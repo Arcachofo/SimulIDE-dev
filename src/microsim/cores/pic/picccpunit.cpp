@@ -58,7 +58,7 @@ void PicCcpUnit::ccprWriteH( uint8_t val )
     else if( m_ccpMode == ccpCOM ) m_comUnit->ocrWriteH( val );
 }
 
-void PicCcpUnit::configureA(uint8_t CCPxCON ) //
+void PicCcpUnit::configureA( uint8_t CCPxCON ) //
 {
     if( CCPxCON == m_mode ) return;
     m_mode = CCPxCON;

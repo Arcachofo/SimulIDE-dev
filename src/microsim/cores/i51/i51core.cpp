@@ -23,8 +23,8 @@ I51Core::I51Core( eMcu* mcu  )
     m_enPin = mcu->getIoPin("PSEN");
     m_laPin = mcu->getIoPin("ALE");
 
-    m_dataPort = mcu->getPort("PORT0");
-    m_addrPort = mcu->getPort("PORT2");
+    m_dataPort = mcu->getMcuPort("PORT0");
+    m_addrPort = mcu->getMcuPort("PORT2");
 
     m_acc = m_mcu->getReg( "ACC" );
 

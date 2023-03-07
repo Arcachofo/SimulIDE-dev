@@ -30,10 +30,12 @@ enum mcuState_t{
 };
 
 class Mcu;
+class McuIntOsc;
 class IoPort;
 class McuPort;
 class McuVref;
 class Component;
+class ConfigWord;
 
 class MAINMODULE_EXPORT eMcu : public DataSpace, public eElement
 {
@@ -42,7 +44,7 @@ class MAINMODULE_EXPORT eMcu : public DataSpace, public eElement
         friend class Mcu;
 
     public:
-        eMcu( Component* comp, QString id );
+        eMcu( Mcu* comp, QString id );
         ~eMcu();
 
  static eMcu* self() { return m_pSelf; }
@@ -54,7 +56,7 @@ class MAINMODULE_EXPORT eMcu : public DataSpace, public eElement
         void stepCpu();
 
         void setDebugger( BaseDebugger* deb );
-        void setDebugging( bool d ) { m_debugging = d; }
+        void setDebugging( bool d );
 
         uint16_t getFlashValue( int address ) { return m_progMem[address]; }
         void     setFlashValue( int address, uint16_t value ) { m_progMem[address] = value; }
@@ -76,11 +78,12 @@ class MAINMODULE_EXPORT eMcu : public DataSpace, public eElement
 
         double freq() { return m_freq; }
         void setFreq( double freq );
-        uint64_t psCycle() { return m_psCycle; }  // Simulation cycles per instruction cycle
+        uint64_t psCycle() { return m_psCycle; }  // picoseconds per instruction cycle
+        void setPsCycle( uint64_t p ) { m_psCycle = p; }
 
         McuTimer* getTimer( QString name );
-        McuPort* getPort( QString name );
-        McuPin*  getPin( QString pinName );
+        McuPort* getMcuPort( QString name );
+        McuPin*  getMcuPin( QString pinName );
         //QHash<QString, McuPort*> getPorts() { return m_mcuPorts; }
 
         IoPort* getIoPort( QString name );
@@ -92,25 +95,25 @@ class MAINMODULE_EXPORT eMcu : public DataSpace, public eElement
         McuVref* vrefModule();
         //McuSleep* sleepModule();
 
+        ConfigWord* cfgWord() { return m_cfgWord; }
+        McuIntOsc* intOsc() { return m_intOsc; }
+
         void wdr();
 
         void enableInterrupts( uint8_t en );
-
-        bool setCfgWord( uint16_t addr, uint16_t data );
-        uint16_t getCfgWord( uint16_t addr=0 );
 
         CpuBase* cpu;
         int cyclesDone;
 
         void setMain() { m_pSelf = this; }
-        Component* component() { return m_component; }
+        Mcu* component() { return m_component; }
 
         Interrupts m_interrupts;
 
     protected:
  static eMcu* m_pSelf;
 
-        Component* m_component;
+        Mcu* m_component;
 
         void reset();
 
@@ -130,8 +133,6 @@ class MAINMODULE_EXPORT eMcu : public DataSpace, public eElement
         QVector<int> m_eeprom;
         bool m_saveEepr;
 
-        QHash<uint16_t, uint16_t> m_cfgWords; // Config words
-
         std::vector<McuModule*> m_modules;
         std::vector<McuUsart*> m_usarts;
 
@@ -140,13 +141,15 @@ class MAINMODULE_EXPORT eMcu : public DataSpace, public eElement
         QHash<QString, IoPort*>   m_ioPorts;  // Access ioPORTS by name
 
         IoPin*  m_clkPin;
+        ConfigWord* m_cfgWord;
         McuSleep* m_sleepModule;
         McuVref* m_vrefModule;
         McuWdt* m_wdt;
+        McuIntOsc* m_intOsc;
 
         double m_freq;           // Clock Frequency in MegaHerzs
         double m_cPerInst;       // Clock ticks per Instruction Cycle
-        uint64_t m_psCycle;      // Simulation cycles per Instruction Cycle
+        uint64_t m_psCycle;      // picoseconds per Instruction Cycle
 
         RamTable* m_cpuTable;
 

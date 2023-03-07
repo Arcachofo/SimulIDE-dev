@@ -45,13 +45,16 @@ class MAINMODULE_EXPORT Mcu : public Chip
         bool autoLoad() { return m_autoLoad; }
         void setAutoLoad( bool al ) { m_autoLoad = al; }
 
+        double extFreq() { return m_extFreq; }
+        void setExtFreq( double freq ) { m_extFreq = freq; setFreq( freq ); }
+
         double freq() { return m_eMcu.m_freq; }
         void setFreq( double freq ) { m_eMcu.setFreq( freq ); }
 
         bool rstPinEnabled();
         void enableRstPin( bool en );
 
-        bool extOscEnabled() { return m_extClock; }
+        bool extOscEnabled();
         void enableExtOsc( bool en );
 
         bool wdtEnabled();
@@ -114,9 +117,10 @@ class MAINMODULE_EXPORT Mcu : public Chip
         deviceType_t m_deviceType;
 
         bool m_autoLoad;
-        bool m_extClock;
         bool m_scripted;
         bool m_resetPol;
+
+        double m_extFreq;
 
         int m_serialMon;
 
@@ -128,7 +132,6 @@ class MAINMODULE_EXPORT Mcu : public Chip
 
         IoPin*  m_resetPin;
         McuPin* m_portRstPin;
-        McuPin* m_clkPin[2];
 
         QList<Pin*> m_pinList;
 

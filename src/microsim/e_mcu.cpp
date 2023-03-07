@@ -21,7 +21,7 @@
 
 eMcu* eMcu::m_pSelf = NULL;
 
-eMcu::eMcu( Component* comp, QString id )
+eMcu::eMcu( Mcu* comp, QString id )
     : DataSpace()
     , eElement( id )
     , m_interrupts( this )
@@ -30,6 +30,7 @@ eMcu::eMcu( Component* comp, QString id )
 
     cpu = NULL;
     m_wdt = NULL;
+    m_intOsc = NULL;
     m_clkPin = NULL;
     m_vrefModule = NULL;
     m_sleepModule = NULL;
@@ -125,6 +126,12 @@ void eMcu::setDebugger( BaseDebugger* deb )
     m_ramTable->setDebugger( deb );
 }
 
+void eMcu::setDebugging( bool d )
+{
+    m_debugger->m_prevLine.lineNumber = -1;
+    m_debugging = d;
+}
+
 void eMcu::reset()
 {
     m_cycle = 0;
@@ -134,7 +141,8 @@ void eMcu::reset()
     //cpu->reset();
     m_interrupts.resetInts();
     DataSpace::initialize();
-    cpu->reset(); ///
+    if( cpu ) cpu->reset(); ///
+    else qDebug() << "ERROR: eMcu::reset NULL Cpu";
 
     if( !m_saveEepr )
         for( uint i=0; i<m_romSize; ++i ) setRomValue( i, 0xFF );
@@ -199,14 +207,14 @@ McuTimer* eMcu::getTimer( QString name )
     return timer;
 }
 
-McuPort* eMcu::getPort( QString name )
+McuPort* eMcu::getMcuPort( QString name )
 {
     McuPort* port = m_mcuPorts.value( name );
     /// if( !port ) qDebug() << "ERROR: NULL Port:"<< name;
     return port;
 }
 
-McuPin* eMcu::getPin( QString pinName )
+McuPin* eMcu::getMcuPin( QString pinName )
 {
     if( pinName.isEmpty() ) return NULL;
     McuPin* pin = NULL;
@@ -237,28 +245,11 @@ IoPin*  eMcu::getIoPin( QString pinName )
         pin = port->getPin( pinName );
         if( pin ) break;
     }
-    if( !pin ) pin = getPin( pinName );
+    if( !pin ) pin = getMcuPin( pinName );
 
     if( !pin )
         qDebug() << "ERROR: eMcu::getIoPin NULL Pin:"<< pinName;
     return pin;
-}
-
-bool eMcu::setCfgWord( uint16_t addr, uint16_t data )
-{
-    if( m_cfgWords.contains( addr ) )
-    {
-        m_cfgWords[addr] = data;
-        qDebug() <<"    Loaded Config Word at:"<<addr<<data;
-        return true;
-    }
-    return false;
-}
-
-uint16_t eMcu::getCfgWord( uint16_t addr )
-{
-    if( addr ) return m_cfgWords.value( addr );
-    return m_cfgWords.values().first();
 }
 
 void eMcu::wdr() { if( m_wdt ) m_wdt->reset(); }

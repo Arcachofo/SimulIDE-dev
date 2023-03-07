@@ -15,7 +15,7 @@
 class eMcu;
 class Interrupts;
 class McuModule;
-class McuPin;
+class IoPin;
 
 class MAINMODULE_EXPORT Interrupt
 {
@@ -52,7 +52,7 @@ class MAINMODULE_EXPORT Interrupt
         eMcu* m_mcu;
         uint8_t* m_ram;
 
-        McuPin* m_intPin;
+        IoPin* m_intPin;
 
         Interrupts* m_interrupts;
 

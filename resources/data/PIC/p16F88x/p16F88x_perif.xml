@@ -1,4 +1,6 @@
 <parts>
+  <intosc name="intosc" type="00" configregsA="OSCCON" />
+    
   <port name="PORTA" pins="8" outreg="PORTA" dirreg="!TRISA"
                      clockpins="PORTA6,PORTA7" >
   </port>
@@ -55,4 +57,9 @@
   <comp name="COMP2" type="12" configregsA="CM2CON0" configregsB="CM2CON1" configregsC="SRCON"
                      interrupt="ACOMP2"
                      pins="PORTA0,PORTA1,PORTB3,PORTB1,PORTA2,PORTA5" />
+                     
+  <configwords name="cfgWord" type="00">
+    <word name="COINFIG1" address="0x2007" value="0" />
+    <word name="COINFIG2" address="0x2008" value="0" />
+  </configwords>
 </parts>
