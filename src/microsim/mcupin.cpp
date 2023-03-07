@@ -154,6 +154,7 @@ void McuPin::setExtraSource( double vddAdmit, double gndAdmit ) // Comparator Vr
 
 void McuPin::ConfExtInt( uint8_t bits )
 {
+    if( !m_extInt ) return;
     m_extIntTrigger = (extIntTrig_t)getRegBitsVal( bits, m_extIntBits );
     m_extInt->setAutoClear( m_extIntTrigger != pinLow );
 }
