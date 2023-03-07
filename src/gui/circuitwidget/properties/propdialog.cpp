@@ -45,9 +45,9 @@ void PropDialog::setComponent( Component* comp )
     showLabel->setChecked( comp->showId() );
 
     int w, index = 0;
-    QList<propGroup> groups = comp->propeties();
+    QList<propGroup>* groups = comp->propeties();
 
-    for( propGroup group : groups )
+    for( propGroup group : *groups )
     {
         if( (group.name.startsWith("Comp"))
          || (group.name == "Board")

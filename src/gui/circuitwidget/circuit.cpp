@@ -365,8 +365,8 @@ void Circuit::loadStrDoc( QString &doc )
                     }
                     comp->setPropStr( "label", label ); //setIdLabel( label );
 
-                    QList<propGroup> groups = comp->propeties(); // Set properties in correct order
-                    for( propGroup group : groups )
+                    QList<propGroup>* groups = comp->propeties(); // Set properties in correct order
+                    for( propGroup group : *groups )
                     {
                         QList<ComProperty*> propList = group.propList;
                         if( propList.isEmpty() ) continue;
