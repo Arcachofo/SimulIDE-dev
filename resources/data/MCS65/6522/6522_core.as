@@ -20,7 +20,7 @@ enum pinModes{
     source
 }
 
-const uint m_rDelay = 10000;
+const uint m_rDelay = 10000; // 10 ns
 
 uint ORB;
 uint ORA;
@@ -80,7 +80,7 @@ void setup() // Executed at setScript()
 {
     irqPin.setPinMode( openCo );
     
-    print("6522 setup()"); 
+    print("6522 setup() OK"); 
 }
 
 void reset() // Executed at Simulation start

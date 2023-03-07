@@ -1,47 +1,36 @@
 <!DOCTYPE SimulIDE>
 
-<iou name="6532" core="intmem" script="6532_core.js" data="144" inst_cycle="1" clkpin="P2"
-                 addrport="PORTR"
-                 dataport="PORTD"
-                 rwpin="RW"
-                 cshpin="CS1"
-                 cslpin="CS2"
-                 clkpin="P2">
+<iou name="6532" core="scripted" script="6532_core.as" data="144" clkpin="P2" >
 
     <datablock name="RAM" start="0x0000" end="0x007F"/>
     
     <regblock name="REGs" start="0x0080" end="0x008F" offset="0x0080">
-        <register name="ORA"   addr="0x00" />
+        <register name="DRA"   addr="0x00" />
         <register name="DDRA"  addr="0x01" />
-        <register name="ORB"   addr="0x02" />
+        <register name="DRB"   addr="0x02" />
         <register name="DDRB"  addr="0x03" />
-        
-        <register name="IFR"   addr="0x05"  mask="0" bits="0,0,0,0,0,EXTIF,T0IF"/><!-- INT FLAGS -->
-        <register name="IER"   addr="0x06"  mask="0" bits="0,0,0,0,0,EXTIE,T0IE"/><!-- INT ENABLE -->
-        <register name="ECR"   addr="0x07"  mask="0" bits="ECR0,ECR1,0,0,0,0,0"/><!-- EDGE CONTROL PA7-->
-        
-        <register name="ADDR"  addr="0x7F" />
+        <register name="IFR"   addr="0x05"  mask="11000000" bits="0,0,0,0,0,EXTIF,T0IF"/><!-- INT FLAGS -->
+        <register name="IER"   addr="0x06"  mask="0001011 " bits="EDC0,EXTIE,0,T0IE,0,0,0"/><!-- INT ENABLE -->
+
+        <register name="ADDR"  addr="0x0F" /><!-- ??? -->
     </regblock>
+    
+    <ioport name="PORTC" pins="CS1,CS2" />
+    <ioport name="PORTI" pins="RW,IRQ,P2" />
     
     <interrupts enable="">
         <interrupt name="EXT" enable="EXTIE" flag="EXTIF" pin="IRQ"/>
-        <interrupt name="T1"  enable="T1IE"  flag="T1IF"  pin="IRQ"/>
+        <interrupt name="T1"  enable="T1IE"  flag="T1IF"  pin="IRQ"/><!-- pin="PB7" ??? -->
     </interrupts>
-
     
-    <port name="PORTA" pins="8" outreg="ORA" dirreg="DDRA" >
-        <!--extint name="EXT" pin="PORTA7" configbits="ECR0,ECR1" -->
-    </port>
+    <mcuport name="PORTA" pins="8" outreg="DRA" dirreg="DDRA"
+                          pullups="11111111" opencol="11111111">
+        <extint name="EXT" pin="PORTA7" />
+    </mcuport>
     
-    <port name="PORTB" pins="8" outreg="ORB" dirreg="DDRB">
-    </port>
+    <mcuport name="PORTB" pins="8" outreg="DRB" dirreg="DDRB"/>
     
-    <port name="PORTD" pins="8" >
-    </port>
+    <ioport name="PORTD" pins="8" />
     
-    <port name="PORTR" pins="8" >
-    </port>
-    
-    <port name="CPORT0" pins="CS1,CS2,RW,IRQ,P2" />
-    
+    <ioport name="PORTR" pins="8" />
 </iou>

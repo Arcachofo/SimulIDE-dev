@@ -20,9 +20,11 @@ ScriptCpu::ScriptCpu( eMcu* mcu )
 {
     m_reset = NULL;
     m_voltChanged = NULL;
-    m_runEvent = NULL;
-    m_extClock = NULL;
+    m_runEvent  = NULL;
+    m_extClock  = NULL;
     m_INTERRUPT = NULL;
+    m_getCpuReg = NULL;
+    m_getStrReg = NULL;
 
     m_aEngine->RegisterObjectType("eElement" ,0, asOBJ_REF | asOBJ_NOCOUNT );
     m_aEngine->RegisterObjectType("ScriptCpu",0, asOBJ_REF | asOBJ_NOCOUNT );
@@ -115,6 +117,8 @@ void ScriptCpu::startScript()
     m_runEvent    = m_aEngine->GetModule(0)->GetFunctionByDecl("void runEvent()");
     m_INTERRUPT   = m_aEngine->GetModule(0)->GetFunctionByDecl("void INTERRUPT( uint vector )");
     m_extClock    = m_aEngine->GetModule(0)->GetFunctionByDecl("void extClock( bool clkState )");
+    m_getCpuReg   = m_aEngine->GetModule(0)->GetFunctionByDecl("int getCpuReg( string reg )");
+    m_getStrReg   = m_aEngine->GetModule(0)->GetFunctionByDecl("srting getStrReg( string reg )");
     //m_extClockCtx = m_aEngine->CreateContext();
 }
 
@@ -138,6 +142,25 @@ void ScriptCpu::extClock( bool clkState )
     prepare( m_extClock );
     m_context->SetArgByte( 0, clkState );
     execute();
+}
+
+int ScriptCpu::getCpuReg( QString reg )
+{
+    if( !m_getCpuReg ) return 0;
+
+    prepare( m_getCpuReg );
+    std::string str = reg.toStdString();
+    m_context->SetArgObject( 0, &str );
+    execute();
+
+    if( m_status != asEXECUTION_FINISHED ) return 0;
+    asQWORD ret = m_context->GetReturnQWord();
+    return ret;
+}
+
+QString ScriptCpu::getStrReg( QString )
+{
+    if( !m_getStrReg ) return "";
 }
 
 void ScriptCpu::addEvent( uint time ) { Simulator::self()->addEvent( time, this ); }
@@ -170,7 +193,7 @@ IoPin* ScriptCpu::getPin( const string pinName )
 McuPort* ScriptCpu::getMcuPort( const string portName )
 {
     QString name = QString::fromStdString( portName );
-    McuPort* port = m_mcu->getPort( name );
+    McuPort* port = m_mcu->getMcuPort( name );
     if( !port ) qDebug() << "Error: ScriptCpu::getMcuPort Port"<< name << "Doesn't exist";
     return port;
 }
@@ -178,7 +201,7 @@ McuPort* ScriptCpu::getMcuPort( const string portName )
 McuPin* ScriptCpu::getMcuPin( const string pinName )
 {
     QString name = QString::fromStdString( pinName );
-    McuPin* pin = m_mcu->getPin( name );
+    McuPin* pin = m_mcu->getMcuPin( name );
     if( !pin ) qDebug() << "Error: ScriptCpu::getMcuPin Pin"<< name << "Doesn't exist";
     return pin;
 }

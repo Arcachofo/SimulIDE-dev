@@ -28,6 +28,9 @@ class MAINMODULE_EXPORT ScriptCpu : public ScriptModule, public McuCpu
         virtual void setScript( QString script ) override;
         void startScript();
 
+        virtual int getCpuReg( QString reg ) override;
+        virtual QString getStrReg( QString ) override;
+
         void addEvent( uint time );
         void cancelEvents();
         uint64_t circTime();
@@ -51,9 +54,13 @@ class MAINMODULE_EXPORT ScriptCpu : public ScriptModule, public McuCpu
         asIScriptFunction* m_reset;
         asIScriptFunction* m_voltChanged;
         asIScriptFunction* m_runEvent;
+        asIScriptFunction* m_extClock;
         asIScriptFunction* m_INTERRUPT;
 
+        asIScriptFunction* m_getCpuReg;
+        asIScriptFunction* m_getStrReg;
+
         //asIScriptContext* m_extClockCtx;
-        asIScriptFunction* m_extClock;
+
 };
 #endif

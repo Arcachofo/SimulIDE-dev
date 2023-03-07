@@ -21,7 +21,7 @@ enum pinModes{
     source
 }
 
-const uint m_rDelay = 10000;
+const uint m_rDelay = 10000; // 10 ns
 
 uint DDRA;
 uint CRA;
@@ -175,6 +175,7 @@ int readREG()
         } break;
         case 3: data = CRB; break;          // Read CRB
     }
+    //print("6520 readREG "+m_addr+" "+data ); 
     return data;
 }
 

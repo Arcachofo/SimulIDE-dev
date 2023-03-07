@@ -29,6 +29,8 @@ class MAINMODULE_EXPORT ScriptModule : public eElement
         void prepare( asIScriptFunction* func, asIScriptContext* ctx=NULL );
         void execute( asIScriptContext* ctx=NULL );
 
+        int m_status;
+
         QString m_script;
 
         asCJITCompiler* m_jit;

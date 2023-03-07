@@ -37,8 +37,8 @@
     <pin type="cp"  xpos="56"   ypos="32"   angle="0"   length="8"  id="CS2"  label="!CS2"/>
     <pin type="cp"  xpos="56"   ypos="48"   angle="0"   length="8"  id="RW"   label="R/!W"/>
     <pin type="cp"  xpos="56"   ypos="128"  angle="0"   length="8"  id="IRQ"  label="!IRQ" />
-    <pin type=""    xpos="-8"   ypos="16"   angle="180" length="8"  id="PR5"  label="A5"  />
     <pin type=""    xpos="56"   ypos="8"    angle="0"   length="8"  id="PR6"  label="A6"  />
+    <pin type=""    xpos="-8"   ypos="16"   angle="180" length="8"  id="PR5"  label="A5"  />
     <pin type=""    xpos="-8"   ypos="24"   angle="180" length="8"  id="PR4"  label="A4"  />
     <pin type=""    xpos="-8"   ypos="32"   angle="180" length="8"  id="PR3"  label="A3"  />
     <pin type=""    xpos="-8"   ypos="40"   angle="180" length="8"  id="PR2"  label="A2"  />
