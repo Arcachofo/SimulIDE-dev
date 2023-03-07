@@ -69,8 +69,13 @@ OutHighlighter::OutHighlighter( QTextDocument* parent )
     rule.format = format;
     highlightingRules.append( rule );
 
-    format.setForeground( QColor(120, 120, 250) );
-    rule.pattern = QRegExp("[0-9]+");
+    format.setForeground( QColor(140, 150, 240) );
+    rule.pattern = QRegExp("\\b[0-9]+\\b");
+    rule.format = format;
+    highlightingRules.append(rule);
+
+    format.setForeground( QColor(140, 150, 240) );
+    rule.pattern = QRegExp("0[xX][0-9a-fA-F]+");
     rule.format = format;
     highlightingRules.append(rule);
 
