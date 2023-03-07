@@ -48,8 +48,8 @@ Tunnel::Tunnel( QObject* parent, QString type, QString id )
     setLabelPos(-16,-24, 0);
 
     addPropGroup( { tr("Main"), {
-new StringProp<Tunnel>( "Name"   , tr("Id")    ,"", this, &Tunnel::name,    &Tunnel::setName ),
-//new BoolProp  <Tunnel>( "Rotated",tr("Rotated"),"", this, &Tunnel::rotated, &Tunnel::setRotated )
+new StringProp<Tunnel>( "Name" , tr("Id"),"", this, &Tunnel::name,  &Tunnel::setName ),
+new BoolProp  <Tunnel>( "IsBus",tr("Bus"),"", this, &Tunnel::isBus, &Tunnel::setIsbus )
     }} );
     addPropGroup( {"Hidden", {
 new StringProp<Tunnel>( "Uid","","", this, &Tunnel::tunnelUid, &Tunnel::setTunnelUid ),
@@ -67,16 +67,16 @@ bool Tunnel::setPropStr( QString prop, QString val )
     return true;
 }
 
-void Tunnel::setEnode( eNode* node )
+void Tunnel::setEnode( eNode* node, int n )
 {
     if( m_blocked ) return;
     m_blocked = true;
 
-    if( node ) m_pin[0]->registerPinsW( node );
+    if( node ) m_pin[0]->registerPinsW( node, n );
     m_blocked = false;
 }
 
-void Tunnel::registerEnode( eNode* enode, int ) // called by m_pin[0]
+void Tunnel::registerEnode( eNode* enode, int n ) // called by m_pin[0]
 {
     if( m_blocked ) return;
 
@@ -87,7 +87,7 @@ void Tunnel::registerEnode( eNode* enode, int ) // called by m_pin[0]
     m_blocked = true;
 
     for( Tunnel* tunnel: *list )
-        if( tunnel != this ) tunnel->setEnode( enode );
+        if( tunnel != this ) tunnel->setEnode( enode, n );
 
     m_blocked = false;
 }
@@ -120,6 +120,16 @@ void Tunnel::setName( QString name )
         m_tunnels[name] = list;
     }
     Circuit::self()->update();
+}
+
+bool Tunnel::isBus()
+{
+    return m_pin[0]->isBus();
+}
+
+void Tunnel::setIsbus( bool b )
+{
+    m_pin[0]->setIsBus( b );
 }
 
 void Tunnel::setRotated( bool rot )
@@ -187,8 +197,11 @@ void Tunnel::paint( QPainter* p, const QStyleOptionGraphicsItem *option, QWidget
 {
     if( m_hidden || m_packed ) return;
 
-    if( m_tunnels.contains( m_name ) ) m_color = QColor( 255, 255, 250 );
-    else                               m_color = QColor( 210, 210, 230 );
+    if( m_tunnels.contains( m_name ) )
+    {
+        if( m_pin[0]->isBus() ) m_color = QColor( 100, 220, 100 );
+        else                    m_color = QColor( 255, 255, 250 );
+    } else                      m_color = QColor( 210, 210, 230 );
 
     Component::paint( p, option, widget );
 

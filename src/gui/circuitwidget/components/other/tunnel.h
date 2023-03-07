@@ -28,6 +28,9 @@ class MAINMODULE_EXPORT Tunnel : public Component
         QString name() { return m_name; }
         void setName( QString name );
 
+        bool isBus();
+        void setIsbus( bool b );
+
         bool rotated() { return m_rotated; }
         void setRotated( bool rot );
 
@@ -38,7 +41,7 @@ class MAINMODULE_EXPORT Tunnel : public Component
         QString tunnelUid() { return m_tunUid; }
         void setTunnelUid( QString uid ) { m_tunUid = uid; }
 
-        void setEnode( eNode* node );
+        void setEnode( eNode* node, int n=-1 );
         void setPacked( bool p );
         void removeTunnel();
 
