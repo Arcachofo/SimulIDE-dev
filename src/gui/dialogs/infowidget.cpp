@@ -59,6 +59,12 @@ void InfoWidget::setTargetSpeed( double s )
 
 void InfoWidget::setRate( double rate, int load )
 {
+    if( Mcu::self() )
+    {
+        QString device = Mcu::self()->device();
+        QString freq = QString::number( Mcu::self()->freq()*1e-6 );
+        mainMcu->setText( device+" at "+freq+" MHz" );
+    }
     if( rate < 0 )
     {
         if( rate == -1 ) realSpeed->setText( tr("Speed: Debugger") );
