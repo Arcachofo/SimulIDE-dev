@@ -57,7 +57,7 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
         void compRemoved( bool removed ) { m_compRemoved = removed; }
         void saveState();
         void addCompState( CompBase* c, QString p, stateMode=stateAll );
-        void unSaveState() { m_undoStack.takeLast(); }
+        void unSaveState() { if( m_undoStack.size() ) m_undoStack.takeLast(); }
         void setChanged() { m_changed = true; }
 
         void deselectAll();

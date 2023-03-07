@@ -1001,7 +1001,7 @@ void Circuit::keyPressEvent( QKeyEvent* event )
             {
                 saveState();
                 QPoint cPos = QCursor::pos()-CircuitView::self()->mapToGlobal( QPoint(0,0));
-                enterItem->setPos( togrid( CircuitView::self()->mapToScene( cPos ) ) );
+                enterItem->setPos( toGrid( CircuitView::self()->mapToScene( cPos ) ) );
                 addItem( enterItem );
                 m_compList.append( enterItem );
             }
