@@ -259,7 +259,9 @@ bool ConnectorLine::connectToWire( QPoint point1 )
     }
     else                                     // A new Connector created here (starts in a node)
     {
-        Circuit::self()->newconnector( node->getPin(1) );
+        Pin* pin = node->getPin(1);
+        if( m_isBus ) pin->setIsBus( true );
+        Circuit::self()->newconnector( pin );
         Circuit::self()->addCompState( m_pConnector, "new", stateAdd );
         m_pConnector->splitCon( index, node->getPin(0), node->getPin(2) );
         Circuit::self()->addCompState( node, "remove", stateAdd );
