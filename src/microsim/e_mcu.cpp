@@ -34,6 +34,7 @@ eMcu::eMcu( Mcu* comp, QString id )
     m_clkPin = NULL;
     m_vrefModule = NULL;
     m_sleepModule = NULL;
+    m_cfgWord = NULL;
 
     m_freq = 0;
     m_cPerInst = 1;
