@@ -94,14 +94,11 @@ void LaChannel::voltChanged()
             bool high = volt > m_analizer->thresholdR();
             if( high ) busValue += pow( 2, n );
         }
-        if( m_busValue != busValue )
-        {
+        if( m_busValue != busValue ){
             m_busValue = busValue;
             addReading( busValue );
-            qDebug() << "LaChannel::voltChanged bus:" << busValue;
         }
-    }
-    else{
+    }else{
         double volt = m_ePin[0]->getVoltage();
 
         if( volt > m_analizer->thresholdR() ) // High

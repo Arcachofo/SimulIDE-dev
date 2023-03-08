@@ -250,36 +250,40 @@ void PlotDisplay::paintEvent( QPaintEvent* /* event */ )
                 {
                     if( j== 0 ) // First Point
                     {
-                        x2 = m_endX;
                         p2Volt = p1Volt;
                         lastX = m_endX;
                     }
-
                     y2 = m_posY[i];
                     y1 = y2 - m_scaleY[i];
 
                     if( p1Volt != p2Volt || time <= timeStart ) // Value Change
                     {
                         if( time <= timeStart ) x1 = m_ceroX;
-
-                        double xd = m_sizeX/200;
-                        double x11 = x1+xd;
-                        double x22 = lastX-xd;
+                        int d = (lastX-x1 < 2)? 0 : 2;
+                        double x11 = x1+d;
+                        double x22 = lastX-d;
                         double zero = y2+(y1-y2)/2;
                         if( p2Volt == 0 ) y2 = y1 = zero;
 
                         p.drawLine( QPointF( x22, y2 ), QPointF( x11, y2 ) );
                         p.drawLine( QPointF( x22, y1 ), QPointF( x11, y1 ) );
 
+                        int s,e;
                         if( time > timeStart ){
+                            s = x1;
                             p.drawLine( QPointF( x11, y2 ), QPointF( x1, zero ) );
                             p.drawLine( QPointF( x11, y1 ), QPointF( x1, zero ) );
                         }
+                        else s = m_ceroX;
+
                         if( lastX < m_endX ){
+                            e = lastX;
                             p.drawLine( QPointF( x22, y2 ), QPointF( lastX, zero ) );
                             p.drawLine( QPointF( x22, y1 ), QPointF( lastX, zero ) );
                         }
-                        int w = lastX-x1;
+                        else e = m_endX;
+
+                        int w = e-s;
                         int val = p2Volt;
                         if( w > 20 && val != 0 )
                         {
@@ -287,8 +291,6 @@ void PlotDisplay::paintEvent( QPaintEvent* /* event */ )
                             else           p.setFont( m_fontXS );
                             p.drawText( x1, y1, w, m_scaleY[i], Qt::AlignCenter, "0x"+QString::number( val, 16 ).toUpper() );
                         }
-                        p2Volt = p1Volt;
-                        lastX = x1;
                     }
                 }
                 else{
@@ -347,15 +349,15 @@ void PlotDisplay::paintEvent( QPaintEvent* /* event */ )
                         Pm = QPointF( x2, y1 );
                         p.drawLine( P1, Pm );
                         p.drawLine( Pm, P2 );
-
                         lastX = x1;
                     }
                 }
             }
             if( time <= timeStart ) break;
 
-            x2 = x1; y2 = y1;
-            //p2Volt = p1Volt;
+            if( m_channel[i]->isBus() ){ if(p1Volt != p2Volt) { lastX = x1; p2Volt = p1Volt; }}
+            else {x2 = x1; y2 = y1;}
+
             if( --pos < 0 ) pos += bufferSize;
     }   }
     // Draw Rects to crop data plots
@@ -398,27 +400,6 @@ void PlotDisplay::paintEvent( QPaintEvent* /* event */ )
 
             QPen pen3( m_color[i], 1.5, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin );
             p.setPen( pen3 );
-            //p.setFont( m_fontS );
-
-            // Draw Background scale values
-            /*int s = 0;
-            int pY;
-            for( double j=m_ceroY; j<=m_endY; j+=m_sizeY/10 )
-            {
-                if( i < 2 ) pY = j-4;
-                else        pY = j+4;
-                int decs = 0;
-                double volTick = (m_vTick[i]*5-m_vTick[i]*s++);
-                if     ( volTick < 10)   decs = 2;
-                else if( volTick < 100)  decs = 1;
-                QString number = QString::number( volTick,'f', decs);
-                if( volTick >= 0 ) number.prepend(" ");
-
-                p.drawText( xPos, pY-5, width(), 10, Qt::AlignVCenter, number );
-            }
-            // Draw Rects behind Max & Min Numbers
-            p.fillRect( xPos, vMaxPos-4, 21, 8, QColor( 10, 15, 50 ) );
-            p.fillRect( xPos, vMinPos-4, 21, 8, QColor( 10, 15, 50 ) );*/
 
             // Draw Max & Min Values
             p.setFont( m_fontB );
@@ -427,8 +408,6 @@ void PlotDisplay::paintEvent( QPaintEvent* /* event */ )
 
             if( drawCursor )              // Draw Cursor Voltages
             {
-                //pen3.setColor( m_color[i] );
-                //p.setPen( pen3 );
                 double val = m_cursorVolt[i]*1e12; // Volt in pV
                 QString unit;
                 int decs = 0;

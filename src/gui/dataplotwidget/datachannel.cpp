@@ -40,5 +40,9 @@ void DataChannel::stamp()    // Called at Simulation Start
     m_ePin[1]->changeCallBack( this );
 }
 
-bool DataChannel::isBus() { return m_pin->isBus(); }
+bool DataChannel::isBus()
+{
+    if( m_pin ) return m_pin->isBus();
+    return false;
+}
 
