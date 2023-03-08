@@ -45,10 +45,15 @@ class MAINMODULE_EXPORT LAnalizer : public PlotBase
         double voltDiv(){ return m_voltDiv; }
         void setVoltDiv( double vd );
 
+        void setIsBus( int ch, bool b ) { m_channel[ch]->setIsBus( b ); }
+
         virtual void setTrigger( int ch ) override;
 
         double thresholdR() { return m_thresholdR; }
         void setThresholdR( double thr );
+
+        QString busStr();
+        void setBusStr( QString b );
 
         double thresholdF() { return m_thresholdF; }
         void setThresholdF( double thr );

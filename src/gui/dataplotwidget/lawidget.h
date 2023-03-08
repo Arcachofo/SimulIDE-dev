@@ -44,6 +44,9 @@ class MAINMODULE_EXPORT LaWidget : public QDialog, private Ui::LaWidget
         void on_timePosDial_valueChanged( int DialPos );
         void on_timePosBox_valueChanged( double val );
 
+        void on_busGroup_buttonClicked( int ch );
+        void setIsBus( int ch, bool b );
+
         void on_rThresholdBox_valueChanged( double v );
         void on_fThresholdBox_valueChanged( double v );
 

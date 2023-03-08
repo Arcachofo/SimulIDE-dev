@@ -20,6 +20,7 @@ enum cond_t{
 };
 
 class PlotBase;
+class Pin;
 
 class MAINMODULE_EXPORT DataChannel : public eElement, public Updatable
 {
@@ -36,6 +37,9 @@ class MAINMODULE_EXPORT DataChannel : public eElement, public Updatable
         virtual void stamp() override;
 
         virtual void setFilter( double f ) {;}
+
+        bool isBus();
+        virtual void setIsBus( bool b ){;}
 
         QString getChName() { return m_chTunnel; }
 
@@ -60,6 +64,8 @@ class MAINMODULE_EXPORT DataChannel : public eElement, public Updatable
         cond_t m_lastCond;
 
         QString m_chTunnel;
+
+        Pin* m_pin;
 
         PlotBase* m_plotBase;
 };

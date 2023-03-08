@@ -9,6 +9,9 @@
 #include "datachannel.h"
 #include "logicanalizer.h"
 
+class eNode;
+class Pin;
+
 class MAINMODULE_EXPORT LaChannel : public DataChannel
 {
         friend class LAnalizer;
@@ -23,8 +26,17 @@ class MAINMODULE_EXPORT LaChannel : public DataChannel
         virtual void updateStep() override;
         virtual void voltChanged() override;
 
+        void setPin( Pin* p );
+
+        virtual void setIsBus( bool b ) override;
+        void registerEnode( eNode* enode, int n=-1 );
+
     private:
         void addReading( double v );
+
+        double m_busValue;
+
+        QMap<int, eNode*> m_busNodes;
 
         LAnalizer* m_analizer;
 };

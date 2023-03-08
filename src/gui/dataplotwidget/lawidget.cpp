@@ -21,6 +21,21 @@ LaWidget::LaWidget( QWidget* parent , LAnalizer* la )
     m_blocked = false;
     m_action = actNone;
 
+    busGroup->setId( busBox_1, 0 );
+    busGroup->setId( busBox_2, 1 );
+    busGroup->setId( busBox_3, 2 );
+    busGroup->setId( busBox_4, 3 );
+    busGroup->setId( busBox_5, 4 );
+    busGroup->setId( busBox_6, 5 );
+    busGroup->setId( busBox_7, 6 );
+    busGroup->setId( busBox_8, 7 );
+
+    for( int i=0; i<4; ++i )
+    {
+        QString color = m_analizer->getColor( i ).name();
+        busGroup->button( i )->setStyleSheet( "background:"+color );
+        busGroup->button( i+4 )->setStyleSheet( "background:"+color );
+    }
     timeDivBox->setUnitStr( "s" );
     timePosBox->setUnitStr( "s" );
 }
@@ -97,6 +112,17 @@ void LaWidget::updateTimePosBox( int64_t timePos )
     timePosBox->setValue( val );
     timePosBox->setSuffix( unit+"s" );
     m_blocked = false;
+}
+
+void LaWidget::on_busGroup_buttonClicked( int ch )
+{
+    m_analizer->setIsBus( ch, busGroup->button( ch )->isChecked() );
+}
+
+void LaWidget::setIsBus( int ch, bool b )
+{
+    busGroup->button( ch )->setChecked( b );
+    m_analizer->setIsBus( ch, b );
 }
 
 void LaWidget::on_rThresholdBox_valueChanged( double v )

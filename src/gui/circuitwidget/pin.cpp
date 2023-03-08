@@ -11,7 +11,7 @@
 #include "pin.h"
 #include "bus.h"
 #include "node.h"
-#include "tunnel.h"
+#include "lachannel.h"
 #include "connector.h"
 #include "connectorline.h"
 #include "circuit.h"
@@ -35,6 +35,7 @@ Pin::Pin( int angle, const QPoint pos, QString id, int index, Component* parent 
     m_animate = false;
     m_warning = false;
     
+    m_dataCannel = NULL;
     my_connector = NULL;
     m_conPin     = NULL;
     m_angle      = angle;
@@ -124,6 +125,7 @@ void Pin::registerEnode( eNode* enode, int n )     // Called by m_conPin
         n = m_index;
     }
     m_component->registerEnode( enode, n );
+    if( m_dataCannel ) m_dataCannel->registerEnode( enode, n );
 
     m_blocked = false;
 }
@@ -335,13 +337,15 @@ void Pin::setLength( int length )
 void Pin::setIsBus( bool bus )
 {
     if( m_isBus == bus ) return;
-    if( !bus ) return;
+    /// if( !bus ) return;          // Why?
     m_isBus = bus;
     
     if( my_connector ) my_connector->setIsBus( true );
     if( m_conPin ) m_conPin->setIsBus( true );
     
     m_component->inStateChanged( 2 );         // Propagate Is Bus (Node)
+
+    update();
 }
 
 void Pin::setVisible( bool visible )
@@ -413,6 +417,7 @@ void Pin::paint( QPainter* painter, const QStyleOptionGraphicsItem* option, QWid
     QPen pen( m_color[0], 3, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin );
 
     if     ( m_unused  ) pen.setColor( QColor( 75, 120, 170 ));
+    else if( m_isBus   ) pen.setColor( Qt::darkGreen );
     else if( m_animate )
     {
         if( m_pinState == undef_state )

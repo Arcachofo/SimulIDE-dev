@@ -17,6 +17,7 @@
 #include "tunnel.h"
 #include "e-node.h"
 
+#include "stringprop.h"
 #include "doubleprop.h"
 #include "boolprop.h"
 #include "intprop.h"
@@ -55,11 +56,13 @@ LAnalizer::LAnalizer( QObject* parent, QString type, QString id )
     for( int i=0; i<8; ++i )
     {
         m_pin[i] = new Pin( 180, QPoint( -80-8,-64+16*i ), id+"-Pin"+QString::number(i), 0, this );
-        m_channel[i] = new LaChannel( this, id+"Chan"+QString::number(i) );
-        m_channel[i]->m_channel = i;
-        m_channel[i]->m_ePin[0] = m_pin[i];
-        m_channel[i]->m_buffer.resize( m_bufferSize );
-        m_channel[i]->m_time.resize( m_bufferSize );
+        LaChannel* ch = new LaChannel( this, id+"Chan"+QString::number(i) );
+
+        ch->m_channel = i;
+        ch->setPin( m_pin[i] );
+        ch->m_buffer.resize( m_bufferSize );
+        ch->m_time.resize( m_bufferSize );
+        m_channel[i] = ch;
 
         m_display->setChannel( i, m_channel[i] );
         m_display->setColor( i, m_color[i%4] );
@@ -87,7 +90,10 @@ new BoolProp<LAnalizer>( "AutoExport",tr("Export at pause"),""   , this, &LAnali
     }} );
 
     addProperty(  "Hidden", {
-new DoubProp<LAnalizer>( "TresholdR","TresholdR","V", this, &LAnalizer::thresholdR, &LAnalizer::setThresholdR )
+new DoubProp  <LAnalizer>( "TresholdR","TresholdR","V", this, &LAnalizer::thresholdR, &LAnalizer::setThresholdR )
+    } );
+    addProperty(  "Hidden", {
+new StringProp<LAnalizer>( "Bus" ,"Bus" , "", this, &LAnalizer::busStr,  &LAnalizer::setBusStr )
     } );
     addProperty(  "Hidden", {
 new DoubProp<LAnalizer>( "TresholdF","TresholdF","V", this, &LAnalizer::thresholdF, &LAnalizer::setThresholdF )
@@ -214,6 +220,26 @@ void LAnalizer::setThresholdR( double thr )
     m_thresholdR = thr;
     m_laWidget->updateThresholdR( thr );
 }
+
+QString LAnalizer::busStr()
+{
+    QString list;
+    QString bus;
+    for( int i=0; i<8; ++i ){
+        bus = m_channel[i]->isBus()? "true":"false";
+        list.append( bus ).append(",");
+    }
+    return list;
+}
+
+void LAnalizer::setBusStr( QString hc )
+{
+    QStringList list = hc.split(",");
+    for( int i=0; i<8; ++i ){
+        if( i == list.size() ) break;
+        bool bus = (list.at(i) == "true")? true:false;
+        m_laWidget->setIsBus( i, bus );
+}   }
 
 void LAnalizer::setThresholdF( double thr )
 {

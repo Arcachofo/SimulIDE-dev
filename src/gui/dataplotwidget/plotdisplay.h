@@ -98,7 +98,10 @@ class PlotDisplay : public QWidget
         bool   m_ncCh[8];
 
         QFont m_fontB;
+        QFont m_fontXS;
         QFont m_fontS;
+        QFont m_fontL;
+
         QColor m_color[8];
         QColor m_dark[2];
         QColor m_scaleColor[3];

@@ -22,6 +22,7 @@ enum pinState_t{
 };
 
 class Connector;
+class LaChannel;
 
 class MAINMODULE_EXPORT Pin : public QObject, public QGraphicsItem, public ePin, public Updatable
 {
@@ -97,6 +98,8 @@ class MAINMODULE_EXPORT Pin : public QObject, public QGraphicsItem, public ePin,
         QString packageType() { return m_packageType; }
         void setPackageType( QString type ) { m_packageType = type; }
 
+        void setDataChannel( LaChannel* ch ) { m_dataCannel = ch; }
+
         inline void setPinState( pinState_t st ) { m_pinState = st; /*m_PinChanged = true;*/ }
 
         void warning( bool w );
@@ -139,6 +142,7 @@ class MAINMODULE_EXPORT Pin : public QObject, public QGraphicsItem, public ePin,
         QRect      m_area;
         Connector* my_connector;
         Component* m_component;
+        LaChannel* m_dataCannel;    // connect to Logic Analyzer
         Pin*       m_conPin;          // Pin at the other side of connector
 
         QGraphicsSimpleTextItem m_label;
