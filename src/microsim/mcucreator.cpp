@@ -111,7 +111,7 @@ int McuCreator::processFile( QString fileName, bool main )
 
     QDomElement root = domDoc.documentElement();
 
-    m_core = root.attribute("core");
+    if( root.hasAttribute("core") ) m_core = root.attribute("core");
 
     if( root.hasAttribute("progword") )   mcu->m_wordSize = root.attribute("progword").toUInt(0,0);
     if( root.hasAttribute("inst_cycle") ) mcu->m_cPerInst = root.attribute("inst_cycle").toDouble();
@@ -160,7 +160,7 @@ int McuCreator::processFile( QString fileName, bool main )
         }
         node = node.nextSibling();
     }
-    /// if( root.hasAttribute("core") )
+    if( root.hasAttribute("core") )
     {
         if     ( m_core == "AVR" )      mcu->cpu = new AvrCore( mcu );
         else if( m_core == "Pic14" )    mcu->cpu = new Pic14Core( mcu );
