@@ -1472,7 +1472,7 @@
  <resources/>
  <connections/>
  <buttongroups>
-  <buttongroup name="channelGroup">
+  <buttongroup name="triggerGroup">
    <property name="exclusive">
     <bool>true</bool>
    </property>
@@ -1482,16 +1482,16 @@
     <bool>true</bool>
    </property>
   </buttongroup>
+  <buttongroup name="trackGroup"/>
   <buttongroup name="hideGroup">
    <property name="exclusive">
     <bool>false</bool>
    </property>
   </buttongroup>
-  <buttongroup name="triggerGroup">
+  <buttongroup name="channelGroup">
    <property name="exclusive">
     <bool>true</bool>
    </property>
   </buttongroup>
-  <buttongroup name="trackGroup"/>
  </buttongroups>
 </ui>
