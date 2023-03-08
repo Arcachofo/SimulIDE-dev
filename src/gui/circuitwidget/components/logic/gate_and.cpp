@@ -27,12 +27,12 @@ LibraryItem* AndGate::libraryItem()
 AndGate::AndGate( QObject* parent, QString type, QString id )
        : Gate( parent, type, id, 2 )
 {
-    addPropGroup( { tr("Main"), {
-new IntProp <AndGate>( "Num_Inputs"    , tr("Input Size")   ,"_Inputs", this, &AndGate::numInps,    &AndGate::setNumInps, "uint" ),
-new BoolProp<AndGate>( "Inverted"      , tr("Invert Output"),""   , this, &AndGate::invertOuts, &AndGate::setInvertOuts ),
-new BoolProp<AndGate>( "Open_Collector", tr("Open Drain")   ,""   , this, &AndGate::openCol,    &AndGate::setOpenCol )
-    }} );
-    addPropGroup( { tr("Electric"), IoComponent::inputProps()+IoComponent::outputProps() } );
+    addPropGroup( { tr("Electric"), IoComponent::inputProps()
++QList<ComProperty*>({
+new BoolProp<AndGate>( "Invert_Inputs", tr("Invert Inputs"),""       , this, &AndGate::invertInps, &AndGate::setInvertInps ),
+new IntProp <AndGate>( "Num_Inputs"   , tr("Input Size")   ,"_Inputs", this, &AndGate::numInps,    &AndGate::setNumInps, "uint" ),
+                    })
+                    +IoComponent::outputProps()+IoComponent::outputType() } );
     addPropGroup( { tr("Edges")   , Gate::edgeProps() } );
 
     removeProperty("pd_n");
@@ -59,5 +59,5 @@ QPainterPath AndGate::shape() const
 void AndGate::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
 {
     Component::paint( p, option, widget );
-    p->drawChord( -28, m_area.y(), 37, m_area.height(), -1440/*-16*90*/, 2880/*16*180*/ );
+    p->drawChord( -27, m_area.y(), 36, m_area.height(), -1440/*-16*90*/, 2880/*16*180*/ );
 }

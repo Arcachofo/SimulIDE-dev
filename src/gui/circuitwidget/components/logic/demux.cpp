@@ -53,10 +53,9 @@ Demux::Demux( QObject* parent, QString type, QString id )
     setAddrBits( 3 );
 
     addPropGroup( { tr("Main"), {
-new IntProp<Demux>(  "Address_Bits", tr("Address Size")  ,"_bits", this, &Demux::addrBits,   &Demux::setAddrBits, "uint" ),
-new BoolProp<Demux>( "Inverted"    , tr("Invert Outputs"),""     , this, &Demux::invertOuts, &Demux::setInvertOuts )
+new IntProp<Demux>(  "Address_Bits", tr("Address Size")  ,"_bits", this, &Demux::addrBits,   &Demux::setAddrBits, "uint" )
     }} );
-    addPropGroup( { tr("Electric"), IoComponent::inputProps()+IoComponent::outputProps() } );
+    addPropGroup( { tr("Electric"), IoComponent::inputProps()+IoComponent::outputProps()+IoComponent::outputType() } );
     addPropGroup( { tr("Edges"), IoComponent::edgeProps() } );
 }
 Demux::~Demux(){}

@@ -47,10 +47,11 @@ LatchD::LatchD( QObject* parent, QString type, QString id )
     addPropGroup( { tr("Main"), {
 new IntProp   <LatchD>(  "Channels" , tr("Size")         ,"_Channels", this, &LatchD::channels,   &LatchD::setChannels, "uint" ),
 new StringProp<LatchD>( "Trigger", tr("Trigger Type")    ,""   , this, &LatchD::triggerStr, &LatchD::setTriggerStr, "enum" ),
-new BoolProp  <LatchD>( "Inverted" , tr("Invert Outputs"),""   , this, &LatchD::invertOuts, &LatchD::setInvertOuts ),
 new BoolProp  <LatchD>( "Tristate" , tr("Tristate")      ,""   , this, &LatchD::tristate,   &LatchD::setTristate ),
     }} );
-    addPropGroup( { tr("Electric"), IoComponent::inputProps()+IoComponent::outputProps() } );
+    addPropGroup( { tr("Electric"), IoComponent::inputProps()
++QList<ComProperty*>({new BoolProp<LatchD>( "Invert_Inputs", tr("Invert Inputs"),"", this, &LatchD::invertInps, &LatchD::setInvertInps )})
+                    +IoComponent::outputProps()+IoComponent::outputType() } );
     addPropGroup( { tr("Edges"), IoComponent::edgeProps() } );
 }
 LatchD::~LatchD(){}

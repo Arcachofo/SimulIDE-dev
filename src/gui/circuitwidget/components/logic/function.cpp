@@ -77,12 +77,13 @@ Function::Function( QObject* parent, QString type, QString id )
     setFunctions( "i0 | i1" );
 
     addPropGroup( { tr("Main"), {
-new IntProp   <Function>( "Num_Inputs" , tr("Input Size")     ,"_Pins", this, &Function::numInps,    &Function::setNumInps, "uint" ),
-new IntProp   <Function>( "Num_Outputs", tr("Output Size")    ,"_Pins", this, &Function::numOuts,    &Function::setNumOuts, "uint" ),
-new BoolProp  <Function>( "Inverted"   , tr("Invert Outputs") ,""     , this, &Function::invertOuts, &Function::setInvertOuts ),
-new StringProp<Function>( "Functions"  , tr("Functions")      ,""     , this, &Function::functions,  &Function::setFunctions ),
+new IntProp   <Function>( "Num_Inputs" , tr("Input Size") ,"_Pins", this, &Function::numInps,   &Function::setNumInps, "uint" ),
+new IntProp   <Function>( "Num_Outputs", tr("Output Size"),"_Pins", this, &Function::numOuts,   &Function::setNumOuts, "uint" ),
+new StringProp<Function>( "Functions"  , tr("Functions")  ,""     , this, &Function::functions, &Function::setFunctions ),
     }} );
-    addPropGroup( { tr("Electric"), IoComponent::inputProps()+IoComponent::outputProps() } );
+    addPropGroup( { tr("Electric"), IoComponent::inputProps()
++QList<ComProperty*>({new BoolProp<Function>( "Invert_Inputs", tr("Invert Inputs"),"", this, &Function::invertInps, &Function::setInvertInps )})
+                    +IoComponent::outputProps()+IoComponent::outputType() } );
     addPropGroup( { tr("Edges"), IoComponent::edgeProps() } );
 }
 Function::~Function(){}

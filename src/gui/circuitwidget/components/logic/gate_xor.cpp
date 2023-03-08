@@ -26,11 +26,10 @@ LibraryItem* XorGate::libraryItem()
 XorGate::XorGate( QObject* parent, QString type, QString id )
         : Gate( parent, type, id, 2 )
 {
-    addPropGroup( { tr("Main"), {
-new BoolProp<XorGate>( "Inverted"      , tr("Invert Output"),"", this, &XorGate::invertOuts, &XorGate::setInvertOuts ),
-new BoolProp<XorGate>( "Open_Collector", tr("Open Drain")   ,"", this, &XorGate::openCol,    &XorGate::setOpenCol )
-    }} );
-    addPropGroup( { tr("Electric"), IoComponent::inputProps()+IoComponent::outputProps() } );
+    addPropGroup( { tr("Electric"), IoComponent::inputProps()
++QList<ComProperty*>({
+new BoolProp<XorGate>( "Invert_Inputs", tr("Invert Inputs"),"", this, &XorGate::invertInps, &XorGate::setInvertInps )})
+                    +IoComponent::outputProps()+IoComponent::outputType() } );
     addPropGroup( { tr("Edges")   , Gate::edgeProps() } );
 
     removeProperty("pd_n");

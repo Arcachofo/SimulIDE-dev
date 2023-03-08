@@ -440,7 +440,7 @@ void Pin::paint( QPainter* painter, const QStyleOptionGraphicsItem* option, QWid
     }
     if( !m_unused && m_animate )
     {
-        pen.setWidth( 2 );
+        pen.setWidthF( 1.5 );
         painter->setPen(pen);
         if( m_pinState >= input_low ) // Draw Input arrow
         {

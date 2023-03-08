@@ -57,12 +57,6 @@ new IntProp<BinCounter>(  "Max_Value",      tr("Count to")          ,"", this, &
 }
 BinCounter::~BinCounter(){}
 
-/*void BinCounter::initialize()
-{
-    m_Counter = 0;
-    LogicComponent::initialize();
-}*/
-
 void BinCounter::stamp()
 {
     m_Counter = 0;

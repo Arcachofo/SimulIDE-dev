@@ -70,10 +70,9 @@ Memory::Memory( QObject* parent, QString type, QString id )
 new IntProp<Memory>(  "Address_Bits", tr("Address Size"),"_Bits", this, &Memory::addrBits,   &Memory::setAddrBits, "uint" ),
 new IntProp<Memory>(  "Data_Bits"   , tr("Data Size")   ,"_Bits", this, &Memory::dataBits,   &Memory::setDataBits, "uint" ),
 new BoolProp<Memory>( "Persistent"  , tr("Persistent")  ,""     , this, &Memory::persistent, &Memory::setPersistent ),
-new BoolProp<Memory>( "Inverted"    , tr("Invert Outputs"),""   , this, &Memory::invertOuts, &Memory::setInvertOuts ),
 new BoolProp<Memory>( "Asynch"      , tr("Asynchronous")  ,""   , this, &Memory::asynchro,   &Memory::setAsynchro )
     }} );
-    addPropGroup( { tr("Electric"), IoComponent::inputProps()+IoComponent::outputProps() } );
+    addPropGroup( { tr("Electric"), IoComponent::inputProps()+IoComponent::outputProps()+IoComponent::outputType() } );
     addPropGroup( { tr("Edges"), IoComponent::edgeProps() } );
     addPropGroup( { "Hidden", {
 new StringProp<Memory>( "Mem","","", this, &Memory::getMem, &Memory::setMem)

@@ -27,12 +27,12 @@ LibraryItem* OrGate::libraryItem()
 OrGate::OrGate( QObject* parent, QString type, QString id )
       : Gate( parent, type, id, 2 )
 {
-    addPropGroup( { tr("Main"), {
-new IntProp <OrGate>( "Num_Inputs"    , tr("Input Size")   ,"_Inputs", this, &OrGate::numInps,    &OrGate::setNumInps, "uint" ),
-new BoolProp<OrGate>( "Inverted"      , tr("Invert Output"),""       , this, &OrGate::invertOuts, &OrGate::setInvertOuts ),
-new BoolProp<OrGate>( "Open_Collector", tr("Open Drain")   ,""       , this, &OrGate::openCol,    &OrGate::setOpenCol )
-    }} );
-    addPropGroup( { tr("Electric"), IoComponent::inputProps()+IoComponent::outputProps() } );
+    addPropGroup( { tr("Electric"), IoComponent::inputProps()
++QList<ComProperty*>({
+new BoolProp<OrGate>( "Invert_Inputs", tr("Invert Inputs"),""       , this, &OrGate::invertInps, &OrGate::setInvertInps ),
+new IntProp <OrGate>( "Num_Inputs"   , tr("Input Size")   ,"_Inputs", this, &OrGate::numInps,    &OrGate::setNumInps, "uint" ),
+                    })
+                    +IoComponent::outputProps()+IoComponent::outputType() } );
     addPropGroup( { tr("Edges")   , Gate::edgeProps() } );
 
     removeProperty("pd_n");

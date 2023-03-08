@@ -22,6 +22,7 @@ class MAINMODULE_EXPORT IoComponent : public Component
 
         QList<ComProperty*> inputProps();
         QList<ComProperty*> outputProps();
+        QList<ComProperty*> outputType();
         QList<ComProperty*> edgeProps();
 
         void initState();

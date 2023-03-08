@@ -11,6 +11,7 @@
 #include "iopin.h"
 
 #include "doubleprop.h"
+#include "boolprop.h"
 #include "intprop.h"
 
 Component* DAC::construct( QObject* parent, QString type, QString id )
@@ -41,7 +42,9 @@ DAC::DAC( QObject* parent, QString type, QString id )
 new IntProp<DAC>(  "Num_Bits", tr("Size")             ,"_Bits", this, &DAC::numInps, &DAC::setNumInps, "uint" ),
 new DoubProp<DAC>( "Vref"    , tr("Reference Voltage"),"V"    , this, &DAC::maxVolt, &DAC::setMaxVolt )
     }} );
-    addPropGroup( { tr("Electric"), IoComponent::inputProps() } );
+    addPropGroup( { tr("Electric"), IoComponent::inputProps()
++QList<ComProperty*>({new BoolProp<IoComponent>( "Invert_Inputs", tr("Invert Inputs"),"", this, &IoComponent::invertInps, &IoComponent::setInvertInps )})
+                  } );
     addPropGroup( { tr("Edges"), IoComponent::edgeProps() } );
 }
 DAC::~DAC(){}

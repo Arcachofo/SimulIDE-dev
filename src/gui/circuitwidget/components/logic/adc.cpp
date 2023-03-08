@@ -42,7 +42,7 @@ ADC::ADC( QObject* parent, QString type, QString id )
 new IntProp<ADC>(  "Num_Bits", tr("Size")             ,"_Bits", this, &ADC::numOuts, &ADC::setNumOuts, "uint" ),
 new DoubProp<ADC>( "Vref"    , tr("Reference Voltage"),"V"    , this, &ADC::maxVolt, &ADC::setMaxVolt ),
     }} );
-    addPropGroup( { tr("Electric"), IoComponent::outputProps() } );
+    addPropGroup( { tr("Electric"), IoComponent::outputProps()+IoComponent::outputType() } );
     addPropGroup( { tr("Edges"), IoComponent::edgeProps() } );
 }
 ADC::~ADC(){}

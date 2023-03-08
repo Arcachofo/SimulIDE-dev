@@ -49,9 +49,10 @@ DecToBcd::DecToBcd( QObject* parent, QString type, QString id )
 
     addPropGroup( { tr("Main"), {
 new BoolProp<DecToBcd>( "_16_Bits", tr("16 Bits")           ,"", this, &DecToBcd::is16Bits,   &DecToBcd::set16bits ),
-new BoolProp<DecToBcd>( "Invert_Inputs", tr("Invert Inputs"),"", this, &DecToBcd::invertInps, &DecToBcd::setInvertInps )
     }} );
-    addPropGroup( { tr("Electric"), IoComponent::inputProps()+IoComponent::outputProps() } );
+    addPropGroup( { tr("Electric"), IoComponent::inputProps()
++QList<ComProperty*>({new BoolProp<DecToBcd>( "Invert_Inputs", tr("Invert Inputs"),"", this, &DecToBcd::invertInps, &DecToBcd::setInvertInps )})
+                    +IoComponent::outputProps()+IoComponent::outputType() } );
     addPropGroup( { tr("Edges"), IoComponent::edgeProps() } );
 }
 DecToBcd::~DecToBcd(){}

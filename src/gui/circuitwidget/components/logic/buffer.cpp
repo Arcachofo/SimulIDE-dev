@@ -33,11 +33,17 @@ Buffer::Buffer( QObject* parent, QString type, QString id )
     setTristate( false );
 
     addPropGroup( { tr("Main"), {
-new BoolProp<Buffer>( "Tristate"      , tr("Tristate")     ,"", this, &Buffer::tristate,   &Buffer::setTristate ),
-new BoolProp<Buffer>( "Inverted"      , tr("Invert Output"),"", this, &Buffer::invertOuts, &Buffer::setInvertOuts ),
-new BoolProp<Buffer>( "Open_Collector", tr("Open Drain")   ,"", this, &Buffer::openCol,    &Buffer::setOpenCol )
+
     }} );
-    addPropGroup( { tr("Electric"), IoComponent::inputProps()+IoComponent::outputProps() } );
+    addPropGroup( { tr("Electric"), IoComponent::inputProps()
++QList<ComProperty*>({
+new BoolProp<Buffer>( "Invert_Inputs", tr("Invert Inputs"),"", this, &Buffer::invertInps, &Buffer::setInvertInps )
+                    })
+                    +IoComponent::outputProps()+IoComponent::outputType()
++QList<ComProperty*>({
+new BoolProp<Buffer>( "Tristate", tr("Tristate"),"", this, &Buffer::tristate, &Buffer::setTristate )
+                    })
+    } );
     addPropGroup( { tr("Edges")   , Gate::edgeProps() } );
 
     removeProperty("pd_n");

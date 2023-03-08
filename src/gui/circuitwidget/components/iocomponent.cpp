@@ -10,6 +10,7 @@
 #include "iopin.h"
 
 #include "doubleprop.h"
+#include "boolprop.h"
 
 IoComponent::IoComponent( QObject* parent, QString type, QString id)
            : Component( parent, type, id )
@@ -50,6 +51,13 @@ new ComProperty( "", tr("Outputs:"),"",""),
 new DoubProp<IoComponent>( "Out_High_V", tr("Output High Voltage"),"V", this, &IoComponent::outHighV, &IoComponent::setOutHighV ),
 new DoubProp<IoComponent>( "Out_Low_V" , tr("Output Low Voltage") ,"V", this, &IoComponent::outLowV,  &IoComponent::setOutLowV ),
 new DoubProp<IoComponent>( "Out_Imped" , tr("Output Impedance")   ,"Ω", this, &IoComponent::outImp,  &IoComponent::setOutImp ) };
+}
+
+QList<ComProperty*> IoComponent::outputType()
+{
+    return {
+new BoolProp<IoComponent>( "Inverted"      , tr("Invert Outputs"),"", this, &IoComponent::invertOuts, &IoComponent::setInvertOuts ),
+new BoolProp<IoComponent>( "Open_Collector", tr("Open Drain")   ,"", this, &IoComponent::openCol,    &IoComponent::setOpenCol )};
 }
 
 QList<ComProperty*> IoComponent::edgeProps()
@@ -209,12 +217,15 @@ void IoComponent::setOpenCol( bool op )
 {
     if( m_openCol == op ) return;
     m_openCol = op;
-
+    Simulator::self()->pauseSim();
     for( IoPin* pin : m_outPin )
     {
         if( op ) pin->setPinMode( openCo );
         else     pin->setPinMode( output );
-}   }
+    }
+    Circuit::self()->update();
+    Simulator::self()->resumeSim();
+}
 
 void IoComponent::setRiseTime( double time )
 {
