@@ -5,7 +5,7 @@
 
 #include "e_mcu.h"
 #include "cpubase.h"
-//#include "mcuportctrl.h"
+#include "mcuconfigword.h"
 #include "mcuport.h"
 #include "mcupin.h"
 #include "ioport.h"
@@ -258,6 +258,12 @@ void eMcu::enableInterrupts( uint8_t en )
 {
     if( en > 1 ) en = 1;
     m_interrupts.enableGlobal( en );
+}
+
+bool eMcu::setCfgWord( uint16_t addr, uint16_t data )
+{
+    if( m_cfgWord ) return m_cfgWord->setCfgWord( addr, data );
+    return false;
 }
 
 McuVref* eMcu::vrefModule() { return m_vrefModule; }

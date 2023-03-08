@@ -96,6 +96,7 @@ class MAINMODULE_EXPORT eMcu : public DataSpace, public eElement
         //McuSleep* sleepModule();
 
         ConfigWord* cfgWord() { return m_cfgWord; }
+        bool setCfgWord( uint16_t addr, uint16_t data );
         McuIntOsc* intOsc() { return m_intOsc; }
 
         void wdr();
