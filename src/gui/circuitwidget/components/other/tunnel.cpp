@@ -39,6 +39,7 @@ Tunnel::Tunnel( QObject* parent, QString type, QString id )
     m_rotated = false;
     m_blocked = false;
     m_packed  = false;
+    m_show    = false;
     m_name = "";
 
     m_pin.resize( 1 );
@@ -181,6 +182,31 @@ void Tunnel::remove()
     Circuit::self()->update();
 }
 
+void Tunnel::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
+{
+    if( m_show )
+    {
+        QAction* hideAction = menu->addAction( QIcon(":nobreakpoint.png"),tr("Hide group") );
+        connect( hideAction, SIGNAL(triggered()),
+                       this, SLOT(hideGroup()),Qt::UniqueConnection );
+    }else{
+        QAction* showAction = menu->addAction( QIcon(":/breakpoint.png"),tr("Show group") );
+        connect( showAction, SIGNAL(triggered()),
+                       this, SLOT(showGroup()), Qt::UniqueConnection );
+    }
+    menu->addSeparator();
+
+    Component::contextMenu( event, menu );
+}
+
+void Tunnel::showHide( bool show )
+{
+    QList<Tunnel*>* list = m_tunnels.value( m_name );
+    if( !list ) return;
+    for( Tunnel* tunnel: *list ) tunnel->m_show = show;
+    Circuit::self()->update();
+}
+
 QRectF Tunnel::boundingRect() const
 {
     if( m_packed ) return QRectF( 0, 0, 0 ,0 );
@@ -223,5 +249,10 @@ void Tunnel::paint( QPainter* p, const QStyleOptionGraphicsItem *option, QWidget
             QPointF(-m_size-8, 4 ) };
 
         p->drawPolygon( points, 5 );
+    }
+    if( m_show ){
+        p->setOpacity( 0.4 );
+        p->fillRect( boundingRect(), Qt::darkBlue );
+        p->setOpacity( 1 );
     }
 }

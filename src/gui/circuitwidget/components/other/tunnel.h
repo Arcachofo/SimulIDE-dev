@@ -51,8 +51,15 @@ class MAINMODULE_EXPORT Tunnel : public Component
 
  static QHash<QString, eNode*> m_eNodes;
 
+    public slots:
+        virtual void contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu );
+        void showGroup() { showHide( true ); }
+        void hideGroup() { showHide( false ); }
+
     protected:
         void mousePressEvent( QGraphicsSceneMouseEvent* event ) override;
+
+        void showHide( bool show );
 
         int m_size;
 
@@ -62,6 +69,7 @@ class MAINMODULE_EXPORT Tunnel : public Component
         bool m_rotated;
         bool m_blocked;
         bool m_packed;
+        bool m_show;
 
  static QHash<QString, QList<Tunnel*>*> m_tunnels;
 };
