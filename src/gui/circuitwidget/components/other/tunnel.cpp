@@ -3,6 +3,8 @@
  *                                                                         *
  ***( see copyright.txt file at root folder )*******************************/
 
+#include <QInputDialog>
+
 #include "tunnel.h"
 #include "itemlibrary.h"
 #include "circuitwidget.h"
@@ -15,7 +17,6 @@
 #include "stringprop.h"
 #include "boolprop.h"
 
-QHash<QString, eNode*> Tunnel::m_eNodes;
 QHash<QString, QList<Tunnel*>*> Tunnel::m_tunnels;
 
 Component* Tunnel::construct( QObject* parent, QString type, QString id )
@@ -84,7 +85,6 @@ void Tunnel::registerEnode( eNode* enode, int n ) // called by m_pin[0]
     QList<Tunnel*>* list = m_tunnels.value( m_name );
     if( !list ) return;
 
-    m_eNodes[m_name] = enode;
     m_blocked = true;
 
     for( Tunnel* tunnel: *list )
@@ -95,9 +95,13 @@ void Tunnel::registerEnode( eNode* enode, int n ) // called by m_pin[0]
 
 void Tunnel::setName( QString name )
 {
-    if( name == m_name ) return;
+    setGroupName( name, true );
+}
 
-    if( Simulator::self()->isRunning() )  CircuitWidget::self()->powerCircOff();
+void Tunnel::setGroupName( QString name, bool single )
+{
+    if( name == m_name ) return;
+    if( single && Simulator::self()->isRunning() )  CircuitWidget::self()->powerCircOff();
 
     removeTunnel(); // Remove old name before setting new one
 
@@ -107,20 +111,21 @@ void Tunnel::setName( QString name )
     else  m_size = snapToGrid( m_pin[0]->labelSizeX()+4 );
     setRotated( m_rotated );
 
-    if( name.isEmpty() ) { setEnode( NULL ); return; }
-
-    if( m_tunnels.contains( name ) ) // There is already tunnel with this name
     {
-        QList<Tunnel*>* list = m_tunnels.value( name );
-        if( !list->contains( this ) ) list->append( this );
+        if( m_tunnels.contains( name ) ) // There is already tunnel with this name
+        {
+            QList<Tunnel*>* list = m_tunnels.value( name );
+            if( !list->contains( this ) ) list->append( this );
+        }
+        else   // name doesn't exist: Create a new List for this name
+        {
+            QList<Tunnel*>* list = new QList<Tunnel*>();
+            list->append( this );
+            m_tunnels[name] = list;
+        }
+        if( single )
+            Circuit::self()->update();
     }
-    else   // name doesn't exist: Create a new List for this name
-    {
-        QList<Tunnel*>* list = new QList<Tunnel*>();
-        list->append( this );
-        m_tunnels[name] = list;
-    }
-    Circuit::self()->update();
 }
 
 bool Tunnel::isBus()
@@ -163,15 +168,14 @@ void Tunnel::removeTunnel()
     if( m_name.isEmpty() ) return;
 
     QList<Tunnel*>* list = m_tunnels.value( m_name );
-    if( list )
-    {
-        list->removeAll( this );
-        if( !list->isEmpty() ) return;
+    if( !list ) return;
 
-        m_tunnels.remove( m_name );
-        m_eNodes.remove( m_name );
-        delete list;
-}   }
+    list->removeAll( this );
+    if( !list->isEmpty() ) return;
+
+    m_tunnels.remove( m_name );
+    delete list;
+}
 
 void Tunnel::remove()
 {
@@ -194,9 +198,29 @@ void Tunnel::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
         connect( showAction, SIGNAL(triggered()),
                        this, SLOT(showGroup()), Qt::UniqueConnection );
     }
+    QAction* nameAction = menu->addAction( QIcon(":/rename.svg"),tr("Change group name") );
+    connect( nameAction, SIGNAL(triggered()),
+                   this, SLOT(setGroupName()), Qt::UniqueConnection );
     menu->addSeparator();
 
     Component::contextMenu( event, menu );
+}
+
+void Tunnel::setGroupName()
+{
+    bool ok;
+    QString text = QInputDialog::getText( NULL, tr("Rename Tunnels"),
+                                         tr("New name:"), QLineEdit::Normal,
+                                         m_name, &ok );
+    if( ok && !text.isEmpty() )
+    {
+        QList<Tunnel*>* list = m_tunnels.value( m_name );
+        if( !list ) return;
+        QVector<Tunnel*> tunnels = list->toVector();
+        for( Tunnel* tunnel: tunnels ) tunnel->setGroupName( text, false );
+
+        Circuit::self()->update();
+    }
 }
 
 void Tunnel::showHide( bool show )
@@ -255,4 +279,11 @@ void Tunnel::paint( QPainter* p, const QStyleOptionGraphicsItem *option, QWidget
         p->fillRect( boundingRect(), Qt::darkBlue );
         p->setOpacity( 1 );
     }
+}
+
+eNode* Tunnel::getEnode( QString n )
+{
+    Tunnel* tunnel=  m_tunnels.value( n )->first();
+    if( tunnel ) return tunnel->getPin()->getEnode();
+    return NULL;
 }

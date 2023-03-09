@@ -46,20 +46,21 @@ class MAINMODULE_EXPORT Tunnel : public Component
         void removeTunnel();
 
         Pin* getPin() { return m_pin[0]; }
+ static eNode* getEnode( QString n );
 
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
-
- static QHash<QString, eNode*> m_eNodes;
 
     public slots:
         virtual void contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu );
         void showGroup() { showHide( true ); }
         void hideGroup() { showHide( false ); }
+        void setGroupName();
 
     protected:
         void mousePressEvent( QGraphicsSceneMouseEvent* event ) override;
 
         void showHide( bool show );
+        void setGroupName( QString name, bool single );
 
         int m_size;
 

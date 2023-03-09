@@ -138,7 +138,7 @@ void LAnalizer::updateStep()
             {
                 QString chTunnel = m_channel[i]->m_chTunnel;
 
-                eNode* enode = Tunnel::m_eNodes.value(  chTunnel, NULL );
+                eNode* enode = Tunnel::getEnode( chTunnel );
                 m_pin[i]->setEnode( enode );
                 if( enode )
                 {
