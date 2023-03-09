@@ -41,10 +41,10 @@ void Ground::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget
     Component::paint( p, option, widget );
 
     QPen pen = p->pen();
-    pen.setWidth(3);
+    pen.setWidthF( 2.5 );
     p->setPen(pen);
 
-    p->drawLine( -8,-8, 8,-8 );
-    p->drawLine( -5,-3, 5,-3 );
-    p->drawLine( -2, 2, 2, 2 );
+    p->drawLine(QLineF(-6.6,-8, 6.6,-8) );
+    p->drawLine(QLineF(-4.3,-4, 4.3,-4) );
+    p->drawLine(QLineF(-1.9, 0, 1.9, 0) );
 }

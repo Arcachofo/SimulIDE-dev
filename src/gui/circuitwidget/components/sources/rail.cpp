@@ -32,14 +32,15 @@ Rail::Rail( QObject* parent, QString type, QString id )
 {
     setLabelPos(-64,-24 );
 
-    m_area = QRect( -10, -10, 20, 20 );
+    m_area = QRect(-4, -8, 12, 16 );
     m_changed = false;
 
     m_pin.resize(1);
     m_pin[0] = m_out = new IoPin( 0, QPoint(16,0), id+"-outnod", 0, this, source );
 
-    setValLabelPos(-19, 0 , 0 ); // x, y, rot
-    setLabelPos(-16,-24, 0);
+    setRotation( 90 );
+    setValLabelPos(-12, 6,-90 ); // x, y, rot
+    setLabelPos(-5,-10,-90);
 
     addPropGroup( { tr("Main"), {
 new DoubProp<Rail>( "Voltage", tr("Voltage"),"V", this, &Rail::volt, &Rail::setVolt )
@@ -87,8 +88,8 @@ void Rail::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* 
     p->setBrush( QColor( 255, 166, 0 ) );
     //p->drawRoundedRect( QRectF( -8, -8, 16, 16 ), 2, 2);
     static const QPointF points[4] = {
-        QPointF(-4,-8 ),
-        QPointF(-4, 8 ),
+        QPointF(-1.5,-6.5 ),
+        QPointF(-1.5, 6.5 ),
         QPointF( 9,  1 ),
         QPointF( 9, -1 )            };
 
