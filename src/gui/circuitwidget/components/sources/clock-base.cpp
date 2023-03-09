@@ -50,9 +50,9 @@ void ClockBase::updateStep()
     {
         m_lastTime = Simulator::self()->circTime();
         Simulator::self()->cancelEvents( this );
-        Simulator::self()->addEvent( 1, this );
+        Simulator::self()->addEvent( m_stepsPC/2, this );
     }
-    m_outpin->sheduleState( false, 0 );
+    m_outpin->setOutState( false );
     m_state = false;
     m_changed = false;
 }
