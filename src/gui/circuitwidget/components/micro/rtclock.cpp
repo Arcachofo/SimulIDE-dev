@@ -16,7 +16,8 @@ RtClock::~RtClock(){}
 void RtClock::initialize()
 {
     m_outEnable = false;
-    m_disOut  = false;
+    m_disabled  = true;
+    m_disOut    = false;
 
     m_freqBase = 32768;
     m_halfPeriod = 1e12/m_freqBase/2;  // Period in ps
@@ -37,13 +38,13 @@ void RtClock::runEvent()
     if( --m_sCount == 0 ) // Increment 1 second
     {
         m_sCount = m_freqBase*2;
-        m_time = m_time.addSecs( 1 );
+        if( !m_disabled ) m_time = m_time.addSecs( 1 );
         if( m_time == QTime( 0, 0, 0 ) ) m_date = m_date.addDays( 1 );
     }
     Simulator::self()->addEvent( m_halfPeriod, this );
 }
 
-void RtClock::getCurrentTime()
+void RtClock::setCurrentTime()
 {
     m_date = QDate::currentDate();
     m_time = QTime::currentTime();
@@ -55,7 +56,7 @@ void RtClock::setFreq( uint64_t freq )
     m_tCount = m_toggle;
 }
 
-void RtClock::enable( bool en )
+void RtClock::enableOut( bool en )
 {
     if( m_outEnable == en ) return;
     m_outEnable = en;

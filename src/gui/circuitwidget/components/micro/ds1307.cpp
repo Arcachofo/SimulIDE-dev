@@ -64,8 +64,12 @@ void DS1307::initialize()
     m_phase = 0;
     for( int i=0; i<64; i++ ) m_data[i] = 0x00;
 
-    if( m_timeUpdtd ) m_clock.getCurrentTime();
-
+    if( m_timeUpdtd ) m_clock.setCurrentTime();
+    else{
+        m_clock.m_date.setDate( 0, 1, 1 );
+        m_clock.m_time.setHMS( 0, 0, 0 );
+    }
+    m_data[0] = 1<<7; // Disabled
     m_data[7] = 0x03;
 }
 
@@ -96,7 +100,10 @@ void DS1307::writeByte()               // Read from RAM
 {
     if( m_addrPtr < 7 ){
         switch( m_addrPtr ){
-            case 0: m_txReg = decToBcd( m_clock.m_time.second() ); break;
+            case 0: {
+                uint8_t disabled = m_data[0] & (1<<7);
+                m_txReg = decToBcd( m_clock.m_time.second() ) | disabled; break;
+            }break;
             case 1: m_txReg = decToBcd( m_clock.m_time.minute() ); break;
             case 2: {
                 int hour = m_clock.m_time.hour();
@@ -126,7 +133,10 @@ void DS1307::I2Cstop()
 void DS1307::updtTime()
 {
     switch( m_addrPtr ){
-        case 0: m_clock.m_time.setHMS( m_clock.m_time.hour(), m_clock.m_time.minute(), bcdToDec( m_rxReg ) ); break;
+        case 0: {
+            m_clock.disable( m_data[0] | 1<<7 );
+            m_clock.m_time.setHMS( m_clock.m_time.hour(), m_clock.m_time.minute(), bcdToDec( m_rxReg & ~(1<<7) ) ); break;
+        }
         case 1: m_clock.m_time.setHMS( m_clock.m_time.hour(), bcdToDec( m_rxReg ), m_clock.m_time.second() ); break;
         case 2: {
             int hour;
@@ -161,12 +171,14 @@ void DS1307::updtCtrl()
         case 3: freq = 32768; break;
     }
     m_clock.setFreq( freq );
-    m_clock.enable( m_data[7] & (1<<4) );
+    m_clock.enableOut( m_data[7] & (1<<4) );
     m_clock.setDisOut( m_data[7] & (1<<7) );
 }
 
-char DS1307::decToBcd(char val) { return( (val/10*16) + (val%10) ); }
-char DS1307::bcdToDec(char val) { return( (val/16*10) + (val%16) ); }
+char DS1307::decToBcd(char val) {
+    return( (val/10*16) + (val%10) ); }
+char DS1307::bcdToDec(char val) {
+    return( (val/16*10) + (val%16) ); }
 
 void DS1307::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
 {

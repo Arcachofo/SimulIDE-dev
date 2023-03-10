@@ -21,9 +21,10 @@ class MAINMODULE_EXPORT RtClock : public eElement
         virtual void initialize() override;
         virtual void runEvent() override;
 
-        void getCurrentTime();
-        void enable( bool en );
-        void setDisOut( bool d );
+        void setCurrentTime();
+        void disable( bool d ) { m_disabled = d; }
+        void enableOut( bool en );     // Enable/Disable clk out
+        void setDisOut( bool d );      // Clk out wheout disabled
         void setFreq( uint64_t freq );
         void setPin( IoPin* pin ) { m_outpin = pin; }
 
@@ -31,7 +32,8 @@ class MAINMODULE_EXPORT RtClock : public eElement
         QDate m_date;
 
     private:
-        bool m_enabled;
+        bool m_disabled;
+        bool m_outEnable;
         bool m_disOut;
 
         uint64_t m_tCount;

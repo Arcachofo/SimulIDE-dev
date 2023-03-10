@@ -37,6 +37,7 @@ Serial.begin(9600);
   lcd.clear();
 
   if( !RTC.begin() )     error("RTC Init ERROR");
+  if( !RTC.isrunning() ) RTC.adjust(DateTime(F(__DATE__), F(__TIME__)));
   if( !RTC.isrunning() ) error("RTC NOT Running!");
   lcd.print("RTC Running");
   delay( 300 );
