@@ -111,21 +111,18 @@ void Tunnel::setGroupName( QString name, bool single )
     else  m_size = snapToGrid( m_pin[0]->labelSizeX()+4 );
     setRotated( m_rotated );
 
+    if( m_tunnels.contains( name ) ) // There is already tunnel with this name
     {
-        if( m_tunnels.contains( name ) ) // There is already tunnel with this name
-        {
-            QList<Tunnel*>* list = m_tunnels.value( name );
-            if( !list->contains( this ) ) list->append( this );
-        }
-        else   // name doesn't exist: Create a new List for this name
-        {
-            QList<Tunnel*>* list = new QList<Tunnel*>();
-            list->append( this );
-            m_tunnels[name] = list;
-        }
-        if( single )
-            Circuit::self()->update();
+        QList<Tunnel*>* list = m_tunnels.value( name );
+        if( !list->contains( this ) ) list->append( this );
     }
+    else   // name doesn't exist: Create a new List for this name
+    {
+        QList<Tunnel*>* list = new QList<Tunnel*>();
+        list->append( this );
+        m_tunnels[name] = list;
+    }
+    if( single ) Circuit::self()->update();
 }
 
 bool Tunnel::isBus()
@@ -283,7 +280,9 @@ void Tunnel::paint( QPainter* p, const QStyleOptionGraphicsItem *option, QWidget
 
 eNode* Tunnel::getEnode( QString n )
 {
-    Tunnel* tunnel=  m_tunnels.value( n )->first();
+    QList<Tunnel*>* list = m_tunnels.value( n );
+    if( !list ) return NULL;
+    Tunnel* tunnel= list->first();
     if( tunnel ) return tunnel->getPin()->getEnode();
     return NULL;
 }
