@@ -205,6 +205,10 @@ void McuPort::registerScript( asIScriptEngine* engine )
     int r=0;
     engine->RegisterObjectType("McuPort", 0, asOBJ_REF | asOBJ_NOCOUNT );
 
+    r = engine->RegisterObjectMethod("McuPort", "void controlPort( bool o, bool d )"
+                                       , asMETHODPR( McuPort, controlPort, (bool, bool), void)
+                                       , asCALL_THISCALL );
+
     r = engine->RegisterObjectMethod("McuPort", "void setDirection( uint d )"
                                        , asMETHODPR( McuPort, setDirection, (uint), void)
                                        , asCALL_THISCALL );

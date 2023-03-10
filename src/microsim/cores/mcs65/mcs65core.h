@@ -6,8 +6,7 @@
 #ifndef MCS65CPU_H
 #define MCS65CPU_H
 
-#include "cpubase.h"
-#include "e-element.h"
+#include "mcs65interface.h"
 #include "iopin.h"
 
 #define CONSTANT  0x20
@@ -23,11 +22,13 @@
 class IoPort;
 class IoPin;
 
-class MAINMODULE_EXPORT Mcs65Cpu : public CpuBase, public eElement
+class MAINMODULE_EXPORT Mcs65Cpu : public Mcs65Interface
 {
     public:
         Mcs65Cpu( eMcu* mcu );
         ~Mcs65Cpu();
+
+        virtual QString getStrReg( QString reg ) override;
 
         virtual void stamp() override;
         virtual void runEvent() override;
@@ -54,14 +55,16 @@ class MAINMODULE_EXPORT Mcs65Cpu : public CpuBase, public eElement
             aIMME,
             aINDX,
             aINDI,
-            aABSO
+            aZERO,
+            aABSO,
         };
-        enum addrIndx_t{
-            iX=1<<0,
+        enum addrFlags_t{
+            iX=1<<0, //
             iY=1<<1,
             iC=1<<2,
             iI=1<<3,
-            iZ=1<<4,
+            iZ=1<<4, // Zero Page
+            iR=1<<5  // Read Op
         };
 
     protected:
@@ -118,11 +121,11 @@ class MAINMODULE_EXPORT Mcs65Cpu : public CpuBase, public eElement
         cpuState_t m_state;
         cpuState_t m_nextState;
 
-        uint8_t m_IsrH;
+        uint8_t m_IsrH; // Interrupt vector
         uint8_t m_IsrL;
 
         addrMode_t m_aMode;
-        uint8_t m_aIndx;
+        uint8_t m_aFlags;
 
         uint8_t m_tmp0;
         uint8_t m_tmp1;

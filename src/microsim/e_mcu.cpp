@@ -139,6 +139,7 @@ void eMcu::reset()
     cyclesDone = 0;
 
     for( McuModule* module : m_modules ) module->reset();
+    for( IoPort* ioPort : m_ioPorts ) ioPort->reset();
     //cpu->reset();
     m_interrupts.resetInts();
     DataSpace::initialize();

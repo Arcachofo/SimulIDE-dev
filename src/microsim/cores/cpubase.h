@@ -34,8 +34,8 @@ class MAINMODULE_EXPORT CpuBase
 
         virtual uint getPC() { return m_PC; }
 
-        virtual QStringList getEnumUids( QString ) { return m_enumUids;}
-        virtual QStringList getEnumNames( QString ) { return m_enumNames; }
+        virtual QStringList getEnumUids( QString ) { return m_enumUids;}    // For enum properties
+        virtual QStringList getEnumNames( QString ) { return m_enumNames; } // For enum properties
 
     protected:
         eMcu* m_mcu;
@@ -46,7 +46,7 @@ class MAINMODULE_EXPORT CpuBase
         uint8_t* m_STATUS;  // STATUS register  /// All CPUs must use this
         uint32_t m_RET_ADDR;// Last Address in Stack /// All CPUs must use this
 
-        /// Sould be in McuCpu:
+        /// Should be in McuCpu:
         uint8_t* m_spl;     // STACK POINTER low byte
         uint8_t* m_sph;     // STACK POINTER high byte
         bool     m_spPre;   // STACK pre-increment?
@@ -63,8 +63,8 @@ class MAINMODULE_EXPORT CpuBase
             else      *m_STATUS &= ~(1<<bit);
         }
 
-        QStringList m_enumUids;
-        QStringList m_enumNames;
+        QStringList m_enumUids;  // For enum properties
+        QStringList m_enumNames; // For enum properties
 };
 
 #endif

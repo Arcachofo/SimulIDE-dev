@@ -1,4 +1,6 @@
 
+bool debug = false;
+
 McuPort@ PortA   = component.getMcuPort("PORTA");
 McuPort@ PortB   = component.getMcuPort("PORTB");
 IoPort@ csPort   = component.getPort("PORTC");
@@ -50,7 +52,7 @@ uint m_prescCount;
 uint8 m_timerCount;
 
 bool m_nextClock;  // Clock State
-
+bool m_CS;
 bool m_read;
 uint8 m_addr;
 
@@ -64,9 +66,6 @@ void setup() // Executed when Component is created
 void reset() // Executed at Simulation start
 {
     print("6532 reset()"); 
-    
-    irqPin.setOutState( true );
-    dataPort.setPinMode( input );
     
     m_nextClock = true; // Wait for first rising edge
     
@@ -87,33 +86,34 @@ void reset() // Executed at Simulation start
 
 void extClock( bool clkState )  // Function called al clockPin change
 {
-    print("6532 runClock " + clkState );
+    //print("6532 runClock " + clkState );
      
     if( m_nextClock != clkState ) return;
     
-    if( csPort.getInpState() == 1 ) /// Chip Selected: CS1 & !CS2
-    {
-        if( m_nextClock ) risingEdge();
-        else              fallingEdge();
-    }
+    m_CS = csPort.getInpState() == 1;  /// Chip Selected: CS1 & !CS2
+
+    
+    if( m_nextClock ) risingEdge();
+    else              fallingEdge();
+
     m_nextClock = !m_nextClock;
 }
 
 void risingEdge()
 {
-    print("6532 Rising Edge "); 
+    //print("6532 Rising Edge "); 
     
     m_addr = addrPort.getInpState();
     m_read = rwPin.getInpState();
-    
-    if( m_read )                           // MCU is reading
+
+    if( m_CS && m_read )                           // MCU is reading
     {
         dataPort.setPinMode( output );
         component.addEvent( m_rDelay );    // Set Data Port after a few ns
     }else{
         dataPort.setPinMode( input );      // We will read data at Falling edge
     }
-    
+
     if( m_step == 0 ) return;
 
     if( ++m_prescCount == m_step )         // Timer count
@@ -136,7 +136,11 @@ void risingEdge()
 
 void fallingEdge()
 {
-    if( !m_read ) // MCU is writing
+    if( !m_CS || m_read )     // Read operation finished
+    {
+        dataPort.setPinMode( input ); // Release Data Bus
+    }
+    else             // MCU is writing
     {
         uint data = dataPort.getInpState(); // Read Data Port
         writeREG( data );
@@ -158,12 +162,14 @@ int readREG()  // MCU is reading
 
     if( m_addr & 1<<7 == 0 )              // Read RAM
     {
+        if( debug ) print("5532 read RAM "+m_addr+" "+data ); 
         data = component.readRAM( m_addr );
     }
     else                                  // Read Register
     {
         if( m_addr & 1<<2 == 0 )          // PORT Registers
         {
+            if( debug ) print("5532 read PORT "+(m_addr & 3) ); 
             switch( m_addr & 3 ){
                 case 0: data = PortA.getInpState(); break; // 0x80
                 case 1: data = DDRA;                break; // 0x81
@@ -176,6 +182,7 @@ int readREG()  // MCU is reading
             
             if( m_addr & 1 == 0 )         // Read Timer
             {
+                if( debug ) print("5532 read TIMER "+m_addr+" "+data ); 
                 uint8 ier = IER;
                 uint8 toie = m_addr & T0IE;
                 ier &= ~T0IE;             // Enable/Disable Timer Interrupt
@@ -191,6 +198,7 @@ int readREG()  // MCU is reading
                 data = m_timerCount;
             }
             else{                         // Read Interrupt flags
+                if( debug ) print("5532 read FLAGS "+m_addr+" "+data ); 
                 data = ifr;               // send IFR before clearing EXTIF flag /// ????
                 ifr &= ~EXTIF;            // Clear A7 Interrupt flag
             }
@@ -200,36 +208,38 @@ int readREG()  // MCU is reading
             }
         }
     }
-    print("6520 readREG "+m_addr+" "+data ); 
     return data;
 }
 
 void writeREG( uint data ) // MCU is writing
 {
-    print("6520 writeREG "+m_addr+" "+data );
-    
-    uint8 addr = m_addr;
+    //uint8 addr = m_addr;
     
     if( m_addr & 1<<7 == 0 )              // Write RAM
     {
+        if( debug ) print("6532 write RAM "+m_addr+" "+data );
         component.writeRAM( m_addr, data );
     }
     else                                  // Write Register
     {
         if( m_addr & 1<<2 == 0 )              // Write PORT Registers
         {
+            if( debug ) print("6532 write PORT "+(m_addr & 3)+" "+data );
+            uint8 addr;
             switch( m_addr & 3 ){
-                case 0: data = PortA.getInpState(); break; // 0x80
-                case 1: data = DDRA;                break; // 0x81
-                case 2: data = PortB.getInpState(); break; // 0x82
-                case 3: data = DDRB;                break; // 0x83
+                case 0: DRA  = data; addr = 0x80; break; // 0x80
+                case 1: DDRA = data; addr = 0x81; break; // 0x81
+                case 2: DRB  = data; addr = 0x82; break; // 0x82
+                case 3: DDRB = data; addr = 0x83; break; // 0x83
             }
+            component.writeRAM( addr, data );
         }
         else{                                // Timer & Edge Detect
             uint8 ier = IER;
             
             if( m_addr & 1<<4 == 0 )          // Write Edge Detect control
             {
+                if( debug ) print("5532 write EDGE "+m_addr+" "+data );
                 uint8 extie = m_addr & EXTIE;
                 ier &= ~EXTIE; ier |= extie;  // Enable/Disable A7 Interrupt
                 
@@ -244,6 +254,7 @@ void writeREG( uint data ) // MCU is writing
                 }
             }
             else{                             // Write Timer
+                if( debug ) print("6532 write TIMER "+m_addr+" "+data );
                 uint8 toie = m_addr & T0IE; 
                 ier &= ~T0IE; ier |= toie;    // Enable/Disable Timer Interrupt
                 
