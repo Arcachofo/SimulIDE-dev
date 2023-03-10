@@ -29,9 +29,7 @@ class EditorWidget : public QWidget
         bool close();
 
        CodeEditor* getCodeEditor();
-       //CodeEditor* getCodeEditor( QString file );
 
-       void dropEvent( QDropEvent* event );
 
     public slots:
        void loadFile( const QString &fileName );
@@ -69,6 +67,7 @@ class EditorWidget : public QWidget
 
 
     protected:
+        void dropEvent( QDropEvent* event );
         void dragEnterEvent( QDragEnterEvent* event);
         void keyPressEvent( QKeyEvent* event );
 

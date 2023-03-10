@@ -15,7 +15,7 @@ RtClock::~RtClock(){}
 
 void RtClock::initialize()
 {
-    m_enabled = false;
+    m_outEnable = false;
     m_disOut  = false;
 
     m_freqBase = 32768;
@@ -32,7 +32,7 @@ void RtClock::runEvent()
     if( --m_tCount == 0 ) // Toggle Pin if enabled
     {
         m_tCount = m_toggle;
-        if( m_enabled ) m_outpin->sheduleState( !m_outpin->getOutState(), 0 );
+        if( m_outEnable ) m_outpin->sheduleState( !m_outpin->getOutState(), 0 );
     }
     if( --m_sCount == 0 ) // Increment 1 second
     {
@@ -57,8 +57,8 @@ void RtClock::setFreq( uint64_t freq )
 
 void RtClock::enable( bool en )
 {
-    if( m_enabled == en ) return;
-    m_enabled = en;
+    if( m_outEnable == en ) return;
+    m_outEnable = en;
     if( !en ) m_outpin->setOutState( m_disOut );
 }
 
@@ -66,5 +66,5 @@ void RtClock::setDisOut( bool d )
 {
     if( m_disOut == d ) return;
     m_disOut = d;
-    if( !m_enabled ) m_outpin->setOutState( m_disOut );
+    if( !m_outEnable ) m_outpin->setOutState( m_disOut );
 }

@@ -49,6 +49,7 @@ CodeEditor::CodeEditor( QWidget* parent, OutPanelText* outPane )
     setTabSize( m_tabSize );
     setShowSpaces( m_showSpaces );
     setSpaceTabs( m_spaceTabs );
+    setAcceptDrops( false );
 
     QPalette p = palette();
     p.setColor( QPalette::Base, QColor( 255, 255, 249) );
@@ -513,11 +514,6 @@ void CodeEditor::updateLineNumberArea( const QRect &rect, int dy )
     if( dy ) m_lNumArea->scroll( 0, dy );
     else     m_lNumArea->update( 0, rect.y(), m_lNumArea->width(), rect.height() );
     if( rect.contains( viewport()->rect() ) ) updateLineNumberAreaWidth( 0 );
-}
-
-void CodeEditor::dropEvent( QDropEvent* event )
-{
-    EditorWindow::self()->dropEvent( event );
 }
 
 void CodeEditor::resizeEvent( QResizeEvent* e )
