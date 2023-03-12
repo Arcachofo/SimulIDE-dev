@@ -244,6 +244,15 @@ void PlotDisplay::paintEvent( QPaintEvent* /* event */ )
             time   = timeData->at(pos);
             x1 = m_ceroX + (time+m_hPos[i]-m_timeStart)*m_scaleX;
 
+            if( !m_channel[i]->isBus() )
+            {
+                y1 = m_posY[i] - p1Volt*m_scaleY[i];
+                if( j== 0 ){ // First Point
+                    x2 = m_endX;
+                    y2 = y1;
+                }
+            }
+
             if( time <= timeEnd )
             {
                 if( m_channel[i]->isBus() )
@@ -294,13 +303,6 @@ void PlotDisplay::paintEvent( QPaintEvent* /* event */ )
                     }
                 }
                 else{
-                    y1 = m_posY[i] - p1Volt*m_scaleY[i];
-
-                    if( j== 0 ) // First Point
-                    {
-                        x2 = m_endX;
-                        y2 = y1;
-                    }
                     if( p1Volt > m_vMaxVal[i] ) m_vMaxVal[i] = p1Volt; // Maximum Voltage
                     if( p1Volt < m_vMinVal[i] ) m_vMinVal[i] = p1Volt; // MiniMum Voltage
                     if( drawCursor && cursorX>x1 && cursorX<x2 ) // Claculate Cursor Voltage betwen 2 points

@@ -59,12 +59,9 @@ class MAINMODULE_EXPORT Mcs65Cpu : public Mcs65Interface
             aINDI,
         };
         enum addrFlags_t{
-            iX=1<<0, //
-            iY=1<<1,
-            iC=1<<2,
-            iI=1<<3,
-            iZ=1<<4, // Zero Page
-            iR=1<<5  // Read Op
+            iX=1<<0,       // X indexed
+            iY=1<<1,       // Y indexed
+            iC=1<<2        // Page Cross carry
         };
 
     protected:
@@ -75,7 +72,6 @@ class MAINMODULE_EXPORT Mcs65Cpu : public Mcs65Interface
 
         inline void readPGM();
         inline void Read();
-        inline void readIndx();
         inline void readMem( uint16_t addr );
         inline uint8_t readDataBus();
 
