@@ -48,9 +48,11 @@ void EditorWindow::updateStep()
     loadFile( m_debugFile );
     CodeEditor* ce = getCodeEditor();
     ce->setDebugLine( m_debugLine );
-    ce->updateScreen();
+    if( m_jumpToBrk ) ce->updateScreen();
+    else              ce->update();
     //m_debugDoc->updateScreen();
     m_updateScreen = false;
+    m_jumpToBrk = false;
 }
 
 bool EditorWindow::upload()
@@ -138,6 +140,7 @@ void EditorWindow::initDebbuger()
     m_debugDoc = NULL;
     m_debugger = NULL;
     m_state = DBG_STOPPED;
+    m_jumpToBrk = false;
     bool ok = uploadFirmware( true );
 
     if( ok )  // OK: Start Debugging
@@ -194,17 +197,21 @@ void EditorWindow::lineReached( codeLine_t line ) // Processor reached PC relate
         else return;
     }
     pause();
+    m_jumpToBrk = true;
 }
 
 void EditorWindow::pauseAt( codeLine_t line )
 {
-    int cycle = eMcu::self()->cycle();
-    double time = Simulator::self()->circTime()/1e6;
-    m_outPane.appendLine( tr("Clock Cycles: ")+QString::number( cycle-m_lastCycle )
-                          +"\t\t"+tr("Time us: ")+QString::number( time-m_lastTime ));
-
     m_debugFile = line.file;
     m_debugLine = line.lineNumber;
+
+    int cycle = eMcu::self()->cycle();
+    double time = Simulator::self()->circTime()/1e6;
+    m_outPane.appendLine( tr("Line ")+QString::number( m_debugLine )+"\t"
+                         +tr("Clock Cycles: ")+QString::number( cycle-m_lastCycle )+"\t"
+                         +tr("Time us: ")+QString::number( time-m_lastTime ));
+
+
     m_lastCycle = cycle;
     m_lastTime = time;
     m_updateScreen = true;

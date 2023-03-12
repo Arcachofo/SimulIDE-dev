@@ -80,6 +80,7 @@ class EditorWindow : public EditorWidget, public Updatable
         bool m_stepOver;
         //bool m_driveCirc;
         bool m_updateScreen;
+        bool m_jumpToBrk;
         int m_lastCycle;
         double m_lastTime;
 

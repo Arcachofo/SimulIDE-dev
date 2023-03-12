@@ -623,6 +623,7 @@ void CodeEditor::lineNumberAreaPaintEvent( QPaintEvent* event )
             }
             if( m_compiler )                            // Breakpoints an error indicator
             {
+                painter.setRenderHint( QPainter::Antialiasing );
                 //UserData* data = (UserData*)block.userData();
 
                 int pos = m_lNumArea->lastPos;
@@ -640,9 +641,10 @@ void CodeEditor::lineNumberAreaPaintEvent( QPaintEvent* event )
 
                 if( m_brkPoints.contains( lineNumber ) ) // Draw breakPoint icon //( data && data->breakp ) //
                 {
-                    painter.setBrush( QColor(Qt::yellow) );
-                    painter.setPen( Qt::NoPen );
-                    painter.drawRect( 0, top+2, fontSize, fontSize-4 );
+                    painter.setOpacity( 0.5 );
+                    painter.fillRect( QRectF( 0, top+1, fontSize, fontSize-2 ), QColor(50, 50, 0) );
+                    painter.setOpacity( 1 );
+                    painter.fillRect( QRectF( 1, top+2, fontSize-2, fontSize-4 ), Qt::yellow );
                 }
 
                 if( lineNumber == m_debugLine ) // Draw debug line icon
