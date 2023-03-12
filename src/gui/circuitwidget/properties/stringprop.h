@@ -24,7 +24,7 @@ class MAINMODULE_EXPORT StringProp : public StrProp
 
         virtual void setValStr( QString val ) override
         {
-            if( m_comp->showProp() == m_name ) m_comp->setValLabelText( val );
+            /// if( m_comp->showProp() == m_name ) m_comp->setValLabelText( val );  // Needed???
             (m_comp->*m_setter)( setStr( val ) ); // Comp setter can change valLabel
         }
 

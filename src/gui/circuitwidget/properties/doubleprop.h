@@ -22,9 +22,6 @@ class MAINMODULE_EXPORT DoubProp : public NumProp
         }
         ~DoubProp(){;}
 
-        virtual void setUnit( QString u ) override  // Old: TODELETE
-        { setValStr( getValU( (m_comp->*m_getter)(), u ) ); }
-
         virtual void setValStr( QString val ) override
         { (m_comp->*m_setter)( getVal( val, m_comp ) ); }
 

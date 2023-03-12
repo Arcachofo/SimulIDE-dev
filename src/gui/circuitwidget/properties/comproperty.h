@@ -23,8 +23,6 @@ class MAINMODULE_EXPORT ComProperty
         QString type() { return m_type; }
         QString unit() { return m_unit; }
 
-        virtual void setUnit( QString u ) {;} // Old: TODELETE
-
         virtual void    setValStr( QString val ){;}
         virtual QString getValStr(){return "";}
         virtual double  getValue(){return 0;}
