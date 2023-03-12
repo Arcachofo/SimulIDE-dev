@@ -617,7 +617,7 @@ void Mcs65Cpu::RTI() // Return from Interrupt ////
         case 2: popStack8();                                               break;
         case 3: popStack8(); *m_STATUS = readDataBus() | CONSTANT | BREAK; break;
         case 4: popStack8(); m_op0 = readDataBus();                        break;
-        case 5: m_PC = (readDataBus() << 8) | m_op0;
+        case 5: m_PC = (readDataBus() << 8) | m_op0; m_aMode = aIMME; // Avoid PC decrement at cFETCH case
 }   }
 
 void Mcs65Cpu::RTS() // Return from Subroutine
