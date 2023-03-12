@@ -133,9 +133,9 @@ void LAnalizer::updateStep()
 
         for( int i=0; i<8; i++ )
         {
-            if( m_pin[i]->isBus() ) continue;
             bool connected = m_pin[i]->connector();
-            if( !connected )
+
+            if( !connected && !m_pin[i]->isBus() )
             {
                 QString chTunnel = m_channel[i]->m_chTunnel;
 
