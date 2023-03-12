@@ -275,31 +275,31 @@ void Mcs65Cpu::decode()
 
     switch( Atype ){                // Set Addressing Mode
     case 0: {
-        if( group == 1 ){ m_aMode = aINDI; m_aFlags = iX|iZ; break; }   // Group 1
-        else{             m_aMode = aIMME;                   break; }   // Groups 2, 4
+        if( group == 1 ){ m_aMode = aINDI; m_aFlags = iX; break; }   // Group 1
+        else{             m_aMode = aIMME;                break; }   // Groups 2, 0
     }
-    case 1:               m_aMode = aZERO;                   break;    // All // Zero Page
+    case 1:               m_aMode = aZERO;                break;    // All // Zero Page
     case 2: {
-        if( group == 1 ){ m_aMode = aIMME;                   break; }   // Group 1
-        if( group == 2 ){ m_aMode = aACCU;                   break; }   // Group 2
+        if( group == 1 ){ m_aMode = aIMME;                break; }   // Group 1
+        if( group == 2 ){ m_aMode = aACCU;                break; }   // Group 2
     }
-    case 3:               m_aMode = aABSO;                   break;     // All
+    case 3:               m_aMode = aABSO;                break;     // All
     case 4:
-        if( group == 0 ){ m_aMode = aIMME;                   break; }   // Conditional Branch
-        if( group == 1 ){ m_aMode = aINDI; m_aFlags = iY;    break; }   // Group 1
+        if( group == 0 ){ m_aMode = aIMME;                break; }   // Conditional Branch
+        if( group == 1 ){ m_aMode = aINDI; m_aFlags = iY; break; }   // Group 1
 
-    case 5:               m_aMode = aINDX; m_aFlags = iX|iZ; break;     // same
+    case 5:               m_aMode = aZEDX;                break;     // same
     case 6:
-        if( group == 1 ){ m_aMode = aABSO; m_aFlags = iY|iC; break; }   // Group 1
+        if( group == 1 ){ m_aMode = aABSO; m_aFlags = iY; break; }   // Group 1
 
-    case 7:               m_aMode = aABSO; m_aFlags = iX|iC; break;     // All
+    case 7:               m_aMode = aABSO; m_aFlags = iX; break;     // All
     }
     switch( group ){               // Set Executable
         case 0:{
         if( Atype == 4 ) // xxy 100 00 Conditional Branch
         {
-            m_tmp0 = (m_IR & 0b11000000) >> 6; // flag: 0=N, 1=O, 2=C, 3=Z
-            m_tmp1 = (m_IR & 0b00100000) >> 5; // y
+            m_u8Tmp0 = (m_IR & 0b11000000) >> 6; // flag: 0=N, 1=O, 2=C, 3=Z
+            m_u8Tmp1 = (m_IR & 0b00100000) >> 5; // y
             m_EXEC = &Mcs65Cpu::BXX; // BPL BMI BVC BVS BCC BCS BNE BEQ
         }else{
             switch( Ocode ){
@@ -345,47 +345,111 @@ void Mcs65Cpu::Read()
     m_state = cEXEC; // Default
 
     switch( m_aMode ){
-        case aNONE:                        break; // Dummy Read //qDebug() << "Warning: Mcs65Cpu::Read aNONE";//readPGM(); break; // Dummy read ???
-        case aACCU: m_op0 = m_Ac;          break; // Value = m_Acumulator
-        case aIMME: m_op0 = readDataBus(); break; // Immediate: From Mem 1 byte
-        case aINDX: readIndx();            break; // Zero Page indexed
-        case aINDI:{                              // Indirect: 1 byte from Mem + RX(ZP wrap) or RY
+        case aNONE:                        break;/// Dummy Read
+        case aACCU: m_op0 = m_Ac;          break;/// Value = m_Acumulator
+        case aIMME: m_op0 = readDataBus(); break;/// Immediate: From Mem 1 byte
+        case aABSO:{                             /// Absolute: address From Mem 2 bytes: LLHH (Little Endian)
             switch( m_cycle ){
                 case 2:{
-                    readIndx();
-                    if( m_aFlags & iR )           // Is a read operation
-                        readMem( m_opAddr );
-                }break;
-                case 3: m_op0 = readDataBus();    // Finish read operation
-            }
-        }break;
-        case aZERO:{                              // Zero Page
-            switch( m_cycle ){
-                case 2:{
-                    m_opAddr = readDataBus();     // Read 1º Operand:
-                    if( m_aFlags & iR )           // Is a read operation
-                        readMem( m_opAddr );
-                }break;
-                case 3: m_op0 = readDataBus();    // Finish read operation
-            }
-        }break;
-        case aABSO:{                              // Absolute: address From Mem 2 bytes: LLHH (Little Endian)
-            switch( m_cycle ){
-                case 2:{
-                    m_opAddr = readDataBus();     // Read 1º Operand
+                    m_opAddr = readDataBus();     // Read addrL
                     readPGM();                    // Read 2º Operand
                 }break;
                 case 3:{
-                    m_opAddr |= (readDataBus() << 8); // | m_opAddr ;
-                    if( m_aFlags ){
-                        if     ( m_aFlags & iC ) { if( STATUS(C) ) m_opAddr++; }
+                    if( m_aFlags )               /// Absolute Indexed
+                    {
                         if     ( m_aFlags & iX ) m_opAddr += m_rX;
                         else if( m_aFlags & iY ) m_opAddr += m_rY;
+                        if( m_opAddr > 255 ){
+                            m_opAddr &= 0xFF;     // clear High byte
+                            m_aFlags |= iC;       // carry
+                        }
                     }
-                    if( m_aFlags & iR )           // Is a read operation
+                    m_opAddr |= (readDataBus() << 8); // Read addrH
+                    readMem( m_opAddr );
+                }break;
+                case 4:{
+                    if( m_aFlags & iC ){          // Add carry and read
+                        m_opAddr += 256;
                         readMem( m_opAddr );
+                    }
+                    else m_op0 = readDataBus();   // Read operation finished
+                }break;
+                case 5: m_op0 = readDataBus();
+            }
+        }break;
+        case aZERO:{                             /// Zero Page
+            switch( m_cycle ){
+                case 2:{
+                    m_opAddr = readDataBus();     // Read addrL
+                    readMem( m_opAddr );          // Read 2º Operand
+                }break;
+                case 3: m_op0 = readDataBus();    // Finish read operation
+            }
+        }break;
+        case aZEDX:{                             /// Zero Page indexed
+            switch( m_cycle ){
+                case 2:{
+                    m_u8Tmp0 = readDataBus();
+                    readMem( m_u8Tmp0 );
+                }break;
+                case 3:{             // Discard reading
+                    if     ( m_aFlags & iX ) m_u8Tmp0 += m_rX;
+                    else if( m_aFlags & iY ) m_u8Tmp0 += m_rY;
+                    m_opAddr = m_u8Tmp0;
+                    readMem( m_opAddr );
                 }break;
                 case 4: m_op0 = readDataBus();    // Finish read operation
+            }
+        }break;
+        case aINDI:{                             /// Indirect: 1 byte from Mem + RX(ZP wrap) or RY
+            if( m_aFlags & iX ){                 /// Indirect Pre-indexed
+                switch( m_cycle ){
+                    case 2:{
+                        m_u8Tmp0 = readDataBus();
+                        readMem( m_u8Tmp0 );            // Read addrL
+                    }break;
+                    case 3:{
+                        m_u8Tmp0 += m_rX;               // Read addrL+X
+                        readMem( m_u8Tmp0 );
+                    }break;
+                    case 4:{
+                        m_u8Tmp0 = readDataBus()+1;
+                        readMem( m_u8Tmp0 );           // Read addrH
+                    }break;
+                    case 5:{
+                            m_opAddr = m_u8Tmp0 | (readDataBus() << 8);
+                            readMem( m_opAddr );
+                    }break;
+                    case 6: m_op0 = readDataBus();    // Finish read operation
+                }
+            }else{                               /// Indirect Post-indexed
+                switch( m_cycle ){
+                    case 2:{
+                        m_u8Tmp0 = readDataBus();
+                        readMem( m_u8Tmp0 );         // Read addrL
+                    }break;
+                    case 3:{
+                        m_u8Tmp1 = readDataBus();    // addrL
+                        readMem( m_u8Tmp0+1 );       // Read addrH
+                    }break;
+                    case 4:{
+                        m_opAddr = m_u8Tmp1 + m_rY;  // addrL+Y
+                        if( m_opAddr > 255 ){
+                            m_opAddr &= 0xFF;        // clear High byte
+                            m_aFlags |= iC;          // carry
+                        }
+                        m_opAddr |= (readDataBus() << 8); // Read addrH
+                        readMem( m_opAddr );
+                    }break;
+                    case 5:{
+                        if( m_aFlags & iC ){         // Add carry and read
+                            m_opAddr += 256;
+                            readMem( m_opAddr );
+                        }
+                        else m_op0 = readDataBus();  // Read operation finished
+                    }break;
+                    case 6: m_op0 = readDataBus();   // Finish read operation
+                }
             }
         }
     }
@@ -427,8 +491,8 @@ void Mcs65Cpu::writeWflags( bool c )
 {
     SET_CARRY( c );
     setNZ( m_op0 );
-    if( m_aMode == aACCU ) return; // Write to Acc
-    writeMem( m_opAddr );          // Write to MEM
+    if( m_aMode == aACCU ) m_Ac = m_op0;         // Write to Acc
+    else                   writeMem( m_opAddr ); // Write to MEM
 }
 
 void Mcs65Cpu::ADC()
@@ -478,8 +542,8 @@ void Mcs65Cpu::BRK() // Break/Interrupt : 1 byte, 7 cycles
         case 3: pushStack8( m_PC /*& 0xFF*/ ); m_nextState = cEXEC; break; // PCL    -> Stack
         case 4: pushStack8( *m_STATUS );       m_nextState = cEXEC; break; // Status -> Stack
         case 5: readMem( m_IsrH );                 m_state = cEXEC; break; // Read IsrH
-        case 6: readMem( m_IsrL ); m_tmp0 = m_op0; m_state = cEXEC; break; // Read IsrL
-        case 7: m_PC = (m_tmp0 << 8) + m_op0; m_IsrL = 0;                  // Jump to Isr
+        case 6: readMem( m_IsrL ); m_u8Tmp0 = m_op0; m_state = cEXEC; break; // Read IsrL
+        case 7: m_PC = (m_u8Tmp0 << 8) + m_op0; m_IsrL = 0;                  // Jump to Isr
 }   }
 
 void Mcs65Cpu::CLC() { SET_CARRY(0);     }
@@ -505,9 +569,9 @@ void Mcs65Cpu::JMP() { m_PC = m_opAddr; }
 void Mcs65Cpu::JSR()
 {
     switch( m_cycle ){
-        case 3: pushStack8( m_PC >> 8 );   m_nextState = cEXEC; break;  // PCH -> Stack
-        case 4: pushStack8( m_PC & 0xFF ); m_nextState = cEXEC; break;  // PCL -> Stack
-        case 5: m_PC = m_opAddr;                                        // Jump to Subroutine
+        case 4: pushStack8( m_PC >> 8 );   m_nextState = cEXEC; break;  // PCH -> Stack
+        case 5: pushStack8( m_PC & 0xFF ); m_nextState = cEXEC; break;  // PCL -> Stack
+        case 6: m_PC = m_opAddr;                                        // Jump to Subroutine
 }   }
 
 void Mcs65Cpu::LDA() { m_Ac = m_op0; setNZ( m_Ac ); }
@@ -605,14 +669,14 @@ void Mcs65Cpu::TSX() { m_rX = m_SP; setNZ( m_rX ); }
 void Mcs65Cpu::TXS() { m_SP = m_rX; }
 
 void  Mcs65Cpu::BXX() /// +1 cycle same page +2 different page
-{                         // m_tmp0 = Flag , m_tmp1 = y
+{                         // m_u8Tmp0 = Flag , m_u8Tmp1 = y
     uint8_t bit = 0;
-    switch( m_tmp0 ) {
+    switch( m_u8Tmp0 ) {
         case 0: bit = N; break;
         case 1: bit = O; break;
         case 2: bit = C; break;
         case 3: bit = Z; break;
     }
     uint8_t flagVal = STATUS( bit ) ? 1 : 0;
-    if( flagVal == m_tmp1 ) m_PC += (int8_t)m_op0;
+    if( flagVal == m_u8Tmp1 ) m_PC += (int8_t)m_op0;
 }

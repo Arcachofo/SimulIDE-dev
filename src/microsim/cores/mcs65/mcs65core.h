@@ -53,10 +53,10 @@ class MAINMODULE_EXPORT Mcs65Cpu : public Mcs65Interface
             aNONE=0,
             aACCU,
             aIMME,
-            aINDX,
-            aINDI,
-            aZERO,
             aABSO,
+            aZERO,
+            aZEDX,
+            aINDI,
         };
         enum addrFlags_t{
             iX=1<<0, //
@@ -127,8 +127,8 @@ class MAINMODULE_EXPORT Mcs65Cpu : public Mcs65Interface
         addrMode_t m_aMode;
         uint8_t m_aFlags;
 
-        uint8_t m_tmp0;
-        uint8_t m_tmp1;
+        uint8_t m_u8Tmp0;
+        uint8_t m_u8Tmp1;
         uint8_t m_op0;
         uint16_t m_opAddr;
 
