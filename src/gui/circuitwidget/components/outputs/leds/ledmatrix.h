@@ -14,7 +14,6 @@ class LibraryItem;
 
 class MAINMODULE_EXPORT LedMatrix : public Component, public eElement
 {
-        Q_OBJECT
     public:
         LedMatrix( QObject* parent, QString type, QString id );
         ~LedMatrix();

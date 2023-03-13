@@ -13,7 +13,6 @@ class Pin;
 
 class MAINMODULE_EXPORT CurrSource : public VarSource
 {
-        Q_OBJECT
     public:
         CurrSource( QObject* parent, QString type, QString id );
         ~CurrSource();

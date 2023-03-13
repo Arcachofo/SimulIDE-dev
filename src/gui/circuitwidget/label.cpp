@@ -16,8 +16,8 @@ Label::Label()
     m_labelrot = 0;
     setCursor( Qt::OpenHandCursor );
 
-    connect( document(), SIGNAL( contentsChange(int, int, int)),
-             this,       SLOT(   updateGeometry(int, int, int)), Qt::UniqueConnection );
+    connect( document(), &QTextDocument::contentsChange,
+             this,       &Label::updateGeometry, Qt::UniqueConnection );
 }
 Label::~Label() { }
 
@@ -61,16 +61,16 @@ void Label::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
         QMenu menu;
 
         QAction* rotateCWAction = menu.addAction(QIcon(":/rotatecw.svg"),"Rotate CW");
-        connect(rotateCWAction, SIGNAL(triggered()),
-                          this, SLOT(rotateCW()), Qt::UniqueConnection );
+        connect(rotateCWAction, &QAction::triggered,
+                          this, &Label::rotateCW, Qt::UniqueConnection );
 
         QAction* rotateCCWAction = menu.addAction(QIcon(":/rotateccw.svg"),"Rotate CCW");
-        connect(rotateCCWAction, SIGNAL(triggered()),
-                           this, SLOT(rotateCCW()), Qt::UniqueConnection );
+        connect(rotateCCWAction, &QAction::triggered,
+                           this, &Label::rotateCCW, Qt::UniqueConnection );
 
         QAction* rotate180Action = menu.addAction(QIcon(":/rotate180.svg"),"Rotate 180º");
-        connect(rotate180Action, SIGNAL(triggered()),
-                           this, SLOT(rotate180()), Qt::UniqueConnection );
+        connect(rotate180Action, &QAction::triggered,
+                           this, &Label::rotate180, Qt::UniqueConnection );
 
         /*QAction* selectedAction = */menu.exec(event->screenPos());
     }
@@ -123,4 +123,4 @@ void Label::V_flip( int vf )
     setTransform( QTransform::fromScale(1, vf) );
 }
 void Label::updateGeometry(int, int, int) { document()->setTextWidth( -1 ); }
-//#include "moc_label.h"
+

@@ -40,4 +40,3 @@ void ModuleSubc::renameTunnels()
     for( Tunnel* tunnel : getPinTunnels() ) tunnel->setName( m_id+"-"+tunnel->tunnelUid() );
     for( Tunnel* tunnel : m_subcTunnels ) tunnel->setName( m_id+"-"+tunnel->tunnelUid() );
 }
-#include "moc_module.cpp"

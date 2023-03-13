@@ -77,11 +77,11 @@ SerialPort::SerialPort( QObject* parent, QString type, QString id )
     m_proxy->setParentItem( this );
     m_proxy->setPos( QPoint(-4,-10) );
 
-    connect( m_button, SIGNAL( clicked() ),
-                 this, SLOT(   onbuttonclicked() ), Qt::UniqueConnection);
+    connect( m_button, &QPushButton::clicked,
+                 this, &SerialPort::onbuttonclicked, Qt::UniqueConnection);
 
-    connect( m_serial, SIGNAL( readyRead()),
-                 this, SLOT(   readData()), Qt::UniqueConnection );
+    connect( m_serial, &QSerialPort::readyRead,
+                 this, &SerialPort::readData, Qt::UniqueConnection );
 
     Simulator::self()->addToUpdateList( this );
 
@@ -215,8 +215,8 @@ void SerialPort::setSerialMon( bool s )
 void SerialPort::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
 {
     QAction* openSerMon = menu->addAction( QIcon(":/terminal.svg"),tr("Open Serial Monitor.") );
-    connect( openSerMon, SIGNAL(triggered()),
-                   this, SLOT(slotOpenTerm()), Qt::UniqueConnection );
+    connect( openSerMon, &QAction::triggered,
+                   this, &SerialPort::slotOpenTerm, Qt::UniqueConnection );
 
     menu->addSeparator();
     Component::contextMenu( event, menu );

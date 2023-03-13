@@ -1,4 +1,4 @@
-/***************************************************************************
+﻿/***************************************************************************
  *   Copyright (C) 2018 by Santiago González                               *
  *                                                                         *
  ***( see copyright.txt file at root folder )*******************************/
@@ -91,14 +91,14 @@ Dht22::Dht22( QObject* parent, QString type, QString id )
     m_proxy->setParentItem( this );
     m_proxy->setPos( QPoint( 17, 6) );
 
-    connect( m_button, SIGNAL( clicked()),
-             this,     SLOT  ( onbuttonclicked()) );
+    connect( m_button, &QPushButton::clicked,
+             this,     &Dht22::onbuttonclicked );
 
-    connect( u_button, SIGNAL( pressed()),
-             this,     SLOT  ( upbuttonclicked()) );
+    connect( u_button, &QPushButton::pressed,
+             this,     &Dht22::upbuttonclicked );
 
-    connect( d_button, SIGNAL( pressed()),
-             this,     SLOT  ( downbuttonclicked()) );
+    connect( d_button, &QPushButton::pressed,
+             this,     &Dht22::downbuttonclicked );
 
     addPropGroup( { tr("Main"), {
 new StringProp<Dht22>( "DHT22"  , tr("Model")           ,""  , this, &Dht22::model,    &Dht22::setModel, "enum"  ),
@@ -279,5 +279,3 @@ void Dht22::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget*
     p->drawText( -16, 1, QString::number( m_temp )+"°C" );
     p->drawText( -16,12, QString::number( m_humi )+" %" );
 }
-
-#include "moc_dht22.cpp"

@@ -101,6 +101,7 @@ void MechContact::SetupSwitches( int poles, int throws )
     for( uint i=start; i<m_pin.size(); i++ )
     {
         m_pin[i]->removeConnector();
+        m_signalPin.removeAll( m_pin[i] );
         delete m_pin[i];
     }
     m_numPoles = poles;

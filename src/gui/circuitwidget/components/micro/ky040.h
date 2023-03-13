@@ -16,8 +16,6 @@ class IoPin;
 
 class MAINMODULE_EXPORT KY040 : public Component, public eElement
 {
-    Q_OBJECT
-    
     public:
         KY040( QObject* parent, QString type, QString id );
         ~KY040();

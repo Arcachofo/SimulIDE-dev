@@ -12,7 +12,7 @@ Component* Zener::construct( QObject* parent, QString type, QString id )
 LibraryItem* Zener::libraryItem()
 {
     return new LibraryItem(
-        tr( "Zener Diode" ),
+        QCoreApplication::translate("Zener", "Zener Diode"),
         "Rectifiers",
         "zener.png",
         "Zener",

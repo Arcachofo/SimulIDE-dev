@@ -17,7 +17,7 @@ Component* AndGate::construct( QObject* parent, QString type, QString id )
 LibraryItem* AndGate::libraryItem()
 {
     return new LibraryItem(
-        tr( "And Gate" ),
+        QCoreApplication::translate("AndGate","And Gate" ),
         "Gates",
         "andgate.png",
         "And Gate",

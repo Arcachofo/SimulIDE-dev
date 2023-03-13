@@ -10,8 +10,6 @@
 
 class TouchPadWidget : public QWidget
 {
-    Q_OBJECT
-    
     public:
         TouchPadWidget();
         ~TouchPadWidget();
@@ -31,5 +29,4 @@ class TouchPadWidget : public QWidget
         int m_xMousePos;
         int m_yMousePos;
 };
-
 #endif

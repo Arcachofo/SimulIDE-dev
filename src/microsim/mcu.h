@@ -23,8 +23,6 @@ class MCUMonitor;
 
 class MAINMODULE_EXPORT Mcu : public Chip
 {
-        Q_OBJECT
-
         friend class McuCreator;
 
     public:

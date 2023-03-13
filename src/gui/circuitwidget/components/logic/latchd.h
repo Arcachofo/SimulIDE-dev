@@ -12,7 +12,6 @@ class LibraryItem;
 
 class MAINMODULE_EXPORT LatchD : public LogicComponent
 {
-        Q_OBJECT
     public:
         LatchD( QObject* parent, QString type, QString id );
         ~LatchD();

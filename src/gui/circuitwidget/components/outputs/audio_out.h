@@ -15,7 +15,6 @@ class LibraryItem;
 
 class AudioOut : public Component, public eResistor
 {
-        Q_OBJECT
     public:
         AudioOut( QObject* parent, QString type, QString id );
         ~AudioOut();
@@ -32,9 +31,6 @@ class AudioOut : public Component, public eResistor
         
         virtual QPainterPath shape() const;
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
-
-    //public slots:
-    //    void stateChanged( QAudio::State state );
 
     private:
         QAudioDeviceInfo m_deviceinfo;

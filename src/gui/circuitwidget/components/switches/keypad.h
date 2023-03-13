@@ -13,7 +13,6 @@ class LibraryItem;
 
 class MAINMODULE_EXPORT KeyPad : public Component, public eElement
 {
-        Q_OBJECT
     public:
         KeyPad( QObject* parent, QString type, QString id );
         ~KeyPad();

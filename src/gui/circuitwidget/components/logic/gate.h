@@ -20,7 +20,7 @@ class MAINMODULE_EXPORT Gate : public LogicComponent
 
         virtual void stamp() override;
         virtual void voltChanged() override;
-        virtual void runEvent() override{ IoComponent::runOutputs(); }
+        virtual void runEvent() override { IoComponent::runOutputs(); }
 
         bool initState() { return m_initState; }
         void setInitState( bool s) { m_initState = s; }

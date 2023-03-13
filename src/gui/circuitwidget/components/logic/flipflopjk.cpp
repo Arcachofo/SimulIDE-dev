@@ -13,7 +13,7 @@ Component* FlipFlopJK::construct( QObject* parent, QString type, QString id )
 LibraryItem* FlipFlopJK::libraryItem()
 {
     return new LibraryItem(
-        tr( "FlipFlop JK" ),
+        QCoreApplication::translate("FlipFlopJK", "FlipFlop JK"),
         "Memory",
         "3to2.png",
         "FlipFlopJK",

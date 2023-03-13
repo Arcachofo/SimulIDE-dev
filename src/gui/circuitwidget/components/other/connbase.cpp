@@ -67,9 +67,11 @@ void ConnBase::deletePins( int d )
     for( int i=start; i<m_size; i++ )
     {
         m_pin[i]->removeConnector();
+        m_signalPin.removeAll( m_pin[i] );
         delete m_pin[i];
 
         m_sockPins[i]->removeConnector();
+        m_signalPin.removeAll( m_sockPins[i] );
         delete m_sockPins[i];
     }
     m_size = m_size-d;
@@ -109,16 +111,10 @@ void ConnBase::setHidden( bool hid, bool hidArea, bool hidLabel )
     {
         m_sockPins[i]->setVisible( true );
         Component* parentComp = static_cast<Component*>( parentItem() );
-        if( hid ) connect( parentComp, SIGNAL( moved() ), m_sockPins[i], SLOT( isMoved() ), Qt::UniqueConnection );
-        else      disconnect( parentComp, SIGNAL( moved() ), m_sockPins[i], SLOT( isMoved() ) );
+        if( hid ) parentComp->addSignalPin( m_sockPins[i] );// connect(    parentComp, &Component::moved, m_sockPins[i], &Pin::isMoved, Qt::UniqueConnection );
+        else      parentComp->remSignalPin( m_sockPins[i] );// disconnect( parentComp, &Component::moved, m_sockPins[i], &Pin::isMoved );
     }
 }
-
-/*void ConnBase::remove()
-{
-    for( int i=0; i<m_size; i++ ) m_sockPins[i]->removeConnector();
-    Component::remove();
-}*/
 
 void ConnBase::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
 {
@@ -139,5 +135,3 @@ void ConnBase::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidg
         //p->drawRoundRect(-2,-28+2+i*8, 3, 4, 1, 1 );
     }
 }
-
-//#include "moc_socket.cpp"

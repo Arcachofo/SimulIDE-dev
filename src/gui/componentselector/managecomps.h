@@ -28,8 +28,6 @@ class QTreeWidgetItem;
 
 class manCompDialog : public QDialog, private Ui::manCompDialog
 {
-    Q_OBJECT
-
     public:
         manCompDialog( QWidget* parent );
 

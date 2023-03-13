@@ -80,11 +80,11 @@ Ds18b20::Ds18b20( QObject* parent, QString type, QString id )
     proxy->setParentItem( this );
     proxy->setPos( QPoint( 9, 4 ) );
 
-    connect( u_button, SIGNAL( pressed()),
-             this,     SLOT (  upbuttonclicked()) );
+    connect( u_button, &QPushButton::pressed,
+             this,     &Ds18b20::upbuttonclicked );
 
-    connect( d_button, SIGNAL( pressed()),
-             this,     SLOT (  downbuttonclicked()) );
+    connect( d_button, &QPushButton::pressed,
+             this,     &Ds18b20::downbuttonclicked );
 
     m_font.setFamily("Ubuntu Mono");
     m_font.setPixelSize( 10 );

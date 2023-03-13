@@ -23,7 +23,7 @@ Component* Diac::construct( QObject* parent, QString type, QString id )
 LibraryItem* Diac::libraryItem()
 {
     return new LibraryItem(
-        tr( "Diac" ),
+        QCoreApplication::translate( "Diac", "Diac" ),
         "Rectifiers",
         "diac.png",
         "Diac",

@@ -12,7 +12,6 @@
 
 class MAINMODULE_EXPORT VarResBase : public Comp2Pin, public eResistor
 {
-    Q_OBJECT
     public:
         VarResBase( QObject* parent, QString type, QString id );
         ~VarResBase();

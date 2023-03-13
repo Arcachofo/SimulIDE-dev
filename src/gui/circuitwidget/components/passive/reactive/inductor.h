@@ -12,7 +12,6 @@ class LibraryItem;
 
 class MAINMODULE_EXPORT Inductor : public Reactive
 {
-        Q_OBJECT
     public:
         Inductor( QObject* parent, QString type, QString id );
         ~Inductor();

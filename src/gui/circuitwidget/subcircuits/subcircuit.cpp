@@ -338,7 +338,8 @@ Pin* SubCircuit::addPin( QString id, QString type, QString label, int pos, int x
         pin->setObjectName( pId );
         pin->setId( pId );
         pin->setInverted( type == "inverted" || type == "inv" );
-        connect( this, SIGNAL( moved() ), pin, SLOT( isMoved() ), Qt::UniqueConnection );
+        addSignalPin( pin );
+        /// connect( this, &SubCircuit::moved, pin, &Pin::isMoved, Qt::UniqueConnection );
 
         tunnel->setRotated( angle >= 180 );      // Our Pins at left side
         if     ( angle == 180) tunnel->setRotation( 0 );
@@ -471,5 +472,3 @@ QString SubCircuit::toString()
 
     return item;
 }
-
-#include "moc_subcircuit.cpp"

@@ -14,8 +14,6 @@
 
 class MAINMODULE_EXPORT ComponentSelector : public QTreeWidget
 {
-    Q_OBJECT
-
     public:
         ComponentSelector( QWidget* parent );
         ~ComponentSelector();

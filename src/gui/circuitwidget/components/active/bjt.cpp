@@ -22,7 +22,7 @@ Component* BJT::construct( QObject* parent, QString type, QString id )
 LibraryItem* BJT::libraryItem()
 {
     return new LibraryItem(
-        tr( "BJT" ),
+        QCoreApplication::translate( "BJT","BJT" ),
         "Transistors",
         "bjt.png",
         "BJT",

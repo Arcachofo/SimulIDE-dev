@@ -83,6 +83,7 @@ void KeyPad::setupButtons()
     {
         pin->removeConnector();
         if( pin->scene() ) Circuit::self()->removeItem( pin );
+        m_signalPin.removeAll( pin );
         delete pin;
     }
     m_pin.resize( m_rows + m_cols );

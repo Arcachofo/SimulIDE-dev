@@ -107,7 +107,7 @@
     </message>
     <message>
         <source>Main</source>
-        <translation>Basico</translation>
+        <translation type="vanished">Basico</translation>
     </message>
     <message>
         <source>Input Size</source>
@@ -115,11 +115,11 @@
     </message>
     <message>
         <source>Invert Output</source>
-        <translation>Invertir Salida</translation>
+        <translation type="vanished">Invertir Salida</translation>
     </message>
     <message>
         <source>Open Drain</source>
-        <translation>Drenaje Abierto</translation>
+        <translation type="vanished">Drenaje Abierto</translation>
     </message>
     <message>
         <source>Electric</source>
@@ -132,6 +132,10 @@
     <message>
         <source>Gates</source>
         <translation type="vanished">Puertas</translation>
+    </message>
+    <message>
+        <source>Invert Inputs</source>
+        <translation type="unfinished">Invertir Entradas</translation>
     </message>
 </context>
 <context>
@@ -233,50 +237,6 @@
     </message>
     <message>
         <source>App</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>English</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Czech</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Dutch</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>French</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>German</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Italian</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Russian</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Spanish</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Portuguese</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pt_Brasil</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Turkish</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -455,6 +415,10 @@ p, li { white-space: pre-wrap; }
         <source>Voltage</source>
         <translation>Voltaje</translation>
     </message>
+    <message>
+        <source>Resistance</source>
+        <translation type="unfinished">Resistencia</translation>
+    </message>
 </context>
 <context>
     <name>BcdTo7S</name>
@@ -468,11 +432,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Main</source>
-        <translation>Basico</translation>
+        <translation type="vanished">Basico</translation>
     </message>
     <message>
         <source>Invert Outputs</source>
-        <translation>Invertir Salidas</translation>
+        <translation type="vanished">Invertir Salidas</translation>
     </message>
     <message>
         <source>Electric</source>
@@ -485,6 +449,10 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Converters</source>
         <translation type="vanished">Conversores</translation>
+    </message>
+    <message>
+        <source>Invert Inputs</source>
+        <translation type="unfinished">Invertir Entradas</translation>
     </message>
 </context>
 <context>
@@ -507,7 +475,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Invert Outputs</source>
-        <translation>Invertir Salidas</translation>
+        <translation type="vanished">Invertir Salidas</translation>
     </message>
     <message>
         <source>Electric</source>
@@ -520,6 +488,10 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Converters</source>
         <translation type="vanished">Conversores</translation>
+    </message>
+    <message>
+        <source>Invert Inputs</source>
+        <translation type="unfinished">Invertir Entradas</translation>
     </message>
 </context>
 <context>
@@ -592,11 +564,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Invert Output</source>
-        <translation>Invertir Salida</translation>
+        <translation type="vanished">Invertir Salida</translation>
     </message>
     <message>
         <source>Open Drain</source>
-        <translation>Drenaje Abierto</translation>
+        <translation type="vanished">Drenaje Abierto</translation>
     </message>
     <message>
         <source>Electric</source>
@@ -609,6 +581,10 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Gates</source>
         <translation type="vanished">Puertas</translation>
+    </message>
+    <message>
+        <source>Invert Inputs</source>
+        <translation type="unfinished">Invertir Entradas</translation>
     </message>
 </context>
 <context>
@@ -632,6 +608,13 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Connectors</source>
         <translation type="vanished">Conectores</translation>
+    </message>
+</context>
+<context>
+    <name>Capacitor</name>
+    <message>
+        <source>Capacitor</source>
+        <translation type="unfinished">Condensador</translation>
     </message>
 </context>
 <context>
@@ -661,15 +644,23 @@ p, li { white-space: pre-wrap; }
     <name>Chip</name>
     <message>
         <source>None</source>
-        <translation type="vanished">Ninguno</translation>
+        <translation>Ninguno</translation>
     </message>
     <message>
         <source>Logic</source>
-        <translation type="vanished">Logica</translation>
+        <translation>Logica</translation>
     </message>
     <message>
         <source>Board</source>
-        <translation type="vanished">Placa</translation>
+        <translation>Placa</translation>
+    </message>
+    <message>
+        <source>Shield</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Module</source>
+        <translation type="unfinished">Modulo</translation>
     </message>
 </context>
 <context>
@@ -1206,6 +1197,13 @@ Can&apos;t find file:
     </message>
 </context>
 <context>
+    <name>ConnectorLine</name>
+    <message>
+        <source>Remove</source>
+        <translation type="unfinished">Eliminar</translation>
+    </message>
+</context>
+<context>
     <name>Csource</name>
     <message>
         <source>Controlled Source</source>
@@ -1300,6 +1298,10 @@ Can&apos;t find file:
     <message>
         <source>Other Logic</source>
         <translation type="vanished">Otros (Logica)</translation>
+    </message>
+    <message>
+        <source>Invert Inputs</source>
+        <translation type="unfinished">Invertir Entradas</translation>
     </message>
 </context>
 <context>
@@ -1432,7 +1434,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Invert Outputs</source>
-        <translation>Invertir Salidas</translation>
+        <translation type="vanished">Invertir Salidas</translation>
     </message>
     <message>
         <source>Electric</source>
@@ -1864,7 +1866,7 @@ Quiere guardar los cambios?</translation>
     </message>
     <message>
         <source>Last Circuits</source>
-        <translation>Ultimos Circuitos</translation>
+        <translation type="vanished">Ultimos Circuitos</translation>
     </message>
     <message>
         <source>
@@ -1879,6 +1881,10 @@ Can&apos;t find file:
     </message>
     <message>
         <source>File doesn&apos;t exist</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Last Files</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1919,6 +1925,17 @@ Can&apos;t find file:
     <message>
         <source>Time us: </source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Line </source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Ellipse</name>
+    <message>
+        <source>Ellipse</source>
+        <translation type="unfinished">Elipse</translation>
     </message>
 </context>
 <context>
@@ -2227,7 +2244,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Invert Outputs</source>
-        <translation>Invertir Salidas</translation>
+        <translation type="vanished">Invertir Salidas</translation>
     </message>
     <message>
         <source>Functions</source>
@@ -2267,6 +2284,10 @@ Can&apos;t find file:
         <source>Arithmetic</source>
         <translation type="obsolete">Aritmetica</translation>
     </message>
+    <message>
+        <source>Invert Inputs</source>
+        <translation type="unfinished">Invertir Entradas</translation>
+    </message>
 </context>
 <context>
     <name>Gate</name>
@@ -2277,6 +2298,13 @@ Can&apos;t find file:
     <message>
         <source>Initial High State</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Ground</name>
+    <message>
+        <source>Ground (0 V)</source>
+        <translation type="unfinished">Tierra</translation>
     </message>
 </context>
 <context>
@@ -2529,6 +2557,14 @@ Can&apos;t find file:
         <source>Gate Delay</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Invert Outputs</source>
+        <translation type="unfinished">Invertir Salidas</translation>
+    </message>
+    <message>
+        <source>Open Drain</source>
+        <translation type="unfinished">Drenaje Abierto</translation>
+    </message>
 </context>
 <context>
     <name>KY023</name>
@@ -2715,6 +2751,10 @@ Can&apos;t find file:
         <source>Threshold</source>
         <translation type="unfinished">Umbral</translation>
     </message>
+    <message>
+        <source>Bus</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LabelVal</name>
@@ -2770,7 +2810,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Invert Outputs</source>
-        <translation>Invertir Salidas</translation>
+        <translation type="vanished">Invertir Salidas</translation>
     </message>
     <message>
         <source>Tristate</source>
@@ -2787,6 +2827,10 @@ Can&apos;t find file:
     <message>
         <source>Memory</source>
         <translation type="obsolete">Memoria</translation>
+    </message>
+    <message>
+        <source>Invert Inputs</source>
+        <translation type="unfinished">Invertir Entradas</translation>
     </message>
 </context>
 <context>
@@ -2829,6 +2873,13 @@ Can&apos;t find file:
     </message>
     <message>
         <source>R1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Led</name>
+    <message>
+        <source>Led</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2903,27 +2954,31 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Yellow</source>
-        <translation type="vanished">Amarillo</translation>
+        <translation>Amarillo</translation>
     </message>
     <message>
         <source>Red</source>
-        <translation type="vanished">Rojo</translation>
+        <translation>Rojo</translation>
     </message>
     <message>
         <source>Green</source>
-        <translation type="vanished">Verde</translation>
+        <translation>Verde</translation>
     </message>
     <message>
         <source>Blue</source>
-        <translation type="vanished">Azul</translation>
+        <translation>Azul</translation>
     </message>
     <message>
         <source>Orange</source>
-        <translation type="vanished">Naranja</translation>
+        <translation>Naranja</translation>
     </message>
     <message>
         <source>Purple</source>
-        <translation type="vanished">Púrpura</translation>
+        <translation>Púrpura</translation>
+    </message>
+    <message>
+        <source>White</source>
+        <translation type="unfinished">Blanco</translation>
     </message>
 </context>
 <context>
@@ -3009,6 +3064,13 @@ Can&apos;t find file:
     </message>
 </context>
 <context>
+    <name>Line</name>
+    <message>
+        <source>Line</source>
+        <translation type="unfinished">Linea</translation>
+    </message>
+</context>
+<context>
     <name>LineNumberArea</name>
     <message>
         <source>Add BreakPoint</source>
@@ -3042,15 +3104,15 @@ Can&apos;t find file:
     <name>LogicComponent</name>
     <message>
         <source>None</source>
-        <translation type="vanished">Ninguno</translation>
+        <translation>Ninguno</translation>
     </message>
     <message>
         <source>Clock</source>
-        <translation type="vanished">Reloj</translation>
+        <translation>Reloj</translation>
     </message>
     <message>
         <source>Enable</source>
-        <translation type="vanished">Nivel</translation>
+        <translation>Nivel</translation>
     </message>
 </context>
 <context>
@@ -3181,27 +3243,31 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Yellow</source>
-        <translation type="obsolete">Amarillo</translation>
+        <translation type="unfinished">Amarillo</translation>
     </message>
     <message>
         <source>Red</source>
-        <translation type="obsolete">Rojo</translation>
+        <translation type="unfinished">Rojo</translation>
     </message>
     <message>
         <source>Green</source>
-        <translation type="obsolete">Verde</translation>
+        <translation type="unfinished">Verde</translation>
     </message>
     <message>
         <source>Blue</source>
-        <translation type="obsolete">Azul</translation>
+        <translation type="unfinished">Azul</translation>
     </message>
     <message>
         <source>Orange</source>
-        <translation type="obsolete">Naranja</translation>
+        <translation type="unfinished">Naranja</translation>
     </message>
     <message>
         <source>Purple</source>
-        <translation type="obsolete">Púrpura</translation>
+        <translation type="unfinished">Púrpura</translation>
+    </message>
+    <message>
+        <source>White</source>
+        <translation type="unfinished">Blanco</translation>
     </message>
 </context>
 <context>
@@ -3370,7 +3436,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Invert Outputs</source>
-        <translation>Invertir Salidas</translation>
+        <translation type="vanished">Invertir Salidas</translation>
     </message>
     <message>
         <source>Electric</source>
@@ -3410,6 +3476,17 @@ Can&apos;t find file:
     <message>
         <source>Switch Pins</source>
         <translation type="vanished">Cambiar Pines</translation>
+    </message>
+</context>
+<context>
+    <name>Meters</name>
+    <message>
+        <source>Ampmeter</source>
+        <translation type="unfinished">Amperímetro</translation>
+    </message>
+    <message>
+        <source>Voltmeter</source>
+        <translation type="unfinished">Voltímetro</translation>
     </message>
 </context>
 <context>
@@ -3575,7 +3652,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Main</source>
-        <translation>Basico</translation>
+        <translation type="vanished">Basico</translation>
     </message>
     <message>
         <source>Input Size</source>
@@ -3583,11 +3660,11 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Invert Output</source>
-        <translation>Invertir Salida</translation>
+        <translation type="vanished">Invertir Salida</translation>
     </message>
     <message>
         <source>Open Drain</source>
-        <translation>Drenaje Abierto</translation>
+        <translation type="vanished">Drenaje Abierto</translation>
     </message>
     <message>
         <source>Electric</source>
@@ -3600,6 +3677,10 @@ Can&apos;t find file:
     <message>
         <source>Gates</source>
         <translation type="obsolete">Puertas</translation>
+    </message>
+    <message>
+        <source>Invert Inputs</source>
+        <translation type="unfinished">Invertir Entradas</translation>
     </message>
 </context>
 <context>
@@ -3727,7 +3808,7 @@ Can&apos;t find file:
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3777,7 +3858,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Remove</source>
-        <translation>Eliminar</translation>
+        <translation type="vanished">Eliminar</translation>
     </message>
     <message>
         <source>Sensors</source>
@@ -3789,7 +3870,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Ampmeter</source>
-        <translation>Amperímetro</translation>
+        <translation type="vanished">Amperímetro</translation>
     </message>
     <message>
         <source>Meters</source>
@@ -3797,7 +3878,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Ellipse</source>
-        <translation>Elipse</translation>
+        <translation type="vanished">Elipse</translation>
     </message>
     <message>
         <source>Graphical</source>
@@ -3805,11 +3886,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Line</source>
-        <translation>Linea</translation>
+        <translation type="vanished">Linea</translation>
     </message>
     <message>
         <source>Rectangle</source>
-        <translation>Rectangulo</translation>
+        <translation type="vanished">Rectangulo</translation>
     </message>
     <message>
         <source>Outputs</source>
@@ -3818,10 +3899,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Displays</source>
         <translation>Pantallas</translation>
-    </message>
-    <message>
-        <source>Led</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Leds</source>
@@ -3833,7 +3910,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Capacitor</source>
-        <translation>Condensador</translation>
+        <translation type="vanished">Condensador</translation>
     </message>
     <message>
         <source>Reactive</source>
@@ -3841,7 +3918,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Electrolytic Capacitor</source>
-        <translation>Condensador Electrolitico</translation>
+        <translation type="vanished">Condensador Electrolitico</translation>
     </message>
     <message>
         <source>Resistive Sensors</source>
@@ -3849,11 +3926,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Parameters</source>
-        <translation>Parámetros</translation>
-    </message>
-    <message>
-        <source>Thermistor</source>
-        <translation></translation>
+        <translation type="vanished">Parámetros</translation>
     </message>
     <message>
         <source>Resistors</source>
@@ -3861,7 +3934,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Ground (0 V)</source>
-        <translation>Tierra</translation>
+        <translation type="vanished">Tierra</translation>
     </message>
     <message>
         <source>Passive</source>
@@ -3925,7 +3998,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Voltmeter</source>
-        <translation>Voltímetro</translation>
+        <translation type="vanished">Voltímetro</translation>
     </message>
     <message>
         <source>Error:
@@ -3948,55 +4021,51 @@ Archivo packae no valido:</translation>
     </message>
     <message>
         <source>None</source>
-        <translation>Ninguno</translation>
+        <translation type="vanished">Ninguno</translation>
     </message>
     <message>
         <source>Clock</source>
-        <translation>Reloj</translation>
+        <translation type="vanished">Reloj</translation>
     </message>
     <message>
         <source>Yellow</source>
-        <translation>Amarillo</translation>
+        <translation type="vanished">Amarillo</translation>
     </message>
     <message>
         <source>Red</source>
-        <translation>Rojo</translation>
+        <translation type="vanished">Rojo</translation>
     </message>
     <message>
         <source>Green</source>
-        <translation>Verde</translation>
+        <translation type="vanished">Verde</translation>
     </message>
     <message>
         <source>Blue</source>
-        <translation>Azul</translation>
+        <translation type="vanished">Azul</translation>
     </message>
     <message>
         <source>Orange</source>
-        <translation>Naranja</translation>
+        <translation type="vanished">Naranja</translation>
     </message>
     <message>
         <source>Purple</source>
-        <translation>Púrpura</translation>
+        <translation type="vanished">Púrpura</translation>
     </message>
     <message>
         <source>Board</source>
-        <translation>Placa</translation>
+        <translation type="vanished">Placa</translation>
     </message>
     <message>
         <source>Module</source>
-        <translation>Modulo</translation>
+        <translation type="vanished">Modulo</translation>
     </message>
     <message>
         <source>Enable</source>
-        <translation>Nivel</translation>
-    </message>
-    <message>
-        <source>Shield</source>
-        <translation type="unfinished"></translation>
+        <translation type="vanished">Nivel</translation>
     </message>
     <message>
         <source>White</source>
-        <translation>Blanco</translation>
+        <translation type="vanished">Blanco</translation>
     </message>
     <message>
         <source>Cpu</source>
@@ -4167,6 +4236,13 @@ Archivo packae no valido:</translation>
   Set auto step &gt;= 1 for this capacitor  
 </source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Rectangle</name>
+    <message>
+        <source>Rectangle</source>
+        <translation type="unfinished">Rectangulo</translation>
     </message>
 </context>
 <context>
@@ -5013,6 +5089,17 @@ Quiere guardar los cambios?
     </message>
 </context>
 <context>
+    <name>Thermistor</name>
+    <message>
+        <source>Thermistor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Parameters</source>
+        <translation type="unfinished">Parámetros</translation>
+    </message>
+</context>
+<context>
     <name>ThermistorBase</name>
     <message>
         <source>Main</source>
@@ -5161,6 +5248,30 @@ Quiere guardar los cambios?
     <message>
         <source>Connectors</source>
         <translation type="vanished">Conectores</translation>
+    </message>
+    <message>
+        <source>Bus</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hide group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change group name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rename Tunnels</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New name:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5358,15 +5469,15 @@ Quiere guardar los cambios?
     </message>
     <message>
         <source>Main</source>
-        <translation>Basico</translation>
+        <translation type="vanished">Basico</translation>
     </message>
     <message>
         <source>Invert Output</source>
-        <translation>Invertir Salida</translation>
+        <translation type="vanished">Invertir Salida</translation>
     </message>
     <message>
         <source>Open Drain</source>
-        <translation>Drenaje Abierto</translation>
+        <translation type="vanished">Drenaje Abierto</translation>
     </message>
     <message>
         <source>Electric</source>
@@ -5379,6 +5490,10 @@ Quiere guardar los cambios?
     <message>
         <source>Gates</source>
         <translation type="obsolete">Puertas</translation>
+    </message>
+    <message>
+        <source>Invert Inputs</source>
+        <translation type="unfinished">Invertir Entradas</translation>
     </message>
 </context>
 <context>
@@ -5436,6 +5551,13 @@ Quiere guardar los cambios?
     <message>
         <source>     ERROR!!! Compilation Failed</source>
         <translation type="unfinished">     ERROR!!! Compilacion fallida</translation>
+    </message>
+</context>
+<context>
+    <name>elCapacitor</name>
+    <message>
+        <source>Electrolytic Capacitor</source>
+        <translation type="unfinished">Condensador Electrolitico</translation>
     </message>
 </context>
 <context>

@@ -20,7 +20,7 @@ Component* Diode::construct( QObject* parent, QString type, QString id )
 LibraryItem* Diode::libraryItem()
 {
     return new LibraryItem(
-        tr( "Diode" ),
+        QCoreApplication::translate("Diode", "Diode"),
         "Rectifiers",
         "diode.png",
         "Diode",

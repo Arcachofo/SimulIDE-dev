@@ -15,8 +15,6 @@ class MAINMODULE_EXPORT SubPackage : public Chip
 {
         friend class Circuit;
 
-    Q_OBJECT
-
     public:
         SubPackage( QObject* parent, QString type, QString id );
         ~SubPackage();
@@ -46,18 +44,18 @@ class MAINMODULE_EXPORT SubPackage : public Chip
         void setPinId( QString id );
         void setPinName( QString name );
         void setPinType( QString type );
-        void setPinAngle( int i);
+        void setPinAngle( int i );
         void boardModeSlot();
         void setBoardMode( bool mode );
         void mainComp() { Component::m_selMainCo = true; }
+        void unusePin( bool unuse );
+        void pointPin( bool point );
     
     private slots:
         void loadPackage();
         void movePin();
         void editPin();
         void deleteEventPin();
-        void unusePin( bool unuse );
-        void pointPin( bool point );
         void slotSave();
         void editFinished( int r );
 
@@ -104,32 +102,30 @@ class QComboBox;
 
 class EditDialog : public QDialog
 {
-    Q_OBJECT
+    public:
+        EditDialog( SubPackage* pack, Pin* eventPin, QWidget* parent = 0 );
 
-public:
-    EditDialog( SubPackage* pack, Pin* eventPin, QWidget* parent = 0 );
+    private slots:
+        void invertPin( bool invert );
 
-private slots:
-    void invertPin( bool invert );
+    private:
+        SubPackage* m_package;
 
-private:
-    SubPackage* m_package;
+        QLabel*    m_nameLabel;
+        QLineEdit* m_nameLineEdit;
 
-    QLabel*    m_nameLabel;
-    QLineEdit* m_nameLineEdit;
+        QLabel*    m_idLabel;
+        QLineEdit* m_idLineEdit;
 
-    QLabel*    m_idLabel;
-    QLineEdit* m_idLineEdit;
+        QLabel*    m_typeLabel;
+        QLineEdit* m_typeLineEdit;
 
-    QLabel*    m_typeLabel;
-    QLineEdit* m_typeLineEdit;
+        QLabel*    m_angleLabel;
+        QComboBox* m_angleBox;
 
-    QLabel*    m_angleLabel;
-    QComboBox* m_angleBox;
-
-    QCheckBox* m_invertCheckBox;
-    QCheckBox* m_unuseCheckBox;
-    QCheckBox* m_pointCheckBox;
+        QCheckBox* m_invertCheckBox;
+        QCheckBox* m_unuseCheckBox;
+        QCheckBox* m_pointCheckBox;
 };
 
 #endif

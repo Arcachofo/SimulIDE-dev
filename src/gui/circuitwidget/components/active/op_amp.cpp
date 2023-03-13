@@ -24,7 +24,7 @@ Component* OpAmp::construct( QObject* parent, QString type, QString id )
 LibraryItem* OpAmp::libraryItem()
 {
     return new LibraryItem(
-        tr( "OpAmp" ),
+        QCoreApplication::translate("OpAmp","OpAmp"),
         "Other Active",
         "opamp.png",
         "opAmp",

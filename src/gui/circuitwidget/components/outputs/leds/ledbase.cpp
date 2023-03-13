@@ -34,13 +34,13 @@ LedBase::LedBase( QObject* parent, QString type, QString id )
         << "White";
 
     m_enumNames = QStringList()
-        << QObject::tr("Yellow")
-        << QObject::tr("Red")
-        << QObject::tr("Green")
-        << QObject::tr("Blue")
-        << QObject::tr("Orange")
-        << QObject::tr("Purple")
-        << QObject::tr("White");
+        << tr("Yellow")
+        << tr("Red")
+        << tr("Green")
+        << tr("Blue")
+        << tr("Orange")
+        << tr("Purple")
+        << tr("White");
 
     m_color = QColor( Qt::black );
     setColorStr("Yellow");

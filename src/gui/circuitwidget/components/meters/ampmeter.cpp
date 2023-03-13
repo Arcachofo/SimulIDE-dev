@@ -12,7 +12,7 @@ Component* Amperimeter::construct( QObject* parent, QString type, QString id )
 LibraryItem* Amperimeter::libraryItem()
 {
     return new LibraryItem(
-        QObject::tr( "Ampmeter" ),
+        QCoreApplication::translate("Meters","Ampmeter"),
         "Meters",
         "amperimeter.png",
         "Amperimeter",
@@ -38,5 +38,3 @@ void Amperimeter::updateStep()
         m_dispValue = curr;
         Meter::updateStep();
 }   }
-
-#include "moc_ampmeter.cpp"

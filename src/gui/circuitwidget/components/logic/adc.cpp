@@ -20,7 +20,7 @@ Component* ADC::construct( QObject* parent, QString type, QString id )
 LibraryItem* ADC::libraryItem()
 {
     return new LibraryItem(
-        tr( "ADC" ),
+        QCoreApplication::translate("ADC", "ADC"),
         "Other Logic",
         "1to3.png",
         "ADC",

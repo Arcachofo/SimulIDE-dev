@@ -10,8 +10,6 @@
 
 class MAINMODULE_EXPORT LogicSubc : public SubCircuit
 {
-    Q_OBJECT
-
     public:
         LogicSubc( QObject* parent, QString type, QString id );
         ~LogicSubc();

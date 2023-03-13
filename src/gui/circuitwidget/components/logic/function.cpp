@@ -28,7 +28,7 @@ Component* Function::construct( QObject* parent, QString type, QString id )
 LibraryItem* Function::libraryItem()
 {
     return new LibraryItem(
-        tr( "Function" ),
+        QCoreApplication::translate("Function", "Function"),
         "Arithmetic",
         "subc.png",
         "Function",
@@ -220,12 +220,12 @@ void Function::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
 {
     menu->addSeparator();
     QAction* loadDaAction = menu->addAction( QIcon(":/load.svg"),tr("Load Functions") );
-    connect( loadDaAction, SIGNAL(triggered()),
-                     this, SLOT(loadData()), Qt::UniqueConnection );
+    connect( loadDaAction, &QAction::triggered,
+                     this, &Function::loadData, Qt::UniqueConnection );
 
     QAction* saveDaAction = menu->addAction(QIcon(":/save.png"), tr("Save Functions") );
-    connect( saveDaAction, SIGNAL(triggered()),
-                     this, SLOT(saveData()), Qt::UniqueConnection );
+    connect( saveDaAction, &QAction::triggered,
+                     this, &Function::saveData, Qt::UniqueConnection );
     menu->addSeparator();
 }
 
@@ -379,5 +379,3 @@ void Function::onbuttonclicked()
         m_funcList[i] = text;
         updateFunctions();
 }   }
-
-#include "moc_function.cpp"

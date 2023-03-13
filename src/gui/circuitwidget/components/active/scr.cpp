@@ -23,7 +23,7 @@ Component* SCR::construct( QObject* parent, QString type, QString id )
 LibraryItem* SCR::libraryItem()
 {
     return new LibraryItem(
-        tr( "SCR" ),
+        QCoreApplication::translate("SCR", "SCR"),
         "Rectifiers",
         "scr.png",
         "SCR",

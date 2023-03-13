@@ -20,7 +20,6 @@ struct sample_t{
 
 class MAINMODULE_EXPORT LAnalizer : public PlotBase
 {
-        Q_OBJECT
     public:
         LAnalizer( QObject* parent, QString type, QString id );
         ~LAnalizer();

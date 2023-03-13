@@ -13,7 +13,6 @@ class LibraryItem;
 
 class MAINMODULE_EXPORT LedBar : public Component
 {
-        Q_OBJECT
     public:
         LedBar( QObject* parent, QString type, QString id );
         ~LedBar();

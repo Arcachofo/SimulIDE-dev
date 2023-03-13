@@ -90,11 +90,11 @@ KY040::KY040( QObject* parent, QString type, QString id )
 
     Simulator::self()->addToUpdateList( this );
 
-    connect( m_button, SIGNAL( pressed() ),
-             this,     SLOT  ( onbuttonchanged() ));
+    connect( m_button, &QToolButton::pressed,
+             this,     &KY040::onbuttonchanged );
     
-    connect( m_button, SIGNAL( released() ),
-             this,     SLOT  ( onbuttonchanged() ));
+    connect( m_button, &QToolButton::released,
+             this,     &KY040::onbuttonchanged );
 
     addPropGroup( { tr("Main"), {
 new IntProp<KY040>( "Steps", tr("Steps per Rotation"),tr("_Steps"), this, &KY040::steps, &KY040::setSteps, "uint" )
@@ -197,5 +197,3 @@ void KY040::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget*
     p->setBrush(QColor( 50, 50, 70 ));
     p->drawRoundedRect( m_area, 2, 2 );
 }
-
-#include "moc_ky040.cpp"

@@ -14,7 +14,6 @@ class IoPin;
 
 class MAINMODULE_EXPORT Rail : public Component, public eElement
 {
-        Q_OBJECT
     public:
         Rail( QObject* parent, QString type, QString id );
         ~Rail();

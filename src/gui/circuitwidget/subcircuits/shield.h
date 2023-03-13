@@ -7,12 +7,9 @@
 #define SHIELD_H
 
 #include "board.h"
-//#include "subcircuit.h"
 
 class MAINMODULE_EXPORT ShieldSubc : public BoardSubc
 {
-    Q_OBJECT
-
     public:
         ShieldSubc( QObject* parent, QString type, QString id );
         ~ShieldSubc();
@@ -41,4 +38,3 @@ class MAINMODULE_EXPORT ShieldSubc : public BoardSubc
         QPointF m_boardPos;
 };
 #endif
-

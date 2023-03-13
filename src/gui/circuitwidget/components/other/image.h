@@ -12,7 +12,6 @@ class LibraryItem;
 
 class MAINMODULE_EXPORT Image : public Shape
 {
-    Q_OBJECT
     public:
         Image( QObject* parent, QString type, QString id );
         ~Image();

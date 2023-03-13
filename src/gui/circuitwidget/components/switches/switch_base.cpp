@@ -36,9 +36,8 @@ SwitchBase::SwitchBase( QObject* parent, QString type, QString id )
     m_proxy = Circuit::self()->addWidget( m_button );
     m_proxy->setParentItem( this );
 
-    connect( Circuit::self(), SIGNAL( keyEvent( QString, bool ) ),
-                        this, SLOT(   keyEvent( QString, bool ) )
-                            , Qt::UniqueConnection );
+    connect( Circuit::self(), &Circuit::keyEvent,
+                        this, &SwitchBase::keyEvent, Qt::UniqueConnection );
 }
 SwitchBase::~SwitchBase(){}
 
@@ -76,5 +75,3 @@ void SwitchBase::setKey( QString key )
     m_key = key;
     m_button->setText( key );
 }
-
-#include "moc_switch_base.cpp"

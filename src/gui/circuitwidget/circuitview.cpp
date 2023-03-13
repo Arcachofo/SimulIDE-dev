@@ -164,37 +164,33 @@ void CircuitView::contextMenuEvent(QContextMenuEvent* event)
 
         QMenu menu;
 
-        /*QAction* zoomToFitAction = menu.addAction( QIcon(":/zoomfit.svg"),tr("Zoom to Fit") );
-                connect( zoomToFitAction, SIGNAL( triggered()),
-                                    this, SLOT( zoomToFit() ), Qt::UniqueConnection  );*/
-
         menu.addSeparator();
 
         QAction* pasteAction = menu.addAction(QIcon(":/paste.svg"),tr("Paste")+"\tCtrl+V");
-        connect( pasteAction, SIGNAL( triggered()),
-                        this, SLOT(slotPaste()), Qt::UniqueConnection );
+        connect( pasteAction, &QAction::triggered,
+                        this, &CircuitView::slotPaste, Qt::UniqueConnection );
 
         QAction* undoAction = menu.addAction(QIcon(":/undo.svg"),tr("Undo")+"\tCtrl+Z");
-        connect( undoAction, SIGNAL( triggered()),
-                  m_circuit, SLOT(undo()), Qt::UniqueConnection );
+        connect( undoAction, &QAction::triggered,
+                  m_circuit, &Circuit::undo, Qt::UniqueConnection );
 
         QAction* redoAction = menu.addAction(QIcon(":/redo.svg"),tr("Redo")+"\tCtrl+Y");
-        connect( redoAction, SIGNAL( triggered()),
-                  m_circuit, SLOT(redo()), Qt::UniqueConnection );
+        connect( redoAction, &QAction::triggered,
+                  m_circuit, &Circuit::redo, Qt::UniqueConnection );
 
         menu.addSeparator();
 
         QAction* importCircAct = menu.addAction(QIcon(":/open.svg"), tr("Import Circuit") );
-        connect(importCircAct, SIGNAL(triggered()),
-                         this, SLOT(importCirc()), Qt::UniqueConnection );
+        connect(importCircAct, &QAction::triggered,
+                         this, &CircuitView::importCirc, Qt::UniqueConnection );
 
         QAction* saveImgAct = menu.addAction( QIcon(":/saveimage.svg"), tr("Save Circuit as Image") );
-        connect( saveImgAct, SIGNAL(triggered()),
-                       this, SLOT(saveImage()), Qt::UniqueConnection );
+        connect( saveImgAct, &QAction::triggered,
+                       this, &CircuitView::saveImage, Qt::UniqueConnection );
 
         QAction* createBomAct = menu.addAction(QIcon(":/savecirc.png"), tr("Bill of Materials") );
-        connect(createBomAct, SIGNAL(triggered()),
-                   m_circuit, SLOT( bom() ), Qt::UniqueConnection );
+        connect(createBomAct, &QAction::triggered,
+                   m_circuit, &Circuit::bom, Qt::UniqueConnection );
 
         menu.exec( mapFromScene( eventPos ) );
 }   }
@@ -252,5 +248,3 @@ void CircuitView::saveImage()
             QPixmap pixMap = this->grab();
             pixMap.save( fileName );
 }   }    }
-
-#include "moc_circuitview.cpp"

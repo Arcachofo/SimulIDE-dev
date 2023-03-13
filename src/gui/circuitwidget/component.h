@@ -12,6 +12,8 @@
 #include "compbase.h"
 #include "updatable.h"
 
+/// #define _TR(str) QCoreApplication::translate("Component",str)
+
 class Pin;
 class eNode;
 class Label;
@@ -20,7 +22,6 @@ class ConnectorLine;
 
 class MAINMODULE_EXPORT Component : public CompBase, public QGraphicsItem, public Updatable
 {
-    Q_OBJECT
     Q_INTERFACES( QGraphicsItem )
 
     public:
@@ -104,7 +105,6 @@ class MAINMODULE_EXPORT Component : public CompBase, public QGraphicsItem, publi
         virtual void setHidden( bool hid, bool hidArea=false, bool hidLabel=false );
 
         virtual void setBackground( QString bck ) { m_background = bck;}
-        //virtual void setSubcDir( QString dir ) {;}
 
         virtual void registerEnode( eNode*, int n=-1 ) {;}
 
@@ -112,20 +112,25 @@ class MAINMODULE_EXPORT Component : public CompBase, public QGraphicsItem, publi
 
         virtual void inStateChanged( int ){;}
 
-        virtual void move( QPointF delta ) { setPos( pos() + delta ); emit moved(); }
-        void moveTo( QPointF pos ){ setPos( pos ); emit moved(); }
+        virtual void move( QPointF delta ) { setPos( pos() + delta ); moveSignal(); }//emit moved(); }
+        void moveTo( QPointF pos ){ setPos( pos ); moveSignal(); }//emit moved(); }
+
+        void moveSignal();
 
         virtual void remove();
 
-        virtual void paint( QPainter* painter, const QStyleOptionGraphicsItem*, QWidget* );
+        virtual void setflip();
 
-        //Component* m_subcircuit;
+        void addSignalPin( Pin* pin );
+        void remSignalPin( Pin* pin );
+
+        virtual void paint( QPainter* painter, const QStyleOptionGraphicsItem*, QWidget* );
 
         bool m_printable;
 
-    signals:
-        void moved();
-        void flip( int h, int v );
+    //signals:
+        //void moved();
+        //void flip( int h, int v );
 
     public slots:
         virtual void contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu );
@@ -148,8 +153,6 @@ class MAINMODULE_EXPORT Component : public CompBase, public QGraphicsItem, publi
         void mouseReleaseEvent( QGraphicsSceneMouseEvent* event );
         void contextMenuEvent( QGraphicsSceneContextMenuEvent* event );
         void mouseDoubleClickEvent( QGraphicsSceneMouseEvent* event );
-
-        virtual void setflip();
 
         bool m_graphical;
         bool m_showId;
@@ -188,6 +191,7 @@ class MAINMODULE_EXPORT Component : public CompBase, public QGraphicsItem, publi
         QList<Component*> m_compMoveList;
 
         std::vector<Pin*> m_pin;
+        QList<Pin*> m_signalPin;
 };
 
 typedef Component* (*createItemPtr)( QObject* parent, QString type, QString id );

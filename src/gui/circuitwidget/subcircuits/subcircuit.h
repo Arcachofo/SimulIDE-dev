@@ -13,8 +13,6 @@ class LibraryItem;
 
 class MAINMODULE_EXPORT SubCircuit : public Chip
 {
-    Q_OBJECT
-
     public:
         SubCircuit( QObject* parent, QString type, QString id );
         ~SubCircuit();

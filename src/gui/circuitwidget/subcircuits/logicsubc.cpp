@@ -103,5 +103,3 @@ void LogicSubc::setFallTime( double time )
     for( Component* c : m_compList )
         c->setPropStr("Tf_ps", QString::number(m_timeHL)+" ps");
 }
-
-#include "moc_logicsubc.cpp"

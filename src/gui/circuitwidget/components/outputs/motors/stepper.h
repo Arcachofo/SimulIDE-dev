@@ -14,7 +14,6 @@
 
 class MAINMODULE_EXPORT Stepper : public Component, public eElement
 {
-        Q_OBJECT
     public:
         Stepper( QObject* parent, QString type, QString id );
         ~Stepper();

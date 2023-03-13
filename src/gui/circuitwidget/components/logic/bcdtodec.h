@@ -12,7 +12,6 @@ class LibraryItem;
 
 class MAINMODULE_EXPORT BcdToDec : public LogicComponent
 {
-        Q_OBJECT
     public:
         BcdToDec( QObject* parent, QString type, QString id );
         ~BcdToDec();

@@ -16,7 +16,6 @@ class LibraryItem;
 
 class MAINMODULE_EXPORT RTD : public ThermistorBase
 {
-        Q_OBJECT
  public:
     RTD( QObject* parent, QString type, QString id );
     ~RTD();

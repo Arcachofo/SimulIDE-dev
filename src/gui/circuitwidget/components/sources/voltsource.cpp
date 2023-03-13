@@ -55,5 +55,3 @@ void VoltSource::updateStep()
         if( m_propDialog ) m_propDialog->updtValues();
         m_changed = false;
 }   }
-
-#include "moc_voltsource.cpp"

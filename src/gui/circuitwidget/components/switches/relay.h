@@ -15,7 +15,6 @@ class eNode;
 
 class MAINMODULE_EXPORT Relay : public MechContact
 {
-        Q_OBJECT
     public:
         Relay( QObject* parent, QString type, QString id );
         ~Relay();

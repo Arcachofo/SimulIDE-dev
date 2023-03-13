@@ -13,7 +13,7 @@ Component* Voltimeter::construct( QObject* parent, QString type, QString id )
 LibraryItem* Voltimeter::libraryItem()
 {
     return new LibraryItem(
-        QObject::tr( "Voltmeter" ),
+        QCoreApplication::translate("Meters","Voltmeter"),
         "Meters",
         "voltimeter.png",
         "Voltimeter",
@@ -35,9 +35,6 @@ void Voltimeter::updateStep()
     
     if( volt != m_dispValue )
     {
-        //setUnit("V");
         m_dispValue = volt;
         Meter::updateStep();
 }   }
-
-#include "moc_voltmeter.cpp"

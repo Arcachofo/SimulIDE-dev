@@ -12,7 +12,6 @@ class LibraryItem;
 
 class MAINMODULE_EXPORT FlipFlopD : public FlipFlopBase
 {
-        Q_OBJECT
     public:
         FlipFlopD( QObject* parent, QString type, QString id );
         ~FlipFlopD();

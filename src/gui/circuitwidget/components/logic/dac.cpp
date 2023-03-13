@@ -20,7 +20,7 @@ Component* DAC::construct( QObject* parent, QString type, QString id )
 LibraryItem* DAC::libraryItem()
 {
     return new LibraryItem(
-        tr( "DAC" ),
+        QCoreApplication::translate("DAC", "DAC"),
         "Other Logic",
         "3to1.png",
         "DAC",

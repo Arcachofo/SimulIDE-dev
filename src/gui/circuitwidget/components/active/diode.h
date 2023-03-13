@@ -13,7 +13,6 @@ class LibraryItem;
 
 class MAINMODULE_EXPORT Diode : public Comp2Pin, public eDiode
 {
-        Q_OBJECT
     public:
         Diode( QObject* parent, QString type, QString id, bool zener=false );
         ~Diode();

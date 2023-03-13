@@ -171,5 +171,3 @@ void FreqMeter::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWid
     p->setBrush( Qt::black);
     p->drawRect( m_area );
 }
-
-#include "moc_freqmeter.cpp"

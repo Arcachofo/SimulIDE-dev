@@ -17,8 +17,6 @@ class Pin;
 
 class MAINMODULE_EXPORT TouchPad : public Component, public eElement
 {
-    Q_OBJECT
-
     public:
         TouchPad( QObject* parent, QString type, QString id );
         ~TouchPad();

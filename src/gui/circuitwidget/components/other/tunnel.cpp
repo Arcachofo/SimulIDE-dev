@@ -152,12 +152,12 @@ void Tunnel::setRotated( bool rot )
 void Tunnel::setPacked( bool p )
 {
     m_packed = p;
-    if( this->parent() )
+    /*if( this->parent() )
     {
         Component* comp = (Component*)parent();
-        connect( comp, SIGNAL( flip( int, int ) ),
-                   this, SIGNAL( flip( int, int ) ), Qt::UniqueConnection );
-    }
+        connect( comp, &Component::flip,
+                   this, &Tunnel::flip, Qt::UniqueConnection );
+    }*/
 }
 
 void Tunnel::removeTunnel()
@@ -188,16 +188,16 @@ void Tunnel::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
     if( m_show )
     {
         QAction* hideAction = menu->addAction( QIcon(":nobreakpoint.png"),tr("Hide group") );
-        connect( hideAction, SIGNAL(triggered()),
-                       this, SLOT(hideGroup()),Qt::UniqueConnection );
+        connect( hideAction, &QAction::triggered,
+                       this, &Tunnel::hideGroup,Qt::UniqueConnection );
     }else{
         QAction* showAction = menu->addAction( QIcon(":/breakpoint.png"),tr("Show group") );
-        connect( showAction, SIGNAL(triggered()),
-                       this, SLOT(showGroup()), Qt::UniqueConnection );
+        connect( showAction, &QAction::triggered,
+                       this, &Tunnel::showGroup, Qt::UniqueConnection );
     }
     QAction* nameAction = menu->addAction( QIcon(":/rename.svg"),tr("Change group name") );
-    connect( nameAction, SIGNAL(triggered()),
-                   this, SLOT(setGroupName()), Qt::UniqueConnection );
+    connect( nameAction, &QAction::triggered,
+                   this, QOverload<>::of(&Tunnel::setGroupName), Qt::UniqueConnection );
     menu->addSeparator();
 
     Component::contextMenu( event, menu );

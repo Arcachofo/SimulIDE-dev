@@ -5,7 +5,6 @@
  
 #include "itemlibrary.h"
 #include "circuit.h"
-#include "appiface.h"
 
 //BEGIN Item includes
 #include "ampmeter.h"

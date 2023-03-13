@@ -13,7 +13,7 @@ Component* FlipFlopT::construct( QObject* parent, QString type, QString id )
 LibraryItem* FlipFlopT::libraryItem()
 {
     return new LibraryItem(
-        tr( "FlipFlop T" ),
+        QCoreApplication::translate("FlipFlopT", "FlipFlop T" ),
         "Memory",
         "2to2.png",
         "FlipFlopT",

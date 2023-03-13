@@ -18,7 +18,6 @@
 #include <QProcessEnvironment>
 
 #include "mainwindow.h"
-#include "appiface.h"
 #include "circuit.h"
 #include "componentselector.h"
 #include "editorwindow.h"

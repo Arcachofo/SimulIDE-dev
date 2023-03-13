@@ -20,10 +20,7 @@ class QToolButton;
 
 class MAINMODULE_EXPORT KY023 : public Component, public eElement
 {
-    Q_OBJECT
-    
     public:
-
         KY023( QObject* parent, QString type, QString id );
         ~KY023();
 
@@ -37,7 +34,6 @@ class MAINMODULE_EXPORT KY023 : public Component, public eElement
     public slots:
         void onbuttonpressed();
         void onbuttonreleased();
-        void onvaluechanged(int xValue, int yValue);
         
     private:
         JoystickWidget m_joystickW;
@@ -48,10 +44,7 @@ class MAINMODULE_EXPORT KY023 : public Component, public eElement
         
         bool m_changed;
         bool m_closed;
-        
-        double m_vOutX;
-        double m_vOutY;
-        
+
         IoPin* m_vrx;
         IoPin* m_vry;
         IoPin* m_sw;

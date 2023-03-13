@@ -44,13 +44,13 @@ Max72xx_matrix::Max72xx_matrix( QObject* parent, QString type, QString id )
         << "White";
 
     m_enumNames = QStringList()
-        << QObject::tr("Yellow")
-        << QObject::tr("Red")
-        << QObject::tr("Green")
-        << QObject::tr("Blue")
-        << QObject::tr("Orange")
-        << QObject::tr("Purple")
-        << QObject::tr("White");
+        << tr("Yellow")
+        << tr("Red")
+        << tr("Green")
+        << tr("Blue")
+        << tr("Orange")
+        << tr("Purple")
+        << tr("White");
 
     m_colors[0] = QColor( 255-25, 255-25,   0    ); // Yellow
     m_colors[1] = QColor( 255-25, 140-25, 100-25 ); // Red

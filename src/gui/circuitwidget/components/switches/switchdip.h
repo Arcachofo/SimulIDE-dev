@@ -15,7 +15,6 @@ class QGraphicsProxyWidget;
 
 class MAINMODULE_EXPORT SwitchDip : public Component, public eElement
 {
-    Q_OBJECT
     public:
         SwitchDip( QObject* parent, QString type, QString id );
         ~SwitchDip();

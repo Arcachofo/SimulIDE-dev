@@ -16,7 +16,6 @@ class LibraryItem;
 
 class MAINMODULE_EXPORT Potentiometer : public Component, public eElement
 {
-        Q_OBJECT
     public:
         Potentiometer( QObject* parent, QString type, QString id );
         ~Potentiometer();

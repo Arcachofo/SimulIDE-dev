@@ -10,8 +10,6 @@
 
 class JoystickWidget : public QWidget
 {
-    Q_OBJECT
-    
     public:
         JoystickWidget();
         ~JoystickWidget();
@@ -20,18 +18,18 @@ class JoystickWidget : public QWidget
         
         int getXValue() { return m_xValue; }
         int getYValue() { return m_yValue; }
+        bool changed()  { return m_changed; }
         
         void mousePressEvent( QMouseEvent* event );
         void mouseMoveEvent( QMouseEvent* event );
         void mouseReleaseEvent( QMouseEvent* event );
         void paintEvent( QPaintEvent* event );
-        
-    signals:
-        void valueChanged(int newXValue, int newYValue);
-        
+
     private:
         int m_xValue;
         int m_yValue;
+
+        bool m_changed;
         
         QPointF m_movingOffset;
         bool m_grabCenter;

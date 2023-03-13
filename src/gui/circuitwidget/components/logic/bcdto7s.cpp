@@ -15,7 +15,7 @@ Component* BcdTo7S::construct( QObject* parent, QString type, QString id )
 LibraryItem* BcdTo7S::libraryItem()
 {
     return new LibraryItem(
-        tr( "Bcd To 7S." ),
+        QCoreApplication::translate("BcdTo7S", "Bcd To 7S."),
         "Converters",
         "2to3g.png",
         "BcdTo7S",

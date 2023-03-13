@@ -12,7 +12,6 @@ class LibraryItem;
 
 class MAINMODULE_EXPORT Push : public PushBase
 {
-        Q_OBJECT
     public:
         Push( QObject* parent, QString type, QString id );
         ~Push();

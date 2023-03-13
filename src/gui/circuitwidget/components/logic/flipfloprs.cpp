@@ -14,7 +14,7 @@ Component* FlipFlopRS::construct( QObject* parent, QString type, QString id )
 LibraryItem* FlipFlopRS::libraryItem()
 {
     return new LibraryItem(
-        tr( "FlipFlop RS" ),
+        QCoreApplication::translate("FlipFlopRS", "FlipFlop RS" ),
         "Memory",
         "2to2.png",
         "FlipFlopRS",

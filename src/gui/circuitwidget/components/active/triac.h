@@ -15,7 +15,6 @@ class eResistor;
 
 class MAINMODULE_EXPORT Triac : public Component, public eElement
 {
-        Q_OBJECT
     public:
         Triac( QObject* parent, QString type, QString id );
         ~Triac();

@@ -10,7 +10,6 @@
 
 class MAINMODULE_EXPORT ClockBase : public FixedVolt
 {
-        Q_OBJECT
 
     public:
         ClockBase( QObject* parent, QString type, QString id );

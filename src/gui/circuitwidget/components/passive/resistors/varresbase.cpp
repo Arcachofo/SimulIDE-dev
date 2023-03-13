@@ -46,8 +46,8 @@ VarResBase::VarResBase( QObject* parent, QString type, QString id )
 
     Simulator::self()->addToUpdateList( this );
 
-    connect( m_dial, SIGNAL(valueChanged(int)),
-             this,   SLOT  (dialChanged(int)), Qt::UniqueConnection );
+    connect( m_dial, &QDial::valueChanged,
+             this,   &VarResBase::dialChanged, Qt::UniqueConnection );
 }
 VarResBase::~VarResBase(){}
 
@@ -99,5 +99,3 @@ void VarResBase::updtValue()
 
     if( m_propDialog ) m_propDialog->updtValues();
 }
-
-#include "moc_varresbase.cpp"

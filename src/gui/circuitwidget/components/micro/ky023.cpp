@@ -45,7 +45,7 @@ KY023::KY023( QObject* parent, QString type, QString id )
 
     m_joystickW.setupWidget();
     m_joystickW.setFixedSize( JOYSTICK_SIZE, JOYSTICK_SIZE );
-    onvaluechanged(500, 500);
+    /// onvaluechanged(500, 500);
     
     m_proxy = Circuit::self()->addWidget( &m_joystickW );
     m_proxy->setParentItem( this );
@@ -80,15 +80,12 @@ KY023::KY023( QObject* parent, QString type, QString id )
     setLabelPos(-34, 20,-90 );
     
     Simulator::self()->addToUpdateList( this );
+
+    connect( m_button, &QToolButton::pressed,
+             this,     &KY023::onbuttonpressed);
     
-    connect( &m_joystickW, SIGNAL( valueChanged(int, int) ),
-             this,         SLOT  ( onvaluechanged(int, int) ));
-    
-    connect( m_button, SIGNAL( pressed() ),
-             this,     SLOT  ( onbuttonpressed() ));
-    
-    connect( m_button, SIGNAL( released() ),
-             this,     SLOT  ( onbuttonreleased() ));
+    connect( m_button, &QToolButton::released,
+             this,     &KY023::onbuttonreleased);
     
     initialize();
 }
@@ -110,22 +107,14 @@ void KY023::onbuttonreleased()
     update();
 }
 
-void KY023::onvaluechanged( int xValue, int yValue )
-{
-    m_vOutX = double(VIN * xValue) / 1000;
-    m_vOutY = double(VIN * (1000 - yValue)) / 1000;
-    
-    m_changed = true;
-}
-
 void KY023::updateStep()
 {
-    if( !m_changed ) return;
+    if( !m_joystickW.changed() ) return;
 
-    m_vrx->setOutHighV( m_vOutX );
+    m_vrx->setOutHighV( m_joystickW.getXValue() );
     m_vrx->setOutState( true );
 
-    m_vry->setOutHighV( m_vOutY );
+    m_vry->setOutHighV( m_joystickW.getYValue() );
     m_vry->setOutState( true );
 
     m_sw->sheduleState( !m_closed, 0 );
@@ -140,5 +129,3 @@ void KY023::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget*
     p->setBrush(QColor( 50, 50, 70 ));
     p->drawRoundedRect( m_area, 2, 2 );
 }
-
-#include "moc_ky023.cpp"

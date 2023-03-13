@@ -22,7 +22,7 @@ Component* Triac::construct( QObject* parent, QString type, QString id )
 LibraryItem* Triac::libraryItem()
 {
     return new LibraryItem(
-        tr( "Triac" ),
+        QCoreApplication::translate("Triac", "Triac"),
         "Rectifiers",
         "triac.png",
         "Triac",

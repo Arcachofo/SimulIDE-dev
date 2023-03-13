@@ -78,11 +78,13 @@ Pin::Pin( int angle, const QPoint pos, QString id, int index, Component* parent 
     Circuit::self()->addPin( this, id );
     animate( Circuit::self()->animate() );
 
-    connect( parent, SIGNAL( moved() ),
-               this, SLOT( isMoved() ), Qt::UniqueConnection );
+    m_component->addSignalPin( this );
 
-    connect( parent, SIGNAL( flip( int, int ) ),
-               this, SLOT( flip( int, int ) ), Qt::UniqueConnection );
+    /*connect( parent, &Component::moved,
+               this, &Pin::isMoved, Qt::UniqueConnection );
+
+    connect( parent, &Component::flip,
+               this, &Pin::flip, Qt::UniqueConnection );*/
 }
 Pin::~Pin()
 {
@@ -93,6 +95,7 @@ void Pin::remove()
 {
     setConnector( NULL );
     m_component->inStateChanged( 1 );          // Used by node to remove
+    m_component->remSignalPin( this );
 }
 
 void Pin::setUnused( bool unused )
@@ -453,5 +456,3 @@ void Pin::paint( QPainter* painter, const QStyleOptionGraphicsItem* option, QWid
             painter->drawLine( 2,-2, 0, 0);// Draw upper half Output arrow
         }
 }   }
-
-#include "moc_pin.cpp"

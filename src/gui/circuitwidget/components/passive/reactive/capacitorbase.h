@@ -10,7 +10,6 @@
 
 class MAINMODULE_EXPORT CapacitorBase : public Reactive
 {
-        Q_OBJECT
     public:
         CapacitorBase( QObject* parent, QString type, QString id );
         ~CapacitorBase();

@@ -185,16 +185,16 @@ void I2CRam::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
 void I2CRam::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
 {
     QAction* loadAction = menu->addAction( QIcon(":/load.svg"),tr("Load data") );
-    connect( loadAction, SIGNAL(triggered()),
-                   this, SLOT(loadData()), Qt::UniqueConnection );
+    connect( loadAction, &QAction::triggered,
+                   this, &I2CRam::loadData, Qt::UniqueConnection );
 
     QAction* saveAction = menu->addAction(QIcon(":/save.png"), tr("Save data") );
-    connect( saveAction, SIGNAL(triggered()),
-                   this, SLOT(saveData()), Qt::UniqueConnection );
+    connect( saveAction, &QAction::triggered,
+                   this, &I2CRam::saveData, Qt::UniqueConnection );
 
     QAction* showEepAction = menu->addAction(QIcon(":/save.png"), tr("Show Memory Table") );
-    connect( showEepAction, SIGNAL(triggered()),
-                      this, SLOT(showTable()), Qt::UniqueConnection );
+    connect( showEepAction, &QAction::triggered,
+                      this, &I2CRam::showTable, Qt::UniqueConnection );
 
     menu->addSeparator();
 }
@@ -206,5 +206,3 @@ void I2CRam::showTable()
     else               m_memTable->setWindowTitle( "I2C RAM: "+m_idLabel->toPlainText() );
     m_memTable->setData( &m_ram );
 }
-
-#include "moc_i2cram.cpp"

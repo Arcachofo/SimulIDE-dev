@@ -14,7 +14,6 @@ class LibraryItem;
 
 class MAINMODULE_EXPORT Hd44780 : public Hd44780_Base, public eElement
 {
-        Q_OBJECT
     public:
         Hd44780( QObject* parent, QString type, QString id );
         ~Hd44780();

@@ -13,8 +13,6 @@ class LibraryItem;
 
 class MAINMODULE_EXPORT DS1621 : public IoComponent, public TwiModule
 {
-    Q_OBJECT
-    
     public:
         DS1621( QObject* parent, QString type, QString id );
         ~DS1621();

@@ -24,7 +24,7 @@ LibraryItem* XorGate::libraryItem()
 }
 
 XorGate::XorGate( QObject* parent, QString type, QString id )
-        : Gate( parent, type, id, 2 )
+       : Gate( parent, type, id, 2 )
 {
     addPropGroup( { tr("Electric"), IoComponent::inputProps()
 +QList<ComProperty*>({
@@ -95,5 +95,3 @@ void XorGate::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidge
     p->setPen( pen3 );
     p->drawRect( m_area );*/
 }
-
-#include "moc_gate_xor.cpp"

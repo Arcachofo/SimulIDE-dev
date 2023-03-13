@@ -72,8 +72,8 @@ Potentiometer::Potentiometer( QObject* parent, QString type, QString id )
     
     Simulator::self()->addToUpdateList( this );
 
-    connect( m_dial, SIGNAL(valueChanged(int)),
-             this,   SLOT  (resChanged(int)), Qt::UniqueConnection );
+    connect( m_dial, &QDial::valueChanged,
+             this,   &Potentiometer::resChanged, Qt::UniqueConnection );
 
     addPropGroup( { tr("Main"), {
 new DoubProp<Potentiometer>( "Resistance", tr("Resistance")   ,"Ω", this, &Potentiometer::getRes, &Potentiometer::setRes ),
@@ -160,5 +160,3 @@ void Potentiometer::paint( QPainter* p, const QStyleOptionGraphicsItem* option, 
     p->drawLine( 0, 6, -3, 9 );
     p->drawLine( 0, 6,  3, 9 );
 }
-
-#include "moc_potentiometer.cpp"

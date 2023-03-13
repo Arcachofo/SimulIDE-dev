@@ -15,7 +15,6 @@ class Pin;
 
 class MAINMODULE_EXPORT ResistorDip : public Component, public eElement
 {
-        Q_OBJECT
     public:
         ResistorDip( QObject* parent, QString type, QString id );
         ~ResistorDip();

@@ -7,7 +7,6 @@ class LibraryItem;
 
 class MAINMODULE_EXPORT TextComponent : public Component
 {
-    Q_OBJECT
     public:
         TextComponent( QObject* parent, QString type, QString id );
         ~TextComponent();

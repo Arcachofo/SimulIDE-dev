@@ -12,7 +12,6 @@ class LibraryItem;
 
 class MAINMODULE_EXPORT Socket : public ConnBase
 {
-    Q_OBJECT
     public:
         Socket( QObject* parent, QString type, QString id );
         ~Socket();

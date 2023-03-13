@@ -21,7 +21,7 @@ Component* VoltReg::construct( QObject* parent, QString type, QString id )
 LibraryItem* VoltReg::libraryItem()
 {
     return new LibraryItem(
-        tr( "Volt. Regulator" ),
+        QCoreApplication::translate("VoltReg", "Volt. Regulator"),
         "Other Active",
         "voltreg.png",
         "VoltReg",

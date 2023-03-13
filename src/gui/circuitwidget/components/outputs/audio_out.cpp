@@ -81,13 +81,6 @@ AudioOut::AudioOut( QObject* parent, QString type, QString id )
         qDebug() << m_format.sampleRate() << m_format.channelCount()<<m_format.sampleSize();
     }  
     m_audioOutput = new QAudioOutput( m_deviceinfo, m_format );
-    
-    //m_dataSize = refreshPeriod*sampleRate/1000;
-    //m_dataBuffer.resize( m_dataSize*10 );
-    //initialize();
-
-    //connect( m_audioOutput, SIGNAL( stateChanged( QAudio::State ) ),
-    //                 this, SLOT( stateChanged( QAudio::State ) ), Qt::UniqueConnection );
 
     addPropGroup( { tr("Main"), {
 new BoolProp<AudioOut>( "Buzzer"   , tr("Buzzer")   ,"" , this, &AudioOut::buzzer, &AudioOut::setBuzzer ),

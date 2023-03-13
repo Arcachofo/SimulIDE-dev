@@ -268,21 +268,21 @@ void SubPackage::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu
     if( m_eventPin )
     {
         QAction* moveAction = menu->addAction( QIcon(":/hflip.svg"),tr("Move Pin ")+m_eventPin->getLabelText() );
-        connect( moveAction, SIGNAL( triggered()), this, SLOT( movePin() ), Qt::UniqueConnection );
+        connect( moveAction, &QAction::triggered, this, &SubPackage::movePin, Qt::UniqueConnection );
 
         QAction* editAction = menu->addAction( QIcon(":/rename.svg"),tr("Edit Pin ")+m_eventPin->getLabelText() );
-        connect( editAction, SIGNAL( triggered()), this, SLOT( editPin() ), Qt::UniqueConnection );
+        connect( editAction, &QAction::triggered, this, &SubPackage::editPin, Qt::UniqueConnection );
 
         QAction* deleteAction = menu->addAction( QIcon(":/remove.svg"),tr("Delete Pin ")+m_eventPin->getLabelText() );
-        connect( deleteAction, SIGNAL( triggered()), this, SLOT( deleteEventPin() ), Qt::UniqueConnection );
+        connect( deleteAction, &QAction::triggered, this, &SubPackage::deleteEventPin, Qt::UniqueConnection );
 
         menu->exec( event->screenPos() );
     }else{
         QAction* loadAction = menu->addAction( QIcon(":/open.png"),tr("Load Package") );
-        connect( loadAction, SIGNAL( triggered()), this, SLOT( loadPackage() ), Qt::UniqueConnection );
+        connect( loadAction, &QAction::triggered, this, &SubPackage::loadPackage, Qt::UniqueConnection );
 
         QAction* saveAction = menu->addAction( QIcon(":/save.png"),tr("Save Package") );
-        connect( saveAction, SIGNAL(triggered()), this, SLOT( slotSave() ), Qt::UniqueConnection );
+        connect( saveAction, &QAction::triggered, this, &SubPackage::slotSave, Qt::UniqueConnection );
 
         menu->addSeparator();
 
@@ -290,12 +290,12 @@ void SubPackage::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu
         {
             m_boardModeAction->setChecked( m_boardMode );
             menu->addAction( m_boardModeAction );
-            connect( m_boardModeAction, SIGNAL( triggered()),
-                                  this, SLOT( boardModeSlot() ), Qt::UniqueConnection );
+            connect( m_boardModeAction, &QAction::triggered,
+                                  this, &SubPackage::boardModeSlot, Qt::UniqueConnection );
 
             QAction* mainCompAction = menu->addAction( QIcon(":/subcl.png"),tr("Select Main Component") );
-            connect( mainCompAction, SIGNAL( triggered()),
-                               this, SLOT( mainComp() ), Qt::UniqueConnection );
+            connect( mainCompAction, &QAction::triggered,
+                               this, &SubPackage::mainComp, Qt::UniqueConnection );
         }
         Component::contextMenu( event, menu );
     }
@@ -416,8 +416,8 @@ void SubPackage::editPin()
     m_angle = m_eventPin->pinAngle();
 
     EditDialog* editDialog = new EditDialog( this, m_eventPin, NULL );
-    connect( editDialog, SIGNAL( finished(int) ),
-                   this, SLOT( editFinished(int) ), Qt::UniqueConnection );
+    connect( editDialog, &EditDialog::finished,
+                   this, &SubPackage::editFinished, Qt::UniqueConnection );
 
     editDialog->exec();
     editDialog->deleteLater();
@@ -742,29 +742,29 @@ EditDialog::EditDialog( SubPackage* pack, Pin* eventPin, QWidget* parent )
     setLayout( layout );
     setWindowTitle( tr("Edit Pin ")+eventPin->getLabelText() );
 
-    connect( bb, SIGNAL(accepted()),
-           this, SLOT(accept()), Qt::UniqueConnection);
+    connect( bb, &QDialogButtonBox::accepted,
+           this, &EditDialog::accept, Qt::UniqueConnection);
 
-    connect( m_nameLineEdit, SIGNAL( textChanged( QString ) ),
-                       pack, SLOT( setPinName( QString ) ), Qt::UniqueConnection );
+    connect( m_nameLineEdit, &QLineEdit::textChanged,
+                       pack, &SubPackage::setPinName, Qt::UniqueConnection );
 
-    connect( m_idLineEdit, SIGNAL( textEdited( QString ) ),
-                     pack, SLOT( setPinId( QString ) ), Qt::UniqueConnection );
+    connect( m_idLineEdit, &QLineEdit::textEdited,
+                     pack, &SubPackage::setPinId, Qt::UniqueConnection );
 
-    connect( m_typeLineEdit, SIGNAL( textEdited( QString ) ),
-                       pack, SLOT( setPinType( QString ) ), Qt::UniqueConnection );
+    connect( m_typeLineEdit, &QLineEdit::textEdited,
+                       pack, &SubPackage::setPinType, Qt::UniqueConnection );
 
-    connect( m_angleBox, SIGNAL( currentIndexChanged(int) ),
-                   pack, SLOT( setPinAngle( int ) ), Qt::UniqueConnection );
+    connect( m_angleBox, QOverload<int>::of(&QComboBox::currentIndexChanged),
+                   pack, &SubPackage::setPinAngle, Qt::UniqueConnection );
 
-    connect( m_invertCheckBox, SIGNAL( toggled( bool ) ),
-                         this, SLOT( invertPin( bool ) ), Qt::UniqueConnection );
+    connect( m_invertCheckBox, &QCheckBox::toggled,
+                         this, &EditDialog::invertPin, Qt::UniqueConnection );
 
-    connect( m_unuseCheckBox,  SIGNAL( toggled( bool ) ),
-                        pack,  SLOT( unusePin( bool ) ), Qt::UniqueConnection );
+    connect( m_unuseCheckBox,  &QCheckBox::toggled,
+                        pack,  &SubPackage::unusePin, Qt::UniqueConnection );
 
-    connect( m_pointCheckBox,  SIGNAL( toggled( bool ) ),
-                        pack,  SLOT( pointPin( bool ) ), Qt::UniqueConnection );
+    connect( m_pointCheckBox,  &QCheckBox::toggled,
+                        pack,  &SubPackage::pointPin, Qt::UniqueConnection );
 }
 
 void EditDialog::invertPin( bool invert )
@@ -776,5 +776,3 @@ void EditDialog::invertPin( bool invert )
     m_idLineEdit->setText( id );
     m_package->invertPin( invert );
 }
-
-#include "moc_subpackage.cpp"

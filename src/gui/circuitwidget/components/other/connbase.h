@@ -13,7 +13,6 @@
 
 class MAINMODULE_EXPORT ConnBase : public Component, public eElement
 {
-    Q_OBJECT
     public:
         ConnBase( QObject* parent, QString type, QString id );
         ~ConnBase();
@@ -21,8 +20,6 @@ class MAINMODULE_EXPORT ConnBase : public Component, public eElement
 
         int  size() { return m_size; }
         void setSize( int size );
-
-        //virtual void remove() override;
 
         virtual void registerEnode( eNode*, int n=-1 ) override;
 

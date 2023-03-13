@@ -106,7 +106,7 @@
     </message>
     <message>
         <source>Main</source>
-        <translation>Основные</translation>
+        <translation type="vanished">Основные</translation>
     </message>
     <message>
         <source>Input Size</source>
@@ -114,11 +114,11 @@
     </message>
     <message>
         <source>Invert Output</source>
-        <translation>Инвертировать выход</translation>
+        <translation type="vanished">Инвертировать выход</translation>
     </message>
     <message>
         <source>Open Drain</source>
-        <translation>Открытый сток</translation>
+        <translation type="vanished">Открытый сток</translation>
     </message>
     <message>
         <source>Electric</source>
@@ -131,6 +131,10 @@
     <message>
         <source>Gates</source>
         <translation type="obsolete">Логические элементы</translation>
+    </message>
+    <message>
+        <source>Invert Inputs</source>
+        <translation type="unfinished">Инвертировать входы</translation>
     </message>
 </context>
 <context>
@@ -168,7 +172,7 @@
     </message>
     <message>
         <source>Russian</source>
-        <translation>Русский</translation>
+        <translation type="vanished">Русский</translation>
     </message>
     <message>
         <source>Font Scale</source>
@@ -273,46 +277,6 @@
     <message>
         <source>Reactive</source>
         <translation>Реактивный</translation>
-    </message>
-    <message>
-        <source>English</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Czech</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Dutch</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>French</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>German</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Italian</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Spanish</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Portuguese</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pt_Brasil</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Turkish</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source> 0%</source>
@@ -458,6 +422,10 @@ p, li { white-space: pre-wrap; }
         <source>Voltage</source>
         <translation>Напряжение</translation>
     </message>
+    <message>
+        <source>Resistance</source>
+        <translation type="unfinished">Сопротивление</translation>
+    </message>
 </context>
 <context>
     <name>BcdTo7S</name>
@@ -471,11 +439,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Main</source>
-        <translation>Основные</translation>
+        <translation type="vanished">Основные</translation>
     </message>
     <message>
         <source>Invert Outputs</source>
-        <translation>Инвертировать выходы</translation>
+        <translation type="vanished">Инвертировать выходы</translation>
     </message>
     <message>
         <source>Electric</source>
@@ -488,6 +456,10 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Converters</source>
         <translation type="obsolete">Конвертеры</translation>
+    </message>
+    <message>
+        <source>Invert Inputs</source>
+        <translation type="unfinished">Инвертировать входы</translation>
     </message>
 </context>
 <context>
@@ -510,7 +482,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Invert Outputs</source>
-        <translation>Инвертировать выходы</translation>
+        <translation type="vanished">Инвертировать выходы</translation>
     </message>
     <message>
         <source>Electric</source>
@@ -523,6 +495,10 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Converters</source>
         <translation type="obsolete">Конвертеры</translation>
+    </message>
+    <message>
+        <source>Invert Inputs</source>
+        <translation type="unfinished">Инвертировать входы</translation>
     </message>
 </context>
 <context>
@@ -595,11 +571,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Invert Output</source>
-        <translation>Инвертировать выход</translation>
+        <translation type="vanished">Инвертировать выход</translation>
     </message>
     <message>
         <source>Open Drain</source>
-        <translation>Открытый сток</translation>
+        <translation type="vanished">Открытый сток</translation>
     </message>
     <message>
         <source>Electric</source>
@@ -612,6 +588,10 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Gates</source>
         <translation type="obsolete">Логические элементы</translation>
+    </message>
+    <message>
+        <source>Invert Inputs</source>
+        <translation type="unfinished">Инвертировать входы</translation>
     </message>
 </context>
 <context>
@@ -635,6 +615,13 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Connectors</source>
         <translation type="vanished">Соединители</translation>
+    </message>
+</context>
+<context>
+    <name>Capacitor</name>
+    <message>
+        <source>Capacitor</source>
+        <translation type="unfinished">Конденсатор</translation>
     </message>
 </context>
 <context>
@@ -664,15 +651,23 @@ p, li { white-space: pre-wrap; }
     <name>Chip</name>
     <message>
         <source>None</source>
-        <translation type="vanished">Не выбран</translation>
+        <translation>Не выбран</translation>
     </message>
     <message>
         <source>Logic</source>
-        <translation type="vanished">Логика</translation>
+        <translation>Логика</translation>
     </message>
     <message>
         <source>Board</source>
-        <translation type="vanished">Плата</translation>
+        <translation>Плата</translation>
+    </message>
+    <message>
+        <source>Shield</source>
+        <translation type="unfinished">Шилд</translation>
+    </message>
+    <message>
+        <source>Module</source>
+        <translation type="unfinished">Модуль</translation>
     </message>
 </context>
 <context>
@@ -1216,6 +1211,13 @@ Can&apos;t find file:
     </message>
 </context>
 <context>
+    <name>ConnectorLine</name>
+    <message>
+        <source>Remove</source>
+        <translation type="unfinished">Удалить</translation>
+    </message>
+</context>
+<context>
     <name>Csource</name>
     <message>
         <source>Controlled Source</source>
@@ -1310,6 +1312,10 @@ Can&apos;t find file:
     <message>
         <source>Other Logic</source>
         <translation type="obsolete">Другое (Логика)</translation>
+    </message>
+    <message>
+        <source>Invert Inputs</source>
+        <translation type="unfinished">Инвертировать входы</translation>
     </message>
 </context>
 <context>
@@ -1442,7 +1448,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Invert Outputs</source>
-        <translation>Инвертировать выходы</translation>
+        <translation type="vanished">Инвертировать выходы</translation>
     </message>
     <message>
         <source>Electric</source>
@@ -1879,7 +1885,7 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Last Circuits</source>
-        <translation>Последняя схема</translation>
+        <translation type="vanished">Последняя схема</translation>
     </message>
     <message>
         <source>
@@ -1897,6 +1903,10 @@ Can&apos;t find file:
     </message>
     <message>
         <source>File doesn&apos;t exist</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Last Files</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1937,6 +1947,17 @@ Can&apos;t find file:
     <message>
         <source>Time us: </source>
         <translation>Время мкс: </translation>
+    </message>
+    <message>
+        <source>Line </source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Ellipse</name>
+    <message>
+        <source>Ellipse</source>
+        <translation type="unfinished">Эллипс</translation>
     </message>
 </context>
 <context>
@@ -2251,7 +2272,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Invert Outputs</source>
-        <translation>Инвертировать выходы</translation>
+        <translation type="vanished">Инвертировать выходы</translation>
     </message>
     <message>
         <source>Functions</source>
@@ -2291,12 +2312,23 @@ Can&apos;t find file:
         <source>Arithmetic</source>
         <translation type="obsolete">Арифметика</translation>
     </message>
+    <message>
+        <source>Invert Inputs</source>
+        <translation type="unfinished">Инвертировать входы</translation>
+    </message>
 </context>
 <context>
     <name>Gate</name>
     <message>
         <source>Initial High State</source>
         <translation>Начальный высокий уровень</translation>
+    </message>
+</context>
+<context>
+    <name>Ground</name>
+    <message>
+        <source>Ground (0 V)</source>
+        <translation type="unfinished">Земля (0 V)</translation>
     </message>
 </context>
 <context>
@@ -2549,6 +2581,14 @@ Can&apos;t find file:
         <source>Gate Delay</source>
         <translation>Задержка сигнала</translation>
     </message>
+    <message>
+        <source>Invert Outputs</source>
+        <translation type="unfinished">Инвертировать выходы</translation>
+    </message>
+    <message>
+        <source>Open Drain</source>
+        <translation type="unfinished">Открытый сток</translation>
+    </message>
 </context>
 <context>
     <name>KY023</name>
@@ -2735,6 +2775,10 @@ Can&apos;t find file:
         <source>Threshold</source>
         <translation type="unfinished">Порог</translation>
     </message>
+    <message>
+        <source>Bus</source>
+        <translation type="unfinished">Шина</translation>
+    </message>
 </context>
 <context>
     <name>LabelVal</name>
@@ -2790,7 +2834,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Invert Outputs</source>
-        <translation>Инвертировать выходы</translation>
+        <translation type="vanished">Инвертировать выходы</translation>
     </message>
     <message>
         <source>Tristate</source>
@@ -2807,6 +2851,10 @@ Can&apos;t find file:
     <message>
         <source>Memory</source>
         <translation type="obsolete">Память</translation>
+    </message>
+    <message>
+        <source>Invert Inputs</source>
+        <translation type="unfinished">Инвертировать входы</translation>
     </message>
 </context>
 <context>
@@ -2850,6 +2898,13 @@ Can&apos;t find file:
     <message>
         <source>R1</source>
         <translation></translation>
+    </message>
+</context>
+<context>
+    <name>Led</name>
+    <message>
+        <source>Led</source>
+        <translation type="unfinished">Светодиод</translation>
     </message>
 </context>
 <context>
@@ -2931,11 +2986,31 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Yellow</source>
-        <translation type="vanished">Желтый</translation>
+        <translation>Желтый</translation>
     </message>
     <message>
         <source>Blue</source>
-        <translation type="vanished">Синий</translation>
+        <translation>Синий</translation>
+    </message>
+    <message>
+        <source>Red</source>
+        <translation type="unfinished">Красный</translation>
+    </message>
+    <message>
+        <source>Green</source>
+        <translation type="unfinished">Зелёный</translation>
+    </message>
+    <message>
+        <source>Orange</source>
+        <translation type="unfinished">Оранжевый</translation>
+    </message>
+    <message>
+        <source>Purple</source>
+        <translation type="unfinished">Фиолетовый</translation>
+    </message>
+    <message>
+        <source>White</source>
+        <translation type="unfinished">Белый</translation>
     </message>
 </context>
 <context>
@@ -3033,6 +3108,13 @@ Can&apos;t find file:
     </message>
 </context>
 <context>
+    <name>Line</name>
+    <message>
+        <source>Line</source>
+        <translation type="unfinished">Отрезок</translation>
+    </message>
+</context>
+<context>
     <name>LineNumberArea</name>
     <message>
         <source>Add BreakPoint</source>
@@ -3066,11 +3148,15 @@ Can&apos;t find file:
     <name>LogicComponent</name>
     <message>
         <source>None</source>
-        <translation type="vanished">Не выбран</translation>
+        <translation>Не выбран</translation>
     </message>
     <message>
         <source>Clock</source>
-        <translation type="vanished">Тактовый генератор</translation>
+        <translation>Тактовый генератор</translation>
+    </message>
+    <message>
+        <source>Enable</source>
+        <translation type="unfinished">Включить</translation>
     </message>
 </context>
 <context>
@@ -3205,11 +3291,31 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Yellow</source>
-        <translation type="vanished">Желтый</translation>
+        <translation>Желтый</translation>
     </message>
     <message>
         <source>Blue</source>
-        <translation type="vanished">Синий</translation>
+        <translation>Синий</translation>
+    </message>
+    <message>
+        <source>Red</source>
+        <translation type="unfinished">Красный</translation>
+    </message>
+    <message>
+        <source>Green</source>
+        <translation type="unfinished">Зелёный</translation>
+    </message>
+    <message>
+        <source>Orange</source>
+        <translation type="unfinished">Оранжевый</translation>
+    </message>
+    <message>
+        <source>Purple</source>
+        <translation type="unfinished">Фиолетовый</translation>
+    </message>
+    <message>
+        <source>White</source>
+        <translation type="unfinished">Белый</translation>
     </message>
 </context>
 <context>
@@ -3378,7 +3484,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Invert Outputs</source>
-        <translation>Инвертировать выходы</translation>
+        <translation type="vanished">Инвертировать выходы</translation>
     </message>
     <message>
         <source>Electric</source>
@@ -3418,6 +3524,17 @@ Can&apos;t find file:
     <message>
         <source>Switch Pins</source>
         <translation type="vanished">Поменять контакты</translation>
+    </message>
+</context>
+<context>
+    <name>Meters</name>
+    <message>
+        <source>Ampmeter</source>
+        <translation type="unfinished">Амперметр</translation>
+    </message>
+    <message>
+        <source>Voltmeter</source>
+        <translation type="unfinished">Вольтметр</translation>
     </message>
 </context>
 <context>
@@ -3588,7 +3705,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Main</source>
-        <translation>Основные</translation>
+        <translation type="vanished">Основные</translation>
     </message>
     <message>
         <source>Input Size</source>
@@ -3596,11 +3713,11 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Invert Output</source>
-        <translation>Инвертировать выход</translation>
+        <translation type="vanished">Инвертировать выход</translation>
     </message>
     <message>
         <source>Open Drain</source>
-        <translation>Открытый сток</translation>
+        <translation type="vanished">Открытый сток</translation>
     </message>
     <message>
         <source>Electric</source>
@@ -3613,6 +3730,10 @@ Can&apos;t find file:
     <message>
         <source>Gates</source>
         <translation type="obsolete">Логические элементы</translation>
+    </message>
+    <message>
+        <source>Invert Inputs</source>
+        <translation type="unfinished">Инвертировать входы</translation>
     </message>
 </context>
 <context>
@@ -3744,9 +3865,9 @@ Can&apos;t find file:
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3794,7 +3915,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Remove</source>
-        <translation>Удалить</translation>
+        <translation type="vanished">Удалить</translation>
     </message>
     <message>
         <source>Sensors</source>
@@ -3806,7 +3927,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Ampmeter</source>
-        <translation>Амперметр</translation>
+        <translation type="vanished">Амперметр</translation>
     </message>
     <message>
         <source>Meters</source>
@@ -3814,7 +3935,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Ellipse</source>
-        <translation>Эллипс</translation>
+        <translation type="vanished">Эллипс</translation>
     </message>
     <message>
         <source>Graphical</source>
@@ -3822,11 +3943,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Line</source>
-        <translation>Отрезок</translation>
+        <translation type="vanished">Отрезок</translation>
     </message>
     <message>
         <source>Rectangle</source>
-        <translation>Прямоугольник</translation>
+        <translation type="vanished">Прямоугольник</translation>
     </message>
     <message>
         <source>Outputs</source>
@@ -3838,7 +3959,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Led</source>
-        <translation>Светодиод</translation>
+        <translation type="vanished">Светодиод</translation>
     </message>
     <message>
         <source>Leds</source>
@@ -3850,7 +3971,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Capacitor</source>
-        <translation>Конденсатор</translation>
+        <translation type="vanished">Конденсатор</translation>
     </message>
     <message>
         <source>Reactive</source>
@@ -3858,7 +3979,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Electrolytic Capacitor</source>
-        <translation>Электролитический конденсатор</translation>
+        <translation type="vanished">Электролитический конденсатор</translation>
     </message>
     <message>
         <source>Resistive Sensors</source>
@@ -3866,11 +3987,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Parameters</source>
-        <translation>Параметры</translation>
+        <translation type="vanished">Параметры</translation>
     </message>
     <message>
         <source>Thermistor</source>
-        <translation>Терморезистор</translation>
+        <translation type="vanished">Терморезистор</translation>
     </message>
     <message>
         <source>Resistors</source>
@@ -3878,7 +3999,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Ground (0 V)</source>
-        <translation>Земля (0 V)</translation>
+        <translation type="vanished">Земля (0 V)</translation>
     </message>
     <message>
         <source>Passive</source>
@@ -3946,7 +4067,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Voltmeter</source>
-        <translation>Вольтметр</translation>
+        <translation type="vanished">Вольтметр</translation>
     </message>
     <message>
         <source>Error:
@@ -3969,55 +4090,55 @@ Not valid Package file:
     </message>
     <message>
         <source>None</source>
-        <translation>Не выбран</translation>
+        <translation type="vanished">Не выбран</translation>
     </message>
     <message>
         <source>Clock</source>
-        <translation>Тактовый генератор</translation>
+        <translation type="vanished">Тактовый генератор</translation>
     </message>
     <message>
         <source>Yellow</source>
-        <translation>Желтый</translation>
+        <translation type="vanished">Желтый</translation>
     </message>
     <message>
         <source>Red</source>
-        <translation>Красный</translation>
+        <translation type="vanished">Красный</translation>
     </message>
     <message>
         <source>Green</source>
-        <translation>Зелёный</translation>
+        <translation type="vanished">Зелёный</translation>
     </message>
     <message>
         <source>Blue</source>
-        <translation>Синий</translation>
+        <translation type="vanished">Синий</translation>
     </message>
     <message>
         <source>Orange</source>
-        <translation>Оранжевый</translation>
+        <translation type="vanished">Оранжевый</translation>
     </message>
     <message>
         <source>Purple</source>
-        <translation>Фиолетовый</translation>
+        <translation type="vanished">Фиолетовый</translation>
     </message>
     <message>
         <source>Board</source>
-        <translation>Плата</translation>
+        <translation type="vanished">Плата</translation>
     </message>
     <message>
         <source>Enable</source>
-        <translation>Включить</translation>
+        <translation type="vanished">Включить</translation>
     </message>
     <message>
         <source>Shield</source>
-        <translation>Шилд</translation>
+        <translation type="vanished">Шилд</translation>
     </message>
     <message>
         <source>Module</source>
-        <translation>Модуль</translation>
+        <translation type="vanished">Модуль</translation>
     </message>
     <message>
         <source>White</source>
-        <translation>Белый</translation>
+        <translation type="vanished">Белый</translation>
     </message>
     <message>
         <source>Cpu</source>
@@ -4191,6 +4312,13 @@ Not valid Package file:
   Внимание: конденсатор не может быстро обновляться  
 
  Установите Авто шаг &gt;=1 для этого конденсатора  </translation>
+    </message>
+</context>
+<context>
+    <name>Rectangle</name>
+    <message>
+        <source>Rectangle</source>
+        <translation type="unfinished">Прямоугольник</translation>
     </message>
 </context>
 <context>
@@ -5097,6 +5225,17 @@ Do you want to save your changes?
     </message>
 </context>
 <context>
+    <name>Thermistor</name>
+    <message>
+        <source>Thermistor</source>
+        <translation type="unfinished">Терморезистор</translation>
+    </message>
+    <message>
+        <source>Parameters</source>
+        <translation type="unfinished">Параметры</translation>
+    </message>
+</context>
+<context>
     <name>ThermistorBase</name>
     <message>
         <source>Main</source>
@@ -5249,6 +5388,30 @@ Do you want to save your changes?
     <message>
         <source>Connectors</source>
         <translation type="vanished">Соединители</translation>
+    </message>
+    <message>
+        <source>Bus</source>
+        <translation type="unfinished">Шина</translation>
+    </message>
+    <message>
+        <source>Hide group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change group name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rename Tunnels</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New name:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5454,15 +5617,15 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Main</source>
-        <translation>Основные</translation>
+        <translation type="vanished">Основные</translation>
     </message>
     <message>
         <source>Invert Output</source>
-        <translation>Инвертировать выход</translation>
+        <translation type="vanished">Инвертировать выход</translation>
     </message>
     <message>
         <source>Open Drain</source>
-        <translation>Открытый сток</translation>
+        <translation type="vanished">Открытый сток</translation>
     </message>
     <message>
         <source>Electric</source>
@@ -5475,6 +5638,10 @@ Do you want to save your changes?
     <message>
         <source>Gates</source>
         <translation type="obsolete">Логические элементы</translation>
+    </message>
+    <message>
+        <source>Invert Inputs</source>
+        <translation type="unfinished">Инвертировать входы</translation>
     </message>
 </context>
 <context>
@@ -5513,6 +5680,13 @@ Do you want to save your changes?
     <message>
         <source>     ERROR!!! Compilation Failed</source>
         <translation>     ОШИБКА! Неудачная компиляция</translation>
+    </message>
+</context>
+<context>
+    <name>elCapacitor</name>
+    <message>
+        <source>Electrolytic Capacitor</source>
+        <translation type="unfinished">Электролитический конденсатор</translation>
     </message>
 </context>
 <context>

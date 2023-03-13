@@ -13,8 +13,6 @@ class IoPin;
 
 class MAINMODULE_EXPORT VoltSource : public VarSource
 {
-    Q_OBJECT
-
     public:
         VoltSource( QObject* parent, QString type, QString id );
         ~VoltSource();

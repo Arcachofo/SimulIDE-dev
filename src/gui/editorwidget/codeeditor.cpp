@@ -56,14 +56,14 @@ CodeEditor::CodeEditor( QWidget* parent, OutPanelText* outPane )
     p.setColor( QPalette::Text, QColor( 0, 0, 0) );
     setPalette( p );
 
-    connect( this, SIGNAL( blockCountChanged( int )),
-             this, SLOT( updateLineNumberAreaWidth( int )), Qt::UniqueConnection );
+    connect( this, &CodeEditor::blockCountChanged,
+             this, &CodeEditor::updateLineNumberAreaWidth, Qt::UniqueConnection );
 
-    connect( this, SIGNAL( updateRequest( QRect,int )),
-             this, SLOT( updateLineNumberArea( QRect,int )), Qt::UniqueConnection);
+    connect( this, &CodeEditor::updateRequest,
+             this, &CodeEditor::updateLineNumberArea, Qt::UniqueConnection);
 
-    connect( this, SIGNAL( cursorPositionChanged() ),
-             this, SLOT( highlightCurrentLine() ), Qt::UniqueConnection);
+    connect( this, &CodeEditor::cursorPositionChanged,
+             this, &CodeEditor::highlightCurrentLine, Qt::UniqueConnection);
     
     setLineWrapMode( QPlainTextEdit::NoWrap );
     updateLineNumberAreaWidth( 0 );
@@ -447,38 +447,38 @@ void CodeEditor::contextMenuEvent( QContextMenuEvent* event )
     QMenu menu;
 
     QAction* undoAction = menu.addAction(QIcon(":/undo.svg"),tr("Undo")+"\tCtrl+Z");
-    connect( undoAction, SIGNAL( triggered()),
-              this, SLOT(undo()), Qt::UniqueConnection );
+    connect( undoAction, &QAction::triggered,
+              this, &CodeEditor::undo, Qt::UniqueConnection );
 
     QAction* redoAction = menu.addAction(QIcon(":/redo.svg"),tr("Redo")+"\tCtrl+Y");
-    connect( redoAction, SIGNAL( triggered()),
-              this, SLOT(redo()), Qt::UniqueConnection );
+    connect( redoAction, &QAction::triggered,
+              this, &CodeEditor::redo, Qt::UniqueConnection );
 
     menu.addSeparator();
 
     QAction* cutAction = menu.addAction(QIcon(":/cut.svg"),tr("Cut")+"\tCtrl+X");
-    connect( cutAction, SIGNAL( triggered()),
-                   this, SLOT(cut()), Qt::UniqueConnection );
+    connect( cutAction, &QAction::triggered,
+                  this, &CodeEditor::cut, Qt::UniqueConnection );
 
     QAction* copyAction = menu.addAction(QIcon(":/copy.svg"),tr("Copy")+"\tCtrl+C");
-    connect( copyAction, SIGNAL( triggered()),
-                   this, SLOT(copy()), Qt::UniqueConnection );
+    connect( copyAction, &QAction::triggered,
+                   this, &CodeEditor::copy, Qt::UniqueConnection );
 
     QAction* pasteAction = menu.addAction(QIcon(":/paste.svg"),tr("Paste")+"\tCtrl+V");
-    connect( pasteAction, SIGNAL( triggered()),
-                    this, SLOT(paste()), Qt::UniqueConnection );
+    connect( pasteAction, &QAction::triggered,
+                    this, &CodeEditor::paste, Qt::UniqueConnection );
 
     QAction* removeAction = menu.addAction( QIcon( ":/remove.svg"),tr("Remove") );
-    connect( removeAction, SIGNAL( triggered()),
-                     this, SLOT(deleteSelected()), Qt::UniqueConnection );
+    connect( removeAction, &QAction::triggered,
+                     this, &CodeEditor::deleteSelected, Qt::UniqueConnection );
 
     if( !textCursor().hasSelection() ) removeAction->setDisabled( true );
 
     menu.addSeparator();
 
     QAction* reloadAction = menu.addAction(QIcon(":/reload.svg"), tr("Reload Document")+"\tCtrl+R");
-    connect( reloadAction, SIGNAL( triggered()),
-             EditorWindow::self(), SLOT(reload()), Qt::UniqueConnection );
+    connect( reloadAction, &QAction::triggered,
+             EditorWindow::self(), &EditorWindow::reload, Qt::UniqueConnection );
 
     menu.exec( event->globalPos() );
 }
@@ -749,18 +749,18 @@ void LineNumberArea::contextMenuEvent( QContextMenuEvent *event)
     QMenu menu;
 
     QAction* addBrkAction = menu.addAction( QIcon(":/breakpoint.png"),tr( "Add BreakPoint" ) );
-    connect( addBrkAction, SIGNAL( triggered()),
-               m_codeEditor, SLOT(slotAddBreak()), Qt::UniqueConnection );
+    connect( addBrkAction, &QAction::triggered,
+               m_codeEditor, &CodeEditor::slotAddBreak, Qt::UniqueConnection );
 
     QAction* remBrkAction = menu.addAction( QIcon(":/nobreakpoint.png"),tr( "Remove BreakPoint" ) );
-    connect( remBrkAction, SIGNAL( triggered()),
-               m_codeEditor, SLOT(slotRemBreak()), Qt::UniqueConnection );
+    connect( remBrkAction, &QAction::triggered,
+               m_codeEditor, &CodeEditor::slotRemBreak, Qt::UniqueConnection );
 
     menu.addSeparator();
 
     QAction* clrBrkAction = menu.addAction( QIcon(":/remove.svg"),tr( "Clear All BreakPoints" ) );
-    connect( clrBrkAction, SIGNAL( triggered()),
-               m_codeEditor, SLOT(slotClearBreak()), Qt::UniqueConnection );
+    connect( clrBrkAction, &QAction::triggered,
+               m_codeEditor, &CodeEditor::slotClearBreak, Qt::UniqueConnection );
 
     if( menu.exec(event->globalPos()) != 0 ) lastPos = event->pos().y();
 }

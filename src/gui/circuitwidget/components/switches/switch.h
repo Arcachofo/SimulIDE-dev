@@ -12,17 +12,16 @@ class LibraryItem;
 
 class MAINMODULE_EXPORT Switch : public SwitchBase
 {
-    Q_OBJECT
     public:
         Switch( QObject* parent, QString type, QString id );
         ~Switch();
 
         static Component* construct( QObject* parent, QString type, QString id );
-        static LibraryItem *libraryItem();
+        static LibraryItem* libraryItem();
 
         virtual void stamp() override;
 
-        virtual void paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget );
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
 
     public slots:
         virtual void keyEvent( QString key, bool pressed );

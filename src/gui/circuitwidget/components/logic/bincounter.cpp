@@ -17,7 +17,7 @@ Component *BinCounter::construct(QObject *parent, QString type, QString id)
 LibraryItem* BinCounter::libraryItem()
 {
     return new LibraryItem(
-        tr( "Counter" ),
+        QCoreApplication::translate("BinCounter", "Counter"),
         "Arithmetic",
         "2to1.png",
         "Counter",

@@ -27,7 +27,6 @@ class MAINMODULE_EXPORT Transformer : public Component, public eElement
             int x;
         };
 
-        Q_OBJECT
     public:
         Transformer( QObject* parent, QString type, QString id );
         ~Transformer();

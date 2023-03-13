@@ -23,7 +23,7 @@ Component* MuxAnalog::construct( QObject* parent, QString type, QString id )
 LibraryItem* MuxAnalog::libraryItem()
 {
     return new LibraryItem(
-        tr( "Analog Mux" ),
+        QCoreApplication::translate( "MuxAnalog","Analog Mux" ),
         "Other Active",
         "1to3-c.png",
         "MuxAnalog",
@@ -154,6 +154,7 @@ void MuxAnalog::deleteAddrBits( int d )
     for( int i=start; i<m_addrBits; i++ )
     {
         m_addrPin[i]->removeConnector();
+        m_signalPin.removeAll( m_addrPin[i] );
         delete m_addrPin[i];
     }
     m_addrBits = m_addrBits-d;
@@ -190,6 +191,7 @@ void MuxAnalog::deleteResistors( int d )
     for( int i=start; i<m_channels; ++i )
     {
         m_chanPin[i]->removeConnector();
+        m_signalPin.removeAll( m_chanPin[i] );
         delete m_chanPin[i];
         delete m_ePin[i];
         delete m_resistor[i];

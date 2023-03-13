@@ -154,8 +154,8 @@ void SwitchDip::createSwitches( int c )
         proxy->setParentItem( this );
         proxy->setPos( QPoint( 3, -27+i*8 ) );
         m_proxys.append( proxy );
-        connect( button, SIGNAL( released() ),
-                   this, SLOT  ( onbuttonclicked() ), Qt::UniqueConnection);
+        connect( button, &QPushButton::released,
+                   this, &SwitchDip::onbuttonclicked, Qt::UniqueConnection);
         
         QPoint pinpos = QPoint(-8,-32+8+i*8 );
         Pin* pin = new Pin( 180, pinpos, butId+"-pinP", 0, this);
@@ -176,12 +176,13 @@ void SwitchDip::deleteSwitches( int d )
     for( int i=start*2; i<m_size*2; i++ )
     {
         m_pin[i]->removeConnector();
+        m_signalPin.removeAll( m_pin[i] );
         delete m_pin[i];
     }
     for( int i=start; i<m_size; i++ )
     {
         QPushButton* button = m_buttons.takeLast();
-        disconnect( button, SIGNAL( released() ), this, SLOT  ( onbuttonclicked() ));
+        disconnect( button, &QPushButton::released, this, &SwitchDip::onbuttonclicked );
         delete button;
         
         m_proxys.removeLast();
@@ -217,5 +218,3 @@ void SwitchDip::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWid
     Component::paint( p, option, widget );
     p->drawRoundRect( m_area, 4, 4 );
 }
-
-#include "moc_switchdip.cpp"

@@ -12,7 +12,6 @@ class LibraryItem;
 
 class MAINMODULE_EXPORT Servo : public LogicComponent
 {
-        Q_OBJECT
     public:
         Servo( QObject* parent, QString type, QString id );
         ~Servo();

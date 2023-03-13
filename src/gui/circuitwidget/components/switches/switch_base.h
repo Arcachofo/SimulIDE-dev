@@ -13,7 +13,6 @@ class QGraphicsProxyWidget;
 
 class MAINMODULE_EXPORT SwitchBase : public MechContact
 {
-    Q_OBJECT
     public:
         SwitchBase( QObject* parent, QString type, QString id );
         ~SwitchBase();

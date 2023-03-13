@@ -85,5 +85,3 @@ void ClockBase::setRunning( bool running )
 }
 
 void ClockBase::onbuttonclicked() { setRunning( !m_isRunning ); }
-
-#include "moc_clock-base.cpp"

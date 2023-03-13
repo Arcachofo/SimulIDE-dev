@@ -18,7 +18,6 @@ class CustomButton;
 
 class MAINMODULE_EXPORT FixedVolt : public Component, public eElement
 {
-        Q_OBJECT
     public:
         FixedVolt( QObject* parent, QString type, QString id );
         ~FixedVolt();

@@ -13,7 +13,6 @@ class LibraryItem;
 
 class MAINMODULE_EXPORT Csource : public Component, public eResistor
 {
-        Q_OBJECT
     public:
         Csource( QObject* parent, QString type, QString id );
         ~Csource();

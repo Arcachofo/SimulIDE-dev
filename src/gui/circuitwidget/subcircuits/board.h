@@ -12,8 +12,6 @@ class ShieldSubc;
 
 class MAINMODULE_EXPORT BoardSubc : public SubCircuit
 {
-    Q_OBJECT
-
     public:
         BoardSubc( QObject* parent, QString type, QString id );
         ~BoardSubc();

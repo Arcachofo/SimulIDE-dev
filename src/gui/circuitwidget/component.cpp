@@ -1,4 +1,4 @@
-/***************************************************************************
+﻿/***************************************************************************
  *   Copyright (C) 2012 by Santiago González                               *
  *                                                                         *
  ***( see copyright.txt file at root folder )*******************************/
@@ -71,7 +71,7 @@ Component::Component( QObject* parent, QString type, QString id )
     m_valLabel->setFont( f );
     m_valLabel->setVisible( false );
     
-    setObjectName( id );
+    //setObjectName( id );
     if( !id.contains("-") ) id.prepend( type+"-" );
     setIdLabel( id );
 
@@ -207,7 +207,7 @@ void Component::mouseMoveEvent( QGraphicsSceneMouseEvent* event )
     {
         Component* parentComp = static_cast<Component*>( this->parentItem() );
         parentComp->mouseMoveEvent( event );
-        if( !m_hidden ) emit moved();
+        if( !m_hidden ) moveSignal();// emit moved();
         return;
     }
     event->accept();
@@ -316,53 +316,53 @@ void Component::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu 
     if( !event && m_isMainComp ) // Main Component in Subcircuit
     {
         QAction* propertiesAction = menu->addAction( QIcon( ":/properties.svg"),tr("Properties") );
-        connect( propertiesAction, SIGNAL( triggered()),
-                             this, SLOT(slotProperties()), Qt::UniqueConnection );
+        connect( propertiesAction, &QAction::triggered,
+                             this, &Component::slotProperties, Qt::UniqueConnection );
         menu->addSeparator();
         return;
     }
     m_eventpoint = mapToScene( toGrid(event->pos()) );
 
     QAction* copyAction = menu->addAction(QIcon(":/copy.svg"),tr("Copy")+"\tCtrl+C");
-    connect( copyAction, SIGNAL( triggered()),
-                   this, SLOT(slotCopy()), Qt::UniqueConnection );
+    connect( copyAction, &QAction::triggered,
+                   this, &Component::slotCopy, Qt::UniqueConnection );
 
     QAction* cutAction = menu->addAction(QIcon(":/cut.svg"),tr("Cut")+"\tCtrl+X");
-    connect( cutAction, SIGNAL( triggered()),
-                   this, SLOT(slotCut()), Qt::UniqueConnection );
+    connect( cutAction, &QAction::triggered,
+                   this, &Component::slotCut, Qt::UniqueConnection );
 
     QAction* removeAction = menu->addAction( QIcon( ":/remove.svg"),tr("Remove")+"\tDel" );
-    connect( removeAction, SIGNAL( triggered()),
-                     this, SLOT(slotRemove()), Qt::UniqueConnection );
+    connect( removeAction, &QAction::triggered,
+                     this, &Component::slotRemove, Qt::UniqueConnection );
 
     /*QAction* groupAction = menu->addAction( QIcon( ":/group.png"),tr("Group") );
-    connect( groupAction, SIGNAL( triggered()),
-                     this, SLOT(slotGroup()), Qt::UniqueConnection );*/
+    connect( groupAction, &QAction::triggered,
+                     this, &Component::slotGroup()), Qt::UniqueConnection );*/
     
     QAction* propertiesAction = menu->addAction( QIcon( ":/properties.svg"),tr("Properties") );
-    connect( propertiesAction, SIGNAL( triggered()),
-                         this, SLOT(slotProperties()), Qt::UniqueConnection );
+    connect( propertiesAction, &QAction::triggered,
+                         this, &Component::slotProperties, Qt::UniqueConnection );
     menu->addSeparator();
 
     QAction* rotateCWAction = menu->addAction( QIcon( ":/rotatecw.svg"),tr("Rotate CW")+"\tCtrl+R" );
-    connect( rotateCWAction, SIGNAL( triggered()),
-                       this, SLOT(rotateCW()), Qt::UniqueConnection );
+    connect( rotateCWAction, &QAction::triggered,
+                       this, &Component::rotateCW, Qt::UniqueConnection );
 
     QAction* rotateCCWAction = menu->addAction(QIcon( ":/rotateccw.svg"),tr("Rotate CCW") );
-    connect( rotateCCWAction, SIGNAL( triggered()),
-                        this, SLOT(rotateCCW()), Qt::UniqueConnection );
+    connect( rotateCCWAction, &QAction::triggered,
+                        this, &Component::rotateCCW, Qt::UniqueConnection );
 
     QAction* rotateHalfAction = menu->addAction(QIcon(":/rotate180.svg"),tr("Rotate 180") );
-    connect( rotateHalfAction, SIGNAL( triggered()),
-                         this, SLOT(rotateHalf()), Qt::UniqueConnection );
+    connect( rotateHalfAction, &QAction::triggered,
+                         this, &Component::rotateHalf, Qt::UniqueConnection );
     
     QAction* H_flipAction = menu->addAction(QIcon(":/hflip.svg"),tr("Horizontal Flip") );
-    connect( H_flipAction, SIGNAL( triggered()),
-                     this, SLOT(H_flip()), Qt::UniqueConnection );
+    connect( H_flipAction, &QAction::triggered,
+                     this, &Component::H_flip, Qt::UniqueConnection );
     
     QAction* V_flipAction = menu->addAction(QIcon(":/vflip.svg"),tr("Vertical Flip") );
-    connect( V_flipAction, SIGNAL( triggered()),
-                     this, SLOT(V_flip()), Qt::UniqueConnection );
+    connect( V_flipAction, &QAction::triggered,
+                     this, &Component::V_flip, Qt::UniqueConnection );
 
     menu->exec(event->screenPos());
 }
@@ -453,7 +453,8 @@ void Component::rotateCW()
     if( m_hidden ) return;
     Circuit::self()->addCompState( this, "rotation" );
     setRotation( rotation() + 90 );
-    emit moved();
+    //emit moved();
+    moveSignal();
 }
 
 void Component::rotateCCW()
@@ -461,7 +462,8 @@ void Component::rotateCCW()
     if( m_hidden ) return;
     Circuit::self()->addCompState( this, "rotation" );
     setRotation( rotation() - 90 );
-    emit moved();
+    //emit moved();
+    moveSignal();
 }
 
 void Component::rotateHalf()
@@ -469,7 +471,8 @@ void Component::rotateHalf()
     if( m_hidden ) return;
     Circuit::self()->addCompState( this, "rotation" );
     setRotation( rotation() - 180);
-    emit moved();
+    //emit moved();
+    moveSignal();
 }
 
 QString Component::idLabel() { return m_idLabel->toPlainText(); }
@@ -543,8 +546,26 @@ void Component::setflip()
     setTransform( QTransform::fromScale( m_Hflip, m_Vflip ) );
     m_idLabel->setTransform( QTransform::fromScale( m_Hflip, m_Vflip ) );
     m_valLabel->setTransform( QTransform::fromScale( m_Hflip, m_Vflip ) );
-    emit flip( m_Hflip, m_Vflip );
-    emit moved();
+    //emit flip( m_Hflip, m_Vflip );
+    for( Pin* pin : m_signalPin ) pin->flip( m_Hflip, m_Vflip );
+
+    //emit moved();                  // Used by sockets
+    moveSignal();
+}
+
+void Component::moveSignal()
+{
+    for( Pin* pin : m_signalPin ) pin->isMoved();
+}
+
+void Component::addSignalPin( Pin* pin )
+{
+    if( !m_signalPin.contains( pin ) ) m_signalPin.append( pin );
+}
+
+void Component::remSignalPin( Pin* pin )
+{
+    m_signalPin.removeAll( pin );
 }
 
 void Component::setHidden(bool hid, bool hidArea, bool hidLabel )
@@ -564,7 +585,7 @@ QString Component::print()
     if( !m_printable ) return "";
     
     QString str = m_id+" : ";
-    str += objectName().split("-").first()+" ";
+    str += m_id.split("-").first()+" ";
     /// FIXME if( m_value > 0 ) str += QString::number( m_value )+" "+m_unit+"\n";
     
     return str;
@@ -608,5 +629,3 @@ void Component::paint( QPainter* p, const QStyleOptionGraphicsItem*, QWidget* )
     p->setBrush( color );
     p->setPen( pen );
 }
-
-#include "moc_component.cpp"

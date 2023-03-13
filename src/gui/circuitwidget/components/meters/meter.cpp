@@ -45,10 +45,6 @@ Meter::Meter( QObject* parent, QString type, QString id )
     m_display.setVisible( true );
 
     Simulator::self()->addToUpdateList( this );
-
-    /*addPropGroup( { tr("Main"), {
-new BoolProp<Meter>( "SwitchPins", tr("Switch Pins"),"", this, &Meter::swithchPins, &Meter::setSwitchPins )
-    } } );*/
 }
 Meter::~Meter(){}
 
@@ -127,5 +123,3 @@ void Meter::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget*
     QPointF( 26, -5 )   };
     p->drawPolygon(points, 3);*/
 }
-
-#include "moc_meter.cpp"

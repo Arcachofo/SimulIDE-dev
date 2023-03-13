@@ -13,7 +13,7 @@ Component* Line::construct( QObject* parent, QString type, QString id )
 LibraryItem* Line::libraryItem()
 {
     return new LibraryItem(
-        QObject::tr( "Line" ),
+        tr( "Line" ),
         "Graphical",
         "line.png",
         "Line",

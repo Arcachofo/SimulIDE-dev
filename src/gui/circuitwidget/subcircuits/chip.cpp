@@ -31,11 +31,11 @@ Chip::Chip( QObject* parent, QString type, QString id )
         << "Module";
 
     m_enumNames = QStringList()
-        << QObject::tr("None")
-        << QObject::tr("Logic")
-        << QObject::tr("Board")
-        << QObject::tr("Shield")
-        << QObject::tr("Module");
+        << tr("None")
+        << tr("Logic")
+        << tr("Board")
+        << tr("Shield")
+        << tr("Module");
 
     m_subcType = None;
     m_isLS = false;
@@ -195,6 +195,7 @@ void Chip::deletePin( Pin* pin )
     if( !pin ) return;
 
     pin->removeConnector();
+    m_signalPin.removeAll( pin );
     delete pin;
 }
 

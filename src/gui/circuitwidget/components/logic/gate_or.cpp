@@ -17,7 +17,7 @@ Component* OrGate::construct( QObject* parent, QString type, QString id )
 LibraryItem* OrGate::libraryItem()
 {
     return new LibraryItem(
-        tr( "Or Gate" ),
+        QCoreApplication::translate("OrGate","Or Gate"),
         "Gates",
         "orgate.png",
         "Or Gate",

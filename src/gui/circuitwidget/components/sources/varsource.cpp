@@ -53,11 +53,11 @@ VarSource::VarSource( QObject* parent, QString type, QString id )
 
     Simulator::self()->addToUpdateList( this );
 
-    connect( m_button, SIGNAL( clicked()),
-             this,     SLOT  ( onbuttonclicked()), Qt::UniqueConnection );
+    connect( m_button, &CustomButton::clicked,
+             this,     &VarSource::onbuttonclicked, Qt::UniqueConnection );
 
-    connect( m_dial,   SIGNAL( valueChanged(int) ),
-             this,     SLOT  ( valueChanged(int)), Qt::UniqueConnection );
+    connect( m_dial, &QDial::valueChanged,
+             this,   &VarSource::valueChanged, Qt::UniqueConnection );
 
     addPropGroup( { "Hidden1", {
 new BoolProp<VarSource>( "Running", "","", this, &VarSource::running, &VarSource::setRunning ),
@@ -128,5 +128,3 @@ void VarSource::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWid
 
     //p->fillRect( m_area, Qt::darkGray );
 }
-
-#include "moc_varsource.cpp"

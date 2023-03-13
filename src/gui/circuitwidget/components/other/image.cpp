@@ -59,8 +59,8 @@ void Image::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
 void Image::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
 {
     QAction* loadAction = menu->addAction( QIcon(":/load.svg"),tr("Load Image") );
-    connect( loadAction, SIGNAL(triggered()),
-                   this, SLOT(slotLoad()), Qt::UniqueConnection );
+    connect( loadAction, &QAction::triggered,
+                   this, &Image::slotLoad, Qt::UniqueConnection );
 
     menu->addSeparator();
 }
@@ -103,8 +103,8 @@ void Image::setBackground( QString bck )
         if( m_movie->isValid() )
         {
             m_movie->setCacheMode( QMovie::CacheAll );
-            connect( m_movie, SIGNAL( updated(const QRect &) ),
-                     this, SLOT( updateGif(const QRect &) ), Qt::UniqueConnection );
+            connect( m_movie, &QMovie::updated,
+                     this, &Image::updateGif, Qt::UniqueConnection );
             m_movie->start();
         }
         else qDebug() << "Image::setBackground : not a valid Gif animation";
@@ -140,5 +140,3 @@ void Image::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget*
 
     p->drawPixmap( m_area, m_image, m_image.rect() );
 }
-
-#include "moc_image.cpp"

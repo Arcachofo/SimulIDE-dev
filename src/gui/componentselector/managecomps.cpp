@@ -36,8 +36,8 @@ manCompDialog::manCompDialog( QWidget* parent )
     table->setColumnWidth( 0, 300 );
     table->setColumnWidth( 1, 90 );
 
-    connect( table, SIGNAL( itemChanged( QTableWidgetItem* )),
-                   this, SLOT( slotItemChanged( QTableWidgetItem* )), Qt::UniqueConnection );
+    connect( table, &QTableWidget::itemChanged,
+              this, &manCompDialog::slotItemChanged, Qt::UniqueConnection );
 }
 
 void manCompDialog::addItem( QTreeWidgetItem* item )
@@ -136,5 +136,3 @@ void manCompDialog::reject()
     }
     ComponentSelector::self()->setShortCuts( shortCuts );
 }
-
-#include "moc_managecomps.cpp"

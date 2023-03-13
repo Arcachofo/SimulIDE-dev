@@ -319,7 +319,7 @@ void ConnectorLine::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
        event->accept();
        QMenu menu;
 
-       QAction* removeAction = menu.addAction( QObject::tr("Remove") );
+       QAction* removeAction = menu.addAction( tr("Remove") );
        connect( removeAction, SIGNAL(triggered()),
                        this, SLOT(remove()), Qt::UniqueConnection );
 

@@ -56,8 +56,8 @@ FixedVolt::FixedVolt( QObject* parent, QString type, QString id )
     
     Simulator::self()->addToUpdateList( this );
 
-    connect( m_button, SIGNAL( clicked() ),
-             this,     SLOT  ( onbuttonclicked() ), Qt::UniqueConnection );
+    connect( m_button, &CustomButton::clicked,
+             this,     &FixedVolt::onbuttonclicked, Qt::UniqueConnection );
 
     addPropGroup( { "Hidden", {
 new BoolProp<FixedVolt>( "Out", "","", this, &FixedVolt::out, &FixedVolt::setOut ),
@@ -121,4 +121,3 @@ void FixedVolt::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWid
 
     p->drawRoundedRect( QRectF( -8, -8, 16, 16 ), 2, 2);
 }
-#include "moc_fixedvolt.cpp"

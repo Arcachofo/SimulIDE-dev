@@ -18,7 +18,6 @@ class IoPin;
 
 class MAINMODULE_EXPORT Ssd1306 : public Component, public TwiModule
 {
-        Q_OBJECT
     public:
         Ssd1306( QObject* parent, QString type, QString id );
         ~Ssd1306();

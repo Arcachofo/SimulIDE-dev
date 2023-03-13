@@ -327,8 +327,8 @@ void WaveGen::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
     if( m_waveType == Wav )
     {
         QAction* loadAction = menu->addAction( QIcon(":/load.svg"),tr("Load Wav File") );
-        connect( loadAction, SIGNAL(triggered()),
-                       this, SLOT(slotLoad()), Qt::UniqueConnection );
+        connect( loadAction, &QAction::triggered,
+                       this, &WaveGen::slotLoad, Qt::UniqueConnection );
 
         menu->addSeparator();
     }
@@ -499,4 +499,3 @@ void WaveGen::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidge
     p->drawRoundedRect( m_area,2 ,2 );
     p->drawPixmap( m_area.x()+3, m_area.y()+4,16, 8, *m_wavePixmap );
 }
-

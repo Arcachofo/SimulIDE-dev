@@ -102,6 +102,7 @@ void ResistorDip::deleteResistors( int d )
     for( int i=start*2; i<m_size*2; ++i )
     {
         m_pin[i]->removeConnector();
+        m_signalPin.removeAll( m_pin[i] );
         delete m_pin[i];
     }
     for( int i=start; i<m_size; i++ ) delete m_resistor[i];

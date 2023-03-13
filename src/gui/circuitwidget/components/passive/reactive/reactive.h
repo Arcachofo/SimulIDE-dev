@@ -11,7 +11,6 @@
 
 class MAINMODULE_EXPORT Reactive : public Comp2Pin, public eReactive
 {
-        Q_OBJECT
     public:
         Reactive( QObject* parent, QString type, QString id );
         ~Reactive();

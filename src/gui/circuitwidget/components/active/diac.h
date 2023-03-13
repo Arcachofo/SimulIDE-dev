@@ -15,7 +15,6 @@ class eResistor;
 
 class MAINMODULE_EXPORT Diac : public Component, public eElement
 {
-        Q_OBJECT
     public:
         Diac( QObject* parent, QString type, QString id );
         ~Diac();

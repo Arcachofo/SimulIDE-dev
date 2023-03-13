@@ -15,7 +15,7 @@ Component* Ground::construct( QObject* parent, QString type, QString id )
 LibraryItem* Ground::libraryItem()
 {
     return new LibraryItem(
-        QObject::tr( "Ground (0 V)" ),
+        tr( "Ground (0 V)" ),
         "Sources",
         "ground.png",
         "Ground",
@@ -34,7 +34,7 @@ Ground::Ground( QObject* parent, QString type, QString id )
     
     setLabelPos(-16, 8, 0);
 }
-Ground::~Ground() { /*delete m_out;*/ }
+Ground::~Ground() {}
 
 void Ground::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
 {

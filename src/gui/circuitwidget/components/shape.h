@@ -10,7 +10,6 @@
 
 class MAINMODULE_EXPORT Shape : public Component
 {
-        Q_OBJECT
     public:
         Shape( QObject* parent, QString type, QString id );
         ~Shape();

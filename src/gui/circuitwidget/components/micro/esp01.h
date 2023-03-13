@@ -16,8 +16,6 @@ class QSignalMapper;
 
 class MAINMODULE_EXPORT Esp01 : public Component, public UsartModule, public eElement
 {
-    Q_OBJECT
-
     public:
         Esp01( QObject* parent, QString type, QString id );
         ~Esp01();

@@ -12,7 +12,6 @@ class LibraryItem;
 
 class MAINMODULE_EXPORT SevenSegmentBCD : public BcdBase
 {
-        Q_OBJECT
     public:
         SevenSegmentBCD( QObject* parent, QString type, QString id );
         ~SevenSegmentBCD();

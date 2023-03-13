@@ -37,8 +37,8 @@ Switch::Switch( QObject* parent, QString type, QString id )
 
     SetupSwitches( 1, 1 );
 
-    connect( m_button, SIGNAL( clicked() ),
-             this,     SLOT  ( onbuttonclicked() ), Qt::UniqueConnection);
+    connect( m_button, &CustomButton::clicked,
+             this,     &Switch::onbuttonclicked, Qt::UniqueConnection);
 
     addPropGroup( { tr("Main"), {
 new BoolProp  <Switch>( "Norm_Close", tr("Normally Closed"),""      , this, &Switch::nClose, &Switch::setNClose ),
@@ -72,5 +72,3 @@ void Switch::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget
     Component::paint( p, option, widget );
     MechContact::paint( p, option, widget );
 }
-
-#include "moc_switch.cpp"

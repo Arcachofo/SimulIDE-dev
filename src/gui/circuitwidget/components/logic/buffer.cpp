@@ -17,7 +17,7 @@ Component* Buffer::construct( QObject* parent, QString type, QString id )
 LibraryItem* Buffer::libraryItem()
 {
     return new LibraryItem(
-        tr( "Buffer" ),
+        QCoreApplication::translate("Buffer", "Buffer"),
         "Gates",
         "buffer.png",
         "Buffer",

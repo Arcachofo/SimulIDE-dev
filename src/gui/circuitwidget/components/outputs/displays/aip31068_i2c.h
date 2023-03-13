@@ -14,7 +14,6 @@ class IoPin;
 
 class MAINMODULE_EXPORT Aip31068_i2c : public Hd44780_Base, public TwiModule
 {
-        Q_OBJECT
     public:
         Aip31068_i2c( QObject* parent, QString type, QString id );
         ~Aip31068_i2c();

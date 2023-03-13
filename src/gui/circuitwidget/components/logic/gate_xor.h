@@ -13,8 +13,6 @@ class LibraryItem;
 
 class MAINMODULE_EXPORT XorGate : public Gate
 {
-    Q_OBJECT
-
     public:
         XorGate( QObject* parent, QString type, QString id );
         ~XorGate();
@@ -28,5 +26,4 @@ class MAINMODULE_EXPORT XorGate : public Gate
     protected:
         virtual bool calcOutput( int inputs ) override;
 };
-
 #endif

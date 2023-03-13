@@ -16,7 +16,6 @@ class LibraryItem;
 
 class MAINMODULE_EXPORT Strain : public VarResBase
 {
-        Q_OBJECT
  public:
     Strain( QObject* parent, QString type, QString id );
     ~Strain();

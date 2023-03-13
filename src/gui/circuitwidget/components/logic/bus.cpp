@@ -21,7 +21,7 @@ Component* Bus::construct( QObject* parent, QString type, QString id )
 LibraryItem* Bus::libraryItem()
 {
     return new LibraryItem(
-        tr( "Bus" ),
+        QCoreApplication::translate("Bus", "Bus"),
         "Connectors",
         "bus.png",
         "Bus",
@@ -74,9 +74,11 @@ void Bus::setNumLines( int lines )
 
     for( int i=1; i<=m_numLines; i++ )
     {
-        if( m_pin[i]->connector() ) m_pin[i]->connector()->remove();
-        if( m_pin[i]->scene() ) Circuit::self()->removeItem( m_pin[i] );
-        delete m_pin[i];
+        Pin* pin = m_pin[i];
+        if( pin->connector() ) pin->connector()->remove();
+        if( pin->scene() ) Circuit::self()->removeItem( pin );
+        m_signalPin.removeAll( pin );
+        delete pin;
     }
     m_numLines = lines;
 

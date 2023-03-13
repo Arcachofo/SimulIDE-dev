@@ -16,7 +16,7 @@ Component* DecToBcd::construct( QObject* parent, QString type, QString id )
 LibraryItem* DecToBcd::libraryItem()
 {
     return new LibraryItem(
-        tr( "Encoder(10/16 to 4)" ),
+        QCoreApplication::translate("DecToBcd", "Encoder(10/16 to 4)"),
         "Converters",
         "3to2g.png",
         "DecToBcd",

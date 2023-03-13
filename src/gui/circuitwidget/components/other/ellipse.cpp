@@ -13,7 +13,7 @@ Component* Ellipse::construct( QObject* parent, QString type, QString id )
 LibraryItem* Ellipse::libraryItem()
 {
     return new LibraryItem(
-        QObject::tr( "Ellipse" ),
+        tr( "Ellipse" ),
         "Graphical",
         "ellipse.png",
         "Ellipse",

@@ -22,7 +22,7 @@ Component* Demux::construct( QObject* parent, QString type, QString id )
 LibraryItem* Demux::libraryItem()
 {
     return new LibraryItem(
-        tr( "Demux" ),
+        QCoreApplication::translate("Demux", "Demux"),
          "Converters" ,
         "demux.png",
         "Demux",

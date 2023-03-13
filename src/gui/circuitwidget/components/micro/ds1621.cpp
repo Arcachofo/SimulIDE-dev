@@ -77,11 +77,11 @@ DS1621::DS1621( QObject* parent, QString type, QString id )
     proxy->setParentItem( this );
     proxy->setPos( QPoint( 9, 4 ) );
 
-    connect( u_button, SIGNAL( pressed()),
-             this,     SLOT  ( upbuttonclicked()) );
+    connect( u_button, &QPushButton::pressed,
+             this,     &DS1621::upbuttonclicked );
 
-    connect( d_button, SIGNAL( pressed()),
-             this,     SLOT  ( downbuttonclicked()) );
+    connect( d_button, &QPushButton::pressed,
+             this,     &DS1621::downbuttonclicked );
 
     m_font.setFamily("Ubuntu Mono");
 #ifdef _WIN32
@@ -282,5 +282,3 @@ void DS1621::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget
     //p->drawText(-9, -3, "°C" );
     p->drawText(-9, -3, QString::number( m_temp )+"°C" );
 }
-
-#include "moc_ds1621.cpp"

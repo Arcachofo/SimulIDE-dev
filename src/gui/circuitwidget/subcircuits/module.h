@@ -10,8 +10,6 @@
 
 class MAINMODULE_EXPORT ModuleSubc : public ShieldSubc
 {
-    Q_OBJECT
-
     public:
         ModuleSubc( QObject* parent, QString type, QString id );
         ~ModuleSubc();

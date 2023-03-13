@@ -14,7 +14,6 @@ class LibraryItem;
 
 class MAINMODULE_EXPORT I2CRam : public IoComponent, public TwiModule, public MemData
 {
-    Q_OBJECT
     public:
         I2CRam( QObject* parent, QString type, QString id );
         ~I2CRam();

@@ -13,6 +13,7 @@
 
 JoystickWidget::JoystickWidget()
 {
+    m_changed = true;
 }
 JoystickWidget::~JoystickWidget() {}
 
@@ -31,21 +32,22 @@ void JoystickWidget::setupWidget()
     updateOutputValues();
 }
 
-void JoystickWidget::updateOutputValues() {
+void JoystickWidget::updateOutputValues()
+{
     m_xValue = m_movingOffset.x() * 1000 / width();
     m_yValue = m_movingOffset.y() * 1000 / height();
-    
-    emit valueChanged(m_xValue, m_yValue);
+
+    m_changed = true;
 }
 
-void JoystickWidget::mousePressEvent(QMouseEvent *event)
+void JoystickWidget::mousePressEvent( QMouseEvent* event )
 {
     if (event->button() == Qt::LeftButton)
         m_grabCenter = centerEllipse().contains(event->pos());
     else QWidget::mousePressEvent(event);
 }
  
-void JoystickWidget::mouseMoveEvent(QMouseEvent *event)
+void JoystickWidget::mouseMoveEvent( QMouseEvent* event )
 {
     if (m_grabCenter)
     {
@@ -58,7 +60,7 @@ void JoystickWidget::mouseMoveEvent(QMouseEvent *event)
         updateOutputValues();
 }   }
 
-void JoystickWidget::mouseReleaseEvent(QMouseEvent *event)
+void JoystickWidget::mouseReleaseEvent( QMouseEvent* event )
 {
     m_grabCenter = false;
     m_movingOffset = center();
@@ -66,7 +68,7 @@ void JoystickWidget::mouseReleaseEvent(QMouseEvent *event)
     updateOutputValues();
 }
 
-void JoystickWidget::paintEvent(QPaintEvent *)
+void JoystickWidget::paintEvent( QPaintEvent* )
 {
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
@@ -92,5 +94,3 @@ QPointF JoystickWidget::center()
 {
     return QPointF(width()/2, height()/2);
 }
-
-#include "moc_joystickwidget.cpp"

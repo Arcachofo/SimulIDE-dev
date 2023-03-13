@@ -15,7 +15,6 @@ class QGraphicsProxyWidget;
 
 class MAINMODULE_EXPORT Function : public IoComponent, public ScriptModule
 {
-    Q_OBJECT
     public:
         Function( QObject* parent, QString type, QString id );
         ~Function();

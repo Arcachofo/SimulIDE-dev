@@ -15,7 +15,6 @@ class eResistor;
 
 class MAINMODULE_EXPORT SCR : public Component, public eElement
 {
-        Q_OBJECT
     public:
         SCR( QObject* parent, QString type, QString id );
         ~SCR();

@@ -38,6 +38,7 @@ class EditorWidget : public QWidget
        virtual void stop(){;}
        virtual void run(){;}
        void findReplaceDialog();
+       void reload();
 
     protected slots:
         void confEditor();
@@ -49,7 +50,7 @@ class EditorWidget : public QWidget
         void closeTab(int);
         void documentWasModified();
         //void tabChanged( int tab );
-        void reload();
+
 
         void cut()   { getCodeEditor()->cut(); }
         void copy()  { getCodeEditor()->copy(); }

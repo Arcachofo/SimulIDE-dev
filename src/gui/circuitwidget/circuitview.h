@@ -15,8 +15,6 @@ class QPlainTextEdit;
 
 class CircuitView : public QGraphicsView
 {
-    Q_OBJECT
-
     public:
         CircuitView( QWidget *parent );
         ~CircuitView();

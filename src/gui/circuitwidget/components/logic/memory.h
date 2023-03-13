@@ -13,8 +13,6 @@ class LibraryItem;
 
 class MAINMODULE_EXPORT Memory : public LogicComponent, public MemData
 {
-    Q_OBJECT
-
     public:
         Memory( QObject* parent, QString type, QString id );
         ~Memory();

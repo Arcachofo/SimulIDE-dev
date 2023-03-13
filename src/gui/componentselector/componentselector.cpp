@@ -40,11 +40,11 @@ ComponentSelector::ComponentSelector( QWidget* parent )
 
     setContextMenuPolicy( Qt::CustomContextMenu );
 
-    connect( this, SIGNAL(customContextMenuRequested(const QPoint&)),
-             this, SLOT  (slotContextMenu(const QPoint&)), Qt::UniqueConnection );
+    connect( this, &ComponentSelector::customContextMenuRequested,
+             this, &ComponentSelector::slotContextMenu, Qt::UniqueConnection );
 
-    connect( this, SIGNAL(itemPressed(QTreeWidgetItem*, int)),
-             this, SLOT  (slotItemClicked(QTreeWidgetItem*, int)), Qt::UniqueConnection );
+    connect( this, &ComponentSelector::itemPressed,
+             this, &ComponentSelector::slotItemClicked, Qt::UniqueConnection );
 }
 ComponentSelector::~ComponentSelector(){}
 
@@ -274,7 +274,8 @@ void ComponentSelector::slotContextMenu( const QPoint& point )
     QMenu menu;
 
     QAction* manageComponents = menu.addAction( QIcon(":/fileopen.png"),tr("Manage Components") );
-    connect( manageComponents, SIGNAL(triggered()), this, SLOT(slotManageComponents()) );
+    connect( manageComponents, &QAction::triggered,
+             this, &ComponentSelector::slotManageComponents, Qt::UniqueConnection );
 
     menu.exec( mapToGlobal(point) );
 }
@@ -315,5 +316,3 @@ void ComponentSelector::search( QString filter )
         }
     }
 }
-
-#include "moc_componentselector.cpp"

@@ -13,7 +13,6 @@ class LibraryItem;
 
 class MAINMODULE_EXPORT Battery : public Comp2Pin, public eResistor
 {
-        Q_OBJECT
     public:
         Battery( QObject* parent, QString type, QString id );
         ~Battery();

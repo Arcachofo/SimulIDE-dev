@@ -14,7 +14,6 @@ class Label : public QGraphicsTextItem
 {
     friend class Component;
 
-    Q_OBJECT
     public:
         Label();
         ~Label();

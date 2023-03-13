@@ -14,7 +14,6 @@ class LibraryItem;
 
 class MAINMODULE_EXPORT LedRgb : public Component, public eElement
 {
-        Q_OBJECT
     public:
         LedRgb( QObject* parent, QString type, QString id );
         ~LedRgb();

@@ -26,7 +26,6 @@ class LaChannel;
 
 class MAINMODULE_EXPORT Pin : public QObject, public QGraphicsItem, public ePin, public Updatable
 {
-    Q_OBJECT
     Q_INTERFACES(QGraphicsItem)
 
     public:
@@ -108,7 +107,7 @@ class MAINMODULE_EXPORT Pin : public QObject, public QGraphicsItem, public ePin,
 
         virtual void paint( QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget );
 
-    public slots:
+    //public slots:
         void isMoved();
         void flip( int h, int v );
 

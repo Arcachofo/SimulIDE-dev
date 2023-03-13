@@ -10,11 +10,11 @@
 PushBase::PushBase( QObject* parent, QString type, QString id )
         : SwitchBase( parent, type, id )
 {
-    connect( m_button, SIGNAL( pressed() ),
-                 this, SLOT  ( onbuttonPressed() ), Qt::UniqueConnection );
+    connect( m_button, &CustomButton::pressed,
+                 this, &PushBase::onbuttonPressed, Qt::UniqueConnection );
 
-    connect( m_button, SIGNAL( released() ),
-                 this, SLOT  ( onbuttonReleased() ), Qt::UniqueConnection );
+    connect( m_button, &CustomButton::released,
+                 this, &PushBase::onbuttonReleased, Qt::UniqueConnection );
 }
 PushBase::~PushBase(){}
 
@@ -43,5 +43,3 @@ void PushBase::keyEvent( QString key, bool pressed )
         if( pressed ) onbuttonPressed();
         else          onbuttonReleased();
 }   }
-
-#include "moc_push_base.cpp"

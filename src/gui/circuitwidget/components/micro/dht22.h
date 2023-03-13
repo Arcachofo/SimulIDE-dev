@@ -17,8 +17,6 @@ class IoPin;
 
 class MAINMODULE_EXPORT Dht22 : public Component , public eElement
 {
-    Q_OBJECT
-
     public:
         Dht22( QObject* parent, QString type, QString id );
         ~Dht22();

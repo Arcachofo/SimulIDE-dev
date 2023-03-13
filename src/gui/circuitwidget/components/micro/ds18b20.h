@@ -16,8 +16,6 @@ class IoPin;
 
 class MAINMODULE_EXPORT Ds18b20 : public Component , public eElement
 {
-    Q_OBJECT
-
     public:
         Ds18b20( QObject* parent, QString type, QString id );
         ~Ds18b20();

@@ -29,5 +29,3 @@ void BoardSubc::remove()
     }
     SubCircuit::remove();
 }
-
-#include "moc_board.cpp"

@@ -12,7 +12,6 @@
 
 class MAINMODULE_EXPORT VarSource : public Component, public eElement
 {
-    Q_OBJECT
     public:
         VarSource( QObject* parent, QString type, QString id );
         ~VarSource();

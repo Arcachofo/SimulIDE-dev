@@ -12,7 +12,6 @@ class LibraryItem;
 
 class MAINMODULE_EXPORT ShiftReg : public LogicComponent
 {
-        Q_OBJECT
     public:
         ShiftReg( QObject* parent, QString type, QString id );
         ~ShiftReg();

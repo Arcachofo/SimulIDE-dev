@@ -13,7 +13,6 @@ class LibraryItem;
 
 class MAINMODULE_EXPORT VoltReg : public Component, public eResistor
 {
-        Q_OBJECT
     public:
         VoltReg( QObject* parent, QString type, QString id );
         ~VoltReg();

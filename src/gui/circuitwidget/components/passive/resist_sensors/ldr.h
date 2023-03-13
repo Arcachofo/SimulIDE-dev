@@ -12,7 +12,6 @@ class LibraryItem;
 
 class MAINMODULE_EXPORT Ldr : public VarResBase
 {
-        Q_OBJECT
     public:
         Ldr( QObject* parent, QString type, QString id );
         ~Ldr();

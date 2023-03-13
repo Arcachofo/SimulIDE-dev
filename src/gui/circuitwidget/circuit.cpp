@@ -63,8 +63,8 @@ Circuit::Circuit( qreal x, qreal y, qreal width, qreal height, CircuitView*  par
     m_showScroll = MainWindow::self()->settings()->value( "Circuit/showScroll" ).toBool();
     m_filePath   = "";//qApp->applicationDirPath()+"/new.simu"; // AppImage tries to write in read olny filesystem
 
-    connect( &m_bckpTimer, SIGNAL( timeout() ),
-                     this, SLOT( saveBackup() ), Qt::UniqueConnection );
+    connect( &m_bckpTimer, &QTimer::timeout,
+                     this,&Circuit::saveBackup, Qt::UniqueConnection );
 }
 
 Circuit::~Circuit()
@@ -82,7 +82,7 @@ Circuit::~Circuit()
 
 Component* Circuit::getCompById( QString id )
 {
-    for( Component* comp : m_compList ) if( comp->objectName() == id ) return comp;
+    for( Component* comp : m_compList ) if( comp->getUid() == id ) return comp;
     return NULL;
 }
 
@@ -321,7 +321,7 @@ void Circuit::loadStrDoc( QString &doc )
                     else if( name == "x"  ) joint->setX( val.toInt() );
                     else if( name == "y"  ) joint->setY( val.toInt() );
                 }
-                int number = joint->objectName().split("-").last().toInt();
+                int number = joint->getUid().split("-").last().toInt();
                 if( number > m_seqNumber ) m_seqNumber = number; // Adjust item counter: m_seqNumber
                 addItem( joint );
                 nodeList.append( joint );
@@ -394,7 +394,7 @@ void Circuit::loadStrDoc( QString &doc )
                                 if( oldArduino && mcu ) mcu->setPropStr( propName, value );
                         }
                     }
-                    int number = comp->objectName().split("-").last().toInt();
+                    int number = comp->getUid().split("-").last().toInt();
                     if( number > m_seqNumber ) m_seqNumber = number;               // Adjust item counter: m_seqNumber
                     addItem( comp );
                     if( m_pasting ) comp->setIdLabel( newUid );

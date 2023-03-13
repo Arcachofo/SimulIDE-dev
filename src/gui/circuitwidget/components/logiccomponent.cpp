@@ -25,9 +25,9 @@ LogicComponent::LogicComponent( QObject* parent, QString type, QString id )
         << "Enable";
 
     m_enumNames = QStringList()
-        << QObject::tr("None")
-        << QObject::tr("Clock")
-        << QObject::tr("Enable");
+        << tr("None")
+        << tr("Clock")
+        << tr("Enable");
 }
 LogicComponent::~LogicComponent(){}
 

@@ -75,5 +75,3 @@ void Header::updatePixmap()
         default: break;
     }
 }
-
-//#include "moc_socket.cpp"

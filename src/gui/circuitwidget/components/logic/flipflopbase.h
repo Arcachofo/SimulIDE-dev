@@ -10,7 +10,6 @@
 
 class MAINMODULE_EXPORT FlipFlopBase : public LogicComponent
 {
-        Q_OBJECT
     public:
         FlipFlopBase( QObject* parent, QString type, QString id );
         ~FlipFlopBase();

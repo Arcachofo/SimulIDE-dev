@@ -13,7 +13,6 @@ class LibraryItem;
 
 class MAINMODULE_EXPORT Resistor : public Comp2Pin, public eResistor
 {
-        Q_OBJECT
     public:
         Resistor( QObject* parent, QString type, QString id );
         ~Resistor();

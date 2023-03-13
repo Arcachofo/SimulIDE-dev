@@ -311,7 +311,7 @@ void Transformer::create( winding_t* w  )
     QList<Pin*>*   pins  = &w->pins;
     QList<eCoil*>* coils = &w->coils;
 
-    for( Pin* pin : *pins ) { pin->removeConnector(); delete pin; }
+    for( Pin* pin : *pins ) { pin->removeConnector(); m_signalPin.removeAll( pin ); delete pin; }
     pins->clear();
     for( eCoil* coil : *coils ) delete coil;
     coils->clear();

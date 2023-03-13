@@ -20,7 +20,7 @@ Component* Mosfet::construct( QObject* parent, QString type, QString id )
 LibraryItem* Mosfet::libraryItem()
 {
     return new LibraryItem(
-        tr( "Mosfet" ),
+        QCoreApplication::translate("Mosfet", "Mosfet"),
         "Transistors",
         "mosfet.png",
         "Mosfet",

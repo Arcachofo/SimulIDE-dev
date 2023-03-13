@@ -135,10 +135,10 @@ void ShieldSubc::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
         if( m_attached )
         {
             QAction* detachAction = menu->addAction(QIcon(":/detach.png"),tr("Detach") );
-            connect( detachAction, SIGNAL( triggered()), this, SLOT(slotDetach()) );
+            connect( detachAction, &QAction::triggered, this, &ShieldSubc::slotDetach );
         }else{
             QAction* attachAction = menu->addAction(QIcon(":/attach.png"),tr("Attach") );
-            connect( attachAction, SIGNAL( triggered()), this, SLOT(slotAttach()) );
+            connect( attachAction, &QAction::triggered, this, &ShieldSubc::slotAttach );
         }
         menu->addSection( "" );
         if( m_board && m_board->getMainComp() )
@@ -161,5 +161,3 @@ void ShieldSubc::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
         else          Component::contextMenu( event, menu );
         menu->deleteLater();
 }   }
-
-#include "moc_shield.cpp"

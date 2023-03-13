@@ -13,7 +13,7 @@ Component* FullAdder::construct(QObject *parent, QString type, QString id)
 LibraryItem* FullAdder::libraryItem()
 {
     return new LibraryItem(
-        tr( "Full Adder" ),
+        QCoreApplication::translate("FullAdder", "Full Adder"),
         "Arithmetic",
         "2to2.png",
         "FullAdder",

@@ -143,11 +143,13 @@ void LedMatrix::deleteMatrix()
             Circuit::self()->removeComp( lsmd );
         }
         m_rowPin[row]->removeConnector();
+        m_signalPin.removeAll( m_rowPin[row] );
         delete m_rowPin[row];
     }
     for( int col=0; col<m_cols; col++ )
     {
         m_colPin[col]->removeConnector();
+        m_signalPin.removeAll( m_colPin[col] );
         delete m_colPin[col];
     }
     m_led.clear();
