@@ -55,10 +55,38 @@ bool m_nextClock;  // Clock State
 bool m_CS;
 bool m_read;
 uint8 m_addr;
+uint8 m_data;
+
+int getCpuReg( string reg )
+{
+    //print( "reg = "+reg );
+    
+    if( reg == "Timer" )  return m_timerCount;
+    if( reg == "Presc" )  return m_presc;
+    if( reg == "Address") return m_addr;
+    if( reg == "Data" )   return m_data;
+    return 0;
+}
+
+string getStrReg( string reg )
+{
+    //print( "reg = "+reg ); 
+    string value = ""; 
+    if( reg == "CS" ) value = m_CS   ? "true" : "false"; 
+    if( reg == "Op" ) value = m_read ? "Read" : "Write";
+    return value;
+}
 
 void setup() // Executed when Component is created
 {
     irqPin.setPinMode( openCo );
+    
+    component.addCpuReg("Timer","uint8");
+    component.addCpuVar("Presc","uint16");
+    component.addCpuVar("CS","string");
+    component.addCpuVar("Op","string");
+    component.addCpuVar("Address","uint16");
+    component.addCpuVar("Data","uint8");
     
     print("6532 setup() OK"); 
 }
@@ -142,8 +170,8 @@ void fallingEdge()
     }
     else             // MCU is writing
     {
-        uint data = dataPort.getInpState(); // Read Data Port
-        writeREG( data );
+        m_data = dataPort.getInpState(); // Read Data Port
+        writeREG( m_data );
     }
 }
 
@@ -151,8 +179,8 @@ void runEvent()
 {
     if( m_read ) // MCU is reading
     {
-        uint data = readREG();
-        dataPort.setOutState( data );       // Set Data Port
+        m_data = readREG();
+        dataPort.setOutState( m_data );       // Set Data Port
     }
 }
 
@@ -281,16 +309,3 @@ void writeREG( uint data ) // MCU is writing
     }
 }
 
-int getCpuReg( string reg )
-{
-    //print( "reg = "+reg );
-    if( reg == "DRB"  ) return DRB;
-    if( reg == "DRA"  ) return DRA;
-    if( reg == "DDRB" ) return DDRB;
-    if( reg == "DDRA" ) return DDRA; 
-    if( reg == "IFR"  ) return IFR;
-    if( reg == "IER"  ) return IER;
-    
-    if( reg == "Timer"  ) return m_timerCount;
-    return 0;
-}

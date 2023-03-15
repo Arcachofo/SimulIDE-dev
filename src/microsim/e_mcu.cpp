@@ -18,6 +18,7 @@
 #include "simulator.h"
 #include "basedebugger.h"
 #include "editorwindow.h"
+#include "watcher.h"
 
 eMcu* eMcu::m_pSelf = NULL;
 
@@ -51,10 +52,11 @@ eMcu::eMcu( Mcu* comp, QString id )
     m_saveEepr = true;
 
     m_ramTable = new RamTable( NULL, this, false );
-    m_ramTable->hide();
+    //m_ramTable->hide();
 
-    m_cpuTable = new RamTable( NULL, this, true );
-    m_cpuTable->hide();
+    m_cpuTable = NULL;
+    //m_cpuTable = new Watcher( NULL, this );
+    //m_cpuTable->hide();
 }
 
 eMcu::~eMcu()
@@ -63,6 +65,11 @@ eMcu::~eMcu()
     m_interrupts.remove();
     for( McuModule* module : m_modules ) delete module;
     if( m_pSelf == this ) m_pSelf = NULL;
+}
+
+void eMcu::createCpuTable()
+{
+    if( !m_cpuTable ) m_cpuTable = new Watcher( NULL, this );
 }
 
 void eMcu::stamp()

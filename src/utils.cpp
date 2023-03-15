@@ -60,7 +60,7 @@ QString decToBase( int value, int base, int digits )
         if( value >= base ) converted = toDigit( value%base ) + converted;
         else                converted = toDigit( value ) + converted;
 
-        if( i+1 == 4 ) converted = " " + converted;
+        //if( base == 2 && i+1 == 4 ) converted = " " + converted;
         //if( (i+1)%8 == 0 ) converted = " " + converted;
 
         value = floor( value/base );

@@ -5,6 +5,7 @@
 #include "simulator.h"
 #include "ioport.h"
 #include "mcu.h"
+#include "watcher.h"
 
 #include "boolprop.h"
 #include "stringprop.h"
@@ -14,6 +15,7 @@ Z80Core::Z80Core( eMcu* mcu )
        , eElement( mcu->getId()+"-Z80Core" )
 {
     // Values to show in Monitor High Area (any type)
+    mcu->createCpuTable();
     mcu->getCpuTable()->addRegister( "A", "uint8" );
     mcu->getCpuTable()->addRegister( "B", "uint8" );
     mcu->getCpuTable()->addRegister( "C", "uint8" );

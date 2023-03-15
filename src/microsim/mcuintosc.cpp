@@ -28,6 +28,7 @@ McuIntOsc::~McuIntOsc(){}
 
 void McuIntOsc::stamp()
 {
+    if( !m_clkInPin ) return;
     m_clkInPin->controlPin( !m_clkInIO, !m_clkInIO );
 
     bool ctrlO = !m_clkOutIO || m_clkOut;

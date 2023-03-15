@@ -36,6 +36,7 @@ class McuPort;
 class McuVref;
 class Component;
 class ConfigWord;
+class Watcher;
 
 class MAINMODULE_EXPORT eMcu : public DataSpace, public eElement
 {
@@ -89,7 +90,8 @@ class MAINMODULE_EXPORT eMcu : public DataSpace, public eElement
         IoPort* getIoPort( QString name );
         IoPin*  getIoPin( QString pinName );
 
-        RamTable* getCpuTable() { return m_cpuTable; }
+        Watcher* getCpuTable() { return m_cpuTable; }
+        void createCpuTable();
 
         McuWdt* watchDog() { return m_wdt; }
         McuVref* vrefModule();
@@ -152,7 +154,7 @@ class MAINMODULE_EXPORT eMcu : public DataSpace, public eElement
         double m_cPerInst;       // Clock ticks per Instruction Cycle
         uint64_t m_psCycle;      // picoseconds per Instruction Cycle
 
-        RamTable* m_cpuTable;
+        Watcher* m_cpuTable;
 
         // Debugger:
         BaseDebugger* m_debugger;

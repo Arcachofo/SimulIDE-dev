@@ -14,6 +14,7 @@
 class eMcu;
 class MemTable;
 class RamTable;
+class Watcher;
 
 class MCUMonitor : public QDialog, private Ui::McuMonitor
 {
@@ -40,7 +41,7 @@ class MCUMonitor : public QDialog, private Ui::McuMonitor
 
         uint8_t* m_statusReg;  // STATUS register
 
-        RamTable* m_cpuTable;
+        Watcher* m_cpuTable;
         RamTable* m_ramTable;
         MemTable* m_ramMonitor;
         MemTable* m_flashMonitor;

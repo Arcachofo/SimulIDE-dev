@@ -11,6 +11,7 @@
 #include "mcupin.h"
 #include "mcuport.h"
 #include "ioport.h"
+#include "watcher.h"
 
 using namespace std;
 
@@ -39,6 +40,14 @@ ScriptCpu::ScriptCpu( eMcu* mcu )
     McuPin::registerScript( m_aEngine );
 
     int r;
+    r = m_aEngine->RegisterObjectMethod("ScriptCpu", "void addCpuReg(string n, string t)"
+                                       , asMETHODPR( ScriptCpu, addCpuReg, (string, string), void)
+                                       , asCALL_THISCALL );
+
+    r = m_aEngine->RegisterObjectMethod("ScriptCpu", "void addCpuVar( string n, string t )"
+                                       , asMETHODPR( ScriptCpu, addCpuVar, (string, string), void)
+                                       , asCALL_THISCALL );
+
     r = m_aEngine->RegisterObjectMethod("ScriptCpu", "void addEvent(uint t)"
                                        , asMETHODPR( ScriptCpu, addEvent, (uint), void)
                                        , asCALL_THISCALL );
@@ -118,7 +127,7 @@ void ScriptCpu::startScript()
     m_INTERRUPT   = m_aEngine->GetModule(0)->GetFunctionByDecl("void INTERRUPT( uint vector )");
     m_extClock    = m_aEngine->GetModule(0)->GetFunctionByDecl("void extClock( bool clkState )");
     m_getCpuReg   = m_aEngine->GetModule(0)->GetFunctionByDecl("int getCpuReg( string reg )");
-    m_getStrReg   = m_aEngine->GetModule(0)->GetFunctionByDecl("srting getStrReg( string reg )");
+    m_getStrReg   = m_aEngine->GetModule(0)->GetFunctionByDecl("string getStrReg( string reg )");
     //m_extClockCtx = m_aEngine->CreateContext();
 }
 
@@ -144,6 +153,18 @@ void ScriptCpu::extClock( bool clkState )
     execute();
 }
 
+void ScriptCpu::addCpuReg( string name, string type )
+{
+    m_mcu->createCpuTable();
+    m_mcu->getCpuTable()->addRegister( QString::fromStdString( name ), QString::fromStdString( type ) );
+}
+
+void ScriptCpu::addCpuVar( string name, string type )
+{
+    m_mcu->createCpuTable();
+    m_mcu->getCpuTable()->addVariable( QString::fromStdString( name ), QString::fromStdString( type ) );
+}
+
 int ScriptCpu::getCpuReg( QString reg )
 {
     if( !m_getCpuReg ) return 0;
@@ -158,9 +179,18 @@ int ScriptCpu::getCpuReg( QString reg )
     return ret;
 }
 
-QString ScriptCpu::getStrReg( QString )
+QString ScriptCpu::getStrReg( QString val )
 {
     if( !m_getStrReg ) return "";
+
+    prepare( m_getStrReg );
+    std::string str = val.toStdString();
+    m_context->SetArgObject( 0, &str );
+    execute();
+
+    if( m_status != asEXECUTION_FINISHED ) return "";
+    str = *(string*)m_context->GetReturnObject();
+    return QString::fromStdString( str );
 }
 
 void ScriptCpu::addEvent( uint time ) { Simulator::self()->addEvent( time, this ); }

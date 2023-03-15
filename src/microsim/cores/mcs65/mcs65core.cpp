@@ -9,11 +9,13 @@
 #include "e_mcu.h"
 #include "simulator.h"
 #include "ioport.h"
+#include "watcher.h"
 
 Mcs65Cpu::Mcs65Cpu( eMcu* mcu )
         : Mcs65Interface( mcu )
 {
     // CPU registers to show in Monitor
+
     m_cpuRegs.insert("P" , &m_P  );
     m_cpuRegs.insert("S" , &m_SP );
     m_cpuRegs.insert("A" , &m_Ac );

@@ -28,6 +28,7 @@
 #include "mcuuart.h"
 #include "mcuintosc.h"
 #include "utils.h"
+#include "watcher.h"
 
 #include "stringprop.h"
 #include "doubleprop.h"

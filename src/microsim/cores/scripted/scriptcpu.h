@@ -28,6 +28,8 @@ class MAINMODULE_EXPORT ScriptCpu : public ScriptModule, public McuCpu
         virtual void setScript( QString script ) override;
         void startScript();
 
+        void addCpuReg( string name, string type );
+        void addCpuVar( string name, string type );
         virtual int getCpuReg( QString reg ) override;
         virtual QString getStrReg( QString ) override;
 

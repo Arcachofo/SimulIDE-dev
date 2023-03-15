@@ -112,8 +112,8 @@ void MemTable::resizeTable( int dataSize )
 
     float scale = MainWindow::self()->fontScale();
     QFont font;
-    font.setPixelSize( 14*scale );
     font.setFamily("Ubuntu Mono");
+    font.setPixelSize( round(13*scale) );
 
     table->horizontalHeader()->setFont( font );
     table->verticalHeader()->setFont( font );
@@ -141,6 +141,7 @@ void MemTable::resizeTable( int dataSize )
                 else font.setWeight( QFont::Medium );
                 it->setFlags( Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable );
                 it->setFont( font );
+                it->setTextAlignment( Qt::AlignHCenter );
             }
             table->setItem( row, col, it );
         }

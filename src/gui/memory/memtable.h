@@ -3,12 +3,12 @@
  *                                                                         *
  ***( see copyright.txt file at root folder )*******************************/
 
+#ifndef MEMTABLE_H
+#define MEMTABLE_H
+
 #include <QWidget>
 
 #include "ui_memtable.h"
-
-#ifndef MEMTABLE_H
-#define MEMTABLE_H
 
 class Component;
 

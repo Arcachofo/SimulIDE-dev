@@ -11,6 +11,8 @@
 #include "mainwindow.h"
 #include "utils.h"
 
+#include "watcher.h"
+
 MCUMonitor::MCUMonitor( QWidget* parent, eMcu* mcu )
           : QDialog( parent )
           , m_status( 1, 8 )
@@ -31,16 +33,33 @@ MCUMonitor::MCUMonitor( QWidget* parent, eMcu* mcu )
     createStatusPC();
 
     horizontalLayout->setStretchFactor( byteButton, 20 );
+    QSplitter* spl = NULL;
 
+    m_cpuTable = m_processor->getCpuTable();
+    if( m_cpuTable )
+    {
+        spl = new QSplitter( Qt::Horizontal, this );
+        spl->addWidget( m_cpuTable );
+
+        tabWidget->addTab( spl, tr("Watch") );
+    }
     if( mcu->ramSize() )
     {
-        m_ramMonitor   = new MemTable( tabWidget, m_processor->ramSize() );
         m_ramTable = m_processor->getRamTable();
-        m_ramTable->getSplitter()->insertWidget( 2, m_ramMonitor );
-        m_ramTable->getSplitter()->setSizes( {50,320,50} );
+        if( spl ){
+            spl->addWidget( m_ramTable );
+            this->resize( this->width()*2,this->height() );
+            spl->setSizes({350,460});
+        }else{
+            tabWidget->addTab( m_ramTable, tr("Watch") );
+            this->resize( 480,this->height() );
+        }
+
+        m_ramMonitor   = new MemTable( tabWidget, m_processor->ramSize() );
         connect( m_ramMonitor,   SIGNAL(dataChanged(int, int)), this, SLOT(ramDataChanged(int, int)) );
-        tabWidget->addTab( m_ramTable, "RAM" );
+        tabWidget->addTab( m_ramMonitor, "RAM" );
     }
+
     if( mcu->flashSize() )
     {
         m_flashMonitor = new MemTable( tabWidget, m_processor->flashSize(), m_processor->wordSize() );
@@ -52,12 +71,6 @@ MCUMonitor::MCUMonitor( QWidget* parent, eMcu* mcu )
         m_romMonitor   = new MemTable( tabWidget, m_processor->romSize() );
         tabWidget->addTab( m_romMonitor, "EEPROM");
         connect( m_romMonitor,   SIGNAL(dataChanged(int, int)), this, SLOT(eepromDataChanged(int, int)) );
-    }
-    m_cpuTable = m_processor->getCpuTable();
-    if( m_cpuTable )
-    {
-        m_cpuTable->getSplitter()->setSizes( {50,320} );
-        tabWidget->addTab( m_cpuTable, "CPU" );
     }
     connect( tabWidget, SIGNAL(currentChanged(int)), this, SLOT(tabChanged(int)) );
 }
@@ -74,7 +87,6 @@ void MCUMonitor::eepromDataChanged( int address, int val )
 void MCUMonitor::tabChanged( int )
 {
     if( Simulator::self()->isRunning() ) return;
-    /// if( tabWidget->count() < 3 ) return;
     updateStep();
 }
 
@@ -117,23 +129,24 @@ void MCUMonitor::updateStep()
     {
         m_cpuTable->updateValues();
     }
-    else if( m_ramTable && m_ramTable->isVisible() )
+    if( m_ramTable && m_ramTable->isVisible() )
     {
-        if( m_ramTable->getSplitter()->sizes().at(1) > 150 ) // RAM Watcher visible
+        //if( m_ramTable->getSplitter()->sizes().at(1) > 150 ) // RAM Watcher visible
             m_ramTable->updateValues();
-        if( m_ramTable->getSplitter()->sizes().at(2) > 100 ) // RAM MemTable visible
-        {
-            for( uint32_t i=0; i<m_processor->ramSize(); ++i )
-                m_ramMonitor->setValue( i, m_processor->getRamValue(i));
+    }
+    if( m_ramMonitor && m_ramMonitor->isVisible() ) // RAM MemTable visible
+    {
+        for( uint32_t i=0; i<m_processor->ramSize(); ++i )
+            m_ramMonitor->setValue( i, m_processor->getRamValue(i));
 
-            if(  Simulator::self()->simState() == SIM_RUNNING )
-                m_ramMonitor->setAddrSelected( m_ramTable->getCurrentAddr(), m_jumpToAddress );
-    }   }
-    else if( m_romMonitor && m_romMonitor->isVisible() )
+        if(  Simulator::self()->simState() == SIM_RUNNING )
+            m_ramMonitor->setAddrSelected( m_ramTable->getCurrentAddr(), m_jumpToAddress );
+    }
+    if( m_romMonitor && m_romMonitor->isVisible() )
     {
         m_romMonitor->setData( m_processor->eeprom() );
     }
-    else if( m_flashMonitor && m_flashMonitor->isVisible() )
+    if( m_flashMonitor && m_flashMonitor->isVisible() )
     {
         for( uint32_t i=0; i<m_processor->flashSize(); ++i )
             m_flashMonitor->setValue( i, m_processor->getFlashValue(i));
@@ -153,7 +166,7 @@ void MCUMonitor::createStatusPC()
     m_statusReg = m_processor->cpu->getStatus();
     if( !m_statusReg ) return;
 
-    float scale = MainWindow::self()->fontScale();
+    float scale = MainWindow::self()->fontScale()*0.8;
     int row_heigh = round( 22*scale );
     int font_size = round(14*scale);
     int numberColor = 0x202090;
@@ -190,8 +203,8 @@ void MCUMonitor::createStatusPC()
     if( statusBits.size() )
         for( int i=7; i>=0; --i ) m_status.item( 0, i )->setText( statusBits.takeFirst() );
 
-    horizontalLayout->insertWidget( 0, &m_status);
-    horizontalLayout->setStretchFactor( &m_status, 65 );
+    //horizontalLayout->insertWidget( 0, &m_status);
+    //horizontalLayout->setStretchFactor( &m_status, 65 );
 
     m_pc.setVerticalHeaderLabels( QStringList()<<" PC ");
     m_pc.verticalHeader()->setFixedWidth( round(31*scale) );
@@ -220,4 +233,5 @@ void MCUMonitor::createStatusPC()
 
     horizontalLayout->insertWidget( 0, &m_pc);
     horizontalLayout->setStretchFactor( &m_pc, 30 );
+    verticalLayout->insertWidget( 0, &m_status);
 }

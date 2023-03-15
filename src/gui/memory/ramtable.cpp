@@ -33,50 +33,56 @@ RamTable::RamTable( QWidget* parent, eMcu* processor ,bool cpuMonitor )
 
     float scale = MainWindow::self()->fontScale();
     int row_heigh = round( 22*scale );
-    int font_size = round(14*scale);
+    //int font_size = round(14*scale);
     int numberColor = 0x202090;
 
     QTableWidgetItem* it;
+    QFont fontS;
+    fontS.setFamily("Ubuntu Mono");
+    fontS.setBold( true );
+    //fontS.setPointSize( 13 );
+    fontS.setPixelSize( round(12.5*scale) );
+
     QFont font;
     font.setFamily("Ubuntu Mono");
     font.setBold( true );
-    font.setPixelSize( font_size );
+    //font.setPointSize( 14 );
+    font.setPixelSize( round(12.5*scale) );
 
     table->verticalHeader()->setSectionsMovable( true );
     if( m_cpuMonitor )
     {
         table->setColumnWidth( 1, round(55*scale) );
-        table->setColumnWidth( 2, round(60*scale) );
-        table->setColumnWidth( 3, round(60*scale) );
-        table->setColumnWidth( 4, round(90*scale) );
-    }else{
-        table->setColumnWidth( 0, round(50*scale) );
-        table->setColumnWidth( 1, round(55*scale) );
-        table->setColumnWidth( 2, round(40*scale) );
+        table->setColumnWidth( 2, round(150*scale) );
         table->setColumnWidth( 3, round(40*scale) );
-        table->setColumnWidth( 4, round(75*scale) );
+    }else{
+        table->setColumnWidth( 0, round(40*scale) );
+        table->setColumnWidth( 1, round(40*scale) );
+        table->setColumnWidth( 2, round(125*scale) );
+        table->setColumnWidth( 3, round(40*scale) );
     }
     for( int row=0; row<m_numRegs; row++ )
     {
         it = new QTableWidgetItem(0);
-        it->setFont( font );
+        it->setFont( fontS );
         it->setText( "---" );
         table->setVerticalHeaderItem( row, it );
-        for( int col=0; col<5; col++ )
+        for( int col=0; col<4; col++ )
         {
             QTableWidgetItem *it = new QTableWidgetItem(0);
             if( col != 1 ){
                 it->setFlags( Qt::ItemIsEnabled );
                 it->setText("---");
-                if( col == 2 ) it->setTextColor( QColor( 0x904020 ) );
+                if( col == 3 ) it->setTextColor( QColor( 0x904020 ) );
                 else           it->setTextColor( QColor( numberColor ) );
             }
-            it->setFont( font );
+            if( col == 0  || col == 3 ) it->setFont( fontS );
+            else           it->setFont( font );
             table->setItem( row, col, it );
         }
         table->setRowHeight(row, row_heigh);
     }
-    table->setHorizontalHeaderLabels( QStringList()<<tr("Addr")<<tr("Name")<<tr("Type")<<tr("Dec")<<tr("Value")  );
+    table->setHorizontalHeaderLabels( QStringList()<<tr("Address")<<tr("Name")<<tr("Value")<<tr("Type") );
 
     if( m_cpuMonitor )
     {
@@ -85,18 +91,17 @@ RamTable::RamTable( QWidget* parent, eMcu* processor ,bool cpuMonitor )
     }
     setContextMenuPolicy( Qt::CustomContextMenu );
 
-    registers->setFont( font );
-    //registers->setFixedWidth( 80*scale );
-    registers->setEditTriggers( QAbstractItemView::NoEditTriggers );
     m_registerModel = new QStandardItemModel( this );
+    registers->setFont( font );
     registers->setModel( m_registerModel );
+    registers->setEditTriggers( QAbstractItemView::NoEditTriggers );
 
-    variables->setFont( font );
-    //registers->setFixedWidth( 80*scale );
-    variables->setEditTriggers( QAbstractItemView::NoEditTriggers );
     m_variableModel = new QStandardItemModel( this );
+    variables->setFont( font );
     variables->setModel( m_variableModel );
+    variables->setEditTriggers( QAbstractItemView::NoEditTriggers );
 
+    splitter->setSizes( {{50,320}} );
     splitter_2->setSizes( {100,30} );
 
     /*connect( registers, SIGNAL(doubleClicked(QModelIndex)),
@@ -120,7 +125,7 @@ void RamTable::RegDoubleClick( const QModelIndex& index )
     m_currentRow = table->currentRow();
     if( m_currentRow < 0 ) return;
 
-    setItemValue( 1, m_registerModel->item(index.row())->text() );
+    setName( m_currentRow, m_registerModel->item(index.row())->text() );
     table->setCurrentCell( m_currentRow+1, 1 );
 }
 
@@ -129,7 +134,7 @@ void RamTable::VarDoubleClick( const QModelIndex& index )
     m_currentRow = table->currentRow();
     if( m_currentRow < 0 ) return;
 
-    setItemValue( 1, m_variableModel->item(index.row())->text() );
+    setName( m_currentRow, m_variableModel->item(index.row())->text() );
     table->setCurrentCell( m_currentRow+1, 1 );
 }
 
@@ -244,13 +249,10 @@ void RamTable::saveVarSet()
         QApplication::restoreOverrideCursor();
 }   }
 
-
-
 void RamTable::setRegisters( QStringList regs )
 {
     regs.sort();
-    m_regNames = regs;
-    for( QString reg : regs ) m_registerModel->appendRow( new QStandardItem(reg) );
+    for( QString reg : regs ) addRegister( reg, "uint8" );
 }
 
 void RamTable::addRegister( QString name, QString type )
@@ -299,6 +301,11 @@ void RamTable::updateItems()
     }
 }
 
+void RamTable::setAddress( int r, QString a ) { table->item( r, 0 )->setText( a ); }
+void RamTable::setName( int r, QString n )    { table->item( r, 1 )->setText( n ); }
+void RamTable::setValue( int r, QString v )   { table->item( r, 2 )->setText( " "+v ); }
+void RamTable::setType( int r, QString t )    { table->item( r, 3 )->setText( t ); }
+
 void RamTable::addToWatch( QTableWidgetItem* it )
 {
     if( table->column(it) != 1 ) return;
@@ -312,10 +319,9 @@ void RamTable::addToWatch( QTableWidgetItem* it )
         watchList.remove(_row);
         table->verticalHeaderItem( _row )->setText("---");
 
-        table->item( _row, 0 )->setText("---");
-        table->item( _row, 2 )->setText("---");
-        table->item( _row, 3 )->setText("---");
-        table->item( _row, 4 )->setText("---");
+        setAddress( _row,"---");
+        setValue( _row,"---");
+        setType( _row,"---");
     }
     else if( m_cpuMonitor )
     {
@@ -324,15 +330,9 @@ void RamTable::addToWatch( QTableWidgetItem* it )
         if( m_regNames.contains( name ) || m_varNames.contains( name ) )
         {
             watchList[_row] = name;
-            table->item( _row, 2 )->setText( type );
-            if( type == "string" )
-            {
-                table->item( _row, 3 )->setText(" - ");
-                table->item( _row, 4 )->setText("");
-            }else{
-                table->item( _row, 3 )->setText("0");
-                table->item( _row, 4 )->setText("0000 0000");
-            }
+            setType( _row, type );
+            if( type == "string" ) setValue( _row,"");
+            else                   setValue( _row,"0");
         }
     }else{
         int addr = -1;
@@ -378,129 +378,122 @@ void RamTable::updateValues()
     {
         m_currentRow = _row;
         QString name = watchList[_row];
+        QString strVal;
+        QString type;
+        int value = 0;
+
+        if( m_typeTable.contains( name ) ) type = m_typeTable.value( name );
+        else                               type = "uint8";
+
+        setType( _row, type );
 
         if( m_cpuMonitor  )
         {
-            QString type = "";
-            if( m_typeTable.contains( name ) ) type = m_typeTable.value( name );
-            if( type == "string" )
-            {
-                setItemValue( 4, m_processor->cpu->getStrReg( name ) );
-            }
+            if( type == "string" ) strVal = m_processor->cpu->getStrReg( name );
             else{
-                int value = m_processor->cpu->getCpuReg( name );
+                value = m_processor->cpu->getCpuReg( name );
                 if( value < 0 ) continue;
-                setItemValue( 3, value );
-                if( type.contains("8") ) setItemValue( 4, decToBase(value, 2, 8) );
-                else setItemValue( 4, "0x"+decToBase(value, 16, 4).remove(0,1) );
             }
         }else{
             bool ok;
             int addr = name.toInt(&ok, 10);
             if( !ok && name.startsWith("0x") ) addr = name.toInt(&ok, 16);
 
-            if( ok ){                              // Address
-                uint8_t value = m_processor->getRamValue( addr );
-                table->item( _row, 2 )->setText("u8");
-                table->item( _row, 3 )->setData( 0, value );
-                table->item( _row, 4 )->setData( 0, decToBase(value, 2, 8) );
+            if( ok ) value = m_processor->getRamValue( addr ); // Address
+            else                                               // Var or Reg name
+            {
+                QByteArray ba;
+                ba.resize(4);
+
+                int address = -1;
+                if( m_varsTable.contains( name ) ) address = m_varsTable.value( name );
+                else                               address = m_processor->getRegAddress( name );
+                if( address < 0 ) return;
+
+                if( type ==  "string" )
+                {
+                    QString strVal = "";
+                    for( int i=address; i<=address+value; i++ )
+                    {
+                        QString str = "";
+                        const QChar cha = m_processor->getRamValue( i );
+                        str.setRawData( &cha, 1 );
+                        strVal += str; //QByteArray::fromHex( getRamValue( i ) );
+                    }
+                }else{
+                    int bits;
+
+                    if( type.contains( "32" ) )    // 4 bytes
+                    {
+                        bits = 32;
+                        ba[0] = m_processor->getRamValue( address );
+                        ba[1] = m_processor->getRamValue( address+1 );
+                        ba[2] = m_processor->getRamValue( address+2 );
+                        ba[3] = m_processor->getRamValue( address+3 );
+                    }
+                    else if( type.contains( "16" ) )  // 2 bytes
+                    {
+                        bits = 16;
+                        ba[0] = m_processor->getRamValue( address );
+                        ba[1] = m_processor->getRamValue( address+1 );
+                        ba[2] = 0;
+                        ba[3] = 0;
+                    }else{                             // 1 byte
+                        bits = 8;
+                        ba[0] = m_processor->getRamValue( address );
+                        ba[1] = 0;
+                        ba[2] = 0;
+                        ba[3] = 0;
+                    }
+                    if( type.contains( "f" ) )        // float, double
+                    {
+                        float val = 0;
+                        memcpy( &val, ba, 4 );
+                        setValue( m_currentRow, QString::number( val ) );
+                        continue;
+                    }
+                    else{                             // char, int, long
+                        if( type.contains( "u" ) )
+                        {
+                            uint32_t val = 0;
+                            memcpy(&val, ba, 4);
+                            value = val;
+                        }else{
+                            if( bits == 32 )
+                            {
+                                int32_t val = 0;
+                                memcpy(&val, ba, 4);
+                                value = val;
+                            }
+                            else if( bits == 16 )
+                            {
+                                int16_t val = 0;
+                                memcpy(&val, ba, 2);
+                                value = val;
+                            }else{
+                                int8_t val = 0;
+                                memcpy(&val, ba, 1);
+                                value = val;
+                        }   }
+                    }
+                }
             }
-            else updateRamValue( name );  // Var or Reg name
         }
+        if( type.endsWith("8") )        // 8 bits
+        {
+            value = value  & 0xFF;
+            QString decStr = decToBase( value, 10, 3 );
+            QString hexStr = decToBase( value, 16, 2 );
+            QString binStr = decToBase( value,  2, 8 );
+            strVal = decStr+" 0x"+hexStr+" "+binStr;
+        }
+        else if( type.endsWith("16") ) // 16 bits
+        {
+            value = value  & 0xFFFF;
+            QString decStr = decToBase( value, 10, 5 );
+            QString hexStr = decToBase( value, 16, 4 );
+            strVal = decStr+" 0x"+hexStr;
+        }
+        setValue( _row, strVal );
 }   }
 
-void RamTable::updateRamValue( QString name )
-{
-    //name = name.toUpper();
-    QString type = "u8";
-    if( m_typeTable.contains( name ) ) type = m_typeTable.value( name );
-    setItemValue( 2, type );
-
-    /*if( m_cpuMonitor  )
-    {
-        int value = m_processor->cpu->getCpuReg( name );
-        setItemValue( 3, value );
-        setItemValue( 4, decToBase(value, 2, 8) );
-    }
-    else*/
-    {
-        QByteArray ba;
-        ba.resize(4);
-
-        int address = -1;
-        if( m_varsTable.contains( name ) ) address = m_varsTable.value( name );
-        else                               address = m_processor->getRegAddress( name );
-        if( address < 0 ) return;
-
-        int bits = 8;
-
-        if( type.contains( "32" ) )    // 4 bytes
-        {
-            bits = 32;
-            ba[0] = m_processor->getRamValue( address );
-            ba[1] = m_processor->getRamValue( address+1 );
-            ba[2] = m_processor->getRamValue( address+2 );
-            ba[3] = m_processor->getRamValue( address+3 );
-        }
-        else if( type.contains( "16" ) )  // 2 bytes
-        {
-            bits = 16;
-            ba[0] = m_processor->getRamValue( address );
-            ba[1] = m_processor->getRamValue( address+1 );
-            ba[2] = 0;
-            ba[3] = 0;
-        }else{                             // 1 byte
-            ba[0] = m_processor->getRamValue( address );
-            ba[1] = 0;
-            ba[2] = 0;
-            ba[3] = 0;
-        }
-        if( type.contains( "f" ) )        // float, double
-        {
-            float value = 0;
-            memcpy( &value, ba, 4 );
-            setItemValue( 2, value );
-        }
-        else{                             // char, int, long
-            int32_t value = 0;
-
-            if( type.contains( "u" ) )
-            {
-                uint32_t val = 0;
-                memcpy(&val, ba, 4);
-                value = val;
-            }else{
-                if( bits == 32 )
-                {
-                    int32_t val = 0;
-                    memcpy(&val, ba, 4);
-                    value = val;
-                }
-                else if( bits == 16 )
-                {
-                    int16_t val = 0;
-                    memcpy(&val, ba, 2);
-                    value = val;
-                }else{
-                    int8_t val = 0;
-                    memcpy(&val, ba, 1);
-                    value = val;
-            }   }
-            setItemValue( 3, value  );
-
-            if     ( type.contains( "8" ) ) setItemValue( 4, decToBase(value, 2, 8)  );
-            else if( type.contains( "string" ) )
-            {
-                QString strVal = "";
-                for( int i=address; i<=address+value; i++ )
-                {
-                    QString str = "";
-                    const QChar cha = m_processor->getRamValue( i );
-                    str.setRawData( &cha, 1 );
-
-                    strVal += str; //QByteArray::fromHex( getRamValue( i ) );
-                }
-                setItemValue( 4, strVal );
-        }   }
-    }
-}
