@@ -179,9 +179,12 @@ void Function::updateFunctions()
     m_script += "\n  // Setting Outputs:\n";
     for( int i=0; i<m_funcList.size(); ++i )
     {
+        if( i >= m_outPin.size() ) break;
         QString n = QString::number(i);
 
         QString func = m_funcList.at( i );
+        if( func.isEmpty() ) continue;
+
         func = func.replace("&","&&").replace("|","||").replace("^","^^");
         func = func.remove(" ").toLower();
         if( func.startsWith("vo") )
@@ -320,7 +323,7 @@ void Function::setNumOuts( int outs )
                 m_proxys.at(i)->setPos( QPoint( 0, -halfH+(int)i*16+1 ) );
             }else{
                 QPushButton* button = m_buttons.takeLast();
-                disconnect( button, SIGNAL( released() ), this, SLOT  ( onbuttonclicked() ));
+                disconnect( button, &QPushButton::released, this, &Function::onbuttonclicked );
                 delete button;
 
                 m_proxys.removeLast();
@@ -356,8 +359,8 @@ void Function::setNumOuts( int outs )
                 m_proxys.append( proxy );
                 m_funcList.append( "" );
 
-                connect( button, SIGNAL( released() ),
-                           this, SLOT  ( onbuttonclicked() ), Qt::UniqueConnection );
+                connect( button, &QPushButton::released,
+                           this, &Function::onbuttonclicked, Qt::UniqueConnection );
     }   }   }
     
     Circuit::self()->update();
