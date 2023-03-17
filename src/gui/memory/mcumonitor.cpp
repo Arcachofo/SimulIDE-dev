@@ -58,6 +58,7 @@ MCUMonitor::MCUMonitor( QWidget* parent, eMcu* mcu )
         m_ramMonitor   = new MemTable( tabWidget, m_processor->ramSize() );
         connect( m_ramMonitor,   SIGNAL(dataChanged(int, int)), this, SLOT(ramDataChanged(int, int)) );
         tabWidget->addTab( m_ramMonitor, "RAM" );
+        jumpButton->setVisible( true );
     }
 
     if( mcu->flashSize() )
@@ -164,7 +165,12 @@ void MCUMonitor::updateRamTable()
 void MCUMonitor::createStatusPC()
 {
     m_statusReg = m_processor->cpu->getStatus();
-    if( !m_statusReg ) return;
+    if( !m_statusReg )
+    {
+        byteButton->setVisible( false );
+        jumpButton->setVisible( false );
+        return;
+    }
 
     float scale = MainWindow::self()->fontScale()*0.8;
     int row_heigh = round( 22*scale );

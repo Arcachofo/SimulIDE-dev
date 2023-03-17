@@ -1,6 +1,6 @@
 <!DOCTYPE SimulIDE>
 
-<iou name="6522" core="scripted" script="6522_core.as" data="16" clkpin="P2">
+<iou name="6522" core="scripted" script="6522_core.as" data="18" clkpin="P2">
     
     <regblock name="REGs" start="0x00" end="0x0F" >
         <register name="ORB"   addr="0x00" />

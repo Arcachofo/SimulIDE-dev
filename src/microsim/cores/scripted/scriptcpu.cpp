@@ -12,6 +12,7 @@
 #include "mcuport.h"
 #include "ioport.h"
 #include "watcher.h"
+#include "console.h"
 
 using namespace std;
 
@@ -19,6 +20,8 @@ ScriptCpu::ScriptCpu( eMcu* mcu )
          : ScriptModule( mcu->getId()+"-"+"ScriptCpu" )
          , McuCpu( mcu )
 {
+    m_watcher = NULL;
+
     m_reset = NULL;
     m_voltChanged = NULL;
     m_runEvent  = NULL;
@@ -26,9 +29,12 @@ ScriptCpu::ScriptCpu( eMcu* mcu )
     m_INTERRUPT = NULL;
     m_getCpuReg = NULL;
     m_getStrReg = NULL;
+    m_command   = NULL;
+    m_initialized = false;
 
     m_aEngine->RegisterObjectType("eElement" ,0, asOBJ_REF | asOBJ_NOCOUNT );
     m_aEngine->RegisterObjectType("ScriptCpu",0, asOBJ_REF | asOBJ_NOCOUNT );
+    m_aEngine->RegisterObjectType("Uart"     ,0, asOBJ_REF | asOBJ_NOCOUNT );
     //m_aEngine->RegisterObjectType("pod", sizeof(pod), asOBJ_VALUE | asOBJ_POD);
 
     m_aEngine->RegisterGlobalProperty("ScriptCpu component", this );
@@ -39,68 +45,71 @@ ScriptCpu::ScriptCpu( eMcu* mcu )
     McuPort::registerScript( m_aEngine );
     McuPin::registerScript( m_aEngine );
 
-    int r;
-    r = m_aEngine->RegisterObjectMethod("ScriptCpu", "void addCpuReg(string n, string t)"
-                                       , asMETHODPR( ScriptCpu, addCpuReg, (string, string), void)
-                                       , asCALL_THISCALL );
+    m_aEngine->RegisterObjectMethod("ScriptCpu", "void addCpuReg(string n, string t)"
+                                   , asMETHODPR( ScriptCpu, addCpuReg, (string, string), void)
+                                   , asCALL_THISCALL );
 
-    r = m_aEngine->RegisterObjectMethod("ScriptCpu", "void addCpuVar( string n, string t )"
-                                       , asMETHODPR( ScriptCpu, addCpuVar, (string, string), void)
-                                       , asCALL_THISCALL );
+    m_aEngine->RegisterObjectMethod("ScriptCpu", "void addCpuVar( string n, string t )"
+                                   , asMETHODPR( ScriptCpu, addCpuVar, (string, string), void)
+                                   , asCALL_THISCALL );
 
-    r = m_aEngine->RegisterObjectMethod("ScriptCpu", "void addEvent(uint t)"
-                                       , asMETHODPR( ScriptCpu, addEvent, (uint), void)
-                                       , asCALL_THISCALL );
+    m_aEngine->RegisterObjectMethod("ScriptCpu", "void toConsole( string r )"
+                                   , asMETHODPR( ScriptCpu, toConsole, (string), void)
+                                   , asCALL_THISCALL );
 
-    r = m_aEngine->RegisterObjectMethod("ScriptCpu", "void cancelEvents()"
-                                       , asMETHOD( ScriptCpu, cancelEvents )
-                                       , asCALL_THISCALL );
+    m_aEngine->RegisterObjectMethod("ScriptCpu", "void addEvent(uint t)"
+                                   , asMETHODPR( ScriptCpu, addEvent, (uint), void)
+                                   , asCALL_THISCALL );
 
-    r = m_aEngine->RegisterObjectMethod("ScriptCpu", "uint64 circTime()"
-                                       , asMETHODPR( ScriptCpu, circTime, (), uint64_t)
-                                       , asCALL_THISCALL );
+    m_aEngine->RegisterObjectMethod("ScriptCpu", "void cancelEvents()"
+                                   , asMETHOD( ScriptCpu, cancelEvents )
+                                   , asCALL_THISCALL );
 
-    r = m_aEngine->RegisterObjectMethod("ScriptCpu", "int readPGM(uint n)"
-                                       , asMETHODPR( ScriptCpu, readPGM, (uint), int)
-                                       , asCALL_THISCALL );
+    m_aEngine->RegisterObjectMethod("ScriptCpu", "uint64 circTime()"
+                                   , asMETHODPR( ScriptCpu, circTime, (), uint64_t)
+                                   , asCALL_THISCALL );
 
-    r = m_aEngine->RegisterObjectMethod("ScriptCpu", "void writePGM(uint a, int v)"
-                                       , asMETHODPR( ScriptCpu, writePGM, (uint, int), void)
-                                       , asCALL_THISCALL );
+    m_aEngine->RegisterObjectMethod("ScriptCpu", "int readPGM(uint n)"
+                                   , asMETHODPR( ScriptCpu, readPGM, (uint), int)
+                                   , asCALL_THISCALL );
 
-    r = m_aEngine->RegisterObjectMethod("ScriptCpu", "int readRAM(uint n)"
-                                       , asMETHODPR( ScriptCpu, readRAM, (uint), int)
-                                       , asCALL_THISCALL );
+    m_aEngine->RegisterObjectMethod("ScriptCpu", "void writePGM(uint a, int v)"
+                                   , asMETHODPR( ScriptCpu, writePGM, (uint, int), void)
+                                   , asCALL_THISCALL );
 
-    r = m_aEngine->RegisterObjectMethod("ScriptCpu", "void writeRAM(uint a, int v)"
-                                       , asMETHODPR( ScriptCpu, writeRAM, (uint, int), void)
-                                       , asCALL_THISCALL );
+    m_aEngine->RegisterObjectMethod("ScriptCpu", "int readRAM(uint n)"
+                                   , asMETHODPR( ScriptCpu, readRAM, (uint), int)
+                                   , asCALL_THISCALL );
 
-    r = m_aEngine->RegisterObjectMethod("ScriptCpu", "int readROM(uint n)"
-                                       , asMETHODPR( ScriptCpu, readROM, (uint), int)
-                                       , asCALL_THISCALL );
+    m_aEngine->RegisterObjectMethod("ScriptCpu", "void writeRAM(uint a, int v)"
+                                   , asMETHODPR( ScriptCpu, writeRAM, (uint, int), void)
+                                   , asCALL_THISCALL );
 
-    r = m_aEngine->RegisterObjectMethod("ScriptCpu", "void writeROM(uint a, int v)"
-                                       , asMETHODPR( ScriptCpu, writeROM, (uint, int), void)
-                                       , asCALL_THISCALL );
+    m_aEngine->RegisterObjectMethod("ScriptCpu", "int readROM(uint n)"
+                                   , asMETHODPR( ScriptCpu, readROM, (uint), int)
+                                   , asCALL_THISCALL );
 
-    r = m_aEngine->RegisterObjectMethod("ScriptCpu", "IoPort@ getPort(const string port)"
+    m_aEngine->RegisterObjectMethod("ScriptCpu", "void writeROM(uint a, int v)"
+                                   , asMETHODPR( ScriptCpu, writeROM, (uint, int), void)
+                                   , asCALL_THISCALL );
+
+    m_aEngine->RegisterObjectMethod("ScriptCpu", "IoPort@ getPort(const string port)"
                                        , asMETHODPR( ScriptCpu, getPort, (const string), IoPort*)
                                        , asCALL_THISCALL );
 
-    r = m_aEngine->RegisterObjectMethod("ScriptCpu", "IoPin@ getPin(const string pin)"
-                                       , asMETHODPR( ScriptCpu, getPin, (const string), IoPin*)
-                                       , asCALL_THISCALL );
+    m_aEngine->RegisterObjectMethod("ScriptCpu", "IoPin@ getPin(const string pin)"
+                                   , asMETHODPR( ScriptCpu, getPin, (const string), IoPin*)
+                                   , asCALL_THISCALL );
 
-    r = m_aEngine->RegisterObjectMethod("ScriptCpu", "McuPort@ getMcuPort(const string port)"
-                                       , asMETHODPR( ScriptCpu, getMcuPort, (const string), McuPort*)
-                                       , asCALL_THISCALL );
+    m_aEngine->RegisterObjectMethod("ScriptCpu", "McuPort@ getMcuPort(const string port)"
+                                   , asMETHODPR( ScriptCpu, getMcuPort, (const string), McuPort*)
+                                   , asCALL_THISCALL );
 
-    r = m_aEngine->RegisterObjectMethod("ScriptCpu", "McuPin@ getMcuPin(const string pin)"
-                                       , asMETHODPR( ScriptCpu, getMcuPin, (const string), McuPin*)
-                                       , asCALL_THISCALL );
+    m_aEngine->RegisterObjectMethod("ScriptCpu", "McuPin@ getMcuPin(const string pin)"
+                                   , asMETHODPR( ScriptCpu, getMcuPin, (const string), McuPin*)
+                                   , asCALL_THISCALL );
 
-    r = m_aEngine->RegisterObjectMethod("ScriptCpu", "void INTERRUPT( uint vector )"
+    m_aEngine->RegisterObjectMethod("ScriptCpu", "void INTERRUPT( uint vector )"
                                        , asMETHODPR( ScriptCpu, INTERRUPT, (uint32_t), void)
                                        , asCALL_THISCALL );
 }
@@ -108,18 +117,17 @@ ScriptCpu::~ScriptCpu() {}
 
 void ScriptCpu::setScript( QString script )
 {
-    if( !m_aEngine ) return;
     m_script = script;
-
-    int r = compileScript();
-    if( r < 0 ) return;
-    startScript();
 }
 
 void ScriptCpu::startScript()
 {
-    asIScriptFunction* func = m_aEngine->GetModule(0)->GetFunctionByDecl("void setup()");
-    if( func ) callFunction( func );
+    if( !m_aEngine ) return;
+
+    int r = compileScript();
+    if( r < 0 ) return;
+
+    m_initialized = true;
 
     m_reset       = m_aEngine->GetModule(0)->GetFunctionByDecl("void reset()");
     m_voltChanged = m_aEngine->GetModule(0)->GetFunctionByDecl("void voltChanged()");
@@ -128,13 +136,31 @@ void ScriptCpu::startScript()
     m_extClock    = m_aEngine->GetModule(0)->GetFunctionByDecl("void extClock( bool clkState )");
     m_getCpuReg   = m_aEngine->GetModule(0)->GetFunctionByDecl("int getCpuReg( string reg )");
     m_getStrReg   = m_aEngine->GetModule(0)->GetFunctionByDecl("string getStrReg( string reg )");
+    m_command     = m_aEngine->GetModule(0)->GetFunctionByDecl("void command( string c )");
+
+    if( m_getCpuReg || m_getStrReg )
+    {
+        m_mcu->createCpuTable();
+    }
+    if( m_command || m_script.contains("toConsole") )
+    {
+        m_mcu->createCpuTable();
+        m_watcher = m_mcu->getCpuTable();
+        m_watcher->addConsole( this );
+    }
+
+    asIScriptFunction* func = m_aEngine->GetModule(0)->GetFunctionByDecl("void setup()");
+    if( func ) callFunction( func );
+
     //m_extClockCtx = m_aEngine->CreateContext();
 }
 
 void ScriptCpu::reset()
 {
-    //for( IoPort* port : m_ports ) port->reset();
-    callFunction( m_reset );
+    m_initialized = false;
+    startScript();
+
+    if( m_initialized && m_reset ) callFunction( m_reset );
 }
 void ScriptCpu::voltChanged() { callFunction( m_voltChanged ); }
 void ScriptCpu::runEvent()    { callFunction( m_runEvent ); }
@@ -153,16 +179,37 @@ void ScriptCpu::extClock( bool clkState )
     execute();
 }
 
+void ScriptCpu::command( QString c )
+{
+    if( !m_command ) return;
+
+    prepare( m_command );
+    std::string str = c.toStdString();
+    m_context->SetArgObject( 0, &str );
+    execute();
+
+    //if( m_status != asEXECUTION_FINISHED ) return;
+    //str = *(string*)m_context->GetReturnObject();
+    //return QString::fromStdString( str );
+}
+
+void ScriptCpu::toConsole( string r )
+{
+    if( !m_watcher ) return;
+    Console* c = m_watcher->console();
+    if( c ) c->appendText( QString::fromStdString(r) );
+}
+
 void ScriptCpu::addCpuReg( string name, string type )
 {
-    m_mcu->createCpuTable();
-    m_mcu->getCpuTable()->addRegister( QString::fromStdString( name ), QString::fromStdString( type ) );
+    if( !m_watcher ) return;
+    m_watcher->addRegister( QString::fromStdString( name ), QString::fromStdString( type ) );
 }
 
 void ScriptCpu::addCpuVar( string name, string type )
 {
-    m_mcu->createCpuTable();
-    m_mcu->getCpuTable()->addVariable( QString::fromStdString( name ), QString::fromStdString( type ) );
+    if( !m_watcher ) return;
+    m_watcher->addVariable( QString::fromStdString( name ), QString::fromStdString( type ) );
 }
 
 int ScriptCpu::getCpuReg( QString reg )

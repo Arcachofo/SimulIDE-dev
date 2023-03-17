@@ -36,7 +36,7 @@ ValueWidget::ValueWidget( QString name, QString type, eMcu* processor, QWidget* 
 
     typeLabel->setFont( fontS );
     typeLabel->setText( m_type );
-    typeLabel->setFixedWidth( round(40*scale) );
+    //typeLabel->setFixedWidth( round(40*scale) );
 
     valueLine->setFixedWidth( round(120*scale) );
     valueLine->setReadOnly( true );

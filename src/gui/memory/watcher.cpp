@@ -12,6 +12,8 @@
 #include "mainwindow.h"
 #include "e_mcu.h"
 #include "cpubase.h"
+#include "console.h"
+#include "scriptcpu.h"
 
 Watcher::Watcher( QWidget* parent, eMcu* processor )
        : QWidget( parent )
@@ -20,6 +22,9 @@ Watcher::Watcher( QWidget* parent, eMcu* processor )
 
     m_processor = processor;
 
+    m_console= NULL;
+    m_header = false;
+
     QFont font;
     float scale = MainWindow::self()->fontScale();
     font.setFamily("Ubuntu Mono");
@@ -27,13 +32,10 @@ Watcher::Watcher( QWidget* parent, eMcu* processor )
     //font.setPointSize( 14 );
     font.setPixelSize( round(12.5*scale) );
 
-    HeaderWidget* header = new HeaderWidget("Name","Type", this );
-
     m_valuesLayout = new QBoxLayout( QBoxLayout::TopToBottom, this );
     m_valuesLayout->setMargin( 0 );
     m_valuesLayout->setSpacing( 2 );
     m_valuesLayout->setContentsMargins( 0, 0, 0, 0 );
-    m_valuesLayout->addWidget( header );
     m_valuesLayout->addStretch();
     valuesWidget->setLayout( m_valuesLayout );
 
@@ -57,6 +59,13 @@ Watcher::Watcher( QWidget* parent, eMcu* processor )
              this,      &Watcher::RegDoubleClick );
 }
 
+void Watcher::addHeader()
+{
+    m_header = true;
+    HeaderWidget* header = new HeaderWidget("Name","Type", this );
+    m_valuesLayout->insertWidget( 0, header );
+}
+
 void Watcher::updateValues()
 {
     if( !m_processor ) return;
@@ -73,6 +82,7 @@ void Watcher::setRegisters( QStringList regs )
 
 void Watcher::addRegister( QString name, QString type )
 {
+    if( !m_header ) addHeader();
     if( m_typeTable.keys().contains( name ) ) return;
     m_typeTable[ name ] = type;
     m_registerModel->appendRow( new QStandardItem(name) );
@@ -88,6 +98,7 @@ void Watcher::setVariables( QStringList vars )
 
 void Watcher::addVariable( QString name, QString type )
 {
+    if( !m_header ) addHeader();
     if( m_typeTable.keys().contains( name ) ) return;
     m_typeTable[ name ] = type;
     m_variableModel->appendRow( new QStandardItem(name) );
@@ -112,6 +123,13 @@ QStringList Watcher::getVarSet()
     return varset;
 }
 
+void Watcher::addConsole( ScriptCpu* s )
+{
+    if( m_console ) return;
+    m_console = new Console( s );
+    m_valuesLayout->insertWidget( m_valuesLayout->count()-1, m_console );
+}
+
 void Watcher::RegDoubleClick( const QModelIndex& index )
 {
     QString name = m_registerModel->item(index.row())->text();
@@ -122,7 +140,8 @@ void Watcher::RegDoubleClick( const QModelIndex& index )
     ValueWidget* valwid = new ValueWidget( name, type, m_processor, this );
     m_values[name] = valwid;
 
-    m_valuesLayout->insertWidget( m_valuesLayout->count()-1, valwid );
+    int last = m_console ? 2 : 1;
+    m_valuesLayout->insertWidget( m_valuesLayout->count()-last, valwid );
 }
 
 void Watcher::VarDoubleClick( const QModelIndex& index )
@@ -135,5 +154,6 @@ void Watcher::VarDoubleClick( const QModelIndex& index )
     ValueWidget* valwid = new ValueWidget( name, type, m_processor, this );
     m_values[name] = valwid;
 
-    m_valuesLayout->insertWidget( m_valuesLayout->count()-1, valwid );
+    int last = m_console ? 2 : 1;
+    m_valuesLayout->insertWidget( m_valuesLayout->count()-last, valwid );
 }

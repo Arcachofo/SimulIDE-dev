@@ -27,7 +27,7 @@ HeaderWidget::HeaderWidget( QString name, QString type, QWidget* parent )
 
     float scale = MainWindow::self()->fontScale();
 
-    typeLabel->setFixedWidth( round(40*scale) );
+    //typeLabel->setFixedWidth( round(40*scale) );
     valueLine->setFixedWidth( round(120*scale) );
 }
 

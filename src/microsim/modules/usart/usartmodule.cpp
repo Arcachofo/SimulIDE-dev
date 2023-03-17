@@ -3,6 +3,8 @@
  *                                                                         *
  ***( see copyright.txt file at root folder )*******************************/
 
+#include <math.h>
+
 #include "usartmodule.h"
 #include "usarttx.h"
 #include "usartrx.h"
@@ -38,6 +40,12 @@ void UsartModule::setBaudRate( int br )
 {
     m_baudRate = br;
     setPeriod( 1e12/br );
+}
+
+void UsartModule::setDataBits( uint8_t b )
+{
+    m_dataBits = b;
+    m_dataMask = pow( 2, b )-1;
 }
 
 void UsartModule::setPeriod( uint64_t period )
@@ -122,10 +130,10 @@ bool UartTR::getParity( uint16_t data )
 void UartTR::raiseInt( uint8_t data )
 {
     m_data = data;
-    m_interrupt->raise( /*data*/ );
+    if( m_interrupt ) m_interrupt->raise( /*data*/ );
 }
 
-void UartTR::setPins( QList<IoPin *> pinList )
+void UartTR::setPins( QList<IoPin*> pinList )
 {
     m_pinList = pinList;
     m_ioPin = pinList.at(0);

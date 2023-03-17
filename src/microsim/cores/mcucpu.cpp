@@ -18,8 +18,11 @@ McuCpu::McuCpu( eMcu* mcu )
     else                      m_lowDataMemEnd = 0;
 
     m_regEnd = mcu->m_regEnd;
-    if( m_dataMemEnd > 0 ) m_STATUS = &m_dataMem[mcu->m_sregAddr];
-
+    if( m_dataMemEnd > 0 )
+    {
+        uint16_t sregAddr = mcu->m_sregAddr;
+        if( sregAddr ) m_STATUS = &m_dataMem[sregAddr];
+    }
     if     ( m_progSize <= 0xFF )     m_progAddrSize = 1;
     else if( m_progSize <= 0xFFFF )   m_progAddrSize = 2;
     else if( m_progSize <= 0xFFFFFF ) m_progAddrSize = 3;

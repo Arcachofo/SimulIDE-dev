@@ -77,6 +77,12 @@ string getStrReg( string reg )
     return value;
 }
 
+void command( string c )
+{
+    //print( "Command: " +c );
+    component.toConsole("Ok.\n");
+}
+
 void setup() // Executed when Component is created
 {
     irqPin.setPinMode( openCo );

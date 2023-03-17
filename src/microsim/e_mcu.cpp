@@ -147,10 +147,11 @@ void eMcu::reset()
 
     for( McuModule* module : m_modules ) module->reset();
     for( IoPort* ioPort : m_ioPorts ) ioPort->reset();
-    //cpu->reset();
+
     m_interrupts.resetInts();
     DataSpace::initialize();
-    if( cpu ) cpu->reset(); ///
+
+    if( cpu ) cpu->reset(); // Must be after all modules reset
     else qDebug() << "ERROR: eMcu::reset NULL Cpu";
 
     if( !m_saveEepr )

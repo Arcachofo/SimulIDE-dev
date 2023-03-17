@@ -70,6 +70,7 @@
 
 #include "scriptcpu.h"
 #include "scriptport.h"
+#include "scriptusart.h"
 
 #include "utils.h"
 
@@ -781,11 +782,15 @@ void McuCreator::createUsart( QDomElement* u )
     QString name = u->attribute( "name" );
     int   number = u->attribute( "number" ).toInt();
 
+    QString core = m_core;
+    if( u->hasAttribute("core") ) core = u->attribute("core");
+
     McuUsart* usartM;
-    if     ( m_core == "8051" )  usartM = new I51Usart( mcu, name, number );
-    else if( m_core == "AVR"  )  usartM = new AvrUsart( mcu, name, number );
-    else if( m_core == "Pic14")  usartM = new PicUsart( mcu, name, number );
-    else if( m_core == "Pic14e") usartM = new PicUsart( mcu, name, number );
+    if     ( core == "8051" )    usartM = new I51Usart( mcu, name, number );
+    else if( core == "AVR"  )    usartM = new AvrUsart( mcu, name, number );
+    else if( core == "Pic14")    usartM = new PicUsart( mcu, name, number );
+    else if( core == "Pic14e")   usartM = new PicUsart( mcu, name, number );
+    else if( core == "scripted") usartM = new ScriptUsart( mcu, name, number );
     else return;
 
     mcu->m_usarts.emplace_back( usartM );
@@ -822,7 +827,7 @@ void McuCreator::createUsart( QDomElement* u )
 
                 QStringList pinNames = el.attribute( "pin" ).split(",");
                 QList<IoPin*> pinList;
-                for( QString pinName : pinNames ) pinList.append( mcu->getMcuPin( pinName ) );
+                for( QString pinName : pinNames ) pinList.append( mcu->getIoPin( pinName ) );
                 trUnit->setPins( pinList );
 
                 if( el.hasAttribute("enable") )

@@ -13,6 +13,8 @@
 class eMcu;
 class ValueWidget;
 class QStandardItemModel;
+class ScriptCpu;
+class Console;
 
 class Watcher : public QWidget, private Ui::Watcher
 {
@@ -32,13 +34,20 @@ class Watcher : public QWidget, private Ui::Watcher
         void loadVarSet( QStringList varSet );
         QStringList getVarSet();
 
+        void addConsole( ScriptCpu* s );
+        Console* console() { return m_console; }
+
     public slots:
         void RegDoubleClick( const QModelIndex& index );
         void VarDoubleClick( const QModelIndex& index );
 
     private:
+        void addHeader();
+
+        bool m_header;
 
         eMcu* m_processor;
+        Console* m_console;
 
         QStandardItemModel* m_registerModel;
         QStandardItemModel* m_variableModel;

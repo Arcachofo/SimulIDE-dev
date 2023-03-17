@@ -1,4 +1,4 @@
-/***************************************************************************
+﻿/***************************************************************************
  *   Copyright (C) 2022 by Santiago González                               *
  *                                                                         *
  ***( see copyright.txt file at root folder )*******************************/
@@ -28,6 +28,9 @@ class MAINMODULE_EXPORT ScriptCpu : public ScriptModule, public McuCpu
         virtual void setScript( QString script ) override;
         void startScript();
 
+        void command( QString c );
+        void toConsole( string r );
+
         void addCpuReg( string name, string type );
         void addCpuVar( string name, string type );
         virtual int getCpuReg( QString reg ) override;
@@ -53,6 +56,8 @@ class MAINMODULE_EXPORT ScriptCpu : public ScriptModule, public McuCpu
         virtual void INTERRUPT( uint vector ) override;
 
     protected:
+        bool m_initialized;
+
         asIScriptFunction* m_reset;
         asIScriptFunction* m_voltChanged;
         asIScriptFunction* m_runEvent;
@@ -61,8 +66,11 @@ class MAINMODULE_EXPORT ScriptCpu : public ScriptModule, public McuCpu
 
         asIScriptFunction* m_getCpuReg;
         asIScriptFunction* m_getStrReg;
+        asIScriptFunction* m_command;
 
         //asIScriptContext* m_extClockCtx;
+
+        Watcher* m_watcher;
 
 };
 #endif
