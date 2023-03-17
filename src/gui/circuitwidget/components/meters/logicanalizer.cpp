@@ -149,8 +149,7 @@ void LAnalizer::updateStep()
                 display()->connectChannel( i, connected );
             }
             m_channel[i]->m_connected = connected;
-            if( connected ) m_channel[i]->updateStep();
-            else            m_channel[i]->initialize();
+            if( !connected ) m_channel[i]->initialize();
             m_channel[i]->m_trigIndex = m_channel[i]->m_bufferCounter;
         }
         m_risEdge = 0;

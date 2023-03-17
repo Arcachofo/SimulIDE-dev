@@ -47,15 +47,15 @@ void LaChannel::stamp()    // Called at Simulation Start
     }
 }
 
-void LaChannel::updateStep()
+/*void LaChannel::updateStep()
 {
-    int counter = m_bufferCounter;
-    voltChanged();
-    if( counter == m_bufferCounter ) addReading( m_buffer[m_bufferCounter] );
-    double dispMax = m_analizer->voltDiv()*10;
-    double dispMin = 0;
-    m_analizer->display()->setLimits( m_channel, dispMax, dispMin );
-}
+    //int counter = m_bufferCounter;
+    //voltChanged();
+    //if( counter == m_bufferCounter ) addReading( m_buffer[m_bufferCounter] );
+    //double dispMax = m_analizer->voltDiv()*10;
+    //double dispMin = 0;
+    //m_analizer->display()->setLimits( m_channel, dispMax, dispMin );
+}*/
 
 void LaChannel::setPin( Pin* p ) { m_ePin[0] = m_pin = p; }
 

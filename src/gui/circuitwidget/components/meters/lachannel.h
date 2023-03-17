@@ -23,7 +23,7 @@ class MAINMODULE_EXPORT LaChannel : public DataChannel
 
         virtual void initialize() override;
         virtual void stamp() override;
-        virtual void updateStep() override;
+        //virtual void updateStep() override;
         virtual void voltChanged() override;
 
         void setPin( Pin* p );
