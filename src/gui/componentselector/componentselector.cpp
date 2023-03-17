@@ -34,7 +34,10 @@ ComponentSelector::ComponentSelector( QWidget* parent )
     setRootIsDecorated( true );
     setCursor( Qt::OpenHandCursor );
     headerItem()->setHidden( true );
-    setIconSize( QSize( 36, 24 ));
+
+    float scale = MainWindow::self()->fontScale();
+    setIconSize( QSize( 30*scale, 24*scale ));
+    //setIconSize( QSize( 36, 24 ));
 
     LoadLibraryItems();
 
@@ -167,11 +170,11 @@ void ComponentSelector::addItem( QString caption, QTreeWidgetItem* catItem, QStr
     if( nameFull.size() > 1 ) info = "   "+nameFull.last();
 
     QTreeWidgetItem* item = new QTreeWidgetItem(0);
+    float scale = MainWindow::self()->fontScale();
     QFont font;
     font.setFamily("Ubuntu");
     font.setBold( true );
-
-    font.setPixelSize( 11*MainWindow::self()->fontScale() );
+    font.setPixelSize( 11*scale );
 
     item->setFlags( QFlag(32) );
     item->setFont( 0, font );
@@ -179,7 +182,7 @@ void ComponentSelector::addItem( QString caption, QTreeWidgetItem* catItem, QStr
     item->setText( 0, nameTr+info );
     item->setData( 0, Qt::UserRole, type );
 
-    if( ( type == "Subcircuit" )||( type == "MCU" ) )
+    if( type == "Subcircuit" || type == "MCU" )
          item->setData( 0, Qt::WhatsThisRole, nameTr );
     else item->setData( 0, Qt::WhatsThisRole, type );
 

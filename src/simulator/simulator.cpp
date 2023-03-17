@@ -97,20 +97,20 @@ void Simulator::timerEvent( QTimerEvent* e )  //update at m_timerTick rate (50 m
         m_CircuitFuture.waitForFinished();
         m_state = state;
     }
-    /*if( m_pauseCirc ) // Paused from sim engine thread, update UI
-    {
-        m_pauseCirc = false;
-        m_state = m_oldState;
-        CircuitWidget::self()->pauseSim();
-    }*/
 
     if( Circuit::self()->animate() )
     {
-        Circuit::self()->updateConnectors();
-        for( eNode* enode : m_eNodeList ) enode->setVoltChanged( false );
+        uint updateRate = m_fps/5;
+        if( updateRate < 1 ) updateRate = 1;
+        if( ++m_updtCnt >= updateRate )     // Animate at FPS/5 with minimum 4 FPS
+        {
+            m_updtCnt = 0;
+            Circuit::self()->updateConnectors();
+            for( eNode* enode : m_eNodeList ) enode->setVoltChanged( false );
+        }
     }
     for( Updatable* el : m_updateList ) el->updateStep();
-    EditorWindow::self()->outPane()->updateStep();
+    EditorWindow::self()->outPane()->updateStep(); // OutPanel in Editor can be created before this simulator.
 
     // Calculate Load
     uint64_t loop = 0;

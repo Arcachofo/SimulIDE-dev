@@ -98,8 +98,10 @@ void LedBar::deleteLeds( int d )
 
     for( int i=start*2; i<m_size*2; i++ )
     {
-        m_pin[i]->removeConnector();
-        delete m_pin[i];
+        Pin* pin = m_pin[i];
+        pin->removeConnector();
+        m_signalPin.removeAll( pin );
+        delete pin;
     }
     for( int i=start; i<m_size; i++ )  Circuit::self()->removeComp( m_led[i] );
     m_size = m_size-d;
