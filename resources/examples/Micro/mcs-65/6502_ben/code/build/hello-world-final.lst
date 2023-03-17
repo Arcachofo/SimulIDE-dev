@@ -1,0 +1,133 @@
+Sections:
+00: "seg8000" (8000-808D)
+01: "segfffc" (FFFC-0)
+
+
+Source: "hello-world-final.s"
+                        	     1: ; Compiler: Vasm-6502
+                        	     2: 
+                        	     3: PORTB = $6000
+                        	     4: PORTA = $6001
+                        	     5: DDRB  = $6002
+                        	     6: DDRA  = $6003
+                        	     7: 
+                        	     8: E  = %10000000
+                        	     9: RW = %01000000
+                        	    10: RS = %00100000
+                        	    11: 
+                        	    12:   .org $8000
+                        	    13: 
+                        	    14: reset:
+00:8000 A2FF            	    15:   ldx #$ff
+00:8002 9A              	    16:   txs
+                        	    17: 
+00:8003 A9FF            	    18:   lda #%11111111 ; Set all pins on port B to output
+00:8005 8D0260          	    19:   sta DDRB
+00:8008 A9E0            	    20:   lda #%11100000 ; Set top 3 pins on port A to output
+00:800A 8D0360          	    21:   sta DDRA
+                        	    22: 
+00:800D A938            	    23:   lda #%00111000 ; Set 8-bit mode; 2-line display; 5x8 font
+00:800F 206180          	    24:   jsr lcd_instruction
+00:8012 A90E            	    25:   lda #%00001110 ; Display on; cursor on; blink off
+00:8014 206180          	    26:   jsr lcd_instruction
+00:8017 A906            	    27:   lda #%00000110 ; Increment and shift cursor; don't shift display
+00:8019 206180          	    28:   jsr lcd_instruction
+00:801C A901            	    29:   lda #$00000001 ; Clear display
+00:801E 206180          	    30:   jsr lcd_instruction
+                        	    31: 
+00:8021 A200            	    32:   ldx #0
+                        	    33: print:
+00:8023 BD3280          	    34:   lda message,x
+00:8026 F007            	    35:   beq loop
+00:8028 207780          	    36:   jsr print_char
+00:802B E8              	    37:   inx
+00:802C 4C2380          	    38:   jmp print
+                        	    39: 
+                        	    40: loop:
+00:802F 4C2F80          	    41:   jmp loop
+                        	    42: 
+00:8032 48656C6C6F2C2077	    43: message: .asciiz "Hello, world!"
+00:803A 6F726C6421
+00:803F 00
+                        	    44: 
+                        	    45: lcd_wait:
+00:8040 48              	    46:   pha
+00:8041 A900            	    47:   lda #%00000000  ; Port B is input
+00:8043 8D0260          	    48:   sta DDRB
+                        	    49: lcdbusy:
+00:8046 A940            	    50:   lda #RW
+00:8048 8D0160          	    51:   sta PORTA
+00:804B A9C0            	    52:   lda #(RW | E)
+00:804D 8D0160          	    53:   sta PORTA
+00:8050 AD0060          	    54:   lda PORTB
+00:8053 2980            	    55:   and #%10000000
+                        	    56: ;  bne lcdbusy
+                        	    57: 
+00:8055 A940            	    58:   lda #RW
+00:8057 8D0160          	    59:   sta PORTA
+00:805A A9FF            	    60:   lda #%11111111  ; Port B is output
+00:805C 8D0260          	    61:   sta DDRB
+00:805F 68              	    62:   pla
+00:8060 60              	    63:   rts
+                        	    64: 
+                        	    65: lcd_instruction:
+00:8061 204080          	    66:   jsr lcd_wait
+00:8064 8D0060          	    67:   sta PORTB
+00:8067 A900            	    68:   lda #0         ; Clear RS/RW/E bits
+00:8069 8D0160          	    69:   sta PORTA
+00:806C A980            	    70:   lda #E         ; Set E bit to send instruction
+00:806E 8D0160          	    71:   sta PORTA
+00:8071 A900            	    72:   lda #0         ; Clear RS/RW/E bits
+00:8073 8D0160          	    73:   sta PORTA
+00:8076 60              	    74:   rts
+                        	    75: 
+                        	    76: print_char:
+00:8077 204080          	    77:   jsr lcd_wait
+00:807A 8D0060          	    78:   sta PORTB
+00:807D A920            	    79:   lda #RS         ; Set RS; Clear RW/E bits
+00:807F 8D0160          	    80:   sta PORTA
+00:8082 A9A0            	    81:   lda #(RS | E)   ; Set E bit to send instruction
+00:8084 8D0160          	    82:   sta PORTA
+00:8087 A920            	    83:   lda #RS         ; Clear E bits
+00:8089 8D0160          	    84:   sta PORTA
+00:808C 60              	    85:   rts
+                        	    86: 
+                        	    87:   .org $fffc
+01:FFFC 0080            	    88:   .word reset
+01:FFFE 0000            	    89:   .word $0000
+                        	    90: 
+
+
+Symbols by name:
+DDRA                             E:6003
+DDRB                             E:6002
+E                                E:0080
+PORTA                            E:6001
+PORTB                            E:6000
+RS                               E:0020
+RW                               E:0040
+lcd_instruction                  A:8061
+lcd_wait                         A:8040
+lcdbusy                          A:8046
+loop                             A:802F
+message                          A:8032
+print                            A:8023
+print_char                       A:8077
+reset                            A:8000
+
+Symbols by value:
+0020 RS
+0040 RW
+0080 E
+6000 PORTB
+6001 PORTA
+6002 DDRB
+6003 DDRA
+8000 reset
+8023 print
+802F loop
+8032 message
+8040 lcd_wait
+8046 lcdbusy
+8061 lcd_instruction
+8077 print_char

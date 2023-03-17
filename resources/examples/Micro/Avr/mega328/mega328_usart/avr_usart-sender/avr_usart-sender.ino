@@ -15,5 +15,4 @@ void loop()
     PORTB = data;
     data++;
     delay( 500 );
-    //_delay_ms( 100 );
 }

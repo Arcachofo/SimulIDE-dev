@@ -1,0 +1,41 @@
+<circuit version="1.0.0" rev="1199" stepSize="1000000" stepsPS="1000000" NLsteps="100000" reaStep="1000000" animate="0" >
+
+<item itemtype="KY040" CircId="KY040-9" mainComp="false" Show_id="true" Show_Val="false" Pos="-496,-360" rotation="0" hflip="1" vflip="1" label="KY040-25" idLabPos="-16,-48" labelrot="0" valLabPos="0,0" valLabRot="0" Steps="20 _Steps" />
+
+<item itemtype="Probe" CircId="Probe-8" mainComp="false" Show_id="false" Show_Val="true" Pos="-400,-256" rotation="-45" hflip="1" vflip="1" label="Probe-26" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
+
+<item itemtype="Probe" CircId="Probe-7" mainComp="false" Show_id="false" Show_Val="true" Pos="-376,-632" rotation="-45" hflip="1" vflip="1" label="Probe-14" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
+
+<item itemtype="Probe" CircId="Probe-6" mainComp="false" Show_id="false" Show_Val="true" Pos="-336,-632" rotation="-45" hflip="1" vflip="1" label="Probe-16" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
+
+<item itemtype="Probe" CircId="Probe-5" mainComp="false" Show_id="false" Show_Val="true" Pos="-296,-632" rotation="-45" hflip="1" vflip="1" label="Probe-18" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
+
+<item itemtype="Probe" CircId="Probe-4" mainComp="false" Show_id="false" Show_Val="true" Pos="-252,-632" rotation="-45" hflip="1" vflip="1" label="Probe-20" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
+
+<item itemtype="Resistor" CircId="Resistor-3" mainComp="false" ShowProp="Resistance" Show_id="false" Show_Val="true" Pos="-416,-372" rotation="-90" hflip="1" vflip="1" label="Resistor-25" idLabPos="-12,-20" labelrot="0" valLabPos="-16,6" valLabRot="0" Resistance="100 Ω" />
+
+<item itemtype="Resistor" CircId="Resistor-2" mainComp="false" ShowProp="Resistance" Show_id="false" Show_Val="true" Pos="-432,-372" rotation="90" hflip="1" vflip="1" label="Resistor-28" idLabPos="-12,-20" labelrot="0" valLabPos="-16,6" valLabRot="0" Resistance="100 Ω" />
+
+<item itemtype="Subcircuit" CircId="Mega-1" mainComp="false" Show_id="true" Show_Val="false" Pos="-252,-568" rotation="0" hflip="1" vflip="1" label="Arduino Mega-31" idLabPos="100,-21" labelrot="0" valLabPos="0,0" valLabRot="0" Logic_Symbol="false">
+<mainCompProps itemtype="MCU" CircId="1_mega2560-63" mainComp="true" Show_id="false" Show_Val="false" Pos="20,20" rotation="0" hflip="1" vflip="1" label="1_mega2560-63" idLabPos="0,-20" labelrot="0" valLabPos="-16,20" valLabRot="0" Frequency="16 MHz" Program="ky040.hex" Auto_Load="true" Rst_enabled="true" Ext_Osc="false" Wdt_enabled="false" />
+</item>
+
+<item itemtype="Connector" uid="Connector-11" startpinid="Probe-8-inpin" endpinid="KY040-9-sw" pointList="-416,-240,-508,-240,-508,-324" />
+
+<item itemtype="Connector" uid="Connector-13" startpinid="KY040-9-clk" endpinid="Resistor-3-lPin" pointList="-492,-324,-492,-256,-416,-256,-416,-356" />
+
+<item itemtype="Connector" uid="Connector-15" startpinid="KY040-9-dt" endpinid="Resistor-2-rPin" pointList="-500,-324,-500,-248,-432,-248,-432,-356" />
+
+<item itemtype="Connector" uid="Connector-17" startpinid="Resistor-2-lPin" endpinid="Mega-1-18" pointList="-432,-388,-432,-496,-244,-496" />
+
+<item itemtype="Connector" uid="Connector-19" startpinid="Resistor-3-rPin" endpinid="Mega-1-19" pointList="-416,-388,-416,-504,-244,-504" />
+
+<item itemtype="Connector" uid="Connector-21" startpinid="Probe-7-inpin" endpinid="Mega-1-13" pointList="-392,-616,-392,-336,-244,-336" />
+
+<item itemtype="Connector" uid="Connector-23" startpinid="Mega-1-12" endpinid="Probe-6-inpin" pointList="-244,-344,-352,-344,-352,-616" />
+
+<item itemtype="Connector" uid="Connector-25" startpinid="Mega-1-11" endpinid="Probe-5-inpin" pointList="-244,-352,-312,-352,-312,-616" />
+
+<item itemtype="Connector" uid="Connector-27" startpinid="Probe-4-inpin" endpinid="Mega-1-10" pointList="-268,-616,-268,-360,-244,-360" />
+
+</circuit>

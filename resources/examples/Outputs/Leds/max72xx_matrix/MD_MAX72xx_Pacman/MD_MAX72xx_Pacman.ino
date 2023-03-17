@@ -1,4 +1,4 @@
-// Board: Mega
+// Board = Mega
 // Use the MD_MAX72XX library to display a Pacman animation
 // Just for fun!
 
@@ -62,7 +62,7 @@ uint8_t deltaFrame;         // the animation frame offset for the next frame
 //
 void resetMatrix(void)
 {
-  mx.control(MD_MAX72XX::INTENSITY, 14);
+  mx.control(MD_MAX72XX::INTENSITY, 12);
   mx.control(MD_MAX72XX::UPDATE, MD_MAX72XX::ON);
   mx.clear();
 }

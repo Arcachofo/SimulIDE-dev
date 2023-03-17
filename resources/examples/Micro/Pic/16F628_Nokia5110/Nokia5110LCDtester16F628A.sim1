@@ -1,0 +1,37 @@
+<circuit version="1.0.0" rev="1199" stepSize="1000000" stepsPS="1000000" NLsteps="100000" reaStep="1000000" animate="0" >
+
+<item itemtype="Ground" CircId="Ground (0 V)-10" mainComp="false" Show_id="false" Show_Val="false" Pos="-252,-100" rotation="0" hflip="1" vflip="1" label="Ground (0 V)-10" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" />
+
+<item itemtype="Push" CircId="Push-9" mainComp="false" Show_id="true" Show_Val="false" Pos="-228,-124" rotation="180" hflip="-1" vflip="1" label="Mode" idLabPos="-12,34" labelrot="-180" valLabPos="0,0" valLabRot="0" Norm_Close="false" Poles="1 _Poles" />
+
+<item itemtype="Push" CircId="Push-8" mainComp="false" Show_id="true" Show_Val="false" Pos="-276,-124" rotation="0" hflip="1" vflip="-1" label="Init" idLabPos="-7,33" labelrot="0" valLabPos="0,0" valLabRot="0" Norm_Close="false" Poles="1 _Poles" />
+
+<item itemtype="Ground" CircId="Ground (0 V)-7" mainComp="false" Show_id="false" Show_Val="false" Pos="-260,-220" rotation="0" hflip="1" vflip="1" label="Ground (0 V)-7" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" />
+
+<item itemtype="Pcd8544" CircId="Pcd8544-6" mainComp="false" Show_id="true" Show_Val="false" Pos="-244,-292" rotation="0" hflip="1" vflip="1" label="Pcd8544" idLabPos="-28,-71" labelrot="0" valLabPos="0,0" valLabRot="0" />
+
+<item itemtype="MCU" CircId="p16f628a-5" mainComp="false" Show_id="true" Show_Val="false" Pos="-356,-212" rotation="0" hflip="1" vflip="1" label="pic16f628a" idLabPos="-14,-19" labelrot="0" valLabPos="0,0" valLabRot="0" Frequency="20 MHz" Program="Nokia5110LCDtester16F628A.hex" Auto_Load="false" Rst_enabled="false" Ext_Osc="false" Wdt_enabled="false" />
+
+<item itemtype="Node" CircId="Node-22" mainComp="false" Pos="-252,-124" />
+
+<item itemtype="Connector" uid="connector-23" startpinid="p16f628a-5-PORTA6" endpinid="Pcd8544-6-PinRst" pointList="-316,-180,-276,-180,-276,-252" />
+
+<item itemtype="Connector" uid="connector-24" startpinid="Pcd8544-6-PinDc" endpinid="p16f628a-5-PORTA7" pointList="-244,-252,-244,-188,-316,-188" />
+
+<item itemtype="Connector" uid="connector-25" startpinid="Pcd8544-6-PinSi" endpinid="p16f628a-5-PORTA0" pointList="-228,-252,-228,-196,-316,-196" />
+
+<item itemtype="Connector" uid="connector-26" startpinid="Pcd8544-6-PinScl" endpinid="p16f628a-5-PORTA1" pointList="-212,-252,-212,-204,-316,-204" />
+
+<item itemtype="Connector" uid="connector-27" startpinid="Ground (0 V)-7-Gnd" endpinid="Pcd8544-6-PinCs" pointList="-260,-236,-260,-252" />
+
+<item itemtype="Connector" uid="connector-28" startpinid="Push-8-pinP0" endpinid="p16f628a-5-PORTB3" pointList="-292,-124,-372,-124,-372,-140,-364,-140" />
+
+<item itemtype="Connector" uid="connector-29" startpinid="Node-22-2" endpinid="Push-8-switch0pinN" pointList="-252,-124,-260,-124" />
+
+<item itemtype="Connector" uid="connector-30" startpinid="Node-22-1" endpinid="Push-9-pinP0" pointList="-252,-124,-244,-124" />
+
+<item itemtype="Connector" uid="connector-31" startpinid="Push-9-switch0pinN" endpinid="p16f628a-5-PORTB2" pointList="-212,-124,-188,-124,-188,-92,-380,-92,-380,-148,-364,-148" />
+
+<item itemtype="Connector" uid="connector-32" startpinid="Ground (0 V)-10-Gnd" endpinid="Node-22-0" pointList="-252,-116,-252,-124" />
+
+</circuit>

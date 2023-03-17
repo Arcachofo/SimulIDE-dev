@@ -1,10 +1,4 @@
 // Board = Mega
-// Use the MD_MAX72XX library to Print some text on the display
-//
-// Demonstrates the use of the library to print text.
-//
-// User can enter text on the serial monitor and this will display as a
-// message on the display.
 
 #include <MD_MAX72xx.h>
 #include <SPI.h>
@@ -37,7 +31,6 @@ void setup()
 
 void loop()
 {
-
   mx.control(MD_MAX72XX::INTENSITY, intensity);
   intensity++;
   intensity &= 0x0F;
