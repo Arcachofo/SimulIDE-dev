@@ -373,8 +373,8 @@ void Connector::splitCon(int index, Pin* pin0, Pin* pin2 )
     
     new_connector->closeCon( m_endPin );    // Close new_connector first please
     closeCon( pin0 );                       // Close this
-    Circuit::self()->addCompState( this, "remove", stateAdd );
-    Circuit::self()->addCompState( new_connector, "remove", stateAdd );
+    ///Circuit::self()->addCompState( this, "remove", stateAdd );
+    ///Circuit::self()->addCompState( new_connector, "remove", stateAdd );
 }
 
 void Connector::updateLines()

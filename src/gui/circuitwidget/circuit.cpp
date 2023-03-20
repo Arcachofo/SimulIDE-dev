@@ -48,6 +48,7 @@ Circuit::Circuit( qreal x, qreal y, qreal width, qreal height, CircuitView*  par
     m_animate    = false;
     m_pasting    = false;
     m_deleting   = false;
+    m_loading    = false;
     m_conStarted = false;
     m_createSubc = false;
     m_acceptKeys = true;
@@ -55,6 +56,7 @@ Circuit::Circuit( qreal x, qreal y, qreal width, qreal height, CircuitView*  par
     m_board = NULL;
     m_newConnector = NULL;
     m_seqNumber = 0;
+    m_maxUndoSteps = 100;
     m_undoIndex = -1;
     m_redoIndex = -1;
 
@@ -120,6 +122,7 @@ void Circuit::loadCircuit( QString fileName )
     ///saveState();
 
     m_busy = true;
+    m_loading = true;
     m_filePath = fileName;
     m_error = 0;
 
@@ -127,6 +130,7 @@ void Circuit::loadCircuit( QString fileName )
     loadStrDoc( doc );
 
     m_busy = false;
+    m_loading = false;
 
     if( m_error != 0 ) remove();
     else{
@@ -298,7 +302,7 @@ void Circuit::loadStrDoc( QString &doc )
                     int number = newUid.split("-").last().toInt();
                     if( number > m_seqNumber ) m_seqNumber = number; // Adjust item counter: m_seqNumber
                 }
-                else if( !m_pasting )// Start or End pin not found
+                else if( !m_pasting && !m_undo && !m_redo )// Start or End pin not found
                 {
                     if( !startpin ) qDebug() << "\n   ERROR!!  Circuit::loadStrDoc:  null startpin in Connector" << uid << startpinid;
                     if( !endpin   ) qDebug() << "\n   ERROR!!  Circuit::loadStrDoc:  null endpin in Connector"   << uid << endpinid;
@@ -536,7 +540,7 @@ void Circuit::removeItems()                     // Remove Selected items
 
     QList<Connector*> connectors;
     QList<Component*> components;
-    addCompState( NULL, "", stateNew );
+    addCompState( NULL, "New State", stateNew );
 
     for( QGraphicsItem* item : selectedItems() )
     {
@@ -627,7 +631,6 @@ void Circuit::saveState()
 {
     if( m_conStarted || m_circState.size() == 0 ) return;
     m_changed = true;
-//qDebug() << "Circuit::saveState\n";
 
     if( m_undo )
     {
@@ -642,19 +645,27 @@ void Circuit::saveState()
                 while( m_undoStack.size() > (m_undoIndex+1) ) m_undoStack.removeLast();
             }
             m_undoStack.append( m_circState );
+            if( m_undoStack.size() > m_maxUndoSteps )
+            {
+                m_undoStack.takeFirst();
+                m_undoIndex--;
+            }
         }
         m_undoIndex++;
     }
-    /// m_circState.clear();
+    //qDebug() << "Circuit::saveState Undo:"<< m_undoStack.size()<<m_undoIndex
+    //                              <<"Redo:"<<m_redoStack.size()<<m_redoIndex<<"\n";
     QString title = MainWindow::self()->windowTitle();
     if( !title.endsWith('*') ) MainWindow::self()->setWindowTitle(title+'*');
 }
 
 void Circuit::addCompState( CompBase* c, QString p, stateMode state )
 {
+    if( m_loading || m_deleting ) return;
     QString type = "NULL";
     if( c ) type = c->itemType();
 //qDebug() << "Circuit::addCompState" << type<<p<<state;
+
     if( state & stateNew )
     {
         m_circState.clear();
@@ -673,16 +684,14 @@ void Circuit::addCompState( CompBase* c, QString p, stateMode state )
             if( p == "remove" )
             {
                 cState.valStr = con->startPinId(); // Save Connector start Pin id.
-                ///m_circState.append( cState );
                 m_circState.remove.prepend( cState );
             }
             else m_circState.create.append( cState );
-                ///m_circState.prepend( cState );
         }
         else               // Component
         {
-            if( p == "remove" ) m_circState.remove.append( cState );  ///m_circState.prepend( cState );
-            else                m_circState.create.prepend( cState ); ///m_circState.append( cState );
+            if( p == "remove" ) m_circState.remove.append( cState );
+            else                m_circState.create.prepend( cState );
         }
     }
     if( state & stateSave ) saveState();
@@ -694,15 +703,21 @@ void Circuit::undo()
 //qDebug() << "\nCircuit::undo"<<m_undoIndex<<m_redoIndex;
     m_undo = true;
 
-    restoreState( m_undoStack.at( m_undoIndex ) );
-    m_undoIndex--;
-    m_redoIndex++;
-    saveState();
+    circState step = m_undoStack.at( m_undoIndex );
+    if( restoreState( step ) )
+    {
+        m_undoIndex--;
+        m_redoIndex++;
+        saveState();
 
-    if(  m_board && m_board->m_boardMode )
-        for( Connector* con : m_conList  ) con->setVisib( false );
-
+        if( m_board && m_board->m_boardMode )
+            for( Connector* con : m_conList  ) con->setVisib( false );
+    }
+    else clearUndoRedo();
     m_undo = false;
+
+    //qDebug() << "Circuit::undo Undo:"<<m_undoStack.size()<<m_undoIndex
+    //                        <<"Redo:"<<m_redoStack.size()<<m_redoIndex<<"\n";
 //qDebug() << "Circuit::undo-----------------------\n";
 }
 
@@ -713,19 +728,24 @@ void Circuit::redo()
     m_redo = true;
 
     circState step = m_redoStack.at( m_redoIndex );
-    restoreState( step );
-    m_redoIndex--;
-    m_undoIndex++;
-    if( m_redoIndex < 0 ) m_redoStack.clear();
+    if( restoreState( step ) )
+    {
+        m_redoIndex--;
+        m_undoIndex++;
+        if( m_redoIndex < 0 ) m_redoStack.clear();
 
-    if(  m_board && m_board->m_boardMode )
-        for( Connector* con : m_conList  ) con->setVisib( false );
-
+        if(  m_board && m_board->m_boardMode )
+            for( Connector* con : m_conList  ) con->setVisib( false );
+    }
+    else clearUndoRedo();
     m_redo = false;
+
+    //qDebug() << "Circuit::redo Undo:"<< m_undoStack.size()<<m_undoIndex
+    //                        <<"Redo:"<<m_redoStack.size()<<m_redoIndex<<"\n";
 //qDebug() << "Circuit::redo-----------------------\n";
 }
 
-void Circuit::restoreState( circState step )
+bool Circuit::restoreState( circState step )
 {
     if( m_simulator->isRunning() ) CircuitWidget::self()->powerCircOff();
     m_busy = true;
@@ -737,26 +757,10 @@ void Circuit::restoreState( circState step )
         //QString propName = cState.property;
         QString propVal  = cState.valStr;
         CompBase* comp   = m_compMap.value( compName );
-//qDebug() << "Circuit::restoreState" << propName<<propVal;
-        if( !comp ){
-            qDebug() << "Circuit::restoreState Error removing"<<compName<<propVal;
-            m_busy = false;
-            return; }
+//qDebug() << "Circuit::restoreState"<<compName<<cState.property;
 
-        if( comp->itemType() == "Connector")
+        if( comp && comp->itemType() != "Connector" )
         {
-            Pin* pin = m_pinMap.value( propVal ); // Find Connector start Pin from id.
-            Connector* con = pin->connector();
-            if( con )
-            {
-                if( m_undo ) addCompState( con, "new", stateAdd ); // Add compState to new Redo state
-                conList()->removeOne( con );
-                m_compMap.remove( con->getUid() );
-                con->remLines();
-                con->startPin()->setConnector( NULL );
-                con->endPin()->setConnector( NULL );
-            }
-        }else{
             if( m_undo ) addCompState( comp, "new", stateAdd ); // Add compState to new Redo state
             if( comp->itemType() == "Node")
             {
@@ -768,6 +772,32 @@ void Circuit::restoreState( circState step )
             }
             else removeComp( (Component*)comp );
         }
+        else
+        {
+            Pin* pin = m_pinMap.value( propVal ); // Find Connector start Pin from id.
+            if( !pin ){
+                //qDebug() << "Circuit::restoreState Error NULL Pin"<<compName<<propVal;
+                continue; //return false;
+            }
+            Connector* con = pin->connector();
+            if( !con ){
+                //qDebug() << "Circuit::restoreState Error NULL Connector"<<compName<<propVal;
+                continue; // return false;
+            }
+            if( m_undo )
+            {
+                addCompState( con, "new", stateAdd ); // Add compState to new Redo state
+                con->remove();
+            }
+            else
+            {
+                conList()->removeOne( con );
+                m_compMap.remove( con->getUid() );
+                con->remLines();
+                con->startPin()->setConnector( NULL );
+                con->endPin()->setConnector( NULL );
+            }
+        }
     }
     for( compState cState : step.create )
     {
@@ -775,7 +805,7 @@ void Circuit::restoreState( circState step )
         QString propName = cState.property;
         QString propVal  = cState.valStr;
         CompBase* comp   = m_compMap.value( compName );
-
+//qDebug() << "Circuit::restoreState"<<compName<<propName;
         if( propName == "new" )
         {
             loadStrDoc( propVal );
@@ -785,8 +815,7 @@ void Circuit::restoreState( circState step )
         {
             if( !comp ){
                 qDebug() << "Circuit::restoreState Error restoring"<<compName<<propVal;
-                m_busy = false;
-                return; }
+                return false; }
             if( m_undo ) addCompState( comp, propName, stateAdd );
             comp->setPropStr( propName, propVal );
         }
@@ -794,6 +823,17 @@ void Circuit::restoreState( circState step )
     m_LdPinMap.clear();
     m_busy = false;
     update();
+    return true;
+}
+
+void Circuit::clearUndoRedo()
+{
+    qDebug() << "Circuit::clearUndoRedo Warning: Stack Cleared"<<m_redoIndex<<m_undoIndex<<"\n";
+    m_redoStack.clear();
+    m_undoStack.clear();
+    m_redoIndex = -1;
+    m_undoIndex = -1;
+    m_busy = false;
 }
 
 void Circuit::copy( QPointF eventpoint )

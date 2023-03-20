@@ -179,7 +179,7 @@ void Function::updateFunctions()
     m_script += "\n  // Setting Outputs:\n";
     for( int i=0; i<m_funcList.size(); ++i )
     {
-        if( i >= m_outPin.size() ) break;
+        if( i >= (int)m_outPin.size() ) break;
         QString n = QString::number(i);
 
         QString func = m_funcList.at( i );

@@ -126,7 +126,7 @@ void Node::joinConns( int c0, int c1 )
 
         con->setPointList( plist );
         con->closeCon( pin1->conPin() );
-        Circuit::self()->addCompState( con, "remove", stateAdd );
+        ///Circuit::self()->addCompState( con, "remove", stateAdd );
         if( this->isSelected() ) con->setSelected( true );
     }
     Circuit::self()->addCompState( con0, "new", stateAdd );
@@ -140,7 +140,7 @@ void Node::joinConns( int c0, int c1 )
     con1->remove();
 }
 
-void Node::setHidden(bool hid, bool , bool )
+void Node::setHidden( bool hid, bool , bool )
 {
     m_hidden = hid;
 

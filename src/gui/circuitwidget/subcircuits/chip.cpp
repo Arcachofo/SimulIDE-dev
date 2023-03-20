@@ -204,7 +204,9 @@ void Chip::setLogicSymbol( bool ls )
     if( m_initialized && (m_isLS == ls) ) return;
 
     if( Simulator::self()->isRunning() ) CircuitWidget::self()->powerCircOff();
-    Circuit::self()->addCompState( this, "Logic_Symbol" );
+
+    /// Undo/Redo stack for Properties ??
+    /// Circuit::self()->addCompState( this, "Logic_Symbol" );
     
     if(  ls && m_pkgeFile.endsWith(".package"))    m_pkgeFile.replace( ".package", "_LS.package" );
     if( !ls && m_pkgeFile.endsWith("_LS.package")) m_pkgeFile.replace( "_LS.package", ".package" );
@@ -213,7 +215,7 @@ void Chip::setLogicSymbol( bool ls )
     Chip::initChip();
     
     if( m_error == 0 ) Circuit::self()->update();
-    else               Circuit::self()->unSaveState();
+    /// else               Circuit::self()->unSaveState();
 }
 
 void Chip::setBackground( QString bck )

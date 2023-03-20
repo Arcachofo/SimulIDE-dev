@@ -113,6 +113,7 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
         void paste( QPointF eventpoint );
         void undo();
         void redo();
+        void clearUndoRedo();
         void importCirc( QPointF eventpoint );
         void bom();
         void saveBackup();
@@ -132,13 +133,13 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
             QString valStr;
         };
         struct circState{       // Circuit State to be restored by Undo/Redo
-                QList<compState> remove;
-                QList<compState> create;
-                int size() { return remove.size()+create.size(); }
-                void clear() { remove.clear(); create.clear(); }
+            QList<compState> remove;
+            QList<compState> create;
+            int size() { return remove.size()+create.size(); }
+            void clear() { remove.clear(); create.clear(); }
         };
 
-        void restoreState( circState step );
+        bool restoreState( circState step );
         void loadStrDoc( QString &doc );
         bool saveString( QString &fileName, QString doc );
         QString circuitHeader();
@@ -159,11 +160,13 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
 
         int m_seqNumber;
         int m_error;
+        int m_maxUndoSteps;
         int m_undoIndex;
         int m_redoIndex;
 
         bool m_pasting;
         bool m_deleting;
+        bool m_loading;
         bool m_conStarted;
         bool m_hideGrid;
         bool m_showScroll;
@@ -181,13 +184,14 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
 
         QList<Component*> m_compList;   // Component list
         QList<Connector*> m_conList;    // Connector list
-        QList<Node*> m_nodeList;        // Node list
+        QList<Node*>      m_nodeList;   // Node list
+
         SubPackage* m_board;
         
-        QHash<QString, Pin*> m_pinMap;    // Pin list
-        QHash<QString, Pin*> m_LdPinMap;  // Pin list while loading/pasting/importing
-        QHash<QString, QString> m_idMap;
-        QHash<QString, CompBase*> m_compMap; // Map Component name -> Component pointer
+        QHash<QString, Pin*>      m_pinMap;   // Pin list
+        QHash<QString, Pin*>      m_LdPinMap; // Pin list while loading/pasting/importing
+        QHash<QString, QString>   m_idMap;
+        QHash<QString, CompBase*> m_compMap;  // Map Component name -> Component pointer
 
         circState m_circState;
         QList<circState> m_undoStack;
