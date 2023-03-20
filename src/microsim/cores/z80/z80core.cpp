@@ -548,7 +548,7 @@ void Z80Core::clkRisingEdge() // Execution of instruction and sampling bus signa
     }else {                                         // if reset input is not active, then count TStates for reset down until it reach value 0, then reset CPU
         if( normalReset ){                          // the flag normalReset is still set
             if( rstCount > 0 ) rstCount--;          // decrease TStates counter for reset
-            else               reset();             // when TStates counter for reset reach 0 reset CPU
+            else {reset(); normalReset=false;}      // when TStates counter for reset reach 0 reset CPU
         }
         else rstCount = 0;                          // restart TStates counter for reset when the reset pulse is shorter than 3 TStates
     }
