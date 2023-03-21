@@ -134,7 +134,7 @@ void DS1307::updtTime()
 {
     switch( m_addrPtr ){
         case 0: {
-            m_clock.disable( m_data[0] | 1<<7 );
+            m_clock.disable( m_data[0] & 1<<7 );
             m_clock.m_time.setHMS( m_clock.m_time.hour(), m_clock.m_time.minute(), bcdToDec( m_rxReg & ~(1<<7) ) ); break;
         }
         case 1: m_clock.m_time.setHMS( m_clock.m_time.hour(), bcdToDec( m_rxReg ), m_clock.m_time.second() ); break;
