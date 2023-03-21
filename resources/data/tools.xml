@@ -25,6 +25,7 @@
     <item name="Rotary_SW8"      info="Rotary switch for 8 positions" /> 
     <item name="Rotary_SW16"     info="Rotary switch for 16 positions" />
     <item name="5bit_count"      info="5 Bit Counter" /> 
+    <item name="AButton" info="Active clock button" />
 
   </itemset>
 

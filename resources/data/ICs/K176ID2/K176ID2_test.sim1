@@ -1,0 +1,139 @@
+<circuit version="" rev="1530" stepSize="1000000" stepsPS="1000000" NLsteps="100000" reaStep="1000000" animate="1" >
+
+<item itemtype="Rail" CircId="Rail-222" mainComp="false" ShowProp="Voltage" Show_id="false" Show_Val="true" Pos="-408,-212" rotation="0" hflip="1" vflip="1" label="Rail-222" idLabPos="-16,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Voltage="5 V" />
+
+<item itemtype="Ground" CircId="Ground-213" mainComp="false" Show_id="false" Show_Val="false" Pos="-324,-164" rotation="0" hflip="1" vflip="1" label="Ground-213" idLabPos="-16,8" labelrot="0" valLabPos="0,0" valLabRot="0" />
+
+<item itemtype="RelaySPST" CircId="RelaySPST-212" mainComp="false" Show_id="false" Show_Val="false" Pos="-344,-196" rotation="0" hflip="1" vflip="1" label="RelaySPST-212" idLabPos="-16,8" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="true" Poles="2 _Poles" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Steps" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-210" mainComp="false" Show_id="false" Show_Val="true" Pos="-472,-244" rotation="0" hflip="1" vflip="1" label="Fixed Voltage-175" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
+
+<item itemtype="Seven Segment" CircId="Seven Segment-188" mainComp="false" Show_id="false" Show_Val="false" Pos="-216,-220" rotation="0" hflip="1" vflip="1" label="Seven Segment-179" idLabPos="20,-44" labelrot="0" valLabPos="0,0" valLabRot="0" NumDisplays="1 _7seg" Color="Yellow" Vertical_Pins="false" CommonCathode="false" Threshold="2.4 V" MaxCurrent="0.02 A" Resistance="300 Ω" />
+
+<item itemtype="Seven Segment" CircId="Seven Segment-179" mainComp="false" Show_id="false" Show_Val="false" Pos="-216,-328" rotation="0" hflip="1" vflip="1" label="Seven Segment-179" idLabPos="20,-44" labelrot="0" valLabPos="0,0" valLabRot="0" NumDisplays="1 _7seg" Color="Yellow" Vertical_Pins="false" CommonCathode="true" Threshold="2.4 V" MaxCurrent="0.02 A" Resistance="100 Ω" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-177" mainComp="false" Show_id="false" Show_Val="true" Pos="-492,-300" rotation="0" hflip="1" vflip="1" label="Fixed Voltage-175" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="true" Voltage="5 V" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-175" mainComp="false" Show_id="false" Show_Val="true" Pos="-496,-352" rotation="0" hflip="1" vflip="1" label="Fixed Voltage-175" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
+
+<item itemtype="Subcircuit" CircId="74XX93-119" mainComp="false" Show_id="true" Show_Val="false" Pos="-440,-360" rotation="0" hflip="1" vflip="1" label="74XX93-119" idLabPos="0,-20" labelrot="0" valLabPos="13,34" valLabRot="-90" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+09 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" Logic_Symbol="true" />
+
+<item itemtype="Probe" CircId="Probe-476" mainComp="false" Show_id="false" Show_Val="true" Pos="-292,-392" rotation="-45" hflip="1" vflip="1" label="Probe-476" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
+
+<item itemtype="Probe" CircId="Probe-480" mainComp="false" Show_id="false" Show_Val="true" Pos="-256,-388" rotation="-45" hflip="1" vflip="1" label="Probe-480" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
+
+<item itemtype="Subcircuit" CircId="K176ID2-493" mainComp="false" Show_id="true" Show_Val="false" Pos="-364,-360" rotation="0" hflip="1" vflip="1" label="K176ID2-493" idLabPos="0,-20" labelrot="0" valLabPos="-16,20" valLabRot="0" Logic_Symbol="true" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-545" mainComp="false" Show_id="false" Show_Val="false" Pos="-460,-276" rotation="0" hflip="1" vflip="1" label="Fixed Voltage-545" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
+
+<item itemtype="Node" CircId="Node-219" mainComp="false" Pos="-324,-184" />
+
+<item itemtype="Node" CircId="Node-193" mainComp="false" Pos="-260,-344" />
+
+<item itemtype="Node" CircId="Node-494" mainComp="false" Pos="-392,-352" />
+
+<item itemtype="Node" CircId="Node-501" mainComp="false" Pos="-388,-244" />
+
+<item itemtype="Node" CircId="Node-512" mainComp="false" Pos="-264,-336" />
+
+<item itemtype="Node" CircId="Node-515" mainComp="false" Pos="-268,-328" />
+
+<item itemtype="Node" CircId="Node-518" mainComp="false" Pos="-272,-320" />
+
+<item itemtype="Node" CircId="Node-521" mainComp="false" Pos="-276,-312" />
+
+<item itemtype="Node" CircId="Node-524" mainComp="false" Pos="-280,-304" />
+
+<item itemtype="Node" CircId="Node-531" mainComp="false" Pos="-272,-344" />
+
+<item itemtype="Node" CircId="Node-533" mainComp="false" Pos="-308,-352" />
+
+<item itemtype="Node" CircId="Node-536" mainComp="false" Pos="-256,-352" />
+
+<item itemtype="Connector" uid="Connector-181" startpinid="Seven Segment-179-pin_b" endpinid="Node-193-0" pointList="-240,-344,-260,-344" />
+
+<item itemtype="Connector" uid="Connector-192" startpinid="Seven Segment-188-pin_b" endpinid="Node-193-1" pointList="-240,-236,-260,-236,-260,-344" />
+
+<item itemtype="Connector" uid="Connector-214" startpinid="Ground-213-Gnd" endpinid="Node-219-0" pointList="-324,-180,-324,-184" />
+
+<item itemtype="Connector" uid="Connector-218" startpinid="RelaySPST-212-pinP5" endpinid="Node-219-1" pointList="-360,-228,-376,-228,-376,-184,-324,-184" />
+
+<item itemtype="Connector" uid="Connector-220" startpinid="Node-219-2" endpinid="RelaySPST-212-inductor-rPin" pointList="-324,-184,-324,-196,-328,-196" />
+
+<item itemtype="Connector" uid="Connector-221" startpinid="RelaySPST-212-switch3pinN" endpinid="Seven Segment-179-pin_commona" pointList="-328,-236,-300,-236,-300,-288,-208,-288,-208,-296" />
+
+<item itemtype="Connector" uid="Connector-223" startpinid="Rail-222-outnod" endpinid="RelaySPST-212-pinP2" pointList="-392,-212,-360,-212" />
+
+<item itemtype="Connector" uid="Connector-224" startpinid="RelaySPST-212-switch0pinN" endpinid="Seven Segment-188-pin_commona" pointList="-328,-212,-300,-212,-300,-180,-208,-180,-208,-188" />
+
+<item itemtype="Connector" uid="Connector-225" startpinid="Fixed Voltage-175-outnod" endpinid="74XX93-119-CP0" pointList="-480,-352,-472,-352,-472,-328,-448,-328" />
+
+<item itemtype="Connector" uid="Connector-484" startpinid="74XX93-119-Q0" endpinid="Node-494-0" pointList="-400,-352,-392,-352" />
+
+<item itemtype="Connector" uid="Connector-485" startpinid="Fixed Voltage-210-outnod" endpinid="Node-501-0" pointList="-456,-244,-388,-244" />
+
+<item itemtype="Connector" uid="Connector-488" startpinid="Seven Segment-179-pin_c" endpinid="Node-512-0" pointList="-240,-336,-264,-336" />
+
+<item itemtype="Connector" uid="Connector-489" startpinid="Seven Segment-179-pin_d" endpinid="Node-515-0" pointList="-240,-328,-268,-328" />
+
+<item itemtype="Connector" uid="Connector-490" startpinid="Seven Segment-179-pin_e" endpinid="Node-518-0" pointList="-240,-320,-272,-320" />
+
+<item itemtype="Connector" uid="Connector-491" startpinid="Seven Segment-179-pin_f" endpinid="Node-521-0" pointList="-240,-312,-276,-312" />
+
+<item itemtype="Connector" uid="Connector-492" startpinid="Seven Segment-179-pin_g" endpinid="Node-524-0" pointList="-240,-304,-280,-304" />
+
+<item itemtype="Connector" uid="Connector-495" startpinid="Node-494-1" endpinid="K176ID2-493-A" pointList="-392,-352,-372,-352" />
+
+<item itemtype="Connector" uid="Connector-496" startpinid="Node-494-2" endpinid="74XX93-119-CP1" pointList="-392,-352,-392,-364,-460,-364,-460,-320,-448,-320" />
+
+<item itemtype="Connector" uid="Connector-497" startpinid="74XX93-119-Q1" endpinid="K176ID2-493-B" pointList="-400,-344,-372,-344" />
+
+<item itemtype="Connector" uid="Connector-498" startpinid="74XX93-119-Q2" endpinid="K176ID2-493-C" pointList="-400,-336,-372,-336" />
+
+<item itemtype="Connector" uid="Connector-499" startpinid="74XX93-119-Q3" endpinid="K176ID2-493-D" pointList="-400,-328,-372,-328" />
+
+<item itemtype="Connector" uid="Connector-502" startpinid="Node-501-1" endpinid="K176ID2-493-!M" pointList="-388,-244,-388,-296,-372,-296" />
+
+<item itemtype="Connector" uid="Connector-503" startpinid="Node-501-2" endpinid="RelaySPST-212-inductor-lPin" pointList="-388,-244,-388,-196,-360,-196" />
+
+<item itemtype="Connector" uid="Connector-511" startpinid="K176ID2-493-c" endpinid="Node-512-1" pointList="-324,-336,-264,-336" />
+
+<item itemtype="Connector" uid="Connector-513" startpinid="Node-512-2" endpinid="Seven Segment-188-pin_c" pointList="-264,-336,-264,-228,-240,-228" />
+
+<item itemtype="Connector" uid="Connector-514" startpinid="K176ID2-493-d" endpinid="Node-515-1" pointList="-324,-328,-268,-328" />
+
+<item itemtype="Connector" uid="Connector-516" startpinid="Node-515-2" endpinid="Seven Segment-188-pin_d" pointList="-268,-328,-268,-220,-240,-220" />
+
+<item itemtype="Connector" uid="Connector-517" startpinid="K176ID2-493-e" endpinid="Node-518-1" pointList="-324,-320,-272,-320" />
+
+<item itemtype="Connector" uid="Connector-519" startpinid="Node-518-2" endpinid="Seven Segment-188-pin_e" pointList="-272,-320,-272,-212,-240,-212" />
+
+<item itemtype="Connector" uid="Connector-520" startpinid="K176ID2-493-f" endpinid="Node-521-1" pointList="-324,-312,-276,-312" />
+
+<item itemtype="Connector" uid="Connector-522" startpinid="Node-521-2" endpinid="Seven Segment-188-pin_f" pointList="-276,-312,-276,-204,-240,-204" />
+
+<item itemtype="Connector" uid="Connector-523" startpinid="K176ID2-493-g" endpinid="Node-524-1" pointList="-324,-304,-280,-304" />
+
+<item itemtype="Connector" uid="Connector-525" startpinid="Node-524-2" endpinid="Seven Segment-188-pin_g" pointList="-280,-304,-280,-196,-240,-196" />
+
+<item itemtype="Connector" uid="Connector-527" startpinid="Node-193-2" endpinid="Node-531-0" pointList="-260,-344,-272,-344" />
+
+<item itemtype="Connector" uid="Connector-528" startpinid="Seven Segment-179-pin_a" endpinid="Node-536-0" pointList="-240,-352,-256,-352" />
+
+<item itemtype="Connector" uid="Connector-529" startpinid="K176ID2-493-a" endpinid="Node-533-0" pointList="-324,-352,-308,-352" />
+
+<item itemtype="Connector" uid="Connector-530" startpinid="K176ID2-493-b" endpinid="Node-531-1" pointList="-324,-344,-272,-344" />
+
+<item itemtype="Connector" uid="Connector-532" startpinid="Node-531-2" endpinid="Probe-480-inpin" pointList="-272,-344,-272,-372" />
+
+<item itemtype="Connector" uid="Connector-534" startpinid="Node-533-1" endpinid="Node-536-1" pointList="-308,-352,-256,-352" />
+
+<item itemtype="Connector" uid="Connector-535" startpinid="Node-533-2" endpinid="Probe-476-inpin" pointList="-308,-352,-308,-376" />
+
+<item itemtype="Connector" uid="Connector-537" startpinid="Node-536-2" endpinid="Seven Segment-188-pin_a" pointList="-256,-352,-256,-244,-240,-244" />
+
+<item itemtype="Connector" uid="Connector-543" startpinid="Fixed Voltage-177-outnod" endpinid="K176ID2-493-S" pointList="-476,-300,-448,-300,-448,-308,-396,-308,-396,-312,-372,-312" />
+
+<item itemtype="Connector" uid="Connector-546" startpinid="Fixed Voltage-545-outnod" endpinid="K176ID2-493-!K" pointList="-444,-276,-428,-276,-428,-304,-372,-304" />
+
+</circuit>

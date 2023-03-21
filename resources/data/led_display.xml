@@ -23,6 +23,7 @@
     <item name="8x8_vs_static" info="8x8 matrix, vertical scan, static" /> 
     <item name="8x8_rgb_cc"    info="8x8 RGB matrix common cathode" /> 
     <item name="8x8_rgb_ca"    info="8x8 RGB matrix common anode" /> 
+    <item name="4bit_clock_cc" info="4-Bit Led display for digital clock, com. cathode" /> 
 
   </itemset>
 

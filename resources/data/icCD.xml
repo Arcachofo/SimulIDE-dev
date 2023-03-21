@@ -5,6 +5,8 @@
   <itemset category="Logic/IC CD" type="Subcircuit" folder="ICs" icon="ic2.png" >
       
     <item name="CD4006"  info="18-stage static shift register" ></item>
+    <item name="CD4009"  info="  Hex buffers, inverted outputs (TTL to CMOS, CMOS to TTL level shifters)" ></item>
+    <item name="CD4010"  info="  Hex buffers (TTL to CMOS, CMOS to TTL level shifters)" ></item>
     <item name="CD4013"  info="dual D positive edge triggered flip-flop, asynchronous preset and clear " ></item>
     <item name="CD4014"  info="8-stage static shift register" ></item>
     <item name="CD4015"  info="dual 4-stage static shift register" ></item>

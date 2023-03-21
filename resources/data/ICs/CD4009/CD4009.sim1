@@ -1,0 +1,135 @@
+<circuit type="simulide_1.0" rev="1007" stepSize="1000000" stepsPS="1000000" NLsteps="100000" animate="0" >
+
+<item itemtype="Function" CircId="Function-1" mainComp="false" Show_id="false" Show_Val="false" Pos="812,660" rotation="0" hflip="1" vflip="1" label="Function-1" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" Num_Inputs="3 Pins" Num_Outputs="1 _Pins" Inverted="false" Functions="vo0=(vi0>vi1*.5)*0+(vi0<=vi1*.5)*vi2" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+09 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
+
+<item itemtype="Tunnel" CircId="Tunnel-2" mainComp="false" Show_id="false" Show_Val="false" Pos="728,652" rotation="0" hflip="1" vflip="1" label="Tunnel-2" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" Name="A0" Rotated="false" />
+
+<item itemtype="Tunnel" CircId="Tunnel-4" mainComp="false" Show_id="false" Show_Val="false" Pos="768,660" rotation="0" hflip="1" vflip="1" label="Tunnel-4" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" Name="Vdd" Rotated="false" />
+
+<item itemtype="Tunnel" CircId="Tunnel-6" mainComp="false" Show_id="false" Show_Val="false" Pos="768,668" rotation="0" hflip="1" vflip="1" label="Tunnel-6" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" Name="Vcc" Rotated="false" />
+
+<item itemtype="Tunnel" CircId="Tunnel-8" mainComp="false" Show_id="false" Show_Val="false" Pos="844,660" rotation="0" hflip="1" vflip="1" label="Tunnel-8" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" Name="X0" Rotated="true" />
+
+<item itemtype="Function" CircId="Function-39" mainComp="false" Show_id="false" Show_Val="false" Pos="812,700" rotation="0" hflip="1" vflip="1" label="Function-1" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" Num_Inputs="3 Pins" Num_Outputs="1 _Pins" Inverted="false" Functions="vo0=(vi0>vi1*.5)*0+(vi0<=vi1*.5)*vi2" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+09 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
+
+<item itemtype="Tunnel" CircId="Tunnel-40" mainComp="false" Show_id="false" Show_Val="false" Pos="728,692" rotation="0" hflip="1" vflip="1" label="Tunnel-2" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" Name="A1" Rotated="false" />
+
+<item itemtype="Tunnel" CircId="Tunnel-42" mainComp="false" Show_id="false" Show_Val="false" Pos="844,700" rotation="0" hflip="1" vflip="1" label="Tunnel-8" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" Name="X1" Rotated="true" />
+
+<item itemtype="Tunnel" CircId="Tunnel-47" mainComp="false" Show_id="false" Show_Val="false" Pos="728,732" rotation="0" hflip="1" vflip="1" label="Tunnel-2" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" Name="A2" Rotated="false" />
+
+<item itemtype="Function" CircId="Function-48" mainComp="false" Show_id="false" Show_Val="false" Pos="812,740" rotation="0" hflip="1" vflip="1" label="Function-1" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" Num_Inputs="3 Pins" Num_Outputs="1 _Pins" Inverted="false" Functions="vo0=(vi0>vi1*.5)*0+(vi0<=vi1*.5)*vi2" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+09 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
+
+<item itemtype="Tunnel" CircId="Tunnel-49" mainComp="false" Show_id="false" Show_Val="false" Pos="844,740" rotation="0" hflip="1" vflip="1" label="Tunnel-8" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" Name="X2" Rotated="true" />
+
+<item itemtype="Tunnel" CircId="Tunnel-52" mainComp="false" Show_id="false" Show_Val="false" Pos="844,820" rotation="0" hflip="1" vflip="1" label="Tunnel-8" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" Name="X4" Rotated="true" />
+
+<item itemtype="Tunnel" CircId="Tunnel-53" mainComp="false" Show_id="false" Show_Val="false" Pos="728,772" rotation="0" hflip="1" vflip="1" label="Tunnel-2" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" Name="A3" Rotated="false" />
+
+<item itemtype="Function" CircId="Function-54" mainComp="false" Show_id="false" Show_Val="false" Pos="812,780" rotation="0" hflip="1" vflip="1" label="Function-1" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" Num_Inputs="3 Pins" Num_Outputs="1 _Pins" Inverted="false" Functions="vo0=(vi0>vi1*.5)*0+(vi0<=vi1*.5)*vi2" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+09 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
+
+<item itemtype="Tunnel" CircId="Tunnel-55" mainComp="false" Show_id="false" Show_Val="false" Pos="844,780" rotation="0" hflip="1" vflip="1" label="Tunnel-8" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" Name="X3" Rotated="true" />
+
+<item itemtype="Function" CircId="Function-56" mainComp="false" Show_id="false" Show_Val="false" Pos="812,820" rotation="0" hflip="1" vflip="1" label="Function-1" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" Num_Inputs="3 Pins" Num_Outputs="1 _Pins" Inverted="false" Functions="vo0=(vi0>vi1*.5)*0+(vi0<=vi1*.5)*vi2" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+09 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
+
+<item itemtype="Tunnel" CircId="Tunnel-57" mainComp="false" Show_id="false" Show_Val="false" Pos="728,812" rotation="0" hflip="1" vflip="1" label="Tunnel-2" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" Name="A4" Rotated="false" />
+
+<item itemtype="Tunnel" CircId="Tunnel-63" mainComp="false" Show_id="false" Show_Val="false" Pos="728,852" rotation="0" hflip="1" vflip="1" label="Tunnel-2" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" Name="A5" Rotated="false" />
+
+<item itemtype="Function" CircId="Function-64" mainComp="false" Show_id="false" Show_Val="false" Pos="812,860" rotation="0" hflip="1" vflip="1" label="Function-1" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" Num_Inputs="3 Pins" Num_Outputs="1 _Pins" Inverted="false" Functions="vo0=(vi0>vi1*.5)*0+(vi0<=vi1*.5)*vi2" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+09 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
+
+<item itemtype="Tunnel" CircId="Tunnel-65" mainComp="false" Show_id="false" Show_Val="false" Pos="844,860" rotation="0" hflip="1" vflip="1" label="Tunnel-8" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" Name="X5" Rotated="true" />
+
+<item itemtype="Package" CircId="Package-134" mainComp="false" Show_id="true" Show_Val="false" Pos="632,624" rotation="0" hflip="1" vflip="1" label="Package-134" idLabPos="0,-20" labelrot="0" valLabPos="-16,20" valLabRot="0" SubcType="None" Width="4 _Cells" Height="9 Cells" Name="CD4010" Package_File="CD4009.package" Logic_Symbol="false" />
+
+<item itemtype="Package" CircId="Package-135" mainComp="false" Show_id="true" Show_Val="false" Pos="628,732" rotation="0" hflip="1" vflip="1" label="Package-135" idLabPos="0,-20" labelrot="0" valLabPos="-16,20" valLabRot="0" SubcType="None" Width="4 _Cells" Height="8 _Cells" Name="CD4009" Package_File="CD4009_LS.package" Logic_Symbol="true" />
+
+<item itemtype="Node" CircId="Node-72" mainComp="false" Pos="780,668" />
+
+<item itemtype="Node" CircId="Node-75" mainComp="false" Pos="780,708" />
+
+<item itemtype="Node" CircId="Node-78" mainComp="false" Pos="780,748" />
+
+<item itemtype="Node" CircId="Node-81" mainComp="false" Pos="780,788" />
+
+<item itemtype="Node" CircId="Node-84" mainComp="false" Pos="780,828" />
+
+<item itemtype="Node" CircId="Node-87" mainComp="false" Pos="776,660" />
+
+<item itemtype="Node" CircId="Node-90" mainComp="false" Pos="776,700" />
+
+<item itemtype="Node" CircId="Node-93" mainComp="false" Pos="776,740" />
+
+<item itemtype="Node" CircId="Node-96" mainComp="false" Pos="776,780" />
+
+<item itemtype="Node" CircId="Node-99" mainComp="false" Pos="776,820" />
+
+<item itemtype="Connector" uid="connector-136" startpinid="Tunnel-2-pin" endpinid="Function-1-in0" pointList="728,652,788,652" />
+
+<item itemtype="Connector" uid="connector-137" startpinid="Tunnel-4-pin" endpinid="Node-87-0" pointList="768,660,776,660" />
+
+<item itemtype="Connector" uid="connector-138" startpinid="Tunnel-8-pin" endpinid="Function-1-out0" pointList="844,660,836,660" />
+
+<item itemtype="Connector" uid="connector-139" startpinid="Tunnel-6-pin" endpinid="Node-72-0" pointList="768,668,780,668" />
+
+<item itemtype="Connector" uid="connector-140" startpinid="Tunnel-42-pin" endpinid="Function-39-out0" pointList="844,700,836,700" />
+
+<item itemtype="Connector" uid="connector-141" startpinid="Tunnel-40-pin" endpinid="Function-39-in0" pointList="728,692,788,692" />
+
+<item itemtype="Connector" uid="connector-142" startpinid="Tunnel-47-pin" endpinid="Function-48-in0" pointList="728,732,788,732" />
+
+<item itemtype="Connector" uid="connector-143" startpinid="Tunnel-49-pin" endpinid="Function-48-out0" pointList="844,740,836,740" />
+
+<item itemtype="Connector" uid="connector-144" startpinid="Tunnel-57-pin" endpinid="Function-56-in0" pointList="728,812,788,812" />
+
+<item itemtype="Connector" uid="connector-145" startpinid="Tunnel-52-pin" endpinid="Function-56-out0" pointList="844,820,836,820" />
+
+<item itemtype="Connector" uid="connector-146" startpinid="Tunnel-53-pin" endpinid="Function-54-in0" pointList="728,772,788,772" />
+
+<item itemtype="Connector" uid="connector-147" startpinid="Tunnel-55-pin" endpinid="Function-54-out0" pointList="844,780,836,780" />
+
+<item itemtype="Connector" uid="connector-148" startpinid="Tunnel-63-pin" endpinid="Function-64-in0" pointList="728,852,788,852" />
+
+<item itemtype="Connector" uid="connector-149" startpinid="Tunnel-65-pin" endpinid="Function-64-out0" pointList="844,860,836,860" />
+
+<item itemtype="Connector" uid="connector-150" startpinid="Node-72-2" endpinid="Function-1-in2" pointList="780,668,788,668" />
+
+<item itemtype="Connector" uid="connector-151" startpinid="Node-72-1" endpinid="Node-75-0" pointList="780,668,780,708" />
+
+<item itemtype="Connector" uid="connector-152" startpinid="Node-75-2" endpinid="Function-39-in2" pointList="780,708,788,708" />
+
+<item itemtype="Connector" uid="connector-153" startpinid="Node-75-1" endpinid="Node-78-0" pointList="780,708,780,748" />
+
+<item itemtype="Connector" uid="connector-154" startpinid="Node-78-2" endpinid="Function-48-in2" pointList="780,748,788,748" />
+
+<item itemtype="Connector" uid="connector-155" startpinid="Node-78-1" endpinid="Node-81-0" pointList="780,748,780,788" />
+
+<item itemtype="Connector" uid="connector-156" startpinid="Node-81-2" endpinid="Function-54-in2" pointList="780,788,788,788" />
+
+<item itemtype="Connector" uid="connector-157" startpinid="Node-81-1" endpinid="Node-84-0" pointList="780,788,780,828" />
+
+<item itemtype="Connector" uid="connector-158" startpinid="Node-84-2" endpinid="Function-56-in2" pointList="780,828,788,828" />
+
+<item itemtype="Connector" uid="connector-159" startpinid="Node-84-1" endpinid="Function-64-in2" pointList="780,828,780,868,788,868" />
+
+<item itemtype="Connector" uid="connector-160" startpinid="Node-87-2" endpinid="Function-1-in1" pointList="776,660,788,660" />
+
+<item itemtype="Connector" uid="connector-161" startpinid="Node-87-1" endpinid="Node-90-0" pointList="776,660,776,700" />
+
+<item itemtype="Connector" uid="connector-162" startpinid="Node-90-2" endpinid="Function-39-in1" pointList="776,700,788,700" />
+
+<item itemtype="Connector" uid="connector-163" startpinid="Node-90-1" endpinid="Node-93-0" pointList="776,700,776,740" />
+
+<item itemtype="Connector" uid="connector-164" startpinid="Node-93-2" endpinid="Function-48-in1" pointList="776,740,788,740" />
+
+<item itemtype="Connector" uid="connector-165" startpinid="Node-93-1" endpinid="Node-96-0" pointList="776,740,776,780" />
+
+<item itemtype="Connector" uid="connector-166" startpinid="Node-96-2" endpinid="Function-54-in1" pointList="776,780,788,780" />
+
+<item itemtype="Connector" uid="connector-167" startpinid="Node-96-1" endpinid="Node-99-0" pointList="776,780,776,820" />
+
+<item itemtype="Connector" uid="connector-168" startpinid="Node-99-2" endpinid="Function-56-in1" pointList="776,820,788,820" />
+
+<item itemtype="Connector" uid="connector-169" startpinid="Node-99-1" endpinid="Function-64-in1" pointList="776,820,776,860,788,860" />
+
+</circuit>

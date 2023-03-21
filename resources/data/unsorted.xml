@@ -16,8 +16,9 @@
     <item name="DAC8562"    info="+5 Volt, Parallel Input Complete 12-Bit DAC" />           
     <item name="DAC7621"    info="+5 Volt, Parallel Input 12-Bit DAC" /> 
     <item name="LM555"      info="Timer" /> 
-    <item name="TPL8002_25" info="Tandem 64-tap Digital Potentiometer " /> 
-    
+    <item name="TPL8002_25" info="Tandem 64-tap Digital Potentiometer" />
+    <item name="TL494"      info="Switch mode PWM Control Circuit" /> 
+    <item name="IR2153D"    info=" Self-oscillating half-bridge driver" />
   </itemset>
 
 </itemlib>
