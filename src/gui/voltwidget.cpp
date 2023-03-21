@@ -30,7 +30,11 @@ void VoltWidget::setupWidget()
 
     QFont font;
     font.setFamily("Ubuntu");
-    font.setPixelSize(9);
+    font.setPixelSize(8);
+    font.setLetterSpacing( QFont::PercentageSpacing, 100 );
+#ifdef _WIN32
+    font.setLetterSpacing( QFont::PercentageSpacing, 90 );
+#endif
     pushButton->setFont( font );
     
     verticalLayout->addWidget( pushButton );

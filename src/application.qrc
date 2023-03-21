@@ -1,6 +1,7 @@
 <RCC>
     <qresource prefix="/">
     
+        <file alias="Ubuntu-R.ttf">../resources/fonts/Ubuntu-R.ttf</file>
         <file alias="Ubuntu-B.ttf">../resources/fonts/Ubuntu-B.ttf</file>
         <file alias="UbuntuMono-B.ttf">../resources/fonts/UbuntuMono-B.ttf</file>
         <file alias="UbuntuMono-BI.ttf">../resources/fonts/UbuntuMono-BI.ttf</file>

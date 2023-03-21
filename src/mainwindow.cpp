@@ -51,6 +51,7 @@ MainWindow::MainWindow()
     m_compSettings = new QSettings( getConfigPath("compList.ini"), QSettings::IniFormat, this );
 
     // Fonts --------------------------------------
+    QFontDatabase::addApplicationFont( ":/Ubuntu-R.ttf" );
     QFontDatabase::addApplicationFont( ":/Ubuntu-B.ttf" );
     QFontDatabase::addApplicationFont( ":/UbuntuMono-B.ttf" );
     QFontDatabase::addApplicationFont( ":/UbuntuMono-BI.ttf" );

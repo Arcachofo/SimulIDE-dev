@@ -7,18 +7,26 @@
 #include "codeeditor.h"
 #include "basedebugger.h"
 #include "editorwindow.h"
+#include "mainwindow.h"
 
 CompilerProp::CompilerProp( CodeEditor* parent )
             : QDialog( parent )
 {
     setupUi(this);
     m_document = parent;
+
+    setPathButton->setMaximumWidth( setPathButton->height() );
+    setInclButton->setMaximumWidth( setInclButton->height() );
+
     m_blocked = true;
     compilerBox->insertItem( 0, "None" );
     compilerBox->insertItems( 1, EditorWindow::self()->compilers() );
     compilerBox->insertSeparator( compilerBox->count() );
     compilerBox->insertItems( compilerBox->count(), EditorWindow::self()->assemblers() );
     m_blocked = false;
+    
+    double scale = MainWindow::self()->fontScale();
+    this->resize( 300*scale, 200*scale );
 }
 
 void CompilerProp::on_compilerBox_currentIndexChanged( int index )
@@ -86,6 +94,10 @@ void CompilerProp::setFamily( QString fam )
 void CompilerProp::on_ardBoard_currentIndexChanged( int index )
 {
     m_compiler->setProperty( "Board", index );
+    QString board = ardBoard->itemText( index );
+    bool showCustom = board == "Custom";
+    customLabel->setVisible( showCustom  );
+    customBoard->setVisible( showCustom  );
 }
 
 void CompilerProp::on_customBoard_textEdited( QString board )
@@ -139,6 +151,9 @@ void CompilerProp::setCompiler( Compiler* compiler )
             boardLabel->setVisible( true );
             ardBoard->setVisible( true );
             ardBoard->setCurrentIndex( value.toInt() );
+            bool showCustom = false;
+            QString board = value.toString();
+            if( board == "Custom" ) showCustom = true;
             customLabel->setVisible( true );
             customBoard->setVisible( true );
             customBoard->setText( compiler->property( "Custom_Board" ).toString() );

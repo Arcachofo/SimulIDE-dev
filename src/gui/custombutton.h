@@ -1,3 +1,8 @@
+/***************************************************************************
+ *   Copyright (C) 2023 by Santiago González                               *
+ *                                                                         *
+ ***( see copyright.txt file at root folder )*******************************/
+
 #ifndef CUSTOMBUTTON_H
 #define CUSTOMBUTTON_H
 

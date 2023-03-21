@@ -52,14 +52,18 @@ Component::Component( QObject* parent, QString type, QString id )
     m_circPos  = QPointF(0, 0);
     m_circRot  = 0;
 
-    QFont f;
-    f.setFamily("Ubuntu");
-    f.setPixelSize( 10 );
-    
+    QFont font;
+    font.setFamily("Ubuntu");
+    font.setPixelSize( 10 );
+    font.setLetterSpacing( QFont::PercentageSpacing, 100 );
+#ifdef _WIN32
+    font.setLetterSpacing( QFont::PercentageSpacing, 90 );
+#endif
+
     m_idLabel = new Label();
     m_idLabel->setComponent( this );
     m_idLabel->setDefaultTextColor( Qt::darkBlue );
-    m_idLabel->setFont( f );
+    m_idLabel->setFont( font );
     setLabelPos(-16,-24, 0 );
     setShowId( false );
     
@@ -67,8 +71,8 @@ Component::Component( QObject* parent, QString type, QString id )
     m_valLabel->setComponent( this );
     m_valLabel->setDefaultTextColor( Qt::darkRed );
     setValLabelPos(-16, 20, 0 );
-    f.setPixelSize( 8 );
-    m_valLabel->setFont( f );
+    font.setPixelSize( 8 );
+    m_valLabel->setFont( font );
     m_valLabel->setVisible( false );
     
     //setObjectName( id );

@@ -73,7 +73,7 @@ void VarSource::updateButton()
     bool checked = m_button->isChecked();
     
     if( checked )
-          msg = QString::number( m_outValue,'f', 2 )+" "+m_unit;
+          msg = QString::number( m_outValue,'f', 2 ).left(5)+" "+m_unit;
     else  msg = QString("---"+m_unit);
         
     m_button->setText( msg );

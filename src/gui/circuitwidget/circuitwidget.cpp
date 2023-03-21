@@ -64,11 +64,11 @@ CircuitWidget::CircuitWidget( QWidget *parent  )
     m_mainSplitter->setSizes( {500, 100} );
 
     QFont font( "Ubuntu", 10, QFont::Bold );
-    double fontScale = MainWindow::self()->fontScale();
-    font.setPixelSize( 14*fontScale );
-    m_msgLabel  = new QLabel( this );
+    double scale = MainWindow::self()->fontScale();
+    font.setPixelSize( 14*scale );
+    m_msgLabel = new QLabel( this );
     m_msgLabel->setFont( font );
-    m_msgLabel->setMaximumSize( 200, 20*fontScale );
+    m_msgLabel->setMaximumSize( 200*scale, 20*scale );
 
     createActions();
     updateRecentFileActions();
