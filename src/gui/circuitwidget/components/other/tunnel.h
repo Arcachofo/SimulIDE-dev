@@ -55,7 +55,7 @@ class MAINMODULE_EXPORT Tunnel : public Component
         virtual void contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu );
         void showGroup();
         void hideGroup() { showHide( false ); }
-        void setGroupName();
+        void renameGroup();
 
     protected:
         void mousePressEvent( QGraphicsSceneMouseEvent* event ) override;

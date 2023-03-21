@@ -7,6 +7,7 @@
 
 #include "tunnel.h"
 #include "itemlibrary.h"
+#include "propdialog.h"
 #include "circuitwidget.h"
 #include "simulator.h"
 #include "circuit.h"
@@ -46,6 +47,8 @@ Tunnel::Tunnel( QObject* parent, QString type, QString id )
     m_pin.resize( 1 );
     m_pin[0] = new Pin( 0, QPoint(0,0), id+"-pin", 0, this);
     m_pin[0]->setLabelColor( Qt::black );
+    m_pin[0]->setLength( 5 );
+    m_pin[0]->setSpace( 4 );
 
     setLabelPos(-16,-24, 0);
 
@@ -123,6 +126,7 @@ void Tunnel::setGroupName( QString name, bool single )
         m_tunnels[name] = list;
     }
     if( single ) Circuit::self()->update();
+    if( m_propDialog ) m_propDialog->updtValues();
 }
 
 bool Tunnel::isBus()
@@ -152,6 +156,9 @@ void Tunnel::setRotated( bool rot )
 void Tunnel::setPacked( bool p )
 {
     m_packed = p;
+    if( p ) m_pin[0]->setLength( 8 );
+    else    m_pin[0]->setLength( 5 );
+    m_pin[0]->setSpace( 8-m_pin[0]->length() );
     /*if( this->parent() )
     {
         Component* comp = (Component*)parent();
@@ -195,15 +202,15 @@ void Tunnel::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
         connect( showAction, &QAction::triggered,
                        this, &Tunnel::showGroup, Qt::UniqueConnection );
     }
-    QAction* nameAction = menu->addAction( QIcon(":/rename.svg"),tr("Change group name") );
+    QAction* nameAction = menu->addAction( QIcon(":/rename.svg"),tr("Rename group") );
     connect( nameAction, &QAction::triggered,
-                   this, QOverload<>::of(&Tunnel::setGroupName), Qt::UniqueConnection );
+                   this, QOverload<>::of(&Tunnel::renameGroup), Qt::UniqueConnection );
     menu->addSeparator();
 
     Component::contextMenu( event, menu );
 }
 
-void Tunnel::setGroupName()
+void Tunnel::renameGroup()
 {
     bool ok;
     QString text = QInputDialog::getText( NULL, tr("Rename Tunnels"),
