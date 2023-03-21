@@ -44,6 +44,7 @@ class MAINMODULE_EXPORT Tunnel : public Component
         void setEnode( eNode* node, int n=-1 );
         void setPacked( bool p );
         void removeTunnel();
+        bool m_show;
 
         Pin* getPin() { return m_pin[0]; }
  static eNode* getEnode( QString n );
@@ -52,7 +53,7 @@ class MAINMODULE_EXPORT Tunnel : public Component
 
     public slots:
         virtual void contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu );
-        void showGroup() { showHide( true ); }
+        void showGroup();
         void hideGroup() { showHide( false ); }
         void setGroupName();
 
@@ -70,7 +71,7 @@ class MAINMODULE_EXPORT Tunnel : public Component
         bool m_rotated;
         bool m_blocked;
         bool m_packed;
-        bool m_show;
+
 
  static QHash<QString, QList<Tunnel*>*> m_tunnels;
 };

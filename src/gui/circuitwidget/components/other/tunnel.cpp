@@ -220,6 +220,16 @@ void Tunnel::setGroupName()
     }
 }
 
+void Tunnel::showGroup()
+{
+    for( QList<Tunnel*>* list : m_tunnels.values() )  // Hide other groups
+    {
+        if( !list ) continue;
+        for( Tunnel* tunnel: *list ) tunnel->m_show = false;
+    }
+    showHide( true );
+}
+
 void Tunnel::showHide( bool show )
 {
     QList<Tunnel*>* list = m_tunnels.value( m_name );
