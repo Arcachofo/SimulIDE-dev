@@ -55,6 +55,7 @@ BJT::~BJT(){}
 void BJT::updateStep()
 {
     if( Circuit::self()->animate() ) update();
+    if( m_changed ) voltChanged(); // m_changed cleared at eDiode::voltChanged
 }
 
 void BJT::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )

@@ -9,6 +9,7 @@
 
 #include "triac.h"
 #include "itemlibrary.h"
+#include "simulator.h"
 #include "circuit.h"
 #include "e-diode.h"
 #include "e-node.h"
@@ -22,7 +23,7 @@ Component* Triac::construct( QObject* parent, QString type, QString id )
 LibraryItem* Triac::libraryItem()
 {
     return new LibraryItem(
-        QCoreApplication::translate("Triac", "Triac"),
+        tr("Triac"),
         "Rectifiers",
         "triac.png",
         "Triac",
@@ -70,6 +71,8 @@ Triac::Triac( QObject* parent, QString type, QString id )
     m_resistGa->setEpin( 0, m_pin[2] );
     m_resistGa->setEpin( 1, m_ePin[5] );
 
+    Simulator::self()->addToUpdateList( this );
+
     addPropGroup( { tr("Main"), {
 new DoubProp<Triac>( "GateRes" , tr("Gate Resistance"),"Ω", this, &Triac::gateRes , &Triac::setGateRes ),
 new DoubProp<Triac>( "TrigCurr", tr("Trigger Current"),"A", this, &Triac::trigCurr, &Triac::setTrigCurr ),
@@ -112,6 +115,15 @@ void Triac::stamp()
 
     m_resistor->setRes( 10e5 );
     m_resistGa->setRes( m_gateRes );
+}
+
+void Triac::updateStep()
+{
+    if( !m_changed ) return;
+    m_changed = false;
+
+    m_resistGa->setRes( m_gateRes );
+    voltChanged();
 }
 
 void Triac::voltChanged()

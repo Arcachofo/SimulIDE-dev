@@ -88,8 +88,9 @@ void eBJT::voltChanged()
     double voltBC = voltB-voltC;
     double voltBE = voltB-voltE;
 
-    if( (qFabs( voltBC-m_voltBC ) < .01)
-     && (qFabs( voltBE-m_voltBE ) < .01) )
+    if( m_changed ) m_changed = false;
+    else if( qFabs(voltBC-m_voltBC) < .01
+          && qFabs(voltBE-m_voltBE) < .01 )
         { m_step = 0; return; }
     Simulator::self()->notCorverged();
 
@@ -148,10 +149,12 @@ void eBJT::setGain( double gain )
 {
     m_gain = gain;
     m_fgain = m_gain/(m_gain+1);
+    m_changed = true;
 }
 
 void eBJT::setThreshold( double vCrit )
 {
     m_vCrit = vCrit;
     m_satCur = m_vt/(qExp( vCrit/m_vt )*qSqrt(2));
+    m_changed = true;
 }

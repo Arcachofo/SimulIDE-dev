@@ -49,7 +49,9 @@ void eDiode::stamp()
 void eDiode::voltChanged()
 {
     double voltPN = m_ePin[0]->getVoltage() - m_ePin[1]->getVoltage();
-    if( qFabs( voltPN - m_voltPN ) < .01 ) { m_step = 0; return; } // Converged
+
+    if( m_changed ) m_changed = false;
+    else if( qFabs( voltPN - m_voltPN ) < .01 ) { m_step = 0; return; } // Converged
     Simulator::self()->notCorverged();
 
     m_step += .01;
@@ -113,18 +115,21 @@ void eDiode::SetParameters( double sc, double ec, double bv, double sr )
 
 void eDiode::setThreshold( double vCrit )
 {
+    if( vCrit < 0.01 ) return;
     m_satCur = m_vScale/(qExp(vCrit/m_vScale)*qSqrt(2));
     updateValues();
 }
 
 void eDiode::setSatCur( double satCur )
 {
+    if( satCur <= 0 ) return;
     m_satCur = satCur;
     updateValues();
 }
 
 void eDiode::setEmCoef( double emCoef )
 {
+    if( emCoef < 0.01 ) return;
     m_emCoef = emCoef;
     updateValues();
 }
@@ -144,6 +149,7 @@ void eDiode::updateValues()
     m_zOfset = m_bkDown - m_vt*qLn(-(1-0.005/m_satCur) );
     m_vzCrit = m_vt*qLn( m_vt/(qSqrt(2)*m_satCur) );
     m_bAdmit = m_satCur*1e-2;
+    m_changed = true;
 }
 
 void eDiode::getModels() // Static

@@ -22,6 +22,7 @@ class MAINMODULE_EXPORT MuxAnalog : public Component, public eElement
  static LibraryItem* libraryItem();
 
         virtual void stamp() override;
+        virtual void updateStep() override;
         virtual void voltChanged() override;
         virtual void runEvent() override;
         virtual void remove() override;
@@ -30,7 +31,7 @@ class MAINMODULE_EXPORT MuxAnalog : public Component, public eElement
         void setAddrBits( int bits );
 
         double impedance() { return 1/m_admit; }
-        void setImpedance( double i ) { m_admit = 1/i; }
+        void setImpedance( double i ) { m_admit = 1/i; m_changed = true; }
         
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
         

@@ -24,16 +24,17 @@ class MAINMODULE_EXPORT Triac : public Component, public eElement
 
         virtual void initialize() override;
         virtual void stamp() override;
+        virtual void updateStep() override;
         virtual void voltChanged() override;
 
         double gateRes() { return m_gateRes; }
-        void setGateRes( double r ) { m_gateRes = r; }
+        void setGateRes( double r ) { m_gateRes = r; m_changed = true; }
 
         double trigCurr() { return m_trigCurr; }
-        void setTrigCurr( double c ) { m_trigCurr = c; }
+        void setTrigCurr( double c ) { m_trigCurr = c; m_changed = true; }
 
         double holdCurr() { return m_holdCurr; }
-        void setHoldCurr( double v ) { m_holdCurr = v; }
+        void setHoldCurr( double v ) { m_holdCurr = v; m_changed = true; }
 
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
 

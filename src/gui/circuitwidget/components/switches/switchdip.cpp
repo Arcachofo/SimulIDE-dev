@@ -78,6 +78,7 @@ void SwitchDip::stamp()
 void SwitchDip::updateStep()
 {
     if( !m_changed ) return;
+    m_changed = false;
 
     int i = 0;
     for( QPushButton* button : m_buttons ) 
@@ -90,7 +91,6 @@ void SwitchDip::updateStep()
         m_pin[pin+1]->stampAdmitance( admit );
        i++;
     }
-    m_changed = false;
 }
 
 void SwitchDip::onbuttonclicked()

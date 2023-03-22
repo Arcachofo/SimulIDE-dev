@@ -105,6 +105,15 @@ void OpAmp::stamp()
     }
 }
 
+void OpAmp::updateStep()
+{
+    if( !m_changed ) return;
+    m_changed = false;
+
+    m_output->setImp( m_outImp );
+    voltChanged();
+}
+
 void OpAmp::voltChanged() // Called when any pin node change volt
 {
     if( m_powerPins )
@@ -156,7 +165,8 @@ void OpAmp::setOutImp( double imp )
 {
     if( imp < cero_doub ) imp = cero_doub;
     m_outImp = imp;
-    m_output->setImp( imp );
+    m_changed = true;
+    if( !Simulator::self()->isRunning() ) updateStep();
 }
 
 void OpAmp::setPowerPins( bool set )

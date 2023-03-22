@@ -48,6 +48,8 @@ ResistorDip::ResistorDip( QObject* parent, QString type, QString id )
     m_pullUp = false;
     m_puVolt = 5;
 
+    Simulator::self()->addToUpdateList( this );
+
     addPropGroup( { tr("Main"), {
 new DoubProp<ResistorDip>( "Resistance", tr("Resistance"),"Ω"       , this, &ResistorDip::getRes, &ResistorDip::setRes ),
 new IntProp <ResistorDip>( "Size"      , tr("Size")      ,"_Resist.", this, &ResistorDip::size,   &ResistorDip::setSize, "uint" ),
@@ -71,6 +73,14 @@ void ResistorDip::stamp()
         m_pin[index]->createCurrent();
         m_pin[index]->stampCurrent( m_puVolt/m_resist );
     }
+}
+
+void ResistorDip::updateStep()
+{
+    if( !m_changed ) return;
+    m_changed = false;
+
+    for( eResistor* res : m_resistor ) res->setRes( m_resist );
 }
 
 void ResistorDip::createResistors( int c )
@@ -113,8 +123,11 @@ void ResistorDip::deleteResistors( int d )
 
 void ResistorDip::setRes( double resist )
 {
-    for( eResistor* res : m_resistor ) res->setRes( resist );
+    if( resist < 1e-12 ) resist = 1e-12;
+    if( m_resist == resist ) return;
     m_resist = resist;
+    m_changed = true;
+    if( !Simulator::self()->isRunning() ) updateStep();
 }
 
 void ResistorDip::setSize( int size )

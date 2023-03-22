@@ -64,6 +64,8 @@ Diac::Diac( QObject* parent, QString type, QString id )
     m_resistor->setEpin( 0, m_ePin[4] );
     m_resistor->setEpin( 1, m_pin[1] );
 
+    Simulator::self()->addToUpdateList( this );
+
     addPropGroup( { tr("Main"), {
 new DoubProp<Diac>( "ResOn"   , tr("On Resistance")    ,"Ω", this, &Diac::resOn ,   &Diac::setResOn ),
 new DoubProp<Diac>( "ResOff"  , tr("Off Resistance")   ,"Ω", this, &Diac::resOff,   &Diac::setResOff ),
@@ -102,6 +104,16 @@ void Diac::stamp()
     if( node1 ) node1->addToNoLinList( this );
 
     m_resistor->setRes( m_resOff );
+}
+
+void Diac::updateStep()
+{
+    if( !m_changed ) return;
+    m_changed = false;
+
+    double res = m_state ? m_resOn : m_resOff;
+    m_resistor->setRes( res );
+    voltChanged();
 }
 
 void Diac::voltChanged()

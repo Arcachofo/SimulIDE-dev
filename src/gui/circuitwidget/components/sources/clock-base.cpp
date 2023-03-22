@@ -46,6 +46,8 @@ void ClockBase::stamp()
 void ClockBase::updateStep()
 {
     if( !m_changed ) return;
+    m_changed = false;
+
     if( m_isRunning )
     {
         m_lastTime = Simulator::self()->circTime();
@@ -54,7 +56,6 @@ void ClockBase::updateStep()
     }
     m_outpin->setOutState( false );
     m_state = false;
-    m_changed = false;
 }
 
 void ClockBase::setAlwaysOn( bool on )

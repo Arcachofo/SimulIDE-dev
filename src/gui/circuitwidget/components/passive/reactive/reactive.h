@@ -19,8 +19,6 @@ class MAINMODULE_EXPORT Reactive : public Comp2Pin, public eReactive
         virtual void stamp() override;
         virtual void updateStep() override;
 
-        virtual void stepError() override;
-
         double value() { return m_value; }
         void setValue( double c );
 

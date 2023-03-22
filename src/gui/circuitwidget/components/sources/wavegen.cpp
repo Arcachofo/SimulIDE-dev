@@ -42,8 +42,8 @@ WaveGen::WaveGen( QObject* parent, QString type, QString id )
 {
     m_bipolar  = false;
     m_floating = false;
-    m_voltBase = 0;
-    m_voltMid  = 2.5;
+    m_voltBase = -2.5;
+    m_voltMid  = 0;
     m_lastVout = 0;
     m_waveType = Sine;
     m_wavePixmap = NULL;

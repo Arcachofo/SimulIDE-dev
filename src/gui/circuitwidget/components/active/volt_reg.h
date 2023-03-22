@@ -21,10 +21,11 @@ class MAINMODULE_EXPORT VoltReg : public Component, public eResistor
         static LibraryItem* libraryItem();
 
         virtual void stamp() override;
+        virtual void updateStep() override;
         virtual void voltChanged() override;
 
         double outVolt() { return m_vRef; }
-        void setOutVolt( double v ) { m_vRef = v; }
+        void setOutVolt( double v ) { m_vRef = v; m_changed = true; }
 
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
 

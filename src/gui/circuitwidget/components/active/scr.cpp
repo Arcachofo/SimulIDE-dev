@@ -65,6 +65,8 @@ SCR::SCR( QObject* parent, QString type, QString id )
     m_resistGa->setEpin( 0, m_pin[2] );
     m_resistGa->setEpin( 1, m_ePin[2] );
 
+    Simulator::self()->addToUpdateList( this );
+
     addPropGroup( { tr("Main"), {
 new DoubProp<SCR>( "GateRes" , tr("Gate Resistance"),"Ω", this, &SCR::gateRes , &SCR::setGateRes ),
 new DoubProp<SCR>( "TrigCurr", tr("Trigger Current"),"A", this, &SCR::trigCurr, &SCR::setTrigCurr ),
@@ -105,6 +107,14 @@ void SCR::stamp()
 
     m_resistor->setRes( 10e5 );
     m_resistGa->setRes( m_gateRes );
+}
+
+void SCR::updateStep()
+{
+    if( !m_changed ) return;
+    m_changed = false;
+
+    voltChanged();
 }
 
 void SCR::voltChanged()

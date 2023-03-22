@@ -137,7 +137,7 @@ void Potentiometer::setVal( double val )
     m_dial->setValue( val*1000/m_resist );
     m_res1 = val;
     m_changed = true;
-    updateStep();
+    if( !Simulator::self()->isRunning() ) updateStep();
 }
 
 void Potentiometer::setRes( double res ) // Called when property resistance is changed

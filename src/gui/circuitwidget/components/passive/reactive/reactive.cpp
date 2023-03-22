@@ -22,6 +22,8 @@ Reactive::Reactive( QObject* parent, QString type, QString id )
     m_resistor->setRes( 1e-6 );
     m_resistor->setEpin( 0, m_ePin[2] );
     m_resistor->setEpin( 1, m_pin[1] );
+
+    Simulator::self()->addToUpdateList( this );
 }
 Reactive::~Reactive()
 {
@@ -57,29 +59,27 @@ void Reactive::updateStep()
         }
         else setToolTip("");
     }
+    if( m_warning ) update();
 
+    uint64_t reactStep = Simulator::self()->reactStep();
+    if( m_reacStep != reactStep )
+    {
+        m_reacStep = reactStep; // Time in ps
+        m_changed = true;
+    }
     if( m_changed )
     {
         m_changed = false;
         m_warning = false;
         m_stepError = false;
-        m_reacStep = Simulator::self()->reactStep(); // Time in ps
         updtReactStep();
     }
-    update();
-    Simulator::self()->remFromUpdateList( this );
-}
-
-void Reactive::stepError()
-{
-    Simulator::self()->addToUpdateList( this );
 }
 
 void Reactive::setValue( double c )
 {
     m_value = c;
     m_changed = true;
-    Simulator::self()->addToUpdateList( this );
 }
 
 void Reactive::setResist( double resist )
@@ -91,5 +91,4 @@ void Reactive::setAutoStep( int a )
 {
     m_autoStep = a;
     m_changed = true;
-    Simulator::self()->addToUpdateList( this );
 }

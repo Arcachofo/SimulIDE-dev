@@ -22,7 +22,7 @@ class MAINMODULE_EXPORT eBJT : public eElement
         void setGain( double gain );
 
         virtual bool pnp()              { return m_PNP; }
-        virtual void setPnp( bool pnp ) { m_PNP = pnp; }
+        virtual void setPnp( bool pnp ) { m_PNP = pnp; m_changed = true; }
 
         double threshold() { return m_vCrit; }
         void   setThreshold( double vCrit );

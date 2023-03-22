@@ -55,6 +55,11 @@ Mosfet::~Mosfet(){}
 void Mosfet::updateStep()
 {
     if( Circuit::self()->animate() ) update();
+
+    if( !m_changed ) return;
+    m_changed = false;
+
+    voltChanged();
 }
 
 void Mosfet::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )

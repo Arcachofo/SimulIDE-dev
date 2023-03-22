@@ -103,12 +103,15 @@ void eMosfet::setRDSon( double rdson )
     if( rdson < cero_doub ) rdson = cero_doub;
     if( rdson > 1000 ) rdson = 1000;
     m_RDSon = rdson;
+    m_changed = true;
 }
 
 void eMosfet::setThreshold( double th )
-{ 
+{
+    if( th < 0.01 ) return;
     m_threshold = th; 
     m_kRDSon = m_RDSon*(10-m_threshold);
     m_Gth = m_threshold-m_threshold/4;
+    m_changed = true;
 }
 

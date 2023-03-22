@@ -23,6 +23,7 @@ class MAINMODULE_EXPORT ResistorDip : public Component, public eElement
  static LibraryItem *libraryItem();
 
         virtual void stamp() override;
+        virtual void updateStep() override;
 
         int size() { return m_size; }
         void setSize( int size );

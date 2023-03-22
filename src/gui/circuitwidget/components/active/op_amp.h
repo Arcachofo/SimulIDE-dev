@@ -23,19 +23,20 @@ class MAINMODULE_EXPORT OpAmp : public Component, public eElement
 
         virtual void initialize() override;
         virtual void stamp() override;
+        virtual void updateStep() override;
         virtual void voltChanged() override;
 
         double gain() { return m_gain; }
-        void setGain( double g ) { m_gain = g; }
+        void setGain( double g ) { m_gain = g; m_changed = true; }
 
         double outImp() { return m_outImp; }
         void setOutImp( double imp );
 
         double voltPos() { return m_voltPosDef; }
-        void setVoltPos( double v ) { m_voltPosDef = v; }
+        void setVoltPos( double v ) { m_voltPosDef = v; m_changed = true; }
 
         double voltNeg() { return m_voltNegDef; }
-        void setVoltNeg( double v ) { m_voltNegDef = v; }
+        void setVoltNeg( double v ) { m_voltNegDef = v; m_changed = true; }
 
         bool powerPins() {return m_powerPins; }
         void setPowerPins( bool set );

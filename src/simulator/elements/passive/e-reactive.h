@@ -24,8 +24,6 @@ class MAINMODULE_EXPORT eReactive : public eResistor
         double initCurr() { return -m_InitCurr; }
         void setInitCurr( double c ) { m_InitCurr = -c; }
 
-        virtual void stepError(){;}
-
     protected:
         void updtReactStep();
 

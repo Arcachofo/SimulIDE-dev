@@ -47,6 +47,7 @@ VarSource::VarSource( QObject* parent, QString type, QString id )
 
     m_dial = m_voltw.dial;
     m_dial->setMaximum( 1000 );
+    setVal( 0 );
 
     setValLabelPos( -8, 30 , 0 ); // x, y, rot
     setLabelPos(-32,-48, 0);
@@ -106,7 +107,9 @@ void VarSource::setVal( double val )
 void VarSource::setMaxValue( double v )
 {
     m_maxValue = v;
+    if( m_outValue > v ) m_outValue = v;
     m_dial->setValue( m_outValue*1000/m_maxValue );
+    m_changed = true;
 }
 
 void VarSource::setflip()

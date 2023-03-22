@@ -19,10 +19,10 @@ class MAINMODULE_EXPORT eLed : public eResistor
         virtual void voltChanged() override;
 
         double threshold() { return m_threshold; }
-        void  setThreshold( double threshold ) { m_threshold = threshold; }
+        void  setThreshold( double threshold ) { m_threshold = threshold; m_changed = true; }
 
         double maxCurrent()             { return m_maxCurrent; }
-        void  setMaxCurrent( double c ) { m_maxCurrent = c; }
+        void  setMaxCurrent( double c ) { m_maxCurrent = c; m_changed = true; }
 
         virtual void   setRes( double resist );
         virtual double res() { return m_imped; }

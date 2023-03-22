@@ -24,19 +24,20 @@ class MAINMODULE_EXPORT Diac : public Component, public eElement
 
         virtual void initialize() override;
         virtual void stamp() override;
+        virtual void updateStep() override;
         virtual void voltChanged() override;
 
         double resOn() { return m_resOn; }
-        void setResOn( double r ) { m_resOn = r; }
+        void setResOn( double r ) { m_resOn = r; m_changed = true; }
 
         double resOff() { return m_resOff; }
-        void setResOff( double r ) { m_resOff = r; }
+        void setResOff( double r ) { m_resOff = r; m_changed = true; }
 
         double brkVolt() { return m_brkVolt; }
-        void setBrkVolt( double v ) { m_brkVolt = v; }
+        void setBrkVolt( double v ) { m_brkVolt = v; m_changed = true; }
 
         double holdCurr() { return m_holdCurr; }
-        void setHoldCurr( double v ) { m_holdCurr = v; }
+        void setHoldCurr( double v ) { m_holdCurr = v; m_changed = true; }
 
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
 

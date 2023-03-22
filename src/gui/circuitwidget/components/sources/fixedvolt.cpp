@@ -77,7 +77,7 @@ void FixedVolt::updateStep()
 {
     if( !m_changed ) return;
     m_changed = false;
-    m_outpin->sheduleState( m_button->isChecked(), 0 );
+    m_outpin->setOutState( m_button->isChecked() );
     update();
 }
 
@@ -108,6 +108,7 @@ void FixedVolt::setVolt( double v )
 {
     m_voltage = v;
     m_outpin->setOutHighV( m_voltage );
+    m_changed = true;
 }
 
 void FixedVolt::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )

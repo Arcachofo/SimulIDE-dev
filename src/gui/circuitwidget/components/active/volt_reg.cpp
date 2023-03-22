@@ -56,6 +56,8 @@ VoltReg::VoltReg( QObject* parent, QString type, QString id )
     m_pin[2]->setLabelText( "R" );
     m_pin[2]->setLabelColor( QColor( 0, 0, 0 ) );
 
+    Simulator::self()->addToUpdateList( this );
+
     addPropGroup( { tr("Main"), {
 new DoubProp<VoltReg>( "Voltage", tr("Output Voltage"),"V", this, &VoltReg::outVolt, &VoltReg::setOutVolt )
     }} );
@@ -80,6 +82,14 @@ void VoltReg::stamp()
     }
     eResistor::stamp();
     m_lastCurrent = 0;
+}
+
+void VoltReg::updateStep()
+{
+    if( !m_changed ) return;
+    m_changed = false;
+
+    voltChanged();
 }
 
 void VoltReg::voltChanged()

@@ -113,8 +113,9 @@ void Diode::updateStep()
         if( m_warning ) update();
         m_warning = false;
         m_crashed = false;
-}   }
-
+    }
+    if( m_changed ) voltChanged(); // m_changed cleared at eDiode::voltChanged
+}
 
 void Diode::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
 {

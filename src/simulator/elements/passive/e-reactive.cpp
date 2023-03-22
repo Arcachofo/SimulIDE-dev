@@ -62,10 +62,8 @@ void eReactive::voltChanged()
             {
                 m_reacStep = m_deltaTime;
                 updtReactStep();
-            }else{
-                m_stepError = true;
-                stepError();
             }
+            else m_stepError = true;
         }
     }
     else if( m_stepError ) m_stepError = false;

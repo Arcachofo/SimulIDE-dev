@@ -95,6 +95,11 @@ void LedBase::updateStep()
         m_crashed = false;
     }
     if( intensity != m_intensity ) update();
+    if( m_changed )
+    {
+        m_changed = false;
+        voltChanged();
+    }
 }
 
 void LedBase::setGrounded( bool grounded )

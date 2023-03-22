@@ -28,21 +28,21 @@ LibraryItem* Stepper::libraryItem()
 }
 
 Stepper::Stepper( QObject* parent, QString type, QString id )
-        : Component( parent, type, id )
-        , eElement( (id+"-eElement") )
-        , m_resA1( (id+"-eEresistorA1") )
-        , m_resA2( (id+"-eEresistorA2") )
-        , m_resB1( (id+"-eEresistorB1") )
-        , m_resB2( (id+"-eEresistorB2") )
-        , m_pinA1( 180, QPoint(-72,-32), id+"-PinA1", 0, this )
-        , m_pinA2( 180, QPoint(-72, 16), id+"-PinA2", 0, this )
-        , m_pinCo( 180, QPoint(-72, 0 ), id+"-PinCo", 0, this )
-        , m_pinB1( 180, QPoint(-72,-16), id+"-PinB1", 0, this )
-        , m_pinB2( 180, QPoint(-72, 32), id+"-PinB2", 0, this )
-        , m_ePinA1Co( (id+"-ePinA1Co"), 0 )
-        , m_ePinA2Co( (id+"-ePinA2Co"), 0 )
-        , m_ePinB1Co( (id+"-ePinB1Co"), 0 )
-        , m_ePinB2Co( (id+"-ePinB2Co"), 0 )
+       : Component( parent, type, id )
+       , eElement( (id+"-eElement") )
+       , m_resA1( (id+"-eEresistorA1") )
+       , m_resA2( (id+"-eEresistorA2") )
+       , m_resB1( (id+"-eEresistorB1") )
+       , m_resB2( (id+"-eEresistorB2") )
+       , m_pinA1( 180, QPoint(-72,-32), id+"-PinA1", 0, this )
+       , m_pinA2( 180, QPoint(-72, 16), id+"-PinA2", 0, this )
+       , m_pinCo( 180, QPoint(-72, 0 ), id+"-PinCo", 0, this )
+       , m_pinB1( 180, QPoint(-72,-16), id+"-PinB1", 0, this )
+       , m_pinB2( 180, QPoint(-72, 32), id+"-PinB2", 0, this )
+       , m_ePinA1Co( (id+"-ePinA1Co"), 0 )
+       , m_ePinA2Co( (id+"-ePinA2Co"), 0 )
+       , m_ePinB1Co( (id+"-ePinB1Co"), 0 )
+       , m_ePinB2Co( (id+"-ePinB2Co"), 0 )
 {
     m_graphical = true;
     m_area = QRectF( -64, -50, 114, 100 );
@@ -82,6 +82,36 @@ new DoubProp<Stepper>( "Resistance", tr("Resistance")        ,"Ω"     , this, &
     }} );
 }
 Stepper::~Stepper(){}
+
+void Stepper::stamp()
+{
+    eNode* enode = m_pinCo.getEnode();// Register for changes callback
+    if( enode )
+    {
+        m_ePinA1Co.setEnode( enode );
+        m_ePinA2Co.setEnode( enode );
+        m_ePinB1Co.setEnode( enode );
+        m_ePinB2Co.setEnode( enode );
+    }
+    m_pinA1.changeCallBack( this );// Register for changes callback
+    m_pinA2.changeCallBack( this );// Register for changes callback
+    m_pinB1.changeCallBack( this );// Register for changes callback
+    m_pinB2.changeCallBack( this );// Register for changes callback
+    m_pinCo.changeCallBack( this );// Register for changes callback
+}
+
+void Stepper::updateStep()
+{
+    if( m_changed )
+    {
+        m_changed = false;
+        m_resA1.setRes( m_res );
+        m_resA2.setRes( m_res );
+        m_resB1.setRes( m_res );
+        m_resB2.setRes( m_res );
+    }
+    update();
+}
 
 void Stepper::voltChanged()
 {
@@ -140,12 +170,10 @@ void Stepper::setSteps( int steps ) //" 4, 8,16,32"
 
 void Stepper::setRes( double res )
 {
+    if( res < 1e-12 ) res = 1e-12;
+    if( m_res == res ) return;
     m_res = res;
-    //Component::setValue( res );       // Takes care about units multiplier
-    m_resA1.setResSafe( res );
-    m_resA2.setResSafe( res );
-    m_resB1.setResSafe( res );
-    m_resB2.setResSafe( res );
+    m_changed = true;
 }
 
 void Stepper::setBipolar( bool bi )
@@ -153,28 +181,6 @@ void Stepper::setBipolar( bool bi )
     m_bipolar = bi;
     m_pinCo.removeConnector();
     m_pinCo.setVisible( !bi );
-}
-
-void Stepper::stamp()
-{
-    eNode* enode = m_pinCo.getEnode();// Register for changes callback
-    if( enode )
-    {
-        m_ePinA1Co.setEnode( enode );
-        m_ePinA2Co.setEnode( enode );
-        m_ePinB1Co.setEnode( enode );
-        m_ePinB2Co.setEnode( enode );
-    }
-    m_pinA1.changeCallBack( this );// Register for changes callback
-    m_pinA2.changeCallBack( this );// Register for changes callback
-    m_pinB1.changeCallBack( this );// Register for changes callback
-    m_pinB2.changeCallBack( this );// Register for changes callback
-    m_pinCo.changeCallBack( this );// Register for changes callback
-}
-
-void Stepper::updateStep()
-{
-    update();
 }
 
 void Stepper::remove()

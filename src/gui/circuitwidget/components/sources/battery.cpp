@@ -63,6 +63,7 @@ void Battery::stamp()
 void Battery::updateStep()
 {
     if( !m_changed ) return;
+    m_changed = false;
 
     stampAdmit();
     m_pin[0]->stampCurrent( m_volt*m_admit );
