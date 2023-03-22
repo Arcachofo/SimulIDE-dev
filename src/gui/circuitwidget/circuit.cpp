@@ -119,7 +119,6 @@ Pin* Circuit::findPin( int x, int y, QString id )
 void Circuit::loadCircuit( QString fileName )
 {
     if( m_conStarted ) return;
-    ///saveState();
 
     m_busy = true;
     m_loading = true;
@@ -132,7 +131,7 @@ void Circuit::loadCircuit( QString fileName )
     m_busy = false;
     m_loading = false;
 
-    if( m_error != 0 ) remove();
+    if( m_error != 0 ) clearCircuit();
     else{
         m_graphicView->zoomToFit();
         qDebug() << "Circuit Loaded: ";
@@ -535,7 +534,6 @@ Component* Circuit::createItem( QString type, QString id )
 void Circuit::removeItems()                     // Remove Selected items
 {
     if( m_conStarted ) return;
-
     m_busy = true;
 
     QList<Connector*> connectors;
@@ -552,17 +550,12 @@ void Circuit::removeItems()                     // Remove Selected items
             {
                 components.append( comp );
                 addCompState( comp, "new", stateAdd );
-                std::vector<Pin*> pins = comp->getPins();
-                for( Pin* pin : pins )
+
+                for( Pin* pin : comp->getPins() )
                 {
                     if( !pin ) continue;
                     Connector* con = pin->connector();
-                    if( !con ) continue;
-                    if( !connectors.contains( con ) )
-                    {
-                        connectors.append( con );
-                        addCompState( con, "new", stateAdd );
-                    }
+                    if( con ) addCompState( con, "new", stateAdd );
                 }
             }
         }
@@ -598,10 +591,11 @@ void Circuit::removeComp( Component* comp )
     delete comp;
 }
 
-void Circuit::remove() // Remove everything ( Clear Circuit )
+void Circuit::clearCircuit() // Remove everything ( Clear Circuit )
 {
     if( m_conStarted ) return;
     m_deleting = true;
+
     while( !m_compList.isEmpty() ) removeComp( m_compList.takeFirst() );
     while( !m_nodeList.isEmpty() )
     {
@@ -771,9 +765,7 @@ bool Circuit::restoreState( circState step )
                 delete node;
             }
             else removeComp( (Component*)comp );
-        }
-        else
-        {
+        }else{
             Pin* pin = m_pinMap.value( propVal ); // Find Connector start Pin from id.
             if( !pin ){
                 //qDebug() << "Circuit::restoreState Error NULL Pin"<<compName<<propVal;

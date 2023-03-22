@@ -1,15 +1,16 @@
 Compiler types:
 
-For generic compilers, the type field ( for example type="asm01" ) defines certain characteristics.
-The key is in the last 2 numeric digits ( for example "01" ).
+For generic compilers, the field "type" defines certain characteristics ( for example type="asm01" ) .
+The key is in the last 2 numeric digits: "01".
 From left to right:
     
-- First ( for example "0*" ) language level: 
-    0 for asm, 1 for high level
+- First digit "0*" language level:
+Value can be 0 or 1: 0 for asm, 1 for high level
     
-- Second digit digit ( for example "*1" ) lst file type: 
+- Second digit "*1" lst file type:
+Value can be from 0 to 3:
     Bit0: use ":" ?
         0 doesn't use ":" (gpasm ).
         1 uses ":" (avra, gavrasm)
     
-    Bit1: position of flash address  (0 or 1)
+    Bit1: position of flash address (0 or 1)

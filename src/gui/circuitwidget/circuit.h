@@ -52,7 +52,7 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
         
         void removeItems();
         void removeComp( Component* comp );
-        void remove();
+        void clearCircuit();
         bool deleting() { return m_deleting; }
         void compRemoved( bool removed ) { m_compRemoved = removed; }
         void saveState();

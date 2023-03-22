@@ -85,7 +85,7 @@ OpAmp::~OpAmp(){}
 
 void OpAmp::initialize()
 {
-    m_accuracy = Simulator::self()->NLaccuracy();
+    m_accuracy = 5e-6;
 
     added = false;
     m_step = 0;

@@ -58,7 +58,7 @@ void CircuitView::clear()
 {
     if( m_circuit ) 
     {
-        m_circuit->remove();
+        m_circuit->clearCircuit();
         m_circuit->deleteLater();
     }
     m_circuit = new Circuit( -1600, -1200, 3200, 2400, this );

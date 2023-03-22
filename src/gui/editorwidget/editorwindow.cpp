@@ -165,7 +165,6 @@ void EditorWindow::initDebbuger()
         pauseAct->setEnabled( false );
 
         Simulator::self()->addToUpdateList( this );
-
     }else{
         m_outPane.appendLine( "\n"+tr("Error Starting Debugger")+"\n" );
         stopDebbuger();
@@ -210,8 +209,6 @@ void EditorWindow::pauseAt( codeLine_t line )
     m_outPane.appendLine( tr("Line ")+QString::number( m_debugLine )+"\t"
                          +tr("Clock Cycles: ")+QString::number( cycle-m_lastCycle )+"\t"
                          +tr("Time us: ")+QString::number( time-m_lastTime ));
-
-
     m_lastCycle = cycle;
     m_lastTime = time;
     m_updateScreen = true;
@@ -247,7 +244,6 @@ BaseDebugger* EditorWindow::createDebugger( QString name, CodeEditor* ce , QStri
     else if( type == "sdcc" )    debugger = new SdccDebugger( ce, &m_outPane );
     else if( type == "gcbasic" ) debugger = new GcbDebugger( ce, &m_outPane );
     else if( type == "ascript" ) debugger = new asDebugger( ce, &m_outPane );
-
     //else if( type == "gputils" ) debugger = new PicAsmDebugger( ce, &m_outPane );
     //else if( type == "b16asm" )  debugger = new B16AsmDebugger( ce, &m_outPane );
     else

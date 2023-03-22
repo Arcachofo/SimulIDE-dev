@@ -35,7 +35,6 @@ Simulator::Simulator( QObject* parent )
     m_stepSize  = 1e6;
     m_stepsPS   = 1e6;
     m_reactStep = 1e6;
-    m_noLinAcc  = 5; // Non-Linear accuracy
     m_maxNlstp  = 100000;
     m_slopeSteps = 0;
 
@@ -326,12 +325,6 @@ void Simulator::stopSim()
     m_changedNode = NULL;
 }
 
-/*void Simulator::pauseCirc() // Paused UI from sim engine thread
-{
-    pauseSim();
-    m_pauseCirc = true;
-}*/
-
 void Simulator::pauseSim() // Only pause simulation, don't update UI
 {
     if( m_state <= SIM_PAUSED ) return;
@@ -399,8 +392,6 @@ void Simulator::setPsPerSec( uint64_t psPs )
 
     CircuitWidget::self()->setTargetSpeed( 100*m_psPerSec/1e12 );
 }
-
-double Simulator::NLaccuracy() { return 1/pow(10,m_noLinAcc)/2; }
 
 void Simulator::clearEventList()
 {

@@ -44,10 +44,8 @@ class MAINMODULE_EXPORT Simulator : public QObject
          void cancelEvents( eElement* el );
 
         void startSim( bool paused=false );
-        void resumeSim();
-
-        ///void pauseCirc();
         void pauseSim();
+        void resumeSim();
         void stopSim();
 
         void setWarning( int warning ) { m_warning = warning; }
@@ -68,8 +66,6 @@ class MAINMODULE_EXPORT Simulator : public QObject
 
         uint64_t reactStep() { return m_reactStep; }
         void setreactStep( uint64_t rs ) { m_reactStep = rs; }
-
-        double NLaccuracy(); ///////////// !!!!!!!!!!!!!!!
 
         void  setSlopeSteps( int steps ) { m_slopeSteps = steps; }
         int slopeSteps( ) { return m_slopeSteps; }
@@ -92,7 +88,6 @@ class MAINMODULE_EXPORT Simulator : public QObject
         inline void notCorverged() { m_converged = false; }
 
         void addToEnodeList( eNode* nod );
-        //void remFromEnodeList( eNode* nod );
 
         void addToElementList( eElement* el );
         void remFromElementList( eElement* el );
@@ -152,7 +147,6 @@ class MAINMODULE_EXPORT Simulator : public QObject
         int m_warning;
         int m_timerId;
         int m_timerTick;
-        int m_noLinAcc;
         int m_slopeSteps;
         uint m_updtCnt;
 
@@ -175,8 +169,6 @@ class MAINMODULE_EXPORT Simulator : public QObject
         uint64_t m_lastRefT;
         uint64_t m_loopTime;
         double   m_load;
-
-        uint64_t m_kkTime;
 
         QElapsedTimer m_RefTimer;
 };

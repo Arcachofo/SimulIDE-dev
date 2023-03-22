@@ -35,7 +35,7 @@ void eMosfet::stamp()
 
     m_kRDSon = m_RDSon*(10-m_threshold);
     m_Gth    = m_threshold-m_threshold/4;
-    m_accuracy = Simulator::self()->NLaccuracy();
+    m_accuracy = 5e-6;
 
     if( (m_ePin[0]->isConnected())
       &&(m_ePin[1]->isConnected())

@@ -9,12 +9,14 @@
 <!-- $fileName - "myfile"                - file name (without extension)-->
 <!-- $fileExt  - ".asm"                  - file extension (with dot)    -->
 <!-- $inclPath  -                        - include path                 -->
+<!-- $buildPath  -                       - build path                   -->
+<!-- $family  -                          - device family                -->
+<!-- $device  -                          - device model                 -->
 
-<compiler 
-    name="Avra"
-    toolPath=""
-    inclPath=""
-    command="avra"
-    arguments=" -W NoRegDef -l $fileDir$fileName.lst -I $inclPath $filePath"
-    argsDebug=" -W NoRegDef -l $fileDir$fileName.lst -I $inclPath $filePath"
-/>
+<compiler  name="Avra" type="avrasm01" syntax="avrasm">
+    <step 
+        command="avra"
+        arguments=" -W NoRegDef -l $fileDir$fileName.lst -I $inclPath $filePath"
+        argsDebug=" -W NoRegDef -l $fileDir$fileName.lst -I $inclPath $filePath"
+    />
+</compiler>

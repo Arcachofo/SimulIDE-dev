@@ -68,8 +68,8 @@ void DS1307::initialize()
     else{
         m_clock.m_date.setDate( 0, 1, 1 );
         m_clock.m_time.setHMS( 0, 0, 0 );
+        m_data[0] = 1<<7; // Disabled
     }
-    m_data[0] = 1<<7; // Disabled
     m_data[7] = 0x03;
 }
 
