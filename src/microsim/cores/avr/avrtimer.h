@@ -102,12 +102,15 @@ class MAINMODULE_EXPORT AvrTimer810 : public AvrTimer
 
     protected:
         void updateMode();
+        void updateOcUnit( McuOcUnit*ocUnit, bool pwm );
 
         regBits_t m_CTC1;
         regBits_t m_PWM1A;
         regBits_t m_PWM1B;
-};
 
+        McuPin* m_oc1AiPin;
+        McuPin* m_oc1BiPin;
+};
 
 class MAINMODULE_EXPORT AvrTimer820 : public AvrTimer8bit
 {

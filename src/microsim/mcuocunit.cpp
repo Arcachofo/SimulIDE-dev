@@ -15,6 +15,7 @@ McuOcUnit::McuOcUnit( eMcu* mcu, QString name )
     m_timer = NULL;
     m_ocPin = NULL;
     m_ocm = NULL;
+    m_ocPinInv = NULL;
 }
 McuOcUnit::~McuOcUnit( ){}
 

@@ -45,6 +45,8 @@ class MAINMODULE_EXPORT McuOcUnit : public McuModule, public eElement
         uint8_t getMode() { return m_mode; }
         McuPin* getPin() { return m_ocPin; }
 
+        void setPinInnv( McuPin* p ) { m_ocPinInv = p; }
+
     protected:
         virtual void drivePin( ocAct_t act );
         virtual void setPinSate( bool state );
@@ -52,6 +54,7 @@ class MAINMODULE_EXPORT McuOcUnit : public McuModule, public eElement
         McuOcm*   m_ocm;
         McuTimer* m_timer;
         McuPin*   m_ocPin;
+        McuPin*   m_ocPinInv;
 
         uint8_t* m_ocRegL;
         uint8_t* m_ocRegH;

@@ -8,6 +8,7 @@
 #include "avrocunit.h"
 #include "avricunit.h"
 #include "e_mcu.h"
+#include "mcupin.h"
 #include "simulator.h"
 #include "regwatcher.h"
 
@@ -266,38 +267,72 @@ AvrTimer810::AvrTimer810( eMcu* mcu, QString name)
     m_CTC1  = getRegBits( "CTC1", mcu );
     m_PWM1A = getRegBits( "PWM1A", mcu );
     m_PWM1B = getRegBits( "PWM1B", mcu );
+
+    m_oc1AiPin = mcu->getMcuPin("PORTB0");
+    m_oc1BiPin = mcu->getMcuPin("PORTB3");
 }
 AvrTimer810::~AvrTimer810(){}
 
 void AvrTimer810::configureA( uint8_t newTCCR1 ) // TCCR1
 {
-    if( m_OCA ) m_OCA->configure( newTCCR1 ); // Done in ocunits
-
-    uint8_t mode = m_mode & ~0b00000101;
+    uint8_t mode = m_mode & ~0b00000101; // Clear CTC and PWMA in mode
     if( getRegBitsBool( newTCCR1, m_CTC1 ) )  mode |= 1<<2;
-    if( getRegBitsBool( newTCCR1, m_PWM1A ) ) mode |= 1;
-    if( mode != m_mode ) updateMode();
+
+    bool pwm =  getRegBitsBool( newTCCR1, m_PWM1A );
+    if( pwm ) mode |= 1;
+
+    if( m_OCA ){
+        m_OCA->configure( newTCCR1 ); // Done in ocunits
+        updateOcUnit( m_OCA, pwm );
+    }
+    if( mode != m_mode ) { m_mode = mode; updateMode(); }
 
     updtPrescaler( newTCCR1 );
 }
 
 void AvrTimer810::configureB( uint8_t newGTCCR ) // GTCCR
 {
-    if( m_OCB ) m_OCB->configure( newGTCCR ); // Done in ocunits
+    uint8_t mode = m_mode & ~0b00000010; // Clear PWMB in mode
+    bool pwm = getRegBitsBool( newGTCCR, m_PWM1B );
+    if( pwm ) mode |= 1<<1;
 
-    uint8_t mode = m_mode & ~0b00000010;
-    if( getRegBitsBool( newGTCCR, m_PWM1B ) ) mode |= 1<<1;
-    if( mode != m_mode ) updateMode();
+    if( m_OCB ){
+        m_OCB->configure( newGTCCR ); // Done in ocunits
+        updateOcUnit( m_OCB, pwm );
+    }
+    if( mode != m_mode ){ m_mode = mode; updateMode(); }
+}
+
+void AvrTimer810::updateOcUnit( McuOcUnit* ocUnit, bool pwm )
+{
+    McuPin* iPin = (ocUnit == m_OCA) ? m_oc1AiPin : m_oc1BiPin;
+
+    ocAct_t comAct = (ocAct_t)ocUnit->getMode();  // Default mode
+    ocAct_t tovAct = ocNON;
+
+    if( comAct == ocTOG && pwm )
+    {
+        comAct = ocCLR;
+        if( iPin )
+        {
+            iPin->controlPin( true, false );
+            iPin->setOutState( false );
+            ocUnit->setPinInnv( iPin );
+        }
+    }else if( iPin ){
+        iPin->controlPin( false, false );
+        ocUnit->setPinInnv( NULL );
+    }
+
+    if     ( comAct == ocCLR ) tovAct = ocSET;
+    else if( comAct == ocSET ) tovAct = ocCLR;
+    ocUnit->setOcActs( comAct, tovAct );
 }
 
 void AvrTimer810::updateMode()
 {
-    if( m_mode ) // Top = OCR1C
-    {
-        m_ovfMatch = *m_topReg0L;
-        /// Implement !OC1X Pin
-    }
-    else m_ovfMatch = 0xFF;
+    if( m_mode ) m_ovfMatch = *m_topReg0L;// Top = OCR1C
+    else         m_ovfMatch = 0xFF;
     m_ovfPeriod = m_ovfMatch+1;
 }
 
