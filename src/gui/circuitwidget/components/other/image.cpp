@@ -43,7 +43,10 @@ Image::Image( QObject* parent, QString type, QString id )
 new StringProp<Image>( "Image_File", tr("Image File"),"", this, &Image::background, &Image::setBackground )
     }} );
 }
-Image::~Image(){}
+Image::~Image()
+{
+    if( m_movie ) delete m_movie;
+}
 
 void Image::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
 {
@@ -78,6 +81,8 @@ void Image::slotLoad()
     if( fileName.isEmpty() ) return; // User cancels loading
 
     setBackground( fileName );
+    Shape::setHSize( m_image.width() );
+    Shape::setVSize( m_image.height() );
 }
 
 void Image::updateGif( const QRect &rect )
@@ -110,12 +115,7 @@ void Image::setBackground( QString bck )
         else qDebug() << "Image::setBackground : not a valid Gif animation";
     }
 
-    if( m_image.load( absPath ) )
-    {
-        m_background = absPath;
-        Shape::setHSize( m_image.width() );
-        Shape::setVSize( m_image.height() );
-    }
+    if( m_image.load( absPath ) )     m_background = absPath;
     else if( m_background.isEmpty() ) m_image = QPixmap( ":/saveimage.svg" );
     else                              m_image = QPixmap( m_background );
 }
