@@ -11,6 +11,7 @@
     <itemset category="PIC/p12F" type="MCU">
         <item name="p12F629" package="PIC/p12F629/p12F629" data="PIC/p12F629"></item>
         <item name="p12F675" package="PIC/p12F629/p12F629" data="PIC/p12F675"></item>
+        <item name="p12F683" package="PIC/p12F683/p12F683" data="PIC/p12F683"></item>
     </itemset>
     <itemset category="PIC/p16F" type="MCU">
         <item name="p16F83"  package="PIC/p16F8x/p16F84"   data="PIC/p16F83" ></item>
