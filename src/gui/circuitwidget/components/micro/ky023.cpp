@@ -109,6 +109,12 @@ void KY023::onbuttonreleased()
 
 void KY023::updateStep()
 {
+    if( m_changed )
+    {
+        m_changed = false;
+        m_sw->setOutState( !m_closed );
+    }
+
     if( !m_joystickW.changed() ) return;
 
     m_vrx->setOutHighV( VIN*m_joystickW.getXValue()/1000 );
@@ -116,8 +122,6 @@ void KY023::updateStep()
 
     m_vry->setOutHighV( VIN*m_joystickW.getYValue()/1000 );
     m_vry->setOutState( true );
-
-    m_sw->sheduleState( !m_closed, 0 );
 
     m_changed = false;
 }

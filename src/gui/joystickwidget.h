@@ -1,7 +1,11 @@
 /***************************************************************************
- *   Copyright (C) 2012 by Santiago González                               *
+ *   Copyright (C) 2020 by Jan K. S.                                       *
  *                                                                         *
  ***( see copyright.txt file at root folder )*******************************/
+
+/*   Modified 2020 by Santiago González                                    *
+ *   santigoro@gmail.com                                                   *
+ *                                                                         */
 
 #ifndef JOYSTICKWIDGET_H
 #define JOYSTICKWIDGET_H
@@ -18,7 +22,7 @@ class JoystickWidget : public QWidget
         
         double getXValue() { return m_xValue; }
         double getYValue() { return m_yValue; }
-        bool changed()  { return m_changed; }
+        bool   changed()   { return m_changed; }
         
         void mousePressEvent( QMouseEvent* event );
         void mouseMoveEvent( QMouseEvent* event );

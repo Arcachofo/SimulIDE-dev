@@ -222,6 +222,11 @@ void Chip::setBackground( QString bck )
 {
     m_background = bck;
 
+    if( m_BackPixmap )
+    {
+        delete m_BackPixmap;
+        m_BackPixmap = NULL;
+    }
     if( bck.startsWith("color") )
     {
         bck.remove("color").remove("(").remove(")").remove(" ");
@@ -230,14 +235,8 @@ void Chip::setBackground( QString bck )
 
         m_color = QColor( rgb.at(0).toInt(), rgb.at(1).toInt(), rgb.at(2).toInt() );
     }
-    if( m_BackPixmap )
-    {
-        delete m_BackPixmap;
-        m_BackPixmap = NULL;
-    }
-    if( bck != "" ){
-        QString pixmapPath = MainWindow::self()->getFilePath("data/images");
-        pixmapPath += "/"+bck;
+    else if( bck != "" ){
+        QString pixmapPath = MainWindow::self()->getFilePath("data/images")+"/"+bck;
         if( QFile::exists( pixmapPath ) )              // Image in simulide data folder
             m_BackPixmap = new QPixmap( pixmapPath );
         else                                           // Image in Circuit data folder

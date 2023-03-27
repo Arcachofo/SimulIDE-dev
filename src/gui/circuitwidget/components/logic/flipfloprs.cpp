@@ -57,7 +57,9 @@ void FlipFlopRS::voltChanged()
     bool set   = sPinState();
     bool reset = rPinState();
 
-    if( set || reset) m_nextOutVal = (set? 1:0) + (reset? 2:0);
-
-    sheduleOutPuts( this );
+    if( set || reset)
+    {
+        m_nextOutVal = (set? 1:0) + (reset? 2:0);
+        sheduleOutPuts( this );
+    }
 }
