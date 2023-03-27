@@ -16,8 +16,8 @@ class JoystickWidget : public QWidget
 
         void setupWidget();
         
-        int getXValue() { return m_xValue; }
-        int getYValue() { return m_yValue; }
+        double getXValue() { return m_xValue; }
+        double getYValue() { return m_yValue; }
         bool changed()  { return m_changed; }
         
         void mousePressEvent( QMouseEvent* event );
@@ -26,8 +26,8 @@ class JoystickWidget : public QWidget
         void paintEvent( QPaintEvent* event );
 
     private:
-        int m_xValue;
-        int m_yValue;
+        double m_xValue;
+        double m_yValue;
 
         bool m_changed;
         

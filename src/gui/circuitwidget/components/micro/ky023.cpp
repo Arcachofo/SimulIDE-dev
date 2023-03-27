@@ -111,10 +111,10 @@ void KY023::updateStep()
 {
     if( !m_joystickW.changed() ) return;
 
-    m_vrx->setOutHighV( m_joystickW.getXValue() );
+    m_vrx->setOutHighV( VIN*m_joystickW.getXValue()/1000 );
     m_vrx->setOutState( true );
 
-    m_vry->setOutHighV( m_joystickW.getYValue() );
+    m_vry->setOutHighV( VIN*m_joystickW.getYValue()/1000 );
     m_vry->setOutState( true );
 
     m_sw->sheduleState( !m_closed, 0 );
