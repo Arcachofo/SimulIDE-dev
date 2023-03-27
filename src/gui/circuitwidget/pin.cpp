@@ -27,7 +27,6 @@ Pin::Pin( int angle, const QPoint pos, QString id, int index, Component* parent 
     m_area = QRect(-3, -3, 11, 6);
     m_pinState = undef_state;
     m_pinType = pinNormal;
-    m_packageType = "";
 
     m_blocked = false;
     m_isBus   = false;
@@ -237,8 +236,8 @@ void Pin::setLabelText( QString label, bool over )
     m_overScore = -1;
     if( over && label.startsWith("!")) // Draw overscore
     {
-        if( !m_inverted ) m_overScore = label.indexOf("!");
-        label.replace("!","");
+        if( !m_inverted ) m_overScore = 1; // label.indexOf("!");
+        label.remove( 0, 1 );// replace("!","");
     }
     /// Hack: if ItemStacksBehindParent then overscore does not paint
     setFlag( QGraphicsItem::ItemStacksBehindParent, m_overScore == -1 );

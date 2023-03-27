@@ -507,7 +507,6 @@ Pin* Mcu::addPin( QString id, QString type, QString label,
     }
     else if( type.startsWith("inv") ) pin->setInverted( true );
 
-    pin->setPackageType( type );
     pin->setPos( QPoint( xpos, ypos ) );
     pin->setPinAngle( angle );
     pin->setLength( length );

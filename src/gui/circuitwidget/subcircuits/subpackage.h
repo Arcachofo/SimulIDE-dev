@@ -43,7 +43,6 @@ class MAINMODULE_EXPORT SubPackage : public Chip
         void invertPin( bool invert );
         void setPinId( QString id );
         void setPinName( QString name );
-        void setPinType( QString type );
         void setPinAngle( int i );
         void boardModeSlot();
         void setBoardMode( bool mode );
@@ -116,9 +115,6 @@ class EditDialog : public QDialog
 
         QLabel*    m_idLabel;
         QLineEdit* m_idLineEdit;
-
-        QLabel*    m_typeLabel;
-        QLineEdit* m_typeLineEdit;
 
         QLabel*    m_angleLabel;
         QComboBox* m_angleBox;

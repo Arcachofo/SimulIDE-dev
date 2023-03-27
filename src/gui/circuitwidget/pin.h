@@ -94,9 +94,6 @@ class MAINMODULE_EXPORT Pin : public QObject, public QGraphicsItem, public ePin,
         void setPinType( pinType_t ty ) { m_pinType = ty; }
         pinType_t pinType() { return m_pinType; }
 
-        QString packageType() { return m_packageType; }
-        void setPackageType( QString type ) { m_packageType = type; }
-
         void setDataChannel( LaChannel* ch ) { m_dataCannel = ch; }
 
         inline void setPinState( pinState_t st ) { m_pinState = st; /*m_PinChanged = true;*/ }
@@ -135,7 +132,6 @@ class MAINMODULE_EXPORT Pin : public QObject, public QGraphicsItem, public ePin,
         double  m_opCount;
 
         QString m_labelText;
-        QString m_packageType;
         
         QColor m_color[8];
         QRect      m_area;

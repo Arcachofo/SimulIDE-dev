@@ -176,11 +176,13 @@ void SubPackage::mousePressEvent( QGraphicsSceneMouseEvent* event )
         event->accept();
         m_fakePin = false;
 
+        QColor color = m_isLS ? Qt::black : QColor( 250, 250, 200 );
+
         m_eventPin = new Pin( m_angle, QPoint(m_p1X,m_p1Y ), "name", 0, this );
         m_eventPin->setEnabled( false );
         m_eventPin->setFlag( QGraphicsItem::ItemStacksBehindParent, false );
         m_eventPin->setPinId( "Id" );
-        m_eventPin->setLabelColor( QColor( Qt::black ) );
+        m_eventPin->setLabelColor( color );
         m_eventPin->setLabelPos();
         if( m_p2X == m_p1X+1) m_eventPin->setLength( 1 );
         else                  m_eventPin->setLabelText( "Name" );
@@ -383,11 +385,9 @@ Pin* SubPackage::addPin( QString id, QString type, QString label, int pos, int x
     Pin* pin = new Pin( angle, QPoint(xpos, ypos), m_id+"-"+id, pos-1, this ); // pos in package starts at 1
     pin->setEnabled( false );
 
-    QColor color = Qt::black;
-    if( !m_isLS ) color = QColor( 250, 250, 200 );
+    QColor color = m_isLS ? Qt::black : QColor( 250, 250, 200 );
 
     pin->setLabelColor( color );
-    pin->setPackageType( type );
     pin->setPos( QPoint( xpos, ypos ) );
     pin->setPinAngle( angle );
     pin->setLength( length );
@@ -461,15 +461,9 @@ void SubPackage::setPinAngle( int i )
     update();
 }
 
-void SubPackage::setPinType( QString type )
-{
-    m_eventPin->setPackageType( type );
-}
-
 void SubPackage::invertPin( bool invert )
 {
     m_eventPin->setInverted( invert );
-    m_eventPin->setPackageType("inv");
     Circuit::self()->update();
     m_changed = true;
 }
@@ -477,7 +471,6 @@ void SubPackage::invertPin( bool invert )
 void SubPackage::unusePin( bool unuse )
 {
     m_eventPin->setUnused( unuse );
-    m_eventPin->setPackageType("nc");
     Circuit::self()->update();
     m_changed = true;
 }
@@ -636,7 +629,10 @@ QString SubPackage::pinEntry( Pin* pin )
     QString length = "length=\""+QString::number( pin->length() )+"\"";
     QString id     = "id=\""+pin->pinId().split( "-" ).last().replace( " ", "" )+"\"";
     QString label  = "label=\""+pin->getLabelText().replace("<","&#x3C;").replace("=","&#x3D;").replace(">","&#x3E;")+"\"";
-    QString type   = "type=\""+pin->packageType()+"\"";
+    QString type;
+    if( pin->inverted() ) type = "inv";
+    if( pin->unused()   ) type = "nc";
+    type = "type=\""+type+"\"";
 
     return "    <pin "
             +adjustSize( type, 11 )
@@ -695,14 +691,6 @@ EditDialog::EditDialog( SubPackage* pack, Pin* eventPin, QWidget* parent )
     idLayout->addWidget( m_idLabel );
     idLayout->addWidget( m_idLineEdit );
 
-    m_typeLabel = new QLabel( tr("Pin Type:") );
-    m_typeLineEdit = new QLineEdit;
-    m_typeLineEdit->setText( eventPin->packageType() );
-    m_typeLabel->setBuddy( m_typeLineEdit );
-    QHBoxLayout* typeLayout = new QHBoxLayout;
-    typeLayout->addWidget( m_typeLabel );
-    typeLayout->addWidget( m_typeLineEdit );
-
     int angle = eventPin->pinAngle();
     int i = 0;
     if     ( angle == 180 ) i = 1;
@@ -732,7 +720,6 @@ EditDialog::EditDialog( SubPackage* pack, Pin* eventPin, QWidget* parent )
     QVBoxLayout* layout = new QVBoxLayout;
     layout->addLayout( nameLayout );
     layout->addLayout( idLayout );
-    layout->addLayout( typeLayout );
     layout->addLayout( angleLayout );
     layout->addWidget( m_invertCheckBox );
     layout->addWidget( m_unuseCheckBox );
@@ -750,9 +737,6 @@ EditDialog::EditDialog( SubPackage* pack, Pin* eventPin, QWidget* parent )
 
     connect( m_idLineEdit, &QLineEdit::textEdited,
                      pack, &SubPackage::setPinId, Qt::UniqueConnection );
-
-    connect( m_typeLineEdit, &QLineEdit::textEdited,
-                       pack, &SubPackage::setPinType, Qt::UniqueConnection );
 
     connect( m_angleBox, QOverload<int>::of(&QComboBox::currentIndexChanged),
                    pack, &SubPackage::setPinAngle, Qt::UniqueConnection );

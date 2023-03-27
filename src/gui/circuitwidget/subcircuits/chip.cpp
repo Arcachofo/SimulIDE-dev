@@ -177,7 +177,6 @@ void Chip::addNewPin( QString id, QString type, QString label, int pos, int xpos
             label = "";
         }
         pin->setLabelText( label );
-        pin->setPackageType( type );
         pin->setLength( length );
         pin->setFlag( QGraphicsItem::ItemStacksBehindParent, false );
 
