@@ -635,7 +635,7 @@ QString SubPackage::pinEntry( Pin* pin )
     QString angle  = "angle=\""+QString::number( pin->pinAngle() )+"\"";
     QString length = "length=\""+QString::number( pin->length() )+"\"";
     QString id     = "id=\""+pin->pinId().split( "-" ).last().replace( " ", "" )+"\"";
-    QString label  = "label=\""+pin->getLabelText()+"\"";
+    QString label  = "label=\""+pin->getLabelText().replace("<","&#x3C;").replace("=","&#x3D;").replace(">","&#x3E;")+"\"";
     QString type   = "type=\""+pin->packageType()+"\"";
 
     return "    <pin "
