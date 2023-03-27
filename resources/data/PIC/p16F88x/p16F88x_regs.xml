@@ -31,7 +31,7 @@
         <register name="CCPR1L"  addr="0x15" bits=""/>
         <register name="CCPR1H"  addr="0x16" bits=""/>
         <register name="CCP1CON" addr="0x17" 
-                  bits="CCP1M0,CCP1M1,CCP1M2,CCP1M3,CCP1X"/>
+                  bits="CCP1M0,CCP1M1,CCP1M2,CCP1M3,DC1B0,DC1B1,P1M0,P1M1"/>
                   
         <register name="RCSTA"   addr="0x18" mask="11111000"
                   bits="RX9D,OERR,FERR,ADEN,CREN,SREN,RX9,SPEN"/>
@@ -42,7 +42,7 @@
         <register name="CCPR2L"  addr="0x1B" bits=""/>
         <register name="CCPR2H"  addr="0x1C" bits=""/>
         <register name="CCP2CON" addr="0x1D" 
-                  bits="CCP2M0,CCP2M1,CCP2M2,CCP2M3,CCP2Y,CCP2X,0,0"/>
+                  bits="CCP2M0,CCP2M1,CCP2M2,CCP2M3,DC2B0,DC2B1,0,0"/>
                   
         <register name="ADRESH"  addr="0x1E" bits=""/>
         <register name="ADCON0"  addr="0x1F" 

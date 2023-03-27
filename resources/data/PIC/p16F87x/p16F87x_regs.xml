@@ -18,14 +18,19 @@
         <register name="SSPCON"  addr="0x14" bits="SSPM0,SSPM1,SSPM2,SSPM3,CKP,SSPEN,SSPOV,WCOL" />
         <register name="CCPR1L"  addr="0x15" bits=""/>
         <register name="CCPR1H"  addr="0x16" bits=""/>
-        <register name="CCP1CON" addr="0x17" bits="CCP1M0,CCP1M1,CCP1M2,CCP1M3,CCP1X"/>
-        <register name="RCSTA"   addr="0x18" bits="RX9D,OERR,FERR,ADEN,CREN,SREN,RX9,SPEN" mask="11111000"/>
+        <register name="CCP1CON" addr="0x17" 
+                  bits="CCP1M0,CCP1M1,CCP1M2,CCP1M3,CCP1Y,CCP1X,0,0"/>
+                        
+        <register name="RCSTA"   addr="0x18"  mask="11111000"
+                  bits="RX9D,OERR,FERR,ADEN,CREN,SREN,RX9,SPEN"/>
         <register name="TXREG"   addr="0x19" bits=""/>
         <register name="RCREG"   addr="0x1A" bits=""/>
         
         <register name="CCPR2L"  addr="0x1B" bits=""/>
         <register name="CCPR2H"  addr="0x1C" bits=""/>
-        <register name="CCP2CON" addr="0x1D" bits="CCP2M0,CCP2M1,CCP2M2,CCP2M3,CCP2Y,CCP2X,0,0"/>
+        <register name="CCP2CON" addr="0x1D" 
+                  bits="CCP2M0,CCP2M1,CCP2M2,CCP2M3,CCP2Y,CCP2X,0,0"/>
+                  
         <register name="ADRESH"  addr="0x1E" bits=""/>
         <register name="ADCON0"  addr="0x1F" 
                   bits="ADON,0,GO/DONE,CHS0,CHS1,CHS2,ADCS0,ADCS1"/>

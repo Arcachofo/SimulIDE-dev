@@ -27,7 +27,7 @@
                        interrupt="T2_MATCH"
                        prescalers="1,4,16,16"/>
 
-  <ccpunit name="CCP1" type="01" configregsA="CCP1CON"
+  <ccpunit name="CCP+1" type="01" configregsA="CCP1CON"
                        ccpreg="CCPR1L,CCPR1H"
                        pin="PORTC2"
                        interrupt="CCP1" />

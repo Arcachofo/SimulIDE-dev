@@ -30,12 +30,12 @@
                        interrupt="T2_MATCH"
                        prescalers="1,4,16,16"/>
 
-  <ccpunit name="CCP1" type="00" configregsA="CCP1CON"
+  <ccpunit name="CCP1" type="01" configregsA="CCP1CON"
                        ccpreg="CCPR1L,CCPR1H"
                        pin="PORTC2"
                        interrupt="CCP1" />
 
-  <ccpunit name="CCP2" type="00" configregsA="CCP2CON"
+  <ccpunit name="CCP2" type="01" configregsA="CCP2CON"
                        ccpreg="CCPR2L,CCPR2H"
                        pin="PORTC1"
                        interrupt="CCP2" />
