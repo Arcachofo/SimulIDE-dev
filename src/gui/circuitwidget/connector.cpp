@@ -323,7 +323,6 @@ void Connector::remove()
     if( m_endPin )   m_endPin->remove();
 
     Circuit::self()->conList()->removeOne( this );
-    Circuit::self()->compMap()->remove( m_id );
     remLines();
 }
 
@@ -349,11 +348,10 @@ void Connector::splitCon(int index, Pin* pin0, Pin* pin2 )
     if( !m_endPin ) return;
     disconnectLines( index-1, index );
 
-    QString id = "Connector-"+Circuit::self()->newSceneId();
+    QString id = "Connector-"+Circuit::self()->newConnectorId();
 
     Connector* new_connector = new Connector( Circuit::self(), "Connector", id, pin2 );
     Circuit::self()->conList()->append( new_connector );
-    Circuit::self()->compMap()->insert( id, new_connector  );
 
     int newindex = 0;
     int size = m_conLineList.size();

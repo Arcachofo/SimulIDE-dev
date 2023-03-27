@@ -56,6 +56,7 @@ Circuit::Circuit( qreal x, qreal y, qreal width, qreal height, CircuitView*  par
     m_board = NULL;
     m_newConnector = NULL;
     m_seqNumber = 0;
+    m_conNumber = 0;
     m_maxUndoSteps = 100;
     m_undoIndex = -1;
     m_redoIndex = -1;
@@ -231,6 +232,8 @@ void Circuit::loadStrDoc( QString &doc )
             {
                 if( type == "Subcircuit" || type == "MCU" )
                      newUid = uid.split("-").first()+"-"+newSceneId();
+                else if( type == "Connector" )
+                    newUid = "Connector-"+newConnectorId();
                 else newUid = type+"-"+newSceneId();
             }
             else     newUid = uid;
@@ -288,18 +291,17 @@ void Circuit::loadStrDoc( QString &doc )
 
                 if( startpin && endpin )    // Create Connector
                 {
-                    if( newUid.isEmpty() ) newUid = "connector-"+newSceneId();
+                    if( newUid.isEmpty() ) newUid = "connector-"+newConnectorId();
                     Connector* con = new Connector( this, type, newUid, startpin, endpin );
                     con->setPointList( pointList );
                     conList.append( con );
                     m_newComp = con;
-                    m_compMap[newUid] = con;
                     if( !rev ){
                         startpin->isMoved();
                         endpin->isMoved();
                     }
                     int number = newUid.split("-").last().toInt();
-                    if( number > m_seqNumber ) m_seqNumber = number; // Adjust item counter: m_seqNumber
+                    if( number > m_conNumber ) m_conNumber = number; // Adjust Connector counter: m_conNumber
                 }
                 else if( !m_pasting && !m_undo && !m_redo )// Start or End pin not found
                 {
@@ -784,7 +786,6 @@ bool Circuit::restoreState( circState step )
             else
             {
                 conList()->removeOne( con );
-                m_compMap.remove( con->getUid() );
                 con->remLines();
                 con->startPin()->setConnector( NULL );
                 con->endPin()->setConnector( NULL );
@@ -888,9 +889,7 @@ void Circuit::newconnector( Pin* startpin )
     m_conStarted = true;
 
     QString type = QString("Connector");
-    QString id = type;
-    id.append( "-" );
-    id.append( newSceneId() );
+    QString id = type+"-"+newConnectorId() ;
 
     m_newConnector = new Connector( this, type, id, startpin );
     m_conList.append( m_newConnector );
@@ -904,7 +903,6 @@ void Circuit::closeconnector( Pin* endpin )
 {
     m_conStarted = false;
     m_newConnector->closeCon( endpin );
-    m_compMap[m_newConnector->getUid()] = m_newConnector;
     addCompState( m_newConnector, "remove", stateAdd );
     saveState();
 }

@@ -70,7 +70,8 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
 
         Component* createItem( QString name, QString id );
 
-        QString newSceneId() { return QString("%1").arg(++m_seqNumber) ; }
+        QString newSceneId() { return QString::number(++m_seqNumber); }
+        QString newConnectorId() { return QString::number(++m_conNumber); }
 
         void newconnector( Pin*  startpin );
         void closeconnector( Pin* endpin );
@@ -159,6 +160,7 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
         CompBase*    m_newComp;
 
         int m_seqNumber;
+        int m_conNumber;
         int m_error;
         int m_maxUndoSteps;
         int m_undoIndex;

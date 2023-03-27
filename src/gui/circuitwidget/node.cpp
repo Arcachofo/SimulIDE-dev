@@ -100,7 +100,6 @@ void Node::joinConns( int c0, int c1 )
     {
         Connector* con = new Connector( Circuit::self(), "Connector", "Connector-"+Circuit::self()->newSceneId(), pin0->conPin() );
         Circuit::self()->conList()->append( con );
-        Circuit::self()->compMap()->insert( con->getUid(), con );
 
         QStringList list0 = con0->pointList();
         QStringList list1 = con1->pointList();
