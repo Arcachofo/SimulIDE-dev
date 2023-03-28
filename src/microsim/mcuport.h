@@ -40,6 +40,7 @@ class MAINMODULE_EXPORT McuPort : public McuModule//, public eElement
 
         virtual void outChanged( uint8_t val );
         virtual void dirChanged( uint8_t val );
+        void intChanged( uint8_t val );
         virtual void setIntMask( uint8_t val) { m_intMask = val; }
         virtual void rstIntMask( bool rst) { m_rstIntMask = rst; }
 
@@ -66,6 +67,7 @@ class MAINMODULE_EXPORT McuPort : public McuModule//, public eElement
         uint8_t m_numPins;
         uint8_t m_pinState;
 
+        regBits_t m_intBits;
         uint8_t m_intMask;
 
         bool m_dirInv;

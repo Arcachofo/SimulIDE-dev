@@ -577,9 +577,19 @@ void McuCreator::createMcuPort( QDomElement* p )
                 bool ok = false;
                 int bits = mask.toInt( &ok,2 );
                 port->rstIntMask( !ok );
-                if( ok ) port->setIntMask( bits );
-                else watchRegNames( mask, R_WRITE, port, &McuPort::setIntMask, mcu );
-        }   }
+                if( ok ) port->setIntMask( bits ); // Hardcode Interrupt to Pin
+                else                               // Interrupt controlled by register
+                {
+                    watchRegNames( mask, R_WRITE, port, &McuPort::intChanged, mcu );
+                }
+            }
+            else if(  el.hasAttribute("bitmask") )
+            {
+                QString bitNames = el.attribute( "bitmask" );
+                port->m_intBits = getRegBits( bitNames, mcu );
+                watchBitNames( bitNames, R_WRITE, port, &McuPort::intChanged, mcu );
+            }
+        }
         else if( el.tagName() == "extint" )
         {
             QString intName = el.attribute("name");

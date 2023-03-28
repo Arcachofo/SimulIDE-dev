@@ -20,10 +20,10 @@ struct regSignal_t{
 };
 
 struct regBits_t{
-    uint8_t bit0;
-    uint8_t mask;
-    uint8_t* reg;
-    uint16_t regAddr;
+    uint8_t bit0=0;
+    uint8_t mask=0;
+    uint8_t* reg=NULL;
+    uint16_t regAddr=0;
 };
 
 #endif

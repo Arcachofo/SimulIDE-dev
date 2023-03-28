@@ -10,6 +10,7 @@
 #include "mcu.h"
 #include "e_mcu.h"
 #include "mcuinterrupts.h"
+#include "datautils.h"
 
 McuPort::McuPort( eMcu* mcu, QString name )
        : McuModule( mcu, name )
@@ -84,6 +85,11 @@ void McuPort::readPort( uint8_t )
 {
 }
 
+void McuPort::intChanged( uint8_t val )
+{
+    if( m_intBits.reg ) m_intMask = getRegBitsVal( val, m_intBits );
+    else                m_intMask = val;
+}
 // Direct Control---------------------------------------------------
 
 void McuPort::controlPort( bool outCtrl, bool dirCtrl )
