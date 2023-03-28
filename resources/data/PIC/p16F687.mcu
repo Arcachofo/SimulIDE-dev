@@ -36,4 +36,10 @@
     <include file="p16F685/p16F685_int.xml" />
     <include file="p16F685/p16F685_perif.xml" />
     
+    <usart name="USART0"  number="1" configregsA="TXSTA" configregsB="RCSTA"
+                        interrupt="USART_T">
+
+      <trunit type="tx" pin="PORTB7" register="TXREG"/>
+      <trunit type="rx" pin="PORTB5" register="RCREG" interrupt="USART_R" />
+    </usart>
 </mcu>

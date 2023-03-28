@@ -8,6 +8,10 @@
     
     <!-- BANK 0 -->
       <regblock name="SFR0" start="0x001E" end="0x001F" >
+        <register name="TMR2"    addr="0x11" />
+        <register name="T2CON"   addr="0x12" mask="01111111"
+                  bits="T2CKPS0,T2CKPS1,TMR2ON,TOUTPS0,TOUTPS1,TOUTPS2,TOUTPS3"/>
+                  
         <register name="CCPR1L"  addr="0x15" bits=""/>
         <register name="CCPR1H"  addr="0x16" bits=""/>
         <register name="CCP1CON" addr="0x17" 
@@ -38,6 +42,16 @@
       </regblock>
     
     <include file="p16F685/p16F685_int.xml" />
+                   
     <include file="p16F685/p16F685_perif.xml" />
     
+    <timer name="TIMER2" type="820" configregsA="T2CON" configregsB="PR2"
+                   counter="TMR2"
+                   interrupt="T2_MATCH"
+                   prescalers="1,4,16,16"/>
+                   
+    <ccpunit name="CCP+1" type="01" configregsA="CCP1CON"
+                       ccpreg="CCPR1L,CCPR1H"
+                       pin="PORTC2"
+                       interrupt="CCP1" />
 </mcu>

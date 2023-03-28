@@ -26,11 +26,11 @@ PicCcpUnit::PicCcpUnit( eMcu* mcu, QString name, int type )
 
     m_comUnit = new PicOcUnit( mcu, "OC"+e+n );
     m_comUnit->m_timer = timer1;
-    timer1->addOcUnit( m_comUnit );
+    if( timer1 ) timer1->addOcUnit( m_comUnit );
 
     m_pwmUnit = PicOcUnit::createPwmUnit( mcu, "PWM"+e+n, type  );
     m_pwmUnit->m_timer = timer2;
-    timer2->addOcUnit( m_pwmUnit );
+    if( timer2 ) timer2->addOcUnit( m_pwmUnit );
 
     m_CCPxM = getRegBits( "CCP"+n+"M0,CCP"+n+"M1,CCP"+n+"M2,CCP"+n+"M3", mcu );
 

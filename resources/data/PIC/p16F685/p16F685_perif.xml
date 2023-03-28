@@ -8,8 +8,11 @@
     <interrupt name="PA_INT" mask="00111111"/>
     <extint    name="INT" pin="PORTA2" configbits="INTEDG"/>
   </port>
+  
+  <port name="PORTB" pins="8" outreg="PORTB" dirreg="!TRISB" pinmask="11110000">
+  </port>
 
-  <port name="PORTC" pins="6" outreg="PORTC" dirreg="!TRISC" >
+  <port name="PORTC" pins="8" outreg="PORTC" dirreg="!TRISC" >
   </port>
 
   <timer name="TIMER0" type="800" configregsA="OPTION" clockpin="PORTA2"
@@ -21,26 +24,16 @@
                        counter="TMR1L,TMR1H"
                        interrupt="T1_OVF"
                        prescalers="1,2,4,8"/>
-
-  <timer name="TIMER2" type="820" configregsA="T2CON" configregsB="PR2"
-                       counter="TMR2"
-                       interrupt="T2_MATCH"
-                       prescalers="1,4,16,16"/>
-
-  <ccpunit name="CCP+1" type="01" configregsA="CCP1CON"
-                       ccpreg="CCPR1L,CCPR1H"
-                       pin="PORTC2"
-                       interrupt="CCP1" />
                        
   <vref name="Vref" configregsA="VRCON" pinout="PORTA2"/>
 
   <comp name="COMP1" type="11" configregsA="CM1CON0"  configregsC="SRCON"
                      interrupt="ACOMP1"
-                     pins="PORTA0,PORTA1,PORTB3,PORTB1,PORTA3,PORTA4" />
+                     pins="PORTA1,PORTC1,PORTC2,PORTC3,PORTA0,PORTA2" />
 
   <comp name="COMP2" type="12" configregsA="CM2CON0" configregsB="CM2CON1" configregsC="SRCON"
                      interrupt="ACOMP2"
-                     pins="PORTA0,PORTA1,PORTB3,PORTB1,PORTA2,PORTA5" />
+                     pins="PORTA1,PORTC1,PORTC2,PORTC3,PORTC0,PORTC4" />
                       
   <adc name="ADC" type="11" bits="10" configregsA="ADCON0"
                         dataregs="ADRESL,ADRESH"

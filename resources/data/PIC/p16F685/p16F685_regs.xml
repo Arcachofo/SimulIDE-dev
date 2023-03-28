@@ -19,10 +19,6 @@
         <register name="T1CON"   addr="0x10" 
                   bits="TMR1ON,TMR1CS,T1SYNC,T1OSCEN,T1CKPS0,T1CKPS1,TMR1GE,T1GINV"/>
                   
-        <register name="TMR2"    addr="0x11" />
-        <register name="T2CON"   addr="0x12" mask="01111111"
-                  bits="T2CKPS0,T2CKPS1,TMR2ON,TOUTPS0,TOUTPS1,TOUTPS2,TOUTPS3"/>
-                  
         <register name="ADRESH"  addr="0x1E" />
         <register name="ADCON0"  addr="0x1F" 
                   bits="ADON,GO/DONE,CHS0,CHS1,CHS2,CHS3,VCFG,ADFM"/>
@@ -95,7 +91,7 @@
         <register name="CM1CON0" addr="0x119" mask="11110111"
                   bits="C1CH0,C1CH1,C1R,0,C1POL,C1OE,C1OUT,C1ON"/>
                   
-        <register name="CM2CON0" addr="0x111A" mask="11110111"
+        <register name="CM2CON0" addr="0x11A" mask="11110111"
                   bits="C2CH0,C2CH1,C2R,0,C2POL,C2OE,C2OUT,C2ON"/>
                   
         <register name="CM2CON1" addr="0x11B" mask="11110011"
