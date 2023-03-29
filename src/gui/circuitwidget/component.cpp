@@ -584,7 +584,7 @@ void Component::setHidden(bool hid, bool hidArea, bool hidLabel )
         m_showProperty = "";
 }   }
 
-QString Component::print()
+/*QString Component::print()
 {
     if( !m_printable ) return "";
     
@@ -593,7 +593,7 @@ QString Component::print()
     /// FIXME if( m_value > 0 ) str += QString::number( m_value )+" "+m_unit+"\n";
     
     return str;
-}
+}*/
 
 void Component::paint( QPainter* p, const QStyleOptionGraphicsItem*, QWidget* )
 {

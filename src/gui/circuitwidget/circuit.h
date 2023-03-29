@@ -116,7 +116,7 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
         void redo();
         void clearUndoRedo();
         void importCirc( QPointF eventpoint );
-        void bom();
+        //void bom();
         void saveBackup();
 
     protected:

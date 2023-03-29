@@ -99,7 +99,7 @@ class MAINMODULE_EXPORT Component : public CompBase, public QGraphicsItem, publi
 
         virtual std::vector<Pin*> getPins() { return m_pin; }
 
-        QString print();
+        //QString print();
 
         bool isHidden() { return m_hidden; }
         virtual void setHidden( bool hid, bool hidArea=false, bool hidLabel=false );

@@ -925,7 +925,7 @@ void Circuit::addNode( Node* node )
     m_compMap.insert( node->getUid(), node );
 }
 
-void Circuit::bom()
+/*void Circuit::bom()
 {
     if( m_conStarted ) return;
 
@@ -955,7 +955,7 @@ void Circuit::bom()
     for( QString line : bom ) out << line;
 
     file.close();
-}
+}*/
 
 void Circuit::mousePressEvent( QGraphicsSceneMouseEvent* event )
 {

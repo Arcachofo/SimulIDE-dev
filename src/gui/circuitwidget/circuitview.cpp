@@ -188,9 +188,9 @@ void CircuitView::contextMenuEvent(QContextMenuEvent* event)
         connect( saveImgAct, &QAction::triggered,
                        this, &CircuitView::saveImage, Qt::UniqueConnection );
 
-        QAction* createBomAct = menu.addAction(QIcon(":/savecirc.png"), tr("Bill of Materials") );
+        /*QAction* createBomAct = menu.addAction(QIcon(":/savecirc.png"), tr("Bill of Materials") );
         connect(createBomAct, &QAction::triggered,
-                   m_circuit, &Circuit::bom, Qt::UniqueConnection );
+                   m_circuit, &Circuit::bom, Qt::UniqueConnection );*/
 
         menu.exec( mapFromScene( eventPos ) );
 }   }
