@@ -59,14 +59,14 @@ ScriptModule::~ScriptModule()
     if( m_jit )     delete m_jit;
 }
 
-void ScriptModule::setScriptFile( QString scriptFile )
+void ScriptModule::setScriptFile( QString scriptFile, bool )
 {
     m_script = fileToString( scriptFile, "ScriptModule::setScriptFile" );
 }
 
 void ScriptModule::setScript( QString script )
 {
-
+    m_script = script;
 }
 
 int ScriptModule::compileScript()

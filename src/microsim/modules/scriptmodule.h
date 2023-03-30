@@ -19,9 +19,9 @@ class MAINMODULE_EXPORT ScriptModule : public eElement
         ScriptModule( QString name );
         ~ScriptModule();
 
-        int compileScript();
+        virtual int compileScript();
 
-        void setScriptFile( QString scriptFile );
+        virtual void setScriptFile( QString scriptFile, bool compile=true );
         virtual void setScript( QString script );
 
         asIScriptEngine* engine() { return m_aEngine; }

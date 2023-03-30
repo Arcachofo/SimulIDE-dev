@@ -83,6 +83,7 @@ Mcu*    McuCreator::m_mcuComp = NULL;
 eMcu*   McuCreator::mcu = NULL;
 bool    McuCreator::m_newStack;
 QDomElement McuCreator::m_stackEl;
+std::vector<ScriptPerif*> McuCreator::m_scriptPerif;
 
 McuCreator::McuCreator(){}
 McuCreator::~McuCreator(){}
@@ -92,6 +93,7 @@ int McuCreator::createMcu( Mcu* mcuComp, QString name )
     m_CompName = name;
     m_mcuComp  = mcuComp;
     m_newStack = false;
+    m_scriptPerif.clear();
 
     mcu = &(mcuComp->m_eMcu);
     QString dataFile = mcuComp->m_dataFile;
@@ -172,42 +174,13 @@ int McuCreator::processFile( QString fileName, bool main )
         else if( m_core == "scripted" )
         {
             ScriptCpu* cpu = new ScriptCpu( mcu );
+            cpu->setPeriferals( m_scriptPerif );
             mcu->cpu = cpu;
             m_mcuComp->m_scripted = true;
-            QString script = root.attribute("script");
-            cpu->setScript( fileToString( m_basePath+"/"+script, "McuCreator::processFile" ) );
+            cpu->setScriptFile( m_basePath+"/"+root.attribute("script") );
         }
         else mcu->cpu = new McuCpu( mcu );
-        /*else if( m_core == "intmem" )
-        {
-            IntMemCore* intMem = new IntMemCore( mcu );
-            mcu->cpu = intMem;
 
-            McuPort* addrPort = mcu->getPort( root.attribute("addrport") );
-            for( int i=0; i<addrPort->m_numPins; ++i )
-            {
-                McuPin* pin = addrPort->getPinN( i );
-                if( pin ){
-                    intMem->m_addrPin.emplace_back( pin );
-                    pin->setDirection( true );
-                    pin->controlPin( true, true );
-                }
-            }
-            McuPort* dataPort = mcu->getPort( root.attribute("dataport") );
-            for( int i=0; i<dataPort->m_numPins; ++i )
-            {
-                McuPin* pin = dataPort->getPinN( i );
-                if( pin ){
-                    intMem->m_dataPin.emplace_back( pin );
-                    pin->setDirection( false );
-                    pin->controlPin( true, true );
-                }
-            }
-            intMem->m_rwPin  = mcu->getPin( root.attribute("rwpin") );
-            intMem->m_cshPin = mcu->getPin( root.attribute("cshpin") );
-            intMem->m_cslPin = mcu->getPin( root.attribute("cslpin") );
-            intMem->m_clkPin = mcu->getPin( root.attribute("clkpin") );
-        }*/
         if( m_newStack ) createStack( &m_stackEl );
     }
 
@@ -465,7 +438,7 @@ void McuCreator::createMcuPort( QDomElement* p )
         {
             port = new ScriptPort( mcu, name );
             ScriptPort* sPort = (ScriptPort*)port;
-            sPort->setScript( fileToString( m_basePath+"/"+p->attribute("script"), "McuCreator::createMcuPort" ) );
+            sPort->setScriptFile( m_basePath+"/"+p->attribute("script"));
         }
         else port = new McuPort( mcu, name );
     }
@@ -800,7 +773,11 @@ void McuCreator::createUsart( QDomElement* u )
     else if( core == "AVR"  )    usartM = new AvrUsart( mcu, name, number );
     else if( core == "Pic14")    usartM = new PicUsart( mcu, name, number );
     else if( core == "Pic14e")   usartM = new PicUsart( mcu, name, number );
-    else if( core == "scripted") usartM = new ScriptUsart( mcu, name, number );
+    else if( core == "scripted"){
+        ScriptUsart* su = new ScriptUsart( mcu, name, number );
+        usartM = su;
+        m_scriptPerif.push_back( su );
+    }
     else return;
 
     mcu->m_usarts.emplace_back( usartM );

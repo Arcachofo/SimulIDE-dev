@@ -28,7 +28,7 @@ bool asDebugger::upload() // Copy hex file to Circuit folder, then upload
     m_stepOver = false;
     m_running = false;
     eMcu::self()->setDebugger( this );
-    m_device->startScript();
+    //m_device->startScript();
     m_outPane->appendText( "\n"+tr("Script Uploaded to ") );
     m_outPane->appendLine( Mcu::self()->device() );
     return true;
@@ -52,7 +52,7 @@ int asDebugger::compile( bool )
         return -1;
     }
     m_device = static_cast<ScriptCpu*>( mcu->cpu() );
-    m_device->setScriptFile( m_firmware );
+    m_device->setScriptFile( m_firmware, false );
     int r = m_device->compileScript();
     if( r == 0 ) m_outPane->appendLine( "\n"+tr("     SUCCESS!!! Compilation Ok")+"\n" );
     else         m_outPane->appendLine( "\n"+tr("     ERROR!!! Compilation Failed")+"\n" );

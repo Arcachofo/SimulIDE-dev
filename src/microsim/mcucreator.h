@@ -16,6 +16,7 @@ class QDomElement;
 class McuPrescaled;
 class McuModule;
 class Interrupt;
+class ScriptPerif;
 
 class MAINMODULE_EXPORT McuCreator
 {
@@ -68,6 +69,8 @@ class MAINMODULE_EXPORT McuCreator
         static QDomElement m_stackEl;
         static Mcu* m_mcuComp;
         static eMcu* mcu;
+
+        static std::vector<ScriptPerif*> m_scriptPerif;
 };
 
 #endif

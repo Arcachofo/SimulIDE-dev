@@ -6,12 +6,14 @@
 #ifndef SCRIPTUSART_H
 #define SCRIPTUSART_H
 
+#include "scriptperif.h"
 #include "mcuuart.h"
 
 class ScriptCpu;
+
 class asIScriptFunction;
 
-class MAINMODULE_EXPORT ScriptUsart : public McuUsart
+class MAINMODULE_EXPORT ScriptUsart : public McuUsart, public ScriptPerif
 {
     public:
         ScriptUsart( eMcu* mcu, QString name, int number );
@@ -21,12 +23,11 @@ class MAINMODULE_EXPORT ScriptUsart : public McuUsart
         virtual void byteReceived( uint8_t data ) override;
         virtual void frameSent( uint8_t data ) override;
 
+        virtual void registerScript( ScriptCpu* cpu ) override;
+        virtual void startScript() override;
+
     private:
-        ScriptCpu* m_scriptCpu;
-
         QString m_uartName;
-
-        bool m_initialized;
 
         asIScriptFunction* m_byteReceived;
         asIScriptFunction* m_frameSent;

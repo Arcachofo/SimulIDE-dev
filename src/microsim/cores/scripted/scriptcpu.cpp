@@ -11,6 +11,7 @@
 #include "mcupin.h"
 #include "mcuport.h"
 #include "ioport.h"
+#include "scriptusart.h"
 #include "watcher.h"
 #include "console.h"
 
@@ -30,7 +31,6 @@ ScriptCpu::ScriptCpu( eMcu* mcu )
     m_getCpuReg = NULL;
     m_getStrReg = NULL;
     m_command   = NULL;
-    m_initialized = false;
 
     m_aEngine->RegisterObjectType("eElement" ,0, asOBJ_REF | asOBJ_NOCOUNT );
     m_aEngine->RegisterObjectType("ScriptCpu",0, asOBJ_REF | asOBJ_NOCOUNT );
@@ -44,6 +44,7 @@ ScriptCpu::ScriptCpu( eMcu* mcu )
     IoPin::registerScript( m_aEngine );
     McuPort::registerScript( m_aEngine );
     McuPin::registerScript( m_aEngine );
+    //ScriptUsart::registerScript( m_aEngine );
 
     m_aEngine->RegisterObjectMethod("ScriptCpu", "void addCpuReg(string n, string t)"
                                    , asMETHODPR( ScriptCpu, addCpuReg, (string, string), void)
@@ -115,19 +116,24 @@ ScriptCpu::ScriptCpu( eMcu* mcu )
 }
 ScriptCpu::~ScriptCpu() {}
 
-void ScriptCpu::setScript( QString script )
+void ScriptCpu::setPeriferals( std::vector<ScriptPerif*> p )
 {
-    m_script = script;
+    m_periferals = p;
+    for( ScriptPerif* perif : m_periferals ) perif->registerScript( this );
 }
 
-void ScriptCpu::startScript()
+void ScriptCpu::setScriptFile( QString scriptFile, bool compile )
 {
-    if( !m_aEngine ) return;
+    ScriptModule::setScriptFile( scriptFile, compile );
+    if( compile ) compileScript();
+}
 
-    int r = compileScript();
-    if( r < 0 ) return;
+int ScriptCpu::compileScript()
+{
+    if( !m_aEngine ) return -1;
 
-    m_initialized = true;
+    int r = ScriptModule::compileScript();
+    if( r < 0 ) return r;
 
     m_reset       = m_aEngine->GetModule(0)->GetFunctionByDecl("void reset()");
     m_voltChanged = m_aEngine->GetModule(0)->GetFunctionByDecl("void voltChanged()");
@@ -148,19 +154,17 @@ void ScriptCpu::startScript()
         m_watcher = m_mcu->getCpuTable();
         m_watcher->addConsole( this );
     }
+    for( ScriptPerif* perif : m_periferals ) perif->startScript();
 
     asIScriptFunction* func = m_aEngine->GetModule(0)->GetFunctionByDecl("void setup()");
     if( func ) callFunction( func );
 
-    //m_extClockCtx = m_aEngine->CreateContext();
+    return 0;
 }
 
 void ScriptCpu::reset()
 {
-    m_initialized = false;
-    startScript();
-
-    if( m_initialized && m_reset ) callFunction( m_reset );
+    if( m_reset ) callFunction( m_reset );
 }
 void ScriptCpu::voltChanged() { callFunction( m_voltChanged ); }
 void ScriptCpu::runEvent()    { callFunction( m_runEvent ); }
