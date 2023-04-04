@@ -18,10 +18,10 @@ PicVref::PicVref( eMcu* mcu, QString name )
 }
 PicVref::~PicVref(){}
 
-/*void PicVref::initialize()
+void PicVref::initialize()
 {
-    setMode( 0 );
-}*/
+    m_vref = 5.0/4; //setMode( 0 );
+}
 
 void PicVref::configureA( uint8_t newVRCON )
 {

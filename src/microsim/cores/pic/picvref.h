@@ -14,7 +14,7 @@ class MAINMODULE_EXPORT PicVref : public McuVref
         PicVref( eMcu* mcu, QString name );
         ~PicVref();
 
-        //virtual void initialize() override;
+        virtual void initialize() override;
 
         virtual void configureA( uint8_t newVRCON ) override;
 

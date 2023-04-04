@@ -22,7 +22,7 @@ void McuComp::initialize()
     m_fixVref = false;
     m_enabled = true;
     m_compOut = false;
-    m_vref = 0;
+    /// m_vref = 0; // Let Vref Module set this value.
     setMode( 0 );
 }
 
