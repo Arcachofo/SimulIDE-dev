@@ -64,9 +64,12 @@ void DS1307::initialize()
     m_phase = 0;
     for( int i=0; i<64; i++ ) m_data[i] = 0x00;
 
-    if( m_timeUpdtd ) m_clock.setCurrentTime();
-    else{
-        m_clock.m_date.setDate( 0, 1, 1 );
+    if( m_timeUpdtd )
+    {
+        m_clock.disable( false );
+        m_clock.setCurrentTime();
+    }else{
+        m_clock.m_date.setDate( 2000, 1, 1 );
         m_clock.m_time.setHMS( 0, 0, 0 );
         m_data[0] = 1<<7; // Disabled
     }

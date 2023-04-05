@@ -10,13 +10,13 @@
 RtClock::RtClock( QString id )
        : eElement ( id )
 {
+    m_disabled  = true;
 }
 RtClock::~RtClock(){}
 
 void RtClock::initialize()
 {
     m_outEnable = false;
-    m_disabled  = true;
     m_disOut    = false;
 
     m_freqBase = 32768;
@@ -30,6 +30,9 @@ void RtClock::initialize()
 
 void RtClock::runEvent()
 {
+    Simulator::self()->addEvent( m_halfPeriod, this );
+    if( m_disabled ) return;
+
     if( --m_tCount == 0 ) // Toggle Pin if enabled
     {
         m_tCount = m_toggle;
@@ -38,10 +41,9 @@ void RtClock::runEvent()
     if( --m_sCount == 0 ) // Increment 1 second
     {
         m_sCount = m_freqBase*2;
-        if( !m_disabled ) m_time = m_time.addSecs( 1 );
+        m_time = m_time.addSecs( 1 );
         if( m_time == QTime( 0, 0, 0 ) ) m_date = m_date.addDays( 1 );
     }
-    Simulator::self()->addEvent( m_halfPeriod, this );
 }
 
 void RtClock::setCurrentTime()
