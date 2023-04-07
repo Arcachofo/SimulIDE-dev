@@ -11,7 +11,7 @@
         <register name="INTCON"  addr="0x0B" 
                   bits="RBIF,INTF,T0IF,RBIE,INTE,T0IE,PEIE,GIE"/>
                   
-        <register name="PIR1"    addr="0x0C" 
+        <register name="PIR1"    addr="0x0C" mask="11110111"
                   bits="TMR1IF,TMR2IF,CCP1IF,0,TXIF,RCIF,CMIF,EEIF"/>
                   
         <register name="TMR1L"   addr="0x0E" bits=""/>

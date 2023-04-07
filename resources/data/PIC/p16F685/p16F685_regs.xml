@@ -9,7 +9,7 @@
                   bits="RABIF,INTF,T0IF,RABIE,INTE,T0IE,PEIE,GIE"/>
                   
         <register name="PIR1"    addr="0x0C" mask="01111111"
-                  bits="TMR1IF,TMR2IF,CCP1IF,SSPIF,TXIF,RCIF,ADIF"/>
+                  bits="TMR1IF,TMR2IF,CCP1IF,SSPIF,TXIF,RCIF,ADIF,0"/>
                   
         <register name="PIR2"    addr="0x0D" mask="11110000"
                   bits="0,0,0,0,EEIF,C1IF,C2IF,OSFIF"/>

@@ -7,7 +7,7 @@
         <register name="PCLATH"  addr="0x0A" mask="00011111" bits=""/>
         <register name="INTCON"  addr="0x0B" 
                   bits="GPIF,INTF,T0IF,GPIE,INTE,T0IE,PEIE,GIE"/>                  
-        <register name="PIR1"    addr="0x0C" mask="11001001"
+        <register name="PIR1"    addr="0x0C" mask="11101111"
                   bits="TMR1IF,TMR2IF,OSFIF,CMIF,0,CCP1IF,ADIF,EEIF"/>
                   
         <register name="TMR1L"   addr="0x0E" bits=""/>
