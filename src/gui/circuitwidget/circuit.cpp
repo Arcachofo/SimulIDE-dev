@@ -91,11 +91,8 @@ Component* Circuit::getCompById( QString id )
 
 QString Circuit::getCompId( QString &pinName )
 {
-    QStringList list = pinName.split("-");
-    if( list.size() < 2 ) return "";
-
-    QString compId = list.at( 0 )+"-"+list.at(1);
-    return compId;
+    int pos = pinName.lastIndexOf("-");
+    return pinName.left( pos );
 }
 
 Pin* Circuit::findPin( int x, int y, QString id )
