@@ -37,10 +37,12 @@ void McuIcUnit::voltChanged() // Pin change
     m_inState = inState;
     if( inState == m_fallingEdge ) return; // Wrong Edge
 
-    uint16_t count = m_timer->getCount();
-    *m_icRegL = count & 0xFF;
-    *m_icRegH = (count >> 8) & 0xFF;
-
+    if( m_icRegL )
+    {
+        uint16_t count = m_timer->getCount();
+        *m_icRegL = count & 0xFF;
+        if( m_icRegH ) *m_icRegH = (count >> 8) & 0xFF;
+    }
     m_interrupt->raise();
 }
 

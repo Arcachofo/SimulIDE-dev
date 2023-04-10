@@ -46,6 +46,7 @@
 #include "picport.h"
 #include "pictimer.h"
 #include "picccpunit.h"
+#include "picicunit.h"
 #include "picinterrupt.h"
 #include "pic14einterrupt.h"
 #include "picusart.h"
@@ -748,11 +749,15 @@ void McuCreator::createCcpUnit( QDomElement* c )
     QString highByte = regs.value(1);
 
     if( !lowByte.isEmpty() ){
-        ccpUnit->m_ccpRegL = mcu->getReg( lowByte );
+        uint8_t* regL = mcu->getReg( lowByte );
+        ccpUnit->m_ccpRegL = regL;
+        ccpUnit->m_capUnit->m_icRegL = regL;
         watchRegNames( lowByte, R_WRITE, ccpUnit, &PicCcpUnit::ccprWriteL, mcu );
     }
     if( !highByte.isEmpty() ){
-        ccpUnit->m_ccpRegH = mcu->getReg( highByte );
+        uint8_t* regH = mcu->getReg( highByte );
+        ccpUnit->m_ccpRegH = regH;
+        ccpUnit->m_capUnit->m_icRegH = regH;
         watchRegNames( highByte, R_WRITE, ccpUnit, &PicCcpUnit::ccprWriteH, mcu );
     }
     setConfigRegs( c, ccpUnit );
