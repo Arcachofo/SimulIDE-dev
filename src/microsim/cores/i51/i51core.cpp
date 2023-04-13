@@ -241,17 +241,17 @@ uint8_t I51Core::popStack8()
 void I51Core::addFlags( uint8_t value1, uint8_t value2, uint8_t acc )
 {
     uint8_t c = ((value1+value2+acc)>>1) & 1<<7;
-    write_S_Bit( Cy, c );                                                // Carry: overflow from 7th bit to 8th bit
-    write_S_Bit( AC, ((value1 & 7   )+( value2 & 7   ) + acc ) & 1<<3 ); // Auxiliary carry: overflow from 3th bit to 4th bit
-    write_S_Bit( OV, ((value1 & 127 )+( value2 & 127 ) + acc ) ^ c    ); // Overflow: overflow from 6th or 7th bit, but not both
+    write_S_Bit( Cy, c );                                                  // Carry: overflow from 7th bit to 8th bit
+    write_S_Bit( AC, ((value1 & 0x0F)+(value2 & 0x0F) + acc ) & 1<<4 );    // Auxiliary carry: overflow from 3th bit to 4th bit
+    write_S_Bit( OV, (((value1 & 127)+(value2 & 127 ) + acc )^c ) & 1<<7); // Overflow: overflow from 6th or 7th bit, but not both
 }
 
 void I51Core::subFlags( uint8_t value1, uint8_t value2 )
 {
     uint8_t c = ((value1-value2)>>1) & 1<<7; //Carry: overflow from 7th bit to 8th bit
     write_S_Bit( Cy, c );                                             // Carry: overflow from 7th bit to 8th bit
-    write_S_Bit( AC, ((value1 & 7   )-( value2 & 7   )) & 1<<3 );
-    write_S_Bit( OV, ((value1 & 127 )-( value2 & 127 )) ^ c    );
+    write_S_Bit( AC, ((value1 & 0x0F)-(value2 & 0x0F)) & 1<<4 );
+    write_S_Bit( OV, (((value1 & 127)-(value2 & 127)) ^ c ) & 1<<7);
 }
 
 // INSTRUCTIONS -----------------------------
@@ -848,4 +848,12 @@ void I51Core::Exec()
             case 0xf7: break; /// m_op0 = ACC; addrInd(); MOVX(); break;  // @Indirect Rx
         }
     }
+    bool parity = false;
+    uint8_t acu = *m_acc;
+    for( int i=0; i<8; ++i )
+    {
+        parity ^= acu & 1;
+        acu >>= 1;
+    }
+    write_S_Bit( 0, parity );
 }

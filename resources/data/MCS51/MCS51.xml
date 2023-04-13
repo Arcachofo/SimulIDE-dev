@@ -28,7 +28,7 @@
         <register name="RCAP2H" addr="75"  bits=""/>
         <register name="TL2"    addr="76"  bits=""/>
         <register name="TH2"    addr="77"  bits=""/>
-        <register name="PSW"    addr="80"  bits="P,0,OV,RS0,RS1,F0,AC,CY"/>
+        <register name="PSW"    addr="80"  bits="P,0,OV,R0,R1,F0,AC,CY"/>
         <register name="ACC"    addr="96"  bits=""/>
         <register name="B"      addr="112" bits=""/>
     </regblock>
