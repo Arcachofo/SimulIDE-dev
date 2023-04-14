@@ -27,7 +27,7 @@ void MemTable::updateTable( QVector<int>* data )
 {
     if( ++m_updtCount >= 10 ) m_updtCount = 0;
     else                      return;
-    setData( data );
+    setData( data, m_wordBytes );
 }
 
 void MemTable::setValue( int address, int val )
