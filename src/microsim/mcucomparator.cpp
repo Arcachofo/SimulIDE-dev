@@ -26,7 +26,7 @@ void McuComp::initialize()
     setMode( 0 );
 }
 
-void McuComp::callBackDoub( double vref )
+void McuComp::callBackDoub( double vref ) // Called from Vref module
 {
     m_vref = vref;
     if( m_enabled ) voltChanged();

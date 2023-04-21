@@ -16,18 +16,21 @@ AvrComp::AvrComp( eMcu* mcu, QString name )
     m_ACBG = getRegBits( "ACBG", mcu );
     m_ACO  = getRegBits( "ACO", mcu );
     m_ACI  = getRegBits( "ACI", mcu );
+    m_ACIE = getRegBits( "ACIE", mcu );
     m_ACIC = getRegBits( "ACIC", mcu );
     m_ACIS = getRegBits( "ACIS0,ACIS1", mcu );
 
     m_AIN0D = getRegBits( "AIN0D", mcu );
     m_AIN1D = getRegBits( "AIN1D", mcu );
 
-    watchBitNames( "ACO", R_READ, this, &AvrComp::compare, mcu );
+    /// watchBitNames( "ACO", R_READ, this, &AvrComp::compare, mcu );
 }
 AvrComp::~AvrComp(){}
 
 void AvrComp::initialize()
 {
+    m_acie = false;
+
     m_pinP = m_pins[0];
     m_pinN = m_pins[1];
 }
@@ -39,11 +42,15 @@ void AvrComp::voltChanged()
 
 void AvrComp::configureA( uint8_t newACSR ) // ACSR is being written
 {
-    if( newACSR & m_ACI.mask )
-        m_mcu->m_regOverride = newACSR & ~(m_ACI.mask); // Clear ACI by writting it to 1
+    //if( newACSR & m_ACI.mask )  // Done in interrupt (clear=1)
+    //    m_mcu->m_regOverride = newACSR & ~(m_ACI.mask); // Clear ACI by writting it to 1
 
     m_enabled = !getRegBitsBool( newACSR, m_ACD );
     if( !m_enabled ) m_mcu->m_regOverride = newACSR & ~m_ACO.mask; // Clear ACO
+
+    m_acie = getRegBitsBool( newACSR, m_ACIE );                   // Enable interrupt
+    m_pins[0]->changeCallBack( this, m_enabled && m_acie );
+    m_pins[1]->changeCallBack( this, m_enabled && m_acie );
 
     m_fixVref = getRegBitsVal( newACSR, m_ACBG );
 
@@ -64,8 +71,8 @@ void AvrComp::configureC( uint8_t newACOE )
     else          m_pinOut = NULL;
     m_pins[2]->controlPin( newACOE, newACOE );
 
-    m_pins[0]->changeCallBack( m_pins[0], newACOE );
-    m_pins[1]->changeCallBack( m_pins[1], newACOE );
+    //m_pins[0]->changeCallBack( m_pins[0], newACOE );
+    //m_pins[1]->changeCallBack( m_pins[1], newACOE );
 }
 
 void AvrComp::compare( uint8_t ) // Performed only when ACO is readed

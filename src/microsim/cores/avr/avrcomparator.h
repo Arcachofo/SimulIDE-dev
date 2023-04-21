@@ -25,10 +25,13 @@ class MAINMODULE_EXPORT AvrComp : public McuComp
     protected:
         void compare( uint8_t );
 
+        bool m_acie;
+
         regBits_t m_ACD;
         regBits_t m_ACBG;
         regBits_t m_ACO;
         regBits_t m_ACI;
+        regBits_t m_ACIE;
         regBits_t m_ACIC;
         regBits_t m_ACIS;
 
