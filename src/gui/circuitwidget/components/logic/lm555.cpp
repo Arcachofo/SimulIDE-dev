@@ -56,7 +56,7 @@ Lm555::Lm555( QObject* parent, QString type, QString id )
     m_output->setLabelText( "Out" );
     m_output->setOutputImp( 10 );
     m_output->setOutLowV( 0 );
-    m_output->setOutHighV( 5-1.7 );
+    m_output->setOutHighV( 5-1.3 );
     m_output->setOutState( true );
     m_pin[2] = m_output;
 
@@ -148,7 +148,7 @@ void Lm555::voltChanged()
     }
     if( qFabs(voltPos-m_voltPos) > 1e-3 )
     {
-        double voltHight = voltPos - 1.7;
+        double voltHight = voltPos - 1.3;
         if( voltHight < m_voltNeg ) voltHight = m_voltNeg;
         m_output->setOutHighV( voltHight );
 
