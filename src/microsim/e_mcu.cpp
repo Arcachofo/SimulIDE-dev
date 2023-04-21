@@ -174,7 +174,7 @@ void eMcu::hardReset( bool r )
 
 void eMcu::sleep( bool s )
 {
-    if( !m_sleepModule->enabled() ) return;
+    if( !m_sleepModule || !m_sleepModule->enabled() ) return;
 
     int mode = -1;
     if( s )     // Go to Sleep

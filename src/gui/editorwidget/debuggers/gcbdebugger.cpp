@@ -160,7 +160,7 @@ bool GcbDebugger::mapFlashToSource()  // Map asm_source_line <=> gcb_source_line
 
     bool haveVariable = false;
     QString asmLine;
-    while( !asmLine.contains("BASPROGRAMSTART:") )
+    while( !asmLines.isEmpty() && !asmLine.contains("BASPROGRAMSTART:") )
     {
         asmLine = asmLines.takeFirst();
         if     ( asmLine.isEmpty() ) continue;

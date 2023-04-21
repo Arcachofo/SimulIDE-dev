@@ -1,4 +1,4 @@
-﻿/***************************************************************************
+/***************************************************************************
  *   Copyright (C) 2012 by Santiago González                               *
  *                                                                         *
  ***( see copyright.txt file at root folder )*******************************/
@@ -190,10 +190,10 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
 
         SubPackage* m_board;
         
-        QHash<QString, Pin*>      m_pinMap;   // Pin list
-        QHash<QString, Pin*>      m_LdPinMap; // Pin list while loading/pasting/importing
-        QHash<QString, QString>   m_idMap;
-        QHash<QString, CompBase*> m_compMap;  // Map Component name -> Component pointer
+        QHash<QString, Pin*>      m_pinMap;   // Pin Id to Pin*
+        QHash<QString, Pin*>      m_LdPinMap; // Pin Id to Pin* while loading/pasting/importing
+        QHash<QString, QString>   m_idMap;    // Component Id to new Id (pasting)
+        QHash<QString, CompBase*> m_compMap;  // Component Id to Component*
 
         circState m_circState;
         QList<circState> m_undoStack;
