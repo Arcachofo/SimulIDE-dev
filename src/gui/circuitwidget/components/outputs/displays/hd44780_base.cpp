@@ -273,7 +273,7 @@ void Hd44780_Base::paint( QPainter* p, const QStyleOptionGraphicsItem* option, Q
                 charact = m_fontImg.copy( 0, 0, 10, 16 );
                 int addr = char_num*8;
 
-                for( int y=0; y<14; y+=2 )
+                for( int y=0; y<16; y+=2 )
                 {
                     int data = m_CGram[ addr ];
                     addr++;
@@ -290,5 +290,5 @@ void Hd44780_Base::paint( QPainter* p, const QStyleOptionGraphicsItem* option, Q
             }   }   }
             else charact = m_fontImg.copy( char_num*10, 0, 10, 16 );
 
-            p->drawImage(10+col*12,-(m_imgHeight+22)+row*18,charact );
+            p->drawImage( 10+col*12,-(m_imgHeight+22)+row*18,charact );
 }   }   }
