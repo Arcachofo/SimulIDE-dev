@@ -25,6 +25,7 @@ class MAINMODULE_EXPORT McuTwi : public McuPrescaled, public TwiModule
         virtual void writeAddrReg( uint8_t val ){ m_address = val; }
         virtual void writeStatus( uint8_t val ){;}
         virtual void writeTwiReg( uint8_t val ){;}
+        virtual void readTwiReg( uint8_t val ){;}
 
     protected:
         virtual void updateFreq() {;}

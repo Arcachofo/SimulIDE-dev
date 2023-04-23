@@ -8,6 +8,12 @@
 
 #include "e-clocked_device.h"
 
+enum spiMode_t{
+    SPI_OFF=0,
+    SPI_MASTER,
+    SPI_SLAVE
+};
+
 class IoPin;
 
 class MAINMODULE_EXPORT SpiModule : public eClockedDevice
@@ -15,12 +21,6 @@ class MAINMODULE_EXPORT SpiModule : public eClockedDevice
     public:
         SpiModule( QString name );
         ~SpiModule();
-
-        enum spiMode_t{
-            SPI_OFF=0,
-            SPI_MASTER,
-            SPI_SLAVE
-        };
 
         virtual void initialize() override;
         virtual void stamp() override;
@@ -37,6 +37,8 @@ class MAINMODULE_EXPORT SpiModule : public eClockedDevice
         virtual void setSckPin( IoPin* pin )  { m_clkPin = pin; }
         virtual void setSsPin( IoPin* pin )   { m_SS = pin; }
 
+        void setUseSS( bool u ) { m_useSS = u; }
+
     protected:
         void step();
         void resetSR();
@@ -47,6 +49,7 @@ class MAINMODULE_EXPORT SpiModule : public eClockedDevice
         bool m_lsbFirst;
         bool m_toggleSck;
         bool m_enabled;
+        bool m_useSS;
 
         clkState_t m_sampleEdge;
         clkState_t m_leadEdge;
@@ -63,7 +66,7 @@ class MAINMODULE_EXPORT SpiModule : public eClockedDevice
 
         IoPin* m_MOSI;
         IoPin* m_MISO;
-        //IoPin* m_SCK; // m_clkPin
+        //IoPin* m_SCK; // m_clkPin in eClockedDevice
         IoPin* m_SS;
 
         IoPin* m_dataOutPin;

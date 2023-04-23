@@ -11,3 +11,9 @@ McuPrescaled::McuPrescaled( eMcu* mcu, QString name )
 
 }
 McuPrescaled::~McuPrescaled( ){}
+
+void McuPrescaled::setPrescIndex( uint16_t p )
+{
+    m_prIndex = p;
+    m_prescaler = m_prescList.at( m_prIndex );
+}

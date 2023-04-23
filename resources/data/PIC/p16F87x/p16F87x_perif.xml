@@ -46,4 +46,23 @@
     <trunit type="tx" pin="PORTC6" register="TXREG"/>
     <trunit type="rx" pin="PORTC7" register="RCREG" interrupt="USART_R" />
   </usart>
+  
+  <msspunit name="MSSP" type="00" configregsA="SSPCON" >
+                        
+    <twi name="TWI"  configregsA="SSPCON" configregsB="SSPCON2" 
+                     dataregs="SSPBUF" 
+                     addressreg="SSPADD"
+                     statusreg="SSPSTAT" 
+                     interrupt="SSP"
+                     prescalers=""
+                     pins="PORTC4,PORTC3" /><!-- "SDA,SCL" -->
+
+    <spi name="SPI"  configregsA="SSPCON" 
+                     dataregs="SSPBUF" 
+                     statusreg="SSPSTAT"
+                     interrupt="SSP" 
+                     prescalers="4,16,64,0"
+                     pins="PORTC4,PORTC5,PORTC3,PORTA5"/><!-- "SDI,SDO,SCK,SS" -->
+  </msspunit>
+  
 </parts>

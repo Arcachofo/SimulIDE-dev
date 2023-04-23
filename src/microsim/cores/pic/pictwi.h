@@ -3,8 +3,8 @@
  *                                                                         *
  ***( see copyright.txt file at root folder )*******************************/
 
-#ifndef AVRTWI_H
-#define AVRTWI_H
+#ifndef PICTWI_H
+#define PICTWI_H
 
 #include "mcutwi.h"
 //#include "mcutypes.h"
@@ -12,7 +12,7 @@
 class eMcu;
 //class McuPin;
 
-class MAINMODULE_EXPORT PicTwi : public McuTwi
+class PicTwi : public McuTwi
 {
     public:
         PicTwi( eMcu* mcu, QString name );
@@ -20,30 +20,43 @@ class MAINMODULE_EXPORT PicTwi : public McuTwi
 
         virtual void initialize() override;
 
-        virtual void configureA( uint8_t newTWCR ) override;
-        virtual void configureB( uint8_t val ) override;
+        virtual void configureA( uint8_t newSSPCON ) override;
+        virtual void configureB( uint8_t newSSPCON2 ) override;
 
-        virtual void writeAddrReg( uint8_t newTWAR ) override;
-        virtual void writeStatus( uint8_t newTWSR ) override;
-        virtual void writeTwiReg( uint8_t newTWDR ) override;
+        virtual void writeAddrReg( uint8_t newSSPADD ) override;
+        virtual void writeStatus( uint8_t newSSPSTAT ) override;
+        virtual void writeTwiReg( uint8_t newSSPBUF ) override;
+        virtual void readTwiReg( uint8_t val ) override;
+
+        virtual void setMode( twiMode_t mode ) override;
+        virtual void writeByte() override;
+        virtual void bufferEmpty() override;
+        virtual void readByte() override;
 
     protected:
         virtual void setTwiState( twiState_t state ) override;
         uint8_t getStaus() { return *m_statReg &= 0b11111000; }
-        virtual void updateFreq() override;
 
         uint8_t m_bitRate;
 
-        uint8_t*  m_TWCR;
-        //uint8_t*  m_TWSR;
+        // SSPCON
+        regBits_t m_WCOL;
 
-        regBits_t m_TWEN;
-        regBits_t m_TWWC;
-        regBits_t m_TWSTO;
-        regBits_t m_TWSTA;
-        regBits_t m_TWEA;
-        regBits_t m_TWINT;
+        // SSPCON2
+        regBits_t m_CGEN;
+        regBits_t m_ACKSTAT;
+        regBits_t m_ACKDT;
+        regBits_t m_ACKEN;
+        regBits_t m_RCEN;
+        regBits_t m_PEN;
+        regBits_t m_RSEN;
+        regBits_t m_SEN;
 
+        //SSPSTAT
+        regBits_t m_P;
+        regBits_t m_S;
+        regBits_t m_RW;
+        regBits_t m_BF;
 };
 
 #endif

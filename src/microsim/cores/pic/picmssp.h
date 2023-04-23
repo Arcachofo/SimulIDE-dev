@@ -12,17 +12,8 @@
 
 class PicSpi;
 class PicTwi;
-//class McuPin;
 
-enum sspMode_t{
-    sspOFF=0,
-    sspSPI_M,
-    sspSPI_S,
-    sspI2C_M,
-    sspI2C_S
-};
-
-class MAINMODULE_EXPORT PicMssp : public McuModule, public eElement
+class PicMssp : public McuModule, public eElement
 {
     friend class McuCreator;
 
@@ -36,19 +27,16 @@ class MAINMODULE_EXPORT PicMssp : public McuModule, public eElement
 
         //virtual void setInterrupt( Interrupt* i ) override;
 
-        //void setPin( McuPin* pin );
-
     protected:
         uint8_t m_mode;
-        sspMode_t m_sspMode;
 
-        /*uint8_t* m_ccpRegL;
-        uint8_t* m_ccpRegH;*/
+        bool m_enabled;
 
         regBits_t m_SSPMx;
+        regBits_t m_SSPEN;
 
-        PicSpi*  m_spiUnit;
-        PicTwi*  m_twiUnit;
+        PicSpi* m_spiUnit;
+        PicTwi* m_twiUnit;
 };
 
 #endif

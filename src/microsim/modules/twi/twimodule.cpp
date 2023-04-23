@@ -31,6 +31,7 @@ void TwiModule::initialize()
     m_genCall    = false;
 
     m_lastSDA = true; // SDA High = inactive
+    m_masterACK = true;
 }
 
 void TwiModule::stamp()      // Called at Simulation Start
@@ -92,18 +93,25 @@ void TwiModule::runEvent()
 
         case I2C_WRITE :          // We are Writting data
         {
-            if( clkLow ) writeBit(); // Set SDA while clk is Low
+            if( clkLow )  // Set SDA while clk is Low
+            {
+                writeBit();
+                if( m_i2cState == I2C_READACK ) bufferEmpty(); // Data sent (before ACK)
+            }
             m_toggleScl = true;
         }break;
 
         case I2C_ACK:             // Send ACK
         {
-            if( clkLow )
+            if( m_masterACK ) // PICs send Master ACK as separate action
             {
-                if( m_sendACK ) setSDA( false);
-                m_i2cState = I2C_ENDACK;
+                if( clkLow )
+                {
+                    if( m_sendACK ) setSDA( false);
+                    m_i2cState = I2C_ENDACK;
+                }
+                m_toggleScl = true;
             }
-            m_toggleScl = true;
         }break;
 
         case I2C_ENDACK:         // We sent ACK, release SDA

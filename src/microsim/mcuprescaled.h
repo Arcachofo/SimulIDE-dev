@@ -8,13 +8,16 @@
 
 #include "mcumodule.h"
 
-class MAINMODULE_EXPORT McuPrescaled : public McuModule
+class McuPrescaled : public McuModule
 {
         friend class McuCreator;
 
     public:
         McuPrescaled( eMcu* mcu, QString name );
         virtual ~McuPrescaled();
+
+        void setPrescaler( uint16_t p ) { m_prescaler = p;}
+        void setPrescIndex( uint16_t p );
 
     protected:
         regBits_t m_prSelBits;              // Bits configuring prescaler index

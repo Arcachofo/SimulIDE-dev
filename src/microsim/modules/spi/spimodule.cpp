@@ -28,6 +28,7 @@ void SpiModule::initialize()
     m_toggleSck = false;
     m_lsbFirst  = false;
     m_enabled   = false;
+    m_useSS     = true;
 
     m_leadEdge   = Clock_Rising;
     m_tailEdge   = Clock_Falling;
@@ -63,7 +64,8 @@ void SpiModule::voltChanged() // Called in Slave mode on SCK or SS changes
 
     updateClock();
 
-    bool enabled = m_SS->getInpState() ? false : true;  // SS active LOW
+    bool enabled = true;
+    if( m_useSS && m_SS ) enabled = !m_SS->getInpState(); // SS active LOW
 
     if( enabled != m_enabled ) // Enabling or Disabling
     {
@@ -162,7 +164,7 @@ void SpiModule::setMode( spiMode_t mode )
         m_dataOutPin = m_MISO;
         m_dataInPin  = m_MOSI;
 
-        if( m_SS ) m_SS->changeCallBack( this, true );
+        if( m_useSS && m_SS ) m_SS->changeCallBack( this, true );
     }
     if( m_dataOutPin && m_mode == SPI_MASTER ) m_dataOutPin->setOutState( true );
 }

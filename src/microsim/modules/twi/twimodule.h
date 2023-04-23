@@ -9,6 +9,12 @@
 #include "e-clocked_device.h"
 #include "avrtwicodes.h" // Using AVR states comes at hand
 
+enum twiMode_t{
+    TWI_OFF=0,
+    TWI_MASTER,
+    TWI_SLAVE
+};
+
 class eSource;
 
 class MAINMODULE_EXPORT TwiModule : public eClockedDevice
@@ -16,12 +22,6 @@ class MAINMODULE_EXPORT TwiModule : public eClockedDevice
     public:
         TwiModule( QString name );
         ~TwiModule();
-
-        enum twiMode_t{
-            TWI_OFF=0,
-            TWI_MASTER,
-            TWI_SLAVE
-        };
 
         enum i2cState_t{
             I2C_IDLE=0,
@@ -47,13 +47,14 @@ class MAINMODULE_EXPORT TwiModule : public eClockedDevice
 
         virtual void startWrite(){;} // Notify posible child class
         virtual void writeByte() { m_bitPtr = 7;}
+        virtual void bufferEmpty(){;}
         virtual void readByte();
 
         uint8_t byteReceived() { return m_rxReg; }
 
         void setSdaPin( IoPin* pin );
         void setSclPin( IoPin* pin );
-        void setMode( twiMode_t mode );
+        virtual void setMode( twiMode_t mode );
 
         void masterStart() { m_i2cState = I2C_START; }
         void masterWrite( uint8_t data, bool isAddr, bool write );
@@ -87,6 +88,7 @@ class MAINMODULE_EXPORT TwiModule : public eClockedDevice
         bool m_isAddr;
         bool m_write;
         bool m_sendACK;
+        bool m_masterACK;
         bool m_addrMatch;
         bool m_genCall;
         bool m_enabled;

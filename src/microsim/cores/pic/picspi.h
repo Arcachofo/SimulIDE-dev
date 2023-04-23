@@ -10,7 +10,7 @@
 
 class eMcu;
 
-class MAINMODULE_EXPORT PicSpi : public McuSpi
+class PicSpi : public McuSpi
 {
     friend class PicMssp;
 
@@ -21,22 +21,29 @@ class MAINMODULE_EXPORT PicSpi : public McuSpi
         //virtual void initialize() override;
 
         virtual void setMode( spiMode_t mode ) override;
-        virtual void configureA( uint8_t newSPCR ) override;
-        virtual void writeStatus( uint8_t newSPSR ) override;
-        virtual void writeSpiReg( uint8_t newSPDR ) override;
+        virtual void configureA( uint8_t newSSPCON ) override;
+        virtual void writeStatus( uint8_t newSSPSTAT ) override;
+        virtual void writeSpiReg( uint8_t newSSPBUF ) override;
         virtual void endTransaction() override;
 
     protected:
 
+        bool m_clkPol;
+        bool m_clkPha;
+
         /*uint8_t*  m_SPCR;
 
         regBits_t m_SPIE;
-        regBits_t m_SPE;
+
         regBits_t m_DODR;
         regBits_t m_MSTR;
         regBits_t m_CPOL;
         regBits_t m_CPHA;*/
         //regBits_t m_SPIF;
+
+        regBits_t m_SSPEN;
+        regBits_t m_CKP;
+        regBits_t m_CKE;
 };
 
 #endif

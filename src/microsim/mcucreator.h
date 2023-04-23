@@ -16,6 +16,8 @@ class QDomElement;
 class McuPrescaled;
 class McuModule;
 class Interrupt;
+class McuTwi;
+class McuSpi;
 class ScriptPerif;
 
 class MAINMODULE_EXPORT McuCreator
@@ -44,6 +46,7 @@ class MAINMODULE_EXPORT McuCreator
         static void createTimer( QDomElement* t );
         static void createOcm( QDomElement* e );
         static void createCcpUnit( QDomElement* c );
+        static void createMsspUnit( QDomElement* c );
         static void createUsart( QDomElement* u );
         static void createAdc( QDomElement* e );
         static void createAcomp( QDomElement* e );
@@ -69,6 +72,9 @@ class MAINMODULE_EXPORT McuCreator
         static QDomElement m_stackEl;
         static Mcu* m_mcuComp;
         static eMcu* mcu;
+
+        static McuTwi* m_twi;
+        static McuSpi* m_spi;
 
         static std::vector<ScriptPerif*> m_scriptPerif;
 };

@@ -26,9 +26,19 @@ static inline uint8_t getRegBits( uint8_t val, regBits_t rb )
     return (val & rb.mask);
 }
 
+static inline uint8_t getRegBitsVal( regBits_t rb )
+{
+    return (*rb.reg & rb.mask)>>rb.bit0;
+}
+
 static inline uint8_t getRegBitsVal( uint8_t val, regBits_t rb )
 {
     return (val & rb.mask)>>rb.bit0;
+}
+
+static inline uint8_t getRegBitsBool( regBits_t rb )
+{
+    return (*rb.reg & rb.mask) > 0;
 }
 
 static inline uint8_t getRegBitsBool( uint8_t val, regBits_t rb )
@@ -46,4 +56,9 @@ static inline void clearRegBits( regBits_t bits ) // Clear bits in a Register
     *(bits.reg) &= ~bits.mask;
 }
 
+static inline void writeRegBits( regBits_t bits, bool value ) // Clear bits in a Register
+{
+    if( value ) setRegBits( bits );
+    else        clearRegBits( bits );
+}
 #endif

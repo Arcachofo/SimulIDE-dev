@@ -20,11 +20,11 @@ AvrTwi::AvrTwi( eMcu* mcu, QString name )
     m_TWCR = mcu->getReg( "TWCR"+n );
     //m_TWSR = mcu->getReg( "TWSR" );
 
-    m_TWEN  = getRegBits( "TWEN"+n, mcu );
-    m_TWWC  = getRegBits( "TWWC"+n, mcu );
+    m_TWEN  = getRegBits( "TWEN"+n , mcu );
+    m_TWWC  = getRegBits( "TWWC"+n , mcu );
     m_TWSTO = getRegBits( "TWSTO"+n, mcu );
     m_TWSTA = getRegBits( "TWSTA"+n, mcu );
-    m_TWEA  = getRegBits( "TWEA"+n, mcu );
+    m_TWEA  = getRegBits( "TWEA"+n , mcu );
     m_TWINT = getRegBits( "TWINT"+n, mcu );
 }
 AvrTwi::~AvrTwi(){}
@@ -63,24 +63,23 @@ void AvrTwi::configureA( uint8_t newTWCR ) // TWCR is being written
         m_scl->controlPin( true, true );
     }
 
+    bool oldStart = getRegBitsBool( *m_TWCR, m_TWSTA );
+    bool newStart = getRegBitsBool( newTWCR, m_TWSTA );
+    if( newStart && !oldStart )            /// Generate Start Condition
+    {
+        if( m_mode != TWI_MASTER ) setMode( TWI_MASTER );
+        masterStart();
+    }
+
     bool oldStop = getRegBitsBool( *m_TWCR, m_TWSTO );
     bool newStop = getRegBitsBool( newTWCR, m_TWSTO );
     if( newStop && !oldStop )              /// Generate Stop Condition
     {
         if( m_mode == TWI_MASTER ) // Master: Stop if I2C was started
-        {
-            if( getStaus() < TWI_NO_STATE ) masterStop();//I2Cstop();
+        {/// DONE if Stop and Start at same time, then Start Condition should be sheduled
+            if( !newStart && getStaus() < TWI_NO_STATE ) masterStop();//I2Cstop();
         }
         else setMode( TWI_SLAVE ); // Slave: Stop Cond restarts Slave mode (can be used to recover from an error condition)
-    }
-
-    bool oldStart = getRegBitsBool( *m_TWCR, m_TWSTA );
-    bool newStart = getRegBitsBool( newTWCR, m_TWSTA );
-    /// TODO if Stop and Start at same time, then Start Condition should be sheduled
-    if( newStart && !oldStart )            /// Generate Start Condition
-    {
-        if( m_mode != TWI_MASTER ) setMode( TWI_MASTER );
-        masterStart();
     }
 
     m_enabled = false;
