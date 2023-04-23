@@ -101,6 +101,7 @@
         <file alias="strain.png">../src/icons/components/strain.png</file>
         <file alias="ldr.png">../src/icons/components/ldr.png</file>
         <file alias="voltage.png">../src/icons/components/voltage.png</file>
+        <file alias="rail.png">../src/icons/components/rail.png</file>
         <file alias="ic2.png">../src/icons/components/ic2.png</file>
         <file alias="ic_comp.png">../src/icons/components/ic_comp.png</file>
         <file alias="subc.png">../src/icons/components/subc.png</file>
