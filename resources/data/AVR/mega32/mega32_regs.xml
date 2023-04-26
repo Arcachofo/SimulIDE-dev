@@ -66,12 +66,14 @@
     <register  name="EECR"    addr="0x001C"  reset=""  mask="" 
                bits="EERE,EEWE,EEMWE,EERIE,0,0,0,0" />
 
-    <register  name="EEDR"    addr="0x001D"  reset=""  mask="" 
-               bits="EEDR0,EEDR1,EEDR2,EEDR3,EEDR4,EEDR5,EEDR6,EEDR7" />
+    <register  name="EEDR"    addr="0x001D"  reset=""  mask=""  />
 
     <register  name="EEARL"   addr="0x001E"  reset=""  mask="" bits="" />
     <register  name="EEARH"   addr="0x001F"  reset=""  mask="" bits="" />
-    <register  name="UBRRH"   addr="0x0020"  reset=""  mask="" bits="" />
+    <register  name="UCSRC"   addr="0x0020"  reset="00000110"  mask="" 
+               bits="UCPOL,UCSZ0,UCSZ1,USBS,UPM0,UPM1,UMSEL,URSEL" />
+
+    <!-- kkregister  name="UBRRH"   addr="0x0020"  reset=""  mask="00001111" -->
     <register  name="WDTCR"   addr="0x0021"  reset=""  mask="" 
                bits="WDP0,WDP1,WDP2,WDE,WDDE,0,0,0" />
 
