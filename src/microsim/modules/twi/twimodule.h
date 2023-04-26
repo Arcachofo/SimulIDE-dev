@@ -46,7 +46,7 @@ class MAINMODULE_EXPORT TwiModule : public eClockedDevice
         virtual void setFreqKHz( double f );
 
         virtual void startWrite(){;} // Notify posible child class
-        virtual void writeByte() { m_bitPtr = 7;}
+        virtual void writeByte() { m_bitPtr = 7; }
         virtual void bufferEmpty(){;}
         virtual void readByte();
 
@@ -60,6 +60,7 @@ class MAINMODULE_EXPORT TwiModule : public eClockedDevice
         void masterWrite( uint8_t data, bool isAddr, bool write );
         void masterRead( bool ack );
         void masterStop();
+        void slaveWrite();
 
         virtual void I2Cstop() { m_i2cState = I2C_STOP; }
 

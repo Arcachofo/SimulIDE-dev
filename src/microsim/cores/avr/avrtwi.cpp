@@ -82,24 +82,26 @@ void AvrTwi::configureA( uint8_t newTWCR ) // TWCR is being written
         else setMode( TWI_SLAVE ); // Slave: Stop Cond restarts Slave mode (can be used to recover from an error condition)
     }
 
-    m_enabled = false;
     bool twea = getRegBitsBool( newTWCR, m_TWEA );
-    bool addrSet = ( m_address != 0b01111111);
-    if( addrSet && twea && !newStop && !newStart )
+    if( !newStop && !newStart && !clearTwint )
     {
-        if( m_mode != TWI_SLAVE && !clearTwint ) setMode( TWI_SLAVE );
-        m_enabled = true;
-        return;
+        if( m_mode != TWI_SLAVE ) setMode( TWI_SLAVE );
+        m_enabled = twea;
     }
+
+    bool data = clearTwint && !newStop && !newStart; // No start or stop and TWINT cleared, receive data
+    if( !data ) return;
 
     if( m_mode == TWI_MASTER )
     {
-        bool data = clearTwint && !newStop && !newStart; // No start or stop and TWINT cleared, receive data
-        if( !data ) return;
-
-        if( (m_twiState == TWI_MRX_ADR_ACK)    // We sent Slave Address + R and received ACK
-         || (m_twiState == TWI_MRX_DATA_ACK) ) // We sent data and received ACK
+        if( m_twiState == TWI_MRX_ADR_ACK    // We sent Slave Address + R and received ACK
+         || m_twiState == TWI_MRX_DATA_ACK ) // We sent data and received ACK
             masterRead( twea );     // Read a byte and send ACK/NACK
+    }
+    else if( m_mode == TWI_SLAVE )
+    {
+        if( m_twiState == TWI_STX_ADR_ACK ) // Own Slave Address + R received and ACK sent
+            slaveWrite();          // Start Slave transmission
     }
 }
 
@@ -126,6 +128,7 @@ void AvrTwi::writeStatus( uint8_t newTWSR ) // TWSR Status Register is being wri
 
 void AvrTwi::writeTwiReg( uint8_t newTWDR ) // TWDR is being written
 {
+    if( m_mode == TWI_SLAVE ) m_txReg = newTWDR;
     if( m_mode != TWI_MASTER ) return;
 
     bool twint = getRegBitsBool( *m_TWCR, m_TWINT ); // Check if TWINT is set

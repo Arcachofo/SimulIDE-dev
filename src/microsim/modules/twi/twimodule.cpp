@@ -157,7 +157,7 @@ void TwiModule::voltChanged() // Used by slave
     updateClock();
     getSdaState();                             // State of SDA pin
 
-    if(( m_clkState == Clock_High )&&( m_i2cState != I2C_ACK ))
+    if( m_clkState == Clock_High && m_i2cState != I2C_ACK )
     {
         if( m_lastSDA && !m_sdaState ) {       // We are in a Start Condition
             m_bitPtr = 0;
@@ -221,7 +221,12 @@ void TwiModule::voltChanged() // Used by slave
                 writeByte();
             }
             else m_i2cState = I2C_IDLE;
-    }   }
+        }
+        else if( m_i2cState == I2C_ENDACK )      // We sent ACK, set State
+        {
+            setTwiState( m_nextState );
+        }
+    }
     else if( m_enabled && m_clkState == Clock_Falling )
     {
         if( m_i2cState == I2C_ACK ) {             // Send ACK
@@ -230,12 +235,8 @@ void TwiModule::voltChanged() // Used by slave
         }
         else if( m_i2cState == I2C_ENDACK )      // We sent ACK, release SDA
         {
-            setTwiState( m_nextState );
             m_i2cState = m_lastState;
-
-            bool releaseSda = true;
-            if( m_i2cState == I2C_READ ) releaseSda = m_txReg>>m_bitPtr & 1; // Keep Sending
-            sheduleSDA( releaseSda );
+            if( m_i2cState != I2C_READ ) sheduleSDA( true );
             m_rxReg = 0;
         }
         if( m_i2cState == I2C_READ ) writeBit();
@@ -327,12 +328,21 @@ void TwiModule::masterRead( bool ack )
     m_bitPtr = 0;
     m_rxReg = 0;
     m_i2cState = I2C_READ;
+
+    Simulator::self()->cancelEvents( this );
+    Simulator::self()->addEvent( m_clockPeriod, this );
 }
 
 void TwiModule::masterStop()
 {
     m_i2cState = I2C_STOP;
     setSDA( false );
+}
+
+void TwiModule::slaveWrite()
+{
+    m_bitPtr = 7;// Start Slave transmission
+    writeBit();
 }
 
 void TwiModule::setFreqKHz( double f )
