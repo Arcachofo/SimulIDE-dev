@@ -181,6 +181,8 @@ void EditorWindow::stepDebug( bool over )
         Simulator::self()->resumeSim();
     }else{                                // First step to PC = 0
         setStepActs( true );
+        m_jumpToBrk = true;
+        m_updateScreen = true;
     }
 }
 
