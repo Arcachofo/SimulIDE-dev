@@ -69,9 +69,11 @@ VoltReg::~VoltReg(){}
 
 void VoltReg::stamp()
 {
-    if( m_ePin[0]->isConnected()
-     && m_ePin[1]->isConnected()
-     && m_ePin[2]->isConnected() )
+    m_connected = m_ePin[0]->isConnected()
+               && m_ePin[1]->isConnected()
+               && m_ePin[2]->isConnected();
+
+    if( m_connected )
     {
         m_ePin[0]->getEnode()->addToNoLinList(this);
         m_ePin[1]->getEnode()->addToNoLinList(this);
@@ -89,7 +91,7 @@ void VoltReg::updateStep()
     if( !m_changed ) return;
     m_changed = false;
 
-    voltChanged();
+    if( m_connected ) voltChanged();
 }
 
 void VoltReg::voltChanged()

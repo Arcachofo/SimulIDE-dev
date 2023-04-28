@@ -32,6 +32,8 @@ class MAINMODULE_EXPORT VoltReg : public Component, public eResistor
     protected:
         double m_vRef;
         double m_lastCurrent;
+
+        bool m_connected;
 };
 
 #endif
