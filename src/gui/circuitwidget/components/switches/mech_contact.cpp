@@ -37,11 +37,11 @@ void MechContact::stamp()
 
         if( m_numthrows > 1 ) m_ePin[ epinN+2 ]->setEnode( enode );
     }
-    /*for( uint i=m_pin0; i<m_ePin.size(); ++i )
+    for( uint i=m_pin0; i<m_ePin.size(); ++i )
     {
         eNode* enode = m_ePin[i]->getEnode();
         if( enode ) enode->setSwitched( true );
-    }*/
+    }
     setSwitch( m_nClose );
 }
 
