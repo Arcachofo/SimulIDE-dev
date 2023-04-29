@@ -68,6 +68,18 @@ void PicOcUnit::configure( uint8_t CCPxM )  // CCPxM0,CCPxM1,CCPxM2,CCPxM3
     m_enabled = true;
 }
 
+void PicOcUnit::ocrWriteL( uint8_t val )
+{
+    m_comMatch = (m_comMatch & 0xFF00) | val;
+    if( m_enabled ) sheduleEvents( m_timer->ovfMatch(), m_timer->getCount() );
+}
+
+void PicOcUnit::ocrWriteH( uint8_t val )
+{
+    m_comMatch = (m_comMatch & 0x00FF) | (uint16_t)val<<8;
+    if( m_enabled ) sheduleEvents( m_timer->ovfMatch(), m_timer->getCount() );
+}
+
 //------------------------------------------------------
 //-- PIC PWM Unit --------------------------------------
 

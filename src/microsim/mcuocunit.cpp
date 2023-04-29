@@ -23,7 +23,6 @@ void McuOcUnit::initialize()
 {
     m_enabled = false;
     m_ctrlPin = false;
-    m_comMatch = 0;
     m_mode = 0;
 
     m_comAct = ocNON;

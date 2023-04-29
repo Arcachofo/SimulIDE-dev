@@ -44,18 +44,19 @@ PicCcpUnit::~PicCcpUnit()
 void PicCcpUnit::initialize()
 {
     m_mode = 0;
+    m_ccpMode = ccpOFF;
 }
 
 void PicCcpUnit::ccprWriteL( uint8_t val )
 {
-    if     ( m_ccpMode == ccpPWM ) m_pwmUnit->ocrWriteL( val );
-    else if( m_ccpMode == ccpCOM ) m_comUnit->ocrWriteL( val );
+    m_pwmUnit->ocrWriteL( val );
+    m_comUnit->ocrWriteL( val );
 }
 
 void PicCcpUnit::ccprWriteH( uint8_t val )
 {
-    if     ( m_ccpMode == ccpPWM ) m_mcu->m_regOverride = *m_ccpRegH; // Read only
-    else if( m_ccpMode == ccpCOM ) m_comUnit->ocrWriteH( val );
+    if( m_ccpMode == ccpPWM ) m_mcu->m_regOverride = *m_ccpRegH; // Read only
+    else                      m_comUnit->ocrWriteH( val );
 }
 
 void PicCcpUnit::configureA( uint8_t CCPxCON ) //

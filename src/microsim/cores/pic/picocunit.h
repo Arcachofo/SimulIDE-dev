@@ -24,6 +24,8 @@ static PicPwmUnit* createPwmUnit( eMcu* mcu, QString name, int type );
         virtual void runEvent();
 
         virtual void configure( uint8_t CCPxM ) override;
+        virtual void ocrWriteL( uint8_t val ) override;
+        virtual void ocrWriteH( uint8_t val ) override;
 
     protected:
         bool m_enhanced;
