@@ -24,13 +24,14 @@ void OscopeChannel::initialize()
     m_rising   = false;
     m_falling  = false;
 
-    m_period = 0;
+    m_simTime = -1;
+    m_period  = 0;
     m_risEdge = 0;
     m_nCycles = 0;
-    m_totalP = 0;
-    m_numMax = 0;
+    m_totalP  = 0;
+    m_numMax  = 0;
     m_lastMax = 0;
-    m_ampli = 0;
+    m_ampli   = 0;
     m_maxVal = -1e12;
     m_minVal = 1e12;
     m_midVal = 0;
@@ -91,12 +92,10 @@ void OscopeChannel::updateStep()
             m_oscope->setTimeDiv( m_period/5 );
             m_oscope->setVoltDiv( m_channel, m_ampli/10 );
             m_oscope->setVoltPos( m_channel, -m_midVal );
-            m_oscope->display()->setLimits( m_channel, m_dispMax, m_dispMin );
     }   }
     else{
         m_dispMax = m_oscope->voltDiv( m_channel )*10;
         m_dispMin = 0;
-        m_oscope->display()->setLimits( m_channel, m_dispMax, m_dispMin );
     }
     updateValues();
 
@@ -121,7 +120,6 @@ void OscopeChannel::updateStep()
 void OscopeChannel::voltChanged()
 {
     if( !m_connected ) return;
-    uint64_t simTime = Simulator::self()->circTime();
 
     /*if( ++m_dataTime > m_buffer.size() ) // Measure time taken to fill buffer
     {
@@ -135,19 +133,22 @@ void OscopeChannel::voltChanged()
         if( ++m_subStep > m_subSample ) m_subStep = 0;
         else return;
     }*/
-    double d0 = m_ePin[0]->getVoltage();
-    double d1 = m_ePin[1]->getVoltage();
-    double data = d0-d1;
+    double data = m_ePin[0]->getVoltage()-m_ePin[1]->getVoltage();
+    double delta = data-m_lastValue;
+    if( delta == 0 ) return;
 
     if( data > m_maxVal ) m_maxVal = data;
     if( data < m_minVal ) m_minVal = data;
 
-    if( ++m_bufferCounter >= m_buffer.size() ) m_bufferCounter = 0;
-    m_buffer[m_bufferCounter] = data;
-    uint64_t time = simTime;
-    m_time[m_bufferCounter] = time;
+    uint64_t simTime = Simulator::self()->circTime();
 
-    double delta = data-m_lastValue;
+    if( m_simTime != simTime )
+    {
+        m_simTime = simTime;
+        if( ++m_bufferCounter >= m_buffer.size() ) m_bufferCounter = 0;
+    }
+    m_buffer[m_bufferCounter] = data;
+    m_time[m_bufferCounter] = simTime;
 
     if( delta > m_filter )               // Rising
     {
