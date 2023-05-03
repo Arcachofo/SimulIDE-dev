@@ -99,7 +99,7 @@ void AvrUsart::configureB( uint8_t newUCSRnB ) // UCSRnB changed
 
 void AvrUsart::configureC( uint8_t newUCSRnC ) // UCSRnC changed
 {
-    if( !m_UBRRnH && (newUCSRnC & (1<<7)) ) // atmega8 Writting to UBBRH
+    if( !m_UBRRnH && !(newUCSRnC & (1<<7)) ) // atmega8 Writting to UBBRH
     {
         setUBRRnH( newUCSRnC & 0x0F );
         return;
