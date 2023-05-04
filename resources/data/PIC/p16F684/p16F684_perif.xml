@@ -1,4 +1,6 @@
 <parts>
+  <intosc name="intosc" type="00" configregsA="OSCCON" />
+
   <port name="PORTA" pins="6" outreg="PORTA" dirreg="!TRISA"
                      inpmask="00110111" 
                      clockpins="PORTA4,PORTA5" 
@@ -49,4 +51,9 @@
 
   <wdt name="WDT" configregsA="OPTION"
                   prescalers="1,2,4,8,16,32,64,128"/>
+
+  <configwords name="cfgWord" type="00">
+    <word name="COINFIG1" address="0x2007" value="0" />
+    <word name="COINFIG2" address="0x2008" value="0" />
+  </configwords>
 </parts>

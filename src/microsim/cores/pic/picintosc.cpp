@@ -15,6 +15,8 @@ PicIntOsc::PicIntOsc( eMcu* mcu, QString name )
 {
     m_cfgWordCtrl = true;
 
+    m_intOscFreq = 4*1e6; // 4 MHz (default)
+
     m_SCS  = getRegBits( "SCS", mcu );
     m_IRCF = getRegBits( "IRCF0,IRCF1,IRCF2,", mcu );
 }

@@ -1,5 +1,6 @@
 <parts>
-
+  <intosc name="intosc" type="00" configregsA="OSCCON" />
+  
   <port name="PORTP" pins="6" outreg="GPIO" dirreg="!TRISIO" 
                      inpmask="00110111"
                      pullups="WPU"
@@ -56,4 +57,8 @@
                   adcpins="PORTP0,PORTP1,PORTP2,PORTP4"
                   vrefpins="PORTP1"/>
 
+  <configwords name="cfgWord" type="00">
+    <word name="COINFIG1" address="0x2007" value="0" />
+    <word name="COINFIG2" address="0x2008" value="0" />
+  </configwords>
 </parts>

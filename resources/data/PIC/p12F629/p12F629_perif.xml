@@ -1,4 +1,6 @@
 <parts>
+  <intosc name="intosc" type="00" />
+  
   <port name="PORTP" pins="6" outreg="GPIO" dirreg="!TRISIO" 
                      inpmask="00110111"
                      pullups="WPU"
@@ -37,4 +39,8 @@
                   addressreg="EEADR" 
                   interrupt="EEPR" />
 
+  <configwords name="cfgWord" type="00">
+    <word name="COINFIG1" address="0x2007" value="0" />
+    <word name="COINFIG2" address="0x2008" value="0" />
+  </configwords>
 </parts>
