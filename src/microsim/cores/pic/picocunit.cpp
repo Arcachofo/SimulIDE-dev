@@ -54,14 +54,12 @@ void PicOcUnit::configure( uint8_t CCPxM )  // CCPxM0,CCPxM1,CCPxM2,CCPxM3
     m_specEvent = false;
     setOcActs( ocNON, ocNON );
 
-    if( m_enhanced && CCPxM == 2 ) setOcActs( ocTOG, ocNON ); // Toggle OC Pin
-    else{
-        switch( CCPxM ) {
-            case 8: setOcActs( ocSET, ocCLR );           break; // Set OC Pin
-            case 9: setOcActs( ocCLR, ocSET );           break; // Clear OC Pin
-            case 10: ctrlPin = false;                    break; // Only interrupt
-            case 11: ctrlPin = false; m_specEvent = true;       // Special event
-        }
+    switch( CCPxM ) {
+        case 2: setOcActs( ocTOG, ocNON );     break; // Toggle OC Pin - by ci (works in non-enhanced real device)
+        case 8: setOcActs( ocSET, ocCLR );     break; // Set OC Pin
+        case 9: setOcActs( ocCLR, ocSET );     break; // Clear OC Pin
+        case 10: ctrlPin = false;              break; // Only interrupt
+        case 11: ctrlPin = false; m_specEvent = true; // Special event
     }
     m_ocPin->controlPin( ctrlPin, false ); // Connect/Disconnect PORT
     if( ctrlPin ) m_ocPin->setOutState( false );
