@@ -38,6 +38,7 @@ Ssd1306::Ssd1306( QObject* parent, QString type, QString id )
     m_graphical = true;
     m_width = 128;
     m_height = 64;
+    m_rows   = 8;
     m_area = QRectF( -70, -m_height/2-16, m_width+12, m_height+24 );
     m_address = m_cCode = 0b00111100; // 0x3A - 60
 
@@ -90,6 +91,83 @@ Ssd1306::~Ssd1306(){}
 void Ssd1306::stamp()
 {
     setMode( TWI_SLAVE );
+}
+
+void Ssd1306::updateStep()
+{
+    if     ( !m_dispOn )  m_pdisplayImg->fill(0);  // Display Off
+    else if( m_dispFull ) m_pdisplayImg->fill(255); // Display fully On
+    else{
+        if( m_scroll )
+        {
+            m_scrollCount--;
+            if( m_scrollCount <= 0 )
+            {
+                m_scrollCount = m_scrollInterval;
+
+                for( int row=m_scrollStartPage; row<=m_scrollEndPage; row++ )
+                {
+                    unsigned char start = m_aDispRam[0][row];
+                    unsigned char end   = m_aDispRam[127][row];
+
+                    for( int col=0; col<128; col++ )
+                    {
+                        if( m_scrollR )
+                        {
+                            int c = 127-col;
+                            if( c < 127 ) m_aDispRam[c][row] = m_aDispRam[c-1][row];
+                            if( col == 0 )  m_aDispRam[0][row]   = end;
+                        }else{
+                            if( col < 127 )  m_aDispRam[col][row] = m_aDispRam[col+1][row];
+                            if( col == 127 ) m_aDispRam[col][row] = start;
+        }   }   }   }   }
+        for( int row=0; row<8; row++ )
+        {
+            for( int col=0; col<128; col++ )
+            {
+                unsigned char abyte = m_aDispRam[col][row];
+
+                if( m_dispInv ) abyte = ~abyte;         // Display Inverted
+
+                for( int bit=0; bit<8; bit++ )
+                {
+                    m_pdisplayImg->setPixel(col,row*8+bit,(abyte & 1) );
+                    abyte >>= 1;
+    }   }   }   }
+    update();
+}
+
+void Ssd1306::reset()
+{
+    m_cdr = 1;
+    m_mr  = 63;
+    m_fosc = 370000;
+    m_frm = m_fosc/(m_cdr*54*m_mr);
+
+    m_addrX  = 0;
+    m_addrY  = 0;
+    m_startX = 0;
+    m_endX   = 127;
+    m_startY = 0;
+    m_endY   = m_rows-1;
+
+    m_scrollStartPage  = 0;
+    m_scrollEndPage    = 7;
+    m_scrollInterval   = 5;
+    m_scrollVertOffset = 0;
+
+    m_startLin = 0;
+    m_readBytes = 0;
+
+    m_dispOn   = false;
+    m_dispFull = false;
+    m_dispInv  = false;
+
+    m_scroll  = false;
+    m_scrollR = false;
+    m_scrollV = false;
+
+    clearLcd();
 }
 
 void Ssd1306::initialize()
@@ -160,7 +238,10 @@ void Ssd1306::proccessCommand()
         else if( m_lastCommand == 0x22 ) // 22 34 Set Page Address (Start-End)
         {
             if( m_readBytes == 2 ) m_startY = m_rxReg & 0x07; // 0b00000111
-            else                   m_endY   = m_rxReg & 0x07; // 0b00000111
+            else{                                             // 0b00000111
+                m_endY = m_rxReg & 0x07;
+                if( m_endY > m_rows-1 ) m_endY = m_rows-1;
+            }
         }
         else if( m_lastCommand == 0x26   // 26 36 Continuous Horizontal Scroll Setup
               || m_lastCommand == 0x27
@@ -297,7 +378,7 @@ void Ssd1306::incrementPointer()
             m_addrY = m_startY;
             m_addrX++;
         }
-        if( m_addrX > m_endX )m_addrX = m_startX;
+        if( m_addrX > m_endX ) m_addrX = m_startX;
     }else{
         m_addrX++;
         if( m_addrX > m_endX )
@@ -310,87 +391,10 @@ void Ssd1306::incrementPointer()
             if( m_addrY > m_endY ) m_addrY = m_startY;
 }   }   }
 
-void Ssd1306::reset() 
-{
-    m_cdr = 1;
-    m_mr  = 63;
-    m_fosc = 370000;
-    m_frm = m_fosc/(m_cdr*54*m_mr);
-
-    m_addrX  = 0;
-    m_addrY  = 0;
-    m_startX = 0;
-    m_endX   = 127;
-    m_startY = 0;
-    m_endY   = 7;
-
-    m_scrollStartPage  = 0;
-    m_scrollEndPage    = 7;
-    m_scrollInterval   = 5;
-    m_scrollVertOffset = 0;
-
-    m_startLin = 0;
-    m_readBytes = 0;
-
-    m_dispOn   = false;
-    m_dispFull = false;
-    m_dispInv  = false;
-
-    m_scroll  = false;
-    m_scrollR = false;
-    m_scrollV = false;
-
-    clearLcd();
-}
-
 void Ssd1306::remove()
 {
     delete m_pdisplayImg;
     Component::remove();
-}
-
-void Ssd1306::updateStep()
-{
-    if     ( !m_dispOn )  m_pdisplayImg->fill(0);  // Display Off
-    else if( m_dispFull ) m_pdisplayImg->fill(255); // Display fully On
-    else{
-        if( m_scroll )
-        {
-            m_scrollCount--;
-            if( m_scrollCount <= 0 )
-            {
-                m_scrollCount = m_scrollInterval;
-
-                for( int row=m_scrollStartPage; row<=m_scrollEndPage; row++ )
-                {
-                    unsigned char start = m_aDispRam[0][row];
-                    unsigned char end   = m_aDispRam[127][row];
-
-                    for( int col=0; col<128; col++ )
-                    {
-                        if( m_scrollR )
-                        {
-                            int c = 127-col;
-                            if( c < 127 ) m_aDispRam[c][row] = m_aDispRam[c-1][row];
-                            if( col == 0 )  m_aDispRam[0][row]   = end;
-                        }else{
-                            if( col < 127 )  m_aDispRam[col][row] = m_aDispRam[col+1][row];
-                            if( col == 127 ) m_aDispRam[col][row] = start;
-        }   }   }   }   }
-        for( int row=0; row<8; row++ )
-        {
-            for( int col=0; col<128; col++ )
-            {
-                unsigned char abyte = m_aDispRam[col][row];
-
-                if( m_dispInv ) abyte = ~abyte;         // Display Inverted
-
-                for( int bit=0; bit<8; bit++ ) 
-                {
-                    m_pdisplayImg->setPixel(col,row*8+bit,(abyte & 1) );
-                    abyte >>= 1;
-    }   }   }   }
-    update();
 }
 
 void Ssd1306::setColorStr( QString color )
@@ -419,8 +423,8 @@ void Ssd1306::setHeight( int h )
 {
     if     ( h > 64 ) h = 64;
     else if( h < 16 ) h = 16;
-    if( m_height == h ) return;
-    m_height = h;
+    m_rows = h/8;
+    m_height = m_rows*8;
     updateSize();
 }
 

@@ -70,6 +70,7 @@ class MAINMODULE_EXPORT Ssd1306 : public Component, public TwiModule
 
         int m_width;
         int m_height;
+        int m_rows;
 
         int m_addrX;              // X RAM address
         int m_addrY;              // Y RAM address
