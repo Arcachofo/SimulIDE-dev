@@ -40,7 +40,7 @@ void Interrupt::enableFlag( uint8_t en )
 
     if( en ) // If not enabled m_remember it until reenabled
     {
-        if( m_raised && m_remember )m_interrupts->addToPending( this ); // Add to pending interrupts
+        if( m_raised && m_remember ) m_interrupts->addToPending( this ); // Add to pending interrupts
     }
     else m_interrupts->remFromPending( this );
 }
@@ -72,11 +72,12 @@ void Interrupt::writeFlag( uint8_t v ) // Clear Interrupt flag by writting 1 to 
 
 void Interrupt::raise( uint8_t v )
 {
-    if( v ){
+    if( v && !m_raised ){
         m_raised = true;
         m_ram[m_flagReg] |= m_flagMask; // Set Interrupt flag
         if( m_enabled )
         {
+            //qDebug() <<"Interrupt::raise"<< m_name;
             m_interrupts->addToPending( this ); // Add to pending interrupts
             if( m_intPin ) m_intPin->setOutState( false );
         }
@@ -87,13 +88,15 @@ void Interrupt::raise( uint8_t v )
 
 void Interrupt::execute()
 {
+    //qDebug() <<"Interrupt::execute"<< m_name;
     m_interrupts->writeGlobalFlag( 0 ); // Disable Global Interrupts
     if( m_vector ) m_mcu->cpu->INTERRUPT( m_vector );
 }
 
 void Interrupt::exitInt() // Exit from this interrupt
 {
-    m_interrupts->writeGlobalFlag( 1 ); // Enable Global Interrupts
+    //qDebug() <<"Interrupt::exitInt"<< m_name;
+    /// m_interrupts->writeGlobalFlag( 1 ); // Enable Global Interrupts /// done in Interrupts::exitInt()
     if( m_autoClear ) clearFlag();
     if( !m_exitCallBacks.isEmpty() ) { for( McuModule* mod : m_exitCallBacks ) mod->callBack(); }
 }
@@ -132,49 +135,58 @@ void Interrupts::resetInts()
     for( QString inte : m_intList.keys() ) m_intList.value( inte )->reset();
 }
 
-void Interrupts::exitInt()
-{
-    m_reti = false;
-
-    if( !m_active ) {
-        qDebug() << "Interrupts::retI Error: No active Interrupt"; return; }
-    m_active->exitInt();
-
-    if( m_running ) // Some interrupt was interrupted by this one
-    {
-        Interrupt* running = m_running;
-        m_running = m_running->m_nextInt;   // Remove from running list
-        addToPending( running );            // Add to pending Interrupts
-    }
-    m_active = NULL;
-}
-
 void Interrupts::runInterrupts()
 {
-    if( m_reti ) { exitInt(); return; }
-    if( !m_enabled ) return; // Global Interrupts disabled
-    if( m_enabled > 1 ){ m_enabled -= 1; return; }// Execute interrupts some cycles later
+    if( m_reti )                                // RETI
+    {
+        m_reti = false;
 
-    if( !m_pending ) return; // No Interrupts pending to execute;
-    if( m_active ) // An interrupt is running,
+        if( !m_active ) {
+            qDebug() << "Interrupts::retI Error: No active Interrupt"; return; }
+        m_active->exitInt();
+
+        if( m_running )                         // Some interrupt was interrupted by this one
+        {
+            /// Interrupt* running = m_running;
+            m_active  = m_running;
+            m_running = m_running->m_nextInt;   // Remove from running list
+            /// addToPending( running );            // Add to pending Interrupts
+        }
+        else m_active = NULL;
+        writeGlobalFlag( 1 );                   // Enable Global Interrupts
+        return;
+    }
+    /// if( m_enabled > 1 ){ m_enabled -= 1; return; }// Execute interrupts some cycles later
+
+    if( !m_enabled ) return;                    // Global Interrupts disabled
+    if( !m_pending ) return;                    // No Interrupts pending to execute;
+
+    if( m_active )                              // An interrupt is running,
     {
         if( m_pending->priority() > m_active->priority() )// Only interrupt other Interrupts with lower priority
         {
             m_active->m_nextInt = m_running;
-            m_running = m_active;            // An interrupt being interrupted, add to running list.
+            m_running = m_active;               // An interrupt being interrupted, add to running list.
         }
         else return;
     }
     m_pending->execute();
-    m_active = m_pending;
+    m_active  = m_pending;
+    m_pending = m_pending->m_nextInt;
 }
 
 void Interrupts::writeGlobalFlag( uint8_t flag )
 {
-    if( flag ) setRegBits( m_enGlobalFlag );   // Set Enable Global Interrupts flag
-    else       clearRegBits( m_enGlobalFlag ); // Clear Enable Global Interrupts flag
+    writeRegBits( m_enGlobalFlag, flag );   // Set/Clear Enable Global Interrupts flag
 
-    enableGlobal( flag );              // Disable interrupts
+    m_enabled = flag;                       // Enable/Disable interrupts
+    //qDebug() << "Interrupts::writeGlobalFlag"<<flag;
+}
+
+void Interrupts::enableGlobal( uint8_t en )
+{
+    m_enabled = en;
+    //qDebug() << "IInterrupts::enableGlobal"<<en;
 }
 
 void Interrupts::remove()
@@ -200,6 +212,7 @@ void Interrupts::addToPending( Interrupt* newInt )
     newInt->m_nextInt = posInt;
     if( preInt ) preInt->m_nextInt = newInt;
     else         m_pending = newInt;
+
 }
 
 void Interrupts::remFromPending( Interrupt* remInt )
@@ -215,5 +228,5 @@ void Interrupts::remFromPending( Interrupt* remInt )
             break;
         }
         preInt = posInt;
-        posInt= posInt->m_nextInt;
+        posInt = posInt->m_nextInt;
 }   }

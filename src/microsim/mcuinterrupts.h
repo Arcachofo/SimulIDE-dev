@@ -87,7 +87,8 @@ class MAINMODULE_EXPORT Interrupts
         Interrupts( eMcu* mcu );
         virtual ~Interrupts();
 
-        void enableGlobal( uint8_t en ) { m_enabled = en; }
+        void enableGlobal( uint8_t en ) ;
+        //{ m_enabled = en; }
         uint8_t enabled() { return m_enabled; }
 
         void runInterrupts();
@@ -100,8 +101,6 @@ class MAINMODULE_EXPORT Interrupts
         void remFromPending( Interrupt* remInt );
 
     protected:
-        void exitInt();
-
         eMcu* m_mcu;
 
         bool m_reti;
