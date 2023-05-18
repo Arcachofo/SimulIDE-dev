@@ -97,7 +97,7 @@ void ConnectorLine::moveSimple( QPointF delta )
         m_prevLine->updatePos();
         m_prevLine->updatePrev();
     }
-    if( m_nextLine && !(m_nextLine->isSelected()) ) 
+    if( m_nextLine && !(m_nextLine->isSelected()) )
     {
         m_nextLine->moveLine( delta.toPoint() ); 
         

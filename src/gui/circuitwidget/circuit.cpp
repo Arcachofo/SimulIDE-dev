@@ -805,7 +805,8 @@ bool Circuit::restoreState( circState step )
         {
             if( !comp ){
                 qDebug() << "Circuit::restoreState Error restoring"<<compName<<propVal;
-                return false; }
+                continue;
+            }
             if( m_undo ) addCompState( comp, propName, stateAdd );
             comp->setPropStr( propName, propVal );
         }

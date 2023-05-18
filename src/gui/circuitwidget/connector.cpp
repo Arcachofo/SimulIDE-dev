@@ -30,6 +30,8 @@ Connector::Connector( QObject* parent, QString type, QString id, Pin* startpin, 
     if( endpin ) closeCon( endpin );
     else m_endPin   = NULL;
 
+    Circuit::self()->compMap()->insert( id, this );
+
     addPropGroup( {"Main", {
 new StringProp<Connector>( "itemtype"  ,"","", this, &Connector::itemType,   &Connector::dummySetter ),
 new StringProp<Connector>( "uid"       ,"","", this, &Connector::getUid,     &Connector::dummySetter ),
@@ -38,7 +40,10 @@ new StringProp<Connector>( "endpinid"  ,"","", this, &Connector::endPinId,   &Co
 new StringProp<Connector>( "pointList" ,"","", this, &Connector::pListStr,   &Connector::setPointListStr ),
     }} );
 }
-Connector::~Connector(){}
+Connector::~Connector()
+{
+    Circuit::self()->compMap()->remove( m_id );
+}
 
 void Connector::remNullLines()      // Remove lines with leght = 0 or aligned
 {
@@ -250,7 +255,7 @@ void Connector::updateConRoute( Pin* pin, QPointF thisPoint )
             point = line->p2();
 
             if( fabs(line->dx()) > fabs(line->dy()) ) point.setY( line->p1().y() );
-            else                                    point.setX( line->p1().x() );
+            else                                      point.setX( line->p1().x() );
 
             ConnectorLine* newLine = addConLine( point.x(), point.y(), line->p2().x(), line->p2().y(), m_lastindex + 1 );
 

@@ -186,7 +186,6 @@ class MAINMODULE_EXPORT Component : public CompBase, public QGraphicsItem, publi
         Label* m_idLabel;
         Label* m_valLabel;
 
-        QList<ConnectorLine*> m_linMoveList;
         QList<Connector*> m_conMoveList;
         QList<Component*> m_compMoveList;
 

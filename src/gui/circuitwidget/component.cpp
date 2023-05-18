@@ -219,19 +219,21 @@ void Component::mouseMoveEvent( QGraphicsSceneMouseEvent* event )
     QPointF delta = toGrid(event->scenePos()) - toGrid(event->lastScenePos());
     if( !(fabs( delta.x() )> 0) && !(fabs( delta.y() )> 0) ) return;
 
+    QList<QGraphicsItem*> itemlist = Circuit::self()->selectedItems();
+    //if( itemlist.isEmpty() ) return;
+
     if( !m_moving ) // Get lists of elements to move and save Undo state
     {
         Circuit::self()->addCompState( NULL, "", stateNew );
-        m_linMoveList.clear();
+        //m_linMoveList.clear();
         m_conMoveList.clear();
         m_compMoveList.clear();
-        QList<QGraphicsItem*> itemlist = Circuit::self()->selectedItems();
+
         for( QGraphicsItem* item : itemlist )
         {
             if( item->type() == UserType+2 ) // ConnectorLine selected
             {
                 ConnectorLine* line =  qgraphicsitem_cast<ConnectorLine*>( item );
-                m_linMoveList.append( line );
                 Connector* con = line->connector();
                 if( !m_conMoveList.contains( con ) ) // Connectors selected
                 {
@@ -249,8 +251,7 @@ void Component::mouseMoveEvent( QGraphicsSceneMouseEvent* event )
                 {
                     if( !pin ) continue;
                     Connector* con = pin->connector();
-                    if( !con ) continue;
-                    if( !m_conMoveList.contains( con ) ) // Connector attached to selected Component
+                    if( con && !m_conMoveList.contains( con ) ) // Connector attached to selected Component
                     {
                         m_conMoveList.append( con );
                         Circuit::self()->addCompState( con, "pointList", stateAdd );
@@ -260,9 +261,14 @@ void Component::mouseMoveEvent( QGraphicsSceneMouseEvent* event )
         }
         m_moving = true;
     }
-    for( ConnectorLine* line : m_linMoveList  ) line->moveSimple( delta ); // Move lines selected
-    for( Component*     comp : m_compMoveList ) comp->move( delta );       // Move Components selected
-    for( Connector*     con  : m_conMoveList )                             // Update Connectors
+    for( QGraphicsItem* item : itemlist )
+    {
+        if( item->type() != UserType+2 ) continue; // ConnectorLine
+        ConnectorLine* line =  qgraphicsitem_cast<ConnectorLine*>( item );
+        line->moveSimple( delta );
+    }
+    for( Component* comp : m_compMoveList ) comp->move( delta );       // Move Components selected
+    for( Connector* con  : m_conMoveList )                             // Update Connectors
     {
         con->startPin()->isMoved();
         con->endPin()->isMoved();
