@@ -221,7 +221,7 @@ void EditorWindow::stopDebbuger()
     if( m_state > DBG_STOPPED )
     {
         CircuitWidget::self()->powerCircOff();
-        eMcu::self()->setDebugging( false );
+        if( eMcu::self() ) eMcu::self()->setDebugging( false );
 
         m_state = DBG_STOPPED;
         m_debugDoc->stopDebug();
