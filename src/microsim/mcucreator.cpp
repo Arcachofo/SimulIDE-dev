@@ -416,6 +416,7 @@ void McuCreator::createIntOsc( QDomElement* p )
     if( m_core == "Pic14" ) intOsc = new PicIntOsc( mcu, "intOsc");
     if( !intOsc ) return;
 
+    mcu->m_modules.emplace_back( intOsc );
     mcu->m_intOsc = intOsc;
 
     setConfigRegs( p, intOsc );
@@ -461,7 +462,12 @@ void McuCreator::createMcuPort( QDomElement* p )
 
     if( p->hasAttribute("clockpins") )
     {
-        if( !mcu->m_intOsc ) mcu->m_intOsc = new McuIntOsc( mcu, "intOsc");
+        if( !mcu->m_intOsc )
+        {
+            McuIntOsc* intOsc = new McuIntOsc( mcu, "intOsc");
+            mcu->m_modules.emplace_back( intOsc );
+            mcu->m_intOsc = intOsc;
+        }
         QStringList pins = p->attribute("clockpins").split(",");
         for( int i=0; i<pins.size(); ++i )
             mcu->m_intOsc->setPin( i, port->getPin( pins.value(i) ) );
