@@ -587,7 +587,7 @@ void Component::setHidden(bool hid, bool hidArea, bool hidLabel )
 
     if( hidLabel ){
         setShowId( false );
-        m_showProperty = "";
+        setShowProp("");
 }   }
 
 /*QString Component::print()
