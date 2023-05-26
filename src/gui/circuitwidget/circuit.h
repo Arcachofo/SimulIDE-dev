@@ -16,6 +16,7 @@
 enum stateMode{
     stateNew=1,
     stateAdd=2,
+    stateNewAdd=1+2,
     stateSave=4,
     stateAll=1+2+4
 };
@@ -40,24 +41,25 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
 
         bool drawGrid() { return !m_hideGrid; }
         void setDrawGrid( bool draw );
-        
+
         bool showScroll() { return m_showScroll; }
         void setShowScroll( bool show );
-        
+
         bool animate() { return m_animate; }
         void setAnimate( bool an );
 
         int autoBck();
         void setAutoBck( int secs );
-        
+
         void removeItems();
         void removeComp( Component* comp );
         void clearCircuit();
         bool deleting() { return m_deleting; }
         void compRemoved( bool removed ) { m_compRemoved = removed; }
         void saveState();
+        void unSaveState();
         void addCompState( CompBase* c, QString p, stateMode=stateAll );
-        void unSaveState() { if( m_undoStack.size() ) m_undoStack.takeLast(); }
+
         void setChanged() { m_changed = true; }
 
         void deselectAll();
@@ -97,7 +99,7 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
         bool pasting() { return m_pasting; }
         bool isBusy()  { return m_busy || m_pasting | m_deleting; }
         bool isSubc()  { return m_createSubc; }
-        
+
         void addPin( Pin* pin, QString pinId ) { m_pinMap[ pinId ] = pin; m_LdPinMap[ pinId ] = pin; }
         void remPin( QString pinId ) { m_pinMap.remove( pinId ); }
         void updatePin( ePin* epin, QString oldId, QString newId );
@@ -189,7 +191,7 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
         QList<Node*>      m_nodeList;   // Node list
 
         SubPackage* m_board;
-        
+
         QHash<QString, Pin*>      m_pinMap;   // Pin Id to Pin*
         QHash<QString, Pin*>      m_LdPinMap; // Pin Id to Pin* while loading/pasting/importing
         QHash<QString, QString>   m_idMap;    // Component Id to new Id (pasting)

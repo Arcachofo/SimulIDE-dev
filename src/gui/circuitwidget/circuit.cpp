@@ -1,4 +1,4 @@
-/***************************************************************************
+﻿/***************************************************************************
  *   Copyright (C) 2012 by Santiago González                               *
  *                                                                         *
  ***( see copyright.txt file at root folder )*******************************/
@@ -646,10 +646,17 @@ void Circuit::saveState()
         }
         m_undoIndex++;
     }
-    //qDebug() << "Circuit::saveState Undo:"<< m_undoStack.size()<<m_undoIndex
-    //                              <<"Redo:"<<m_redoStack.size()<<m_redoIndex<<"\n";
+//qDebug() << "Circuit::saveState Undo:"<< m_undoStack.size()<<m_undoIndex
+//                              <<"Redo:"<<m_redoStack.size()<<m_redoIndex<<"\n";
     QString title = MainWindow::self()->windowTitle();
     if( !title.endsWith('*') ) MainWindow::self()->setWindowTitle(title+'*');
+}
+
+void Circuit::unSaveState()
+{
+    if( m_undoStack.isEmpty() ) return;
+    m_undoStack.takeLast();
+    m_undoIndex--;
 }
 
 void Circuit::addCompState( CompBase* c, QString p, stateMode state )
@@ -687,7 +694,7 @@ void Circuit::addCompState( CompBase* c, QString p, stateMode state )
             else                m_circState.create.prepend( cState );
         }
     }
-    if( state & stateSave ) saveState();
+    if( (int)state & (int)stateSave ) saveState();
 }
 
 void Circuit::undo()
@@ -695,7 +702,12 @@ void Circuit::undo()
     if( m_busy || m_deleting || m_conStarted || m_undoIndex < 0 ) return;
 //qDebug() << "\nCircuit::undo"<<m_undoIndex<<m_redoIndex;
     m_undo = true;
-
+    if( m_undoIndex > m_undoStack.size() )
+    {
+        qDebug() << "Circuit::redo index Error"<< m_undoStack.size()<<m_undoIndex;
+        clearUndoRedo();
+        return;
+    }
     circState step = m_undoStack.at( m_undoIndex );
     if( restoreState( step ) )
     {
@@ -709,8 +721,8 @@ void Circuit::undo()
     else clearUndoRedo();
     m_undo = false;
 
-    //qDebug() << "Circuit::undo Undo:"<<m_undoStack.size()<<m_undoIndex
-    //                        <<"Redo:"<<m_redoStack.size()<<m_redoIndex<<"\n";
+//qDebug() << "Circuit::undo Undo:"<<m_undoStack.size()<<m_undoIndex
+//                        <<"Redo:"<<m_redoStack.size()<<m_redoIndex<<"\n";
 //qDebug() << "Circuit::undo-----------------------\n";
 }
 
@@ -719,7 +731,12 @@ void Circuit::redo()
     if( m_busy || m_deleting || m_conStarted || m_redoIndex < 0 ) return;
 //qDebug() << "\nCircuit::redo"<<m_undoIndex<<m_redoIndex;
     m_redo = true;
-
+    if( m_redoIndex > m_redoStack.size() )
+    {
+        qDebug() << "Circuit::redo index Error"<< m_redoStack.size()<<m_redoIndex;
+        clearUndoRedo();
+        return;
+    }
     circState step = m_redoStack.at( m_redoIndex );
     if( restoreState( step ) )
     {
@@ -733,8 +750,8 @@ void Circuit::redo()
     else clearUndoRedo();
     m_redo = false;
 
-    //qDebug() << "Circuit::redo Undo:"<< m_undoStack.size()<<m_undoIndex
-    //                        <<"Redo:"<<m_redoStack.size()<<m_redoIndex<<"\n";
+//qDebug() << "Circuit::redo Undo:"<< m_undoStack.size()<<m_undoIndex
+//                        <<"Redo:"<<m_redoStack.size()<<m_redoIndex<<"\n";
 //qDebug() << "Circuit::redo-----------------------\n";
 }
 
@@ -747,8 +764,6 @@ bool Circuit::restoreState( circState step )
     for( compState cState : step.remove )
     {
         QString compName = cState.component;
-        //QString propName = cState.property;
-        QString propVal  = cState.valStr;
         CompBase* comp   = m_compMap.value( compName );
 //qDebug() << "Circuit::restoreState"<<compName<<cState.property;
 
@@ -765,6 +780,7 @@ bool Circuit::restoreState( circState step )
             }
             else removeComp( (Component*)comp );
         }else{
+            QString propVal  = cState.valStr;
             Pin* pin = m_pinMap.value( propVal ); // Find Connector start Pin from id.
             if( !pin ){
                 //qDebug() << "Circuit::restoreState Error NULL Pin"<<compName<<propVal;
