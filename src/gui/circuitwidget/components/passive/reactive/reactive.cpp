@@ -89,6 +89,7 @@ void Reactive::setResist( double resist )
 
 void Reactive::setAutoStep( int a )
 {
+    if( a > 2 ) a = 2;
     m_autoStep = a;
     m_changed = true;
 }
