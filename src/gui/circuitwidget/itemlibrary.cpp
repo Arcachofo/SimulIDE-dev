@@ -32,6 +32,7 @@
 #include "ds1307.h"
 #include "ds1621.h"
 #include "ds18b20.h"
+#include "dynamic_memory.h"
 #include "elcapacitor.h"
 #include "ellipse.h"
 #include "esp01.h"
@@ -256,6 +257,7 @@ void ItemLibrary::loadItems()
     addItem( FlipFlopJK::libraryItem() );
     addItem( LatchD::libraryItem() );
     addItem( Memory::libraryItem() );
+    addItem( DynamicMemory::libraryItem() );
     addItem( I2CRam::libraryItem() );
     addItem( new LibraryItem( QObject::tr("Converters"), "Logic", "1to2.png","Converters", NULL ) );
     addItem( Mux::libraryItem() );
