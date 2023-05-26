@@ -39,7 +39,7 @@ class MAINMODULE_EXPORT TextComponent : public Component
         void    setFont( QString font );
 
         qreal opac() { return m_opac; }
-        void setOpac( qreal op ) { m_opac = op; update(); }
+        void setOpac( qreal op );
 
         void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
 

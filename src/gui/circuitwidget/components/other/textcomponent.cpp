@@ -110,6 +110,14 @@ void TextComponent::setMargin( int margin )
     updateGeometry( 0, 0, 0 );
 }
 
+void TextComponent::setOpac( qreal op )
+{
+    if     ( op > 1 ) op = 1;
+    else if( op < 0 ) op = 0;
+    m_opac = op;
+    update();
+}
+
 void TextComponent::setFixedW( bool fixedW ) 
 { 
     m_fixedW = fixedW;
