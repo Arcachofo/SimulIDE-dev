@@ -352,7 +352,11 @@ void Circuit::loadStrDoc( QString &doc )
                 {
                     m_newComp = comp;
                     lastComp = comp;
-                    if( m_pasting ) m_idMap[uid] = newUid;
+                    if( m_pasting )
+                    {
+                        m_idMap[uid] = newUid;
+                        if( type == "RelaySPST" ) m_idMap[uid+"-inductor"] = newUid+"-inductor";
+                    }
 
                     Mcu* mcu = NULL;
                     if( oldArduino )
@@ -515,17 +519,10 @@ Component* Circuit::createItem( QString type, QString id )
     for( LibraryItem* item : ItemLibrary::self()->items() )
     {
         if( !item->createItemFnPtr() ) continue; // Is category
-        if( item->type() != type ) continue;;
+        if( item->type() != type ) continue;
 
         comp = item->createItemFnPtr()( this, type, id );
-        if( comp )
-        {
-            QString category = item->category();
-            if( ( category != "Meters" )
-            &&  ( category != "Sources" )
-            &&  ( category != "Other" ) )
-                comp->m_printable = true;
-    }   }
+    }
     m_compMap[id] = comp;
     return comp;
 }
@@ -665,7 +662,7 @@ void Circuit::addCompState( CompBase* c, QString p, stateMode state )
     QString type = "NULL";
     if( c ) type = c->itemType();
 //qDebug() << "Circuit::addCompState" << type<<p<<state;
-
+//qDebug() <<(state&stateNew)<<(state&stateAdd)<<(state&stateSave)<<((int)state&(int)stateSave);
     if( state & stateNew )
     {
         m_circState.clear();
@@ -694,7 +691,11 @@ void Circuit::addCompState( CompBase* c, QString p, stateMode state )
             else                m_circState.create.prepend( cState );
         }
     }
-    if( (int)state & (int)stateSave ) saveState();
+    if( state & stateSave )
+    {
+//qDebug() << "Circuit::addCompState saveState";
+        saveState();
+    }
 }
 
 void Circuit::undo()
@@ -858,7 +859,7 @@ void Circuit::copy( QPointF eventpoint )
         if( item->type() == QGraphicsItem::UserType+1 ) // Component
         {
             Component* comp =  qgraphicsitem_cast<Component*>( item );
-            if( comp && !comp->isHidden() ) complist.append( comp );
+            if( comp && !comp->isHidden() && !comp->parentItem() ) complist.append( comp );
         }
         else if( item->type() == QGraphicsItem::UserType+2 ) // ConnectorLine
         {
