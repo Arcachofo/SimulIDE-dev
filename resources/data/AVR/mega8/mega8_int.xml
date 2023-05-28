@@ -14,7 +14,7 @@
         <interrupt name="USART_R" enable="RXCIE"  flag="RXC"   priority="8"  vector="0x00B" clear="0"/>
         <interrupt name="USART_U" enable="UDRIE"  flag="UDRE"  priority="7"  vector="0x00C" clear="0"/>
         <interrupt name="USART_T" enable="TXCIE"  flag="TXC"   priority="6"  vector="0x00D" clear="1"/>
-        <interrupt name="ADC"     enable="ADIE"   flag="ADIF"  priority="5"  vector="0x00E"/>
+        <interrupt name="ADC"     enable="ADIE"   flag="ADIF"  priority="5"  vector="0x00E" clear="1"/>
         <interrupt name="EEPR"    enable="EERIE"  flag=""      priority="4"  vector="0x00F"/>
         <interrupt name="ACOMP"   enable="ACIE"   flag="ACI"   priority="3"  vector="0x010"/>
         <interrupt name="TWI"     enable="TWIE"   flag="TWINT" priority="2"  vector="0x011" clear="0"/>
