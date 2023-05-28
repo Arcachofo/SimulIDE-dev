@@ -275,7 +275,26 @@ QString Mcu::varList()
 { return m_eMcu.getRamTable()->getVarSet().join(","); }
 
 void Mcu::setVarList( QString vl )
-{ m_eMcu.getRamTable()->loadVarSet( vl.split(",") ); }
+{
+    if( vl.isEmpty() ) return;
+    QStringList vars = vl.split(",");
+    QStringList varSet;
+    for( QString str : vars ) // Format: {"var0/aadr0/type0", "var1/addr1/type1",...}
+    {
+        QStringList words = str.split("/");
+        if( words.size() < 1 ) continue;
+        QString name = words.at(0);
+        int addr = -1;
+        QString type = "uint8";
+        bool ok = false;
+        if( words.size() > 1 ) addr = words.at(1).toInt( &ok, 0 );
+        if( words.size() > 2 ) type = words.at(2);
+        if( ok ) m_eMcu.getRamTable()->addVariable( name, addr, type );
+        varSet.append( name );
+    }
+    m_eMcu.getRamTable()->loadVarSet( varSet );
+}
+//{ m_eMcu.getRamTable()->loadVarSet( vl.split(",") ); }
 
 QString Mcu::cpuRegs()
 { return m_eMcu.getCpuTable()->getVarSet().join(","); }
