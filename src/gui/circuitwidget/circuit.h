@@ -147,7 +147,8 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
         bool saveString( QString &fileName, QString doc );
         QString circuitHeader();
         QString circuitToString();
-        QString getCompId( QString &pinName );
+        QString getSeqNumber( QString name );
+        QString replaceId( QString pinName );
 
         void updatePinName( QString* name );
 
@@ -194,7 +195,7 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
 
         QHash<QString, Pin*>      m_pinMap;   // Pin Id to Pin*
         QHash<QString, Pin*>      m_LdPinMap; // Pin Id to Pin* while loading/pasting/importing
-        QHash<QString, QString>   m_idMap;    // Component Id to new Id (pasting)
+        QHash<QString, QString>   m_idMap;    // Component seqNumber to new seqNumber (pasting)
         QHash<QString, CompBase*> m_compMap;  // Component Id to Component*
 
         circState m_circState;

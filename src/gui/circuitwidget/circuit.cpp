@@ -89,10 +89,34 @@ Component* Circuit::getCompById( QString id )
     return NULL;
 }
 
-QString Circuit::getCompId( QString &pinName )
+QString Circuit::getSeqNumber( QString name )
 {
-    int pos = pinName.lastIndexOf("-");
-    return pinName.left( pos );
+    QStringList words = name.split("-");
+    for( int i=1; i<words.size(); ++i )    // Start at second word, first must be name
+    {
+        QString word = words.at( i );
+        bool ok;
+        word.toInt( &ok );  // If it converts to int, then this is old seqNumber
+        if( ok ) return word;
+    }
+    return "";
+}
+
+QString Circuit::replaceId( QString pinName )
+{
+    QStringList words = pinName.split("-");
+    for( int i=1; i<words.size(); ++i )    // Start at second word, first must be name
+    {
+        QString word = words.at( i );
+        bool ok;
+        word.toInt( &ok );  // If it converts to int, then this is old seqNumber
+        if( ok )
+        {
+            words.replace( i, m_idMap.value( word ) );
+            break;
+        }
+    }
+    return words.join("-");
 }
 
 Pin* Circuit::findPin( int x, int y, QString id )
@@ -200,7 +224,7 @@ void Circuit::loadStrDoc( QString &doc )
         }
         else if( line.startsWith("<item") )
         {
-            QString uid, newUid, type, label;
+            QString uid, newUid, type, label, newNum;
 
             QStringRef name;
             QVector<QStringRef> props = line.split("\"");
@@ -227,13 +251,15 @@ void Circuit::loadStrDoc( QString &doc )
 
             if( m_pasting ) // Create new id
             {
-                if( type == "Subcircuit" || type == "MCU" )
-                     newUid = uid.split("-").first()+"-"+newSceneId();
-                else if( type == "Connector" )
-                    newUid = "Connector-"+newConnectorId();
-                else newUid = type+"-"+newSceneId();
+                if( type == "Connector" ) newUid = "Connector-"+newConnectorId();
+                else{
+                    newNum = newSceneId();
+                    if( type == "Subcircuit" || type == "MCU" )
+                        newUid = uid.split("-").first()+"-"+newNum;
+                    else newUid = type+"-"+newNum;
+                }
             }
-            else     newUid = uid;
+            else newUid = uid;
 
             if( type == "Connector" )
             {
@@ -256,11 +282,8 @@ void Circuit::loadStrDoc( QString &doc )
                 }
                 if( m_pasting )
                 {
-                    QString startCompId = getCompId( startpinid );
-                    QString endCompId   = getCompId( endpinid );
-
-                    startpinid.replace( startCompId, m_idMap.value(startCompId) );
-                    endpinid.replace(   endCompId,   m_idMap.value(endCompId) );
+                    startpinid = replaceId( startpinid );
+                    endpinid   = replaceId( endpinid );
                 }
                 if( m_undo || m_redo )
                 {
@@ -310,7 +333,7 @@ void Circuit::loadStrDoc( QString &doc )
                 Node* joint = new Node( this, type, newUid );
                 if( m_pasting )
                 {
-                    m_idMap[uid] = newUid; // Map simu id to new id
+                    m_idMap[getSeqNumber( uid )] = newNum; // Map simu id to new id
                     joint->setSelected( true );
                 }
                 QString name;
@@ -352,11 +375,7 @@ void Circuit::loadStrDoc( QString &doc )
                 {
                     m_newComp = comp;
                     lastComp = comp;
-                    if( m_pasting )
-                    {
-                        m_idMap[uid] = newUid;
-                        if( type == "RelaySPST" ) m_idMap[uid+"-inductor"] = newUid+"-inductor";
-                    }
+                    if( m_pasting ) m_idMap[getSeqNumber( uid )] = newNum; // Map simu id to new id
 
                     Mcu* mcu = NULL;
                     if( oldArduino )
@@ -425,7 +444,7 @@ void Circuit::loadStrDoc( QString &doc )
 
     setAnimate( m_animate ); // Force Pin update
 
-    m_idMap.clear();
+    if( m_pasting ) m_idMap.clear();
     m_busy = false;
     QApplication::restoreOverrideCursor();
     update();
@@ -762,6 +781,7 @@ bool Circuit::restoreState( circState step )
     m_busy = true;
 
     if( m_undo ) addCompState( NULL, "", stateNew ); // Start new Undo/Redo state
+
     for( compState cState : step.remove )
     {
         QString compName = cState.component;
