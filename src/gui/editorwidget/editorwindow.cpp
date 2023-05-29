@@ -228,6 +228,7 @@ void EditorWindow::stopDebbuger()
 
         Simulator::self()->remFromUpdateList( this );
     }
+    m_debugger = NULL;
 }
 
 BaseDebugger* EditorWindow::createDebugger( QString name, CodeEditor* ce , QString code )

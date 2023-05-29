@@ -175,8 +175,7 @@ void EditorWidget::loadFile( const QString &fileName )
         m_docWidget->setCurrentWidget( m_fileList.value( fileName ) );
         return;
     }
-
-    else newFile();
+    newFile();
     QApplication::setOverrideCursor( Qt::WaitCursor );
 
     CodeEditor* ce = getCodeEditor();
