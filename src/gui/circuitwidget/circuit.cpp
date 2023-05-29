@@ -390,7 +390,7 @@ void Circuit::loadStrDoc( QString &doc )
                     }
                     comp->setPropStr( "label", label ); //setIdLabel( label );
 
-                    QList<propGroup>* groups = comp->propeties(); // Set properties in correct order
+                    QList<propGroup>* groups = comp->properties(); // Set properties in correct order
                     for( propGroup group : *groups )
                     {
                         QList<ComProperty*> propList = group.propList;
@@ -406,7 +406,7 @@ void Circuit::loadStrDoc( QString &doc )
                     }
                     QString propName;
                     QString value;
-                    for( QStringRef prop : properties.keys() )
+                    for( QStringRef prop : properties.keys() ) // Properties not recognized (old versions)
                     {
                         propName = prop.toString();
                         value    = properties.value( prop ).toString();
@@ -433,7 +433,7 @@ void Circuit::loadStrDoc( QString &doc )
     {
         for( Component* item : compList ) { item->setSelected( true ); item->move( m_deltaMove ); }
         for( Component* item : nodeList ) { item->setSelected( true ); item->move( m_deltaMove ); }
-        for( Connector* con : conList )   { con->setSelected( true );  con->move( m_deltaMove ); }
+        for( Connector* con  : conList )  { con->setSelected( true );  con->move( m_deltaMove ); }
     }
     m_compList.append( compList );
     m_nodeList.append( nodeList );

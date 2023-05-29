@@ -32,7 +32,7 @@ class MAINMODULE_EXPORT CompBase : public QObject
         void remPropGroup( QString name );
         void addProperty( QString group, ComProperty* p );
         void removeProperty( QString prop );
-        QList<propGroup>* propeties() { return &m_propGroups; }
+        QList<propGroup>* properties() { return &m_propGroups; }
 
         virtual QStringList getEnumUids( QString ) { return m_enumUids;}
         virtual QStringList getEnumNames( QString ) { return m_enumNames; }

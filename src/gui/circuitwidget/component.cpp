@@ -38,7 +38,6 @@ Component::Component( QObject* parent, QString type, QString id )
     m_showId     = false;
     m_showVal    = false;
     m_moving     = false;
-    m_printable  = false;
     m_isMainComp = false;
     m_hidden     = false;
     m_crashed    = false;

@@ -126,8 +126,6 @@ class MAINMODULE_EXPORT Component : public CompBase, public QGraphicsItem, publi
 
         virtual void paint( QPainter* painter, const QStyleOptionGraphicsItem*, QWidget* );
 
-        bool m_printable;
-
     //signals:
         //void moved();
         //void flip( int h, int v );
