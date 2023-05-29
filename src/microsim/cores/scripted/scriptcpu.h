@@ -13,6 +13,7 @@
 using namespace std;
 
 class ScriptPerif;
+class Mcu;
 
 class MAINMODULE_EXPORT ScriptCpu : public ScriptModule, public McuCpu
 {
@@ -26,6 +27,7 @@ class MAINMODULE_EXPORT ScriptCpu : public ScriptModule, public McuCpu
         virtual void reset();
         virtual void runStep();
         virtual void extClock( bool clkState ) override;
+        virtual void updateStep() override;
 
         void setPeriferals( std::vector<ScriptPerif*> p);
         virtual void setScriptFile( QString scriptFile, bool compile=true ) override;
@@ -33,6 +35,7 @@ class MAINMODULE_EXPORT ScriptCpu : public ScriptModule, public McuCpu
 
         void command( QString c );
         void toConsole( string r );
+        void showValue( string r );
 
         void addCpuReg( string name, string type );
         void addCpuVar( string name, string type );
@@ -59,6 +62,7 @@ class MAINMODULE_EXPORT ScriptCpu : public ScriptModule, public McuCpu
         virtual void INTERRUPT( uint vector ) override;
 
     protected:
+        Mcu* m_mcuComp;
         asIScriptFunction* m_reset;
         asIScriptFunction* m_voltChanged;
         asIScriptFunction* m_runEvent;
@@ -70,6 +74,8 @@ class MAINMODULE_EXPORT ScriptCpu : public ScriptModule, public McuCpu
         asIScriptFunction* m_command;
 
         //asIScriptContext* m_extClockCtx;
+
+        QString m_value;
 
         Watcher* m_watcher;
 

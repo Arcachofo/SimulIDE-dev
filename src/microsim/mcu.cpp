@@ -257,6 +257,8 @@ void Mcu::updateStep()
     }
     if( m_mcuMonitor
      && m_mcuMonitor->isVisible() ) m_mcuMonitor->updateStep();
+
+    m_eMcu.cpu->updateStep();
 }
 
 void Mcu::voltChanged() // Reset Pin callBack

@@ -14,6 +14,7 @@
 #include "scriptusart.h"
 #include "watcher.h"
 #include "console.h"
+#include "mcu.h"
 
 using namespace std;
 
@@ -31,6 +32,8 @@ ScriptCpu::ScriptCpu( eMcu* mcu )
     m_getCpuReg = NULL;
     m_getStrReg = NULL;
     m_command   = NULL;
+
+    m_mcuComp = m_mcu->component();
 
     m_aEngine->RegisterObjectType("eElement" ,0, asOBJ_REF | asOBJ_NOCOUNT );
     m_aEngine->RegisterObjectType("ScriptCpu",0, asOBJ_REF | asOBJ_NOCOUNT );
@@ -56,6 +59,10 @@ ScriptCpu::ScriptCpu( eMcu* mcu )
 
     m_aEngine->RegisterObjectMethod("ScriptCpu", "void toConsole( string r )"
                                    , asMETHODPR( ScriptCpu, toConsole, (string), void)
+                                   , asCALL_THISCALL );
+
+    m_aEngine->RegisterObjectMethod("ScriptCpu", "void showValue( string r )"
+                                   , asMETHODPR( ScriptCpu, showValue, (string), void)
                                    , asCALL_THISCALL );
 
     m_aEngine->RegisterObjectMethod("ScriptCpu", "void addEvent(uint t)"
@@ -162,8 +169,16 @@ int ScriptCpu::compileScript()
     return 0;
 }
 
+void ScriptCpu::updateStep()
+{
+    m_mcuComp->setValLabelText( m_value );
+}
+
 void ScriptCpu::reset()
 {
+    m_mcuComp->setShowVal( true );
+    m_value = "";
+
     if( m_reset ) callFunction( m_reset );
 }
 void ScriptCpu::voltChanged() { callFunction( m_voltChanged ); }
@@ -202,6 +217,11 @@ void ScriptCpu::toConsole( string r )
     if( !m_watcher ) return;
     Console* c = m_watcher->console();
     if( c ) c->appendText( QString::fromStdString(r) );
+}
+
+void ScriptCpu::showValue( string r )
+{
+    m_value = QString::fromStdString(r);
 }
 
 void ScriptCpu::addCpuReg( string name, string type )

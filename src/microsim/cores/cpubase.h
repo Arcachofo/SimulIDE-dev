@@ -23,6 +23,7 @@ class MAINMODULE_EXPORT CpuBase
         virtual void reset();
         virtual void runStep(){;}
         virtual void extClock( bool clkState ){;}
+        virtual void updateStep(){;}
 
         uint8_t* getStatus() { return m_STATUS; }  // Used my Monitor: All CPUs must use m_STATUS
         virtual int getCpuReg( QString reg );
