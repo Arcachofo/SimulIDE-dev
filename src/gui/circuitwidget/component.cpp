@@ -454,43 +454,37 @@ void Component::slotProperties()
 
 void Component::H_flip()
 {
-    Circuit::self()->addCompState( this, "hflip" );
+    if( !m_hidden ) Circuit::self()->addCompState( this, "hflip" );
     m_Hflip = -m_Hflip;
     setflip();
 }
 
 void Component::V_flip()
 {
-    Circuit::self()->addCompState( this, "vflip" );
+    if( !m_hidden ) Circuit::self()->addCompState( this, "vflip" );
     m_Vflip = -m_Vflip;
     setflip();
 }
 
 void Component::rotateCW()
 {
-    if( m_hidden ) return;
-    Circuit::self()->addCompState( this, "rotation" );
+    if( !m_hidden ) Circuit::self()->addCompState( this, "rotation" );
     setRotation( rotation() + 90 );
-    //emit moved();
-    moveSignal();
+    if( !m_hidden ) moveSignal();
 }
 
 void Component::rotateCCW()
 {
-    if( m_hidden ) return;
-    Circuit::self()->addCompState( this, "rotation" );
+    if( !m_hidden ) Circuit::self()->addCompState( this, "rotation" );
     setRotation( rotation() - 90 );
-    //emit moved();
-    moveSignal();
+    if( !m_hidden ) moveSignal();
 }
 
 void Component::rotateHalf()
 {
-    if( m_hidden ) return;
-    Circuit::self()->addCompState( this, "rotation" );
-    setRotation( rotation() - 180);
-    //emit moved();
-    moveSignal();
+    if( !m_hidden ) Circuit::self()->addCompState( this, "rotation" );
+    setRotation( rotation() - 180 );
+    if( !m_hidden ) moveSignal();
 }
 
 QString Component::idLabel() { return m_idLabel->toPlainText(); }
@@ -561,15 +555,13 @@ void Component::setVflip( int vf )
 
 void Component::setflip()
 {
-    if( m_hidden ) return;
     setTransform( QTransform::fromScale( m_Hflip, m_Vflip ) );
     m_idLabel->setTransform( QTransform::fromScale( m_Hflip, m_Vflip ) );
     m_valLabel->setTransform( QTransform::fromScale( m_Hflip, m_Vflip ) );
-    //emit flip( m_Hflip, m_Vflip );
+
     for( Pin* pin : m_signalPin ) pin->flip( m_Hflip, m_Vflip );
 
-    //emit moved();                  // Used by sockets
-    moveSignal();
+    if( !m_hidden ) moveSignal();    // Used by sockets
 }
 
 void Component::moveSignal()
