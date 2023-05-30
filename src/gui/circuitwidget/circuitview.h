@@ -31,6 +31,8 @@ class CircuitView : public QGraphicsView
         void mousePressEvent( QMouseEvent* event );
         void mouseReleaseEvent( QMouseEvent* event );
 
+        void overrideCursor( const QCursor &cursor );
+
         qreal getScale() { return m_scale; }
 
     public slots:

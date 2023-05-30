@@ -1,4 +1,4 @@
-#ifndef TEXTCOMPONENT_H
+﻿#ifndef TEXTCOMPONENT_H
 #define TEXTCOMPONENT_H
 
 #include "component.h"
@@ -11,7 +11,7 @@ class MAINMODULE_EXPORT TextComponent : public Component
         TextComponent( QObject* parent, QString type, QString id );
         ~TextComponent();
         
-        QRectF boundingRect() const 
+        QRectF boundingRect() const override
         { 
             return QRectF( m_area.x()-m_border/2-1, m_area.y()-m_border/2-1, 
                            m_area.width()+m_border+2, m_area.height()+m_border+2 ); 
@@ -19,6 +19,8 @@ class MAINMODULE_EXPORT TextComponent : public Component
 
  static Component* construct( QObject* parent, QString type, QString id );
  static LibraryItem* libraryItem();
+
+        virtual void updateStep() override;
 
         int  margin();
         void setMargin( int margin );
@@ -41,14 +43,28 @@ class MAINMODULE_EXPORT TextComponent : public Component
         qreal opac() { return m_opac; }
         void setOpac( qreal op );
 
-        void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
+        QString getLinks();
+        void setLinks( QString links );
+
+        virtual void createLinks(QList<Component*>*compList ) override;
+
+        virtual void compSelected( Component* comp ) override;
+
+        void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
 
 
     public slots:
         void updateGeometry(int, int, int);
+        void linkComp();
+
+    protected:
+        virtual void contextMenuEvent( QGraphicsSceneContextMenuEvent* event ) override;
 
     private:
         QGraphicsTextItem* m_text;
+        QString m_textString;
+
+        QList<Component*> m_linkedComp;
 
         qreal m_opac;
         

@@ -7,6 +7,7 @@
 #include <QMimeData>
 #include <QFileDialog>
 #include <QSettings>
+#include <QGuiApplication>
 
 #include "circuitview.h"
 #include "circuitwidget.h"
@@ -145,20 +146,32 @@ void CircuitView::mouseReleaseEvent( QMouseEvent* event )
             Qt::LeftButton, Qt::LeftButton, Qt::NoModifier   );
 
         QGraphicsView::mouseReleaseEvent( &eve );
+        setDragMode( QGraphicsView::RubberBandDrag );
     }
     else QGraphicsView::mouseReleaseEvent( event );
+}
 
-    viewport()->setCursor( Qt::ArrowCursor );
+void CircuitView::overrideCursor( const QCursor &cursor )
+{
+    setDragMode( QGraphicsView::ScrollHandDrag );
+    setCursor( cursor );
     setDragMode( QGraphicsView::RubberBandDrag );
 }
 
-void CircuitView::contextMenuEvent(QContextMenuEvent* event)
+void CircuitView::contextMenuEvent( QContextMenuEvent* event )
 {
     QGraphicsView::contextMenuEvent( event );
 
     if( m_circuit->is_constarted() ) m_circuit->deleteNewConnector();
     else if( !event->isAccepted() )
     {
+        if( Component::m_selecComp ) // Cancel link to components
+        {
+            Component::m_selecComp->compSelected( NULL );
+            QGuiApplication::restoreOverrideCursor();
+            return;
+        }
+
         QPointF eventPos = mapToScene( event->globalPos() ) ;
         m_eventpoint = mapToScene( event->pos()  );
 

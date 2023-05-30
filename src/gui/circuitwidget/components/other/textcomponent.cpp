@@ -6,10 +6,15 @@
 #include <QCursor>
 #include <QPainter>
 #include <QTextDocument>
+#include <QMenu>
+#include <QGuiApplication>
 
 #include "textcomponent.h"
 #include "itemlibrary.h"
 #include "circuit.h"
+#include "simulator.h"
+#include "circuit.h"
+#include "circuitwidget.h"
 
 #include "stringprop.h"
 #include "doubleprop.h"
@@ -37,6 +42,8 @@ TextComponent::TextComponent( QObject* parent, QString type, QString id )
     m_color = QColor( 255, 255, 220 );
     m_font  = "Helvetica [Cronyx]";
 
+    /// m_linkedComp = NULL;
+
     QFont sansFont( m_font, 10 );
     #if QT_VERSION >= QT_VERSION_CHECK(5, 9, 0)
     sansFont.setWeight( QFont::Medium );
@@ -51,7 +58,8 @@ TextComponent::TextComponent( QObject* parent, QString type, QString id )
     m_text->setTextInteractionFlags( 0 );
     m_text->setTextWidth( 90 );
     m_text->setFont( sansFont );
-    m_text->setPlainText("... TEXT ...");
+    m_textString = "... TEXT ...";
+    m_text->setPlainText( m_textString );
     m_text->setPos( 0, 0 );
     m_text->document()->setTextWidth(-1);
     m_text->setDefaultTextColor( Qt::darkBlue );
@@ -78,12 +86,32 @@ new DoubProp<TextComponent>( "Opacity", tr("Opacity"),""       , this, &TextComp
 new StringProp<TextComponent>( "Font"       , tr("Font")       ,""       , this, &TextComponent::getFont , &TextComponent::setFont ),
 new IntProp   <TextComponent>( "Font_Size"  , tr("Font Size")  ,"_Pixels", this, &TextComponent::fontSize, &TextComponent::setFontSize ),
 new BoolProp  <TextComponent>( "Fixed_Width", tr("Fixed_Width"),""       , this, &TextComponent::fixedW  , &TextComponent::setFixedW ),
-new StringProp<TextComponent>( "Text"       , tr("Text")        ,""       , this, &TextComponent::getText , &TextComponent::setText, "textEdit" )
+new StringProp<TextComponent>( "Text"       , tr("Text")        ,""      , this, &TextComponent::getText , &TextComponent::setText, "textEdit" )
+    }} );
+    addPropGroup( { "Hidden", {
+new StringProp<TextComponent>( "Links", "Links","", this, &TextComponent::getLinks , &TextComponent::setLinks )
     }} );
 }
 TextComponent::~TextComponent()
 {
     delete m_text;
+}
+
+void TextComponent::updateStep()
+{
+    if( m_linkedComp.isEmpty() ) return;
+
+    QString text = m_textString;
+
+    for( int i=0; i<m_linkedComp.size(); ++i )
+    {
+        Component* comp = m_linkedComp.at( i );
+        comp->m_linkNumber = i;
+        comp->update();
+        QString data = comp->getValLabelText();
+        text.replace( "$data"+QString::number(i), data );
+    }
+    m_text->document()->setPlainText( text );
 }
 
 void TextComponent::updateGeometry(int, int, int)
@@ -118,6 +146,42 @@ void TextComponent::setOpac( qreal op )
     update();
 }
 
+QString TextComponent::getLinks()
+{
+    QString links;
+
+    for( int i=0; i<m_linkedComp.size(); ++i )
+    {
+        Component* comp = m_linkedComp.at( i );
+        links.append( comp->getUid()+"," );
+    }
+    return links;
+}
+
+void TextComponent::setLinks( QString links )
+{
+    m_linkedStr = links;
+}
+
+void TextComponent::createLinks( QList<Component*>* compList )
+{
+    QStringList components = m_linkedStr.split(",");
+    for( QString uid : components )
+    {
+        if( uid.isEmpty() ) continue;
+
+        for( Component* comp : *compList )
+            if( comp->getUid().contains( uid ) )
+            {
+                qDebug() << "TextComponent::createLinks"<<uid;
+                m_linkedComp.append( comp );
+                break;
+            }
+    }
+    if( !m_linkedComp.isEmpty() ) Simulator::self()->addToUpdateList( this );
+    updateStep();
+}
+
 void TextComponent::setFixedW( bool fixedW ) 
 { 
     m_fixedW = fixedW;
@@ -130,12 +194,14 @@ void TextComponent::setFixedW( bool fixedW )
 
 QString TextComponent::getText()
 {
-    return m_text->toPlainText();
+    return m_textString;
 }
 
 void TextComponent::setText( QString text )
 {
-    m_text->document()->setPlainText( text );
+    m_textString = text;
+    if( m_linkedComp.isEmpty() ) m_text->document()->setPlainText( text );
+    else updateStep();
 }
 
 void TextComponent::setFont( QString font )
@@ -158,6 +224,53 @@ void TextComponent::setFontSize( int size )
     font.setPixelSize( size );
     m_text->setFont( font );
     updateGeometry( 0, 0, 0 );
+}
+
+void TextComponent::linkComp()
+{
+    Component::m_selecComp = this;
+    QGuiApplication::setOverrideCursor( Qt::PointingHandCursor );
+    Circuit::self()->update();
+}
+
+void TextComponent::compSelected( Component* comp )
+{
+    if( comp )
+    {
+        if( m_linkedComp.contains( comp ) )
+        {
+            comp->m_linkNumber = -1;
+            m_linkedComp.removeAll( comp );
+        }
+        else m_linkedComp.append( comp );
+
+        for( int i=0; i<m_linkedComp.size(); ++i )
+        {
+            Component* comp = m_linkedComp.at( i );
+            comp->m_linkNumber = i;
+        }
+    }
+    else m_selecComp = NULL;
+    updateStep();
+
+    Simulator::self()->addToUpdateList( this );
+}
+
+void TextComponent::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
+{
+    if( !acceptedMouseButtons() ) { event->ignore(); return; }
+
+    event->accept();
+    QMenu* menu = new QMenu();
+
+    QAction* linkCompAction = menu->addAction( QIcon(":/subcl.png"),tr("Link to Component") );
+    connect( linkCompAction, &QAction::triggered,
+                       this, &TextComponent::linkComp, Qt::UniqueConnection );
+
+    menu->addSeparator();
+
+    Component::contextMenu( event, menu );
+    menu->deleteLater();
 }
 
 void TextComponent::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )

@@ -23,6 +23,7 @@
 
 int  Component::m_error = 0;
 bool Component::m_selMainCo = false;
+Component* Component::m_selecComp = NULL;
 
 Component::Component( QObject* parent, QString type, QString id )
          : CompBase( parent, type, id )
@@ -45,6 +46,7 @@ Component::Component( QObject* parent, QString type, QString id )
     m_graphical  = false;
     m_background = "";
     m_showProperty = "";
+    m_linkNumber = -1;
 
     m_boardPos = QPointF( -1e6, -1e6 );
     m_boardRot = -1e6;
@@ -85,9 +87,10 @@ Component::Component( QObject* parent, QString type, QString id )
 new StringProp<Component>( "itemtype","","", this, &Component::itemType,  &Component::setItemType ),
 new StringProp<Component>( "CircId"  ,"","", this, &Component::getUid,    &Component::setUid ),
 new BoolProp  <Component>( "mainComp","","", this, &Component::isMainComp,&Component::setMainComp ),// Related to Subcircuit:
+new StringProp<Component>( "ShowProp","","", this, &Component::showProp,  &Component::setShowProp ),
     }} );
     addPropGroup( { "CompGraphic", {
-new StringProp<Component>( "ShowProp","","", this, &Component::showProp,  &Component::setShowProp ),
+
 new BoolProp  <Component>( "Show_id" ,"","", this, &Component::showId,    &Component::setShowId ),
 new BoolProp<Component>  ( "Show_Val","","", this, &Component::showVal,   &Component::setShowVal ),
 //new DoubProp<Component>  ( "Value"   ,"","",this, &Component::getValue,  &Component::setValue ),
@@ -174,14 +177,20 @@ void Component::mousePressEvent( QGraphicsSceneMouseEvent* event )
         event->accept();
         if( m_selMainCo )  // Used when creating Boards to set this as main component
         {
+            m_selMainCo = false;
             if( m_isMainComp ) m_isMainComp = false;
             else{
                 QList<Component*>* compList = Circuit::self()->compList();
                 for( Component* comp : *compList ) comp->m_isMainComp = false;
-                m_selMainCo  = false;
+
                 m_isMainComp = true;
             }
             update();
+            return;
+        }
+        else if( m_selecComp )
+        {
+            m_selecComp->compSelected( this );
             return;
         }
         if( event->modifiers() == Qt::ControlModifier ) setSelected( !isSelected() );
@@ -522,6 +531,7 @@ void Component::setValLabelPos( int x, int y, int rot )
 void Component::updtValLabelPos() { m_valLabel->updtLabelPos(); }
 
 void Component::setValLabelText( QString t ) { m_valLabel->setPlainText( t ); }
+QString Component::getValLabelText() { return m_valLabel->toPlainText(); }
 
 QString Component::showProp()
 {
@@ -586,8 +596,10 @@ void Component::setHidden(bool hid, bool hidArea, bool hidLabel )
 
     if( hidLabel ){
         setShowId( false );
-        setShowProp("");
-}   }
+
+    }
+    m_valLabel->setVisible( !hidLabel ); //setShowProp("");
+}
 
 /*QString Component::print()
 {
@@ -616,7 +628,7 @@ void Component::paint( QPainter* p, const QStyleOptionGraphicsItem*, QWidget* )
 
     if( m_warning || m_crashed )
     {
-        double speed, opaci;
+        double speed=0, opaci=1;
         if( m_crashed ){
             speed = 0.1; opaci = 0;
             p->fillRect( boundingRect(), QColor(255, 100, 0, 150) );
@@ -629,10 +641,19 @@ void Component::paint( QPainter* p, const QStyleOptionGraphicsItem*, QWidget* )
         if( m_opCount > 0.6 ) m_opCount = 0.0;
         p->setOpacity( m_opCount+opaci );
     }
-    else if( m_isMainComp & !m_hidden )
+    else if( !m_hidden )
     {
-        p->fillRect( boundingRect(), Qt::yellow  );
-        p->setOpacity( 0.5 );
+        if( m_isMainComp ){
+            p->fillRect( boundingRect(), Qt::yellow  );
+            p->setOpacity( 0.5 );
+        }
+        if( m_selecComp && m_linkNumber >= 0 ){
+            p->setOpacity( 0.3 );
+            p->fillRect( boundingRect(), Qt::blue  );
+            p->setOpacity( 1 );
+            p->drawText( boundingRect(), Qt::AlignCenter, QString::number(m_linkNumber) );
+            p->setOpacity( 0.12 );
+        }
     }
     //p->drawPath( shape() );
     p->setBrush( color );

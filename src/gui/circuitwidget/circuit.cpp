@@ -164,6 +164,7 @@ void Circuit::loadStrDoc( QString &doc )
 {
     QApplication::setOverrideCursor(Qt::WaitCursor);
 
+    QList<Component*> linkList;   // Linked  Component list
     QList<Component*> compList;   // Pasting Component list
     QList<Connector*> conList;    // Pasting Connector list
     QList<Node*> nodeList;        // Pasting node list
@@ -426,18 +427,22 @@ void Circuit::loadStrDoc( QString &doc )
                     comp->updtLabelPos();
                     comp->updtValLabelPos();
                     compList.append( comp );
+                    if( !comp->m_linkedStr.isEmpty() ) linkList.append( comp );
                 }
                 else qDebug() << " ERROR Creating Component: "<< type << uid;
     }   }   }
     if( m_pasting )
     {
-        for( Component* item : compList ) { item->setSelected( true ); item->move( m_deltaMove ); }
-        for( Component* item : nodeList ) { item->setSelected( true ); item->move( m_deltaMove ); }
+        for( Component* comp : compList ) { comp->setSelected( true ); comp->move( m_deltaMove ); }
+        for( Component* comp : nodeList ) { comp->setSelected( true ); comp->move( m_deltaMove ); }
         for( Connector* con  : conList )  { con->setSelected( true );  con->move( m_deltaMove ); }
     }
+    for( Component* comp : linkList ) comp->createLinks( &compList );
+
     m_compList.append( compList );
     m_nodeList.append( nodeList );
     m_conList.append( conList );
+
     // Take care about unconnected Joints
     if( !m_undo && !m_redo )  for( Node* joint : nodeList ) joint->checkRemove(); // Only removed if some missing connector
     for( ShieldSubc* shield : shieldList ) shield->connectBoard();

@@ -70,9 +70,10 @@ class MAINMODULE_EXPORT Component : public CompBase, public QGraphicsItem, publi
         void updtValLabelPos();
 
         virtual void setValLabelText( QString t ) override;
+        QString getValLabelText();
 
         virtual QString showProp() override;
-        virtual void    setShowProp( QString prop )override;
+        virtual void    setShowProp( QString prop ) override;
 
         bool isGraphical() { return m_graphical; }
 
@@ -121,11 +122,17 @@ class MAINMODULE_EXPORT Component : public CompBase, public QGraphicsItem, publi
 
         virtual void setflip();
 
+        virtual void compSelected( Component* comp ){ m_selecComp = NULL;}
+
         void addSignalPin( Pin* pin );
         void remSignalPin( Pin* pin );
 
         virtual void paint( QPainter* painter, const QStyleOptionGraphicsItem*, QWidget* );
 
+        virtual void createLinks( QList<Component*>* l){;}
+        int m_linkNumber;
+        QString m_linkedStr;
+ static Component* m_selecComp;
     //signals:
         //void moved();
         //void flip( int h, int v );
@@ -171,6 +178,7 @@ class MAINMODULE_EXPORT Component : public CompBase, public QGraphicsItem, publi
         
         int m_Hflip;
         int m_Vflip;
+
  static int m_error;
  static bool m_selMainCo;
 
