@@ -118,6 +118,8 @@ class MAINMODULE_EXPORT Component : public CompBase, public QGraphicsItem, publi
 
         void moveSignal();
 
+        void rotateAngle( double a );
+
         virtual void remove();
 
         virtual void setflip();
@@ -145,8 +147,8 @@ class MAINMODULE_EXPORT Component : public CompBase, public QGraphicsItem, publi
         virtual void slotProperties();
         void rotateCCW();
         void rotateHalf();
-        void H_flip();
-        void V_flip();
+        void slotH_flip();
+        void slotV_flip();
         void slotRemove();
         void slotGroup();
         void slotCopy();

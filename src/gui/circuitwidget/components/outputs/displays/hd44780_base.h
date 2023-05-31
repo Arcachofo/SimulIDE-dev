@@ -32,8 +32,6 @@ class MAINMODULE_EXPORT Hd44780_Base : public Component
         void clearDDRAM();
         void clearLcd();
         void writeData( int data );
-        void readData(){;}
-        void readBusy(){;}
         void proccessCommand( int command );
         void functionSet( int data );
         void C_D_Shift( int data );

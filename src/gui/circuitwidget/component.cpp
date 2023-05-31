@@ -129,7 +129,6 @@ bool Component::setPropStr( QString prop, QString val )
     else if( prop =="valLabelx" ) m_valLabel->m_labelx = val.toInt();   // Old: TODELETE
     else if( prop =="valLabely" ) m_valLabel->m_labely = val.toInt();   // Old: TODELETE
 
-    //else if( prop =="Show_Val" ) { setShowVal( val=="true" );}          // Old: TODELETE
     else if( prop =="Unit" )                                            // Old: TODELETE
     {
         val = val.remove(" ").replace("u","µ");
@@ -150,7 +149,6 @@ bool Component::setPropStr( QString prop, QString val )
 void Component::substitution( QString &propName ) // static
 {
     if     ( propName == "Volts"       ) propName = "Voltage";
-    //else if( propName == "Current") propName = "Value";
     else if( propName == "id"          ) propName = "label";
     else if( propName == "Duty_Square" ) propName = "Duty";
     else if( propName == "S_R_Inverted") propName = "Reset_Inverted";
@@ -228,12 +226,11 @@ void Component::mouseMoveEvent( QGraphicsSceneMouseEvent* event )
     if( !(fabs( delta.x() )> 0) && !(fabs( delta.y() )> 0) ) return;
 
     QList<QGraphicsItem*> itemlist = Circuit::self()->selectedItems();
-    //if( itemlist.isEmpty() ) return;
 
     if( !m_moving ) // Get lists of elements to move and save Undo state
     {
         Circuit::self()->addCompState( NULL, "", stateNew );
-        //m_linMoveList.clear();
+
         m_conMoveList.clear();
         m_compMoveList.clear();
 
@@ -347,7 +344,7 @@ void Component::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu 
 
     QAction* cutAction = menu->addAction(QIcon(":/cut.svg"),tr("Cut")+"\tCtrl+X");
     connect( cutAction, &QAction::triggered,
-                   this, &Component::slotCut, Qt::UniqueConnection );
+                  this, &Component::slotCut, Qt::UniqueConnection );
 
     QAction* removeAction = menu->addAction( QIcon( ":/remove.svg"),tr("Remove")+"\tDel" );
     connect( removeAction, &QAction::triggered,
@@ -376,11 +373,11 @@ void Component::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu 
     
     QAction* H_flipAction = menu->addAction(QIcon(":/hflip.svg"),tr("Horizontal Flip") );
     connect( H_flipAction, &QAction::triggered,
-                     this, &Component::H_flip, Qt::UniqueConnection );
+                     this, &Component::slotH_flip, Qt::UniqueConnection );
     
     QAction* V_flipAction = menu->addAction(QIcon(":/vflip.svg"),tr("Vertical Flip") );
     connect( V_flipAction, &QAction::triggered,
-                     this, &Component::V_flip, Qt::UniqueConnection );
+                     this, &Component::slotV_flip, Qt::UniqueConnection );
 
     menu->exec(event->screenPos());
 }
@@ -452,38 +449,53 @@ void Component::slotProperties()
     m_propDialog->show();
 }
 
-void Component::H_flip()
+void Component::slotH_flip()
 {
     if( !m_hidden ) Circuit::self()->addCompState( this, "hflip" );
     m_Hflip = -m_Hflip;
     setflip();
 }
 
-void Component::V_flip()
+void Component::slotV_flip()
 {
     if( !m_hidden ) Circuit::self()->addCompState( this, "vflip" );
     m_Vflip = -m_Vflip;
     setflip();
 }
 
-void Component::rotateCW()
+void Component::setHflip( int hf )
 {
-    if( !m_hidden ) Circuit::self()->addCompState( this, "rotation" );
-    setRotation( rotation() + 90 );
-    if( !m_hidden ) moveSignal();
+    if( hf != 1 && hf != -1 ) hf = 1;
+    m_Hflip = hf;
+    setflip();
 }
 
-void Component::rotateCCW()
+void Component::setVflip( int vf )
 {
-    if( !m_hidden ) Circuit::self()->addCompState( this, "rotation" );
-    setRotation( rotation() - 90 );
-    if( !m_hidden ) moveSignal();
+    if( vf != 1 && vf != -1 ) vf = 1;
+    m_Vflip = vf;
+    setflip();
 }
 
-void Component::rotateHalf()
+void Component::setflip()
+{
+    setTransform( QTransform::fromScale( m_Hflip, m_Vflip ) );
+    m_idLabel->setTransform( QTransform::fromScale( m_Hflip, m_Vflip ) );
+    m_valLabel->setTransform( QTransform::fromScale( m_Hflip, m_Vflip ) );
+
+    for( Pin* pin : m_signalPin ) pin->flip( m_Hflip, m_Vflip );
+
+    if( !m_hidden ) moveSignal();    // Used by sockets
+}
+
+void Component::rotateCW()   { rotateAngle( 90 ); }
+void Component::rotateCCW()  { rotateAngle( -90 ); }
+void Component::rotateHalf() { rotateAngle( -180 ); }
+
+void Component::rotateAngle( double a )
 {
     if( !m_hidden ) Circuit::self()->addCompState( this, "rotation" );
-    setRotation( rotation() - 180 );
+    Component::setRotation( rotation() + a );
     if( !m_hidden ) moveSignal();
 }
 
@@ -537,31 +549,6 @@ void Component::setShowProp( QString prop )
 {
     m_showProperty = prop;
     setShowVal( !(prop.isEmpty()) );
-}
-
-void Component::setHflip( int hf )
-{ 
-    if( ( hf != 1 ) && ( hf != -1 ) ) hf = 1;
-    m_Hflip = hf;
-    setflip();
-}
-
-void Component::setVflip( int vf )
-{ 
-    if( ( vf != 1 ) && ( vf != -1 ) ) vf = 1;
-    m_Vflip = vf; 
-    setflip();
-}
-
-void Component::setflip()
-{
-    setTransform( QTransform::fromScale( m_Hflip, m_Vflip ) );
-    m_idLabel->setTransform( QTransform::fromScale( m_Hflip, m_Vflip ) );
-    m_valLabel->setTransform( QTransform::fromScale( m_Hflip, m_Vflip ) );
-
-    for( Pin* pin : m_signalPin ) pin->flip( m_Hflip, m_Vflip );
-
-    if( !m_hidden ) moveSignal();    // Used by sockets
 }
 
 void Component::moveSignal()

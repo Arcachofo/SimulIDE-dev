@@ -120,6 +120,16 @@ void Hd44780::voltChanged()             // Called when clock Pin changes
     }
 }
 
+void Hd44780::readData()
+{
+
+}
+
+void Hd44780::readBusy()
+{
+
+}
+
 void Hd44780::initPuPin( int n, QString l, IoPin* pin )
 {
     pin->setLabelText( l );
