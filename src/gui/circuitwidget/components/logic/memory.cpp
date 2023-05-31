@@ -113,20 +113,24 @@ void Memory::updateStep()
 
 void Memory::voltChanged()        // Some Pin Changed State, Manage it
 {
-    m_cs = m_CsPin->getInpState();
-    m_we = m_WePin->getInpState();
-
-    bool oe = m_oePin->getInpState() && m_cs && !m_we;
+    bool cs = m_CsPin->getInpState();
+    bool we = m_WePin->getInpState();
+    bool oe = m_oePin->getInpState() && cs && !we; // Enable output buffers only if OE & CS & Read
     if( m_oe != oe )
     {
         m_oe = oe;
-        for( IoPin* pin : m_outPin )         // Enable/Disable outputs
+        for( IoPin* pin : m_outPin )         // Enable/Disable output buffers
         {
             pin->setPinMode( oe ? output : input );
             if( m_asynchro ) pin->changeCallBack( this, m_cs && m_we );
         }
     }
-    if( !m_cs ) return;                      // Chip not selected, nothing to do
+    // Operate only if Asynchronous or change in CS or WE
+    bool operate = m_asynchro || m_cs != cs || m_we != we;
+    m_cs = cs;
+    m_we = we;
+
+    if( !operate || !m_cs ) return;          // Nothing to do
 
     m_address = 0;
     for( int i=0; i<m_addrBits; ++i )        // Get Address
