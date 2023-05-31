@@ -6,12 +6,13 @@
 #ifndef MEMORY_H
 #define MEMORY_H
 
-#include "logiccomponent.h"
+#include "iocomponent.h"
+#include "e-element.h"
 #include "memdata.h"
 
 class LibraryItem;
 
-class MAINMODULE_EXPORT Memory : public LogicComponent, public MemData
+class MAINMODULE_EXPORT Memory : public IoComponent, public eElement, public MemData
 {
     public:
         Memory( QObject* parent, QString type, QString id );
@@ -23,7 +24,7 @@ class MAINMODULE_EXPORT Memory : public LogicComponent, public MemData
         virtual void stamp() override;
         virtual void updateStep() override;
         virtual void voltChanged() override;
-        virtual void runEvent() override;
+        virtual void runEvent() override { IoComponent::runOutputs(); }
 
         void setMem( QString m );
         QString getMem();
@@ -56,8 +57,6 @@ class MAINMODULE_EXPORT Memory : public LogicComponent, public MemData
         virtual void contextMenuEvent( QGraphicsSceneContextMenuEvent* event );
         
     private:
-        void write( bool w );
-
         int m_addrBits;
         int m_dataBits;
         int m_dataBytes;
@@ -65,14 +64,15 @@ class MAINMODULE_EXPORT Memory : public LogicComponent, public MemData
 
         QVector<int> m_ram;
 
+        bool m_oe;
         bool m_we;
         bool m_cs;
-        bool m_write;
         bool m_persistent;
         bool m_asynchro;
 
         IoPin* m_CsPin;
         IoPin* m_WePin;
+        IoPin*  m_oePin;
 };
 
 #endif

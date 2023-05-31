@@ -32,7 +32,8 @@ LibraryItem* Memory::libraryItem()
 }
 
 Memory::Memory( QObject* parent, QString type, QString id )
-      : LogicComponent( parent, type, id )
+      : IoComponent( parent, type, id )
+      , eElement( id )
       , MemData()
 {
     m_width  = 4;
@@ -82,27 +83,29 @@ Memory::~Memory(){}
 
 void Memory::stamp()                   // Called at Simulation Start
 {
-    m_we = true;
+    m_oe = false;
     m_cs = true;
+    m_we = true;
+
+    for( IoPin* pin : m_outPin ) pin->setPinMode( input );
+    IoComponent::initState();
+
     if( !m_persistent ) m_ram.fill( 0 );
 
-    for( uint i=0; i<m_inPin.size(); ++i ) m_inPin[i]->changeCallBack( this, m_asynchro );
+    for( uint i=0; i<m_inPin.size(); ++i )
+        m_inPin[i]->changeCallBack( this, m_asynchro );
 
     m_WePin->changeCallBack( this );
     m_CsPin->changeCallBack( this );
     m_oePin->changeCallBack( this );
-
-    write( true );
-
-    LogicComponent::stamp();
 }
 
 void Memory::updateStep()
 {
     if( m_changed )
     {
-        for( IoPin* pin : m_inPin  ) pin->changeCallBack( this, m_asynchro );
-        for( IoPin* pin : m_outPin ) pin->changeCallBack( this, m_asynchro && m_we );
+        for( IoPin* pin : m_inPin  ) pin->changeCallBack( this, m_asynchro && m_cs );
+        for( IoPin* pin : m_outPin ) pin->changeCallBack( this, m_asynchro && m_cs && m_we );
         m_changed = false;
     }
     if( m_memTable ) m_memTable->updateTable( &m_ram );
@@ -110,70 +113,40 @@ void Memory::updateStep()
 
 void Memory::voltChanged()        // Some Pin Changed State, Manage it
 {
-    bool CS = m_CsPin->getInpState();
-    if( CS != m_cs ){
-        m_cs = CS;
-        LogicComponent::enableOutputs( CS && m_outEnable );
-    }
-    if( !CS ) return;
-
-    updateOutEnabled();
-
+    m_cs = m_CsPin->getInpState();
     m_we = m_WePin->getInpState();
+
+    bool oe = m_oePin->getInpState() && m_cs && !m_we;
+    if( m_oe != oe )
+    {
+        m_oe = oe;
+        for( IoPin* pin : m_outPin )         // Enable/Disable outputs
+        {
+            pin->setPinMode( oe ? output : input );
+            if( m_asynchro ) pin->changeCallBack( this, m_cs && m_we );
+        }
+    }
+    if( !m_cs ) return;                      // Chip not selected, nothing to do
+
     m_address = 0;
     for( int i=0; i<m_addrBits; ++i )        // Get Address
     {
         bool state = m_inPin[i]->getInpState();
         if( state ) m_address += pow( 2, i );
     }
-    if( m_we ){                             // Write
-        write( true );
-        Simulator::self()->addEvent( m_propDelay*m_propSize, this );
-    }
-    else{                                  // Read
-        write( false );
-        m_nextOutVal = m_ram[m_address];
-        IoComponent::sheduleOutPuts( this );
-        //Simulator::self()->addEvent( m_propDelay*m_propSize, this );
-}   }
-
-void Memory::runEvent()
-{
-    if( m_write )
-    {
+    if( m_we ){                              // Write
         int value = 0;
         for( uint i=0; i<m_outPin.size(); ++i )
         {
             bool state = m_outPin[i]->getInpState();
             if( state ) value += pow( 2, i );
-            m_outPin[i]->setPinState( state? input_high:input_low ); // High-Low colors
         }
         m_ram[m_address] = value;
     }
-    else{ IoComponent::runOutputs();
-        /*for( int i=0; i<m_dataBits; ++i )
-        {
-            bool state = m_nextOutVal & (1<<i);
-            bool oldst = m_outPin[i]->getOutState();
-            if( state == oldst ) continue;
-
-            m_outPin[i]->setOutStatFast( state );
-        }*/
-    }
-}
-
-void Memory::write( bool w )
-{
-    m_write = w;
-    for( IoPin* pin : m_outPin )
-    {
-        if( m_outEnable ) pin->setPinMode( w ? input : output );
-        else              LogicComponent::enableOutputs( false );
-
-        if( m_asynchro ) pin->changeCallBack( this, w );
-    }
-    Simulator::self()->cancelEvents( this );
-}
+    else{                                    // Read
+        m_nextOutVal = m_ram[m_address];
+        IoComponent::sheduleOutPuts( this );
+}   }
 
 void Memory::setAsynchro( bool a )
 {
@@ -262,7 +235,7 @@ void Memory::createAddrBits( int bits )
 }   }
 
 void Memory::deleteAddrBits( int bits )
-{ LogicComponent::deletePins( &m_inPin, bits ); }
+{ IoComponent::deletePins( &m_inPin, bits ); }
 
 void Memory::setDataBits( int bits )
 {
@@ -301,7 +274,7 @@ void Memory::createDataBits( int bits )
 }   }
 
 void Memory::deleteDataBits( int bits )
-{ LogicComponent::deletePins( &m_outPin, bits ); }
+{ IoComponent::deletePins( &m_outPin, bits ); }
 
 void Memory::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
 {
