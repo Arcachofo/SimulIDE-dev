@@ -87,7 +87,7 @@ void Simulator::timerEvent( QTimerEvent* e )  //update at m_timerTick rate (50 m
         m_warning = -10;
     }
     else if( m_warning < 0 )
-    { if( ++m_warning == 0 ) CircuitWidget::self()->setMsg( " Running ", 0 ); }
+    { if( ++m_warning == 0 ) CircuitWidget::self()->setMsg( " "+tr("Running")+" ", 0 ); }
 
     if( !m_CircuitFuture.isFinished() ) // Stop remaining parallel thread
     {
@@ -220,7 +220,7 @@ void Simulator::resetSim()
     m_voltChanged = NULL;
     m_nonLinear = NULL;
 
-    CircuitWidget::self()->setMsg( " Stopped ", 1 );
+    CircuitWidget::self()->setMsg( " "+tr("Stopped")+" ", 1 );
 }
 
 void Simulator::createNodes()
@@ -345,7 +345,7 @@ void Simulator::stopTimer()
     m_timerId = 0;
 
     CircuitWidget::self()->setRate( 0, 0 );
-    CircuitWidget::self()->setMsg( " Stopped ", 1 );
+    CircuitWidget::self()->setMsg( " "+tr("Stopped")+" ", 1 );
     Circuit::self()->update();
     qDebug() << "\n    Simulation Stopped ";
     m_state = SIM_STOPPED;
@@ -354,7 +354,7 @@ void Simulator::stopTimer()
 void Simulator::initTimer()
 {
     if( m_timerId != 0 ) return;
-    CircuitWidget::self()->setMsg( " Running ", 0  );
+    CircuitWidget::self()->setMsg( " "+tr("Running")+" ", 0 );
     m_refTime  = m_RefTimer.nsecsElapsed();
     m_loopTime = m_refTime;
     m_timerId = this->startTimer( m_timerTick, Qt::PreciseTimer );

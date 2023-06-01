@@ -34,7 +34,6 @@ CircuitWidget::CircuitWidget( QWidget *parent  )
     setObjectName( "CircuitWidget" );
     m_pSelf = this;
 
-    m_blocked = false;
     m_appPropW = NULL;
     m_about = NULL;
 
@@ -151,7 +150,7 @@ void CircuitWidget::createActions()
     pauseSimAct = new QAction( QIcon(":/pausesim.png"),tr("Pause Simulation"), this);
     pauseSimAct->setStatusTip(tr("Pause Simulation"));
     connect( pauseSimAct, &QAction::triggered,
-             this, &CircuitWidget::pauseSim, Qt::UniqueConnection );
+             this, &CircuitWidget::pauseCirc, Qt::UniqueConnection );
 
     settAppAct = new QAction( QIcon(":/config.svg"),tr("Settings"), this);
     settAppAct->setStatusTip(tr("Settings"));
@@ -359,12 +358,9 @@ void CircuitWidget::saveCirc( QString file )
 
 void CircuitWidget::powerCirc()
 {
-    if( m_blocked ) return;
-    m_blocked = true;
     if( Simulator::self()->isPaused() )          powerCircOff();
     else if( powerCircAct->iconText() == "Off" ) powerCircOn();
     else if( powerCircAct->iconText() == "On" )  powerCircOff();
-    m_blocked = false;
 }
 
 void CircuitWidget::powerCircOn()
@@ -392,39 +388,52 @@ void CircuitWidget::powerCircOff()
 
 void CircuitWidget::powerCircDebug( bool paused )
 {
+    Simulator::self()->startSim( paused );
+
     powerCircAct->setIcon( QIcon(":/powerdeb.png") );
     powerCircAct->setIconText("Debug");
-    powerCircAct->setEnabled( true );
-    MainWindow::self()->setState("▶");
+    powerCircAct->setEnabled( false );
+    pauseSimAct->setEnabled( false );
+    MainWindow::self()->setState("❚❚");
+    setMsg( " "+tr("Debug")+"❚❚", 3 );
 
-    Simulator::self()->startSim( paused );
-    if( paused ) m_infoWidget->setRate( -1, 0 );  //m_rateLabel->setText( tr("Speed: Debugger") );
+    m_infoWidget->setRate( -1, 0 );  //m_rateLabel->setText( tr("Speed: Debugger") );
 }
 
-void CircuitWidget::pauseSim()
+void CircuitWidget::pauseDebug()
 {
-    if( m_blocked ) return;
-    m_blocked = true;
+    Simulator::self()->pauseSim();
+    setMsg( " "+tr("Debug")+"❚❚", 3 );
+    MainWindow::self()->setState("❚❚");
+}
+
+void CircuitWidget::resumeDebug()
+{
+    Simulator::self()->resumeSim();
+    setMsg( " "+tr("Debug")+"  ▶ ", 4 );
+    MainWindow::self()->setState("▶");
+}
+
+void CircuitWidget::pauseCirc()
+{
     if( Simulator::self()->simState() > SIM_PAUSED )
     {
         Simulator::self()->pauseSim();
-        setMsg( " Paused ", 1 );
+        setMsg( " "+tr("Paused")+" ", 1 );
+        MainWindow::self()->setState("❚❚");
         pauseSimAct->setIcon( QIcon(":/simpaused.png") );
         powerCircAct->setIcon( QIcon(":/poweroff.png") );
         powerCircAct->setIconText("Off");
-        MainWindow::self()->setState("❚❚");
     }
     else if( Simulator::self()->isPaused() )
     {
         Simulator::self()->resumeSim();
-        setMsg( " Running ", 0 );
+        setMsg( " "+tr("Running")+" ", 0 );
+        MainWindow::self()->setState("▶");
         pauseSimAct->setIcon( QIcon(":/pausesim.png") );
         powerCircAct->setIcon( QIcon(":/poweron.png") );
         powerCircAct->setIconText("On");
-        MainWindow::self()->setState("▶");
-        //powerCircAct->setEnabled( true );
     }
-    m_blocked = false;
 }
 
 void CircuitWidget::settApp()
@@ -463,6 +472,8 @@ void CircuitWidget::setMsg( QString msg, int type )
     if     ( type == 0 ) m_msgLabel->setStyleSheet("QLabel { background-color: lightgreen; color: black;  font-weight: bold;}");
     else if( type == 1 ) m_msgLabel->setStyleSheet("QLabel { background-color: orange;     color: white;  font-weight: bold;}");
     else if( type == 2 ) m_msgLabel->setStyleSheet("QLabel { background-color: red;        color: yellow; font-weight: bold;}");
+    else if( type == 3 ) m_msgLabel->setStyleSheet("QLabel { background-color: blue;       color: white;  font-weight: bold;}");
+    else if( type == 4 ) m_msgLabel->setStyleSheet("QLabel { background-color: lightblue;  color: black;  font-weight: bold;}");
     m_msgLabel->setText( "   "+msg+"   " );
 }
 

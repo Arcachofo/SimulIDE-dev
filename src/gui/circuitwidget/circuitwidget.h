@@ -40,8 +40,10 @@ class MAINMODULE_EXPORT CircuitWidget : public QWidget
         void powerCircOn();
         void powerCircOff();
         void powerCircDebug( bool paused );
+        void pauseDebug();
+        void resumeDebug();
 
-        void simDebug( QString msg ) { m_outPane.appendLine( msg.remove("\"") ); }
+        void simDebugMessage( QString msg ) { m_outPane.appendLine( msg.remove("\"") ); }
 
         QSplitter* splitter() { return m_mainSplitter; }
         
@@ -54,7 +56,7 @@ class MAINMODULE_EXPORT CircuitWidget : public QWidget
         void saveCirc();
         void saveCircAs();
         void powerCirc();
-        void pauseSim();
+        void pauseCirc();
         void settApp();
         void openInfo();
         void about();
@@ -71,8 +73,6 @@ class MAINMODULE_EXPORT CircuitWidget : public QWidget
         enum { MaxRecentFiles = 10 };
         void updateRecentFiles();
         void updateRecentFileActions();
-
-        bool m_blocked;
 
         QVBoxLayout  m_verticalLayout;
         CircuitView  m_circView;

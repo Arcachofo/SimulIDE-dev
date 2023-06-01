@@ -85,7 +85,7 @@ void EditorWindow::run()
     if( m_state == DBG_STOPPED ) return;
     m_state = DBG_RUNNING;
     m_debugger->run();
-    Simulator::self()->resumeSim();
+    CircuitWidget::self()->resumeDebug();
 }
 
 void EditorWindow::step()
@@ -103,7 +103,7 @@ void EditorWindow::stepOver()
 void EditorWindow:: pause()
 {
     if( m_state < DBG_STEPING )  return;
-    Simulator::self()->pauseSim();
+    CircuitWidget::self()->pauseDebug();
 
     m_resume = m_state;
     m_state  = DBG_PAUSED;
@@ -115,7 +115,8 @@ void EditorWindow:: pause()
 
 void EditorWindow::reset()
 {
-    CircuitWidget::self()->powerCircOff();
+    //CircuitWidget::self()->powerCircOff();
+    Simulator::self()->stopSim();
 
     m_debugDoc->setDebugLine( 1 );
     m_debugDoc->updateScreen();
@@ -178,7 +179,7 @@ void EditorWindow::stepDebug( bool over )
     if( m_debugger->stepFromLine( over ) )
     {
         m_state = DBG_STEPING;
-        Simulator::self()->resumeSim();
+        CircuitWidget::self()->resumeDebug();
     }else{                                // First step to PC = 0
         setStepActs( true );
         m_jumpToBrk = true;

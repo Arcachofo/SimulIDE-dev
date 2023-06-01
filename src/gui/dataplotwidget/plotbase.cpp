@@ -185,7 +185,7 @@ void PlotBase::conditonMet( int ch, cond_t cond )
     if( m_pause )
     {
         m_risEdge = Simulator::self()->circTime();
-        CircuitWidget::self()->pauseSim();
+        CircuitWidget::self()->pauseCirc();
         if( m_autoExport ) QTimer::singleShot( 50, this, &PlotBase::dump );
     }
 
