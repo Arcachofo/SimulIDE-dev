@@ -53,6 +53,7 @@ AudioOut::AudioOut( QObject* parent, QString type, QString id )
     
     m_admit = 1.0/8;
     m_buzzer = false;
+    m_audioOutput = NULL;
 
     m_deviceinfo = QAudioDeviceInfo::defaultOutputDevice(); 
     if( m_deviceinfo.isNull() ) 
@@ -89,7 +90,7 @@ new DoubProp<AudioOut>( "Impedance", tr("Impedance"),"Ω", this, &AudioOut::res,
 }
 AudioOut::~AudioOut()
 {
-    delete m_audioOutput;
+    if( m_audioOutput ) delete m_audioOutput;
 }
 
 void AudioOut::initialize()
