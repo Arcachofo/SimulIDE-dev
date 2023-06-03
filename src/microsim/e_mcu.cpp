@@ -145,14 +145,17 @@ void eMcu::reset()
     m_cycle = 0;
     cyclesDone = 0;
 
-    for( McuModule* module : m_modules ) module->reset();
-    for( IoPort* ioPort : m_ioPorts ) ioPort->reset();
+    for( McuModule* module : m_modules  ) module->reset();
+    for( IoPort*    ioPort : m_ioPorts  ) ioPort->reset();
+    for( McuPort*  mcuPort : m_mcuPorts ) mcuPort->reset();
 
     m_interrupts.resetInts();
     DataSpace::initialize();
 
     if( cpu ) cpu->reset(); // Must be after all modules reset
     else qDebug() << "ERROR: eMcu::reset NULL Cpu";
+
+    for( McuPort*  mcuPort : m_mcuPorts ) mcuPort->readPort( 0 ); // Update Pin Input register
 
     if( !m_saveEepr )
         for( uint i=0; i<m_romSize; ++i ) setRomValue( i, 0xFF );

@@ -204,7 +204,7 @@ void McuCreator::createCfgWord( QDomElement* e )
     QString name = e->attribute("name");
     QString type = e->attribute("type");
 
-    ConfigWord* cfgWord;
+    ConfigWord* cfgWord = NULL;
     if( m_core == "Pic14" )  cfgWord = PicConfigWord::createCfgWord( mcu, name, type );
     if( !cfgWord ) return;
 

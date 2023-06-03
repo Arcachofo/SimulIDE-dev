@@ -83,6 +83,7 @@ void McuPort::dirChanged( uint8_t val )
 
 void McuPort::readPort( uint8_t )
 {
+    if( m_inAddr ) *m_inReg = getInpState();
 }
 
 void McuPort::intChanged( uint8_t val )
