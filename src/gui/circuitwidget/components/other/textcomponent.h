@@ -2,10 +2,11 @@
 #define TEXTCOMPONENT_H
 
 #include "component.h"
+#include "linkable.h"
 
 class LibraryItem;
 
-class MAINMODULE_EXPORT TextComponent : public Component
+class MAINMODULE_EXPORT TextComponent : public Component, public Linkable
 {
     public:
         TextComponent( QObject* parent, QString type, QString id );
@@ -43,19 +44,14 @@ class MAINMODULE_EXPORT TextComponent : public Component
         qreal opac() { return m_opac; }
         void setOpac( qreal op );
 
-        QString getLinks();
-        void setLinks( QString links );
-
-        virtual void createLinks(QList<Component*>*compList ) override;
-
+        virtual void createLinks( QList<Component*>*compList ) override;
         virtual void compSelected( Component* comp ) override;
 
         void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
 
-
     public slots:
         void updateGeometry(int, int, int);
-        void linkComp();
+        void slotLinkComp() { Linkable::linkComp(); }
 
     protected:
         virtual void contextMenuEvent( QGraphicsSceneContextMenuEvent* event ) override;
@@ -63,8 +59,6 @@ class MAINMODULE_EXPORT TextComponent : public Component
     private:
         QGraphicsTextItem* m_text;
         QString m_textString;
-
-        QList<Component*> m_linkedComp;
 
         qreal m_opac;
         

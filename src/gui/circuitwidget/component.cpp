@@ -14,6 +14,7 @@
 #include "circuit.h"
 #include "utils.h"
 #include "propdialog.h"
+#include "linkable.h"
 
 #include "doubleprop.h"
 #include "boolprop.h"
@@ -23,7 +24,7 @@
 
 int  Component::m_error = 0;
 bool Component::m_selMainCo = false;
-Component* Component::m_selecComp = NULL;
+Linkable* Component::m_selecComp = NULL;
 
 Component::Component( QObject* parent, QString type, QString id )
          : CompBase( parent, type, id )
@@ -44,6 +45,7 @@ Component::Component( QObject* parent, QString type, QString id )
     m_crashed    = false;
     m_warning    = false;
     m_graphical  = false;
+    m_Linkable   = false;
     m_background = "";
     m_showProperty = "";
     m_linkNumber = -1;

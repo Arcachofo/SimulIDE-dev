@@ -17,6 +17,7 @@
 #include "subcircuit.h"
 #include "utils.h"
 #include "e-diode.h"
+#include "linkable.h"
 
 CircuitView*  CircuitView::m_pSelf = NULL;
 
@@ -160,6 +161,7 @@ void CircuitView::overrideCursor( const QCursor &cursor )
 
 void CircuitView::contextMenuEvent( QContextMenuEvent* event )
 {
+    QGuiApplication::restoreOverrideCursor();
     QGraphicsView::contextMenuEvent( event );
 
     if( m_circuit->is_constarted() ) m_circuit->deleteNewConnector();
@@ -168,7 +170,6 @@ void CircuitView::contextMenuEvent( QContextMenuEvent* event )
         if( Component::m_selecComp ) // Cancel link to components
         {
             Component::m_selecComp->compSelected( NULL );
-            QGuiApplication::restoreOverrideCursor();
             return;
         }
 

@@ -16,6 +16,7 @@
 #include "e-node.h"
 #include "utils.h"
 #include "mcu.h"
+#include "linkable.h"
 
 #include "logicsubc.h"
 #include "board.h"
@@ -174,7 +175,7 @@ void SubCircuit::loadSubCircuit( QString fileName )
     numId = numId.split("-").last();
     Circuit* circ = Circuit::self();
 
-    QList<Component*> linkList;   // Linked  Component list
+    QList<Linkable*> linkList;   // Linked  Component list
 
     QVector<QStringRef> docLines = doc.splitRef("\n");
     for( QStringRef line : docLines )
@@ -303,7 +304,11 @@ void SubCircuit::loadSubCircuit( QString fileName )
                     }
                     m_compList.append( comp );
 
-                    if( !comp->m_linkedStr.isEmpty() ) linkList.append( comp );
+                    if( comp->m_Linkable )
+                    {
+                        Linkable* l = (Linkable*)comp;
+                        if( l->hasLinks() ) linkList.append( l );
+                    }
 
                     if( type == "Tunnel" ) // Make Tunnel names unique for this subcircuit
                     {
@@ -314,7 +319,7 @@ void SubCircuit::loadSubCircuit( QString fileName )
                 }   }
                 else qDebug() << "SubCircuit:"<<m_name<<m_id<< "ERROR Creating Component: "<<type<<uid<<label;
     }   }   }
-    for( Component* comp : linkList ) comp->createLinks( &m_compList );
+    for( Linkable* l : linkList ) l->createLinks( &m_compList );
 }
 
 Pin* SubCircuit::addPin( QString id, QString type, QString label, int pos, int xpos, int ypos, int angle, int length  )

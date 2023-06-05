@@ -25,6 +25,7 @@
 #include "simulator.h"
 #include "e-node.h"
 #include "shield.h"
+#include "linkable.h"
 
 Circuit* Circuit::m_pSelf = NULL;
 
@@ -164,7 +165,7 @@ void Circuit::loadStrDoc( QString &doc )
 {
     QApplication::setOverrideCursor(Qt::WaitCursor);
 
-    QList<Component*> linkList;   // Linked  Component list
+    QList<Linkable*> linkList;   // Linked  Component list
     QList<Component*> compList;   // Pasting Component list
     QList<Connector*> conList;    // Pasting Connector list
     QList<Node*> nodeList;        // Pasting node list
@@ -427,7 +428,11 @@ void Circuit::loadStrDoc( QString &doc )
                     comp->updtLabelPos();
                     comp->updtValLabelPos();
                     compList.append( comp );
-                    if( !comp->m_linkedStr.isEmpty() ) linkList.append( comp );
+                    if( comp->m_Linkable )
+                    {
+                        Linkable* l = (Linkable*)comp;
+                        if( l->hasLinks() ) linkList.append( l );
+                    }
                 }
                 else qDebug() << " ERROR Creating Component: "<< type << uid;
     }   }   }
@@ -437,7 +442,7 @@ void Circuit::loadStrDoc( QString &doc )
         for( Component* comp : nodeList ) { comp->setSelected( true ); comp->move( m_deltaMove ); }
         for( Connector* con  : conList )  { con->setSelected( true );  con->move( m_deltaMove ); }
     }
-    for( Component* comp : linkList ) comp->createLinks( &compList );
+    for( Linkable* l : linkList ) l->createLinks( &m_compList );
 
     m_compList.append( compList );
     m_nodeList.append( nodeList );

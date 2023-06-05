@@ -36,13 +36,13 @@ LibraryItem* TextComponent::libraryItem()
 
 TextComponent::TextComponent( QObject* parent, QString type, QString id )
              : Component( parent, type, id )
+             , Linkable()
 {
     m_graphical = true;
+    m_Linkable  = true;
     m_opac = 1;
     m_color = QColor( 255, 255, 220 );
     m_font  = "Helvetica [Cronyx]";
-
-    /// m_linkedComp = NULL;
 
     QFont sansFont( m_font, 10 );
     #if QT_VERSION >= QT_VERSION_CHECK(5, 9, 0)
@@ -53,8 +53,6 @@ TextComponent::TextComponent( QObject* parent, QString type, QString id )
     sansFont.setFixedPitch(true);
 
     m_text = new QGraphicsTextItem( this );
-    //m_text->setTextInteractionFlags( Qt::TextSelectableByMouse | Qt::TextSelectableByKeyboard | Qt::TextEditable);
-    //m_text->setTextInteractionFlags( Qt::TextEditorInteraction | Qt::TextBrowserInteraction );
     m_text->setTextInteractionFlags( 0 );
     m_text->setTextWidth( 90 );
     m_text->setFont( sansFont );
@@ -106,7 +104,6 @@ void TextComponent::updateStep()
     for( int i=0; i<m_linkedComp.size(); ++i )
     {
         Component* comp = m_linkedComp.at( i );
-        comp->m_linkNumber = i;
         comp->update();
         QString data = comp->getValLabelText();
         text.replace( "$data"+QString::number(i), data );
@@ -144,42 +141,6 @@ void TextComponent::setOpac( qreal op )
     else if( op < 0 ) op = 0;
     m_opac = op;
     update();
-}
-
-QString TextComponent::getLinks()
-{
-    QString links;
-
-    for( int i=0; i<m_linkedComp.size(); ++i )
-    {
-        Component* comp = m_linkedComp.at( i );
-        links.append( comp->getUid()+"," );
-    }
-    return links;
-}
-
-void TextComponent::setLinks( QString links )
-{
-    m_linkedStr = links;
-}
-
-void TextComponent::createLinks( QList<Component*>* compList )
-{
-    QStringList components = m_linkedStr.split(",");
-    for( QString uid : components )
-    {
-        if( uid.isEmpty() ) continue;
-
-        for( Component* comp : *compList )
-            if( comp->getUid().contains( uid ) )
-            {
-                qDebug() << "TextComponent::createLinks"<<uid;
-                m_linkedComp.append( comp );
-                break;
-            }
-    }
-    if( !m_linkedComp.isEmpty() ) Simulator::self()->addToUpdateList( this );
-    updateStep();
 }
 
 void TextComponent::setFixedW( bool fixedW ) 
@@ -226,33 +187,17 @@ void TextComponent::setFontSize( int size )
     updateGeometry( 0, 0, 0 );
 }
 
-void TextComponent::linkComp()
+void TextComponent::createLinks( QList<Component*>* compList )
 {
-    Component::m_selecComp = this;
-    QGuiApplication::setOverrideCursor( Qt::PointingHandCursor );
-    Circuit::self()->update();
+    Linkable::createLinks( compList );
+    if( !m_linkedComp.isEmpty() ) Simulator::self()->addToUpdateList( this );
+    updateStep();
 }
 
 void TextComponent::compSelected( Component* comp )
 {
-    if( comp )
-    {
-        if( m_linkedComp.contains( comp ) )
-        {
-            comp->m_linkNumber = -1;
-            m_linkedComp.removeAll( comp );
-        }
-        else m_linkedComp.append( comp );
-
-        for( int i=0; i<m_linkedComp.size(); ++i )
-        {
-            Component* comp = m_linkedComp.at( i );
-            comp->m_linkNumber = i;
-        }
-    }
-    else m_selecComp = NULL;
+    Linkable::compSelected( comp );
     updateStep();
-
     Simulator::self()->addToUpdateList( this );
 }
 
@@ -265,7 +210,7 @@ void TextComponent::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
 
     QAction* linkCompAction = menu->addAction( QIcon(":/subcl.png"),tr("Link to Component") );
     connect( linkCompAction, &QAction::triggered,
-                       this, &TextComponent::linkComp, Qt::UniqueConnection );
+                       this, &TextComponent::slotLinkComp, Qt::UniqueConnection );
 
     menu->addSeparator();
 

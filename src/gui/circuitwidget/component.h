@@ -19,6 +19,7 @@ class eNode;
 class Label;
 class Connector;
 class ConnectorLine;
+class Linkable;
 
 class MAINMODULE_EXPORT Component : public CompBase, public QGraphicsItem, public Updatable
 {
@@ -124,17 +125,16 @@ class MAINMODULE_EXPORT Component : public CompBase, public QGraphicsItem, publi
 
         virtual void setflip();
 
-        virtual void compSelected( Component* comp ){ m_selecComp = NULL;}
-
         void addSignalPin( Pin* pin );
         void remSignalPin( Pin* pin );
 
         virtual void paint( QPainter* painter, const QStyleOptionGraphicsItem*, QWidget* );
 
-        virtual void createLinks( QList<Component*>* l){;}
+        // Link components
+        bool m_Linkable;
         int m_linkNumber;
-        QString m_linkedStr;
- static Component* m_selecComp;
+ static Linkable* m_selecComp;
+
     //signals:
         //void moved();
         //void flip( int h, int v );
