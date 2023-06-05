@@ -81,7 +81,7 @@ void RTD::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* w
     font.setPixelSize(8);
     p->setFont( font );
 
-    p->drawRect(-10.5, -4, 21, 8 );
+    p->drawRect( QRectF(-10.5, -4, 21, 8 ));
 
     p->drawLine(-6, 6, 8,-8 );
     p->drawText(-8,-6, "+tº");
