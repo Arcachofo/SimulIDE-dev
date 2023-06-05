@@ -16,10 +16,7 @@ class VoltWidget : public DialWidget
         VoltWidget();
         ~VoltWidget();
 
-        void setupWidget();
-
         CustomButton* pushButton;
-
 };
 #endif
 

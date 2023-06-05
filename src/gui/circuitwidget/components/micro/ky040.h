@@ -13,6 +13,7 @@
 class LibraryItem;
 class QToolButton;
 class IoPin;
+class CustomDial;
 
 class MAINMODULE_EXPORT KY040 : public Component, public eElement
 {
@@ -47,9 +48,8 @@ class MAINMODULE_EXPORT KY040 : public Component, public eElement
         bool m_stateB;
         
         bool m_changed;
-        
-        DialWidget m_dialW;
-        QDial* m_dial;
+
+        CustomDial* m_dial;
         QGraphicsProxyWidget* m_proxy;
         
         QToolButton* m_button;

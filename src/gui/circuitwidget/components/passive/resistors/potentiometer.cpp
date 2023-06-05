@@ -3,11 +3,12 @@
  *                                                                         *
  ***( see copyright.txt file at root folder )*******************************/
 
-#include <QDial>
+#include <QAbstractSlider>
 #include <QPainter>
 #include <QGraphicsProxyWidget>
 
 #include "potentiometer.h"
+#include "dialwidget.h"
 #include "propdialog.h"
 #include "simulator.h"
 #include "circuit.h"
@@ -41,26 +42,16 @@ Potentiometer::Potentiometer( QObject* parent, QString type, QString id )
              , m_resB(  id+"-resB" )
 {
     m_graphical = true;
-    m_midEnode = NULL;
     m_area = QRectF( -12, -4.5, 24, 12.5 );
+
+    m_midEnode = NULL;
+    m_dial     = NULL;
+    m_proxy    = NULL;
 
     m_pin.resize(3);
     m_pin[0] = &m_pinA;
     m_pin[1] = &m_pinM;
     m_pin[2] = &m_pinB;
-    
-    m_dialW.setupWidget();
-    m_dialW.setFixedSize( 24, 24 );
-
-    m_dial = m_dialW.dial;
-    m_dial->setMinimum(0);
-    m_dial->setMaximum(1000);
-    m_dial->setValue(500);
-    m_dial->setSingleStep(25);
-    
-    m_proxy = Circuit::self()->addWidget( &m_dialW );
-    m_proxy->setParentItem( this );
-    m_proxy->setPos( QPoint( -12, -24-5) );
 
     m_resA.setEpin( 0, &m_pinA );
     m_resA.setEpin( 1, &m_ePinA );
@@ -72,8 +63,7 @@ Potentiometer::Potentiometer( QObject* parent, QString type, QString id )
     
     Simulator::self()->addToUpdateList( this );
 
-    connect( m_dial, &QDial::valueChanged,
-             this,   &Potentiometer::resChanged, Qt::UniqueConnection );
+    setDialType( 0 );
 
     addPropGroup( { tr("Main"), {
 new DoubProp<Potentiometer>( "Resistance", tr("Resistance")   ,"Ω", this, &Potentiometer::getRes, &Potentiometer::setRes ),
@@ -83,7 +73,7 @@ new DoubProp<Potentiometer>( "Value_Ohm" , tr("Current Value"),"Ω", this, &Pote
     m_res1 = 0;
     setShowProp("Resistance");
     setPropStr( "Resistance", "1000 Ω" );
-    resChanged( 500 );
+    dialChanged( 500 );
 }
 Potentiometer::~Potentiometer() {}
 
@@ -104,7 +94,7 @@ void Potentiometer::updateStep()
     if( !m_changed ) return;
     m_changed = false;
 
-    double res1 = double( m_resist*m_dial->value()/1000 );
+    double res1 = double( m_resist*m_dialW.value()/1000 );
     double res2 = m_resist-res1;
 
     if( res1 < 1e-6 ){
@@ -122,19 +112,19 @@ void Potentiometer::updateStep()
     else if( m_showProperty == "Value_Ohm" ) setValLabelText( getPropStr( "Value_Ohm" ) );
 }
 
-void Potentiometer::resChanged( int res ) // Called when dial is rotated
+void Potentiometer::dialChanged( int ) // Called when dial is rotated
 {
     m_changed = true;
     if( !Simulator::self()->isRunning() ) updateStep();
 }
 
-double Potentiometer::getVal() { return m_resist*m_dial->value()/1000; }
+double Potentiometer::getVal() { return m_resist*m_dialW.value()/1000; }
 
 void Potentiometer::setVal( double val )
 {
     if( val > m_resist ) val = m_resist;
     else if( val < 1e-12 ) val = 1e-12;
-    m_dial->setValue( val*1000/m_resist );
+    m_dialW.setValue( val*1000/m_resist );
     m_res1 = val;
     m_changed = true;
     if( !Simulator::self()->isRunning() ) updateStep();
@@ -147,16 +137,41 @@ void Potentiometer::setRes( double res ) // Called when property resistance is c
     setVal( m_res1 );
 }
 
+void Potentiometer::setDialType( int type )
+{
+    m_dialW.setType( type );
+    setDial( &m_dialW );
+    m_proxy->setPos( QPoint(-m_dial->width()/2,-m_dial->height()-5) );
+}
+
+void Potentiometer::setDial( DialWidget* dial )
+{
+    if( m_dial )
+    {
+        disconnect( m_dial->dial(), &QAbstractSlider::valueChanged,
+                    this,           &Potentiometer::dialChanged );
+    }
+    if( dial ) m_dial = dial;
+    else       m_dial = &m_dialW;
+
+    if( m_proxy ) delete m_proxy;
+    m_proxy = Circuit::self()->addWidget( m_dial );
+    m_proxy->setParentItem( this );
+
+    connect( m_dial->dial(), &QAbstractSlider::valueChanged,
+             this,           &Potentiometer::dialChanged, Qt::UniqueConnection );
+}
+
 void Potentiometer::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
 {
     if( m_hidden ) return;
 
     Component::paint( p, option, widget );
-    p->drawRect( -10.5, -4, 21, 8 );
+    p->drawRect( QRectF(-10.5,-4, 21, 8 ));
     QPen pen = p->pen();
     pen.setWidth(3);
     p->setPen(pen);
 
-    p->drawLine( 0, 6, -3, 9 );
-    p->drawLine( 0, 6,  3, 9 );
+    p->drawLine( 0, 6,-3, 9 );
+    p->drawLine( 0, 6, 3, 9 );
 }

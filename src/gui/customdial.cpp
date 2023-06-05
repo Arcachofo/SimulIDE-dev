@@ -10,8 +10,6 @@ dial->setStyleSheet("qproperty-knobRadius: 5; qproperty-knobMargin: 5;"); */
 #include <QPainter>
 #include <QColor>
 #include <QPalette>
-#include "qdial.h"
-#include <qslider.h>
 #include <QtMath>
 #include <QStyleOptionSlider>
 
@@ -20,7 +18,12 @@ dial->setStyleSheet("qproperty-knobRadius: 5; qproperty-knobMargin: 5;"); */
 CustomDial::CustomDial( QWidget* parent )
           : QDial( parent )
 {
-    QDial::setRange( 0,100 );
+    setFixedSize( 24, 24 );
+    setRange( 0, 1000 );
+    setValue( 500 );
+    setSingleStep( 25 );
+    setNotchesVisible( true );
+    setAttribute( Qt::WA_TranslucentBackground );
 }
 
 void CustomDial::paintEvent( QPaintEvent* e )

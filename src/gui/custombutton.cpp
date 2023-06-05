@@ -20,8 +20,8 @@ void CustomButton::paintEvent( QPaintEvent* )
     QPainter painter(this);
     painter.setRenderHint( QPainter::Antialiasing ); // Smooth out the circle
     QPen pen = painter.pen();
-    pen.setColor( QColor( 160, 160, 160 ) );
-    painter.setPen( pen );
+    //pen.setColor( QColor( 160, 160, 160 ) );
+    //painter.setPen( pen );
 
     int h = height()-2;
     int w = width();
@@ -44,7 +44,7 @@ void CustomButton::paintEvent( QPaintEvent* )
         rect = QRectF( 1, 1, w-2, h );
     }
     painter.setBrush( linearGrad );
-    painter.drawRoundedRect( rect,2,2 );
+    painter.drawRoundedRect( rect, 2, 2 );
 
     pen.setColor( QColor( 0, 0, 20 ) );
     painter.setPen( pen );

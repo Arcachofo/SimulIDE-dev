@@ -40,7 +40,7 @@ new DoubProp<CurrSource>( "MaxValue" ,tr("Max. Current") ,"A", this, &CurrSource
 
     setShowProp("MaxValue");
     setPropStr( "MaxValue", "1 A" );
-    valueChanged( 0 );
+    dialChanged( 0 );
 }
 CurrSource::~CurrSource(){}
 

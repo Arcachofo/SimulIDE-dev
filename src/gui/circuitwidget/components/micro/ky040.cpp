@@ -5,12 +5,12 @@
 
 #include <math.h>
 
-#include <QDial>
-#include <QToolButton>
 #include <QGraphicsProxyWidget>
 #include <QPainter>
 
 #include "ky040.h"
+#include "customdial.h"
+#include "custombutton.h"
 #include "iopin.h"
 #include "simulator.h"
 #include "circuit.h"
@@ -47,11 +47,9 @@ KY040::KY040( QObject* parent, QString type, QString id )
 {
     m_changed = false;
     m_area = QRect( -WIDTH/2, -HEIGHT/2 + GAP, WIDTH, HEIGHT );
-    
-    m_dialW.setupWidget();
-    m_dialW.setFixedSize( DIAL_SIZE, DIAL_SIZE );
 
-    m_dial = m_dialW.dial;
+    m_dial = new CustomDial();
+    m_dial->setFixedSize( DIAL_SIZE, DIAL_SIZE );
     m_dial->setWrapping( true );
     m_dial->setMinimum( 1 );
     m_dial->setValue( 1 );
@@ -59,13 +57,13 @@ KY040::KY040( QObject* parent, QString type, QString id )
     m_dial->setNotchTarget( 10 );
     setSteps( 20 );
     
-    m_proxy = Circuit::self()->addWidget( &m_dialW );
+    m_proxy = Circuit::self()->addWidget( m_dial );
     m_proxy->setParentItem( this );
     m_proxy->setPos( QPoint(-WIDTH/2+(WIDTH-DIAL_SIZE)/2, -HEIGHT/2+(WIDTH-DIAL_SIZE)/2+GAP) );
     
-    m_button = new QToolButton();
-    m_button->setMaximumSize( 10,10 );
-    m_button->setGeometry(-10,-10,10,10);
+    m_button = new CustomButton();
+    m_button->setMaximumSize( 10, 10 );
+    m_button->setGeometry(-10,-10, 10, 10 );
     
     m_proxy_button = Circuit::self()->addWidget( m_button );
     m_proxy_button->setParentItem( this );
@@ -102,10 +100,9 @@ new IntProp<KY040>( "Steps", tr("Steps per Rotation"),tr("_Steps"), this, &KY040
 }
 KY040::~KY040(){}
 
-
 void KY040::stamp()
 {
-    m_dial->setValue(1);
+    m_dial->setValue( 1 );
     m_prevDialVal = 1;
 
     m_posA = 5;

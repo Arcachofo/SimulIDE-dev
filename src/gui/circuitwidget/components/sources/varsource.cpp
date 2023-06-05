@@ -38,30 +38,22 @@ VarSource::VarSource( QObject* parent, QString type, QString id )
 
     m_button = m_voltw.pushButton;
     m_button->setFixedSize( WIDTH-8,16 );
-    //m_button->setGeometry(-20,-16,16,16);
-    /*m_button->setStyleSheet(
-        "QPushButton {border: 1px solid #A0A0A0; border-radius: 2px;\n"
-        "padding: 0 3px; background: #F3F3F3;}\n"
-        "QPushButton:hover {background: #FAFAFA;}\n"
-        "QPushButton:checked {background: lightGray;}\n" );*/
 
-    m_dial = m_voltw.dial;
-    m_dial->setMaximum( 1000 );
     setVal( 0 );
 
-    setValLabelPos( -8, 30 , 0 ); // x, y, rot
-    setLabelPos(-32,-48, 0);
+    setValLabelPos(-8, 30 , 0 ); // x, y, rot
+    setLabelPos(-32,-48, 0 );
 
     Simulator::self()->addToUpdateList( this );
 
     connect( m_button, &CustomButton::clicked,
              this,     &VarSource::onbuttonclicked, Qt::UniqueConnection );
 
-    connect( m_dial, &QDial::valueChanged,
-             this,   &VarSource::valueChanged, Qt::UniqueConnection );
+    connect( m_voltw.dial(), &QDial::valueChanged,
+             this,           &VarSource::dialChanged, Qt::UniqueConnection );
 
     addPropGroup( { "Hidden1", {
-new BoolProp<VarSource>( "Running", "","", this, &VarSource::running, &VarSource::setRunning ),
+new BoolProp<VarSource>( "Running","","", this, &VarSource::running, &VarSource::setRunning ),
     }} );
 }
 VarSource::~VarSource() { }
@@ -86,7 +78,7 @@ void VarSource::onbuttonclicked()
     m_changed = true;
 }
 
-void VarSource::valueChanged( int val )
+void VarSource::dialChanged( int val )
 {
     m_outValue = double( m_maxValue*val/1000 );
     updateButton();
@@ -97,7 +89,7 @@ void VarSource::setVal( double val )
 {
     if( val > m_maxValue ) m_maxValue = val;
     else if( val < 0 ) val = 0;
-    m_dial->setValue( val*1000/m_maxValue );
+    m_voltw.setValue( val*1000/m_maxValue );
     m_outValue = val;
     m_changed = true;
     updateButton();
@@ -108,7 +100,7 @@ void VarSource::setMaxValue( double v )
 {
     m_maxValue = v;
     if( m_outValue > v ) m_outValue = v;
-    m_dial->setValue( m_outValue*1000/m_maxValue );
+    m_voltw.setValue( m_outValue*1000/m_maxValue );
     m_changed = true;
 }
 

@@ -8,8 +8,10 @@
 
 #include <QWidget>
 
-class QDial;
+class QAbstractSlider;
 class QVBoxLayout;
+class CustomDial;
+class CustomSlider;
 
 class DialWidget : public QWidget
 {
@@ -19,13 +21,23 @@ class DialWidget : public QWidget
         DialWidget();
         ~DialWidget();
 
-        void setupWidget();
+        void setSize( int size );
 
-        QDial* dial;
-        QVBoxLayout* verticalLayout;
+        void setType( int type );
 
-    private:
+        void setValue( int v );
+        int value();
+
+        QAbstractSlider* dial() { return m_dial; }
+
+    protected:
         virtual void paintEvent( QPaintEvent* e) override;
+
+        QVBoxLayout* m_verticalLayout;
+
+        QAbstractSlider* m_dial;
+        CustomDial*      m_knob;
+        CustomSlider*    m_slider;
 };
 #endif
 

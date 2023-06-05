@@ -3,30 +3,20 @@
  *                                                                         *
  ***( see copyright.txt file at root folder )*******************************/
 
-#include <QDial>
-#include "custombutton.h"
 #include <QVBoxLayout>
 
 #include "voltwidget.h"
+#include "custombutton.h"
+#include "customdial.h"
+#include "customslider.h"
 
 VoltWidget::VoltWidget()
 {
-    setupWidget();
-    setFixedSize( 60, 90 );
-}
-VoltWidget::~VoltWidget() {}
+    DialWidget::setSize( 36 );
+    m_dial->setValue( 0 );
 
-void VoltWidget::setupWidget()
-{
-    DialWidget::setupWidget();
-    
-    dial->setMinimum(0);
-    dial->setMaximum(500);
-    dial->setValue(000);
-    dial->setSingleStep(10);
-    
-    pushButton = new CustomButton(this);
-    pushButton->setCheckable(true);
+    pushButton = new CustomButton( this );
+    pushButton->setCheckable( true );
 
     QFont font;
     font.setFamily("Ubuntu");
@@ -36,8 +26,10 @@ void VoltWidget::setupWidget()
     font.setLetterSpacing( QFont::PercentageSpacing, 90 );
 #endif
     pushButton->setFont( font );
-    
-    verticalLayout->addWidget( pushButton );
-    verticalLayout->setAlignment( pushButton, Qt::AlignHCenter );
-}
 
+    m_verticalLayout->addWidget( pushButton );
+    m_verticalLayout->setAlignment( pushButton, Qt::AlignHCenter );
+
+    //setFixedSize( 60, 90 );
+}
+VoltWidget::~VoltWidget() {}

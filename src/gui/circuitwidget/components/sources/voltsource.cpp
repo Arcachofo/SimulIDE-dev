@@ -42,7 +42,7 @@ new DoubProp<VoltSource>( "MaxValue"  ,tr("Max. Voltage")  ,"V", this, &VoltSour
 
     setShowProp("MaxValue");
     setPropStr( "MaxValue", "5 V" );
-    valueChanged( 0 );
+    dialChanged( 0 );
 }
 VoltSource::~VoltSource() {}
 

@@ -4,7 +4,7 @@
  ***( see copyright.txt file at root folder )*******************************/
 
 #include <math.h>
-#include <QDial>
+#include <QAbstractSlider>
 #include <QGraphicsProxyWidget>
 
 #include "varresbase.h"
@@ -15,22 +15,14 @@
 #include "label.h"
 
 VarResBase::VarResBase( QObject* parent, QString type, QString id )
-            : Comp2Pin( parent, type, id )
-            , eResistor( id )
+          : Comp2Pin( parent, type, id )
+          , eResistor( id )
 {
     m_area = QRectF( -11, -11, 22, 16 );
     m_graphical = true;
 
     m_ePin[0] = m_pin[0];
     m_ePin[1] = m_pin[1];
-
-    m_dialW.setupWidget();
-    m_dialW.setFixedSize( 24, 24 );
-
-    m_dial = m_dialW.dial;
-    m_dial->setMinimum(0);
-    m_dial->setMaximum(1000);
-    m_dial->setSingleStep(25);
 
     m_proxy = Circuit::self()->addWidget( &m_dialW );
     m_proxy->setParentItem( this );
@@ -46,8 +38,8 @@ VarResBase::VarResBase( QObject* parent, QString type, QString id )
 
     Simulator::self()->addToUpdateList( this );
 
-    connect( m_dial, &QDial::valueChanged,
-             this,   &VarResBase::dialChanged, Qt::UniqueConnection );
+    connect( m_dialW.dial(), &QAbstractSlider::valueChanged,
+                       this, &VarResBase::dialChanged, Qt::UniqueConnection );
 }
 VarResBase::~VarResBase(){}
 
@@ -95,7 +87,7 @@ void VarResBase::updtValue()
     else if( m_value < m_minVal ) m_value = m_minVal;
 
     double dialV = (m_value-m_minVal)*1000/(m_maxVal-m_minVal);
-    m_dial->setValue( dialV );
+    m_dialW.setValue( dialV );
 
     if( m_propDialog ) m_propDialog->updtValues();
 }

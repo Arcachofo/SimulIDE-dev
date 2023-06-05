@@ -20,8 +20,11 @@ class MAINMODULE_EXPORT Potentiometer : public Component, public eElement
         Potentiometer( QObject* parent, QString type, QString id );
         ~Potentiometer();
 
-        static Component* construct( QObject* parent, QString type, QString id );
-        static LibraryItem* libraryItem();
+ static Component* construct( QObject* parent, QString type, QString id );
+ static LibraryItem* libraryItem();
+
+        virtual void stamp() override;
+        virtual void updateStep() override;
 
         double getVal();
         void setVal( double val );
@@ -29,13 +32,13 @@ class MAINMODULE_EXPORT Potentiometer : public Component, public eElement
         double getRes() { return m_resist; }
         void setRes( double v );
 
-        virtual void stamp() override;
-        virtual void updateStep() override;
+        void setDialType( int type );
+        void setDial( DialWidget* dial );
 
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
 
     public slots:
-        void resChanged( int volt );
+        void dialChanged( int );
 
     private:
         double m_resist;
@@ -54,9 +57,9 @@ class MAINMODULE_EXPORT Potentiometer : public Component, public eElement
         eResistor m_resB;
         
         eNode* m_midEnode;
-        
-        QDial* m_dial;
-        DialWidget m_dialW;
+
+        DialWidget* m_dial; // Dial actually controling
+        DialWidget m_dialW; // Builtin dial
         QGraphicsProxyWidget* m_proxy;
 };
 

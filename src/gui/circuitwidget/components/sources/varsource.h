@@ -27,11 +27,11 @@ class MAINMODULE_EXPORT VarSource : public Component, public eElement
 
         virtual void initialize() override;
 
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
 
     public slots:
         void onbuttonclicked();
-        void valueChanged( int val );
+        void dialChanged( int val );
 
     protected:
         void updateButton();
@@ -47,7 +47,6 @@ class MAINMODULE_EXPORT VarSource : public Component, public eElement
         VoltWidget m_voltw;
 
         CustomButton* m_button;
-        QDial* m_dial;
         QGraphicsProxyWidget* m_proxy;
 };
 

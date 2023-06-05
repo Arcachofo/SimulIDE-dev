@@ -43,7 +43,6 @@ class MAINMODULE_EXPORT VarResBase : public Comp2Pin, public eResistor
         double m_step;
 
         DialWidget m_dialW;
-        QDial*     m_dial;
         QGraphicsProxyWidget* m_proxy;
 };
 
