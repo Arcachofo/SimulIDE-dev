@@ -113,8 +113,8 @@
     <register  name="TCCR1A"  addr="0x002F"  reset=""  mask="" 
                bits="WGM10,WGM11,FOC1B,FOC1A,COM1B0,COM1B1,COM1A0,COM1A1" />
     
-    <register  name="SFIOR"   addr="0x0030"  reset=""  mask="00001111" 
-               bits="PSR10,PSR2,PUD,ACME" />
+    <register  name="SFIOR"   addr="0x0030"  reset=""  mask="00001000" 
+               bits="0,0,0,ACME" />
                
     <register  name="OSCCAL"  addr="0x0031"  reset=""  mask="" bits="" />
     <register  name="TCNT0"   addr="0x0032"  reset=""  mask="" bits="" />

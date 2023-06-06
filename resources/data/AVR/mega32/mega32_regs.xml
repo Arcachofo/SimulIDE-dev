@@ -103,15 +103,11 @@
     <register  name="TCCR1A"  addr="0x002F"  reset=""  mask="" 
                bits="PWM10,PWM11,FOC1B,FOC1A,COM1B0,COM1B1,COM1A0,COM1A1" />
 
-    <register  name="SFIOR"   addr="0x0030"  reset=""  mask="" 
+    <register  name="SFIOR"   addr="0x0030"  reset=""  mask="11101111" 
                bits="PSR10,0,PUD,ACME,0,ADTS0,ADTS1,ADTS2" />
 
-    <register  name="OSCCAL"  addr="0x0031"  reset=""  mask="" 
-               bits="CAL0,CAL1,CAL2,CAL3,CAL4,CAL5,CAL6,CAL7" />
-
-    <register  name="TCNT0"   addr="0x0032"  reset=""  mask="" 
-               bits="TCNT0_0,TCNT0_1,TCNT0_2,TCNT0_3,TCNT0_4,TCNT0_5,TCNT0_6,TCNT0_7" />
-
+    <register  name="OSCCAL"  addr="0x0031"  reset=""  mask="" bits="" />
+    <register  name="TCNT0"   addr="0x0032"  reset=""  mask="" bits="" />
     <register  name="TCCR0"   addr="0x0033"  reset=""  mask="" 
                bits="CS00,CS01,CS02,CTC0,COM00,COM01,PWM0,FOC0" />
 

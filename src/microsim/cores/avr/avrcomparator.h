@@ -22,10 +22,16 @@ class MAINMODULE_EXPORT AvrComp : public McuComp
         virtual void configureB( uint8_t newAIND ) override;
         virtual void configureC( uint8_t newACOE ) override;
 
+        virtual void setPinN( McuPin* pin ) override;
+
+        void readACO( uint8_t );
+
     protected:
-        void compare( uint8_t );
+        void compare( uint8_t v=0 );
+        void changeCallbacks();
 
         bool m_acie;
+        bool m_acoe;
 
         regBits_t m_ACD;
         regBits_t m_ACBG;

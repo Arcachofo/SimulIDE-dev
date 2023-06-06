@@ -31,9 +31,13 @@ class MAINMODULE_EXPORT AvrAdc : public McuAdc
         virtual void callBack() override { if( !m_converting ) startConversion(); }
 
     protected:
+        void updateAcme( uint8_t newVal );
         virtual void autotriggerConf(){;}
         virtual void endConversion() override;
 
+        void toAdcMux();
+
+        bool m_acme;
         bool m_autoTrigger;
         bool m_freeRunning;
         uint m_initCycles;
@@ -50,6 +54,7 @@ class MAINMODULE_EXPORT AvrAdc : public McuAdc
 
         // ADCSB
         regBits_t m_ADTS;
+        regBits_t m_ACME;
 
         //ADMUX
         regBits_t m_MUX;
@@ -82,6 +87,8 @@ class MAINMODULE_EXPORT AvrAdc01 : public AvrAdc00
     public:
         AvrAdc01( eMcu* mcu, QString name );
         ~AvrAdc01();
+
+        virtual void configureB( uint8_t newSFIOR ) override;
 
     protected:
         virtual void autotriggerConf() override;

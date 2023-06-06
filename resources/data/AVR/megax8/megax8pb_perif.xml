@@ -135,7 +135,7 @@
                    addressreg="EEARL,EEARH" 
                    interrupt="EEPR" />
           
-  <comp name="Comp" configregsA="ACSR" configbitsB="AIN0D,AIN1D"
+  <comp name="COMP" configregsA="ACSR" configbitsB="AIN0D,AIN1D" configbitsC="ACOE"
                     interrupt="ACOMP" 
                     pins="PORTD6,PORTD7,PORTE0"/>
 </parts>

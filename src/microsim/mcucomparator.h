@@ -21,6 +21,8 @@ class MAINMODULE_EXPORT McuComp : public McuModule, public eElement
 
         virtual void initialize() override;
 
+        virtual void setPinN( McuPin* ){;}
+
         virtual void callBackDoub( double vref ) override;
 
     protected:

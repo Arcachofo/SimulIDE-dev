@@ -54,7 +54,7 @@
   </usart>
 
   <port name="PORTV" pins="2"/> <!-- Fake Port for aVcc, aRef -->
-  <adc name="ADC" type="00" bits="10" configregsA="ADCSRA" configregsB="SFIOR"
+  <adc name="ADC" type="03" bits="10" configregsA="ADCSRA" configregsB="SFIOR"
                   dataregs="ADCL,ADCH"
                   multiplex="ADMUX"
                   interrupt="ADC"

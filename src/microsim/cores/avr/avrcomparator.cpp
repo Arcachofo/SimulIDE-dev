@@ -23,13 +23,15 @@ AvrComp::AvrComp( eMcu* mcu, QString name )
     m_AIN0D = getRegBits( "AIN0D", mcu );
     m_AIN1D = getRegBits( "AIN1D", mcu );
 
-    /// watchBitNames( "ACO", R_READ, this, &AvrComp::compare, mcu );
+    watchRegNames( "ACSR", R_READ, this, &AvrComp::readACO, mcu ); // Trigger a compare when ACO or ACI is read (ACSR)
 }
 AvrComp::~AvrComp(){}
 
 void AvrComp::initialize()
 {
     m_acie = false;
+    m_acoe = false;
+    m_compOut = false;
 
     m_pinP = m_pins[0];
     m_pinN = m_pins[1];
@@ -37,7 +39,7 @@ void AvrComp::initialize()
 
 void AvrComp::voltChanged()
 {
-    compare(0);
+    compare();
 }
 
 void AvrComp::configureA( uint8_t newACSR ) // ACSR is being written
@@ -46,17 +48,17 @@ void AvrComp::configureA( uint8_t newACSR ) // ACSR is being written
     //    m_mcu->m_regOverride = newACSR & ~(m_ACI.mask); // Clear ACI by writting it to 1
 
     m_enabled = !getRegBitsBool( newACSR, m_ACD );
-    if( !m_enabled ) m_mcu->m_regOverride = newACSR & ~m_ACO.mask; // Clear ACO
 
-    m_acie = getRegBitsBool( newACSR, m_ACIE );                   // Enable interrupt
-    m_pins[0]->changeCallBack( this, m_enabled && m_acie );
-    m_pins[1]->changeCallBack( this, m_enabled && m_acie );
+    m_acie = getRegBitsBool( newACSR, m_ACIE );  // Enable interrupt
+    changeCallbacks();
 
     m_fixVref = getRegBitsVal( newACSR, m_ACBG );
 
     /// TODO: ACIC: Analog Comparator Input Capture Enable
 
     m_mode = getRegBitsVal( newACSR, m_ACIS );
+
+    if( !m_enabled ) m_mcu->m_regOverride = newACSR & ~m_ACO.mask; // Clear ACO
 }
 
 void AvrComp::configureB( uint8_t newAIND ) // AIN0D,AIN1D being written
@@ -65,17 +67,26 @@ void AvrComp::configureB( uint8_t newAIND ) // AIN0D,AIN1D being written
     /// The corresponding PIN Register bit will always read as zero when this bit is set
 }
 
-void AvrComp::configureC( uint8_t newACOE )
+void AvrComp::configureC( uint8_t newACOE ) // mega328PB
 {
+    if( m_pins.size() < 3 ) return;
+
     if( newACOE ) m_pinOut = m_pins[2];
     else          m_pinOut = NULL;
     m_pins[2]->controlPin( newACOE, newACOE );
 
-    //m_pins[0]->changeCallBack( m_pins[0], newACOE );
-    //m_pins[1]->changeCallBack( m_pins[1], newACOE );
+    m_acoe = newACOE;
+    changeCallbacks();
 }
 
-void AvrComp::compare( uint8_t ) // Performed only when ACO is readed
+void AvrComp::readACO( uint8_t )
+{
+    if( !m_enabled ) return;
+    compare();
+    m_mcu->m_regOverride = *m_ACO.reg; // Clear ACO
+}
+
+void AvrComp::compare( uint8_t ) //
 {
     if( !m_enabled ) return;
 
@@ -97,4 +108,21 @@ void AvrComp::compare( uint8_t ) // Performed only when ACO is readed
         m_compOut = compOut;
         if( m_pinOut ) m_pinOut->sheduleState( compOut, 0 );
     }
+}
+
+void AvrComp::setPinN( McuPin* pin )
+{
+    if( !pin ) pin = m_pins[1];
+
+    m_pinN->changeCallBack( this, false );
+    m_pinN = pin;
+
+    changeCallbacks();
+    compare();
+}
+
+void AvrComp::changeCallbacks()
+{
+    m_pinP->changeCallBack( this, m_enabled && (m_acie || m_acoe) );
+    m_pinN->changeCallBack( this, m_enabled && (m_acie || m_acoe) );
 }

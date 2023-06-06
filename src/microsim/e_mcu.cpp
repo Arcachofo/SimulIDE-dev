@@ -29,13 +29,14 @@ eMcu::eMcu( Mcu* comp, QString id )
 {
     m_component = comp;
 
-    cpu = NULL;
-    m_wdt = NULL;
-    m_intOsc = NULL;
-    m_clkPin = NULL;
+    cpu          = NULL;
+    m_wdt        = NULL;
+    m_intOsc     = NULL;
+    m_comparator = NULL;
+    m_clkPin     = NULL;
+    m_cfgWord    = NULL;
     m_vrefModule = NULL;
     m_sleepModule = NULL;
-    m_cfgWord = NULL;
 
     m_freq = 0;
     m_cPerInst = 1;

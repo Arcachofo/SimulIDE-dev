@@ -6,6 +6,7 @@
 #include "avradc.h"
 #include "avrtimer.h"
 #include "mcuocunit.h"
+#include "mcucomparator.h"
 #include "mcupin.h"
 #include "e_mcu.h"
 #include "datautils.h"
@@ -33,6 +34,7 @@ AvrAdc::AvrAdc( eMcu* mcu, QString name )
     m_ADPS  = getRegBits( "ADPS0,ADPS1,ADPS2", mcu );
 
     m_ADTS  = getRegBits( "ADTS0,ADTS1,ADTS2", mcu );
+    m_ACME  = getRegBits( "ACME", mcu );
 
     m_ADLAR = getRegBits( "ADLAR", mcu );
     m_REFS  = getRegBits( "REFS0,REFS1", mcu );
@@ -57,6 +59,7 @@ void AvrAdc::initialize()
 {
     m_autoTrigger = false;
     m_freeRunning = false;
+    m_acme = false;
 
     m_trigger = 0;
     m_refSelect = 0;
@@ -72,7 +75,12 @@ void AvrAdc::configureA( uint8_t newADCSRA ) // ADCSRA
     if( newADCSRA & m_ADIF.mask )
           m_mcu->m_regOverride = newADCSRA & ~(m_ADIF.mask); // Clear ADIF by writting it to 1
 
-    m_enabled = getRegBitsBool( newADCSRA, m_ADEN );
+    bool enabled = getRegBitsBool( newADCSRA, m_ADEN );
+    if( m_enabled != enabled )
+    {
+        m_enabled = enabled;
+        toAdcMux();
+    }
 
     uint8_t prs = getRegBitsVal( newADCSRA, m_ADPS );
     m_convTime = m_mcu->psCycle()*13*m_prescList[prs];
@@ -93,12 +101,29 @@ void AvrAdc::configureA( uint8_t newADCSRA ) // ADCSRA
     }
 }
 
-void AvrAdc::configureB( uint8_t newADCSRB ) // ADCSRB
+void AvrAdc::configureB( uint8_t newADCSRB ) // ADCSRB / SFIOR(Atmega32)
 {
     m_trigger = getRegBitsVal( newADCSRB, m_ADTS );
     if( m_autoTrigger ) autotriggerConf();
 
-    /// TODO: ACME ???
+    updateAcme( newADCSRB );
+}
+
+void AvrAdc::updateAcme( uint8_t newVal )
+{
+    bool acme = getRegBitsBool( newVal, m_ACME );
+    if( m_acme != acme )
+    {
+        m_acme = acme;
+        toAdcMux();
+    }
+}
+
+void AvrAdc::toAdcMux() // Connect Comparator with ADC multiplexer
+{
+    bool connect = m_acme && !m_enabled;
+    if( connect ) m_mcu->comparator()->setPinN( m_adcPin[m_channel] );
+    else          m_mcu->comparator()->setPinN( NULL );
 }
 
 void AvrAdc::setChannel( uint8_t newADMUX ) // ADMUX
@@ -106,6 +131,9 @@ void AvrAdc::setChannel( uint8_t newADMUX ) // ADMUX
     m_channel = getRegBitsVal( newADMUX, m_MUX ); //newADMUX & 0x0F;
     m_leftAdjust = getRegBitsBool( newADMUX, m_ADLAR );
     m_refSelect  = getRegBitsVal(  newADMUX, m_REFS );
+
+    if( !m_mcu->comparator() ) return;
+    if( m_acme && !m_enabled ) m_mcu->comparator()->setPinN( m_adcPin[m_channel] );
 }
 
 void AvrAdc::endConversion()
@@ -164,6 +192,11 @@ AvrAdc01::AvrAdc01( eMcu* mcu, QString name )
     m_fixedVref = 2.6;
 }
 AvrAdc01::~AvrAdc01(){}
+
+void AvrAdc01::configureB( uint8_t newSFIOR ) // SFIOR(Atmega8)
+{
+    updateAcme( newSFIOR );
+}
 
 void AvrAdc01::autotriggerConf()
 {

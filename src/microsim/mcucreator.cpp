@@ -930,6 +930,7 @@ void McuCreator::createAcomp( QDomElement* e )
     if( !comp ) return;
 
     mcu->m_modules.emplace_back( comp );
+    mcu->m_comparator = comp;
     setConfigRegs( e, comp );
 
     QStringList pins = e->attribute( "pins" ).split(",");

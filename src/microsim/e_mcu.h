@@ -37,6 +37,7 @@ class McuVref;
 class Component;
 class ConfigWord;
 class Watcher;
+class McuComp;
 
 class MAINMODULE_EXPORT eMcu : public DataSpace, public eElement
 {
@@ -100,6 +101,7 @@ class MAINMODULE_EXPORT eMcu : public DataSpace, public eElement
         ConfigWord* cfgWord() { return m_cfgWord; }
         bool setCfgWord( uint16_t addr, uint16_t data );
         McuIntOsc* intOsc() { return m_intOsc; }
+        McuComp* comparator() { return m_comparator; }
 
         void wdr();
 
@@ -149,6 +151,7 @@ class MAINMODULE_EXPORT eMcu : public DataSpace, public eElement
         McuVref* m_vrefModule;
         McuWdt* m_wdt;
         McuIntOsc* m_intOsc;
+        McuComp* m_comparator;
 
         double m_freq;           // Clock Frequency in MegaHerzs
         double m_cPerInst;       // Clock ticks per Instruction Cycle
