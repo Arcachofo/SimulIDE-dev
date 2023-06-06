@@ -20,8 +20,6 @@ void CustomButton::paintEvent( QPaintEvent* )
     QPainter painter(this);
     painter.setRenderHint( QPainter::Antialiasing ); // Smooth out the circle
     QPen pen = painter.pen();
-    //pen.setColor( QColor( 160, 160, 160 ) );
-    //painter.setPen( pen );
 
     int h = height()-2;
     int w = width();
@@ -36,11 +34,11 @@ void CustomButton::paintEvent( QPaintEvent* )
 
     if( this->isDown() || isChecked() ){
         linearGrad.setColorAt( 0, QColor( 230, 230, 230 ) );
-        linearGrad.setColorAt( 1, QColor( 190, 190, 190 ) );
+        linearGrad.setColorAt( 1, QColor( 180, 180, 180 ) );
         rect = QRectF( 1.3, 1.3, w-2, h );
     }else{
         linearGrad.setColorAt(0, Qt::white);
-        linearGrad.setColorAt(1, QColor( 210, 210, 210 ) );
+        linearGrad.setColorAt(1, QColor( 200, 200, 200 ) );
         rect = QRectF( 1, 1, w-2, h );
     }
     painter.setBrush( linearGrad );

@@ -41,8 +41,8 @@ VarResistor::~VarResistor(){}
 
 void VarResistor::updateStep()
 {
-    if( !m_changed ) return;
-    m_changed = false;
+    if( !m_needUpdate ) return;
+    m_needUpdate = false;
 
     eResistor::setRes( m_value );
     if( m_propDialog ) m_propDialog->updtValues();

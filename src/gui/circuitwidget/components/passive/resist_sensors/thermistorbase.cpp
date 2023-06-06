@@ -30,7 +30,7 @@ void ThermistorBase::setPtc( bool ptc )
 {
     return; // TODO
     m_ptc = ptc;
-    m_changed = true;
+    m_needUpdate = true;
 }
 
 void ThermistorBase::setMinVal( double min )

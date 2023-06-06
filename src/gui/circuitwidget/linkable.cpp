@@ -42,12 +42,13 @@ void Linkable::createLinks( QList<Component*>* compList )
             {
                 //qDebug() << "TextComponent::createLinks"<<uid;
                 m_linkedComp.append( comp );
+                comp->linked( true );
                 break;
             }
     }
 }
 
-void Linkable::linkComp()  // Start linking Components
+void Linkable::startLinking()  // Start linking Components
 {
     if( Component::m_selecComp ) Component::m_selecComp->compSelected( NULL ); // Finish previous linking
     Component::m_selecComp = this;
@@ -66,7 +67,10 @@ void Linkable::compSelected( Component* comp )
 {
     if( comp )  // One Component was selected to link
     {
-        if( m_linkedComp.contains( comp ) )
+        bool linked = m_linkedComp.contains( comp );
+        comp->linked( !linked );
+
+        if( linked )
         {
             comp->m_linkNumber = -1;
             m_linkedComp.removeAll( comp );
@@ -85,5 +89,7 @@ void Linkable::compSelected( Component* comp )
 
         for( Component* comp : m_linkedComp )  // Clear numbers for visualization
             comp->m_linkNumber = -1;
+
+        Circuit::self()->update();
     }
 }

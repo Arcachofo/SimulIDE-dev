@@ -7,10 +7,10 @@
 #define VARRESBASE_H
 
 #include "e-resistor.h"
-#include "comp2pin.h"
+#include "dialed.h"
 #include "dialwidget.h"
 
-class MAINMODULE_EXPORT VarResBase : public Comp2Pin, public eResistor
+class MAINMODULE_EXPORT VarResBase : public Dialed, public eResistor
 {
     public:
         VarResBase( QObject* parent, QString type, QString id );
@@ -30,20 +30,17 @@ class MAINMODULE_EXPORT VarResBase : public Comp2Pin, public eResistor
 
         virtual void initialize() override;
 
-
     public slots:
-        void dialChanged( int val );
+        virtual void dialChanged( int val ) override;
 
     protected:
         void updtValue();
+        virtual void updateProxy() override;
 
         double m_value;
         double m_minVal;
         double m_maxVal;
         double m_step;
-
-        DialWidget m_dialW;
-        QGraphicsProxyWidget* m_proxy;
 };
 
 #endif

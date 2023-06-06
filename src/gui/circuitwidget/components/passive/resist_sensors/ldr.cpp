@@ -44,13 +44,14 @@ new DoubProp<Ldr>( "Dial_Step", tr("Dial Step")    ,"Lux", this, &Ldr::getStep, 
 new DoubProp<Ldr>( "Gamma"    , tr("Gamma")        ,""   , this, &Ldr::gamma,   &Ldr::setGamma ),
 new IntProp <Ldr>( "R1"       , tr("R1")           ,"Ω"  , this, &Ldr::r1,      &Ldr::setR1, "uint" )
     }} );
+    addPropGroup( { tr("Dial"), Dialed::dialProps() } );
 }
 Ldr::~Ldr(){}
 
 void Ldr::updateStep()
 {
-    if( !m_changed ) return;
-    m_changed = false;
+    if( !m_needUpdate ) return;
+    m_needUpdate = false;
 
     double res = double(m_r1)*pow( m_value, -m_gamma );
     eResistor::setRes( res );
@@ -61,13 +62,13 @@ void Ldr::updateStep()
 void Ldr::setR1( int r1 )
 {
     m_r1 = r1;
-    m_changed = true;
+    m_needUpdate = true;
 }
 
 void Ldr::setGamma( double ga )
 {
     m_gamma = ga;
-    m_changed = true;
+    m_needUpdate = true;
 }
 
 void Ldr::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )

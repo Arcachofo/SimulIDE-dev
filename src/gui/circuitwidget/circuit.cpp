@@ -428,9 +428,9 @@ void Circuit::loadStrDoc( QString &doc )
                     comp->updtLabelPos();
                     comp->updtValLabelPos();
                     compList.append( comp );
-                    if( comp->m_Linkable )
+                    if( comp->m_linkable )
                     {
-                        Linkable* l = (Linkable*)comp;
+                        Linkable* l = dynamic_cast<Linkable*>(comp);
                         if( l->hasLinks() ) linkList.append( l );
                     }
                 }
@@ -442,7 +442,8 @@ void Circuit::loadStrDoc( QString &doc )
         for( Component* comp : nodeList ) { comp->setSelected( true ); comp->move( m_deltaMove ); }
         for( Connector* con  : conList )  { con->setSelected( true );  con->move( m_deltaMove ); }
     }
-    for( Linkable* l : linkList ) l->createLinks( &m_compList );
+    for( Linkable* l : linkList )
+        l->createLinks( &compList );
 
     m_compList.append( compList );
     m_nodeList.append( nodeList );

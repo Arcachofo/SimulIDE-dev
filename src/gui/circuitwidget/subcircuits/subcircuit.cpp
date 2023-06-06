@@ -304,7 +304,7 @@ void SubCircuit::loadSubCircuit( QString fileName )
                     }
                     m_compList.append( comp );
 
-                    if( comp->m_Linkable )
+                    if( comp->m_linkable )
                     {
                         Linkable* l = (Linkable*)comp;
                         if( l->hasLinks() ) linkList.append( l );

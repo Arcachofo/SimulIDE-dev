@@ -28,6 +28,7 @@
 #include "demux.h"
 #include "dht22.h"
 #include "diac.h"
+#include "dial.h"
 #include "diode.h"
 #include "ds1307.h"
 #include "ds1621.h"
@@ -298,6 +299,7 @@ void ItemLibrary::loadItems()
     // Other
     addItem( new LibraryItem( QObject::tr("Other"), "", "","Other", NULL ) );
     addItem( SubPackage::libraryItem() );
+    addItem( Dial::libraryItem() );
 }
 
 void ItemLibrary::addItem( LibraryItem* item )

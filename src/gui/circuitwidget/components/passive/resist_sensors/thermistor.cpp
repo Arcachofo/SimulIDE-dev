@@ -35,13 +35,14 @@ Thermistor::Thermistor( QObject* parent, QString type, QString id )
 new IntProp<Thermistor>( "B"  , "B"  ,""  , this, &Thermistor::bVal, &Thermistor::setBval, "uint" ),
 new IntProp<Thermistor>( "R25", "R25","Ω" , this, &Thermistor::r25,  &Thermistor::setR25,  "uint" )
     }} );
+    addPropGroup( { tr("Dial"), Dialed::dialProps() } );
 }
 Thermistor::~Thermistor(){}
 
 void Thermistor::updateStep()
 {
-    if( !m_changed ) return;
-    m_changed = false;
+    if( !m_needUpdate ) return;
+    m_needUpdate = false;
 
     double t0 = 25+273.15;      // Temp in Kelvin
     double t = m_value+273.15;
@@ -58,13 +59,13 @@ void Thermistor::updateStep()
 void Thermistor::setBval( int bval )
 {
     m_bVal = bval;
-    m_changed = true;
+    m_needUpdate = true;
 }
 
 void Thermistor::setR25( int r25 )
 {
     m_r25 = r25;
-    m_changed = true;
+    m_needUpdate = true;
 }
 
 void Thermistor::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )

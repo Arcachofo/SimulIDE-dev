@@ -109,6 +109,8 @@
         <file alias="subcl.png">../src/icons/components/subcl.png</file>
         <file alias="ground.png">../src/icons/components/ground.png</file>
         <file alias="voltsource.png">../src/icons/components/voltsource.png</file>
+        <file alias="cursource.png">../src/icons/components/cursource.png</file>
+        <file alias="dial.png">../src/icons/components/dial.png</file>
         <file alias="battery.png">../src/icons/components/battery.png</file>
         <file alias="capacitor.png">../src/icons/components/capacitor.png</file>
         <file alias="elcapacitor.png">../src/icons/components/elcapacitor.png</file>

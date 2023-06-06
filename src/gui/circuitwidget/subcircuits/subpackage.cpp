@@ -38,7 +38,7 @@ LibraryItem* SubPackage::libraryItem()
     return new LibraryItem(
         tr( "Package" ),
         "Other",
-        "subc2.png",
+        "resistordip.png",
         "Package",
         SubPackage::construct );
 }

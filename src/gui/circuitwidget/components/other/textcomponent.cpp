@@ -39,7 +39,7 @@ TextComponent::TextComponent( QObject* parent, QString type, QString id )
              , Linkable()
 {
     m_graphical = true;
-    m_Linkable  = true;
+    m_linkable  = true;
     m_opac = 1;
     m_color = QColor( 255, 255, 220 );
     m_font  = "Helvetica [Cronyx]";
@@ -197,7 +197,7 @@ void TextComponent::createLinks( QList<Component*>* compList )
 void TextComponent::compSelected( Component* comp )
 {
     Linkable::compSelected( comp );
-    updateStep();
+    if( !Simulator::self()->isRunning() ) updateStep();
     Simulator::self()->addToUpdateList( this );
 }
 

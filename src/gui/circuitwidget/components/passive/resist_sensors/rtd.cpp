@@ -37,13 +37,14 @@ RTD::RTD( QObject* parent, QString type, QString id )
 //new IntProp<RTD>( "B" , "B" ,""  , this, &RTD::bVal, &RTD::setBval, "uint" ),
 new DoubProp<RTD>( "R0", "R0","Ω" , this, &RTD::getR0,   &RTD::setR0 )
     }} );
+    addPropGroup( { tr("Dial"), Dialed::dialProps() } );
 }
 RTD::~RTD() {}
 
 void RTD::updateStep()
 {
-    if( !m_changed ) return;
-    m_changed = false;
+    if( !m_needUpdate ) return;
+    m_needUpdate = false;
 
     //m_t0_tau = (double) (Simulator::self()->step())/1e6;
 

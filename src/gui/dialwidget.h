@@ -21,6 +21,9 @@ class DialWidget : public QWidget
         DialWidget();
         ~DialWidget();
 
+        double scale() { return m_scale; }
+        void setScale( double s );
+
         void setSize( int size );
 
         void setType( int type );
@@ -32,6 +35,9 @@ class DialWidget : public QWidget
 
     protected:
         virtual void paintEvent( QPaintEvent* e) override;
+
+        int m_size;
+        double m_scale;
 
         QVBoxLayout* m_verticalLayout;
 

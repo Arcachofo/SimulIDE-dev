@@ -45,7 +45,7 @@ Component::Component( QObject* parent, QString type, QString id )
     m_crashed    = false;
     m_warning    = false;
     m_graphical  = false;
-    m_Linkable   = false;
+    m_linkable   = false;
     m_background = "";
     m_showProperty = "";
     m_linkNumber = -1;

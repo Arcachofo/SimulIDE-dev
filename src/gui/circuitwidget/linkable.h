@@ -21,7 +21,7 @@ class MAINMODULE_EXPORT Linkable
 
         bool hasLinks() { return !m_linkedStr.isEmpty(); }
 
-        void linkComp();
+        void startLinking();
 
         virtual void createLinks( QList<Component*>* );
         virtual void compSelected( Component* comp );

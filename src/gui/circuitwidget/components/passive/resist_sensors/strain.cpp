@@ -48,6 +48,7 @@ new DoubProp<Strain>( "Dial_Step"  , tr("Dial Step")    ,"N", this, &Strain::get
 new DoubProp<Strain>( "Ref_Temp", tr("Ref. Temperature"),"ºC", this, &Strain::refTemp, &Strain::setRefTemp ),
 new DoubProp<Strain>( "Temp"    , tr("Temperature")     ,"ºC", this, &Strain::getTemp, &Strain::setTemp )
     }} );
+    addPropGroup( { tr("Dial"), Dialed::dialProps() } );
 }
 Strain::~Strain() { }
 
@@ -64,8 +65,8 @@ void Strain::initialize()
 
 void Strain::updateStep()
 {
-    if( !m_changed ) return;
-    m_changed = false;
+    if( !m_needUpdate ) return;
+    m_needUpdate = false;
 
     /*m_step = Simulator::self()->step();
     double t = (double) m_step/1e6;

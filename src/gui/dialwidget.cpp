@@ -12,7 +12,10 @@
 
 DialWidget::DialWidget()
 {
+    m_size = 24;
+    m_scale = 1;
     m_slider = NULL;
+
     m_knob = new CustomDial( this );
     m_dial = m_knob;
 
@@ -27,8 +30,15 @@ DialWidget::~DialWidget() {}
 
 void DialWidget::setSize( int size )
 {
-    if( m_dial == m_knob ) m_knob->setFixedSize( size, size );
-    else                   m_slider->setFixedSize( size, 12 );
+    m_knob->setFixedSize( size, size );
+    if( m_slider ) m_slider->setFixedSize( double(size*2.5), 12 );
+    this->setFixedSize( m_dial->size() );
+}
+
+void DialWidget::setScale( double s )
+{
+    m_scale = s;
+    setSize( m_size*s );
 }
 
 void DialWidget::setType( int type )
@@ -45,6 +55,7 @@ void DialWidget::setType( int type )
         if( !m_slider )
         {
             m_slider = new CustomSlider( this );
+            m_slider->setFixedSize( double(m_size*2.5), 12 );
             m_verticalLayout->addWidget( m_slider );
         }
         m_dial = m_slider;

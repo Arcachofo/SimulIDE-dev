@@ -15,18 +15,15 @@
 #include "label.h"
 
 VarResBase::VarResBase( QObject* parent, QString type, QString id )
-          : Comp2Pin( parent, type, id )
+          : Dialed( parent, type, id )
           , eResistor( id )
 {
-    m_area = QRectF( -11, -11, 22, 16 );
+    m_area = QRectF(-11,-11, 22, 16 );
     m_graphical = true;
 
-    m_ePin[0] = m_pin[0];
-    m_ePin[1] = m_pin[1];
-
-    m_proxy = Circuit::self()->addWidget( &m_dialW );
-    m_proxy->setParentItem( this );
-    m_proxy->setPos( QPoint( -12, 7) );
+    m_pin.resize(2);
+    m_ePin[0] = m_pin[0] = new Pin( 180, QPoint(-16, 0 ), id+"-lPin", 0, this);
+    m_ePin[1] = m_pin[1] = new Pin( 0,   QPoint( 16, 0 ), id+"-rPin", 1, this);
 
     m_idLabel->setPos(-12,-24);
     setLabelPos(-16,-24, 0);
@@ -37,15 +34,12 @@ VarResBase::VarResBase( QObject* parent, QString type, QString id )
     m_step = 0;
 
     Simulator::self()->addToUpdateList( this );
-
-    connect( m_dialW.dial(), &QAbstractSlider::valueChanged,
-                       this, &VarResBase::dialChanged, Qt::UniqueConnection );
 }
 VarResBase::~VarResBase(){}
 
 void VarResBase::initialize()
 {
-    m_changed = true;
+    m_needUpdate = true;
 }
 
 void VarResBase::setMinVal( double min )
@@ -77,7 +71,7 @@ void VarResBase::dialChanged( int val )
     m_value = m_minVal+val*( m_maxVal-m_minVal)/1000;
     if( m_step > 0 ) m_value = round( m_value/m_step )*m_step;
 
-    m_changed = true;
+    m_needUpdate = true;
     if( !Simulator::self()->isRunning() ) updateStep();
 }
 
@@ -90,4 +84,9 @@ void VarResBase::updtValue()
     m_dialW.setValue( dialV );
 
     if( m_propDialog ) m_propDialog->updtValues();
+}
+
+void VarResBase::updateProxy()
+{
+    m_proxy->setPos( QPoint(-m_dialW.width()/2, 7) );
 }

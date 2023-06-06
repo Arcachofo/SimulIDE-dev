@@ -51,7 +51,7 @@ class MAINMODULE_EXPORT TextComponent : public Component, public Linkable
 
     public slots:
         void updateGeometry(int, int, int);
-        void slotLinkComp() { Linkable::linkComp(); }
+        void slotLinkComp() { Linkable::startLinking(); }
 
     protected:
         virtual void contextMenuEvent( QGraphicsSceneContextMenuEvent* event ) override;

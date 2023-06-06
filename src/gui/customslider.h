@@ -15,6 +15,6 @@ class CustomSlider : public QSlider
         CustomSlider( QWidget* parent=NULL );
 
     private:
-        virtual void paintEvent( QPaintEvent* e ) override;
+        virtual void paintEvent( QPaintEvent* ) override;
 };
 #endif
