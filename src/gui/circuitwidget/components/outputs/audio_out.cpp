@@ -59,10 +59,18 @@ AudioOut::AudioOut( QObject* parent, QString type, QString id )
     if( m_deviceinfo.isNull() ) 
     {
         const auto deviceInfos = QAudioDeviceInfo::availableDevices( QAudio::AudioOutput );
-        for( const QAudioDeviceInfo &deviceInfo : deviceInfos )
-            qDebug() << "Device name: " << deviceInfo.deviceName();
+        if( deviceInfos.isEmpty() )
+        {
+            qDebug() <<"   Error: No Audio Output Devices Found at all";
+            qDebug() <<"Check that Qt5 multimedia & multimedia-plugins packages are installed";
+        }else{
+            qDebug() <<"   Error: No default Audio Output Device Found";
+            qDebug() <<"Audio Output Devices available:";
 
-        qDebug() <<"   Error: No defaulf Audio Output Device Found" ;
+            for( const QAudioDeviceInfo &deviceInfo : deviceInfos )
+                qDebug() << "Device name: " << deviceInfo.deviceName();
+        }
+        qDebug() <<" ";
         return;
     }
     //int refreshPeriod = 10; // mS
