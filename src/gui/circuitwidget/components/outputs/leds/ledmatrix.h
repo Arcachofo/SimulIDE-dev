@@ -63,8 +63,6 @@ class MAINMODULE_EXPORT LedMatrix : public Component, public eElement
         
         bool m_verticalPins;
 
-        int m_ledColor;
-
         double m_resist;
         double m_maxCurr;
         double m_threshold;

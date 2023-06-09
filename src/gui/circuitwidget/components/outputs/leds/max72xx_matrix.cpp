@@ -224,8 +224,8 @@ void Max72xx_matrix::paint( QPainter* p, const QStyleOptionGraphicsItem* option,
 
         int factor = m_intensity[display];
         QColor color = m_colors[m_ledColor];
-        int r = color.red();
-        r = r*factor/16;
+        //int r = color.red();
+        //r = r*factor/16;
         color = QColor( 25+color.red()*factor/16, 25+color.green()*factor/16, 25+color.blue()*factor/16);
 
         for( int row=0; row<8; row++ )
@@ -235,7 +235,7 @@ void Max72xx_matrix::paint( QPainter* p, const QStyleOptionGraphicsItem* option,
             for( int col=0; col<8; col++)
             {
                 int bit = m_ram[display][row] & (0x80>>col);
-                if( !m_shutdown && (m_test || ((m_decodemode == 0) && (row <= m_scanlimit) && bit)) )
+                if( !m_shutdown && (m_test || (m_decodemode == 0 && row <= m_scanlimit && bit)) )
                 {
                     p->setBrush( color );
                     pen.setColor( color );

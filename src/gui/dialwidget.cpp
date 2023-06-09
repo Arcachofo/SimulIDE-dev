@@ -10,7 +10,8 @@
 #include "customdial.h"
 #include "customslider.h"
 
-DialWidget::DialWidget()
+DialWidget::DialWidget( QWidget* parent )
+          : QWidget( parent )
 {
     m_size = 24;
     m_scale = 1;

@@ -47,7 +47,7 @@ void McuIntOsc::runEvent()
     Simulator::self()->addEvent( m_psCycle, this );
 }
 
-void McuIntOsc::enableExtOsc( bool en ) // From Mcu, TODELETE
+void McuIntOsc::enableExtOsc( bool en ) // From Mcu, AVR or PIC with no cfg word
 {
     m_extClock = en;
     if( m_mcu->cfgWord() ) return;     // Controlled by Config word.

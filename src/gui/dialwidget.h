@@ -18,7 +18,7 @@ class DialWidget : public QWidget
     Q_OBJECT
     
     public:
-        DialWidget();
+        DialWidget( QWidget* parent=NULL );
         ~DialWidget();
 
         double scale() { return m_scale; }

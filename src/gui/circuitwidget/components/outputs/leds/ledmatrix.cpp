@@ -40,8 +40,7 @@ LedMatrix::LedMatrix( QObject* parent, QString type, QString id )
     m_resist  = 0.6;
     m_maxCurr = 0.02;
     m_threshold = 2.4;
-    
-    m_ledColor = 0;
+
     m_color = QColor(0,0,0);
     m_verticalPins = false;
     createMatrix();

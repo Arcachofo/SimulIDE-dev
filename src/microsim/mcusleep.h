@@ -26,6 +26,6 @@ class MAINMODULE_EXPORT McuSleep : public McuModule, public eElement
     protected:
         bool m_enabled;
 
-        uint8_t m_sleepMode;
+        //uint8_t m_sleepMode; /// in McuModule
 };
 #endif
