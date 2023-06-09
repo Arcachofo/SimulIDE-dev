@@ -35,6 +35,9 @@ void ScriptUsart::registerScript( ScriptCpu* cpu )
 
     string uart = "Uart "+m_uartName.toStdString();
     asIScriptEngine* engine = cpu->engine();
+
+    engine->RegisterObjectType("Uart",0 , asOBJ_REF | asOBJ_NOCOUNT );
+
     engine->RegisterGlobalProperty( uart.c_str(), this );
 
     engine->RegisterObjectMethod("Uart", "void setBaudRate(int t)"

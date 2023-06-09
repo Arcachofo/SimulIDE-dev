@@ -37,7 +37,6 @@ ScriptCpu::ScriptCpu( eMcu* mcu )
 
     m_aEngine->RegisterObjectType("eElement" ,0, asOBJ_REF | asOBJ_NOCOUNT );
     m_aEngine->RegisterObjectType("ScriptCpu",0, asOBJ_REF | asOBJ_NOCOUNT );
-    m_aEngine->RegisterObjectType("Uart"     ,0, asOBJ_REF | asOBJ_NOCOUNT );
     //m_aEngine->RegisterObjectType("pod", sizeof(pod), asOBJ_VALUE | asOBJ_POD);
 
     m_aEngine->RegisterGlobalProperty("ScriptCpu component", this );
@@ -47,7 +46,6 @@ ScriptCpu::ScriptCpu( eMcu* mcu )
     IoPin::registerScript( m_aEngine );
     McuPort::registerScript( m_aEngine );
     McuPin::registerScript( m_aEngine );
-    //ScriptUsart::registerScript( m_aEngine );
 
     m_aEngine->RegisterObjectMethod("ScriptCpu", "void addCpuReg(string n, string t)"
                                    , asMETHODPR( ScriptCpu, addCpuReg, (string, string), void)

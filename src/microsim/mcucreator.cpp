@@ -75,6 +75,7 @@
 #include "scriptcpu.h"
 #include "scriptport.h"
 #include "scriptusart.h"
+#include "scriptspi.h"
 
 #include "utils.h"
 
@@ -999,6 +1000,11 @@ void McuCreator::createSpi( QDomElement* e )
 
     if     ( m_core == "AVR" )  m_spi = new AvrSpi( mcu, name );
     else if( m_core == "Pic14") m_spi = new PicSpi( mcu, name );
+    else if( m_core == "scripted"){
+        ScriptSpi* su = new ScriptSpi( mcu, name );
+        m_spi = su;
+        m_scriptPerif.push_back( su );
+    }
     else return;
 
     mcu->m_modules.emplace_back( m_spi );
