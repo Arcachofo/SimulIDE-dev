@@ -7,6 +7,7 @@
 
 #include "scriptmodule.h"
 #include "scriptstdstring.h"
+#include "scriptarray.h"
 #include "utils.h"
 
 using namespace std;
@@ -42,6 +43,7 @@ ScriptModule::ScriptModule( QString name )
 
     m_aEngine->SetMessageCallback( asFUNCTION( MessageCallback ), 0, asCALL_CDECL );
     RegisterStdString( m_aEngine );
+    RegisterScriptArray( m_aEngine, true );
 
     m_aEngine->RegisterGlobalFunction("void print(const string &in)", asFUNCTION(print), asCALL_CDECL);
 
