@@ -78,9 +78,11 @@ void SevenSegmentBCD::setLinked( bool l )
     setHidden( l, false, false );
 }
 
-void SevenSegmentBCD::setLinkedValue( int v )
+void SevenSegmentBCD::setLinkedValue( int v, int i )
 {
-    m_digit = v & 0xFF;  // 1 bit for each segment
+    v &= 0xFF;
+    if( i == 0 ) m_digit = m_values[v]; // Display value
+    else         m_digit = v & 0xFF;    // 1 bit for each segment
     m_changed = true;
 }
 

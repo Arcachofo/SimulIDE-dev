@@ -29,23 +29,30 @@ class MAINMODULE_EXPORT TextComponent : public Component, public Linkable
         int  border() { return m_border; }
         void setBorder( int border ) { m_border = border; update(); }
         
+        QString getFont() { return m_font; }
+        void    setFont( QString font );
+
         int  fontSize() { return m_fontSize; }
         void setFontSize( int size );
+
+        QString fontColor() { return m_fontColor; }
+        void setFontColor( QString n );
+
+        QString colorStr() { return m_color.name(); }
+        void setColorStr( QString n );
         
         bool fixedW() { return m_fixedW; }
         void setFixedW( bool fixedW );
 
         QString getText();
         void    setText( QString text );
-        
-        QString getFont() { return m_font; }
-        void    setFont( QString font );
 
         qreal opac() { return m_opac; }
         void setOpac( qreal op );
 
         virtual void createLinks( QList<Component*>*compList ) override;
         virtual void compSelected( Component* comp ) override;
+        virtual void setLinkedString( QString str, int i=0 ) override;
 
         void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
 
@@ -61,6 +68,8 @@ class MAINMODULE_EXPORT TextComponent : public Component, public Linkable
         QString m_textString;
 
         qreal m_opac;
+
+        bool m_changed;
         
         int  m_fontSize;
         int  m_docMargin;
@@ -71,6 +80,7 @@ class MAINMODULE_EXPORT TextComponent : public Component, public Linkable
         bool m_context;
         
         QString m_font;
+        QString m_fontColor;
 };
 
 #endif // TEXTCOMPONENT_H

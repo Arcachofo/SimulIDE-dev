@@ -54,7 +54,7 @@ void Dialed::dialChanged( int ) // Called when dial is rotated
     /// m_dialW.setVisible( !l );
 }*/
 
-void Dialed::setLinkedValue( int v )
+void Dialed::setLinkedValue( int v, int i )
 {
     m_dialW.setValue( v );
 }

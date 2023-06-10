@@ -61,7 +61,8 @@ class MAINMODULE_EXPORT ScriptCpu : public ScriptModule, public McuCpu
         McuPin*  getMcuPin( const string pinName );
 
         void setLinkable();
-        void setLinkedValue( int index, int v );
+        void setLinkedValue( int index, int v, int i=0  );
+        void setLinkedString( int index, const string str, int i=0 );
 
         virtual void INTERRUPT( uint vector ) override;
 

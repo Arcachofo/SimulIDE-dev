@@ -93,7 +93,8 @@ class MAINMODULE_EXPORT Mcu : public Chip, public Linkable
 
         //void createCfgWord( QString name, uint16_t addr, uint16_t v );
         void setScriptLinkable( ScriptCpu* l) { m_scriptLink = l; }
-        void setLinkedVal( int index, int v );
+        void setLinkedVal( int index, int v, int i=0 );
+        void setLinkedStr( int index, QString str, int i );
 
         virtual QStringList getEnumUids( QString ) override;
         virtual QStringList getEnumNames( QString ) override;

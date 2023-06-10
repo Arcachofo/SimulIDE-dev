@@ -123,8 +123,12 @@ ScriptCpu::ScriptCpu( eMcu* mcu )
                                    , asMETHODPR( ScriptCpu, setLinkable, (), void)
                                    , asCALL_THISCALL );
 
-    m_aEngine->RegisterObjectMethod("ScriptCpu", "void setLinkedValue( int index, int v )"
-                                   , asMETHODPR( ScriptCpu, setLinkedValue, (int,int), void)
+    m_aEngine->RegisterObjectMethod("ScriptCpu", "void setLinkedValue( int index, int v, int i )"
+                                   , asMETHODPR( ScriptCpu, setLinkedValue, (int,int,int), void)
+                                   , asCALL_THISCALL );
+
+    m_aEngine->RegisterObjectMethod("ScriptCpu", "void setLinkedString( int index, string v, int i )"
+                                   , asMETHODPR( ScriptCpu, setLinkedString, (int,const string,int), void)
                                    , asCALL_THISCALL );
 }
 ScriptCpu::~ScriptCpu() {}
@@ -318,7 +322,13 @@ void ScriptCpu::setLinkable()
     m_mcuComp->setScriptLinkable( this );
 }
 
-void ScriptCpu::setLinkedValue( int index, int v )
+void ScriptCpu::setLinkedValue( int index, int v, int i )
 {
-    m_mcuComp->setLinkedVal( index, v );
+    m_mcuComp->setLinkedVal( index, v, i );
+}
+
+void ScriptCpu::setLinkedString( int index, string str, int i )
+{
+    QString s = QString::fromStdString( str );
+    m_mcuComp->setLinkedStr( index, s, i );
 }

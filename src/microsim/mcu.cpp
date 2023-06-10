@@ -517,10 +517,16 @@ int Mcu::serialMon()
 
 void Mcu::setSerialMon( int s ) { if( s>=0 ) slotOpenTerm( s ); }
 
-void Mcu::setLinkedVal( int index, int v )
+void Mcu::setLinkedVal( int index, int v, int i )
 {
     if( index >= m_linkedComp.size() ) return;
-    m_linkedComp.at( index )->setLinkedValue( v );
+    m_linkedComp.at( index )->setLinkedValue( v, i );
+}
+
+void Mcu::setLinkedStr( int index, QString str, int i )
+{
+    if( index >= m_linkedComp.size() ) return;
+    m_linkedComp.at( index )->setLinkedString( str, i );
 }
 
 Pin* Mcu::addPin( QString id, QString type, QString label,

@@ -131,7 +131,8 @@ class MAINMODULE_EXPORT Component : public CompBase, public QGraphicsItem, publi
         virtual void paint( QPainter* painter, const QStyleOptionGraphicsItem*, QWidget* );
 
         // Link components
-        virtual void setLinkedValue( int ){;}
+        virtual void setLinkedValue( int v, int i=0 ){;}
+        virtual void setLinkedString( QString str, int i=0 ){;}
         virtual void setLinked( bool l ){ m_linked = l;}
         bool m_linkable;
         int m_linkNumber;
