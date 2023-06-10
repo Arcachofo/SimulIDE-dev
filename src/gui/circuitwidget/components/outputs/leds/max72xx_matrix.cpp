@@ -81,7 +81,7 @@ Max72xx_matrix::Max72xx_matrix( QObject* parent, QString type, QString id )
     setLabelPos(-32, -58, 0);
     setShowId( true );
 
-    initialize();
+    Max72xx_matrix::initialize();
 
     addPropGroup( { tr("Main"), {
 new StringProp<Max72xx_matrix>( "Color"      , tr("Color"),""       , this, &Max72xx_matrix::colorStr,    &Max72xx_matrix::setColorStr, "enum" ),
