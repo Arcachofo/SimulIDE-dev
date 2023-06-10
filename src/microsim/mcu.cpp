@@ -29,6 +29,7 @@
 #include "mcuintosc.h"
 #include "utils.h"
 #include "watcher.h"
+#include "linkable.h"
 
 #include "stringprop.h"
 #include "doubleprop.h"
@@ -86,9 +87,12 @@ Mcu::Mcu( QObject* parent, QString type, QString id )
     m_resetPin   = NULL;
     m_portRstPin = NULL;
     m_mcuMonitor = NULL;
-    m_autoLoad   = false;
-    m_scripted   = false;
-    m_resetPol   = false;
+    m_scriptLink = NULL;
+
+    m_autoLoad = false;
+    m_scripted = false;
+    m_resetPol = false;
+    m_linkable = true;
 
     m_serialMon = -1;
 
@@ -207,6 +211,7 @@ addProperty(tr("Main"),new BoolProp<Mcu>( "Logic_Symbol", tr("Logic Symbol"),"",
     addPropGroup( {"Hidden", {
 new StringProp<Mcu>("varList", "","", this, &Mcu::varList,   &Mcu::setVarList),
 new StringProp<Mcu>("cpuRegs", "","", this, &Mcu::cpuRegs,   &Mcu::setCpuRegs),
+new StringProp<Mcu>("Links"  , "","", this, &Mcu::getLinks , &Mcu::setLinks )
     }} );
     }
 }
@@ -417,6 +422,13 @@ void Mcu::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
                        this, &Mcu::slotmain, Qt::UniqueConnection );
     }
 
+    if( m_scriptLink )
+    {
+        QAction* linkCompAction = menu->addAction( QIcon(":/subcl.png"),tr("Link to Component") );
+        connect( linkCompAction, &QAction::triggered,
+                           this, &Mcu::slotLinkComp, Qt::UniqueConnection );
+    }
+
     if( m_deviceType == typeMCU )
     {
         QAction* loadAction = menu->addAction( QIcon(":/load.svg"),tr("Load firmware") );
@@ -475,6 +487,11 @@ void Mcu::slotmain()
     Circuit::self()->update();
 }
 
+void Mcu::slotLinkComp()
+{
+    Linkable::startLinking();
+}
+
 void Mcu::slotOpenMcuMonitor()
 {
     if( !m_mcuMonitor )
@@ -498,9 +515,12 @@ int Mcu::serialMon()
     return -1;
 }
 
-void Mcu::setSerialMon( int s )
+void Mcu::setSerialMon( int s ) { if( s>=0 ) slotOpenTerm( s ); }
+
+void Mcu::setLinkedVal( int index, int v )
 {
-    if( s>=0 ) slotOpenTerm( s );
+    if( index >= m_linkedComp.size() ) return;
+    m_linkedComp.at( index )->setLinkedValue( v );
 }
 
 Pin* Mcu::addPin( QString id, QString type, QString label,

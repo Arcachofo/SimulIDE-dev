@@ -37,7 +37,9 @@ class MAINMODULE_EXPORT LedBase : public Component, public eLed
         virtual void initialize() override;
         virtual void updateStep() override;
 
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
+ static QColor getColor( LedColor c, int intensity );
+
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
 
     protected:
         virtual void drawBackground( QPainter* p )=0;

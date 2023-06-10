@@ -10,6 +10,7 @@
 #include "itemlibrary.h"
 #include "simulator.h"
 #include "iopin.h"
+#include "ledbase.h"
 
 Component* SevenSegmentBCD::construct( QObject* parent, QString type, QString id )
 { return new SevenSegmentBCD( parent, type, id ); }
@@ -32,6 +33,7 @@ SevenSegmentBCD::SevenSegmentBCD( QObject* parent, QString type, QString id )
     m_width  = 4;
     m_height = 6;
     m_color = Qt::black;
+    m_intensity = 255;
 
     QStringList pinList;
 
@@ -67,6 +69,21 @@ void SevenSegmentBCD::updateStep()
     m_changed = false;
 }
 
+void SevenSegmentBCD::setLinked( bool l )
+{
+    Component::setLinked( l );
+    if( l )
+        for( uint i=0; i<m_inPin.size(); ++i ) m_inPin[i]->removeConnector();
+
+    setHidden( l, false, false );
+}
+
+void SevenSegmentBCD::setLinkedValue( int v )
+{
+    m_digit = v & 0xFF;  // 1 bit for each segment
+    m_changed = true;
+}
+
 void SevenSegmentBCD::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
 {
     Component::paint( p, option, widget );
@@ -82,23 +99,22 @@ void SevenSegmentBCD::paint( QPainter* p, const QStyleOptionGraphicsItem* option
 
     QPen pen;
     pen.setWidth(tk);
-    pen.setColor( QColor( 250, 250, 100));
+    QColor color = LedBase::getColor( (LedBase::LedColor)0, m_intensity );
+    pen.setColor( color );
     pen.setCapStyle(Qt::RoundCap);
     p->setPen(pen);
 
-    if( m_digit & 1  ) p->drawLine( x1+tk+ds, y1,    x2-tk+ds, y1    );
-    if( m_digit & 2  ) p->drawLine( x2+ds,    y1+tk, x2,      -tk    );
-    if( m_digit & 4  ) p->drawLine( x2,       tk,    x2-ds,    y2-tk );
-    if( m_digit & 8  ) p->drawLine( x2-tk-ds, y2,    x1+tk-ds, y2    );
-    if( m_digit & 16 ) p->drawLine( x1-ds,    y2-tk, x1,       tk    );
-    if( m_digit & 32 ) p->drawLine( x1,      -tk,    x1+ds,    y1+tk );
-    if( m_digit & 64 ) p->drawLine( x1+tk,    0,     x2-tk,    0     );
-
-    /*if( m_point )
-    {
+    if( m_digit & 1<<0 ) p->drawLine( x1+tk+ds, y1,    x2-tk+ds, y1    );
+    if( m_digit & 1<<1 ) p->drawLine( x2+ds,    y1+tk, x2,      -tk    );
+    if( m_digit & 1<<2 ) p->drawLine( x2,       tk,    x2-ds,    y2-tk );
+    if( m_digit & 1<<3 ) p->drawLine( x2-tk-ds, y2,    x1+tk-ds, y2    );
+    if( m_digit & 1<<4 ) p->drawLine( x1-ds,    y2-tk, x1,       tk    );
+    if( m_digit & 1<<5 ) p->drawLine( x1,      -tk,    x1+ds,    y1+tk );
+    if( m_digit & 1<<6 ) p->drawLine( x1+tk,    0,     x2-tk,    0     );
+    if( m_digit & 1<<7 )
+    {                               // Point
         p->setPen( Qt::NoPen );
         p->setBrush( QColor( 250, 250, 100) );
         p->drawPie( x2+ds, y2-ds, tk, tk, 0, 16*360 );
-        // Decimal pointn  p->drawPie( x2+ds, y3-ds, 6, 6, 0, 16*360 );
-    }*/
+    };
 }

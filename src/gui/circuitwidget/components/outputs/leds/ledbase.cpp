@@ -136,6 +136,30 @@ void LedBase::setColorStr( QString color )
         setValLabelText( m_enumNames.at( ledColor ) );
 }
 
+QColor LedBase::getColor( LedColor c, int intensity )
+{
+    int overBight = 100;
+    QColor color;
+
+    if( intensity > 25 )
+    {
+        intensity += 15;       // Set a Minimun Bright
+        if( intensity > 255 )
+        {
+            overBight += intensity-255;
+            intensity = 255;
+    }   }
+    switch( c ) {
+        case yellow: color = QColor( intensity, intensity,               overBight*2/3 ); break;
+        case red:    color = QColor( intensity, intensity/4+overBight/2, overBight/2 );   break;
+        case green:  color = QColor( overBight, intensity,               intensity*2/3 ); break;
+        case blue:   color = QColor( overBight, intensity*2/3,           intensity );     break;
+        case orange: color = QColor( intensity, intensity*2/3,           overBight );     break;
+        case purple: color = QColor( intensity, intensity/4+overBight/2, intensity );     break;
+        case white:  color = QColor( intensity, intensity,               intensity );     break;
+    }
+    return color;
+}
 void LedBase::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
 {
     Component::paint( p, option, widget );
@@ -155,33 +179,14 @@ void LedBase::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidge
         color = QColor( Qt::white );
         pen.setColor( color );
     }else{
-        int overBight = 100;
-        uint32_t intensity = m_intensity;
-
-        if( intensity > 25 )
-        {
-            intensity += 15;       // Set a Minimun Bright
-            if( intensity > 255 )
-            {
-                overBight += intensity-255;
-                intensity = 255;
-        }   }
-        switch( m_ledColor ) {
-            case yellow: color = QColor( intensity, intensity,               overBight*2/3 ); break;
-            case red:    color = QColor( intensity, intensity/4+overBight/2, overBight/2 );   break;
-            case green:  color = QColor( overBight, intensity,               intensity*2/3 ); break;
-            case blue:   color = QColor( overBight, intensity*2/3,           intensity );     break;
-            case orange: color = QColor( intensity, intensity*2/3,           overBight );     break;
-            case purple: color = QColor( intensity, intensity/4+overBight/2, intensity );     break;
-            case white:  color = QColor( intensity, intensity,               intensity );     break;
-        }
+        color = getColor( m_ledColor, m_intensity );
     }
     p->setPen( pen );
     drawBackground( p );
     
     pen.setColor( color );
-    pen.setWidth(2.5);
-    p->setPen(pen);
+    pen.setWidth( 2 );
+    p->setPen( pen );
     p->setBrush( color );
 
     drawForeground( p );

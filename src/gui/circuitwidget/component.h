@@ -132,7 +132,7 @@ class MAINMODULE_EXPORT Component : public CompBase, public QGraphicsItem, publi
 
         // Link components
         virtual void setLinkedValue( int ){;}
-        virtual void linked( bool ){;}
+        virtual void setLinked( bool l ){ m_linked = l;}
         bool m_linkable;
         int m_linkNumber;
  static Linkable* m_selecComp;
@@ -170,6 +170,7 @@ class MAINMODULE_EXPORT Component : public CompBase, public QGraphicsItem, publi
         bool m_warning;
         bool m_crashed;
         bool m_hidden;
+        bool m_linked;
 
         QPointF m_boardPos;
         QPointF m_circPos;

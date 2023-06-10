@@ -100,8 +100,8 @@ ScriptCpu::ScriptCpu( eMcu* mcu )
                                    , asCALL_THISCALL );
 
     m_aEngine->RegisterObjectMethod("ScriptCpu", "IoPort@ getPort(const string port)"
-                                       , asMETHODPR( ScriptCpu, getPort, (const string), IoPort*)
-                                       , asCALL_THISCALL );
+                                   , asMETHODPR( ScriptCpu, getPort, (const string), IoPort*)
+                                   , asCALL_THISCALL );
 
     m_aEngine->RegisterObjectMethod("ScriptCpu", "IoPin@ getPin(const string pin)"
                                    , asMETHODPR( ScriptCpu, getPin, (const string), IoPin*)
@@ -116,8 +116,16 @@ ScriptCpu::ScriptCpu( eMcu* mcu )
                                    , asCALL_THISCALL );
 
     m_aEngine->RegisterObjectMethod("ScriptCpu", "void INTERRUPT( uint vector )"
-                                       , asMETHODPR( ScriptCpu, INTERRUPT, (uint32_t), void)
-                                       , asCALL_THISCALL );
+                                   , asMETHODPR( ScriptCpu, INTERRUPT, (uint32_t), void)
+                                   , asCALL_THISCALL );
+
+    m_aEngine->RegisterObjectMethod("ScriptCpu", "void setLinkable()"
+                                   , asMETHODPR( ScriptCpu, setLinkable, (), void)
+                                   , asCALL_THISCALL );
+
+    m_aEngine->RegisterObjectMethod("ScriptCpu", "void setLinkedValue( int index, int v )"
+                                   , asMETHODPR( ScriptCpu, setLinkedValue, (int,int), void)
+                                   , asCALL_THISCALL );
 }
 ScriptCpu::~ScriptCpu() {}
 
@@ -303,4 +311,14 @@ McuPin* ScriptCpu::getMcuPin( const string pinName )
     McuPin* pin = m_mcu->getMcuPin( name );
     if( !pin ) qDebug() << "Error: ScriptCpu::getMcuPin Pin"<< name << "Doesn't exist";
     return pin;
+}
+
+void ScriptCpu::setLinkable()
+{
+    m_mcuComp->setScriptLinkable( this );
+}
+
+void ScriptCpu::setLinkedValue( int index, int v )
+{
+    m_mcuComp->setLinkedVal( index, v );
 }

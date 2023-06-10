@@ -24,7 +24,7 @@ class MAINMODULE_EXPORT Dialed : public Component
         double scale() { return m_dialW.scale(); }
         void setScale( double s ) { m_dialW.setScale(s); updateProxy(); }
 
-        virtual void linked( bool l ) override;
+        //virtual void setLinked( bool l ) override;
         virtual void setLinkedValue( int v ) override;
 
     public slots:

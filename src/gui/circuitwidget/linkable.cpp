@@ -42,7 +42,7 @@ void Linkable::createLinks( QList<Component*>* compList )
             {
                 //qDebug() << "TextComponent::createLinks"<<uid;
                 m_linkedComp.append( comp );
-                comp->linked( true );
+                comp->setLinked( true );
                 break;
             }
     }
@@ -68,7 +68,7 @@ void Linkable::compSelected( Component* comp )
     if( comp )  // One Component was selected to link
     {
         bool linked = m_linkedComp.contains( comp );
-        comp->linked( !linked );
+        comp->setLinked( !linked );
 
         if( linked )
         {

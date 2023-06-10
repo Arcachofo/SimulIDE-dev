@@ -46,6 +46,7 @@ Component::Component( QObject* parent, QString type, QString id )
     m_warning    = false;
     m_graphical  = false;
     m_linkable   = false;
+    m_linked     = false;
     m_background = "";
     m_showProperty = "";
     m_linkNumber = -1;
@@ -622,18 +623,18 @@ void Component::paint( QPainter* p, const QStyleOptionGraphicsItem*, QWidget* )
         if( m_opCount > 0.6 ) m_opCount = 0.0;
         p->setOpacity( m_opCount+opaci );
     }
+    else if( m_selecComp && m_linkNumber >= 0 ){
+        p->setOpacity( 0.3 );
+        p->fillRect( boundingRect(), Qt::blue  );
+        p->setOpacity( 1 );
+        p->drawText( boundingRect(), Qt::AlignCenter, QString::number(m_linkNumber) );
+        p->setOpacity( 0.12 );
+    }
     else if( !m_hidden )
     {
         if( m_isMainComp ){
             p->fillRect( boundingRect(), Qt::yellow  );
             p->setOpacity( 0.5 );
-        }
-        if( m_selecComp && m_linkNumber >= 0 ){
-            p->setOpacity( 0.3 );
-            p->fillRect( boundingRect(), Qt::blue  );
-            p->setOpacity( 1 );
-            p->drawText( boundingRect(), Qt::AlignCenter, QString::number(m_linkNumber) );
-            p->setOpacity( 0.12 );
         }
     }
     //p->drawPath( shape() );

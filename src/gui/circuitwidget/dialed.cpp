@@ -49,10 +49,10 @@ void Dialed::dialChanged( int ) // Called when dial is rotated
     if( !Simulator::self()->isRunning() ) updateStep();
 }
 
-void Dialed::linked( bool l )
+/*void Dialed::setLinked( bool l )
 {
     /// m_dialW.setVisible( !l );
-}
+}*/
 
 void Dialed::setLinkedValue( int v )
 {

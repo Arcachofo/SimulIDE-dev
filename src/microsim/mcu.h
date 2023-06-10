@@ -10,6 +10,7 @@
 
 #include "e_mcu.h"
 #include "chip.h"
+#include "linkable.h"
 
 enum deviceType_t{
     typeNONE=0,
@@ -20,8 +21,9 @@ enum deviceType_t{
 
 class LibraryItem;
 class MCUMonitor;
+class ScriptCpu;
 
-class MAINMODULE_EXPORT Mcu : public Chip
+class MAINMODULE_EXPORT Mcu : public Chip, public Linkable
 {
         friend class McuCreator;
 
@@ -90,6 +92,8 @@ class MAINMODULE_EXPORT Mcu : public Chip
                              int pos, int xpos, int ypos, int angle , int length=8) override;
 
         //void createCfgWord( QString name, uint16_t addr, uint16_t v );
+        void setScriptLinkable( ScriptCpu* l) { m_scriptLink = l; }
+        void setLinkedVal( int index, int v );
 
         virtual QStringList getEnumUids( QString ) override;
         virtual QStringList getEnumNames( QString ) override;
@@ -102,6 +106,7 @@ class MAINMODULE_EXPORT Mcu : public Chip
         void slotReload();
         void slotOpenTerm( int num );
         void slotOpenMcuMonitor();
+        void slotLinkComp();
 
         void loadEEPROM();
         void saveEEPROM();
@@ -134,6 +139,8 @@ class MAINMODULE_EXPORT Mcu : public Chip
         QList<Pin*> m_pinList;
 
         MCUMonitor* m_mcuMonitor;
+
+        ScriptCpu* m_scriptLink;
 };
 
 #endif

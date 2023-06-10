@@ -10,6 +10,7 @@
 #include "iopin.h"
 #include "mcucpu.h"
 
+
 using namespace std;
 
 class ScriptPerif;
@@ -24,8 +25,8 @@ class MAINMODULE_EXPORT ScriptCpu : public ScriptModule, public McuCpu
         virtual void voltChanged() override;
         virtual void runEvent() override;
 
-        virtual void reset();
-        virtual void runStep();
+        virtual void reset() override;
+        virtual void runStep() override;
         virtual void extClock( bool clkState ) override;
         virtual void updateStep() override;
 
@@ -58,6 +59,9 @@ class MAINMODULE_EXPORT ScriptCpu : public ScriptModule, public McuCpu
 
         McuPort* getMcuPort( const string portName );
         McuPin*  getMcuPin( const string pinName );
+
+        void setLinkable();
+        void setLinkedValue( int index, int v );
 
         virtual void INTERRUPT( uint vector ) override;
 
