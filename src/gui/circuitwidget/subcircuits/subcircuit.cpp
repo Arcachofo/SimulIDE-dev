@@ -163,6 +163,9 @@ void SubCircuit::loadSubCircuit( QString fileName )
 {
     QString doc = fileToString( fileName, "SubCircuit::loadSubCircuit" );
 
+    QString oldFilePath = Circuit::self()->getFilePath();
+    Circuit::self()->setFilePath( fileName );             // Path to find subcircuits/Scripted in our data folder
+
     QStringList graphProps;
     for( propGroup pg : m_propGroups ) // Create list of "Graphical" poperties (We don't need them)
     {
@@ -306,7 +309,7 @@ void SubCircuit::loadSubCircuit( QString fileName )
 
                     if( comp->m_linkable )
                     {
-                        Linkable* l = (Linkable*)comp;
+                        Linkable* l = dynamic_cast<Linkable*>(comp);
                         if( l->hasLinks() ) linkList.append( l );
                     }
 
@@ -319,7 +322,10 @@ void SubCircuit::loadSubCircuit( QString fileName )
                 }   }
                 else qDebug() << "SubCircuit:"<<m_name<<m_id<< "ERROR Creating Component: "<<type<<uid<<label;
     }   }   }
-    for( Linkable* l : linkList ) l->createLinks( &m_compList );
+    for( Linkable* l : linkList )
+        l->createLinks( &m_compList );
+
+    Circuit::self()->setFilePath( oldFilePath ); // Restore original filePath
 }
 
 Pin* SubCircuit::addPin( QString id, QString type, QString label, int pos, int xpos, int ypos, int angle, int length  )

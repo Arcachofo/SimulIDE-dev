@@ -105,6 +105,7 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
         void updatePin( ePin* epin, QString oldId, QString newId );
 
         const QString getFilePath() const { return m_filePath; }
+        void setFilePath( QString f ) { m_filePath = f; }
 
         void drawBackground( QPainter* painter, const QRectF &rect );
 
