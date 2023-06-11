@@ -48,8 +48,12 @@ Component* SubCircuit::construct( QObject* parent, QString type, QString id )
 
     if( dataFile == "" ) // Component is not in SimulIDE, search in Circuit folder
     {
-        QDir circuitDir  = QFileInfo( Circuit::self()->getFilePath() ).absoluteDir();
-        m_subcDir = circuitDir.absoluteFilePath( "data/"+name );
+        m_subcDir = ComponentSelector::self()->getFileDir( name ); // Found in folder (no xml file)
+        if( m_subcDir.isEmpty() )                                  // Try to find a "data" folder in Circuit folder
+        {
+            QDir circuitDir = QFileInfo( Circuit::self()->getFilePath() ).absoluteDir();
+            m_subcDir = circuitDir.absoluteFilePath( "data/"+name );
+        }
     }
     else{
         QDomDocument domDoc = fileToDomDoc( dataFile, "SubCircuit::construct");

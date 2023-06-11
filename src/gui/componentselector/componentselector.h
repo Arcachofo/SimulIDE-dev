@@ -22,7 +22,8 @@ class MAINMODULE_EXPORT ComponentSelector : public QTreeWidget
 
         void LoadCompSetAt( QDir compSetDir );
 
-        QString getXmlFile( QString compName ) { return m_xmlFileList[ compName ]; }
+        QString getXmlFile( QString compName ) { return m_xmlFileList.value( compName ); }
+        QString getFileDir( QString compName ) { return m_dirFileList.value( compName ); }
 
         void search( QString filter );
 
@@ -55,6 +56,7 @@ class MAINMODULE_EXPORT ComponentSelector : public QTreeWidget
         QHash<QString, QString> m_catTr;
 
         QHash<QString, QString> m_xmlFileList;
+        QHash<QString, QString> m_dirFileList;
         QHash<QString, QString> m_shortCuts;
 
         manCompDialog m_mcDialog;

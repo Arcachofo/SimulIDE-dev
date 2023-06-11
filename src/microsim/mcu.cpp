@@ -143,19 +143,28 @@ Mcu::Mcu( QObject* parent, QString type, QString id )
             if( found ) break;
             rNode = rNode.nextSibling();
         }
-    }else // Try to find a "data" folder in Circuit folder
-    {
-        QDir circuitDir = QFileInfo( Circuit::self()->getFilePath() ).absoluteDir();
-        QString folder = "data/"+m_device+"/";
-        m_dataFile = circuitDir.absoluteFilePath( folder+m_device+".mcu" );
-        m_pkgeFile = circuitDir.absoluteFilePath( folder+m_device+".package" );
+    }else{
+        QDir mcuDir;
+        QString folder = ComponentSelector::self()->getFileDir( m_device );
+
+        if( !folder.isEmpty() ) // Found in folder (no xml file)
+        {
+            mcuDir = QDir( folder );
+        }
+        else              // Try to find a "data" folder in Circuit folder
+        {
+            mcuDir = QFileInfo( Circuit::self()->getFilePath() ).absoluteDir();
+            folder = "data/"+m_device;
+        }
+        m_dataFile = mcuDir.absoluteFilePath( folder+"/"+m_device+".mcu" );
+        m_pkgeFile = mcuDir.absoluteFilePath( folder+"/"+m_device+".package" );
 
         QFile dataFile( m_dataFile );
         QFile pkgeFile( m_pkgeFile );
         if( !dataFile.exists() || !pkgeFile.exists() )
         {
             MessageBoxNB( "Mcu::Mcu", "                               \n"+
-                      tr("xml file not found for: %1").arg( m_device ) );
+                      tr("Files not found for: %1").arg( m_device ) );
             m_error = 1;
             return;
         }

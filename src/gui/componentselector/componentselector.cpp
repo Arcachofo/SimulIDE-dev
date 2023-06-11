@@ -80,7 +80,29 @@ void ComponentSelector::LoadCompSetAt( QDir compSetDir )
     for( QString compSetName : xmlList )
     {
         QString compSetFilePath = compSetDir.absoluteFilePath( compSetName );
-        if( !compSetFilePath.isEmpty( ))  loadXml( compSetFilePath );
+        if( !compSetFilePath.isEmpty() ) loadXml( compSetFilePath );
+    }
+    if( compSetDir.cd("test") )
+    {
+        QStringList dirList = compSetDir.entryList( {"*"}, QDir::Dirs );
+        if( !dirList.isEmpty() )
+        {
+            QTreeWidgetItem* catItem = getCategory("test");
+            if( !catItem ) catItem = addCategory("test","test","","" );
+
+            for( QString compName : dirList )
+            {
+                QString path = compName+"/"+compName;
+                QString type;
+                if     ( compSetDir.exists( path+".sim1") ) type = "Subcircuit";
+                else if( compSetDir.exists( path+".mcu")  ) type = "MCU";
+                if( !type.isEmpty() )
+                {
+                    addItem( compName, catItem, "subc", type );
+                    m_dirFileList[ compName ] = compSetDir.absoluteFilePath( compName );
+                }
+            }
+        }
     }
     qDebug() << "\n";
 }
