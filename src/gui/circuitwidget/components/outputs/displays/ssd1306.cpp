@@ -83,6 +83,7 @@ Ssd1306::Ssd1306( QObject* parent, QString type, QString id )
 new StringProp<Ssd1306>( "Color"    ,tr("Color")        ,""           ,this,&Ssd1306::colorStr,&Ssd1306::setColorStr, "enum" ),
 new IntProp   <Ssd1306>( "Width"    ,tr("Width")        ,tr("_Pixels"),this,&Ssd1306::width,   &Ssd1306::setWidth,"uint" ),
 new IntProp   <Ssd1306>( "Height"   ,tr("Height")       ,tr("_Pixels"),this,&Ssd1306::height,  &Ssd1306::setHeight,"uint" ),
+new IntProp   <Ssd1306>( "Control_Code",tr("I2C Address")  ,""        ,this,&Ssd1306::cCode,   &Ssd1306::setCcode,"uint" ),
 new DoubProp  <Ssd1306>( "Frequency",tr("I2C Frequency"),"_KHz"       ,this,&Ssd1306::freqKHz, &Ssd1306::setFreqKHz ),
     }} );
 }
