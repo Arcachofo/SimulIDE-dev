@@ -60,9 +60,11 @@ class MAINMODULE_EXPORT ScriptCpu : public ScriptModule, public McuCpu
         McuPort* getMcuPort( const string portName );
         McuPin*  getMcuPin( const string pinName );
 
-        void setLinkable();
-        void setLinkedValue( int index, int v, int i=0  );
-        void setLinkedString( int index, const string str, int i=0 );
+        void setLinkable();                                           // Called from script
+        void setLinkedValue( int index, int v, int i=0  );            // Called from script
+        void setLinkedString( int index, const string str, int i=0 ); // Called from script
+        void setLinkedVal( int v, int i=0 );                          // Called from C++
+        void setLinkedStr( QString s, int i );                        // Called from C++
 
         virtual void INTERRUPT( uint vector ) override;
 
@@ -77,6 +79,9 @@ class MAINMODULE_EXPORT ScriptCpu : public ScriptModule, public McuCpu
         asIScriptFunction* m_getCpuReg;
         asIScriptFunction* m_getStrReg;
         asIScriptFunction* m_command;
+
+        asIScriptFunction* m_setLinkedVal;
+        asIScriptFunction* m_setLinkedStr;
 
         //asIScriptContext* m_extClockCtx;
 

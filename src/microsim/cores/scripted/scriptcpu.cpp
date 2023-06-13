@@ -32,6 +32,8 @@ ScriptCpu::ScriptCpu( eMcu* mcu )
     m_getCpuReg = NULL;
     m_getStrReg = NULL;
     m_command   = NULL;
+    m_setLinkedVal= NULL;
+    m_setLinkedStr= NULL;
 
     m_mcuComp = m_mcu->component();
 
@@ -160,6 +162,8 @@ int ScriptCpu::compileScript()
     m_getCpuReg   = m_aEngine->GetModule(0)->GetFunctionByDecl("int getCpuReg( string reg )");
     m_getStrReg   = m_aEngine->GetModule(0)->GetFunctionByDecl("string getStrReg( string reg )");
     m_command     = m_aEngine->GetModule(0)->GetFunctionByDecl("void command( string c )");
+    m_setLinkedVal= m_aEngine->GetModule(0)->GetFunctionByDecl("void setLinkedValue( int v, int i )");
+    m_setLinkedStr= m_aEngine->GetModule(0)->GetFunctionByDecl("void setLinkedString( string str, int i )");
 
     if( m_getCpuReg || m_getStrReg )
     {
@@ -181,6 +185,8 @@ int ScriptCpu::compileScript()
 
 void ScriptCpu::updateStep()
 {
+    if( !m_changed ) return;
+    m_changed = false;
     m_mcuComp->setValLabelText( m_value );
 }
 
@@ -232,6 +238,7 @@ void ScriptCpu::toConsole( string r )
 void ScriptCpu::showValue( string r )
 {
     m_value = QString::fromStdString(r);
+    m_changed = true;
 }
 
 void ScriptCpu::addCpuReg( string name, string type )
@@ -331,4 +338,25 @@ void ScriptCpu::setLinkedString( int index, string str, int i )
 {
     QString s = QString::fromStdString( str );
     m_mcuComp->setLinkedStr( index, s, i );
+}
+
+void ScriptCpu::setLinkedVal( int v, int i )
+{
+    if( !m_setLinkedVal ) return;
+
+    prepare( m_setLinkedVal);
+    m_context->SetArgDWord( 0, v );
+    m_context->SetArgDWord( 1, i );
+    execute();
+}
+
+void ScriptCpu::setLinkedStr( QString s, int i )
+{
+    if( !m_setLinkedStr ) return;
+
+    prepare( m_setLinkedStr);
+    std::string str = s.toStdString();
+    m_context->SetArgObject( 0, &str );
+    m_context->SetArgDWord( 1, i );
+    execute();
 }

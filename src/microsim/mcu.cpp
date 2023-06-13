@@ -17,6 +17,7 @@
 #include "mcupin.h"
 #include "mcuwdt.h"
 #include "mcucreator.h"
+#include "scriptcpu.h"
 #include "circuit.h"
 #include "simulator.h"
 #include "itemlibrary.h"
@@ -536,6 +537,16 @@ void Mcu::setLinkedStr( int index, QString str, int i )
 {
     if( index >= m_linkedComp.size() ) return;
     m_linkedComp.at( index )->setLinkedString( str, i );
+}
+
+void Mcu::setLinkedValue( int v, int i )
+{
+    if( m_scriptLink ) m_scriptLink->setLinkedVal( v, i );
+}
+
+void Mcu::setLinkedString( QString str, int i )
+{
+    if( m_scriptLink ) m_scriptLink->setLinkedStr( str, i );
 }
 
 Pin* Mcu::addPin( QString id, QString type, QString label,
