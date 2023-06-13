@@ -10,14 +10,13 @@
 
 #include "mcumodule.h"
 #include "mcupin.h"
-//#include "e-element.h"
 
 class Mcu;
 class eMcu;
 class McuPin;
 class Component;
 
-class MAINMODULE_EXPORT McuPort : public McuModule//, public eElement
+class MAINMODULE_EXPORT McuPort : public McuModule
 {
         friend class McuCreator;
         friend class McuPorts;

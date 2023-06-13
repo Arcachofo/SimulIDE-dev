@@ -168,47 +168,46 @@ void McuPin::setExtInt( uint mode )
 #include "angelscript.h"
 void McuPin::registerScript( asIScriptEngine* engine )
 {
-    int r=0;
     engine->RegisterObjectType("McuPin", 0, asOBJ_REF | asOBJ_NOCOUNT );
 
-    r = engine->RegisterObjectMethod("McuPin", "void setDirection( bool o )"
-                                       , asMETHODPR( McuPin, setDirection, (bool), void)
-                                       , asCALL_THISCALL );
+    engine->RegisterObjectMethod("McuPin", "void setDirection( bool o )"
+                                   , asMETHODPR( McuPin, setDirection, (bool), void)
+                                   , asCALL_THISCALL );
 
-    r = engine->RegisterObjectMethod("McuPin", "void setPortState( bool s )"
-                                       , asMETHODPR( McuPin, setPortState, (bool), void)
-                                       , asCALL_THISCALL );
+    engine->RegisterObjectMethod("McuPin", "void setPortState( bool s )"
+                                   , asMETHODPR( McuPin, setPortState, (bool), void)
+                                   , asCALL_THISCALL );
 
-    r = engine->RegisterObjectMethod("McuPin", "void controlPin( bool outCtrl, bool dirCtrl )"
-                                       , asMETHODPR( McuPin, controlPin, (bool,bool), void)
-                                       , asCALL_THISCALL );
+    engine->RegisterObjectMethod("McuPin", "void controlPin( bool outCtrl, bool dirCtrl )"
+                                   , asMETHODPR( McuPin, controlPin, (bool,bool), void)
+                                   , asCALL_THISCALL );
 
-    r = engine->RegisterObjectMethod("McuPin", "void setExtInt( uint mode )"
-                                       , asMETHODPR( McuPin, setExtInt, (uint), void)
-                                       , asCALL_THISCALL );
+    engine->RegisterObjectMethod("McuPin", "void setExtInt( uint mode )"
+                                   , asMETHODPR( McuPin, setExtInt, (uint), void)
+                                   , asCALL_THISCALL );
 
     // IoPin ------------
-    r = engine->RegisterObjectMethod("McuPin", "void setPinMode(uint m)"
-                                       , asMETHODPR( McuPin, setPinMode, (uint), void)
-                                       , asCALL_THISCALL );
+    engine->RegisterObjectMethod("McuPin", "void setPinMode(uint m)"
+                                   , asMETHODPR( McuPin, setPinMode, (uint), void)
+                                   , asCALL_THISCALL );
 
-    r = engine->RegisterObjectMethod("McuPin", "bool getInpState()"
-                                       , asMETHODPR( McuPin, getInpState, (), bool)
-                                       , asCALL_THISCALL );
+    engine->RegisterObjectMethod("McuPin", "bool getInpState()"
+                                   , asMETHODPR( McuPin, getInpState, (), bool)
+                                   , asCALL_THISCALL );
 
-    r = engine->RegisterObjectMethod("McuPin", "void setOutState(bool s)"
-                                       , asMETHODPR( McuPin, setOutState, (bool), void)
-                                       , asCALL_THISCALL );
+    engine->RegisterObjectMethod("McuPin", "void setOutState(bool s)"
+                                   , asMETHODPR( McuPin, setOutState, (bool), void)
+                                   , asCALL_THISCALL );
 
-    r = engine->RegisterObjectMethod("McuPin", "double getVoltage()"
-                                       , asMETHODPR( McuPin, getVoltage, (), double)
-                                       , asCALL_THISCALL );
+    engine->RegisterObjectMethod("McuPin", "double getVoltage()"
+                                   , asMETHODPR( McuPin, getVoltage, (), double)
+                                   , asCALL_THISCALL );
 
-    r = engine->RegisterObjectMethod("McuPin", "void setVoltage(double v)"
-                                       , asMETHODPR( McuPin, setVoltage, (double), void)
-                                       , asCALL_THISCALL );
+    engine->RegisterObjectMethod("McuPin", "void setVoltage(double v)"
+                                   , asMETHODPR( McuPin, setVoltage, (double), void)
+                                   , asCALL_THISCALL );
 
-    r = engine->RegisterObjectMethod("McuPin", "void changeCallBack(eElement@ p, bool s)"
-                                       , asMETHODPR( McuPin, changeCallBack, (eElement*, bool), void)
-                                       , asCALL_THISCALL );
+    engine->RegisterObjectMethod("McuPin", "void changeCallBack(eElement@ p, bool s)"
+                                   , asMETHODPR( McuPin, changeCallBack, (eElement*, bool), void)
+                                   , asCALL_THISCALL );
 }

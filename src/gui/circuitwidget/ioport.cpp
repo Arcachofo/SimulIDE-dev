@@ -143,22 +143,21 @@ IoPin* IoPort::getPin( QString pinName )
 #include "angelscript.h"
 void IoPort::registerScript( asIScriptEngine* engine )
 {
-    int r=0;
     engine->RegisterObjectType("IoPort", 0, asOBJ_REF | asOBJ_NOCOUNT );
 
-    r = engine->RegisterObjectMethod("IoPort", "void setPinMode(uint m)"
-                                       , asMETHODPR( IoPort, setPinMode, (uint), void)
-                                       , asCALL_THISCALL );
+    engine->RegisterObjectMethod("IoPort", "void setPinMode(uint m)"
+                                   , asMETHODPR( IoPort, setPinMode, (uint), void)
+                                   , asCALL_THISCALL );
 
-    r = engine->RegisterObjectMethod("IoPort", "uint getInpState()"
-                                       , asMETHODPR( IoPort, getInpState, (), uint)
-                                       , asCALL_THISCALL );
+    engine->RegisterObjectMethod("IoPort", "uint getInpState()"
+                                   , asMETHODPR( IoPort, getInpState, (), uint)
+                                   , asCALL_THISCALL );
 
-    r = engine->RegisterObjectMethod("IoPort", "void setOutState(uint s)"
-                                       , asMETHODPR( IoPort, setOutState, (uint), void)
-                                       , asCALL_THISCALL );
+    engine->RegisterObjectMethod("IoPort", "void setOutState(uint s)"
+                                   , asMETHODPR( IoPort, setOutState, (uint), void)
+                                   , asCALL_THISCALL );
 
-    r = engine->RegisterObjectMethod("IoPort", "void changeCallBack(eElement@ s, bool s)"
-                                       , asMETHODPR( IoPort, changeCallBack, (eElement*, bool), void)
-                                       , asCALL_THISCALL );
+    engine->RegisterObjectMethod("IoPort", "void changeCallBack(eElement@ s, bool s)"
+                                   , asMETHODPR( IoPort, changeCallBack, (eElement*, bool), void)
+                                   , asCALL_THISCALL );
 }

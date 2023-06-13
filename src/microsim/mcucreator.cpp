@@ -1011,15 +1011,19 @@ void McuCreator::createSpi( QDomElement* e )
 
     setConfigRegs( e, m_spi );
 
-    QString dataReg = e->attribute("dataregs");
-    m_spi->m_dataReg = mcu->getReg( dataReg );
-    watchRegNames( dataReg, R_WRITE, m_spi, &McuSpi::writeSpiReg, mcu );
-
-    QString statReg = e->attribute("statusreg");
-    m_spi->m_statReg = mcu->getReg( statReg );
-    watchRegNames( statReg, R_WRITE, m_spi, &McuSpi::writeStatus, mcu );
-
-    if( e->hasAttribute("interrupt") ) setInterrupt( e->attribute("interrupt"), m_spi );
+    if(  e->hasAttribute("dataregs") )
+    {
+        QString dataReg = e->attribute("dataregs");
+        m_spi->m_dataReg = mcu->getReg( dataReg );
+        watchRegNames( dataReg, R_WRITE, m_spi, &McuSpi::writeSpiReg, mcu );
+    }
+    if(  e->hasAttribute("statusreg") )
+    {
+        QString statReg = e->attribute("statusreg");
+        m_spi->m_statReg = mcu->getReg( statReg );
+        watchRegNames( statReg, R_WRITE, m_spi, &McuSpi::writeStatus, mcu );
+    }
+    if( e->hasAttribute("interrupt")  ) setInterrupt(  e->attribute("interrupt") , m_spi );
     if( e->hasAttribute("prescalers") ) setPrescalers( e->attribute("prescalers"), m_spi );
 
     QStringList pins = e->attribute("pins").remove(" ").split(",");
