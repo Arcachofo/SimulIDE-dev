@@ -13,11 +13,8 @@ ComProperty::ComProperty( QString name, QString caption, QString unit, QString t
     m_unit = unit;
     m_type = type;
 
-    m_widget = NULL;
+    //m_widget = NULL;
 }
 
-void ComProperty::setWidget( PropVal* w )
-{
-    m_widget = w;
-}
+//void ComProperty::setWidget( PropVal* w ) { m_widget = w; }
 

@@ -14,8 +14,9 @@ const QString NumProp::getValU( double val, QString &u )
 QString NumProp::getStr( double val )
 {
     QString valStr;
-    if( m_widget ) valStr = m_widget->getValWithUnit();
-    else{
+    //if( m_widget ) valStr = m_widget->getValWithUnit();
+    //else
+    {
         double multiplier = getMultiplier( m_unit );
         valStr = QString::number( val/multiplier );
         if( !m_unit.isEmpty() ) valStr.append(" "+m_unit );

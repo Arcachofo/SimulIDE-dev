@@ -76,6 +76,7 @@
 #include "scriptport.h"
 #include "scriptusart.h"
 #include "scriptspi.h"
+#include "scriptprop.h"
 
 #include "utils.h"
 
@@ -164,6 +165,7 @@ int McuCreator::processFile( QString fileName, bool main )
         else if( part == "intosc")      createIntOsc( &el );
         //else if( part == "extmem" )     createExtMem( &el );
         else if( part == "intmem" )     createIntMem( &el );
+
         else if( part == "include" )
         {
             error = processFile( el.attribute("file") );
@@ -182,9 +184,42 @@ int McuCreator::processFile( QString fileName, bool main )
         else if( m_core == "scripted" )
         {
             ScriptCpu* cpu = new ScriptCpu( mcu );
-            cpu->setPeriferals( m_scriptPerif );
             mcu->cpu = cpu;
             m_mcuComp->m_scripted = true;
+
+            node = root.firstChild();
+
+            while( !node.isNull() )
+            {
+                QDomElement e = node.toElement();
+                QString  part = e.tagName();
+
+                if( part == "properties" )
+                {
+                    QString group = e.attribute("name");
+
+                    QList<ComProperty*> propList;
+                    m_mcuComp->addPropGroup( {group, propList} );
+
+                    QDomNode node = e.firstChild();
+                    while( !node.isNull() )
+                    {
+                        QDomElement el = node.toElement();
+
+                        if( el.tagName() == "property" )
+                        {
+                            QString name = el.attribute("name");
+                            QString type = el.attribute("type");
+
+                            cpu->addProperty( group, name, type );
+                        }
+                        node = node.nextSibling();
+                    }
+                }
+                node = node.nextSibling();
+            }
+            cpu->setPeriferals( m_scriptPerif );
+
             cpu->setScriptFile( m_basePath+"/"+root.attribute("script") );
         }
         else mcu->cpu = new McuCpu( mcu );

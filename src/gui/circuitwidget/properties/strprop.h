@@ -18,6 +18,8 @@ class MAINMODULE_EXPORT StrProp : public ComProperty
         {}
         ~StrProp(){;}
 
+        virtual double getValue() override;
+
     protected:
         QString getStr( QString str );
         QString setStr( QString str );

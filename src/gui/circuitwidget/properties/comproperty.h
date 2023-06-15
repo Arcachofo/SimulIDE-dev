@@ -29,10 +29,10 @@ class MAINMODULE_EXPORT ComProperty
 
         virtual QString toString(){return getValStr();}
 
-        void setWidget( PropVal* w );
+        //void setWidget( PropVal* w );
 
     protected:
-        PropVal* m_widget;
+        //PropVal* m_widget;
 
         QString m_name;
         QString m_capt;

@@ -10,7 +10,6 @@
 #include "iopin.h"
 #include "mcucpu.h"
 
-
 using namespace std;
 
 class ScriptPerif;
@@ -42,6 +41,10 @@ class MAINMODULE_EXPORT ScriptCpu : public ScriptModule, public McuCpu
         void addCpuVar( string name, string type );
         virtual int getCpuReg( QString reg ) override;
         virtual QString getStrReg( QString ) override;
+
+        void addProperty( QString group, QString name, QString type );
+        QString getProp( ComProperty* p );
+        void setProp( ComProperty* p, QString val );
 
         void addEvent( uint time );
         void cancelEvents();
@@ -82,6 +85,11 @@ class MAINMODULE_EXPORT ScriptCpu : public ScriptModule, public McuCpu
 
         asIScriptFunction* m_setLinkedVal;
         asIScriptFunction* m_setLinkedStr;
+
+        std::vector<ComProperty*> m_scriptProps;
+        QHash<QString, QString> m_propFunctions;
+        QHash<QString, asIScriptFunction*> m_propGetters;
+        QHash<QString, asIScriptFunction*> m_propSetters;
 
         //asIScriptContext* m_extClockCtx;
 

@@ -16,3 +16,9 @@ QString StrProp::setStr( QString str )
     return str.replace("&#xa;","\n").replace("&#x22;","\"")
             .replace("&#x3C","<").replace("&#x3D","=").replace("&#x3E",">");
 }
+
+double StrProp::getValue()
+{
+    return getValStr().toDouble();
+}
+

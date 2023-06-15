@@ -128,6 +128,12 @@ void Potentiometer::setRes( double res ) // Called when property resistance is c
     setVal( m_res1 );
 }
 
+void Potentiometer::setLinkedValue( int v, int i )
+{
+    if( i ) setRes( v );
+    else Dialed::setLinkedValue( v, i );
+}
+
 void Potentiometer::updateProxy()
 {
     m_proxy->setPos( QPoint(-m_dialW.width()/2,-m_dialW.height()-5) );

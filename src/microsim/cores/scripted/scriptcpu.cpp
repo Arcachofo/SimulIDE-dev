@@ -1,4 +1,4 @@
-/***************************************************************************
+﻿/***************************************************************************
  *   Copyright (C) 2022 by Santiago González                               *
  *                                                                         *
  ***( see copyright.txt file at root folder )*******************************/
@@ -15,6 +15,8 @@
 #include "watcher.h"
 #include "console.h"
 #include "mcu.h"
+
+#include "scriptprop.h"
 
 using namespace std;
 
@@ -165,11 +167,25 @@ int ScriptCpu::compileScript()
     m_setLinkedVal= m_aEngine->GetModule(0)->GetFunctionByDecl("void setLinkedValue( int v, int i )");
     m_setLinkedStr= m_aEngine->GetModule(0)->GetFunctionByDecl("void setLinkedString( string str, int i )");
 
+    for( ComProperty* p : m_scriptProps ) // Get properties getters and setters from script
+    {
+        QString propName = p->name();
+        QString type = p->type();
+
+        QString getter = type+" get"+propName+"()";
+        asIScriptFunction* asFunc = m_aEngine->GetModule(0)->GetFunctionByDecl( getter.toLocal8Bit().constData() );
+        m_propGetters[propName] = asFunc;
+
+        QString setter = "void set"+propName+"("+type+")";
+        asFunc = m_aEngine->GetModule(0)->GetFunctionByDecl( setter.toLocal8Bit().constData() );
+        m_propSetters[propName] = asFunc;
+    }
+
     if( m_getCpuReg || m_getStrReg )
     {
         m_mcu->createCpuTable();
     }
-    if( m_command || m_script.contains("toConsole") )
+    if( m_command || m_script.contains("toConsole") )  /// TODELETE use TextComponent
     {
         m_mcu->createCpuTable();
         m_watcher = m_mcu->getCpuTable();
@@ -281,6 +297,80 @@ QString ScriptCpu::getStrReg( QString val )
     return QString::fromStdString( str );
 }
 
+void ScriptCpu::addProperty( QString group, QString name, QString type )
+{
+    ComProperty* p = new ScriptProp<ScriptCpu>( name, name, "", this
+                                              , &ScriptCpu::getProp, &ScriptCpu::setProp, type );
+    m_scriptProps.push_back( p );
+
+    m_mcu->component()->addProperty( group, p );
+}
+
+QString ScriptCpu::getProp( ComProperty* p )
+{
+    QString name = p->name();
+    QString type = p->type();
+
+    asIScriptFunction* asFunc = m_propGetters.value( name );
+
+    if( !asFunc ) return "";
+
+    prepare( asFunc );
+    execute();
+
+    if( m_status != asEXECUTION_FINISHED ) return "";
+
+    if( type == "string" )
+    {
+        std::string str = *(string*)m_context->GetReturnObject();
+        return QString::fromStdString( str );
+    }
+    else if( type == "int" )
+    {
+        int64_t ret = m_context->GetReturnQWord();
+        return QString::number( ret );
+    }
+    else if( type == "uint" )
+    {
+        uint64_t ret = m_context->GetReturnQWord();
+        return QString::number( ret );
+    }
+    else if( type == "double" )
+    {
+        double ret = m_context->GetReturnDouble();
+        return QString::number( ret );
+    }
+    else if( type == "bool")
+    {
+        asBYTE ret = m_context->GetReturnByte();
+        QString retStr = ret ? "true" : "false";
+        return retStr;
+    }
+    return "";
+}
+
+void ScriptCpu::setProp( ComProperty* p, QString val )
+{
+    QString name = p->name();
+    QString type = p->type();
+
+    asIScriptFunction* asFunc = m_propSetters.value( name );
+
+    if( !asFunc ) return; // Repeated in command(), create a function for this
+    prepare( asFunc );
+    if( type == "string" )
+    {
+        std::string str = val.toStdString();
+        m_context->SetArgObject( 0, &str );
+    }
+    else if( type == "int"    ) m_context->SetArgDWord(  0, val.toInt() );
+    else if( type == "uint"   ) m_context->SetArgDWord(  0, val.toUInt() );
+    else if( type == "double" ) m_context->SetArgDouble( 0, val.toDouble() );
+    else if( type == "bool"   ) m_context->SetArgByte(   0, val == "true" );
+
+    execute();
+}
+
 void ScriptCpu::addEvent( uint time ) { Simulator::self()->addEvent( time, this ); }
 void ScriptCpu::cancelEvents()        { Simulator::self()->cancelEvents( this ); }
 uint64_t ScriptCpu::circTime()        { return Simulator::self()->circTime(); }
@@ -324,15 +414,9 @@ McuPin* ScriptCpu::getMcuPin( const string pinName )
     return pin;
 }
 
-void ScriptCpu::setLinkable()
-{
-    m_mcuComp->setScriptLinkable( this );
-}
+void ScriptCpu::setLinkable() { m_mcuComp->setScriptLinkable( this ); }
 
-void ScriptCpu::setLinkedValue( int index, int v, int i )
-{
-    m_mcuComp->setLinkedVal( index, v, i );
-}
+void ScriptCpu::setLinkedValue( int index, int v, int i ) { m_mcuComp->setLinkedVal( index, v, i ); }
 
 void ScriptCpu::setLinkedString( int index, string str, int i )
 {
