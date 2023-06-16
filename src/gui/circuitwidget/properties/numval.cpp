@@ -60,6 +60,7 @@ void NumVal::on_showVal_toggled( bool checked )
     }
     else m_component->setShowProp( "" );
     m_propDialog->updtValues();
+    m_propDialog->changed();
     m_blocked = false;
 }
 
@@ -72,6 +73,7 @@ void NumVal::on_valueBox_valueChanged( double val )
     else            m_property->setValStr( QString::number( valueBox->value() ) );
     m_blocked = false;
     m_propDialog->updtValues();
+    m_propDialog->changed();
 }
 
 void NumVal::on_unitBox_currentTextChanged( QString unit )
@@ -82,6 +84,7 @@ void NumVal::on_unitBox_currentTextChanged( QString unit )
     m_property->setValStr( getValWithUnit() );
     m_blocked = false;
     m_propDialog->updtValues();
+    m_propDialog->changed();
 }
 
 void NumVal::updtValues()

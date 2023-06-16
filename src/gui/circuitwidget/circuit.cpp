@@ -651,7 +651,7 @@ void Circuit::saveBackup()
 void Circuit::saveState()
 {
     if( m_conStarted || m_circState.size() == 0 ) return;
-    m_changed = true;
+    setChanged();
 
     if( m_undo )
     {
@@ -676,6 +676,12 @@ void Circuit::saveState()
     }
 //qDebug() << "Circuit::saveState Undo:"<< m_undoStack.size()<<m_undoIndex
 //                              <<"Redo:"<<m_redoStack.size()<<m_redoIndex<<"\n";
+
+}
+
+void Circuit::setChanged()
+{
+    m_changed = true;
     QString title = MainWindow::self()->windowTitle();
     if( !title.endsWith('*') ) MainWindow::self()->setWindowTitle(title+'*');
 }

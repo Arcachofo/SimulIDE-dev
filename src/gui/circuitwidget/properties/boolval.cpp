@@ -32,6 +32,7 @@ void BoolVal::on_trueVal_toggled( bool checked )
     if( m_blocked ) return;
     m_property->setValStr( checked ? "true" : "false" );
     m_propDialog->updtValues();
+    m_propDialog->changed();
 }
 
 void BoolVal::updtValues()

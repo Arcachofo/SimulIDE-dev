@@ -24,6 +24,8 @@ class PropDialog : public QDialog, private Ui::PropDialog
         void showProp( QString name, bool show );
         void updtValues();
 
+        void changed();
+
     public slots:
         void on_labelBox_editingFinished();
         void on_showLabel_toggled( bool checked );

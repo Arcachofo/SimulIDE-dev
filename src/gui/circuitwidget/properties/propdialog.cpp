@@ -5,6 +5,7 @@
 
 #include "propdialog.h"
 #include "component.h"
+#include "circuit.h"
 #include "labelval.h"
 //#include "propval.h"
 
@@ -164,4 +165,9 @@ void PropDialog::updtValues()
 {
     for( PropVal* prop : m_propList ) prop->updtValues();
     m_component->updtValues();
+}
+
+void PropDialog::changed()
+{
+    Circuit::self()->setChanged();
 }

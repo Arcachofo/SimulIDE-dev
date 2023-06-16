@@ -60,7 +60,7 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
         void unSaveState();
         void addCompState( CompBase* c, QString p, stateMode=stateAll );
 
-        void setChanged() { m_changed = true; }
+        void setChanged();
 
         void deselectAll();
         void accepKeys( bool a ) { m_acceptKeys = a; }

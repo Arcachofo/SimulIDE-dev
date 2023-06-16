@@ -44,6 +44,7 @@ void EnumVal::on_showVal_toggled( bool checked )
     }
     else m_component->setShowProp( "" );
     m_propDialog->updtValues();
+    m_propDialog->changed();
     m_blocked = false;
 }
 
@@ -54,6 +55,7 @@ void EnumVal::on_valueBox_currentIndexChanged( QString val )
     m_property->setValStr( m_enums.at( index ) );
 
     if( showVal->isChecked() ) m_component->setValLabelText( val );
+    m_propDialog->changed();
 }
 
 void EnumVal::updtValues()

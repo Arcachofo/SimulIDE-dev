@@ -6,6 +6,7 @@
 #include "textval.h"
 //#include "scripted.h"
 #include "comproperty.h"
+#include "propdialog.h"
 
 TextVal::TextVal( PropDialog* parent, Component* comp, ComProperty* prop )
        : PropVal( parent, comp, prop )
@@ -41,6 +42,7 @@ void TextVal::setup()
 void TextVal::on_textBox_textChanged()
 {
     m_property->setValStr( textBox->toPlainText() );
+    m_propDialog->changed();
 }
 
 void TextVal::updatValue()

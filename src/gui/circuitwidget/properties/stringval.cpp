@@ -6,6 +6,7 @@
 #include "stringval.h"
 #include "component.h"
 #include "comproperty.h"
+#include "propdialog.h"
 
 StringVal::StringVal( PropDialog* parent, Component* comp, ComProperty* prop )
          : PropVal( parent, comp, prop )
@@ -25,6 +26,7 @@ void StringVal::on_value_editingFinished()
 {
     m_property->setValStr( value->text() );
     updtValues();
+    m_propDialog->changed();
 }
 
 void StringVal::updtValues()

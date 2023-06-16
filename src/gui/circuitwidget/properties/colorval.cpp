@@ -8,6 +8,7 @@
 #include "colorval.h"
 #include "component.h"
 #include "comproperty.h"
+#include "propdialog.h"
 
 ColorVal::ColorVal( PropDialog* parent, Component* comp, ComProperty* prop )
         : PropVal( parent, comp, prop )
@@ -65,6 +66,8 @@ void ColorVal::on_valueBox_currentIndexChanged( int index )
     QPalette pal = colorW->palette();
     pal.setColor( QPalette::Base, m_color );
     colorW->setPalette( pal );
+
+    m_propDialog->changed();
 }
 
 void ColorVal::updtValues()
