@@ -22,10 +22,10 @@ class MAINMODULE_EXPORT Meter : public Component, public eResistor
         bool swithchPins() { return m_switchPins; }
         void setSwitchPins( bool s );
 
-        virtual void initialize(){ m_crashed = false;}
+        virtual void initialize() override { m_crashed = false;}
         virtual void updateStep() override;
 
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
 
     protected:
         virtual void setflip() override;

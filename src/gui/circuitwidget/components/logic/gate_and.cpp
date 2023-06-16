@@ -29,11 +29,11 @@ AndGate::AndGate( QObject* parent, QString type, QString id )
 {
     addPropGroup( { tr("Electric"), IoComponent::inputProps()
 +QList<ComProperty*>({
-new BoolProp<AndGate>( "Invert_Inputs", tr("Invert Inputs"),""       , this, &AndGate::invertInps, &AndGate::setInvertInps ),
-new IntProp <AndGate>( "Num_Inputs"   , tr("Input Size")   ,"_Inputs", this, &AndGate::numInps,    &AndGate::setNumInps, "uint" ),
+new BoolProp<AndGate>( "Invert_Inputs", tr("Invert Inputs"),""       , this, &AndGate::invertInps, &AndGate::setInvertInps, propNoCopy ),
+new IntProp <AndGate>( "Num_Inputs"   , tr("Input Size")   ,"_Inputs", this, &AndGate::numInps,    &AndGate::setNumInputs, propNoCopy,"uint" )
                     })
-                    +IoComponent::outputProps()+IoComponent::outputType() } );
-    addPropGroup( { tr("Edges")   , Gate::edgeProps() } );
+                    +IoComponent::outputProps()+IoComponent::outputType(),0 } );
+    addPropGroup( { tr("Edges"), Gate::edgeProps(),0 } );
 
     removeProperty("pd_n");
 }

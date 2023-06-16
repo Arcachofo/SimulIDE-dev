@@ -22,12 +22,13 @@ class MAINMODULE_EXPORT ShieldSubc : public BoardSubc
 
         virtual void remove() override;
 
+        virtual void contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu ) override;
+
     public slots:
         virtual void slotAttach();
         virtual void slotDetach();
 
     protected:
-        void contextMenuEvent( QGraphicsSceneContextMenuEvent* event );
         virtual void attachToBoard();
         virtual void renameTunnels();
 

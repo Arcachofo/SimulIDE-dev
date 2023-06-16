@@ -69,7 +69,7 @@ Pcd8544::Pcd8544( QObject* parent, QString type, QString id )
     setLabelPos( -32,-66, 0);
     setShowId( true );
     
-   initialize();
+   Pcd8544::initialize();
 }
 Pcd8544::~Pcd8544(){}
 
@@ -85,7 +85,29 @@ void Pcd8544::initialize()
     clearDDRAM();
     clearLcd();
     reset() ;
-    updateStep();
+    Pcd8544::updateStep();
+}
+
+void Pcd8544::updateStep()
+{
+    if     ( m_bPD )          m_pdisplayImg->fill(0); // Power-Down mode
+    else if( !m_bD && !m_bE ) m_pdisplayImg->fill(0); // Blank Display mode, blank the visuals
+    else if( !m_bD && m_bE )  m_pdisplayImg->fill(1); //All segments on
+    else
+    {
+        for(int row=0;row<6;row++){
+            for( int col=0; col<84; col++ )
+            {
+                char abyte = m_aDispRam[row][col];
+                for( int bit=0; bit<8; bit++ )
+                {
+                    //This takes inverse video mode into account:
+                    m_pdisplayImg->setPixel(col,row*8+bit,
+                        (abyte & 1) ^ ((m_bD && m_bE) ? 1 : 0) );
+
+                    abyte >>= 1;
+    }   }   }   }
+    update();
 }
 
 void Pcd8544::voltChanged()               // Called when Scl, Rst or Cs Pin changes
@@ -160,28 +182,6 @@ void Pcd8544::voltChanged()               // Called when Scl, Rst or Cs Pin chan
         m_cinBuf <<= 1;
         m_inBit++;
 }   }
-
-void Pcd8544::updateStep()
-{
-    if     ( m_bPD )          m_pdisplayImg->fill(0); // Power-Down mode
-    else if( !m_bD && !m_bE ) m_pdisplayImg->fill(0); // Blank Display mode, blank the visuals
-    else if( !m_bD && m_bE )  m_pdisplayImg->fill(1); //All segments on
-    else
-    {
-        for(int row=0;row<6;row++){
-            for( int col=0; col<84; col++ )
-            {
-                char abyte = m_aDispRam[row][col];
-                for( int bit=0; bit<8; bit++ ) 
-                {
-                    //This takes inverse video mode into account:
-                    m_pdisplayImg->setPixel(col,row*8+bit,
-                        (abyte & 1) ^ ((m_bD && m_bE) ? 1 : 0) );
-
-                    abyte >>= 1;
-    }   }   }   }
-    update();
-}
 
 void Pcd8544::clearLcd() { m_pdisplayImg->fill(0); }
 

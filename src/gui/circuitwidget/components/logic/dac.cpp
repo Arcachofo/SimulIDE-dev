@@ -39,13 +39,13 @@ DAC::DAC( QObject* parent, QString type, QString id )
     m_maxVolt = 5;
 
     addPropGroup( { tr("Main"), {
-new IntProp<DAC>(  "Num_Bits", tr("Size")             ,"_Bits", this, &DAC::numInps, &DAC::setNumInps, "uint" ),
-new DoubProp<DAC>( "Vref"    , tr("Reference Voltage"),"V"    , this, &DAC::maxVolt, &DAC::setMaxVolt )
-    }} );
+new IntProp <DAC>("Num_Bits", tr("Size")             ,"_Bits", this, &DAC::numInps, &DAC::setNumInps,0,"uint" ),
+new DoubProp<DAC>("Vref"    , tr("Reference Voltage"),"V"    , this, &DAC::maxVolt, &DAC::setMaxVolt )
+    },groupNoCopy} );
     addPropGroup( { tr("Electric"), IoComponent::inputProps()
-+QList<ComProperty*>({new BoolProp<IoComponent>( "Invert_Inputs", tr("Invert Inputs"),"", this, &IoComponent::invertInps, &IoComponent::setInvertInps )})
-                  } );
-    addPropGroup( { tr("Edges"), IoComponent::edgeProps() } );
++QList<ComProperty*>({new BoolProp<IoComponent>( "Invert_Inputs", tr("Invert Inputs"),"", this, &IoComponent::invertInps, &IoComponent::setInvertInps,propNoCopy )})
+                  ,0} );
+    addPropGroup( { tr("Edges"), IoComponent::edgeProps(),0 } );
 }
 DAC::~DAC(){}
 

@@ -68,16 +68,16 @@ Memory::Memory( QObject* parent, QString type, QString id )
     Simulator::self()->addToUpdateList( this );
 
     addPropGroup( { tr("Main"), {
-new IntProp<Memory>(  "Address_Bits", tr("Address Size"),"_Bits", this, &Memory::addrBits,   &Memory::setAddrBits, "uint" ),
-new IntProp<Memory>(  "Data_Bits"   , tr("Data Size")   ,"_Bits", this, &Memory::dataBits,   &Memory::setDataBits, "uint" ),
-new BoolProp<Memory>( "Persistent"  , tr("Persistent")  ,""     , this, &Memory::persistent, &Memory::setPersistent ),
-new BoolProp<Memory>( "Asynch"      , tr("Asynchronous")  ,""   , this, &Memory::asynchro,   &Memory::setAsynchro )
-    }} );
-    addPropGroup( { tr("Electric"), IoComponent::inputProps()+IoComponent::outputProps()+IoComponent::outputType() } );
-    addPropGroup( { tr("Edges"), IoComponent::edgeProps() } );
+new IntProp <Memory>("Address_Bits", tr("Address Size"),"_Bits", this, &Memory::addrBits,   &Memory::setAddrBits,0,"uint" ),
+new IntProp <Memory>("Data_Bits"   , tr("Data Size")   ,"_Bits", this, &Memory::dataBits,   &Memory::setDataBits,0,"uint" ),
+new BoolProp<Memory>("Persistent"  , tr("Persistent")  ,""     , this, &Memory::persistent, &Memory::setPersistent ),
+new BoolProp<Memory>("Asynch"      , tr("Asynchronous")  ,""   , this, &Memory::asynchro,   &Memory::setAsynchro )
+    }, groupNoCopy} );
+    addPropGroup( { tr("Electric"), IoComponent::inputProps()+IoComponent::outputProps()+IoComponent::outputType(),0 } );
+    addPropGroup( { tr("Edges")   , IoComponent::edgeProps(),0 } );
     addPropGroup( { "Hidden", {
-new StringProp<Memory>( "Mem","","", this, &Memory::getMem, &Memory::setMem)
-    }} );
+new StrProp<Memory>("Mem","","", this, &Memory::getMem, &Memory::setMem)
+    }, groupHidden} );
 }
 Memory::~Memory(){}
 
@@ -280,18 +280,7 @@ void Memory::createDataBits( int bits )
 void Memory::deleteDataBits( int bits )
 { IoComponent::deletePins( &m_outPin, bits ); }
 
-void Memory::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
-{
-    if( !acceptedMouseButtons() ) event->ignore();
-    else{
-        event->accept();
-        QMenu* menu = new QMenu();
-        contextMenu( event, menu );
-        Component::contextMenu( event, menu );
-        menu->deleteLater();
-}   }
-
-void Memory::contextMenu( QGraphicsSceneContextMenuEvent*, QMenu* menu )
+void Memory::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
 {
     QAction* loadAction = menu->addAction( QIcon(":/load.svg"),tr("Load data") );
     connect( loadAction, &QAction::triggered,
@@ -303,9 +292,10 @@ void Memory::contextMenu( QGraphicsSceneContextMenuEvent*, QMenu* menu )
 
     QAction* showEepAction = menu->addAction(QIcon(":/save.png"), tr("Show Memory Table") );
     connect( showEepAction, &QAction::triggered,
-                      this, &Memory::showTable, Qt::UniqueConnection );
+                      this, &Memory::slotShowTable, Qt::UniqueConnection );
 
     menu->addSeparator();
+    Component::contextMenu( event, menu );
 }
 
 void Memory::loadData()
@@ -316,7 +306,7 @@ void Memory::loadData()
 
 void Memory::saveData() { MemData::saveData( &m_ram, m_dataBits ); }
 
-void Memory::showTable()
+void Memory::slotShowTable()
 {
     MemData::showTable( m_ram.size(), m_dataBytes );
     if( m_persistent ) m_memTable->setWindowTitle( "ROM: "+idLabel() );

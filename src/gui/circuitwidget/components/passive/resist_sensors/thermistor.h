@@ -19,8 +19,6 @@ class MAINMODULE_EXPORT Thermistor : public ThermistorBase
         static Component* construct( QObject* parent, QString type, QString id );
         static LibraryItem* libraryItem();
 
-        //virtual QList<propGroup_t> propGroups() override;
-
         int bVal() { return m_bVal; }
         void setBval( int bval );
 
@@ -29,7 +27,7 @@ class MAINMODULE_EXPORT Thermistor : public ThermistorBase
 
         virtual void updateStep() override;
 
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget *widget );
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget *widget ) override;
 
     private:
         int m_bVal;

@@ -16,10 +16,10 @@ class MAINMODULE_EXPORT Capacitor : public CapacitorBase
         Capacitor( QObject* parent, QString type, QString id );
         ~Capacitor();
 
-        static Component* construct( QObject* parent, QString type, QString id );
-        static LibraryItem* libraryItem();
+ static Component* construct( QObject* parent, QString type, QString id );
+ static LibraryItem* libraryItem();
 
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
 };
 
 #endif

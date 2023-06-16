@@ -3,20 +3,20 @@
  *                                                                         *
  ***( see copyright.txt file at root folder )*******************************/
 
-#ifndef STRPROP_H
-#define STRPROP_H
+#ifndef STRBASEPROP_H
+#define STRBASEPROP_H
 
 #include "comproperty.h"
 
 class CompBase;
 
-class MAINMODULE_EXPORT StrProp : public ComProperty
+class MAINMODULE_EXPORT StrBaseProp : public ComProperty
 {
     public:
-        StrProp( QString name, QString caption, QString unit, QString type )
-        : ComProperty( name, caption, unit, type )
+        StrBaseProp( QString name, QString caption, QString unit, QString type, uint8_t flags )
+        : ComProperty( name, caption, unit, type, flags )
         {}
-        ~StrProp(){;}
+        ~StrBaseProp(){;}
 
         virtual double getValue() override;
 

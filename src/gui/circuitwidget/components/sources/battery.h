@@ -28,7 +28,7 @@ class MAINMODULE_EXPORT Battery : public Comp2Pin, public eResistor
         virtual void stamp() override;
         virtual void updateStep() override;
 
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
 
     private:
         double m_volt;

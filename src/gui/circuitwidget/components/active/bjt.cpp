@@ -48,7 +48,7 @@ BJT::BJT( QObject* parent, QString type, QString id )
 new BoolProp<BJT>( "PNP"  , tr("PNP")      ,"" , this, &BJT::pnp      , &BJT::setPnp ),
 new DoubProp<BJT>( "Gain" , tr("Gain")     ,"" , this, &BJT::gain     , &BJT::setGain ),
 new DoubProp<BJT>( "Vcrit", tr("Threshold"),"V", this, &BJT::threshold, &BJT::setThreshold ),
-    }} );
+    },0} );
 }
 BJT::~BJT(){}
 

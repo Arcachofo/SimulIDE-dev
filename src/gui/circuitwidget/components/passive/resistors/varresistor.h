@@ -16,12 +16,12 @@ class MAINMODULE_EXPORT VarResistor : public VarResBase
         VarResistor( QObject* parent, QString type, QString id );
         ~VarResistor();
 
-        static Component* construct( QObject* parent, QString type, QString id );
-        static LibraryItem* libraryItem();
+ static Component* construct( QObject* parent, QString type, QString id );
+ static LibraryItem* libraryItem();
 
         virtual void updateStep() override;
 
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget *widget );
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget *widget ) override;
 };
 
 #endif

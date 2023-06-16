@@ -53,10 +53,10 @@ Demux::Demux( QObject* parent, QString type, QString id )
     setAddrBits( 3 );
 
     addPropGroup( { tr("Main"), {
-new IntProp<Demux>(  "Address_Bits", tr("Address Size")  ,"_bits", this, &Demux::addrBits,   &Demux::setAddrBits, "uint" )
-    }} );
-    addPropGroup( { tr("Electric"), IoComponent::inputProps()+IoComponent::outputProps()+IoComponent::outputType() } );
-    addPropGroup( { tr("Edges"), IoComponent::edgeProps() } );
+new IntProp<Demux>("Address_Bits", tr("Address Size"),"_bits", this, &Demux::addrBits, &Demux::setAddrBits,0,"uint" )
+    },groupNoCopy} );
+    addPropGroup( { tr("Electric"), IoComponent::inputProps()+IoComponent::outputProps()+IoComponent::outputType(),0 } );
+    addPropGroup( { tr("Edges")   , IoComponent::edgeProps(),0 } );
 }
 Demux::~Demux(){}
 

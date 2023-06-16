@@ -26,8 +26,8 @@ PropDialog::PropDialog( QWidget* parent, QString help )
     m_component = NULL;
 
     m_scale = MainWindow::self()->fontScale();
-    m_minW = 350*m_scale;
-    m_minH = 100*m_scale;
+    m_minW  = 350*m_scale;
+    m_minH  = 100*m_scale;
 
     m_helpExpanded = false;
     helpText->setVisible( false );
@@ -44,14 +44,12 @@ void PropDialog::setComponent( Component* comp )
     m_component = comp;
     showLabel->setChecked( comp->showId() );
 
-    int w, index = 0;
-    QList<propGroup>* groups = comp->properties();
+    int w=0, index=0;
+    QList<propGroup> groups = comp->properties();
 
-    for( propGroup group : *groups )
+    for( propGroup group : groups )
     {
-        if( (group.name.startsWith("Comp"))
-         || (group.name == "Board")
-         || (group.name.startsWith("Hidden") ) ) continue;
+        if( group.flags & groupHidden ) continue;
 
         QList<ComProperty*> propList = group.propList;
         if( !propList.isEmpty() )
@@ -102,11 +100,9 @@ void PropDialog::showProp( QString name, bool show )
 {
     for( PropVal* prop : m_propList )
     {
-        if( prop->propName() == name )
-        {
-            prop->setHidden( !show );
-            break;
-        }
+        if( prop->propName() != name ) continue;
+        prop->setHidden( !show );
+        break;
     }
 }
 

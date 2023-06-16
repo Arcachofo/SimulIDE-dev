@@ -33,7 +33,7 @@ class MAINMODULE_EXPORT MuxAnalog : public Component, public eElement
         double impedance() { return 1/m_admit; }
         void setImpedance( double i ) { m_admit = 1/i; m_changed = true; }
         
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
         
     private:
         void createAddrBits( int c );

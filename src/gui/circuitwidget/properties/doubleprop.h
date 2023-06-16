@@ -13,8 +13,9 @@ class MAINMODULE_EXPORT DoubProp : public NumProp
 {
     public:
         DoubProp( QString name, QString caption, QString unit, Comp* comp
-                , double (Comp::*getter)(), void (Comp::*setter)(double), QString type="double" )
-        : NumProp( name, caption, unit, type )
+                , double (Comp::*getter)(), void (Comp::*setter)(double)
+                , uint8_t flags=0, QString type="double" )
+        : NumProp( name, caption, unit, type, flags )
         {
             m_comp = comp;
             m_getter = getter;

@@ -13,9 +13,15 @@
 
 class ComProperty;
 
+enum groupFlags{
+    groupHidden = 1,
+    groupNoCopy = 1<<1,
+};
+
 struct propGroup{
-        QString name;
-        QList<ComProperty*> propList;
+    QString name;
+    QList<ComProperty*> propList;
+    int flags;
 };
 
 class PropDialog;
@@ -28,13 +34,13 @@ class MAINMODULE_EXPORT CompBase : public QObject
         CompBase( QObject* parent, QString type, QString id );
         ~CompBase();
 
-        void addPropGroup( propGroup pg );
+        void addPropGroup( propGroup pg, bool list=true );
         void remPropGroup( QString name );
         void addProperty( QString group, ComProperty* p );
         void removeProperty( QString prop );
-        QList<propGroup>* properties() { return &m_propGroups; }
+        QList<propGroup> properties() { return m_propGroups; }
 
-        virtual QStringList getEnumUids( QString ) { return m_enumUids;}
+        virtual QStringList getEnumUids( QString )  { return m_enumUids; }
         virtual QStringList getEnumNames( QString ) { return m_enumNames; }
         int getEnumIndex( QString prop );
 
@@ -49,10 +55,10 @@ class MAINMODULE_EXPORT CompBase : public QObject
         QString itemType()  { return m_type; }
         void setItemType( QString ) {;}
 
-        virtual void setValLabelText( QString t ){;}
+        virtual void setValLabelText( QString ){;}
 
         virtual QString showProp(){return "";}
-        virtual void setShowProp( QString prop ){;}
+        virtual void setShowProp( QString ){;}
 
     protected:
         QString m_id;

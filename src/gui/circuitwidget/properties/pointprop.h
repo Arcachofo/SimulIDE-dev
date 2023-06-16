@@ -6,6 +6,8 @@
 #ifndef POINTPROP_H
 #define POINTPROP_H
 
+#include <QPointF>
+
 #include "comproperty.h"
 #include "proputils.h"
 
@@ -14,8 +16,9 @@ class MAINMODULE_EXPORT PointProp : public ComProperty
 {
     public:
         PointProp( QString name, QString caption, QString unit, Comp* comp
-                  , QPointF (Comp::*getter)(), void (Comp::*setter)(QPointF), QString type="point" )
-        : ComProperty( name, caption, unit, type )
+                 , QPointF (Comp::*getter)(), void (Comp::*setter)(QPointF)
+                 , QString type="point", uint8_t flags=0 )
+        : ComProperty( name, caption, unit, type, flags )
         {
             m_comp = comp;
             m_getter = getter;

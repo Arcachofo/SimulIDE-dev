@@ -31,13 +31,13 @@ class MAINMODULE_EXPORT Function : public IoComponent, public ScriptModule
 
         virtual void remove() override;
         
-        void setNumInps( int inputs );
-        void setNumOuts( int outs );
+        void setNumInputs( int inputs );
+        void setNumOutputs( int outs );
 
-        bool getInputState( int pin );
+        bool   getInputState( int pin );
         double getInputVoltage( int pin );
-        void setOutputState( int pin, bool s );
-        void setOutputVoltage( int pin, double v );
+        void   setOutputState( int pin, bool s );
+        void   setOutputVoltage( int pin, double v );
         double getOutputVoltage( int pin );
         
     public slots:
@@ -46,8 +46,7 @@ class MAINMODULE_EXPORT Function : public IoComponent, public ScriptModule
         void saveData();
         
     protected:
-        virtual void contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu );
-        virtual void contextMenuEvent( QGraphicsSceneContextMenuEvent* event);
+        virtual void contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu ) override;
 
     private:
         void updateFunctions();

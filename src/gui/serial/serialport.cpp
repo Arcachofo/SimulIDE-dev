@@ -87,17 +87,17 @@ SerialPort::SerialPort( QObject* parent, QString type, QString id )
 
     addPropGroup( { "Main", {
 //new BoolProp  <Chip>( "Logic_Symbol","","", this, &Chip::logicSymbol, &Chip::setLogicSymbol ),
-new StringProp<SerialPort>( "Port", tr("Port Name"),"", this, &SerialPort::port,  &SerialPort::setPort ),
+new StrProp<SerialPort>( "Port", tr("Port Name"),"", this, &SerialPort::port,  &SerialPort::setPort ),
     } } );
 
     addPropGroup( { "Config", {
-new IntProp<SerialPort>("Baudrate", tr("Baudrate"),"_Bauds", this, &SerialPort::baudRate, &SerialPort::setBaudRate, "uint" ),
-new IntProp<SerialPort>("DataBits", tr("Data Bits"),"_Bits", this, &SerialPort::dataBits, &SerialPort::setDataBits, "uint" ),
-new IntProp<SerialPort>("StopBits", tr("Stop Bits"),"_Bits", this, &SerialPort::stopBits, &SerialPort::setStopBits, "uint" ),
-    } } );
+new IntProp<SerialPort>("Baudrate", tr("Baudrate"),"_Bauds", this, &SerialPort::baudRate, &SerialPort::setBaudRate,0,"uint" ),
+new IntProp<SerialPort>("DataBits", tr("Data Bits"),"_Bits", this, &SerialPort::dataBits, &SerialPort::setDataBits,0,"uint" ),
+new IntProp<SerialPort>("StopBits", tr("Stop Bits"),"_Bits", this, &SerialPort::stopBits, &SerialPort::setStopBits,0,"uint" ),
+    }, 0 } );
     addPropGroup( {"Hidden", {
 new BoolProp<SerialPort>("SerialMon","","", this, &SerialPort::serialMon, &SerialPort::setSerialMon ),
-}} );
+}, groupHidden} );
 }
 SerialPort::~SerialPort(){}
 

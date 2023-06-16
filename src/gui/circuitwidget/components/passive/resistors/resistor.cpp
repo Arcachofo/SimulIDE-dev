@@ -33,7 +33,7 @@ Resistor::Resistor( QObject* parent, QString type, QString id )
 
     addPropGroup( { tr("Main"), {
 new DoubProp<Resistor>( "Resistance", tr("Resistance"), "Ω", this, &Resistor::getRes, &Resistor::setResSafe )
-    } } );
+    }, 0 } );
 
     setShowProp("Resistance");
     setPropStr( "Resistance", "100" );

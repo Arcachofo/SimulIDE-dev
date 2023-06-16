@@ -22,15 +22,14 @@ class MAINMODULE_EXPORT Image : public Shape
         virtual void setBackground( QString bck ) override;
         QString background();
 
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
 
     public slots:
         void updateGif( const QRect &rect );
         void slotLoad();
-        virtual void contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu );
 
     protected:
-        virtual void contextMenuEvent(QGraphicsSceneContextMenuEvent* event);
+        virtual void contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu ) override;
 
     private:
         QPixmap m_image;

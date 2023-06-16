@@ -33,11 +33,11 @@ Connector::Connector( QObject* parent, QString type, QString id, Pin* startpin, 
     Circuit::self()->compMap()->insert( id, this );
 
     addPropGroup( {"Main", {
-new StringProp<Connector>( "itemtype"  ,"","", this, &Connector::itemType,   &Connector::dummySetter ),
-new StringProp<Connector>( "uid"       ,"","", this, &Connector::getUid,     &Connector::dummySetter ),
-new StringProp<Connector>( "startpinid","","", this, &Connector::startPinId, &Connector::dummySetter ),
-new StringProp<Connector>( "endpinid"  ,"","", this, &Connector::endPinId,   &Connector::dummySetter ),
-new StringProp<Connector>( "pointList" ,"","", this, &Connector::pListStr,   &Connector::setPointListStr ),
+new StrProp<Connector>( "itemtype"  ,"","", this, &Connector::itemType,   &Connector::dummySetter ),
+new StrProp<Connector>( "uid"       ,"","", this, &Connector::getUid,     &Connector::dummySetter ),
+new StrProp<Connector>( "startpinid","","", this, &Connector::startPinId, &Connector::dummySetter ),
+new StrProp<Connector>( "endpinid"  ,"","", this, &Connector::endPinId,   &Connector::dummySetter ),
+new StrProp<Connector>( "pointList" ,"","", this, &Connector::pListStr,   &Connector::setPointListStr ),
     }} );
 }
 Connector::~Connector()

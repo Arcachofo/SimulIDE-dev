@@ -52,10 +52,10 @@ ResistorDip::ResistorDip( QObject* parent, QString type, QString id )
 
     addPropGroup( { tr("Main"), {
 new DoubProp<ResistorDip>( "Resistance", tr("Resistance"),"Ω"       , this, &ResistorDip::getRes, &ResistorDip::setRes ),
-new IntProp <ResistorDip>( "Size"      , tr("Size")      ,"_Resist.", this, &ResistorDip::size,   &ResistorDip::setSize, "uint" ),
+new IntProp <ResistorDip>( "Size"      , tr("Size")      ,"_Resist.", this, &ResistorDip::size,   &ResistorDip::setSize, propNoCopy,"uint" ),
 new BoolProp<ResistorDip>( "PullUp"    , tr("Pullup")    ,""        , this, &ResistorDip::pullUp, &ResistorDip::setPullUp ),
 new DoubProp<ResistorDip>( "PuVolt", tr("Pullup Voltage"),"V"       , this, &ResistorDip::puVolt, &ResistorDip::setPuVolt ),
-    } } );
+    },0 } );
 
     setShowProp("Resistance");
     setPropStr( "Resistance", "100" );

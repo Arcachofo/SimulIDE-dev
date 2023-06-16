@@ -9,12 +9,13 @@
 #include "strprop.h"
 
 template <class Comp>
-class MAINMODULE_EXPORT ScriptProp : public StrProp
+class MAINMODULE_EXPORT ScriptProp : public StrBaseProp
 {
     public:
         ScriptProp( QString name, QString caption, QString unit, Comp* comp
-                  , QString (Comp::*getter)(ComProperty*), void (Comp::*setter)(ComProperty*, QString), QString type="string" )
-        : StrProp( name, caption, unit, type )
+                  , QString (Comp::*getter)(ComProperty*), void (Comp::*setter)(ComProperty*, QString)
+                  , QString type="string", uint8_t flags=0 )
+        : StrBaseProp( name, caption, unit, type, flags )
         {
             m_comp = comp;
             m_getter = getter;

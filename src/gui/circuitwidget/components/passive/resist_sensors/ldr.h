@@ -27,7 +27,7 @@ class MAINMODULE_EXPORT Ldr : public VarResBase
 
         virtual void updateStep() override;
 
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
 
     private:
         int m_r1;

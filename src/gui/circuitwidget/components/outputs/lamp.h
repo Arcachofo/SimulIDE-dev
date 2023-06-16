@@ -28,10 +28,10 @@ class MAINMODULE_EXPORT Lamp : public Comp2Pin, public eResistor
  static Component* construct( QObject* parent, QString type, QString id );
  static LibraryItem* libraryItem();
 
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
 
     private:
-        void updateVI();
+        virtual void updateVI() override;
         void updateBright();
         double overCurrent() { return m_avgCurrent/m_maxCurrent; }
 

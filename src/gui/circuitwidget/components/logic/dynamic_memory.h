@@ -25,9 +25,6 @@ class MAINMODULE_EXPORT DynamicMemory : public LogicComponent, public MemData
         virtual void voltChanged() override;
         virtual void runEvent() override;
 
-        void setMem( QString m );
-        QString getMem();
-
         int rowAddrBits() { return m_rowAddrBits; }
         int colAddrBits() { return m_colAddrBits; }
         void setRowAddrBits( int bits );
@@ -49,12 +46,11 @@ class MAINMODULE_EXPORT DynamicMemory : public LogicComponent, public MemData
     public slots:
         void loadData();
         void saveData();
-        void showTable();
-        virtual void contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu );
+        void slotShowTable();
 
     protected:
-        virtual void contextMenuEvent( QGraphicsSceneContextMenuEvent* event );
-        
+        virtual void contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu ) override;
+
     private:
         void write( bool w );
 

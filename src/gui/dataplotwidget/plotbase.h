@@ -51,11 +51,11 @@ class MAINMODULE_EXPORT PlotBase : public Component, public ScriptModule
         virtual QString tunnels();
         virtual void setTunnels( QString tunnels )=0;
 
-        virtual void expand( bool e ){;}
+        virtual void expand( bool ){;}
         void toggleExpand() { expand( !m_expand ); }
 
         QString conds() { return m_conditions; }
-        virtual void setConds( QString conds ){;}
+        virtual void setConds( QString ){;}
         void updateConds( QString conds );
 
         int timeStep() { return m_timeStep; }
@@ -65,7 +65,7 @@ class MAINMODULE_EXPORT PlotBase : public Component, public ScriptModule
         void setAutoExport( bool a ) { m_autoExport = a; }
         QString getExportFile() { return m_exportFile; }
         void dump() { dumpData( m_exportFile ); }
-        virtual void dumpData( const QString& fn ){;}
+        virtual void dumpData( const QString& ){;}
 
         virtual void channelChanged( int ch, QString name ) { m_channel[ch]->m_chTunnel = name; }
 

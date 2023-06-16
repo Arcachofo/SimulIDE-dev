@@ -43,7 +43,7 @@ class MAINMODULE_EXPORT Csource : public Component, public eResistor
         void setControlPins( bool set );
 
         //virtual QPainterPath shape() const;
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
 
     protected slots:
         virtual void slotProperties() override;

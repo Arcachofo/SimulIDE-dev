@@ -18,7 +18,7 @@ Gate::Gate( QObject* parent, QString type, QString id, int inputs )
     m_minInputs = inputs;
 
     setNumOuts( 1, "", 0, false );
-    setNumInps( inputs );  // Create Input Pins
+    setNumInputs( inputs );  // Create Input Pins
 
     /// m_rndPD = true; // Randomize Propagation Delay:
 }
@@ -68,7 +68,7 @@ bool Gate::calcOutput( int inputs )
     return ((uint)inputs == m_inPin.size()); // Default for: Buffer, Inverter, And, Nand
 }
 
-void Gate::setNumInps( int inputs )
+void Gate::setNumInputs( int inputs )
 {
     if( inputs < m_minInputs ) return;
     IoComponent::setNumInps( inputs, "" );

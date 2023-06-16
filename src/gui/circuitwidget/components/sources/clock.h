@@ -21,7 +21,7 @@ class MAINMODULE_EXPORT Clock : public ClockBase
 
         virtual void runEvent() override;
 
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
 };
 
 #endif

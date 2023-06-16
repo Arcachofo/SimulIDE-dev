@@ -18,8 +18,8 @@ class MAINMODULE_EXPORT Max72xx_matrix : public LogicComponent
         Max72xx_matrix( QObject* parent, QString type, QString id );
         ~Max72xx_matrix();
 
-        static Component* construct( QObject* parent, QString type, QString id );
-        static LibraryItem* libraryItem();
+ static Component* construct( QObject* parent, QString type, QString id );
+ static LibraryItem* libraryItem();
 
         QString colorStr() { return m_enumUids.at((int)m_ledColor ); }
         void setColorStr( QString color );
@@ -34,7 +34,7 @@ class MAINMODULE_EXPORT Max72xx_matrix : public LogicComponent
 
         virtual void setHidden( bool hid, bool hidArea=false, bool hidLabel=false ) override;
 
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
 
     private:
         void proccessCommand();

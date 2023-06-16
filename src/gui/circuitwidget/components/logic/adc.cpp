@@ -34,16 +34,15 @@ ADC::ADC( QObject* parent, QString type, QString id )
     m_height = 9;
 
     setLabelPos(-16,-80, 0);
-    setNumOuts( 8 );    // Create Output Pins
-    setNumInps( 1, "In" );
+    setNumOutputs( 8 );    // Create Output Pins
     m_maxVolt = 5;
 
     addPropGroup( { tr("Main"), {
-new IntProp<ADC>(  "Num_Bits", tr("Size")             ,"_Bits", this, &ADC::numOuts, &ADC::setNumOuts, "uint" ),
-new DoubProp<ADC>( "Vref"    , tr("Reference Voltage"),"V"    , this, &ADC::maxVolt, &ADC::setMaxVolt ),
-    }} );
-    addPropGroup( { tr("Electric"), IoComponent::outputProps()+IoComponent::outputType() } );
-    addPropGroup( { tr("Edges"), IoComponent::edgeProps() } );
+new IntProp <ADC>("Num_Bits", tr("Size")         ,"_Bits", this, &ADC::numOuts, &ADC::setNumOutputs, 0,"uint" ),
+new DoubProp<ADC>("Vref"    , tr("Reference Voltage"),"V", this, &ADC::maxVolt, &ADC::setMaxVolt ),
+    },groupNoCopy} );
+    addPropGroup( { tr("Electric"), IoComponent::outputProps()+IoComponent::outputType(),0 } );
+    addPropGroup( { tr("Edges")   , IoComponent::edgeProps()                            ,0 } );
 }
 ADC::~ADC(){}
 
@@ -60,7 +59,7 @@ void ADC::voltChanged()
     LogicComponent::sheduleOutPuts( this );
 }
 
-void ADC::setNumOuts( int outs )
+void ADC::setNumOutputs( int outs )
 {
     if( outs < 1 ) return;
     m_maxValue = pow( 2, outs )-1;

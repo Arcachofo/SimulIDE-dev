@@ -71,7 +71,7 @@ new DoubProp<Diac>( "ResOn"   , tr("On Resistance")    ,"Ω", this, &Diac::resOn
 new DoubProp<Diac>( "ResOff"  , tr("Off Resistance")   ,"Ω", this, &Diac::resOff,   &Diac::setResOff ),
 new DoubProp<Diac>( "BrkVolt" , tr("Breakdown Voltage"),"V", this, &Diac::brkVolt,  &Diac::setBrkVolt ),
 new DoubProp<Diac>( "HoldCurr", tr("Hold Current")     ,"A", this, &Diac::holdCurr, &Diac::setHoldCurr )
-    }} );
+    },0} );
 }
 Diac::~Diac()
 {

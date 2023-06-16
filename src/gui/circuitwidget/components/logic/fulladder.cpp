@@ -35,8 +35,8 @@ FullAdder::FullAdder(QObject *parent, QString type, QString id)
             "OR03Co",
         });
 
-    addPropGroup( { tr("Electric"), IoComponent::inputProps()+IoComponent::outputProps() } );
-    addPropGroup( { tr("Edges"), IoComponent::edgeProps() } );
+    addPropGroup( { tr("Electric"), IoComponent::inputProps()+IoComponent::outputProps(),0 } );
+    addPropGroup( { tr("Edges")   , IoComponent::edgeProps(),0 } );
 }
 FullAdder::~FullAdder(){}
 

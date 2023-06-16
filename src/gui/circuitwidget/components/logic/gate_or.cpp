@@ -29,11 +29,11 @@ OrGate::OrGate( QObject* parent, QString type, QString id )
 {
     addPropGroup( { tr("Electric"), IoComponent::inputProps()
 +QList<ComProperty*>({
-new BoolProp<OrGate>( "Invert_Inputs", tr("Invert Inputs"),""       , this, &OrGate::invertInps, &OrGate::setInvertInps ),
-new IntProp <OrGate>( "Num_Inputs"   , tr("Input Size")   ,"_Inputs", this, &OrGate::numInps,    &OrGate::setNumInps, "uint" ),
+new BoolProp<OrGate>( "Invert_Inputs", tr("Invert Inputs"),""    , this, &OrGate::invertInps, &OrGate::setInvertInps,propNoCopy ),
+new IntProp <OrGate>( "Num_Inputs"   , tr("Input Size"),"_Inputs", this, &OrGate::numInps,    &OrGate::setNumInputs ,propNoCopy,"uint" ),
                     })
-                    +IoComponent::outputProps()+IoComponent::outputType() } );
-    addPropGroup( { tr("Edges")   , Gate::edgeProps() } );
+                    +IoComponent::outputProps()+IoComponent::outputType(),0 } );
+    addPropGroup( { tr("Edges")   , Gate::edgeProps(),0 } );
 
     removeProperty("pd_n");
 }

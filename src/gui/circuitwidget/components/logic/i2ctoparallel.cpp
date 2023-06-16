@@ -41,7 +41,7 @@ I2CToParallel::I2CToParallel( QObject* parent, QString type, QString id )
             "IL04INT"
         });
 
-    setNumOuts( 8, "D" );
+    setNumOuts( 8,"D" );
 
     m_inPin[0]->setPinMode( openCo );
     TwiModule::setSdaPin( m_inPin[0] );
@@ -60,18 +60,11 @@ I2CToParallel::I2CToParallel( QObject* parent, QString type, QString id )
     m_cCode = 0b01010000; // 0x50, 80
 
     addPropGroup( { tr("Main"), {
-new IntProp <I2CToParallel>( "Control_Code", tr("Control_Code") ,""    , this, &I2CToParallel::cCode,   &I2CToParallel::setCcode, "uint" ),
-new DoubProp<I2CToParallel>( "Frequency"   , tr("I2C Frequency"),"_KHz", this, &I2CToParallel::freqKHz, &I2CToParallel::setFreqKHz ),
-    }} );
+new IntProp <I2CToParallel>("Control_Code", tr("Control_Code") ,""    , this, &I2CToParallel::cCode,   &I2CToParallel::setCcode,0,"uint" ),
+new DoubProp<I2CToParallel>("Frequency"   , tr("I2C Frequency"),"_KHz", this, &I2CToParallel::freqKHz, &I2CToParallel::setFreqKHz ),
+    }, groupNoCopy} );
 }
 I2CToParallel::~I2CToParallel(){}
-
-/*void I2CToParallel::initialize()
-{
-    TwiModule::initialize();
-    IoComponent::initState();
-    for( int i=0; i<8; ++i ) m_outPin[i]->setOutState( true );
-}*/
 
 void I2CToParallel::stamp()             // Called at Simulation Start
 {

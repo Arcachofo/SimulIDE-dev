@@ -74,10 +74,10 @@ Triac::Triac( QObject* parent, QString type, QString id )
     Simulator::self()->addToUpdateList( this );
 
     addPropGroup( { tr("Main"), {
-new DoubProp<Triac>( "GateRes" , tr("Gate Resistance"),"Ω", this, &Triac::gateRes , &Triac::setGateRes ),
-new DoubProp<Triac>( "TrigCurr", tr("Trigger Current"),"A", this, &Triac::trigCurr, &Triac::setTrigCurr ),
-new DoubProp<Triac>( "HoldCurr", tr("Holding Current"),"A", this, &Triac::holdCurr, &Triac::setHoldCurr )
-    }} );
+new DoubProp<Triac>("GateRes" , tr("Gate Resistance"),"Ω", this, &Triac::gateRes , &Triac::setGateRes  ),
+new DoubProp<Triac>("TrigCurr", tr("Trigger Current"),"A", this, &Triac::trigCurr, &Triac::setTrigCurr ),
+new DoubProp<Triac>("HoldCurr", tr("Holding Current"),"A", this, &Triac::holdCurr, &Triac::setHoldCurr )
+    },0} );
 }
 Triac::~Triac()
 {

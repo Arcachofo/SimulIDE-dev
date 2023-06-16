@@ -53,12 +53,12 @@ Tunnel::Tunnel( QObject* parent, QString type, QString id )
     setLabelPos(-16,-24, 0);
 
     addPropGroup( { tr("Main"), {
-new StringProp<Tunnel>( "Name" , tr("Id"),"", this, &Tunnel::name,  &Tunnel::setName ),
-new BoolProp  <Tunnel>( "IsBus",tr("Bus"),"", this, &Tunnel::isBus, &Tunnel::setIsbus )
-    }} );
+new StrProp <Tunnel>("Name" , tr("Id") ,"", this, &Tunnel::name,  &Tunnel::setName ),
+new BoolProp<Tunnel>("IsBus", tr("Bus"),"", this, &Tunnel::isBus, &Tunnel::setIsbus )
+    }, groupNoCopy} );
     addPropGroup( {"Hidden", {
-new StringProp<Tunnel>( "Uid","","", this, &Tunnel::tunnelUid, &Tunnel::setTunnelUid ),
-    }} );
+new StrProp<Tunnel>( "Uid","","", this, &Tunnel::tunnelUid, &Tunnel::setTunnelUid ),
+    }, groupNoCopy | groupHidden} );
 }
 Tunnel::~Tunnel() {}
 
@@ -205,8 +205,8 @@ void Tunnel::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
     QAction* nameAction = menu->addAction( QIcon(":/rename.svg"),tr("Rename group") );
     connect( nameAction, &QAction::triggered,
                    this, QOverload<>::of(&Tunnel::renameGroup), Qt::UniqueConnection );
-    menu->addSeparator();
 
+    menu->addSeparator();
     Component::contextMenu( event, menu );
 }
 

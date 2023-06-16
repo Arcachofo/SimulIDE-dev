@@ -60,18 +60,18 @@ PlotBase::PlotBase( QObject* parent, QString type, QString id )
     m_exportFile = changeExt( Circuit::self()->getFilePath(), "_"+id+".vcd" );
 
     addPropGroup( { tr("Main"), {
-new IntProp<PlotBase>( "Basic_X"    ,tr("Screen Size X"),tr("_Pixels"), this, &PlotBase::baSizeX,    &PlotBase::setBaSizeX, "uint" ),
-new IntProp<PlotBase>( "Basic_Y"    ,tr("Screen Size Y"),tr("_Pixels"), this, &PlotBase::baSizeY,    &PlotBase::setBaSizeY, "uint" ),
-new IntProp<PlotBase>( "BufferSize" ,tr("Buffer Size")  ,tr("Samples"), this, &PlotBase::bufferSize, &PlotBase::setBufferSize, "uint" ),
-    }} );
+new IntProp<PlotBase>( "Basic_X"    ,tr("Screen Size X"),tr("_Pixels"), this, &PlotBase::baSizeX,    &PlotBase::setBaSizeX   ,0, "uint" ),
+new IntProp<PlotBase>( "Basic_Y"    ,tr("Screen Size Y"),tr("_Pixels"), this, &PlotBase::baSizeY,    &PlotBase::setBaSizeY   ,0, "uint" ),
+new IntProp<PlotBase>( "BufferSize" ,tr("Buffer Size")  ,tr("Samples"), this, &PlotBase::bufferSize, &PlotBase::setBufferSize,0,"uint" ),
+    }, groupNoCopy} );
     addPropGroup( {"Hidden", {
-new StringProp<PlotBase>( "TimDiv"  ,"","", this, &PlotBase::timDiv,  &PlotBase::setTimDiv ),
-new StringProp<PlotBase>( "TimPos"  ,"","", this, &PlotBase::timPos,  &PlotBase::setTimPos ),
-new StringProp<PlotBase>( "VolDiv" ,"", "", this, &PlotBase::volDiv,  &PlotBase::setVolDiv ),
-new StringProp<PlotBase>( "Conds"   ,"","", this, &PlotBase::conds,   &PlotBase::setConds ),
-new StringProp<PlotBase>( "Tunnels" ,"","", this, &PlotBase::tunnels, &PlotBase::setTunnels ),
-new IntProp   <PlotBase>( "Trigger" ,"","", this, &PlotBase::trigger, &PlotBase::setTrigger ),
-    } } );
+new StrProp<PlotBase>( "TimDiv"  ,"","", this, &PlotBase::timDiv,  &PlotBase::setTimDiv ),
+new StrProp<PlotBase>( "TimPos"  ,"","", this, &PlotBase::timPos,  &PlotBase::setTimPos ),
+new StrProp<PlotBase>( "VolDiv" ,"", "", this, &PlotBase::volDiv,  &PlotBase::setVolDiv ),
+new StrProp<PlotBase>( "Conds"   ,"","", this, &PlotBase::conds,   &PlotBase::setConds ),
+new StrProp<PlotBase>( "Tunnels" ,"","", this, &PlotBase::tunnels, &PlotBase::setTunnels ),
+new IntProp<PlotBase>( "Trigger" ,"","", this, &PlotBase::trigger, &PlotBase::setTrigger ),
+    }, groupHidden } );
 }
 PlotBase::~PlotBase()
 {

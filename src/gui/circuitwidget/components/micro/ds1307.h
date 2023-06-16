@@ -18,8 +18,8 @@ class MAINMODULE_EXPORT DS1307 : public Component, public TwiModule
         DS1307( QObject* parent, QString type, QString id );
         ~DS1307();
 
-        static Component* construct( QObject* parent, QString type, QString id );
-        static LibraryItem* libraryItem();
+ static Component* construct( QObject* parent, QString type, QString id );
+ static LibraryItem* libraryItem();
 
         bool timeUpdtd() { return m_timeUpdtd; }
         void setTimeUpdtd( bool u ) { m_timeUpdtd = u; }
@@ -34,7 +34,7 @@ class MAINMODULE_EXPORT DS1307 : public Component, public TwiModule
         char decToBcd(char val);
         char bcdToDec(char val);
 
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
 
     private:
         void updtTime();

@@ -13,7 +13,7 @@ class LibraryItem;
 class MAINMODULE_EXPORT Mux : public LogicComponent
 {
     public:
-        QRectF boundingRect() const { return m_area; }
+        QRectF boundingRect() const override { return m_area; }
     
         Mux( QObject* parent, QString type, QString id );
         ~Mux();
@@ -28,12 +28,11 @@ class MAINMODULE_EXPORT Mux : public LogicComponent
         int addrBits() { return m_addrBits; }
         void setAddrBits( int bits );
         
-        virtual QPainterPath shape() const;
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
+        virtual QPainterPath shape() const override;
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
 
     private:
         int m_addrBits;
-
 };
 
 #endif

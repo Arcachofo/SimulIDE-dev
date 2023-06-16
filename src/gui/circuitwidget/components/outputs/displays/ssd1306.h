@@ -22,8 +22,8 @@ class MAINMODULE_EXPORT Ssd1306 : public Component, public TwiModule
         Ssd1306( QObject* parent, QString type, QString id );
         ~Ssd1306();
 
-        static Component* construct( QObject* parent, QString type, QString id );
-        static LibraryItem* libraryItem();
+ static Component* construct( QObject* parent, QString type, QString id );
+ static LibraryItem* libraryItem();
 
         enum dispColor {
             White = 0,
@@ -47,7 +47,7 @@ class MAINMODULE_EXPORT Ssd1306 : public Component, public TwiModule
         virtual void readByte() override;
         virtual void I2Cstop() override;
         
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
 
     protected:
         void writeData();

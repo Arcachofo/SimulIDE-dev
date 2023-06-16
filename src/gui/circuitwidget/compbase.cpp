@@ -34,10 +34,12 @@ void CompBase::remPropGroup( QString name )
             break;
 }   }   }
 
-void CompBase::addPropGroup( propGroup pg )
+void CompBase::addPropGroup( propGroup pg, bool list )
 {
-    for( ComProperty* p : pg.propList ) m_propHash[p->name()] = p;
     m_propGroups.append( pg );
+
+    if( list )
+        for( ComProperty* p : pg.propList ) m_propHash[p->name()] = p;
 }
 
 void CompBase::addProperty( QString group, ComProperty* p )
@@ -87,16 +89,11 @@ QString CompBase::toString() // Used to save circuit
     QString item = "\n<item ";
     for( propGroup pg : m_propGroups )
     {
-        if( !Circuit::self()->getBoard() )
+        if( !Circuit::self()->getBoard() )     // Not a Subcircit Board
         {
-            if( pg.name == "Board") continue;
-            /// Error saving if package type is not set to board and have Main comp.
-            /*if( m_isMainComp )
-            {
-                if( pg.name != "Main"
-                 && pg.name != "Hidden" ) continue;
-            }*/
+            if( pg.name == "Board") continue;  // Don't save Board properties
         }
+
         for( ComProperty* prop : pg.propList )
         {
             QString val = prop->toString();

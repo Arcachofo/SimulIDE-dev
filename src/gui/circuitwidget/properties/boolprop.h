@@ -13,8 +13,9 @@ class MAINMODULE_EXPORT BoolProp : public ComProperty
 {
     public:
         BoolProp( QString name, QString caption, QString unit, Comp* comp
-                , bool (Comp::*getter)(), void (Comp::*setter)(bool), QString type="bool" )
-        : ComProperty( name, caption, unit, type )
+                , bool (Comp::*getter)(), void (Comp::*setter)(bool)
+                , uint8_t flags=0, QString type="bool" )
+        : ComProperty( name, caption, unit, type, flags )
         {
             m_comp = comp;
             m_getter = getter;

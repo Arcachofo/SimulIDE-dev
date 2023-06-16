@@ -96,16 +96,16 @@ TouchPad::TouchPad( QObject* parent, QString type, QString id )
     Simulator::self()->addToUpdateList( this );
 
     addPropGroup( { tr("Main"), {
-new IntProp<TouchPad>(  "Width", tr("Width"),"_Pixels" , this, &TouchPad::width, &TouchPad::setWidth ,"uint" ),
-new IntProp<TouchPad>(  "Height",tr("Height"),"_Pixels", this, &TouchPad::height, &TouchPad::setHeight ,"uint" ),
-new BoolProp<TouchPad>( "Transparent",tr("Transparent"),"", this, &TouchPad::transparent, &TouchPad::setTransparent )
-    }} );
+new IntProp <TouchPad>("Width", tr("Width")    ,"_Pixels", this, &TouchPad::width      , &TouchPad::setWidth ,0,"uint" ),
+new IntProp <TouchPad>("Height",tr("Height")   ,"_Pixels", this, &TouchPad::height     , &TouchPad::setHeight ,0,"uint" ),
+new BoolProp<TouchPad>("Transparent",tr("Transparent"),"", this, &TouchPad::transparent, &TouchPad::setTransparent )
+    }, groupNoCopy} );
     addPropGroup( { tr("Electric"), {
-new DoubProp<TouchPad>( "RxMin", tr("RxMin"),"Ω", this, &TouchPad::RxMin, &TouchPad::setRxMin ,"uint" ),
-new DoubProp<TouchPad>( "RxMax", tr("RxMax"),"Ω", this, &TouchPad::RxMax, &TouchPad::setRxMax ,"uint" ),
-new DoubProp<TouchPad>( "RyMin", tr("RyMin"),"Ω", this, &TouchPad::RyMin, &TouchPad::setRyMin ,"uint" ),
-new DoubProp<TouchPad>( "RyMax", tr("RyMax"),"Ω", this, &TouchPad::RyMax, &TouchPad::setRyMax ,"uint" ),
-    }} );
+new DoubProp<TouchPad>("RxMin", tr("RxMin"),"Ω", this, &TouchPad::RxMin, &TouchPad::setRxMin,0,"uint" ),
+new DoubProp<TouchPad>("RxMax", tr("RxMax"),"Ω", this, &TouchPad::RxMax, &TouchPad::setRxMax,0,"uint" ),
+new DoubProp<TouchPad>("RyMin", tr("RyMin"),"Ω", this, &TouchPad::RyMin, &TouchPad::setRyMin,0,"uint" ),
+new DoubProp<TouchPad>("RyMax", tr("RyMax"),"Ω", this, &TouchPad::RyMax, &TouchPad::setRyMax,0,"uint" ),
+    }, groupNoCopy} );
 }
 TouchPad::~TouchPad(){}
 

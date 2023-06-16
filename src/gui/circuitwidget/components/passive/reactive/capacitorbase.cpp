@@ -27,8 +27,8 @@ CapacitorBase::CapacitorBase( QObject* parent, QString type, QString id )
 new DoubProp<CapacitorBase>( "Capacitance", tr("Capacitance")    , "F"    , this, &CapacitorBase::value   , &CapacitorBase::setValue ),
 new DoubProp<CapacitorBase>( "Resistance" , tr("Resistance")      ,"Ω"    , this, &CapacitorBase::resist  , &CapacitorBase::setResist ),
 new DoubProp<CapacitorBase>( "InitVolt"   , tr("Initial Voltage"), "V"    , this, &CapacitorBase::initVolt, &CapacitorBase::setInitVolt ),
-new IntProp <CapacitorBase>( "AutoStep"   , tr("Auto Step")      ,"_Steps", this, &CapacitorBase::autoStep, &CapacitorBase::setAutoStep, "uint" )
-    } } );
+new IntProp <CapacitorBase>( "AutoStep"   , tr("Auto Step")      ,"_Steps", this, &CapacitorBase::autoStep, &CapacitorBase::setAutoStep,0,"uint" )
+    },0 } );
 
     setShowProp("Capacitance");
     setPropStr( "Capacitance", "10 µF" );

@@ -46,11 +46,11 @@ Transformer::Transformer( QObject* parent, QString type, QString id )
     m_secondary.x     = 16;
 
     addPropGroup( { tr("Main"), {
-new DoubProp  <Transformer>( "CoupCoeff", tr("Coupling Coefficient"), "", this, &Transformer::coupCoeff, &Transformer::setCoupCoeff ),
-new DoubProp  <Transformer>( "BaseInd"  , tr("Base Inductance"), "H", this, &Transformer::baseInd, &Transformer::setBaseInd ),
-new StringProp<Transformer>( "Primary"  , tr("Primary")        , "" , this, &Transformer::primary, &Transformer::setPrimary ),
-new StringProp<Transformer>( "Secondary", tr("Secondary")      , "" , this, &Transformer::secondary, &Transformer::setSecondary ),
-    } } );
+new DoubProp<Transformer>("CoupCoeff", tr("Coupling Coefficient"), "", this, &Transformer::coupCoeff, &Transformer::setCoupCoeff ),
+new DoubProp<Transformer>("BaseInd"  , tr("Base Inductance"), "H", this, &Transformer::baseInd,   &Transformer::setBaseInd ),
+new StrProp <Transformer>("Primary"  , tr("Primary")        , "" , this, &Transformer::primary,   &Transformer::setPrimary  , propNoCopy ),
+new StrProp <Transformer>("Secondary", tr("Secondary")      , "" , this, &Transformer::secondary, &Transformer::setSecondary, propNoCopy ),
+    },0 } );
 
     setPrimary("1");
     setSecondary("1");

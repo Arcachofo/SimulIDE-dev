@@ -42,7 +42,7 @@ class MAINMODULE_EXPORT ResistorDip : public Component, public eElement
 
         virtual void remove() override;
         
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
 
     protected slots:
         virtual void slotProperties() override;

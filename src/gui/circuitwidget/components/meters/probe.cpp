@@ -58,7 +58,7 @@ Probe::Probe( QObject* parent, QString type, QString id )
     addPropGroup( { tr("Main"), {
 new BoolProp<Probe>( "ShowVolt" , tr("Show Voltage"), "" , this, &Probe::showVal,   &Probe::setShowVal ),
 new DoubProp<Probe>( "Threshold", tr("Threshold")   , "V", this, &Probe::threshold, &Probe::setThreshold )
-    } } );
+    }, groupNoCopy } );
 }
 Probe::~Probe(){}
 

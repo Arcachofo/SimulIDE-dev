@@ -18,8 +18,8 @@ class MAINMODULE_EXPORT Ks0108 : public Component, public eElement
         Ks0108( QObject* parent, QString type, QString id );
         ~Ks0108();
         
-        static Component* construct( QObject* parent, QString type, QString id );
-        static LibraryItem* libraryItem();
+ static Component* construct( QObject* parent, QString type, QString id );
+ static LibraryItem* libraryItem();
 
         virtual void initialize() override;
         virtual void stamp() override;
@@ -29,7 +29,7 @@ class MAINMODULE_EXPORT Ks0108 : public Component, public eElement
         void setCsActLow( bool low ) { m_csActLow = low; }
         bool csActLow() { return m_csActLow; }
         
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
 
     private:
         void initPins();

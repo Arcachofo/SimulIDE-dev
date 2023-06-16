@@ -3,24 +3,25 @@
  *                                                                         *
  ***( see copyright.txt file at root folder )*******************************/
 
-#ifndef STRINGPROP_H
-#define STRINGPROP_H
+#ifndef STRPROP_H
+#define STRPROP_H
 
 #include "strprop.h"
 
 template <class Comp>
-class MAINMODULE_EXPORT StringProp : public StrProp
+class MAINMODULE_EXPORT StrProp : public StrBaseProp
 {
     public:
-        StringProp( QString name, QString caption, QString unit, Comp* comp
-                  , QString (Comp::*getter)(), void (Comp::*setter)(QString), QString type="string" )
-        : StrProp( name, caption, unit, type )
+        StrProp( QString name, QString caption, QString unit, Comp* comp
+               , QString (Comp::*getter)(), void (Comp::*setter)(QString)
+               , uint8_t flags=0, QString type="string" )
+        : StrBaseProp( name, caption, unit, type, flags )
         {
             m_comp = comp;
             m_getter = getter;
             m_setter = setter;
         }
-        ~StringProp(){;}
+        ~StrProp(){;}
 
         virtual void setValStr( QString val ) override
         {

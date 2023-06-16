@@ -25,7 +25,7 @@ class MAINMODULE_EXPORT Gate : public LogicComponent
         bool initState() { return m_initState; }
         void setInitState( bool s) { m_initState = s; }
 
-        virtual void setNumInps( int pins );
+        void setNumInputs( int pins );
 
     protected:
         virtual bool calcOutput( int inputs );

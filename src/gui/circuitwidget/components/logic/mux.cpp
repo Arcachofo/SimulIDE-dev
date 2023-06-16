@@ -57,11 +57,11 @@ Mux::Mux( QObject* parent, QString type, QString id )
 
     addPropGroup( { tr("Main"), {
 new IntProp<Mux>(  "Address_Bits" , tr("Address Size") ,"_bits", this, &Mux::addrBits,   &Mux::setAddrBits)
-    }} );
+    }, groupNoCopy} );
     addPropGroup( { tr("Electric"), IoComponent::inputProps()
-+QList<ComProperty*>({new BoolProp<Mux>( "Invert_Inputs", tr("Invert Inputs"),"", this, &Mux::invertInps, &Mux::setInvertInps )})
-                    +IoComponent::outputProps() } );
-    addPropGroup( { tr("Edges"), IoComponent::edgeProps() } );
++QList<ComProperty*>({new BoolProp<Mux>( "Invert_Inputs", tr("Invert Inputs"),"", this, &Mux::invertInps, &Mux::setInvertInps, propNoCopy )})
+                    +IoComponent::outputProps(),0 } );
+    addPropGroup( { tr("Edges"), IoComponent::edgeProps(),0 } );
 }
 Mux::~Mux(){}
 

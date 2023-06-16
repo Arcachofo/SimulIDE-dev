@@ -46,7 +46,7 @@ Battery::Battery( QObject* parent, QString type, QString id )
     addPropGroup( { tr("Main"), {
 new DoubProp<Battery>( "Voltage"   , tr("Voltage")   ,"V", this, &Battery::volt, &Battery::setVolt ),
 new DoubProp<Battery>( "Resistance", tr("Resistance"),"Ω", this, &Battery::res,  &Battery::setRes ),
-    } } );
+    },0 } );
 }
 Battery::~Battery() {}
 

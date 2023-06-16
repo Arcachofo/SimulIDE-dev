@@ -36,8 +36,8 @@ RTD::RTD( QObject* parent, QString type, QString id )
     addPropGroup( { tr("Parameters"), {
 //new IntProp<RTD>( "B" , "B" ,""  , this, &RTD::bVal, &RTD::setBval, "uint" ),
 new DoubProp<RTD>( "R0", "R0","Ω" , this, &RTD::getR0,   &RTD::setR0 )
-    }} );
-    addPropGroup( { tr("Dial"), Dialed::dialProps() } );
+    }, 0} );
+    addPropGroup( { tr("Dial"), Dialed::dialProps(), groupNoCopy } );
 }
 RTD::~RTD() {}
 

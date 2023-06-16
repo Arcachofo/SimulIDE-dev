@@ -50,11 +50,10 @@ class MAINMODULE_EXPORT Memory : public IoComponent, public eElement, public Mem
     public slots:
         void loadData();
         void saveData();
-        void showTable();
-        virtual void contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu );
+        void slotShowTable();
 
     protected:
-        virtual void contextMenuEvent( QGraphicsSceneContextMenuEvent* event );
+        virtual void contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu ) override;
         
     private:
         int m_addrBits;

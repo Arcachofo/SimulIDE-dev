@@ -101,10 +101,10 @@ Dht22::Dht22( QObject* parent, QString type, QString id )
              this,     &Dht22::downbuttonclicked );
 
     addPropGroup( { tr("Main"), {
-new StringProp<Dht22>( "DHT22"  , tr("Model")           ,""  , this, &Dht22::model,    &Dht22::setModel, "enum"  ),
-new DoubProp  <Dht22>( "TempInc", tr("Temp. increment") ,"°C", this, &Dht22::tempInc,  &Dht22::setTempInc ),
-new DoubProp  <Dht22>( "HumiInc", tr("Humid. increment"),"_%", this, &Dht22::humidInc, &Dht22::setHumidInc ),
-    }} );
+new StrProp <Dht22>("DHT22"  , tr("Model")           ,""  , this, &Dht22::model,    &Dht22::setModel, propNoCopy,"enum"  ),
+new DoubProp<Dht22>("TempInc", tr("Temp. increment") ,"°C", this, &Dht22::tempInc,  &Dht22::setTempInc ),
+new DoubProp<Dht22>("HumiInc", tr("Humid. increment"),"_%", this, &Dht22::humidInc, &Dht22::setHumidInc ),
+    },0} );
 }
 Dht22::~Dht22(){}
 

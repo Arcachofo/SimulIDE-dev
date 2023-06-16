@@ -34,7 +34,7 @@ class MAINMODULE_EXPORT FixedVolt : public Component, public eElement
         double volt() { return m_voltage; }
         void setVolt( double v );
 
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
 
     public slots:
         virtual void onbuttonclicked();

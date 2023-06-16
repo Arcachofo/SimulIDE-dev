@@ -18,8 +18,8 @@ class MAINMODULE_EXPORT LedMatrix : public Component, public eElement
         LedMatrix( QObject* parent, QString type, QString id );
         ~LedMatrix();
 
-        static Component* construct( QObject* parent, QString type, QString id );
-        static LibraryItem* libraryItem();
+ static Component* construct( QObject* parent, QString type, QString id );
+ static LibraryItem* libraryItem();
 
         QString colorStr();
         void setColorStr( QString color );
@@ -50,7 +50,7 @@ class MAINMODULE_EXPORT LedMatrix : public Component, public eElement
         virtual QStringList getEnumUids( QString ) override;
         virtual QStringList getEnumNames( QString ) override;
         
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
 
     private:
         void setupMatrix( int rows, int cols );

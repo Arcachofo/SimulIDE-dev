@@ -53,11 +53,11 @@ FreqMeter::FreqMeter( QObject* parent, QString type, QString id )
 
     Simulator::self()->addToUpdateList( this );
 
-    initialize();
+    FreqMeter::initialize();
 
     addPropGroup( { tr("Main"), {
-new DoubProp<FreqMeter>( "Filter", tr("Filter"), "V", this, &FreqMeter::filter, &FreqMeter::setFilter ),
-    } } );
+new DoubProp<FreqMeter>("Filter", tr("Filter"), "V", this, &FreqMeter::filter, &FreqMeter::setFilter ),
+    },0 } );
 }
 FreqMeter::~FreqMeter(){}
 

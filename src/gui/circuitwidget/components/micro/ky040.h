@@ -31,7 +31,7 @@ class MAINMODULE_EXPORT KY040 : public Component, public eElement
         int steps() { return m_steps; }
         void setSteps( int s );
 
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
         
     public slots:
         void onbuttonchanged();

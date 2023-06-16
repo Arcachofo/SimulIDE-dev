@@ -38,7 +38,7 @@ IoComponent::~IoComponent(){}
 QList<ComProperty*> IoComponent::inputProps()
 {
     return {
-new ComProperty( "", tr("Inputs:"),"",""),
+new ComProperty( "", tr("Inputs:"),"","",0),
 new DoubProp<IoComponent>( "Input_High_V", tr("Low to High Threshold"),"V", this, &IoComponent::inputHighV, &IoComponent::setInputHighV ),
 new DoubProp<IoComponent>( "Input_Low_V" , tr("High to Low Threshold"),"V", this, &IoComponent::inputLowV,  &IoComponent::setInputLowV ),
 new DoubProp<IoComponent>( "Input_Imped" , tr("Input Impedance")      ,"Ω", this, &IoComponent::inputImp,   &IoComponent::setInputImp ) };
@@ -47,17 +47,17 @@ new DoubProp<IoComponent>( "Input_Imped" , tr("Input Impedance")      ,"Ω", thi
 QList<ComProperty*> IoComponent::outputProps()
 {
     return {
-new ComProperty( "", tr("Outputs:"),"",""),
+new ComProperty( "", tr("Outputs:"),"","",0),
 new DoubProp<IoComponent>( "Out_High_V", tr("Output High Voltage"),"V", this, &IoComponent::outHighV, &IoComponent::setOutHighV ),
 new DoubProp<IoComponent>( "Out_Low_V" , tr("Output Low Voltage") ,"V", this, &IoComponent::outLowV,  &IoComponent::setOutLowV ),
-new DoubProp<IoComponent>( "Out_Imped" , tr("Output Impedance")   ,"Ω", this, &IoComponent::outImp,  &IoComponent::setOutImp ) };
+new DoubProp<IoComponent>( "Out_Imped" , tr("Output Impedance")   ,"Ω", this, &IoComponent::outImp,   &IoComponent::setOutImp ) };
 }
 
 QList<ComProperty*> IoComponent::outputType()
 {
     return {
-new BoolProp<IoComponent>( "Inverted"      , tr("Invert Outputs"),"", this, &IoComponent::invertOuts, &IoComponent::setInvertOuts ),
-new BoolProp<IoComponent>( "Open_Collector", tr("Open Drain")   ,"", this, &IoComponent::openCol,    &IoComponent::setOpenCol )};
+new BoolProp<IoComponent>( "Inverted"      , tr("Invert Outputs"),"", this, &IoComponent::invertOuts, &IoComponent::setInvertOuts, propNoCopy ),
+new BoolProp<IoComponent>( "Open_Collector", tr("Open Drain")    ,"", this, &IoComponent::openCol,    &IoComponent::setOpenCol   , propNoCopy )};
 }
 
 QList<ComProperty*> IoComponent::edgeProps()

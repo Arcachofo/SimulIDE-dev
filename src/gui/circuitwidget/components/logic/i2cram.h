@@ -42,11 +42,11 @@ class MAINMODULE_EXPORT I2CRam : public IoComponent, public TwiModule, public Me
     public slots:
         void loadData() { MemData::loadData( &m_ram ); }
         void saveData() { MemData::saveData( &m_ram ); }
-        void showTable();
-        virtual void contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu );
+        void slotShowTable();
+
 
     protected:
-        virtual void contextMenuEvent( QGraphicsSceneContextMenuEvent* event );
+        virtual void contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu ) override;
 
     private:
         QVector<int> m_ram;

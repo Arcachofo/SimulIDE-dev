@@ -13,8 +13,9 @@ class MAINMODULE_EXPORT IntProp : public NumProp
 {
     public:
         IntProp( QString name, QString caption, QString unit, Comp* comp
-               , int (Comp::*getter)(), void (Comp::*setter)(int), QString type="int" )
-        : NumProp( name, caption, unit, type )
+               , int (Comp::*getter)(), void (Comp::*setter)(int)
+               , uint8_t flags=0, QString type="int" )
+        : NumProp( name, caption, unit, type, flags )
         {
             m_comp = comp;
             m_getter = getter;

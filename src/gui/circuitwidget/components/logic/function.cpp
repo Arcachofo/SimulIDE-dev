@@ -72,19 +72,19 @@ Function::Function( QObject* parent, QString type, QString id )
                                        , asCALL_THISCALL );
     if( r < 0 ) qDebug() << "Function::Function error Registering Function";
 
-    setNumInps( 2 );                           // Create Input Pins
-    setNumOuts( 1 );
+    setNumInputs( 2 );                           // Create Input Pins
+    setNumOutputs( 1 );
     setFunctions( "i0 | i1" );
 
     addPropGroup( { tr("Main"), {
-new IntProp   <Function>( "Num_Inputs" , tr("Input Size") ,"_Pins", this, &Function::numInps,   &Function::setNumInps, "uint" ),
-new IntProp   <Function>( "Num_Outputs", tr("Output Size"),"_Pins", this, &Function::numOuts,   &Function::setNumOuts, "uint" ),
-new StringProp<Function>( "Functions"  , tr("Functions")  ,""     , this, &Function::functions, &Function::setFunctions ),
-    }} );
+new IntProp<Function>("Num_Inputs" , tr("Input Size") ,"_Pins", this, &Function::numInps,   &Function::setNumInputs ,0,"uint" ),
+new IntProp<Function>("Num_Outputs", tr("Output Size"),"_Pins", this, &Function::numOuts,   &Function::setNumOutputs,0,"uint" ),
+new StrProp<Function>("Functions"  , tr("Functions")  ,""     , this, &Function::functions, &Function::setFunctions ),
+    },groupNoCopy} );
     addPropGroup( { tr("Electric"), IoComponent::inputProps()
-+QList<ComProperty*>({new BoolProp<Function>( "Invert_Inputs", tr("Invert Inputs"),"", this, &Function::invertInps, &Function::setInvertInps )})
-                    +IoComponent::outputProps()+IoComponent::outputType() } );
-    addPropGroup( { tr("Edges"), IoComponent::edgeProps() } );
++QList<ComProperty*>({new BoolProp<Function>( "Invert_Inputs", tr("Invert Inputs"),"", this, &Function::invertInps, &Function::setInvertInps, propNoCopy )})
+                    +IoComponent::outputProps()+IoComponent::outputType(),0 } );
+    addPropGroup( { tr("Edges"), IoComponent::edgeProps(),0 } );
 }
 Function::~Function(){}
 
@@ -208,17 +208,6 @@ void Function::updateFunctions()
     m_voltChanged = m_aEngine->GetModule(0)->GetFunctionByDecl("void voltChanged()");
 }
 
-void Function::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
-{
-    if( !acceptedMouseButtons() ) { event->ignore(); return; }
-
-    event->accept();
-    QMenu* menu = new QMenu();
-    contextMenu( event, menu );
-    Component::contextMenu( event, menu );
-    menu->deleteLater();
-}
-
 void Function::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
 {
     menu->addSeparator();
@@ -230,6 +219,7 @@ void Function::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
     connect( saveDaAction, &QAction::triggered,
                      this, &Function::saveData, Qt::UniqueConnection );
     menu->addSeparator();
+    Component::contextMenu( event, menu );
 }
 
 void Function::loadData()
@@ -287,7 +277,7 @@ void Function::updateArea( uint ins, uint outs )
     m_area = QRect(-16,-halfH, m_width*8, m_height*8 );
 }
 
-void Function::setNumInps( int inputs )
+void Function::setNumInputs( int inputs )
 {
     if( (uint)inputs == m_inPin.size() ) return;
     if( inputs < 1 ) return;
@@ -300,7 +290,7 @@ void Function::setNumInps( int inputs )
     updateArea( inputs, m_outPin.size() );
 }
 
-void Function::setNumOuts( int outs )
+void Function::setNumOutputs( int outs )
 {
     if( (uint)outs == m_outPin.size() ) return;
     if( outs < 1 ) return;

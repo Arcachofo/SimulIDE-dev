@@ -59,10 +59,10 @@ DcMotor::DcMotor( QObject* parent, QString type, QString id )
     Simulator::self()->addToUpdateList( this );
 
     addPropGroup( { tr("Main"), {
-new IntProp <DcMotor>( "RPM_Nominal" , tr("Nominal Speed")  ,tr("_RPM"), this, &DcMotor::rpm,    &DcMotor::setRpm ),
+new IntProp <DcMotor>( "RPM_Nominal" , tr("Nominal Speed")  ,"_RPM", this, &DcMotor::rpm,    &DcMotor::setRpm ),
 new DoubProp<DcMotor>( "Volt_Nominal", tr("Nominal Voltage"),"V"   , this, &DcMotor::volt,   &DcMotor::setVolt ),
 new DoubProp<DcMotor>( "Resistance"  , tr("Resistance")     ,"Ω"   , this, &DcMotor::getRes, &DcMotor::setResSafe )
-    }} );
+    },0} );
 }
 DcMotor::~DcMotor(){}
 

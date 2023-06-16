@@ -54,7 +54,7 @@ VarSource::VarSource( QObject* parent, QString type, QString id )
 
     addPropGroup( { "Hidden1", {
 new BoolProp<VarSource>( "Running","","", this, &VarSource::running, &VarSource::setRunning ),
-    }} );
+    }, groupHidden} );
 }
 VarSource::~VarSource() { }
 

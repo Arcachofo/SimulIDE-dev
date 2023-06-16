@@ -35,7 +35,7 @@ class MAINMODULE_EXPORT Strain : public VarResBase
     //public slots:
       void senseChanged( int val );
 
-      virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
+      virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
       
  private:
     double sensorFunction ( double forceN );

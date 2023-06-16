@@ -17,8 +17,8 @@ class MAINMODULE_EXPORT WS2812 : public Component, public eClockedDevice
         WS2812( QObject* parent, QString type, QString id );
         ~WS2812();
 
-        static Component* construct( QObject* parent, QString type, QString id );
-        static LibraryItem *libraryItem();
+ static Component* construct( QObject* parent, QString type, QString id );
+ static LibraryItem *libraryItem();
 
         int  rows() { return m_rows; }
         void setRows( int rows );
@@ -30,7 +30,7 @@ class MAINMODULE_EXPORT WS2812 : public Component, public eClockedDevice
         virtual void updateStep() override;
         virtual void voltChanged() override;
 
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
 
     private:
         void setOut( bool state );

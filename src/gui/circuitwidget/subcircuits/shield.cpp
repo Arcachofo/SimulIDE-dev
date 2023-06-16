@@ -28,8 +28,8 @@ ShieldSubc::ShieldSubc( QObject* parent, QString type, QString id )
     setZValue( 1 );
 
     addPropGroup( {"Hidden", {
-new StringProp<ShieldSubc>( "BoardId" , "","", this, &ShieldSubc::boardId, &ShieldSubc::setBoardId )
-    }} );
+new StrProp<ShieldSubc>( "BoardId" , "","", this, &ShieldSubc::boardId, &ShieldSubc::setBoardId )
+    }, groupHidden} );
 }
 ShieldSubc::~ShieldSubc(){}
 
@@ -123,41 +123,19 @@ void ShieldSubc::renameTunnels()
     for( Tunnel* tunnel : m_subcTunnels ) tunnel->setName( m_id+"-"+tunnel->tunnelUid() );
 }
 
-void ShieldSubc::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
+void ShieldSubc::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
 {
-    if( !acceptedMouseButtons() ) event->ignore();
-    else{
         event->accept();
-        QMenu* menu = new QMenu();
-        Component* mainComp = m_mainComponent;
-        QString id = m_id;
 
         if( m_attached )
         {
-            QAction* detachAction = menu->addAction(QIcon(":/detach.png"),tr("Detach") );
+            QAction* detachAction = menu->addAction( QIcon(":/detach.png"),tr("Detach") );
             connect( detachAction, &QAction::triggered, this, &ShieldSubc::slotDetach );
         }else{
-            QAction* attachAction = menu->addAction(QIcon(":/attach.png"),tr("Attach") );
+            QAction* attachAction = menu->addAction( QIcon(":/attach.png"),tr("Attach") );
             connect( attachAction, &QAction::triggered, this, &ShieldSubc::slotAttach );
         }
-        menu->addSection( "" );
-        if( m_board && m_board->getMainComp() )
-        {
-            mainComp = m_board->getMainComp();
-            id = "Board "+m_board->getUid();
-        }
-        if( mainComp )
-        {
-            menu->addSection( "                            " );
-            menu->addSection( mainComp->itemType()+" at "+id );
-            menu->addSection( "" );
-            mainComp->contextMenu( NULL, menu );
 
-            menu->addSection( "                            " );
-            menu->addSection( id );
-            menu->addSection( "" );
-        }
         if( m_board ) m_board->contextMenu( event, menu );
         else          Component::contextMenu( event, menu );
-        menu->deleteLater();
-}   }
+}

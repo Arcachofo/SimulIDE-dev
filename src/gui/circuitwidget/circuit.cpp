@@ -219,7 +219,8 @@ void Circuit::loadStrDoc( QString &doc )
                     continue;
                 }
                 else if( prop.endsWith("/>") ) continue;
-                mComp->setPropStr( propName, prop.toString() );
+                if( propName == "MainCompId") mComp = subci->getMainComp( prop.toString() );  // If more than 1 mainComp then get Component
+                else                          mComp->setPropStr( propName, prop.toString() );
 
                 propName = "";
             }
@@ -392,8 +393,8 @@ void Circuit::loadStrDoc( QString &doc )
                     }
                     comp->setPropStr( "label", label ); //setIdLabel( label );
 
-                    QList<propGroup>* groups = comp->properties(); // Set properties in correct order
-                    for( propGroup group : *groups )
+                    QList<propGroup> groups = comp->properties(); // Set properties in correct order
+                    for( propGroup group : groups )
                     {
                         QList<ComProperty*> propList = group.propList;
                         if( propList.isEmpty() ) continue;

@@ -48,25 +48,17 @@ LedBase::LedBase( QObject* parent, QString type, QString id )
     Simulator::self()->addToUpdateList( this );
 
     addPropGroup( { tr("Main"), {
-//new StringProp<LedBase>( "Model"   , tr("Model")   ,"", this, &LedBase::model,    &LedBase::setModel, "enum" ),
-new StringProp<LedBase>( "Color"   , tr("Color")   ,"", this, &LedBase::colorStr, &LedBase::setColorStr, "enum" ),
-new BoolProp  <LedBase>( "Grounded", tr("Grounded"),"", this, &LedBase::grounded, &LedBase::setGrounded),
-    }} );
+new StrProp <LedBase>("Color"   , tr("Color")   ,"", this, &LedBase::colorStr, &LedBase::setColorStr,0,"enum" ),
+new BoolProp<LedBase>("Grounded", tr("Grounded"),"", this, &LedBase::grounded, &LedBase::setGrounded),
+    }, groupNoCopy} );
+
     addPropGroup( { tr("Electric"), {
-new DoubProp<LedBase>( "Threshold" , tr("Forward Voltage"),"V", this, &LedBase::threshold,  &LedBase::setThreshold ),
-new DoubProp<LedBase>( "MaxCurrent", tr("Max Current")    ,"A", this, &LedBase::maxCurrent, &LedBase::setMaxCurrent ),
-new DoubProp<LedBase>( "Resistance", tr("Resistance")     ,"Ω", this, &LedBase::res,        &LedBase::setRes ),
-    }} );
-/*    addPropGroup( { tr("Advanced"), {
-new DoubProp<LedBase>( "BrkDownV"  , tr("Breakdown Voltage")   ,"V" , this, &LedBase::brkDownV, &LedBase::setBrkDownV ),
-new DoubProp<LedBase>( "SatCurrent", tr("Saturation Current")  ,"nA", this, &LedBase::satCur,   &LedBase::setSatCur ),
-new DoubProp<LedBase>( "EmCoef"    , tr("Emission Coefficient"),""  , this, &LedBase::emCoef,   &LedBase::setEmCoef ),
-    }} );*/
+new DoubProp<LedBase>("Threshold" , tr("Forward Voltage"),"V", this, &LedBase::threshold,  &LedBase::setThreshold ),
+new DoubProp<LedBase>("MaxCurrent", tr("Max Current")    ,"A", this, &LedBase::maxCurrent, &LedBase::setMaxCurrent ),
+new DoubProp<LedBase>("Resistance", tr("Resistance")     ,"Ω", this, &LedBase::res,        &LedBase::setRes ),
+    }, groupNoCopy} );
 }
-LedBase::~LedBase()
-{
-    //if( m_grounded ) m_pin[1]->setEnode( NULL );
-}
+LedBase::~LedBase(){}
 
 void LedBase::initialize()
 {

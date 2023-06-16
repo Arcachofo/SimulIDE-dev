@@ -46,7 +46,7 @@ class MAINMODULE_EXPORT Esp01 : public Component, public UsartModule, public eEl
         virtual void byteReceived( uint8_t byte ) override;
         virtual void frameSent( uint8_t data ) override;
 
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
 
     public slots:
         void slotOpenTerm();
@@ -55,7 +55,7 @@ class MAINMODULE_EXPORT Esp01 : public Component, public UsartModule, public eEl
         void tcpReadyRead( int link );
 
     protected:
-        virtual void contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu );
+        virtual void contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu ) override;
 
     private:
         void reset();

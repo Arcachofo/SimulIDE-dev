@@ -53,7 +53,7 @@ DS1307::DS1307( QObject* parent, QString type, QString id )
 
     addPropGroup( { "Main", {
 new BoolProp<DS1307>( "Time_Updtd", tr("Set current time at start"),"", this, &DS1307::timeUpdtd, &DS1307::setTimeUpdtd ),
-        } } );
+        },0 } );
 }
 DS1307::~DS1307(){}
 

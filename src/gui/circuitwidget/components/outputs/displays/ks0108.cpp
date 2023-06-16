@@ -75,11 +75,11 @@ Ks0108::Ks0108( QObject* parent, QString type, QString id )
     setLabelPos( -32,-68, 0);
     setShowId( true );
     
-    initialize();
+    Ks0108::initialize();
 
     addPropGroup( { tr("Main"), {
 new BoolProp<Ks0108>( "CS_Active_Low", tr("CS Active Low"),"", this, &Ks0108::csActLow, &Ks0108::setCsActLow )
-    }} );
+    }, groupNoCopy} );
 }
 Ks0108::~Ks0108()
 {

@@ -29,7 +29,7 @@ class MAINMODULE_EXPORT ClockBase : public FixedVolt
         bool running() { return m_isRunning; }
         virtual void setRunning( bool running );
 
-        virtual void setOut( bool ){;}
+        virtual void setOut( bool ) override {;}
 
     public slots:
         virtual void onbuttonclicked() override;

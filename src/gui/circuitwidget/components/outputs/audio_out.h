@@ -29,8 +29,8 @@ class AudioOut : public Component, public eResistor
         bool buzzer() { return m_buzzer; }
         void setBuzzer( bool b ) { m_buzzer = b; }
         
-        virtual QPainterPath shape() const;
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
+        virtual QPainterPath shape() const override;
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
 
     private:
         QAudioDeviceInfo m_deviceinfo;

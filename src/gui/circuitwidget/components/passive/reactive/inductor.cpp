@@ -29,8 +29,8 @@ LibraryItem* Inductor::libraryItem()
 Inductor::Inductor( QObject* parent, QString type, QString id )
         : Reactive( parent, type, id )
 {
-    m_pin[0]->setLength( 4.5 );
-    m_pin[1]->setLength( 4.5 );
+    m_pin[0]->setLength( 4 );
+    m_pin[1]->setLength( 4 );
 
     m_value = 1; // H
 
@@ -38,8 +38,8 @@ Inductor::Inductor( QObject* parent, QString type, QString id )
 new DoubProp<Inductor>( "Inductance", tr("Inductance")     , "H"     , this, &Inductor::value,    &Inductor::setValue ),
 new DoubProp<Inductor>( "Resistance", tr("Resistance")     , "Ω"     , this, &Inductor::resist  , &Inductor::setResist ),
 new DoubProp<Inductor>( "InitVolt"  , tr("Initial Current"), "A"     , this, &Inductor::initCurr, &Inductor::setInitCurr ),
-new IntProp <Inductor>( "AutoStep"  , tr("Auto Step")      , "_Steps", this, &Inductor::autoStep, &Inductor::setAutoStep, "uint" )
-    } } );
+new IntProp <Inductor>( "AutoStep"  , tr("Auto Step")      , "_Steps", this, &Inductor::autoStep, &Inductor::setAutoStep,0,"uint" )
+    },0 } );
 
     setShowProp("Inductance");
     setPropStr( "Inductance", "1" );
@@ -51,8 +51,8 @@ void Inductor::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidg
     Component::paint( p, option, widget );
 
     QPen pen = p->pen();
-    pen.setWidth(2.8);
-    p->setPen(pen);
+    pen.setWidth( 2 );
+    p->setPen( pen );
     
     p->drawArc( QRectF(-12,-4.5, 10, 10 ),-45*16 , 220*16 );
     p->drawArc( QRectF( -5,-4.5, 10, 10 ), 225*16,-270*16 );

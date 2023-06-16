@@ -187,8 +187,11 @@ int McuCreator::processFile( QString fileName, bool main )
             mcu->cpu = cpu;
             m_mcuComp->m_scripted = true;
 
-            node = root.firstChild();
+            if( root.hasAttribute("linkable")
+             && root.attribute("linkable") == "true" )
+                m_mcuComp->setScriptLinkable( cpu );
 
+            node = root.firstChild();
             while( !node.isNull() )
             {
                 QDomElement e = node.toElement();

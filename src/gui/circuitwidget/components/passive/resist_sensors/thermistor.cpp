@@ -32,10 +32,10 @@ Thermistor::Thermistor( QObject* parent, QString type, QString id )
     m_r25  = 10000;
 
     addPropGroup( { tr("Parameters"), {
-new IntProp<Thermistor>( "B"  , "B"  ,""  , this, &Thermistor::bVal, &Thermistor::setBval, "uint" ),
-new IntProp<Thermistor>( "R25", "R25","Ω" , this, &Thermistor::r25,  &Thermistor::setR25,  "uint" )
-    }} );
-    addPropGroup( { tr("Dial"), Dialed::dialProps() } );
+new IntProp<Thermistor>( "B"  , "B"  ,""  , this, &Thermistor::bVal, &Thermistor::setBval,0,"uint" ),
+new IntProp<Thermistor>( "R25", "R25","Ω" , this, &Thermistor::r25,  &Thermistor::setR25, 0,"uint" )
+    }, 0} );
+    addPropGroup( { tr("Dial"), Dialed::dialProps(), groupNoCopy } );
 }
 Thermistor::~Thermistor(){}
 

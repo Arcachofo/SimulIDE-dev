@@ -57,18 +57,18 @@ Relay::Relay( QObject* parent, QString type, QString id )
 
     addPropGroup( { tr("Main"), {
 new BoolProp<Relay>( "Norm_Close", tr("Normally Closed"),""      , this, &Relay::nClose, &Relay::setNClose ),
-new BoolProp<Relay>( "DT"        , tr("Double Throw")   ,""      , this, &Relay::dt,     &Relay::setDt ),
-new IntProp <Relay>( "Poles"     , tr("Poles")          ,"_Poles", this, &Relay::poles,  &Relay::setPoles, "uint" ),
-    }} );
+new BoolProp<Relay>( "DT"        , tr("Double Throw")   ,""      , this, &Relay::dt,     &Relay::setDt, propNoCopy ),
+new IntProp <Relay>( "Poles"     , tr("Poles")          ,"_Poles", this, &Relay::poles,  &Relay::setPoles, propNoCopy,"uint" ),
+    }, 0} );
     addPropGroup( { tr("Electric"), {
-new DoubProp<Relay>( "IOn"       , tr("IOn")       ,"A", this, &Relay::iTrig, &Relay::setITrig),
-new DoubProp<Relay>( "IOff"      , tr("IOff")      ,"A", this, &Relay::iRel,  &Relay::setIRel )
-    }} );
+new DoubProp<Relay>( "IOn" , tr("IOn") ,"A", this, &Relay::iTrig, &Relay::setITrig),
+new DoubProp<Relay>( "IOff", tr("IOff"),"A", this, &Relay::iRel,  &Relay::setIRel )
+    }, 0} );
     addPropGroup( { tr("Coil"), {
 new DoubProp<Inductor>( "Inductance", tr("Inductance"),"H", m_inductor, &Inductor::value , &Inductor::setValue ),
 new DoubProp<Inductor>( "Rcoil"     , tr("Resistance"),"Ω", m_inductor, &Inductor::resist, &Inductor::setResist),
-new IntProp <Inductor>( "AutoStep"  , tr("Auto Step") , "_Steps", m_inductor, &Inductor::autoStep, &Inductor::setAutoStep, "uint" )
-    }} );
+new IntProp <Inductor>( "AutoStep"  , tr("Auto Step") , "_Steps", m_inductor, &Inductor::autoStep, &Inductor::setAutoStep,0,"uint" )
+    }, 0} );
 }
 Relay::~Relay(){}
 

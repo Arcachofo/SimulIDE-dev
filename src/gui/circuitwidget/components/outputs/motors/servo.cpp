@@ -60,8 +60,8 @@ Servo::Servo( QObject* parent, QString type, QString id )
 new DoubProp<Servo>( "Speed"   , tr("Speed ")     ,tr("_sec/60º"), this, &Servo::speed,    &Servo::setSpeed ),
 new DoubProp<Servo>( "MinPulse", tr("Min. Pulse Width"),tr("_us"), this, &Servo::minPulse, &Servo::setMinPulse ),
 new DoubProp<Servo>( "MaxPulse", tr("Max. Pulse Width"),tr("_us"), this, &Servo::maxPulse, &Servo::setMaxPulse )
-    }} );
-    addPropGroup( { tr("Electric"), IoComponent::inputProps() } );
+    },0} );
+    addPropGroup( { tr("Electric"), IoComponent::inputProps(),0 } );
 }
 Servo::~Servo(){}
 

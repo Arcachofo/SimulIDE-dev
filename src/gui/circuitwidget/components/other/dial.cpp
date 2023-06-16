@@ -45,10 +45,10 @@ Dial::Dial( QObject* parent, QString type, QString id )
 
     Simulator::self()->addToUpdateList( this );
 
-    addPropGroup( { tr("Dial"), Dialed::dialProps() } );
+    addPropGroup( { tr("Dial"), Dialed::dialProps(), groupNoCopy } );
     addPropGroup( { "Hidden", {
-new StringProp<Dial>( "Links", "Links","", this, &Dial::getLinks , &Dial::setLinks )
-    }} );
+new StrProp<Dial>("Links", "Links","", this, &Dial::getLinks , &Dial::setLinks )
+    }, groupHidden} );
 }
 Dial::~Dial() {}
 

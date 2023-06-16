@@ -16,8 +16,8 @@ class MAINMODULE_EXPORT Servo : public LogicComponent
         Servo( QObject* parent, QString type, QString id );
         ~Servo();
         
-        static Component* construct( QObject* parent, QString type, QString id );
-        static LibraryItem* libraryItem();
+ static Component* construct( QObject* parent, QString type, QString id );
+ static LibraryItem* libraryItem();
 
         double speed() { return m_speed; }
         void setSpeed( double speed ) { m_speed = speed; }
@@ -32,8 +32,8 @@ class MAINMODULE_EXPORT Servo : public LogicComponent
         virtual void updateStep() override;
         virtual void voltChanged() override;
 
-        virtual QPainterPath shape() const;
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
+        virtual QPainterPath shape() const override;
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
 
     private:
         double m_pos;            // Actual Angular position 0-180

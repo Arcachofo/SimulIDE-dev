@@ -48,9 +48,9 @@ WS2812::WS2812( QObject* parent, QString type, QString id )
     Simulator::self()->addToUpdateList( this );
 
     addPropGroup( { tr("Main"), {
-new IntProp<WS2812>( "Rows", tr("Rows")   ,"_Leds", this, &WS2812::rows, &WS2812::setRows, "uint" ),
-new IntProp<WS2812>( "Cols", tr("Columns"),"_Leds", this, &WS2812::cols, &WS2812::setCols, "uint" ),
-    }} );
+new IntProp<WS2812>( "Rows", tr("Rows")   ,"_Leds", this, &WS2812::rows, &WS2812::setRows,0,"uint" ),
+new IntProp<WS2812>( "Cols", tr("Columns"),"_Leds", this, &WS2812::cols, &WS2812::setCols,0,"uint" ),
+    }, groupNoCopy} );
 }
 WS2812::~WS2812() { }
 

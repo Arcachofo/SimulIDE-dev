@@ -17,7 +17,7 @@ class MAINMODULE_EXPORT Socket : public ConnBase
         ~Socket();
 
  static Component* construct( QObject* parent, QString type, QString id );
- static LibraryItem *libraryItem();
+ static LibraryItem* libraryItem();
 
         virtual void updateStep() override;
 

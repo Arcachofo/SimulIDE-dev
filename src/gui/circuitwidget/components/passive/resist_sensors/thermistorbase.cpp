@@ -14,7 +14,7 @@ ThermistorBase::ThermistorBase( QObject* parent, QString type, QString id )
 
     m_ptc  = false;
 
-    setMaxVal( 200 );
+    ThermistorBase::setMaxVal( 200 );
     setVal( 25 );
 
     addPropGroup( { tr("Main"), {
@@ -22,7 +22,7 @@ new DoubProp<ThermistorBase>( "Temp"     , tr("Current Value"),"ºC", this, &The
 new DoubProp<ThermistorBase>( "Min_Temp" , tr("Minimum Value"),"ºC", this, &ThermistorBase::minVal,  &ThermistorBase::setMinVal ),
 new DoubProp<ThermistorBase>( "Max_Temp" , tr("Maximum Value"),"ºC", this, &ThermistorBase::maxVal,  &ThermistorBase::setMaxVal ),
 new DoubProp<ThermistorBase>( "Dial_Step", tr("Dial Step")    ,"ºC", this, &ThermistorBase::getStep, &ThermistorBase::setStep )
-    }} );
+    }, 0} );
 }
 ThermistorBase::~ThermistorBase(){}
 

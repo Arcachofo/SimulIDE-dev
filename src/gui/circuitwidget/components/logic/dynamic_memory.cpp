@@ -72,16 +72,13 @@ DynamicMemory::DynamicMemory( QObject* parent, QString type, QString id )
     Simulator::self()->addToUpdateList( this );
 
     addPropGroup( { tr("Main"), {
-new IntProp<DynamicMemory>(  "Row_Address_Bits", tr("Row Address Size"),"_Bits", this, &DynamicMemory::rowAddrBits,   &DynamicMemory::setRowAddrBits, "uint" ),
-new IntProp<DynamicMemory>(  "Column_Address_Bits", tr("Column Address Size"),"_Bits", this, &DynamicMemory::colAddrBits,   &DynamicMemory::setColAddrBits, "uint" ),
-new IntProp<DynamicMemory>(  "Data_Bits"   , tr("Data Size")   ,"_Bits", this, &DynamicMemory::dataBits,   &DynamicMemory::setDataBits, "uint" ),
-new DoubProp<DynamicMemory>( "Refresh_Period", tr("Refresh period"),"ps", this, &DynamicMemory::refreshPeriod, &DynamicMemory::setRefreshPeriod )
-    }} );
-    addPropGroup( { tr("Electric"), IoComponent::inputProps()+IoComponent::outputProps()+IoComponent::outputType() } );
-    addPropGroup( { tr("Edges"), IoComponent::edgeProps() } );
-    addPropGroup( { "Hidden", {
-new StringProp<DynamicMemory>( "Mem","","", this, &DynamicMemory::getMem, &DynamicMemory::setMem)
-    }} );
+new IntProp <DynamicMemory>("Row_Bits"   , tr("Row Address Size")   ,"_Bits", this, &DynamicMemory::rowAddrBits,   &DynamicMemory::setRowAddrBits,0,"uint" ),
+new IntProp <DynamicMemory>("Column_Bits", tr("Column Address Size"),"_Bits", this, &DynamicMemory::colAddrBits,   &DynamicMemory::setColAddrBits,0,"uint" ),
+new IntProp <DynamicMemory>("Data_Bits"  , tr("Data Size")          ,"_Bits", this, &DynamicMemory::dataBits,      &DynamicMemory::setDataBits,0,"uint" ),
+new DoubProp<DynamicMemory>("Refresh"    , tr("Refresh period")     ,"ps"   , this, &DynamicMemory::refreshPeriod, &DynamicMemory::setRefreshPeriod )
+    },groupNoCopy} );
+    addPropGroup( { tr("Electric"), IoComponent::inputProps()+IoComponent::outputProps()+IoComponent::outputType(),0 } );
+    addPropGroup( { tr("Edges")   , IoComponent::edgeProps(),0 } );
 }
 DynamicMemory::~DynamicMemory(){}
 
@@ -217,18 +214,6 @@ void DynamicMemory::write( bool w )
 
     }
     Simulator::self()->cancelEvents( this );
-}
-
-void DynamicMemory::setMem( QString m )
-{
-    if( m.isEmpty() ) return;
-    MemData::setMem( &m_ram, m );
-}
-
-QString DynamicMemory::getMem()
-{
-    QString m;
-    return MemData::getMem( &m_ram );
 }
 
 void DynamicMemory::updatePins()
@@ -374,18 +359,7 @@ void DynamicMemory::createDataBits( int bits )
 void DynamicMemory::deleteDataBits( int bits )
 { LogicComponent::deletePins( &m_outPin, bits ); }
 
-void DynamicMemory::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
-{
-    if( !acceptedMouseButtons() ) event->ignore();
-    else{
-        event->accept();
-        QMenu* menu = new QMenu();
-        contextMenu( event, menu );
-        Component::contextMenu( event, menu );
-        menu->deleteLater();
-}   }
-
-void DynamicMemory::contextMenu( QGraphicsSceneContextMenuEvent*, QMenu* menu )
+void DynamicMemory::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
 {
     QAction* loadAction = menu->addAction( QIcon(":/load.svg"),tr("Load data") );
     connect( loadAction, &QAction::triggered,
@@ -397,9 +371,10 @@ void DynamicMemory::contextMenu( QGraphicsSceneContextMenuEvent*, QMenu* menu )
 
     QAction* showEepAction = menu->addAction(QIcon(":/save.png"), tr("Show Memory Table") );
     connect( showEepAction, &QAction::triggered,
-                      this, &DynamicMemory::showTable, Qt::UniqueConnection );
+                      this, &DynamicMemory::slotShowTable, Qt::UniqueConnection );
 
     menu->addSeparator();
+    Component::contextMenu( event, menu );
 }
 
 void DynamicMemory::loadData()
@@ -410,7 +385,7 @@ void DynamicMemory::loadData()
 
 void DynamicMemory::saveData() { MemData::saveData( &m_ram, m_dataBits ); }
 
-void DynamicMemory::showTable()
+void DynamicMemory::slotShowTable()
 {
     MemData::showTable( m_ram.size(), m_dataBytes );
     m_memTable->setWindowTitle( "DRAM: "+idLabel() );

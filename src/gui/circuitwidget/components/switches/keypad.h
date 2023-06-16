@@ -17,8 +17,8 @@ class MAINMODULE_EXPORT KeyPad : public Component, public eElement
         KeyPad( QObject* parent, QString type, QString id );
         ~KeyPad();
 
-        static Component* construct( QObject* parent, QString type, QString id );
-        static LibraryItem* libraryItem();
+ static Component* construct( QObject* parent, QString type, QString id );
+ static LibraryItem* libraryItem();
 
         int rows() { return m_rows; }
         void setRows( int rows );
@@ -32,7 +32,7 @@ class MAINMODULE_EXPORT KeyPad : public Component, public eElement
         virtual void stamp() override;
         virtual void remove() override;
 
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
 
     protected:
         virtual void setflip() override;

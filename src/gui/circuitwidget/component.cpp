@@ -30,8 +30,6 @@ Component::Component( QObject* parent, QString type, QString id )
          : CompBase( parent, type, id )
          , QGraphicsItem()
 {
-    //setCacheMode(QGraphicsItem::DeviceCoordinateCache);
-
     m_help = "";
     m_Hflip  = 1;
     m_Vflip  = 1;
@@ -78,8 +76,7 @@ Component::Component( QObject* parent, QString type, QString id )
     font.setPixelSize( 8 );
     m_valLabel->setFont( font );
     m_valLabel->setVisible( false );
-    
-    //setObjectName( id );
+
     if( !id.contains("-") ) id.prepend( type+"-" );
     setIdLabel( id );
 
@@ -87,34 +84,32 @@ Component::Component( QObject* parent, QString type, QString id )
     setFlag( QGraphicsItem::ItemIsSelectable, true );
 
     addPropGroup( { "CompBase", {
-new StringProp<Component>( "itemtype","","", this, &Component::itemType,  &Component::setItemType ),
-new StringProp<Component>( "CircId"  ,"","", this, &Component::getUid,    &Component::setUid ),
-new BoolProp  <Component>( "mainComp","","", this, &Component::isMainComp,&Component::setMainComp ),// Related to Subcircuit:
-new StringProp<Component>( "ShowProp","","", this, &Component::showProp,  &Component::setShowProp ),
-    }} );
-    addPropGroup( { "CompGraphic", {
+new StrProp <Component>("itemtype","","", this, &Component::itemType,  &Component::setItemType ),
+new StrProp <Component>("CircId"  ,"","", this, &Component::getUid,    &Component::setUid ),
+new BoolProp<Component>("mainComp","","", this, &Component::isMainComp,&Component::setMainComp ),// Related to Subcircuit:
+new StrProp <Component>("ShowProp","","", this, &Component::showProp,  &Component::setShowProp ),
+    }, groupHidden | groupNoCopy } );
 
-new BoolProp  <Component>( "Show_id" ,"","", this, &Component::showId,    &Component::setShowId ),
-new BoolProp<Component>  ( "Show_Val","","", this, &Component::showVal,   &Component::setShowVal ),
-//new DoubProp<Component>  ( "Value"   ,"","",this, &Component::getValue,  &Component::setValue ),
-//new StringProp<Component>( "Unit"    ,"","",this, &Component::unit,      &Component::setUnit ),
-new PointProp <Component>( "Pos"     ,"","", this, &Component::position,  &Component::setPosition ),
-new DoubProp  <Component>( "rotation","","", this, &Component::getAngle,  &Component::setAngle ),
-new IntProp   <Component>( "hflip"   ,"","", this, &Component::hflip,     &Component::setHflip ),
-new IntProp   <Component>( "vflip"   ,"","", this, &Component::vflip,     &Component::setVflip ),
-new StringProp<Component>( "label"   ,"","", this, &Component::idLabel,   &Component::setIdLabel ),
-new PointProp<Component>( "idLabPos" ,"","", this, &Component::getIdPos,  &Component::setIdPos ),
-new IntProp  <Component>( "labelrot" ,"","", this, &Component::getIdRot,  &Component::setIdRot ),
-new PointProp<Component>( "valLabPos","","", this, &Component::getValPos, &Component::setValPos ),
-new IntProp  <Component>( "valLabRot","","", this, &Component::getValRot, &Component::setValRot ),
-    }} );
+    addPropGroup( { "CompGraphic", {
+new BoolProp <Component>("Show_id"  ,"","", this, &Component::showId,    &Component::setShowId ),
+new BoolProp <Component>("Show_Val" ,"","", this, &Component::showVal,   &Component::setShowVal ),
+new PointProp<Component>("Pos"      ,"","", this, &Component::position,  &Component::setPosition ),
+new DoubProp <Component>("rotation" ,"","", this, &Component::getAngle,  &Component::setAngle ),
+new IntProp  <Component>("hflip"    ,"","", this, &Component::hflip,     &Component::setHflip ),
+new IntProp  <Component>("vflip"    ,"","", this, &Component::vflip,     &Component::setVflip ),
+new StrProp  <Component>("label"    ,"","", this, &Component::idLabel,   &Component::setIdLabel ),
+new PointProp<Component>("idLabPos" ,"","", this, &Component::getIdPos,  &Component::setIdPos ),
+new IntProp  <Component>("labelrot" ,"","", this, &Component::getIdRot,  &Component::setIdRot ),
+new PointProp<Component>("valLabPos","","", this, &Component::getValPos, &Component::setValPos ),
+new IntProp  <Component>("valLabRot","","", this, &Component::getValRot, &Component::setValRot ),
+    }, groupHidden | groupNoCopy } );
 
     addPropGroup( { "Board", {                   // Board properties
-new PointProp<Component>( "boardPos", "","", this, &Component::boardPos, &Component::setBoardPos ),
-new PointProp<Component>( "circPos" , "","", this, &Component::circPos,  &Component::setCircPos ),
-new DoubProp <Component>( "boardRot", "","", this, &Component::boardRot, &Component::setBoardRot ),
-new DoubProp <Component>( "circRot" , "","", this, &Component::circRot,  &Component::setCircRot )
-    }} );
+new PointProp<Component>("boardPos", "","", this, &Component::boardPos, &Component::setBoardPos ),
+new PointProp<Component>("circPos" , "","", this, &Component::circPos,  &Component::setCircPos ),
+new DoubProp <Component>("boardRot", "","", this, &Component::boardRot, &Component::setBoardRot ),
+new DoubProp <Component>("circRot" , "","", this, &Component::circRot,  &Component::setCircRot )
+    }, groupHidden | groupNoCopy } );
 }
 Component::~Component(){}
 
@@ -333,10 +328,10 @@ void Component::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu 
 {
     if( !event && m_isMainComp ) // Main Component in Subcircuit
     {
-        QAction* propertiesAction = menu->addAction( QIcon( ":/properties.svg"),tr("Properties") );
+        /*QAction* propertiesAction = menu->addAction( QIcon( ":/properties.svg"),tr("Properties") );
         connect( propertiesAction, &QAction::triggered,
                              this, &Component::slotProperties, Qt::UniqueConnection );
-        menu->addSeparator();
+        menu->addSeparator();*/
         return;
     }
     m_eventpoint = mapToScene( toGrid(event->pos()) );

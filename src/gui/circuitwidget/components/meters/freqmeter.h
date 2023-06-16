@@ -17,8 +17,8 @@ class MAINMODULE_EXPORT FreqMeter : public Component, public eElement
         FreqMeter( QObject* parent, QString type, QString id );
         ~FreqMeter();
 
-        static Component* construct( QObject* parent, QString type, QString id );
-        static LibraryItem* libraryItem();
+ static Component* construct( QObject* parent, QString type, QString id );
+ static LibraryItem* libraryItem();
 
         virtual void initialize() override;
         virtual void stamp() override;
@@ -28,7 +28,7 @@ class MAINMODULE_EXPORT FreqMeter : public Component, public eElement
         double filter() { return m_filter; }
         void setFilter( double f ) { m_filter = f; }
         
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
         
     protected:
         virtual void setflip() override;

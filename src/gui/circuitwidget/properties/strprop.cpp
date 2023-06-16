@@ -5,19 +5,19 @@
 
 #include"strprop.h"
 
-QString StrProp::getStr( QString str )
+QString StrBaseProp::getStr( QString str )
 {
     return str.replace("\n","&#xa;").replace("\"","&#x22;")
             .replace("<","&#x3C").replace("=","&#x3D").replace(">","&#x3E");
 }
 
-QString StrProp::setStr( QString str )
+QString StrBaseProp::setStr( QString str )
 {
     return str.replace("&#xa;","\n").replace("&#x22;","\"")
             .replace("&#x3C","<").replace("&#x3D","=").replace("&#x3E",">");
 }
 
-double StrProp::getValue()
+double StrBaseProp::getValue()
 {
     return getValStr().toDouble();
 }

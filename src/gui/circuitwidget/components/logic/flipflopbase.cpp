@@ -18,13 +18,13 @@ FlipFlopBase::FlipFlopBase( QObject* parent, QString type, QString id )
     m_useRS = true;
 
     addPropGroup( { tr("Main"), {
-new BoolProp<FlipFlopBase>( "UseRS",          tr("Use Set/Reset Pins"),"", this, &FlipFlopBase::pinsRS,   &FlipFlopBase::usePinsRS ),
-new BoolProp<FlipFlopBase>( "Reset_Inverted", tr("Set/Reset Inverted"),"", this, &FlipFlopBase::srInv,    &FlipFlopBase::setSrInv ),
-new BoolProp<FlipFlopBase>( "Clock_Inverted", tr("Clock Inverted")    ,"", this, &FlipFlopBase::clockInv, &FlipFlopBase::setClockInv ),
-new StringProp<FlipFlopBase>( "Trigger"     , tr("Trigger Type")      ,"", this, &FlipFlopBase::triggerStr, &FlipFlopBase::setTriggerStr, "enum" ),
-    }} );
-    addPropGroup( { tr("Electric"), IoComponent::inputProps()+IoComponent::outputProps() } );
-    addPropGroup( { tr("Edges"), IoComponent::edgeProps() } );
+new BoolProp<FlipFlopBase>("UseRS"         , tr("Use Set/Reset Pins"),"", this, &FlipFlopBase::pinsRS,    &FlipFlopBase::usePinsRS   ),
+new BoolProp<FlipFlopBase>("Reset_Inverted", tr("Set/Reset Inverted"),"", this, &FlipFlopBase::srInv,     &FlipFlopBase::setSrInv    ),
+new BoolProp<FlipFlopBase>("Clock_Inverted", tr("Clock Inverted")    ,"", this, &FlipFlopBase::clockInv,  &FlipFlopBase::setClockInv ),
+new StrProp <FlipFlopBase>("Trigger"       , tr("Trigger Type")      ,"", this, &FlipFlopBase::triggerStr,&FlipFlopBase::setTriggerStr,0,"enum" ),
+    },groupNoCopy} );
+    addPropGroup( { tr("Electric"), IoComponent::inputProps()+IoComponent::outputProps(),0 } );
+    addPropGroup( { tr("Edges")   , IoComponent::edgeProps(),0 } );
 }
 FlipFlopBase::~FlipFlopBase(){}
 

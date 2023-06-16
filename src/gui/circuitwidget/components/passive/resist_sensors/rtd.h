@@ -28,7 +28,7 @@ class MAINMODULE_EXPORT RTD : public ThermistorBase
 
     virtual void updateStep() override;
 
-    virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
+    virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
 
  private:
     double sensorFunction ( double temp );

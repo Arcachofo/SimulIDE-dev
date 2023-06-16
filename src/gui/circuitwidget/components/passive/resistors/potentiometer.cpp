@@ -64,8 +64,8 @@ Potentiometer::Potentiometer( QObject* parent, QString type, QString id )
     addPropGroup( { tr("Main"), {
 new DoubProp<Potentiometer>( "Resistance", tr("Resistance")   ,"Ω", this, &Potentiometer::getRes, &Potentiometer::setRes ),
 new DoubProp<Potentiometer>( "Value_Ohm" , tr("Current Value"),"Ω", this, &Potentiometer::getVal, &Potentiometer::setVal ),
-    } } );
-    addPropGroup( { tr("Dial"), Dialed::dialProps() } );
+    },0 } );
+    addPropGroup( { tr("Dial"), Dialed::dialProps(), groupNoCopy } );
 
     m_res1 = 0;
     setShowProp("Resistance");

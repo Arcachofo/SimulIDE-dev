@@ -62,14 +62,14 @@ I2CRam::I2CRam( QObject* parent, QString type, QString id )
     Simulator::self()->addToUpdateList( this );
 
     addPropGroup( { tr("Main"), {
-new IntProp <I2CRam>( "Size_bytes"  , tr("Size")         ,"_Bytes", this, &I2CRam::rSize,      &I2CRam::setRSize, "uint" ),
-new IntProp <I2CRam>( "Control_Code", tr("Control_Code") ,""      , this, &I2CRam::cCode,      &I2CRam::setCcode, "uint" ),
-new DoubProp<I2CRam>( "Frequency"   , tr("I2C Frequency"),"_KHz"  , this, &I2CRam::freqKHz,    &I2CRam::setFreqKHz ),
-new BoolProp<I2CRam>( "Persistent"  , tr("Persistent")   ,""      , this, &I2CRam::persistent, &I2CRam::setPersistent ),
-    }} );
+new IntProp <I2CRam>("Size_bytes"  , tr("Size")         ,"_Bytes", this, &I2CRam::rSize,      &I2CRam::setRSize,0,"uint" ),
+new IntProp <I2CRam>("Control_Code", tr("Control_Code") ,""      , this, &I2CRam::cCode,      &I2CRam::setCcode,0,"uint" ),
+new DoubProp<I2CRam>("Frequency"   , tr("I2C Frequency"),"_KHz"  , this, &I2CRam::freqKHz,    &I2CRam::setFreqKHz ),
+new BoolProp<I2CRam>("Persistent"  , tr("Persistent")   ,""      , this, &I2CRam::persistent, &I2CRam::setPersistent ),
+    }, groupNoCopy} );
     addPropGroup( {"Hidden", {
-new StringProp<I2CRam>( "Mem", "","", this, &I2CRam::getMem, &I2CRam::setMem )
-    }} );
+new StrProp<I2CRam>("Mem","","", this, &I2CRam::getMem, &I2CRam::setMem )
+    }, groupHidden} );
 }
 I2CRam::~I2CRam(){}
 
@@ -170,18 +170,6 @@ void I2CRam::setRSize( int size )
     if( m_memTable ) m_memTable->setData( &m_ram );
 }
 
-void I2CRam::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
-{
-    if( !acceptedMouseButtons() ) event->ignore();
-    else
-    {
-        event->accept();
-        QMenu* menu = new QMenu();
-        contextMenu( event, menu );
-        Component::contextMenu( event, menu );
-        menu->deleteLater();
-}   }
-
 void I2CRam::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
 {
     QAction* loadAction = menu->addAction( QIcon(":/load.svg"),tr("Load data") );
@@ -194,12 +182,13 @@ void I2CRam::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
 
     QAction* showEepAction = menu->addAction(QIcon(":/save.png"), tr("Show Memory Table") );
     connect( showEepAction, &QAction::triggered,
-                      this, &I2CRam::showTable, Qt::UniqueConnection );
+                      this, &I2CRam::slotShowTable, Qt::UniqueConnection );
 
     menu->addSeparator();
+    Component::contextMenu( event, menu );
 }
 
-void I2CRam::showTable()
+void I2CRam::slotShowTable()
 {
     MemData::showTable( m_size, 1 );
     if( m_persistent ) m_memTable->setWindowTitle( "I2C ROM: "+m_idLabel->toPlainText());

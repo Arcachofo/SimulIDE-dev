@@ -75,19 +75,19 @@ WaveGen::WaveGen( QObject* parent, QString type, QString id )
 
     remPropGroup( tr("Main") );
     addPropGroup( { tr("Main"), {
-new StringProp<WaveGen>( "Wave_Type", tr("Wave Type"),""     , this, &WaveGen::waveType, &WaveGen::setWaveType, "enum" ),
-new DoubProp <WaveGen>( "Freq"     , tr("Frequency"),"Hz"    , this, &WaveGen::freq,     &WaveGen::setFreq ),
-new IntProp  <WaveGen>( "Steps"    , tr("Quality")  ,"_Steps", this, &WaveGen::steps,    &WaveGen::setSteps ),
-new DoubProp <WaveGen>( "Duty"     , tr("Duty")     ,"_\%"   , this, &WaveGen::duty,     &WaveGen::setDuty ),
-new StringProp<WaveGen>( "File"    , tr("File"),""           , this, &WaveGen::fileName, &WaveGen::setFile ),
-new BoolProp <WaveGen>( "Always_On", tr("Always On"),""      , this, &WaveGen::alwaysOn, &WaveGen::setAlwaysOn )
-    }} );
+new StrProp <WaveGen>("Wave_Type", tr("Wave Type"),""      , this, &WaveGen::waveType, &WaveGen::setWaveType,0,"enum" ),
+new DoubProp<WaveGen>("Freq"     , tr("Frequency"),"Hz"    , this, &WaveGen::freq,     &WaveGen::setFreq ),
+new IntProp <WaveGen>("Steps"    , tr("Quality")  ,"_Steps", this, &WaveGen::steps,    &WaveGen::setSteps ),
+new DoubProp<WaveGen>("Duty"     , tr("Duty")     ,"_\%"   , this, &WaveGen::duty,     &WaveGen::setDuty ),
+new StrProp <WaveGen>("File"     , tr("File"),""           , this, &WaveGen::fileName, &WaveGen::setFile ),
+new BoolProp<WaveGen>("Always_On", tr("Always On"),""      , this, &WaveGen::alwaysOn, &WaveGen::setAlwaysOn )
+    },0} );
     addPropGroup( { tr("Electric"), {
-new BoolProp <WaveGen>( "Bipolar"  , tr("Bipolar")       ,"" , this, &WaveGen::bipolar,   &WaveGen::setBipolar ),
-new BoolProp <WaveGen>( "Floating" , tr("Floating")      ,"" , this, &WaveGen::floating,  &WaveGen::setFloating ),
-new DoubProp<WaveGen>( "Semi_Ampli", tr("Semi Amplitude"),"V", this, &WaveGen::semiAmpli, &WaveGen::setSemiAmpli ),
-new DoubProp<WaveGen>( "Mid_Volt"  , tr("Middle Voltage"),"V", this, &WaveGen::midVolt,   &WaveGen::setMidVolt )
-    }} );
+new BoolProp<WaveGen>("Bipolar"   , tr("Bipolar")       ,"" , this, &WaveGen::bipolar,   &WaveGen::setBipolar, propNoCopy ),
+new BoolProp<WaveGen>("Floating"  , tr("Floating")      ,"" , this, &WaveGen::floating,  &WaveGen::setFloating, propNoCopy ),
+new DoubProp<WaveGen>("Semi_Ampli", tr("Semi Amplitude"),"V", this, &WaveGen::semiAmpli, &WaveGen::setSemiAmpli ),
+new DoubProp<WaveGen>("Mid_Volt"  , tr("Middle Voltage"),"V", this, &WaveGen::midVolt,   &WaveGen::setMidVolt )
+    },0} );
 
     setWaveType( "Sine" );
 }

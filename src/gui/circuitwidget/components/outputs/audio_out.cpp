@@ -94,7 +94,7 @@ AudioOut::AudioOut( QObject* parent, QString type, QString id )
     addPropGroup( { tr("Main"), {
 new BoolProp<AudioOut>( "Buzzer"   , tr("Buzzer")   ,"" , this, &AudioOut::buzzer, &AudioOut::setBuzzer ),
 new DoubProp<AudioOut>( "Impedance", tr("Impedance"),"Ω", this, &AudioOut::res,    &AudioOut::setResSafe )
-    }} );
+    },0} );
 }
 AudioOut::~AudioOut()
 {

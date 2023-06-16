@@ -16,8 +16,8 @@ class MAINMODULE_EXPORT ADC : public LogicComponent
         ADC( QObject* parent, QString type, QString id );
         ~ADC();
 
-        static Component* construct( QObject* parent, QString type, QString id );
-        static LibraryItem *libraryItem();
+ static Component*   construct( QObject* parent, QString type, QString id );
+ static LibraryItem* libraryItem();
 
         virtual void stamp() override;
         virtual void voltChanged() override;
@@ -26,7 +26,7 @@ class MAINMODULE_EXPORT ADC : public LogicComponent
         double maxVolt() { return m_maxVolt; }
         void setMaxVolt( double v ) { m_maxVolt = v; }
 
-        void setNumOuts( int pins ) ;
+        void setNumOutputs( int pins );
         
     protected:
         double m_maxVolt;

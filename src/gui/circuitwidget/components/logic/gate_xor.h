@@ -21,7 +21,7 @@ class MAINMODULE_EXPORT XorGate : public Gate
         static LibraryItem *libraryItem();
 
         virtual QPainterPath shape() const override;
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
 
     protected:
         virtual bool calcOutput( int inputs ) override;

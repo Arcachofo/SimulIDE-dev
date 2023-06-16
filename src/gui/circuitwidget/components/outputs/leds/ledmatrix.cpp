@@ -46,16 +46,16 @@ LedMatrix::LedMatrix( QObject* parent, QString type, QString id )
     createMatrix();
 
     addPropGroup( { tr("Main"), {
-new IntProp   <LedMatrix>( "Rows"         , tr("Rows")     ,"_Leds", this, &LedMatrix::rows,     &LedMatrix::setRows, "uint" ),
-new IntProp   <LedMatrix>( "Cols"         , tr("Columns")  ,"_Leds", this, &LedMatrix::cols,     &LedMatrix::setCols, "uint" ),
-new StringProp<LedMatrix>( "Color"        , tr("Color")        ,"" , this, &LedMatrix::colorStr, &LedMatrix::setColorStr, "enum" ),
-new BoolProp  <LedMatrix>( "Vertical_Pins", tr("Vertical Pins"),"" , this, &LedMatrix::verticalPins, &LedMatrix::setVerticalPins ),
-    }} );
+new IntProp <LedMatrix>("Rows"         , tr("Rows")     ,"_Leds", this, &LedMatrix::rows,     &LedMatrix::setRows,0,"uint" ),
+new IntProp <LedMatrix>("Cols"         , tr("Columns")  ,"_Leds", this, &LedMatrix::cols,     &LedMatrix::setCols,0,"uint" ),
+new StrProp <LedMatrix>("Color"        , tr("Color")        ,"" , this, &LedMatrix::colorStr, &LedMatrix::setColorStr,0,"enum" ),
+new BoolProp<LedMatrix>("Vertical_Pins", tr("Vertical Pins"),"" , this, &LedMatrix::verticalPins, &LedMatrix::setVerticalPins ),
+    }, groupNoCopy} );
     addPropGroup( { tr("Electric"), {
-new DoubProp<LedMatrix>( "Threshold" , tr("Forward Voltage"),"V", this, &LedMatrix::threshold,  &LedMatrix::setThreshold ),
-new DoubProp<LedMatrix>( "MaxCurrent", tr("Max Current")    ,"A", this, &LedMatrix::maxCurrent, &LedMatrix::setMaxCurrent ),
-new DoubProp<LedMatrix>( "Resistance", tr("Resistance")     ,"Ω", this, &LedMatrix::res,        &LedMatrix::setRes ),
-    }} );
+new DoubProp<LedMatrix>("Threshold" , tr("Forward Voltage"),"V", this, &LedMatrix::threshold,  &LedMatrix::setThreshold ),
+new DoubProp<LedMatrix>("MaxCurrent", tr("Max Current")    ,"A", this, &LedMatrix::maxCurrent, &LedMatrix::setMaxCurrent ),
+new DoubProp<LedMatrix>("Resistance", tr("Resistance")     ,"Ω", this, &LedMatrix::res,        &LedMatrix::setRes ),
+    }, groupNoCopy} );
 }
 LedMatrix::~LedMatrix(){}
 

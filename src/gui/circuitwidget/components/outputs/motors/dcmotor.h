@@ -17,8 +17,8 @@ class MAINMODULE_EXPORT DcMotor : public Component, public eResistor
         DcMotor( QObject* parent, QString type, QString id );
         ~DcMotor();
 
-        static Component* construct( QObject* parent, QString type, QString id );
-        static LibraryItem* libraryItem();
+ static Component* construct( QObject* parent, QString type, QString id );
+ static LibraryItem* libraryItem();
 
         virtual void initialize() override;
         virtual void stamp() override;
@@ -31,7 +31,7 @@ class MAINMODULE_EXPORT DcMotor : public Component, public eResistor
         double volt() { return m_voltNom; }
         void setVolt( double v ) { m_voltNom = v; }
         
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
 
     protected:
         void updatePos();

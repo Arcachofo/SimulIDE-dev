@@ -77,17 +77,31 @@ Ssd1306::Ssd1306( QObject* parent, QString type, QString id )
     setLabelPos(-32,-60, 0);
     setShowId( true );
     
-    initialize();
+    Ssd1306::initialize();
 
     addPropGroup( { tr("Main"), {
-new StringProp<Ssd1306>( "Color"    ,tr("Color")        ,""           ,this,&Ssd1306::colorStr,&Ssd1306::setColorStr, "enum" ),
-new IntProp   <Ssd1306>( "Width"    ,tr("Width")        ,tr("_Pixels"),this,&Ssd1306::width,   &Ssd1306::setWidth,"uint" ),
-new IntProp   <Ssd1306>( "Height"   ,tr("Height")       ,tr("_Pixels"),this,&Ssd1306::height,  &Ssd1306::setHeight,"uint" ),
-new IntProp   <Ssd1306>( "Control_Code",tr("I2C Address")  ,""        ,this,&Ssd1306::cCode,   &Ssd1306::setCcode,"uint" ),
-new DoubProp  <Ssd1306>( "Frequency",tr("I2C Frequency"),"_KHz"       ,this,&Ssd1306::freqKHz, &Ssd1306::setFreqKHz ),
-    }} );
+new StrProp <Ssd1306>("Color"       ,tr("Color")        ,""           ,this,&Ssd1306::colorStr,&Ssd1306::setColorStr,0,"enum" ),
+new IntProp <Ssd1306>("Width"       ,tr("Width")        ,tr("_Pixels"),this,&Ssd1306::width,   &Ssd1306::setWidth,0,"uint" ),
+new IntProp <Ssd1306>("Height"      ,tr("Height")       ,tr("_Pixels"),this,&Ssd1306::height,  &Ssd1306::setHeight,0,"uint" ),
+new IntProp <Ssd1306>("Control_Code",tr("I2C Address")  ,""           ,this,&Ssd1306::cCode,   &Ssd1306::setCcode,0,"uint" ),
+new DoubProp<Ssd1306>("Frequency"   ,tr("I2C Frequency"),"_KHz"       ,this,&Ssd1306::freqKHz, &Ssd1306::setFreqKHz ),
+    }, groupNoCopy} );
 }
 Ssd1306::~Ssd1306(){}
+
+void Ssd1306::initialize()
+{
+    TwiModule::initialize();
+
+    m_continue = false;
+    m_command = false;
+    m_data = false;
+    m_addrMode = HORI_ADDR_MODE;
+
+    clearDDRAM();
+    reset() ;
+    Ssd1306::updateStep();
+}
 
 void Ssd1306::stamp()
 {
@@ -169,20 +183,6 @@ void Ssd1306::reset()
     m_scrollV = false;
 
     clearLcd();
-}
-
-void Ssd1306::initialize()
-{
-    TwiModule::initialize();
-
-    m_continue = false;
-    m_command = false;
-    m_data = false;
-    m_addrMode = HORI_ADDR_MODE;
-
-    clearDDRAM();
-    reset() ;
-    updateStep();
 }
 
 void Ssd1306::I2Cstop()

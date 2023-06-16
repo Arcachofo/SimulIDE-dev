@@ -71,7 +71,7 @@ Ili9341::Ili9341( QObject* parent, QString type, QString id )
     setLabelPos(-32,-180, 0);
     setShowId( true );
     
-    initialize();
+    Ili9341::initialize();
 }
 
 Ili9341::~Ili9341(){}
@@ -87,7 +87,26 @@ void Ili9341::initialize()
 {
     clearDDRAM();
     reset();
-    updateStep();
+    Ili9341::updateStep();
+}
+
+void Ili9341::updateStep()
+{
+    if( !m_dispOn ) m_pdisplayImg->fill(0);               // Display Off
+    else{
+        for( int row=0; row<=319; row++ ){
+            for( int col=0; col<=239; col++ )
+            {
+                unsigned int pixel;
+                //if( m_dispFull ) pixel = 0xFFFF;        // Display fully On
+                //else
+                    pixel = m_aDispRam[col][row];
+
+                //if( m_dispInv ) abyte = ~abyte;         // Display Inverted
+
+                m_pdisplayImg->setPixel(col,row, QColor(pixel).rgb() );
+    }   }   }
+    update();
 }
 
 void Ili9341::voltChanged()
@@ -405,25 +424,6 @@ void Ili9341::remove()
 {
     delete m_pdisplayImg;
     Component::remove();
-}
-
-void Ili9341::updateStep()
-{
-    if( !m_dispOn ) m_pdisplayImg->fill(0);               // Display Off
-    else{
-        for( int row=0; row<=319; row++ ){
-            for( int col=0; col<=239; col++ )
-            {
-                unsigned int pixel;
-                //if( m_dispFull ) pixel = 0xFFFF;        // Display fully On
-                //else
-                    pixel = m_aDispRam[col][row];
-
-                //if( m_dispInv ) abyte = ~abyte;         // Display Inverted
-
-                m_pdisplayImg->setPixel(col,row, QColor(pixel).rgb() );
-    }   }   }
-    update();
 }
 
 void Ili9341::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )

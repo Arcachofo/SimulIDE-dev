@@ -49,8 +49,8 @@ class MAINMODULE_EXPORT TouchPad : public Component, public eElement
         double RyMax() { return m_RyMax; }
         void setRyMax( double max );
 
-        virtual QPainterPath shape() const;
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
+        virtual QPainterPath shape() const override;
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
 
     private:
         void updateSize();

@@ -48,7 +48,7 @@ class MAINMODULE_EXPORT LedBar : public Component
         virtual QStringList getEnumUids( QString ) override;
         virtual QStringList getEnumNames( QString ) override;
         
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem*o, QWidget* w);
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem*o, QWidget* w) override;
 
     private:
         std::vector<LedSmd*> m_led;

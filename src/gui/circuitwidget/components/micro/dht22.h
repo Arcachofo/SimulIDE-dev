@@ -6,7 +6,6 @@
 #ifndef DHT22_H
 #define DHT22_H
 
-//#include "e-logic_device.h"
 #include "e-element.h"
 #include "component.h"
 
@@ -33,11 +32,11 @@ class MAINMODULE_EXPORT Dht22 : public Component , public eElement
         double humidInc() { return m_humiInc; }
         void setHumidInc( double inc ) { m_humiInc = trim( inc ); }
 
-        virtual void stamp();
+        virtual void stamp() override;
         virtual void voltChanged() override;
         virtual void runEvent() override;
 
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
 
     public slots:
         void onbuttonclicked();

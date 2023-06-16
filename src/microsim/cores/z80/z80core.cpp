@@ -95,10 +95,10 @@ Z80Core::Z80Core( eMcu* mcu )
 mcu->component()->addPropGroup( { QObject::tr("Cpu"), {
 //new BoolProp  <Z80Core>( "Ext_Clock", tr("External clock source"), "", this, &Z80Core::extClkEnabled, &Z80Core::enableExtClk ),
 //new DoubProp  <Z80Core>( "Frequency", tr("Frequency"), "MHz" , this, &Z80Core::freq, &Z80Core::setFreq ),
-new StringProp<Z80Core>( "Producer"        , QObject::tr("Producer")             , "", this, &Z80Core::producer , &Z80Core::setProducer, "enum" ),
-new BoolProp  <Z80Core>( "CMOS"            , QObject::tr("CMOS")                 , "", this, &Z80Core::cmos     , &Z80Core::setCmos ),
-new BoolProp  <Z80Core>( "Single cycle I/O", QObject::tr("Single cycle I/O")     , "", this, &Z80Core::ioWait   , &Z80Core::setIoWait ),
-new BoolProp  <Z80Core>( "Int_Vector"      , QObject::tr("Interrupt Vector 0xFF"), "", this, &Z80Core::intVector, &Z80Core::setIntVector ),
+new StrProp <Z80Core>( "Producer"        , QObject::tr("Producer")             , "", this, &Z80Core::producer , &Z80Core::setProducer,0,"enum" ),
+new BoolProp<Z80Core>( "CMOS"            , QObject::tr("CMOS")                 , "", this, &Z80Core::cmos     , &Z80Core::setCmos ),
+new BoolProp<Z80Core>( "Single cycle I/O", QObject::tr("Single cycle I/O")     , "", this, &Z80Core::ioWait   , &Z80Core::setIoWait ),
+new BoolProp<Z80Core>( "Int_Vector"      , QObject::tr("Interrupt Vector 0xFF"), "", this, &Z80Core::intVector, &Z80Core::setIntVector ),
     }} );
 }
 

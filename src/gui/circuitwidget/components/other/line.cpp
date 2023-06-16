@@ -38,7 +38,7 @@ QPainterPath Line::shape() const
     return path;
 }
 
-void Line::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget )
+void Line::paint( QPainter* p, const QStyleOptionGraphicsItem*, QWidget* )
 {
     QPen pen( m_color, m_border, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
 

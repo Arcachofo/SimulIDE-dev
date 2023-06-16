@@ -123,10 +123,6 @@ ScriptCpu::ScriptCpu( eMcu* mcu )
                                    , asMETHODPR( ScriptCpu, INTERRUPT, (uint32_t), void)
                                    , asCALL_THISCALL );
 
-    m_aEngine->RegisterObjectMethod("ScriptCpu", "void setLinkable()"
-                                   , asMETHODPR( ScriptCpu, setLinkable, (), void)
-                                   , asCALL_THISCALL );
-
     m_aEngine->RegisterObjectMethod("ScriptCpu", "void setLinkedValue( int index, int v, int i )"
                                    , asMETHODPR( ScriptCpu, setLinkedValue, (int,int,int), void)
                                    , asCALL_THISCALL );
@@ -413,8 +409,6 @@ McuPin* ScriptCpu::getMcuPin( const string pinName )
     if( !pin ) qDebug() << "Error: ScriptCpu::getMcuPin Pin"<< name << "Doesn't exist";
     return pin;
 }
-
-void ScriptCpu::setLinkable() { m_mcuComp->setScriptLinkable( this ); }
 
 void ScriptCpu::setLinkedValue( int index, int v, int i ) { m_mcuComp->setLinkedVal( index, v, i ); }
 

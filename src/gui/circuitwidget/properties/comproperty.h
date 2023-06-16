@@ -8,26 +8,28 @@
 
 #include <QString>
 
-class PropVal;
-class PropDialog;
-class Component;
+enum propFlags{
+    propHidden = 1,
+    propNoCopy = 1<<1,
+};
 
 class MAINMODULE_EXPORT ComProperty
 {
     public:
-        ComProperty( QString name, QString caption, QString unit, QString type );
+        ComProperty( QString name, QString caption, QString unit, QString type, uint8_t flags );
         virtual ~ComProperty(){;}
 
-        QString name() { return m_name; }
-        QString capt() { return m_capt; }
-        QString type() { return m_type; }
-        QString unit() { return m_unit; }
+        QString name();
+        QString capt();
+        QString type();
+        QString unit();
+        uint8_t flags();
 
-        virtual void    setValStr( QString val ){;}
-        virtual QString getValStr(){return "";}
-        virtual double  getValue(){return 0;}
+        virtual void    setValStr( QString );
+        virtual QString getValStr();
+        virtual double  getValue();
 
-        virtual QString toString(){return getValStr();}
+        virtual QString toString();
 
         //void setWidget( PropVal* w );
 

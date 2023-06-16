@@ -32,7 +32,7 @@ class MAINMODULE_EXPORT Relay : public MechContact
         virtual void stamp() override;
         virtual void voltChanged() override;
 
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
 
     protected:
         Inductor* m_inductor;

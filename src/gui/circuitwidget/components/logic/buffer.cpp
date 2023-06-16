@@ -30,21 +30,21 @@ Buffer::Buffer( QObject* parent, QString type, QString id )
     m_area = QRect(-8, -8, 16, 16 );
     
     setOePin( new IoPin( 90, QPoint( 0,-12 ), m_id+"-Pin_outEnable", 0, this, input ) );
-    setTristate( false );
+    Buffer::setTristate( false );
 
     addPropGroup( { tr("Main"), {
 
-    }} );
+    },0} );
     addPropGroup( { tr("Electric"), IoComponent::inputProps()
 +QList<ComProperty*>({
-new BoolProp<Buffer>( "Invert_Inputs", tr("Invert Inputs"),"", this, &Buffer::invertInps, &Buffer::setInvertInps )
+new BoolProp<Buffer>("Invert_Inputs", tr("Invert Inputs"),"", this, &Buffer::invertInps, &Buffer::setInvertInps, propNoCopy )
                     })
                     +IoComponent::outputProps()+IoComponent::outputType()
 +QList<ComProperty*>({
-new BoolProp<Buffer>( "Tristate", tr("Tristate"),"", this, &Buffer::tristate, &Buffer::setTristate )
+new BoolProp<Buffer>("Tristate", tr("Tristate"),"", this, &Buffer::tristate, &Buffer::setTristate, propNoCopy )
                     })
-    } );
-    addPropGroup( { tr("Edges")   , Gate::edgeProps() } );
+    ,0} );
+    addPropGroup( { tr("Edges") , Gate::edgeProps(),0 } );
 
     removeProperty("pd_n");
 }

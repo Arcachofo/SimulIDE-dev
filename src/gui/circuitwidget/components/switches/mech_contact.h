@@ -31,7 +31,7 @@ class MAINMODULE_EXPORT MechContact : public Component, public eElement
         void  SetupSwitches( int poles, int throws );
         void  SetupButton();
 
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
 
     protected:
         virtual void setSwitch( bool on );

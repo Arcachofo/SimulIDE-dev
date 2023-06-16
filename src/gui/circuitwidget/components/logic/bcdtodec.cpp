@@ -39,12 +39,12 @@ BcdToDec::BcdToDec( QObject* parent, QString type, QString id )
     createOePin( "IU01OE ", id+"-in4"); // Output Enable
 
     addPropGroup( { tr("Main"), {
-new BoolProp<BcdToDec>( "_16_Bits", tr("16 Bits")       ,"", this, &BcdToDec::is16Bits,   &BcdToDec::set_16bits )
-    }} );
+new BoolProp<BcdToDec>("_16_Bits", tr("16 Bits"),"", this, &BcdToDec::is16Bits, &BcdToDec::set_16bits )
+    },groupNoCopy} );
     addPropGroup( { tr("Electric"), IoComponent::inputProps()
-+QList<ComProperty*>({new BoolProp<BcdToDec>( "Invert_Inputs", tr("Invert Inputs"),"", this, &BcdToDec::invertInps, &BcdToDec::setInvertInps )})
-                    +IoComponent::outputProps()+IoComponent::outputType() } );
-    addPropGroup( { tr("Edges"), IoComponent::edgeProps() } );
++QList<ComProperty*>({new BoolProp<BcdToDec>( "Invert_Inputs", tr("Invert Inputs"),"", this, &BcdToDec::invertInps, &BcdToDec::setInvertInps, propNoCopy )})
+                    +IoComponent::outputProps()+IoComponent::outputType(),0 } );
+    addPropGroup( { tr("Edges"), IoComponent::edgeProps(),0 } );
 }
 BcdToDec::~BcdToDec(){}
 

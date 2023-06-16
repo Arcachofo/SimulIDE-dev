@@ -16,15 +16,15 @@ class MAINMODULE_EXPORT Switch : public SwitchBase
         Switch( QObject* parent, QString type, QString id );
         ~Switch();
 
-        static Component* construct( QObject* parent, QString type, QString id );
-        static LibraryItem* libraryItem();
+ static Component* construct( QObject* parent, QString type, QString id );
+ static LibraryItem* libraryItem();
 
         virtual void stamp() override;
 
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
 
     public slots:
-        virtual void keyEvent( QString key, bool pressed );
+        virtual void keyEvent( QString key, bool pressed ) override;
 };
 
 #endif

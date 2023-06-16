@@ -34,7 +34,7 @@ class MAINMODULE_EXPORT DS1621 : public IoComponent, public TwiModule
         virtual void writeByte() override;
         //virtual void startWrite() override;
 
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
 
     public slots:
         void upbuttonclicked();

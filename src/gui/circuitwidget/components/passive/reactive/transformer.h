@@ -49,7 +49,7 @@ class MAINMODULE_EXPORT Transformer : public Component, public eElement
         double coupCoeff() { return m_coupCoeff; }
         void setCoupCoeff( double c );
 
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
 
     private:
         void setupInducts( winding_t* w );

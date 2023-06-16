@@ -23,7 +23,7 @@ class MAINMODULE_EXPORT Tunnel : public Component
  static LibraryItem* libraryItem();
         virtual bool setPropStr( QString prop, QString val ) override;
 
-        QRectF boundingRect() const;
+        QRectF boundingRect() const override;
 
         QString name() { return m_name; }
         void setName( QString name );
@@ -49,16 +49,16 @@ class MAINMODULE_EXPORT Tunnel : public Component
         Pin* getPin() { return m_pin[0]; }
  static eNode* getEnode( QString n );
 
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
 
     public slots:
-        virtual void contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu );
         void showGroup();
         void hideGroup() { showHide( false ); }
         void renameGroup();
 
     protected:
         void mousePressEvent( QGraphicsSceneMouseEvent* event ) override;
+        virtual void contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu ) override;
 
         void showHide( bool show );
         void setGroupName( QString name, bool single );

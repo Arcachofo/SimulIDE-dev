@@ -39,25 +39,14 @@ Image::Image( QObject* parent, QString type, QString id )
 
     m_movie = NULL;
 
-    addPropGroup( { "Hidden", {
-new StringProp<Image>( "Image_File", tr("Image File"),"", this, &Image::background, &Image::setBackground )
-    }} );
+    addPropGroup( {"Hidden", {
+new StrProp<Image>("Image_File", tr("Image File"),"", this, &Image::background, &Image::setBackground )
+    }, groupNoCopy | groupHidden} );
 }
 Image::~Image()
 {
     if( m_movie ) delete m_movie;
 }
-
-void Image::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
-{
-    if( !acceptedMouseButtons() ) event->ignore();
-    else{
-        event->accept();
-        QMenu* menu = new QMenu();
-        contextMenu( event, menu );
-        Component::contextMenu( event, menu );
-        menu->deleteLater();
-}   }
 
 void Image::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
 {
@@ -66,6 +55,7 @@ void Image::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
                    this, &Image::slotLoad, Qt::UniqueConnection );
 
     menu->addSeparator();
+    Component::contextMenu( event, menu );
 }
 
 void Image::slotLoad()
@@ -126,7 +116,7 @@ QString Image::background()
     return circuitDir.relativeFilePath( m_background );
 }
 
-void Image::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
+void Image::paint( QPainter* p, const QStyleOptionGraphicsItem*, QWidget* )
 {
     QPen pen(Qt::black, m_border, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
 

@@ -18,8 +18,8 @@ class MAINMODULE_EXPORT SevenSegment : public Component, public eElement
         SevenSegment( QObject* parent, QString type, QString id );
         ~SevenSegment();
 
-        static Component* construct( QObject* parent, QString type, QString id );
-        static LibraryItem *libraryItem();
+ static Component* construct( QObject* parent, QString type, QString id );
+ static LibraryItem *libraryItem();
 
         QString colorStr();
         void setColorStr( QString color );
@@ -49,7 +49,7 @@ class MAINMODULE_EXPORT SevenSegment : public Component, public eElement
 
         virtual void setHidden( bool hid, bool hidArea=false, bool hidLabel=false ) override;
 
-        virtual void paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget );
+        virtual void paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget ) override;
 
     private:
         void createDisplay( int n );

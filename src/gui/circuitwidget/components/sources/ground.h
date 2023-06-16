@@ -16,8 +16,8 @@ class MAINMODULE_EXPORT Ground : public Component
         Ground( QObject* parent, QString type, QString id );
         ~Ground();
 
-        static Component* construct( QObject* parent, QString type, QString id );
-        static LibraryItem* libraryItem();
+ static Component* construct( QObject* parent, QString type, QString id );
+ static LibraryItem* libraryItem();
 
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
 };

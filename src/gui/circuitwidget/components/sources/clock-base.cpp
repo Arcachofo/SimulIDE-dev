@@ -20,13 +20,13 @@ ClockBase::ClockBase( QObject* parent, QString type, QString id )
     m_alwaysOn  = false;
 
     m_stepsPC = 0;
-    setFreq( 1000 );
+    ClockBase::setFreq( 1000 );
 
     Simulator::self()->addToUpdateList( this );
 
     addPropGroup( { "Hidden1", {
 new BoolProp<ClockBase>( "Running", "","", this, &ClockBase::running, &ClockBase::setRunning ),
-    }} );
+    }, groupHidden} );
 }
 ClockBase::~ClockBase(){}
 

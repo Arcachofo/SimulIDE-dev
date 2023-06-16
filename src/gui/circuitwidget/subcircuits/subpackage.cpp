@@ -73,13 +73,13 @@ SubPackage::SubPackage( QObject* parent, QString type, QString id )
     m_pkgeFile = "";
 
     addPropGroup( { tr("Main"), {
-new StringProp<SubPackage>( "SubcType"    ,tr("Type")        ,""      , this, &SubPackage::subcTypeStr,&SubPackage::setSubcTypeStr,"enum" ),
-new IntProp   <SubPackage>( "Width"       ,tr("Width")       ,"_Cells", this, &SubPackage::width,      &SubPackage::setWidth ,"uint" ),
-new IntProp   <SubPackage>( "Height"      ,tr("Height")      ,"_Cells", this, &SubPackage::height,     &SubPackage::setHeight,"uint"  ),
-new StringProp<SubPackage>( "Name"        ,tr("Name")        ,""      , this, &SubPackage::name,       &SubPackage::setName ),
-new StringProp<SubPackage>( "Package_File",tr("Package File"),""      , this, &SubPackage::package,    &SubPackage::setPackage),
-new StringProp<SubPackage>( "Background"  ,tr("Background")  ,""      , this, &SubPackage::background, &SubPackage::setBackground ),
-new BoolProp  <SubPackage>( "Logic_Symbol",tr("Logic Symbol"),""      , this, &SubPackage::logicSymbol,&SubPackage::setLogicSymbol ),
+new StrProp<SubPackage>( "SubcType"    ,tr("Type")  ,""      , this, &SubPackage::subcTypeStr,&SubPackage::setSubcTypeStr,0,"enum" ),
+new IntProp<SubPackage>( "Width"       ,tr("Width") ,"_Cells", this, &SubPackage::width,      &SubPackage::setWidth ,0,"uint" ),
+new IntProp<SubPackage>( "Height"      ,tr("Height"),"_Cells", this, &SubPackage::height,     &SubPackage::setHeight,0,"uint"  ),
+new StrProp<SubPackage>( "Name"        ,tr("Name")        ,"", this, &SubPackage::name,       &SubPackage::setName ),
+new StrProp<SubPackage>( "Package_File",tr("Package File"),"", this, &SubPackage::package,    &SubPackage::setPackage),
+new StrProp<SubPackage>( "Background"  ,tr("Background")  ,"", this, &SubPackage::background, &SubPackage::setBackground ),
+new BoolProp<SubPackage>("Logic_Symbol",tr("Logic Symbol"),"", this, &SubPackage::logicSymbol,&SubPackage::setLogicSymbol ),
     }} );
 }
 SubPackage::~SubPackage(){}
@@ -294,11 +294,11 @@ void SubPackage::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu
             menu->addAction( m_boardModeAction );
             connect( m_boardModeAction, &QAction::triggered,
                                   this, &SubPackage::boardModeSlot, Qt::UniqueConnection );
-
+        }
             QAction* mainCompAction = menu->addAction( QIcon(":/subcl.png"),tr("Select Main Component") );
             connect( mainCompAction, &QAction::triggered,
                                this, &SubPackage::mainComp, Qt::UniqueConnection );
-        }
+
         Component::contextMenu( event, menu );
     }
 }

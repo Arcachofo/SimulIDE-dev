@@ -85,19 +85,19 @@ LAnalizer::LAnalizer( QObject* parent, QString type, QString id )
     setTrigger( 9 ); // Trigger = None
 
     addPropGroup( { tr("Export"), {
-new IntProp <LAnalizer>( "TimeStep"  ,tr("Base Time Step") ,"_ps", this, &LAnalizer::timeStep,   &LAnalizer::setTimeStep, "uint" ),
-new BoolProp<LAnalizer>( "AutoExport",tr("Export at pause"),""   , this, &LAnalizer::autoExport, &LAnalizer::setAutoExport ),
-    }} );
+new IntProp <LAnalizer>("TimeStep"  ,tr("Base Time Step") ,"_ps", this, &LAnalizer::timeStep,   &LAnalizer::setTimeStep,0,"uint" ),
+new BoolProp<LAnalizer>("AutoExport",tr("Export at pause"),""   , this, &LAnalizer::autoExport, &LAnalizer::setAutoExport ),
+    },0} );
 
-    addProperty(  "Hidden", {
-new DoubProp  <LAnalizer>( "TresholdR","TresholdR","V", this, &LAnalizer::thresholdR, &LAnalizer::setThresholdR )
-    } );
-    addProperty(  "Hidden", {
-new StringProp<LAnalizer>( "Bus" ,"Bus" , "", this, &LAnalizer::busStr,  &LAnalizer::setBusStr )
-    } );
-    addProperty(  "Hidden", {
-new DoubProp<LAnalizer>( "TresholdF","TresholdF","V", this, &LAnalizer::thresholdF, &LAnalizer::setThresholdF )
-    } );
+    addProperty("Hidden",
+new DoubProp<LAnalizer>("TresholdR","TresholdR","V", this, &LAnalizer::thresholdR, &LAnalizer::setThresholdR )
+     );
+    addProperty("Hidden",
+new StrProp<LAnalizer>("Bus" ,"Bus" , "", this, &LAnalizer::busStr,  &LAnalizer::setBusStr )
+    );
+    addProperty("Hidden",
+new DoubProp<LAnalizer>("TresholdF","TresholdF","V", this, &LAnalizer::thresholdF, &LAnalizer::setThresholdF )
+    );
 }
 LAnalizer::~LAnalizer()
 {
@@ -262,7 +262,7 @@ void LAnalizer::moveTimePos( int64_t delta )
     m_laWidget->updateTimePosBox( m_timePos );
 }
 
-void LAnalizer::setVoltDiv( double vd )
+void LAnalizer::setVoltDiv( double )
 {
     m_voltDiv = 0.6/4; // For Logic values 0 : 1
     for( int i=0; i<8; i++ ) m_display->setVTick( i, m_voltDiv );

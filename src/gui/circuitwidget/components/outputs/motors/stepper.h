@@ -18,8 +18,8 @@ class MAINMODULE_EXPORT Stepper : public Component, public eElement
         Stepper( QObject* parent, QString type, QString id );
         ~Stepper();
 
-        static Component* construct( QObject* parent, QString type, QString id );
-        static LibraryItem* libraryItem();
+ static Component* construct( QObject* parent, QString type, QString id );
+ static LibraryItem* libraryItem();
 
         int steps() { return m_steps; }
         void setSteps( int steps ); //" 4, 8,16,32"
@@ -35,7 +35,7 @@ class MAINMODULE_EXPORT Stepper : public Component, public eElement
         virtual void updateStep() override;
         virtual void remove() override;
         
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
 
     protected:
         int m_steps;

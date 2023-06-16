@@ -18,8 +18,11 @@ class MAINMODULE_EXPORT LedRgb : public Component, public eElement
         LedRgb( QObject* parent, QString type, QString id );
         ~LedRgb();
 
-        static Component* construct( QObject* parent, QString type, QString id );
-        static LibraryItem* libraryItem();
+ static Component* construct( QObject* parent, QString type, QString id );
+ static LibraryItem* libraryItem();
+
+        virtual void stamp() override;
+        virtual void updateStep() override;
         
         double threshold_R() { return m_led[0]->threshold(); }
         void   setThreshold_R( double threshold );
@@ -45,16 +48,13 @@ class MAINMODULE_EXPORT LedRgb : public Component, public eElement
         bool isComCathode() { return m_commonCathode; }
         void setComCathode( bool ct );
 
-        virtual void stamp();
-
         virtual void setHidden( bool hid, bool hidArea=false, bool hidLabel=false ) override;
         
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
 
     private:
         void createMatrix();
         void deleteMatrix();
-        void updateStep();
 
         bool m_commonCathode = true;
 

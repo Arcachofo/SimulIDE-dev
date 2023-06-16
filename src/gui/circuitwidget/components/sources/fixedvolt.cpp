@@ -59,12 +59,13 @@ FixedVolt::FixedVolt( QObject* parent, QString type, QString id )
     connect( m_button, &CustomButton::clicked,
              this,     &FixedVolt::onbuttonclicked, Qt::UniqueConnection );
 
-    addPropGroup( { "Hidden", {
-new BoolProp<FixedVolt>( "Out", "","", this, &FixedVolt::out, &FixedVolt::setOut ),
-    }} );
     addPropGroup( { tr("Main"), {
 new DoubProp<FixedVolt>( "Voltage", tr("Voltage"),"V", this, &FixedVolt::volt, &FixedVolt::setVolt )
-    }} );
+    }, 0} );
+
+    addPropGroup( { "Hidden", {
+new BoolProp<FixedVolt>( "Out", "","", this, &FixedVolt::out, &FixedVolt::setOut ),
+    }, groupHidden} );
 }
 FixedVolt::~FixedVolt(){}
 

@@ -24,11 +24,11 @@ LogicSubc::LogicSubc( QObject* parent, QString type, QString id )
     m_timeHL = 4000;
 
     addPropGroup( { tr("Electric"), {
-    new ComProperty( "", tr("Inputs:"),"",""),
+    new ComProperty( "", tr("Inputs:"),"","",0),
     new DoubProp<LogicSubc>( "Input_High_V", tr("Low to High Threshold"),"V", this, &LogicSubc::inputHighV, &LogicSubc::setInputHighV ),
     new DoubProp<LogicSubc>( "Input_Low_V" , tr("High to Low Threshold"),"V", this, &LogicSubc::inputLowV,  &LogicSubc::setInputLowV ),
     new DoubProp<LogicSubc>( "Input_Imped" , tr("Input Impedance")      ,"Ω", this, &LogicSubc::inputImp,   &LogicSubc::setInputImp ),
-    new ComProperty( "", tr("Outputs:"),"",""),
+    new ComProperty( "", tr("Outputs:"),"","",0),
     new DoubProp<LogicSubc>( "Out_High_V", tr("Output High Voltage"),"V", this, &LogicSubc::outHighV, &LogicSubc::setOutHighV ),
     new DoubProp<LogicSubc>( "Out_Low_V" , tr("Output Low Voltage") ,"V", this, &LogicSubc::outLowV,  &LogicSubc::setOutLowV ),
     new DoubProp<LogicSubc>( "Out_Imped" , tr("Output Impedance")   ,"Ω", this, &LogicSubc::outImp,  &LogicSubc::setOutImp )

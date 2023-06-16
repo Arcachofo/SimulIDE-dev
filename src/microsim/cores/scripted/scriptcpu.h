@@ -63,7 +63,6 @@ class MAINMODULE_EXPORT ScriptCpu : public ScriptModule, public McuCpu
         McuPort* getMcuPort( const string portName );
         McuPin*  getMcuPin( const string pinName );
 
-        void setLinkable();                                           // Called from script
         void setLinkedValue( int index, int v, int i=0  );            // Called from script
         void setLinkedString( int index, const string str, int i=0 ); // Called from script
         void setLinkedVal( int v, int i=0 );                          // Called from C++

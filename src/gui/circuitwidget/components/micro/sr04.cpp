@@ -56,7 +56,7 @@ SR04::SR04( QObject* parent, QString type, QString id )
     m_echo->setOutHighV( 5 );
     m_pin[4] = m_echo;
     
-    initialize();
+    SR04::initialize();
 }
 SR04::~SR04(){}
 

@@ -79,7 +79,7 @@ Stepper::Stepper( QObject* parent, QString type, QString id )
 new BoolProp<Stepper>( "Bipolar"   , tr("Bipolar")           ,""      , this, &Stepper::bipolar, &Stepper::setBipolar ),
 new IntProp <Stepper>( "Steps"     , tr("Steps per Rotation"),tr("_Teeth"), this, &Stepper::steps,   &Stepper::setSteps ),
 new DoubProp<Stepper>( "Resistance", tr("Resistance")        ,"Ω"     , this, &Stepper::res,     &Stepper::setRes )
-    }} );
+    },0} );
 }
 Stepper::~Stepper(){}
 

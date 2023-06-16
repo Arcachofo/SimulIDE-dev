@@ -28,7 +28,7 @@ class MAINMODULE_EXPORT ConnBase : public Component, public eElement
         void createPins( int c );
         void deletePins( int d );
 
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
 
     protected:
         virtual void updatePixmap(){;}

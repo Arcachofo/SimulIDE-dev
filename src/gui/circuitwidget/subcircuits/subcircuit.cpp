@@ -133,7 +133,7 @@ Component* SubCircuit::construct( QObject* parent, QString type, QString id )
         if( dip && ls ) // If no both files exist, this prop. is not needed
         subcircuit->addPropGroup( { tr("Main"), {
         new BoolProp<SubCircuit>( "Logic_Symbol", tr("Logic Symbol"),"", subcircuit, &SubCircuit::logicSymbol, &SubCircuit::setLogicSymbol ),
-        }} );
+        },groupNoCopy} );
         Circuit::self()->m_createSubc = false;
     }
     if( m_error > 0 )
@@ -159,7 +159,7 @@ SubCircuit::SubCircuit( QObject* parent, QString type, QString id )
           : Chip( parent, type, id )
 {
     m_icColor = QColor( 20, 30, 60 );
-    m_mainComponent = NULL;
+    //m_mainComponent = NULL;
 }
 SubCircuit::~SubCircuit(){}
 
@@ -294,20 +294,25 @@ void SubCircuit::loadSubCircuit( QString fileName )
                     }
                     if( comp->isMainComp() )
                     {
-                        m_mainComponent = comp; // This component will add it's Context Menu
-                        /*if( m_getProps ) /// Does not work: Properties need to be copied
+                        m_mainComponents[newUid] = comp; // This component will add it's Context Menu and properties
+
+                        QList<propGroup> props = comp->properties();
+                        for( propGroup pg : props )
                         {
-                            QList<propGroup> props = comp->propeties();
-                            for( propGroup pg : props )
+                            if( pg.flags & groupNoCopy ) continue;
+
+                            propGroup npg;
+                            int len = label.lastIndexOf("-");
+                            npg.name = label.mid( 0, len )+" "+pg.name;
+                            npg.flags = pg.flags;
+
+                            for( ComProperty* p : pg.propList ) // Copy properties
                             {
-                                if( pg.name.startsWith("Hid") ) continue;
-                                if( pg.name.startsWith("Mai") ) continue;
-                                if( pg.name.startsWith("Comp") ) continue;
-                                if( pg.name.startsWith("Boar") ) continue;
-                                addPropGroup( pg );
+                                if( p->flags() & propNoCopy ) continue;
+                                npg.propList.append( p );
                             }
-                        }*/
-                        //qDebug() <<comp->itemType();
+                            addPropGroup( npg, false );
+                        }
                     }
                     m_compList.append( comp );
 
@@ -440,6 +445,12 @@ void SubCircuit::setLogicSymbol( bool ls )
     }
 }
 
+Component* SubCircuit::getMainComp( QString name )
+{
+    if( name.isEmpty() ) return m_mainComponents.value( m_mainComponents.keys().first() );
+    return m_mainComponents.value(name);
+}
+
 void SubCircuit::remove()
 {
     for( Component* comp : m_compList )
@@ -451,45 +462,52 @@ void SubCircuit::remove()
     Component::remove();
 }
 
-void SubCircuit::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
+void SubCircuit::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
 {
-    if( !acceptedMouseButtons() ) event->ignore();
-    else{
-        event->accept();
-        QMenu* menu = new QMenu();
-        Component* mainComp = m_mainComponent;
-        QString id = m_id;
+    event->accept();
 
-        if( mainComp )
-        {
-            menu->addSection( "                            " );
-            menu->addSection( mainComp->itemType()+" at "+id );
-            menu->addSection( "" );
-            mainComp->contextMenu( NULL, menu );
+    for( Component* mainComp : m_mainComponents.values() )
+    {
+        QString compType = mainComp->getUid();
+        int pos = compType.indexOf("_")+1;
+        int len = compType.lastIndexOf("-")-pos;
+        compType = compType.mid( pos, len );
 
-            menu->addSection( "                            " );
-            menu->addSection( id );
-            menu->addSection( "" );
-        }
-        Component::contextMenu( event, menu );
-        menu->deleteLater();
-}   }
+        QMenu* submenu = menu->addMenu( QIcon(":/subc.png"), compType );
+
+        mainComp->contextMenu( NULL, submenu );
+    }
+    menu->addSeparator();
+    Component::contextMenu( event, menu );
+}
 
 QString SubCircuit::toString()
 {
     QString item = CompBase::toString();
     QString end = " />\n";
-    /*if( m_subcType >= Shield )
+
+    if( !m_mainComponents.isEmpty() )
     {
-        QString cp = " circPos=\""+getPropStr( "circPos" )+"\"";
-        item.replace( end, cp+end );
-    }*/
-    if( !m_mainComponent ) return item;
+        item.remove( end );
+        item += ">";
 
-    item.remove( end );
-    item += ">";
-    item += m_mainComponent->toString().replace( "<item ", "<mainCompProps ");
-    item += "</item>\n";
+        for( QString uid : m_mainComponents.keys() )
+        {
+            Component* mainComponent = m_mainComponents.value( uid );
+            item += "\n<mainCompProps MainCompId=\""+uid+"\" ";
+            for( propGroup pg : mainComponent->properties() )
+            {
+                if( pg.flags & groupNoCopy ) continue;
 
+                for( ComProperty* prop : pg.propList )
+                {
+                    QString val = prop->toString();
+                    if( val.isEmpty() ) continue;
+                    item += prop->name() + "=\""+val+"\" ";
+            }   }
+            item += "/>\n";
+        }
+        item += "</item>\n";
+    }
     return item;
 }

@@ -195,23 +195,26 @@ void Mcu::setup( QString type )
     if( m_deviceType == typeMCU )
     {
     addPropGroup( { tr("Main"), {
-new DoubProp  <Mcu>("Frequency", tr("Frequency"),"MHz" , this, &Mcu::extFreq, &Mcu::setExtFreq ),
-new StringProp<Mcu>("Program"  , tr("Firmware")  ,""   , this, &Mcu::program, &Mcu::setProgram ),
-new BoolProp  <Mcu>("Auto_Load", tr("Reload hex at Simulation Start"),"", this, &Mcu::autoLoad, &Mcu::setAutoLoad ),
-new BoolProp  <Mcu>("saveEepr", tr("EEPROM persitent"),"", this, &Mcu::saveEepr, &Mcu::setSaveEepr ),
-new BoolProp  <Mcu>("Logic_Symbol", tr("Logic Symbol"),"", this, &Mcu::logicSymbol, &Mcu::setLogicSymbol )
-    }} );
+new DoubProp<Mcu>("Frequency", tr("Frequency")    ,"MHz", this, &Mcu::extFreq,    &Mcu::setExtFreq ),
+new StrProp <Mcu>("Program"  , tr("Firmware")        ,"", this, &Mcu::program,    &Mcu::setProgram ),
+new BoolProp<Mcu>("Auto_Load", tr("Reload hex at \
+                                   Simulation Start"),"", this, &Mcu::autoLoad,   &Mcu::setAutoLoad ),
+new BoolProp<Mcu>("saveEepr" , tr("EEPROM persitent"),"", this, &Mcu::saveEepr,   &Mcu::setSaveEepr ),
+new BoolProp<Mcu>("Logic_Symbol", tr("Logic Symbol") ,"", this, &Mcu::logicSymbol,&Mcu::setLogicSymbol, propNoCopy )
+    }, 0} );
+
     addPropGroup( { tr("Config"), {
-new BoolProp  <Mcu>( "Rst_enabled", tr("Enable Reset Pin")   ,"", this, &Mcu::rstPinEnabled, &Mcu::enableRstPin ),
-new BoolProp  <Mcu>( "Ext_Osc"    , tr("External Oscillator"),"", this, &Mcu::extOscEnabled, &Mcu::enableExtOsc ),
-new BoolProp  <Mcu>( "Wdt_enabled", tr("Enable WatchDog")    ,"", this, &Mcu::wdtEnabled,    &Mcu::enableWdt )
-    }} );
+new BoolProp<Mcu>("Rst_enabled", tr("Enable Reset Pin")   ,"", this, &Mcu::rstPinEnabled, &Mcu::enableRstPin ),
+new BoolProp<Mcu>("Ext_Osc"    , tr("External Oscillator"),"", this, &Mcu::extOscEnabled, &Mcu::enableExtOsc ),
+new BoolProp<Mcu>("Wdt_enabled", tr("Enable WatchDog")    ,"", this, &Mcu::wdtEnabled,    &Mcu::enableWdt )
+    }, groupNoCopy} );
+
     addPropGroup( {"Hidden", {
-new StringProp<Mcu>("varList", "","", this, &Mcu::varList,   &Mcu::setVarList),
-new StringProp<Mcu>("cpuRegs", "","", this, &Mcu::cpuRegs,   &Mcu::setCpuRegs),
-new StringProp<Mcu>("eeprom" , "","", this, &Mcu::getEeprom, &Mcu::setEeprom ),
-new IntProp   <Mcu>("SerialMon","","", this, &Mcu::serialMon, &Mcu::setSerialMon )
-    }} );
+new StrProp<Mcu>("varList"  ,"","", this, &Mcu::varList,   &Mcu::setVarList),
+new StrProp<Mcu>("cpuRegs"  ,"","", this, &Mcu::cpuRegs,   &Mcu::setCpuRegs),
+new StrProp<Mcu>("eeprom"   ,"","", this, &Mcu::getEeprom, &Mcu::setEeprom ),
+new IntProp<Mcu>("SerialMon","","", this, &Mcu::serialMon, &Mcu::setSerialMon )
+    }, groupHidden } );
     }
     else //if( m_deviceType == typeMPU )
     {
@@ -219,10 +222,10 @@ new IntProp   <Mcu>("SerialMon","","", this, &Mcu::serialMon, &Mcu::setSerialMon
 addProperty(tr("Main"),new BoolProp<Mcu>( "Logic_Symbol", tr("Logic Symbol"),"", this, &Mcu::logicSymbol, &Mcu::setLogicSymbol ) );
 
     addPropGroup( {"Hidden", {
-new StringProp<Mcu>("varList", "","", this, &Mcu::varList,   &Mcu::setVarList),
-new StringProp<Mcu>("cpuRegs", "","", this, &Mcu::cpuRegs,   &Mcu::setCpuRegs),
-new StringProp<Mcu>("Links"  , "","", this, &Mcu::getLinks , &Mcu::setLinks )
-    }} );
+new StrProp<Mcu>("varList", "","", this, &Mcu::varList,   &Mcu::setVarList),
+new StrProp<Mcu>("cpuRegs", "","", this, &Mcu::cpuRegs,   &Mcu::setCpuRegs),
+new StrProp<Mcu>("Links"  , "","", this, &Mcu::getLinks , &Mcu::setLinks )
+    }, groupHidden } );
     }
 }
 Mcu::~Mcu()
@@ -482,13 +485,14 @@ void Mcu::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
     }
     menu->addSeparator();
 
-    if( !event )
+    /*if( !event )
     {
         QAction* propertiesAction = menu->addAction( QIcon( ":/properties.svg"),tr("Properties") );
         connect( propertiesAction, &QAction::triggered,
                              this, &Mcu::slotProperties, Qt::UniqueConnection );
         menu->addSeparator();
-}   }
+    }*/
+}
 
 void Mcu::slotmain()
 {

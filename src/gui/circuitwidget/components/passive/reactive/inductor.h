@@ -23,7 +23,7 @@ class MAINMODULE_EXPORT Inductor : public Reactive
 
         Pin* getPin( int n ) { return m_pin[n]; }
         
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
 
     protected:
         virtual double updtRes()  override { return m_value/m_tStep; }

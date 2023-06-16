@@ -13,8 +13,8 @@ class CompBase;
 class MAINMODULE_EXPORT NumProp : public ComProperty
 {
     public:
-        NumProp( QString name, QString caption, QString unit, QString type )
-        : ComProperty( name, caption, unit, type )
+        NumProp( QString name, QString caption, QString unit, QString type, uint8_t flags )
+        : ComProperty( name, caption, unit, type, flags )
         {}
         ~NumProp(){;}
 

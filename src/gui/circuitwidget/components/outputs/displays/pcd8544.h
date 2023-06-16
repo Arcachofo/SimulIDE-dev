@@ -37,11 +37,11 @@ class MAINMODULE_EXPORT Pcd8544 : public Component, public eElement
         virtual void updateStep() override;
         virtual void remove() override;
         
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
 
     protected:
         void initPins();
-        virtual void clearLcd();
+        void clearLcd();
         void incrementPointer();
         void reset();
         void clearDDRAM();

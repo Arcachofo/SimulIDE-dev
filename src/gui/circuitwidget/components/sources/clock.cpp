@@ -34,7 +34,7 @@ Clock::Clock( QObject* parent, QString type, QString id )
 new DoubProp<Clock>( "Voltage"  , tr("Voltage")  ,"V" , this, &Clock::volt,     &Clock::setVolt ),
 new DoubProp<Clock>( "Freq"     , tr("Frequency"),"Hz", this, &Clock::freq,     &Clock::setFreq ),
 new BoolProp<Clock>( "Always_On", tr("Always On"),""  , this, &Clock::alwaysOn, &Clock::setAlwaysOn ),
-    }} );
+    }, 0} );
 }
 Clock::~Clock(){}
 
