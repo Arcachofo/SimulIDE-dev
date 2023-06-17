@@ -62,3 +62,12 @@ void Shape::setColor( QColor color )
     m_color = color;
     update();
 }
+
+void Shape::setOpac( qreal op )
+{
+    if     ( op > 1 ) op = 1;
+    else if( op < 0 ) op = 0;
+    m_opac = op;
+    update();
+}
+

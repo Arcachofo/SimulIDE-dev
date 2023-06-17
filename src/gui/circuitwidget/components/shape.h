@@ -34,7 +34,7 @@ class MAINMODULE_EXPORT Shape : public Component
         void setZVal( double v) { setZValue( v ); }
 
         double opac() { return m_opac; }
-        void setOpac( double op ) { m_opac = op; update(); }
+        void setOpac( double op );
 
 
         QString colorStr() { return m_color.name(); }

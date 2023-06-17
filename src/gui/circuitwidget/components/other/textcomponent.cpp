@@ -253,9 +253,10 @@ void TextComponent::paint( QPainter* p, const QStyleOptionGraphicsItem* option, 
     QPen pen( QColor( 0, 0, 0 ), m_border, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
     p->setPen( pen );
 
-    p->setOpacity( p->opacity()*m_opac );
-    p->fillRect( m_area, p->brush() );
-    p->setOpacity( 1 );
+    double opacity = p->opacity();
+    p->setOpacity( opacity*m_opac );
+    p->fillRect( m_area, m_color );
+    p->setOpacity( opacity );
 
     if( m_border > 0 )
     {

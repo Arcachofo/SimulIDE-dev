@@ -33,9 +33,10 @@ void Rectangle::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWid
     QPen pen(Qt::black, m_border, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
     p->setPen( pen );
     
-    p->setOpacity( m_opac );
+    double opacity = p->opacity();
+    p->setOpacity( opacity*m_opac );
     p->fillRect( m_area, m_color );
-    p->setOpacity( 1 );
+    p->setOpacity( opacity );
 
     if( m_border > 0 )
     {

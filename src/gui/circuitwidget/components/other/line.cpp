@@ -38,12 +38,12 @@ QPainterPath Line::shape() const
     return path;
 }
 
-void Line::paint( QPainter* p, const QStyleOptionGraphicsItem*, QWidget* )
+void Line::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
 {
+    Component::paint( p, option, widget );
+
     QPen pen( m_color, m_border, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
-
-    if ( isSelected() ) pen.setColor( Qt::darkGray);
-
     p->setPen( pen );
+
     p->drawLine( -m_hSize/2, m_vSize/2, m_hSize/2, -m_vSize/2 );
 }

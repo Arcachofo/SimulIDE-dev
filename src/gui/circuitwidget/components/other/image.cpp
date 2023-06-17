@@ -116,17 +116,23 @@ QString Image::background()
     return circuitDir.relativeFilePath( m_background );
 }
 
-void Image::paint( QPainter* p, const QStyleOptionGraphicsItem*, QWidget* )
+void Image::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
 {
-    QPen pen(Qt::black, m_border, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
+    Component::paint( p, option, widget );
 
-    if( isSelected() ) pen.setColor( Qt::darkGray);
-
-    p->setBrush( m_color );
+    QPen pen( Qt::black, m_border, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
     p->setPen( pen );
     
-    if( m_border > 0 ) p->drawRect( m_area );
-    else               p->fillRect( m_area, p->brush() );
+    double opacity = p->opacity();
+    p->setOpacity( opacity*m_opac );
+    p->fillRect( m_area, m_color );
+    p->setOpacity( opacity );
 
     p->drawPixmap( m_area, m_image, m_image.rect() );
+
+    if( m_border > 0 )
+    {
+        p->setBrush( Qt::transparent );
+        p->drawRect( m_area );
+    }
 }

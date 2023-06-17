@@ -41,9 +41,10 @@ void Ellipse::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidge
     p->setPen( pen );
     p->setBrush( m_color );
 
-    p->setOpacity( m_opac );
-    p->drawEllipse( m_area );
-    p->setOpacity( 1 );
+    double opacity = p->opacity();
+    p->setOpacity( opacity*m_opac );
+    p->fillRect( m_area, m_color );
+    p->setOpacity( opacity );
 
     if( m_border > 0 )
     {
