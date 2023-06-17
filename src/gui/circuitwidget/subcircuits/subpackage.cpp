@@ -307,6 +307,7 @@ void SubPackage::boardModeSlot()
 {
     m_boardMode = m_boardModeAction->isChecked();
     setBoardMode( m_boardMode );
+    Component::m_boardMode = m_boardMode;
     Circuit::self()->update();
 }
 

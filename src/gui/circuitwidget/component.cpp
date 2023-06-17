@@ -24,6 +24,7 @@
 
 int  Component::m_error = 0;
 bool Component::m_selMainCo = false;
+bool Component::m_boardMode = false;
 Linkable* Component::m_selecComp = NULL;
 
 Component::Component( QObject* parent, QString type, QString id )
@@ -220,7 +221,10 @@ void Component::mouseMoveEvent( QGraphicsSceneMouseEvent* event )
     }
     event->accept();
     
-    QPointF delta = toGrid(event->scenePos()) - toGrid(event->lastScenePos());
+    QPointF delta(0,0);
+    if( m_boardMode ) delta = event->scenePos() - event->lastScenePos();
+    else delta = toGrid(event->scenePos()) - toGrid(event->lastScenePos());
+
     if( !(fabs( delta.x() )> 0) && !(fabs( delta.y() )> 0) ) return;
 
     QList<QGraphicsItem*> itemlist = Circuit::self()->selectedItems();

@@ -138,9 +138,7 @@ class MAINMODULE_EXPORT Component : public CompBase, public QGraphicsItem, publi
         int m_linkNumber;
  static Linkable* m_selecComp;
 
-    //signals:
-        //void moved();
-        //void flip( int h, int v );
+ static bool m_boardMode;
 
     public slots:
         virtual void contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu );
