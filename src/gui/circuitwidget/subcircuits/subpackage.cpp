@@ -18,6 +18,7 @@
 #include <QDebug>
 
 #include "subpackage.h"
+#include "packagepin.h"
 #include "itemlibrary.h"
 #include "circuitwidget.h"
 #include "circuit.h"
@@ -53,7 +54,6 @@ SubPackage::SubPackage( QObject* parent, QString type, QString id )
 
     m_changed = false;
     m_fakePin = false;
-    m_movePin = false;
     m_isLS    = true;
     m_graphical = true;
     m_boardMode = false;
@@ -73,14 +73,14 @@ SubPackage::SubPackage( QObject* parent, QString type, QString id )
     m_pkgeFile = "";
 
     addPropGroup( { tr("Main"), {
-new StrProp<SubPackage>( "SubcType"    ,tr("Type")  ,""      , this, &SubPackage::subcTypeStr,&SubPackage::setSubcTypeStr,0,"enum" ),
-new IntProp<SubPackage>( "Width"       ,tr("Width") ,"_Cells", this, &SubPackage::width,      &SubPackage::setWidth ,0,"uint" ),
-new IntProp<SubPackage>( "Height"      ,tr("Height"),"_Cells", this, &SubPackage::height,     &SubPackage::setHeight,0,"uint"  ),
-new StrProp<SubPackage>( "Name"        ,tr("Name")        ,"", this, &SubPackage::name,       &SubPackage::setName ),
-new StrProp<SubPackage>( "Package_File",tr("Package File"),"", this, &SubPackage::package,    &SubPackage::setPackage),
-new StrProp<SubPackage>( "Background"  ,tr("Background")  ,"", this, &SubPackage::background, &SubPackage::setBackground ),
+new StrProp <SubPackage>("SubcType"    ,tr("Type")  ,""      , this, &SubPackage::subcTypeStr,&SubPackage::setSubcTypeStr,0,"enum" ),
+new IntProp <SubPackage>("Width"       ,tr("Width") ,"_Cells", this, &SubPackage::width,      &SubPackage::setWidth ,0,"uint" ),
+new IntProp <SubPackage>("Height"      ,tr("Height"),"_Cells", this, &SubPackage::height,     &SubPackage::setHeight,0,"uint"  ),
+new StrProp <SubPackage>("Name"        ,tr("Name")        ,"", this, &SubPackage::name,       &SubPackage::setName ),
+new StrProp <SubPackage>("Package_File",tr("Package File"),"", this, &SubPackage::package,    &SubPackage::setPackage),
+new StrProp <SubPackage>("Background"  ,tr("Background")  ,"", this, &SubPackage::background, &SubPackage::setBackground ),
 new BoolProp<SubPackage>("Logic_Symbol",tr("Logic Symbol"),"", this, &SubPackage::logicSymbol,&SubPackage::setLogicSymbol ),
-    }} );
+    }, 0} );
 }
 SubPackage::~SubPackage(){}
 
@@ -169,7 +169,7 @@ void SubPackage::hoverLeaveEvent( QGraphicsSceneHoverEvent* event )
 
 void SubPackage::mousePressEvent( QGraphicsSceneMouseEvent* event )
 {
-    if( m_selMainCo ) return; // Used when creating Boards to set this as main component
+    if( m_selecComp ) return; // Used when linking or creating Boards to set this as main component
 
     if( m_fakePin )
     {
@@ -178,8 +178,8 @@ void SubPackage::mousePressEvent( QGraphicsSceneMouseEvent* event )
 
         QColor color = m_isLS ? Qt::black : QColor( 250, 250, 200 );
 
-        m_eventPin = new Pin( m_angle, QPoint(m_p1X,m_p1Y ), "name", 0, this );
-        m_eventPin->setEnabled( false );
+        m_eventPin = new PackagePin( m_angle, QPoint(m_p1X,m_p1Y ), "name", 0, this );
+        ///m_eventPin->setEnabled( false );
         m_eventPin->setFlag( QGraphicsItem::ItemStacksBehindParent, false );
         m_eventPin->setPinId( "Id" );
         m_eventPin->setLabelColor( color );
@@ -191,116 +191,36 @@ void SubPackage::mousePressEvent( QGraphicsSceneMouseEvent* event )
         editPin();
         Circuit::self()->update();
     }
-    else if( m_movePin )
-    {
-        event->accept();
-        ungrabMouse();
-        setCursor( Qt::OpenHandCursor );
-        
-        m_changed = true;
-        m_movePin = false;
-        m_eventPin = NULL;
-    }
     else Component::mousePressEvent( event );
-}
-
-void SubPackage::mouseMoveEvent( QGraphicsSceneMouseEvent* event )
-{
-    if( m_movePin && m_eventPin )
-    {
-        event->accept();
-
-        int pinLenth = m_eventPin->length();
-
-        int Xmax = m_area.width();
-        int Ymax = m_area.height();
-        int Xmin = 0;
-        int Ymin = 0;
-        if     ( m_angle == 180 ) { Xmin -= pinLenth; Xmax -= pinLenth; } // Left
-        else if( m_angle == 0 )   { Xmin += pinLenth; Xmax += pinLenth; } // Right
-        else if( m_angle == 90 )  { Ymin -= pinLenth; Ymax -= pinLenth; } // Top
-        else if( m_angle == 270 ) { Ymin += pinLenth; Ymax += pinLenth; } // Bottom
-
-        QPointF delta = toGrid(event->scenePos()) - toGrid(event->lastScenePos());
-        int deltaX = delta.x();
-        int deltaY = delta.y();
-        int pinX = m_eventPin->pos().x() + deltaX;
-        int pinY = m_eventPin->pos().y() + deltaY;
-
-        if     ( pinX > Xmax ) deltaX -= pinX-Xmax;
-        else if( pinX < Xmin ) deltaX -= pinX-Xmin;
-        if     ( pinY > Ymax ) deltaY -= pinY-Ymax;
-        else if( pinY < Ymin ) deltaY -= pinY-Ymin;
-
-        m_eventPin->moveBy( deltaX, deltaY );
-    }
-    else Component::mouseMoveEvent( event );
-}
-
-void SubPackage::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
-{
-    int xPos = snapToGrid( (int)event->pos().x() );
-    int yPos = snapToGrid( (int)event->pos().y() );
-
-    m_eventPin = NULL;
-
-    for( Pin* pin : m_pkgePins )
-    {
-        int xPin = pin->x();
-        int yPin = pin->y();
-        int angle = pin->pinAngle();
-        int length = pin->length();
-
-        if     ( angle == 0 )   xPin -= length; // Right
-        else if( angle == 180 ) xPin += length; // Left
-        else if( angle == 90 )  yPin += length; // Top
-        else if( angle == 270 ) yPin -= length; // Bottom
-
-        if(( fabs(yPin-yPos)<4 ) && ( fabs(xPin-xPos)<4 ) )
-        { m_eventPin = pin; break; }
-    }
-    event->accept();
-    QMenu* menu = new QMenu();
-    contextMenu( event, menu );
-    menu->deleteLater();
 }
 
 void SubPackage::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
 {
-    if( m_eventPin )
+    QAction* loadAction = menu->addAction( QIcon(":/open.png"),tr("Load Package") );
+    connect( loadAction, &QAction::triggered, this, &SubPackage::loadPackage, Qt::UniqueConnection );
+
+    QAction* saveAction = menu->addAction( QIcon(":/save.png"),tr("Save Package") );
+    connect( saveAction, &QAction::triggered, this, &SubPackage::slotSave, Qt::UniqueConnection );
+
+    menu->addSeparator();
+
+    if( m_subcType >= Board )
     {
-        QAction* moveAction = menu->addAction( QIcon(":/hflip.svg"),tr("Move Pin ")+m_eventPin->getLabelText() );
-        connect( moveAction, &QAction::triggered, this, &SubPackage::movePin, Qt::UniqueConnection );
-
-        QAction* editAction = menu->addAction( QIcon(":/rename.svg"),tr("Edit Pin ")+m_eventPin->getLabelText() );
-        connect( editAction, &QAction::triggered, this, &SubPackage::editPin, Qt::UniqueConnection );
-
-        QAction* deleteAction = menu->addAction( QIcon(":/remove.svg"),tr("Delete Pin ")+m_eventPin->getLabelText() );
-        connect( deleteAction, &QAction::triggered, this, &SubPackage::deleteEventPin, Qt::UniqueConnection );
-
-        menu->exec( event->screenPos() );
-    }else{
-        QAction* loadAction = menu->addAction( QIcon(":/open.png"),tr("Load Package") );
-        connect( loadAction, &QAction::triggered, this, &SubPackage::loadPackage, Qt::UniqueConnection );
-
-        QAction* saveAction = menu->addAction( QIcon(":/save.png"),tr("Save Package") );
-        connect( saveAction, &QAction::triggered, this, &SubPackage::slotSave, Qt::UniqueConnection );
-
-        menu->addSeparator();
-
-        if( m_subcType >= Board )
-        {
-            m_boardModeAction->setChecked( m_boardMode );
-            menu->addAction( m_boardModeAction );
-            connect( m_boardModeAction, &QAction::triggered,
-                                  this, &SubPackage::boardModeSlot, Qt::UniqueConnection );
-        }
-            QAction* mainCompAction = menu->addAction( QIcon(":/subcl.png"),tr("Select Main Component") );
-            connect( mainCompAction, &QAction::triggered,
-                               this, &SubPackage::mainComp, Qt::UniqueConnection );
-
-        Component::contextMenu( event, menu );
+        m_boardModeAction->setChecked( m_boardMode );
+        menu->addAction( m_boardModeAction );
+        connect( m_boardModeAction, &QAction::triggered,
+                              this, &SubPackage::boardModeSlot, Qt::UniqueConnection );
     }
+    QAction* mainCompAction = menu->addAction( QIcon(":/subcl.png"),tr("Select Main Component") );
+    connect( mainCompAction, &QAction::triggered,
+                       this, &SubPackage::mainComp, Qt::UniqueConnection );
+
+    Component::contextMenu( event, menu );
+}
+
+void SubPackage::compSelected( Component* comp )
+{
+    if( comp) comp->setMainComp( !comp->isMainComp() );
 }
 
 void SubPackage::boardModeSlot()
@@ -383,8 +303,8 @@ void SubPackage::setHeight( int height )
 
 Pin* SubPackage::addPin( QString id, QString type, QString label, int pos, int xpos, int ypos, int angle, int length  )
 {
-    Pin* pin = new Pin( angle, QPoint(xpos, ypos), m_id+"-"+id, pos-1, this ); // pos in package starts at 1
-    pin->setEnabled( false );
+    PackagePin* pin = new PackagePin( angle, QPoint(xpos, ypos), m_id+"-"+id, pos-1, this ); // pos in package starts at 1
+    //pin->setEnabled( false );
 
     QColor color = m_isLS ? Qt::black : QColor( 250, 250, 200 );
 
@@ -394,21 +314,10 @@ Pin* SubPackage::addPin( QString id, QString type, QString label, int pos, int x
     pin->setLength( length );
     pin->setLabelText( label );
     pin->setInverted( type == "inverted" || type == "inv" );
-    pin->setFlag( QGraphicsItem::ItemStacksBehindParent, false );
+    //pin->setFlag( QGraphicsItem::ItemStacksBehindParent, false );
 
     m_pkgePins.append( pin );
     return pin;
-}
-
-void SubPackage::movePin()
-{
-    if( !m_eventPin ) return;
-    
-    m_changed = true;
-    m_movePin = true;
-    m_angle = m_eventPin->pinAngle();
-    
-    grabMouse();
 }
 
 void SubPackage::editPin()
@@ -424,7 +333,7 @@ void SubPackage::editPin()
     editDialog->deleteLater();
 }
 
-void SubPackage::editFinished( int r )
+void SubPackage::editFinished( int )
 { if( m_changed ) Circuit::self()->saveState(); }
 
 void SubPackage::deleteEventPin()
@@ -433,7 +342,8 @@ void SubPackage::deleteEventPin()
     m_changed = true;
 
     m_pkgePins.removeOne( m_eventPin );
-    deletePin( m_eventPin );
+    m_signalPin.removeOne( m_eventPin );
+    delete m_eventPin;
     m_eventPin = NULL;
     
     Circuit::self()->update();

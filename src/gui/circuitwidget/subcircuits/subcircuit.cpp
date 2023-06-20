@@ -337,7 +337,7 @@ void SubCircuit::loadSubCircuit( QString fileName )
     Circuit::self()->setFilePath( oldFilePath ); // Restore original filePath
 }
 
-Pin* SubCircuit::addPin( QString id, QString type, QString label, int pos, int xpos, int ypos, int angle, int length  )
+Pin* SubCircuit::addPin( QString id, QString type, QString label, int pos, int xpos, int ypos, int angle, int length )
 {
     if( m_initialized && m_pinTunnels.contains( m_id+"-"+id ) )
     {
@@ -361,7 +361,7 @@ Pin* SubCircuit::addPin( QString id, QString type, QString label, int pos, int x
         m_pinTunnels.insert( pId, tunnel );
 
         Pin* pin = tunnel->getPin();
-        pin->setObjectName( pId );
+        /// pin->setObjectName( pId );
         pin->setId( pId );
         pin->setInverted( type == "inverted" || type == "inv" );
         addSignalPin( pin );

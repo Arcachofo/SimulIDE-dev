@@ -253,7 +253,7 @@ QRectF Tunnel::boundingRect() const
 
 void Tunnel::mousePressEvent( QGraphicsSceneMouseEvent* event )
 {
-    if( !m_selMainCo )  // Used when creating Boards to set this as main component
+    if( !m_selecComp )  // Used when linking or creating Boards to set this as main component
         Component::mousePressEvent( event );
 }
 

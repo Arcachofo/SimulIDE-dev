@@ -7,11 +7,12 @@
 #define SUBPACKAGE_H
 
 #include "chip.h"
+#include "linkable.h"
 
 class LibraryItem;
 class QAction;
 
-class MAINMODULE_EXPORT SubPackage : public Chip
+class MAINMODULE_EXPORT SubPackage : public Chip, public Linkable
 {
         friend class Circuit;
 
@@ -31,40 +32,41 @@ class MAINMODULE_EXPORT SubPackage : public Chip
         QString  package();
         void setPackage( QString package );
 
+        void setEventPin( Pin* pin ) { m_eventPin = pin; }
+
         void savePackage( QString fileName );
         virtual void setSubcTypeStr( QString s ) override;
         virtual void setLogicSymbol( bool ls ) override;
         virtual void remove() override;
 
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
+        virtual void compSelected( Component* comp ) override;
+
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
 
     public slots:
-        virtual void contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu );
         void invertPin( bool invert );
         void setPinId( QString id );
         void setPinName( QString name );
         void setPinAngle( int i );
         void boardModeSlot();
         void setBoardMode( bool mode );
-        void mainComp() { Component::m_selMainCo = true; }
+        void mainComp() { Linkable::startLinking(); }
         void unusePin( bool unuse );
         void pointPin( bool point );
+        void editPin();
+        void deleteEventPin();
     
     private slots:
         void loadPackage();
-        void movePin();
-        void editPin();
-        void deleteEventPin();
         void slotSave();
         void editFinished( int r );
 
     protected:
-        void mousePressEvent( QGraphicsSceneMouseEvent* event );
-        void mouseMoveEvent( QGraphicsSceneMouseEvent* event );
-        void hoverMoveEvent( QGraphicsSceneHoverEvent* event ) ;
-        void hoverLeaveEvent( QGraphicsSceneHoverEvent* event );
+        void mousePressEvent( QGraphicsSceneMouseEvent* event ) override;
+        void hoverMoveEvent( QGraphicsSceneHoverEvent* event ) override;
+        void hoverLeaveEvent( QGraphicsSceneHoverEvent* event ) override;
         
-        virtual void contextMenuEvent( QGraphicsSceneContextMenuEvent* event );
+        virtual void contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu ) override;
 
         virtual Pin* addPin( QString id, QString type, QString label,
                             int pos, int xpos, int ypos, int angle, int length=8 ) override;
@@ -75,7 +77,6 @@ class MAINMODULE_EXPORT SubPackage : public Chip
 
  static QString m_lastPkg;
 
-        bool m_movePin;
         bool m_fakePin; // Data for drawing pin when hovering
         
         int m_angle;  

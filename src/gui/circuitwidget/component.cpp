@@ -23,7 +23,6 @@
 #include "pointprop.h"
 
 int  Component::m_error = 0;
-bool Component::m_selMainCo = false;
 bool Component::m_boardMode = false;
 Linkable* Component::m_selecComp = NULL;
 
@@ -172,20 +171,7 @@ void Component::mousePressEvent( QGraphicsSceneMouseEvent* event )
     if( event->button() == Qt::LeftButton )
     {
         event->accept();
-        if( m_selMainCo )  // Used when creating Boards to set this as main component
-        {
-            m_selMainCo = false;
-            if( m_isMainComp ) m_isMainComp = false;
-            else{
-                QList<Component*>* compList = Circuit::self()->compList();
-                for( Component* comp : *compList ) comp->m_isMainComp = false;
-
-                m_isMainComp = true;
-            }
-            update();
-            return;
-        }
-        else if( m_selecComp )
+        if( m_selecComp )
         {
             m_selecComp->compSelected( this );
             return;

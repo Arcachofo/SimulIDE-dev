@@ -184,7 +184,6 @@ class MAINMODULE_EXPORT Component : public CompBase, public QGraphicsItem, publi
         int m_Vflip;
 
  static int m_error;
- static bool m_selMainCo;
 
         QString m_help;
         QString m_background;   // BackGround Image path

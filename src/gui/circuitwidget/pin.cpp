@@ -18,15 +18,15 @@
 #include "simulator.h"
 
 Pin::Pin( int angle, const QPoint pos, QString id, int index, Component* parent )
-   : QObject()
-   , QGraphicsItem( parent )
+   : QGraphicsItem( parent )
    , ePin( id, index )
    , m_label( parent )
 {
-    m_component = parent;
     m_area = QRect(-3, -3, 11, 6);
+
+    m_component = parent;
     m_pinState = undef_state;
-    m_pinType = pinNormal;
+    m_pinType  = pinNormal;
 
     m_blocked = false;
     m_isBus   = false;
@@ -65,7 +65,7 @@ Pin::Pin( int angle, const QPoint pos, QString id, int index, Component* parent 
     m_label.setText("");
     m_label.setBrush( QColor( 250, 250, 200 ) );
 
-    setObjectName( id );
+    /// setObjectName( id );
     setConnector( NULL );
     setPos( pos );
     setRotation( 180-angle );
@@ -78,12 +78,6 @@ Pin::Pin( int angle, const QPoint pos, QString id, int index, Component* parent 
     animate( Circuit::self()->animate() );
 
     m_component->addSignalPin( this );
-
-    /*connect( parent, &Component::moved,
-               this, &Pin::isMoved, Qt::UniqueConnection );
-
-    connect( parent, &Component::flip,
-               this, &Pin::flip, Qt::UniqueConnection );*/
 }
 Pin::~Pin()
 {

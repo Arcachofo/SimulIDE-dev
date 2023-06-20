@@ -24,12 +24,12 @@ enum pinState_t{
 class Connector;
 class LaChannel;
 
-class MAINMODULE_EXPORT Pin : public QObject, public QGraphicsItem, public ePin, public Updatable
+class MAINMODULE_EXPORT Pin : public QGraphicsItem, public ePin, public Updatable
 {
     Q_INTERFACES(QGraphicsItem)
 
     public:
-        Pin( int angle, const QPoint pos, QString id, int index, Component* parent = 0 );
+        Pin( int angle, const QPoint pos, QString id, int index, Component* parent=0 );
         ~Pin();
 
         enum pinType_t{
@@ -39,9 +39,9 @@ class MAINMODULE_EXPORT Pin : public QObject, public QGraphicsItem, public ePin,
         };
 
         enum { Type = UserType + 3 };
-        int type() const { return Type; }
+        int type() const override { return Type; }
 
-        QRectF boundingRect() const { return m_area; }
+        QRectF boundingRect() const override { return m_area; }
 
         QString pinId() { return m_id; }
         
@@ -49,7 +49,7 @@ class MAINMODULE_EXPORT Pin : public QObject, public QGraphicsItem, public ePin,
         void setUnused( bool unused );
 
         int length() { return m_length; }
-        void setLength( int length );
+        virtual void setLength( int length );
 
         void setColor( QColor color ) { m_color[0] = color; }
         void setPinAngle( int angle );
@@ -71,7 +71,7 @@ class MAINMODULE_EXPORT Pin : public QObject, public QGraphicsItem, public ePin,
         Pin* connectPin( bool connect );
 
         QString getLabelText() { return m_labelText; }
-        void setLabelText( QString label, bool over=true );
+        virtual void setLabelText( QString label, bool over=true );
         void setLabelPos();
         void setLabelColor( QColor color );
         void setFontSize( int size );
@@ -102,16 +102,15 @@ class MAINMODULE_EXPORT Pin : public QObject, public QGraphicsItem, public ePin,
         void animate( bool an );
         virtual void updateStep() override;
 
-        virtual void paint( QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget );
+        virtual void paint( QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
 
-    //public slots:
         void isMoved();
         void flip( int h, int v );
 
     protected:
-        void mousePressEvent( QGraphicsSceneMouseEvent* event );
+        void mousePressEvent( QGraphicsSceneMouseEvent* event ) override;
 
-        pinType_t m_pinType;
+        pinType_t  m_pinType;
         pinState_t m_pinState;
 
         int m_angle;
@@ -134,7 +133,7 @@ class MAINMODULE_EXPORT Pin : public QObject, public QGraphicsItem, public ePin,
         QString m_labelText;
         
         QColor m_color[8];
-        QRect      m_area;
+        QRectF     m_area;
         Connector* my_connector;
         Component* m_component;
         LaChannel* m_dataCannel;    // connect to Logic Analyzer
