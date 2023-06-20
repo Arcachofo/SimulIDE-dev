@@ -77,7 +77,6 @@ void Interrupt::raise( uint8_t v )
         m_ram[m_flagReg] |= m_flagMask; // Set Interrupt flag
         if( m_enabled )
         {
-            //qDebug() <<"Interrupt::raise"<< m_name;
             m_interrupts->addToPending( this ); // Add to pending interrupts
             if( m_intPin ) m_intPin->setOutState( false );
         }
@@ -88,15 +87,12 @@ void Interrupt::raise( uint8_t v )
 
 void Interrupt::execute()
 {
-    //qDebug() <<"Interrupt::execute"<< m_name;
     m_interrupts->writeGlobalFlag( 0 ); // Disable Global Interrupts
     if( m_vector ) m_mcu->cpu->INTERRUPT( m_vector );
 }
 
 void Interrupt::exitInt() // Exit from this interrupt
 {
-    //qDebug() <<"Interrupt::exitInt"<< m_name;
-    /// m_interrupts->writeGlobalFlag( 1 ); // Enable Global Interrupts /// done in Interrupts::exitInt()
     if( m_autoClear ) clearFlag();
     if( !m_exitCallBacks.isEmpty() ) { for( McuModule* mod : m_exitCallBacks ) mod->callBack(); }
 }
@@ -147,10 +143,8 @@ void Interrupts::runInterrupts()
 
         if( m_running )                         // Some interrupt was interrupted by this one
         {
-            /// Interrupt* running = m_running;
             m_active  = m_running;
             m_running = m_running->m_nextInt;   // Remove from running list
-            /// addToPending( running );            // Add to pending Interrupts
         }
         else m_active = NULL;
         writeGlobalFlag( 1 );                   // Enable Global Interrupts
@@ -180,13 +174,11 @@ void Interrupts::writeGlobalFlag( uint8_t flag )
     writeRegBits( m_enGlobalFlag, flag );   // Set/Clear Enable Global Interrupts flag
 
     m_enabled = flag;                       // Enable/Disable interrupts
-    //qDebug() << "Interrupts::writeGlobalFlag"<<flag;
 }
 
 void Interrupts::enableGlobal( uint8_t en )
 {
     m_enabled = en;
-    //qDebug() << "IInterrupts::enableGlobal"<<en;
 }
 
 void Interrupts::remove()

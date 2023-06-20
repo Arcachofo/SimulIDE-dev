@@ -35,7 +35,7 @@ Image::Image( QObject* parent, QString type, QString id )
     m_image = QPixmap( ":/saveimage.svg" );
     m_hSize = 80;
     m_vSize = 80;
-    m_area = QRectF( -40, -40, 80, 80 );
+    m_area = QRectF(-40,-40, 80, 80 );
 
     m_movie = NULL;
 
@@ -125,7 +125,7 @@ void Image::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget*
     
     double opacity = p->opacity();
     p->setOpacity( opacity*m_opac );
-    p->fillRect( m_area, m_color );
+    p->drawRect( m_area );
     p->setOpacity( opacity );
 
     p->drawPixmap( m_area, m_image, m_image.rect() );

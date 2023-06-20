@@ -45,7 +45,7 @@ class MAINMODULE_EXPORT Shape : public Component
         int m_vSize;
         int m_border;
 
-        qreal m_opac;
+        double m_opac;
 };
 
 #endif
