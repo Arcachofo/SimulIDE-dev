@@ -118,7 +118,7 @@ double Strain::sensorFunction(double forceN )
 void Strain::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
 {
     Component::paint( p, option, widget );
-    p->drawRect( -10,-20, 20, 24 );
+    p->drawRect(-11,-20, 22, 24 );
     p->fillRect(-8,-2, 4, 4, Qt::black );
     p->fillRect( 8,-2,-4, 4, Qt::black );
 

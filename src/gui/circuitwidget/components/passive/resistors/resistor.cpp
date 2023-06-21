@@ -31,6 +31,9 @@ Resistor::Resistor( QObject* parent, QString type, QString id )
     m_ePin[0] = m_pin[0];
     m_ePin[1] = m_pin[1];
 
+    m_pin[0]->setLength( 5 );
+    m_pin[1]->setLength( 5 );
+
     addPropGroup( { tr("Main"), {
 new DoubProp<Resistor>( "Resistance", tr("Resistance"), "Ω", this, &Resistor::getRes, &Resistor::setResSafe )
     }, 0 } );

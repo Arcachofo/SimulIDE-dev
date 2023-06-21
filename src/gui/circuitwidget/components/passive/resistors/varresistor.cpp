@@ -54,7 +54,7 @@ void VarResistor::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QW
     if( m_hidden ) return;
     Component::paint( p, option, widget );
 
-    p->drawRect( QRectF(-10.5, -4, 21, 8 ) );
+    p->drawRect( QRectF(-11,-4.5, 22, 9 ) );
     p->drawLine(-6, 6, 8,-8 );
     p->drawLine( 8,-6, 8,-8 );
     p->drawLine( 8,-8, 6,-8 );

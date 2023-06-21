@@ -51,6 +51,9 @@ Potentiometer::Potentiometer( QObject* parent, QString type, QString id )
     m_pin[1] = &m_pinM;
     m_pin[2] = &m_pinB;
 
+    m_pin[0]->setLength( 5 );
+    m_pin[2]->setLength( 5 );
+
     m_resA.setEpin( 0, &m_pinA );
     m_resA.setEpin( 1, &m_ePinA );
     m_resB.setEpin( 1, &m_pinB );
@@ -144,7 +147,7 @@ void Potentiometer::paint( QPainter* p, const QStyleOptionGraphicsItem* option, 
     if( m_hidden ) return;
 
     Component::paint( p, option, widget );
-    p->drawRect( QRectF(-10.5,-4, 21, 8 ));
+    p->drawRect( QRectF(-11,-4.5, 22, 9 ));
     QPen pen = p->pen();
     pen.setWidth(3);
     p->setPen(pen);

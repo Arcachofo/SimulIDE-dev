@@ -93,7 +93,9 @@ void KeyPad::setupButtons()
     for( int row=0; row<m_rows; row++ )
     {
         QPoint pinPos = QPoint( m_cols*16, 8+row*16 );
-        m_pin[row] = new Pin( 0, pinPos, m_id+"-Pin"+QString::number(row), 0, this);
+        Pin* pin = new Pin( 0, pinPos, m_id+"-Pin"+QString::number(row), 0, this);
+        pin->setLength( 4 );
+        m_pin[row] = pin;
         
         for( int col=0; col<m_cols; col++ )
         {
@@ -112,10 +114,11 @@ void KeyPad::setupButtons()
 
             if( row == 0 )
             {
-                QString pinId = m_id;
-                pinId.append( "-Pin"+QString::number(m_rows+col)) ;
+                int index = m_rows+col;
                 QPoint pinPos = QPoint( col*16, m_rows*16+8);
-                m_pin[m_rows+col] = new Pin( 270, pinPos, pinId, 0, this);
+                Pin* pin = new Pin( 270, pinPos, m_id+"-Pin"+QString::number(index), 0, this);
+                pin->setLength( 4 );
+                m_pin[index] = pin;
             }
             Circuit::self()->update();
     }   }

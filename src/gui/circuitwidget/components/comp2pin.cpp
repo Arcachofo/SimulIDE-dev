@@ -9,7 +9,7 @@
 Comp2Pin::Comp2Pin( QObject* parent, QString type, QString id )
         : Component( parent, type, id )
 {
-    m_area = QRectF( -11, -4.5, 22, 9 );
+    m_area = QRectF(-11,-4.5, 22, 9 );
 
     m_pin.resize(2);
     m_pin[0] = new Pin( 180, QPoint(-16, 0 ), id+"-lPin", 0, this);
