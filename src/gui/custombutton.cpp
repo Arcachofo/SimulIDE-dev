@@ -12,6 +12,11 @@
 CustomButton::CustomButton( QWidget* parent )
             : QToolButton( parent )
 {
+    QFont f = this->font();
+    f.setFamily("Ubuntu");
+    f.setPixelSize(11);
+    setFont( f );
+
     setAttribute( Qt::WA_TranslucentBackground );
 }
 

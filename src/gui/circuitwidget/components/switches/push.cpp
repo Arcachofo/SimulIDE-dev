@@ -30,8 +30,8 @@ LibraryItem* Push::libraryItem()
 Push::Push( QObject* parent, QString type, QString id )
     : PushBase( parent, type, id )
 {
-    m_area =  QRectF( -11, -9, 22, 11 );
-    m_proxy->setPos( QPoint(-8, 4) );
+    m_area = QRectF(-11,-9, 22, 11 );
+    m_proxy->setPos(-8, 4 );
 
     SetupSwitches( 1, 1 );
 
@@ -56,13 +56,13 @@ void Push::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* 
     for( int i=0; i<m_numPoles; i++ )                           // Draw Switches
     {
         int offset = 16*i;
-        if( m_closed ) p->drawLine(-9, -2-offset, 9, -2-offset );
-        else           p->drawLine(-9, -8-offset, 9, -8-offset );
+        if( m_closed ) p->drawLine(-9,-2-offset, 9,-2-offset );
+        else           p->drawLine(-9,-8-offset, 9,-8-offset );
     }
     if( m_numPoles > 1 )
     {
         pen.setStyle(Qt::DashLine);
         pen.setWidth(1);
         p->setPen(pen);
-        p->drawLine(-0, 4-4*m_pin0, 0, -3*m_pin0-16*m_numPoles+4 );
+        p->drawLine(-0, 4-4*m_pin0, 0,-3*m_pin0-16*m_numPoles+4 );
 }   }

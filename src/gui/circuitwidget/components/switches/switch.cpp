@@ -32,8 +32,8 @@ LibraryItem* Switch::libraryItem()
 Switch::Switch( QObject* parent, QString type, QString id )
       : SwitchBase( parent, type, id )
 {
-    m_area =  QRectF( -11, -9, 22, 11 );
-    m_proxy->setPos( QPoint(-8, 4) );
+    m_area = QRectF(-11,-9, 22, 11 );
+    m_proxy->setPos(-8, 4 );
 
     SetupSwitches( 1, 1 );
 

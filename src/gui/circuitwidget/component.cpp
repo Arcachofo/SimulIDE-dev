@@ -477,8 +477,8 @@ void Component::setflip()
 }
 
 void Component::rotateCW()   { rotateAngle( 90 ); }
-void Component::rotateCCW()  { rotateAngle( -90 ); }
-void Component::rotateHalf() { rotateAngle( -180 ); }
+void Component::rotateCCW()  { rotateAngle(-90 ); }
+void Component::rotateHalf() { rotateAngle(-180 ); }
 
 void Component::rotateAngle( double a )
 {

@@ -24,17 +24,13 @@ SwitchBase::SwitchBase( QObject* parent, QString type, QString id )
     m_idLabel->setPos(-12,-24);
 
     m_button = new CustomButton( );
-    m_button->setMaximumSize( 16,16 );
-    m_button->setGeometry(-20,-16,16,16);
+    m_button->setMaximumSize( 16, 16 );
     m_button->setCheckable( true );
-
-    QFont font = m_button->font();
-    font.setFamily("Ubuntu");
-    font.setPixelSize(11);
-    m_button->setFont( font );
 
     m_proxy = Circuit::self()->addWidget( m_button );
     m_proxy->setParentItem( this );
+    m_proxy->setPos(-20,-16 );
+    m_proxy->setTransformOriginPoint( m_proxy->boundingRect().center() );
 
     connect( Circuit::self(), &Circuit::keyEvent,
                         this, &SwitchBase::keyEvent, Qt::UniqueConnection );
@@ -49,6 +45,18 @@ void SwitchBase::updateStep()
         m_changed = false;
         update();
 }   }
+
+void SwitchBase::rotateAngle( double a )
+{
+    Component::rotateAngle( a );
+    rotateText(-a );
+}
+
+void SwitchBase::rotateText( double angle )
+{
+    double rot = m_proxy->rotation();
+    m_proxy->setRotation( rot + angle );
+}
 
 void SwitchBase::setHidden( bool hide, bool hidArea, bool hidLabel )
 {
