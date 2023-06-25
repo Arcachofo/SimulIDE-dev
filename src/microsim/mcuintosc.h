@@ -25,6 +25,9 @@ class McuIntOsc : public McuModule, public eElement
         bool extClock() { return m_extClock; }
         void enableExtOsc( bool en );
 
+        bool clockOut() { return m_clkOut; }
+        void setClockOut( bool clkOut );
+
         virtual void setPin( int n, McuPin* p );
         //McuPin* getClkPin( int n );
         void configPins( bool inIo, bool outIo, bool clkOut ); // From Config Word

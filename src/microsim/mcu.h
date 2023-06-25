@@ -60,6 +60,9 @@ class MAINMODULE_EXPORT Mcu : public Chip, public Linkable
         bool wdtEnabled();
         void enableWdt( bool en );
 
+        bool clockOut();
+        void setClockOut( bool clkOut );
+
         QString varList();
         void setVarList( QString vl );
 

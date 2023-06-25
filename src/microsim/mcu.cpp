@@ -73,7 +73,7 @@ Mcu::Mcu( QObject* parent, QString type, QString id )
 {
     qDebug() << "        Initializing"<<id;
 
-    addPropGroup( { tr("Main"), {}} );
+    addPropGroup( { tr("Main"), {},0} );
 
     m_device = m_name;//.split("_").last(); // for example: "atmega328-1" to: "atmega328"
     if( m_device.contains("_") ) m_device = m_device.split("_").last(); // MCU in Subcircuit
@@ -206,7 +206,8 @@ new BoolProp<Mcu>("Logic_Symbol", tr("Logic Symbol") ,"", this, &Mcu::logicSymbo
     addPropGroup( { tr("Config"), {
 new BoolProp<Mcu>("Rst_enabled", tr("Enable Reset Pin")   ,"", this, &Mcu::rstPinEnabled, &Mcu::enableRstPin ),
 new BoolProp<Mcu>("Ext_Osc"    , tr("External Oscillator"),"", this, &Mcu::extOscEnabled, &Mcu::enableExtOsc ),
-new BoolProp<Mcu>("Wdt_enabled", tr("Enable WatchDog")    ,"", this, &Mcu::wdtEnabled,    &Mcu::enableWdt )
+new BoolProp<Mcu>("Wdt_enabled", tr("Enable WatchDog")    ,"", this, &Mcu::wdtEnabled   , &Mcu::enableWdt ),
+new BoolProp<Mcu>("Clk_Out"    , tr("Clock Out")          ,"", this, &Mcu::clockOut     , &Mcu::setClockOut )
     }, groupNoCopy} );
 
     addPropGroup( {"Hidden", {
@@ -624,6 +625,14 @@ bool Mcu::wdtEnabled()
 }
 
 void Mcu::enableWdt( bool en ) { if( m_eMcu.m_wdt ) m_eMcu.m_wdt->enable( en ); }
+
+bool Mcu::clockOut()
+{
+    if( m_eMcu.m_intOsc ) return m_eMcu.m_intOsc->clockOut();
+    return false;
+}
+
+void Mcu::setClockOut( bool clkOut ) { if( m_eMcu.m_intOsc ) m_eMcu.m_intOsc->setClockOut( clkOut ); }
 
 QStringList Mcu::getEnumUids( QString e) { return m_eMcu.cpu->getEnumUids( e ); }
 QStringList Mcu::getEnumNames( QString e) { return m_eMcu.cpu->getEnumNames( e ); }

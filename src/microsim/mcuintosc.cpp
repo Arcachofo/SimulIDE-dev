@@ -65,13 +65,19 @@ void McuIntOsc::enableExtOsc( bool en ) // From Mcu, AVR or PIC with no cfg word
     }
 }
 
+void McuIntOsc::setClockOut( bool clkOut )
+{
+    m_clkOut = clkOut;
+    m_clkOutPin->setUnused( !m_clkOutIO && !clkOut );
+}
+
 void McuIntOsc::configPins( bool inIo, bool outIo, bool clkOut )
 {
     m_clkInIO  = inIo;
     m_clkOutIO = outIo;
-    m_clkOut   = clkOut;
     m_clkInPin->setUnused( !inIo );
-    m_clkOutPin->setUnused( !outIo && !clkOut );
+
+    setClockOut( clkOut );
 }
 
 void McuIntOsc::setPin( int n, McuPin* p )
