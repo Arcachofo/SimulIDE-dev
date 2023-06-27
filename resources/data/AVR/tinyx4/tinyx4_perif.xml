@@ -1,15 +1,17 @@
 <!DOCTYPE SimulIDE>
 
 <parts>
-<port name="PORTA" pins="8" outreg="PORTA" inreg="PINA" dirreg="DDRA">
+  <port name="PORTA" pins="8" outreg="PORTA" inreg="PINA" dirreg="DDRA">
     <interrupt name="PCINT0" mask="PCMSK0"/>
-</port>
+  </port>
 
-<port name="PORTB" pins="4" outreg="PORTB" inreg="PINB" dirreg="DDRB"
-    clockpins="PORTB0,PORTB1" resetpin="PORTB3">
+  <port name="PORTB" pins="4" outreg="PORTB" inreg="PINB" dirreg="DDRB"
+                     resetpin="PORTB3">
     <interrupt name="PCINT1" mask="PCMSK1"/>
     <extint    name="INT0" pin="PORTB2" configbits="ISC00,ISC01"/>
-</port>
+  </port>
+  
+  <intosc name="intosc" clockpins="PORTB0,PORTB1" />
 
   <timer name="TIMER0" type="800" configregsA="TCCR0A" configregsB="TCCR0B"
                        counter="TCNT0"

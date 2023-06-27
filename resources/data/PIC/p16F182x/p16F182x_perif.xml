@@ -14,6 +14,9 @@
     <interrupt name="IOC" mask="11111111"/>
     <extint    name="INT" pin="PORTB0" configbits="INTEDG"/>
   </port>
+  
+  <intosc name="intosc" type="02" configregsA="OSCCON" 
+                        clockpins="PORTA5,PORTA4" />
 
   <timer name="TIMER0" type="800" configregsA="OPTION" 
                        counter="TMR0"
@@ -59,4 +62,9 @@
   <wdt name="WDT" configregsA="WDTCON"
                   prescalers="1,2,4,8,16,32,64,128"/>
 
+  <configwords name="cfgWord" type="04">
+    <word name="COINFIG1" address="0x8007" value="0" />
+    <word name="COINFIG2" address="0x8008" value="0" />
+  </configwords>
+  
 </parts>

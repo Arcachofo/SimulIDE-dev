@@ -1,9 +1,7 @@
 <!DOCTYPE SimulIDE>
 
 <parts>
-  <port name="PORTB" pins="8" outreg="PORTB" inreg="PINB" dirreg="DDRB"
-        clockpins="PORTB6,PORTB7">
-  </port>
+  <port name="PORTB" pins="8" outreg="PORTB" inreg="PINB" dirreg="DDRB" />
 
   <port name="PORTC" pins="7" outreg="PORTC" inreg="PINC" dirreg="DDRC" 
         resetpin="PORTC6">
@@ -13,6 +11,8 @@
     <extint    name="INT0" pin="PORTD2" configbits="ISC00,ISC01"/>
     <extint    name="INT1" pin="PORTD3" configbits="ISC10,ISC11"/>
   </port>
+  
+  <intosc name="intosc" clockpins="PORTB6,PORTB7" />
 
   <timer name="TIMER0" type="801" configregsA="TCCR0"
                        counter="TCNT0"

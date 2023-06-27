@@ -2,7 +2,8 @@
 
 <parts>
   
-  <port name="PORTA" pins="3" outreg="PORTA" inreg="PINA" dirreg="DDRA" clockpins="PORTA0,PORTA1" resetpin="PORTA2">
+  <port name="PORTA" pins="3" outreg="PORTA" inreg="PINA" dirreg="DDRA" 
+                     resetpin="PORTA2">
   </port>
   
   <port name="PORTB" pins="8" outreg="PORTB" inreg="PINB" dirreg="DDRB" >
@@ -13,6 +14,8 @@
     <extint    name="INT0" pin="PORTD2" configbits="ISC00,ISC01"/>
     <extint    name="INT1" pin="PORTD3" configbits="ISC10,ISC11"/>
   </port>
+  
+  <intosc name="intosc" clockpins="PORTA0,PORTA1" />
 
   <timer name="TIMER0" type="800" configregsA="TCCR0A" configregsB="TCCR0B"
                        counter="TCNT0" 

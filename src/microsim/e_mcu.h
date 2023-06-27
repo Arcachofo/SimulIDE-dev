@@ -98,7 +98,7 @@ class MAINMODULE_EXPORT eMcu : public DataSpace, public eElement
         McuVref* vrefModule();
         //McuSleep* sleepModule();
 
-        ConfigWord* cfgWord() { return m_cfgWord; }
+        /// ConfigWord* cfgWord() { return m_cfgWord; }
         bool setCfgWord( uint16_t addr, uint16_t data );
         McuIntOsc* intOsc() { return m_intOsc; }
         McuComp* comparator() { return m_comparator; }

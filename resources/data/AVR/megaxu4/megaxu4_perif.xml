@@ -13,6 +13,8 @@
         <interrupt name="PCINT2" />
     </port>
     
+    <intosc name="intosc" clockoutpin="PORTC7" />
+    
     <timer name="TIMER0" type="800" counter="TCNT0" configregsA="TCCR0A" configregsB="TCCR0B"
                                     clockpin="PORTD4">
         <prescaler select="CS00,CS01,CS02" values="0,1,8,64,256,1024,EXT_F,EXT_R"/>

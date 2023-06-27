@@ -296,8 +296,8 @@ void SubCircuit::loadSubCircuit( QString fileName )
                     {
                         m_mainComponents[newUid] = comp; // This component will add it's Context Menu and properties
 
-                        QList<propGroup> props = comp->properties();
-                        for( propGroup pg : props )
+                        QList<propGroup>* props = comp->properties();
+                        for( propGroup pg : *props )
                         {
                             if( pg.flags & groupNoCopy ) continue;
 
@@ -495,7 +495,7 @@ QString SubCircuit::toString()
         {
             Component* mainComponent = m_mainComponents.value( uid );
             item += "\n<mainCompProps MainCompId=\""+uid+"\" ";
-            for( propGroup pg : mainComponent->properties() )
+            for( propGroup pg : *mainComponent->properties() )
             {
                 if( pg.flags & groupNoCopy ) continue;
 

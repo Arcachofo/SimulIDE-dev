@@ -59,7 +59,8 @@ OscWidget::OscWidget( QWidget* parent , Oscope* oscope )
     for( int i=0; i<5; ++i )
     {
         QString color = m_oscope->getColor( i ).name();
-        channelGroup->button( i )->setStyleSheet( "QPushButton:checked{background-color:"+color+"; border: 2px solid gray; border-radius: 2px;}" );
+        channelGroup->button( i )->setStyleSheet("QPushButton:checked{background-color:"+color+"; border: 3px solid gray; border-radius: 2px; border-style: inset;}\
+                                                  QPushButton{background-color:"+color+"; }" );
         channelGroup->button( i )->adjustSize();
         autoGroup->button( i )->setStyleSheet( "background-color:"+color );
         triggerGroup->button( i )->setStyleSheet( "background-color:"+color );

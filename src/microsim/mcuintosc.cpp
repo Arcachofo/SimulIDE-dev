@@ -28,16 +28,18 @@ McuIntOsc::~McuIntOsc(){}
 
 void McuIntOsc::stamp()
 {
-    if( !m_clkInPin ) return;
-    m_clkInPin->controlPin( !m_clkInIO, !m_clkInIO );
+    if( m_clkInPin ) m_clkInPin->controlPin( !m_clkInIO, !m_clkInIO );
 
-    bool ctrlO = !m_clkOutIO || m_clkOut;
-    m_clkOutPin->controlPin( ctrlO, ctrlO );
-
-    if( m_clkOut )
+    if( m_clkOutPin )
     {
-        m_clkOutPin->setPinMode( output );
-        Simulator::self()->addEvent( m_psCycle, this );
+        bool ctrlO = !m_clkOutIO || m_clkOut;
+        m_clkOutPin->controlPin( ctrlO, ctrlO );
+
+        if( m_clkOut )
+        {
+            m_clkOutPin->setPinMode( output );
+            Simulator::self()->addEvent( m_psCycle, this );
+        }
     }
 }
 
@@ -50,7 +52,7 @@ void McuIntOsc::runEvent()
 void McuIntOsc::enableExtOsc( bool en ) // From Mcu, AVR or PIC with no cfg word
 {
     m_extClock = en;
-    if( m_mcu->cfgWord() ) return;     // Controlled by Config word.
+    /// if( m_mcu->cfgWord() ) return;     // Controlled by Config word.
     if( m_clkPin[0] == NULL ) return;
 
     for( int i=0; i<2; ++i )
@@ -68,22 +70,23 @@ void McuIntOsc::enableExtOsc( bool en ) // From Mcu, AVR or PIC with no cfg word
 void McuIntOsc::setClockOut( bool clkOut )
 {
     m_clkOut = clkOut;
-    m_clkOutPin->setUnused( !m_clkOutIO && !clkOut );
+    if( m_clkOutPin ) m_clkOutPin->setUnused( !m_clkOutIO && !clkOut );
 }
 
 void McuIntOsc::configPins( bool inIo, bool outIo, bool clkOut )
 {
     m_clkInIO  = inIo;
     m_clkOutIO = outIo;
-    m_clkInPin->setUnused( !inIo );
+    if( m_clkInPin) m_clkInPin->setUnused( !inIo );
 
     setClockOut( clkOut );
 }
 
 void McuIntOsc::setPin( int n, McuPin* p )
 {
-    if     ( n == 0 ) m_clkOutPin = m_clkPin[0] = p; // RA6 16F886
-    else if( n == 1 ) m_clkInPin  = m_clkPin[1] = p; // RA7 16F886
+    if     ( n == 0 ) m_clkPin[0] = p;
+    else if( n == 1 ) m_clkPin[1] = p;
+    else if( n == 2 ) m_clkOutPin = p;
 }
 
 /*McuPin* McuIntOsc::getClkPin( int n )

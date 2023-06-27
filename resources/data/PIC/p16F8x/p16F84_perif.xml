@@ -16,5 +16,10 @@
                        interrupt="T0_OVF"
                        prescalers="2,4,8,16,32,64,128,256">
   </timer>
-    
+  
+  <configwords name="cfgWord" type="02">
+    <word name="COINFIG1" address="0x2007" value="0" />
+    <word name="COINFIG2" address="0x2008" value="0" />
+  </configwords>
+  
 </parts>

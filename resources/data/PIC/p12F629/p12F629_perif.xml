@@ -1,15 +1,14 @@
 <parts>
-  <intosc name="intosc" type="00" />
-  
   <port name="PORTP" pins="6" outreg="GPIO" dirreg="!TRISIO" 
                      inpmask="00110111"
                      pullups="WPU"
-                     clockpins="PORTP4,PORTP5" 
                      resetpin="PORTP3">
 
         <interrupt name="IOC" mask="IOC"/>
         <extint    name="INT" pin="PORTP2" configbits="INTEDG"/>
   </port>
+  
+  <intosc name="intosc" type="00" clockpins="PORTP4,PORTP5" />
 
   <timer name="TIMER0" type="800" configregsA="OPTION"
                        counter="TMR0"

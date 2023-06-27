@@ -10,8 +10,7 @@
     <extint    name="INT" pin="PORTB0" configbits="INTEDG"/>
   </port>
 
-  <port name="PORTC" pins="8" outreg="PORTC" dirreg="!TRISC">
-  </port>
+  <port name="PORTC" pins="8" outreg="PORTC" dirreg="!TRISC" />
 
   <timer name="TIMER0" type="800" configregsA="OPTION"
                        counter="TMR0"
@@ -64,5 +63,10 @@
                      prescalers="4,16,64,0"
                      pins="PORTC4,PORTC5,PORTC3,PORTA5"/><!-- "SDI,SDO,SCK,SS" -->
   </msspunit>
+  
+  <configwords name="cfgWord" type="02">
+    <word name="COINFIG1" address="0x2007" value="0" />
+    <word name="COINFIG2" address="0x2008" value="0" />
+  </configwords>
   
 </parts>

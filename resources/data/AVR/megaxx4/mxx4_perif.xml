@@ -4,18 +4,23 @@
   <port name="PORTA" pins="8" outreg="PORTA" inreg="PINA" dirreg="DDRA">
     <interrupt name="PCINT0" mask="PCMSK0"/>
   </port>
+  
   <port name="PORTB" pins="8" outreg="PORTB" inreg="PINB" dirreg="DDRB">
       <extint name="INT2" pin="PORTB2" configbits="ISC20,ISC21"/>
     <interrupt name="PCINT1" mask="PCMSK1"/>
   </port>
+  
   <port name="PORTC" pins="8" outreg="PORTC" inreg="PINC" dirreg="DDRC">
     <interrupt name="PCINT2" mask="PCMSK2"/>
   </port>
+  
   <port name="PORTD" pins="8" outreg="PORTD" inreg="PIND" dirreg="DDRD">
     <extint name="INT0" pin="PORTD2" configbits="ISC00,ISC01"/>
     <extint name="INT1" pin="PORTD3" configbits="ISC10,ISC11"/>
     <interrupt name="PCINT3" mask="PCMSK3"/>
   </port>
+  
+  <intosc name="intosc" clockoutpin="PORTB1" />
 
   <timer name="TIMER0" type="800" counter="TCNT0" configregsA="TCCR0A" configregsB="TCCR0B"
                        clockpin="PORTB0"

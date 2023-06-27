@@ -203,12 +203,18 @@ new BoolProp<Mcu>("saveEepr" , tr("EEPROM persitent"),"", this, &Mcu::saveEepr, 
 new BoolProp<Mcu>("Logic_Symbol", tr("Logic Symbol") ,"", this, &Mcu::logicSymbol,&Mcu::setLogicSymbol, propNoCopy )
     }, 0} );
 
-    addPropGroup( { tr("Config"), {
-new BoolProp<Mcu>("Rst_enabled", tr("Enable Reset Pin")   ,"", this, &Mcu::rstPinEnabled, &Mcu::enableRstPin ),
-new BoolProp<Mcu>("Ext_Osc"    , tr("External Oscillator"),"", this, &Mcu::extOscEnabled, &Mcu::enableExtOsc ),
-new BoolProp<Mcu>("Wdt_enabled", tr("Enable WatchDog")    ,"", this, &Mcu::wdtEnabled   , &Mcu::enableWdt ),
-new BoolProp<Mcu>("Clk_Out"    , tr("Clock Out")          ,"", this, &Mcu::clockOut     , &Mcu::setClockOut )
-    }, groupNoCopy} );
+    addPropGroup( { tr("Config"), {}, groupNoCopy} );
+if( m_portRstPin )
+addProperty(tr("Config"),new BoolProp<Mcu>("Rst_enabled", tr("Enable Reset Pin")   ,"", this, &Mcu::rstPinEnabled, &Mcu::enableRstPin ) );
+
+if( m_eMcu.m_intOsc && m_eMcu.m_intOsc->clkInPin() )
+addProperty(tr("Config"),new BoolProp<Mcu>("Ext_Osc"    , tr("External Oscillator"),"", this, &Mcu::extOscEnabled, &Mcu::enableExtOsc ) );
+
+if( m_eMcu.m_wdt )
+addProperty(tr("Config"),new BoolProp<Mcu>("Wdt_enabled", tr("Enable WatchDog")    ,"", this, &Mcu::wdtEnabled   , &Mcu::enableWdt ) );
+
+if( m_eMcu.m_intOsc && m_eMcu.m_intOsc->clkOutPin() )
+addProperty(tr("Config"),new BoolProp<Mcu>("Clk_Out"    , tr("Clock Out")          ,"", this, &Mcu::clockOut     , &Mcu::setClockOut ) );
 
     addPropGroup( {"Hidden", {
 new StrProp<Mcu>("varList"  ,"","", this, &Mcu::varList,   &Mcu::setVarList),

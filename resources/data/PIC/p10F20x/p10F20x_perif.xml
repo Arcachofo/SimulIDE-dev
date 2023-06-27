@@ -10,5 +10,12 @@
                        clockpin="PORTP2"
                        prescalers="2,4,8,16,32,64,128,256">
   </timer>
-    
+  
+  <wdt name="WDT" configregsA="OPTION"
+                  prescalers="1,2,4,8,16,32,64,128"/>
+  
+  <configwords name="cfgWord" type="03">
+    <word name="COINFIG1" address="0x2007" value="0" />
+    <word name="COINFIG2" address="0x2008" value="0" />
+  </configwords>
 </parts>

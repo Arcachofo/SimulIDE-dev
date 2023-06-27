@@ -46,9 +46,9 @@ void PropDialog::setComponent( Component* comp )
     showLabel->setChecked( comp->showId() );
 
     int w=0, index=0;
-    QList<propGroup> groups = comp->properties();
+    QList<propGroup>* groups = comp->properties();
 
-    for( propGroup group : groups )
+    for( propGroup group : *groups )
     {
         if( group.flags & groupHidden ) continue;
 

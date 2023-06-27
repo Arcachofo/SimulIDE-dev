@@ -30,7 +30,8 @@
   </port>
   
   <port name="PORTL" pins="8" outreg="PORTL" inreg="PINL" dirreg="DDRL"/>
-
+  
+  <intosc name="intosc" clockoutpin="PORTE7" />
 
   <timer name="TIMER0" type="800" counter="TCNT0" configregsA="TCCR0A" configregsB="TCCR0B"
                        clockpin="PORTD7"

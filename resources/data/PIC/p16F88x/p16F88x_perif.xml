@@ -1,9 +1,5 @@
-<parts>
-  <intosc name="intosc" type="00" configregsA="OSCCON" />
-    
-  <port name="PORTA" pins="8" outreg="PORTA" dirreg="!TRISA"
-                     clockpins="PORTA6,PORTA7" >
-  </port>
+<parts>    
+  <port name="PORTA" pins="8" outreg="PORTA" dirreg="!TRISA" />
 
   <port name="PORTB" pins="8" outreg="PORTB" dirreg="!TRISB"
                      pullups="WPUB" >
@@ -13,6 +9,9 @@
   </port>
 
   <port name="PORTC" pins="8" outreg="PORTC" dirreg="!TRISC"/>
+  
+  <intosc name="intosc" type="00" configregsA="OSCCON" 
+                        clockpins="PORTA6,PORTA7" />
 
   <timer name="TIMER0" type="800" configregsA="OPTION"
                        counter="TMR0"
