@@ -18,6 +18,8 @@ class PicIntOsc : public McuIntOsc
 
         virtual void setPin( int n, McuPin* p ) override;
 
+ static PicIntOsc* createIntOsc( eMcu* mcu, QString name, QString type );
+
     protected:
         bool m_cfgWordCtrl;
 };

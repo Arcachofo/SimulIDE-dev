@@ -11,6 +11,10 @@
   </port>
 
   <port name="PORTC" pins="8" outreg="PORTC" dirreg="!TRISC" />
+  
+  <port name="PORTX" pins="1" />
+  
+  <intosc name="intosc" type="" clockoutpin="PORTX0" />
 
   <timer name="TIMER0" type="800" configregsA="OPTION"
                        counter="TMR0"

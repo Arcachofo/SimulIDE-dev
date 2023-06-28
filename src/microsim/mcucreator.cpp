@@ -244,7 +244,7 @@ void McuCreator::createCfgWord( QDomElement* e )
     QString type = e->attribute("type");
 
     ConfigWord* cfgWord = NULL;
-    if( m_core == "Pic14" )  cfgWord = PicConfigWord::createCfgWord( mcu, name, type );
+    if( m_core.startsWith("Pic14") ) cfgWord = PicConfigWord::createCfgWord( mcu, name, type );
     if( !cfgWord ) return;
 
     mcu->m_cfgWord = cfgWord;
@@ -451,9 +451,12 @@ void McuCreator::createProgBlock( QDomElement* p )
 
 void McuCreator::createIntOsc( QDomElement* p )
 {
+    QString name = p->attribute("name");
+    QString type = p->attribute("type");
+
     McuIntOsc* intOsc = NULL;
-    if( m_core == "Pic14" ) intOsc = new PicIntOsc( mcu, "intOsc");
-    else                    intOsc = new McuIntOsc( mcu, "intOsc");
+    if( m_core.startsWith("Pic14") ) intOsc = PicIntOsc::createIntOsc( mcu, name, type );
+    else                             intOsc = new McuIntOsc( mcu, "intOsc");
 
     mcu->m_modules.emplace_back( intOsc );
     mcu->m_intOsc = intOsc;

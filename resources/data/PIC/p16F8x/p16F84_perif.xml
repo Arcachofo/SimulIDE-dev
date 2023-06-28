@@ -9,6 +9,10 @@
     <interrupt name="PB_INT" mask="11110000"/>
     <extint    name="INT" pin="PORTB0" configbits="INTEDG"/>
   </port>
+  
+  <port name="PORTX" pins="1" />
+  
+  <intosc name="intosc" type="" clockoutpin="PORTX0" />
 
   <timer name="TIMER0" type="800" configregsA="OPTION"
                        counter="TMR0"

@@ -18,7 +18,7 @@
     <pin type=""    xpos="40"   ypos="56"   angle="0"   length="8"  id="PB6"  label="B6"  />
     <pin type=""    xpos="40"   ypos="48"   angle="0"   length="8"  id="PB7"  label="B7"  />
     <pin type="nc"  xpos="40"   ypos="40"   angle="0"   length="8"  id="VDD"  label="Vdd" />
-    <pin type="nc"  xpos="40"   ypos="32"   angle="0"   length="8"  id="OSC2" label="Osc" />
+    <pin type="n"   xpos="40"   ypos="32"   angle="0"   length="8"  id="PX0"  label="Osc" />
     <pin type="nc"  xpos="40"   ypos="24"   angle="0"   length="8"  id="OSC1" label="Osc" />
     <pin type=""    xpos="40"   ypos="16"   angle="0"   length="8"  id="PA0"  label="A0"  />
     <pin type=""    xpos="40"   ypos="8"    angle="0"   length="8"  id="PA1"  label="A1"  />

@@ -10,6 +10,16 @@
 #include "e_mcu.h"
 #include "mcu.h"
 
+
+PicIntOsc* PicIntOsc::createIntOsc( eMcu* mcu, QString name, QString type )
+{
+    if     ( type == ""   ) return new PicIntOsc( mcu, name );   // 16F876
+    else if( type == "00" ) return new PicIntOsc00( mcu, name ); //
+    else if( type == "01" ) return new PicIntOsc01( mcu, name ); // 16F627
+    else if( type == "02" ) return new PicIntOsc02( mcu, name ); // 16F1825
+    return NULL;
+}
+
 PicIntOsc::PicIntOsc( eMcu* mcu, QString name )
          : McuIntOsc( mcu, name )
 {
@@ -30,6 +40,7 @@ void PicIntOsc::setPin( int n, McuPin* p )
 {
     if     ( n == 0 ) m_clkOutPin = m_clkPin[0] = p; // RA6 16F886
     else if( n == 1 ) m_clkInPin  = m_clkPin[1] = p; // RA7 16F886
+    else if( n == 2 ) m_clkOutPin = p;               // Ktal2 16F876
 }
 
 // -------------------------------------------
@@ -44,7 +55,7 @@ PicIntOsc00::~PicIntOsc00(){}
 
 void PicIntOsc00::configureA( uint8_t newOSCCON )
 {
-    uint8_t ircf = getRegBitsVal(  newOSCCON, m_IRCF );
+    uint8_t ircf = getRegBitsVal( newOSCCON, m_IRCF );
     switch( ircf ) {
         case 0: m_intOscFreq = 31*1e3;  break; // 31  kHz (LFINTOSC)
         case 1: m_intOscFreq = 125*1e3; break; // 125 kHz
@@ -121,6 +132,4 @@ void PicIntOsc02::configureA( uint8_t newOSCCON )
     double freq = intOsc ? m_intOscFreq : m_mcu->component()->extFreq();
     m_mcu->setFreq( freq );
     m_psCycle = m_mcu->psCycle()/2;
-    //QString msg = intOsc ? "Internal" : "External";
-    //qDebug() << msg<< "Clock"<< freq << "Hz" <<"\n";
 }

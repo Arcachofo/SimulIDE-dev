@@ -203,7 +203,10 @@ new BoolProp<Mcu>("saveEepr" , tr("EEPROM persitent"),"", this, &Mcu::saveEepr, 
 new BoolProp<Mcu>("Logic_Symbol", tr("Logic Symbol") ,"", this, &Mcu::logicSymbol,&Mcu::setLogicSymbol, propNoCopy )
     }, 0} );
 
-    addPropGroup( { tr("Config"), {}, groupNoCopy} );
+    addPropGroup( { tr("Config"), {
+new ComProperty( "", tr("Changes applied after Simulation Restart"),"","",0),
+                    }, groupNoCopy} );
+
 if( m_portRstPin )
 addProperty(tr("Config"),new BoolProp<Mcu>("Rst_enabled", tr("Enable Reset Pin")   ,"", this, &Mcu::rstPinEnabled, &Mcu::enableRstPin ) );
 
