@@ -126,6 +126,12 @@ void FileBrowser::searchFiles( QString filter )
     }
 }
 
+void FileBrowser::mouseDoubleClickEvent( QMouseEvent* event )
+{
+    event->accept();
+    open();
+}
+
 void FileBrowser::contextMenuEvent( QContextMenuEvent* event )
 {
     QTreeView::contextMenuEvent( event );
