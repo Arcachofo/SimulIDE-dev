@@ -160,6 +160,7 @@ void FileWidget::pathChanged()
 void FileWidget::contextMenuEvent( QContextMenuEvent* event )
 {
     QListWidgetItem* item =  m_bookmarks->currentItem();
+    if( !item ) return;
     
     if( m_bookmarkList.contains( item->data( 4 ).toString() ) )
     {
