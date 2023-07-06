@@ -104,8 +104,8 @@ TextComponent::~TextComponent()
 
 void TextComponent::updateStep()
 {
-    if( !m_changed ) return;
-    m_changed = false;
+    //if( !m_changed ) return;
+    //m_changed = false;
 
     QString text = m_textString;
 
