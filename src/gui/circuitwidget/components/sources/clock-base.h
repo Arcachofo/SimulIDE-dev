@@ -27,9 +27,11 @@ class MAINMODULE_EXPORT ClockBase : public FixedVolt
         virtual void setFreq( double freq );
 
         bool running() { return m_isRunning; }
-        virtual void setRunning( bool running );
+        void setRunning( bool running );
 
         virtual void setOut( bool ) override {;}
+
+        virtual void setLinkedValue( int v, int i=0 ) override;
 
     public slots:
         virtual void onbuttonclicked() override;

@@ -85,4 +85,9 @@ void ClockBase::setRunning( bool running )
     update();
 }
 
+void ClockBase::setLinkedValue( int v, int )
+{
+    setFreq( v );
+}
+
 void ClockBase::onbuttonclicked() { setRunning( !m_isRunning ); }
