@@ -28,7 +28,7 @@ Component* LAnalizer::construct( QObject* parent, QString type, QString id )
 LibraryItem* LAnalizer::libraryItem()
 {
     return new LibraryItem(
-        tr( "Logic Analizer" ),
+        tr( "Logic Analyzer" ),
         "Meters",
         "lanalizer.png",
         "LAnalizer",

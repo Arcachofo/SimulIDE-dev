@@ -160,7 +160,7 @@ void LaWidget::on_condEdit_editingFinished()
 
 void LaWidget::on_exportData_clicked()
 {
-    QString fileName = QFileDialog::getSaveFileName( this, tr("Save Circuit"), m_analizer->getExportFile(),
+    QString fileName = QFileDialog::getSaveFileName( this, tr("Export Data"), m_analizer->getExportFile(),
                                                      tr("VCD files (*.vcd);;All files (*.*)") );
     if( fileName.isEmpty() ) return;
     if( !fileName.endsWith(".vcd") ) fileName += ".vcd";
