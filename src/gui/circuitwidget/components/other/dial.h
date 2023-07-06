@@ -23,6 +23,12 @@ class MAINMODULE_EXPORT Dial : public Dialed, public Linkable
 
         virtual void updateStep() override;
 
+         int maxVal()  { return m_maxVal; }
+         virtual void setMaxVal( int max );
+
+         int minVal() { return m_minVal; }
+         virtual void setMinVal( int min );
+
         bool slider() { return m_slider; }
         void setSlider( bool s );
 
@@ -36,6 +42,9 @@ class MAINMODULE_EXPORT Dial : public Dialed, public Linkable
     protected:
         virtual void contextMenuEvent( QGraphicsSceneContextMenuEvent* event ) override;
         virtual void updateProxy() override;
+
+        int m_minVal;
+        int m_maxVal;
 };
 
 #endif

@@ -16,6 +16,7 @@
 #include "itemlibrary.h"
 
 #include "boolprop.h"
+#include "intprop.h"
 #include "stringprop.h"
 
 Component* Dial::construct( QObject* parent, QString type, QString id )
@@ -34,9 +35,13 @@ LibraryItem* Dial::libraryItem()
 Dial::Dial( QObject* parent, QString type, QString id )
     : Dialed( parent, type, id )
 {
+    m_area = QRectF(-12,-4.5, 24, 12.5 );
+
     m_graphical = true;
     m_linkable  = true;
-    m_area = QRectF(-12,-4.5, 24, 12.5 );
+
+    m_minVal = 0;
+    m_maxVal = 1000;
 
     setValLabelPos( 15,-20, 0 );
     setLabelPos(-16,-40, 0);
@@ -45,6 +50,10 @@ Dial::Dial( QObject* parent, QString type, QString id )
 
     Simulator::self()->addToUpdateList( this );
 
+    addPropGroup( { tr("Main"), {
+new IntProp<Dial>( "Min_Val", tr("Minimum Value"), "", this, &Dial::minVal, &Dial::setMinVal ),
+new IntProp<Dial>( "Max_Val", tr("Maximum Value"), "", this, &Dial::maxVal, &Dial::setMaxVal )
+    },0 } );
     addPropGroup( { tr("Dial"), Dialed::dialProps(), groupNoCopy } );
     addPropGroup( { "Hidden", {
 new StrProp<Dial>("Links", "Links","", this, &Dial::getLinks , &Dial::setLinks )
@@ -57,12 +66,31 @@ void Dial::updateStep()
     if( !m_needUpdate ) return;
     m_needUpdate = false;
 
-    int v = m_dialW.value();
+    int range = m_maxVal - m_minVal;
+    int v = m_minVal + m_dialW.value()*range/1000;
     for( int i=0; i<m_linkedComp.size(); ++i )
     {
         Component* comp = m_linkedComp.at( i );
         comp->setLinkedValue( v );  //update();
     }
+}
+
+void Dial::setMinVal( int min )
+{
+    if( min < 0    ) min = 0;
+    if( min > m_maxVal ) min = m_maxVal;
+    m_minVal = min;
+
+    m_needUpdate = true;
+}
+
+void Dial::setMaxVal( int max )
+{
+    if( max < 0 ) max = 0;
+    if( max < m_minVal ) max = m_minVal;
+    m_maxVal = max;
+
+    m_needUpdate = true;
 }
 
 /*void Dial::compSelected( Component* comp )
