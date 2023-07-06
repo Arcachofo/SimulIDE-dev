@@ -227,14 +227,25 @@ void IoComponent::setOpenCol( bool op )
     Simulator::self()->resumeSim();
 }
 
+void IoComponent::setPropDelay( double pd )
+{
+    if( pd < 1e-12 ) pd = 1e-12;
+    if( pd > 1e6   ) pd = 1e6;
+    m_propDelay = pd*1e12;
+}
+
 void IoComponent::setRiseTime( double time )
 {
+    if( time < 1e-12 ) time = 1e-12;
+    if( time > 1e6   ) time = 1e6;
     m_timeLH = time*1e12;
     for( IoPin* pin : m_outPin ) pin->setRiseTime( m_timeLH*1.25 );
 }
 
 void IoComponent::setFallTime( double time )
 {
+    if( time < 1e-12 ) time = 1e-12;
+    if( time > 1e6   ) time = 1e6;
     m_timeHL = time*1e12;
     for( IoPin* pin : m_outPin ) pin->setFallTime( m_timeHL*1.25 );
 }

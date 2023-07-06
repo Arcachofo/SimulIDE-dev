@@ -56,7 +56,7 @@ class MAINMODULE_EXPORT IoComponent : public Component
         void setPropSize( double g ) { m_propSize = g; }
 
         double propDelay() { return m_propDelay*1e-12; }
-        void setPropDelay( double pd ) { m_propDelay = pd*1e12; }
+        void setPropDelay( double pd );
 
         double riseTime() { return m_timeLH*1e-12; }
         void setRiseTime( double time );
