@@ -98,10 +98,10 @@ class MAINMODULE_EXPORT IoComponent : public Component
         std::queue<uint64_t> m_timeQueue;
         //uint m_nextOutDir;
 
-        uint64_t m_propDelay; // Propagation delay
-        uint64_t m_timeLH;    // Time for Output voltage to switch from 10% to 90% (1 gate)
-        uint64_t m_timeHL;    // Time for Output voltage to switch from 90% to 10% (1 gate)
-        double m_propSize;    // Nunmber of gates for total Propagation delay
+        double m_propDelay; // Propagation delay
+        double m_timeLH;    // Time for Output voltage to switch from 10% to 90% (1 gate)
+        double m_timeHL;    // Time for Output voltage to switch from 90% to 10% (1 gate)
+        double m_propSize;  // Nunmber of gates for total Propagation delay
         //bool m_rndPD;         // Randomize Propagation Delay
 
         double m_inHighV;  // currently in eClockedDevice
