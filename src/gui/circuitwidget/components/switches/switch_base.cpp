@@ -46,6 +46,11 @@ void SwitchBase::updateStep()
         update();
 }   }
 
+void SwitchBase::setAngle( double angle )
+{
+    SwitchBase::rotateAngle( angle );
+}
+
 void SwitchBase::rotateAngle( double a )
 {
     Component::rotateAngle( a );

@@ -41,7 +41,7 @@ class MAINMODULE_EXPORT Component : public CompBase, public QGraphicsItem, publi
         void setPosition( QPointF pos ) { setPos( pos ); }
 
         double getAngle() { return rotation(); }
-        void setAngle( double angle ) { rotateAngle( angle ); }
+        virtual void setAngle( double angle ) { setRotation( angle ); }
 
         QString idLabel();
         void setIdLabel( QString id );

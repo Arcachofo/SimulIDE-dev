@@ -19,6 +19,7 @@ class MAINMODULE_EXPORT SwitchBase : public MechContact
 
         virtual void updateStep() override;
 
+        virtual void setAngle( double angle ) override;
         virtual void rotateAngle( double a ) override;
         void rotateText( double angle );
 
