@@ -63,8 +63,8 @@
                   prescalers="1,2,4,8,16,32,64,128"/>
 
   <configwords name="cfgWord" type="04">
-    <word name="COINFIG1" address="0x8007" value="0" />
-    <word name="COINFIG2" address="0x8008" value="0" />
+    <word name="COINFIG1" address="0x8007" value="0xFF" />
+    <word name="COINFIG2" address="0x8008" value="0xFF" />
   </configwords>
   
 </parts>
