@@ -49,7 +49,7 @@ class EditorWidget : public QWidget
         bool saveAs();
         void closeTab(int);
         void documentWasModified();
-        //void tabChanged( int tab );
+        void tabChanged( int tab );
 
 
         void cut()   { getCodeEditor()->cut(); }

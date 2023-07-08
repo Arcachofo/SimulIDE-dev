@@ -345,10 +345,11 @@ void EditorWidget::documentWasModified()
     if( doc->isUndoAvailable() ) undoAct->setEnabled( true );
 }
 
-/*void EditorWidget::tabChanged( int tab )
+void EditorWidget::tabChanged( int )
 {
     //qDebug() << "EditorWindow::tabChanged" << m_docWidget->currentIndex() << tab;
-}*/
+    m_findRepDialog->setEditor( getCodeEditor() );
+}
 
 void EditorWidget::closeTab( int index )
 {
@@ -366,11 +367,14 @@ void EditorWidget::closeTab( int index )
     {
         enableFileActs( false );
         enableDebugActs( false );
+        m_findRepDialog->hide();
     }
 
     int last = m_docWidget->count()-1;
-    if( index > last ) m_docWidget->setCurrentIndex( last );
-    else               m_docWidget->setCurrentIndex( index );
+    if( index > last ) index = last;
+    m_docWidget->setCurrentIndex( index );
+
+    m_findRepDialog->setEditor( getCodeEditor() );
 }
 
 void EditorWidget::confEditor()
@@ -507,7 +511,7 @@ void EditorWidget::createWidgets()
     connect( m_docWidget, SIGNAL( tabCloseRequested(int)),
              this,        SLOT(   closeTab(int)), Qt::UniqueConnection);
 
-    //connect( m_docWidget, SIGNAL(currentChanged(int)), this, SLOT(tabChanged(int)), Qt::UniqueConnection);
+    connect( m_docWidget, SIGNAL(currentChanged(int)), this, SLOT(tabChanged(int)), Qt::UniqueConnection);
 
     m_findRepDialog = new FindReplace( this );
     m_findRepDialog->setModal( false );
