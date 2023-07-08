@@ -66,8 +66,9 @@ void Dial::updateStep()
     if( !m_needUpdate ) return;
     m_needUpdate = false;
 
+    int v = m_dialW.value();
     int range = m_maxVal - m_minVal;
-    int v = m_minVal + m_dialW.value()*range/1000;
+    v = m_minVal + v*range/1000;
     for( int i=0; i<m_linkedComp.size(); ++i )
     {
         Component* comp = m_linkedComp.at( i );

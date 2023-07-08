@@ -207,8 +207,9 @@ void Component::mouseMoveEvent( QGraphicsSceneMouseEvent* event )
     }
     event->accept();
     
-    QPointF delta(0,0);
-    if( m_boardMode ) delta = event->scenePos() - event->lastScenePos();
+    QPointF delta( 0, 0 );
+    if( m_boardMode && event->modifiers() == Qt::ControlModifier )
+         delta = event->scenePos() - event->lastScenePos();
     else delta = toGrid(event->scenePos()) - toGrid(event->lastScenePos());
 
     if( !(fabs( delta.x() )> 0) && !(fabs( delta.y() )> 0) ) return;

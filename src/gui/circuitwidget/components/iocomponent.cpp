@@ -39,9 +39,9 @@ QList<ComProperty*> IoComponent::inputProps()
 {
     return {
 new ComProperty( "", tr("Inputs:"),"","",0),
-new DoubProp<IoComponent>( "Input_High_V", tr("Low to High Threshold"),"V", this, &IoComponent::inputHighV, &IoComponent::setInputHighV ),
-new DoubProp<IoComponent>( "Input_Low_V" , tr("High to Low Threshold"),"V", this, &IoComponent::inputLowV,  &IoComponent::setInputLowV ),
-new DoubProp<IoComponent>( "Input_Imped" , tr("Input Impedance")      ,"Ω", this, &IoComponent::inputImp,   &IoComponent::setInputImp ) };
+new DoubProp<IoComponent>( "Input_High_V", tr("Low to High Threshold"),"V" , this, &IoComponent::inputHighV, &IoComponent::setInputHighV ),
+new DoubProp<IoComponent>( "Input_Low_V" , tr("High to Low Threshold"),"V" , this, &IoComponent::inputLowV,  &IoComponent::setInputLowV ),
+new DoubProp<IoComponent>( "Input_Imped" , tr("Input Impedance")      ,"MΩ", this, &IoComponent::inputImp,   &IoComponent::setInputImp ) };
 }
 
 QList<ComProperty*> IoComponent::outputProps()
