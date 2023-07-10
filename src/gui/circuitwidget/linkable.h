@@ -19,6 +19,8 @@ class MAINMODULE_EXPORT Linkable
         QString getLinks();
         void setLinks( QString links );
 
+        Component* getLinkedComp( int i ) { return m_linkedComp.value( i ); }
+
         bool hasLinks() { return !m_linkedStr.isEmpty(); }
 
         void startLinking();

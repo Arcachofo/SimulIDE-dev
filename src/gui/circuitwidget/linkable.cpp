@@ -11,7 +11,10 @@
 #include "circuit.h"
 
 Linkable::Linkable(){}
-Linkable::~Linkable(){}
+Linkable::~Linkable()
+{
+    if( Component::m_selecComp == this ) Linkable::compSelected( NULL ); // Cancel link to components
+}
 
 QString Linkable::getLinks()
 {

@@ -94,10 +94,7 @@ class MAINMODULE_EXPORT Mcu : public Chip, public Linkable
         virtual Pin* addPin( QString id, QString type, QString label,
                              int pos, int xpos, int ypos, int angle , int length=8) override;
 
-        //void createCfgWord( QString name, uint16_t addr, uint16_t v );
         void setScriptLinkable( ScriptCpu* l) { m_scriptLink = l; } // Called from script
-        void setLinkedVal( int index, int v, int i=0 );             // Called from script
-        void setLinkedStr( int index, QString str, int i=0 );       // Called from script
 
         virtual void setLinkedValue( int v, int i=0  ) override;
         virtual void setLinkedString( QString str, int i=0 ) override;

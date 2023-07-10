@@ -63,6 +63,7 @@ class MAINMODULE_EXPORT ScriptCpu : public ScriptModule, public McuCpu
         McuPort* getMcuPort( const string portName );
         McuPin*  getMcuPin( const string pinName );
 
+        string getPropStr( int index, const string p );               // Called from script:Get property p from linked component at index
         void setLinkedValue( int index, int v, int i=0  );            // Called from script
         void setLinkedString( int index, const string str, int i=0 ); // Called from script
         void setLinkedVal( int v, int i=0 );                          // Called from C++
@@ -74,6 +75,7 @@ class MAINMODULE_EXPORT ScriptCpu : public ScriptModule, public McuCpu
         Mcu* m_mcuComp;
         asIScriptFunction* m_reset;
         asIScriptFunction* m_voltChanged;
+        asIScriptFunction* m_updateStep;
         asIScriptFunction* m_runEvent;
         asIScriptFunction* m_extClock;
         asIScriptFunction* m_INTERRUPT;

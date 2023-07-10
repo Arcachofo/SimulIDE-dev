@@ -123,6 +123,10 @@ ScriptCpu::ScriptCpu( eMcu* mcu )
                                    , asMETHODPR( ScriptCpu, INTERRUPT, (uint32_t), void)
                                    , asCALL_THISCALL );
 
+    m_aEngine->RegisterObjectMethod("ScriptCpu", "string getPropStr( int index, const string p )"
+                                   , asMETHODPR( ScriptCpu, getPropStr, (int,const string), string)
+                                   , asCALL_THISCALL );
+
     m_aEngine->RegisterObjectMethod("ScriptCpu", "void setLinkedValue( int index, int v, int i )"
                                    , asMETHODPR( ScriptCpu, setLinkedValue, (int,int,int), void)
                                    , asCALL_THISCALL );
@@ -154,6 +158,7 @@ int ScriptCpu::compileScript()
 
     m_reset       = m_aEngine->GetModule(0)->GetFunctionByDecl("void reset()");
     m_voltChanged = m_aEngine->GetModule(0)->GetFunctionByDecl("void voltChanged()");
+    m_updateStep  = m_aEngine->GetModule(0)->GetFunctionByDecl("void updateStep()");
     m_runEvent    = m_aEngine->GetModule(0)->GetFunctionByDecl("void runEvent()");
     m_INTERRUPT   = m_aEngine->GetModule(0)->GetFunctionByDecl("void INTERRUPT( uint vector )");
     m_extClock    = m_aEngine->GetModule(0)->GetFunctionByDecl("void extClock( bool clkState )");
@@ -199,6 +204,9 @@ void ScriptCpu::updateStep()
 {
     if( !m_changed ) return;
     m_changed = false;
+
+    if( m_updateStep ) callFunction( m_updateStep );
+
     m_mcuComp->setValLabelText( m_value );
 }
 
@@ -410,12 +418,32 @@ McuPin* ScriptCpu::getMcuPin( const string pinName )
     return pin;
 }
 
-void ScriptCpu::setLinkedValue( int index, int v, int i ) { m_mcuComp->setLinkedVal( index, v, i ); }
+
+//---- Linked --------------------------------------------
+
+string ScriptCpu::getPropStr( int index, const string p  )
+{
+    Component* comp = m_mcuComp->getLinkedComp( index );
+    if( !comp ) return "";
+
+    QString propValue = comp->getPropStr( QString::fromStdString( p) );
+    return propValue.toStdString();
+}
+
+void ScriptCpu::setLinkedValue( int index, int v, int i )
+{
+    Component* comp = m_mcuComp->getLinkedComp( index );
+    if( !comp ) return;
+
+    comp->setLinkedValue( v, i );
+}
 
 void ScriptCpu::setLinkedString( int index, string str, int i )
 {
-    QString s = QString::fromStdString( str );
-    m_mcuComp->setLinkedStr( index, s, i );
+    Component* comp = m_mcuComp->getLinkedComp( index );
+    if( !comp ) return;
+
+    comp->setLinkedString( QString::fromStdString( str ), i );
 }
 
 void ScriptCpu::setLinkedVal( int v, int i )

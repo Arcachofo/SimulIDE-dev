@@ -73,7 +73,7 @@ void ComponentSelector::LoadCompSetAt( QDir compSetDir )
 
     QStringList xmlList = compSetDir.entryList( QDir::Files );
 
-    if( xmlList.isEmpty() ) return;                  // No comp sets to load
+    //if( xmlList.isEmpty() ) return;                  // No comp sets to load
 
     qDebug() << "\n" << tr("    Loading Component sets at:")<< "\n" << compSetDir.absolutePath()<<"\n";
 
