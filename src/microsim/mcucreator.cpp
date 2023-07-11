@@ -197,12 +197,12 @@ int McuCreator::processFile( QString fileName, bool main )
                 QDomElement e = node.toElement();
                 QString  part = e.tagName();
 
-                if( part == "properties" )
+                if( part == "propertygroup" )
                 {
                     QString group = e.attribute("name");
 
                     QList<ComProperty*> propList;
-                    m_mcuComp->addPropGroup( {group, propList} );
+                    m_mcuComp->addPropGroup( {group, propList, 0} );
 
                     QDomNode node = e.firstChild();
                     while( !node.isNull() )
