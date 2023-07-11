@@ -49,14 +49,14 @@ LedBase::LedBase( QObject* parent, QString type, QString id )
 
     addPropGroup( { tr("Main"), {
 new StrProp <LedBase>("Color"   , tr("Color")   ,"", this, &LedBase::colorStr, &LedBase::setColorStr,0,"enum" ),
-new BoolProp<LedBase>("Grounded", tr("Grounded"),"", this, &LedBase::grounded, &LedBase::setGrounded),
-    }, groupNoCopy} );
+new BoolProp<LedBase>("Grounded", tr("Grounded"),"", this, &LedBase::grounded, &LedBase::setGrounded, propNoCopy ),
+    }, 0} );
 
     addPropGroup( { tr("Electric"), {
 new DoubProp<LedBase>("Threshold" , tr("Forward Voltage"),"V", this, &LedBase::threshold,  &LedBase::setThreshold ),
 new DoubProp<LedBase>("MaxCurrent", tr("Max Current")    ,"A", this, &LedBase::maxCurrent, &LedBase::setMaxCurrent ),
 new DoubProp<LedBase>("Resistance", tr("Resistance")     ,"Ω", this, &LedBase::res,        &LedBase::setRes ),
-    }, groupNoCopy} );
+    }, 0} );
 }
 LedBase::~LedBase(){}
 

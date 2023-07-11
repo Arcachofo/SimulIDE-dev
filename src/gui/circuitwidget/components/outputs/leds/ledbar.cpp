@@ -42,15 +42,15 @@ LedBar::LedBar( QObject* parent, QString type, QString id )
     setValLabelPos(-16,-44-12, 0);
 
     addPropGroup( { tr("Main"), {
-new IntProp <LedBar>("Size"    , tr("Size"),"_Leds", this, &LedBar::size    , &LedBar::setSize ),
+new IntProp <LedBar>("Size"    , tr("Size"),"_Leds", this, &LedBar::size    , &LedBar::setSize, propNoCopy ),
 new StrProp <LedBar>("Color"   , tr("Color")   ,"" , this, &LedBar::colorStr, &LedBar::setColorStr,0,"enum" ),
-new BoolProp<LedBar>("Grounded", tr("Grounded"),"" , this, &LedBar::grounded, &LedBar::setGrounded),
-    }, groupNoCopy} );
+new BoolProp<LedBar>("Grounded", tr("Grounded"),"" , this, &LedBar::grounded, &LedBar::setGrounded, propNoCopy ),
+    }, 0} );
     addPropGroup( { tr("Electric"), {
 new DoubProp<LedBar>("Threshold" , tr("Forward Voltage"),"V", this, &LedBar::threshold,  &LedBar::setThreshold ),
 new DoubProp<LedBar>("MaxCurrent", tr("Max Current")    ,"A", this, &LedBar::maxCurrent, &LedBar::setMaxCurrent ),
 new DoubProp<LedBar>("Resistance", tr("Resistance")     ,"Ω", this, &LedBar::res,        &LedBar::setRes ),
-    }, groupNoCopy} );
+    }, 0} );
 }
 LedBar::~LedBar(){}
 
