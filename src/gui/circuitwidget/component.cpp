@@ -555,7 +555,7 @@ void Component::remSignalPin( Pin* pin )
     m_signalPin.removeAll( pin );
 }
 
-void Component::setHidden(bool hid, bool hidArea, bool hidLabel )
+void Component::setHidden( bool hid, bool hidArea, bool hidLabel )
 {
     m_hidden = hid;
 
@@ -563,10 +563,12 @@ void Component::setHidden(bool hid, bool hidArea, bool hidLabel )
     else this->setVisible( !hid );
 
     if( hidLabel ){
-        setShowId( false );
-
+        m_valLabel->setVisible( false );
+        m_idLabel->setVisible( false );
+    }else{
+        m_valLabel->setVisible( m_showVal );
+        m_idLabel->setVisible( m_showId );
     }
-    m_valLabel->setVisible( !hidLabel ); //setShowProp("");
 }
 
 /*QString Component::print()

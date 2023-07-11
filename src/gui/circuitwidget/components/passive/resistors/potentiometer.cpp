@@ -41,8 +41,10 @@ Potentiometer::Potentiometer( QObject* parent, QString type, QString id )
              , m_resA(  id+"-resA" )
              , m_resB(  id+"-resB" )
 {
+    m_areaDial = QRectF(-11,-28 , 22, 22 );
+    m_areaComp = QRectF(-12,-4.5, 24, 12.5 );
+    m_area     = m_areaComp;
     m_graphical = true;
-    m_area = QRectF(-12,-4.5, 24, 12.5 );
 
     m_midEnode = NULL;
 

@@ -17,8 +17,10 @@
 Dialed::Dialed( QObject* parent, QString type, QString id )
       : Component( parent, type, id )
 {
+    m_areaDial = QRectF(-11, 8, 22, 22 );
+    m_areaComp = QRectF(-11,-11, 22, 16 );
+    m_area     = m_areaComp;
     m_graphical = true;
-    m_area = QRectF( -12, -4.5, 24, 12.5 );
 
     setValLabelPos( 15,-20, 0 );
     setLabelPos(-16,-40, 0);
@@ -73,5 +75,15 @@ void Dialed::setSlider( bool s )
              this,           &Dialed::dialChanged, Qt::UniqueConnection );
 
     updateProxy();
+}
+
+void Dialed::setHidden( bool hide, bool hidArea, bool hidLabel )
+{
+    Component::setHidden( hide, hidArea, hidLabel );
+    if  ( hidArea ) m_area = QRectF( 0, 0,-4,-4 );
+    else if( hide ) m_area = m_areaDial;
+    else            m_area = m_areaComp;
+
+    m_proxy->setFlag( QGraphicsItem::ItemStacksBehindParent, hide && !hidArea );
 }
 

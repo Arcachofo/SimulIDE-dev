@@ -24,6 +24,8 @@ class MAINMODULE_EXPORT Dialed : public Component
         double scale() { return m_dialW.scale(); }
         void setScale( double s ) { m_dialW.setScale(s); updateProxy(); }
 
+        virtual void setHidden( bool hid, bool hidArea=false, bool hidLabel=false ) override;
+
         virtual void setLinked( bool l ) override;
         virtual void setLinkedValue( int v, int i=0 ) override;
 
@@ -35,6 +37,9 @@ class MAINMODULE_EXPORT Dialed : public Component
 
         bool m_needUpdate;
         bool m_slider;
+
+        QRectF m_areaDial;
+        QRectF m_areaComp;
 
         DialWidget m_dialW;
         QGraphicsProxyWidget* m_proxy;

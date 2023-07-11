@@ -257,7 +257,7 @@ void SubPackage::setBoardMode( bool mode )
             comp->setPos( comp->circPos() );
             comp->setRotation( comp->circRot() );
         }
-        comp->setHidden( mode );
+        comp->setHidden( mode, false, mode );
     }
 }
 

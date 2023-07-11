@@ -34,7 +34,8 @@ LibraryItem* Strain::libraryItem()
 Strain::Strain( QObject* parent, QString type, QString id )
       : VarResBase( parent, type, id )
 {
-    m_area = QRectF( -12,-20, 24, 24 );
+    m_areaComp = QRectF(-12,-20, 24, 24 );
+    m_area     = m_areaComp;
 
     setVal( 0 );  // start at 0 °C
 
@@ -117,6 +118,8 @@ double Strain::sensorFunction(double forceN )
 
 void Strain::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
 {
+    if( m_hidden ) return;
+
     Component::paint( p, option, widget );
     p->drawRect(-11,-20, 22, 24 );
     p->fillRect(-8,-2, 4, 4, Qt::black );

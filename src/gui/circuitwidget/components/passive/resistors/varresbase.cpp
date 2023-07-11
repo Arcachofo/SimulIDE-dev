@@ -18,7 +18,6 @@ VarResBase::VarResBase( QObject* parent, QString type, QString id )
           : Dialed( parent, type, id )
           , eResistor( id )
 {
-    m_area = QRectF(-11,-11, 22, 16 );
     m_graphical = true;
 
     m_pin.resize(2);
