@@ -174,9 +174,9 @@ void Component::mousePressEvent( QGraphicsSceneMouseEvent* event )
         if( m_selecComp )
         {
             m_selecComp->compSelected( this );
-            return;
+            //return;
         }
-        if( event->modifiers() == Qt::ControlModifier ) setSelected( !isSelected() );
+        else if( event->modifiers() == Qt::ControlModifier ) setSelected( !isSelected() );
         else{
             QList<QGraphicsItem*> itemlist = Circuit::self()->selectedItems();
             if( !isSelected() )     // Unselect everything and select this

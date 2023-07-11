@@ -170,6 +170,7 @@ void CircuitView::contextMenuEvent( QContextMenuEvent* event )
         if( Component::m_selecComp ) // Cancel link to components
         {
             Component::m_selecComp->compSelected( NULL );
+            Component::m_selecComp = NULL;
             return;
         }
 
