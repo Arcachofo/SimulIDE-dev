@@ -6,6 +6,7 @@
 #include "serialmon.h"
 #include "usartmodule.h"
 #include "simulator.h"
+#include "utils.h"
 
 SerialMonitor::SerialMonitor( QWidget* parent, UsartModule* usart )
              : QDialog( parent )
@@ -21,7 +22,7 @@ SerialMonitor::SerialMonitor( QWidget* parent, UsartModule* usart )
     panelLayout->addWidget( &m_uartOutPanel );
 
     m_usart = usart;
-    m_printASCII = true;
+    m_printMode = 0;
     m_addCR = false;
 
     Simulator::self()->addToUpdateList( this );
@@ -52,42 +53,37 @@ void SerialMonitor::on_value_returnPressed()
     m_outBuffer.append( value->text().toInt() );
 }
 
-void SerialMonitor::on_valueButton_clicked()
+void SerialMonitor::on_printBox_currentIndexChanged( int index )
 {
-    m_printASCII = !valueButton->isChecked(); // Button is not yet checked
-    asciiButton->setChecked( m_printASCII );
-}
-
-void SerialMonitor::on_asciiButton_clicked()
-{
-    m_printASCII = asciiButton->isChecked();  // Button is not yet checked
-    valueButton->setChecked( !m_printASCII );
+    //qDebug() << index;
+    m_printMode = index;
 }
 
 void SerialMonitor::printIn( int value ) // Receive one byte on Uart
 {
-    uint8_t byte = value & 0xFF;
-
-    QString text = "";
-    if( m_printASCII )
-    {
-        if( value == 0 ) return;
-        text.append( byte );
-    }
-    else text = QString::number( byte )+" ";
-
-    m_uartInPanel.appendText( text );
+    m_uartInPanel.appendText( valToString( value ) );
 }
 
 void SerialMonitor::printOut( int value ) // Send value to OutPanelText
 {
-    uint8_t byte = value & 0xFF;
+    m_uartOutPanel.appendText( valToString( value ) );
+}
+
+QString SerialMonitor::valToString( int val )
+{
+    uint8_t byte = val & 0xFF;
 
     QString text = "";
-    if( m_printASCII ) text.append( byte );
-    else               text = QString::number( byte )+" ";
 
-    m_uartOutPanel.appendText( text );
+    switch ( m_printMode )
+    {
+        case 0: text.append( byte );                 break; // ASCII
+        case 1: text = decToBase( byte, 16, 2 )+" "; break; // HEX
+        case 2: text = decToBase( byte, 10, 3 )+" "; break; // DEC
+        case 3: text = decToBase( byte,  8, 3 )+" "; break; // OCT
+        case 4: text = decToBase( byte,  2, 8 )+" ";        // BIN
+    }
+    return text;
 }
 
 void SerialMonitor::closeEvent( QCloseEvent *event )

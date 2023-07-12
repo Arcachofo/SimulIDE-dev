@@ -29,22 +29,23 @@ class SerialMonitor : public QDialog, private Ui::SerialMonitor, public Updatabl
     public slots:
         void on_text_returnPressed();
         void on_value_returnPressed();
-        void on_valueButton_clicked();
-        void on_asciiButton_clicked();
+        void on_printBox_currentIndexChanged( int index );
         void on_addCrButton_clicked() { m_addCR = addCrButton->isChecked(); }
         void on_clearIn_clicked() { m_uartInPanel.clear(); }
         void on_clearOut_clicked() { m_uartOutPanel.clear(); }
 
     protected:
-        void closeEvent( QCloseEvent* event );
+        void closeEvent( QCloseEvent* event ) override;
 
     private:
+        QString valToString( int val );
+
         OutPanelText m_uartInPanel;
         OutPanelText m_uartOutPanel;
 
         UsartModule* m_usart;
 
-        bool m_printASCII;
+        int  m_printMode;
         bool m_addCR;
 
         QByteArray m_outBuffer;
