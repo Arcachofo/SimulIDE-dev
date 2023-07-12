@@ -44,7 +44,7 @@ Rail::Rail( QObject* parent, QString type, QString id )
 
     addPropGroup( { tr("Main"), {
 new DoubProp<Rail>( "Voltage", tr("Voltage"),"V", this, &Rail::volt, &Rail::setVolt )
-    }} );
+    }, 0} );
 
     setShowProp("Voltage");
     setPropStr( "Voltage", "5" );

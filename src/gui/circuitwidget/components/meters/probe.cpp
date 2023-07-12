@@ -56,9 +56,9 @@ Probe::Probe( QObject* parent, QString type, QString id )
     Simulator::self()->addToUpdateList( this );
 
     addPropGroup( { tr("Main"), {
-new BoolProp<Probe>( "ShowVolt" , tr("Show Voltage"), "" , this, &Probe::showVal,   &Probe::setShowVal ),
+new BoolProp<Probe>( "ShowVolt" , tr("Show Voltage"), "" , this, &Probe::showVal,   &Probe::setShowVal, propNoCopy ),
 new DoubProp<Probe>( "Threshold", tr("Threshold")   , "V", this, &Probe::threshold, &Probe::setThreshold )
-    }, groupNoCopy } );
+    }, 0 } );
 }
 Probe::~Probe(){}
 

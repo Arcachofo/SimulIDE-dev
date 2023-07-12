@@ -59,7 +59,7 @@ LedRgb::LedRgb( QObject* parent, QString type, QString id )
     Simulator::self()->addToUpdateList( this );
 
     addPropGroup( { tr("Electric"), {
-new BoolProp<LedRgb>( "CommonCathode", tr("Common Cathode"),"",  this, &LedRgb::isComCathode, &LedRgb::setComCathode),
+new BoolProp<LedRgb>( "CommonCathode", tr("Common Cathode"),"",  this, &LedRgb::isComCathode, &LedRgb::setComCathode, propNoCopy),
 new ComProperty( "", tr("Red:"),"","",0),
 new DoubProp<LedRgb>( "Threshold_R" , tr("Forward Voltage"),"V", this, &LedRgb::threshold_R,  &LedRgb::setThreshold_R ),
 new DoubProp<LedRgb>( "MaxCurrent_R", tr("Max Current")    ,"A", this, &LedRgb::maxCurrent_R, &LedRgb::setMaxCurrent_R ),
@@ -72,7 +72,7 @@ new ComProperty( "", tr("Blue:"),"","",0),
 new DoubProp<LedRgb>( "Threshold_B" , tr("Forward Voltage"),"V", this, &LedRgb::threshold_B,  &LedRgb::setThreshold_B ),
 new DoubProp<LedRgb>( "MaxCurrent_B", tr("Max Current")    ,"A", this, &LedRgb::maxCurrent_B, &LedRgb::setMaxCurrent_B ),
 new DoubProp<LedRgb>( "Resistance_B", tr("Resistance")     ,"Ω", this, &LedRgb::res_B,        &LedRgb::setRes_B )
-    }, groupNoCopy} );
+    }, 0} );
 }
 LedRgb::~LedRgb(){}
 
