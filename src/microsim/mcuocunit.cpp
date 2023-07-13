@@ -21,6 +21,9 @@ McuOcUnit::~McuOcUnit( ){}
 
 void McuOcUnit::initialize()
 {
+    m_comMatch = 0;
+    m_extMatch = 0;
+
     m_enabled = false;
     m_ctrlPin = false;
     m_mode = 0;
