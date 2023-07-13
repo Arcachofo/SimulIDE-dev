@@ -59,9 +59,9 @@ void McuTimer::voltChanged()  // External Clock Pin changed voltage
     if( m_clkState == state ) return;
     if( m_clkEdge == 1 )              // Rising
     {
-        if( !state && m_clkState ) clockStep();
+        if( state && !m_clkState ) clockStep();
     }
-    else if( state && !m_clkState ) clockStep();
+    else if( !state && m_clkState ) clockStep();
     m_clkState = state;
 }
 
@@ -69,7 +69,7 @@ void McuTimer::clockStep()  // Timer driven by external clock
 {
     m_countVal++;
     for( McuOcUnit* ocUnit : m_ocUnit ) ocUnit->clockStep( m_countVal ); ///
-    if( m_countVal == m_ovfMatch ) runEvent();
+    if( m_countVal == m_ovfMatch+1 )runEvent();
 }
 
 void McuTimer::runEvent()            // Overflow
