@@ -13,7 +13,7 @@
 ClockBase::ClockBase( QObject* parent, QString type, QString id )
          : FixedVolt( parent, type, id )
 {
-    m_area = QRect( -14, -8, 22, 16 );
+    m_area = QRect(-14,-8, 22, 16 );
 
     m_graphical = true;
     m_isRunning = false;
@@ -88,6 +88,17 @@ void ClockBase::setRunning( bool running )
 void ClockBase::setLinkedValue( int v, int )
 {
     setFreq( v );
+}
+
+
+void ClockBase::setHidden( bool hide, bool hidArea, bool hidLabel )
+{
+    Component::setHidden( hide, hidArea, hidLabel );
+    if  ( hidArea ) m_area = QRectF( 0, 0,-4,-4 );     // Totally hidden
+    else if( hide ) m_area = QRectF(-30,-6, 12, 12 );  // In Board
+    else            m_area = QRect(-14,-8, 22, 16 );   // Normal
+
+    m_proxy->setFlag( QGraphicsItem::ItemStacksBehindParent, hide && !hidArea );
 }
 
 void ClockBase::onbuttonclicked() { setRunning( !m_isRunning ); }
