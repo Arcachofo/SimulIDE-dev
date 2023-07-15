@@ -28,6 +28,8 @@ class MAINMODULE_EXPORT VarResBase : public Dialed, public eResistor
         double getStep() { return m_step; }
         void setStep( double step ) { if( step<0 ) step=0;m_step = step ; }
 
+        virtual void setLinkedValue( double v, int i=0 ) override;
+
         virtual void initialize() override;
 
     public slots:

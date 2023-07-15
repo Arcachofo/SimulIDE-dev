@@ -31,7 +31,7 @@ class MAINMODULE_EXPORT ClockBase : public FixedVolt
 
         virtual void setOut( bool ) override {;}
 
-        virtual void setLinkedValue( int v, int i=0 ) override;
+        virtual void setLinkedValue( double v, int i=0 ) override;
 
         virtual void setHidden( bool hid, bool hidArea=false, bool hidLabel=false ) override;
 

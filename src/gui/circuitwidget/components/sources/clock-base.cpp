@@ -85,7 +85,7 @@ void ClockBase::setRunning( bool running )
     update();
 }
 
-void ClockBase::setLinkedValue( int v, int )
+void ClockBase::setLinkedValue( double v, int )
 {
     setFreq( v );
 }

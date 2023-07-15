@@ -133,7 +133,7 @@ void Potentiometer::setRes( double res ) // Called when property resistance is c
     setVal( m_res1 );
 }
 
-void Potentiometer::setLinkedValue( int v, int i )
+void Potentiometer::setLinkedValue( double v, int i )
 {
     if( i ) setRes( v );
     else Dialed::setLinkedValue( v, i );

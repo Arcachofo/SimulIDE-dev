@@ -57,7 +57,7 @@ void Dialed::setLinked( bool l )
     /// m_dialW.setVisible( !l );
 }
 
-void Dialed::setLinkedValue( int v, int )
+void Dialed::setLinkedValue( double v, int )
 {
     m_dialW.setValue( v );
 }

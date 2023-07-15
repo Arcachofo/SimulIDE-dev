@@ -64,9 +64,9 @@ class MAINMODULE_EXPORT ScriptCpu : public ScriptModule, public McuCpu
         McuPin*  getMcuPin( const string pinName );
 
         string getPropStr( int index, const string p );               // Called from script:Get property p from linked component at index
-        void setLinkedValue( int index, int v, int i=0  );            // Called from script
+        void setLinkedValue( int index, double v, int i=0  );            // Called from script
         void setLinkedString( int index, const string str, int i=0 ); // Called from script
-        void setLinkedVal( int v, int i=0 );                          // Called from C++
+        void setLinkedVal( double v, int i=0 );                          // Called from C++
         void setLinkedStr( QString s, int i );                        // Called from C++
 
         virtual void INTERRUPT( uint vector ) override;

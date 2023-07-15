@@ -541,7 +541,7 @@ int Mcu::serialMon()
 
 void Mcu::setSerialMon( int s ) { if( s>=0 ) slotOpenTerm( s ); }
 
-void Mcu::setLinkedValue( int v, int i )
+void Mcu::setLinkedValue( double v, int i )
 {
     if( m_scriptLink ) m_scriptLink->setLinkedVal( v, i );
 }

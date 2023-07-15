@@ -30,7 +30,7 @@ class MAINMODULE_EXPORT Potentiometer : public Dialed, public eElement
         double getRes() { return m_resist; }
         void setRes( double v );
 
-        virtual void setLinkedValue( int v, int i=0 ) override;
+        virtual void setLinkedValue( double v, int i=0 ) override;
 
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
 

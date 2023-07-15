@@ -68,6 +68,12 @@ void VarResBase::setVal( double val )
     updtValue();
 }
 
+void VarResBase::setLinkedValue( double v, int i )
+{
+    if( i == 0 ) Dialed::setLinkedValue( v, i );
+    else         setVal( v );
+}
+
 void VarResBase::dialChanged( int val )
 {
     m_value = m_minVal+val*( m_maxVal-m_minVal)/1000;

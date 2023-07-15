@@ -96,7 +96,7 @@ class MAINMODULE_EXPORT Mcu : public Chip, public Linkable
 
         void setScriptLinkable( ScriptCpu* l) { m_scriptLink = l; } // Called from script
 
-        virtual void setLinkedValue( int v, int i=0  ) override;
+        virtual void setLinkedValue( double v, int i=0  ) override;
         virtual void setLinkedString( QString str, int i=0 ) override;
 
         virtual QStringList getEnumUids( QString ) override;

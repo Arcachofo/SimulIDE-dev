@@ -229,6 +229,14 @@ void TextComponent::setLinkedString( QString str, int i )
     else         setText( m_textString+str );
 }
 
+void TextComponent::setLinkedValue( double v, int i )
+{
+    QString str = QString::number( v );
+
+    if( i == 0 ) setText( str );
+    else         setText( m_textString+"/n"+str );
+}
+
 void TextComponent::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
 {
     if( !acceptedMouseButtons() ) { event->ignore(); return; }

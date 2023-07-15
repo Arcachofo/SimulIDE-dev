@@ -22,7 +22,7 @@ class MAINMODULE_EXPORT SevenSegmentBCD : public BcdBase
         virtual void updateStep() override;
 
         virtual void setLinked( bool l ) override;
-        virtual void setLinkedValue( int v, int i=0  ) override;
+        virtual void setLinkedValue( double v, int i=0  ) override;
         
         void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
 

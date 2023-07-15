@@ -27,7 +27,7 @@ class MAINMODULE_EXPORT Dialed : public Component
         virtual void setHidden( bool hid, bool hidArea=false, bool hidLabel=false ) override;
 
         virtual void setLinked( bool l ) override;
-        virtual void setLinkedValue( int v, int i=0 ) override;
+        virtual void setLinkedValue( double v, int i=0 ) override;
 
     public slots:
         virtual void dialChanged( int );

@@ -127,8 +127,8 @@ ScriptCpu::ScriptCpu( eMcu* mcu )
                                    , asMETHODPR( ScriptCpu, getPropStr, (int,const string), string)
                                    , asCALL_THISCALL );
 
-    m_aEngine->RegisterObjectMethod("ScriptCpu", "void setLinkedValue( int index, int v, int i )"
-                                   , asMETHODPR( ScriptCpu, setLinkedValue, (int,int,int), void)
+    m_aEngine->RegisterObjectMethod("ScriptCpu", "void setLinkedValue( int index, double v, int i )"
+                                   , asMETHODPR( ScriptCpu, setLinkedValue, (int,double,int), void)
                                    , asCALL_THISCALL );
 
     m_aEngine->RegisterObjectMethod("ScriptCpu", "void setLinkedString( int index, string v, int i )"
@@ -165,7 +165,7 @@ int ScriptCpu::compileScript()
     m_getCpuReg   = m_aEngine->GetModule(0)->GetFunctionByDecl("int getCpuReg( string reg )");
     m_getStrReg   = m_aEngine->GetModule(0)->GetFunctionByDecl("string getStrReg( string reg )");
     m_command     = m_aEngine->GetModule(0)->GetFunctionByDecl("void command( string c )");
-    m_setLinkedVal= m_aEngine->GetModule(0)->GetFunctionByDecl("void setLinkedValue( int v, int i )");
+    m_setLinkedVal= m_aEngine->GetModule(0)->GetFunctionByDecl("void setLinkedValue( double v, int i )");
     m_setLinkedStr= m_aEngine->GetModule(0)->GetFunctionByDecl("void setLinkedString( string str, int i )");
 
     for( ComProperty* p : m_scriptProps ) // Get properties getters and setters from script
@@ -430,7 +430,7 @@ string ScriptCpu::getPropStr( int index, const string p  )
     return propValue.toStdString();
 }
 
-void ScriptCpu::setLinkedValue( int index, int v, int i )
+void ScriptCpu::setLinkedValue( int index, double v, int i )
 {
     Component* comp = m_mcuComp->getLinkedComp( index );
     if( !comp ) return;
@@ -446,7 +446,7 @@ void ScriptCpu::setLinkedString( int index, string str, int i )
     comp->setLinkedString( QString::fromStdString( str ), i );
 }
 
-void ScriptCpu::setLinkedVal( int v, int i )
+void ScriptCpu::setLinkedVal( double v, int i )
 {
     if( !m_setLinkedVal ) return;
 

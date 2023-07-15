@@ -53,6 +53,7 @@ class MAINMODULE_EXPORT TextComponent : public Component, public Linkable
         virtual void createLinks( QList<Component*>*compList ) override;
         virtual void compSelected( Component* comp ) override;
         virtual void setLinkedString( QString str, int i=0 ) override;
+        virtual void setLinkedValue( double v, int i=0 ) override;
 
         void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
 
