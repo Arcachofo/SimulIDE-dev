@@ -224,7 +224,7 @@
     </message>
     <message>
         <source>Simulation Speed</source>
-        <translation>Скорость симуляции</translation>
+        <translation type="vanished">Скорость симуляции</translation>
     </message>
     <message>
         <source>Speed % Real</source>
@@ -321,6 +321,10 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Select tool path</source>
         <translation type="unfinished">Выбрать каталог инструментов</translation>
+    </message>
+    <message>
+        <source>Speed</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -688,7 +692,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Bill Of Materials</source>
-        <translation>Список материалов</translation>
+        <translation type="vanished">Список материалов</translation>
     </message>
 </context>
 <context>
@@ -719,7 +723,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Bill of Materials</source>
-        <translation>Список материалов</translation>
+        <translation type="vanished">Список материалов</translation>
     </message>
     <message>
         <source>Save as Image</source>
@@ -898,6 +902,18 @@ Can&apos;t find file:
     <message>
         <source>Circuits (*.sim1);;All files (*.*)</source>
         <translation>Схемы (*.sim1);;Все файлы (*.*)</translation>
+    </message>
+    <message>
+        <source>Debug</source>
+        <translation type="unfinished">Отладка</translation>
+    </message>
+    <message>
+        <source>Paused</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Running</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1390,7 +1406,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>_RPM</source>
-        <translation>_об/мин</translation>
+        <translation type="vanished">_об/мин</translation>
     </message>
 </context>
 <context>
@@ -1518,6 +1534,40 @@ Can&apos;t find file:
     </message>
 </context>
 <context>
+    <name>Dial</name>
+    <message>
+        <source>Dial</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Main</source>
+        <translation type="unfinished">Основные</translation>
+    </message>
+    <message>
+        <source>Minimum Value</source>
+        <translation type="unfinished">Минимальное значение</translation>
+    </message>
+    <message>
+        <source>Maximum Value</source>
+        <translation type="unfinished">Максимальное значение</translation>
+    </message>
+    <message>
+        <source>Link to Component</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Dialed</name>
+    <message>
+        <source>Slider</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Scale</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Diode</name>
     <message>
         <source>Diode</source>
@@ -1588,6 +1638,53 @@ Can&apos;t find file:
     </message>
 </context>
 <context>
+    <name>DynamicMemory</name>
+    <message>
+        <source>Dynamic Ram</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Main</source>
+        <translation type="unfinished">Основные</translation>
+    </message>
+    <message>
+        <source>Row Address Size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Column Address Size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Data Size</source>
+        <translation type="unfinished">Разрядность данных</translation>
+    </message>
+    <message>
+        <source>Refresh period</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Electric</source>
+        <translation type="unfinished">Электрические</translation>
+    </message>
+    <message>
+        <source>Edges</source>
+        <translation type="unfinished">Фронты</translation>
+    </message>
+    <message>
+        <source>Load data</source>
+        <translation type="unfinished">Загрузить данные</translation>
+    </message>
+    <message>
+        <source>Save data</source>
+        <translation type="unfinished">Сохранить данные</translation>
+    </message>
+    <message>
+        <source>Show Memory Table</source>
+        <translation type="unfinished">Просмотр содержимого памяти</translation>
+    </message>
+</context>
+<context>
     <name>EditDialog</name>
     <message>
         <source>Pin Name:</source>
@@ -1619,7 +1716,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Pin Type:</source>
-        <translation>Тип вывода:</translation>
+        <translation type="vanished">Тип вывода:</translation>
     </message>
     <message>
         <source>Pin Angle:</source>
@@ -1650,11 +1747,11 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Editor</source>
-        <translation>Редактор</translation>
+        <translation type="vanished">Редактор</translation>
     </message>
     <message>
         <source>Show Help</source>
-        <translation>Помощь</translation>
+        <translation type="vanished">Помощь</translation>
     </message>
     <message>
         <source>Font Size</source>
@@ -2382,6 +2479,21 @@ Can&apos;t find file:
     </message>
 </context>
 <context>
+    <name>HeaderWidget</name>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished">Имя</translation>
+    </message>
+    <message>
+        <source>Value</source>
+        <translation type="unfinished">Значение</translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation type="unfinished">Тип</translation>
+    </message>
+</context>
+<context>
     <name>I2CRam</name>
     <message>
         <source>I2C Ram</source>
@@ -2674,7 +2786,7 @@ Can&apos;t find file:
     <name>LAnalizer</name>
     <message>
         <source>Logic Analizer</source>
-        <translation>Логический анализатор</translation>
+        <translation type="vanished">Логический анализатор</translation>
     </message>
     <message>
         <source>Meters</source>
@@ -2699,6 +2811,10 @@ Can&apos;t find file:
     <message>
         <source>Export at pause</source>
         <translation>Экспорт на паузе</translation>
+    </message>
+    <message>
+        <source>Logic Analyzer</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2749,7 +2865,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Save Circuit</source>
-        <translation>Сохранить схему</translation>
+        <translation type="vanished">Сохранить схему</translation>
     </message>
     <message>
         <source>VCD files (*.vcd);;All files (*.*)</source>
@@ -2898,6 +3014,10 @@ Can&apos;t find file:
     <message>
         <source>R1</source>
         <translation></translation>
+    </message>
+    <message>
+        <source>Dial</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3223,6 +3343,13 @@ Can&apos;t find file:
     </message>
 </context>
 <context>
+    <name>MCUMonitor</name>
+    <message>
+        <source>Watch</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>MainWindow</name>
     <message>
         <source>Looks like SimulIDE crashed...</source>
@@ -3322,7 +3449,7 @@ Can&apos;t find file:
     <name>Mcu</name>
     <message>
         <source>xml file not found for: %1</source>
-        <translation>xml файл не найден для: %1</translation>
+        <translation type="vanished">xml файл не найден для: %1</translation>
     </message>
     <message>
         <source>Main</source>
@@ -3338,7 +3465,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Reload hex at Simulation Start</source>
-        <translation>Перезагружать hex при запуске симуляции</translation>
+        <translation type="vanished">Перезагружать hex при запуске симуляции</translation>
     </message>
     <message>
         <source>Config</source>
@@ -3402,7 +3529,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Properties</source>
-        <translation>Свойства</translation>
+        <translation type="vanished">Свойства</translation>
     </message>
     <message>
         <source>All files (*.*);;Hex Files (*.hex)</source>
@@ -3415,6 +3542,26 @@ Can&apos;t find file:
     <message>
         <source>EEPROM persitent</source>
         <translation>Сохранять EEPROM</translation>
+    </message>
+    <message>
+        <source>Files not found for: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reload hex at                                    Simulation Start</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Changes applied after Simulation Restart</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Clock Out</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Link to Component</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3811,6 +3958,10 @@ Can&apos;t find file:
         <source>Current Value</source>
         <translation>Текущее значение</translation>
     </message>
+    <message>
+        <source>Dial</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Probe</name>
@@ -4204,6 +4355,14 @@ Not valid Package file:
         <source>Other Outputs</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Edit Pin </source>
+        <translation type="unfinished">Изменить вывод </translation>
+    </message>
+    <message>
+        <source>Delete Pin </source>
+        <translation type="unfinished">Удалить вывод </translation>
+    </message>
 </context>
 <context>
     <name>RTD</name>
@@ -4218,6 +4377,10 @@ Not valid Package file:
     <message>
         <source>Parameters</source>
         <translation>Параметры</translation>
+    </message>
+    <message>
+        <source>Dial</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4251,7 +4414,7 @@ Not valid Package file:
     </message>
     <message>
         <source>Addr</source>
-        <translation>Адр.</translation>
+        <translation type="vanished">Адр.</translation>
     </message>
     <message>
         <source>Name</source>
@@ -4263,7 +4426,7 @@ Not valid Package file:
     </message>
     <message>
         <source>Dec</source>
-        <translation>Десятичный</translation>
+        <translation type="vanished">Десятичный</translation>
     </message>
     <message>
         <source>Value</source>
@@ -4298,6 +4461,10 @@ Not valid Package file:
 %2.</source>
         <translation>Не удаётся записать файл %1:
 %2.</translation>
+    </message>
+    <message>
+        <source>Address</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4583,6 +4750,26 @@ Not valid Package file:
         <source> Output</source>
         <translation> Выход</translation>
     </message>
+    <message>
+        <source>ASCII</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>HEX</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>DEC</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>OCT</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>BIN</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SerialPort</name>
@@ -4804,6 +4991,17 @@ Not valid Package file:
     </message>
 </context>
 <context>
+    <name>Simulator</name>
+    <message>
+        <source>Running</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Stopped</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Socket</name>
     <message>
         <source>Socket</source>
@@ -4846,7 +5044,7 @@ Not valid Package file:
     </message>
     <message>
         <source>I2C Address</source>
-        <translation type="vanished">I2C адрес</translation>
+        <translation>I2C адрес</translation>
     </message>
     <message>
         <source>I2C Frequency</source>
@@ -4937,6 +5135,10 @@ Not valid Package file:
     <message>
         <source>Temperature</source>
         <translation>Температура</translation>
+    </message>
+    <message>
+        <source>Dial</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5057,15 +5259,15 @@ Not valid Package file:
     </message>
     <message>
         <source>Move Pin </source>
-        <translation>Переместить вывод </translation>
+        <translation type="vanished">Переместить вывод </translation>
     </message>
     <message>
         <source>Edit Pin </source>
-        <translation>Изменить вывод </translation>
+        <translation type="vanished">Изменить вывод </translation>
     </message>
     <message>
         <source>Delete Pin </source>
-        <translation>Удалить вывод </translation>
+        <translation type="vanished">Удалить вывод </translation>
     </message>
     <message>
         <source>Load Package</source>
@@ -5196,6 +5398,18 @@ Do you want to save your changes?
         <source>Fixed_Width</source>
         <translation>Фиксированая ширина</translation>
     </message>
+    <message>
+        <source>Background Color</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Font Color</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Link to Component</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>TextVal</name>
@@ -5233,6 +5447,10 @@ Do you want to save your changes?
     <message>
         <source>Parameters</source>
         <translation type="unfinished">Параметры</translation>
+    </message>
+    <message>
+        <source>Dial</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5402,16 +5620,27 @@ Do you want to save your changes?
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Change group name</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Rename Tunnels</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>New name:</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rename group</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ValueWidget</name>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished">Имя</translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation type="unfinished">Тип</translation>
     </message>
 </context>
 <context>
@@ -5512,6 +5741,13 @@ Do you want to save your changes?
     <message>
         <source>_Leds</source>
         <translation type="vanished">_Диодов</translation>
+    </message>
+</context>
+<context>
+    <name>Watcher</name>
+    <message>
+        <source>Form</source>
+        <translation type="unfinished">Форма</translation>
     </message>
 </context>
 <context>

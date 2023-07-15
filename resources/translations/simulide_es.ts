@@ -209,7 +209,7 @@
     </message>
     <message>
         <source>Simulation Speed</source>
-        <translation>Velocidad de Simulacion</translation>
+        <translation type="vanished">Velocidad de Simulacion</translation>
     </message>
     <message>
         <source>Speed % Real</source>
@@ -314,6 +314,10 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Select tool path</source>
         <translation type="unfinished">Seleccionar ruta al compilador:</translation>
+    </message>
+    <message>
+        <source>Speed</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -681,7 +685,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Bill Of Materials</source>
-        <translation>Lista de Materiales</translation>
+        <translation type="vanished">Lista de Materiales</translation>
     </message>
 </context>
 <context>
@@ -712,7 +716,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Bill of Materials</source>
-        <translation>Lista de Materiales</translation>
+        <translation type="vanished">Lista de Materiales</translation>
     </message>
     <message>
         <source>Save as Image</source>
@@ -887,6 +891,18 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Zoom Circuit to Scale 1:1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Debug</source>
+        <translation type="unfinished">Depurar</translation>
+    </message>
+    <message>
+        <source>Paused</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Running</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1374,10 +1390,6 @@ Can&apos;t find file:
         <source>Resistance</source>
         <translation>Resistencia</translation>
     </message>
-    <message>
-        <source>_RPM</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>DecToBcd</name>
@@ -1504,6 +1516,40 @@ Can&apos;t find file:
     </message>
 </context>
 <context>
+    <name>Dial</name>
+    <message>
+        <source>Dial</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Main</source>
+        <translation type="unfinished">Basico</translation>
+    </message>
+    <message>
+        <source>Minimum Value</source>
+        <translation type="unfinished">Valor Mínimo</translation>
+    </message>
+    <message>
+        <source>Maximum Value</source>
+        <translation type="unfinished">Valor Máximo</translation>
+    </message>
+    <message>
+        <source>Link to Component</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Dialed</name>
+    <message>
+        <source>Slider</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Scale</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Diode</name>
     <message>
         <source>Diode</source>
@@ -1574,6 +1620,53 @@ Can&apos;t find file:
     </message>
 </context>
 <context>
+    <name>DynamicMemory</name>
+    <message>
+        <source>Dynamic Ram</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Main</source>
+        <translation type="unfinished">Basico</translation>
+    </message>
+    <message>
+        <source>Row Address Size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Column Address Size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Data Size</source>
+        <translation type="unfinished">Tamaño Datos</translation>
+    </message>
+    <message>
+        <source>Refresh period</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Electric</source>
+        <translation type="unfinished">Eléctricas</translation>
+    </message>
+    <message>
+        <source>Edges</source>
+        <translation type="unfinished">Frentes</translation>
+    </message>
+    <message>
+        <source>Load data</source>
+        <translation type="unfinished">Cargar Datos</translation>
+    </message>
+    <message>
+        <source>Save data</source>
+        <translation type="unfinished">Guardar Datos</translation>
+    </message>
+    <message>
+        <source>Show Memory Table</source>
+        <translation type="unfinished">Mostrar Tabla de Memoria</translation>
+    </message>
+</context>
+<context>
     <name>EditDialog</name>
     <message>
         <source>Pin Name:</source>
@@ -1597,10 +1690,6 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Pin Id:   </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pin Type:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1632,7 +1721,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Show Help</source>
-        <translation>Mostar Ayuda</translation>
+        <translation type="vanished">Mostar Ayuda</translation>
     </message>
     <message>
         <source>Font Size</source>
@@ -1653,10 +1742,6 @@ Can&apos;t find file:
     <message>
         <source>Spaces</source>
         <translation>Espacios</translation>
-    </message>
-    <message>
-        <source>Editor</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Pixels</source>
@@ -2358,6 +2443,21 @@ Can&apos;t find file:
     </message>
 </context>
 <context>
+    <name>HeaderWidget</name>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished">Nombre</translation>
+    </message>
+    <message>
+        <source>Value</source>
+        <translation type="unfinished">Valor</translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation type="unfinished">Tipo</translation>
+    </message>
+</context>
+<context>
     <name>I2CRam</name>
     <message>
         <source>I2C Ram</source>
@@ -2650,7 +2750,7 @@ Can&apos;t find file:
     <name>LAnalizer</name>
     <message>
         <source>Logic Analizer</source>
-        <translation>Analizador Lógico</translation>
+        <translation type="vanished">Analizador Lógico</translation>
     </message>
     <message>
         <source>Meters</source>
@@ -2676,6 +2776,10 @@ Can&apos;t find file:
         <source>Export at pause</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Logic Analyzer</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LaWidget</name>
@@ -2689,7 +2793,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Save Circuit</source>
-        <translation type="unfinished">Guardar circuito</translation>
+        <translation type="obsolete">Guardar circuito</translation>
     </message>
     <message>
         <source>VCD files (*.vcd);;All files (*.*)</source>
@@ -2873,6 +2977,10 @@ Can&apos;t find file:
     </message>
     <message>
         <source>R1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dial</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3179,6 +3287,13 @@ Can&apos;t find file:
     </message>
 </context>
 <context>
+    <name>MCUMonitor</name>
+    <message>
+        <source>Watch</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>MainWindow</name>
     <message>
         <source>Looks like SimulIDE crashed...</source>
@@ -3274,7 +3389,7 @@ Can&apos;t find file:
     <name>Mcu</name>
     <message>
         <source>xml file not found for: %1</source>
-        <translation>Archivo xml no encontrado para:%1</translation>
+        <translation type="vanished">Archivo xml no encontrado para:%1</translation>
     </message>
     <message>
         <source>Main</source>
@@ -3290,7 +3405,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Reload hex at Simulation Start</source>
-        <translation>Recargar hex al inicio</translation>
+        <translation type="vanished">Recargar hex al inicio</translation>
     </message>
     <message>
         <source>Config</source>
@@ -3354,7 +3469,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Properties</source>
-        <translation>Propiedades</translation>
+        <translation type="vanished">Propiedades</translation>
     </message>
     <message>
         <source>All files (*.*);;Hex Files (*.hex)</source>
@@ -3366,6 +3481,26 @@ Can&apos;t find file:
     </message>
     <message>
         <source>EEPROM persitent</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Files not found for: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reload hex at                                    Simulation Start</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Changes applied after Simulation Restart</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Clock Out</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Link to Component</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3754,6 +3889,10 @@ Can&apos;t find file:
         <source>Current Value</source>
         <translation>Valor Actual</translation>
     </message>
+    <message>
+        <source>Dial</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Probe</name>
@@ -4135,6 +4274,14 @@ Archivo packae no valido:</translation>
         <source>Other Outputs</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Edit Pin </source>
+        <translation type="unfinished">Editar Pin </translation>
+    </message>
+    <message>
+        <source>Delete Pin </source>
+        <translation type="unfinished">Eliminar Pin </translation>
+    </message>
 </context>
 <context>
     <name>RTD</name>
@@ -4149,6 +4296,10 @@ Archivo packae no valido:</translation>
     <message>
         <source>Parameters</source>
         <translation>Parámetros</translation>
+    </message>
+    <message>
+        <source>Dial</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4174,7 +4325,7 @@ Archivo packae no valido:</translation>
     <name>RamTable</name>
     <message>
         <source>Addr</source>
-        <translation>Direccion</translation>
+        <translation type="vanished">Direccion</translation>
     </message>
     <message>
         <source>Name</source>
@@ -4183,10 +4334,6 @@ Archivo packae no valido:</translation>
     <message>
         <source>Type</source>
         <translation>Tipo</translation>
-    </message>
-    <message>
-        <source>Dec</source>
-        <translation></translation>
     </message>
     <message>
         <source>Value</source>
@@ -4224,6 +4371,10 @@ Archivo packae no valido:</translation>
     </message>
     <message>
         <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Address</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4471,6 +4622,26 @@ Archivo packae no valido:</translation>
         <source>Dialog</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>ASCII</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>HEX</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>DEC</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>OCT</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>BIN</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SerialPort</name>
@@ -4684,6 +4855,17 @@ Archivo packae no valido:</translation>
     </message>
 </context>
 <context>
+    <name>Simulator</name>
+    <message>
+        <source>Running</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Stopped</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Socket</name>
     <message>
         <source>Socket</source>
@@ -4730,7 +4912,7 @@ Archivo packae no valido:</translation>
     </message>
     <message>
         <source>I2C Address</source>
-        <translation type="vanished">Dirección I2C</translation>
+        <translation>Dirección I2C</translation>
     </message>
     <message>
         <source>I2C Frequency</source>
@@ -4821,6 +5003,10 @@ Archivo packae no valido:</translation>
     <message>
         <source>Temperature</source>
         <translation>Temperatura</translation>
+    </message>
+    <message>
+        <source>Dial</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4941,15 +5127,15 @@ Archivo packae no valido:</translation>
     </message>
     <message>
         <source>Move Pin </source>
-        <translation>Mover Pin </translation>
+        <translation type="vanished">Mover Pin </translation>
     </message>
     <message>
         <source>Edit Pin </source>
-        <translation>Editar Pin </translation>
+        <translation type="vanished">Editar Pin </translation>
     </message>
     <message>
         <source>Delete Pin </source>
-        <translation>Eliminar Pin </translation>
+        <translation type="vanished">Eliminar Pin </translation>
     </message>
     <message>
         <source>Load Package</source>
@@ -5080,6 +5266,18 @@ Quiere guardar los cambios?
         <source>Fixed_Width</source>
         <translation>Ancho_Fijo</translation>
     </message>
+    <message>
+        <source>Background Color</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Font Color</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Link to Component</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>TextVal</name>
@@ -5097,6 +5295,10 @@ Quiere guardar los cambios?
     <message>
         <source>Parameters</source>
         <translation type="unfinished">Parámetros</translation>
+    </message>
+    <message>
+        <source>Dial</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5262,16 +5464,27 @@ Quiere guardar los cambios?
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Change group name</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Rename Tunnels</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>New name:</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rename group</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ValueWidget</name>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished">Nombre</translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation type="unfinished">Tipo</translation>
     </message>
 </context>
 <context>
@@ -5364,6 +5577,13 @@ Quiere guardar los cambios?
     <message>
         <source>Columns</source>
         <translation>Columnas</translation>
+    </message>
+</context>
+<context>
+    <name>Watcher</name>
+    <message>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

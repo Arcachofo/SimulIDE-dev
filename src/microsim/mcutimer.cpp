@@ -21,7 +21,7 @@ McuTimer::McuTimer( eMcu* mcu, QString name )
     m_countL = NULL;
     m_countH = NULL;
     m_ICunit = NULL;
-    initialize();
+    McuTimer::initialize();
 }
 
 McuTimer::~McuTimer()
@@ -69,7 +69,7 @@ void McuTimer::clockStep()  // Timer driven by external clock
 {
     m_countVal++;
     for( McuOcUnit* ocUnit : m_ocUnit ) ocUnit->clockStep( m_countVal ); ///
-    if( m_countVal == m_ovfMatch+1 )runEvent();
+    if( m_countVal == m_ovfMatch+1 ) runEvent();
 }
 
 void McuTimer::runEvent()            // Overflow
