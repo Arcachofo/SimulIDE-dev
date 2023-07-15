@@ -319,10 +319,10 @@ void Component::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu 
 {
     if( !event && m_isMainComp ) // Main Component in Subcircuit
     {
-        /*QAction* propertiesAction = menu->addAction( QIcon( ":/properties.svg"),tr("Properties") );
+        QAction* propertiesAction = menu->addAction( QIcon( ":/properties.svg"),tr("Properties") );
         connect( propertiesAction, &QAction::triggered,
                              this, &Component::slotProperties, Qt::UniqueConnection );
-        menu->addSeparator();*/
+        menu->addSeparator();
         return;
     }
     m_eventpoint = mapToScene( toGrid(event->pos()) );

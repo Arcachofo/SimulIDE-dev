@@ -296,7 +296,7 @@ void SubCircuit::loadSubCircuit( QString fileName )
                     {
                         m_mainComponents[newUid] = comp; // This component will add it's Context Menu and properties
 
-                        QList<propGroup>* props = comp->properties();
+                        /*QList<propGroup>* props = comp->properties();
                         for( propGroup pg : *props )
                         {
                             if( pg.flags & groupNoCopy ) continue;
@@ -312,7 +312,7 @@ void SubCircuit::loadSubCircuit( QString fileName )
                                 npg.propList.append( p );
                             }
                             addPropGroup( npg, false );
-                        }
+                        }*/
                     }
                     m_compList.append( comp );
 

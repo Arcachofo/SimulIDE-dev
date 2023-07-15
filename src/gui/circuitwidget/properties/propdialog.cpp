@@ -52,6 +52,9 @@ void PropDialog::setComponent( Component* comp )
     {
         if( group.flags & groupHidden ) continue;
 
+        bool enabled = true;
+        if( comp->parentItem() && (group.flags & groupNoCopy) ) enabled = false;
+
         QList<ComProperty*> propList = group.propList;
         if( !propList.isEmpty() )
         {
@@ -88,6 +91,10 @@ void PropDialog::setComponent( Component* comp )
                 mp->setMinimumWidth( w );
                 m_propList.append( mp );
                 propWidget->layout()->addWidget( mp );
+
+                if( comp->parentItem() && (prop->flags() & propNoCopy) ) enabled = false;
+
+                mp->setEnabled( enabled );
             }
             propWidget->setMinimumHeight( propList.size()*30);
             propWidget->setMinimumWidth( w+40 );
