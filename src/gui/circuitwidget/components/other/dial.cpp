@@ -35,7 +35,9 @@ LibraryItem* Dial::libraryItem()
 Dial::Dial( QObject* parent, QString type, QString id )
     : Dialed( parent, type, id )
 {
-    m_area = QRectF(-12,-4.5, 24, 12.5 );
+    m_areaDial = QRectF(-11,-28 , 22, 22 );
+    m_areaComp = QRectF(-12,-4.5, 24, 12.5 );
+    m_area     = m_areaComp;
 
     m_graphical = true;
     m_linkable  = true;
