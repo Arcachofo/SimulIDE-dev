@@ -552,7 +552,7 @@ void Mcu::setLinkedString( QString str, int i )
 }
 
 Pin* Mcu::addPin( QString id, QString type, QString label,
-                  int pos, int xpos, int ypos, int angle, int length )
+                  int pos, int xpos, int ypos, int angle, int length, int space )
 {
     IoPin* pin = NULL;
     if( type.contains("rst") )
@@ -579,6 +579,7 @@ Pin* Mcu::addPin( QString id, QString type, QString label,
     pin->setPos( QPoint( xpos, ypos ) );
     pin->setPinAngle( angle );
     pin->setLength( length );
+    pin->setSpace( space );
     pin->setLabelText( label );
     pin->setLabelColor( color );
     pin->setFlag( QGraphicsItem::ItemStacksBehindParent, false );

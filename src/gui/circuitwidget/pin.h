@@ -76,7 +76,9 @@ class MAINMODULE_EXPORT Pin : public QGraphicsItem, public ePin, public Updatabl
         void setLabelColor( QColor color );
         void setFontSize( int size );
         int  labelSizeX() { return m_labelWidth; }
+
         void setSpace( int s );
+        int space() { return m_space; }
 
         void setPinId( QString id ) { m_id = id; }
         void setVisible( bool visible );

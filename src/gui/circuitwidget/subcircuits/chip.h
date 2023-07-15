@@ -45,13 +45,13 @@ class MAINMODULE_EXPORT Chip : public Component, public eElement
 
     protected:
         virtual Pin* addPin( QString id, QString type, QString label,
-                             int pos, int xpos, int ypos, int angle, int length=8){return NULL;}
+                             int pos, int xpos, int ypos, int angle, int length=8, int space=0 ){return NULL;}
 
         virtual Pin* updatePin( QString id, QString type, QString label,
-                                int pos, int xpos, int ypos, int angle ){return NULL;}
+                                int pos, int xpos, int ypos, int angle, int space=0  ){return NULL;}
 
         void addNewPin( QString id, QString type, QString label,
-                        int pos, int xpos, int ypos, int angle, int length=8);
+                        int pos, int xpos, int ypos, int angle, int length=8, int space=0 );
         void deletePin( Pin* pin );
 
         virtual void initChip();

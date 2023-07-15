@@ -92,7 +92,7 @@ class MAINMODULE_EXPORT Mcu : public Chip, public Linkable
         bool load( QString fileName );
 
         virtual Pin* addPin( QString id, QString type, QString label,
-                             int pos, int xpos, int ypos, int angle , int length=8) override;
+                             int pos, int xpos, int ypos, int angle , int length=8, int space=0 ) override;
 
         void setScriptLinkable( ScriptCpu* l) { m_scriptLink = l; } // Called from script
 

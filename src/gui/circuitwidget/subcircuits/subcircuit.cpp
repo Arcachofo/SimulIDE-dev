@@ -337,7 +337,7 @@ void SubCircuit::loadSubCircuit( QString fileName )
     Circuit::self()->setFilePath( oldFilePath ); // Restore original filePath
 }
 
-Pin* SubCircuit::addPin( QString id, QString type, QString label, int pos, int xpos, int ypos, int angle, int length )
+Pin* SubCircuit::addPin( QString id, QString type, QString label, int pos, int xpos, int ypos, int angle, int length, int space )
 {
     if( m_initialized && m_pinTunnels.contains( m_id+"-"+id ) )
     {
@@ -369,10 +369,11 @@ Pin* SubCircuit::addPin( QString id, QString type, QString label, int pos, int x
 
         tunnel->setRotated( angle >= 180 );      // Our Pins at left side
         if     ( angle == 180) tunnel->setRotation( 0 );
-        else if( angle == 90 ) tunnel->setRotation( -90 ); // QGraphicsItem 0º i at right side
+        else if( angle == 90 ) tunnel->setRotation(-90 ); // QGraphicsItem 0º i at right side
         else                   tunnel->setRotation( angle );
 
         pin->setLength( length );
+        pin->setSpace( space );
         pin->setLabelColor( color );
         pin->setLabelText( label );
         pin->setFlag( QGraphicsItem::ItemStacksBehindParent, false );
@@ -380,7 +381,7 @@ Pin* SubCircuit::addPin( QString id, QString type, QString label, int pos, int x
     }
 }
 
-Pin* SubCircuit::updatePin( QString id, QString type, QString label, int xpos, int ypos, int angle, int length )
+Pin* SubCircuit::updatePin( QString id, QString type, QString label, int xpos, int ypos, int angle, int length, int space )
 {
     Pin* pin = NULL;
     Tunnel* tunnel = m_pinTunnels.value( m_id+"-"+id );
@@ -413,6 +414,7 @@ Pin* SubCircuit::updatePin( QString id, QString type, QString label, int xpos, i
     }
     pin->setInverted( type == "inverted" || type == "inv" );
     pin->setLength( length );
+    pin->setSpace( space );
     pin->setLabelText( label );
     pin->setVisible( true );
     pin->setFlag( QGraphicsItem::ItemStacksBehindParent, (length<8) );

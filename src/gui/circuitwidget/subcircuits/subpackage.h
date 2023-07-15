@@ -11,6 +11,7 @@
 
 class LibraryItem;
 class QAction;
+class QSpinBox;
 
 class MAINMODULE_EXPORT SubPackage : public Chip, public Linkable
 {
@@ -48,6 +49,7 @@ class MAINMODULE_EXPORT SubPackage : public Chip, public Linkable
         void setPinId( QString id );
         void setPinName( QString name );
         void setPinAngle( int i );
+        void setPinSpace( int space );
         void boardModeSlot();
         void setBoardMode( bool mode );
         void mainComp() { Linkable::startLinking(); }
@@ -69,7 +71,7 @@ class MAINMODULE_EXPORT SubPackage : public Chip, public Linkable
         virtual void contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu ) override;
 
         virtual Pin* addPin( QString id, QString type, QString label,
-                            int pos, int xpos, int ypos, int angle, int length=8 ) override;
+                            int pos, int xpos, int ypos, int angle, int length=8, int space=0 ) override;
 
     private:
         QString pinEntry( Pin* pin );
@@ -116,6 +118,9 @@ class EditDialog : public QDialog
 
         QLabel*    m_idLabel;
         QLineEdit* m_idLineEdit;
+
+        QLabel*    m_spaceLabel;
+        QSpinBox*  m_spaceBox;
 
         QLabel*    m_angleLabel;
         QComboBox* m_angleBox;

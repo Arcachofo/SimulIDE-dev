@@ -147,28 +147,31 @@ void Chip::initPackage( QDomElement root )
         QDomElement element = node.toElement();
         if( element.tagName() == "pin" )
         {
-            QString type  = element.attribute( "type" );
-            QString label = element.attribute( "label" );
-            QString id    = element.attribute( "id" ).remove(" ");
+            QString type  = element.attribute("type" );
+            QString label = element.attribute("label");
+            QString id    = element.attribute("id").remove(" ");
 
-            int xpos   = element.attribute( "xpos" ).toInt();
-            int ypos   = element.attribute( "ypos" ).toInt();
-            int angle  = element.attribute( "angle" ).toInt();
-            int length = element.attribute( "length" ).toInt();
+            int xpos   = element.attribute("xpos"  ).toInt();
+            int ypos   = element.attribute("ypos"  ).toInt();
+            int angle  = element.attribute("angle" ).toInt();
+            int length = element.attribute("length").toInt();
+            int space  = element.attribute("space" ).toInt();
 
             chipPos++;
-            addNewPin( id, type, label, chipPos, xpos, ypos, angle, length );
+            addNewPin( id, type, label, chipPos, xpos, ypos, angle, length, space );
         }
         node = node.nextSibling();
     }
     update();
 }
 
-void Chip::addNewPin( QString id, QString type, QString label, int pos, int xpos, int ypos, int angle, int length )
+void Chip::addNewPin( QString id, QString type, QString label, int pos, int xpos, int ypos, int angle, int length, int space )
 {
     if( type == "unused" || type == "nc" )
     {
         Pin* pin = new Pin( angle, QPoint(xpos, ypos), m_id+"-"+id, pos-1, this ); // pos in package starts at 1
+
+        pin->setSpace( space );
 
         pin->setUnused( true ); // Chip::addPin is only for unused Pins
         if( m_isLS )
@@ -183,7 +186,7 @@ void Chip::addNewPin( QString id, QString type, QString label, int pos, int xpos
         m_unusedPins.append( pin );
     }
     else{
-        Pin* pin = addPin( id, type, label, pos, xpos, ypos, angle, length );
+        Pin* pin = addPin( id, type, label, pos, xpos, ypos, angle, length, space );
         m_ePin.emplace_back( pin );
         m_pin.emplace_back( pin );
     }
