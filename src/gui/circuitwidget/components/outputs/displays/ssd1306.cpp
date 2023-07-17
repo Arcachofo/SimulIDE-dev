@@ -81,11 +81,11 @@ Ssd1306::Ssd1306( QObject* parent, QString type, QString id )
 
     addPropGroup( { tr("Main"), {
 new StrProp <Ssd1306>("Color"       ,tr("Color")        ,""           ,this,&Ssd1306::colorStr,&Ssd1306::setColorStr,0,"enum" ),
-new IntProp <Ssd1306>("Width"       ,tr("Width")        ,tr("_Pixels"),this,&Ssd1306::width,   &Ssd1306::setWidth,0,"uint" ),
-new IntProp <Ssd1306>("Height"      ,tr("Height")       ,tr("_Pixels"),this,&Ssd1306::height,  &Ssd1306::setHeight,0,"uint" ),
+new IntProp <Ssd1306>("Width"       ,tr("Width")        ,tr("_Pixels"),this,&Ssd1306::width,   &Ssd1306::setWidth, propNoCopy,"uint" ),
+new IntProp <Ssd1306>("Height"      ,tr("Height")       ,tr("_Pixels"),this,&Ssd1306::height,  &Ssd1306::setHeight, propNoCopy,"uint" ),
 new IntProp <Ssd1306>("Control_Code",tr("I2C Address")  ,""           ,this,&Ssd1306::cCode,   &Ssd1306::setCcode,0,"uint" ),
 new DoubProp<Ssd1306>("Frequency"   ,tr("I2C Frequency"),"_KHz"       ,this,&Ssd1306::freqKHz, &Ssd1306::setFreqKHz ),
-    }, groupNoCopy} );
+    }, 0} );
 }
 Ssd1306::~Ssd1306(){}
 

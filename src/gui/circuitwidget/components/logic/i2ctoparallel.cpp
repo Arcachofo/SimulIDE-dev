@@ -62,7 +62,7 @@ I2CToParallel::I2CToParallel( QObject* parent, QString type, QString id )
     addPropGroup( { tr("Main"), {
 new IntProp <I2CToParallel>("Control_Code", tr("Control_Code") ,""    , this, &I2CToParallel::cCode,   &I2CToParallel::setCcode,0,"uint" ),
 new DoubProp<I2CToParallel>("Frequency"   , tr("I2C Frequency"),"_KHz", this, &I2CToParallel::freqKHz, &I2CToParallel::setFreqKHz ),
-    }, groupNoCopy} );
+    }, 0} );
 }
 I2CToParallel::~I2CToParallel(){}
 
