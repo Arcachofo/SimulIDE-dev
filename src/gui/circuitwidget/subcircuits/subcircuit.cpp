@@ -294,7 +294,7 @@ void SubCircuit::loadSubCircuit( QString fileName )
                     }
                     if( comp->isMainComp() )
                     {
-                        m_mainComponents[newUid] = comp; // This component will add it's Context Menu and properties
+                        m_mainComponents[uid] = comp; // This component will add it's Context Menu and properties
 
                         /*QList<propGroup>* props = comp->properties();
                         for( propGroup pg : *props )

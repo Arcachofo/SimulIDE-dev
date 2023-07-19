@@ -205,7 +205,7 @@ void Circuit::loadStrDoc( QString &doc )
         {
             if( !lastComp ) continue;
             SubCircuit* subci = static_cast<SubCircuit*>(lastComp);
-            Component* mComp = subci->getMainComp();
+            Component* mComp = subci->getMainComp();      // Old circuits with only 1 MainComp
             if( !mComp ) continue;
 
             QString propName = "";
@@ -219,8 +219,13 @@ void Circuit::loadStrDoc( QString &doc )
                     continue;
                 }
                 else if( prop.endsWith("/>") ) continue;
-                if( propName == "MainCompId") mComp = subci->getMainComp( prop.toString() );  // If more than 1 mainComp then get Component
-                else                          mComp->setPropStr( propName, prop.toString() );
+                if( propName == "MainCompId")  // If more than 1 mainComp then get Component
+                {
+                    QString compName = prop.toString();
+                    mComp = subci->getMainComp( compName );
+                    if( !mComp ) qDebug() << "ERROR: Could not create Main Component:"<< compName;
+                }
+                else if( mComp ) mComp->setPropStr( propName, prop.toString() );
 
                 propName = "";
             }
