@@ -18,22 +18,17 @@
 #include "simulator.h"
 #include "basedebugger.h"
 #include "editorwindow.h"
-#include "watcher.h"
 
 eMcu* eMcu::m_pSelf = NULL;
 
 eMcu::eMcu( Mcu* comp, QString id )
     : DataSpace()
-    , eElement( id )
+    , eIou( comp, id )
     , m_interrupts( this )
 {
-    m_component = comp;
-
-    cpu          = NULL;
     m_wdt        = NULL;
     m_intOsc     = NULL;
     m_comparator = NULL;
-    m_clkPin     = NULL;
     m_cfgWord    = NULL;
     m_vrefModule = NULL;
     m_sleepModule = NULL;
@@ -47,30 +42,21 @@ eMcu::eMcu( Mcu* comp, QString id )
     m_ramSize   = 0;
 
     m_firmware = "";
-    m_device   = "";
+    //m_device   = "";
     m_debugger = NULL;
     m_debugging = false;
     m_saveEepr = true;
 
     m_ramTable = new RamTable( NULL, this, false );
     //m_ramTable->hide();
-
-    m_cpuTable = NULL;
-    //m_cpuTable = new Watcher( NULL, this );
-    //m_cpuTable->hide();
 }
 
 eMcu::~eMcu()
 {
-    if( cpu ) delete cpu;
+    if( m_cpu ) delete m_cpu;
     m_interrupts.remove();
     for( McuModule* module : m_modules ) delete module;
     if( m_pSelf == this ) m_pSelf = NULL;
-}
-
-void eMcu::createCpuTable()
-{
-    if( !m_cpuTable ) m_cpuTable = new Watcher( NULL, this );
 }
 
 void eMcu::stamp()
@@ -96,7 +82,7 @@ void eMcu::voltChanged()  // External clock
     }
     else if( m_state >= mcuRunning /*&& m_freq > 0*/ )
     {
-        cpu->extClock( m_clkPin->getInpState() );
+        m_cpu->extClock( m_clkPin->getInpState() );
         //stepCpu();
         //Simulator::self()->addEvent( cyclesDone*m_psCycle, this );
     }
@@ -119,9 +105,9 @@ void eMcu::runEvent()
 
 void eMcu::stepCpu()
 {
-    if( !m_flashSize || cpu->getPC() < m_flashSize )
+    if( !m_flashSize || m_cpu->getPC() < m_flashSize )
     {
-        if( m_state == mcuRunning ) cpu->runStep();
+        if( m_state == mcuRunning ) m_cpu->runStep();
         m_interrupts.runInterrupts();
     }
     else m_state = mcuStopped; /// TODO: Crash
@@ -153,7 +139,7 @@ void eMcu::reset()
     m_interrupts.resetInts();
     DataSpace::initialize();
 
-    if( cpu ) cpu->reset(); // Must be after all modules reset
+    if( m_cpu ) m_cpu->reset(); // Must be after all modules reset
     else qDebug() << "ERROR: eMcu::reset NULL Cpu";
 
     for( McuPort*  mcuPort : m_mcuPorts ) mcuPort->readPort( 0 ); // Update Pin Input register
@@ -243,22 +229,17 @@ McuPin* eMcu::getMcuPin( QString pinName )
     return pin;
 }
 
-IoPort* eMcu::getIoPort( QString name )
+/*IoPort* eMcu::getIoPort( QString name )
 {
     IoPort* port = m_ioPorts.value( name );
     return port;
-}
+}*/
 
 IoPin*  eMcu::getIoPin( QString pinName )
 {
     if( pinName.isEmpty() ) return NULL;
-    IoPin* pin = NULL;
+    IoPin* pin = eIou::getIoPin( pinName );
 
-    for( IoPort* port : m_ioPorts )
-    {
-        pin = port->getPin( pinName );
-        if( pin ) break;
-    }
     if( !pin ) pin = getMcuPin( pinName );
 
     if( !pin )

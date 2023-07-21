@@ -10,7 +10,7 @@
 
 #include "ui_watcher.h"
 
-class eMcu;
+class CoreBase;
 class ValueWidget;
 class QStandardItemModel;
 class ScriptCpu;
@@ -21,7 +21,7 @@ class Watcher : public QWidget, private Ui::Watcher
     Q_OBJECT
 
     public:
-        Watcher( QWidget* parent=0, eMcu* processor=NULL );
+        Watcher( QWidget* parent=0, CoreBase* cpu=NULL );
 
         void updateValues();
 
@@ -46,7 +46,7 @@ class Watcher : public QWidget, private Ui::Watcher
 
         bool m_header;
 
-        eMcu* m_processor;
+        CoreBase* m_core;
         Console* m_console;
 
         QStandardItemModel* m_registerModel;

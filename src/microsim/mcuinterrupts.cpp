@@ -88,7 +88,7 @@ void Interrupt::raise( uint8_t v )
 void Interrupt::execute()
 {
     m_interrupts->writeGlobalFlag( 0 ); // Disable Global Interrupts
-    if( m_vector ) m_mcu->cpu->INTERRUPT( m_vector );
+    if( m_vector ) m_mcu->cpu()->INTERRUPT( m_vector );
 }
 
 void Interrupt::exitInt() // Exit from this interrupt

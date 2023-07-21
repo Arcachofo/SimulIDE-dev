@@ -31,7 +31,7 @@ void McuWdt::runEvent()            // Overflow
     if( m_ovfReset )
     {
         qDebug() << "McuWdt::runEvent - Watchdog Reset\n";
-        m_mcu->cpu->reset();
+        m_mcu->cpu()->reset();
     }
     Simulator::self()->addEvent( m_ovfPeriod, this );
 }

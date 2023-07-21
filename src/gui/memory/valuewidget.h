@@ -10,14 +10,14 @@
 
 #include "ui_valuewidget.h"
 
-class eMcu;
+class CoreBase;
 
 class ValueWidget : public QWidget, private Ui::ValueWidget
 {
     Q_OBJECT
 
     public:
-        ValueWidget( QString name, QString type, eMcu*processor, QWidget* parent=0 );
+        ValueWidget( QString name, QString type, CoreBase* core, QWidget* parent=0 );
 
         void updateValue();
 
@@ -31,7 +31,7 @@ class ValueWidget : public QWidget, private Ui::ValueWidget
         QString m_strVal;
         int m_intVal;
 
-        eMcu* m_processor;
+        CoreBase* m_core;
 
 };
 

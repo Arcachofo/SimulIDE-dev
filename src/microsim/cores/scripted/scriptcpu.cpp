@@ -184,12 +184,12 @@ int ScriptCpu::compileScript()
 
     if( m_getCpuReg || m_getStrReg )
     {
-        m_mcu->createCpuTable();
+        m_mcu->createWatcher();
     }
     if( m_command || m_script.contains("toConsole") )  /// TODELETE use TextComponent
     {
-        m_mcu->createCpuTable();
-        m_watcher = m_mcu->getCpuTable();
+        m_mcu->createWatcher();
+        m_watcher = m_mcu->getWatcher();
         m_watcher->addConsole( this );
     }
     for( ScriptPerif* perif : m_periferals ) perif->startScript();

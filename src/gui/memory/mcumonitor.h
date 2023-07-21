@@ -41,7 +41,7 @@ class MCUMonitor : public QDialog, private Ui::McuMonitor
 
         uint8_t* m_statusReg;  // STATUS register
 
-        Watcher* m_cpuTable;
+        Watcher* m_watcher;
         RamTable* m_ramTable;
         MemTable* m_ramMonitor;
         MemTable* m_flashMonitor;

@@ -15,12 +15,12 @@
 #include "console.h"
 #include "scriptcpu.h"
 
-Watcher::Watcher( QWidget* parent, eMcu* processor )
+Watcher::Watcher( QWidget* parent, CoreBase* cpu )
        : QWidget( parent )
 {
     setupUi(this);
 
-    m_processor = processor;
+    m_core = cpu;
 
     m_console= NULL;
     m_header = false;
@@ -68,7 +68,7 @@ void Watcher::addHeader()
 
 void Watcher::updateValues()
 {
-    if( !m_processor ) return;
+    if( !m_core ) return;
 
     for( ValueWidget* vw : m_values ) vw->updateValue();
 }
@@ -137,7 +137,7 @@ void Watcher::RegDoubleClick( const QModelIndex& index )
 
     QString type = m_typeTable.value( name );
 
-    ValueWidget* valwid = new ValueWidget( name, type, m_processor, this );
+    ValueWidget* valwid = new ValueWidget( name, type, m_core, this );
     m_values[name] = valwid;
 
     int last = m_console ? 2 : 1;
@@ -151,7 +151,7 @@ void Watcher::VarDoubleClick( const QModelIndex& index )
 
     QString type = m_typeTable.value( name );
 
-    ValueWidget* valwid = new ValueWidget( name, type, m_processor, this );
+    ValueWidget* valwid = new ValueWidget( name, type, m_core, this );
     m_values[name] = valwid;
 
     int last = m_console ? 2 : 1;

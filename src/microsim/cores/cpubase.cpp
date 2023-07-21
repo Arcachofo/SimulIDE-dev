@@ -6,6 +6,7 @@
 #include "cpubase.h"
 
 CpuBase::CpuBase( eMcu* mcu )
+       : CoreBase()
 {
     m_mcu = mcu;
 
@@ -20,14 +21,4 @@ CpuBase::~CpuBase() {}
 void CpuBase::reset()
 {
     m_PC = 0;
-}
-
-int CpuBase::getCpuReg( QString reg )
-{
-    if( m_cpuRegs.contains( reg ) )
-    {
-        uint8_t* regPtr = m_cpuRegs.value( reg );
-        return *regPtr;
-    }
-    return -1;
 }

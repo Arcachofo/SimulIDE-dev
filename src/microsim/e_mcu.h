@@ -6,13 +6,13 @@
 #ifndef EMCU_H
 #define EMCU_H
 
-#include "e-element.h"
+#include "e_iou.h"
 #include "mcutimer.h"
 #include "mcuuart.h"
 #include "mcuinterrupts.h"
 #include "mcudataspace.h"
 
-class CpuBase;
+//class CpuBase;
 class McuTimer;
 class McuWdt;
 class McuSleep;
@@ -36,10 +36,10 @@ class McuPort;
 class McuVref;
 class Component;
 class ConfigWord;
-class Watcher;
 class McuComp;
+class CpuBase;
 
-class MAINMODULE_EXPORT eMcu : public DataSpace, public eElement
+class MAINMODULE_EXPORT eMcu : public DataSpace, public eIou
 {
         friend class McuCreator;
         friend class McuCpu;
@@ -88,11 +88,11 @@ class MAINMODULE_EXPORT eMcu : public DataSpace, public eElement
         McuPin*  getMcuPin( QString pinName );
         //QHash<QString, McuPort*> getPorts() { return m_mcuPorts; }
 
-        IoPort* getIoPort( QString name );
+        //IoPort* getIoPort( QString name );
         IoPin*  getIoPin( QString pinName );
 
-        Watcher* getCpuTable() { return m_cpuTable; }
-        void createCpuTable();
+        //Watcher* getCpuTable() { return m_cpuTable; }
+        //void createCpuTable();
 
         McuWdt* watchDog() { return m_wdt; }
         McuVref* vrefModule();
@@ -107,23 +107,19 @@ class MAINMODULE_EXPORT eMcu : public DataSpace, public eElement
 
         void enableInterrupts( uint8_t en );
 
-        CpuBase* cpu;
         int cyclesDone;
 
         void setMain() { m_pSelf = this; }
-        Mcu* component() { return m_component; }
 
         Interrupts m_interrupts;
 
     protected:
  static eMcu* m_pSelf;
 
-        Mcu* m_component;
-
         void reset();
 
         QString m_firmware;     // firmware file loaded
-        QString m_device;
+        //QString m_device;
 
         mcuState_t m_state;
 
@@ -143,9 +139,9 @@ class MAINMODULE_EXPORT eMcu : public DataSpace, public eElement
 
         QHash<QString, McuTimer*> m_timerList;// Access TIMERS by name
         QHash<QString, McuPort*>  m_mcuPorts; // Access PORTS by name
-        QHash<QString, IoPort*>   m_ioPorts;  // Access ioPORTS by name
+        //QHash<QString, IoPort*>   m_ioPorts;  // Access ioPORTS by name
 
-        IoPin*  m_clkPin;
+        //IoPin*  m_clkPin;
         ConfigWord* m_cfgWord;
         McuSleep* m_sleepModule;
         McuVref* m_vrefModule;
@@ -157,7 +153,7 @@ class MAINMODULE_EXPORT eMcu : public DataSpace, public eElement
         double m_cPerInst;       // Clock ticks per Instruction Cycle
         uint64_t m_psCycle;      // picoseconds per Instruction Cycle
 
-        Watcher* m_cpuTable;
+        //Watcher* m_cpuTable;
 
         // Debugger:
         BaseDebugger* m_debugger;

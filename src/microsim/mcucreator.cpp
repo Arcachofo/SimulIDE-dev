@@ -175,16 +175,16 @@ int McuCreator::processFile( QString fileName, bool main )
     }
     if( root.hasAttribute("core") )
     {
-        if     ( m_core == "AVR" )      mcu->cpu = new AvrCore( mcu );
-        else if( m_core == "Pic14" )    mcu->cpu = new Pic14Core( mcu );
-        else if( m_core == "Pic14e" )   mcu->cpu = new Pic14eCore( mcu );
-        else if( m_core == "8051" )     mcu->cpu = new I51Core( mcu );
-        else if( m_core == "6502" )     mcu->cpu = new Mcs65Cpu( mcu );
-        else if( m_core == "Z80" )      mcu->cpu = new Z80Core( mcu );
+        if     ( m_core == "AVR" )      mcu->m_cpu = new AvrCore( mcu );
+        else if( m_core == "Pic14" )    mcu->m_cpu = new Pic14Core( mcu );
+        else if( m_core == "Pic14e" )   mcu->m_cpu = new Pic14eCore( mcu );
+        else if( m_core == "8051" )     mcu->m_cpu = new I51Core( mcu );
+        else if( m_core == "6502" )     mcu->m_cpu = new Mcs65Cpu( mcu );
+        else if( m_core == "Z80" )      mcu->m_cpu = new Z80Core( mcu );
         else if( m_core == "scripted" )
         {
             ScriptCpu* cpu = new ScriptCpu( mcu );
-            mcu->cpu = cpu;
+            mcu->m_cpu = cpu;
             m_mcuComp->m_scripted = true;
 
             if( root.hasAttribute("linkable")
@@ -225,7 +225,7 @@ int McuCreator::processFile( QString fileName, bool main )
 
             cpu->setScriptFile( m_basePath+"/"+root.attribute("script") );
         }
-        else mcu->cpu = new McuCpu( mcu );
+        else mcu->m_cpu = new McuCpu( mcu );
 
         if( m_newStack ) createStack( &m_stackEl );
     }
@@ -1182,14 +1182,14 @@ void McuCreator::createIntMem( QDomElement* e )
 void McuCreator::createStack( QDomElement* s )
 {
     QStringList spRegs = s->attribute("spreg").split(",");
-    mcu->cpu->m_spl = mcu->getReg( spRegs.value(0) );
+    mcu->m_cpu->m_spl = mcu->getReg( spRegs.value(0) );
     if( spRegs.size() > 1 )
-        mcu->cpu->m_sph = mcu->getReg( spRegs.value(1) );
+        mcu->m_cpu->m_sph = mcu->getReg( spRegs.value(1) );
 
     QString inc = s->attribute("increment");
 
-    mcu->cpu->m_spPre = inc.contains("pre");
-    mcu->cpu->m_spInc = inc.contains("inc") ? 1:-1;
+    mcu->m_cpu->m_spPre = inc.contains("pre");
+    mcu->m_cpu->m_spInc = inc.contains("inc") ? 1:-1;
 }
 
 void McuCreator::createInterrupts( QDomElement* i )

@@ -23,7 +23,7 @@ Mcs65Cpu::Mcs65Cpu( eMcu* mcu )
     m_cpuRegs.insert("X" , &m_rX );
     m_cpuRegs.insert("Y" , &m_rY );
     //m_rI = NULL;
-    mcu->getCpuTable()->setRegisters( m_cpuRegs.keys() );
+    mcu->getWatcher()->setRegisters( m_cpuRegs.keys() );
 
     // <register name="P"  addr="0x05" bits="C,Z,I,D,B,1,V,N" reset="00110100" mask="11011111" />
     m_STATUS = &m_P;

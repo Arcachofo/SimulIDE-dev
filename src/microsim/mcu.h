@@ -85,7 +85,7 @@ class MAINMODULE_EXPORT Mcu : public Chip, public Linkable
 
         QString device() { return m_device; }
         bool isScripted() { return m_scripted; }
-        CpuBase* cpu() { return m_eMcu.cpu; }
+        CpuBase* cpu() { return m_eMcu.cpu(); }
 
         void reset() { m_eMcu.hardReset( true ); }
 
@@ -102,7 +102,7 @@ class MAINMODULE_EXPORT Mcu : public Chip, public Linkable
         virtual QStringList getEnumUids( QString ) override;
         virtual QStringList getEnumNames( QString ) override;
 
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w ) override;
 
     public slots:
         void slotmain();
@@ -118,10 +118,10 @@ class MAINMODULE_EXPORT Mcu : public Chip, public Linkable
     protected:
  static Mcu* m_pSelf;
 
-        virtual void contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu );
-        virtual void contextMenuEvent(QGraphicsSceneContextMenuEvent* event);
+        virtual void contextMenu( QGraphicsSceneContextMenuEvent* e, QMenu* m ) override;
+        virtual void contextMenuEvent(QGraphicsSceneContextMenuEvent* e) override;
 
-        deviceType_t m_deviceType;
+        //deviceType_t m_deviceType;
 
         bool m_autoLoad;
         bool m_scripted;

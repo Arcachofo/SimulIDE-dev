@@ -55,7 +55,7 @@ void AvrWdt::runEvent()
         else if( m_ovfReset ) // No interrupt, just Reset
         {
             qDebug() << "AvrWdt::runEvent - Watchdog Reset\n";
-            m_mcu->cpu->reset();
+            m_mcu->cpu()->reset();
         }
         Simulator::self()->addEvent( m_ovfPeriod, this );
     }
@@ -65,7 +65,7 @@ void AvrWdt::callBack() // WDT Overflow Interrupt just executed
 {
     if( !m_wdtFuse && m_disabled ) return;
     qDebug() << "AvrWdt::callBack - Watchdog Reset\n";
-    m_mcu->cpu->reset();
+    m_mcu->cpu()->reset();
 }
 
 void AvrWdt::configureA( uint8_t newWDTCSR ) // WDTCSR Written

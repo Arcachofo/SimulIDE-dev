@@ -35,11 +35,11 @@ MCUMonitor::MCUMonitor( QWidget* parent, eMcu* mcu )
     horizontalLayout->setStretchFactor( byteButton, 20 );
     QSplitter* spl = NULL;
 
-    m_cpuTable = m_processor->getCpuTable();
-    if( m_cpuTable )
+    m_watcher = m_processor->getWatcher();
+    if( m_watcher )
     {
         spl = new QSplitter( Qt::Horizontal, this );
-        spl->addWidget( m_cpuTable );
+        spl->addWidget( m_watcher );
 
         tabWidget->addTab( spl, tr("Watch") );
     }
@@ -108,7 +108,7 @@ void  MCUMonitor::on_jumpButton_toggled( bool jump )
 
 void MCUMonitor::updateStep()
 {
-    int pc = m_processor->cpu->getPC();
+    int pc = m_processor->cpu()->getPC();
 
     if( m_statusReg )
     {
@@ -126,9 +126,9 @@ void MCUMonitor::updateStep()
         m_pc.item( 0, 1 )->setText("0x"+val2hex(pc) );
     }
 
-    if( m_cpuTable && m_cpuTable->isVisible() )
+    if( m_watcher && m_watcher->isVisible() )
     {
-        m_cpuTable->updateValues();
+        m_watcher->updateValues();
     }
     if( m_ramTable && m_ramTable->isVisible() )
     {
@@ -164,7 +164,7 @@ void MCUMonitor::updateRamTable()
 
 void MCUMonitor::createStatusPC()
 {
-    m_statusReg = m_processor->cpu->getStatus();
+    m_statusReg = m_processor->cpu()->getStatus();
     if( !m_statusReg )
     {
         byteButton->setVisible( false );

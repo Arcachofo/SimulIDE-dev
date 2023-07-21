@@ -389,9 +389,9 @@ void RamTable::updateValues()
 
         if( m_cpuMonitor  )
         {
-            if( type == "string" ) strVal = m_processor->cpu->getStrReg( name );
+            if( type == "string" ) strVal = m_processor->cpu()->getStrReg( name );
             else{
-                value = m_processor->cpu->getCpuReg( name );
+                value = m_processor->cpu()->getCpuReg( name );
                 if( value < 0 ) continue;
             }
         }else{

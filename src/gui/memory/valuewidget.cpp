@@ -11,14 +11,14 @@
 #include "cpubase.h"
 #include "utils.h"
 
-ValueWidget::ValueWidget( QString name, QString type, eMcu* processor, QWidget* parent )
+ValueWidget::ValueWidget( QString name, QString type, CoreBase* core, QWidget* parent )
            : QWidget( parent )
 {
     setupUi(this);
 
     m_name = name;
     m_type = type.toLower();
-    m_processor = processor;
+    m_core = core;
 
     float scale = MainWindow::self()->fontScale();
     QFont fontS;
@@ -44,10 +44,10 @@ ValueWidget::ValueWidget( QString name, QString type, eMcu* processor, QWidget* 
 
 void ValueWidget::updateValue()
 {
-    if( !m_processor ) return;
+    if( !m_core ) return;
 
-    if( m_type == "string" ) setValueStr( m_processor->cpu->getStrReg( m_name ) );
-    else                     setValueInt( m_processor->cpu->getCpuReg( m_name ) );
+    if( m_type == "string" ) setValueStr( m_core->getStrReg( m_name ) );
+    else                     setValueInt( m_core->getCpuReg( m_name ) );
 }
 
 void ValueWidget::setValueInt( int val )

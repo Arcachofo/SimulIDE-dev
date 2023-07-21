@@ -184,24 +184,22 @@ Mcu::Mcu( QObject* parent, QString type, QString id )
 
 void Mcu::setup( QString type )
 {
-    if     ( type == "iou" ) m_deviceType = typeIOU;
-    else if( type == "mpu" ) m_deviceType = typeMPU;
-    else if( type == "mcu" ) m_deviceType = typeMCU;
-    else                     m_deviceType = typeNONE;
+    slotmain();
 
-    //if( m_deviceType >= typeMPU )
-        slotmain(); //m_pSelf = this;
+    addPropGroup( { tr("Main"), {}, 0} );
 
-    if( m_deviceType == typeMCU )
-    {
-    addPropGroup( { tr("Main"), {
-new DoubProp<Mcu>("Frequency", tr("Frequency")    ,"MHz", this, &Mcu::extFreq,    &Mcu::setExtFreq ),
-new StrProp <Mcu>("Program"  , tr("Firmware")        ,"", this, &Mcu::program,    &Mcu::setProgram ),
-new BoolProp<Mcu>("Auto_Load", tr("Reload hex at \
-                                   Simulation Start"),"", this, &Mcu::autoLoad,   &Mcu::setAutoLoad ),
-new BoolProp<Mcu>("saveEepr" , tr("EEPROM persitent"),"", this, &Mcu::saveEepr,   &Mcu::setSaveEepr ),
-new BoolProp<Mcu>("Logic_Symbol", tr("Logic Symbol") ,"", this, &Mcu::logicSymbol,&Mcu::setLogicSymbol, propNoCopy )
-    }, 0} );
+addProperty(tr("Main"),new DoubProp<Mcu>("Frequency", tr("Frequency"),"MHz", this, &Mcu::extFreq, &Mcu::setExtFreq ));
+
+if( m_eMcu.flashSize() )
+{
+addProperty(tr("Main"),new StrProp <Mcu>("Program"  , tr("Firmware"),"", this, &Mcu::program, &Mcu::setProgram ));
+addProperty(tr("Main"),new BoolProp<Mcu>("Auto_Load", tr("Reload hex at Simulation Start"),"", this, &Mcu::autoLoad,   &Mcu::setAutoLoad ));
+}
+if( m_eMcu.romSize() )
+{
+addProperty(tr("Main"),new BoolProp<Mcu>("saveEepr" , tr("EEPROM persitent"),"", this, &Mcu::saveEepr,   &Mcu::setSaveEepr ));
+addProperty(tr("Main"),new BoolProp<Mcu>("Logic_Symbol", tr("Logic Symbol") ,"", this, &Mcu::logicSymbol,&Mcu::setLogicSymbol, propNoCopy ));
+}
 
     addPropGroup( { tr("Config"), {
 new ComProperty( "", tr("Changes applied after Simulation Restart"),"","",0),
@@ -225,9 +223,7 @@ new StrProp<Mcu>("cpuRegs"  ,"","", this, &Mcu::cpuRegs,   &Mcu::setCpuRegs),
 new StrProp<Mcu>("eeprom"   ,"","", this, &Mcu::getEeprom, &Mcu::setEeprom ),
 new IntProp<Mcu>("SerialMon","","", this, &Mcu::serialMon, &Mcu::setSerialMon )
     }, groupHidden } );
-    }
-    else //if( m_deviceType == typeMPU )
-    {
+
 //addProperty(tr("Main"),new DoubProp<Mcu>( "Frequency"   , tr("Frequency"),"MHz" , this, &Mcu::freq,    &Mcu::setFreq ) );
 addProperty(tr("Main"),new BoolProp<Mcu>( "Logic_Symbol", tr("Logic Symbol"),"", this, &Mcu::logicSymbol, &Mcu::setLogicSymbol ) );
 
@@ -236,7 +232,7 @@ new StrProp<Mcu>("varList", "","", this, &Mcu::varList,   &Mcu::setVarList),
 new StrProp<Mcu>("cpuRegs", "","", this, &Mcu::cpuRegs,   &Mcu::setCpuRegs),
 new StrProp<Mcu>("Links"  , "","", this, &Mcu::getLinks , &Mcu::setLinks )
     }, groupHidden } );
-    }
+
 }
 Mcu::~Mcu()
 {
@@ -286,7 +282,7 @@ void Mcu::updateStep()
     if( m_mcuMonitor
      && m_mcuMonitor->isVisible() ) m_mcuMonitor->updateStep();
 
-    m_eMcu.cpu->updateStep();
+    m_eMcu.m_cpu->updateStep();
 }
 
 void Mcu::voltChanged() // Reset Pin callBack
@@ -327,10 +323,10 @@ void Mcu::setVarList( QString vl )
 //{ m_eMcu.getRamTable()->loadVarSet( vl.split(",") ); }
 
 QString Mcu::cpuRegs()
-{ return m_eMcu.getCpuTable()->getVarSet().join(","); }
+{ return m_eMcu.getWatcher()->getVarSet().join(","); }
 
 void Mcu::setCpuRegs( QString vl )
-{ m_eMcu.getCpuTable()->loadVarSet( vl.split(",") ); }
+{ m_eMcu.getWatcher()->loadVarSet( vl.split(",") ); }
 
 void Mcu::setEeprom( QString eep )
 {
@@ -436,14 +432,12 @@ void Mcu::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
         menu->deleteLater();
 }   }
 
-void Mcu::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
+void Mcu::contextMenu( QGraphicsSceneContextMenuEvent*, QMenu* menu )
 {
-    //if( m_deviceType >= typeMPU )
-    {
-        QAction* mainAction = menu->addAction( QIcon(":/subc.png"),tr("Main Mcu") );
-        connect( mainAction, &QAction::triggered,
-                       this, &Mcu::slotmain, Qt::UniqueConnection );
-    }
+
+    QAction* mainAction = menu->addAction( QIcon(":/subc.png"),tr("Main Mcu") );
+    connect( mainAction, &QAction::triggered,
+                   this, &Mcu::slotmain, Qt::UniqueConnection );
 
     if( m_scriptLink )
     {
@@ -452,7 +446,7 @@ void Mcu::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
                            this, &Mcu::slotLinkComp, Qt::UniqueConnection );
     }
 
-    if( m_deviceType == typeMCU )
+    if( m_eMcu.flashSize() )
     {
         QAction* loadAction = menu->addAction( QIcon(":/load.svg"),tr("Load firmware") );
         connect( loadAction, &QAction::triggered,
@@ -463,7 +457,10 @@ void Mcu::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
                          this, &Mcu::slotReload, Qt::UniqueConnection );
 
         menu->addSeparator();
+    }
 
+    if( m_eMcu.romSize() )
+    {
         QAction* loadDaAction = menu->addAction( QIcon(":/open.png"),tr("Load EEPROM data from file") );
         connect( loadDaAction, &QAction::triggered,
                          this, &Mcu::loadEEPROM, Qt::UniqueConnection );
@@ -472,15 +469,13 @@ void Mcu::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
         connect( saveDaAction, &QAction::triggered,
                          this, &Mcu::saveEEPROM, Qt::UniqueConnection );
     }
-    //if( m_deviceType >= typeMPU )
-    {
-        menu->addSeparator();
+    menu->addSeparator();
 
-        QAction* openRamTab = menu->addAction( QIcon(":/terminal.svg"),tr("Open Mcu Monitor.") );
-        connect( openRamTab, &QAction::triggered,
-                       this, &Mcu::slotOpenMcuMonitor, Qt::UniqueConnection );
-    }
-    if( m_deviceType == typeMCU )
+    QAction* openRamTab = menu->addAction( QIcon(":/terminal.svg"),tr("Open Mcu Monitor.") );
+    connect( openRamTab, &QAction::triggered,
+                   this, &Mcu::slotOpenMcuMonitor, Qt::UniqueConnection );
+
+    if( m_eMcu.m_usarts.size() )
     {
         QMenu* serMonMenu = menu->addMenu( tr("Open Serial Monitor.") );
 
@@ -494,14 +489,6 @@ void Mcu::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
         connect( sm, QOverload<int>::of(&QSignalMapper::mapped), this, &Mcu::slotOpenTerm );
     }
     menu->addSeparator();
-
-    /*if( !event )
-    {
-        QAction* propertiesAction = menu->addAction( QIcon( ":/properties.svg"),tr("Properties") );
-        connect( propertiesAction, &QAction::triggered,
-                             this, &Mcu::slotProperties, Qt::UniqueConnection );
-        menu->addSeparator();
-    }*/
 }
 
 void Mcu::slotmain()
@@ -632,8 +619,8 @@ bool Mcu::clockOut()
 
 void Mcu::setClockOut( bool clkOut ) { if( m_eMcu.m_intOsc ) m_eMcu.m_intOsc->setClockOut( clkOut ); }
 
-QStringList Mcu::getEnumUids( QString e) { return m_eMcu.cpu->getEnumUids( e ); }
-QStringList Mcu::getEnumNames( QString e) { return m_eMcu.cpu->getEnumNames( e ); }
+QStringList Mcu::getEnumUids( QString e) { return m_eMcu.m_cpu->getEnumUids( e ); }
+QStringList Mcu::getEnumNames( QString e) { return m_eMcu.m_cpu->getEnumNames( e ); }
 
 void Mcu::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
 {

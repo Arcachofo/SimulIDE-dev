@@ -7,12 +7,13 @@
 #define CPUCORE_H
 
 #include "e_mcu.h"
+#include "corebase.h"
 
 #define REG_SPL      m_spl[0]
 #define REG_SPH      m_sph[0]
 #define STATUS(bit) (*m_STATUS & (1<<bit))
 
-class MAINMODULE_EXPORT CpuBase
+class MAINMODULE_EXPORT CpuBase : public CoreBase
 {
         friend class McuCreator;
 
@@ -20,23 +21,15 @@ class MAINMODULE_EXPORT CpuBase
         CpuBase( eMcu* mcu );
         virtual ~CpuBase();
 
-        virtual void reset();
-        virtual void runStep(){;}
-        virtual void extClock( bool clkState ){;}
-        virtual void updateStep(){;}
+        virtual void reset() override;
 
         uint8_t* getStatus() { return m_STATUS; }  // Used my Monitor: All CPUs must use m_STATUS
-        virtual int getCpuReg( QString reg );
-        virtual QString getStrReg( QString ){ return "";}
 
         virtual void INTERRUPT( uint32_t vector ) { CALL_ADDR( vector ); }
         virtual void CALL_ADDR( uint32_t addr ){;} // Used by MCU Interrupts:: All MCUs should use or override this
         virtual uint RET_ADDR() { return m_RET_ADDR; } // Used by Debugger: All CPUs should use or override this
 
         virtual uint getPC() { return m_PC; }
-
-        virtual QStringList getEnumUids( QString ) { return m_enumUids;}    // For enum properties
-        virtual QStringList getEnumNames( QString ) { return m_enumNames; } // For enum properties
 
     protected:
         eMcu* m_mcu;
@@ -54,18 +47,13 @@ class MAINMODULE_EXPORT CpuBase
         int      m_spInc;   // STACK grows up or down? (+1 or -1)
         ///--------------------
 
-        QHash<QString, uint8_t*> m_cpuRegs;
-
         void clear_S_Bit( uint8_t bit) { *m_STATUS &= ~(1<<bit); }
-        void set_S_Bit( uint8_t bit ) { *m_STATUS |= 1<<bit; }
+        void set_S_Bit( uint8_t bit )  { *m_STATUS |=   1<<bit; }
         void write_S_Bit( uint8_t bit, bool val )
         {
-            if( val ) *m_STATUS |= 1<<bit; \
+            if( val ) *m_STATUS |=   1<<bit; \
             else      *m_STATUS &= ~(1<<bit);
         }
-
-        QStringList m_enumUids;  // For enum properties
-        QStringList m_enumNames; // For enum properties
 };
 
 #endif
