@@ -186,53 +186,57 @@ void Mcu::setup( QString type )
 {
     slotmain();
 
-    addPropGroup( { tr("Main"), {}, 0} );
+// Main Property Group --------------------------------------
 
+if( m_eMcu.m_intOsc )
 addProperty(tr("Main"),new DoubProp<Mcu>("Frequency", tr("Frequency"),"MHz", this, &Mcu::extFreq, &Mcu::setExtFreq ));
 
 if( m_eMcu.flashSize() )
 {
 addProperty(tr("Main"),new StrProp <Mcu>("Program"  , tr("Firmware"),"", this, &Mcu::program, &Mcu::setProgram ));
-addProperty(tr("Main"),new BoolProp<Mcu>("Auto_Load", tr("Reload hex at Simulation Start"),"", this, &Mcu::autoLoad,   &Mcu::setAutoLoad ));
+addProperty(tr("Main"),new BoolProp<Mcu>("Auto_Load", tr("Reload hex at Simulation Start"),"", this, &Mcu::autoLoad, &Mcu::setAutoLoad ));
 }
 if( m_eMcu.romSize() )
-{
 addProperty(tr("Main"),new BoolProp<Mcu>("saveEepr" , tr("EEPROM persitent"),"", this, &Mcu::saveEepr,   &Mcu::setSaveEepr ));
-addProperty(tr("Main"),new BoolProp<Mcu>("Logic_Symbol", tr("Logic Symbol") ,"", this, &Mcu::logicSymbol,&Mcu::setLogicSymbol, propNoCopy ));
-}
 
-    addPropGroup( { tr("Config"), {
-new ComProperty( "", tr("Changes applied after Simulation Restart"),"","",0),
-                    }, groupNoCopy} );
+if( QFileInfo::exists( m_pkgeFile.replace(".package","_LS.package") ) )
+addProperty(tr("Main"),new BoolProp<Mcu>( "Logic_Symbol", tr("Logic Symbol"),"", this, &Mcu::logicSymbol, &Mcu::setLogicSymbol, propNoCopy ) );
+
+
+// Config Property Group ------------------------------------
+
+propGroup cg = { tr("Config"), { new ComProperty( "", tr("Changes applied after Simulation Restart"),"","",0),}, groupNoCopy};
 
 if( m_portRstPin )
-addProperty(tr("Config"),new BoolProp<Mcu>("Rst_enabled", tr("Enable Reset Pin")   ,"", this, &Mcu::rstPinEnabled, &Mcu::enableRstPin ) );
+cg.propList.append(new BoolProp<Mcu>("Rst_enabled", tr("Enable Reset Pin")   ,"", this, &Mcu::rstPinEnabled, &Mcu::enableRstPin ) );
 
-if( m_eMcu.m_intOsc && m_eMcu.m_intOsc->clkInPin() )
-addProperty(tr("Config"),new BoolProp<Mcu>("Ext_Osc"    , tr("External Oscillator"),"", this, &Mcu::extOscEnabled, &Mcu::enableExtOsc ) );
+if( m_eMcu.m_intOsc /*&& m_eMcu.m_intOsc->clkInPin()*/ )
+cg.propList.append(new BoolProp<Mcu>("Ext_Osc"    , tr("External Oscillator"),"", this, &Mcu::extOscEnabled, &Mcu::enableExtOsc ) );
 
 if( m_eMcu.m_wdt )
-addProperty(tr("Config"),new BoolProp<Mcu>("Wdt_enabled", tr("Enable WatchDog")    ,"", this, &Mcu::wdtEnabled   , &Mcu::enableWdt ) );
+cg.propList.append(new BoolProp<Mcu>("Wdt_enabled", tr("Enable WatchDog")    ,"", this, &Mcu::wdtEnabled   , &Mcu::enableWdt ) );
 
 if( m_eMcu.m_intOsc && m_eMcu.m_intOsc->clkOutPin() )
-addProperty(tr("Config"),new BoolProp<Mcu>("Clk_Out"    , tr("Clock Out")          ,"", this, &Mcu::clockOut     , &Mcu::setClockOut ) );
+cg.propList.append(new BoolProp<Mcu>("Clk_Out"    , tr("Clock Out")          ,"", this, &Mcu::clockOut     , &Mcu::setClockOut ) );
 
-    addPropGroup( {"Hidden", {
-new StrProp<Mcu>("varList"  ,"","", this, &Mcu::varList,   &Mcu::setVarList),
-new StrProp<Mcu>("cpuRegs"  ,"","", this, &Mcu::cpuRegs,   &Mcu::setCpuRegs),
-new StrProp<Mcu>("eeprom"   ,"","", this, &Mcu::getEeprom, &Mcu::setEeprom ),
-new IntProp<Mcu>("SerialMon","","", this, &Mcu::serialMon, &Mcu::setSerialMon )
-    }, groupHidden } );
+if( cg.propList.size() > 1 ) addPropGroup( cg );
 
-//addProperty(tr("Main"),new DoubProp<Mcu>( "Frequency"   , tr("Frequency"),"MHz" , this, &Mcu::freq,    &Mcu::setFreq ) );
-addProperty(tr("Main"),new BoolProp<Mcu>( "Logic_Symbol", tr("Logic Symbol"),"", this, &Mcu::logicSymbol, &Mcu::setLogicSymbol ) );
 
-    addPropGroup( {"Hidden", {
-new StrProp<Mcu>("varList", "","", this, &Mcu::varList,   &Mcu::setVarList),
-new StrProp<Mcu>("cpuRegs", "","", this, &Mcu::cpuRegs,   &Mcu::setCpuRegs),
-new StrProp<Mcu>("Links"  , "","", this, &Mcu::getLinks , &Mcu::setLinks )
-    }, groupHidden } );
+// Hidden Property Group -----------------------------------
 
+propGroup hi = {"Hidden", {}, groupHidden };
+
+cg.propList.append(new StrProp<Mcu>("varList"  ,"","", this, &Mcu::varList,   &Mcu::setVarList) );
+cg.propList.append(new StrProp<Mcu>("cpuRegs"  ,"","", this, &Mcu::cpuRegs,   &Mcu::setCpuRegs) );
+cg.propList.append(new StrProp<Mcu>("Links"    ,"","", this, &Mcu::getLinks , &Mcu::setLinks ) );
+
+if( m_eMcu.romSize() )
+cg.propList.append(new StrProp<Mcu>("eeprom"   ,"","", this, &Mcu::getEeprom, &Mcu::setEeprom ) );
+
+if( m_eMcu.m_usarts.size() )
+cg.propList.append(new IntProp<Mcu>("SerialMon","","", this, &Mcu::serialMon, &Mcu::setSerialMon ) );
+
+if( hi.propList.size() > 0 ) addPropGroup( hi );
 }
 Mcu::~Mcu()
 {

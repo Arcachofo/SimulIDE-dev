@@ -85,7 +85,7 @@ void McuIntOsc::configPins( bool inIo, bool outIo, bool clkOut )
 void McuIntOsc::setPin( int n, McuPin* p )
 {
     if     ( n == 0 ) m_clkPin[0] = p;
-    else if( n == 1 ) m_clkPin[1] = p;
+    else if( n == 1 ) m_clkPin[1] = m_clkInPin = p;
     else if( n == 2 ) m_clkOutPin = p;
 }
 
