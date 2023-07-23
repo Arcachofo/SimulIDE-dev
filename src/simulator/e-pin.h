@@ -20,7 +20,7 @@ class MAINMODULE_EXPORT ePin
 
         bool isConnected() { return (m_enode!=NULL); }
 
-        double getVoltage();
+        virtual double getVoltage();
 
         eNode* getEnode() { return m_enode; }
         void   setEnode( eNode* enode );

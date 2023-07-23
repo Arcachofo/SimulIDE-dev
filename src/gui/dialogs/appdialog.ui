@@ -58,7 +58,7 @@
         <locale language="C" country="AnyCountry"/>
        </property>
        <property name="currentIndex">
-        <number>0</number>
+        <number>2</number>
        </property>
        <property name="usesScrollButtons">
         <bool>false</bool>
@@ -1099,7 +1099,7 @@
             <string notr="true">font: 12pt &quot;Ubuntu&quot;; color: rgb(85, 0, 127)</string>
            </property>
            <property name="text">
-            <string>Logic Outputs Edges</string>
+            <string>Logic Outputs</string>
            </property>
           </widget>
          </item>
@@ -1111,7 +1111,7 @@
            <item>
             <widget class="QLabel" name="label_2">
              <property name="text">
-              <string>Slope Steps</string>
+              <string>Edges Slope Steps</string>
              </property>
             </widget>
            </item>
@@ -1123,6 +1123,16 @@
             </widget>
            </item>
           </layout>
+         </item>
+         <item alignment="Qt::AlignRight">
+          <widget class="QCheckBox" name="fastModeBox">
+           <property name="layoutDirection">
+            <enum>Qt::RightToLeft</enum>
+           </property>
+           <property name="text">
+            <string>Fast Mode (experimental)</string>
+           </property>
+          </widget>
          </item>
         </layout>
        </widget>

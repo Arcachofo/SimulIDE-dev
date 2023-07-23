@@ -75,7 +75,7 @@ void eClockedDevice::setTrigger( trigger_t trigger )
 
     if( m_trigger == None )
     {
-        m_clkPin->remove();
+        m_clkPin->removeConnector();
         m_clkPin->setLabelText( "" );
         m_clkPin->setVisible( false );
     }

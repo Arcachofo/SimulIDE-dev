@@ -42,6 +42,8 @@ void eNode::initialize()
     m_admitChanged = false;
     nextCH = NULL;
     m_volt = 0;
+    m_voltForced = 0;
+    m_forceVolt = false;
 
     clearElmList( m_voltChEl );
     m_voltChEl = NULL;
@@ -140,13 +142,13 @@ void eNode::stampSingAdm( ePin* epin, double admit )
 
 void eNode::createCurrent( ePin* epin )
 {
-    Connection* conn = new Connection( epin );
     Connection* first = m_firstCurrent;
 
     while( first ){
         if( first->epin == epin ) return; // Element already in the list
         first = first->next;
     }
+    Connection* conn = new Connection( epin );
     conn->next = m_firstCurrent;  // Prepend
     m_firstCurrent = conn;
 }
@@ -159,6 +161,14 @@ void eNode::stampCurrent( ePin* epin, double current ) // Be sure msg doesn't co
         conn = conn->next;
     }
     m_currChanged = true;
+    changed();
+}
+
+void eNode::forceVolt( double volt )
+{
+    if( m_voltForced == volt ) return;
+    m_forceVolt = true;
+    m_voltForced = volt;
     changed();
 }
 
@@ -242,36 +252,43 @@ void eNode::stampMatrix()
 void eNode::solveSingle()
 {
     double volt = 0;
-    if( m_totalAdmit > 0 ) volt = m_totalCurr/m_totalAdmit;
+
+    if( m_forceVolt )
+    {
+        m_forceVolt = false;
+        volt = m_voltForced;
+    }
+    else if( m_totalAdmit > 0 ) volt = m_totalCurr/m_totalAdmit;
+
     setVolt( volt );
 }
 
 void  eNode::setVolt( double v )
 {
-    if( m_volt != v )
-    {
-        m_voltChanged = true; // Used for wire animation
-        m_volt = v;
+    if( m_volt == v ) return;
 
-        LinkedElement* linked = m_voltChEl; // VoltChaneg callback
-        while( linked )
-        {
-            eElement* el = linked->element;
-            linked = linked->next;
-            if( el->added ) continue;
-            Simulator::self()->addToChangedList( el );
-            el->added = true;
-        }
-        linked = m_nonLinEl ;              // Non Linear callback
-        while( linked )
-        {
-            eElement* el = linked->element;
-            linked = linked->next;
-            if( el->added ) continue;
-            Simulator::self()->addToNoLinList( el );
-            el->added = true;
-        }
-}   }
+    m_voltChanged = true; // Used for wire animation
+    m_volt = v;
+
+    LinkedElement* linked = m_voltChEl; // VoltChaneg callback
+    while( linked )
+    {
+        eElement* el = linked->element;
+        linked = linked->next;
+        if( el->added ) continue;
+        Simulator::self()->addToChangedList( el );
+        el->added = true;
+    }
+    linked = m_nonLinEl ;              // Non Linear callback
+    while( linked )
+    {
+        eElement* el = linked->element;
+        linked = linked->next;
+        if( el->added ) continue;
+        Simulator::self()->addToNoLinList( el );
+        el->added = true;
+    }
+}
 
 void eNode::addEpin( ePin* epin )
 { if( !m_ePinList.contains(epin)) m_ePinList.append(epin); }
