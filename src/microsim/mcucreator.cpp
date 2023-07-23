@@ -9,6 +9,8 @@
 #include <QObject>
 #include <math.h>
 
+#include "circuitwidget.h"
+
 #include "mcucreator.h"
 #include "datautils.h"
 #include "regwatcher.h"
@@ -77,6 +79,9 @@
 #include "scriptusart.h"
 #include "scriptspi.h"
 #include "scriptprop.h"
+#include "scriptdisplay.h"
+
+#include "watcher.h"
 
 #include "utils.h"
 
@@ -165,6 +170,7 @@ int McuCreator::processFile( QString fileName, bool main )
         else if( part == "intosc")      createIntOsc( &el );
         //else if( part == "extmem" )     createExtMem( &el );
         else if( part == "intmem" )     createIntMem( &el );
+        else if( part == "display" )    createDisplay( &el );
 
         else if( part == "include" )
         {
@@ -1177,6 +1183,30 @@ void McuCreator::createIntMem( QDomElement* e )
     intMem->m_cshPin = mcu->getIoPin( e->attribute("cshpin") );
     intMem->m_cslPin = mcu->getIoPin( e->attribute("cslpin") );
     intMem->m_clkPin = mcu->getIoPin( e->attribute("clkpin") );
+}
+
+void McuCreator::createDisplay( QDomElement* e )
+{
+    QString name = e->attribute("name");
+
+    int width  = e->attribute("width").toInt();
+    int height = e->attribute("height").toInt();
+
+    ScriptDisplay* display = new ScriptDisplay( width, height, name, CircuitWidget::self() );
+
+    m_scriptPerif.push_back( display );
+
+    if( e->hasAttribute("embeed") )
+        m_mcuComp->setBackImage( display->getImage() );
+
+    if( e->hasAttribute("monitorscale") )
+    {
+        mcu->createWatcher();
+        mcu->getWatcher()->addWidget( display );
+
+        double scale = e->attribute("monitorscale").toDouble();
+        display->setMonitorScale( scale );
+    }
 }
 
 void McuCreator::createStack( QDomElement* s )

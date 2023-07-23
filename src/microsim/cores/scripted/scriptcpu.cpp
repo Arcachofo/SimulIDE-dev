@@ -26,14 +26,15 @@ ScriptCpu::ScriptCpu( eMcu* mcu )
 {
     m_watcher = NULL;
 
-    m_reset = NULL;
+    // Script functions
+    m_reset       = NULL;
     m_voltChanged = NULL;
-    m_runEvent  = NULL;
-    m_extClock  = NULL;
-    m_INTERRUPT = NULL;
-    m_getCpuReg = NULL;
-    m_getStrReg = NULL;
-    m_command   = NULL;
+    m_runEvent    = NULL;
+    m_extClock    = NULL;
+    m_INTERRUPT   = NULL;
+    m_getCpuReg   = NULL;
+    m_getStrReg   = NULL;
+    m_command     = NULL;
     m_setLinkedVal= NULL;
     m_setLinkedStr= NULL;
 
@@ -186,7 +187,7 @@ int ScriptCpu::compileScript()
     {
         m_mcu->createWatcher();
     }
-    if( m_command || m_script.contains("toConsole") )  /// TODELETE use TextComponent
+    if( m_command || m_script.contains("toConsole") )  /// Use TextComponent ???
     {
         m_mcu->createWatcher();
         m_watcher = m_mcu->getWatcher();
@@ -417,7 +418,6 @@ McuPin* ScriptCpu::getMcuPin( const string pinName )
     if( !pin ) qDebug() << "Error: ScriptCpu::getMcuPin Pin"<< name << "Doesn't exist";
     return pin;
 }
-
 
 //---- Linked --------------------------------------------
 

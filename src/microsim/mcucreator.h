@@ -28,6 +28,7 @@ class MAINMODULE_EXPORT McuCreator
 
         static int createMcu( Mcu* mcuComp, QString name );
         static void convert( QString fileName );
+
     private:
         static int  processFile( QString fileName, bool main=false );
         static void createProgMem( uint32_t size );
@@ -55,7 +56,7 @@ class MAINMODULE_EXPORT McuCreator
         static void createSpi( QDomElement* e );
         static void createWdt( QDomElement* e );
         static void createSleep( QDomElement* e );
-        //static void createExtMem( QDomElement* e );
+        static void createDisplay( QDomElement* e );
         static void createIntMem( QDomElement* e );
         static void createStack( QDomElement* s );
         static void createInterrupt( QDomElement* el );

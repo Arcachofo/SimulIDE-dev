@@ -37,6 +37,8 @@ class Watcher : public QWidget, private Ui::Watcher
         void addConsole( ScriptCpu* s );
         Console* console() { return m_console; }
 
+        void addWidget( QWidget* widget );
+
     public slots:
         void RegDoubleClick( const QModelIndex& index );
         void VarDoubleClick( const QModelIndex& index );

@@ -41,6 +41,8 @@ class MAINMODULE_EXPORT Chip : public Component, public eElement
 
         int pkgWidth() { return m_width; }
 
+        void setBackImage( QImage* image ) { m_backImage = image; }
+
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
 
     protected:
@@ -73,7 +75,8 @@ class MAINMODULE_EXPORT Chip : public Component, public eElement
 
         QList<Pin*> m_unusedPins;
 
-        QPixmap* m_BackPixmap;
+        QImage*  m_backImage;
+        QPixmap* m_backPixmap;
         QGraphicsTextItem m_label;
 };
 

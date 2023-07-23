@@ -130,6 +130,12 @@ void Watcher::addConsole( ScriptCpu* s )
     m_valuesLayout->insertWidget( m_valuesLayout->count()-1, m_console );
 }
 
+void Watcher::addWidget( QWidget* widget )
+{
+    int i = m_valuesLayout->count();
+    m_valuesLayout->insertWidget( i-1, widget );
+}
+
 void Watcher::RegDoubleClick( const QModelIndex& index )
 {
     QString name = m_registerModel->item(index.row())->text();

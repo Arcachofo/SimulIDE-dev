@@ -278,6 +278,8 @@ void Mcu::stamp()
 
 void Mcu::updateStep()
 {
+    if( m_backImage ) update();  // used by ScriptDisplay
+
     if( m_crashed )
     {
         Simulator::self()->setWarning( /*m_warning*/0 );

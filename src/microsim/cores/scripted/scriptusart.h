@@ -27,7 +27,7 @@ class MAINMODULE_EXPORT ScriptUsart : public McuUsart, public ScriptPerif
         virtual void startScript() override;
 
     private:
-        QString m_uartName;
+        //QString m_uartName;
 
         asIScriptFunction* m_byteReceived;
         asIScriptFunction* m_frameSent;

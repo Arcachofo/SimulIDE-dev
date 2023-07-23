@@ -41,7 +41,8 @@ Chip::Chip( QObject* parent, QString type, QString id )
     m_isLS = false;
     m_initialized = false;
     m_pkgeFile = "";
-    m_BackPixmap = NULL;
+    m_backPixmap = NULL;
+    m_backImage  = NULL;
     
     m_lsColor = QColor( 255, 255, 255 );
     m_icColor = QColor( 50, 50, 70 );
@@ -69,7 +70,7 @@ Chip::Chip( QObject* parent, QString type, QString id )
 }
 Chip::~Chip()
 {
-    if( m_BackPixmap ) delete m_BackPixmap;
+    if( m_backPixmap ) delete m_backPixmap;
 }
 
 void Chip::initChip()
@@ -224,10 +225,10 @@ void Chip::setBackground( QString bck )
 {
     m_background = bck;
 
-    if( m_BackPixmap )
+    if( m_backPixmap )
     {
-        delete m_BackPixmap;
-        m_BackPixmap = NULL;
+        delete m_backPixmap;
+        m_backPixmap = NULL;
     }
     if( bck.startsWith("color") )
     {
@@ -240,12 +241,12 @@ void Chip::setBackground( QString bck )
     else if( bck != "" ){
         QString pixmapPath = MainWindow::self()->getFilePath("data/images")+"/"+bck;
         if( QFile::exists( pixmapPath ) )              // Image in simulide data folder
-            m_BackPixmap = new QPixmap( pixmapPath );
+            m_backPixmap = new QPixmap( pixmapPath );
         else                                           // Image in Circuit data folder
         {
             QDir    circuitDir = QFileInfo( Circuit::self()->getFilePath() ).absoluteDir();
             QString pixmapPath = circuitDir.absoluteFilePath( "data/"+m_name+"/"+bck );
-            if( QFile::exists( pixmapPath ) ) m_BackPixmap = new QPixmap( pixmapPath );
+            if( QFile::exists( pixmapPath ) ) m_backPixmap = new QPixmap( pixmapPath );
         }
     }
     update();
@@ -255,12 +256,23 @@ void Chip::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* 
 {
     Component::paint( p, option, widget );
 
-    if( m_BackPixmap ) p->drawPixmap( m_area.x(), m_area.y(),m_width*8, m_height*8, *m_BackPixmap );
+    if( m_backPixmap ) p->drawPixmap( m_area.x(), m_area.y(),m_width*8, m_height*8, *m_backPixmap );
     else{
         p->drawRoundedRect( m_area, 1, 1);
-        if( !m_isLS && m_background.isEmpty() )
+        if( m_backImage  )
+        {
+            int w = m_backImage->width();
+            int h = m_backImage->height();
+            int mW = m_area.x()+(m_width*8 - w)/2;
+            int mH = m_area.y()+(m_height*8 - h)/2;
+            p->drawRoundedRect( mW, mH, w, h, 1, 1);
+            p->drawImage( mW, +mH, *m_backImage ); // Image centered
+        }
+        else if( !m_isLS && m_background.isEmpty() )
         {
             p->setPen( QColor( 170, 170, 150 ) );
             if( m_width == m_height ) p->drawEllipse( 4, 4, 4, 4);
             else                      p->drawArc( boundingRect().width()/2-6, -4, 8, 8, 0, -2880 /* -16*180 */ );
-}   }   }
+        }
+    }
+}
