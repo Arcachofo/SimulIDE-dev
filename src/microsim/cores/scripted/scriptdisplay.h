@@ -10,13 +10,17 @@
 
 #include "scriptperif.h"
 #include "updatable.h"
+#include "e-element.h"
 
-class ScriptDisplay : public QWidget, public ScriptPerif, public Updatable
+class asIScriptFunction;
+
+class ScriptDisplay : public QWidget, public ScriptPerif, public Updatable, public eElement
 {
     public:
         ScriptDisplay( int width, int height, QString name, QWidget* parent );
         ~ScriptDisplay();
 
+        virtual void initialize() override;
         virtual void updateStep() override;
 
         void setWidth( int w );
@@ -52,6 +56,9 @@ class ScriptDisplay : public QWidget, public ScriptPerif, public Updatable
 
         QImage m_image;    //Visual representation
 
+        asIScriptFunction* m_clear;
+
+ static void registerScriptMetods( asIScriptEngine* engine );
 };
 
 #endif

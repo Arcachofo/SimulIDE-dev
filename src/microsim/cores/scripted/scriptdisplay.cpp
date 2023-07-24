@@ -13,6 +13,7 @@ ScriptDisplay::ScriptDisplay( int w, int h, QString name, QWidget* parent )
              : QWidget( parent )
              , ScriptPerif()
              , Updatable()
+             , eElement( name )
              , m_image( w, h, QImage::Format_RGB888 )
 {
     m_width  = w;
@@ -22,6 +23,8 @@ ScriptDisplay::ScriptDisplay( int w, int h, QString name, QWidget* parent )
 
     m_background= 0;
     m_changed = false;
+
+    m_clear = NULL;
 
     m_image.fill( 0 );
 
@@ -33,12 +36,18 @@ void ScriptDisplay::registerScript( ScriptCpu* cpu )
 {
     m_scriptCpu = cpu;
 
-    string display = "Display "+m_name.toStdString(); // Type name
     asIScriptEngine* engine = cpu->engine();
 
-    engine->RegisterObjectType("Display", 0, asOBJ_REF | asOBJ_NOCOUNT );
+    asITypeInfo* info = engine->GetTypeInfoByName("Display"); // Check if "Display is already registered
+    if( !info ) registerScriptMetods( engine );
 
+    string display = "Display "+m_name.toStdString(); // Type name
     engine->RegisterGlobalProperty( display.c_str(), this );
+}
+
+void ScriptDisplay::registerScriptMetods( asIScriptEngine* engine ) // Static: register Object type and methods only once
+{
+    engine->RegisterObjectType("Display", 0, asOBJ_REF | asOBJ_NOCOUNT );
 
     engine->RegisterObjectMethod("Display", "void setWidth(int w)"
                                    , asMETHODPR( ScriptDisplay, setWidth, (int), void)
@@ -59,11 +68,15 @@ void ScriptDisplay::registerScript( ScriptCpu* cpu )
 
 void ScriptDisplay::startScript()
 {
-    //asIScriptEngine* aEngine = m_scriptCpu->engine();
-    /*m_byteReceived = aEngine->GetModule(0)->GetFunctionByDecl("void byteReceived( uint d )");
-    m_frameSent    = aEngine->GetModule(0)->GetFunctionByDecl("void frameSent( uint data )");
-    */
-    //this->show();
+    asIScriptEngine* aEngine = m_scriptCpu->engine();
+
+    m_clear = aEngine->GetModule(0)->GetFunctionByDecl("void clear()");
+    //m_frameSent    = aEngine->GetModule(0)->GetFunctionByDecl("void frameSent( uint data )");
+}
+
+void ScriptDisplay::initialize()
+{
+    if( m_clear ) m_scriptCpu->callFunction( m_clear );
 }
 
 void ScriptDisplay::updateStep()
