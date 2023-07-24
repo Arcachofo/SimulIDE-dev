@@ -62,7 +62,7 @@ void IoPin::stamp()
 
     ePin::setEnodeComp( &m_gndEnode );
     ePin::createCurrent();
-    setPinMode( m_pinMode );
+    setPinMode( m_pinMode, true );
     stampAll();
 }
 
@@ -119,9 +119,9 @@ void IoPin::startHL()
     stampVolt( m_outHighV-(m_outLowV+m_outHighV)/100 );
 }
 
-void IoPin::setPinMode( pinMode_t mode )
+void IoPin::setPinMode( pinMode_t mode, bool force )
 {
-    if( m_pinMode == mode ) return;
+    if( !force && m_pinMode == mode ) return;
     m_pinMode = mode;
 
     switch( mode )

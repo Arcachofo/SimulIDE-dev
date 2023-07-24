@@ -36,7 +36,7 @@ class MAINMODULE_EXPORT IoPin : public Pin, public eElement
 
         virtual void sheduleState( bool state, uint64_t time );
 
-        void setPinMode( pinMode_t mode );
+        void setPinMode( pinMode_t mode, bool force=false );
         void setPinMode( uint mode ) { setPinMode( (pinMode_t) mode ); }
 
         void  setInputHighV( double volt ) { m_inpHighV = volt; }
