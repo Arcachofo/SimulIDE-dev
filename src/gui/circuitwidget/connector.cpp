@@ -38,7 +38,7 @@ new StrProp<Connector>( "uid"       ,"","", this, &Connector::getUid,     &Conne
 new StrProp<Connector>( "startpinid","","", this, &Connector::startPinId, &Connector::dummySetter ),
 new StrProp<Connector>( "endpinid"  ,"","", this, &Connector::endPinId,   &Connector::dummySetter ),
 new StrProp<Connector>( "pointList" ,"","", this, &Connector::pListStr,   &Connector::setPointListStr ),
-    }} );
+    }, 0} );
 }
 Connector::~Connector()
 {

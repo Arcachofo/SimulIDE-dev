@@ -208,6 +208,8 @@ void ScriptCpu::updateStep()
 
     if( m_updateStep ) callFunction( m_updateStep );
 
+    m_aEngine->GarbageCollect( asGC_FULL_CYCLE );  // Automatic garbage collection is disabled, doing it manually
+
     m_mcuComp->setValLabelText( m_value );
 }
 
@@ -218,8 +220,8 @@ void ScriptCpu::reset()
 
     if( m_reset ) callFunction( m_reset );
 }
-void ScriptCpu::voltChanged() { callFunction( m_voltChanged ); }
-void ScriptCpu::runEvent()    { callFunction( m_runEvent ); }
+void ScriptCpu::voltChanged() { if( m_voltChanged ) callFunction( m_voltChanged ); }
+void ScriptCpu::runEvent()    { if( m_runEvent )    callFunction( m_runEvent ); }
 void ScriptCpu::INTERRUPT( uint vector )
 {
     prepare( m_INTERRUPT );
@@ -230,6 +232,8 @@ void ScriptCpu::INTERRUPT( uint vector )
 void ScriptCpu::runStep()     { ; }
 void ScriptCpu::extClock( bool clkState )
 {
+    if( !m_extClock) return;
+
     prepare( m_extClock );
     m_context->SetArgByte( 0, clkState );
     execute();

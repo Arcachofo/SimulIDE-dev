@@ -24,12 +24,12 @@ class MAINMODULE_EXPORT ScriptModule : public eElement
         virtual void setScriptFile( QString scriptFile, bool compile=true );
         virtual void setScript( QString script );
 
-        asIScriptEngine* engine() { return m_aEngine; }
+        asIScriptEngine*  engine()  { return m_aEngine; }
         asIScriptContext* context() { return m_context; }
 
-        void callFunction( asIScriptFunction* func, asIScriptContext* ctx=NULL );
-        void prepare( asIScriptFunction* func, asIScriptContext* ctx=NULL );
-        void execute( asIScriptContext* ctx=NULL );
+        void callFunction( asIScriptFunction* func );
+        inline void prepare( asIScriptFunction* func ) { m_context->Prepare( func ); }
+        void execute();
 
     protected:
         int m_status;

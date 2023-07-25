@@ -270,7 +270,7 @@ void  eNode::setVolt( double v )
     m_voltChanged = true; // Used for wire animation
     m_volt = v;
 
-    LinkedElement* linked = m_voltChEl; // VoltChaneg callback
+    CallBackElement* linked = m_voltChEl; // VoltChaneg callback
     while( linked )
     {
         eElement* el = linked->element;
@@ -310,22 +310,22 @@ QList<int> eNode::getConnections()
 
 void eNode::voltChangedCallback( eElement* el )
 {
-    LinkedElement* changed = m_voltChEl;
+    CallBackElement* changed = m_voltChEl;
     while( changed )
     {
         if( el == changed->element ) return; // Element already in the list
         changed = changed->next;
     }
-    LinkedElement* newLinked = new LinkedElement( el );
+    CallBackElement* newLinked = new CallBackElement( el );
     newLinked->next = m_voltChEl; // Prepend
     m_voltChEl = newLinked;
 }
 
 void eNode::remFromChangedCallback( eElement* el )
 {
-    LinkedElement* changed = m_voltChEl;
-    LinkedElement* last  = NULL;
-    LinkedElement* next  = NULL;
+    CallBackElement* changed = m_voltChEl;
+    CallBackElement* last  = NULL;
+    CallBackElement* next  = NULL;
 
     while( changed ){
         next = changed->next;
@@ -342,22 +342,22 @@ void eNode::remFromChangedCallback( eElement* el )
 
 void eNode::addToNoLinList( eElement* el )
 {
-    LinkedElement* changed = m_nonLinEl;
+    CallBackElement* changed = m_nonLinEl;
     while( changed )
     {
         if( el == changed->element ) return; // Element already in the list
         changed = changed->next;
     }
-    LinkedElement* newLinked = new LinkedElement( el );
+    CallBackElement* newLinked = new CallBackElement( el );
     newLinked->next = m_nonLinEl; // Prepend
     m_nonLinEl = newLinked;
     //qDebug() <<m_id<< el->getId();
 }
 
-void eNode::clearElmList( LinkedElement* first )
+void eNode::clearElmList( CallBackElement* first )
 {
     while( first ){
-        LinkedElement* del = first;
+        CallBackElement* del = first;
         first = first->next;
         delete del;
     }

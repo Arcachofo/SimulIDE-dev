@@ -72,13 +72,13 @@ class MAINMODULE_EXPORT eNode
                 int    node;
                 double value;
         };
-        class LinkedElement
+        class CallBackElement
         {
             public:
-                LinkedElement( eElement* el ) { element = el; }
-                ~LinkedElement(){;}
+                CallBackElement( eElement* el ) { element = el; }
+                ~CallBackElement(){;}
 
-                LinkedElement* next;
+                CallBackElement* next;
                 eElement* element;
         };
 
@@ -86,15 +86,15 @@ class MAINMODULE_EXPORT eNode
 
         inline void solveSingle();
 
-        void clearElmList( LinkedElement* first );
+        void clearElmList( CallBackElement* first );
         void clearConnList( Connection* first );
 
         QString m_id;
 
         QList<ePin*> m_ePinList;
 
-        LinkedElement* m_voltChEl;
-        LinkedElement* m_nonLinEl;
+        CallBackElement* m_voltChEl;
+        CallBackElement* m_nonLinEl;
 
         Connection* m_firstAdmit;   // Stamp full admitance in Admitance Matrix
         Connection* m_firstSingAdm; // Stamp single value   in Admitance Matrix

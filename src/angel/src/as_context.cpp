@@ -208,8 +208,7 @@ asCContext::~asCContext()
 // interface
 bool asCContext::IsNested(asUINT *nestCount) const
 {
-	if( nestCount )
-		*nestCount = 0;
+    if( nestCount ) *nestCount = 0;
 
 	asUINT c = GetCallstackSize();
 	if( c == 0 )
@@ -1172,13 +1171,15 @@ int asCContext::Execute()
 
 	m_status = asEXECUTION_ACTIVE;
 
-	asCThreadLocalData *tld = asPushActiveContext((asIScriptContext *)this);
+    ///asCThreadLocalData *tld = asPushActiveContext((asIScriptContext *)this);
 
 	// Make sure there are not too many nested calls, as it could crash the application 
-	// by filling up the thread call stack
-	if (tld->activeContexts.GetLength() > m_engine->ep.maxNestedCalls)
-		SetInternalException(TXT_TOO_MANY_NESTED_CALLS);
-	else if( m_regs.programPointer == 0 )
+    // by filling up the thread call stack
+    /// We don't have nested calls...
+    /// if (tld->activeContexts.GetLength() > m_engine->ep.maxNestedCalls)
+    ///	SetInternalException(TXT_TOO_MANY_NESTED_CALLS);
+    /// else
+    if( m_regs.programPointer == 0 )
 	{
 		if( m_currentFunction->funcType == asFUNC_DELEGATE )
 		{
@@ -1190,7 +1191,7 @@ int asCContext::Execute()
 
 			// Make the call to the delegated object method
 			m_currentFunction = m_currentFunction->funcForDelegate;
-		}
+        }
 
 		if( m_currentFunction->funcType == asFUNC_VIRTUAL ||
 			m_currentFunction->funcType == asFUNC_INTERFACE )
@@ -1274,10 +1275,10 @@ int asCContext::Execute()
 			asASSERT( m_status == asEXECUTION_EXCEPTION );
 		}
 	}
-
-	asUINT gcPreObjects = 0;
-	if( m_engine->ep.autoGarbageCollect )
-		m_engine->gc.GetStatistics(&gcPreObjects, 0, 0, 0, 0);
+    /// We don't autoGarbageCollect
+    /// asUINT gcPreObjects = 0;
+    /// if( m_engine->ep.autoGarbageCollect )
+    ///	m_engine->gc.GetStatistics(&gcPreObjects, 0, 0, 0, 0);
 
 	while (m_status == asEXECUTION_ACTIVE)
 	{
@@ -1300,8 +1301,8 @@ int asCContext::Execute()
 		m_regs.doProcessSuspend = false;
 
 	m_doSuspend = false;
-
-	if( m_engine->ep.autoGarbageCollect )
+    /// We don't autoGarbageCollect
+    /*if( m_engine->ep.autoGarbageCollect )
 	{
 		asUINT gcPosObjects = 0;
 		m_engine->gc.GetStatistics(&gcPosObjects, 0, 0, 0, 0);
@@ -1315,10 +1316,10 @@ int asCContext::Execute()
 			// Execute at least one step, even if no new objects were created
 			m_engine->GarbageCollect(asGC_ONE_STEP | asGC_DESTROY_GARBAGE | asGC_DETECT_GARBAGE, 1);
 		}
-	}
+    }*/
 
 	// Pop the active context
-	asPopActiveContext(tld, this);
+    /// asPopActiveContext(tld, this);
 
 	if( m_status == asEXECUTION_FINISHED )
 	{
@@ -1696,8 +1697,7 @@ void asCContext::CallScriptFunction(asCScriptFunction *func)
 	asASSERT( func->scriptData );
 
 	// Push the framepointer, function id and programCounter on the stack
-	if (PushCallState() < 0)
-		return;
+    if (PushCallState() < 0) return;
 
 	// Update the current function and program position before increasing the stack
 	// so the exception handler will know what to do if there is a stack overflow
@@ -1745,10 +1745,8 @@ void asCContext::PrepareScriptFunction()
 	// be interrupted, even if the scripts have been compiled with asEP_BUILD_WITHOUT_LINE_CUES
 	if( m_regs.doProcessSuspend )
 	{
-		if( m_lineCallback )
-			CallLineCallback();
-		if( m_doSuspend )
-			m_status = asEXECUTION_SUSPENDED;
+        if( m_lineCallback ) CallLineCallback();
+        if( m_doSuspend )    m_status = asEXECUTION_SUSPENDED;
 	}
 }
 

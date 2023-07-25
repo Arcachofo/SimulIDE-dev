@@ -38,8 +38,9 @@ ScriptModule::ScriptModule( QString name )
     m_context = m_aEngine->CreateContext();
     if( m_context == 0 ) { qDebug() << "Failed to create the context."; return; }
 
+    m_aEngine->SetEngineProperty( asEP_AUTO_GARBAGE_COLLECT   , false );
     m_aEngine->SetEngineProperty( asEP_BUILD_WITHOUT_LINE_CUES, true );
-    m_aEngine->SetEngineProperty( asEP_OPTIMIZE_BYTECODE, true );
+    m_aEngine->SetEngineProperty( asEP_OPTIMIZE_BYTECODE      , true );
 
     m_aEngine->SetMessageCallback( asFUNCTION( MessageCallback ), 0, asCALL_CDECL );
     RegisterStdString( m_aEngine );
@@ -89,26 +90,15 @@ int ScriptModule::compileScript()
     return 0;
 }
 
-void ScriptModule::callFunction( asIScriptFunction* func, asIScriptContext* ctx )
+void ScriptModule::callFunction( asIScriptFunction* func )
 {
-    prepare( func, ctx );
-    execute( ctx );
+    prepare( func );
+    execute();
 }
 
-void ScriptModule::prepare( asIScriptFunction* func, asIScriptContext* ctx )
+void ScriptModule::execute()
 {
-    if( !func ) return;
-    if( !ctx ) ctx = m_context;
-    if( !ctx ) return;
-
-    int r = ctx->Prepare( func );
-    if( r < 0 ) { qDebug() << "Failed to prepare context."; return; }
-}
-
-void ScriptModule::execute( asIScriptContext* ctx )
-{
-    if( !ctx ) ctx = m_context;
-    m_status = ctx->Execute();
+    m_status = m_context->Execute();
     if( m_status != asEXECUTION_FINISHED ) // The execution didn't finish as we had planned. Determine why.
     {
         if( m_status == asEXECUTION_ABORTED )
@@ -118,12 +108,12 @@ void ScriptModule::execute( asIScriptContext* ctx )
             qDebug() << "The script ended with an exception." ;
 
             // Write some information about the script exception
-            asIScriptFunction* func = ctx->GetExceptionFunction();
+            asIScriptFunction* func = m_context->GetExceptionFunction();
             qDebug() << "func:" << func->GetDeclaration();
             qDebug() << "modl:" << func->GetModuleName();
             qDebug() << "sect:" << func->GetScriptSectionName();
-            qDebug() << "line:" << ctx->GetExceptionLineNumber();
-            qDebug() << "desc:" << ctx->GetExceptionString();
+            qDebug() << "line:" << m_context->GetExceptionLineNumber();
+            qDebug() << "desc:" << m_context->GetExceptionString();
         }
         else qDebug() << "The script ended for some unforeseen reason:" << m_status;
     }
