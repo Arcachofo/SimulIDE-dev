@@ -77,8 +77,11 @@ class MAINMODULE_EXPORT IoPin : public Pin, public eElement
                 m_outVolt = m_outLowV;
                 setPinState( out_low ); // Low colors
             }
-            //ePin::stampCurrent( m_outVolt*m_admit );
-            if( m_enode ) m_enode->forceVolt( m_outVolt );
+            if( m_enode )        // Pin is connected
+            {
+                if( m_fastMode ) m_enode->forceVolt( m_outVolt );
+                else             m_enode->stampCurrent( this, m_outVolt*m_admit );//ePin::stampCurrent( m_outVolt*m_admit );
+            }
         }
 
         void setStateZ( bool z );

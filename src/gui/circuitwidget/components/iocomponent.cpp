@@ -109,8 +109,6 @@ void IoComponent::sheduleOutPuts( eElement* el )
     if( m_outsReady ) // Event when outputs already dispatched
     {
         if( m_nextOutVal == m_outValue ) return;
-        if( delay ) Simulator::self()->addEvent( delay, el );
-        else runOutputs();
     }
     else             // New Event while previous Event not dispatched
     {
@@ -123,7 +121,8 @@ void IoComponent::sheduleOutPuts( eElement* el )
 
         m_eElement = el;
     }
-    m_outsReady = false;
+    if( delay ) Simulator::self()->addEvent( delay, el );
+    else runOutputs();
 }
 
 void IoComponent::setInputHighV( double volt )
@@ -228,7 +227,7 @@ void IoComponent::setOpenCol( bool op )
 
 void IoComponent::setPropDelay( double pd )
 {
-    if( pd < 1e-12 ) pd = 1e-12;
+    if( pd < 0 ) pd = 0;
     if( pd > 1e6   ) pd = 1e6;
     m_propDelay = pd*1e12;
 }
