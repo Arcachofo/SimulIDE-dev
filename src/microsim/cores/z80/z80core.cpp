@@ -101,7 +101,7 @@ new StrProp <Z80Core>( "Producer"        , QObject::tr("Producer")             ,
 new BoolProp<Z80Core>( "CMOS"            , QObject::tr("CMOS")                 , "", this, &Z80Core::cmos     , &Z80Core::setCmos ),
 new BoolProp<Z80Core>( "Single cycle I/O", QObject::tr("Single cycle I/O")     , "", this, &Z80Core::ioWait   , &Z80Core::setIoWait ),
 new BoolProp<Z80Core>( "Int_Vector"      , QObject::tr("Interrupt Vector 0xFF"), "", this, &Z80Core::intVector, &Z80Core::setIntVector ),
-    }} );
+    },0} );
 }
 
 Z80Core::~Z80Core() {}
@@ -830,18 +830,19 @@ void Z80Core::releaseBus( bool rel )
 // The program counter is increased in case of not handling interrupt or halt.
 void Z80Core::opCodeFetch()
 {
+    switch( mc_prefix ){ // Handle prefixes
+        case noPrefix: XYState = rHL; m_iSet = noPrefix; break; // no prefix - register pair HL and basic instruction set
+        case prefixCB:                m_iSet = prefixCB; break; // prefix CB - no change register pair and instruction set CB
+        case prefixED: XYState = rHL; m_iSet = prefixED; break; // prefix ED - register pair HL and instruction set ED
+        case prefixIX: XYState = rIX; m_iSet = noPrefix; break; // prefix IX - register pair IX and basic instruction set
+        case prefixIY: XYState = rIY; m_iSet = noPrefix; break; // prefix IY - register pair IY and basic instruction set
+    }
+
     switch( sm_M1CycleType ) // Fetching opcode
     {
         case tOpCodeFetch: m_iReg = m_dataPort->getInpState();   // reading opcode from data bus
             m_PC++;                                            // increase program counter PC
 
-            switch( mc_prefix ){ // Handle prefixes
-                case noPrefix: XYState = rHL; m_iSet = noPrefix; break; // no prefix - register pair HL and basic instruction set
-                case prefixCB:                m_iSet = prefixCB; break; // prefix CB - no change register pair and instruction set CB
-                case prefixED: XYState = rHL; m_iSet = prefixED; break; // prefix ED - register pair HL and instruction set ED
-                case prefixIX: XYState = rIX; m_iSet = noPrefix; break; // prefix IX - register pair IX and basic instruction set
-                case prefixIY: XYState = rIY; m_iSet = noPrefix; break; // prefix IY - register pair IY and basic instruction set
-            }
             // Set number of machine cycles and TStates for instruction
             mc_MCycles = sTableMCycles[m_iSet][m_iReg];
             mc_TStates = sTableM1TStates[m_iSet][m_iReg];
