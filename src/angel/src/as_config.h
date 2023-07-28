@@ -74,6 +74,7 @@
 
 // AS_NO_EXCEPTIONS
 // Define this if exception handling is turned off or not available on the target platform.
+#define AS_NO_EXCEPTIONS
 
 // AS_NO_MEMBER_INIT
 // Disable the support for initialization of class members directly in the declaration.

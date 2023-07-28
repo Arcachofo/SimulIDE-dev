@@ -832,8 +832,10 @@ public:
     virtual asIScriptEngine *GetEngine() const = 0;
 
     // Execution
+    virtual void            prepareJit0( asIScriptFunction *func ) = 0;
     virtual int             Prepare(asIScriptFunction *func) = 0;
     virtual int             Unprepare() = 0;
+    virtual int             executeJit0( asIScriptFunction *func ) = 0;
     virtual int             Execute() = 0;
     virtual int             Abort() = 0;
     virtual int             Suspend() = 0;

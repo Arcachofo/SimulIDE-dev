@@ -90,6 +90,35 @@ int ScriptModule::compileScript()
     return 0;
 }
 
+/*int ScriptModule::SaveBytecode(asIScriptEngine *engine, const char *outputFile)
+{
+    CBytecodeStream stream;
+    int r = stream.Open( outputFile );
+    if( r < 0 )
+    {
+        qDebug() << "Failed to open output file for writing";
+        return -1;
+    }
+
+    asIScriptModule *mod = engine->GetModule("build");
+    if( mod == 0 )
+    {
+        qDebug() << "Failed to retrieve the compiled bytecode";
+        return -1;
+    }
+
+    r = mod->SaveByteCode( &stream );
+    if( r < 0 )
+    {
+        qDebug() <<  "Failed to write the bytecode";
+        return -1;
+    }
+
+    qDebug() <<  "Bytecode successfully saved";
+
+    return 0;
+}*/
+
 void ScriptModule::callFunction( asIScriptFunction* func )
 {
     prepare( func );
@@ -99,22 +128,24 @@ void ScriptModule::callFunction( asIScriptFunction* func )
 void ScriptModule::execute()
 {
     m_status = m_context->Execute();
-    if( m_status != asEXECUTION_FINISHED ) // The execution didn't finish as we had planned. Determine why.
-    {
-        if( m_status == asEXECUTION_ABORTED )
-            qDebug() << "The script was aborted before it could finish. Probably it timed out.";
-        else if( m_status == asEXECUTION_EXCEPTION )
-        {
-            qDebug() << "The script ended with an exception." ;
+    if( m_status != asEXECUTION_FINISHED ) printError();
+}
 
-            // Write some information about the script exception
-            asIScriptFunction* func = m_context->GetExceptionFunction();
-            qDebug() << "func:" << func->GetDeclaration();
-            qDebug() << "modl:" << func->GetModuleName();
-            qDebug() << "sect:" << func->GetScriptSectionName();
-            qDebug() << "line:" << m_context->GetExceptionLineNumber();
-            qDebug() << "desc:" << m_context->GetExceptionString();
-        }
-        else qDebug() << "The script ended for some unforeseen reason:" << m_status;
+void ScriptModule::printError() // The execution didn't finish as we had planned. Determine why.
+{
+    if( m_status == asEXECUTION_ABORTED )
+        qDebug() << "The script was aborted before it could finish. Probably it timed out.";
+    else if( m_status == asEXECUTION_EXCEPTION )
+    {
+        qDebug() << "The script ended with an exception." ;
+
+        // Write some information about the script exception
+        asIScriptFunction* func = m_context->GetExceptionFunction();
+        qDebug() << "func:" << func->GetDeclaration();
+        qDebug() << "modl:" << func->GetModuleName();
+        qDebug() << "sect:" << func->GetScriptSectionName();
+        qDebug() << "line:" << m_context->GetExceptionLineNumber();
+        qDebug() << "desc:" << m_context->GetExceptionString();
     }
+    else qDebug() << "The script ended for some unforeseen reason:" << m_status;
 }

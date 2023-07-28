@@ -62,8 +62,10 @@ public:
 	asIScriptEngine *GetEngine() const;
 
 	// Execution
+    void            prepareJit0( asIScriptFunction *func );
 	int             Prepare(asIScriptFunction *func);
 	int             Unprepare();
+    int             executeJit0( asIScriptFunction *func );
 	int             Execute();
 	int             Abort();
 	int             Suspend();
@@ -144,6 +146,7 @@ public:
 #endif
 	void DetachEngine();
 
+    void ExecuteNextJit();
 	void ExecuteNext();
 	void CleanStack(bool catchException = false);
 	bool CleanStackFrame(bool catchException = false);

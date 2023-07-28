@@ -32,6 +32,8 @@ class MAINMODULE_EXPORT ScriptModule : public eElement
         void execute();
 
     protected:
+        void printError();
+
         int m_status;
 
         QString m_script;

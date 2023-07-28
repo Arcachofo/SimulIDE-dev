@@ -220,8 +220,24 @@ void ScriptCpu::reset()
 
     if( m_reset ) callFunction( m_reset );
 }
-void ScriptCpu::voltChanged() { if( m_voltChanged ) callFunction( m_voltChanged ); }
-void ScriptCpu::runEvent()    { if( m_runEvent )    callFunction( m_runEvent ); }
+void ScriptCpu::voltChanged()
+{
+    if( !m_voltChanged ) return;
+    //callFunction( m_voltChanged );
+
+    m_status = m_context->executeJit0( m_voltChanged );
+    if( m_status != asEXECUTION_FINISHED ) printError();
+}
+
+void ScriptCpu::runEvent()
+{
+    if( !m_runEvent ) return;
+    //callFunction( m_runEvent );
+
+    m_status = m_context->executeJit0( m_runEvent );
+    if( m_status != asEXECUTION_FINISHED ) printError();
+}
+
 void ScriptCpu::INTERRUPT( uint vector )
 {
     prepare( m_INTERRUPT );
