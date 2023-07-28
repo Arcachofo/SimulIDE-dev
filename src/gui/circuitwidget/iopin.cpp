@@ -217,7 +217,7 @@ void IoPin::setOutState( bool state ) // Set Output to Hight or Low
         if( m_enode )        // Pin is connected
         {
             if( m_fastMode ) m_enode->forceVolt( m_outVolt );
-            else             stampVolt( m_outVolt );
+            else             ePin::stampCurrent(m_outVolt*m_admit );
         }
 }   }
 

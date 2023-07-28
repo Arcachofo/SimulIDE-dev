@@ -80,7 +80,7 @@ class MAINMODULE_EXPORT IoPin : public Pin, public eElement
             if( m_enode )        // Pin is connected
             {
                 if( m_fastMode ) m_enode->forceVolt( m_outVolt );
-                else             m_enode->stampCurrent( this, m_outVolt*m_admit );//ePin::stampCurrent( m_outVolt*m_admit );
+                else             ePin::stampCurrent( m_outVolt*m_admit );//ePin::stampCurrent( m_outVolt*m_admit );
             }
         }
 
