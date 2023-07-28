@@ -52,8 +52,6 @@ class MAINMODULE_EXPORT DynamicMemory : public LogicComponent, public MemData
         virtual void contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu ) override;
 
     private:
-        void write( bool w );
-
         int m_refreshPeriod;
         int m_rowAddrBits;
         int m_colAddrBits;
@@ -68,10 +66,9 @@ class MAINMODULE_EXPORT DynamicMemory : public LogicComponent, public MemData
         QVector<int> m_ram;
         QVector<uint64_t> m_rowLastRefresh;
 
+        bool m_oe;
         bool m_ras;
         bool m_cas;
-        bool m_we;
-        bool m_write;
 
         IoPin* m_RasPin;
         IoPin* m_CasPin;

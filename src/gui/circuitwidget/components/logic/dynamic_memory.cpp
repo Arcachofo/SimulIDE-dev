@@ -65,6 +65,7 @@ DynamicMemory::DynamicMemory( QObject* parent, QString type, QString id )
     m_addrBits = 0;
     m_dataBits = 0;
     m_refreshPeriod = 0;
+
     setRowAddrBits( 8 );
     setColAddrBits( 8 );
     setDataBits( 8 );
@@ -87,9 +88,10 @@ void DynamicMemory::stamp()                   // Called at Simulation Start
     m_rowAddress = 0;
     m_intRefresh = 0;
     m_refreshError = false;
+
+    m_oe = false;
     m_ras = false;
     m_cas = false;
-    m_we = false;
     for( int &data : m_ram ) data = rand() % (int)( pow( 2, m_dataBits ) );
 
     m_WePin->changeCallBack( this );
@@ -97,7 +99,7 @@ void DynamicMemory::stamp()                   // Called at Simulation Start
     m_CasPin->changeCallBack( this );
     m_oePin->changeCallBack( this );
 
-    write( false );
+    for( IoPin* pin : m_outPin ) pin->setPinMode( input );
 
     LogicComponent::stamp();
 }
@@ -112,108 +114,72 @@ void DynamicMemory::updateStep()
 void DynamicMemory::voltChanged()        // Some Pin Changed State, Manage it
 {
     bool RAS = m_RasPin->getInpState();
+    bool CAS = m_CasPin->getInpState();
+    bool WE  = m_WePin->getInpState();
+    bool OE  = m_oePin->getInpState() && !WE & CAS; // Enable output buffers only if OE & CAS & RAS & Read
+
+    if( m_oe != OE )
+    {
+        m_oe = OE;
+        for( IoPin* pin : m_outPin ) pin->setPinMode( OE ? output : input ); // Enable/Disable output buffers
+    }
+
     if( RAS != m_ras ) {
         m_ras = RAS;
-        if ( m_ras == true ) {                                                      // falling edge at /RAS
+        if ( RAS )                                               // falling edge at /RAS
+        {
             int refreshRow;
-            if ( !m_cas ) {                                                         // RAS before CAS - row refresh from address bus
+            if ( !m_cas ) {                                      // RAS before CAS - row refresh from address bus
                 m_rowAddress = 0;
-                for( int i=0; i<m_rowAddrBits; ++i )                                // Get Row Address
+                for( int i=0; i<m_rowAddrBits; ++i )             // Get Row Address
                 {
                     bool state = m_inPin[i]->getInpState();
                     if( state ) m_rowAddress += pow( 2, i );
                 }
-                refreshRow = m_rowAddress;
-                qDebug() << "Row address" << m_rowAddress;
-            } else {                                                                // RAS after CAS - internal refresh
-                qDebug() << "Internal refresh row" << m_rowAddress;
+                refreshRow = m_rowAddress; //qDebug() << "Row address" << m_rowAddress;
+            } else {                                             // RAS after CAS - internal refresh
                 refreshRow = m_intRefresh++;
-                if( m_intRefresh >= pow( 2, m_rowAddrBits ) )
-                    m_intRefresh = 0;
+                if( m_intRefresh >= pow( 2, m_rowAddrBits ) ) m_intRefresh = 0; //qDebug() << "Internal refresh row" << m_rowAddress;
             }
             if ( Simulator::self()->circTime() > ( m_rowLastRefresh[refreshRow] + m_refreshPeriod ) ) {
-                m_refreshError = true;
-                qDebug() << "Row" << refreshRow << "of dynamic RAM " + idLabel() + " has not been refreshed for" << ( Simulator::self()->circTime() - m_rowLastRefresh[refreshRow] ) / 1e9 << "ms";
+                m_refreshError = true; //qDebug() << "Row" << refreshRow << "of dynamic RAM " + idLabel() + " has not been refreshed for" << ( Simulator::self()->circTime() - m_rowLastRefresh[refreshRow] ) / 1e9 << "ms";
             }
             m_rowLastRefresh[refreshRow] = Simulator::self()->circTime();
         }
     }
 
-    bool CAS = m_CasPin->getInpState();
     if( CAS != m_cas ) {
         m_cas = CAS;
-        LogicComponent::enableOutputs( CAS && m_outEnable );
-        
-        if ( m_cas == true )                                                        // falling edge at /CAS
-            if ( m_ras )                                                            // store address when /RAS is active
+        if ( CAS && RAS )     // falling edge at /CAS
+        {
+            m_address = m_rowAddress * pow( 2, m_rowAddrBits );
+            for( int i=0; i<m_colAddrBits; ++i )                // Get Address
             {
-                m_address = m_rowAddress * pow( 2, m_rowAddrBits );
-                for( int i=0; i<m_colAddrBits; ++i )                                // Get Address
+                bool state = m_inPin[i]->getInpState();
+                if( state ) m_address += pow( 2, i );
+            }
+            //qDebug() << "Address" << m_address;
+
+            if ( WE ) {                                        // Write
+                int value = 0;
+                for( uint i=0; i<m_outPin.size(); ++i )
                 {
-                    bool state = m_inPin[i]->getInpState();
-                    if( state ) m_address += pow( 2, i );
+                    bool state = m_outPin[i]->getInpState();
+                    if( state ) value += pow( 2, i );
                 }
-                qDebug() << "Address" << m_address;
+                m_ram[m_address] = value;
+                //qDebug() << "Write" << value << "to address" << m_address;
+            }else{                                            // Read
+                m_nextOutVal = m_ram[m_address];
+                IoComponent::sheduleOutPuts( this );
             }
-    }
-    
-    if ( !CAS ) {
-        m_we = false;
-        return;
-    }
-
-    updateOutEnabled();
-    if ( m_outEnable == true ) {
-        m_nextOutVal = m_ram[m_address];
-        IoComponent::sheduleOutPuts( this );
-    }
-
-    bool WE = m_WePin->getInpState();
-    if ( WE != m_we ) {
-        m_we = WE;
-        if ( m_we == true ) {                                                       // falling edge at /WE - Write
-            int value = 0;
-            for( uint i=0; i<m_outPin.size(); ++i )
-            {
-                bool state = m_outPin[i]->getInpState();
-                if( state ) value += pow( 2, i );
-            }
-            m_ram[m_address] = value;
-            qDebug() << "Write" << value << "to address" << m_address;
         }
     }
-
 }
 
 void DynamicMemory::runEvent()
 {
-    if( m_write )
-    {
-        int value = 0;
-        for( uint i=0; i<m_outPin.size(); ++i )
-        {
-            bool state = m_outPin[i]->getInpState();
-            if( state ) value += pow( 2, i );
-            m_outPin[i]->setPinState( state? input_high:input_low ); // High-Low colors
-        }
-        m_ram[m_address] = value;
-        qDebug() << "Write" << value << "to address" << m_address;
-    }
-    else{ IoComponent::runOutputs();
-        qDebug() << "Read from address" << m_address;
-    }
-}
-
-void DynamicMemory::write( bool w )
-{
-    m_write = w;
-    for( IoPin* pin : m_outPin )
-    {
-        if( m_outEnable ) pin->setPinMode( w ? input : output );
-        else              LogicComponent::enableOutputs( false );
-
-    }
-    Simulator::self()->cancelEvents( this );
+    IoComponent::runOutputs();
 }
 
 void DynamicMemory::updatePins()
