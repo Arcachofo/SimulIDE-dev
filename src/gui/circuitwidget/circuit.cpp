@@ -52,7 +52,6 @@ Circuit::Circuit( qreal x, qreal y, qreal width, qreal height, CircuitView*  par
     m_loading    = false;
     m_conStarted = false;
     m_createSubc = false;
-    m_fastMode   = false;
     m_acceptKeys = true;
 
     m_board = NULL;
@@ -477,7 +476,6 @@ QString Circuit::circuitHeader()
     header += "stepsPS=\""+QString::number( m_simulator->stepsPerSec() )+"\" ";
     header += "NLsteps=\""+QString::number( m_simulator->maxNlSteps() )+"\" ";
     header += "reaStep=\""+QString::number( m_simulator->reactStep() )+"\" ";
-    header += "fastMode=\""+QString::number( m_fastMode )+"\" ";
     header += "animate=\""+QString::number( m_animate )+"\" >\n";
     return header;
 }

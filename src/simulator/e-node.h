@@ -52,8 +52,6 @@ class MAINMODULE_EXPORT eNode
         void setSingle( bool single ) { m_single = single; } // This eNode can calculate it's own Volt
         void setSwitched( bool switched ){ m_switched = switched; } // This eNode has switches attached
 
-        void forceVolt( double volt );
-
         QList<ePin*> getEpins() { return m_ePinList; }
 
         QList<int> getConnections();
@@ -106,7 +104,6 @@ class MAINMODULE_EXPORT eNode
         double m_totalCurr;
         double m_totalAdmit;
         double m_volt;
-        double m_voltForced;
 
         int m_nodeNum;
 
@@ -116,7 +113,6 @@ class MAINMODULE_EXPORT eNode
         bool m_changed;
         bool m_single;
         bool m_switched;
-        bool m_forceVolt;
 };
 #endif
 

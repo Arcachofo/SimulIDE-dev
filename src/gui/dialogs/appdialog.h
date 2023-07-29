@@ -52,7 +52,6 @@ class AppDialog : public QDialog, private Ui::AppDialog
         void on_reactStepBox_editingFinished();
 
         void on_slopeStepsBox_editingFinished();
-        void on_fastModeBox_toggled( bool fast );
 
     private:
         void updtHelp();

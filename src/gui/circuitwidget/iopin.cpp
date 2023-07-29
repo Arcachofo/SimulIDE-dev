@@ -48,11 +48,9 @@ void IoPin::initialize()
 {
     m_step = 0;
     m_steps = Simulator::self()->slopeSteps();
-    m_outVolt   = 0;
-    m_inpState  = false;
-    m_outState  = false;
+    m_inpState = false;
+    m_outState = false;
     m_nextState = false;
-    m_fastMode  = Circuit::self()->fastMode();
     updateStep();
 }
 
@@ -62,7 +60,7 @@ void IoPin::stamp()
 
     ePin::setEnodeComp( &m_gndEnode );
     ePin::createCurrent();
-    setPinMode( m_pinMode, true );
+    setPinMode( m_pinMode );
     stampAll();
 }
 
@@ -112,6 +110,7 @@ void IoPin::startLH()
 {
     m_step = 0;
     stampVolt( m_outLowV+(m_outLowV+m_outHighV)/100 );
+
 }
 void IoPin::startHL()
 {
@@ -119,9 +118,9 @@ void IoPin::startHL()
     stampVolt( m_outHighV-(m_outLowV+m_outHighV)/100 );
 }
 
-void IoPin::setPinMode( pinMode_t mode, bool force )
+void IoPin::setPinMode( pinMode_t mode )
 {
-    if( !force && m_pinMode == mode ) return;
+    if( m_pinMode == mode ) return;
     m_pinMode = mode;
 
     switch( mode )
@@ -152,7 +151,7 @@ void IoPin::setPinMode( pinMode_t mode, bool force )
 
 void IoPin::updtState()
 {
-    if( !m_enode || m_pinMode > openCo ) return;
+    if( m_pinMode > openCo ) return;
 
     double vddAdmit = m_vddAdmit + m_vddAdmEx;
     double gndAdmit = m_gndAdmit + m_gndAdmEx;
@@ -162,18 +161,12 @@ void IoPin::updtState()
     IoPin::setImp( Rth );
 }
 
-double IoPin::getVoltage()
-{
-    if( m_enode ) return ePin::getVoltage();
-    else          return m_outVolt;
-}
-
 bool IoPin::getInpState()
 {
     double volt = getVoltage();
 
     if     ( volt > m_inpHighV ) m_inpState = true;
-    else if( volt < m_inpLowV ) m_inpState = false;
+    else if( volt < m_inpLowV )  m_inpState = false;
 
     if( m_pinMode == openCo )
     {
@@ -185,40 +178,32 @@ bool IoPin::getInpState()
     return m_inverted ? !m_inpState : m_inpState;
 }
 
-void IoPin::setOutState( bool state ) // Set Output to Hight or Low
+void IoPin::setOutState( bool high ) // Set Output to Hight or Low
 {
-    m_outState = m_nextState = state;
+    m_outState = m_nextState = high;
     if( m_pinMode < openCo || m_stateZ ) return;
 
-    if( m_inverted ) state = !state;
+    if( m_inverted ) high = !high;
 
     if( m_pinMode == openCo )
     {
-        if( state ){
+        if( high ){
             m_gndAdmit = 1/1e8;
             setPinState( open_high ); // Z-high colors
-            updtState();
          }else{
+            m_gndAdmit = 1/m_outputImp;
             setPinState( open_low );  // Z-Low colors
-            if( m_fastMode ){ if( m_enode ) m_enode->forceVolt( m_outVolt ); }
-            else{
-                m_gndAdmit = 1/m_outputImp;
-                updtState();
-            }
         }
+        updtState();
     }else{
-        if( state ){
+        if( high ){
             m_outVolt = m_outHighV;
             setPinState( out_high ); // High colors
         }else{
             m_outVolt = m_outLowV;
             setPinState( out_low ); // Low colors
         }
-        if( m_enode )        // Pin is connected
-        {
-            if( m_fastMode ) m_enode->forceVolt( m_outVolt );
-            else             ePin::stampCurrent(m_outVolt*m_admit );
-        }
+        stampVolt( m_outVolt );
 }   }
 
 void IoPin::setStateZ( bool z )

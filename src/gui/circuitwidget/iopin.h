@@ -36,7 +36,8 @@ class MAINMODULE_EXPORT IoPin : public Pin, public eElement
 
         virtual void sheduleState( bool state, uint64_t time );
 
-        void setPinMode( pinMode_t mode, bool force=false );
+        //pinMode_t pinMode() { return m_pinMode; }
+        void setPinMode( pinMode_t mode );
         void setPinMode( uint mode ) { setPinMode( (pinMode_t) mode ); }
 
         void  setInputHighV( double volt ) { m_inpHighV = volt; }
@@ -60,14 +61,13 @@ class MAINMODULE_EXPORT IoPin : public Pin, public eElement
         virtual void setOutState( bool high );
         virtual void toggleOutState( uint64_t time=0 ) { sheduleState( !m_outState, time ); }
 
-        virtual double getVoltage() override;
-        void setVoltage( double volt )
+        inline void setVoltage( double volt )
         {
             if( volt == m_outVolt ) return;
             m_outVolt = volt;
             ePin::stampCurrent( m_outVolt*m_admit );
         }
-        void setOutStatFast( bool state )
+        inline void setOutStatFast( bool state )
         {
             m_outState = m_nextState = state;
             if( state ){
@@ -77,11 +77,7 @@ class MAINMODULE_EXPORT IoPin : public Pin, public eElement
                 m_outVolt = m_outLowV;
                 setPinState( out_low ); // Low colors
             }
-            if( m_enode )        // Pin is connected
-            {
-                if( m_fastMode ) m_enode->forceVolt( m_outVolt );
-                else             ePin::stampCurrent( m_outVolt*m_admit );//ePin::stampCurrent( m_outVolt*m_admit );
-            }
+            ePin::stampCurrent( m_outVolt*m_admit );
         }
 
         void setStateZ( bool z );
@@ -125,7 +121,6 @@ class MAINMODULE_EXPORT IoPin : public Pin, public eElement
         bool m_stateZ;
         bool m_nextState;
         bool m_skipStamp;
-        bool m_fastMode;
 
         int m_steps;
         uint64_t m_timeRis;  // Time for Output voltage to switch from 0% to 100%

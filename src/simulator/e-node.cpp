@@ -42,8 +42,6 @@ void eNode::initialize()
     m_admitChanged = false;
     nextCH = NULL;
     m_volt = 0;
-    m_voltForced = 0;
-    m_forceVolt = false;
 
     clearElmList( m_voltChEl );
     m_voltChEl = NULL;
@@ -68,8 +66,7 @@ void eNode::initialize()
 
 void eNode::addConnection( ePin* epin, int node )
 {
-    if( node == m_nodeNum ) // Be sure msg doesn't come from this node
-        return;
+    if( node == m_nodeNum ) return;// Be sure msg doesn't come from this node
 
     Connection* first = m_firstAdmit; // Create list of connections
     while( first ){
@@ -164,14 +161,6 @@ void eNode::stampCurrent( ePin* epin, double current ) // Be sure msg doesn't co
     changed();
 }
 
-void eNode::forceVolt( double volt )
-{
-    if( m_voltForced == volt ) return;
-    m_forceVolt = true;
-    m_voltForced = volt;
-    changed();
-}
-
 void eNode::changed()
 {
     if( m_changed ) return;
@@ -253,12 +242,7 @@ void eNode::solveSingle()
 {
     double volt = 0;
 
-    if( m_forceVolt )
-    {
-        m_forceVolt = false;
-        volt = m_voltForced;
-    }
-    else if( m_totalAdmit > 0 ) volt = m_totalCurr/m_totalAdmit;
+    if( m_totalAdmit > 0 ) volt = m_totalCurr/m_totalAdmit;
 
     setVolt( volt );
 }

@@ -53,7 +53,6 @@ AppDialog::AppDialog( QWidget* parent )
 
     nlStepsBox->setValue( Simulator::self()->maxNlSteps() );
     slopeStepsBox->setValue( Simulator::self()->slopeSteps() );
-    fastModeBox->setChecked( Circuit::self()->fastMode() );
     m_blocked = false;
 
     updtSpeedPer();
@@ -242,9 +241,4 @@ void AppDialog::updtReactStep()
 void AppDialog::on_slopeStepsBox_editingFinished()
 {
     Simulator::self()->setSlopeSteps( slopeStepsBox->value() );
-}
-
-void AppDialog::on_fastModeBox_toggled( bool fast )
-{
-    Circuit::self()->setFastMode( fast );
 }

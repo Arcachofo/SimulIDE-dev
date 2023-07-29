@@ -51,9 +51,6 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
         int autoBck();
         void setAutoBck( int secs );
 
-        bool fastMode() { return m_fastMode; }
-        void setFastMode( bool fast ) { m_fastMode = fast; }
-
         void removeItems();
         void removeComp( Component* comp );
         void clearCircuit();
@@ -187,7 +184,6 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
         bool m_redo;
         bool m_acceptKeys;
         bool m_createSubc;
-        bool m_fastMode;
 
         QPointF m_eventpoint;
         QPointF m_deltaMove;

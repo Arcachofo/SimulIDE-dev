@@ -596,6 +596,15 @@
                   </color>
                  </brush>
                 </colorrole>
+                <colorrole role="PlaceholderText">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>85</red>
+                   <green>0</green>
+                   <blue>127</blue>
+                  </color>
+                 </brush>
+                </colorrole>
                </active>
                <inactive>
                 <colorrole role="WindowText">
@@ -625,6 +634,15 @@
                   </color>
                  </brush>
                 </colorrole>
+                <colorrole role="PlaceholderText">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>85</red>
+                   <green>0</green>
+                   <blue>127</blue>
+                  </color>
+                 </brush>
+                </colorrole>
                </inactive>
                <disabled>
                 <colorrole role="WindowText">
@@ -646,6 +664,15 @@
                  </brush>
                 </colorrole>
                 <colorrole role="ButtonText">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>85</red>
+                   <green>0</green>
+                   <blue>127</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+                <colorrole role="PlaceholderText">
                  <brush brushstyle="SolidPattern">
                   <color alpha="255">
                    <red>85</red>
@@ -1099,7 +1126,7 @@
             <string notr="true">font: 12pt &quot;Ubuntu&quot;; color: rgb(85, 0, 127)</string>
            </property>
            <property name="text">
-            <string>Logic Outputs</string>
+            <string>Logic Outputs Edges</string>
            </property>
           </widget>
          </item>
@@ -1111,7 +1138,7 @@
            <item>
             <widget class="QLabel" name="label_2">
              <property name="text">
-              <string>Edges Slope Steps</string>
+              <string>Slope Steps</string>
              </property>
             </widget>
            </item>
@@ -1123,16 +1150,6 @@
             </widget>
            </item>
           </layout>
-         </item>
-         <item alignment="Qt::AlignRight">
-          <widget class="QCheckBox" name="fastModeBox">
-           <property name="layoutDirection">
-            <enum>Qt::RightToLeft</enum>
-           </property>
-           <property name="text">
-            <string>Fast Mode (experimental)</string>
-           </property>
-          </widget>
          </item>
         </layout>
        </widget>
