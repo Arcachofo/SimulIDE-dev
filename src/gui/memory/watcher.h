@@ -45,6 +45,7 @@ class Watcher : public QWidget, private Ui::Watcher
 
     private:
         void addHeader();
+        void insertValue( QString name );
 
         bool m_header;
 

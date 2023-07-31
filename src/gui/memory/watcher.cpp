@@ -21,7 +21,6 @@ Watcher::Watcher( QWidget* parent, CoreBase* cpu )
     setupUi(this);
 
     m_core = cpu;
-
     m_console= NULL;
     m_header = false;
 
@@ -63,13 +62,13 @@ void Watcher::addHeader()
 {
     m_header = true;
     HeaderWidget* header = new HeaderWidget("Name","Type", this );
-    m_valuesLayout->insertWidget( 0, header );
+    int i = m_valuesLayout->count();
+    m_valuesLayout->insertWidget( i, header );
 }
 
 void Watcher::updateValues()
 {
     if( !m_core ) return;
-
     for( ValueWidget* vw : m_values ) vw->updateValue();
 }
 
@@ -82,7 +81,6 @@ void Watcher::setRegisters( QStringList regs )
 
 void Watcher::addRegister( QString name, QString type )
 {
-    if( !m_header ) addHeader();
     if( m_typeTable.keys().contains( name ) ) return;
     m_typeTable[ name ] = type;
     m_registerModel->appendRow( new QStandardItem(name) );
@@ -98,7 +96,6 @@ void Watcher::setVariables( QStringList vars )
 
 void Watcher::addVariable( QString name, QString type )
 {
-    if( !m_header ) addHeader();
     if( m_typeTable.keys().contains( name ) ) return;
     m_typeTable[ name ] = type;
     m_variableModel->appendRow( new QStandardItem(name) );
@@ -106,20 +103,24 @@ void Watcher::addVariable( QString name, QString type )
 
 void Watcher::loadVarSet( QStringList varSet )
 {
-
+    for( QString name : varSet ) insertValue( name );
 }
 
 QStringList Watcher::getVarSet()
 {
-    //bool empty = true;
     QStringList varset;
-    /*for( int row=m_numRegs-1; row>=0; --row )
+
+    for( QString name : m_values.keys() )
     {
-        QString name = table->item( row, 1 )->text();
-        if( !name.isEmpty() ) empty = false;          // Find first non empty
-        if( empty ) continue;
-        varset.prepend( name );
-    }*/
+        int index = m_valuesLayout->indexOf( m_values[name] );
+        int i;
+        for( i=0; i<varset.size(); i++ )
+        {
+            QString n = varset.at(i);
+            if( index < m_valuesLayout->indexOf( m_values[n] ) ) break;
+        }
+        varset.insert( i, name );
+    }
     return varset;
 }
 
@@ -133,33 +134,31 @@ void Watcher::addConsole( ScriptCpu* s )
 void Watcher::addWidget( QWidget* widget )
 {
     int i = m_valuesLayout->count();
-    m_valuesLayout->insertWidget( i-1, widget );
+    m_valuesLayout->insertWidget( i, widget );
 }
 
 void Watcher::RegDoubleClick( const QModelIndex& index )
 {
     QString name = m_registerModel->item(index.row())->text();
-    if( m_values.keys().contains( name ) ) return;
-
-    QString type = m_typeTable.value( name );
-
-    ValueWidget* valwid = new ValueWidget( name, type, m_core, this );
-    m_values[name] = valwid;
-
-    int last = m_console ? 2 : 1;
-    m_valuesLayout->insertWidget( m_valuesLayout->count()-last, valwid );
+    insertValue( name );
 }
 
 void Watcher::VarDoubleClick( const QModelIndex& index )
 {
     QString name = m_variableModel->item(index.row())->text();
+    insertValue( name );
+}
+
+void Watcher::insertValue( QString name )
+{
     if( m_values.keys().contains( name ) ) return;
+    if( !m_header ) addHeader();
 
     QString type = m_typeTable.value( name );
 
     ValueWidget* valwid = new ValueWidget( name, type, m_core, this );
     m_values[name] = valwid;
 
-    int last = m_console ? 2 : 1;
+    int last = m_console ? 1 : 0;
     m_valuesLayout->insertWidget( m_valuesLayout->count()-last, valwid );
 }

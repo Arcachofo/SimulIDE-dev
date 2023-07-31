@@ -226,15 +226,15 @@ if( cg.propList.size() > 1 ) addPropGroup( cg );
 
 propGroup hi = {"Hidden", {}, groupHidden };
 
-cg.propList.append(new StrProp<Mcu>("varList"  ,"","", this, &Mcu::varList,   &Mcu::setVarList) );
-cg.propList.append(new StrProp<Mcu>("cpuRegs"  ,"","", this, &Mcu::cpuRegs,   &Mcu::setCpuRegs) );
-cg.propList.append(new StrProp<Mcu>("Links"    ,"","", this, &Mcu::getLinks , &Mcu::setLinks ) );
+hi.propList.append(new StrProp<Mcu>("varList"  ,"","", this, &Mcu::varList,   &Mcu::setVarList) );
+hi.propList.append(new StrProp<Mcu>("cpuRegs"  ,"","", this, &Mcu::cpuRegs,   &Mcu::setCpuRegs) );
+hi.propList.append(new StrProp<Mcu>("Links"    ,"","", this, &Mcu::getLinks , &Mcu::setLinks ) );
 
 if( m_eMcu.romSize() )
-cg.propList.append(new StrProp<Mcu>("eeprom"   ,"","", this, &Mcu::getEeprom, &Mcu::setEeprom ) );
+hi.propList.append(new StrProp<Mcu>("eeprom"   ,"","", this, &Mcu::getEeprom, &Mcu::setEeprom ) );
 
 if( m_eMcu.m_usarts.size() )
-cg.propList.append(new IntProp<Mcu>("SerialMon","","", this, &Mcu::serialMon, &Mcu::setSerialMon ) );
+hi.propList.append(new IntProp<Mcu>("SerialMon","","", this, &Mcu::serialMon, &Mcu::setSerialMon ) );
 
 if( hi.propList.size() > 0 ) addPropGroup( hi );
 }
@@ -304,10 +304,17 @@ void Mcu::setProgram( QString pro )
 }
 
 QString Mcu::varList()
-{ return m_eMcu.getRamTable()->getVarSet().join(","); }
+{
+    RamTable* ramTable = m_eMcu.getRamTable();
+    if( ramTable ) return ramTable->getVarSet().join(",");
+    return "";
+}
 
 void Mcu::setVarList( QString vl )
 {
+    RamTable* ramTable = m_eMcu.getRamTable();
+    if( !ramTable ) return;
+
     if( vl.isEmpty() ) return;
     QStringList vars = vl.split(",");
     QStringList varSet;
@@ -324,15 +331,23 @@ void Mcu::setVarList( QString vl )
         if( ok ) m_eMcu.getRamTable()->addVariable( name, addr, type );
         varSet.append( name );
     }
-    m_eMcu.getRamTable()->loadVarSet( varSet );
+    ramTable->loadVarSet( varSet );
 }
 //{ m_eMcu.getRamTable()->loadVarSet( vl.split(",") ); }
 
 QString Mcu::cpuRegs()
-{ return m_eMcu.getWatcher()->getVarSet().join(","); }
+{
+    Watcher* watcher = m_eMcu.getWatcher();
+    if( !watcher ) return "";
+    return watcher->getVarSet().join(",");
+}
 
 void Mcu::setCpuRegs( QString vl )
-{ m_eMcu.getWatcher()->loadVarSet( vl.split(",") ); }
+{
+    Watcher* watcher = m_eMcu.getWatcher();
+    if( !watcher ) return;
+    m_eMcu.getWatcher()->loadVarSet( vl.split(",") );
+}
 
 void Mcu::setEeprom( QString eep )
 {
