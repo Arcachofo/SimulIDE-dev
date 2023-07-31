@@ -90,7 +90,7 @@ void BinCounter::voltChanged()
             m_Counter = 0;
             m_nextOutVal = 0;
     }   }
-    IoComponent::sheduleOutPuts( this );
+    IoComponent::scheduleOutPuts( this );
 }
 
 void BinCounter::setSrInv( bool inv )

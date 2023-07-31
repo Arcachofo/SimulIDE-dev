@@ -26,7 +26,7 @@ class MAINMODULE_EXPORT IoComponent : public Component
 
         void initState();
         void runOutputs();
-        void sheduleOutPuts( eElement* el );
+        void scheduleOutPuts( eElement* el );
 
         double inputHighV() { return m_inHighV; }
         virtual void setInputHighV( double volt );

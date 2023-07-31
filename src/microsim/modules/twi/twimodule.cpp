@@ -230,13 +230,13 @@ void TwiModule::voltChanged() // Used by slave
     else if( m_enabled && m_clkState == Clock_Falling )
     {
         if( m_i2cState == I2C_ACK ) {             // Send ACK
-            sheduleSDA( !m_sendACK );
+            scheduleSDA( !m_sendACK );
             m_i2cState = I2C_ENDACK;
         }
         else if( m_i2cState == I2C_ENDACK )      // We sent ACK, release SDA
         {
             m_i2cState = m_lastState;
-            if( m_i2cState != I2C_READ ) sheduleSDA( true );
+            if( m_i2cState != I2C_READ ) scheduleSDA( true );
             m_rxReg = 0;
         }
         if( m_i2cState == I2C_READ ) writeBit();
@@ -256,7 +256,7 @@ void TwiModule::setMode( twiMode_t mode )
 
     if( mode > TWI_OFF )
     {
-        m_scl->sheduleState( true, 10000 /*m_clockPeriod/4*/ ); // Avoid false stop condition
+        m_scl->scheduleState( true, 10000 /*m_clockPeriod/4*/ ); // Avoid false stop condition
         setSDA( true );
     }
     m_mode = mode;
@@ -264,13 +264,13 @@ void TwiModule::setMode( twiMode_t mode )
     m_toggleScl  = false;
 }
 
-void TwiModule::setSCL( bool st ) { m_scl->sheduleState( st, 0 ); }
-void TwiModule::setSDA( bool st ) { m_sda->sheduleState( st, 0 ); }
+void TwiModule::setSCL( bool st ) { m_scl->scheduleState( st, 0 ); }
+void TwiModule::setSDA( bool st ) { m_sda->scheduleState( st, 0 ); }
 void TwiModule::getSdaState() { m_sdaState = m_sda->getInpState(); }
 
-void TwiModule::sheduleSDA( bool state )
+void TwiModule::scheduleSDA( bool state )
 {
-    m_sda->sheduleState( state, 10000 );
+    m_sda->scheduleState( state, 10000 );
 }
 
 void TwiModule::readBit()
@@ -288,7 +288,7 @@ void TwiModule::writeBit()
     m_bitPtr--;
 
     if( m_mode == TWI_MASTER ) setSDA( bit );
-    else                       sheduleSDA( bit );
+    else                       scheduleSDA( bit );
 }
 
 void TwiModule::readByte()

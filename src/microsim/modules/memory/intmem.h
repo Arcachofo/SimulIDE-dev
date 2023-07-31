@@ -46,7 +46,7 @@ class MAINMODULE_EXPORT IntMemModule : public McuModule, public eElement
         void write( bool w );
         void enableOutputs( bool en );
         void runOutputs();
-        void sheduleOutPuts();
+        void scheduleOutPuts();
 
         bool m_we;
         bool m_cs;

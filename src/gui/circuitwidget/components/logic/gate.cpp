@@ -60,7 +60,7 @@ void Gate::voltChanged()
     if( m_out == out && !m_tristate ) return;
     m_out = out;
 
-    sheduleOutPuts( this );
+    scheduleOutPuts( this );
 }
 
 bool Gate::calcOutput( int inputs )

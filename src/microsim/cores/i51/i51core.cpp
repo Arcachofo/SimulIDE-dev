@@ -54,7 +54,7 @@ void I51Core::reset()
         m_rwPin->setPinMode( output );
         m_rwPin->setOutState( true );
     }
-    if( m_rePin ) m_rePin->sheduleState( true, 0 );*/
+    if( m_rePin ) m_rePin->scheduleState( true, 0 );*/
 
     m_enPin->setPinMode( output );
     m_enPin->setOutState( true );
@@ -78,14 +78,14 @@ void I51Core::runEvent()
         case mem_IDLE: break;
         case mem_LAEN:            // Enable Latch for Low addr
         {
-            //m_laPin->sheduleState( true, 0 );
+            //m_laPin->scheduleState( true, 0 );
             m_laPin->setOutState( true );
             Simulator::self()->addEvent( m_addrSetTime, this );
             m_memState = mem_ADDR;
         }break;
         case mem_ADDR:            // Set Address Bus
         {
-            //if( m_readMode & RW ) m_rwPin->sheduleState( m_read, 0 ); // Set RW Pin Hi/Lo
+            //if( m_readMode & RW ) m_rwPin->scheduleState( m_read, 0 ); // Set RW Pin Hi/Lo
 
             // We are latching Low Address byte in Data Bus
             m_dataPort->setOutState( m_addr ); // Low  addr byte to Data Pins
@@ -96,7 +96,7 @@ void I51Core::runEvent()
         } break;
         case mem_LADI:           // Disable Latch
         {
-            //m_laPin->sheduleState( false, 0 );
+            //m_laPin->scheduleState( false, 0 );
             m_laPin->setOutState( false );
 
             m_dataTime = m_read ? m_readSetTime : m_writeSetTime;
@@ -111,7 +111,7 @@ void I51Core::runEvent()
             if( m_read )
             {
                 m_dataPort->setOutState( 0xFF ); // Input
-                m_enPin->sheduleState( false, 1 ); // Set EN  Pin Low
+                m_enPin->scheduleState( false, 1 ); // Set EN  Pin Low
                 uint64_t time = m_readBusTime - m_dataTime;
 
                 Simulator::self()->addEvent( time, this );

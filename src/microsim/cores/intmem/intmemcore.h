@@ -47,7 +47,7 @@ class MAINMODULE_EXPORT IntMemCore : public CpuBase , public eElement
         void write( bool w );
         void enableOutputs( bool en );
         void runOutputs();
-        void sheduleOutPuts();
+        void scheduleOutPuts();
 
         bool m_we;
         bool m_cs;

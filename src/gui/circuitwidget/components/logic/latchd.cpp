@@ -73,7 +73,7 @@ void LatchD::voltChanged()
         for( uint i=0; i<m_outPin.size(); ++i )
             if( m_inPin[i]->getInpState() ) m_nextOutVal |= 1<<i;
     }
-    sheduleOutPuts( this );
+    scheduleOutPuts( this );
 }
 
 void LatchD::setChannels( int channels )

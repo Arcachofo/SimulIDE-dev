@@ -81,7 +81,7 @@ void Demux::voltChanged()
     }
     else m_nextOutVal = 0;
 
-    sheduleOutPuts( this );
+    scheduleOutPuts( this );
 }
 
 void Demux::setAddrBits( int bits )

@@ -73,7 +73,7 @@ void ShiftReg::voltChanged()
         bool data = m_inPin[0]->getInpState();
         if( data ) m_nextOutVal += 1;
     }
-    sheduleOutPuts( this );
+    scheduleOutPuts( this );
 }
 
 void ShiftReg::setResetInv( bool inv )

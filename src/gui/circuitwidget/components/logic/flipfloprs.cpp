@@ -60,6 +60,6 @@ void FlipFlopRS::voltChanged()
     if( set || reset)
     {
         m_nextOutVal = (set? 1:0) + (reset? 2:0);
-        sheduleOutPuts( this );
+        scheduleOutPuts( this );
     }
 }

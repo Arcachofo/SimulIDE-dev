@@ -41,7 +41,7 @@ void ExtMemModule::reset()  // NO: Reset happens after initialize() in Pins.
         m_rwPin->setOutState( true );
     }
     if( m_rePin )
-        m_rePin->sheduleState( true, 0 );
+        m_rePin->scheduleState( true, 0 );
 
     if( m_enPin ){
         m_enPin->controlPin( true, true );
@@ -77,14 +77,14 @@ void ExtMemModule::runEvent()
         case mem_IDLE: break;
         case mem_LAEN:            // Enable Latch for Low addr
         {
-            m_laPin->sheduleState( true, 0 );
+            m_laPin->scheduleState( true, 0 );
             uint64_t time = m_addrSetTime - m_laEnSetTime;
             Simulator::self()->addEvent( time, this );
             m_memState = mem_ADDR;
         }break;
         case mem_ADDR:            // Set Address Bus
         {
-            //if( m_readMode & RW ) m_rwPin->sheduleState( m_read, 0 ); // Set RW Pin Hi/Lo
+            //if( m_readMode & RW ) m_rwPin->scheduleState( m_read, 0 ); // Set RW Pin Hi/Lo
 
             uint64_t time;
             uint addr = m_addr;
@@ -107,7 +107,7 @@ void ExtMemModule::runEvent()
         } break;
         case mem_LADI:           // Disable Latch (if in use)
         {
-            m_laPin->sheduleState( false, 0 );
+            m_laPin->scheduleState( false, 0 );
             m_memState = mem_DATA;
 
             m_dataTime = m_read ? m_readSetTime : m_writeSetTime;
@@ -121,7 +121,7 @@ void ExtMemModule::runEvent()
 
             if( m_read )
             {
-                if( m_readMode & EN ) m_enPin->sheduleState( false, 1 ); // Set EN  Pin Low
+                if( m_readMode & EN ) m_enPin->scheduleState( false, 1 ); // Set EN  Pin Low
                 uint64_t time = m_readBusTime - m_dataTime;
                 Simulator::self()->addEvent( time, this );
             }
@@ -138,7 +138,7 @@ void ExtMemModule::runEvent()
                 if( state ) m_data += pow( 2, i );
             }
             m_memState = mem_IDLE;
-            if( m_readMode & EN ) m_enPin->sheduleState( true, 1 ); // Set EN  Pin High
+            if( m_readMode & EN ) m_enPin->scheduleState( true, 1 ); // Set EN  Pin High
         } break;
     }
 }
@@ -178,7 +178,7 @@ void ExtMemModule::setAddrBus( uint32_t addr )
 {
     for( IoPin* pin : m_addrPin )     // Set addr Pins states
     {
-        pin->sheduleState( addr & 1, 0 );
+        pin->scheduleState( addr & 1, 0 );
         addr >>= 1;
     }
 }
@@ -191,7 +191,7 @@ void ExtMemModule::setDataDir( pinMode_t dir ) // Set data Pins In/Out
 void ExtMemModule::setDataBus( uint32_t data )
 {
     for( IoPin* pin : m_dataPin ){
-            pin->sheduleState( data & 1, 0 );
+            pin->scheduleState( data & 1, 0 );
             data >>= 1;
     }
 }

@@ -163,11 +163,11 @@ void Ds18b20::runEvent()
     if( m_pullDown )   // Pull down
     {
         m_pullDown = false;
-        m_inpin->sheduleState( false, 0 );
+        m_inpin->scheduleState( false, 0 );
         Simulator::self()->addEvent( m_pulse, this );
     }
     else{             // Release
-        m_inpin->sheduleState( true, 0 );
+        m_inpin->scheduleState( true, 0 );
         m_inpin->changeCallBack( this, true );         // Receive voltChange() CallBacks again
     }
 }

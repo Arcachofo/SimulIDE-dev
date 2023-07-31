@@ -82,7 +82,7 @@ void Mux::voltChanged()
 
     bool out = m_inPin[address]->getInpState();
     m_nextOutVal = out? 1:2;
-    sheduleOutPuts( this );
+    scheduleOutPuts( this );
 }
 
 void Mux::setAddrBits( int bits )

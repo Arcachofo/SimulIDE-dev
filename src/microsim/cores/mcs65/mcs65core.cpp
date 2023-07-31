@@ -142,7 +142,7 @@ void Mcs65Cpu::runStep()
     if( m_nextClock ) clkRisingEdge();
     else              clkFallingEdge();
 
-    m_phi2Pin->sheduleState( m_nextClock, 5000 );
+    m_phi2Pin->scheduleState( m_nextClock, 5000 );
     m_nextClock = !m_nextClock;
 }
 
@@ -174,7 +174,7 @@ void Mcs65Cpu::clkFallingEdge()
     {
         //m_debugPC = m_PC; // Don't update m_debugPC until last Instruction fully executed
 
-        m_syncPin->sheduleState( false, m_tHA ); // Reset SYNC Signal
+        m_syncPin->scheduleState( false, m_tHA ); // Reset SYNC Signal
         m_IR = readDataBus();
         if( !m_IsrL && !m_nmiPin->getInpState() ) // NMI
         {
@@ -199,9 +199,9 @@ void Mcs65Cpu::clkFallingEdge()
         if( m_EXEC ) (this->*m_EXEC)();
         //else qDebug() << "ERROR: Instruction not implemented: 0x"+QString::number( m_IR, 16 ).toUpper(); //
     }
-    if( m_state == cWRITE ) m_rwPin->sheduleState( false, m_tHA ); // Write result and fetch at next cycle //m_busAddr = m_opAddr Done in instruction
+    if( m_state == cWRITE ) m_rwPin->scheduleState( false, m_tHA ); // Write result and fetch at next cycle //m_busAddr = m_opAddr Done in instruction
     else{
-        m_rwPin->sheduleState( true, m_tHA );
+        m_rwPin->scheduleState( true, m_tHA );
 
         if( m_state == cFETCH )  // If no Write op. fetch next inst. at execute cycle
         {
@@ -211,7 +211,7 @@ void Mcs65Cpu::clkFallingEdge()
             m_cycle = 0;
             m_state = cDECODE;
 
-            m_syncPin->sheduleState( true, m_tHA );  // Set SYNC Signal
+            m_syncPin->scheduleState( true, m_tHA );  // Set SYNC Signal
         }
     }
 }

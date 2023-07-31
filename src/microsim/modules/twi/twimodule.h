@@ -68,7 +68,7 @@ class MAINMODULE_EXPORT TwiModule : public eClockedDevice
         inline void setSCL( bool st );
         inline void setSDA( bool st );
         inline void getSdaState();
-        inline void sheduleSDA( bool state );
+        inline void scheduleSDA( bool state );
         inline void readBit();
         inline void writeBit();
         inline void waitACK();

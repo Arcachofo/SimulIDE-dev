@@ -97,12 +97,12 @@ void IoComponent::runOutputs()
     for( uint i=0; i<m_outPin.size(); ++i )
     {
         bool state = m_outValue & (1<<i);
-        m_outPin[i]->sheduleState( state, 0 );
+        m_outPin[i]->scheduleState( state, 0 );
     }
     m_outsReady = m_outQueue.empty();
 }
 
-void IoComponent::sheduleOutPuts( eElement* el )
+void IoComponent::scheduleOutPuts( eElement* el )
 {
     uint64_t delay = m_propDelay*m_propSize;
 

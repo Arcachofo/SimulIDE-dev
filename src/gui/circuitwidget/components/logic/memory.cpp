@@ -149,7 +149,7 @@ void Memory::voltChanged()        // Some Pin Changed State, Manage it
     }
     else{                                    // Read
         m_nextOutVal = m_ram[m_address];
-        IoComponent::sheduleOutPuts( this );
+        IoComponent::scheduleOutPuts( this );
 }   }
 
 void Memory::setAsynchro( bool a )

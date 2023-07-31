@@ -91,14 +91,14 @@ void McuPin::setPortState( bool state ) // Port Is being witten
     if( m_outCtrl ) return; // Port is not controlling Pin State
 
     m_outState = state; /// ??? Should this be controlled by IoPin?
-    if( m_isOut ) IoPin::sheduleState( state, 0 );
+    if( m_isOut ) IoPin::scheduleState( state, 0 );
 }
 
 void McuPin::setOutState( bool state ) // Some periferical is controlling this Pin
 { if( m_outCtrl ) IoPin::setOutState( state ); }
 
-void McuPin::sheduleState( bool state, uint64_t time ) // Some periferical is controlling this Pin
-{ if( m_outCtrl ) IoPin::sheduleState( state, time ); }
+void McuPin::scheduleState( bool state, uint64_t time ) // Some periferical is controlling this Pin
+{ if( m_outCtrl ) IoPin::scheduleState( state, time ); }
 
 void McuPin::setDirection( bool out )
 {
@@ -123,7 +123,7 @@ void McuPin::controlPin( bool outCtrl, bool dirCtrl )
 
     if( !outCtrl && m_outCtrl ) // External control is being released
     {
-        if( m_pinMode > input ) sheduleState( m_portState, 0 ); // Set Previous Pin State
+        if( m_pinMode > input ) scheduleState( m_portState, 0 ); // Set Previous Pin State
         else                    m_outState = m_portState;
     }
     m_outCtrl = outCtrl;

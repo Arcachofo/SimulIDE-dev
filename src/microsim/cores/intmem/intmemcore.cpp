@@ -80,7 +80,7 @@ void IntMemCore::extClock( bool clkState )
     else{                                   // Read
         m_nextOutVal = m_mcu->readReg( m_addr );
         write( false );
-        //sheduleOutPuts();
+        //scheduleOutPuts();
 }   }
 
 void IntMemCore::runEvent()
@@ -114,7 +114,7 @@ void IntMemCore::write( bool w )
         }
         m_mcu->writeReg( m_addr, value );
     }
-    else sheduleOutPuts();
+    else scheduleOutPuts();
 
     for( IoPin* pin : m_dataPin )
     {
@@ -138,11 +138,11 @@ void IntMemCore::runOutputs()
         bool state = m_outValue & (1<<i);
         bool oldst = m_dataPin[i]->getOutState();
 
-        if( state != oldst ) m_dataPin[i]->sheduleState( state, 0 );
+        if( state != oldst ) m_dataPin[i]->scheduleState( state, 0 );
     }
 }
 
-void IntMemCore::sheduleOutPuts()
+void IntMemCore::scheduleOutPuts()
 {
     if( m_nextOutVal == m_outValue ) return;
     Simulator::self()->addEvent( m_propDelay, this );

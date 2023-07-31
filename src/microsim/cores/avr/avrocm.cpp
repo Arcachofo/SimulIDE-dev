@@ -20,6 +20,6 @@ void AvrOcm::configureA( uint8_t newVal )
 
 void AvrOcm::OutputOcm() //Set Ocm output from OCnB1 & OCnB2
 {
-    if( m_mode ) m_oPin->sheduleState( m_state1 || m_state2, 0 );
-    else         m_oPin->sheduleState( m_state1 && m_state2, 0 );
+    if( m_mode ) m_oPin->scheduleState( m_state1 || m_state2, 0 );
+    else         m_oPin->scheduleState( m_state1 && m_state2, 0 );
 }

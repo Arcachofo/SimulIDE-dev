@@ -101,7 +101,7 @@ void Function::voltChanged()
     m_nextOutVal = 0;
 
     callFunction( m_voltChanged );
-    sheduleOutPuts( this );
+    scheduleOutPuts( this );
 }
 
 bool Function::getInputState( int pin )

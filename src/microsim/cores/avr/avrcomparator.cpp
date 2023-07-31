@@ -106,7 +106,7 @@ void AvrComp::compare( uint8_t ) //
             case 3: if(  rising ) m_interrupt->raise();        // Comparator Interrupt on Rising  Output Edge.
         }
         m_compOut = compOut;
-        if( m_pinOut ) m_pinOut->sheduleState( compOut, 0 );
+        if( m_pinOut ) m_pinOut->scheduleState( compOut, 0 );
     }
 }
 

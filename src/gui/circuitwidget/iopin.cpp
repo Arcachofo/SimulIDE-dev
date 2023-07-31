@@ -91,7 +91,7 @@ void IoPin::runEvent()
     }
 }
 
-void IoPin::sheduleState( bool state, uint64_t time )
+void IoPin::scheduleState( bool state, uint64_t time )
 {
     if( m_nextState == state ) return;
     m_nextState = state;

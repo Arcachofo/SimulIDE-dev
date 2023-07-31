@@ -92,6 +92,7 @@ void DynamicMemory::stamp()                   // Called at Simulation Start
     m_oe = false;
     m_ras = false;
     m_cas = false;
+
     for( int &data : m_ram ) data = rand() % (int)( pow( 2, m_dataBits ) );
 
     m_WePin->changeCallBack( this );
@@ -118,8 +119,7 @@ void DynamicMemory::voltChanged()        // Some Pin Changed State, Manage it
     bool WE  = m_WePin->getInpState();
     bool OE  = m_oePin->getInpState() && !WE & CAS; // Enable output buffers only if OE & CAS & RAS & Read
 
-    if( m_oe != OE )
-    {
+    if( m_oe != OE ){
         m_oe = OE;
         for( IoPin* pin : m_outPin ) pin->setPinMode( OE ? output : input ); // Enable/Disable output buffers
     }
@@ -171,7 +171,7 @@ void DynamicMemory::voltChanged()        // Some Pin Changed State, Manage it
                 //qDebug() << "Write" << value << "to address" << m_address;
             }else{                                            // Read
                 m_nextOutVal = m_ram[m_address];
-                IoComponent::sheduleOutPuts( this );
+                IoComponent::scheduleOutPuts( this );
             }
         }
     }

@@ -10,7 +10,7 @@ Mcs65Interface::Mcs65Interface( eMcu* mcu )
         : CpuBase( mcu )
         , eElement( mcu->getId()+"-el" )
 {
-    mcu->createWatcher();
+    mcu->createWatcher( this );
     mcu->getWatcher()->addVariable( "Instruction", "string" );
 }
 Mcs65Interface::~Mcs65Interface() {}

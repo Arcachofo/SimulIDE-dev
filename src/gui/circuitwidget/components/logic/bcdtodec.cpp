@@ -66,7 +66,7 @@ void BcdToDec::voltChanged()
         if( m_inPin[i]->getInpState() ) dec += pow( 2, i );
 
     m_nextOutVal = 1<<dec;
-    sheduleOutPuts( this );
+    scheduleOutPuts( this );
 }
 
 void BcdToDec::set_16bits( bool set )

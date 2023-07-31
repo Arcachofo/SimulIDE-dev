@@ -58,5 +58,5 @@ void FullAdder::voltChanged()
     m_nextOutVal = 0;
     if( sum ) m_nextOutVal += 1;
     if( co  ) m_nextOutVal += 2;
-    sheduleOutPuts( this );
+    scheduleOutPuts( this );
 }

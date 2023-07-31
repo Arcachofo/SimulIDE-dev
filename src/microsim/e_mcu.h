@@ -143,11 +143,11 @@ class MAINMODULE_EXPORT eMcu : public DataSpace, public eIou
 
         //IoPin*  m_clkPin;
         ConfigWord* m_cfgWord;
-        McuSleep* m_sleepModule;
-        McuVref* m_vrefModule;
-        McuWdt* m_wdt;
-        McuIntOsc* m_intOsc;
-        McuComp* m_comparator;
+        McuSleep*   m_sleepModule;
+        McuVref*    m_vrefModule;
+        McuWdt*     m_wdt;
+        McuIntOsc*  m_intOsc;
+        McuComp*    m_comparator;
 
         double m_freq;           // Clock Frequency in MegaHerzs
         double m_cPerInst;       // Clock ticks per Instruction Cycle

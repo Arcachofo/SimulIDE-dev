@@ -133,7 +133,7 @@ void SpiModule::step()
     else if( m_dataOutPin )                 // Write one bit (Only if dataOut Pin exist)
     {
         if( m_bitCount == 8 ) endTransaction();
-        else                  m_dataOutPin->sheduleState( (m_srReg & m_outBit)>0, 0 );
+        else                  m_dataOutPin->scheduleState( (m_srReg & m_outBit)>0, 0 );
     }
 }
 

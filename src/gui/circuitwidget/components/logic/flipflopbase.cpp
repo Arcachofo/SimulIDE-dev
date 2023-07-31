@@ -53,7 +53,7 @@ void FlipFlopBase::voltChanged()
 
     if( set || reset)   m_nextOutVal = (set? 1:0) + (reset? 2:0);
     else if( clkAllow ) calcOutput();
-    sheduleOutPuts( this );
+    scheduleOutPuts( this );
 }
 
 void FlipFlopBase::setSrInv( bool inv )
