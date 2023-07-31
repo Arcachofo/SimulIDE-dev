@@ -9,6 +9,7 @@ CpuBase::CpuBase( eMcu* mcu )
        : CoreBase()
 {
     m_mcu = mcu;
+    m_display = NULL;
 
     m_retCycles = 2;
 

@@ -13,6 +13,8 @@
 #define REG_SPH      m_sph[0]
 #define STATUS(bit) (*m_STATUS & (1<<bit))
 
+class Display;
+
 class MAINMODULE_EXPORT CpuBase : public CoreBase
 {
         friend class McuCreator;
@@ -33,6 +35,8 @@ class MAINMODULE_EXPORT CpuBase : public CoreBase
 
     protected:
         eMcu* m_mcu;
+
+        Display* m_display; // Find a place for this
 
         uint8_t m_retCycles;
 

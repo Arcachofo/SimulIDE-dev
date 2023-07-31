@@ -3,58 +3,26 @@
  *                                                                         *
  ***( see copyright.txt file at root folder )*******************************/
 
-#ifndef DISPLAY_H
-#define DISPLAY_H
-
-#include <QWidget>
+#ifndef SCRIPTDISPLAY_H
+#define SCRIPTDISPLAY_H
 
 #include "scriptperif.h"
-#include "updatable.h"
-#include "e-element.h"
+#include "display.h"
 
 class asIScriptFunction;
 
-class ScriptDisplay : public QWidget, public ScriptPerif, public Updatable, public eElement
+class ScriptDisplay : public Display, public ScriptPerif
 {
     public:
         ScriptDisplay( int width, int height, QString name, QWidget* parent );
         ~ScriptDisplay();
 
         virtual void initialize() override;
-        virtual void updateStep() override;
-
-        void setWidth( int w );
-        void setHeight( int h );
-        void setSize( int w, int h );
-        void setBackground( int b );
-        void setPixel( int x, int y, int color );
-
-        void setMonitorScale( double scale );
-
-        QImage* getImage() { return &m_image; }
 
         virtual void registerScript( ScriptCpu* cpu ) override;
         virtual void startScript() override;
 
     private:
-        virtual void paintEvent( QPaintEvent* e ) override;
-
-        void updtImageSize();
-
-        QString m_name;
-
-        bool m_changed;
-
-        int m_width;
-        int m_height;
-
-        double m_scale;
-
-        int m_background;
-
-        QRectF  m_area;
-
-        QImage m_image;    //Visual representation
 
         asIScriptFunction* m_clear;
 
