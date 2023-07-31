@@ -38,10 +38,13 @@ MCUMonitor::MCUMonitor( QWidget* parent, eMcu* mcu )
     m_watcher = m_processor->getWatcher();
     if( m_watcher )
     {
-        spl = new QSplitter( Qt::Horizontal, this );
-        spl->addWidget( m_watcher );
-
-        tabWidget->addTab( spl, tr("Watch") );
+        if( mcu->ramSize() )
+        {
+            spl = new QSplitter( Qt::Horizontal, this );
+            spl->addWidget( m_watcher );
+            tabWidget->addTab( spl, tr("Watch") );
+        }
+        else tabWidget->addTab( m_watcher, tr("Watch") );
     }
     if( mcu->ramSize() )
     {

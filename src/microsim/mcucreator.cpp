@@ -73,6 +73,7 @@
 #include "intmemcore.h"
 
 #include "z80core.h"
+#include "ula_zx48k.h"
 
 #include "scriptcpu.h"
 #include "scriptport.h"
@@ -84,6 +85,8 @@
 #include "watcher.h"
 
 #include "utils.h"
+
+QList<Display*> McuCreator::m_displays;
 
 
 QString McuCreator::m_core = "";
@@ -107,6 +110,7 @@ int McuCreator::createMcu( Mcu* mcuComp, QString name )
     m_mcuComp  = mcuComp;
     m_newStack = false;
     m_scriptPerif.clear();
+    m_displays.clear();
 
     mcu = &(mcuComp->m_eMcu);
     QString dataFile = mcuComp->m_dataFile;
@@ -187,6 +191,7 @@ int McuCreator::processFile( QString fileName, bool main )
         else if( m_core == "8051" )     mcu->m_cpu = new I51Core( mcu );
         else if( m_core == "6502" )     mcu->m_cpu = new Mcs65Cpu( mcu );
         else if( m_core == "Z80" )      mcu->m_cpu = new Z80Core( mcu );
+        else if( m_core == "Z80ULA" )   mcu->m_cpu = new ULA_ZX48k( mcu );
         else if( m_core == "scripted" )
         {
             ScriptCpu* cpu = new ScriptCpu( mcu );
@@ -232,6 +237,16 @@ int McuCreator::processFile( QString fileName, bool main )
             cpu->setScriptFile( m_basePath+"/"+root.attribute("script") );
         }
         else mcu->m_cpu = new McuCpu( mcu );
+
+        if( m_displays.size()  )
+        {
+            for( Display* display : m_displays )
+            {
+                mcu->m_cpu->m_display = display;
+                mcu->createWatcher( mcu->m_cpu );
+                mcu->getWatcher()->addWidget( display );
+            }
+        }
 
         if( m_newStack ) createStack( &m_stackEl );
     }
@@ -1192,20 +1207,23 @@ void McuCreator::createDisplay( QDomElement* e )
     int width  = e->attribute("width").toInt();
     int height = e->attribute("height").toInt();
 
-    ScriptDisplay* display = new ScriptDisplay( width, height, name, CircuitWidget::self() );
-
-    m_scriptPerif.push_back( display );
+    Display* display = NULL;
+    if( m_core == "Scripted" )
+    {
+        ScriptDisplay* d = new ScriptDisplay( width, height, name, CircuitWidget::self() );
+        m_scriptPerif.push_back( d );
+        display = d;
+    }
+    else display = new Display( width, height, name, CircuitWidget::self() );
 
     if( e->hasAttribute("embeed") )
         m_mcuComp->setBackImage( display->getImage() );
 
     if( e->hasAttribute("monitorscale") )
     {
-        mcu->createWatcher();
-        mcu->getWatcher()->addWidget( display );
-
         double scale = e->attribute("monitorscale").toDouble();
         display->setMonitorScale( scale );
+        m_displays.append( display );
     }
 }
 

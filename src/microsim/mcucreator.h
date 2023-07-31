@@ -19,6 +19,7 @@ class Interrupt;
 class McuTwi;
 class McuSpi;
 class ScriptPerif;
+class Display;
 
 class MAINMODULE_EXPORT McuCreator
 {
@@ -76,6 +77,7 @@ class MAINMODULE_EXPORT McuCreator
 
         static McuTwi* m_twi;
         static McuSpi* m_spi;
+        static QList<Display*> m_displays;
 
         static std::vector<ScriptPerif*> m_scriptPerif;
 };
