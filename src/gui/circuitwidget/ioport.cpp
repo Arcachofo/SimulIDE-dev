@@ -7,8 +7,10 @@
 #include <math.h>
 
 #include "ioport.h"
+#include "simulator.h"
 
 IoPort::IoPort( QString name )
+      : eElement( name )
 {
     m_name = name;
     m_shortName = "P"+ name.right(1);
@@ -18,13 +20,27 @@ IoPort::~IoPort(){}
 
 void IoPort::reset()
 {
-    m_pinState = 0;
+    m_pinState  = 0;
+    m_nextState = 0;
     m_pinDirection = 0;
+    m_pinMode  = input;
 
     for( IoPin* pin : m_pins ) {
         pin->setOutState( 0 );
         pin->setPinMode( input );
     }
+}
+
+void IoPort::runEvent()
+{
+    setOutState( m_nextState );
+}
+
+void IoPort::scheduleState( uint32_t val, uint64_t time)
+{
+    if( m_pinState == val ) return;
+    m_nextState = val;
+    Simulator::self()->addEvent( time, this );
 }
 
 void IoPort::setOutState( uint32_t val )
@@ -54,8 +70,7 @@ void IoPort::setOutStatFast( uint32_t val )
 uint32_t IoPort::getInpState()
 {
     uint32_t data = 0;
-    for( int i=0; i<m_numPins; ++i )
-        if( m_pins[i]->getInpState() ) data += (1 << i);
+    for( int i=0; i<m_numPins; ++i ) if( m_pins[i]->getInpState() ) data += (1 << i);
     return data;
 }
 
@@ -72,6 +87,8 @@ void IoPort::setDirection( uint32_t val )
 
 void IoPort::setPinMode( pinMode_t mode )
 {
+    if( m_pinMode == mode ) return;
+    m_pinMode = mode;
     for( IoPin* pin : m_pins ) pin->setPinMode( mode );
 }
 

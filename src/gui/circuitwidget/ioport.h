@@ -9,12 +9,14 @@
 #include <vector>
 
 #include "iopin.h"
+#include "iopin.h"
+#include "e-element.h"
 
 class IoPin;
 class Component;
 class asIScriptEngine;
 
-class MAINMODULE_EXPORT IoPort
+class MAINMODULE_EXPORT IoPort :public eElement
 {
         friend class McuCreator;
 
@@ -23,7 +25,9 @@ class MAINMODULE_EXPORT IoPort
         ~IoPort();
 
         void reset();
+        virtual void runEvent() override;
 
+        void scheduleState( uint32_t val, uint64_t time );
         void setOutState( uint32_t val );
         void setOutStatFast( uint32_t val );
         uint32_t getInpState();
@@ -39,7 +43,7 @@ class MAINMODULE_EXPORT IoPort
 
         QString name() { return m_name; }
 
-        static void registerScript( asIScriptEngine* engine );
+ static void registerScript( asIScriptEngine* engine );
 
     protected:
         void createPins( Component* comp, QString pins, uint32_t pinMask );
@@ -48,10 +52,14 @@ class MAINMODULE_EXPORT IoPort
         QString m_name;
         QString m_shortName;
 
-        std::vector<IoPin*> m_pins;
-        uint8_t m_numPins;
         uint m_pinState;
+        uint m_nextState;
         uint m_pinDirection;
+
+        pinMode_t m_pinMode;
+
+        uint8_t m_numPins;
+        std::vector<IoPin*> m_pins;
 };
 
 #endif
