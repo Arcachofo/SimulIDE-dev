@@ -15,7 +15,7 @@ Z80Core::Z80Core( eMcu* mcu )
        , eElement( mcu->getId()+"-Z80Core" )
 {
     // Values to show in Monitor High Area (any type)
-    mcu->createWatcher();
+    mcu->createWatcher( this );
     Watcher* watcher = mcu->getWatcher();
 
     watcher->addRegister( "A", "uint8" );
@@ -464,8 +464,8 @@ void Z80Core::stamp()
 
 void Z80Core::runEvent()
 {
-    if( !m_nextClock ) risingEdgeDelayed();  // Rising edge
-    else               fallingEdgeDelayed(); // Falling edge
+    if( m_nextClock ) fallingEdgeDelayed(); // Falling edge
+    else              risingEdgeDelayed();  // Rising edge
 }
 
 void Z80Core::reset()
@@ -1709,8 +1709,8 @@ inline void Z80Core::shiftOp( uint8_t &reg ) {
     bool carry;
 
     switch(op) {
-    case iRlc: carry = reg & 0x80;  reg = (reg << 1) | (reg >> 7); break;                              // rotation 1 bit left
-    case iRrc: carry = reg & 0x01;  reg = (reg >> 1) | (reg << 7); break;                              // rotation 1 bit right
+    case iRlc: carry = reg & 0x80; reg = (reg << 1) | (reg >> 7); break;                              // rotation 1 bit left
+    case iRrc: carry = reg & 0x01; reg = (reg >> 1) | (reg << 7); break;                              // rotation 1 bit right
     case iRl : carry = reg & 0x80; reg = (reg << 1) | regF.getC(); break;                   // shift 1 bit left and copy flag C to bit 0
     case iRr : carry = reg & 0x01; reg = (reg >> 1) | ( regF.getC() << 7); break;            // shift 1 bit right and copy flag C to bit 7
     case iSla: carry = reg & 0x80; reg = (reg << 1); break;                                          // shift 1 bit left

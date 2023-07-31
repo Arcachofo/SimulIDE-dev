@@ -13,6 +13,7 @@ eIou::eIou( Mcu* comp, QString id )
 {
     m_component = comp;
 
+    m_cpu     = NULL;
     m_clkPin  = NULL;
     m_watcher = NULL;
 }
@@ -38,7 +39,7 @@ IoPin* eIou::getIoPin( QString pinName )
     return pin;
 }
 
-void eIou::createWatcher()
+void eIou::createWatcher( CpuBase* cpu )
 {
-    if( !m_watcher ) m_watcher = new Watcher( NULL, m_cpu );
+    if( !m_watcher ) m_watcher = new Watcher( NULL, cpu );
 }

@@ -185,11 +185,11 @@ int ScriptCpu::compileScript()
 
     if( m_getCpuReg || m_getStrReg )
     {
-        m_mcu->createWatcher();
+        m_mcu->createWatcher( this );
     }
     if( m_command || m_script.contains("toConsole") )  /// Use TextComponent ???
     {
-        m_mcu->createWatcher();
+        m_mcu->createWatcher( this );
         m_watcher = m_mcu->getWatcher();
         m_watcher->addConsole( this );
     }

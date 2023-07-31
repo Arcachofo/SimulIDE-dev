@@ -28,7 +28,7 @@ class MAINMODULE_EXPORT eIou : public eElement
         IoPin*  getIoPin( QString pinName );
 
         Watcher* getWatcher() { return m_watcher; }
-        void createWatcher();
+        void createWatcher( CpuBase* cpu );
 
         Mcu* component() { return m_component; }
         CpuBase* cpu()   { return m_cpu; }
