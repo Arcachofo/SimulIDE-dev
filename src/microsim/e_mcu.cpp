@@ -91,6 +91,7 @@ void eMcu::voltChanged()  // External clock
 void eMcu::runEvent()
 {
     if( m_state == mcuStopped ) return;
+
     if( m_debugging )
     {
         if( cyclesDone > 1 ) cyclesDone -= 1;
@@ -101,7 +102,8 @@ void eMcu::runEvent()
     {
         stepCpu();
         Simulator::self()->addEvent( cyclesDone*m_psCycle, this );
-}   }
+    }
+}
 
 void eMcu::stepCpu()
 {
@@ -109,9 +111,11 @@ void eMcu::stepCpu()
     {
         if( m_state == mcuRunning ) m_cpu->runStep();
         m_interrupts.runInterrupts();
+    }else{
+        m_state = mcuStopped; /// TODO: Crash
+        qDebug() << "eMcu::stepCpu: Error PC =" << m_cpu->getPC() << "PGM size =" << m_flashSize;
+        qDebug() << "MCU stopped";
     }
-    else m_state = mcuStopped; /// TODO: Crash
-
     m_cycle += cyclesDone;
 }
 
