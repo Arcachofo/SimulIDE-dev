@@ -61,7 +61,7 @@ class MAINMODULE_EXPORT PicMrCore : public McuCpu
 
         virtual void setPC( uint32_t pc ) override
         {
-            m_PC = pc;
+            m_PC = pc & 0x00001FFF;
             m_dataMem[ m_PCLaddr] = m_PC & 0xFF;
         }
 
