@@ -63,7 +63,7 @@ bool MemData::loadFile( QVector<int>* toData, QString file, bool resize, int bit
     m_eMcu = eMcu;
     if( resize ) toData->resize( 1 );
 
-    QString ext = getFileExt( file );
+    QString ext = getFileExt( file ).toLower();
 
     bool ok = false;
     if     ( ext == ".data" ) ok = loadDat( toData, file, resize );
