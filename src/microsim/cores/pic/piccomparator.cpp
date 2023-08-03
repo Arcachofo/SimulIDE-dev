@@ -152,12 +152,12 @@ void PicComp02::setMode( uint8_t mode )
 
     switch ( mode ) {
         case 0: m_enabled = false;
-        case 1:                    connect( m_pins[1], m_pins[0], NULL      ); break;
+        case 1:                    connect( m_pins[0], m_pins[1], NULL      ); break;
         case 2: m_fixVref = true;  connect( pinN     , NULL     , NULL      ); break;
         case 3:                                                                // Fallthrough
         case 4:                                                                // Fallthrough
-        case 5:                    connect( m_pins[1], m_pins[0], m_pins[2] ); break;
-        case 6:                    connect( m_pins[1], m_pins[0], NULL      ); break;
+        case 5:                    connect( m_pins[0], m_pins[1], m_pins[2] ); break;
+        case 6:                    connect( m_pins[0], m_pins[1], NULL      ); break;
         case 7: m_enabled = false; connect( NULL     , NULL     , NULL      ); break;
     }
 }
