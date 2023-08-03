@@ -34,7 +34,7 @@ class Watcher : public QWidget, private Ui::Watcher
         void loadVarSet( QStringList varSet );
         QStringList getVarSet();
 
-        void addConsole( ScriptCpu* s );
+        void addConsole();
         Console* console() { return m_console; }
 
         void addWidget( QWidget* widget );

@@ -9,22 +9,19 @@
 #include <QObject>
 #include <math.h>
 
-#include "circuitwidget.h"
-
 #include "mcucreator.h"
+#include "circuitwidget.h"
 #include "datautils.h"
 #include "regwatcher.h"
 #include "e_mcu.h"
 #include "mcu.h"
 #include "mcuport.h"
 #include "ioport.h"
-//#include "mcuportctrl.h"
 #include "mcupin.h"
-#include "extmem.h"
-#include "intmem.h"
-
 #include "usarttx.h"
 #include "usartrx.h"
+#include "watcher.h"
+#include "console.h"
 
 // Cores
 #include "avrcore.h"
@@ -82,12 +79,10 @@
 #include "scriptprop.h"
 #include "scriptdisplay.h"
 
-#include "watcher.h"
-
 #include "utils.h"
 
 QList<Display*> McuCreator::m_displays;
-
+bool McuCreator::m_console;
 
 QString McuCreator::m_core = "";
 QString McuCreator::m_CompName = "";
@@ -109,6 +104,7 @@ int McuCreator::createMcu( Mcu* mcuComp, QString name )
     m_CompName = name;
     m_mcuComp  = mcuComp;
     m_newStack = false;
+    m_console  = false;
     m_scriptPerif.clear();
     m_displays.clear();
 
@@ -173,8 +169,9 @@ int McuCreator::processFile( QString fileName, bool main )
         else if( part == "configwords") createCfgWord( &el );
         else if( part == "intosc")      createIntOsc( &el );
         //else if( part == "extmem" )     createExtMem( &el );
-        else if( part == "intmem" )     createIntMem( &el );
+        //else if( part == "intmem" )     createIntMem( &el );
         else if( part == "display" )    createDisplay( &el );
+        else if( part == "console" )    m_console = true;
 
         else if( part == "include" )
         {
@@ -238,16 +235,20 @@ int McuCreator::processFile( QString fileName, bool main )
         }
         else mcu->m_cpu = new McuCpu( mcu );
 
-        if( m_displays.size()  )
+        if( m_displays.size() )
         {
+            mcu->createWatcher( mcu->m_cpu );
             for( Display* display : m_displays )
             {
                 mcu->m_cpu->m_display = display;
-                mcu->createWatcher( mcu->m_cpu );
                 mcu->getWatcher()->addWidget( display );
             }
         }
-
+        if( m_console )
+        {
+            mcu->createWatcher( mcu->m_cpu );
+            mcu->getWatcher()->addConsole();
+        }
         if( m_newStack ) createStack( &m_stackEl );
     }
 
@@ -1131,75 +1132,6 @@ void McuCreator::createSleep( QDomElement* e )
     setConfigRegs( e, sleep );
 }
 
-/*void McuCreator::createExtMem( QDomElement* e )
-{
-    QString name = e->attribute( "name" );
-    ExtMemModule* extMem = new ExtMemModule( mcu, name );
-
-    mcu->extMem = extMem;
-    mcu->m_modules.emplace_back( extMem );
-
-    McuPort* addrPort = mcu->getPort( e->attribute("addrport") );
-    for( int i=0; i<addrPort->m_numPins; ++i )
-    {
-        McuPin* pin = addrPort->getPinN( i );
-        if( pin )
-        {
-            extMem->m_addrPin.emplace_back( pin );
-            pin->setDirection( true );
-            pin->controlPin( true, true );
-        }
-    }
-    McuPort* dataPort = mcu->getPort( e->attribute("dataport") );
-    for( int i=0; i<dataPort->m_numPins; ++i )
-    {
-        McuPin* pin = dataPort->getPinN( i );
-        if( pin )
-        {
-            extMem->m_dataPin.emplace_back( pin );
-            pin->setDirection( false );
-            pin->controlPin( true, true );
-        }
-    }
-    extMem->m_rwPin = mcu->getPin( e->attribute("rwpin") );
-    extMem->m_rePin = mcu->getPin( e->attribute("repin") );
-    extMem->m_enPin = mcu->getPin( e->attribute("enpin") );
-    extMem->m_laPin = mcu->getPin( e->attribute("lapin") );
-}*/
-
-void McuCreator::createIntMem( QDomElement* e )
-{
-    QString name = e->attribute( "name" );
-    IntMemModule* intMem = new IntMemModule( mcu, name );
-
-    mcu->m_modules.emplace_back( intMem );
-
-    IoPort* addrPort = mcu->getIoPort( e->attribute("addrport") );
-    for( int i=0; i<addrPort->m_numPins; ++i )
-    {
-        IoPin* pin = addrPort->getPinN( i );
-        if( pin ){
-            intMem->m_addrPin.emplace_back( pin );
-            pin->setPinMode( input );
-            //pin->controlPin( true, true );
-        }
-    }
-    IoPort* dataPort = mcu->getIoPort( e->attribute("dataport") );
-    for( int i=0; i<dataPort->m_numPins; ++i )
-    {
-        IoPin* pin = dataPort->getPinN( i );
-        if( pin ){
-            intMem->m_dataPin.emplace_back( pin );
-            pin->setPinMode( input );
-            //pin->controlPin( true, true );
-        }
-    }
-    intMem->m_rwPin  = mcu->getIoPin( e->attribute("rwpin") );
-    intMem->m_cshPin = mcu->getIoPin( e->attribute("cshpin") );
-    intMem->m_cslPin = mcu->getIoPin( e->attribute("cslpin") );
-    intMem->m_clkPin = mcu->getIoPin( e->attribute("clkpin") );
-}
-
 void McuCreator::createDisplay( QDomElement* e )
 {
     QString name = e->attribute("name");
@@ -1357,96 +1289,3 @@ void McuCreator::setPrescalers( QString pr, McuPrescaled* module )
     for( int i=0; i<prescalers.size(); ++i )
         module->m_prescList[i] = prescalers.value(i).toUInt();
 }
-
-void McuCreator::convert( QString fileName ) // TODELETE convert dat files to xml reg files.
-{
-    QStringList lines = fileToStringList( fileName, "McuCreator::convert" );
-    bool regs = false;
-    bool bits = false;
-    int max = 0;
-    int min = 999;
-    QMap<int, QString> regMap;
-    QHash<QString,QVector<QString> > bitHash;
-    for( QString line : lines )
-    {
-        if( line.startsWith("'") ) continue;
-        if( regs )
-        {
-            if( line.remove(" ").isEmpty() ) continue;
-            if( line.contains("[Bits]") ) { bits = true; regs = false; continue;}
-            QStringList words = line.split(",");
-            regMap[words.value(1).toInt()] = words.value(0);
-        }
-        else if( bits )
-        {
-            if( line.remove(" ").isEmpty() ) continue;
-            if( line.contains("[") ) break;
-            QStringList words = line.split(",");
-            QString bit = words.value(0);
-            QString reg = words.value(1);
-
-            QVector<QString> bh = bitHash[reg];
-            if( bh.isEmpty() )  bh.fill("0",8);
-
-            int i = words.value(2).toInt();
-            if( i > max ) max = i;
-            if( i < min ) min = i;
-
-            bh[i] = bit;
-            bitHash[reg] = bh;
-        }
-        if( line.contains("[Registers]") ) regs = true;
-    }
-    QString doc;
-    doc.append("<parts>\n");
-
-    QList<int> addresses = regMap.keys();
-
-    for( int addr : addresses )
-    {
-        doc.append("    <register ");
-
-        QString regName = regMap.value(addr);
-        QString ad = QString::number(addr,16).toUpper();
-        while( ad.size() < 4 ) ad.prepend("0");
-        QString nameEntry = " name=\""+regName+"\" ";
-        while( nameEntry.size() < 15 ) nameEntry.append(" ");
-
-        doc.append( nameEntry );
-        doc.append(" addr=\"0x"+ad+"\" ");
-        doc.append(" reset=\"\" ");
-        doc.append(" mask=\"\" ");
-
-        QString bitsList;
-        QVector<QString> bitVec = bitHash.value(regName);
-        if( !bitVec.isEmpty() )
-        {
-            for( int i=0; i<8; i++ )
-            {
-                QString bitName = bitVec.value(i);
-                if( bitName.isEmpty() ) continue;
-                bitsList.append( bitName+",");
-            }
-            bitsList.remove(bitsList.size()-1,1);
-            doc.append("\n               ");
-        }
-        doc.append("bits=\""+bitsList+"\" />\n");
-        if(!bitsList.isEmpty() ) doc.append("\n");
-    }
-    doc.append("</parts>\n\n");
-    fileName.replace(".dat","_regs-aut.xml");
-    QFile file( fileName );
-
-    if( !file.open( QFile::WriteOnly | QFile::Text ))
-    {
-        QApplication::restoreOverrideCursor();
-        MessageBoxNB( "McuCreator::convert",
-        "Cannot write file:\n+."+fileName+file.errorString() );
-        return ;
-    }
-    QTextStream out(&file);
-    out.setCodec("UTF-8");
-    out << doc;
-    file.close();
-}
-

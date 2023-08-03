@@ -187,12 +187,7 @@ int ScriptCpu::compileScript()
     {
         m_mcu->createWatcher( this );
     }
-    if( m_command || m_script.contains("toConsole") )  /// Use TextComponent ???
-    {
-        m_mcu->createWatcher( this );
-        m_watcher = m_mcu->getWatcher();
-        m_watcher->addConsole( this );
-    }
+
     for( ScriptPerif* perif : m_periferals ) perif->startScript();
 
     asIScriptFunction* func = m_aEngine->GetModule(0)->GetFunctionByDecl("void setup()");
@@ -215,6 +210,8 @@ void ScriptCpu::updateStep()
 
 void ScriptCpu::reset()
 {
+    m_watcher = m_mcu->getWatcher();
+
     m_mcuComp->setShowVal( true );
     m_value = "";
 

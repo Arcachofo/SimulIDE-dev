@@ -5,12 +5,12 @@
 
 #include "updatable.h"
 
-class ScriptCpu;
+class CoreBase;
 
 class Console : public QPlainTextEdit, public Updatable
 {
     public:
-        Console( ScriptCpu* cpu, QWidget* parent=NULL );
+        Console( CoreBase* cpu, QWidget* parent=NULL );
 
         virtual void updateStep() override;
 
@@ -24,7 +24,7 @@ class Console : public QPlainTextEdit, public Updatable
         void contextMenuEvent(QContextMenuEvent* e) override;
 
     private:
-        ScriptCpu* m_cpu;
+        CoreBase* m_cpu;
 
         bool m_sendCommand;
 

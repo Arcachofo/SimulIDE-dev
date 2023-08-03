@@ -124,10 +124,10 @@ QStringList Watcher::getVarSet()
     return varset;
 }
 
-void Watcher::addConsole( ScriptCpu* s )
+void Watcher::addConsole()
 {
     if( m_console ) return;
-    m_console = new Console( s );
+    m_console = new Console( m_core );
     m_valuesLayout->insertWidget( m_valuesLayout->count()-1, m_console );
 }
 

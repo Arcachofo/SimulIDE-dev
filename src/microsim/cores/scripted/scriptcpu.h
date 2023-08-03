@@ -33,7 +33,7 @@ class MAINMODULE_EXPORT ScriptCpu : public ScriptModule, public McuCpu
         virtual void setScriptFile( QString scriptFile, bool compile=true ) override;
         virtual int compileScript() override;
 
-        void command( QString c );
+        virtual void command( QString c ) override;
         void toConsole( string r );
         void showValue( string r );
 

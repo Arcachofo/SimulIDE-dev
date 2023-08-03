@@ -8,11 +8,11 @@
 #include <QTextCursor>
 
 #include "console.h"
-#include "scriptcpu.h"
+#include "corebase.h"
 #include "mainwindow.h"
 #include "simulator.h"
 
-Console::Console(ScriptCpu*cpu, QWidget* parent )
+Console::Console( CoreBase* cpu, QWidget* parent )
        : QPlainTextEdit( parent )
 {
     m_cpu = cpu;

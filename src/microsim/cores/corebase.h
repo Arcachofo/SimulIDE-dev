@@ -9,6 +9,8 @@
 #include <QStringList>
 #include <QHash>
 
+class Display;
+
 class CoreBase
 {
     public:
@@ -19,6 +21,8 @@ class CoreBase
         virtual void runStep(){;}
         virtual void extClock( bool clkState ){;}
         virtual void updateStep(){;}
+
+        virtual void command( QString c ){;}
 
         virtual int getCpuReg( QString reg );
         virtual QString getStrReg( QString ){ return "";}
@@ -31,6 +35,8 @@ class CoreBase
 
         QStringList m_enumUids;  // For enum properties
         QStringList m_enumNames; // For enum properties
+
+        Display* m_display; // Find a place for this
 };
 
 #endif

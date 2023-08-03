@@ -28,7 +28,6 @@ class MAINMODULE_EXPORT McuCreator
         ~McuCreator();
 
         static int createMcu( Mcu* mcuComp, QString name );
-        static void convert( QString fileName );
 
     private:
         static int  processFile( QString fileName, bool main=false );
@@ -58,7 +57,6 @@ class MAINMODULE_EXPORT McuCreator
         static void createWdt( QDomElement* e );
         static void createSleep( QDomElement* e );
         static void createDisplay( QDomElement* e );
-        static void createIntMem( QDomElement* e );
         static void createStack( QDomElement* s );
         static void createInterrupt( QDomElement* el );
         static void setInterrupt( QString intName, McuModule* module );
@@ -78,6 +76,8 @@ class MAINMODULE_EXPORT McuCreator
         static McuTwi* m_twi;
         static McuSpi* m_spi;
         static QList<Display*> m_displays;
+
+        static bool m_console;
 
         static std::vector<ScriptPerif*> m_scriptPerif;
 };

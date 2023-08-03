@@ -7,7 +7,7 @@
 
 CoreBase::CoreBase()
 {
-
+    m_display = NULL;
 }
 CoreBase::~CoreBase() {}
 
