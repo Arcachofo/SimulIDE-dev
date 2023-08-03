@@ -224,7 +224,6 @@ void ItemLibrary::loadItems()
     addItem( new LibraryItem("MCS65", "Micro", "ic2.png","MCS65", NULL ) );
     addItem( new LibraryItem("Z80"  , "Micro", "ic2.png","Z80", NULL ) );
     addItem( Mcu::libraryItem() );
-    //addItem( Z80CPU::libraryItem() );
     addItem( new LibraryItem( QObject::tr("Arduino"), "Micro", "board.png","Arduino", NULL ) );
     addItem( new LibraryItem( QObject::tr("Shields"), "Micro", "shield.png","Shields", NULL ) );
     addItem( new LibraryItem( QObject::tr("Sensors"), "Micro", "1to2.png","Sensors", NULL ) );

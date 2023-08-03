@@ -99,7 +99,7 @@ class MAINMODULE_EXPORT McuCpu : public CpuBase
             for( int i=0; i<m_progAddrSize; i++, addr>>=8, sp += m_spInc )
                 SET_RAM( sp, addr & 0xFF );
 
-            if( m_spPre )  sp -= m_spInc;
+            if( m_spPre ) sp -= m_spInc;
             SET_SP( sp );
         }
 

@@ -286,7 +286,7 @@ void SubPackage::setWidth( int width )
 
     m_width = width;
     m_area = QRect(0, 0, m_width*8, m_height*8);
-    
+    update();
     Circuit::self()->update();
 }
 
@@ -298,7 +298,7 @@ void SubPackage::setHeight( int height )
     
     m_height = height;
     m_area = QRect( 0, 0, m_width*8, m_height*8 );
-    
+    update();
     Circuit::self()->update();
 }
 

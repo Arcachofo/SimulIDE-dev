@@ -31,7 +31,6 @@ enum mcuState_t{
 
 class Mcu;
 class McuIntOsc;
-class IoPort;
 class McuPort;
 class McuVref;
 class Component;
@@ -86,19 +85,12 @@ class MAINMODULE_EXPORT eMcu : public DataSpace, public eIou
         McuTimer* getTimer( QString name );
         McuPort* getMcuPort( QString name );
         McuPin*  getMcuPin( QString pinName );
-        //QHash<QString, McuPort*> getPorts() { return m_mcuPorts; }
 
-        //IoPort* getIoPort( QString name );
         IoPin*  getIoPin( QString pinName );
-
-        //Watcher* getCpuTable() { return m_cpuTable; }
-        //void createCpuTable();
 
         McuWdt* watchDog() { return m_wdt; }
         McuVref* vrefModule();
-        //McuSleep* sleepModule();
 
-        /// ConfigWord* cfgWord() { return m_cfgWord; }
         bool setCfgWord( uint16_t addr, uint16_t data );
         McuIntOsc* intOsc() { return m_intOsc; }
         McuComp* comparator() { return m_comparator; }
@@ -119,7 +111,6 @@ class MAINMODULE_EXPORT eMcu : public DataSpace, public eIou
         void reset();
 
         QString m_firmware;     // firmware file loaded
-        //QString m_device;
 
         mcuState_t m_state;
 
@@ -139,9 +130,6 @@ class MAINMODULE_EXPORT eMcu : public DataSpace, public eIou
 
         QHash<QString, McuTimer*> m_timerList;// Access TIMERS by name
         QHash<QString, McuPort*>  m_mcuPorts; // Access PORTS by name
-        //QHash<QString, IoPort*>   m_ioPorts;  // Access ioPORTS by name
-
-        //IoPin*  m_clkPin;
         ConfigWord* m_cfgWord;
         McuSleep*   m_sleepModule;
         McuVref*    m_vrefModule;
@@ -152,8 +140,6 @@ class MAINMODULE_EXPORT eMcu : public DataSpace, public eIou
         double m_freq;           // Clock Frequency in MegaHerzs
         double m_cPerInst;       // Clock ticks per Instruction Cycle
         uint64_t m_psCycle;      // picoseconds per Instruction Cycle
-
-        //Watcher* m_cpuTable;
 
         // Debugger:
         BaseDebugger* m_debugger;

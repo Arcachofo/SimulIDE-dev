@@ -42,13 +42,11 @@ eMcu::eMcu( Mcu* comp, QString id )
     m_ramSize   = 0;
 
     m_firmware = "";
-    //m_device   = "";
     m_debugger = NULL;
     m_debugging = false;
     m_saveEepr = true;
 
     m_ramTable = new RamTable( NULL, this, false );
-    //m_ramTable->hide();
 }
 
 eMcu::~eMcu()
@@ -63,28 +61,19 @@ void eMcu::stamp()
 {
     reset();
     m_state = mcuRunning;
-    //m_state = mcuStopped;
-
-    /*Simulator::self()->cancelEvents( this );
-    if( m_clkPin ) m_clkPin->changeCallBack( this );  // External clock
-    else           Simulator::self()->addEvent( m_psCycle, this );*/
 }
 
 void eMcu::voltChanged()  // External clock
 {
-    //if( m_state == mcuRunning ) cpu->extClock( m_clkPin->getInpState() );
     if( m_state == mcuStopped ) return;
     if( m_debugging )
     {
         if( cyclesDone > 1 ) cyclesDone -= 1;
         else                 m_debugger->stepDebug();
-        //Simulator::self()->addEvent( m_psCycle, this );
     }
     else if( m_state >= mcuRunning /*&& m_freq > 0*/ )
     {
         m_cpu->extClock( m_clkPin->getInpState() );
-        //stepCpu();
-        //Simulator::self()->addEvent( cyclesDone*m_psCycle, this );
     }
 }
 
@@ -228,16 +217,9 @@ McuPin* eMcu::getMcuPin( QString pinName )
         pin = port->getPin( pinName );
         if( pin ) break;
     }
-    if( !pin )
-        qDebug() << "ERROR: eMcu::getPin NULL Pin:"<< pinName;
+    if( !pin ) qDebug() << "ERROR: eMcu::getPin NULL Pin:"<< pinName;
     return pin;
 }
-
-/*IoPort* eMcu::getIoPort( QString name )
-{
-    IoPort* port = m_ioPorts.value( name );
-    return port;
-}*/
 
 IoPin*  eMcu::getIoPin( QString pinName )
 {
@@ -245,9 +227,7 @@ IoPin*  eMcu::getIoPin( QString pinName )
     IoPin* pin = eIou::getIoPin( pinName );
 
     if( !pin ) pin = getMcuPin( pinName );
-
-    if( !pin )
-        qDebug() << "ERROR: eMcu::getIoPin NULL Pin:"<< pinName;
+    if( !pin ) qDebug() << "ERROR: eMcu::getIoPin NULL Pin:"<< pinName;
     return pin;
 }
 
