@@ -65,7 +65,7 @@
                      statusreg="SSPSTAT"
                      interrupt="SSP" 
                      prescalers="4,16,64,0"
-                     pins="PORTC4,PORTC5,PORTC3,PORTA5"/><!-- "SDI,SDO,SCK,SS" -->
+                     pins="PORTC5,PORTC4,PORTC3,PORTA5"/><!-- "SD0,SDI,SCK,SS" -->
   </msspunit>
   
   <configwords name="cfgWord" type="02">

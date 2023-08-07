@@ -8,6 +8,7 @@
 #include "iopin.h"
 #include "e_mcu.h"
 #include "mcuinterrupts.h"
+#include "simulator.h"
 
 PicSpi::PicSpi( eMcu* mcu, QString name )
       : McuSpi( mcu, name )
@@ -23,32 +24,36 @@ void PicSpi::setMode( spiMode_t mode )
     m_clockPeriod = 4*m_mcu->psCycle()*m_prescaler/2;
 
     if( mode == m_mode ) return;
-    else if( mode == SPI_OFF )
+    m_mode = mode;
+
+    m_dataOutPin = m_MOSI;
+    m_dataInPin  = m_MISO;
+    Simulator::self()->cancelEvents( this );
+
+    if( mode == SPI_OFF )
     {
         m_MOSI->controlPin( false, false );
         m_MISO->controlPin( false, false );
         m_clkPin->controlPin( false, false );
         m_SS->controlPin( false, false );
+        return;
     }
-    else if( mode == SPI_MASTER )
+    m_dataOutPin->controlPin( true, false );
+    m_dataInPin->setPinMode( input );
+    m_dataInPin->controlPin( true, true );
+    m_SS->controlPin( true, false );
+
+    if( mode == SPI_MASTER )
     {
-        m_MOSI->controlPin( true, false );
-        m_MISO->setPinMode( input );
-        m_MISO->controlPin( true, true );
         m_clkPin->controlPin( true, false );
-        //m_SS->controlPin( true, false );
+        m_dataOutPin->setOutState( true );
     }
     else if( mode == SPI_SLAVE )
     {
-        m_MOSI->setPinMode( input );
-        m_MOSI->controlPin( true, true );
-        m_clkPin->setPinMode( input );
-        m_clkPin->controlPin( true, false );
-        m_SS->setPinMode( input );
-        m_SS->controlPin( true, false );
-        m_MISO->controlPin( true, false );
+        m_clkPin->controlPin( false, false );
+        m_clkPin->changeCallBack( this, true );
+        if( m_useSS && m_SS ) m_SS->changeCallBack( this, true );
     }
-    SpiModule::setMode( mode );
 }
 
 void PicSpi::configureA( uint8_t newSSPCON ) // SSPCON is being written
