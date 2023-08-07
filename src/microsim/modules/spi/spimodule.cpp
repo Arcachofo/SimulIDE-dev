@@ -69,13 +69,11 @@ void SpiModule::voltChanged() // Called in Slave mode on SCK or SS changes
 
     if( enabled != m_enabled ) // Enabling or Disabling
     {
-        if( enabled && !m_enabled ) // Enabling
+        if( enabled && !m_enabled )                 // Enabling
         {
             m_clkPin->changeCallBack( this, true );
-            StartTransaction(); // Start transaction
-        }
-        else                        // Disabling
-        {
+            resetSR();
+        }else{                                      // Disabling
             m_clkPin->changeCallBack( this, false );
             m_srReg = 0;// Reset SPI Logic
         }
@@ -89,7 +87,8 @@ void SpiModule::voltChanged() // Called in Slave mode on SCK or SS changes
 
 void SpiModule::endTransaction()
 {
-    if( m_dataOutPin && m_mode == SPI_MASTER ) m_dataOutPin->setOutState( true );
+    if( m_mode == SPI_MASTER ){ if( m_dataOutPin) m_dataOutPin->setOutState( true ); }
+    else                      resetSR();
 }
 
 void SpiModule::StartTransaction()
@@ -163,7 +162,7 @@ void SpiModule::setMode( spiMode_t mode )
         if( !m_MOSI || !m_clkPin ) { m_mode = SPI_OFF; return; }
         m_dataOutPin = m_MISO;
         m_dataInPin  = m_MOSI;
-
+        m_clkPin->changeCallBack( this, true );
         if( m_useSS && m_SS ) m_SS->changeCallBack( this, true );
     }
     if( m_dataOutPin && m_mode == SPI_MASTER ) m_dataOutPin->setOutState( true );
