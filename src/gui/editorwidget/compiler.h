@@ -69,7 +69,7 @@ class Compiler : public QObject
 
         int runBuildStep( QString fullCommand );
         QString replaceData( QString str );
-        QString getPath( QString msg );
+        QString getPath( QString msg, QString oldPath );
         void toolChainNotFound();
 
         CompilerProp* m_compDialog;

@@ -159,7 +159,9 @@ int InoDebugger::compile( bool debug )
         QString toolsBuild = addQuotes( m_arduinoPath+"tools-builder" );
         QString toolsAvr   = addQuotes( m_arduinoPath+"hardware/tools/avr" );
         QString libraries  = addQuotes( m_arduinoPath+"libraries" );
-        QString userLibrar = addQuotes( m_sketchBook+"/libraries" );
+        QString userLibrar;
+        if( m_inclPath.isEmpty() ) userLibrar = addQuotes( m_sketchBook+"/libraries" );
+        else                       userLibrar = addQuotes( m_inclPath );
 
         command += " -compile";
         //if( debug ) command += " -prefs={compiler.optimization_flags=-Og"};
@@ -180,6 +182,8 @@ int InoDebugger::compile( bool debug )
         command += " --fqbn="+boardName;
         command += " --build-path "+cBuildPath;
         command += " --build-cache-path "+cCachePath;
+        if( !m_inclPath.isEmpty() )
+            command += " --libraries "+addQuotes( m_inclPath );
     }
     command += " "+addQuotes( m_file );
     m_firmware = "";

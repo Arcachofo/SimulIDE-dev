@@ -136,26 +136,29 @@ void CompilerProp::setCompiler( Compiler* compiler )
     QString compName = compiler->compName();
     compilerBox->setCurrentText( compName );
 
+    if( compName == "Arduino" ) inclPathLabel->setText( tr("Libraries Path") );
+    else                        inclPathLabel->setText( tr("Include Path") );
+
     if( compName != "None" )
     {
         updateDialog();
 
-        QVariant value = compiler->property( "Board" );
-        if( !value.isValid() )
+        QVariant boardV = compiler->property( "Board" );
+        if( !boardV.isValid() )
         {
             boardLabel->setVisible( false );
             ardBoard->setVisible( false );
             customLabel->setVisible( false );
             customBoard->setVisible( false );
-        }else{
+        }else{                                  // Arduino compiler
             boardLabel->setVisible( true );
             ardBoard->setVisible( true );
-            ardBoard->setCurrentIndex( value.toInt() );
+            ardBoard->setCurrentIndex( boardV.toInt() );
             bool showCustom = false;
-            QString board = value.toString();
+            QString board = boardV.toString();
             if( board == "Custom" ) showCustom = true;
-            customLabel->setVisible( true );
-            customBoard->setVisible( true );
+            customLabel->setVisible( showCustom  );
+            customBoard->setVisible( showCustom  );
             customBoard->setText( compiler->property( "Custom_Board" ).toString() );
     }   }
     else{

@@ -243,11 +243,11 @@ int Compiler::getFirstNumber( QString txt )
     return number;
 }
 
-QString Compiler::getPath( QString msg )
+QString Compiler::getPath( QString msg, QString oldPath )
 {
     QString path = QFileDialog::getExistingDirectory( NULL
                          , msg
-                         , toolPath()
+                         , oldPath
                          , QFileDialog::ShowDirsOnly
                          | QFileDialog::DontResolveSymlinks);
 
@@ -257,7 +257,7 @@ QString Compiler::getPath( QString msg )
 
 void Compiler::getToolPath()
 {
-    QString path = getPath( tr("Select Compiler Toolchain directory") );
+    QString path = getPath( tr("Select Compiler Toolchain directory"), toolPath() );
     if( !path.isEmpty() ) setToolPath( path );
 }
 
@@ -269,7 +269,8 @@ void Compiler::setToolPath( QString path )
 
 void Compiler::getIncludePath()
 {
-    QString path = getPath( tr("Select Compiler Include directory") );
+    QString oldPath = m_inclPath.isEmpty() ? m_fileDir : m_inclPath;
+    QString path = getPath( tr("Select Compiler Include directory"), oldPath );
     if( !path.isEmpty() ) setIncludePath( path );
 }
 
