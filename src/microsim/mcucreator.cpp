@@ -59,6 +59,7 @@
 #include "piceeprom.h"
 #include "picconfigword.h"
 #include "picintosc.h"
+#include "picsleep.h"
 
 #include "i51core.h"
 #include "i51timer.h"
@@ -70,7 +71,7 @@
 #include "intmemcore.h"
 
 #include "z80core.h"
-#include "ula_zx48k.h"
+//#include "ula_zx48k.h"
 
 #include "scriptcpu.h"
 #include "scriptport.h"
@@ -591,13 +592,13 @@ void McuCreator::createMcuPort( QDomElement* p )
         for( int i=0; i<port->m_numPins; ++i )
             port->m_pins[i]->m_inpMask = inpMask & 1<<i;
     }
-    if( p->hasAttribute("pullups") ) // Permanent Pullups
+    if( p->hasAttribute("pullups") )
     {
         QString pullups = p->attribute( "pullups" );
         bool ok = false;
         uint pullup = pullups.toUInt( &ok, 2 );
         if( ok ){
-            for( int i=0; i<port->m_numPins; ++i )
+            for( int i=0; i<port->m_numPins; ++i )          // Permanent Pullups
                 port->m_pins[i]->m_puMask = pullup & 1<<i;
         }else{
             if( mcu->regExist( pullups ) )
