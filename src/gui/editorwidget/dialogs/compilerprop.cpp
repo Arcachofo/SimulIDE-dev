@@ -155,7 +155,7 @@ void CompilerProp::setCompiler( Compiler* compiler )
             ardBoard->setVisible( true );
             ardBoard->setCurrentIndex( boardV.toInt() );
             bool showCustom = false;
-            QString board = boardV.toString();
+            QString board = ardBoard->currentText();
             if( board == "Custom" ) showCustom = true;
             customLabel->setVisible( showCustom  );
             customBoard->setVisible( showCustom  );
