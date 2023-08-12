@@ -160,16 +160,25 @@ int InoDebugger::compile( bool debug )
         QString toolsAvr   = addQuotes( m_arduinoPath+"hardware/tools/avr" );
         QString libraries  = addQuotes( m_arduinoPath+"libraries" );
         QString userLibrar;
-        if( m_inclPath.isEmpty() ) userLibrar = addQuotes( m_sketchBook+"/libraries" );
-        else                       userLibrar = addQuotes( m_inclPath );
+        QString userHardwa = "";
+
+        if( ! m_sketchBook.isEmpty() ){
+            if( m_inclPath.isEmpty() ) userLibrar = addQuotes( m_sketchBook+"/libraries" );
+            else                       userLibrar = addQuotes( m_inclPath );
+
+            userHardwa = addQuotes( m_sketchBook+"/hardware" );
+        }
 
         command += " -compile";
         //if( debug ) command += " -prefs={compiler.optimization_flags=-Og"};
         command += " -hardware "+hardware;
+        if( !userHardwa.isEmpty() ) command += " -hardware "+userHardwa;
+
         command += " -tools "+toolsBuild;
         command += " -tools "+toolsAvr;
         command += " -built-in-libraries "+libraries;
-        command += " -libraries "+userLibrar;
+        if( !userLibrar.isEmpty() ) command += " -libraries "+userLibrar;
+
         command += " -fqbn="+boardName;
         command += " -build-path "+cBuildPath;
         command += " -build-cache "+cCachePath;
