@@ -50,7 +50,7 @@
                        interrupt="USART_U">
                                    
     <trunit type="tx" pin="PORTD1" register="UDR" interrupt="USART_T" />
-    <trunit type="rx" pin="PORTD0"                 interrupt="USART_R" />
+    <trunit type="rx" pin="PORTD0"                interrupt="USART_R" />
   </usart>
 
   <port name="PORTV" pins="2"/> <!-- Fake Port for aVcc, aRef -->
