@@ -2,9 +2,10 @@
 
 <itemlib>
     
-    <itemset category="Z80" type="MCU" >
+    <itemset category="Z80" type="MCU" folder="Z80">
         
-        <item name="Z80" info="CPU" package="Z80/z80" data="Z80/z80"></item>
+        <item name="Z80"       info="CPU" ></item>
+        <item name="ULA ZX48k" info=""    ></item>
     
     </itemset>
     

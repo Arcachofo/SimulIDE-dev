@@ -1,3 +1,7 @@
+/***************************************************************************
+ *   Copyright (C) 2023 by Jarda Vrana                                     *
+ *                                                                         *
+ ***( see copyright.txt file at root folder )*******************************/
 
 #include "z80core.h"
 #include "z80cycles.h"

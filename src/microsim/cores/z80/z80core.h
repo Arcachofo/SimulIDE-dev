@@ -1,3 +1,8 @@
+/***************************************************************************
+ *   Copyright (C) 2023 by Jarda Vrana                                     *
+ *                                                                         *
+ ***( see copyright.txt file at root folder )*******************************/
+
 #ifndef Z80CORE_H
 #define Z80CORE_H
 
