@@ -57,12 +57,31 @@ void McuTimer::voltChanged()  // External Clock Pin changed voltage
 {
     bool state = m_clockPin->getInpState();
     if( m_clkState == state ) return;
+    if( m_sleeping ) return;
+
     if( m_clkEdge == 1 )              // Rising
     {
         if( state && !m_clkState ) clockStep();
     }
     else if( !state && m_clkState ) clockStep();
     m_clkState = state;
+}
+
+void McuTimer::sleep( int mode )
+{
+    McuModule::sleep( mode );
+
+    if( m_extClock ) return;
+
+    if( m_sleeping ) // Wakeup
+    {
+        Simulator::self()->cancelEvents( this );
+        updtCount();                              /// Update counter
+    }
+    else             // Sleep
+    {
+        updtCycles();                             /// update & Reshedule
+    }
 }
 
 void McuTimer::clockStep()  // Timer driven by external clock
@@ -124,8 +143,7 @@ void McuTimer::sheduleEvents()
 void McuTimer::enable( uint8_t en )
 {
     bool e = en > 0;
-    if( m_running == e )
-        return;
+    if( m_running == e ) return;
     updtCount();    // If disabling, write counter values to Ram
     m_running = e;
     updtCycles();  // This will shedule or cancel events

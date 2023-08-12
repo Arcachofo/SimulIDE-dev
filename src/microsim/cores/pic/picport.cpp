@@ -12,6 +12,7 @@
 PicPort::PicPort( eMcu* mcu, QString name )
        : McuPort( mcu, name )
 {
+    m_sleepMode = 0xFF;
 }
 PicPort::~PicPort(){}
 
@@ -21,9 +22,16 @@ void PicPort::configureA( uint8_t newANSEL ) // Analog pins
         m_pins[i]->setAnalog( newANSEL & 1<<i );
 }
 
+void PicPort::outChanged( uint8_t val )
+{
+    McuPort::outChanged( val );
+    if( m_interrupt ) m_interrupt->clearFlag(); // Clear interrupt fag
+}
+
 void PicPort::readPort( uint8_t )
 {
     m_mcu->m_regOverride = m_pinState;
+    if( m_interrupt ) m_interrupt->clearFlag(); // Clear interrupt fag
 }
 
 McuPin* PicPort::createPin( int i, QString id , Component* mcu )

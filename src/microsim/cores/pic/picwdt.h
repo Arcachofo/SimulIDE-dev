@@ -15,11 +15,13 @@ class MAINMODULE_EXPORT PicWdt : public McuWdt
         ~PicWdt();
 
         virtual void initialize() override;
-        //virtual void runEvent() override;
+        virtual void runEvent() override;
 
         virtual void configureA( uint8_t newOPTION ) override;
 
         virtual void reset() override;
+
+        virtual void sleep( int mode ) override;
 
     private:
         regBits_t m_PS;

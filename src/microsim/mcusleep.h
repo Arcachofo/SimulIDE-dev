@@ -17,7 +17,7 @@ class MAINMODULE_EXPORT McuSleep : public McuModule, public eElement
         McuSleep( eMcu* mcu, QString name );
         ~McuSleep();
 
-        uint8_t mode() { return m_sleepMode; }
+        inline uint8_t mode() { return m_sleepMode; }
 
         bool enabled() { return m_enabled; }
         //virtual void sleep(){;}

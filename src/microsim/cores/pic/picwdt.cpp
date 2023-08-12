@@ -27,9 +27,15 @@ void PicWdt::initialize()
     m_ovfReset = true;
 }
 
-/*void PicWdt::runEvent()
+void PicWdt::runEvent()
 {
-}*/
+    if( m_sleeping )
+    {
+        m_mcu->sleep( false );
+        /// TODO: TO bit in the Status register is cleared
+    }
+    else McuWdt::runEvent();
+}
 
 void PicWdt::configureA( uint8_t newOPTION ) // OPTION Written
 {
@@ -37,7 +43,7 @@ void PicWdt::configureA( uint8_t newOPTION ) // OPTION Written
 
     if( getRegBitsVal( newOPTION, m_PSA ) )
          m_prescaler = getRegBitsVal( newOPTION, m_PS );  // Prescaler asigned to Watchdog
-    else m_prescaler = 0;                           // Prescaler asigned to TIMER0
+    else m_prescaler = 0;                                 // Prescaler asigned to TIMER0
     m_ovfPeriod = m_clkPeriod/m_prescList[ m_prescaler ];
 }
 
@@ -47,4 +53,8 @@ void PicWdt::reset()
     if( m_wdtFuse ) Simulator::self()->addEvent( m_ovfPeriod, this );
 }
 
-
+void PicWdt::sleep( int mode )
+{
+    McuModule::sleep( mode );
+    reset();
+}

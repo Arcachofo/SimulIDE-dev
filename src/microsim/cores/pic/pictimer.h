@@ -80,14 +80,18 @@ class MAINMODULE_EXPORT PicTimer16bit : public PicTimer
 
         virtual void configureA( uint8_t NewT1CON ) override;
 
+        virtual void sleep( int mode ) override;
+
     protected:
         virtual void configureClock(){;}
         virtual void sheduleEvents() override;
 
         bool m_t1Osc;
+        uint8_t m_t1sync;
 
         regBits_t m_T1CKPS;
         regBits_t m_T1OSCEN;
+        regBits_t m_T1SYNC;
 
         regBits_t m_TMR1CS;
         regBits_t m_TMR1ON;

@@ -11,6 +11,7 @@
 #include "mcuuart.h"
 #include "mcuinterrupts.h"
 #include "mcudataspace.h"
+#include "mcusleep.h"
 
 //class CpuBase;
 class McuTimer;
@@ -53,6 +54,9 @@ class MAINMODULE_EXPORT eMcu : public DataSpace, public eIou
         virtual void stamp() override;
         virtual void voltChanged() override;
         virtual void runEvent() override;
+
+        inline bool isSleeping() { return m_state == mcuSleeping; }
+        inline int  sleepMode()  { return m_sleepModule->mode(); }
 
         void stepCpu();
 

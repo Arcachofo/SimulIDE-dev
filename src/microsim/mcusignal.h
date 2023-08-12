@@ -36,7 +36,7 @@ class CallBack : public CallBackBase
         {
             m_object = object;
             m_func = func;
-            nextCallBack = NULL;
+            nextCallBack = nullptr;
         }
         ~CallBack() {;}
 
@@ -53,7 +53,7 @@ class McuSignal
     public:
         McuSignal()
         {
-            m_slot = NULL;
+            m_slot = nullptr;
         }
         ~McuSignal()
         {
@@ -81,7 +81,7 @@ class McuSignal
         template <class Obj>
         void disconnect( Obj* obj, void (Obj::*func)(uint8_t) )
         {
-            CallBackBase* preSlot = NULL;
+            CallBackBase* preSlot = 0;
             CallBackBase* posSlot = m_slot;
             while( posSlot )
             {

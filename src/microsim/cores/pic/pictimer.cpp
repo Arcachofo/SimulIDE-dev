@@ -157,21 +157,23 @@ PicTimer16bit::PicTimer16bit( eMcu* mcu, QString name )
 
     m_T1CKPS = getRegBits( "T1CKPS0,T1CKPS1", mcu );
     m_T1OSCEN = getRegBits( "T1OSCEN", mcu );
+    m_T1SYNC  = getRegBits( "T1SYNC", mcu );
 
     m_TMR1ON = getRegBits( "TMR1ON", mcu );
-
-    //QString num = name.right(1);
 }
 PicTimer16bit::~PicTimer16bit(){}
 
 void PicTimer16bit::configureA( uint8_t NewT1CON )
 {
+    m_t1sync = getRegBitsVal( NewT1CON, m_T1SYNC ) ? 0 : 1; // Used for sleep mode
+
     uint8_t ps = getRegBitsVal( NewT1CON, m_T1CKPS );
+
     m_prescaler = m_prescList.at( ps );
 
-    m_t1Osc = getRegBitsBool( NewT1CON, m_T1OSCEN );
+    m_mode  = getRegBitsVal(  NewT1CON, m_TMR1CS );
+    m_t1Osc = getRegBitsBool( NewT1CON, m_T1OSCEN ) && m_mode; // T1 osc depends on TMR1CS
 
-    m_mode = getRegBitsVal( NewT1CON, m_TMR1CS );
     configureClock();
 
     bool en = getRegBitsBool( NewT1CON, m_TMR1ON );
@@ -180,7 +182,7 @@ void PicTimer16bit::configureA( uint8_t NewT1CON )
 
 void PicTimer16bit::sheduleEvents()
 {
-    if( m_running && m_t1Osc ) // 32.768 KHz Oscillator
+    if( m_running && m_t1Osc ) /// TODO: RC oscillator // 32.768 KHz Oscillator
     {
         uint64_t circTime = Simulator::self()->circTime();
         m_scale = 30517578; // Sim cycs per Timer tick for 32.768 KHz
@@ -195,6 +197,12 @@ void PicTimer16bit::sheduleEvents()
         Simulator::self()->addEvent( cycles, this );
     }
     else McuTimer::sheduleEvents();
+}
+
+void PicTimer16bit::sleep( int mode )
+{
+    m_sleepMode = m_mode ? (m_t1sync & m_mode) : 0xFF;
+    McuTimer::sleep( mode );
 }
 
 //--------------------------------------------------

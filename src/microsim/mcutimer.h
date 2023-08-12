@@ -31,6 +31,8 @@ class MAINMODULE_EXPORT McuTimer : public McuPrescaled, public eElement
         virtual void runEvent() override;
         virtual void voltChanged() override;
 
+        virtual void sleep( int mode ) override;
+
         virtual void resetTimer();
 
         virtual void enable( uint8_t en );

@@ -75,10 +75,15 @@ void Interrupt::raise( uint8_t v )
     if( v && !m_raised ){
         m_raised = true;
         m_ram[m_flagReg] |= m_flagMask; // Set Interrupt flag
+
         if( m_enabled )
         {
             m_interrupts->addToPending( this ); // Add to pending interrupts
             if( m_intPin ) m_intPin->setOutState( false );
+
+            if( m_mcu->isSleeping()
+             && m_wakeup & m_mcu->sleepMode() )
+                m_mcu->sleep( false ); // Exit sleep
         }
         if( !m_callBacks.isEmpty() ) { for( McuModule* mod : m_callBacks ) mod->callBack(); }
     }

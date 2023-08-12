@@ -71,7 +71,7 @@
 #include "intmemcore.h"
 
 #include "z80core.h"
-//#include "ula_zx48k.h"
+#include "ula_zx48k.h"
 
 #include "scriptcpu.h"
 #include "scriptport.h"
@@ -1124,7 +1124,8 @@ void McuCreator::createSleep( QDomElement* e )
 {
     QString name = e->attribute( "name" );
     McuSleep* sleep;
-    if     ( m_core == "AVR" ) sleep = new AvrSleep( mcu, name );
+    if     ( m_core == "AVR"  ) sleep = new AvrSleep( mcu, name );
+    else if( m_core == "Pic14") sleep = new PicSleep( mcu, name );
     else return;
 
     mcu->m_modules.emplace_back( sleep );

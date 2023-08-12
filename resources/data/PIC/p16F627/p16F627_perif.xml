@@ -55,6 +55,8 @@
   <wdt name="WDT" configregsA="OPTION"
                   prescalers="1,2,4,8,16,32,64,128"/>
                   
+  <sleep name="SLEEP"/>
+                  
   <configwords name="cfgWord" type="01">
     <word name="COINFIG1" address="0x2007" value="0xFF" />
     <word name="COINFIG2" address="0x2008" value="0xFF" />

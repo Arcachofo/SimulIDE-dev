@@ -22,7 +22,7 @@ struct regSignal_t{
 struct regBits_t{
     uint8_t bit0=0;
     uint8_t mask=0;
-    uint8_t* reg=NULL;
+    uint8_t* reg=0;
     uint16_t regAddr=0;
 };
 

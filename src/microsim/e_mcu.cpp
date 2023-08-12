@@ -14,7 +14,6 @@
 #include "usartmodule.h"
 #include "usartrx.h"
 #include "mcuvref.h"
-#include "mcusleep.h"
 #include "simulator.h"
 #include "basedebugger.h"
 #include "editorwindow.h"
@@ -79,7 +78,7 @@ void eMcu::voltChanged()  // External clock
 
 void eMcu::runEvent()
 {
-    if( m_state == mcuStopped ) return;
+    if( m_state == mcuStopped || m_state == mcuSleeping ) return;
 
     if( m_debugging )
     {
@@ -125,7 +124,7 @@ void eMcu::reset()
     m_cycle = 0;
     cyclesDone = 0;
 
-    for( McuModule* module : m_modules  ) module->reset();
+    for( McuModule* module : m_modules  ) { module->reset(); module->sleep(-1 ); }
     for( IoPort*    ioPort : m_ioPorts  ) ioPort->reset();
     for( McuPort*  mcuPort : m_mcuPorts ) mcuPort->reset();
 
@@ -160,9 +159,15 @@ void eMcu::sleep( bool s )
     if( !m_sleepModule || !m_sleepModule->enabled() ) return;
 
     int mode = -1;
-    if( s )     // Go to Sleep
+    if( s )                       // Go to Sleep
     {
         mode = m_sleepModule->mode();
+        m_state = mcuSleeping;
+        qDebug() << "eMcu::sleep: Sleeping";
+    }else{
+        m_state = mcuRunning;    // Wakeup
+        runEvent();
+        qDebug() << "eMcu::sleep: Wakeup";
     }
 
     for( McuModule* module : m_modules ) module->sleep( mode );
