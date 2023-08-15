@@ -219,6 +219,13 @@ void IoPin::setStateZ( bool z )
         setPinMode( pm );
 }   }
 
+double IoPin::getVoltage()
+{
+    if     ( m_enode )           return m_enode->getVolt();
+    else if( m_pinMode > input ) return m_outVolt;
+    return 0;
+}
+
 void IoPin::setPullup( bool up )
 {
     if( up ) m_vddAdmEx = 1/1e5; // Activate pullup

@@ -61,6 +61,7 @@ class MAINMODULE_EXPORT IoPin : public Pin, public eElement
         virtual void setOutState( bool high );
         virtual void toggleOutState( uint64_t time=0 ) { scheduleState( !m_outState, time ); }
 
+        virtual double getVoltage() override;
         inline void setVoltage( double volt )
         {
             if( volt == m_outVolt ) return;
