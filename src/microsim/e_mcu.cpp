@@ -60,11 +60,17 @@ void eMcu::stamp()
 {
     reset();
     m_state = mcuRunning;
+    m_clkState = false;
 }
 
 void eMcu::voltChanged()  // External clock
 {
     if( m_state == mcuStopped ) return;
+
+    bool clkState = m_clkPin->getInpState();
+    if( m_clkState == clkState ) return;
+    m_clkState = clkState;
+
     if( m_debugging )
     {
         if( cyclesDone > 1 ) cyclesDone -= 1;
@@ -72,7 +78,7 @@ void eMcu::voltChanged()  // External clock
     }
     else if( m_state >= mcuRunning /*&& m_freq > 0*/ )
     {
-        m_cpu->extClock( m_clkPin->getInpState() );
+        m_cpu->extClock( clkState );
     }
 }
 

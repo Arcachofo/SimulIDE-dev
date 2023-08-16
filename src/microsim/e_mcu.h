@@ -145,6 +145,8 @@ class MAINMODULE_EXPORT eMcu : public DataSpace, public eIou
         double m_cPerInst;       // Clock ticks per Instruction Cycle
         uint64_t m_psCycle;      // picoseconds per Instruction Cycle
 
+        bool m_clkState;
+
         // Debugger:
         BaseDebugger* m_debugger;
         bool          m_debugging;
