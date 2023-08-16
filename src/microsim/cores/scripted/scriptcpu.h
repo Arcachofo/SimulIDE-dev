@@ -78,6 +78,7 @@ class MAINMODULE_EXPORT ScriptCpu : public ScriptModule, public McuCpu
         asIScriptFunction* m_updateStep;
         asIScriptFunction* m_runEvent;
         asIScriptFunction* m_extClock;
+        asIScriptFunction* m_extClockF;
         asIScriptFunction* m_INTERRUPT;
 
         asIScriptFunction* m_getCpuReg;
@@ -87,12 +88,14 @@ class MAINMODULE_EXPORT ScriptCpu : public ScriptModule, public McuCpu
         asIScriptFunction* m_setLinkedVal;
         asIScriptFunction* m_setLinkedStr;
 
+        asIScriptContext* m_vChangedCtx;
+        asIScriptContext* m_runEventCtx;
+        asIScriptContext* m_extClockCtx;
+
         std::vector<ComProperty*> m_scriptProps;
         QHash<QString, QString> m_propFunctions;
         QHash<QString, asIScriptFunction*> m_propGetters;
         QHash<QString, asIScriptFunction*> m_propSetters;
-
-        //asIScriptContext* m_extClockCtx;
 
         QString m_value;
 

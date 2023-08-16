@@ -31,6 +31,7 @@ ScriptCpu::ScriptCpu( eMcu* mcu )
     m_voltChanged = NULL;
     m_runEvent    = NULL;
     m_extClock    = NULL;
+    m_extClockF   = NULL;
     m_INTERRUPT   = NULL;
     m_getCpuReg   = NULL;
     m_getStrReg   = NULL;
@@ -136,7 +137,10 @@ ScriptCpu::ScriptCpu( eMcu* mcu )
                                    , asMETHODPR( ScriptCpu, setLinkedString, (int,const string,int), void)
                                    , asCALL_THISCALL );
 }
-ScriptCpu::~ScriptCpu() {}
+ScriptCpu::~ScriptCpu()
+{
+    if( m_vChangedCtx ) m_vChangedCtx->Release();
+}
 
 void ScriptCpu::setPeriferals( std::vector<ScriptPerif*> p )
 {
@@ -163,11 +167,16 @@ int ScriptCpu::compileScript()
     m_runEvent    = m_aEngine->GetModule(0)->GetFunctionByDecl("void runEvent()");
     m_INTERRUPT   = m_aEngine->GetModule(0)->GetFunctionByDecl("void INTERRUPT( uint vector )");
     m_extClock    = m_aEngine->GetModule(0)->GetFunctionByDecl("void extClock( bool clkState )");
+    m_extClockF   = m_aEngine->GetModule(0)->GetFunctionByDecl("void extClock()");
     m_getCpuReg   = m_aEngine->GetModule(0)->GetFunctionByDecl("int getCpuReg( string reg )");
     m_getStrReg   = m_aEngine->GetModule(0)->GetFunctionByDecl("string getStrReg( string reg )");
     m_command     = m_aEngine->GetModule(0)->GetFunctionByDecl("void command( string c )");
     m_setLinkedVal= m_aEngine->GetModule(0)->GetFunctionByDecl("void setLinkedValue( double v, int i )");
     m_setLinkedStr= m_aEngine->GetModule(0)->GetFunctionByDecl("void setLinkedString( string str, int i )");
+
+    m_vChangedCtx = m_voltChanged ? m_aEngine->CreateContext() : NULL;
+    m_runEventCtx = m_runEvent    ? m_aEngine->CreateContext() : NULL;
+    m_extClockCtx = m_extClockF   ? m_aEngine->CreateContext() : NULL;
 
     for( ComProperty* p : m_scriptProps ) // Get properties getters and setters from script
     {
@@ -220,19 +229,17 @@ void ScriptCpu::reset()
 void ScriptCpu::voltChanged()
 {
     if( !m_voltChanged ) return;
-    //callFunction( m_voltChanged );
 
-    m_status = m_context->executeJit0( m_voltChanged );
-    if( m_status != asEXECUTION_FINISHED ) printError();
+    m_status = m_vChangedCtx->executeJit0( m_voltChanged );
+    if( m_status != asEXECUTION_FINISHED ) printError( m_vChangedCtx );
 }
 
 void ScriptCpu::runEvent()
 {
     if( !m_runEvent ) return;
-    //callFunction( m_runEvent );
 
-    m_status = m_context->executeJit0( m_runEvent );
-    if( m_status != asEXECUTION_FINISHED ) printError();
+    m_status = m_runEventCtx->executeJit0( m_runEvent );
+    if( m_status != asEXECUTION_FINISHED ) printError( m_runEventCtx );
 }
 
 void ScriptCpu::INTERRUPT( uint vector )
@@ -245,7 +252,12 @@ void ScriptCpu::INTERRUPT( uint vector )
 void ScriptCpu::runStep()     { ; }
 void ScriptCpu::extClock( bool clkState )
 {
-    if( !m_extClock) return;
+    if( m_extClockF )
+    {
+        m_status = m_extClockCtx->executeJit0( m_extClockF );
+        if( m_status != asEXECUTION_FINISHED ) printError( m_extClockCtx );
+    }
+    if( !m_extClock ) return;
 
     prepare( m_extClock );
     m_context->SetArgByte( 0, clkState );

@@ -32,7 +32,7 @@ class MAINMODULE_EXPORT ScriptModule : public eElement
         void execute();
 
     protected:
-        void printError();
+        void printError( asIScriptContext* context );
 
         int m_status;
 

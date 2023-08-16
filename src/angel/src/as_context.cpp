@@ -331,221 +331,6 @@ asIScriptFunction *asCContext::GetSystemFunction()
 	return m_callingSystemFunction;
 }
 
-// interface
-void asCContext::prepareJit0( asIScriptFunction *func )
-{
-    m_initialFunction->Release();
-    m_regs.stackPointer = m_originalStackPointer; // Reset stack pointer
-
-    // We trust the application not to pass anything else but a asCScriptFunction
-    m_initialFunction = reinterpret_cast<asCScriptFunction *>(func);
-    m_initialFunction->AddRef();
-    m_currentFunction = m_initialFunction;
-
-    // TODO: runtime optimize: GetSpaceNeededForArguments() should be precomputed
-    m_argumentsSize = m_currentFunction->GetSpaceNeededForArguments() + (m_currentFunction->objectType ? AS_PTR_SIZE : 0);
-
-    // Reserve space for the arguments and return value
-    if( m_currentFunction->DoesReturnOnStack() )
-    {
-        m_returnValueSize = m_currentFunction->returnType.GetSizeInMemoryDWords();
-        m_argumentsSize += AS_PTR_SIZE;
-    }
-    else m_returnValueSize = 0;
-
-    // Determine the minimum stack size needed
-    int stackSize = m_argumentsSize + m_returnValueSize;
-    if( m_currentFunction->scriptData )
-        stackSize += m_currentFunction->scriptData->stackNeeded;
-
-    // Make sure there is enough space on the stack for the arguments and return value
-    if( !ReserveStackSpace(stackSize) ) return; // asOUT_OF_MEMORY;
-
-    // Set up the call stack too
-    if (m_callStack.GetCapacity() < m_engine->ep.initCallStackSize)
-        m_callStack.AllocateNoConstruct(m_engine->ep.initCallStackSize * CALLSTACK_FRAME_SIZE, true);
-/// Moved
-    // Reserve space for the arguments and return value
-    m_regs.stackFramePointer = m_regs.stackPointer - m_argumentsSize - m_returnValueSize;
-    m_originalStackPointer   = m_regs.stackPointer;
-    m_regs.stackPointer      = m_regs.stackFramePointer;
-
-    // Set arguments to 0
-    memset( m_regs.stackPointer, 0, 4*m_argumentsSize );
-
-    if( m_returnValueSize )
-    {
-        // Set the address of the location where the return value should be put
-        asDWORD *ptr = m_regs.stackFramePointer;
-        if( m_currentFunction->objectType ) ptr += AS_PTR_SIZE;
-
-        *(void**)ptr = (void*)(m_regs.stackFramePointer + m_argumentsSize);
-    }
-    // Reset state
-    // Most of the time the previous state will be asEXECUTION_FINISHED, in which case the values are already initialized
-    if( m_status != asEXECUTION_FINISHED )
-    {
-        m_exceptionLine           = -1;
-        m_exceptionFunction       = 0;
-        m_doAbort                 = false;
-        m_doSuspend               = false;
-        m_regs.doProcessSuspend   = m_lineCallback;
-        m_externalSuspendRequest  = false;
-    }
-
-    //return asSUCCESS;
-}
-
-int asCContext::Prepare( asIScriptFunction *func )
-{
-    /// Already done
-    /*if( func == 0 )
-	{
-		asCString str;
-		str.Format(TXT_FAILED_IN_FUNC_s_WITH_s_s_d, "Prepare", "null", errorNames[-asNO_FUNCTION], asNO_FUNCTION);
-		m_engine->WriteMessage("", 0, 0, asMSGTYPE_ERROR, str.AddressOf());
-		return asNO_FUNCTION;
-    }*/
-
-	if( m_status == asEXECUTION_ACTIVE || m_status == asEXECUTION_SUSPENDED )
-	{
-		asCString str;
-		str.Format(TXT_FAILED_IN_FUNC_s_WITH_s_s_d, "Prepare", func->GetDeclaration(true, true), errorNames[-asCONTEXT_ACTIVE], asCONTEXT_ACTIVE);
-		m_engine->WriteMessage("", 0, 0, asMSGTYPE_ERROR, str.AddressOf());
-		return asCONTEXT_ACTIVE;
-	}
-
-	// Clean the stack if not done before
-	if( m_status != asEXECUTION_FINISHED && m_status != asEXECUTION_UNINITIALIZED )
-		CleanStack();
-
-    CleanReturnObject(); // Release the returned object (if any)
-
-	// Release the object if it is a script object
-	if( m_initialFunction && m_initialFunction->objectType && (m_initialFunction->objectType->flags & asOBJ_SCRIPT_OBJECT) )
-	{
-		asCScriptObject *obj = *(asCScriptObject**)&m_regs.stackFramePointer[0];
-        if( obj ) obj->Release();
-
-		*(asPWORD*)&m_regs.stackFramePointer[0] = 0;
-	}
-
-    if( m_initialFunction && m_initialFunction == func ) // If the same function is executed again, we can skip a lot of the setup
-    {
-		m_currentFunction = m_initialFunction;
-
-        m_regs.stackPointer = m_originalStackPointer; // Reset stack pointer
-
-		// Make sure the stack pointer is pointing to the original position,
-		// otherwise something is wrong with the way it is being updated
-        asASSERT( /*IsNested() ||*/ m_stackIndex > 0 || (m_regs.stackPointer == m_stackBlocks[0] + m_stackBlockSize) );
-	}
-    else{
-        /// asASSERT( m_engine );
-
-		// Make sure the function is from the same engine as the context to avoid mixups
-        /// We only have 1 engine
-        /*if( m_engine != func->GetEngine() )
-		{
-			asCString str;
-			str.Format(TXT_FAILED_IN_FUNC_s_WITH_s_s_d, "Prepare", func->GetDeclaration(true, true), errorNames[-asINVALID_ARG], asINVALID_ARG);
-			m_engine->WriteMessage("", 0, 0, asMSGTYPE_ERROR, str.AddressOf());
-			return asINVALID_ARG;
-        }*/
-
-		if( m_initialFunction )
-		{
-			m_initialFunction->Release();
-
-			// Reset stack pointer
-			m_regs.stackPointer = m_originalStackPointer;
-
-			// Make sure the stack pointer is pointing to the original position,
-			// otherwise something is wrong with the way it is being updated
-            asASSERT( /*IsNested() ||*/ m_stackIndex > 0 || (m_regs.stackPointer == m_stackBlocks[0] + m_stackBlockSize) );
-		}
-
-		// We trust the application not to pass anything else but a asCScriptFunction
-		m_initialFunction = reinterpret_cast<asCScriptFunction *>(func);
-		m_initialFunction->AddRef();
-		m_currentFunction = m_initialFunction;
-
-		// TODO: runtime optimize: GetSpaceNeededForArguments() should be precomputed
-		m_argumentsSize = m_currentFunction->GetSpaceNeededForArguments() + (m_currentFunction->objectType ? AS_PTR_SIZE : 0);
-
-		// Reserve space for the arguments and return value
-		if( m_currentFunction->DoesReturnOnStack() )
-		{
-			m_returnValueSize = m_currentFunction->returnType.GetSizeInMemoryDWords();
-			m_argumentsSize += AS_PTR_SIZE;
-		}
-        else m_returnValueSize = 0;
-
-		// Determine the minimum stack size needed
-		int stackSize = m_argumentsSize + m_returnValueSize;
-		if( m_currentFunction->scriptData )
-			stackSize += m_currentFunction->scriptData->stackNeeded;
-
-		// Make sure there is enough space on the stack for the arguments and return value
-        if( !ReserveStackSpace(stackSize) ) return asOUT_OF_MEMORY;
-
-		// Set up the call stack too
-		if (m_callStack.GetCapacity() < m_engine->ep.initCallStackSize)
-            m_callStack.AllocateNoConstruct(m_engine->ep.initCallStackSize * CALLSTACK_FRAME_SIZE, true);
-/// Moved
-        // Reserve space for the arguments and return value
-        m_regs.stackFramePointer = m_regs.stackPointer - m_argumentsSize - m_returnValueSize;
-        m_originalStackPointer   = m_regs.stackPointer;
-        m_regs.stackPointer      = m_regs.stackFramePointer;
-
-        // Set arguments to 0
-        memset(m_regs.stackPointer, 0, 4*m_argumentsSize);
-
-        if( m_returnValueSize )
-        {
-            // Set the address of the location where the return value should be put
-            asDWORD *ptr = m_regs.stackFramePointer;
-            if( m_currentFunction->objectType )
-                ptr += AS_PTR_SIZE;
-
-            *(void**)ptr = (void*)(m_regs.stackFramePointer + m_argumentsSize);
-        }
-	}
-	// Reset state
-	// Most of the time the previous state will be asEXECUTION_FINISHED, in which case the values are already initialized
-	if( m_status != asEXECUTION_FINISHED )
-	{
-		m_exceptionLine           = -1;
-		m_exceptionFunction       = 0;
-		m_doAbort                 = false;
-		m_doSuspend               = false;
-		m_regs.doProcessSuspend   = m_lineCallback;
-		m_externalSuspendRequest  = false;
-	}
-	m_status = asEXECUTION_PREPARED;
-	m_regs.programPointer = 0;
-/*
-	// Reserve space for the arguments and return value
-	m_regs.stackFramePointer = m_regs.stackPointer - m_argumentsSize - m_returnValueSize;
-	m_originalStackPointer   = m_regs.stackPointer;
-	m_regs.stackPointer      = m_regs.stackFramePointer;
-
-	// Set arguments to 0
-	memset(m_regs.stackPointer, 0, 4*m_argumentsSize);
-
-	if( m_returnValueSize )
-	{
-		// Set the address of the location where the return value should be put
-		asDWORD *ptr = m_regs.stackFramePointer;
-		if( m_currentFunction->objectType )
-			ptr += AS_PTR_SIZE;
-
-		*(void**)ptr = (void*)(m_regs.stackFramePointer + m_argumentsSize);
-	}
-*/
-	return asSUCCESS;
-}
-
 // Free all resources
 int asCContext::Unprepare()
 {
@@ -1236,6 +1021,197 @@ int asCContext::Suspend()
 }
 
 // interface
+void asCContext::prepareJit0( asIScriptFunction *func )
+{
+    if( m_initialFunction ) /// Remove if contex menu per function
+    {
+        m_initialFunction->Release();
+        m_regs.stackPointer = m_originalStackPointer; // Reset stack pointer
+    }
+
+    // We trust the application not to pass anything else but a asCScriptFunction
+    m_initialFunction = reinterpret_cast<asCScriptFunction *>(func);
+    m_initialFunction->AddRef();
+    m_currentFunction = m_initialFunction;
+
+    m_argumentsSize = 0; //m_currentFunction->GetSpaceNeededForArguments() + (m_currentFunction->objectType ? AS_PTR_SIZE : 0);
+    m_returnValueSize = 0;
+
+    // Determine the minimum stack size needed
+    int stackSize = 0;
+    if( m_currentFunction->scriptData )
+        stackSize += m_currentFunction->scriptData->stackNeeded;
+
+    // Make sure there is enough space on the stack for the arguments and return value
+    if( !ReserveStackSpace( stackSize ) ) return; // asOUT_OF_MEMORY;
+
+    // Set up the call stack too
+    if( m_callStack.GetCapacity() < m_engine->ep.initCallStackSize )
+        m_callStack.AllocateNoConstruct( m_engine->ep.initCallStackSize * CALLSTACK_FRAME_SIZE, true );
+
+    // Reserve space for the arguments and return value
+    m_regs.stackFramePointer = m_regs.stackPointer;
+    m_originalStackPointer   = m_regs.stackPointer;
+    m_regs.stackPointer      = m_regs.stackFramePointer;
+
+    // Set arguments to 0
+    memset( m_regs.stackPointer, 0, 4*m_argumentsSize );
+
+    // Reset state
+    // Most of the time the previous state will be asEXECUTION_FINISHED, in which case the values are already initialized
+    if( m_status != asEXECUTION_FINISHED )
+    {
+        m_exceptionLine           = -1;
+        m_exceptionFunction       = 0;
+        m_doAbort                 = false;
+        m_doSuspend               = false;
+        m_regs.doProcessSuspend   = m_lineCallback;
+        m_externalSuspendRequest  = false;
+    }
+    m_status = asEXECUTION_PREPARED;
+    m_regs.programPointer = 0;
+
+    //return asSUCCESS;
+}
+
+int asCContext::Prepare( asIScriptFunction *func )
+{
+    /// Already done
+    /*if( func == 0 )
+    {
+        asCString str;
+        str.Format(TXT_FAILED_IN_FUNC_s_WITH_s_s_d, "Prepare", "null", errorNames[-asNO_FUNCTION], asNO_FUNCTION);
+        m_engine->WriteMessage("", 0, 0, asMSGTYPE_ERROR, str.AddressOf());
+        return asNO_FUNCTION;
+    }*/
+
+    if( m_status == asEXECUTION_ACTIVE || m_status == asEXECUTION_SUSPENDED )
+    {
+        asCString str;
+        str.Format(TXT_FAILED_IN_FUNC_s_WITH_s_s_d, "Prepare", func->GetDeclaration(true, true), errorNames[-asCONTEXT_ACTIVE], asCONTEXT_ACTIVE);
+        m_engine->WriteMessage("", 0, 0, asMSGTYPE_ERROR, str.AddressOf());
+        return asCONTEXT_ACTIVE;
+    }
+
+    // Clean the stack if not done before
+    if( m_status != asEXECUTION_FINISHED && m_status != asEXECUTION_UNINITIALIZED )
+        CleanStack();
+
+    CleanReturnObject(); // Release the returned object (if any)
+
+    // Release the object if it is a script object
+    if( m_initialFunction && m_initialFunction->objectType && (m_initialFunction->objectType->flags & asOBJ_SCRIPT_OBJECT) )
+    {
+        asCScriptObject *obj = *(asCScriptObject**)&m_regs.stackFramePointer[0];
+        if( obj ) obj->Release();
+
+        *(asPWORD*)&m_regs.stackFramePointer[0] = 0;
+    }
+
+    if( m_initialFunction && m_initialFunction == func ) // If the same function is executed again, we can skip a lot of the setup
+    {
+        m_currentFunction = m_initialFunction;
+
+        m_regs.stackPointer = m_originalStackPointer; // Reset stack pointer
+
+        // Make sure the stack pointer is pointing to the original position,
+        // otherwise something is wrong with the way it is being updated
+        asASSERT( /*IsNested() ||*/ m_stackIndex > 0 || (m_regs.stackPointer == m_stackBlocks[0] + m_stackBlockSize) );
+    }
+    else{
+        if( m_initialFunction )
+        {
+            m_initialFunction->Release();
+
+            m_regs.stackPointer = m_originalStackPointer; // Reset stack pointer
+
+            // Make sure the stack pointer is pointing to the original position,
+            // otherwise something is wrong with the way it is being updated
+            asASSERT( /*IsNested() ||*/ m_stackIndex > 0 || (m_regs.stackPointer == m_stackBlocks[0] + m_stackBlockSize) );
+        }
+
+        // We trust the application not to pass anything else but a asCScriptFunction
+        m_initialFunction = reinterpret_cast<asCScriptFunction*>(func);
+        m_initialFunction->AddRef();
+        m_currentFunction = m_initialFunction;
+
+        // TODO: runtime optimize: GetSpaceNeededForArguments() should be precomputed
+        m_argumentsSize = m_currentFunction->GetSpaceNeededForArguments() + (m_currentFunction->objectType ? AS_PTR_SIZE : 0);
+
+        // Reserve space for the arguments and return value
+        if( m_currentFunction->DoesReturnOnStack() )
+        {
+            m_returnValueSize = m_currentFunction->returnType.GetSizeInMemoryDWords();
+            m_argumentsSize += AS_PTR_SIZE;
+        }
+        else m_returnValueSize = 0;
+
+        // Determine the minimum stack size needed
+        int stackSize = m_argumentsSize + m_returnValueSize;
+        if( m_currentFunction->scriptData )
+            stackSize += m_currentFunction->scriptData->stackNeeded;
+
+        // Make sure there is enough space on the stack for the arguments and return value
+        if( !ReserveStackSpace(stackSize) ) return asOUT_OF_MEMORY;
+
+        // Set up the call stack too
+        if (m_callStack.GetCapacity() < m_engine->ep.initCallStackSize)
+            m_callStack.AllocateNoConstruct(m_engine->ep.initCallStackSize * CALLSTACK_FRAME_SIZE, true);
+/// Moved
+        // Reserve space for the arguments and return value
+        m_regs.stackFramePointer = m_regs.stackPointer - m_argumentsSize - m_returnValueSize;
+        m_originalStackPointer   = m_regs.stackPointer;
+        m_regs.stackPointer      = m_regs.stackFramePointer;
+
+        // Set arguments to 0
+        memset(m_regs.stackPointer, 0, 4*m_argumentsSize);
+
+        if( m_returnValueSize )
+        {
+            // Set the address of the location where the return value should be put
+            asDWORD *ptr = m_regs.stackFramePointer;
+            if( m_currentFunction->objectType )
+                ptr += AS_PTR_SIZE;
+
+            *(void**)ptr = (void*)(m_regs.stackFramePointer + m_argumentsSize);
+        }
+    }
+    // Reset state
+    // Most of the time the previous state will be asEXECUTION_FINISHED, in which case the values are already initialized
+    if( m_status != asEXECUTION_FINISHED )
+    {
+        m_exceptionLine           = -1;
+        m_exceptionFunction       = 0;
+        m_doAbort                 = false;
+        m_doSuspend               = false;
+        m_regs.doProcessSuspend   = m_lineCallback;
+        m_externalSuspendRequest  = false;
+    }
+    m_status = asEXECUTION_PREPARED;
+    m_regs.programPointer = 0;
+/*
+    // Reserve space for the arguments and return value
+    m_regs.stackFramePointer = m_regs.stackPointer - m_argumentsSize - m_returnValueSize;
+    m_originalStackPointer   = m_regs.stackPointer;
+    m_regs.stackPointer      = m_regs.stackFramePointer;
+
+    // Set arguments to 0
+    memset(m_regs.stackPointer, 0, 4*m_argumentsSize);
+
+    if( m_returnValueSize )
+    {
+        // Set the address of the location where the return value should be put
+        asDWORD *ptr = m_regs.stackFramePointer;
+        if( m_currentFunction->objectType )
+            ptr += AS_PTR_SIZE;
+
+        *(void**)ptr = (void*)(m_regs.stackFramePointer + m_argumentsSize);
+    }
+*/
+    return asSUCCESS;
+}
+
+// interface
 int asCContext::executeJit0( asIScriptFunction *func )
 {
     if( m_initialFunction == func ) // If the same function is executed again, we can skip a lot of the setup
@@ -1249,7 +1225,10 @@ int asCContext::executeJit0( asIScriptFunction *func )
     m_regs.programPointer = m_currentFunction->scriptData->byteCode.AddressOf();
 
     // Set up the internal registers for executing the script function
-    /// PrepareScriptFunction(); // Seeems to do nothing
+    ///PrepareScriptFunction(); // Seeems to do nothing
+    /// This is the meaniful part:
+    uint vs = m_currentFunction->scriptData->variableSpace;
+    m_regs.stackPointer -= vs; //m_currentFunction->scriptData->variableSpace;
 
     //while( m_status == asEXECUTION_ACTIVE )
     //    ExecuteNextJit();
@@ -1272,7 +1251,7 @@ int asCContext::Execute()
 {
     /// asASSERT( m_engine != 0 );
 
-	if( m_status != asEXECUTION_SUSPENDED && m_status != asEXECUTION_PREPARED )
+    if( m_status != asEXECUTION_SUSPENDED && m_status != asEXECUTION_PREPARED )
 	{
 		asCString str;
 		str.Format(TXT_FAILED_IN_FUNC_s_s_d, "Execute", errorNames[-asCONTEXT_NOT_PREPARED], asCONTEXT_NOT_PREPARED);
@@ -1755,8 +1734,8 @@ void asCContext::PrepareScriptFunction()
 
 	// Make sure there is space on the stack to execute the function
 	asDWORD *oldStackPointer = m_regs.stackPointer;
-	if( !ReserveStackSpace(m_currentFunction->scriptData->stackNeeded) )
-		return;
+    if( !ReserveStackSpace(m_currentFunction->scriptData->stackNeeded) )
+        return;
 
 	// If a new stack block was allocated then we'll need to move
 	// over the function arguments to the new block.

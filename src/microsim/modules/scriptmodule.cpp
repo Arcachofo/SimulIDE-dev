@@ -128,10 +128,10 @@ void ScriptModule::callFunction( asIScriptFunction* func )
 void ScriptModule::execute()
 {
     m_status = m_context->Execute();
-    if( m_status != asEXECUTION_FINISHED ) printError();
+    if( m_status != asEXECUTION_FINISHED ) printError( m_context );
 }
 
-void ScriptModule::printError() // The execution didn't finish as we had planned. Determine why.
+void ScriptModule::printError( asIScriptContext* context ) // The execution didn't finish as we had planned. Determine why.
 {
     if( m_status == asEXECUTION_ABORTED )
         qDebug() << "The script was aborted before it could finish. Probably it timed out.";
@@ -144,8 +144,8 @@ void ScriptModule::printError() // The execution didn't finish as we had planned
         qDebug() << "func:" << func->GetDeclaration();
         qDebug() << "modl:" << func->GetModuleName();
         qDebug() << "sect:" << func->GetScriptSectionName();
-        qDebug() << "line:" << m_context->GetExceptionLineNumber();
-        qDebug() << "desc:" << m_context->GetExceptionString();
+        qDebug() << "line:" << context->GetExceptionLineNumber();
+        qDebug() << "desc:" << context->GetExceptionString();
     }
     else qDebug() << "The script ended for some unforeseen reason:" << m_status;
 }
