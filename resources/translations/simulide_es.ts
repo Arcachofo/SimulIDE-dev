@@ -229,7 +229,7 @@
     </message>
     <message>
         <source>Slope Steps</source>
-        <translation>Pasos de Pendiente</translation>
+        <translation type="unfinished">Pasos de Flanco</translation>
     </message>
     <message>
         <source>Reactive</source>
@@ -3453,11 +3453,11 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Load EEPROM data from file</source>
-        <translation>Cargar datos EEPROM desde arcchivo</translation>
+        <translation type="unfinished">Cargar datos EEPROM desde archivo</translation>
     </message>
     <message>
         <source>Save EEPROM data to file</source>
-        <translation>Guardar datos EEPROM a arcchivo</translation>
+        <translation type="unfinished">Guardar datos EEPROM a archivo</translation>
     </message>
     <message>
         <source>Open Mcu Monitor.</source>
