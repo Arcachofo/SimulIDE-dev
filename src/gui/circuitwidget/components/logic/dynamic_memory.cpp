@@ -108,8 +108,8 @@ void DynamicMemory::stamp()                   // Called at Simulation Start
 void DynamicMemory::updateStep()
 {
     if( m_memTable ) m_memTable->updateTable( &m_ram );
-    if ( m_refreshError )
-        m_error = true;
+    //if ( m_refreshError )
+    //    m_error = true;
 }
 
 void DynamicMemory::voltChanged()        // Some Pin Changed State, Manage it

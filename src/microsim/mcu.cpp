@@ -53,6 +53,7 @@ LibraryItem* Mcu::libraryItem()
 
 Component* Mcu::construct( QObject* parent, QString type, QString id )
 {
+    m_error = 0;
     Mcu* mcu = new Mcu( parent, type, id );
     if( !m_error) m_error = McuCreator::createMcu( mcu, id );
     if( !m_error) mcu->setLogicSymbol( false );

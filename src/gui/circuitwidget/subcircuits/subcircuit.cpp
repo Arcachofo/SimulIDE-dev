@@ -123,6 +123,7 @@ Component* SubCircuit::construct( QObject* parent, QString type, QString id )
     if( m_error != 0 )
     {
         subcircuit->remove();
+        m_error = 0;
         return NULL;
     }else{
         Circuit::self()->m_createSubc = true;
@@ -140,6 +141,7 @@ Component* SubCircuit::construct( QObject* parent, QString type, QString id )
     {
         Circuit::self()->compList()->removeOne( subcircuit );
         subcircuit->deleteLater();
+        m_error = 0;
         return NULL;
     }
     return subcircuit;
