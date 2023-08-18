@@ -65,8 +65,8 @@
     <pin type=""    xpos="56"   ypos="-8"   angle="90"  length="8"  id="PF2"  label="F2"  />
     <pin type=""    xpos="48"   ypos="-8"   angle="90"  length="8"  id="PF1"  label="F1"  />
     <pin type=""    xpos="40"   ypos="-8"   angle="90"  length="8"  id="PF0"  label="F0"  />
-    <pin type=""    xpos="32"   ypos="-8"   angle="90"  length="8"  id="AREF" label="Aref"/>
+    <pin type=""    xpos="32"   ypos="-8"   angle="90"  length="8"  id="PV1"  label="Aref"/>
     <pin type="nc"  xpos="24"   ypos="-8"   angle="90"  length="8"  id="GND3" label="Gnd" />
-    <pin type=""    xpos="16"   ypos="-8"   angle="90"  length="8"  id="AVCC" label="Avcc"/>
+    <pin type=""    xpos="16"   ypos="-8"   angle="90"  length="8"  id="PV0"  label="Avcc"/>
     
 </packageB>
