@@ -85,7 +85,7 @@
                     addressreg="EEARL,EEARH" 
                     interrupt="EEPR" />
 
-  <comp name="COMP" configregsA="ACSR" configbitsB="AIN0D,AIN1D"
+  <comp name="COMP" configregsA="ACSR"
                     interrupt="ACOMP" 
                     pins="PORTB2,PORTB3" />
 </parts>
