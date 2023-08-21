@@ -30,8 +30,8 @@ void CircMatrix::createMatrix( QList<eNode*> &eNodeList )
     m_circMatrix.resize( m_numEnodes , d_vector_t( m_numEnodes , 0 ) );
     m_coefVect.resize( m_numEnodes , 0 );
 
-    m_admitChanged = false;
-    m_currChanged  = false;
+    //m_admitChanged = false;
+    //m_currChanged  = false;
 
     qDebug() <<"\n  Initializing Matrix: "<< m_numEnodes << " eNodes";
     analyze();
@@ -44,10 +44,10 @@ void CircMatrix::addConnections( int enodNum, QList<int>* nodeGroup, QList<int>*
 
     eNode* enod = m_eNodeList->at( enodNum-1 );
     enod->setSingle( false );
-    
+
     QList<int> cons = enod->getConnections();
-    
-    for( int nodeNum : cons ) 
+
+    for( int nodeNum : cons )
     {
         if( nodeNum == 0 ) continue;
         if( !nodeGroup->contains( nodeNum ) ) addConnections( nodeNum, nodeGroup, allNodes );
@@ -99,7 +99,9 @@ void CircMatrix::analyze()
                     nx++;
                 }
                 b[ny] = &(m_coefVect[y]);
-                eNodeActive.append( m_eNodeList->at(y) );
+                eNode* node = m_eNodeList->at(y);
+                node->setNodeGroup( group );
+                eNodeActive.append( node );
                 ny++;
             }
             m_aList.append( a );
@@ -109,24 +111,48 @@ void CircMatrix::analyze()
             group++;
         }
     }
+    m_admitChanged.resize( group, true );
+    m_currChanged.resize(  group, true );
+
     qDebug() <<"CircMatrix::solveMatrix"<<group<<"Circuits";
     qDebug() <<"CircMatrix::solveMatrix"<<singleNode<<"Single Nodes\n";
 }
 
 bool CircMatrix::solveMatrix()
 {
-    if( !m_admitChanged && !m_currChanged ) return true;
-
     for( int i=0; i<m_bList.size(); ++i )
     {
+        if( !m_admitChanged[i] && !m_currChanged[i] ) continue;
+
         m_eNodeActive = &(m_eNodeActList[i]);
         int n = m_eNodeActive->size();
 
-        if( m_admitChanged ) factorMatrix( n, i );
-        if( !luSolve( n, i ) ) return false;
+        if( n == 2 )
+        {
+            double a00 = *m_aList[i][0][0];
+            double a01 = *m_aList[i][0][1];
+            double a10 = *m_aList[i][1][0];
+            double a11 = *m_aList[i][1][1];
+
+            double det = ( a00 * a11 ) - ( a01 * a10 );
+            if( det == 0 ) return false;
+
+            double bi0 = *m_bList[i][0];
+            double bi1 = *m_bList[i][1];
+
+            double b0 = ( bi0 * a11 ) - ( a01 * bi1 );
+            double b1 = ( a00 * bi1 ) - ( bi0 * a10 );
+
+            m_eNodeActive->at(0)->setVolt( b0 / det );
+            m_eNodeActive->at(1)->setVolt( b1 / det );
+        }
+        else{
+            if( m_admitChanged[i] ) factorMatrix( n, i );
+            if( !luSolve( n, i )  ) return false;
+        }
+        m_currChanged[i]  = false;
+        m_admitChanged[i] = false;
     }
-    m_currChanged  = false;
-    m_admitChanged = false;
     return true;
 }
 
@@ -198,7 +224,7 @@ bool CircMatrix::luSolve( int n, int group ) // Solves the set of n linear equat
         b[i] = tot;
     }
     bool isOk = true;
-    
+
     for( i=n-1; i>=0; --i )
     {
         tot = b[i];

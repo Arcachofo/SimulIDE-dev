@@ -41,6 +41,8 @@ class MAINMODULE_EXPORT eNode
         int  getNodeNumber() { return m_nodeNum; }
         void setNodeNumber( int n ) { m_nodeNum = n; }
 
+        void setNodeGroup( int n ){ m_nodeGroup = n; }
+
         double getVolt() { return m_volt; }
         void   setVolt( double volt );
         bool voltchanged() { return m_voltChanged; }
@@ -106,6 +108,7 @@ class MAINMODULE_EXPORT eNode
         double m_volt;
 
         int m_nodeNum;
+        int m_nodeGroup;
 
         bool m_currChanged;
         bool m_admitChanged;

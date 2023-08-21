@@ -184,7 +184,7 @@ void Simulator::solveCircuit()
                 m_nonLinear = m_nonLinear->nextChanged;
             }
             if( m_maxNlstp && (m_NLstep++ >= m_maxNlstp) ) { m_warning = 1; return; } // Max iterations reached
-            if( m_state < SIM_RUNNING ){ m_converged = false; break;}    // Loop broken without converging
+            if( m_state < SIM_RUNNING ){ m_converged = false; break; }    // Loop broken without converging
             if( m_changedNode ) solveMatrix();
         }
         if( !m_converged ) return; // Don't run linear until nonliear converged (Loop broken)

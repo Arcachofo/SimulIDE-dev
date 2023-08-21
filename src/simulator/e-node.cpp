@@ -40,6 +40,7 @@ void eNode::initialize()
     m_changed      = false;
     m_currChanged  = false;
     m_admitChanged = false;
+    m_nodeGroup = -1;
     nextCH = NULL;
     m_volt = 0;
 
@@ -200,7 +201,7 @@ void eNode::stampMatrix()
                 m_totalAdmit += adm;    // Calculate total admitance
                 conn = conn->next;
             }
-            CircMatrix::self()->stampMatrix( m_nodeNum, m_nodeNum, m_totalAdmit ); // Stamp diagonal
+            CircMatrix::self()->stampDiagonal( m_nodeGroup, m_nodeNum, m_totalAdmit ); // Stamp diagonal
 
             conn = m_firstSingAdm;      // Single admitance values
             while( conn ){
@@ -232,7 +233,7 @@ void eNode::stampMatrix()
         Connection* conn = m_firstCurrent;
         while( conn ){ m_totalCurr += conn->value; conn = conn->next; } // Calculate total current
 
-        if( !m_single ) CircMatrix::self()->stampCoef( m_nodeNum, m_totalCurr );
+        if( !m_single ) CircMatrix::self()->stampCoef(  m_nodeGroup, m_nodeNum, m_totalCurr );
         m_currChanged  = false;
     }
     if( m_single ) solveSingle();
