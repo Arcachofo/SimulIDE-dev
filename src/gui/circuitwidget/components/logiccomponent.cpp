@@ -80,6 +80,8 @@ void LogicComponent::updateOutEnabled()
 
 void LogicComponent::setTristate( bool t )  // Activate or deactivate OE Pin
 {
+    if( !m_oePin ) return;
+
     if( !t )
     {
         m_oePin->removeConnector();

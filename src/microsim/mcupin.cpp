@@ -149,7 +149,7 @@ void McuPin::setExtraSource( double vddAdmit, double gndAdmit ) // Comparator Vr
 {
     m_vddAdmEx = vddAdmit;
     m_gndAdmEx = gndAdmit;
-    updtState();
+    IoPin::updtState();
 }
 
 void McuPin::ConfExtInt( uint8_t bits )

@@ -58,15 +58,6 @@ void McuPort::outChanged( uint8_t val )
     if( changed == 0 ) return;
     *m_outReg = val;
 
-    /*uint8_t outputs = 0xFF;
-    if( m_dirReg )
-    {
-        if( m_dirInv ) outputs = ~(*m_dirReg); // defaul: 1 for outputs, inverted: 0 for outputs (PICs)
-        else           outputs =   *m_dirReg;
-    }
-    uint8_t pinCh = outputs & changed;
-    if( pinCh ) pinChanged( pinCh, val ); // Update Pin states*/
-
     for( int i=0; i<m_numPins; ++i ){
         if( changed & (1<<i) ) m_pins[i]->setPortState( val & (1<<i) ); // Pin changed
 }   }
