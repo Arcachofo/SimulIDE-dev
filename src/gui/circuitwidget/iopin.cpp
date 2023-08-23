@@ -149,17 +149,17 @@ void IoPin::setPinMode( pinMode_t mode )
     else                    updtState();
 }
 
-void IoPin::updtState()
+/*void IoPin::updtState()
 {
-    if( m_pinMode > openCo ) return;
+    //if( m_pinMode > openCo ) return;
 
     double vddAdmit = m_vddAdmit + m_vddAdmEx;
     double gndAdmit = m_gndAdmit + m_gndAdmEx;
-    double Rth      = 1/(vddAdmit+gndAdmit);
+    m_admit         = vddAdmit+gndAdmit;
 
-    m_outVolt = m_outHighV*vddAdmit*Rth;
-    IoPin::setImp( Rth );
-}
+    m_outVolt = m_outHighV*vddAdmit/m_admit;
+    stampAll();
+}*/
 
 bool IoPin::getInpState()
 {
@@ -289,12 +289,24 @@ void IoPin::registerScript( asIScriptEngine* engine )
                                    , asMETHODPR( IoPin, setOutState, (bool), void)
                                    , asCALL_THISCALL );
 
+    engine->RegisterObjectMethod("IoPin", "void setOutStatFast(bool s)"
+                                   , asMETHODPR( IoPin, setOutStatFast, (bool), void)
+                                   , asCALL_THISCALL );
+
+    engine->RegisterObjectMethod("IoPin", "void scheduleState( bool state, uint64 time )"
+                                   , asMETHODPR( IoPin, scheduleState, (bool,uint64_t), void)
+                                   , asCALL_THISCALL );
+
     engine->RegisterObjectMethod("IoPin", "double getVoltage()"
                                    , asMETHODPR( IoPin, getVoltage, (), double)
                                    , asCALL_THISCALL );
 
     engine->RegisterObjectMethod("IoPin", "void setVoltage(double v)"
                                    , asMETHODPR( IoPin, setVoltage, (double), void)
+                                   , asCALL_THISCALL );
+
+    engine->RegisterObjectMethod("IoPin", "void setImp( double imp )"
+                                   , asMETHODPR( IoPin, setImp, (double), void)
                                    , asCALL_THISCALL );
 
     engine->RegisterObjectMethod("IoPin", "void changeCallBack(eElement@ p, bool s)"

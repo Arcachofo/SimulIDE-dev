@@ -96,8 +96,23 @@ class MAINMODULE_EXPORT IoPin : public Pin, public eElement
         static void registerScript( asIScriptEngine* engine );
 
     protected:
-        void updtState();
-        void stampAll();
+        inline void updtState()
+        {
+            double vddAdmit = m_vddAdmit + m_vddAdmEx;
+            double gndAdmit = m_gndAdmit + m_gndAdmEx;
+            m_admit         = vddAdmit+gndAdmit;
+
+            ///m_outVolt = m_outHighV*vddAdmit/m_admit;
+            ///ePin::stampAdmitance( m_admit );
+            ///stampVolt( m_outVolt );
+            /// Optimized to:
+            double current = m_outHighV*vddAdmit;
+            if( m_enode ){
+                m_enode->stampAdmitance( this, m_admit  );
+                m_enode->stampCurrent( this, current );
+            }else m_outVolt = current/m_admit;          // Used by getVoltage()
+        }
+        inline void stampAll();
         inline void stampVolt( double v) { ePin::stampCurrent( v*m_admit ); }
 
         double m_inpHighV;  // currently in eClockedDevice
