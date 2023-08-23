@@ -140,6 +140,9 @@ ScriptCpu::ScriptCpu( eMcu* mcu )
 ScriptCpu::~ScriptCpu()
 {
     if( m_vChangedCtx ) m_vChangedCtx->Release();
+    if( m_runEventCtx ) m_runEventCtx->Release();
+    if( m_extClockCtx ) m_extClockCtx->Release();
+    if( m_runStepCtx  ) m_runStepCtx->Release();
 }
 
 void ScriptCpu::setPeriferals( std::vector<ScriptPerif*> p )
@@ -166,6 +169,7 @@ int ScriptCpu::compileScript()
     m_updateStep  = m_aEngine->GetModule(0)->GetFunctionByDecl("void updateStep()");
     m_runEvent    = m_aEngine->GetModule(0)->GetFunctionByDecl("void runEvent()");
     m_INTERRUPT   = m_aEngine->GetModule(0)->GetFunctionByDecl("void INTERRUPT( uint vector )");
+    m_runStep     = m_aEngine->GetModule(0)->GetFunctionByDecl("void runStep()");
     m_extClock    = m_aEngine->GetModule(0)->GetFunctionByDecl("void extClock( bool clkState )");
     m_extClockF   = m_aEngine->GetModule(0)->GetFunctionByDecl("void extClock()");
     m_getCpuReg   = m_aEngine->GetModule(0)->GetFunctionByDecl("int getCpuReg( string reg )");
@@ -177,6 +181,7 @@ int ScriptCpu::compileScript()
     m_vChangedCtx = m_voltChanged ? m_aEngine->CreateContext() : NULL;
     m_runEventCtx = m_runEvent    ? m_aEngine->CreateContext() : NULL;
     m_extClockCtx = m_extClockF   ? m_aEngine->CreateContext() : NULL;
+    m_runStepCtx  = m_runStep     ? m_aEngine->CreateContext() : NULL;
 
     for( ComProperty* p : m_scriptProps ) // Get properties getters and setters from script
     {
@@ -249,7 +254,15 @@ void ScriptCpu::INTERRUPT( uint vector )
     //m_context->SetArgAddress( 0, &vector ); // Not working
     execute();
 }
-void ScriptCpu::runStep()     { ; }
+
+void ScriptCpu::runStep()
+{
+    if( !m_runStep ) return;
+    m_mcu->cyclesDone = 1;
+    m_status = m_runStepCtx->executeJit0( m_runStep );
+    if( m_status != asEXECUTION_FINISHED ) printError( m_runStepCtx );
+}
+
 void ScriptCpu::extClock( bool clkState )
 {
     if( m_extClockF )

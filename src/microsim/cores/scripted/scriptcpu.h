@@ -77,6 +77,7 @@ class MAINMODULE_EXPORT ScriptCpu : public ScriptModule, public McuCpu
         asIScriptFunction* m_voltChanged;
         asIScriptFunction* m_updateStep;
         asIScriptFunction* m_runEvent;
+        asIScriptFunction* m_runStep;
         asIScriptFunction* m_extClock;
         asIScriptFunction* m_extClockF;
         asIScriptFunction* m_INTERRUPT;
@@ -90,6 +91,7 @@ class MAINMODULE_EXPORT ScriptCpu : public ScriptModule, public McuCpu
 
         asIScriptContext* m_vChangedCtx;
         asIScriptContext* m_runEventCtx;
+        asIScriptContext* m_runStepCtx;
         asIScriptContext* m_extClockCtx;
 
         std::vector<ComProperty*> m_scriptProps;
