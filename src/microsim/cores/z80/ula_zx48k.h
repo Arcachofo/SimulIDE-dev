@@ -17,6 +17,7 @@ class MAINMODULE_EXPORT ULA_ZX48k : public CpuBase, public eElement
 
         virtual void stamp() override;
         virtual void updateStep() override;
+        virtual void voltChanged() override;
         virtual void runEvent() override;
 
         virtual void runStep() override;
@@ -34,8 +35,6 @@ class MAINMODULE_EXPORT ULA_ZX48k : public CpuBase, public eElement
         eType m_type;
 
         void clk7FallingEdge();
-        void clk7RisingEdge();
-        inline bool vidCasSignal();
         inline void increaseCounters();
         inline void updateVideo();
         inline void readVideoData();
@@ -104,6 +103,8 @@ class MAINMODULE_EXPORT ULA_ZX48k : public CpuBase, public eElement
         IoPin* m_vPin;
         IoPin* m_yPin;
         IoPin* m_micTapePin;
+        IoPin* m_dmaPort0;
+        IoPin* m_kbPort0;
 
         IoPort* m_dmaPort;
         IoPort* m_dPort;

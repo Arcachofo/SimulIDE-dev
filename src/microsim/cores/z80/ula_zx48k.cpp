@@ -73,10 +73,13 @@ ULA_ZX48k::ULA_ZX48k( eMcu* mcu )
     m_vPin      = mcu->getIoPin("V");
     m_yPin      = mcu->getIoPin("Y");
     m_micTapePin = mcu->getIoPin("MICTAPE");
-    
+
     m_dmaPort = mcu->getIoPort("PORTA");
     m_dPort   = mcu->getIoPort("PORTD");
     m_kbPort  = mcu->getIoPort("PORTK");
+
+    m_dmaPort0 = m_dmaPort->getPinN(0);
+    m_kbPort0  = m_kbPort->getPinN(0);
 
     mcu->component()->addProperty( QObject::tr("Main"),
 new StrProp <ULA_ZX48k>( "Type"  , QObject::tr("Type")  , "", this, &ULA_ZX48k::type     , &ULA_ZX48k::setType,0,"enum" ) );
@@ -180,18 +183,29 @@ void ULA_ZX48k::stamp()
     m_evenScanLine = false;
 
     m_a14Pin->setPinMode( input );
+    m_a14Pin->changeCallBack( this );
     m_a15Pin->setPinMode( input );
+    m_a15Pin->changeCallBack( this );
 
     m_mreqPin->setPinMode( input );
-    m_iorqPin->setPinMode( input );
+    m_mreqPin->changeCallBack( this );
+    //m_iorqPin->setPinMode( input );
+    m_iorqPin->changeCallBack( this );
     m_rdPin->setPinMode( input );
+    m_rdPin->changeCallBack( this );
     m_wrPin->setPinMode( input );
-    
+    m_wrPin->changeCallBack( this );
+
     m_rasPin->setPinMode( output );
+    m_rasPin->setOutState( true );
     m_casPin->setPinMode( output );
+    m_casPin->setOutState( true );
     m_dramwePin->setPinMode( output );
+    //m_dramwePin->setOutState( true );
     m_romcsPin->setPinMode( output );
+    //m_romcsPin->setOutState( true );
     m_intPin->setPinMode( output );
+    m_intPin->setOutState( true );
     m_phicpuPin->setPinMode( output );
 
     m_uPin->setPinMode( output );
@@ -210,9 +224,7 @@ void ULA_ZX48k::stamp()
 void ULA_ZX48k::runStep()  // Internal Clock signal
 {
     m_mcu->cyclesDone = 1;
-    m_clk7 = !m_clk7;
-    if( m_clk7 ) clk7RisingEdge();
-    else         clk7FallingEdge();
+    clk7FallingEdge();
 }
 
 void ULA_ZX48k::runEvent()
@@ -220,15 +232,48 @@ void ULA_ZX48k::runEvent()
     m_dmaPort->setPinMode( m_aeDelayed ? output : input ); // Delayed activation/deactivation DMA bus
 }
 
-void ULA_ZX48k::clk7RisingEdge()
+void ULA_ZX48k::voltChanged()
 {
-    bool vidCas = vidCasSignal();        // Video CAS (Figure 13-5 and 14-2)
-    if( vidCas != m_vidCas ) {
-        m_vidCas = vidCas;
+    bool a14   = m_a14Pin->getInpState();
+    bool a15   = m_a15Pin->getInpState();
+    bool mreqn = m_mreqPin->getInpState();
+    //bool iorqn = m_iorqPin->getInpState();
+    bool rdn   = m_rdPin->getInpState();
+    bool wrn   = m_wrPin->getInpState();
+
+    bool romcsn = a14 || a15;                                   // ROM chip select signal (Figure 17-7)
+    if( romcsn != m_romcsn ) {
+        m_romcsn = romcsn;
+        m_romcsPin->setOutStatFast( m_romcsn );
+    }
+
+    bool rasEn = !mreqn && a14 && a15 && !m_border;             // RAS enable signal (Figure 23-2)
+    if( rasEn != m_rasEn ) {
+        m_rasEn = rasEn;
+        m_rasPin->setStateZ( m_rasEn );
+    }
+
+    bool ram16 = !mreqn && a14 && !a15;                       // CPU RAS - Video ram select signal (Figure 17-7)
+    if( ram16 != m_ram16 ) { // Delay of RAS after MREQ is 47 ns during activation and 34 ns during deactivation
+        m_ram16 = ram16;
+        m_rasPin->scheduleState( !m_ram16 && !m_vidRas, ram16 ? 47000 : 34000 );
+    }
+
+    bool dramWe = ram16 && !wrn;
+    if( dramWe != m_dramWe) {
+        m_dramWe = dramWe;   // Delay of DRAMWE after WR is 31 ns during activation and 21 ns during deactivation
+        m_dramwePin->scheduleState( !dramWe, dramWe ? 31000 : 21000 );
+    }
+    // Delay of CAS after RD is 83 ns during activation and 53 ns during deactivation for ULA6C001e-7
+    // Delay of CAS after WR is 94 ns during activation and 91 ns during deactivation for ULA6C001e-7
+    // Delay is shorter about 33 ns for ULA6C001e-6 and older
+    bool cpuCas = ram16 && ( !rdn || !wrn );                            // CPU CAS (Figure 17-7)
+    if( cpuCas != m_cpuCas ) {
+        m_cpuCas = cpuCas;
         uint64_t delay;
         if( m_type == ula6c001e7 || m_type == ula6c011e )
-             delay = 58000;                                      // Delay of video CAS for ULA6C001e-7
-        else delay = 30000;                                      // Delay of video CAS for ULA6C001e-6
+             delay = cpuCas ? 83000 : 53000;
+        else delay = cpuCas ? 50000 : 20000;
         m_casPin->scheduleState( !m_cpuCas && !m_vidCas, delay );
     }
 }
@@ -242,16 +287,17 @@ void ULA_ZX48k::clk7FallingEdge()
     bool rdn   = m_rdPin->getInpState();
     bool wrn   = m_wrPin->getInpState();
 
-    bool tclka = iorqn || mreqn ||  rdn || !wrn;            // Test signal TCLKA (Figure 23-1)
+    bool tclk = iorqn || mreqn;
+    bool tclka = tclk || rdn || !wrn;            // Test signal TCLKA (Figure 23-1)
     if( tclka != m_tclka ) {
         m_tclka = tclka;
         if( !m_tclka && ( m_C & 0x020 ) == 0x020 ) m_C += 63; // Upper Counter Stage Test Clock (Figure 10-3 and Figure 23-1)
     }
-    bool tclkb = iorqn || mreqn || !rdn ||  wrn;            // Test signal TCLKB (Figure 23-1)
+    bool tclkb = tclk || !rdn || wrn;            // Test signal TCLKB (Figure 23-1)
     if( tclkb != m_tclkb ) {
         m_tclkb = tclkb;
         if( !m_tclkb && ( m_V & 0x100 ) == 0x100 ) m_flashClock++; // Upper Counter Stage Test Clock (Figure 10-3 and Figure 23-1)
-        m_kbPort->getPinN(0)->setOutState( m_tclkb || ( m_V & 0x100 ) == 0x000 ); // V8 output at K0 pin (Figure 23-1)
+        m_kbPort0->setOutState( m_tclkb || ( m_V & 0x100 ) == 0x000 ); // V8 output at K0 pin (Figure 23-1)
     }
 
     increaseCounters();
@@ -265,62 +311,26 @@ void ULA_ZX48k::clk7FallingEdge()
         m_intPin->setOutStatFast( !interrupt );
     }
 
-    bool romcsn = a14 || a15;                                   // ROM chip select signal (Figure 17-7)
-    if( romcsn != m_romcsn ) {
-        m_romcsn = romcsn;
-        m_romcsPin->setOutStatFast( m_romcsn );
-    }
-
-    /*bool rasEn = mreqn && a14 && a15 && !m_border;             // RAS enable signal (Figure 23-2)
-    if( rasEn != m_rasEn ) {
-        m_rasEn = rasEn;
-        m_rasPin->setStateZ( m_rasEn );
-        m_rasPin->setOutStatFast( !m_ram16 && !m_vidRas );
-    }*/
-
-    bool ram16 = !mreqn && a14 && !a15;                       // Video ram select signal (Figure 17-7)
-    if( ram16 != m_ram16 ) { // Delay of RAS after MREQ is 47 ns during activation and 34 ns during deactivation
-        m_ram16 = ram16;
-        m_rasPin->scheduleState( !m_ram16 && !m_vidRas, ram16 ? 47000 : 34000 );
-    }
-    // Delay of CAS after RD is 83 ns during activation and 53 ns during deactivation for ULA6C001e-7
-    // Delay of CAS after WR is 94 ns during activation and 91 ns during deactivation for ULA6C001e-7
-    // Delay is shorter about 33 ns for ULA6C001e-6 and older
-    bool cpuCas = ram16 && ( !rdn || !wrn );                            // CPU CAS (Figure 17-7)
-    if ( cpuCas != m_cpuCas ) {
-        m_cpuCas = cpuCas;
-        uint64_t delay;
-        if( m_type == ula6c001e7 || m_type == ula6c011e )
-             delay = cpuCas ? 83000 : 53000;
-        else delay = cpuCas ? 50000 : 20000;
-        m_casPin->scheduleState( !m_cpuCas && !m_vidCas, delay );
-    }
-
-    bool dramWe = ram16 && !wrn;
-    if( dramWe != m_dramWe) {
-        m_dramWe = dramWe;   // Delay of DRAMWE after WR is 31 ns during activation and 21 ns during deactivation
-        m_dramwePin->scheduleState( !dramWe, dramWe ? 31000 : 21000 );
-    }
-
     portIO( iorqn, rdn, wrn );
 }
 
 void ULA_ZX48k::portIO( bool iorqn, bool rdn, bool wrn )
 {
-    bool portOp = iorqn | !m_iorqTW3 | m_dmaPort->getPinN(0)->getInpState(); // Operation in I/O port ??
+    bool portOp = iorqn || !m_iorqTW3 || m_dmaPort0->getInpState(); // Operation in I/O port ??
 
-    bool portRd = portOp | rdn ;                        // Read from I/O port (Figure 19-7)
+    bool portRd = portOp || rdn ;                        // Read from I/O port (Figure 19-7)
     if( portRd != m_portRd ){
         m_portRd = portRd;
         if( portRd ) m_dPort->setPinMode( input );
         else {
             m_dPort->setPinMode( openCo );
+            for( int i=0; i<8; ++i ) m_dPort->getPinN(i)->setOutputImp( 0.02 );
             uint8_t state = m_kbPort->getInpState();          // Copy keyboard signal to data bus (Figure 19-3)
             if( m_micTapePin->getInpState() ) state |= 1<<6;  // Copy MIC/TAPE input  to data bus (Figure 19-5)
             m_dPort->setOutState( state );
         }
     }
-    bool portWr = portOp | wrn;                         // Write to I/O port (Figure 19-7)
+    bool portWr = portOp || wrn;                         // Write to I/O port (Figure 19-7)
     if( portWr != m_portWr ) {
         m_portWr = portWr;
         if( !portWr ){
@@ -337,16 +347,11 @@ void ULA_ZX48k::portIO( bool iorqn, bool rdn, bool wrn )
     }
 }
 
-bool ULA_ZX48k::vidCasSignal()
-{
-    return !m_border && m_C & 0x008 && ( ( m_C & 0x001 ) != 0x001 || !m_clk7 );  // Video CAS (Figure 13-5 and 14-2)
-}
-
 void ULA_ZX48k::increaseCounters()
 {
     m_C++;                                                      // Master counter increase (Figure 10-3)
     if( m_C >= 448 ) {
-        m_C -= 448;
+        m_C = 0;
         m_V++;                                                  // Vertical line counter increase (Figure 10-4 and Figure 10-5)
         if( m_V >= ( ( m_type == ula6c011e ) ? 264 : 312 ) ) {  // 312 scan lines for PAL and 264 scan lines for NTSC (Table 11-2 and Table 11-3)
             m_V = 0;
@@ -368,7 +373,7 @@ void ULA_ZX48k::updateVideo()
         }
         else m_attrOutLatch = ( m_borderColour << 3 );                  // Load attribute output latch from border register (Figure 12-6)
     }
-    bool hBlank = m_C >=320 && m_C <= 415;                                   // Blanking period (Figure 11-5, Table 11-1 and Table 16-4)
+    bool hBlank = m_C >=320 && m_C <= 415;                              // Blanking period (Figure 11-5, Table 11-1 and Table 16-4)
     bool hSync;
     if( m_type == ula5c102e || m_type == ula5c112e ) {                  // Horizontal sync (Figure 11-5, Table 11-1 and Table 16-4)
         hSync = m_C >= 336 && m_C <= 367;
@@ -377,7 +382,7 @@ void ULA_ZX48k::updateVideo()
         hSync = m_C >= 344 && m_C <= 375;
         if( m_C == 344 ) m_evenScanLine = m_V & 0x001;
     }
-    bool burst = m_C >= 384 && m_C <= 399;                                   // Colour burst (Table 16-4);
+    bool burst = m_C >= 384 && m_C <= 399;                              // Colour burst (Table 16-4);
     bool vSync;
     if( m_type == ula6c011e ) vSync = m_V >= 216 && m_V <= 219;         // Vertical sync NTSC (Figure 11-6 and Table 11-3)
     else                      vSync = m_V >= 248 && m_V <= 251 ;        // Vertical sync PAL (Figure 11-5 and Table 11-2)
@@ -407,6 +412,11 @@ void ULA_ZX48k::updateVideo()
 void ULA_ZX48k::readVideoData()
 {
     bool ae = !m_border && ( m_C & 0x00f ) >= 0x007;                                 // Address enable (Figure 15-6)
+    if( ae != m_aeDelayed ) {
+        m_aeDelayed = ae;
+        Simulator::self()->addEvent( 20000, this ); // Delay of enabling and disabling DMA bus is 20 ns
+    }
+
     if( ae ) {
         uint8_t dma = m_dmaDelayed;
 
@@ -420,65 +430,73 @@ void ULA_ZX48k::readVideoData()
             case 0x00d : dma = ( m_V & 0x0c0 ) >> 2 | ( m_V & 0x007 ) << 1 | ( m_V & 0x020 ) >> 5; break; // Display column address (Figure 15-6 and Figure 15-7)
             case 0x00e :
             case 0x00f : dma = 0x30 | ( m_V & 0x0e0 ) >> 5;                                        break; // Attribute column address (Figure 15-6 and Figure 15-7)
-            default    : break;
         }
         if( dma != m_dmaDelayed ) { // Delay of setting DMA bus is 20 ns
             m_dmaDelayed = dma;
             m_dmaPort->scheduleState( m_dmaDelayed, 20000 );
         }
-    }
-    
-    if( ae != m_aeDelayed ) { // Delay of enabling and disabling DMA bus is 20 ns
-        m_aeDelayed = ae;
-        Simulator::self()->addEvent( 20000, this );
-    }
 
-    bool vidRas = !m_border && m_C & 0x008 && ( m_C & 0x003 ) != 0x003;   // Video RAS (Figure 13-5 and 14-2)
-    if( vidRas != m_vidRas ) {
-        m_vidRas = vidRas;
-        m_rasPin->setOutStatFast( !m_ram16 && !m_vidRas ); // RAS signal without any delay
-    }
+        bool vidSignal = !m_border && (m_C & 0x008);          // Video CAS (Figure 13-5 and 14-2)
+        if( vidSignal != m_vidCas ) {
+            m_vidCas = vidSignal;
+            uint64_t delay;
+            if( ( m_type == ula6c001e7 ) || ( m_type == ula6c011e) )
+                 delay = ( m_C & 0x002 ) ? 58000 : 78000;     // Delay of first video CAS activation is 78 ns and delay of the rest of edges is 53 ns for ULA6C001e-7
+            else delay = ( m_C & 0x002 ) ? 30000 : 50000;     // Delay of first video CAS activation is 50 ns and delay of the rest of edges is 30 ns for ULA6C001e-6
+            m_casPin->scheduleState( !m_cpuCas && !m_vidCas, delay );
+        }
+        else  /// from clk7RisingEdge()
+        {
+            bool vidCasEnd = vidSignal && !( m_C & 0x001 );
+            if( vidCasEnd != m_vidCas ) {
+                m_vidCas = vidCasEnd;
+                uint64_t delay;
+                if( m_type == ula6c001e7 || m_type == ula6c011e )
+                     delay = 58000+72000;                                 // Delay of video CAS for ULA6C001e-7
+                else delay = 30000+72000;                                 // Delay of video CAS for ULA6C001e-6
+                m_casPin->scheduleState( !m_cpuCas && !m_vidCas, delay );
+            }
+        }
 
-    bool vidCas = vidCasSignal();                                         // Video CAS (Figure 13-5 and 14-2)
-    if( vidCas != m_vidCas ) {
-        m_vidCas = vidCas;
-        uint64_t delay;
-        if( ( m_type == ula6c001e7 ) || ( m_type == ula6c011e) )
-             delay = ( m_C & 0x002 ) ? 58000 : 78000;     // Delay of first video CAS activation is 78 ns and delay of the rest of edges is 53 ns for ULA6C001e-7
-        else delay = ( m_C & 0x002 ) ? 30000 : 50000;     // Delay of first video CAS activation is 50 ns and delay of the rest of edges is 30 ns for ULA6C001e-6
-        m_casPin->scheduleState( !m_cpuCas && !m_vidCas, delay );
-    }
+        bool vidRas = vidSignal && ( m_C & 0x003 ) != 0x003;   // Video RAS (Figure 13-5 and 14-2)
+        if( vidRas != m_vidRas ) {
+            m_vidRas = vidRas;
+            m_rasPin->setOutStatFast( !m_ram16 && !m_vidRas ); // RAS signal without any delay
+        }
 
-    if( !m_border && m_C & 0x008 && m_C & 0x001 ){
-        if( m_C & 0x002 ) m_attrDataLatch = m_dPort->getInpState();  // Load attribute data latch (Figure 12-6, Figure 12-8 and Figure 14-2)
-        else              m_dataLatch     = m_dPort->getInpState();  // Load data latch (Figure 12-2, Figure 12-7 and Figure 14-2)
+        if( vidSignal && m_C & 0x001 ){
+            if( m_C & 0x002 ) m_attrDataLatch = m_dPort->getInpState();  // Load attribute data latch (Figure 12-6, Figure 12-8 and Figure 14-2)
+            else              m_dataLatch     = m_dPort->getInpState();  // Load data latch (Figure 12-2, Figure 12-7 and Figure 14-2)
+        }
     }
 }
 
 void ULA_ZX48k::generatePhicpu( bool a14, bool a15, bool mreqn, bool iorqn )
 {
-    bool memContention;
-    bool ioContention;
+    bool memContention = false;
+    bool ioContention  = false;
 
-    switch( m_type ) {
-        case ula5c102e :
-            memContention = a14 && !a15 && ( m_C & 0x00c) != 0x000 && !m_border && !m_mreqT23 && !m_iorqTW3 && m_cpuClk;           // Memory contention signal (Figure 18-7)
-            ioContention = ( m_C & 0x00c) != 0x000 && !m_border && !m_cpuClk && !m_iorqTW3 && ( m_C & 0x00e) != 0x008 && !iorqn;       // I/O contention signal (Figure 18-7)
-            break;
-        case ula5c112e :
-            memContention = ( !iorqn || ( a14 && !a15 ) ) && ( m_C & 0x00c) != 0x000 && !m_border && !m_mreqT23 && !m_iorqTW3 && m_cpuClk; // Memory contention signal (Figure 18-12)
-            ioContention = ( m_C & 0x00c) != 0x000 && !m_border && !m_cpuClk && !m_iorqTW3 && ( m_C & 0x00e) != 0x008 && !iorqn;       // I/O contention signal (Figure 18-12)
-            break;
-        default :
-            memContention = ( !iorqn || ( a14 && !a15 ) ) && ( m_C & 0x00c) != 0x000 && !m_border && !m_mreqT23 && !m_iorqTW3 && m_cpuClk; // Memory contention signal (Figure 18-15)
-            ioContention = ( m_C & 0x00c) != 0x000 && !m_border && !m_cpuClk && !m_iorqTW3 && !iorqn;                                  // I/O contention signal (Figure 18-15)
-            break;
+    if( !m_border && ( m_C & 0x00c) != 0x000 )
+    {
+        switch( m_type ) {
+            case ula5c102e :
+                memContention = a14 && !a15 && !m_mreqT23 && !m_iorqTW3 && m_cpuClk;                   // Memory contention signal (Figure 18-7)
+                ioContention = !m_cpuClk && !m_iorqTW3 && ( m_C & 0x00e) != 0x008 && !iorqn;           // I/O contention signal (Figure 18-7)
+                break;
+            case ula5c112e :
+                memContention = ( !iorqn || ( a14 && !a15 ) ) && !m_mreqT23 && !m_iorqTW3 && m_cpuClk; // Memory contention signal (Figure 18-12)
+                ioContention = !m_cpuClk && !m_iorqTW3 && ( m_C & 0x00e) != 0x008 && !iorqn;           // I/O contention signal (Figure 18-12)
+                break;
+            default :
+                memContention = ( !iorqn || ( a14 && !a15 ) ) && !m_mreqT23 && !m_iorqTW3 && m_cpuClk; // Memory contention signal (Figure 18-15)
+                ioContention = !m_cpuClk && !m_iorqTW3 && !iorqn;                                      // I/O contention signal (Figure 18-15)
+                break;
+        }
     }
-    
     if( !memContention && !ioContention ){
         m_cpuClk = m_C & 0x001;
         m_phicpuPin->setOutStatFast( !m_cpuClk );
-        if( ( m_C & 0x001 ) == 0x001 ) {
+        if( m_cpuClk ) {
             m_mreqT23 = !mreqn;
             m_iorqTW3 = !iorqn;
         }
