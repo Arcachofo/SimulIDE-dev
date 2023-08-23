@@ -43,11 +43,22 @@ class MAINMODULE_EXPORT IoPort :public eElement
 
         QString name() { return m_name; }
 
+        // ----------------
+        struct outState_t{
+            uint64_t time;
+            uint     state;
+        };
+        void trigger();
+        void addOutState( uint64_t t, uint s ) { m_outVector.emplace_back( outState_t{t, s} ); }
+        void setOutVector( std::vector<outState_t> v ) { m_outVector = v; }
+
  static void registerScript( asIScriptEngine* engine );
 
     protected:
         void createPins( Component* comp, QString pins, uint32_t pinMask );
         virtual IoPin* createPin( int i, QString id , Component* comp );
+
+        inline void nextStep();
 
         QString m_name;
         QString m_shortName;
@@ -60,6 +71,9 @@ class MAINMODULE_EXPORT IoPort :public eElement
 
         uint8_t m_numPins;
         std::vector<IoPin*> m_pins;
+
+        uint m_index;
+        std::vector<outState_t> m_outVector;
 };
 
 #endif

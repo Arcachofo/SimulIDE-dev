@@ -20,6 +20,7 @@ IoPort::~IoPort(){}
 
 void IoPort::reset()
 {
+    m_index = 0;
     m_pinState  = 0;
     m_nextState = 0;
     m_pinDirection = 0;
@@ -36,7 +37,19 @@ void IoPort::runEvent()
     setOutState( m_nextState );
 }
 
-void IoPort::scheduleState( uint32_t val, uint64_t time)
+void IoPort::trigger()
+{
+    if( m_index == 0 ) nextStep();
+}
+
+void IoPort::nextStep()
+{
+    outState_t outState = m_outVector.at( m_index );
+    m_nextState = outState.state;
+    Simulator::self()->addEvent( outState.time, this );
+}
+
+void IoPort::scheduleState( uint32_t val, uint64_t time )
 {
     if( m_pinState == val ) return;
     m_nextState = val;
@@ -170,11 +183,19 @@ void IoPort::registerScript( asIScriptEngine* engine )
                                    , asMETHODPR( IoPort, getInpState, (), uint)
                                    , asCALL_THISCALL );
 
+    engine->RegisterObjectMethod("IoPort", "void scheduleState( uint32 state, uint64 time )"
+                                   , asMETHODPR( IoPort, scheduleState, (uint32_t,uint64_t), void)
+                                   , asCALL_THISCALL );
+
     engine->RegisterObjectMethod("IoPort", "void setOutState(uint s)"
                                    , asMETHODPR( IoPort, setOutState, (uint), void)
                                    , asCALL_THISCALL );
 
     engine->RegisterObjectMethod("IoPort", "void changeCallBack(eElement@ s, bool s)"
                                    , asMETHODPR( IoPort, changeCallBack, (eElement*, bool), void)
+                                   , asCALL_THISCALL );
+
+    engine->RegisterObjectMethod("IoPort", "void trigger()"
+                                   , asMETHODPR( IoPort, trigger, (), void)
                                    , asCALL_THISCALL );
 }

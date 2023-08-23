@@ -512,6 +512,20 @@ void McuCreator::createIoPort( QDomElement* p )
     mcu->m_ioPorts.insert( name, port );
 
     port->createPins( m_mcuComp, p->attribute("pins"), 0xFFFFFFFF );
+
+    QDomNode node = p->firstChild();
+    while( !node.isNull() )
+    {
+        QDomElement el = node.toElement();
+        if( el.tagName() == "outstate" )
+        {
+            uint64_t  time = el.attribute("time").toUInt();
+            uint     state = el.attribute("state").toUInt();
+
+            port->addOutState( time, state );
+        }
+        node = node.nextSibling();
+    }
 }
 
 void McuCreator::createMcuPort( QDomElement* p )
