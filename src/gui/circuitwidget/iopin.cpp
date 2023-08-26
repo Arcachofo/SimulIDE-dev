@@ -289,6 +289,10 @@ void IoPin::registerScript( asIScriptEngine* engine )
                                    , asMETHODPR( IoPin, setOutState, (bool), void)
                                    , asCALL_THISCALL );
 
+    engine->RegisterObjectMethod("IoPin", "void setStateZ( bool z )"
+                                   , asMETHODPR( IoPin, setStateZ, (bool), void)
+                                   , asCALL_THISCALL );
+
     engine->RegisterObjectMethod("IoPin", "void setOutStatFast(bool s)"
                                    , asMETHODPR( IoPin, setOutStatFast, (bool), void)
                                    , asCALL_THISCALL );
