@@ -38,6 +38,10 @@ ScriptCpu::ScriptCpu( eMcu* mcu )
     m_command     = NULL;
     m_setLinkedVal= NULL;
     m_setLinkedStr= NULL;
+    m_vChangedCtx = NULL;
+    m_runEventCtx = NULL;
+    m_extClockCtx = NULL;
+    m_runStepCtx  = NULL;
 
     m_mcuComp = m_mcu->component();
 
@@ -212,13 +216,12 @@ int ScriptCpu::compileScript()
 
 void ScriptCpu::updateStep()
 {
-    if( !m_changed ) return;
-    m_changed = false;
-
     if( m_updateStep ) callFunction( m_updateStep );
 
     m_aEngine->GarbageCollect( asGC_FULL_CYCLE );  // Automatic garbage collection is disabled, doing it manually
 
+    if( !m_changed ) return;
+    m_changed = false;
     m_mcuComp->setValLabelText( m_value );
 }
 
