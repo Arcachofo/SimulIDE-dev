@@ -24,8 +24,8 @@ class MAINMODULE_EXPORT eLed : public eResistor
         double maxCurrent()             { return m_maxCurrent; }
         void  setMaxCurrent( double c ) { m_maxCurrent = c; m_changed = true; }
 
-        virtual void   setRes( double resist );
-        virtual double res() { return m_imped; }
+        virtual void   setRes( double resist ) override ;
+        virtual double res() override { return m_imped; }
 
         double brightness() { return m_brightness; }
         double overCurrent() { return m_avgCurrent/m_maxCurrent; }
@@ -34,6 +34,8 @@ class MAINMODULE_EXPORT eLed : public eResistor
 
     protected:
         virtual void updateVI() override;
+
+        bool m_converged;
 
         uint64_t m_prevStep;
         uint32_t m_intensity;

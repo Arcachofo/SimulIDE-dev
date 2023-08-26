@@ -7,10 +7,11 @@
 #define LED_H
 
 #include "ledbase.h"
+#include "linkable.h"
 
 class LibraryItem;
 
-class MAINMODULE_EXPORT Led : public LedBase
+class MAINMODULE_EXPORT Led : public LedBase, public Linkable
 {
     public:
         Led( QObject* parent, QString type, QString id );
@@ -19,9 +20,16 @@ class MAINMODULE_EXPORT Led : public LedBase
  static Component* construct( QObject* parent, QString type, QString id );
  static LibraryItem* libraryItem();
 
+        virtual void voltChanged() override;
+
+    public slots:
+        void slotLinkComp() { Linkable::startLinking(); }
+
     protected:
-        void drawBackground( QPainter* p );
-        void drawForeground( QPainter* p );
+        virtual void contextMenuEvent( QGraphicsSceneContextMenuEvent* event ) override;
+
+        void drawBackground( QPainter* p ) override;
+        void drawForeground( QPainter* p ) override;
 };
 
 #endif

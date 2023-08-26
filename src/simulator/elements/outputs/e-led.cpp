@@ -16,7 +16,7 @@ eLed::eLed( QString id )
     m_imped = 0.6;
     m_threshold  = 2.4;
     m_maxCurrent = 0.03;
-    initialize();
+    eLed::initialize();
 }
 eLed::~eLed() {}
 
@@ -66,8 +66,9 @@ void eLed::voltChanged()
     }
     if( admit != m_admit ) eResistor::setAdmit( admit );
 
-    if( ThCurrent == m_lastThCurrent ) { updateVI(); return; }
+    if( ThCurrent == m_lastThCurrent ) { updateVI(); m_converged = true; return; }
     m_lastThCurrent = ThCurrent;
+    m_converged = false;
 
     Simulator::self()->notCorverged();
 

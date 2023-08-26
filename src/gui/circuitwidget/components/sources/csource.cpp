@@ -91,14 +91,7 @@ void Csource::stamp()
 void Csource::voltChanged()
 {
     double volt = m_pin[0]->getVoltage() - m_pin[1]->getVoltage();
-    double curr = volt;
-
-    if( m_currControl )              curr *= m_admit;
-    if( !m_currSource && curr != 0 ) curr /= cero_doub;
-
-    curr *= m_gain;
-    m_pin[2]->stampCurrent( curr );
-    m_pin[3]->stampCurrent(-curr );
+    setVoltage( volt );
 }
 
 void Csource::updateStep()
@@ -134,7 +127,7 @@ void Csource::updateStep()
         m_pin[3]->stampAdmitance( 1/cero_doub );
     }
 
-    if( !m_controlPins )
+    if( !m_controlPins && !m_linked )
     {
         m_pin[0]->removeConnector();
         m_pin[1]->removeConnector();
@@ -154,6 +147,24 @@ void Csource::updateStep()
     m_pin[0]->changeCallBack( this, connected && m_controlPins );
     m_pin[1]->changeCallBack( this, connected && m_controlPins );
     update();
+}
+
+void Csource::setVoltage( double v )
+{
+    double curr = v;
+
+    if( m_currControl )              curr *= m_admit;
+    if( !m_currSource && curr != 0 ) curr /= cero_doub;
+
+    curr *= m_gain;
+    m_pin[2]->stampCurrent( curr );
+    m_pin[3]->stampCurrent(-curr );
+}
+
+
+void Csource::setLinkedValue( double v, int i )
+{
+    setVoltage( v );
 }
 
 void Csource::setGain( double g )
@@ -203,10 +214,12 @@ void Csource::setControlPins( bool set )
 void Csource::udtProperties()
 {
     if( !m_propDialog ) return;
-    m_propDialog->showProp("Voltage", !m_controlPins && !m_currSource );
-    m_propDialog->showProp("Current", !m_controlPins && m_currSource);
-    m_propDialog->showProp("CurrControl", m_controlPins );
-    m_propDialog->showProp("Gain", m_controlPins );
+    bool controlled = m_controlPins || m_linked; // Controlled by pins or Linked
+
+    m_propDialog->showProp("Voltage"    , !controlled && !m_currSource );
+    m_propDialog->showProp("Current"    , !controlled &&  m_currSource );
+    m_propDialog->showProp("CurrControl",  controlled );
+    m_propDialog->showProp("Gain"       ,  controlled );
 }
 
 void Csource::slotProperties()

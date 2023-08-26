@@ -42,6 +42,10 @@ class MAINMODULE_EXPORT Csource : public Component, public eResistor
         bool controlPins() {return m_controlPins; }
         void setControlPins( bool set );
 
+        void setVoltage( double v );
+
+        virtual void setLinkedValue( double v, int i=0 ) override;
+
         //virtual QPainterPath shape() const;
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
 
