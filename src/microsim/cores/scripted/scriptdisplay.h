@@ -22,9 +22,14 @@ class ScriptDisplay : public Display, public ScriptPerif
         virtual void registerScript( ScriptCpu* cpu ) override;
         virtual void startScript() override;
 
+        void setData( CScriptArray* d );
+        void setPalette( CScriptArray* p );
+
     private:
 
         asIScriptFunction* m_clear;
+
+        std::vector<int> m_palette;
 
  static void registerScriptMetods( asIScriptEngine* engine );
 };

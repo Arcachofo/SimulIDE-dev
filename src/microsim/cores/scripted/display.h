@@ -11,6 +11,7 @@
 #include "updatable.h"
 #include "e-element.h"
 
+#include "scriptarray.h"
 
 class Display : public QWidget, public Updatable, public eElement
 {
@@ -26,6 +27,9 @@ class Display : public QWidget, public Updatable, public eElement
         void setSize( int w, int h );
         void setBackground( int b );
         void setPixel( int x, int y, int color );
+        //void setNextPixel( int color );
+        //void setLine( std::vector<int> line );
+        //void setStart( int x, int y ) { m_x = x; m_y = y; }
 
         void setMonitorScale( double scale );
 
@@ -42,6 +46,9 @@ class Display : public QWidget, public Updatable, public eElement
 
         int m_width;
         int m_height;
+
+        int m_x;
+        int m_y;
 
         double m_scale;
 

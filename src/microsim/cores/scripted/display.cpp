@@ -32,6 +32,8 @@ Display::~Display(){}
 void Display::initialize()
 {
     //if( m_clear ) m_scriptCpu->callFunction( m_clear );
+    m_x = 0;
+    m_y = 0;
 }
 
 void Display::updateStep()
@@ -85,10 +87,30 @@ void Display::setBackground( int b )
     m_image.fill( m_background );
 }
 
+/*void Display::setLine( std::vector<int> line )
+{
+    for( uint x=0; x<line.size(); x++ )
+    {
+        setNextPixel( line.at( x ) );
+    }
+}*/
+
+/*void Display::setNextPixel( int color )
+{
+    m_x++;
+    if( m_x >= m_width )
+    {
+        m_x = 0;
+        m_y++;
+        if( m_y >= m_height ) m_y = 0;
+    }
+    setPixel( m_x, m_y, color );
+}*/
+
 void Display::setPixel( int x, int y, int color )
 {
     if( x >= m_width || y >= m_height || x < 0 || y < 0 ) return;
-    m_image.setPixel( x, y, QColor(color).rgb() );
+    m_image.setPixel( x, y, color|0xFF000000/*QColor(color).rgb()*/ );
 }
 
 void Display::updtImageSize()

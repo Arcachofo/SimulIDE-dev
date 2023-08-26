@@ -49,6 +49,18 @@ void ScriptDisplay::registerScriptMetods( asIScriptEngine* engine ) // Static: r
     engine->RegisterObjectMethod("Display", "void setPixel(int x, int y, int color)"
                                    , asMETHODPR( ScriptDisplay, setPixel, (int,int,int), void)
                                    , asCALL_THISCALL );
+
+    //engine->RegisterObjectMethod("Display", "void setNextPixel(int color)"
+    //                               , asMETHODPR( ScriptDisplay, setNextPixel, (int), void)
+    //                               , asCALL_THISCALL );
+
+    engine->RegisterObjectMethod("Display", "void setData( array<array<int>> &data )"
+                                   , asMETHODPR( ScriptDisplay, setData, (CScriptArray*), void)
+                                   , asCALL_THISCALL );
+
+    engine->RegisterObjectMethod("Display", "void setPalette( array<int> &data )"
+                                   , asMETHODPR( ScriptDisplay, setPalette, (CScriptArray*), void)
+                                   , asCALL_THISCALL );
 }
 
 void ScriptDisplay::startScript()
@@ -62,4 +74,37 @@ void ScriptDisplay::startScript()
 void ScriptDisplay::initialize()
 {
     if( m_clear ) m_scriptCpu->callFunction( m_clear );
+}
+
+void ScriptDisplay::setPalette( CScriptArray* p )
+{
+    m_palette.clear();
+
+    for( uint x=0; x<p->GetSize(); x++ )
+    {
+        int color = *(int*)p->At(x);
+        m_palette.push_back( color );
+    }
+}
+
+void ScriptDisplay::setData( CScriptArray* data )
+{
+    asITypeInfo* ti = data->GetArrayObjectType();
+    if( QString( ti->GetName() ) != "array" ) return;
+
+    CScriptArray* column = (CScriptArray*)data->At( 0 );
+    uint width = (uint)data->GetSize();
+    uint height = (uint)column->GetSize();
+
+    for( uint x=0; x<width; x++ )
+    {
+        column = (CScriptArray*)data->At( x );
+        for( uint y=0; y<height; y++ )
+        {
+            int color = 0;
+            uint index = *(uint*)column->At(y);
+            if( index < m_palette.size() ) color = m_palette.at( index );
+            setPixel( x, y, color );
+        }
+    }
 }
