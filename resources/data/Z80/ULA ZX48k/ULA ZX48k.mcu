@@ -1,6 +1,6 @@
 <!DOCTYPE SimulIDE>
 
-<mpu name="Z80ULA" core="Z80ULA" inst_cycle="2" freq="14000000" >
+<mpu name="Z80ULA" core="Z80ULA" inst_cycle="1" freq="14000000" >
     
     <ioport name="PORTA" pins="7" />
     <ioport name="PORTD" pins="8" />

@@ -1,7 +1,21 @@
 /***************************************************************************
  *   Copyright (C) 2023 by Jarda Vrana                                     *
+ *   jarda.vrana@gmail.com                                                 *
  *                                                                         *
- ***( see copyright.txt file at root folder )*******************************/
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 3 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ *   This program is distributed in the hope that it will be useful,       *
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+ *   GNU General Public License for more details.                          *
+ *                                                                         *
+ *   You should have received a copy of the GNU General Public License     *
+ *   along with this program; if not, see <http://www.gnu.org/licenses/>.  *
+ *                                                                         *
+ ***************************************************************************/
 
 #ifndef ULA_ZX48K_H
 #define ULA_ZX48K_H
@@ -34,15 +48,25 @@ class MAINMODULE_EXPORT ULA_ZX48k : public CpuBase, public eElement
         enum eType { ula5c102e = 0, ula5c112e, ula6c001e6, ula6c001e7, ula6c011e };
         eType m_type;
 
+        void setParameters(eType type);
         void clk7FallingEdge();
+        void clk7RisingEdge();
         inline void increaseCounters();
         inline void updateVideo();
         inline void readVideoData();
-        inline void generatePhicpu( bool a14, bool a15, bool mreqn, bool iorqn );
-        inline void portIO( bool iorqn, bool rdn, bool wrn );
+        inline void generatePhicpu();
+        inline void portIO();
 
         bool m_isSrceen;
-        
+        uint64_t m_vidCasDelayFall;
+        uint64_t m_vidCasDelayFallFirst;
+        uint64_t m_vidCasDelayRise;
+        uint16_t m_hSyncFirst;
+        uint16_t m_hSyncLast;
+        uint16_t m_scanLines;
+        uint16_t m_vSyncFirst;
+        uint16_t m_vSyncLast;
+
         bool m_clk7;
         uint16_t m_C;
         uint16_t m_V;
@@ -57,7 +81,9 @@ class MAINMODULE_EXPORT ULA_ZX48k : public CpuBase, public eElement
         uint8_t m_dataLatch;
         uint8_t m_shiftReg;
         uint8_t m_attrDataLatch;
-        uint8_t m_attrOutLatch;
+        uint8_t m_attrOutLatchInk;
+        uint8_t m_attrOutLatchPaper;
+        uint8_t m_attrOutLatchFlBr;
         uint8_t m_borderColour;
         uint8_t m_screen[448][312];
         bool m_evenScanLine;
@@ -69,6 +95,13 @@ class MAINMODULE_EXPORT ULA_ZX48k : public CpuBase, public eElement
         static const float m_micSp6CTable[4];
         static const float m_micSpImpTable[4];
         static int m_colours[16];
+
+        bool m_a14;
+        bool m_a15;
+        bool m_mreqn;
+        bool m_iorqn;
+        bool m_rdn;
+        bool m_wrn;
 
         bool m_mreqT23;
         bool m_iorqTW3;
@@ -83,10 +116,8 @@ class MAINMODULE_EXPORT ULA_ZX48k : public CpuBase, public eElement
         bool m_portWr;
         bool m_mic;
 
-        uint8_t m_dmaDelayed;
         bool m_aeDelayed;
 
-        //IoPin* m_clkPin;
         IoPin* m_rasPin;
         IoPin* m_casPin;
         IoPin* m_dramwePin;
