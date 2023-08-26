@@ -1156,7 +1156,7 @@ void McuCreator::createDisplay( QDomElement* e )
     int height = e->attribute("height").toInt();
 
     Display* display = NULL;
-    if( m_core == "Scripted" )
+    if( m_core == "scripted" )
     {
         ScriptDisplay* d = new ScriptDisplay( width, height, name, CircuitWidget::self() );
         m_scriptPerif.push_back( d );
