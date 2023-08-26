@@ -8,17 +8,22 @@
 #include "scriptmodule.h"
 #include "scriptstdstring.h"
 #include "scriptarray.h"
+#include "editorwindow.h"
 #include "utils.h"
 
 using namespace std;
 
 void MessageCallback( const asSMessageInfo* msg, void* param )
 {
-    const char* type = "ERROR";
-    if     ( msg->type == asMSGTYPE_WARNING     ) type = "WARNING";
-    else if( msg->type == asMSGTYPE_INFORMATION ) type = "INFO";
+    QString type = " ERROR ";
+    if     ( msg->type == asMSGTYPE_WARNING     ) type = " WARNING ";
+    else if( msg->type == asMSGTYPE_INFORMATION ) type = " INFO ";
 
-    qDebug() << msg->section << "line:" << msg->row << msg->col << type << msg->message;
+    QString deb = QString( msg->section )+" line: "+QString::number( msg->row )
+                  +" "+QString::number( msg->col )+type+QString( msg->message );
+
+    EditorWindow::self()->outPane()->appendLine( deb.remove("\n") );
+    //qDebug() << msg->section << "line:" << msg->row << msg->col << type << msg->message;
 }
 
 void print( string &msg )
@@ -50,7 +55,7 @@ ScriptModule::ScriptModule( QString name )
 
     m_jit = NULL;
 #ifndef SIMULIDE_W32 // Defined in .pro file for win32
-    m_jit = new asCJITCompiler(0);
+    m_jit = new asCJITCompiler( JIT_NO_SUSPEND | JIT_SYSCALL_NO_ERRORS );
     m_aEngine->SetEngineProperty( asEP_INCLUDE_JIT_INSTRUCTIONS, 1 );
     m_aEngine->SetJITCompiler( m_jit );
 #endif
@@ -84,9 +89,9 @@ int ScriptModule::compileScript()
     if( r < 0 ) { qDebug() << "\nScriptModule::compileScript: AddScriptSection() failed\n"; return -1; }
 
     r = mod->Build();
-    if( r < 0 ) { qDebug() << "\nScriptModule::compileScript: Build() Error\n"; return -1; }
+    if( r < 0 ) { qDebug() << Qt::endl << m_elmId+" ScriptModule::compileScript Error"<< Qt::endl; return -1; }
 
-    qDebug() << "\nScriptModule::compileScript: Build() Success\n";
+    //qDebug() << "\nScriptModule::compileScript: Build() Success\n";
     return 0;
 }
 
