@@ -1,0 +1,14 @@
+模/数转换器(Analog to Digital Converter, ADC)
+
+属性: (默认值)
+
+主要特性:
+- 位数: (8 Bits)
+   输出引脚的个数。
+
+- 参考电压: (5 V)
+   理想情况下的输入电压。
+
+电气特性:
+#include logicoutputs
+#include logicedges

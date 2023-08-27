@@ -5,7 +5,7 @@
     <name>ADC</name>
     <message>
         <source>ADC</source>
-        <translation>ADC</translation>
+        <translation>模/数转换器</translation>
     </message>
     <message>
         <source>Main</source>
@@ -44,7 +44,7 @@
     </message>
     <message>
         <source>Dialog</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">对话框</translation>
     </message>
     <message>
         <source>TextLabel</source>
@@ -160,11 +160,11 @@
     </message>
     <message>
         <source>Circuit</source>
-        <translation>电路图</translation>
+        <translation>电路</translation>
     </message>
     <message>
         <source>Circuit Canvas</source>
-        <translation>电路图画布</translation>
+        <translation>电路画布</translation>
     </message>
     <message>
         <source>Draw Grid</source>
@@ -236,7 +236,7 @@
     </message>
     <message>
         <source>Steps per Second    </source>
-        <translation>每秒步数</translation>
+        <translation>单位时间步数    </translation>
     </message>
     <message>
         <source>Max. Iterations</source>
@@ -251,36 +251,42 @@
         <translation>电抗性步数</translation>
     </message>
     <message>
+        <source>简体中文
+</source>
+        <translation type="vanished">简体中文
+</translation>
+    </message>
+    <message>
         <source>User data folder:</source>
-        <translation type="unfinished"></translation>
+        <translation>用户数据文件夹:</translation>
     </message>
     <message>
         <source>Select tool path</source>
-        <translation type="unfinished">选择工具路径</translation>
+        <translation>选择工具路径</translation>
     </message>
     <message>
         <source>Speed</source>
-        <translation type="unfinished"></translation>
+        <translation>速度</translation>
     </message>
     <message>
         <source> 0%</source>
-        <translation type="unfinished"></translation>
+        <translation> 0%</translation>
     </message>
     <message>
         <source>0%</source>
-        <translation type="unfinished"></translation>
+        <translation>0%</translation>
     </message>
     <message>
         <source>50%</source>
-        <translation type="unfinished"></translation>
+        <translation>50%</translation>
     </message>
     <message>
         <source>100%</source>
-        <translation type="unfinished"></translation>
+        <translation>100%</translation>
     </message>
     <message>
         <source>ps</source>
-        <translation type="unfinished"></translation>
+        <translation>ps</translation>
     </message>
     <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -288,7 +294,11 @@
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>简体中文</source>
@@ -326,7 +336,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>PNP</source>
-        <translation>PNP</translation>
+        <translation>PNP型</translation>
     </message>
     <message>
         <source>Gain</source>
@@ -384,7 +394,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Resistance</source>
-        <translation type="unfinished">电阻</translation>
+        <translation>电阻</translation>
     </message>
 </context>
 <context>
@@ -503,7 +513,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Tristate</source>
-        <translation>三态</translation>
+        <translation type="unfinished">三态型</translation>
     </message>
     <message>
         <source>Invert Output</source>
@@ -646,7 +656,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Save Circuit as Image</source>
-        <translation>将电路图保存为图片</translation>
+        <translation type="unfinished">将电路保存为图片</translation>
     </message>
     <message>
         <source>Bill of Materials</source>
@@ -669,7 +679,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Create a new Circuit</source>
-        <translation>创建一个新电路图</translation>
+        <translation>创建一个新电路</translation>
     </message>
     <message>
         <source>&amp;Open Circuit	Ctrl+O</source>
@@ -685,7 +695,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Save the Circuit to disk</source>
-        <translation>将电路图保存到磁盘</translation>
+        <translation>将电路保存到磁盘</translation>
     </message>
     <message>
         <source>Save Circuit &amp;As...	Ctrl+Shift+S</source>
@@ -693,7 +703,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Save the Circuit under a new name</source>
-        <translation>将电路图改名保存</translation>
+        <translation>将电路改名保存</translation>
     </message>
     <message>
         <source>Power Circuit</source>
@@ -1041,11 +1051,11 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Libraries Path</source>
-        <translation type="unfinished"></translation>
+        <translation>库文件夹路径</translation>
     </message>
     <message>
         <source>Include Path</source>
-        <translation type="unfinished"></translation>
+        <translation>Include路径</translation>
     </message>
 </context>
 <context>
@@ -1183,14 +1193,14 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Current Value</source>
-        <translation>电流值</translation>
+        <translation>当前值</translation>
     </message>
 </context>
 <context>
     <name>DAC</name>
     <message>
         <source>DAC</source>
-        <translation>DAC</translation>
+        <translation>数/模转换器</translation>
     </message>
     <message>
         <source>Main</source>
@@ -1225,7 +1235,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Set current time at start</source>
-        <translation type="unfinished"></translation>
+        <translation>设置开始时的当前时间</translation>
     </message>
 </context>
 <context>
@@ -1369,7 +1379,7 @@ Can&apos;t find file:
     <name>Diac</name>
     <message>
         <source>Diac</source>
-        <translation>触发二极管</translation>
+        <translation>双向触发二极管</translation>
     </message>
     <message>
         <source>Main</source>
@@ -1470,7 +1480,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Saturation Current</source>
-        <translation>饱和电流</translation>
+        <translation>反向饱和电流</translation>
     </message>
     <message>
         <source>Emission Coefficient</source>
@@ -2127,7 +2137,7 @@ Can&apos;t find file:
     <name>Function</name>
     <message>
         <source>Function</source>
-        <translation>Function</translation>
+        <translation>逻辑函数</translation>
     </message>
     <message>
         <source>Main</source>
@@ -2135,11 +2145,11 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Input Size</source>
-        <translation>输入引脚数</translation>
+        <translation>输入数量</translation>
     </message>
     <message>
         <source>Output Size</source>
-        <translation>输出引脚数</translation>
+        <translation>输出数量</translation>
     </message>
     <message>
         <source>Invert Outputs</source>
@@ -2471,7 +2481,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Steps per Rotation</source>
-        <translation>每次旋转步数</translation>
+        <translation>每圈步数</translation>
     </message>
     <message>
         <source>_Steps</source>
@@ -2498,7 +2508,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Key Labels</source>
-        <translation>键标签</translation>
+        <translation>按键标签</translation>
     </message>
     <message>
         <source>_Buttons</source>
@@ -2536,7 +2546,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Logic Analyzer</source>
-        <translation type="unfinished"></translation>
+        <translation>逻辑分析仪</translation>
     </message>
 </context>
 <context>
@@ -2599,11 +2609,11 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Time Div</source>
-        <translation type="unfinished"></translation>
+        <translation>Time Div</translation>
     </message>
     <message>
         <source>Time Pos</source>
-        <translation type="unfinished"></translation>
+        <translation>Time Pos</translation>
     </message>
     <message>
         <source>Threshold</source>
@@ -2611,7 +2621,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Dialog</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">对话框</translation>
     </message>
     <message>
         <source>Bus</source>
@@ -2652,7 +2662,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Resistance</source>
-        <translation type="unfinished">电阻</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Max Current</source>
@@ -2917,7 +2927,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Red:</source>
-        <translation>Red:</translation>
+        <translation>红(Red):</translation>
     </message>
     <message>
         <source>Forward Voltage</source>
@@ -2933,11 +2943,11 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Green:</source>
-        <translation>Green:</translation>
+        <translation>绿(Green):</translation>
     </message>
     <message>
         <source>Blue:</source>
-        <translation>Blue:</translation>
+        <translation>蓝(Blue):</translation>
     </message>
 </context>
 <context>
@@ -3088,7 +3098,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Select User data directory</source>
-        <translation type="unfinished"></translation>
+        <translation>选择用户数据文件夹</translation>
     </message>
 </context>
 <context>
@@ -3265,7 +3275,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Dialog</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">对话框</translation>
     </message>
 </context>
 <context>
@@ -3380,7 +3390,7 @@ Can&apos;t find file:
     <name>Mosfet</name>
     <message>
         <source>Mosfet</source>
-        <translation>场效应管</translation>
+        <translation>半导体场效应管</translation>
     </message>
     <message>
         <source>Main</source>
@@ -3489,11 +3499,11 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Show Supply Pins</source>
-        <translation type="vanished">显示Supply引脚</translation>
+        <translation type="vanished">显示电源引脚</translation>
     </message>
     <message>
         <source>Switch Supply Pins</source>
-        <translation>交换Supply引脚位置</translation>
+        <translation>交换电源引脚位置</translation>
     </message>
     <message>
         <source>Use Supply Pins</source>
@@ -3560,7 +3570,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Dialog</source>
-        <translation type="unfinished"></translation>
+        <translation>对话框</translation>
     </message>
 </context>
 <context>
@@ -3675,7 +3685,11 @@ Can&apos;t find file:
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -3694,11 +3708,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Poles</source>
-        <translation></translation>
+        <translation>闸刀数</translation>
     </message>
     <message>
         <source>Key</source>
-        <translation>标签</translation>
+        <translation>快捷键字符</translation>
     </message>
     <message>
         <source>_Poles</source>
@@ -3863,11 +3877,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Keys</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Keys</translation>
     </message>
     <message>
         <source>Ternary</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ternary</translation>
     </message>
     <message>
         <source>Tools</source>
@@ -3903,7 +3917,7 @@ Not valid Package file:
     </message>
     <message>
         <source>Active</source>
-        <translation type="unfinished">有源器件</translation>
+        <translation>有源器件</translation>
     </message>
     <message>
         <source>Switches</source>
@@ -3923,7 +3937,7 @@ Not valid Package file:
     </message>
     <message>
         <source>Connectors</source>
-        <translation type="unfinished"></translation>
+        <translation>连接器</translation>
     </message>
     <message>
         <source>Other</source>
@@ -4046,7 +4060,7 @@ Not valid Package file:
     <name>RTD</name>
     <message>
         <source>RTD</source>
-        <translation>电阻式温度传感器</translation>
+        <translation type="unfinished">电阻温度计</translation>
     </message>
     <message>
         <source>Parameters</source>
@@ -4061,7 +4075,7 @@ Not valid Package file:
     <name>Rail</name>
     <message>
         <source>Rail.</source>
-        <translation type="vanished">Rail.</translation>
+        <translation type="vanished">Rail电源</translation>
     </message>
     <message>
         <source>Main</source>
@@ -4187,7 +4201,7 @@ Not valid Package file:
     </message>
     <message>
         <source>Poles</source>
-        <translation type="unfinished"></translation>
+        <translation>闸刀数</translation>
     </message>
     <message>
         <source>Electric</source>
@@ -4195,11 +4209,11 @@ Not valid Package file:
     </message>
     <message>
         <source>IOn</source>
-        <translation type="unfinished"></translation>
+        <translation>吸合电流</translation>
     </message>
     <message>
         <source>IOff</source>
-        <translation type="unfinished"></translation>
+        <translation>释放电流</translation>
     </message>
     <message>
         <source>Coil</source>
@@ -4230,7 +4244,7 @@ Not valid Package file:
     <name>Resistor</name>
     <message>
         <source>Resistor</source>
-        <translation>电阻</translation>
+        <translation>定值电阻</translation>
     </message>
     <message>
         <source>Main</source>
@@ -4238,7 +4252,7 @@ Not valid Package file:
     </message>
     <message>
         <source>Resistance</source>
-        <translation>电阻</translation>
+        <translation>电阻值</translation>
     </message>
 </context>
 <context>
@@ -4327,7 +4341,7 @@ Not valid Package file:
     </message>
     <message>
         <source>Dialog</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">对话框</translation>
     </message>
     <message>
         <source>ASCII</source>
@@ -4488,11 +4502,11 @@ Not valid Package file:
     </message>
     <message>
         <source>Size X</source>
-        <translation>X大小</translation>
+        <translation>宽度</translation>
     </message>
     <message>
         <source>Size Y</source>
-        <translation>Y大小</translation>
+        <translation>高度</translation>
     </message>
     <message>
         <source>Border</source>
@@ -4634,11 +4648,11 @@ Not valid Package file:
     </message>
     <message>
         <source>Bipolar</source>
-        <translation type="unfinished"></translation>
+        <translation>双极性</translation>
     </message>
     <message>
         <source>Steps per Rotation</source>
-        <translation>每转步数</translation>
+        <translation>每圈步数</translation>
     </message>
     <message>
         <source>Resistance</source>
@@ -4833,11 +4847,11 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Poles</source>
-        <translation type="unfinished"></translation>
+        <translation>闸刀数</translation>
     </message>
     <message>
         <source>Key</source>
-        <translation>标签</translation>
+        <translation>快捷键字符</translation>
     </message>
     <message>
         <source>_Poles</source>
@@ -5060,6 +5074,10 @@ Do you want to save your changes?
         <translation type="obsolete">已旋转</translation>
     </message>
     <message>
+        <source>Tunnel</source>
+        <translation type="vanished">隧道</translation>
+    </message>
+    <message>
         <source>Tunnel.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5266,7 +5284,7 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Bipolar</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">双极性</translation>
     </message>
     <message>
         <source>Floating</source>

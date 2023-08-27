@@ -1,0 +1,4 @@
+超声波距离传感器(Ultrasonic distance sensor.)
+
+在左侧"Dist."引脚输入电压，以模拟距离.
+输入电压数等于距离米数.

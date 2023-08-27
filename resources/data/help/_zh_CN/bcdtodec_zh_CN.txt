@@ -1,0 +1,16 @@
+将二进制BCD码转换为十进制.
+
+属性: (默认值)
+
+主要特性:
+- 16位: (无)
+   是8位还是16位输出.
+
+- 对输出引脚取反: (无)
+   对输出引脚取反.
+
+
+Electric:
+#include logicinputs
+#include logicoutputs
+#include logicedges

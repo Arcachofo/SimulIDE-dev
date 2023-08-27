@@ -1,0 +1,22 @@
+计数器(Counter)
+
+属性: (默认值)
+
+主要特性:
+- 使用Set引脚: (否)
+   显示/隐藏Set引脚.
+
+- 对Clock引脚取反: (否)
+   对Clock引脚取反.
+
+- 对Set/Reset引脚取反: (是)
+   对Set/Reset引脚取反.
+
+- 计数到: (1)
+   Clock引脚输入脉冲累计到多少时，输出高电平.
+
+
+电气特性:
+#include logicinputs
+#include logicoutputs
+#include logicedges
