@@ -262,6 +262,10 @@ p, li { white-space: pre-wrap; }
         <source>Speed</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>简体中文</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AudioOut</name>
@@ -930,6 +934,14 @@ Can&apos;t find file:
         <source>Family</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Libraries Path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Include Path</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Component</name>
@@ -1444,6 +1456,10 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Bottom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name Space:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2524,6 +2540,10 @@ Can&apos;t find file:
         <source>Led</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Link to Component</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LedBar</name>
@@ -2985,10 +3005,6 @@ Can&apos;t find file:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Reload hex at                                    Simulation Start</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Changes applied after Simulation Restart</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2998,6 +3014,10 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Link to Component</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reload hex at Simulation Start</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3593,6 +3613,18 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Delete Pin </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Main</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Screen</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
