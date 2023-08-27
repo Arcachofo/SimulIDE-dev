@@ -21,6 +21,7 @@ class QSettings;
 
 enum Langs {
     English = 0,
+    Chinese,
     Czech,
     Dutch,
     French,

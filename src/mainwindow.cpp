@@ -152,6 +152,7 @@ void MainWindow::setFontScale(float scale )
 
 QString MainWindow::loc()
 {
+    if( m_lang == Chinese )    return "zh_CN";
     if( m_lang == Czech )      return "cz";
     if( m_lang == French )     return "fr";
     if( m_lang == German )     return "de";
@@ -169,7 +170,8 @@ QString MainWindow::loc()
 void MainWindow::setLoc( QString loc )
 {
     Langs lang = English;
-    if     ( loc == "cz" )    lang = Czech;
+    if     ( loc == "zh_CN" ) lang = Chinese;
+    else if( loc == "cz" )    lang = Czech;
     else if( loc == "fr" )    lang = French;
     else if( loc == "de" )    lang = German;
     else if( loc == "it" )    lang = Italian;

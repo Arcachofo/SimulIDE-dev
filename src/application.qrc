@@ -19,6 +19,7 @@
         <file alias="simulide_pt_PT.qm">../resources/qm/simulide_pt_PT.qm</file>
         <file alias="simulide_ru.qm">../resources/qm/simulide_ru.qm</file>
         <file alias="simulide_tr.qm">../resources/qm/simulide_tr.qm</file>
+        <file alias="simulide_zh_CN.qm">../resources/qm/simulide_zh_CN.qm</file>
     
         <file alias="null.png">../src/icons/components/null.png</file>
         
