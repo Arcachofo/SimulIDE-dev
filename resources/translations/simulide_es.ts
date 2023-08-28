@@ -323,6 +323,10 @@ p, li { white-space: pre-wrap; }
         <source>简体中文</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Slovenčina</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AudioOut</name>

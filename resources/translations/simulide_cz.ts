@@ -183,13 +183,13 @@
     </message>
     <message>
         <location line="+16"/>
-        <location line="+246"/>
+        <location line="+251"/>
         <location line="+356"/>
         <source>Help</source>
         <translation>Nápověda</translation>
     </message>
     <message>
-        <location line="-588"/>
+        <location line="-593"/>
         <source>Language</source>
         <translation>Jazyk</translation>
     </message>
@@ -243,7 +243,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+62"/>
+        <location line="+50"/>
+        <source>Slovenčina</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+17"/>
         <source>Font Scale</source>
         <translation>Měřítko písma</translation>
     </message>
@@ -4069,7 +4074,7 @@ Chcete uložit změny?
         <translation>Chcete otevřít automaticky uloženou zálohu obvodu?</translation>
     </message>
     <message>
-        <location line="+144"/>
+        <location line="+146"/>
         <source>Components</source>
         <translation>Komponenty</translation>
     </message>
@@ -4094,7 +4099,7 @@ Chcete uložit změny?
         <translation>Hledání komponent</translation>
     </message>
     <message>
-        <location line="-137"/>
+        <location line="-139"/>
         <source>This file will be auto-deleted!!</source>
         <translation>Tento soubor bude automaticky smazán!!</translation>
     </message>
