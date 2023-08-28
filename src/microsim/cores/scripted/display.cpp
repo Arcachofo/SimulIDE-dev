@@ -16,7 +16,6 @@ Display::Display( int w, int h, QString name, QWidget* parent )
 {
     m_width  = w;
     m_height = h;
-    m_name   = name;
     m_scale  = 0;
 
     m_background= 0;

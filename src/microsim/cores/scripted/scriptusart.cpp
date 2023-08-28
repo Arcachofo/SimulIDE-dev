@@ -14,7 +14,7 @@
 
 ScriptUsart::ScriptUsart( eMcu* mcu, QString name, int number )
            : McuUsart( mcu, name, number )
-           , ScriptPerif()
+           , ScriptPerif( name )
 {
     m_name = name;
 
@@ -33,7 +33,7 @@ void ScriptUsart::registerScript( ScriptCpu* cpu )
 {
     m_scriptCpu = cpu;
 
-    string uart = "Uart "+m_name.toStdString(); // Type name
+    string uart = "Uart "+m_perifName.toStdString(); // Type name
     asIScriptEngine* engine = cpu->engine();
 
     engine->RegisterObjectType("Uart", 0, asOBJ_REF | asOBJ_NOCOUNT );

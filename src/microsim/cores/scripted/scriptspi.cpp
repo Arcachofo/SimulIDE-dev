@@ -14,10 +14,8 @@
 
 ScriptSpi::ScriptSpi( eMcu* mcu, QString name )
          : McuSpi( mcu, name )
-         , ScriptPerif()
+         , ScriptPerif( name )
 {
-    m_spiName = name;
-
     m_byteReceived = NULL;
 }
 ScriptSpi::~ScriptSpi(){}
@@ -30,9 +28,9 @@ void ScriptSpi::registerScript( ScriptCpu* cpu )
 {
     m_scriptCpu = cpu;
 
-    string spi = "SPI "+m_spiName.toStdString();
     asIScriptEngine* engine = cpu->engine();
 
+    string spi = "SPI "+m_perifName.toStdString();
     engine->RegisterObjectType("SPI", 0, asOBJ_REF | asOBJ_NOCOUNT );
 
     engine->RegisterGlobalProperty( spi.c_str(), this );

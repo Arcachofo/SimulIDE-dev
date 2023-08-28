@@ -5,8 +5,9 @@
 
 #include "scriptperif.h"
 
-ScriptPerif::ScriptPerif()
+ScriptPerif::ScriptPerif( QString name )
 {
+    m_perifName = name;
 }
 ScriptPerif::~ScriptPerif(){}
 

@@ -77,6 +77,7 @@
 #include "scriptport.h"
 #include "scriptusart.h"
 #include "scriptspi.h"
+#include "scripttwi.h"
 #include "scriptprop.h"
 #include "scriptdisplay.h"
 
@@ -1049,6 +1050,11 @@ void McuCreator::createTwi( QDomElement* e )
 
     if     ( m_core == "AVR" )  m_twi = new AvrTwi( mcu, name );
     else if( m_core == "Pic14") m_twi = new PicTwi( mcu, name );
+    else if( m_core == "scripted"){
+        ScriptTwi* twi = new ScriptTwi( mcu, name );
+        m_twi = twi;
+        m_scriptPerif.push_back( twi );
+    }
     else return;
 
     mcu->m_modules.emplace_back( m_twi );
@@ -1173,6 +1179,7 @@ void McuCreator::createDisplay( QDomElement* e )
         display->setMonitorScale( scale );
         m_displays.append( display );
     }
+    else delete display; /// Fix ???
 }
 
 void McuCreator::createStack( QDomElement* s )

@@ -40,8 +40,6 @@ class Display : public QWidget, public Updatable, public eElement
 
         void updtImageSize();
 
-        QString m_name;
-
         bool m_changed;
 
         int m_width;

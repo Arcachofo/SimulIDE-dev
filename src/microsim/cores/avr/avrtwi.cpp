@@ -53,7 +53,7 @@ void AvrTwi::configureA( uint8_t newTWCR ) // TWCR is being written
         m_sda->controlPin( false, false ); // Release control of MCU PIns
         m_scl->controlPin( false, false );
     }
-    if( !enable ) return;           // Not enabled, do nothing
+    if( !enable ) return;                  // Not enabled, do nothing
 
     if( !oldEn )                           /// Enable TWI if it was disabled
     {
@@ -96,16 +96,16 @@ void AvrTwi::configureA( uint8_t newTWCR ) // TWCR is being written
     {
         if( m_twiState == TWI_MRX_ADR_ACK    // We sent Slave Address + R and received ACK
          || m_twiState == TWI_MRX_DATA_ACK ) // We sent data and received ACK
-            masterRead( twea );     // Read a byte and send ACK/NACK
+            masterRead( twea );              // Read a byte and send ACK/NACK
     }
     else if( m_mode == TWI_SLAVE )
     {
-        if( m_twiState == TWI_STX_ADR_ACK ) // Own Slave Address + R received and ACK sent
-            slaveWrite();          // Start Slave transmission
+        if( m_twiState == TWI_STX_ADR_ACK )   // Own Slave Address + R received and ACK sent
+            slaveWrite();                     // Start Slave transmission
     }
 }
 
-void AvrTwi::configureB( uint8_t val ) // TWBR is being written
+void AvrTwi::configureB( uint8_t val )       // TWBR is being written
 {
     if( m_bitRate == val ) return;
     m_bitRate = val;
@@ -134,23 +134,23 @@ void AvrTwi::writeTwiReg( uint8_t newTWDR ) // TWDR is being written
     bool twint = getRegBitsBool( *m_TWCR, m_TWINT ); // Check if TWINT is set
     if( twint )                  // If set clear TWWC
     {
-        clearRegBits( m_TWWC ); // Clear Write Collision bit TWWC
+        clearRegBits( m_TWWC );  // Clear Write Collision bit TWWC
     }
-    else                        // If not, the access will be discarded
+    else                         // If not, the access will be discarded
     {
-        setRegBits( m_TWWC );  // set Write Collision bit TWWC
+        setRegBits( m_TWWC );    // set Write Collision bit TWWC
         return;
     }
     bool write = false;
     bool isAddr = (getStaus() == TWI_START
                 || getStaus() == TWI_REP_START); // We just sent Start, so this must be slave address
 
-    if( isAddr ) write = ((newTWDR & 1) == 0);       // Sendind address for Read or Write?
+    if( isAddr ) write = ((newTWDR & 1) == 0);   // Sending address for Read or Write?
 
     masterWrite( newTWDR, isAddr, write );       /// Write data or address to Slave
 }
 
-void AvrTwi::setTwiState( twiState_t state )  // Set new AVR Status value
+void AvrTwi::setTwiState( twiState_t state )     // Set new AVR Status value
 {
     TwiModule::setTwiState( state );
 
@@ -159,7 +159,7 @@ void AvrTwi::setTwiState( twiState_t state )  // Set new AVR Status value
 
     if( state == TWI_NO_STATE && m_i2cState == I2C_STOP ) // Stop Condition sent
     {
-        clearRegBits( m_TWSTO ); // Clear TWSTO bit
+        clearRegBits( m_TWSTO );   // Clear TWSTO bit
     }
     else{
         m_interrupt->raise();

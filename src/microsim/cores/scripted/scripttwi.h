@@ -3,34 +3,33 @@
  *                                                                         *
  ***( see copyright.txt file at root folder )*******************************/
 
-#ifndef SCRIPTSPI_H
-#define SCRIPTSPI_H
+#ifndef SCRIPTTWI_H
+#define SCRIPTTWI_H
 
 #include "scriptperif.h"
-#include "mcuspi.h"
+#include "mcutwi.h"
 
-class ScriptCpu;
 class asIScriptFunction;
 
-class MAINMODULE_EXPORT ScriptSpi : public McuSpi, public ScriptPerif
+class ScriptTwi : public McuTwi, public ScriptPerif
 {
     public:
-        ScriptSpi( eMcu* mcu, QString name );
-        ~ScriptSpi();
-
-        void byteReceived( uint8_t data );
-        void sendByte( uint8_t data );
+        ScriptTwi( eMcu* mcu, QString name );
+        ~ScriptTwi();
 
         virtual void reset() override;
 
-        virtual void endTransaction() override;
+        void byteReceived( uint8_t data );
+        void sendByte( uint8_t data );
 
         virtual void registerScript( ScriptCpu* cpu ) override;
         virtual void startScript() override;
 
     private:
+        uint8_t getStaus() { return *m_statReg &= 0b11111000; }
 
         asIScriptFunction* m_byteReceived;
+
 };
 
 #endif

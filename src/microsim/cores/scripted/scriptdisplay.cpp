@@ -11,7 +11,7 @@
 
 ScriptDisplay::ScriptDisplay( int w, int h, QString name, QWidget* parent )
              : Display( w, h, name, parent )
-             , ScriptPerif()
+             , ScriptPerif( name )
 {
     m_clear = NULL;
 }
@@ -26,7 +26,7 @@ void ScriptDisplay::registerScript( ScriptCpu* cpu )
     asITypeInfo* info = engine->GetTypeInfoByName("Display"); // Check if "Display is already registered
     if( !info ) registerScriptMetods( engine );
 
-    string display = "Display "+m_name.toStdString(); // Type name
+    string display = "Display "+m_perifName.toStdString(); // Type name
     engine->RegisterGlobalProperty( display.c_str(), this );
 }
 
