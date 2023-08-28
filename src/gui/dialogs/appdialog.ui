@@ -196,6 +196,11 @@
              </item>
              <item>
               <property name="text">
+               <string>Slovenčina</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
                <string notr="true">Türkçe</string>
               </property>
              </item>

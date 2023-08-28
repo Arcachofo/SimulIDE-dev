@@ -31,6 +31,7 @@ enum Langs {
     Spanish,
     Portuguese,
     Pt_Brasil,
+    Slovak,
     Turkish
 };
 
