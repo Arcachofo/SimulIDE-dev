@@ -1227,7 +1227,7 @@ int asCContext::executeJit0( asIScriptFunction *func )
     // Set up the internal registers for executing the script function
     ///PrepareScriptFunction(); // Seeems to do nothing
     /// This is the meaniful part:
-    uint vs = m_currentFunction->scriptData->variableSpace;
+    asDWORD vs = m_currentFunction->scriptData->variableSpace;
     m_regs.stackPointer -= vs; //m_currentFunction->scriptData->variableSpace;
 
     //while( m_status == asEXECUTION_ACTIVE )

@@ -30,9 +30,9 @@ void ScriptTwi::registerScript( ScriptCpu* cpu )
 
     engine->RegisterGlobalProperty( twi.c_str(), this );
 
-    /*engine->RegisterObjectMethod("TWI", "void setMode(int t)"
-                                   , asMETHODPR( ScriptTwi, setMode, (spiMode_t), void)
-                                   , asCALL_THISCALL );*/
+    engine->RegisterObjectMethod("TWI", "void setMode(int t)"
+                                   , asMETHODPR( ScriptTwi, setMode, (twiMode_t), void)
+                                   , asCALL_THISCALL );
 
     engine->RegisterObjectMethod("TWI", "void sendByte(uint8 b)"
                                    , asMETHODPR( ScriptTwi, sendByte, (uint8_t), void)

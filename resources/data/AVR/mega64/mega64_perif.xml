@@ -22,7 +22,7 @@
   <port name="PORTF" pins="8" outreg="PORTF" inreg="PINF" dirreg="DDRF"/>
   <port name="PORTG" pins="5" outreg="PORTG" inreg="PING" dirreg="DDRG"/>
 
-  <!-- intosc name="intosc" /> -->
+  <intosc name="intosc" />
 
   <!-- timer0-2 8 bit, 1-2 16bit -->
   <timer name="TIMER0"  type="821" configregsA="TCCR0"
