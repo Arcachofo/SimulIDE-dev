@@ -4,23 +4,29 @@
  ***( see copyright.txt file at root folder )*******************************/
 
 #include <math.h>
+#include <QToolTip>
 
 #include "memtable.h"
 #include "mainwindow.h"
 #include "simulator.h"
+#include "utils.h"
 
 MemTable::MemTable( QWidget* parent, int dataSize, int wordBytes )
         : QWidget( parent )
 {
     setupUi(this);
 
+    m_addrBytes = ceil( ceil(log2(dataSize))/8 );
     m_wordBytes = wordBytes;
     m_cellBytes = wordBytes;
     m_byteRatio = 1;
     m_updtCount = 0;
     m_data = NULL;
+    m_hoverItem = NULL;
 
     resizeTable( dataSize );
+
+    table->setMouseTracking( true );
 }
 
 void MemTable::updateTable( QVector<int>* data )
@@ -51,7 +57,18 @@ void MemTable::setCellValue( int address, int val )
     int colRam = address%16;
     int colAscii = colRam +17;
 
-    table->item( row, colRam )->setData( 0, valToHex( val, m_cellBytes ) );
+    QTableWidgetItem* item = table->item( row, colRam );
+    if( underMouse() && item == m_hoverItem )
+    {
+        QString values = "Addr: "+decToBase( val, 10, m_addrBytes )
+                       +"\nDec: "+decToBase( val, 10, 3 )
+                       +"\nOct: "+decToBase( val,  8, 3 )
+                       +"\nBin: "+decToBase( val,  2, 8 );
+
+        QToolTip::showText( QCursor::pos(), values );
+    }
+
+    item->setData( 0, valToHex( val, m_cellBytes ) );
     QString valS = QChar( val&0x00FF );
     for( int i=1; i<m_cellBytes; ++i )
     {
@@ -93,7 +110,7 @@ void MemTable::resizeTable( int dataSize )
     m_dataSize = dataSize;
     dataSize *= m_byteRatio;
 
-    int addrBytes = ceil( ceil(log2(dataSize))/8 );
+    m_addrBytes = ceil( ceil(log2(dataSize))/8 );
 
     int rows = dataSize/16;
     if( dataSize%16) rows++;
@@ -125,7 +142,7 @@ void MemTable::resizeTable( int dataSize )
         it = new QTableWidgetItem(0);
         it->setFlags( Qt::ItemIsEnabled );
         it->setFont( font );
-        it->setText( " 0x"+valToHex( row*16, addrBytes )+" ");
+        it->setText( " 0x"+valToHex( row*16, m_addrBytes )+" ");
         table->setVerticalHeaderItem( row, it );
 
         for( int col=0; col<33; ++col )
@@ -220,6 +237,11 @@ void MemTable::on_table_itemChanged( QTableWidgetItem* item )
     if( running ) Simulator::self()->resumeSim();
 
     m_blocked = false;
+}
+
+void MemTable::on_table_itemEntered( QTableWidgetItem* item )
+{
+    m_hoverItem = item;
 }
 
 void MemTable::cellClicked( int row, int col )
