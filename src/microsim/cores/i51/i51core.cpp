@@ -217,10 +217,10 @@ void I51Core::operRel() { m_dataEvent.append( aRELA | aORIG | aPGM );       // m
                           m_dataEvent.append( aRELA         | aPGM ); }     // m_offset = data;
 
 void I51Core::addrRgx() { m_opAddr = m_RxAddr; }
-void I51Core::addrInd() { m_opAddr = checkAddr( I_RX_VAL );}             //
+void I51Core::addrInd() { m_opAddr = checkAddr( I_RX_VAL );}                //
 void I51Core::addrI08() { m_dataEvent.append( aIMME | aORIG ); }            // m_opAddr = data;
-void I51Core::addrDir() { m_dataEvent.append( aDIRE | aPGM ); }            // m_opAddr = data;
-void I51Core::addrBit( bool invert ) { m_dataEvent.append( aBIT  | aPGM ); // m_opAddr = addr, m_op0 = bitMask
+void I51Core::addrDir() { m_dataEvent.append( aDIRE | aPGM ); }             // m_opAddr = data;
+void I51Core::addrBit( bool invert ) { m_dataEvent.append( aBIT  | aPGM );  // m_opAddr = addr, m_op0 = bitMask
                                        m_invert = invert; }
 
 void I51Core::pushStack8( uint8_t value )

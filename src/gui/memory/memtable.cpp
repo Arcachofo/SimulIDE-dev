@@ -60,10 +60,10 @@ void MemTable::setCellValue( int address, int val )
     QTableWidgetItem* item = table->item( row, colRam );
     if( underMouse() && item == m_hoverItem )
     {
-        QString values = "Addr: "+decToBase( val, 10, m_addrBytes )
-                       +"\nDec: "+decToBase( val, 10, 3 )
-                       +"\nOct: "+decToBase( val,  8, 3 )
-                       +"\nBin: "+decToBase( val,  2, 8 );
+        QString values = "Addr: 0x"+valToHex( address, m_addrBytes )
+                       +"\nDec: "+decToBase( val, 10, 2*m_cellBytes+1 )
+                       +"\nOct: "+decToBase( val,  8, 3*m_cellBytes )
+                       +"\nBin: "+decToBase( val,  2, 8*m_cellBytes );
 
         QToolTip::showText( QCursor::pos(), values );
     }
@@ -82,8 +82,8 @@ void MemTable::setData( QVector<int>* data, int wordBytes )
 {
     m_data = data;
 
-    if( (data->size() != m_dataSize)
-      ||(wordBytes != m_wordBytes) )
+    if( data->size() != m_dataSize
+      || wordBytes   != m_wordBytes )
     {
         m_wordBytes = wordBytes;
         m_cellBytes = wordBytes;
