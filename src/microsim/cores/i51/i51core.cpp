@@ -201,7 +201,7 @@ void I51Core::readOperand()
         if( addrMode & aORIG ) m_op2 = m_pgmData;
         else                   m_opAddr = m_pgmData;
     }
-    else if( addrMode & aBIT ){   // Get bit mask an Reg address
+    else if( addrMode & aBIT ){   // Get bit mask and Reg address
         m_bitAddr = m_pgmData;
         m_bitMask = 1 << (m_pgmData & 7);
         if( m_bitAddr > m_lowDataMemEnd ) m_bitAddr &= 0xF8;
@@ -297,18 +297,21 @@ void I51Core::RET() { m_PC  = popStack8() << 8; m_PC |= popStack8(); }
 
 void I51Core::JBC()
 {
-    if( m_dataMem[m_bitAddr] & m_bitMask )
+    uint8_t v = GET_RAM( m_bitAddr );
+    if( v & m_bitMask )
     {
-        m_dataMem[m_bitAddr] &= ~m_bitMask;
+        SET_RAM( m_bitAddr, v & ~m_bitMask );
         m_PC += (int8_t)m_opAddr;
     }
 }
 
 void I51Core::JB()
-{ if(   m_dataMem[m_bitAddr] & m_bitMask  ) m_PC += (int8_t)m_opAddr; }
+{
+    if( GET_RAM( m_bitAddr ) & m_bitMask  ) m_PC += (int8_t)m_opAddr;
+}
 
 void I51Core::JNB()
-{ if( !(m_dataMem[m_bitAddr] & m_bitMask) ) m_PC += (int8_t)m_opAddr; }
+{ if( !(GET_RAM( m_bitAddr ) & m_bitMask) ) m_PC += (int8_t)m_opAddr; }
 
 void I51Core::JC()  { if(  STATUS(Cy) ) m_PC += (int8_t)m_opAddr; }
 void I51Core::JNC() { if( !STATUS(Cy) ) m_PC += (int8_t)m_opAddr; }
@@ -318,14 +321,14 @@ void I51Core::JNZ() { if(  ACC        ) m_PC += (int8_t)m_opAddr; }
 void I51Core::MOVbc()
 {
     uint8_t carry = STATUS(Cy) >> Cy;
-    uint8_t     value = m_dataMem[m_bitAddr] & ~m_bitMask; // Clear bit
-    if( carry ) value = m_dataMem[m_bitAddr] | m_bitMask;  // Set bit if Carry
+    uint8_t     value = GET_RAM( m_bitAddr ) & ~m_bitMask; // Clear bit
+    if( carry ) value = GET_RAM( m_bitAddr ) | m_bitMask;  // Set bit if Carry
 
     SET_RAM( m_bitAddr, value );
 }
 void I51Core::MOVc()
 {
-    uint8_t value = (m_dataMem[m_bitAddr] & m_bitMask) ? 1 : 0;
+    uint8_t value = (GET_RAM( m_bitAddr ) & m_bitMask) ? 1 : 0;
     write_S_Bit( Cy, value );
 }
 
@@ -333,7 +336,7 @@ void I51Core::ORLc()
 {
     uint8_t carry = STATUS(Cy) >> Cy;
 
-    uint8_t value = m_dataMem[m_bitAddr] & m_bitMask;
+    uint8_t value = GET_RAM( m_bitAddr ) & m_bitMask;
     if( m_invert ) value = value ? 1 : carry;
     else           value = value ? carry : 1;
 
@@ -344,7 +347,7 @@ void I51Core::ANLc()
 {
     uint8_t carry = STATUS(Cy) >> Cy;
 
-    uint8_t value = m_dataMem[m_bitAddr] & m_bitMask ;
+    uint8_t value = GET_RAM( m_bitAddr ) & m_bitMask ;
     if( m_invert ) value = value ? 0 : carry;
     else           value = value ? carry : 0;
 
@@ -355,9 +358,9 @@ void I51Core::CLRc()  { clear_S_Bit( Cy ); }
 void I51Core::SETBc() { set_S_Bit( Cy ); }
 void I51Core::CPLc()  { *m_STATUS ^= 1 << Cy; }
 
-void I51Core::CLRb()  { SET_RAM( m_bitAddr, m_dataMem[m_bitAddr] & ~m_bitMask ); }
-void I51Core::SETBb() { SET_RAM( m_bitAddr, m_dataMem[m_bitAddr] | m_bitMask ); }
-void I51Core::CPLb()  { SET_RAM( m_bitAddr, m_dataMem[m_bitAddr] ^ m_bitMask ); }
+void I51Core::CLRb()  { SET_RAM( m_bitAddr, GET_RAM( m_bitAddr ) & ~m_bitMask ); }
+void I51Core::SETBb() { SET_RAM( m_bitAddr, GET_RAM( m_bitAddr ) | m_bitMask ); }
+void I51Core::CPLb()  { SET_RAM( m_bitAddr, GET_RAM( m_bitAddr ) ^ m_bitMask ); }
 
 void I51Core::CJNE()  ///
 {
@@ -367,7 +370,7 @@ void I51Core::CJNE()  ///
 
 void I51Core::DJNZ()
 {
-    int value = m_dataMem[m_op0]-1; // m_op0 = Rx or Dir
+    int value = GET_RAM( m_op0 )-1; // m_op0 = Rx or Dir
     SET_RAM( m_op0, value );
     if( value ) m_PC += (int8_t)m_opAddr;
 }

@@ -124,10 +124,6 @@ class MAINMODULE_EXPORT I51Core : public McuCpu, public eElement
         uint64_t m_dataTime;    // to store previous times
 
 
-
-
-
-
         inline void readOperand();
         inline void Exec();
         inline void Decode();
@@ -161,7 +157,7 @@ class MAINMODULE_EXPORT I51Core : public McuCpu, public eElement
             addr = checkAddr( addr );
             return McuCpu::GET_RAM( addr );
         }
-        inline void SET_RAM( uint16_t addr , uint8_t val )
+        inline void SET_RAM( uint16_t addr , uint8_t val ) override
         {
             addr = checkAddr( addr );
             McuCpu::SET_RAM( addr, val );

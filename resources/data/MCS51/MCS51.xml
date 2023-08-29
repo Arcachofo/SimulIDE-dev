@@ -43,6 +43,8 @@
         <interrupt name="USART_R" enable="ES"  flag="RI"  priority="PS"  vector="0x0023" />
         <interrupt name="USART_T" enable="ES"  flag="TI"  priority="PS"  vector="0x0023" />
     </interrupts>
+
+    <intosc name="intosc" />
     
     <port name="PORT0" pins="8" outreg="P0" outmask="11111111" 
                                 opencol="11111111">
