@@ -288,8 +288,8 @@ void I51Core::RLC()
 
 void I51Core::LCALL()
 {
-    pushStack8(( m_PC+3 ) & 0xFF );
-    pushStack8(( m_PC+3 ) >> 8 );
+    pushStack8( m_PC & 0xFF );
+    pushStack8( m_PC >> 8 );
     m_PC = m_opAddr;
 }
 
