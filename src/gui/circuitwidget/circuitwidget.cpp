@@ -141,8 +141,8 @@ void CircuitWidget::createActions()
     connect( zoomOneAct, &QAction::triggered,
              CircuitView::self(), &CircuitView::zoomOne, Qt::UniqueConnection );
 
-    powerCircAct = new QAction( QIcon(":/poweroff.png"),tr("Power Circuit"), this);
-    powerCircAct->setStatusTip(tr("Power the Circuit"));
+    powerCircAct = new QAction( QIcon(":/poweroff.png"),tr("Start Simulation"), this);
+    powerCircAct->setStatusTip(tr("Start Simulation"));
     powerCircAct->setIconText("Off");
     connect( powerCircAct, &QAction::triggered,
                      this, &CircuitWidget::powerCirc, Qt::UniqueConnection );
@@ -366,6 +366,7 @@ void CircuitWidget::powerCirc()
 void CircuitWidget::powerCircOn()
 {
     powerCircAct->setIcon( QIcon(":/poweron.png") );
+    powerCircAct->setText(tr("Stop Simulation"));
     powerCircAct->setEnabled( true );
     powerCircAct->setIconText("On");
     pauseSimAct->setIcon( QIcon(":/pausesim.png") );
@@ -380,9 +381,11 @@ void CircuitWidget::powerCircOff()
      || Simulator::self()->isRunning() ) Simulator::self()->stopSim();
 
     powerCircAct->setIcon( QIcon(":/poweroff.png") );
+    powerCircAct->setText(tr("Start Simulation"));
     powerCircAct->setIconText("Off");
     powerCircAct->setEnabled( true );
     pauseSimAct->setEnabled( false );
+    pauseSimAct->setText(tr("Pause Simulation"));
     MainWindow::self()->setState("■");
 }
 
@@ -421,6 +424,7 @@ void CircuitWidget::pauseCirc()
         Simulator::self()->pauseSim();
         setMsg( " "+tr("Paused")+" ", 1 );
         MainWindow::self()->setState("❚❚");
+        pauseSimAct->setText(tr("Resume Simulation"));
         pauseSimAct->setIcon( QIcon(":/simpaused.png") );
         powerCircAct->setIcon( QIcon(":/poweroff.png") );
         powerCircAct->setIconText("Off");
@@ -430,6 +434,7 @@ void CircuitWidget::pauseCirc()
         Simulator::self()->resumeSim();
         setMsg( " "+tr("Running")+" ", 0 );
         MainWindow::self()->setState("▶");
+        pauseSimAct->setText(tr("Pause Simulation"));
         pauseSimAct->setIcon( QIcon(":/pausesim.png") );
         powerCircAct->setIcon( QIcon(":/poweron.png") );
         powerCircAct->setIconText("On");
