@@ -25,7 +25,7 @@ Compiler::Compiler( CodeEditor* editor, OutPanelText* outPane )
 
     m_compDialog = NULL;
 
-    m_file     = editor->getFilePath();
+    m_file     = QDir::toNativeSeparators( editor->getFilePath() );
     m_fileDir  = getFileDir( m_file );
     m_fileExt  = getFileExt( m_file );
     m_fileName = getBareName( m_file );
@@ -48,16 +48,16 @@ void Compiler::clearCompiler()
 
 QString Compiler::replaceData( QString str )
 {
-    QString filePath = addQuotes( m_file );
-    QString inclPath = addQuotes( m_inclPath );
-    //QString buildPath = addQuotes( m_buildPath );
+    QString filePath  = addQuotes( m_file );
+    QString inclPath  = addQuotes( m_inclPath );
+    QString buildPath = addQuotes( m_buildPath );
 
     str = str.replace( "$filePath", filePath )
              .replace( "$fileDir" , m_fileDir )
              .replace( "$fileName", m_fileName )
              .replace( "$fileExt" , m_fileExt )
              .replace( "$inclPath", inclPath )
-             .replace( "$buildPath", m_buildPath );
+             .replace( "$buildPath", buildPath );
     return str;
 }
 
@@ -86,10 +86,10 @@ void Compiler::loadCompiler( QString file )
         QDir buildDir= QFileInfo( m_file ).absoluteDir();
         if( !buildDir.cd( path ) )
         {
-            buildDir.mkpath( m_fileDir+"/"+path); // Create build Dir
+            buildDir.mkpath( m_fileDir+QDir::separator()+path); // Create build Dir
             buildDir.cd( path );
         }
-        m_buildPath = buildDir.absolutePath()+"/";
+        m_buildPath = buildDir.absolutePath()+QDir::separator();
     }
     if( compiler.hasAttribute("inclPath") ) inclPath = compiler.attribute( "inclPath" );
     if( !inclPath.isEmpty() ) m_inclPath = inclPath;
@@ -251,7 +251,7 @@ QString Compiler::getPath( QString msg, QString oldPath )
                          , QFileDialog::ShowDirsOnly
                          | QFileDialog::DontResolveSymlinks);
 
-    if( !path.isEmpty() && !path.endsWith("/") ) path += "/";
+    if( !path.isEmpty() && !path.endsWith(QDir::separator()) ) path += QDir::separator();
     return path;
 }
 
