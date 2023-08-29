@@ -30,6 +30,7 @@ class McuIntOsc : public McuModule, public eElement
 
         McuPin* clkOutPin() { return m_clkOutPin; }
         McuPin* clkInPin()  { return m_clkInPin; }
+        bool hasClockPins() { return m_clkPin[0] != nullptr; } // Has Multiplexed Clock Pins
 
         virtual void setPin( int n, McuPin* p );
         //McuPin* getClkPin( int n );

@@ -211,7 +211,7 @@ propGroup cg = { tr("Config"), { new ComProperty( "", tr("Changes applied after 
 if( m_portRstPin )
 cg.propList.append(new BoolProp<Mcu>("Rst_enabled", tr("Enable Reset Pin")   ,"", this, &Mcu::rstPinEnabled, &Mcu::enableRstPin ) );
 
-if( m_eMcu.m_intOsc /*&& m_eMcu.m_intOsc->clkInPin()*/ )
+if( m_eMcu.m_intOsc && m_eMcu.m_intOsc->hasClockPins() )
 cg.propList.append(new BoolProp<Mcu>("Ext_Osc"    , tr("External Oscillator"),"", this, &Mcu::extOscEnabled, &Mcu::enableExtOsc ) );
 
 if( m_eMcu.m_wdt )
