@@ -231,7 +231,7 @@ void ItemLibrary::loadItems()
     addItem( Dht22::libraryItem() );
     addItem( DS1621::libraryItem() );
     addItem( Ds18b20::libraryItem() );
-    addItem( new LibraryItem( QObject::tr("Perifericals"), "Micro", "perif.png","Perifericals", NULL ) );
+    addItem( new LibraryItem( QObject::tr("Peripherals"), "Micro", "perif.png","Peripherals", NULL ) );
     addItem( SerialPort::libraryItem() );
     addItem( TouchPad::libraryItem() );
     addItem( KY023::libraryItem() );

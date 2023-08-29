@@ -3436,7 +3436,7 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Perifericals</source>
+        <source>Peripherals</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3899,7 +3899,7 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Perifericals</source>
+        <source>Peripherals</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

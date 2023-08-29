@@ -4040,7 +4040,7 @@ Neplatný súbor balíka:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Perifericals</source>
+        <source>Peripherals</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4437,7 +4437,7 @@ Neplatný súbor balíka:
         <translation>Otvoriť</translation>
     </message>
     <message>
-        <source>Perifericals</source>
+        <source>Peripherals</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

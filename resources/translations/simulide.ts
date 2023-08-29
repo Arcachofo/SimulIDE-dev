@@ -1733,7 +1733,7 @@ Can&apos;t find file:
 <context>
     <name>Esp01</name>
     <message>
-        <source>Perifericals</source>
+        <source>Peripherals</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2272,7 +2272,7 @@ Can&apos;t find file:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Perifericals</source>
+        <source>Peripherals</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2283,7 +2283,7 @@ Can&apos;t find file:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Perifericals</source>
+        <source>Peripherals</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3370,7 +3370,7 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Perifericals</source>
+        <source>Peripherals</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3861,7 +3861,7 @@ Not valid Package file:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Perifericals</source>
+        <source>Peripherals</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4430,7 +4430,7 @@ Do you want to save your changes?
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Perifericals</source>
+        <source>Peripherals</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

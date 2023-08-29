@@ -2023,7 +2023,7 @@ Can&apos;t find file:
 <context>
     <name>Esp01</name>
     <message>
-        <source>Perifericals</source>
+        <source>Peripherals</source>
         <translation type="obsolete">Periferik</translation>
     </message>
     <message>
@@ -2639,7 +2639,7 @@ Can&apos;t find file:
         <translation type="unfinished">KY-023</translation>
     </message>
     <message>
-        <source>Perifericals</source>
+        <source>Peripherals</source>
         <translation type="obsolete">Periferik</translation>
     </message>
 </context>
@@ -2650,7 +2650,7 @@ Can&apos;t find file:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Perifericals</source>
+        <source>Peripherals</source>
         <translation type="obsolete">Periferik</translation>
     </message>
     <message>
@@ -3939,7 +3939,7 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Sensörler</translation>
     </message>
     <message>
-        <source>Perifericals</source>
+        <source>Peripherals</source>
         <translation type="unfinished">Periferik</translation>
     </message>
     <message>
@@ -4542,7 +4542,7 @@ p, li { white-space: pre-wrap; }
 %2.</translation>
     </message>
     <message>
-        <source>Perifericals</source>
+        <source>Peripherals</source>
         <translation type="unfinished">Periferik</translation>
     </message>
     <message>
@@ -5191,7 +5191,7 @@ Değişiklikler kaydedilsin mi?
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Perifericals</source>
+        <source>Peripherals</source>
         <translation type="obsolete">Periferik</translation>
     </message>
     <message>

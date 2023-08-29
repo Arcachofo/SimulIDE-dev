@@ -2080,7 +2080,7 @@ Can&apos;t find file:
 <context>
     <name>Esp01</name>
     <message>
-        <source>Perifericals</source>
+        <source>Peripherals</source>
         <translation type="vanished">Периферия</translation>
     </message>
     <message>
@@ -2729,7 +2729,7 @@ Can&apos;t find file:
         <translation>KY-023</translation>
     </message>
     <message>
-        <source>Perifericals</source>
+        <source>Peripherals</source>
         <translation type="vanished">Периферия</translation>
     </message>
 </context>
@@ -2740,7 +2740,7 @@ Can&apos;t find file:
         <translation>Датчик угла (инкрементный)</translation>
     </message>
     <message>
-        <source>Perifericals</source>
+        <source>Peripherals</source>
         <translation type="vanished">Периферия</translation>
     </message>
     <message>
@@ -4093,7 +4093,7 @@ p, li { white-space: pre-wrap; }
         <translation>Датчики</translation>
     </message>
     <message>
-        <source>Perifericals</source>
+        <source>Peripherals</source>
         <translation>Периферия</translation>
     </message>
     <message>
@@ -4812,7 +4812,7 @@ Not valid Package file:
 %2.</translation>
     </message>
     <message>
-        <source>Perifericals</source>
+        <source>Peripherals</source>
         <translation>Периферия</translation>
     </message>
     <message>
@@ -5515,7 +5515,7 @@ Do you want to save your changes?
         <translation>Резистивная сенсорная панель</translation>
     </message>
     <message>
-        <source>Perifericals</source>
+        <source>Peripherals</source>
         <translation type="vanished">Периферия</translation>
     </message>
     <message>

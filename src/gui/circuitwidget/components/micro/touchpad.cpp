@@ -24,7 +24,7 @@ LibraryItem* TouchPad::libraryItem()
 {
     return new LibraryItem(
         tr( "TouchPad (Resistive)" ),
-        "Perifericals",
+        "Peripherals",
         "touch.png",
         "TouchPadR",
         TouchPad::construct);

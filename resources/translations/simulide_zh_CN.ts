@@ -4008,7 +4008,7 @@ Not valid Package file:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Perifericals</source>
+        <source>Peripherals</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4405,7 +4405,7 @@ Not valid Package file:
         <translation>打开</translation>
     </message>
     <message>
-        <source>Perifericals</source>
+        <source>Peripherals</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -2532,7 +2532,7 @@ Chcete uložit změny?
 <context>
     <name>Esp01</name>
     <message>
-        <source>Perifericals</source>
+        <source>Peripherals</source>
         <translation type="vanished">Periferie</translation>
     </message>
     <message>
@@ -3280,7 +3280,7 @@ Chcete uložit změny?
         <translation>KY-023</translation>
     </message>
     <message>
-        <source>Perifericals</source>
+        <source>Peripherals</source>
         <translation type="vanished">Periferie</translation>
     </message>
 </context>
@@ -3292,7 +3292,7 @@ Chcete uložit změny?
         <translation>Rotační enkodér (relativní)</translation>
     </message>
     <message>
-        <source>Perifericals</source>
+        <source>Peripherals</source>
         <translation type="vanished">Periferie</translation>
     </message>
     <message>
@@ -4891,7 +4891,7 @@ Neplatný soubor s pouzdrem
     </message>
     <message>
         <location filename="../../src/gui/circuitwidget/itemlibrary.cpp" line="+234"/>
-        <source>Perifericals</source>
+        <source>Peripherals</source>
         <translation>Periferie</translation>
     </message>
     <message>
@@ -5716,7 +5716,7 @@ Neplatný soubor s pouzdrem
     <name>SerialPort</name>
     <message>
         <location filename="../../src/gui/serial/serialport.cpp" line="+32"/>
-        <source>Perifericals</source>
+        <source>Peripherals</source>
         <translation>Periferie</translation>
     </message>
     <message>
@@ -6528,7 +6528,7 @@ Chcete uložit změny?
         <translation>TouchPad (odporový)</translation>
     </message>
     <message>
-        <source>Perifericals</source>
+        <source>Peripherals</source>
         <translation type="vanished">Periferie</translation>
     </message>
     <message>

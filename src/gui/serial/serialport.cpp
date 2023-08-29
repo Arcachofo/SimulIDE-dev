@@ -29,7 +29,7 @@ LibraryItem* SerialPort::libraryItem()
 {
     return new LibraryItem(
         "SerialPort",
-        tr("Perifericals"),
+        tr("Peripherals"),
         "serialport.png",
         "SerialPort",
         SerialPort::construct );

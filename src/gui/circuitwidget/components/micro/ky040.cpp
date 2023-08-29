@@ -35,7 +35,7 @@ LibraryItem* KY040::libraryItem()
 {
     return new LibraryItem(
         tr("Rotary Encoder (relative)"),
-        "Perifericals",
+        "Peripherals",
         "ky-040.png",
         "KY040",
         KY040::construct);

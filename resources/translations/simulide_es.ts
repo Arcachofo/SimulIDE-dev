@@ -2046,7 +2046,7 @@ Can&apos;t find file:
 <context>
     <name>Esp01</name>
     <message>
-        <source>Perifericals</source>
+        <source>Peripherals</source>
         <translation type="vanished">Periféricos</translation>
     </message>
     <message>
@@ -2693,7 +2693,7 @@ Can&apos;t find file:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Perifericals</source>
+        <source>Peripherals</source>
         <translation type="vanished">Periféricos</translation>
     </message>
 </context>
@@ -2704,7 +2704,7 @@ Can&apos;t find file:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Perifericals</source>
+        <source>Peripherals</source>
         <translation type="vanished">Periféricos</translation>
     </message>
     <message>
@@ -4024,7 +4024,7 @@ p, li { white-space: pre-wrap; }
         <translation>Sensores</translation>
     </message>
     <message>
-        <source>Perifericals</source>
+        <source>Peripherals</source>
         <translation>Periféricos</translation>
     </message>
     <message>
@@ -4684,7 +4684,7 @@ Archivo packae no valido:</translation>
 %2.</translation>
     </message>
     <message>
-        <source>Perifericals</source>
+        <source>Peripherals</source>
         <translation>Periféricos</translation>
     </message>
     <message>
@@ -5363,7 +5363,7 @@ Quiere guardar los cambios?
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Perifericals</source>
+        <source>Peripherals</source>
         <translation type="vanished">Periféricos</translation>
     </message>
     <message>

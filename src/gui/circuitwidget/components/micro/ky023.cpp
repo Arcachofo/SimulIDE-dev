@@ -31,7 +31,7 @@ LibraryItem* KY023::libraryItem()
 {
     return new LibraryItem(
         tr( "KY-023" ),
-        "Perifericals",
+        "Peripherals",
         "ky-023.png",
         "KY023",
         KY023::construct);

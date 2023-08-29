@@ -2319,7 +2319,7 @@ Can&apos;t find file:
 <context>
     <name>Esp01</name>
     <message>
-        <source>Perifericals</source>
+        <source>Peripherals</source>
         <translation type="obsolete">Peripherie</translation>
     </message>
     <message>
@@ -2950,7 +2950,7 @@ Can&apos;t find file:
         <translation></translation>
     </message>
     <message>
-        <source>Perifericals</source>
+        <source>Peripherals</source>
         <translation type="vanished">Peripherie</translation>
     </message>
 </context>
@@ -2961,7 +2961,7 @@ Can&apos;t find file:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Perifericals</source>
+        <source>Peripherals</source>
         <translation type="obsolete">Peripherie</translation>
     </message>
     <message>
@@ -4317,7 +4317,7 @@ Keine valide Package Datei:
         <translation>Sensoren</translation>
     </message>
     <message>
-        <source>Perifericals</source>
+        <source>Peripherals</source>
         <translation>Peripherie</translation>
     </message>
     <message>
@@ -4986,7 +4986,7 @@ Keine valide Package Datei:
 %2.</translation>
     </message>
     <message>
-        <source>Perifericals</source>
+        <source>Peripherals</source>
         <translation type="unfinished">Peripherie</translation>
     </message>
     <message>
@@ -5726,7 +5726,7 @@ Sollen die Änderungen gespeichert werden?
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Perifericals</source>
+        <source>Peripherals</source>
         <translation type="obsolete">Peripherie</translation>
     </message>
     <message>
