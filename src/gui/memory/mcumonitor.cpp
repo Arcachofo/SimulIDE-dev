@@ -59,6 +59,8 @@ MCUMonitor::MCUMonitor( QWidget* parent, eMcu* mcu )
         }
 
         m_ramMonitor = new MemTable( tabWidget, m_processor->ramSize() );
+        //RAM is cleared when MCU restart, so no use to save/load it.
+        m_ramMonitor->setCanSaveLoad( false );
         connect( m_ramMonitor, SIGNAL( dataChanged(int, int)), this, SLOT(ramDataChanged(int, int)) );
         tabWidget->addTab( m_ramMonitor, "RAM" );
         jumpButton->setVisible( true );

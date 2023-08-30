@@ -6,6 +6,8 @@
 #ifndef MEMDATA_H
 #define MEMDATA_H
 
+#include <QVector>
+
 class MemTable;
 class eMcu;
 
@@ -26,7 +28,7 @@ class MAINMODULE_EXPORT MemData
         static QString getMem( QVector<int>* data );
         static void setMem( QVector<int>* data, QString m );
 
-    public slots:
+    //public slots:
         virtual void showTable( int dataSize=256, int wordBytes=1 );
 
     protected:

@@ -11,6 +11,7 @@
 #include "ui_memtable.h"
 
 class Component;
+class QAction;
 
 class MemTable : public QWidget, private Ui::MemTable
 {
@@ -24,6 +25,8 @@ class MemTable : public QWidget, private Ui::MemTable
         void setValue( int address, int val );
         void setCellBytes( int bytes );
         void setAddrSelected( int addr ,bool jump );
+        void setCanSaveLoad( bool val);
+        bool canSaveLoad();
 
     signals:
         void dataChanged( int address, int val );
@@ -32,6 +35,9 @@ class MemTable : public QWidget, private Ui::MemTable
         void on_table_itemChanged( QTableWidgetItem* item );
         void on_table_cellClicked( int row, int col ) { cellClicked( row, col ); }
         void on_table_itemEntered( QTableWidgetItem* item );
+        void on_context_menu_requested( const QPoint &pos );
+        void saveTable();
+        void loadTable();
 
     private:
         void resizeTable( int dataSize );
@@ -47,6 +53,8 @@ class MemTable : public QWidget, private Ui::MemTable
         int m_addrBytes;
 
         bool m_blocked;
+
+        bool m_canSaveLoad;
 
         QTableWidgetItem* m_hoverItem;
         QVector<int>* m_data;

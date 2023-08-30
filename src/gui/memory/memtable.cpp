@@ -5,11 +5,13 @@
 
 #include <math.h>
 #include <QToolTip>
+#include <QMenu>
 
 #include "memtable.h"
 #include "mainwindow.h"
 #include "simulator.h"
 #include "utils.h"
+#include "memdata.h"
 
 MemTable::MemTable( QWidget* parent, int dataSize, int wordBytes )
         : QWidget( parent )
@@ -24,9 +26,17 @@ MemTable::MemTable( QWidget* parent, int dataSize, int wordBytes )
     m_data = NULL;
     m_hoverItem = NULL;
 
+    m_canSaveLoad = true;
+
     resizeTable( dataSize );
 
     table->setMouseTracking( true );
+
+    setContextMenuPolicy( Qt::CustomContextMenu );
+
+    connect( this, &MemTable::customContextMenuRequested, this, &MemTable::on_context_menu_requested );
+    connect( actionSave_Memory_Table, &QAction::triggered, this, &MemTable::saveTable );
+    connect( actionLoad_Memory_Table, &QAction::triggered, this, &MemTable::loadTable );
 }
 
 void MemTable::updateTable( QVector<int>* data )
@@ -183,6 +193,16 @@ void MemTable::setAddrSelected( int addr, bool jump )
     if( jump ) table->scrollToItem( table->item( row, col ) );
 }
 
+void MemTable::setCanSaveLoad(bool val)
+{
+    m_canSaveLoad=val;
+}
+
+bool MemTable::canSaveLoad()
+{
+    return m_canSaveLoad;
+}
+
 void MemTable::on_table_itemChanged( QTableWidgetItem* item )
 {
     if( m_blocked ) return;
@@ -242,6 +262,54 @@ void MemTable::on_table_itemChanged( QTableWidgetItem* item )
 void MemTable::on_table_itemEntered( QTableWidgetItem* item )
 {
     m_hoverItem = item;
+}
+
+void MemTable::on_context_menu_requested( const QPoint &pos )
+{
+    if (!m_canSaveLoad)
+        return;
+    QMenu menu( this );
+
+    menu.addAction( actionSave_Memory_Table );
+    menu.addAction( actionLoad_Memory_Table );
+    menu.exec( this->mapToGlobal( pos ) );
+}
+
+void MemTable::saveTable()
+{
+    if (m_data)
+        MemData::saveData( m_data );
+    else {
+        QVector<int> data( m_dataSize );
+        int rows = m_dataSize/16;
+        if ( m_dataSize%16 ) rows++;
+        int i = 0;
+        bool ok;
+        for ( int row = 0; row < rows; row++ ) {
+            for ( int col = 0; col < 16; col++ ) {
+                data[i] = table->item( row, col )->data(0).toString().toInt( &ok, 16 );
+                i++;
+                if ( i >= m_dataSize )
+                    break;
+            }
+        }
+        MemData::saveData( &data );
+    }
+
+}
+
+void MemTable::loadTable()
+{
+    if (m_data) {
+        MemData::loadData( m_data, false );
+    } else {
+        QVector<int> data( m_dataSize );
+        if ( MemData::loadData( &data, false ) ) {
+            for ( int i = 0; i < data.size() ; i++ ) {
+                setValue( i,data[i] );
+            }
+        }
+    }
 }
 
 void MemTable::cellClicked( int row, int col )
