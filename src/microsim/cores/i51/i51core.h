@@ -50,8 +50,8 @@ class MAINMODULE_EXPORT I51Core : public McuCpu, public eElement
             aRELA=1<<3,
 
             aORIG=1<<4,
-            aPGM =1<<5,
-            aBIT =1<<6
+            aBIT =1<<5,
+            a16BIT=1<<6
         };
 
         virtual void stamp() override;
@@ -137,6 +137,7 @@ class MAINMODULE_EXPORT I51Core : public McuCpu, public eElement
         inline void addrRgx();
         inline void addrInd();
         inline void addrI08();
+        inline void addrI16();
         inline void addrDir();
         inline void addrBit( bool invert=false );
 

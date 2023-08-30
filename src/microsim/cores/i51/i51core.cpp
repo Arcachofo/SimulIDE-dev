@@ -167,6 +167,7 @@ void I51Core::runStep()
 
     if( m_cpuState == cpu_EXEC )  // Execute Instruction
     {
+        //qDebug("Before exec: PC:%x opcode:%x op0:%x opaddr:%x op2:%x",m_PC,m_opcode,m_op0,m_opAddr,m_op2);
         m_PC = m_tmpPC;
         Exec();
         m_tmpPC = m_PC;
@@ -187,18 +188,21 @@ void I51Core::readOperand()
     uint8_t addrMode = m_dataEvent.takeFirst();
 
     if( addrMode & aIMME ){
-        if( addrMode & aORIG ) m_op0 = m_opAddr = m_pgmData;
-        else{
-            if     ( m_cycle == 1 ) m_opAddr = (uint16_t)m_pgmData << 8; /// 16 bit addrs
-            else if( m_cycle == 2 ) m_opAddr |= m_pgmData;
+        if( addrMode & aORIG ) m_op0 = m_pgmData;
+        else {
+            if( addrMode & a16BIT ) {  // 16 bit address
+                if     ( m_cycle == 1 ) m_opAddr  = (uint16_t)m_pgmData << 8;
+                else if( m_cycle == 2 ) m_opAddr |= m_pgmData;
+            }
+            else m_opAddr = m_pgmData;
         }
     }
     else if( addrMode & aDIRE ){
-        if( addrMode & aORIG ) m_op0 = GET_RAM( m_pgmData );
+        if( addrMode & aORIG ) m_op0    = GET_RAM( m_pgmData );
         else                   m_opAddr = m_pgmData;
     }
     else if( addrMode & aRELA ){
-        if( addrMode & aORIG ) m_op2 = m_pgmData;
+        if( addrMode & aORIG ) m_op2    = m_pgmData;
         else                   m_opAddr = m_pgmData;
     }
     else if( addrMode & aBIT ){   // Get bit mask and Reg address
@@ -209,18 +213,20 @@ void I51Core::readOperand()
     }
 }
 
-void I51Core::operRgx() { m_op0 = m_RxAddr; }//{ m_op0 = m_dataMem[m_RxAddr]; }
-void I51Core::operInd() { m_op0 = m_dataMem[ checkAddr( I_RX_VAL ) ]; }
-void I51Core::operI08() { m_dataEvent.append( aIMME | aORIG | aPGM ); }     // m_op0 = data
-void I51Core::operDir() { m_dataEvent.append( aDIRE | aORIG | aPGM ); }     // m_op0 = GET_RAM( data );
-void I51Core::operRel() { m_dataEvent.append( aRELA | aORIG | aPGM );       // m_op2 = data;
-                          m_dataEvent.append( aRELA         | aPGM ); }     // m_offset = data;
+void I51Core::operRgx() { m_op0 = m_dataMem[m_RxAddr]; }               //
+void I51Core::operInd() { m_op0 = m_dataMem[ checkAddr( I_RX_VAL ) ]; }//
+void I51Core::operI08() { m_dataEvent.append( aIMME | aORIG ); }       // m_op0 = data
+void I51Core::operDir() { m_dataEvent.append( aDIRE | aORIG ); }       // m_op0 = GET_RAM( data );
+void I51Core::operRel() { m_dataEvent.append( aRELA | aORIG );         // m_op2 = data;
+                          m_dataEvent.append( aRELA         ); }       // m_offset = data;
 
 void I51Core::addrRgx() { m_opAddr = m_RxAddr; }
-void I51Core::addrInd() { m_opAddr = checkAddr( I_RX_VAL );}                //
-void I51Core::addrI08() { m_dataEvent.append( aIMME | aORIG ); }            // m_opAddr = data;
-void I51Core::addrDir() { m_dataEvent.append( aDIRE | aPGM ); }             // m_opAddr = data;
-void I51Core::addrBit( bool invert ) { m_dataEvent.append( aBIT  | aPGM );  // m_opAddr = addr, m_op0 = bitMask
+void I51Core::addrInd() { m_opAddr = checkAddr( I_RX_VAL );}           //
+void I51Core::addrI08() { m_dataEvent.append( aIMME ); }               // m_opAddr = data;
+void I51Core::addrI16() { m_dataEvent.append( aIMME | a16BIT);
+                          m_dataEvent.append( aIMME | a16BIT); }       // m_opAddr = data16;
+void I51Core::addrDir() { m_dataEvent.append( aDIRE         ); }       // m_opAddr = data;
+void I51Core::addrBit( bool invert ) { m_dataEvent.append( aBIT );     // m_opAddr = addr, m_op0 = bitMask
                                        m_invert = invert; }
 
 void I51Core::pushStack8( uint8_t value )
@@ -256,7 +262,7 @@ void I51Core::subFlags( uint8_t value1, uint8_t value2 )
 
 // INSTRUCTIONS -----------------------------
 
-void I51Core::AJMP() { m_PC = ((m_PC+2) & 0xF800) | m_opAddr | (( m_opcode & 0xE0 ) << 3 ); }
+void I51Core::AJMP() { m_PC = (m_PC & 0xF800) | m_opAddr | (( m_opcode & 0xE0 ) << 3 ); }
 void I51Core::LJMP() { m_PC = m_opAddr; }
 void I51Core::JMP()  { m_PC = GET_REG16_LH( REG_DPL ) + ACC; }
 void I51Core::SJMP() { m_PC += (int8_t)m_opAddr; }
@@ -533,7 +539,7 @@ void I51Core::Decode()
         switch( m_opcode ){                           // b-c Inst
             case 0x00:                       break;   // 1-1 NOP
             case 0x01: addrI08();            break;   // 2-2 AJMP addr11
-            case 0x02: addrI08(); addrI08(); break;   // 3-2 LJMP addr16
+            case 0x02: addrI16();            break;   // 3-2 LJMP addr16
             case 0x03:                       break;   // 1-1 RRa Ac >> 1
             case 0x04:                       break;   // 1-1 INC Ac <- Ac++  Accumulator
             case 0x05: addrDir();            break;   // 2-1 INC Di <- Di++  Direct
@@ -542,7 +548,7 @@ void I51Core::Decode()
 
             case 0x10: addrBit(); addrI08(); break;   // 3-2 JBC
             case 0x11: addrI08();            break;   // 2-2 ACALL addr11
-            case 0x12: addrI08(); addrI08(); break;   // 3-2 LCALL addr16
+            case 0x12: addrI16();            break;   // 3-2 LCALL addr16
             case 0x13:                       break;   // 1-1 RRCa C >> Ac>>1
             case 0x14:                       break;   // 1-1 DEC Ac <- Ac++  Accumulator
             case 0x15: addrDir();            break;   // 2-1 DEC Di <- Di++  Direct
@@ -612,7 +618,7 @@ void I51Core::Decode()
             case 0x86:
             case 0x87: addrDir(); operInd(); break;   // 2-2 MOVm Di <- In  @Indirect
 
-            case 0x90: addrI08(); addrI08(); break;   // 3-2 MOVd  Dptr <- addr16;
+            case 0x90: addrI16();            break;   // 3-2 MOVd  Dptr <- addr16;
             case 0x91: addrI08();            break;   // 2-2 ACALL addr11
             case 0x92: addrBit();            break;   // 2-2 MOVbc b  <- C
             case 0x93:                       break;   // 1-2 MOVCd Ac += (Dptr)
