@@ -5,6 +5,7 @@
 
 #include <QFileInfo>
 #include <QDebug>
+#include <QDateTime>
 
 #include "sdccdebugger.h"
 #include "codeeditor.h"
@@ -24,26 +25,27 @@ int SdccDebugger::compile( bool debug )
     int error = Compiler::compile( debug );
     if( error == 0 && !m_family.startsWith("pic") )
     {
-        if( !QFileInfo::exists( m_firmware ) )
-        {
-            QString ihx = m_buildPath+m_fileName+".ihx";
-            if( QFileInfo::exists( ihx ) )   // Convert .ihx to .hex
-            {
-                QString packihx = "packihx";
-            #ifndef Q_OS_UNIX
-                packihx += ".exe";
-            #endif
-                m_compProcess.setWorkingDirectory( m_buildPath );
-                m_compProcess.start( packihx+" "+m_fileName+".ihx" );
-                m_compProcess.waitForFinished(-1);
+        QFileInfo ihxInfo(m_buildPath+m_fileName+".ihx");
+        QFileInfo hexInfo(m_buildPath+m_fileName+".hex");
 
-                QFile file( m_buildPath+m_fileName+".hex" );
-                if( file.open(QFile::WriteOnly | QFile::Text) )
-                {
-                    QTextStream out(&file);
-                    out << m_compProcess.readAllStandardOutput();
-                    file.close();
-    }   }   }   }
+        if( !hexInfo.exists() // hex file not exists
+                || ( ihxInfo.exists() && (hexInfo.lastModified() < ihxInfo.lastModified()))) // ihx file is newer
+        {
+            QString packihx = "packihx";
+        #ifndef Q_OS_UNIX
+            packihx += ".exe";
+        #endif
+            m_compProcess.setWorkingDirectory( m_buildPath );
+            m_compProcess.start( packihx+" "+m_fileName+".ihx" );
+            m_compProcess.waitForFinished(-1);
+
+            QFile file( m_buildPath+m_fileName+".hex" );
+            if( file.open(QFile::WriteOnly | QFile::Text | QFile::Truncate) )
+            {
+                QTextStream out(&file);
+                out << m_compProcess.readAllStandardOutput();
+                file.close();
+    }   }   }
     return error;
 }
 
