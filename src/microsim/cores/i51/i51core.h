@@ -132,7 +132,9 @@ class MAINMODULE_EXPORT I51Core : public McuCpu, public eElement
         inline void operInd();
         inline void operI08();
         inline void operDir();
-        inline void operRel();
+        inline void operACC();
+        inline void opr2I08();
+        inline void opr2Dir();
 
         inline void addrRgx();
         inline void addrInd();
