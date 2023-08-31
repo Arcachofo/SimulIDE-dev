@@ -44,6 +44,7 @@ class MemTable : public QWidget, private Ui::MemTable
         void setCellValue( int address, int val );
         void cellClicked( int row, int col );
         QString valToHex( int val, int bytes );
+        QVector<int> toIntVector();
 
         int m_updtCount;
         int m_dataSize;

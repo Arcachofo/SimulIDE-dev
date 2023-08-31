@@ -280,19 +280,7 @@ void MemTable::saveTable()
     if (m_data)
         MemData::saveData( m_data );
     else {
-        QVector<int> data( m_dataSize );
-        int rows = m_dataSize/16;
-        if ( m_dataSize%16 ) rows++;
-        int i = 0;
-        bool ok;
-        for ( int row = 0; row < rows; row++ ) {
-            for ( int col = 0; col < 16; col++ ) {
-                data[i] = table->item( row, col )->data(0).toString().toInt( &ok, 16 );
-                i++;
-                if ( i >= m_dataSize )
-                    break;
-            }
-        }
+        QVector<int> data { toIntVector() };
         MemData::saveData( &data );
     }
 
@@ -300,13 +288,15 @@ void MemTable::saveTable()
 
 void MemTable::loadTable()
 {
-    if (m_data) {
-        MemData::loadData( m_data, false );
-    } else {
-        QVector<int> data( m_dataSize );
-        if ( MemData::loadData( &data, false ) ) {
-            for ( int i = 0; i < data.size() ; i++ ) {
-                setValue( i,data[i] );
+    QVector<int> oldData { toIntVector() };
+    QVector<int> data(m_dataSize);
+    if ( MemData::loadData( &data,false ) ) {
+        for( int i=0; i<m_dataSize; ++i ) {
+            if ( oldData[i] != data[i] ) {
+                setValue(i, data[i]);
+                if ( m_data )
+                    m_data->replace(i, data[i]);
+                emit dataChanged(i, data[i]);
             }
         }
     }
@@ -331,4 +321,22 @@ QString MemTable::valToHex( int val, int bytes )
     //sval.append(" ");
 
     return sval;
+}
+
+QVector<int> MemTable::toIntVector()
+{
+    QVector<int> data( m_dataSize );
+    int rows = m_dataSize/16;
+    if ( m_dataSize%16 ) rows++;
+    int i = 0;
+    bool ok;
+    for ( int row = 0; row < rows; row++ ) {
+        for ( int col = 0; col < 16; col++ ) {
+            data[i] = table->item( row, col )->data(0).toString().toInt( &ok, 16 );
+            i++;
+            if ( i >= m_dataSize )
+                break;
+        }
+    }
+    return data;
 }
