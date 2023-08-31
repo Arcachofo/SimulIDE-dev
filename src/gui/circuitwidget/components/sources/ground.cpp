@@ -9,21 +9,23 @@
 #include "itemlibrary.h"
 #include "iopin.h"
 
-Component* Ground::construct( QObject* parent, QString type, QString id )
-{ return new Ground( parent, type, id ); }
+#define tr(str) simulideTr("Ground",str)
+
+Component* Ground::construct( QString type, QString id )
+{ return new Ground( type, id ); }
 
 LibraryItem* Ground::libraryItem()
 {
     return new LibraryItem(
-        tr( "Ground (0 V)" ),
+        tr("Ground (0 V)"),
         "Sources",
         "ground.png",
         "Ground",
         Ground::construct );
 }
 
-Ground::Ground( QObject* parent, QString type, QString id )
-      : Component( parent, type, id )
+Ground::Ground( QString type, QString id )
+      : Component( type, id )
 {
     m_area = QRect(-10,-10, 20, 14 );
 

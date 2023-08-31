@@ -14,21 +14,23 @@
 #include "boolprop.h"
 #include "intprop.h"
 
-Component* DAC::construct( QObject* parent, QString type, QString id )
-{ return new DAC( parent, type, id ); }
+#define tr(str) simulideTr("DAC",str)
+
+Component* DAC::construct( QString type, QString id )
+{ return new DAC( type, id ); }
 
 LibraryItem* DAC::libraryItem()
 {
     return new LibraryItem(
-        QCoreApplication::translate("DAC", "DAC"),
+        tr("DAC"),
         "Other Logic",
         "3to1.png",
         "DAC",
         DAC::construct );
 }
 
-DAC::DAC( QObject* parent, QString type, QString id )
-   : LogicComponent( parent, type, id )
+DAC::DAC( QString type, QString id )
+   : LogicComponent( type, id )
 {    
     m_width  = 4;
     m_height = 9;

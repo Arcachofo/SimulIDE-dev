@@ -11,21 +11,23 @@
 
 #include "doubleprop.h"
 
-Component* Resistor::construct( QObject* parent, QString type, QString id )
-{ return new Resistor( parent, type, id ); }
+#define tr(str) simulideTr("Resistor",str)
+
+Component* Resistor::construct( QString type, QString id )
+{ return new Resistor( type, id ); }
 
 LibraryItem* Resistor::libraryItem()
 {
     return new LibraryItem(
-        tr( "Resistor" ),
+        tr("Resistor"),
         "Resistors",
         "resistor.png",
         "Resistor",
         Resistor::construct);
 }
 
-Resistor::Resistor( QObject* parent, QString type, QString id )
-        : Comp2Pin( parent, type, id )
+Resistor::Resistor( QString type, QString id )
+        : Comp2Pin( type, id )
         , eResistor( id )
 {
     m_ePin[0] = m_pin[0];

@@ -12,21 +12,23 @@
 
 #include "doubleprop.h"
 
-Component* VoltSource::construct( QObject* parent, QString type, QString id )
-{ return new VoltSource( parent, type, id ); }
+#define tr(str) simulideTr("Voltage Source",str)
+
+Component* VoltSource::construct( QString type, QString id )
+{ return new VoltSource( type, id ); }
 
 LibraryItem* VoltSource::libraryItem()
 {
     return new LibraryItem(
-        tr( "Voltage Source" ),
+        tr("Voltage Source"),
         "Sources",
         "voltsource.png",
         "Voltage Source",
         VoltSource::construct );
 }
 
-VoltSource::VoltSource( QObject* parent, QString type, QString id )
-          : VarSource( parent, type, id )
+VoltSource::VoltSource( QString type, QString id )
+          : VarSource( type, id )
 {
     m_pin.resize(1);
     m_pin[0] = m_outPin = new IoPin( 0, QPoint(28,16), id+"-outPin", 0, this, source );

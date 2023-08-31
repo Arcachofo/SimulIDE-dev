@@ -9,21 +9,23 @@
 
 #include "boolprop.h"
 
-Component* ShiftReg::construct( QObject* parent, QString type, QString id )
-{ return new ShiftReg( parent, type, id ); }
+#define tr(str) simulideTr("ShiftReg",str)
+
+Component* ShiftReg::construct( QString type, QString id )
+{ return new ShiftReg( type, id ); }
 
 LibraryItem* ShiftReg::libraryItem()
 {
     return new LibraryItem(
-        tr( "Shift Reg." ),
+        tr( "Shift Register" ),
         "Arithmetic",
         "1to3.png",
         "ShiftReg",
         ShiftReg::construct );
 }
 
-ShiftReg::ShiftReg( QObject* parent, QString type, QString id )
-        : LogicComponent( parent, type, id )
+ShiftReg::ShiftReg( QString type, QString id )
+        : LogicComponent( type, id )
 {
     m_width  = 4;
     m_height = 9;

@@ -17,21 +17,23 @@
 #include "doubleprop.h"
 #include "intprop.h"
 
-Component* MuxAnalog::construct( QObject* parent, QString type, QString id )
-{ return new MuxAnalog( parent, type, id ); }
+#define tr(str) simulideTr("MuxAnalog",str)
+
+Component* MuxAnalog::construct( QString type, QString id )
+{ return new MuxAnalog( type, id ); }
 
 LibraryItem* MuxAnalog::libraryItem()
 {
     return new LibraryItem(
-        QCoreApplication::translate( "MuxAnalog","Analog Mux" ),
+        tr("Analog Mux"),
         "Other Active",
         "1to3-c.png",
         "MuxAnalog",
         MuxAnalog::construct );
 }
 
-MuxAnalog::MuxAnalog( QObject* parent, QString type, QString id )
-         : Component( parent, type, id )
+MuxAnalog::MuxAnalog( QString type, QString id )
+         : Component( type, id )
          , eElement( id )
 {
     setLabelPos(-16,-16, 0 );

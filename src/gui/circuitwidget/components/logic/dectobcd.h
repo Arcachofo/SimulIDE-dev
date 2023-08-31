@@ -13,10 +13,10 @@ class LibraryItem;
 class MAINMODULE_EXPORT DecToBcd : public LogicComponent
 {
     public:
-        DecToBcd( QObject* parent, QString type, QString id );
+        DecToBcd( QString type, QString id );
         ~DecToBcd();
 
-        static Component* construct( QObject* parent, QString type, QString id );
+        static Component* construct( QString type, QString id );
         static LibraryItem* libraryItem();
 
         virtual void stamp() override;

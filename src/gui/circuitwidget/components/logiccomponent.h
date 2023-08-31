@@ -14,7 +14,7 @@ class IoPin;
 class MAINMODULE_EXPORT LogicComponent : public IoComponent, public eClockedDevice
 {
     public:
-        LogicComponent( QObject* parent, QString type, QString id );
+        LogicComponent( QString type, QString id );
         ~LogicComponent();
 
         virtual void stamp() override;

@@ -12,21 +12,23 @@
 #include "intprop.h"
 #include "propdialog.h"
 
-Component* Thermistor::construct( QObject* parent, QString type, QString id )
-{ return new Thermistor( parent, type, id ); }
+#define tr(str) simulideTr("Thermistor",str)
+
+Component* Thermistor::construct( QString type, QString id )
+{ return new Thermistor( type, id ); }
 
 LibraryItem* Thermistor::libraryItem()
 {
     return new LibraryItem(
-        tr( "Thermistor" ),
+        tr("Thermistor"),
         "Resistive Sensors",
         "thermistor.png",
         "Thermistor",
         Thermistor::construct);
 }
 
-Thermistor::Thermistor( QObject* parent, QString type, QString id )
-          : ThermistorBase( parent, type, id  )
+Thermistor::Thermistor( QString type, QString id )
+          : ThermistorBase( type, id  )
 {
     m_bVal = 3455;
     m_r25  = 10000;

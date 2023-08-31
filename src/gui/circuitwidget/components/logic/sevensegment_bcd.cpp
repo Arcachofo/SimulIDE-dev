@@ -12,21 +12,21 @@
 #include "iopin.h"
 #include "ledbase.h"
 
-Component* SevenSegmentBCD::construct( QObject* parent, QString type, QString id )
-{ return new SevenSegmentBCD( parent, type, id ); }
+Component* SevenSegmentBCD::construct( QString type, QString id )
+{ return new SevenSegmentBCD( type, id ); }
 
 LibraryItem* SevenSegmentBCD::libraryItem()
 {
     return new LibraryItem(
-        tr( "7 Seg BCD" ),
+        simulideTr("7-Seg BCD","7 Seg BCD"), /// FIXME: only charaters in Component type
         "Other Logic",
         "7segbcd.png",
         "7-Seg BCD",
         SevenSegmentBCD::construct );
 }
 
-SevenSegmentBCD::SevenSegmentBCD( QObject* parent, QString type, QString id )
-               : BcdBase( parent, type, id )
+SevenSegmentBCD::SevenSegmentBCD( QString type, QString id )
+               : BcdBase( type, id )
 {
     m_graphical = true;
 

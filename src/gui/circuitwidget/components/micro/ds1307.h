@@ -15,10 +15,10 @@ class LibraryItem;
 class MAINMODULE_EXPORT DS1307 : public Component, public TwiModule
 {
     public:
-        DS1307( QObject* parent, QString type, QString id );
+        DS1307( QString type, QString id );
         ~DS1307();
 
- static Component* construct( QObject* parent, QString type, QString id );
+ static Component* construct( QString type, QString id );
  static LibraryItem* libraryItem();
 
         bool timeUpdtd() { return m_timeUpdtd; }

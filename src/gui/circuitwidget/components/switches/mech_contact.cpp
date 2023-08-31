@@ -9,8 +9,8 @@
 #include "simulator.h"
 #include "e-node.h"
 
-MechContact::MechContact( QObject* parent, QString type, QString id )
-           : Component( parent, type, id )
+MechContact::MechContact( QString type, QString id )
+           : Component( type, id )
            , eElement(  id )
 {
     m_numthrows = 0;

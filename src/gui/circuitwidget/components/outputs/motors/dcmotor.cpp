@@ -15,8 +15,10 @@
 #include "doubleprop.h"
 #include "intprop.h"
 
-Component* DcMotor::construct( QObject* parent, QString type, QString id )
-{ return new DcMotor( parent, type, id ); }
+#define tr(str) simulideTr("Dc Motor",str)
+
+Component* DcMotor::construct( QString type, QString id )
+{ return new DcMotor( type, id ); }
 
 LibraryItem* DcMotor::libraryItem()
 {
@@ -28,9 +30,9 @@ LibraryItem* DcMotor::libraryItem()
         DcMotor::construct );
 }
 
-DcMotor::DcMotor( QObject* parent, QString type, QString id )
-        : Component( parent, type, id )
-        , eResistor( id )
+DcMotor::DcMotor( QString type, QString id )
+       : Component( type, id )
+       , eResistor( id )
 {
     m_graphical = true;
     

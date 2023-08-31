@@ -14,7 +14,7 @@ class LibraryItem;
 class MAINMODULE_EXPORT Lamp : public Comp2Pin, public eResistor
 {
     public:
-        Lamp( QObject* parent, QString type, QString id );
+        Lamp( QString type, QString id );
         ~Lamp();
 
         virtual void initialize() override;
@@ -25,7 +25,7 @@ class MAINMODULE_EXPORT Lamp : public Comp2Pin, public eResistor
         double maxCurrent()             { return m_maxCurrent; }
         void  setMaxCurrent( double c ) { m_maxCurrent = c; }
 
- static Component* construct( QObject* parent, QString type, QString id );
+ static Component* construct( QString type, QString id );
  static LibraryItem* libraryItem();
 
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;

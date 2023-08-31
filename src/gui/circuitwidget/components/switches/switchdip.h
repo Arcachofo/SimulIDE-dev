@@ -16,10 +16,10 @@ class QGraphicsProxyWidget;
 class MAINMODULE_EXPORT SwitchDip : public Component, public eElement
 {
     public:
-        SwitchDip( QObject* parent, QString type, QString id );
+        SwitchDip( QString type, QString id );
         ~SwitchDip();
 
-        static Component* construct( QObject* parent, QString type, QString id );
+        static Component* construct( QString type, QString id );
         static LibraryItem *libraryItem();
 
         int  size() { return m_size; }

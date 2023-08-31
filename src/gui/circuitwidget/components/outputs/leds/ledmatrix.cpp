@@ -16,21 +16,23 @@
 #include "boolprop.h"
 #include "intprop.h"
 
-Component* LedMatrix::construct( QObject* parent, QString type, QString id )
-{ return new LedMatrix( parent, type, id ); }
+#define tr(str) simulideTr("Led Matrix",str)
+
+Component* LedMatrix::construct( QString type, QString id )
+{ return new LedMatrix( type, id ); }
 
 LibraryItem* LedMatrix::libraryItem()
 {
     return new LibraryItem(
-        tr( "LedMatrix" ),
+        tr("LedMatrix"),
         "Leds",
         "ledmatrix.png",
         "LedMatrix",
         LedMatrix::construct);
 }
 
-LedMatrix::LedMatrix( QObject* parent, QString type, QString id )
-         : Component( parent, type, id )
+LedMatrix::LedMatrix( QString type, QString id )
+         : Component( type, id )
          , eElement( id )
 {
     m_graphical = true;
@@ -110,7 +112,7 @@ void LedMatrix::createMatrix()
         {
             QString ledid = m_id;
             ledid.append( QString( "-led"+QString::number(row)+"_"+QString::number(col) ) );
-            LedSmd* lsmd = new LedSmd( this, "LEDSMD", ledid, QRectF(-2, -2, 4, 4) );
+            LedSmd* lsmd = new LedSmd( "LEDSMD", ledid, QRectF(-2, -2, 4, 4) );
 
             lsmd->setParentItem(this);
             lsmd->setPos( col*8, row*8 );

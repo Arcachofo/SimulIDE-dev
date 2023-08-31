@@ -10,8 +10,10 @@
 #include "doubleprop.h"
 #include "intprop.h"
 
-Shape::Shape( QObject* parent, QString type, QString id )
-     : Component( parent, type, id )
+#define tr(str) simulideTr("Shape",str)
+
+Shape::Shape( QString type, QString id )
+     : Component( type, id )
 {
     m_graphical = true;
     

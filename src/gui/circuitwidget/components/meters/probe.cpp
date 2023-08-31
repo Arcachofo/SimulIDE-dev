@@ -17,21 +17,23 @@
 #include "doubleprop.h"
 #include "boolprop.h"
 
-Component* Probe::construct( QObject* parent, QString type, QString id )
-{ return new Probe( parent, type, id ); }
+#define tr(str) simulideTr("Probe",str)
+
+Component* Probe::construct( QString type, QString id )
+{ return new Probe( type, id ); }
 
 LibraryItem* Probe::libraryItem()
 {
     return new LibraryItem(
-        tr( "Probe" ),
+        tr("Probe"),
         "Meters",
         "probe.png",
         "Probe",
         Probe::construct );
 }
 
-Probe::Probe( QObject* parent, QString type, QString id )
-     : Component( parent, type, id )
+Probe::Probe( QString type, QString id )
+     : Component( type, id )
      , eElement( id )
 {
     setZValue( 200 );

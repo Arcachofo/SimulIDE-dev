@@ -11,7 +11,7 @@
 class MAINMODULE_EXPORT FlipFlopBase : public LogicComponent
 {
     public:
-        FlipFlopBase( QObject* parent, QString type, QString id );
+        FlipFlopBase( QString type, QString id );
         ~FlipFlopBase();
 
         bool srInv() { return m_srInv; }

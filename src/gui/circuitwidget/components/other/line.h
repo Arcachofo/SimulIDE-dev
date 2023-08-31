@@ -12,10 +12,10 @@
 class MAINMODULE_EXPORT Line : public Shape
 {
     public:
-        Line( QObject* parent, QString type, QString id );
+        Line( QString type, QString id );
         ~Line();
 
- static Component* construct( QObject* parent, QString type, QString id );
+ static Component* construct( QString type, QString id );
  static LibraryItem *libraryItem();
 
         virtual QPainterPath shape() const override;

@@ -14,10 +14,10 @@ class LibraryItem;
 class MAINMODULE_EXPORT I2CToParallel : public IoComponent, public TwiModule
 {
     public:
-        I2CToParallel( QObject* parent, QString type, QString id );
+        I2CToParallel( QString type, QString id );
         ~I2CToParallel();
 
- static Component* construct( QObject* parent, QString type, QString id );
+ static Component* construct( QString type, QString id );
  static LibraryItem* libraryItem();
 
         virtual void stamp() override;

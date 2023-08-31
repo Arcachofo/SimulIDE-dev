@@ -15,10 +15,10 @@ class IoPin;
 class MAINMODULE_EXPORT OpAmp : public Component, public eElement
 {
     public:
-        OpAmp( QObject* parent, QString type, QString id );
+        OpAmp( QString type, QString id );
         ~OpAmp();
         
-        static Component* construct( QObject* parent, QString type, QString id );
+        static Component* construct( QString type, QString id );
         static LibraryItem* libraryItem();
 
         virtual void initialize() override;

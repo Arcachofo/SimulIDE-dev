@@ -17,7 +17,7 @@ class IoPin;
 class MAINMODULE_EXPORT Ds18b20 : public Component , public eElement
 {
     public:
-        Ds18b20( QObject* parent, QString type, QString id );
+        Ds18b20( QString type, QString id );
         ~Ds18b20();
 
         enum w1State_t{
@@ -45,7 +45,7 @@ class MAINMODULE_EXPORT Ds18b20 : public Component , public eElement
             DS_RD_POW  = 0xB4
         };
 
- static Component* construct( QObject* parent, QString type, QString id );
+ static Component* construct( QString type, QString id );
  static LibraryItem* libraryItem();
 
         QString getROM() { return arrayToHex( m_ROM, 8 ); }

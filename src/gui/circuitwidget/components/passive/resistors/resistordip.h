@@ -16,10 +16,10 @@ class Pin;
 class MAINMODULE_EXPORT ResistorDip : public Component, public eElement
 {
     public:
-        ResistorDip( QObject* parent, QString type, QString id );
+        ResistorDip( QString type, QString id );
         ~ResistorDip();
 
- static Component* construct( QObject* parent, QString type, QString id );
+ static Component* construct( QString type, QString id );
  static LibraryItem *libraryItem();
 
         virtual void stamp() override;

@@ -11,7 +11,7 @@
 class MAINMODULE_EXPORT ShieldSubc : public BoardSubc
 {
     public:
-        ShieldSubc( QObject* parent, QString type, QString id );
+        ShieldSubc( QString type, QString id );
         ~ShieldSubc();
 
         QString boardId() { return m_boardId; }

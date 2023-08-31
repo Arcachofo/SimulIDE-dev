@@ -8,21 +8,21 @@
 #include "simulator.h"
 #include "iopin.h"
 
-Component* FlipFlopRS::construct( QObject* parent, QString type, QString id )
-{ return new FlipFlopRS( parent, type, id ); }
+Component* FlipFlopRS::construct( QString type, QString id )
+{ return new FlipFlopRS( type, id ); }
 
 LibraryItem* FlipFlopRS::libraryItem()
 {
     return new LibraryItem(
-        QCoreApplication::translate("FlipFlopRS", "FlipFlop RS" ),
+        simulideTr("FlipFlopRS", "FlipFlop RS" ),
         "Memory",
         "2to2.png",
         "FlipFlopRS",
         FlipFlopRS::construct );
 }
 
-FlipFlopRS::FlipFlopRS( QObject* parent, QString type, QString id )
-          : FlipFlopBase( parent, type, id )
+FlipFlopRS::FlipFlopRS( QString type, QString id )
+          : FlipFlopBase( type, id )
 {
     m_width  = 3;
     m_height = 4;

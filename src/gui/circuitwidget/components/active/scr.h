@@ -16,10 +16,10 @@ class eResistor;
 class MAINMODULE_EXPORT SCR : public Component, public eElement
 {
     public:
-        SCR( QObject* parent, QString type, QString id );
+        SCR( QString type, QString id );
         ~SCR();
 
- static Component* construct( QObject* parent, QString type, QString id );
+ static Component* construct( QString type, QString id );
  static LibraryItem* libraryItem();
 
         virtual void initialize() override;

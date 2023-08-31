@@ -13,10 +13,10 @@ class LibraryItem;
 class MAINMODULE_EXPORT BcdTo7S : public BcdBase
 {
     public:
-        BcdTo7S( QObject* parent, QString type, QString id );
+        BcdTo7S( QString type, QString id );
         ~BcdTo7S();
 
-        static Component* construct( QObject* parent, QString type, QString id );
+        static Component* construct( QString type, QString id );
         static LibraryItem* libraryItem();
 
         virtual void stamp() override;

@@ -13,21 +13,23 @@
 #include "doubleprop.h"
 #include "boolprop.h"
 
-Component* Clock::construct( QObject* parent, QString type, QString id )
-{ return new Clock( parent, type, id ); }
+#define tr(str) simulideTr("Clock",str)
+
+Component* Clock::construct( QString type, QString id )
+{ return new Clock( type, id ); }
 
 LibraryItem* Clock::libraryItem()
 {
     return new LibraryItem(
-        tr( "Clock" ),
+        tr("Clock"),
         "Sources",
         "clock.png",
         "Clock",
         Clock::construct );
 }
 
-Clock::Clock( QObject* parent, QString type, QString id )
-     : ClockBase( parent, type, id )
+Clock::Clock( QString type, QString id )
+     : ClockBase( type, id )
 {
     remPropGroup( tr("Main") );
     addPropGroup( { tr("Main"), {

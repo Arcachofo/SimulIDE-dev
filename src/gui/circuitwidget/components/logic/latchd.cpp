@@ -14,8 +14,10 @@
 #include "boolprop.h"
 #include "intprop.h"
 
-Component* LatchD::construct( QObject* parent, QString type, QString id )
-{ return new LatchD( parent, type, id ); }
+#define tr(str) simulideTr("LatchD",str)
+
+Component* LatchD::construct( QString type, QString id )
+{ return new LatchD( type, id ); }
 
 LibraryItem* LatchD::libraryItem()
 {
@@ -27,8 +29,8 @@ LibraryItem* LatchD::libraryItem()
         LatchD::construct );
 }
 
-LatchD::LatchD( QObject* parent, QString type, QString id )
-      : LogicComponent( parent, type, id )
+LatchD::LatchD( QString type, QString id )
+      : LogicComponent( type, id )
 {
     m_width  = 4;
     m_height = 10;

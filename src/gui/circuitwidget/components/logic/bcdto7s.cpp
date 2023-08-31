@@ -9,21 +9,23 @@
 
 #include "boolprop.h"
 
-Component* BcdTo7S::construct( QObject* parent, QString type, QString id )
-{ return new BcdTo7S( parent, type, id ); }
+#define tr(str) simulideTr("BcdTo7S",str)
+
+Component* BcdTo7S::construct( QString type, QString id )
+{ return new BcdTo7S( type, id ); }
 
 LibraryItem* BcdTo7S::libraryItem()
 {
     return new LibraryItem(
-        QCoreApplication::translate("BcdTo7S", "Bcd To 7S."),
+        tr("Bcd To 7S."),
         "Converters",
         "2to3g.png",
         "BcdTo7S",
         BcdTo7S::construct );
 }
 
-BcdTo7S::BcdTo7S( QObject* parent, QString type, QString id )
-       : BcdBase( parent, type, id )
+BcdTo7S::BcdTo7S( QString type, QString id )
+       : BcdBase( type, id )
 {
     m_width  = 4;
     m_height = 8;

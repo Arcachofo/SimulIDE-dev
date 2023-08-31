@@ -13,21 +13,23 @@
 #include "doubleprop.h"
 #include "intprop.h"
 
-Component* Inductor::construct( QObject* parent, QString type, QString id )
-{ return new Inductor( parent, type, id ); }
+#define tr(str) simulideTr("Inductor",str)
+
+Component* Inductor::construct( QString type, QString id )
+{ return new Inductor( type, id ); }
 
 LibraryItem* Inductor::libraryItem()
 {
     return new LibraryItem(
-        tr( "Inductor" ),
+        tr("Inductor"),
         "Reactive",
         "inductor.png",
         "Inductor",
         Inductor::construct);
 }
 
-Inductor::Inductor( QObject* parent, QString type, QString id )
-        : Reactive( parent, type, id )
+Inductor::Inductor( QString type, QString id )
+        : Reactive( type, id )
 {
     m_pin[0]->setLength( 4 );
     m_pin[1]->setLength( 4 );

@@ -9,8 +9,7 @@
 #include "circuit.h"
 #include "comproperty.h"
 
-CompBase::CompBase( QObject* parent, QString type, QString id )
-        : QObject( parent )
+CompBase::CompBase( QString type, QString id )
 {
     m_id   = id;
     m_type = type;

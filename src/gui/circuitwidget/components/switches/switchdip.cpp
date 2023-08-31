@@ -18,21 +18,23 @@
 
 #include "intprop.h"
 
-Component* SwitchDip::construct( QObject* parent, QString type, QString id )
-{ return new SwitchDip( parent, type, id ); }
+#define tr(str) simulideTr("SwitchDip",str)
+
+Component* SwitchDip::construct( QString type, QString id )
+{ return new SwitchDip( type, id ); }
 
 LibraryItem* SwitchDip::libraryItem()
 {
     return new LibraryItem(
-        tr( "Switch Dip" ),
+        tr("Switch Dip"),
         "Switches",
         "switchdip.png",
         "SwitchDip",
         SwitchDip::construct);
 }
 
-SwitchDip::SwitchDip( QObject* parent, QString type, QString id )
-         : Component( parent, type, id )
+SwitchDip::SwitchDip( QString type, QString id )
+         : Component( type, id )
          , eElement( id )
 {
     m_graphical = true;
@@ -154,8 +156,7 @@ void SwitchDip::createSwitches( int c )
         proxy->setParentItem( this );
         proxy->setPos( QPoint( 3, -27+i*8 ) );
         m_proxys.append( proxy );
-        connect( button, &QPushButton::released,
-                   this, &SwitchDip::onbuttonclicked, Qt::UniqueConnection);
+        QObject::connect( button, &QPushButton::released, [=](){ onbuttonclicked(); });
         
         QPoint pinpos = QPoint(-8,-32+8+i*8 );
         Pin* pin = new Pin( 180, pinpos, butId+"-pinP", 0, this);
@@ -182,7 +183,7 @@ void SwitchDip::deleteSwitches( int d )
     for( int i=start; i<m_size; i++ )
     {
         QPushButton* button = m_buttons.takeLast();
-        disconnect( button, &QPushButton::released, this, &SwitchDip::onbuttonclicked );
+        /// FIXME: disconnect( button, &QPushButton::released, this, &SwitchDip::onbuttonclicked );
         delete button;
         
         m_proxys.removeLast();

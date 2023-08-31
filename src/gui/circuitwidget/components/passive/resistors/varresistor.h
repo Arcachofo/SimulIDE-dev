@@ -13,10 +13,10 @@ class LibraryItem;
 class MAINMODULE_EXPORT VarResistor : public VarResBase
 {
     public:
-        VarResistor( QObject* parent, QString type, QString id );
+        VarResistor( QString type, QString id );
         ~VarResistor();
 
- static Component* construct( QObject* parent, QString type, QString id );
+ static Component* construct( QString type, QString id );
  static LibraryItem* libraryItem();
 
         virtual void updateStep() override;

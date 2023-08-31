@@ -9,8 +9,8 @@
 #include "e-pin.h"
 #include "label.h"
 
-LedSmd::LedSmd( QObject* parent, QString type, QString id, QRectF area, ePin* pin0, ePin* pin1 )
-      : LedBase( parent, type, id )
+LedSmd::LedSmd( QString type, QString id, QRectF area, ePin* pin0, ePin* pin1 )
+      : LedBase( type, id )
 {
     m_area = area;
     m_valLabel->setEnabled( false );

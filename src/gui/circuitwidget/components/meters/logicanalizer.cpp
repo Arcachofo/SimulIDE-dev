@@ -22,8 +22,10 @@
 #include "boolprop.h"
 #include "intprop.h"
 
-Component* LAnalizer::construct( QObject* parent, QString type, QString id )
-{ return new LAnalizer( parent, type, id ); }
+#define tr(str) simulideTr("LAnalizer",str)
+
+Component* LAnalizer::construct( QString type, QString id )
+{ return new LAnalizer( type, id ); }
 
 LibraryItem* LAnalizer::libraryItem()
 {
@@ -35,8 +37,8 @@ LibraryItem* LAnalizer::libraryItem()
         LAnalizer::construct );
 }
 
-LAnalizer::LAnalizer( QObject* parent, QString type, QString id )
-         : PlotBase( parent, type, id )
+LAnalizer::LAnalizer( QString type, QString id )
+         : PlotBase( type, id )
 {
     m_numChannels = 8;
     m_bufferSize = 100000;

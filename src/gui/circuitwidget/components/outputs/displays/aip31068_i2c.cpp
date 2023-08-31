@@ -12,21 +12,23 @@
 #include "doubleprop.h"
 #include "intprop.h"
 
-Component* Aip31068_i2c::construct( QObject* parent, QString type, QString id )
-{ return new Aip31068_i2c( parent, type, id ); }
+#define tr(str) simulideTr("Aip31068_i2c",str)
+
+Component* Aip31068_i2c::construct( QString type, QString id )
+{ return new Aip31068_i2c( type, id ); }
 
 LibraryItem* Aip31068_i2c::libraryItem()
 {
     return new LibraryItem(
-        tr( "Aip31068_i2c" ),
+        tr("Aip31068 I2C") ,
         "Displays",
         "aip31068.png",
         "Aip31068_i2c",
         Aip31068_i2c::construct );
 }
 
-Aip31068_i2c::Aip31068_i2c( QObject* parent, QString type, QString id )
-            : Hd44780_Base( parent, type, id )
+Aip31068_i2c::Aip31068_i2c( QString type, QString id )
+            : Hd44780_Base( type, id )
             , TwiModule( id )
 {
     m_address = m_cCode = 0x3E;

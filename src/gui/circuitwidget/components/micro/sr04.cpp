@@ -10,8 +10,8 @@
 #include "itemlibrary.h"
 #include "simulator.h"
 
-Component* SR04::construct( QObject* parent, QString type, QString id )
-{ return new SR04( parent, type, id ); }
+Component* SR04::construct( QString type, QString id )
+{ return new SR04( type, id ); }
 
 LibraryItem* SR04::libraryItem()
 {
@@ -23,8 +23,8 @@ LibraryItem* SR04::libraryItem()
         SR04::construct);
 }
 
-SR04::SR04( QObject* parent, QString type, QString id )
-    : Component( parent, type, id )
+SR04::SR04( QString type, QString id )
+    : Component( type, id )
     , eElement( id )
 {
     m_area = QRect( -10*8, -4*8, 21*8, 9*8 );

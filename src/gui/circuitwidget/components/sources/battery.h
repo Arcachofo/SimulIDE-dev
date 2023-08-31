@@ -14,10 +14,10 @@ class LibraryItem;
 class MAINMODULE_EXPORT Battery : public Comp2Pin, public eResistor
 {
     public:
-        Battery( QObject* parent, QString type, QString id );
+        Battery( QString type, QString id );
         ~Battery();
 
- static Component* construct( QObject* parent, QString type, QString id );
+ static Component* construct( QString type, QString id );
  static LibraryItem* libraryItem();
 
         double volt() { return m_volt; }

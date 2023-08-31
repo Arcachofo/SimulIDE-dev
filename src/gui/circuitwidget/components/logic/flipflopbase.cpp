@@ -11,8 +11,10 @@
 #include "boolprop.h"
 #include "stringprop.h"
 
-FlipFlopBase::FlipFlopBase( QObject* parent, QString type, QString id )
-            : LogicComponent( parent, type, id )
+#define tr(str) simulideTr("FlipFlopBase",str)
+
+FlipFlopBase::FlipFlopBase( QString type, QString id )
+            : LogicComponent( type, id )
 {
     m_dataPins = 0;
     m_useRS = true;

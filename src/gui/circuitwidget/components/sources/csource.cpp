@@ -13,8 +13,10 @@
 #include "doubleprop.h"
 #include "boolprop.h"
 
-Component* Csource::construct( QObject* parent, QString type, QString id )
-{ return new Csource( parent, type, id ); }
+#define tr(str) simulideTr("Csource",str)
+
+Component* Csource::construct( QString type, QString id )
+{ return new Csource( type, id ); }
 
 LibraryItem* Csource::libraryItem()
 {
@@ -26,8 +28,8 @@ LibraryItem* Csource::libraryItem()
         Csource::construct );
 }
 
-Csource::Csource( QObject* parent, QString type, QString id )
-       : Component( parent, type, id )
+Csource::Csource( QString type, QString id )
+       : Component( type, id )
        , eResistor( id )
 {
     m_area = QRect(-16,-16, 32, 32 );

@@ -16,29 +16,30 @@
 #include "boolprop.h"
 #include "intprop.h"
 
-Component* Switch::construct( QObject* parent, QString type, QString id )
-{ return new Switch( parent, type, id ); }
+#define tr(str) simulideTr("Switch",str)
+
+Component* Switch::construct( QString type, QString id )
+{ return new Switch( type, id ); }
 
 LibraryItem* Switch::libraryItem()
 {
     return new LibraryItem(
-        tr( "Switch (all)" ),
+        tr("Switch (all)"),
         "Switches",
         "switch.png",
         "Switch",
         Switch::construct);
 }
 
-Switch::Switch( QObject* parent, QString type, QString id )
-      : SwitchBase( parent, type, id )
+Switch::Switch( QString type, QString id )
+      : SwitchBase( type, id )
 {
     m_area = QRectF(-11,-9, 22, 11 );
     m_proxy->setPos(-8, 4 );
 
     SetupSwitches( 1, 1 );
 
-    connect( m_button, &CustomButton::clicked,
-             this,     &Switch::onbuttonclicked, Qt::UniqueConnection);
+    QObject::connect( m_button, &CustomButton::clicked, [=](){ onbuttonclicked(); });
 
     addPropGroup( { tr("Main"), {
 new BoolProp<Switch>("Norm_Close", tr("Normally Closed"),""      , this, &Switch::nClose, &Switch::setNClose ),

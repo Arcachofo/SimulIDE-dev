@@ -14,21 +14,23 @@
 
 #include "intprop.h"
 
-Component* Hd44780::construct( QObject* parent, QString type, QString id )
-{ return new Hd44780( parent, type, id ); }
+#define tr(str) simulideTr("HD44780",str)
+
+Component* Hd44780::construct( QString type, QString id )
+{ return new Hd44780( type, id ); }
 
 LibraryItem* Hd44780::libraryItem()
 {
     return new LibraryItem(
-        tr( "Hd44780" ),
+        "Hd44780",
         "Displays",
         "hd44780.png",
         "Hd44780",
         Hd44780::construct );
 }
 
-Hd44780::Hd44780( QObject* parent, QString type, QString id )
-       : Hd44780_Base( parent, type, id )
+Hd44780::Hd44780( QString type, QString id )
+       : Hd44780_Base( type, id )
        , eElement( id+"-eElement" )
 {
     m_pin.resize( 11 );

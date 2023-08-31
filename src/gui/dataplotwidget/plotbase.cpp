@@ -14,8 +14,10 @@
 #include "doubleprop.h"
 #include "intprop.h"
 
-PlotBase::PlotBase( QObject* parent, QString type, QString id )
-        : Component( parent, type, id )
+#define tr(str) simulideTr("PlotBase",str)
+
+PlotBase::PlotBase( QString type, QString id )
+        : Component( type, id )
         , ScriptModule( id )
 {
     m_graphical = true;
@@ -186,7 +188,7 @@ void PlotBase::conditonMet( int ch, cond_t cond )
     {
         m_risEdge = Simulator::self()->circTime();
         CircuitWidget::self()->pauseCirc();
-        if( m_autoExport ) QTimer::singleShot( 50, this, &PlotBase::dump );
+        if( m_autoExport ) QTimer::singleShot( 50, [=](){ dump(); } );
     }
 
     //if( m_trigger != 8 ) return;

@@ -16,10 +16,10 @@ class QGraphicsProxyWidget;
 class MAINMODULE_EXPORT Function : public IoComponent, public ScriptModule
 {
     public:
-        Function( QObject* parent, QString type, QString id );
+        Function( QString type, QString id );
         ~Function();
         
-        static Component* construct( QObject* parent, QString type, QString id );
+        static Component* construct( QString type, QString id );
         static LibraryItem* libraryItem();
 
         virtual void stamp() override;

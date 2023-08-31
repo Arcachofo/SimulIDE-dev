@@ -13,10 +13,10 @@ class LibraryItem;
 class MAINMODULE_EXPORT Ground : public Component
 {
     public:
-        Ground( QObject* parent, QString type, QString id );
+        Ground( QString type, QString id );
         ~Ground();
 
- static Component* construct( QObject* parent, QString type, QString id );
+ static Component* construct( QString type, QString id );
  static LibraryItem* libraryItem();
 
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;

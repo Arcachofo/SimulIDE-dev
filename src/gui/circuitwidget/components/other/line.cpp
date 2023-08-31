@@ -7,21 +7,23 @@
 
 #include "line.h"
 
-Component* Line::construct( QObject* parent, QString type, QString id )
-{ return new Line( parent, type, id ); }
+#define tr(str) simulideTr("Line",str)
+
+Component* Line::construct( QString type, QString id )
+{ return new Line( type, id ); }
 
 LibraryItem* Line::libraryItem()
 {
     return new LibraryItem(
-        tr( "Line" ),
+        tr("Line"),
         "Graphical",
         "line.png",
         "Line",
         Line::construct);
 }
 
-Line::Line( QObject* parent, QString type, QString id )
-    : Shape( parent, type, id )
+Line::Line( QString type, QString id )
+    : Shape( type, id )
 {
 }
 Line::~Line(){}

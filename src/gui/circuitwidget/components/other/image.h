@@ -13,10 +13,10 @@ class LibraryItem;
 class MAINMODULE_EXPORT Image : public Shape
 {
     public:
-        Image( QObject* parent, QString type, QString id );
+        Image( QString type, QString id );
         ~Image();
 
- static Component* construct( QObject* parent, QString type, QString id );
+ static Component* construct( QString type, QString id );
  static LibraryItem* libraryItem();
 
         virtual void setBackground( QString bck ) override;

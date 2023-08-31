@@ -10,21 +10,23 @@
 
 #include "boolprop.h"
 
-Component* DecToBcd::construct( QObject* parent, QString type, QString id )
-{ return new DecToBcd( parent, type, id ); }
+#define tr(str) simulideTr("DecToBcd",str)
+
+Component* DecToBcd::construct( QString type, QString id )
+{ return new DecToBcd( type, id ); }
 
 LibraryItem* DecToBcd::libraryItem()
 {
     return new LibraryItem(
-        QCoreApplication::translate("DecToBcd", "Encoder(10/16 to 4)"),
+        tr("Encoder(10/16 to 4)"),
         "Converters",
         "3to2g.png",
         "DecToBcd",
         DecToBcd::construct );
 }
 
-DecToBcd::DecToBcd( QObject* parent, QString type, QString id )
-        : LogicComponent( parent, type, id )
+DecToBcd::DecToBcd( QString type, QString id )
+        : LogicComponent( type, id )
 {
     m_width  = 4;
     m_height = 10;

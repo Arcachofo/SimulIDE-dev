@@ -15,10 +15,10 @@ class eNode;
 class MAINMODULE_EXPORT Bus : public Component, public eElement
 {
     public:
-        Bus( QObject* parent, QString type, QString id );
+        Bus( QString type, QString id );
         ~Bus();
 
-        static Component* construct( QObject* parent, QString type, QString id );
+        static Component* construct( QString type, QString id );
         static LibraryItem* libraryItem();
         
         int numLines() { return m_numLines; }

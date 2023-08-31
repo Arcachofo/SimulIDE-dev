@@ -15,10 +15,10 @@ class LibraryItem;
 class MAINMODULE_EXPORT Probe : public Component, public eElement
 {
     public:
-        Probe( QObject* parent, QString type, QString id );
+        Probe( QString type, QString id );
         ~Probe();
 
- static Component* construct( QObject* parent, QString type, QString id );
+ static Component* construct( QString type, QString id );
  static LibraryItem* libraryItem();
 
         virtual void updateStep() override;

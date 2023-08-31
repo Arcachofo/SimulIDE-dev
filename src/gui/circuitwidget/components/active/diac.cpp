@@ -17,21 +17,23 @@
 
 #include "doubleprop.h"
 
-Component* Diac::construct( QObject* parent, QString type, QString id )
-{ return new Diac( parent, type, id ); }
+#define tr(str) simulideTr("Diac",str)
+
+Component* Diac::construct( QString type, QString id )
+{ return new Diac( type, id ); }
 
 LibraryItem* Diac::libraryItem()
 {
     return new LibraryItem(
-        QCoreApplication::translate( "Diac", "Diac" ),
+        tr("Diac"),
         "Rectifiers",
         "diac.png",
         "Diac",
         Diac::construct );
 }
 
-Diac::Diac( QObject* parent, QString type, QString id )
-     : Component( parent, type, id )
+Diac::Diac( QString type, QString id )
+     : Component( type, id )
      , eElement( id )
 {
     m_area =  QRectF( -8, -16, 16, 32 );

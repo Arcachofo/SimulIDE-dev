@@ -13,10 +13,10 @@ class LibraryItem;
 class MAINMODULE_EXPORT Demux : public LogicComponent
 {
     public:
-        Demux( QObject* parent, QString type, QString id );
+        Demux( QString type, QString id );
         ~Demux();
 
-        static Component* construct( QObject* parent, QString type, QString id );
+        static Component* construct( QString type, QString id );
         static LibraryItem* libraryItem();
 
         virtual void stamp() override;

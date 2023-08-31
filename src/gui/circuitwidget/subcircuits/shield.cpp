@@ -4,8 +4,6 @@
  ***( see copyright.txt file at root folder )*******************************/
 
 #include "shield.h"
-//#include "itemlibrary.h"
-//#include "componentselector.h"
 #include "circuitwidget.h"
 #include "simulator.h"
 #include "circuit.h"
@@ -18,8 +16,10 @@
 #include "boolprop.h"
 #include "doubleprop.h"
 
-ShieldSubc::ShieldSubc( QObject* parent, QString type, QString id )
-          : BoardSubc( parent, type, id )
+#define tr(str) simulideTr("ShieldSubc",str)
+
+ShieldSubc::ShieldSubc( QString type, QString id )
+          : BoardSubc( type, id )
 {
     m_subcType = Chip::Shield;
     m_attached = false;
@@ -130,10 +130,10 @@ void ShieldSubc::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu
         if( m_attached )
         {
             QAction* detachAction = menu->addAction( QIcon(":/detach.png"),tr("Detach") );
-            connect( detachAction, &QAction::triggered, this, &ShieldSubc::slotDetach );
+            QObject::connect( detachAction, &QAction::triggered, [=](){ slotDetach(); } );
         }else{
             QAction* attachAction = menu->addAction( QIcon(":/attach.png"),tr("Attach") );
-            connect( attachAction, &QAction::triggered, this, &ShieldSubc::slotAttach );
+            QObject::connect( attachAction, &QAction::triggered, [=](){ slotAttach(); } );
         }
 
         if( m_board ) m_board->contextMenu( event, menu );

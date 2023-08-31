@@ -14,8 +14,10 @@
 #include "utils.h"
 #include "pin.h"
 
-Chip::Chip( QObject* parent, QString type, QString id )
-    : Component( parent, type, id )
+#define tr(str) simulideTr("Chip",str)
+
+Chip::Chip( QString type, QString id )
+    : Component( type, id )
     , eElement( id )
     , m_label( this )
 {

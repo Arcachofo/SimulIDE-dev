@@ -14,10 +14,10 @@ class LibraryItem;
 class MAINMODULE_EXPORT FreqMeter : public Component, public eElement
 {
     public:
-        FreqMeter( QObject* parent, QString type, QString id );
+        FreqMeter( QString type, QString id );
         ~FreqMeter();
 
- static Component* construct( QObject* parent, QString type, QString id );
+ static Component* construct( QString type, QString id );
  static LibraryItem* libraryItem();
 
         virtual void initialize() override;

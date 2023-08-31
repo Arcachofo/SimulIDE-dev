@@ -13,10 +13,10 @@ class LibraryItem;
 class MAINMODULE_EXPORT DAC : public LogicComponent
 {
     public:
-        DAC( QObject* parent, QString type, QString id );
+        DAC( QString type, QString id );
         ~DAC();
 
- static Component* construct( QObject* parent, QString type, QString id );
+ static Component* construct( QString type, QString id );
  static LibraryItem *libraryItem();
 
         virtual void stamp() override;

@@ -18,10 +18,10 @@ class MAINMODULE_EXPORT SubPackage : public Chip, public Linkable
         friend class Circuit;
 
     public:
-        SubPackage( QObject* parent, QString type, QString id );
+        SubPackage( QString type, QString id );
         ~SubPackage();
         
-    static Component* construct( QObject* parent, QString type, QString id );
+    static Component* construct( QString type, QString id );
     static LibraryItem* libraryItem();
 
         int width() { return m_width; }
@@ -44,7 +44,7 @@ class MAINMODULE_EXPORT SubPackage : public Chip, public Linkable
 
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
 
-    public slots:
+    //public slots:
         void invertPin( bool invert );
         void setPinId( QString id );
         void setPinName( QString name );
@@ -58,12 +58,12 @@ class MAINMODULE_EXPORT SubPackage : public Chip, public Linkable
         void editPin();
         void deleteEventPin();
     
-    private slots:
+    protected:
         void loadPackage();
         void slotSave();
         void editFinished( int r );
 
-    protected:
+
         void mousePressEvent( QGraphicsSceneMouseEvent* event ) override;
         void hoverMoveEvent( QGraphicsSceneHoverEvent* event ) override;
         void hoverLeaveEvent( QGraphicsSceneHoverEvent* event ) override;

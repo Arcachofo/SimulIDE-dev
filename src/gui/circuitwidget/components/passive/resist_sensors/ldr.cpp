@@ -13,21 +13,23 @@
 #include "intprop.h"
 #include "propdialog.h"
 
-Component* Ldr::construct( QObject* parent, QString type, QString id )
-{ return new Ldr( parent, type, id ); }
+#define tr(str) simulideTr("LDR",str)
+
+Component* Ldr::construct( QString type, QString id )
+{ return new Ldr( type, id ); }
 
 LibraryItem* Ldr::libraryItem()
 {
     return new LibraryItem(
-        tr( "LDR" ),
+        tr("LDR"),
         "Resistive Sensors",
         "ldr.png",
         "LDR",
         Ldr::construct);
 }
 
-Ldr::Ldr( QObject* parent, QString type, QString id )
-   : VarResBase( parent, type, id  )
+Ldr::Ldr( QString type, QString id )
+   : VarResBase( type, id  )
 {
     m_r1    = 127410;
     m_gamma = 0.8582;

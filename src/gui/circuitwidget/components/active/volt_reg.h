@@ -14,10 +14,10 @@ class LibraryItem;
 class MAINMODULE_EXPORT VoltReg : public Component, public eResistor
 {
     public:
-        VoltReg( QObject* parent, QString type, QString id );
+        VoltReg( QString type, QString id );
         ~VoltReg();
         
-        static Component* construct( QObject* parent, QString type, QString id );
+        static Component* construct( QString type, QString id );
         static LibraryItem* libraryItem();
 
         virtual void stamp() override;

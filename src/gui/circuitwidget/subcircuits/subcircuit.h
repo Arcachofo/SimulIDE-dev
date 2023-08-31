@@ -14,10 +14,10 @@ class LibraryItem;
 class MAINMODULE_EXPORT SubCircuit : public Chip
 {
     public:
-        SubCircuit( QObject* parent, QString type, QString id );
+        SubCircuit( QString type, QString id );
         ~SubCircuit();
 
- static Component* construct( QObject* parent, QString type, QString id );
+ static Component* construct( QString type, QString id );
  static LibraryItem* libraryItem();
 
         virtual void remove() override;

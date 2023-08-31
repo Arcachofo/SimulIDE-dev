@@ -22,12 +22,14 @@
 #include "stringprop.h"
 #include "pointprop.h"
 
+#define tr(str) simulideTr("Component",str)
+
 int  Component::m_error = 0;
 bool Component::m_boardMode = false;
 Linkable* Component::m_selecComp = NULL;
 
-Component::Component( QObject* parent, QString type, QString id )
-         : CompBase( parent, type, id )
+Component::Component( QString type, QString id )
+         : CompBase( type, id )
          , QGraphicsItem()
 {
     m_help = "";
@@ -320,53 +322,42 @@ void Component::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu 
     if( !event && m_isMainComp ) // Main Component in Subcircuit
     {
         QAction* propertiesAction = menu->addAction( QIcon( ":/properties.svg"),tr("Properties") );
-        connect( propertiesAction, &QAction::triggered,
-                             this, &Component::slotProperties, Qt::UniqueConnection );
+        QObject::connect( propertiesAction, &QAction::triggered, [=](){ slotProperties(); } );
         menu->addSeparator();
         return;
     }
     m_eventpoint = mapToScene( toGrid(event->pos()) );
 
     QAction* copyAction = menu->addAction(QIcon(":/copy.svg"),tr("Copy")+"\tCtrl+C");
-    connect( copyAction, &QAction::triggered,
-                   this, &Component::slotCopy, Qt::UniqueConnection );
+    QObject::connect( copyAction, &QAction::triggered, [=](){ slotCopy(); } );
 
     QAction* cutAction = menu->addAction(QIcon(":/cut.svg"),tr("Cut")+"\tCtrl+X");
-    connect( cutAction, &QAction::triggered,
-                  this, &Component::slotCut, Qt::UniqueConnection );
+    QObject::connect( cutAction, &QAction::triggered, [=](){ slotCut(); } );
 
     QAction* removeAction = menu->addAction( QIcon( ":/remove.svg"),tr("Remove")+"\tDel" );
-    connect( removeAction, &QAction::triggered,
-                     this, &Component::slotRemove, Qt::UniqueConnection );
+    QObject::connect( removeAction, &QAction::triggered, [=](){ slotRemove(); } );
 
     /*QAction* groupAction = menu->addAction( QIcon( ":/group.png"),tr("Group") );
-    connect( groupAction, &QAction::triggered,
-                     this, &Component::slotGroup()), Qt::UniqueConnection );*/
+    QObject::connect( groupAction, &QAction::triggered, [=](){ slotGroup())(); } );*/
     
     QAction* propertiesAction = menu->addAction( QIcon( ":/properties.svg"),tr("Properties") );
-    connect( propertiesAction, &QAction::triggered,
-                         this, &Component::slotProperties, Qt::UniqueConnection );
+    QObject::connect( propertiesAction, &QAction::triggered, [=](){ slotProperties(); } );
     menu->addSeparator();
 
     QAction* rotateCWAction = menu->addAction( QIcon( ":/rotatecw.svg"),tr("Rotate CW")+"\tCtrl+R" );
-    connect( rotateCWAction, &QAction::triggered,
-                       this, &Component::rotateCW, Qt::UniqueConnection );
+    QObject::connect( rotateCWAction, &QAction::triggered, [=](){ rotateCW(); } );
 
     QAction* rotateCCWAction = menu->addAction(QIcon( ":/rotateccw.svg"),tr("Rotate CCW") );
-    connect( rotateCCWAction, &QAction::triggered,
-                        this, &Component::rotateCCW, Qt::UniqueConnection );
+    QObject::connect( rotateCCWAction, &QAction::triggered, [=](){ rotateCCW(); } );
 
     QAction* rotateHalfAction = menu->addAction(QIcon(":/rotate180.svg"),tr("Rotate 180") );
-    connect( rotateHalfAction, &QAction::triggered,
-                         this, &Component::rotateHalf, Qt::UniqueConnection );
+    QObject::connect( rotateHalfAction, &QAction::triggered, [=](){ rotateHalf(); } );
     
     QAction* H_flipAction = menu->addAction(QIcon(":/hflip.svg"),tr("Horizontal Flip") );
-    connect( H_flipAction, &QAction::triggered,
-                     this, &Component::slotH_flip, Qt::UniqueConnection );
+    QObject::connect( H_flipAction, &QAction::triggered, [=](){ slotH_flip(); } );
     
     QAction* V_flipAction = menu->addAction(QIcon(":/vflip.svg"),tr("Vertical Flip") );
-    connect( V_flipAction, &QAction::triggered,
-                     this, &Component::slotV_flip, Qt::UniqueConnection );
+    QObject::connect( V_flipAction, &QAction::triggered, [=](){ slotV_flip(); } );
 
     menu->exec(event->screenPos());
 }

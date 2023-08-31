@@ -14,10 +14,10 @@ class LibraryItem;
 class MAINMODULE_EXPORT Led : public LedBase, public Linkable
 {
     public:
-        Led( QObject* parent, QString type, QString id );
+        Led( QString type, QString id );
         ~Led();
 
- static Component* construct( QObject* parent, QString type, QString id );
+ static Component* construct( QString type, QString id );
  static LibraryItem* libraryItem();
 
         virtual void voltChanged() override;

@@ -19,21 +19,23 @@
 #include "intprop.h"
 #include "stringprop.h"
 
-Component* Dial::construct( QObject* parent, QString type, QString id )
-{ return new Dial( parent, type, id ); }
+#define tr(str) simulideTr("Dial",str)
+
+Component* Dial::construct( QString type, QString id )
+{ return new Dial( type, id ); }
 
 LibraryItem* Dial::libraryItem()
 {
     return new LibraryItem(
-        tr( "Dial" ),
+        tr("Dial"),
         "Other",
         "dial.png",
         "Dial",
         Dial::construct );
 }
 
-Dial::Dial( QObject* parent, QString type, QString id )
-    : Dialed( parent, type, id )
+Dial::Dial( QString type, QString id )
+    : Dialed( type, id )
 {
     m_areaDial = QRectF(-11,-28 , 22, 22 );
     m_areaComp = QRectF(-12,-4.5, 24, 12.5 );
@@ -117,8 +119,7 @@ void Dial::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
     QMenu* menu = new QMenu();
 
     QAction* linkCompAction = menu->addAction( QIcon(":/subcl.png"),tr("Link to Component") );
-    connect( linkCompAction, &QAction::triggered,
-                       this, &Dial::slotLinkComp, Qt::UniqueConnection );
+    QObject::connect( linkCompAction, &QAction::triggered, [=](){ slotLinkComp(); } );
 
     menu->addSeparator();
 

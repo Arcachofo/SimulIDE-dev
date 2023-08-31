@@ -15,10 +15,10 @@ class LibraryItem;
 class MAINMODULE_EXPORT I2CRam : public IoComponent, public TwiModule, public MemData
 {
     public:
-        I2CRam( QObject* parent, QString type, QString id );
+        I2CRam( QString type, QString id );
         ~I2CRam();
 
-        static Component* construct( QObject* parent, QString type, QString id );
+        static Component* construct( QString type, QString id );
         static LibraryItem* libraryItem();
 
         virtual void stamp() override;

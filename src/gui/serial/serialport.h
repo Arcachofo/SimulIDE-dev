@@ -18,18 +18,11 @@ class QGraphicsProxyWidget;
 
 class MAINMODULE_EXPORT SerialPort : public Component, public UsartModule, public eElement
 {
-    Q_OBJECT
-    /*
-
-    Q_PROPERTY( QSerialPort::Parity   Parity   READ parity   WRITE setParity    DESIGNABLE true  USER true )
-    Q_PROPERTY( QSerialPort::FlowControl FlowControl READ flowControl WRITE setFlowControl  DESIGNABLE true  USER true )
-*/
     public:
-
-        SerialPort( QObject* parent, QString type, QString id );
+        SerialPort( QString type, QString id );
         ~SerialPort();
         
- static Component* construct( QObject* parent, QString type, QString id );
+ static Component* construct( QString type, QString id );
  static LibraryItem* libraryItem();
 
         virtual void stamp() override;

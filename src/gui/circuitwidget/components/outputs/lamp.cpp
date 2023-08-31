@@ -13,21 +13,23 @@
 
 #include "doubleprop.h"
 
-Component* Lamp::construct( QObject* parent, QString type, QString id )
-{ return new Lamp( parent, type, id ); }
+#define tr(str) simulideTr("Lamp",str)
+
+Component* Lamp::construct( QString type, QString id )
+{ return new Lamp( type, id ); }
 
 LibraryItem* Lamp::libraryItem()
 {
     return new LibraryItem(
-        tr( "Incandescent lamp" ),
+        tr("Incandescent lamp"),
         "Other Outputs",
         "lamp.png",
         "Lamp",
         Lamp::construct);
 }
 
-Lamp::Lamp( QObject* parent, QString type, QString id )
-    : Comp2Pin( parent, type, id )
+Lamp::Lamp( QString type, QString id )
+    : Comp2Pin( type, id )
     , eResistor( id )
 {
     m_area = QRect(-10,-10, 20, 20 );

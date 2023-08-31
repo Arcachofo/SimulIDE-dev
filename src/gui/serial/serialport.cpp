@@ -22,21 +22,23 @@
 #include "boolprop.h"
 #include "intprop.h"
 
-Component* SerialPort::construct( QObject* parent, QString type, QString id )
-{ return new SerialPort( parent, type, id ); }
+#define tr(str) simulideTr("SerialPort",str)
+
+Component* SerialPort::construct( QString type, QString id )
+{ return new SerialPort( type, id ); }
 
 LibraryItem* SerialPort::libraryItem()
 {
     return new LibraryItem(
-        "SerialPort",
-        tr("Peripherals"),
+        tr("Serial Port"),
+        "Peripherals",
         "serialport.png",
         "SerialPort",
         SerialPort::construct );
 }
 
-SerialPort::SerialPort( QObject* parent, QString type, QString id )
-          : Component( parent, type, id )
+SerialPort::SerialPort( QString type, QString id )
+          : Component( type, id )
           , UsartModule( NULL, id+"-Uart" )
           , eElement( (id+"-eElement") )
 {
@@ -56,7 +58,7 @@ SerialPort::SerialPort( QObject* parent, QString type, QString id )
     m_pin[1] = pinRx;
     m_receiver->setPins( {pinRx} );
 
-    m_serial = new QSerialPort( this );
+    m_serial = new QSerialPort( /*this*/ );
     m_receiving = false;
 
     m_flowControl = QSerialPort::NoFlowControl;
@@ -77,18 +79,15 @@ SerialPort::SerialPort( QObject* parent, QString type, QString id )
     m_proxy->setParentItem( this );
     m_proxy->setPos( QPoint(-4,-10) );
 
-    connect( m_button, &QPushButton::clicked,
-                 this, &SerialPort::onbuttonclicked, Qt::UniqueConnection);
-
-    connect( m_serial, &QSerialPort::readyRead,
-                 this, &SerialPort::readData, Qt::UniqueConnection );
+    QObject::connect( m_button, &QPushButton::clicked  , [=](){ onbuttonclicked(); });
+    QObject::connect( m_serial, &QSerialPort::readyRead, [=](){ readData(); } );
 
     Simulator::self()->addToUpdateList( this );
 
-    addPropGroup( { "Main", {
+    addPropGroup( { tr("Main"), {
 //new BoolProp  <Chip>( "Logic_Symbol","","", this, &Chip::logicSymbol, &Chip::setLogicSymbol ),
 new StrProp<SerialPort>( "Port", tr("Port Name"),"", this, &SerialPort::port,  &SerialPort::setPort ),
-    } } );
+    }, 0 } );
 
     addPropGroup( { "Config", {
 new IntProp<SerialPort>("Baudrate", tr("Baudrate"),"_Bauds", this, &SerialPort::baudRate, &SerialPort::setBaudRate,0,"uint" ),
@@ -215,8 +214,7 @@ void SerialPort::setSerialMon( bool s )
 void SerialPort::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
 {
     QAction* openSerMon = menu->addAction( QIcon(":/terminal.svg"),tr("Open Serial Monitor.") );
-    connect( openSerMon, &QAction::triggered,
-                   this, &SerialPort::slotOpenTerm, Qt::UniqueConnection );
+    QObject::connect( openSerMon, &QAction::triggered, [=](){ slotOpenTerm(); } );
 
     menu->addSeparator();
     Component::contextMenu( event, menu );
@@ -257,4 +255,4 @@ void SerialPort::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWi
     p->drawText( 40, 5, m_portName );
 }
 
-#include "moc_serialport.cpp"
+//#include "moc_serialport.cpp"

@@ -15,21 +15,23 @@
 
 #include "doubleprop.h"
 
-Component* VoltReg::construct( QObject* parent, QString type, QString id )
-{ return new VoltReg( parent, type, id ); }
+#define tr(str) simulideTr("VoltReg",str)
+
+Component* VoltReg::construct( QString type, QString id )
+{ return new VoltReg( type, id ); }
 
 LibraryItem* VoltReg::libraryItem()
 {
     return new LibraryItem(
-        QCoreApplication::translate("VoltReg", "Volt. Regulator"),
+        tr("Volt. Regulator"),
         "Other Active",
         "voltreg.png",
         "VoltReg",
         VoltReg::construct );
 }
 
-VoltReg::VoltReg( QObject* parent, QString type, QString id )
-       : Component( parent, type, id )
+VoltReg::VoltReg( QString type, QString id )
+       : Component( type, id )
        , eResistor( id )
 {
     m_area = QRect( -11, -8, 22, 19 );

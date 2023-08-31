@@ -14,10 +14,10 @@ class LibraryItem;
 class MAINMODULE_EXPORT AndGate : public Gate
 {
     public:
-        AndGate( QObject* parent, QString type, QString id );
+        AndGate( QString type, QString id );
         ~AndGate();
         
-        static Component* construct( QObject* parent, QString type, QString id );
+        static Component* construct( QString type, QString id );
         static LibraryItem *libraryItem();
 
         virtual QPainterPath shape() const;

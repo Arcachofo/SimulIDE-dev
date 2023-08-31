@@ -23,13 +23,13 @@
 #define HEIGHT 56
 #define GAP 0
 #define DIAL_SIZE 36
-
 #define RESOLUTION 10
-
 #define VIN 5
 
-Component* KY040::construct( QObject* parent, QString type, QString id )
-{ return new KY040( parent, type, id ); }
+#define tr(str) simulideTr("KY040",str)
+
+Component* KY040::construct( QString type, QString id )
+{ return new KY040( type, id ); }
 
 LibraryItem* KY040::libraryItem()
 {
@@ -41,8 +41,8 @@ LibraryItem* KY040::libraryItem()
         KY040::construct);
 }
 
-KY040::KY040( QObject* parent, QString type, QString id )
-     : Component( parent, type, id )
+KY040::KY040( QString type, QString id )
+     : Component( type, id )
      , eElement( id )
 {
     m_changed = false;
@@ -88,11 +88,8 @@ KY040::KY040( QObject* parent, QString type, QString id )
 
     Simulator::self()->addToUpdateList( this );
 
-    connect( m_button, &QToolButton::pressed,
-             this,     &KY040::onbuttonchanged );
-    
-    connect( m_button, &QToolButton::released,
-             this,     &KY040::onbuttonchanged );
+    QObject::connect( m_button, &QToolButton::pressed , [=](){ onbuttonchanged(); } );
+    QObject::connect( m_button, &QToolButton::released, [=](){ onbuttonchanged(); } );
 
     addPropGroup( { tr("Main"), {
 new IntProp<KY040>( "Steps", tr("Steps per Rotation"),tr("_Steps"), this, &KY040::steps, &KY040::setSteps,0,"uint" )

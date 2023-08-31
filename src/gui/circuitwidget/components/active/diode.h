@@ -14,10 +14,10 @@ class LibraryItem;
 class MAINMODULE_EXPORT Diode : public Comp2Pin, public eDiode
 {
     public:
-        Diode( QObject* parent, QString type, QString id, bool zener=false );
+        Diode( QString type, QString id, bool zener=false );
         ~Diode();
 
- static Component* construct( QObject* parent, QString type, QString id );
+ static Component* construct( QString type, QString id );
  static LibraryItem *libraryItem();
 
         virtual bool setPropStr( QString prop, QString val ) override;
@@ -29,7 +29,7 @@ class MAINMODULE_EXPORT Diode : public Comp2Pin, public eDiode
         virtual double res() override{ return m_resistor->res(); }
         virtual void setResSafe( double resist ) override { m_resistor->setResSafe(resist);}
 
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
 
     private:
         bool m_isZener;

@@ -14,21 +14,23 @@
 
 #include "doubleprop.h"
 
-Component* FreqMeter::construct( QObject* parent, QString type, QString id )
-{ return new FreqMeter( parent, type, id ); }
+#define tr(str) simulideTr("FreqMeter",str)
+
+Component* FreqMeter::construct( QString type, QString id )
+{ return new FreqMeter( type, id ); }
 
 LibraryItem* FreqMeter::libraryItem()
 {
     return new LibraryItem(
-        tr( "FreqMeter" ),
+        tr("Frequency Meter"),
         "Meters",
         "frequencimeter.png",
         "FreqMeter",
         FreqMeter::construct);
 }
 
-FreqMeter::FreqMeter( QObject* parent, QString type, QString id )
-         : Component( parent, type, id )
+FreqMeter::FreqMeter( QString type, QString id )
+         : Component( type, id )
          , eElement( id )
          , m_display( this )
 {

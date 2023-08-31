@@ -14,8 +14,8 @@
 #include "pin.h"
 #include "label.h"
 
-VarResBase::VarResBase( QObject* parent, QString type, QString id )
-          : Dialed( parent, type, id )
+VarResBase::VarResBase( QString type, QString id )
+          : Dialed( type, id )
           , eResistor( id )
 {
     m_graphical = true;

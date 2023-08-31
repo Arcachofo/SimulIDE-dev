@@ -18,21 +18,23 @@
 #include "doubleprop.h"
 #include "boolprop.h"
 
-Component* OpAmp::construct( QObject* parent, QString type, QString id )
-{ return new OpAmp( parent, type, id ); }
+#define tr(str) simulideTr("opAmp",str)
+
+Component* OpAmp::construct( QString type, QString id )
+{ return new OpAmp( type, id ); }
 
 LibraryItem* OpAmp::libraryItem()
 {
     return new LibraryItem(
-        QCoreApplication::translate("OpAmp","OpAmp"),
+        tr("OpAmp"),
         "Other Active",
         "opamp.png",
         "opAmp",
         OpAmp::construct );
 }
 
-OpAmp::OpAmp( QObject* parent, QString type, QString id )
-     : Component( parent, type, id )
+OpAmp::OpAmp( QString type, QString id )
+     : Component( type, id )
      , eElement( id )
 {
     m_area = QRect( -18, -8*2, 36, 8*2*2 );

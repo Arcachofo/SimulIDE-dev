@@ -10,21 +10,23 @@
 #include "simulator.h"
 #include "e-pin.h"
 
-Component* elCapacitor::construct( QObject* parent, QString type, QString id )
-{ return new elCapacitor( parent, type, id ); }
+#define tr(str) simulideTr("Capacitor",str)
+
+Component* elCapacitor::construct( QString type, QString id )
+{ return new elCapacitor( type, id ); }
 
 LibraryItem* elCapacitor::libraryItem()
 {
     return new LibraryItem(
-        tr( "Electrolytic Capacitor" ),
+        tr("Electrolytic Capacitor"),
         "Reactive",
         "elcapacitor.png",
         "elCapacitor",
         elCapacitor::construct);
 }
 
-elCapacitor::elCapacitor( QObject* parent, QString type, QString id )
-           : CapacitorBase( parent, type, id )
+elCapacitor::elCapacitor( QString type, QString id )
+           : CapacitorBase( type, id )
 {
     Simulator::self()->addToUpdateList( this );
 }

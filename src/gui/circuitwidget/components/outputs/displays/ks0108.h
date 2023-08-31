@@ -15,10 +15,10 @@ class LibraryItem;
 class MAINMODULE_EXPORT Ks0108 : public Component, public eElement
 {
     public:
-        Ks0108( QObject* parent, QString type, QString id );
+        Ks0108( QString type, QString id );
         ~Ks0108();
         
- static Component* construct( QObject* parent, QString type, QString id );
+ static Component* construct( QString type, QString id );
  static LibraryItem* libraryItem();
 
         virtual void initialize() override;

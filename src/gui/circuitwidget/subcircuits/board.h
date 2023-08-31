@@ -13,7 +13,7 @@ class ShieldSubc;
 class MAINMODULE_EXPORT BoardSubc : public SubCircuit
 {
     public:
-        BoardSubc( QObject* parent, QString type, QString id );
+        BoardSubc( QString type, QString id );
         ~BoardSubc();
 
         void attachShield( ShieldSubc* shield );

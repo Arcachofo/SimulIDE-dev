@@ -14,8 +14,10 @@
 #include "boolprop.h"
 #include "intprop.h"
 
-Component*  Stepper::construct( QObject* parent, QString type, QString id )
-{ return new Stepper( parent, type, id ); }
+#define tr(str) simulideTr("Stepper",str)
+
+Component*  Stepper::construct( QString type, QString id )
+{ return new Stepper( type, id ); }
 
 LibraryItem* Stepper::libraryItem()
 {
@@ -27,8 +29,8 @@ LibraryItem* Stepper::libraryItem()
         Stepper::construct );
 }
 
-Stepper::Stepper( QObject* parent, QString type, QString id )
-       : Component( parent, type, id )
+Stepper::Stepper( QString type, QString id )
+       : Component( type, id )
        , eElement( (id+"-eElement") )
        , m_resA1( (id+"-eEresistorA1") )
        , m_resA2( (id+"-eEresistorA2") )

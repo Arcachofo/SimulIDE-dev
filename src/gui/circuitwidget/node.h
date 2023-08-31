@@ -6,15 +6,17 @@
 #ifndef NODE_H
 #define NODE_H
 
+#include <QObject>
+
 #include "component.h"
 #include "pin.h"
 
-class MAINMODULE_EXPORT Node : public Component
+class MAINMODULE_EXPORT Node : public Component, public QObject
 {
     public:
-        QRectF boundingRect() const { return QRect( -4, -4, 8, 8 ); }
+        QRectF boundingRect() const { return QRect(-4,-4, 8, 8 ); }
 
-        Node( QObject* parent, QString type, QString id );
+        Node( QString type, QString id );
         ~Node();
 
         Pin* getPin( int pin ) const { return m_pin[pin]; }
@@ -23,13 +25,13 @@ class MAINMODULE_EXPORT Node : public Component
 
         virtual void setHidden( bool hid, bool hidArea=false, bool hidLabel=false ) override;
 
-        void inStateChanged( int rem=1 );
+        void inStateChanged( int rem=1 ) override;
         void checkRemove();
 
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
 
     protected:
-        void contextMenuEvent(QGraphicsSceneContextMenuEvent* event){;}
+        void contextMenuEvent(QGraphicsSceneContextMenuEvent* event) override {;}
 
     private:
         void joinConns( int co0, int c1);

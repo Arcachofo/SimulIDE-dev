@@ -30,23 +30,25 @@
 #include "boolprop.h"
 #include "intprop.h"
 
+#define tr(str) simulideTr("SubPackage",str)
+
 QString SubPackage::m_lastPkg = "";
 
-Component* SubPackage::construct( QObject* parent, QString type, QString id )
-{ return new SubPackage( parent, type, id ); }
+Component* SubPackage::construct( QString type, QString id )
+{ return new SubPackage( type, id ); }
 
 LibraryItem* SubPackage::libraryItem()
 {
     return new LibraryItem(
-        tr( "Package" ),
+        simulideTr("Package", "Package" ),
         "Other",
         "resistordip.png",
         "Package",
         SubPackage::construct );
 }
 
-SubPackage::SubPackage( QObject* parent, QString type, QString id )
-          : Chip( parent, type, id )
+SubPackage::SubPackage( QString type, QString id )
+          : Chip( type, id )
 {
     m_subcType = Chip::None;
     m_width  = 4;
@@ -64,7 +66,7 @@ SubPackage::SubPackage( QObject* parent, QString type, QString id )
     m_icColor = QColor( 40, 40, 120 );
     m_color = m_lsColor;
 
-    m_boardModeAction = new QAction( tr("Board Mode"), this );
+    m_boardModeAction = new QAction( tr("Board Mode") );
     m_boardModeAction->setCheckable( true );
     m_boardMode = false;
     
@@ -83,7 +85,10 @@ new StrProp <SubPackage>("Background"  ,tr("Background")  ,"", this, &SubPackage
 new BoolProp<SubPackage>("Logic_Symbol",tr("Logic Symbol"),"", this, &SubPackage::logicSymbol,&SubPackage::setLogicSymbol ),
     }, 0} );
 }
-SubPackage::~SubPackage(){}
+SubPackage::~SubPackage()
+{
+    delete m_boardModeAction;
+}
 
 void SubPackage::setSubcTypeStr( QString s )
 {
@@ -198,10 +203,10 @@ void SubPackage::mousePressEvent( QGraphicsSceneMouseEvent* event )
 void SubPackage::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
 {
     QAction* loadAction = menu->addAction( QIcon(":/open.png"),tr("Load Package") );
-    connect( loadAction, &QAction::triggered, this, &SubPackage::loadPackage, Qt::UniqueConnection );
+    QObject::connect( loadAction, &QAction::triggered, [=](){ loadPackage(); } );
 
     QAction* saveAction = menu->addAction( QIcon(":/save.png"),tr("Save Package") );
-    connect( saveAction, &QAction::triggered, this, &SubPackage::slotSave, Qt::UniqueConnection );
+    QObject::connect( saveAction, &QAction::triggered, [=](){ slotSave(); } );
 
     menu->addSeparator();
 
@@ -209,12 +214,10 @@ void SubPackage::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu
     {
         m_boardModeAction->setChecked( m_boardMode );
         menu->addAction( m_boardModeAction );
-        connect( m_boardModeAction, &QAction::triggered,
-                              this, &SubPackage::boardModeSlot, Qt::UniqueConnection );
+        QObject::connect( m_boardModeAction, &QAction::triggered, [=](){ boardModeSlot(); } );
     }
     QAction* mainCompAction = menu->addAction( QIcon(":/subcl.png"),tr("Select Main Component") );
-    connect( mainCompAction, &QAction::triggered,
-                       this, &SubPackage::mainComp, Qt::UniqueConnection );
+    QObject::connect( mainCompAction, &QAction::triggered, [=](){ mainComp(); } );
 
     Component::contextMenu( event, menu );
 }
@@ -328,8 +331,7 @@ void SubPackage::editPin()
     m_angle = m_eventPin->pinAngle();
 
     EditDialog* editDialog = new EditDialog( this, m_eventPin, NULL );
-    connect( editDialog, &EditDialog::finished,
-                   this, &SubPackage::editFinished, Qt::UniqueConnection );
+    QObject::connect( editDialog, &EditDialog::finished, [=](int r){ editFinished(r); } );
 
     editDialog->exec();
     editDialog->deleteLater();
@@ -657,29 +659,28 @@ EditDialog::EditDialog( SubPackage* pack, Pin* eventPin, QWidget* parent )
     setLayout( layout );
     setWindowTitle( tr("Edit Pin ")+eventPin->getLabelText() );
 
-    connect( bb, &QDialogButtonBox::accepted,
-           this, &EditDialog::accept, Qt::UniqueConnection);
+    QObject::connect( bb, &QDialogButtonBox::accepted, [=](){ accept(); } );
 
-    connect( m_nameLineEdit, &QLineEdit::textChanged,
-                       pack, &SubPackage::setPinName, Qt::UniqueConnection );
+    QObject::connect( m_nameLineEdit, &QLineEdit::textChanged,
+                      [=](const QString &s){ m_package->setPinName(s); } );
 
-    connect( m_idLineEdit, &QLineEdit::textEdited,
-                     pack, &SubPackage::setPinId, Qt::UniqueConnection );
+    QObject::connect( m_idLineEdit, &QLineEdit::textEdited,
+                      [=](const QString &s){ m_package->setPinId(s); } );
 
-    connect( m_spaceBox, QOverload<int>::of(&QSpinBox::valueChanged),
-                   pack, &SubPackage::setPinSpace, Qt::UniqueConnection );
+    QObject::connect( m_spaceBox, QOverload<int>::of(&QSpinBox::valueChanged),
+                      [=](int s){ m_package->setPinSpace(s); } );
 
-    connect( m_angleBox, QOverload<int>::of(&QComboBox::currentIndexChanged),
-                   pack, &SubPackage::setPinAngle, Qt::UniqueConnection );
+    QObject::connect( m_angleBox, QOverload<int>::of(&QComboBox::currentIndexChanged),
+                      [=](int a){ m_package->setPinAngle(a); }  );
 
-    connect( m_invertCheckBox, &QCheckBox::toggled,
-                         this, &EditDialog::invertPin, Qt::UniqueConnection );
+    QObject::connect( m_invertCheckBox, &QCheckBox::toggled,
+                      [=](bool t){ m_package->invertPin(t); } );
 
-    connect( m_unuseCheckBox,  &QCheckBox::toggled,
-                        pack,  &SubPackage::unusePin, Qt::UniqueConnection );
+    QObject::connect( m_unuseCheckBox,  &QCheckBox::toggled,
+                      [=](bool t){ m_package->unusePin(t); } );
 
-    connect( m_pointCheckBox,  &QCheckBox::toggled,
-                        pack,  &SubPackage::pointPin, Qt::UniqueConnection );
+    QObject::connect( m_pointCheckBox,  &QCheckBox::toggled,
+                      [=](bool t){ m_package->pointPin(t); } );
 }
 
 void EditDialog::invertPin( bool invert )

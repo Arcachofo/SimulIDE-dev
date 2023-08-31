@@ -10,21 +10,23 @@
 
 #include "boolprop.h"
 
-Component* XorGate::construct( QObject* parent, QString type, QString id )
-{ return new XorGate( parent, type, id ); }
+#define tr(str) simulideTr("Gate",str)
+
+Component* XorGate::construct( QString type, QString id )
+{ return new XorGate( type, id ); }
 
 LibraryItem* XorGate::libraryItem()
 {
     return new LibraryItem(
-        tr( "Xor Gate" ),
+        tr("Xor Gate" ),
         "Gates",
         "xorgate.png",
         "Xor Gate",
         XorGate::construct );
 }
 
-XorGate::XorGate( QObject* parent, QString type, QString id )
-       : Gate( parent, type, id, 2 )
+XorGate::XorGate( QString type, QString id )
+       : Gate( type, id, 2 )
 {
     addPropGroup( { tr("Electric"), IoComponent::inputProps()
 +QList<ComProperty*>({

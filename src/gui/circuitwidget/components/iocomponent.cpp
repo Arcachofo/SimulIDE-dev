@@ -12,8 +12,10 @@
 #include "doubleprop.h"
 #include "boolprop.h"
 
-IoComponent::IoComponent( QObject* parent, QString type, QString id)
-           : Component( parent, type, id )
+#define tr(str) simulideTr("IoComponent",str)
+
+IoComponent::IoComponent( QString type, QString id)
+           : Component( type, id )
 {
     m_inHighV = 2.5;
     m_inLowV  = 2.5;

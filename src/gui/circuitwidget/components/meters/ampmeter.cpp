@@ -6,21 +6,21 @@
 #include "ampmeter.h"
 #include "itemlibrary.h"
 
-Component* Amperimeter::construct( QObject* parent, QString type, QString id )
-{ return new Amperimeter( parent, type, id ); }
+Component* Amperimeter::construct( QString type, QString id )
+{ return new Amperimeter( type, id ); }
 
 LibraryItem* Amperimeter::libraryItem()
 {
     return new LibraryItem(
-        QCoreApplication::translate("Meters","Ampmeter"),
+        simulideTr("Meters","Ampmeter"),
         "Meters",
         "amperimeter.png",
         "Amperimeter",
         Amperimeter::construct);
 }
 
-Amperimeter::Amperimeter( QObject* parent, QString type, QString id )
-           : Meter( parent, type, id )
+Amperimeter::Amperimeter( QString type, QString id )
+           : Meter( type, id )
 {
     m_unit = "A";
     m_dispValue = 0;

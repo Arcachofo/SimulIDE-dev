@@ -13,6 +13,8 @@
 #include "mcu.h"
 #include "utils.h"
 
+#define tr(str) QCoreApplication::translate("BaseDebugger",str)
+
 BaseDebugger::BaseDebugger( CodeEditor* parent, OutPanelText* outPane )
             : Compiler( parent, outPane )
 {
@@ -366,4 +368,4 @@ QString BaseDebugger::getVarType( QString var )
     return m_varTypes.value( var );
 }
 
-#include "moc_basedebugger.cpp"
+//#include "moc_basedebugger.cpp"

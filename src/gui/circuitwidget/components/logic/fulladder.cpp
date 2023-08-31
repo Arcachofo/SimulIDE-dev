@@ -7,21 +7,23 @@
 #include "itemlibrary.h"
 #include "iopin.h"
 
-Component* FullAdder::construct(QObject *parent, QString type, QString id)
-{ return new FullAdder(parent, type, id); }
+#define tr(str) simulideTr("FullAdder",str)
+
+Component* FullAdder::construct( QString type, QString id)
+{ return new FullAdder( type, id); }
 
 LibraryItem* FullAdder::libraryItem()
 {
     return new LibraryItem(
-        QCoreApplication::translate("FullAdder", "Full Adder"),
+        simulideTr("FullAdder", "Full Adder"),
         "Arithmetic",
         "2to2.png",
         "FullAdder",
         FullAdder::construct );
 }
 
-FullAdder::FullAdder(QObject *parent, QString type, QString id) 
-         : LogicComponent( parent, type, id )
+FullAdder::FullAdder( QString type, QString id)
+         : LogicComponent( type, id )
 {
     m_width  = 3;
     m_height = 4;

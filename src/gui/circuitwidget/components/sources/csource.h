@@ -14,10 +14,10 @@ class LibraryItem;
 class MAINMODULE_EXPORT Csource : public Component, public eResistor
 {
     public:
-        Csource( QObject* parent, QString type, QString id );
+        Csource( QString type, QString id );
         ~Csource();
 
- static Component* construct( QObject* parent, QString type, QString id );
+ static Component* construct( QString type, QString id );
  static LibraryItem* libraryItem();
 
         virtual void stamp() override;

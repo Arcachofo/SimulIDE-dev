@@ -10,9 +10,8 @@
 
 class MAINMODULE_EXPORT ClockBase : public FixedVolt
 {
-
     public:
-        ClockBase( QObject* parent, QString type, QString id );
+        ClockBase( QString type, QString id );
         ~ClockBase();
 
         virtual bool setPropStr( QString prop, QString val ) override;

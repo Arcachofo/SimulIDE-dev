@@ -15,10 +15,10 @@
 class MAINMODULE_EXPORT Stepper : public Component, public eElement
 {
     public:
-        Stepper( QObject* parent, QString type, QString id );
+        Stepper( QString type, QString id );
         ~Stepper();
 
- static Component* construct( QObject* parent, QString type, QString id );
+ static Component* construct( QString type, QString id );
  static LibraryItem* libraryItem();
 
         int steps() { return m_steps; }

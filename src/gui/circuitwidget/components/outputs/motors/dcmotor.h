@@ -14,10 +14,10 @@ class LibraryItem;
 class MAINMODULE_EXPORT DcMotor : public Component, public eResistor
 {
     public:
-        DcMotor( QObject* parent, QString type, QString id );
+        DcMotor( QString type, QString id );
         ~DcMotor();
 
- static Component* construct( QObject* parent, QString type, QString id );
+ static Component* construct( QString type, QString id );
  static LibraryItem* libraryItem();
 
         virtual void initialize() override;

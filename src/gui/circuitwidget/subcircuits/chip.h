@@ -14,7 +14,7 @@ class QDomElement;
 class MAINMODULE_EXPORT Chip : public Component, public eElement
 {
     public:
-        Chip( QObject* parent, QString type, QString id );
+        Chip( QString type, QString id );
         ~Chip();
 
         enum subcType_t{

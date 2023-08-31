@@ -15,21 +15,23 @@
 
 #include "intprop.h"
 
-Component* Bus::construct( QObject* parent, QString type, QString id )
-{ return new Bus( parent, type, id ); }
+#define tr(str) simulideTr("Bus",str)
+
+Component* Bus::construct( QString type, QString id )
+{ return new Bus( type, id ); }
 
 LibraryItem* Bus::libraryItem()
 {
     return new LibraryItem(
-        QCoreApplication::translate("Bus", "Bus"),
+        tr("Bus"),
         "Connectors",
         "bus.png",
         "Bus",
         Bus::construct );
 }
 
-Bus::Bus( QObject* parent, QString type, QString id )
-   : Component( parent, type, id )
+Bus::Bus( QString type, QString id )
+   : Component( type, id )
    , eElement( id )
 {
     m_busPin1 = new Pin( 270, QPoint( 0, 0 ), m_id+"-busPinI", 1, this );

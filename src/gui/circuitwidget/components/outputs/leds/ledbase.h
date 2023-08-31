@@ -15,7 +15,7 @@ class eNode;
 class MAINMODULE_EXPORT LedBase : public Component, public eLed
 {
     public:
-        LedBase( QObject* parent, QString type, QString id );
+        LedBase( QString type, QString id );
         ~LedBase();
         
         enum LedColor {

@@ -19,9 +19,9 @@
 #define HEIGHT 56
 #define DIAL_SIZE 36
 
-VarSource::VarSource( QObject* parent, QString type, QString id )
-          : Component( parent, type, id )
-          , eElement( id )
+VarSource::VarSource( QString type, QString id )
+         : Component( type, id )
+         , eElement( id )
 {
     m_area = QRect( -WIDTH/2, -HEIGHT/2, WIDTH, HEIGHT );
 
@@ -46,11 +46,8 @@ VarSource::VarSource( QObject* parent, QString type, QString id )
 
     Simulator::self()->addToUpdateList( this );
 
-    connect( m_button, &CustomButton::clicked,
-             this,     &VarSource::onbuttonclicked, Qt::UniqueConnection );
-
-    connect( m_voltw.dial(), &QDial::valueChanged,
-             this,           &VarSource::dialChanged, Qt::UniqueConnection );
+    QObject::connect( m_button, &CustomButton::clicked, [=](){ onbuttonclicked(); } );
+    QObject::connect( m_voltw.dial(), &QDial::valueChanged, [=](int v){ dialChanged(v); } );
 
     addPropGroup( { "Hidden1", {
 new BoolProp<VarSource>( "Running","","", this, &VarSource::running, &VarSource::setRunning ),

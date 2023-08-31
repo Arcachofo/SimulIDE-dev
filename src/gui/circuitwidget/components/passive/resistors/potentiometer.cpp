@@ -17,21 +17,23 @@
 
 #include "doubleprop.h"
 
-Component* Potentiometer::construct( QObject* parent, QString type, QString id )
-{ return new Potentiometer( parent, type, id ); }
+#define tr(str) simulideTr("Potentiometer",str)
+
+Component* Potentiometer::construct( QString type, QString id )
+{ return new Potentiometer( type, id ); }
 
 LibraryItem* Potentiometer::libraryItem()
 {
     return new LibraryItem(
-        tr( "Potentiometer" ),
+        tr("Potentiometer"),
         "Resistors",
         "potentiometer.png",
         "Potentiometer",
         Potentiometer::construct );
 }
 
-Potentiometer::Potentiometer( QObject* parent, QString type, QString id )
-             : Dialed( parent, type, id )
+Potentiometer::Potentiometer( QString type, QString id )
+             : Dialed( type, id )
              , eElement( (id+"-eElement") )
              , m_pinA( 180, QPoint(-16,0 ), id+"-PinA", 0, this )
              , m_pinM( 270, QPoint( 0,16 ), id+"-PinM", 0, this )

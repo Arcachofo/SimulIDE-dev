@@ -20,8 +20,10 @@
 #include "doubleprop.h"
 #include "stringprop.h"
 
-Component* Ds18b20::construct( QObject* parent, QString type, QString id )
-{ return new Ds18b20( parent, type, id ); }
+#define tr(str) simulideTr("DS18B20",str)
+
+Component* Ds18b20::construct( QString type, QString id )
+{ return new Ds18b20( type, id ); }
 
 LibraryItem* Ds18b20::libraryItem()
 {
@@ -33,8 +35,8 @@ LibraryItem* Ds18b20::libraryItem()
         Ds18b20::construct );
 }
 
-Ds18b20::Ds18b20( QObject* parent, QString type, QString id )
-       : Component( parent, type, id )
+Ds18b20::Ds18b20( QString type, QString id )
+       : Component( type, id )
        , eElement( id )
 {    
     m_area = QRect(-28,-16, 56, 32 );
@@ -80,11 +82,8 @@ Ds18b20::Ds18b20( QObject* parent, QString type, QString id )
     proxy->setParentItem( this );
     proxy->setPos( QPoint( 9, 4 ) );
 
-    connect( u_button, &QPushButton::pressed,
-             this,     &Ds18b20::upbuttonclicked );
-
-    connect( d_button, &QPushButton::pressed,
-             this,     &Ds18b20::downbuttonclicked );
+    QObject::connect( u_button, &QPushButton::pressed, [=](){ upbuttonclicked(); } );
+    QObject::connect( d_button, &QPushButton::pressed, [=](){ downbuttonclicked(); } );
 
     m_font.setFamily("Ubuntu Mono");
     m_font.setPixelSize( 10 );

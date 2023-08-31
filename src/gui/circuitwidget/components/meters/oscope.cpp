@@ -21,8 +21,10 @@
 #include "doubleprop.h"
 #include "intprop.h"
 
-Component* Oscope::construct( QObject* parent, QString type, QString id )
-{ return new Oscope( parent, type, id ); }
+#define tr(str) simulideTr("Oscope",str)
+
+Component* Oscope::construct( QString type, QString id )
+{ return new Oscope( type, id ); }
 
 LibraryItem* Oscope::libraryItem()
 {
@@ -34,8 +36,8 @@ LibraryItem* Oscope::libraryItem()
         Oscope::construct );
 }
 
-Oscope::Oscope( QObject* parent, QString type, QString id )
-      : PlotBase( parent, type, id )
+Oscope::Oscope( QString type, QString id )
+      : PlotBase( type, id )
 {
     m_numChannels = 4;
     m_trigger = 4;

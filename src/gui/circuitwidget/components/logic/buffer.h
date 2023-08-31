@@ -13,10 +13,10 @@ class LibraryItem;
 class MAINMODULE_EXPORT Buffer : public Gate
 {
     public:
-        Buffer( QObject* parent, QString type, QString id );
+        Buffer( QString type, QString id );
         ~Buffer();
 
-        static Component* construct( QObject* parent, QString type, QString id );
+        static Component* construct( QString type, QString id );
         static LibraryItem *libraryItem();
 
         virtual void setTristate( bool t ) override;

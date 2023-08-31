@@ -13,10 +13,10 @@ class LibraryItem;
 class MAINMODULE_EXPORT Zener : public Diode
 {
     public:
-        Zener( QObject* parent, QString type, QString id );
+        Zener( QString type, QString id );
         ~Zener();
 
- static Component* construct( QObject* parent, QString type, QString id );
+ static Component* construct( QString type, QString id );
  static LibraryItem* libraryItem();
 };
 

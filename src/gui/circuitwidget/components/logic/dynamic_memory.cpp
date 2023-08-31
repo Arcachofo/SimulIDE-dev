@@ -1,4 +1,10 @@
+/***************************************************************************
+ *   Copyright (C) 2018 by Santiago González                               *
+ *                                                                         *
+ ***( see copyright.txt file at root folder )*******************************/
+
 #include <math.h>
+#include <QDebug>
 
 #include "dynamic_memory.h"
 #include "itemlibrary.h"
@@ -12,23 +18,24 @@
 #include "stringprop.h"
 #include "doubleprop.h"
 #include "intprop.h"
-#include <QDebug>
 
-Component* DynamicMemory::construct( QObject* parent, QString type, QString id )
-{ return new DynamicMemory( parent, type, id ); }
+#define tr(str) simulideTr("DynamicMemory",str)
+
+Component* DynamicMemory::construct( QString type, QString id )
+{ return new DynamicMemory( type, id ); }
 
 LibraryItem* DynamicMemory::libraryItem()
 {
     return new LibraryItem(
-        tr( "Dynamic Ram" ),
+        tr("Dynamic Ram"),
         "Memory",
         "2to3g.png",
         "DynamicMemory",
         DynamicMemory::construct );
 }
 
-DynamicMemory::DynamicMemory( QObject* parent, QString type, QString id )
-             : LogicComponent( parent, type, id )
+DynamicMemory::DynamicMemory( QString type, QString id )
+             : LogicComponent( type, id )
              , MemData()
 {
     m_width  = 4;
@@ -328,16 +335,13 @@ void DynamicMemory::deleteDataBits( int bits )
 void DynamicMemory::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
 {
     QAction* loadAction = menu->addAction( QIcon(":/load.svg"),tr("Load data") );
-    connect( loadAction, &QAction::triggered,
-                   this, &DynamicMemory::loadData, Qt::UniqueConnection );
+    QObject::connect( loadAction, &QAction::triggered, [=](){ loadData(); } );
 
     QAction* saveAction = menu->addAction(QIcon(":/save.png"), tr("Save data") );
-    connect( saveAction, &QAction::triggered,
-                   this, &DynamicMemory::saveData, Qt::UniqueConnection );
+    QObject::connect( saveAction, &QAction::triggered, [=](){ saveData(); } );
 
     QAction* showEepAction = menu->addAction(QIcon(":/save.png"), tr("Show Memory Table") );
-    connect( showEepAction, &QAction::triggered,
-                      this, &DynamicMemory::slotShowTable, Qt::UniqueConnection );
+    QObject::connect( showEepAction, &QAction::triggered, [=](){ slotShowTable(); } );
 
     menu->addSeparator();
     Component::contextMenu( event, menu );

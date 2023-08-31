@@ -17,10 +17,10 @@ class IoPin;
 class MAINMODULE_EXPORT Dht22 : public Component , public eElement
 {
     public:
-        Dht22( QObject* parent, QString type, QString id );
+        Dht22( QString type, QString id );
         ~Dht22();
 
-        static Component* construct( QObject* parent, QString type, QString id );
+        static Component* construct( QString type, QString id );
         static LibraryItem* libraryItem();
 
         void setModel( QString model);

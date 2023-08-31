@@ -13,10 +13,10 @@ class LibraryItem;
 class MAINMODULE_EXPORT Switch : public SwitchBase
 {
     public:
-        Switch( QObject* parent, QString type, QString id );
+        Switch( QString type, QString id );
         ~Switch();
 
- static Component* construct( QObject* parent, QString type, QString id );
+ static Component* construct( QString type, QString id );
  static LibraryItem* libraryItem();
 
         virtual void stamp() override;

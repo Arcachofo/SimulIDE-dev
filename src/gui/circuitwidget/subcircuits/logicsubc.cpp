@@ -8,8 +8,10 @@
 
 #include "doubleprop.h"
 
-LogicSubc::LogicSubc( QObject* parent, QString type, QString id )
-         : SubCircuit( parent, type, id )
+#define tr(str) simulideTr("LogicSubc",str)
+
+LogicSubc::LogicSubc( QString type, QString id )
+         : SubCircuit( type, id )
 {
     m_subcType = Chip::Logic;
 

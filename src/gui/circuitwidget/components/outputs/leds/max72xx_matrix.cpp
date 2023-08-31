@@ -14,21 +14,23 @@
 #include "stringprop.h"
 #include "intprop.h"
 
-Component* Max72xx_matrix::construct( QObject* parent, QString type, QString id )
-{ return new Max72xx_matrix( parent, type, id ); }
+#define tr(str) simulideTr("Max72xx matrix",str)
+
+Component* Max72xx_matrix::construct( QString type, QString id )
+{ return new Max72xx_matrix( type, id ); }
 
 LibraryItem* Max72xx_matrix::libraryItem()
 {
     return new LibraryItem(
-        tr( "Max72xx_matrix" ),
+        tr( "Max72xx matrix" ),
         "Leds",
         "max72xx.png",
         "Max72xx_matrix",
         Max72xx_matrix::construct);
 }
 
-Max72xx_matrix::Max72xx_matrix( QObject* parent, QString type, QString id )
-              : LogicComponent( parent, type, id )
+Max72xx_matrix::Max72xx_matrix( QString type, QString id )
+              : LogicComponent( type, id )
 {
     m_graphical = true;
     m_numDisplays = 4;

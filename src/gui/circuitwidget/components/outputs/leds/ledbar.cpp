@@ -16,21 +16,23 @@
 #include "boolprop.h"
 #include "intprop.h"
 
-Component* LedBar::construct( QObject* parent, QString type, QString id )
-{ return new LedBar( parent, type, id ); }
+#define tr(str) simulideTr("Led Bar",str)
+
+Component* LedBar::construct( QString type, QString id )
+{ return new LedBar( type, id ); }
 
 LibraryItem* LedBar::libraryItem()
 {
     return new LibraryItem(
-        tr( "Led Bar" ),
+        tr("Led Bar"),
         "Leds",
         "ledbar.png",
         "LedBar",
         LedBar::construct);
 }
 
-LedBar::LedBar( QObject* parent, QString type, QString id )
-      : Component( parent, type, id )
+LedBar::LedBar( QString type, QString id )
+      : Component( type, id )
 {
     m_area = QRect(-8,-28, 16, 64 );
     m_graphical = true;
@@ -74,7 +76,7 @@ void LedBar::createLeds( int c )
         Pin* pin1 = new Pin( 0, QPoint( 16,-32+8+i*8 ), ledid+"-pinN", 0, this );
         m_pin[index+1] = pin1;
 
-        m_led[i] = new LedSmd( this, "LEDSMD", ledid, QRectF( 0, 0, 4, 4), pin0, pin1 );
+        m_led[i] = new LedSmd( "LEDSMD", ledid, QRectF( 0, 0, 4, 4), pin0, pin1 );
         m_led[i]->setParentItem(this);
         m_led[i]->setPos( 0,-28+2+i*8 );
         m_led[i]->setFlag( QGraphicsItem::ItemIsSelectable, false );

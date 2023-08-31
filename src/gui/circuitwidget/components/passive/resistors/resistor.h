@@ -14,10 +14,10 @@ class LibraryItem;
 class MAINMODULE_EXPORT Resistor : public Comp2Pin, public eResistor
 {
     public:
-        Resistor( QObject* parent, QString type, QString id );
+        Resistor( QString type, QString id );
         ~Resistor();
 
- static Component* construct( QObject* parent, QString type, QString id );
+ static Component* construct( QString type, QString id );
  static LibraryItem* libraryItem();
 
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;

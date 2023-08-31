@@ -21,11 +21,12 @@
 #define HEIGHT 56
 #define GAP 0
 #define JOYSTICK_SIZE 36
-
 #define VIN 5
 
-Component* KY023::construct( QObject* parent, QString type, QString id )
-{ return new KY023( parent, type, id ); }
+#define tr(str) simulideTr("KY023",str)
+
+Component* KY023::construct( QString type, QString id )
+{ return new KY023( type, id ); }
 
 LibraryItem* KY023::libraryItem()
 {
@@ -37,8 +38,8 @@ LibraryItem* KY023::libraryItem()
         KY023::construct);
 }
 
-KY023::KY023( QObject* parent, QString type, QString id )
-     : Component( parent, type, id )
+KY023::KY023( QString type, QString id )
+     : Component( type, id )
      , eElement( id )
 {
     m_area = QRect( -WIDTH/2, -HEIGHT/2 + GAP, WIDTH, HEIGHT );
@@ -81,11 +82,8 @@ KY023::KY023( QObject* parent, QString type, QString id )
     
     Simulator::self()->addToUpdateList( this );
 
-    connect( m_button, &QToolButton::pressed,
-             this,     &KY023::onbuttonpressed);
-    
-    connect( m_button, &QToolButton::released,
-             this,     &KY023::onbuttonreleased);
+    QObject::connect( m_button, &QToolButton::pressed , [=](){ onbuttonpressed(); });
+    QObject::connect( m_button, &QToolButton::released, [=](){ onbuttonreleased(); });
     
     initialize();
 }

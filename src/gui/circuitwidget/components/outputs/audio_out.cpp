@@ -17,21 +17,23 @@
 #include "doubleprop.h"
 #include "boolprop.h"
 
-Component* AudioOut::construct( QObject* parent, QString type, QString id )
-{ return new AudioOut( parent, type, id ); }
+#define tr(str) simulideTr("AudioOut",str)
+
+Component* AudioOut::construct( QString type, QString id )
+{ return new AudioOut( type, id ); }
 
 LibraryItem* AudioOut::libraryItem()
 {
     return new LibraryItem(
-        tr( "Audio Out" ),
+        tr("Audio Out"),
         "Other Outputs",
         "audio_out.png",
         "AudioOut",
         AudioOut::construct);
 }
 
-AudioOut::AudioOut( QObject* parent, QString type, QString id )
-        : Component( parent, type, id )
+AudioOut::AudioOut( QString type, QString id )
+        : Component( type, id )
         , eResistor( id )
 {
     m_area = QRect( -12, -24, 24, 40 );

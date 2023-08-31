@@ -12,21 +12,23 @@
 #include "doubleprop.h"
 #include "intprop.h"
 
-Component* I2CToParallel::construct( QObject* parent, QString type, QString id )
-{ return new I2CToParallel( parent, type, id ); }
+#define tr(str) simulideTr("I2CToParallel",str)
+
+Component* I2CToParallel::construct( QString type, QString id )
+{ return new I2CToParallel( type, id ); }
 
 LibraryItem* I2CToParallel::libraryItem()
 {
     return new LibraryItem(
-        tr( "I2C to Parallel" ),
-         "Converters" ,
+        tr("I2C to Parallel"),
+        "Converters" ,
         "2to3g.png",
         "I2CToParallel",
         I2CToParallel::construct );
 }
 
-I2CToParallel::I2CToParallel( QObject* parent, QString type, QString id )
-             : IoComponent( parent, type, id )
+I2CToParallel::I2CToParallel( QString type, QString id )
+             : IoComponent( type, id )
              , TwiModule( id )
 {
     m_width  = 4;

@@ -13,10 +13,10 @@ class LibraryItem;
 class MAINMODULE_EXPORT Capacitor : public CapacitorBase
 {
     public:
-        Capacitor( QObject* parent, QString type, QString id );
+        Capacitor( QString type, QString id );
         ~Capacitor();
 
- static Component* construct( QObject* parent, QString type, QString id );
+ static Component* construct( QString type, QString id );
  static LibraryItem* libraryItem();
 
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;

@@ -12,10 +12,10 @@
 class MAINMODULE_EXPORT Ellipse : public Shape
 {
     public:
-        Ellipse( QObject* parent, QString type, QString id );
+        Ellipse( QString type, QString id );
         ~Ellipse();
         
- static Component* construct( QObject* parent, QString type, QString id );
+ static Component* construct( QString type, QString id );
  static LibraryItem* libraryItem();
 
         virtual QPainterPath shape() const override;

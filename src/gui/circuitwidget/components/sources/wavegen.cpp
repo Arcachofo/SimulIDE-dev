@@ -24,21 +24,23 @@
 #include "boolprop.h"
 #include "intprop.h"
 
-Component* WaveGen::construct( QObject* parent, QString type, QString id )
-{ return new WaveGen( parent, type, id ); }
+#define tr(str) simulideTr("WaveGen",str)
+
+Component* WaveGen::construct( QString type, QString id )
+{ return new WaveGen( type, id ); }
 
 LibraryItem* WaveGen::libraryItem()
 {
     return new LibraryItem(
-        tr( "Wave Gen." ),
+        tr("Wave Gen."),
         "Sources",
         "wavegen.png",
         "WaveGen",
         WaveGen::construct );
 }
 
-WaveGen::WaveGen( QObject* parent, QString type, QString id )
-       : ClockBase( parent, type, id )
+WaveGen::WaveGen( QString type, QString id )
+       : ClockBase( type, id )
 {
     m_bipolar  = false;
     m_floating = false;
@@ -327,8 +329,7 @@ void WaveGen::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
     if( m_waveType == Wav )
     {
         QAction* loadAction = menu->addAction( QIcon(":/load.svg"),tr("Load Wav File") );
-        connect( loadAction, &QAction::triggered,
-                       this, &WaveGen::slotLoad, Qt::UniqueConnection );
+        QObject::connect( loadAction, &QAction::triggered, [=](){ slotLoad(); } );
 
         menu->addSeparator();
     }

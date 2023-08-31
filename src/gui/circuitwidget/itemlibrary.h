@@ -6,16 +6,12 @@
 #ifndef ITEMLIBRARY_H
 #define ITEMLIBRARY_H
 
-#include <QCoreApplication>
-
 #include "component.h"
 
 class LibraryItem;
 
 class MAINMODULE_EXPORT ItemLibrary
 {
-    //Q_DECLARE_TR_FUNCTIONS( ItemLibrary )
-    
     public:
         ItemLibrary();
         ~ItemLibrary();

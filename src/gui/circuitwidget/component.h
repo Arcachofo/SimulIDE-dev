@@ -12,8 +12,6 @@
 #include "compbase.h"
 #include "updatable.h"
 
-/// #define _TR(str) QCoreApplication::translate("Component",str)
-
 class Pin;
 class eNode;
 class Label;
@@ -26,16 +24,16 @@ class MAINMODULE_EXPORT Component : public CompBase, public QGraphicsItem, publi
     Q_INTERFACES( QGraphicsItem )
 
     public:
-        QRectF boundingRect() const { return QRectF( m_area.x()-2, m_area.y()-2, m_area.width()+4, m_area.height()+4 ); }
+        QRectF boundingRect() const override { return QRectF( m_area.x()-2, m_area.y()-2, m_area.width()+4, m_area.height()+4 ); }
 
-        Component( QObject* parent, QString type, QString id );
+        Component( QString type, QString id );
         ~Component();
 
         virtual bool setPropStr( QString prop, QString val ) override;
  static void substitution( QString &propName );
 
         enum { Type = UserType + 1 };
-        int type() const { return Type; }
+        int type() const override { return Type; }
 
         QPointF position() { return pos(); }
         void setPosition( QPointF pos ) { setPos( pos ); }
@@ -128,7 +126,7 @@ class MAINMODULE_EXPORT Component : public CompBase, public QGraphicsItem, publi
         void addSignalPin( Pin* pin );
         void remSignalPin( Pin* pin );
 
-        virtual void paint( QPainter* painter, const QStyleOptionGraphicsItem*, QWidget* );
+        virtual void paint( QPainter* painter, const QStyleOptionGraphicsItem*, QWidget* ) override;
 
         // Link components
         virtual void setLinkedValue( double v, int i=0 ){;}
@@ -156,11 +154,11 @@ class MAINMODULE_EXPORT Component : public CompBase, public QGraphicsItem, publi
         void slotCut();
 
     protected:
-        void mousePressEvent( QGraphicsSceneMouseEvent* event );
-        void mouseMoveEvent( QGraphicsSceneMouseEvent* event );
-        void mouseReleaseEvent( QGraphicsSceneMouseEvent* event );
-        void contextMenuEvent( QGraphicsSceneContextMenuEvent* event );
-        void mouseDoubleClickEvent( QGraphicsSceneMouseEvent* event );
+        void mousePressEvent( QGraphicsSceneMouseEvent* event ) override;
+        void mouseMoveEvent( QGraphicsSceneMouseEvent* event ) override;
+        void mouseReleaseEvent( QGraphicsSceneMouseEvent* event ) override;
+        void contextMenuEvent( QGraphicsSceneContextMenuEvent* event ) override;
+        void mouseDoubleClickEvent( QGraphicsSceneMouseEvent* event ) override;
 
         bool m_graphical;
         bool m_showId;
@@ -202,6 +200,6 @@ class MAINMODULE_EXPORT Component : public CompBase, public QGraphicsItem, publi
         QList<Pin*> m_signalPin;
 };
 
-typedef Component* (*createItemPtr)( QObject* parent, QString type, QString id );
+typedef Component* (*createItemPtr)( QString type, QString id );
 
 #endif

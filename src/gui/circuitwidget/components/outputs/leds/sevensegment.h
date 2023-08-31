@@ -15,10 +15,10 @@ class LibraryItem;
 class MAINMODULE_EXPORT SevenSegment : public Component, public eElement
 {
     public:
-        SevenSegment( QObject* parent, QString type, QString id );
+        SevenSegment( QString type, QString id );
         ~SevenSegment();
 
- static Component* construct( QObject* parent, QString type, QString id );
+ static Component* construct( QString type, QString id );
  static LibraryItem *libraryItem();
 
         QString colorStr();

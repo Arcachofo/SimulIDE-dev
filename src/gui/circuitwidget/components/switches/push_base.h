@@ -11,7 +11,7 @@
 class MAINMODULE_EXPORT PushBase : public SwitchBase
 {
     public:
-        PushBase( QObject* parent, QString type, QString id );
+        PushBase( QString type, QString id );
         ~PushBase();
 
     public slots:

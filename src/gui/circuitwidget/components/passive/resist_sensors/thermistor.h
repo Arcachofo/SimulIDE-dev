@@ -13,10 +13,10 @@ class LibraryItem;
 class MAINMODULE_EXPORT Thermistor : public ThermistorBase
 {
     public:
-        Thermistor( QObject* parent, QString type, QString id );
+        Thermistor( QString type, QString id );
         ~Thermistor();
 
-        static Component* construct( QObject* parent, QString type, QString id );
+        static Component* construct( QString type, QString id );
         static LibraryItem* libraryItem();
 
         int bVal() { return m_bVal; }

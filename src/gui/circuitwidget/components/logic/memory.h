@@ -15,10 +15,10 @@ class LibraryItem;
 class MAINMODULE_EXPORT Memory : public IoComponent, public eElement, public MemData
 {
     public:
-        Memory( QObject* parent, QString type, QString id );
+        Memory( QString type, QString id );
         ~Memory();
 
-        static Component* construct( QObject* parent, QString type, QString id );
+        static Component* construct( QString type, QString id );
         static LibraryItem* libraryItem();
 
         virtual void stamp() override;

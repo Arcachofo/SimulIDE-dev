@@ -13,7 +13,7 @@
 class MAINMODULE_EXPORT Dialed : public Component
 {
     public:
-        Dialed( QObject* parent, QString type, QString id );
+        Dialed( QString type, QString id );
         ~Dialed();
 
         QList<ComProperty*> dialProps();

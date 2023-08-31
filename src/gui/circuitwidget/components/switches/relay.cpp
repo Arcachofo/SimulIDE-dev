@@ -16,8 +16,10 @@
 #include "boolprop.h"
 #include "intprop.h"
 
-Component* Relay::construct( QObject* parent, QString type, QString id )
-{ return new Relay( parent, type, id ); }
+#define tr(str) simulideTr("Relay",str)
+
+Component* Relay::construct( QString type, QString id )
+{ return new Relay( type, id ); }
 
 LibraryItem* Relay::libraryItem()
 {
@@ -29,8 +31,8 @@ LibraryItem* Relay::libraryItem()
         Relay::construct);
 }
 
-Relay::Relay( QObject* parent, QString type, QString id )
-     : MechContact( parent, type, id )
+Relay::Relay( QString type, QString id )
+     : MechContact( type, id )
 {
     m_ePin.resize(4);
     m_pin.resize(2);

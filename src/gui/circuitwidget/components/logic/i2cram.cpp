@@ -17,21 +17,23 @@
 #include "boolprop.h"
 #include "intprop.h"
 
-Component* I2CRam::construct( QObject* parent, QString type, QString id )
-{ return new I2CRam( parent, type, id ); }
+#define tr(str) simulideTr("I2CRAM",str)
+
+Component* I2CRam::construct( QString type, QString id )
+{ return new I2CRam( type, id ); }
 
 LibraryItem* I2CRam::libraryItem()
 {
     return new LibraryItem(
-        tr( "I2C Ram" ),
+        tr("I2C Ram"),
         "Memory",
         "2to3.png",
         "I2CRam",
         I2CRam::construct );
 }
 
-I2CRam::I2CRam( QObject* parent, QString type, QString id )
-      : IoComponent( parent, type, id )
+I2CRam::I2CRam( QString type, QString id )
+      : IoComponent( type, id )
       , TwiModule( id )
       , MemData()
 {
@@ -173,16 +175,13 @@ void I2CRam::setRSize( int size )
 void I2CRam::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
 {
     QAction* loadAction = menu->addAction( QIcon(":/load.svg"),tr("Load data") );
-    connect( loadAction, &QAction::triggered,
-                   this, &I2CRam::loadData, Qt::UniqueConnection );
+    QObject::connect( loadAction, &QAction::triggered, [=](){ loadData(); } );
 
     QAction* saveAction = menu->addAction(QIcon(":/save.png"), tr("Save data") );
-    connect( saveAction, &QAction::triggered,
-                   this, &I2CRam::saveData, Qt::UniqueConnection );
+    QObject::connect( saveAction, &QAction::triggered, [=](){ saveData(); } );
 
     QAction* showEepAction = menu->addAction(QIcon(":/save.png"), tr("Show Memory Table") );
-    connect( showEepAction, &QAction::triggered,
-                      this, &I2CRam::slotShowTable, Qt::UniqueConnection );
+    QObject::connect( showEepAction, &QAction::triggered, [=](){ slotShowTable(); } );
 
     menu->addSeparator();
     Component::contextMenu( event, menu );

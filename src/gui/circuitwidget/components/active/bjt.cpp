@@ -16,21 +16,23 @@
 #include "doubleprop.h"
 #include "boolprop.h"
 
-Component* BJT::construct( QObject* parent, QString type, QString id )
-{ return new BJT( parent, type, id ); }
+#define tr(str) simulideTr("BJT",str)
+
+Component* BJT::construct( QString type, QString id )
+{ return new BJT( type, id ); }
 
 LibraryItem* BJT::libraryItem()
 {
     return new LibraryItem(
-        QCoreApplication::translate( "BJT","BJT" ),
+        tr("BJT"),
         "Transistors",
         "bjt.png",
         "BJT",
         BJT::construct );
 }
 
-BJT::BJT( QObject* parent, QString type, QString id )
-   : Component( parent, type, id )
+BJT::BJT( QString type, QString id )
+   : Component( type, id )
    , eBJT( id )
 {
     m_area =  QRectF( -12, -14, 28, 28 );

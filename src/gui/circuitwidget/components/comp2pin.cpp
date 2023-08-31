@@ -6,8 +6,8 @@
 #include "comp2pin.h"
 #include "pin.h"
 
-Comp2Pin::Comp2Pin( QObject* parent, QString type, QString id )
-        : Component( parent, type, id )
+Comp2Pin::Comp2Pin( QString type, QString id )
+        : Component( type, id )
 {
     m_area = QRectF(-11,-4.5, 22, 9 );
 

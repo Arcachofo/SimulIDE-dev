@@ -13,10 +13,10 @@ class LibraryItem;
 class MAINMODULE_EXPORT Servo : public LogicComponent
 {
     public:
-        Servo( QObject* parent, QString type, QString id );
+        Servo( QString type, QString id );
         ~Servo();
         
- static Component* construct( QObject* parent, QString type, QString id );
+ static Component* construct( QString type, QString id );
  static LibraryItem* libraryItem();
 
         double speed() { return m_speed; }

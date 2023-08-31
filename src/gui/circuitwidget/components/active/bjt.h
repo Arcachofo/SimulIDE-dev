@@ -14,10 +14,10 @@ class LibraryItem;
 class MAINMODULE_EXPORT BJT : public Component, public eBJT
 {
     public:
-        BJT( QObject* parent, QString type, QString id );
+        BJT( QString type, QString id );
         ~BJT();
         
- static Component* construct( QObject* parent, QString type, QString id );
+ static Component* construct( QString type, QString id );
  static LibraryItem* libraryItem();
 
         virtual void updateStep() override;

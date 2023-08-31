@@ -21,21 +21,23 @@
 #include "boolprop.h"
 #include "intprop.h"
 
-Component* TextComponent::construct( QObject* parent, QString type, QString id )
-{ return new TextComponent( parent, type, id ); }
+#define tr(str) simulideTr("TextComponent",str)
+
+Component* TextComponent::construct( QString type, QString id )
+{ return new TextComponent( type, id ); }
 
 LibraryItem* TextComponent::libraryItem()
 {
     return new LibraryItem(
-        tr( "Text" ),
+        tr("Text"),
         "Graphical",
         "text.png",
         "TextComponent",
         TextComponent::construct );
 }
 
-TextComponent::TextComponent( QObject* parent, QString type, QString id )
-             : Component( parent, type, id )
+TextComponent::TextComponent( QString type, QString id )
+             : Component( type, id )
              , Linkable()
 {
     m_graphical = true;
@@ -77,8 +79,7 @@ TextComponent::TextComponent( QObject* parent, QString type, QString id )
 
     Simulator::self()->addToUpdateList( this );
 
-    connect( m_text->document(), &QTextDocument::contentsChange,
-                           this, &TextComponent::updateGeometry, Qt::UniqueConnection );
+    QObject::connect( m_text->document(), &QTextDocument::contentsChange, [=](int f, int cr, int ca){ updateGeometry(f,cr,ca); } );
 
     addPropGroup( { tr("Main"), {
 new IntProp <TextComponent>("Margin" , tr("Margin") ,"_Pixels"  , this, &TextComponent::margin,  &TextComponent::setMargin ),
@@ -245,8 +246,7 @@ void TextComponent::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
     QMenu* menu = new QMenu();
 
     QAction* linkCompAction = menu->addAction( QIcon(":/subcl.png"),tr("Link to Component") );
-    connect( linkCompAction, &QAction::triggered,
-                       this, &TextComponent::slotLinkComp, Qt::UniqueConnection );
+    QObject::connect( linkCompAction, &QAction::triggered, [=](){ slotLinkComp(); } );
 
     menu->addSeparator();
 

@@ -18,23 +18,25 @@
 #include "stringprop.h"
 #include "boolprop.h"
 
+#define tr(str) simulideTr("Tunnel",str)
+
 QHash<QString, QList<Tunnel*>*> Tunnel::m_tunnels;
 
-Component* Tunnel::construct( QObject* parent, QString type, QString id )
-{ return new Tunnel( parent, type, id ); }
+Component* Tunnel::construct( QString type, QString id )
+{ return new Tunnel( type, id ); }
 
 LibraryItem* Tunnel::libraryItem()
 {
     return new LibraryItem(
-        tr( "Tunnel." ),
+        tr("Tunnel."),
         "Connectors",
         "tunnel.png",
         "Tunnel",
         Tunnel::construct );
 }
 
-Tunnel::Tunnel( QObject* parent, QString type, QString id )
-      : Component( parent, type, id )
+Tunnel::Tunnel( QString type, QString id )
+      : Component( type, id )
 {
     m_size = 20;
     m_area = QRect( -m_size-8-4, -4, m_size+4, 8 );
@@ -163,7 +165,7 @@ void Tunnel::setPacked( bool p )
     {
         Component* comp = (Component*)parent();
         connect( comp, &Component::flip,
-                   this, &Tunnel::flip, Qt::UniqueConnection );
+                   this, &Tunnel::flip(); } );
     }*/
 }
 
@@ -195,16 +197,13 @@ void Tunnel::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
     if( m_show )
     {
         QAction* hideAction = menu->addAction( QIcon(":nobreakpoint.png"),tr("Hide group") );
-        connect( hideAction, &QAction::triggered,
-                       this, &Tunnel::hideGroup,Qt::UniqueConnection );
+        QObject::connect( hideAction, &QAction::triggered, [=](){ hideGroup(); } );
     }else{
         QAction* showAction = menu->addAction( QIcon(":/breakpoint.png"),tr("Show group") );
-        connect( showAction, &QAction::triggered,
-                       this, &Tunnel::showGroup, Qt::UniqueConnection );
+        QObject::connect( showAction, &QAction::triggered, [=](){ showGroup(); } );
     }
     QAction* nameAction = menu->addAction( QIcon(":/rename.svg"),tr("Rename group") );
-    connect( nameAction, &QAction::triggered,
-                   this, QOverload<>::of(&Tunnel::renameGroup), Qt::UniqueConnection );
+    QObject::connect( nameAction, &QAction::triggered, [=](){ renameGroup(); } );
 
     menu->addSeparator();
     Component::contextMenu( event, menu );

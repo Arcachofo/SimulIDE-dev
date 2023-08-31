@@ -15,21 +15,23 @@
 
 #include "stringprop.h"
 
-Component* Image::construct( QObject* parent, QString type, QString id )
-{ return new Image( parent, type, id ); }
+#define tr(str) simulideTr("Image",str)
+
+Component* Image::construct( QString type, QString id )
+{ return new Image( type, id ); }
 
 LibraryItem* Image::libraryItem()
 {
     return new LibraryItem(
-        tr( "Image" ),
+        tr("Image"),
         "Graphical",
         "image.png",
         "Image",
         Image::construct);
 }
 
-Image::Image( QObject* parent, QString type, QString id )
-     : Shape( parent, type, id )
+Image::Image( QString type, QString id )
+     : Shape( type, id )
 {
     m_background = "";
     m_image = QPixmap( ":/saveimage.svg" );
@@ -51,8 +53,7 @@ Image::~Image()
 void Image::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
 {
     QAction* loadAction = menu->addAction( QIcon(":/load.svg"),tr("Load Image") );
-    connect( loadAction, &QAction::triggered,
-                   this, &Image::slotLoad, Qt::UniqueConnection );
+    QObject::connect( loadAction, &QAction::triggered, [=](){ slotLoad(); } );
 
     menu->addSeparator();
     Component::contextMenu( event, menu );
@@ -93,13 +94,12 @@ void Image::setBackground( QString bck )
         if( m_movie ) delete m_movie;
 
         m_movie = new QMovie( bck );
-        m_movie->setParent( this );
+        /// FIXME: m_movie->setParent( this );
 
         if( m_movie->isValid() )
         {
             m_movie->setCacheMode( QMovie::CacheAll );
-            connect( m_movie, &QMovie::updated,
-                     this, &Image::updateGif, Qt::UniqueConnection );
+            QObject::connect( m_movie, &QMovie::updated, [=](const QRect &rect){ updateGif(rect); } );
             m_movie->start();
         }
         else qDebug() << "Image::setBackground : not a valid Gif animation";

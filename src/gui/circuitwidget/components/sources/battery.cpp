@@ -11,21 +11,23 @@
 
 #include "doubleprop.h"
 
-Component* Battery::construct( QObject* parent, QString type, QString id )
-{ return new Battery( parent, type, id ); }
+#define tr(str) simulideTr("Battery",str)
+
+Component* Battery::construct( QString type, QString id )
+{ return new Battery( type, id ); }
 
 LibraryItem* Battery::libraryItem()
 {
     return new LibraryItem(
-        tr( "Battery" ),
+        tr("Battery"),
         "Sources",
         "battery.png",
         "Battery",
         Battery::construct );
 }
 
-Battery::Battery( QObject* parent, QString type, QString id )
-       : Comp2Pin( parent, type, id )
+Battery::Battery( QString type, QString id )
+       : Comp2Pin( type, id )
        , eResistor( id )
 {
     m_area = QRect( -10, -10, 20, 20 );

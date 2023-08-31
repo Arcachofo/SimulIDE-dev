@@ -17,8 +17,10 @@
 #include "doubleprop.h"
 #include "stringprop.h"
 
-Component* Dht22::construct( QObject* parent, QString type, QString id )
-{ return new Dht22( parent, type, id ); }
+#define tr(str) simulideTr("Dht22",str)
+
+Component* Dht22::construct( QString type, QString id )
+{ return new Dht22( type, id ); }
 
 LibraryItem* Dht22::libraryItem()
 {
@@ -30,8 +32,8 @@ LibraryItem* Dht22::libraryItem()
         Dht22::construct );
 }
 
-Dht22::Dht22( QObject* parent, QString type, QString id )
-     : Component( parent, type, id )
+Dht22::Dht22( QString type, QString id )
+     : Component( type, id )
      , eElement( id )
 {
     m_area = QRect(-28,-20, 56, 40 );
@@ -91,14 +93,9 @@ Dht22::Dht22( QObject* parent, QString type, QString id )
     m_proxy->setParentItem( this );
     m_proxy->setPos( QPoint( 17, 6) );
 
-    connect( m_button, &QPushButton::clicked,
-             this,     &Dht22::onbuttonclicked );
-
-    connect( u_button, &QPushButton::pressed,
-             this,     &Dht22::upbuttonclicked );
-
-    connect( d_button, &QPushButton::pressed,
-             this,     &Dht22::downbuttonclicked );
+    QObject::connect( m_button, &QPushButton::clicked, [=](){ onbuttonclicked(); } );
+    QObject::connect( u_button, &QPushButton::pressed, [=](){ upbuttonclicked(); } );
+    QObject::connect( d_button, &QPushButton::pressed, [=](){ downbuttonclicked(); } );
 
     addPropGroup( { tr("Main"), {
 new StrProp <Dht22>("DHT22"  , tr("Model")           ,""  , this, &Dht22::model,    &Dht22::setModel, propNoCopy,"enum"  ),

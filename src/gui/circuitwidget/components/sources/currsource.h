@@ -14,10 +14,10 @@ class Pin;
 class MAINMODULE_EXPORT CurrSource : public VarSource
 {
     public:
-        CurrSource( QObject* parent, QString type, QString id );
+        CurrSource( QString type, QString id );
         ~CurrSource();
 
-        static Component* construct( QObject* parent, QString type, QString id );
+        static Component* construct( QString type, QString id );
         static LibraryItem* libraryItem();
 
         virtual void stamp() override;

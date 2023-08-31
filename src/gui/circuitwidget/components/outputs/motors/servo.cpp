@@ -15,21 +15,23 @@
 
 #include "doubleprop.h"
 
-Component* Servo::construct( QObject* parent, QString type, QString id )
-{ return new Servo( parent, type, id ); }
+#define tr(str) simulideTr("Servo Motor",str)
+
+Component* Servo::construct( QString type, QString id )
+{ return new Servo( type, id ); }
 
 LibraryItem* Servo::libraryItem()
 {
     return new LibraryItem(
-        tr( "Servo" ),
+        tr("Servo Motor"),
         "Motors",
         "servo.png",
         "Servo",
         Servo::construct );
 }
 
-Servo::Servo( QObject* parent, QString type, QString id )
-     : LogicComponent( parent, type, id )
+Servo::Servo( QString type, QString id )
+     : LogicComponent( type, id )
 {
     m_graphical = true;
     m_width  = 10;

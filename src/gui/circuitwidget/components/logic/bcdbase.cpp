@@ -26,8 +26,8 @@ const uint8_t BcdBase::m_values[]={
         0b00000000
 };
 
-BcdBase::BcdBase( QObject* parent, QString type, QString id )
-       : LogicComponent( parent, type, id )
+BcdBase::BcdBase( QString type, QString id )
+       : LogicComponent( type, id )
 {
     m_digit = m_values[0];
 }

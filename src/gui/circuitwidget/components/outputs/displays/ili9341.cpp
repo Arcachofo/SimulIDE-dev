@@ -10,8 +10,8 @@
 #include "connector.h"
 #include "simulator.h"
 
-Component* Ili9341::construct( QObject* parent, QString type, QString id )
-{ return new Ili9341( parent, type, id ); }
+Component* Ili9341::construct( QString type, QString id )
+{ return new Ili9341( type, id ); }
 
 LibraryItem* Ili9341::libraryItem()
 {
@@ -23,8 +23,8 @@ LibraryItem* Ili9341::libraryItem()
         Ili9341::construct );
 }
 
-Ili9341::Ili9341( QObject* parent, QString type, QString id )
-       : Component( parent, type, id )
+Ili9341::Ili9341( QString type, QString id )
+       : Component( type, id )
        , eClockedDevice( id )
        , m_pinCS (  270, QPoint(-56, 184), id+"-PinCS"  , 0, this, input )
        , m_pinRst(  270, QPoint(-48, 184), id+"-PinRst" , 0, this, input )

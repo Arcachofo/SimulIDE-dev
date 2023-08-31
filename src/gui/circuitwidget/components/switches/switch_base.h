@@ -14,7 +14,7 @@ class QGraphicsProxyWidget;
 class MAINMODULE_EXPORT SwitchBase : public MechContact
 {
     public:
-        SwitchBase( QObject* parent, QString type, QString id );
+        SwitchBase( QString type, QString id );
         ~SwitchBase();
 
         virtual void updateStep() override;

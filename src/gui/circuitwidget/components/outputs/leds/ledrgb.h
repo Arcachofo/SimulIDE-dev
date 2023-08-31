@@ -15,10 +15,10 @@ class LibraryItem;
 class MAINMODULE_EXPORT LedRgb : public Component, public eElement
 {
     public:
-        LedRgb( QObject* parent, QString type, QString id );
+        LedRgb( QString type, QString id );
         ~LedRgb();
 
- static Component* construct( QObject* parent, QString type, QString id );
+ static Component* construct( QString type, QString id );
  static LibraryItem* libraryItem();
 
         virtual void stamp() override;

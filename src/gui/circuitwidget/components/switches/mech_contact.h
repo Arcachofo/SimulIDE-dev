@@ -12,7 +12,7 @@
 class MAINMODULE_EXPORT MechContact : public Component, public eElement
 {
     public:
-        MechContact( QObject* parent, QString type, QString id );
+        MechContact( QString type, QString id );
         ~MechContact();
 
         virtual int poles() { return m_numPoles; }

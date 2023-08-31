@@ -15,10 +15,10 @@ class IoPin;
 class MAINMODULE_EXPORT SR04 : public Component, public eElement
 {
     public:
-        SR04( QObject* parent, QString type, QString id );
+        SR04( QString type, QString id );
         ~SR04();
 
-        static Component* construct( QObject* parent, QString type, QString id );
+        static Component* construct( QString type, QString id );
         static LibraryItem* libraryItem();
         
         virtual void stamp() override;

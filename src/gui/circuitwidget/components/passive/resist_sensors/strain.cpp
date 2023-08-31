@@ -18,21 +18,23 @@
 #include "doubleprop.h"
 #include "propdialog.h"
 
-Component *Strain::construct (QObject* parent, QString type, QString id)
-{ return new Strain (parent, type, id); }
+#define tr(str) simulideTr("Starin",str)
+
+Component *Strain::construct( QString type, QString id)
+{ return new Strain ( type, id); }
 
 LibraryItem* Strain::libraryItem()
 {
     return new LibraryItem(
-        tr( "Force Strain Gauge" ),
+        tr("Force Strain Gauge"),
         "Resistive Sensors",
         "strain.png",
         "Strain",
         Strain::construct );
 }
 
-Strain::Strain( QObject* parent, QString type, QString id )
-      : VarResBase( parent, type, id )
+Strain::Strain( QString type, QString id )
+      : VarResBase( type, id )
 {
     m_areaComp = QRectF(-12,-20, 24, 24 );
     m_area     = m_areaComp;

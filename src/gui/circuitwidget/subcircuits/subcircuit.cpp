@@ -25,9 +25,11 @@
 
 #include "boolprop.h"
 
+#define tr(str) simulideTr("SubCircuit",str)
+
 QString SubCircuit::m_subcDir = "";
 
-Component* SubCircuit::construct( QObject* parent, QString type, QString id )
+Component* SubCircuit::construct( QString type, QString id )
 {
     m_error = 0;
     m_subcDir = "";
@@ -114,11 +116,11 @@ Component* SubCircuit::construct( QObject* parent, QString type, QString id )
     if( root1.hasAttribute("type") ) subcTyp = root1.attribute("type").remove("subc");
 
     SubCircuit* subcircuit = NULL;
-    if     ( subcTyp == "Logic"  ) subcircuit = new LogicSubc( parent, type, id );
-    else if( subcTyp == "Board"  ) subcircuit = new BoardSubc( parent, type, id );
-    else if( subcTyp == "Shield" ) subcircuit = new ShieldSubc( parent, type, id );
-    else if( subcTyp == "Module" ) subcircuit = new ModuleSubc( parent, type, id );
-    else                           subcircuit = new SubCircuit( parent, type, id );
+    if     ( subcTyp == "Logic"  ) subcircuit = new LogicSubc( type, id );
+    else if( subcTyp == "Board"  ) subcircuit = new BoardSubc( type, id );
+    else if( subcTyp == "Shield" ) subcircuit = new ShieldSubc( type, id );
+    else if( subcTyp == "Module" ) subcircuit = new ModuleSubc( type, id );
+    else                           subcircuit = new SubCircuit( type, id );
 
     if( m_error != 0 )
     {
@@ -140,7 +142,7 @@ Component* SubCircuit::construct( QObject* parent, QString type, QString id )
     if( m_error > 0 )
     {
         Circuit::self()->compList()->removeOne( subcircuit );
-        subcircuit->deleteLater();
+        delete subcircuit;
         m_error = 0;
         return NULL;
     }
@@ -150,15 +152,15 @@ Component* SubCircuit::construct( QObject* parent, QString type, QString id )
 LibraryItem* SubCircuit::libraryItem()
 {
     return new LibraryItem(
-        tr("Subcircuit"),
+        simulideTr("Subcircuit","Subcircuit"),
         "",         // Category Not dispalyed
         "",
         "Subcircuit",
         SubCircuit::construct );
 }
 
-SubCircuit::SubCircuit( QObject* parent, QString type, QString id )
-          : Chip( parent, type, id )
+SubCircuit::SubCircuit( QString type, QString id )
+          : Chip( type, id )
 {
     m_icColor = QColor( 20, 30, 60 );
     //m_mainComponent = NULL;
@@ -251,7 +253,7 @@ void SubCircuit::loadSubCircuit( QString fileName )
             else{
                 Component* comp = NULL;
 
-                if( type == "Node" ) comp = new Node( this, type, newUid );
+                if( type == "Node" ) comp = new Node( type, newUid );
                 else                 comp = circ->createItem( type, newUid );
 
                 if( comp ){
@@ -348,7 +350,7 @@ Pin* SubCircuit::addPin( QString id, QString type, QString label, int pos, int x
         QColor color = Qt::black;
         if( !m_isLS ) color = QColor( 250, 250, 200 );
 
-        Tunnel* tunnel = new Tunnel( this, "Tunnel", m_id+"-"+id );
+        Tunnel* tunnel = new Tunnel( "Tunnel", m_id+"-"+id );
         Circuit::self()->compList()->removeOne( tunnel );
         m_compList.append( tunnel );
 

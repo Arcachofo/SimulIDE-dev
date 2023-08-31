@@ -48,7 +48,7 @@ bool MemData::loadData( QVector<int>* toData, bool resize, int bits )
     QString dir = changeExt( Circuit::self()->getFilePath(), ".data" );
     QString fileName = QFileDialog::getOpenFileName( NULL,
                                                     "MemData::loadData", dir,
-                       QCoreApplication::translate( "MemData", "All files (*.*);;.data (*.data);;.bin (*.bin)"));
+                       simulideTr( "MemData", "All files (*.*);;.data (*.data);;.bin (*.bin)"));
 
     if( fileName.isEmpty() ) return false; // User cancels loading
 
@@ -250,8 +250,8 @@ void MemData::saveData( QVector<int>* data, int bits )
     QString dir = changeExt( Circuit::self()->getFilePath(), ".data" );
 
     QString fileName = QFileDialog::getSaveFileName( NULL,
-                       QCoreApplication::translate( "MemData", "Save Data" ), dir,
-                       QCoreApplication::translate( "MemData", "All files (*.*);;.data (*.data);;.bin (*.bin)"));
+                       simulideTr( "MemData", "Save Data" ), dir,
+                       simulideTr( "MemData", "All files (*.*);;.data (*.data);;.bin (*.bin)"));
 
     if( fileName.isEmpty() ) return; // User cancels saving
 
@@ -274,7 +274,7 @@ void MemData::saveData( QVector<int>* data, int bits )
         if( !outFile.open( QFile::WriteOnly | QFile::Text ) )
         {
              QMessageBox::warning(NULL, "MemData::saveData",
-             QCoreApplication::translate( "MemData", "Cannot write file %1:\n%2.").arg(fileName).arg(outFile.errorString()));
+             simulideTr( "MemData", "Cannot write file %1:\n%2.").arg(fileName).arg(outFile.errorString()));
         }else{
             QTextStream toFile( &outFile );
             toFile << output;
@@ -285,7 +285,7 @@ void MemData::saveData( QVector<int>* data, int bits )
         if( !outFile.open( QFile::WriteOnly ) )
         {
               QMessageBox::warning(NULL, "MemData::saveData",
-              QCoreApplication::translate( "MemData", "Cannot write file %1:\n%2.").arg(fileName).arg(outFile.errorString()));
+              simulideTr( "MemData", "Cannot write file %1:\n%2.").arg(fileName).arg(outFile.errorString()));
         }else{
             for( int val : *data ){
                 for( int by=0; by<bytes; by++ ) // Separate bytes little-endian

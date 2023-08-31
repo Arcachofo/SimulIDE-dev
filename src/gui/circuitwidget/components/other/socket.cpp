@@ -10,21 +10,23 @@
 #include "circuit.h"
 #include "e-node.h"
 
-Component* Socket::construct( QObject* parent, QString type, QString id )
-{ return new Socket( parent, type, id ); }
+#define tr(str) simulideTr("Socket",str)
+
+Component* Socket::construct( QString type, QString id )
+{ return new Socket( type, id ); }
 
 LibraryItem* Socket::libraryItem()
 {
     return new LibraryItem(
-        tr( "Socket" ),
+        tr("Socket"),
         "Connectors",
         "socket.png",
         "Socket",
         Socket::construct);
 }
 
-Socket::Socket( QObject* parent, QString type, QString id )
-      : ConnBase( parent, type, id )
+Socket::Socket( QString type, QString id )
+      : ConnBase( type, id )
 {
     setZValue(-2 );
 

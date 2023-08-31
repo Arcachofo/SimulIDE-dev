@@ -19,10 +19,10 @@ class IoPin;
 class MAINMODULE_EXPORT Ssd1306 : public Component, public TwiModule
 {
     public:
-        Ssd1306( QObject* parent, QString type, QString id );
+        Ssd1306( QString type, QString id );
         ~Ssd1306();
 
- static Component* construct( QObject* parent, QString type, QString id );
+ static Component* construct( QString type, QString id );
  static LibraryItem* libraryItem();
 
         enum dispColor {

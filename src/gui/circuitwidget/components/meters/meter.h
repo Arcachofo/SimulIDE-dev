@@ -14,7 +14,7 @@ class IoPin;
 class MAINMODULE_EXPORT Meter : public Component, public eResistor
 {
     public:
-        Meter( QObject* parent, QString type, QString id );
+        Meter( QString type, QString id );
         ~Meter();
 
         virtual bool setPropStr( QString prop, QString val ) override;

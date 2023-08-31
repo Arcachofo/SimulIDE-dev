@@ -320,7 +320,7 @@ void Circuit::loadStrDoc( QString &doc )
                 if( startpin && endpin )    // Create Connector
                 {
                     if( newUid.isEmpty() ) newUid = "connector-"+newConnectorId();
-                    Connector* con = new Connector( this, type, newUid, startpin, endpin );
+                    Connector* con = new Connector( type, newUid, startpin, endpin );
                     con->setPointList( pointList );
                     conList.append( con );
                     m_newComp = con;
@@ -338,7 +338,7 @@ void Circuit::loadStrDoc( QString &doc )
             }   }
             else if( type == "Node")
             {
-                Node* joint = new Node( this, type, newUid );
+                Node* joint = new Node( type, newUid );
                 if( m_pasting )
                 {
                     m_idMap[getSeqNumber( uid )] = newNum; // Map simu id to new id
@@ -559,7 +559,7 @@ Component* Circuit::createItem( QString type, QString id )
         if( !item->createItemFnPtr() ) continue; // Is category
         if( item->type() != type ) continue;
 
-        comp = item->createItemFnPtr()( this, type, id );
+        comp = item->createItemFnPtr()( type, id );
     }
     m_compMap[id] = comp;
     return comp;
@@ -951,7 +951,7 @@ void Circuit::newconnector( Pin* startpin )
     QString type = QString("Connector");
     QString id = type+"-"+newConnectorId() ;
 
-    m_newConnector = new Connector( this, type, id, startpin );
+    m_newConnector = new Connector( type, id, startpin );
     m_conList.append( m_newConnector );
 
     QPoint p1 = startpin->scenePos().toPoint();

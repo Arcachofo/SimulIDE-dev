@@ -11,7 +11,7 @@
 class MAINMODULE_EXPORT LogicSubc : public SubCircuit
 {
     public:
-        LogicSubc( QObject* parent, QString type, QString id );
+        LogicSubc( QString type, QString id );
         ~LogicSubc();
 
         double inputHighV() { return m_inHighV; }

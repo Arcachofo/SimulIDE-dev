@@ -13,10 +13,10 @@ class LibraryItem;
 class MAINMODULE_EXPORT FlipFlopD : public FlipFlopBase
 {
     public:
-        FlipFlopD( QObject* parent, QString type, QString id );
+        FlipFlopD( QString type, QString id );
         ~FlipFlopD();
 
-        static Component* construct( QObject* parent, QString type, QString id );
+        static Component* construct( QString type, QString id );
         static LibraryItem *libraryItem();
 
     protected:

@@ -17,21 +17,23 @@
 
 #include "doubleprop.h"
 
-Component* SCR::construct( QObject* parent, QString type, QString id )
-{ return new SCR( parent, type, id ); }
+#define tr(str) simulideTr("SCR",str)
+
+Component* SCR::construct( QString type, QString id )
+{ return new SCR( type, id ); }
 
 LibraryItem* SCR::libraryItem()
 {
     return new LibraryItem(
-        QCoreApplication::translate("SCR", "SCR"),
+        tr("SCR"),
         "Rectifiers",
         "scr.png",
         "SCR",
         SCR::construct );
 }
 
-SCR::SCR( QObject* parent, QString type, QString id )
-     : Component( parent, type, id )
+SCR::SCR( QString type, QString id )
+     : Component( type, id )
      , eElement( id )
 {
     m_area =  QRectF( -8, -16, 16, 32 );

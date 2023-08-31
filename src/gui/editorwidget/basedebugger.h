@@ -23,7 +23,6 @@ class BaseDebugger : public Compiler    // Base Class for all debuggers
 {
         friend class eMcu;
 
-    Q_OBJECT
     public:
         BaseDebugger( CodeEditor* parent, OutPanelText* outPane );
         ~BaseDebugger();

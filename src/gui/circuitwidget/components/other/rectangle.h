@@ -12,10 +12,10 @@
 class MAINMODULE_EXPORT Rectangle : public Shape
 {
     public:
-        Rectangle( QObject* parent, QString type, QString id );
+        Rectangle( QString type, QString id );
         ~Rectangle();
 
- static Component* construct( QObject* parent, QString type, QString id );
+ static Component* construct( QString type, QString id );
  static LibraryItem* libraryItem();
 
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;

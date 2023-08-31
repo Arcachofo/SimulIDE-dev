@@ -17,8 +17,10 @@
 
 #include "doubleprop.h"
 
-Component *DS1621::construct(QObject *parent, QString type, QString id) {
-  return new DS1621( parent, type, id );
+#define tr(str) simulideTr("DS1621",str)
+
+Component *DS1621::construct( QString type, QString id) {
+  return new DS1621( type, id );
 }
 
 LibraryItem *DS1621::libraryItem()
@@ -31,8 +33,8 @@ LibraryItem *DS1621::libraryItem()
         DS1621::construct);
 }
 
-DS1621::DS1621( QObject* parent, QString type, QString id )
-      : IoComponent( parent, type, id )
+DS1621::DS1621( QString type, QString id )
+      : IoComponent( type, id )
       , TwiModule( id )
 {
     m_width  = 7;
@@ -77,11 +79,8 @@ DS1621::DS1621( QObject* parent, QString type, QString id )
     proxy->setParentItem( this );
     proxy->setPos( QPoint( 9, 4 ) );
 
-    connect( u_button, &QPushButton::pressed,
-             this,     &DS1621::upbuttonclicked );
-
-    connect( d_button, &QPushButton::pressed,
-             this,     &DS1621::downbuttonclicked );
+    QObject::connect( u_button, &QPushButton::pressed, [=](){ upbuttonclicked(); } );
+    QObject::connect( d_button, &QPushButton::pressed, [=](){ downbuttonclicked(); } );
 
     m_font.setFamily("Ubuntu Mono");
 #ifdef _WIN32

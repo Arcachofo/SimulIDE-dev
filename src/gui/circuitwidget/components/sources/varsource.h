@@ -13,7 +13,7 @@
 class MAINMODULE_EXPORT VarSource : public Component, public eElement
 {
     public:
-        VarSource( QObject* parent, QString type, QString id );
+        VarSource( QString type, QString id );
         ~VarSource();
 
         double getVal() { return m_outValue; }

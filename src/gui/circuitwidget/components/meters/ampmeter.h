@@ -13,10 +13,10 @@ class LibraryItem;
 class MAINMODULE_EXPORT Amperimeter : public Meter
 {
     public:
-        Amperimeter( QObject* parent, QString type, QString id );
+        Amperimeter( QString type, QString id );
         ~Amperimeter();
 
- static Component* construct( QObject* parent, QString type, QString id );
+ static Component* construct( QString type, QString id );
  static LibraryItem* libraryItem();
 
         virtual void updateStep() override;

@@ -16,10 +16,10 @@ class DataWidget;
 class MAINMODULE_EXPORT Oscope : public PlotBase
 {
     public:
-        Oscope( QObject* parent, QString type, QString id );
+        Oscope( QString type, QString id );
         ~Oscope();
 
-        static Component* construct( QObject* parent, QString type, QString id );
+        static Component* construct( QString type, QString id );
         static LibraryItem* libraryItem();
 
         double filter() { return m_filter; }

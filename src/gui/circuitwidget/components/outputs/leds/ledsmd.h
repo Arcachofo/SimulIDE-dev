@@ -11,7 +11,7 @@
 class MAINMODULE_EXPORT LedSmd : public LedBase
 {
     public:
-        LedSmd( QObject* parent, QString type, QString id, QRectF area, ePin* pin0=NULL, ePin* pin1=NULL );
+        LedSmd( QString type, QString id, QRectF area, ePin* pin0=NULL, ePin* pin1=NULL );
         ~LedSmd();
 
     protected:

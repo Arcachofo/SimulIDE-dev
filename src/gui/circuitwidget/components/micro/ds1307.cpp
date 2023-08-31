@@ -11,8 +11,10 @@
 
 #include "boolprop.h"
 
-Component* DS1307::construct( QObject* parent, QString type, QString id )
-{ return new DS1307( parent, type, id ); }
+#define tr(str) simulideTr("DS1307",str)
+
+Component* DS1307::construct( QString type, QString id )
+{ return new DS1307( type, id ); }
 
 LibraryItem* DS1307::libraryItem()
 {
@@ -24,8 +26,8 @@ LibraryItem* DS1307::libraryItem()
         DS1307::construct );
 }
 
-DS1307::DS1307( QObject* parent, QString type, QString id )
-      : Component( parent, type, id )
+DS1307::DS1307( QString type, QString id )
+      : Component( type, id )
       , TwiModule( id )
       , m_clock( id+"_clock" )
 {

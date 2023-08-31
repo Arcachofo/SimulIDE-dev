@@ -13,7 +13,7 @@ class IoPin;
 class MAINMODULE_EXPORT Gate : public LogicComponent
 {
     public:
-        Gate( QObject* parent, QString type, QString id, int inputs );
+        Gate( QString type, QString id, int inputs );
         ~Gate();
 
         QList<ComProperty*> edgeProps();

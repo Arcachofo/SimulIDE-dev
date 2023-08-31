@@ -18,10 +18,10 @@ class CustomDial;
 class MAINMODULE_EXPORT KY040 : public Component, public eElement
 {
     public:
-        KY040( QObject* parent, QString type, QString id );
+        KY040( QString type, QString id );
         ~KY040();
 
-        static Component* construct( QObject* parent, QString type, QString id );
+        static Component* construct( QString type, QString id );
         static LibraryItem* libraryItem();
 
         virtual void stamp() override;

@@ -14,10 +14,10 @@ class LibraryItem;
 class MAINMODULE_EXPORT DS1621 : public IoComponent, public TwiModule
 {
     public:
-        DS1621( QObject* parent, QString type, QString id );
+        DS1621( QString type, QString id );
         ~DS1621();
         
-        static Component* construct( QObject* parent, QString type, QString id );
+        static Component* construct( QString type, QString id );
         static LibraryItem* libraryItem();
 
         double tempInc() { return m_tempInc; }

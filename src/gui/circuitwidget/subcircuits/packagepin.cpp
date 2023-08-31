@@ -56,10 +56,12 @@ void PackagePin::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
 
     QMenu* menu = new QMenu();
     QAction* editAction = menu->addAction( QIcon(":/rename.svg"),QObject::tr("Edit Pin "));
-    QObject::connect( editAction, &QAction::triggered, m_package, &SubPackage::editPin, Qt::UniqueConnection );
+    QObject::connect( editAction, &QAction::triggered,
+                      [=](){ m_package->editPin(); } );
 
     QAction* deleteAction = menu->addAction( QIcon(":/remove.svg"),QObject::tr("Delete Pin ") );
-    QObject::connect( deleteAction, &QAction::triggered, m_package, &SubPackage::deleteEventPin, Qt::UniqueConnection );
+    QObject::connect( deleteAction, &QAction::triggered,
+                      [=](){ m_package->deleteEventPin(); } );
 
     menu->exec( event->screenPos() );
 }

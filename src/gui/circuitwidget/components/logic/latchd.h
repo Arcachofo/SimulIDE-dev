@@ -13,10 +13,10 @@ class LibraryItem;
 class MAINMODULE_EXPORT LatchD : public LogicComponent
 {
     public:
-        LatchD( QObject* parent, QString type, QString id );
+        LatchD( QString type, QString id );
         ~LatchD();
 
-        static Component* construct( QObject* parent, QString type, QString id );
+        static Component* construct( QString type, QString id );
         static LibraryItem* libraryItem();
 
         virtual void stamp() override;

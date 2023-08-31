@@ -12,8 +12,8 @@
 #include "label.h"
 #include "custombutton.h"
 
-SwitchBase::SwitchBase( QObject* parent, QString type, QString id )
-          : MechContact( parent, type, id )
+SwitchBase::SwitchBase( QString type, QString id )
+          : MechContact( type, id )
 {
     m_graphical = true;
     m_changed = true;
@@ -32,8 +32,7 @@ SwitchBase::SwitchBase( QObject* parent, QString type, QString id )
     m_proxy->setPos(-20,-16 );
     m_proxy->setTransformOriginPoint( m_proxy->boundingRect().center() );
 
-    connect( Circuit::self(), &Circuit::keyEvent,
-                        this, &SwitchBase::keyEvent, Qt::UniqueConnection );
+    QObject::connect( Circuit::self(), &Circuit::keyEvent, [=](QString k, bool p){ keyEvent(k,p); } );
 }
 SwitchBase::~SwitchBase(){}
 

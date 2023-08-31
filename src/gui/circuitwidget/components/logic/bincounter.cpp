@@ -11,21 +11,23 @@
 #include "intprop.h"
 #include "boolprop.h"
 
-Component *BinCounter::construct(QObject *parent, QString type, QString id)
-{ return new BinCounter(parent, type, id); }
+#define tr(str) simulideTr("Counter",str)
+
+Component *BinCounter::construct( QString type, QString id)
+{ return new BinCounter( type, id); }
 
 LibraryItem* BinCounter::libraryItem()
 {
     return new LibraryItem(
-        QCoreApplication::translate("BinCounter", "Counter"),
+        tr("Binary Counter"),
         "Arithmetic",
         "2to1.png",
         "Counter",
         BinCounter::construct );
 }
 
-BinCounter::BinCounter(QObject *parent, QString type, QString id) 
-          : LogicComponent( parent, type, id )
+BinCounter::BinCounter( QString type, QString id)
+          : LogicComponent( type, id )
 {
     m_TopValue = 1;
     m_width  = 3;

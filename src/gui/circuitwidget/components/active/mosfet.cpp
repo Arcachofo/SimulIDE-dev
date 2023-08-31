@@ -14,21 +14,23 @@
 #include "doubleprop.h"
 #include "boolprop.h"
 
-Component* Mosfet::construct( QObject* parent, QString type, QString id )
-{ return new Mosfet( parent, type, id ); }
+#define tr(str) simulideTr("Mosfet",str)
+
+Component* Mosfet::construct( QString type, QString id )
+{ return new Mosfet( type, id ); }
 
 LibraryItem* Mosfet::libraryItem()
 {
     return new LibraryItem(
-        QCoreApplication::translate("Mosfet", "Mosfet"),
+        tr("Mosfet"),
         "Transistors",
         "mosfet.png",
         "Mosfet",
         Mosfet::construct);
 }
 
-Mosfet::Mosfet( QObject* parent, QString type, QString id )
-      : Component( parent, type, id )
+Mosfet::Mosfet( QString type, QString id )
+      : Component( type, id )
       , eMosfet( id )
 {
     m_area = QRectF(-12, -14, 28, 28 );

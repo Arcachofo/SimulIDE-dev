@@ -189,7 +189,7 @@ bool AvrGccDebugger::mapFlashToSource()
     avrSize = addQuotes( avrSize );
     addr2li = addQuotes( addr2li );
 
-    QProcess getSize( this );  // Get Firmware size
+    QProcess getSize( 0 );  // Get Firmware size
     getSize.start( avrSize + " " + m_elfPath );
     getSize.waitForFinished();
     QString lines = getSize.readAllStandardOutput();
@@ -204,7 +204,7 @@ bool AvrGccDebugger::mapFlashToSource()
     }
     if( !ok || flashSize == 0 ) flashSize = 35000;
 
-    QProcess flashToLine( this );
+    QProcess flashToLine( 0 );
     flashToLine.start( addr2li + " -e " + m_elfPath );
     ok = flashToLine.waitForStarted( 1000 );
     if( ok )
@@ -226,7 +226,6 @@ bool AvrGccDebugger::mapFlashToSource()
 
             int idx = p_stdout.lastIndexOf( ":" );
             if( idx == -1 ) continue;
-
 
             QString filePath = QFileInfo( p_stdout.left( idx ) ).filePath();//  .fileName();
             if( m_fileList.contains( filePath ) )

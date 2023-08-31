@@ -14,10 +14,12 @@
 #include "stringprop.h"
 #include "boolprop.h"
 
+#define tr(str) simulideTr("Led",str)
+
 eNode LedBase::m_gndEnode("");
 
-LedBase::LedBase( QObject* parent, QString type, QString id )
-       : Component( parent, type, id )
+LedBase::LedBase( QString type, QString id )
+       : Component( type, id )
        , eLed( id )
 {
     m_graphical = true;

@@ -17,21 +17,23 @@
 #include "doubleprop.h"
 #include "propdialog.h"
 
-Component* RTD::construct( QObject* parent, QString type, QString id )
-{ return new RTD( parent, type, id ); }
+#define tr(str) simulideTr("RTD",str)
+
+Component* RTD::construct( QString type, QString id )
+{ return new RTD( type, id ); }
 
 LibraryItem* RTD::libraryItem()
 {
     return new LibraryItem(
-        tr( "RTD" ),
+        tr("RTD"),
         "Resistive Sensors",
         "rtd.png",
         "RTD",
         RTD::construct );
 }
 
-RTD::RTD( QObject* parent, QString type, QString id )
-   : ThermistorBase( parent, type, id )
+RTD::RTD( QString type, QString id )
+   : ThermistorBase( type, id )
 {
     addPropGroup( { tr("Parameters"), {
 //new IntProp<RTD>( "B" , "B" ,""  , this, &RTD::bVal, &RTD::setBval, "uint" ),

@@ -14,12 +14,11 @@ class Pin;
 
 class MAINMODULE_EXPORT Tunnel : public Component
 {
-        Q_OBJECT
     public:
-        Tunnel( QObject* parent, QString type, QString id );
+        Tunnel( QString type, QString id );
         ~Tunnel();
 
- static Component* construct( QObject* parent, QString type, QString id );
+ static Component* construct( QString type, QString id );
  static LibraryItem* libraryItem();
         virtual bool setPropStr( QString prop, QString val ) override;
 

@@ -13,10 +13,10 @@ class LibraryItem;
 class MAINMODULE_EXPORT Header : public ConnBase
 {
     public:
-        Header( QObject* parent, QString type, QString id );
+        Header( QString type, QString id );
         ~Header();
 
- static Component* construct( QObject* parent, QString type, QString id );
+ static Component* construct( QString type, QString id );
  static LibraryItem* libraryItem();
 
         bool pointDown() { return m_pointDown; }

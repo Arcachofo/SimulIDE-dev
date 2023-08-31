@@ -12,21 +12,23 @@
 #include "doubleprop.h"
 #include "propdialog.h"
 
-Component* VarResistor::construct( QObject* parent, QString type, QString id )
-{ return new VarResistor( parent, type, id ); }
+#define tr(str) simulideTr("Var Resistor",str)
+
+Component* VarResistor::construct( QString type, QString id )
+{ return new VarResistor( type, id ); }
 
 LibraryItem* VarResistor::libraryItem()
 {
     return new LibraryItem(
-        tr( "Variable Resistor" ),
+        tr("Variable Resistor"),
         "Resistors",
         "varresistor.png",
         "VarResistor",
         VarResistor::construct);
 }
 
-VarResistor::VarResistor( QObject* parent, QString type, QString id )
-           : VarResBase( parent, type, id  )
+VarResistor::VarResistor( QString type, QString id )
+           : VarResBase( type, id  )
 {
     setVal( 0 );
 

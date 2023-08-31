@@ -13,10 +13,10 @@ class LibraryItem;
 class MAINMODULE_EXPORT Ldr : public VarResBase
 {
     public:
-        Ldr( QObject* parent, QString type, QString id );
+        Ldr( QString type, QString id );
         ~Ldr();
 
-        static Component* construct( QObject* parent, QString type, QString id );
+        static Component* construct( QString type, QString id );
         static LibraryItem* libraryItem();
 
         int r1() { return m_r1; }

@@ -15,8 +15,10 @@
 #include "stringprop.h"
 #include "intprop.h"
 
-Component* Ssd1306::construct( QObject* parent, QString type, QString id )
-{ return new Ssd1306( parent, type, id ); }
+#define tr(str) simulideTr("SSD1306",str)
+
+Component* Ssd1306::construct( QString type, QString id )
+{ return new Ssd1306( type, id ); }
 
 LibraryItem* Ssd1306::libraryItem()
 {
@@ -28,8 +30,8 @@ LibraryItem* Ssd1306::libraryItem()
         Ssd1306::construct );
 }
 
-Ssd1306::Ssd1306( QObject* parent, QString type, QString id )
-       : Component( parent, type, id )
+Ssd1306::Ssd1306( QString type, QString id )
+       : Component( type, id )
        , TwiModule( id )
        //, m_pinRst( 270, QPoint(-32, 48), id+"-PinRst" , 0, this )
        //, m_pinDC ( 270, QPoint(-24, 48), id+"-PinDC"  , 0, this )

@@ -7,21 +7,21 @@
 #include "itemlibrary.h"
 #include "e-pin.h"
 
-Component* Voltimeter::construct( QObject* parent, QString type, QString id )
-{ return new Voltimeter( parent, type, id ); }
+Component* Voltimeter::construct( QString type, QString id )
+{ return new Voltimeter( type, id ); }
 
 LibraryItem* Voltimeter::libraryItem()
 {
     return new LibraryItem(
-        QCoreApplication::translate("Meters","Voltmeter"),
+        simulideTr("Meters","Voltmeter"),
         "Meters",
         "voltimeter.png",
         "Voltimeter",
         Voltimeter::construct);
 }
 
-Voltimeter::Voltimeter( QObject* parent, QString type, QString id )
-          : Meter( parent, type, id )
+Voltimeter::Voltimeter( QString type, QString id )
+          : Meter( type, id )
 {
     m_unit = "V";
     setRes( high_imp );

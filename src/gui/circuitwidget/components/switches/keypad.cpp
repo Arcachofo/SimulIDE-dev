@@ -13,21 +13,23 @@
 #include "stringprop.h"
 #include "intprop.h"
 
-Component* KeyPad::construct( QObject* parent, QString type, QString id )
-{ return new KeyPad( parent, type, id ); }
+#define tr(str) simulideTr("Keypad",str)
+
+Component* KeyPad::construct( QString type, QString id )
+{ return new KeyPad( type, id ); }
 
 LibraryItem* KeyPad::libraryItem()
 {
     return new LibraryItem(
-        tr( "KeyPad" ),
+        tr("KeyPad"),
         "Switches",
         "keypad.png",
         "KeyPad",
         KeyPad::construct);
 }
 
-KeyPad::KeyPad( QObject* parent, QString type, QString id )
-      : Component( parent, type, id )
+KeyPad::KeyPad( QString type, QString id )
+      : Component( type, id )
       , eElement( id )
 {
     m_graphical = true;
@@ -100,7 +102,7 @@ void KeyPad::setupButtons()
         for( int col=0; col<m_cols; col++ )
         {
             QString butId = m_id+"button"+QString::number(row)+QString::number(col);
-            PushBase* button = new PushBase( this, "PushBase", butId );
+            PushBase* button = new PushBase( "PushBase", butId );
             button->SetupButton();
             button->setParentItem( this );
             button->setPos( QPointF(col*16+12, 16+row*16 ) );

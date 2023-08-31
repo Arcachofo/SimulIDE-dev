@@ -13,7 +13,7 @@
 class MAINMODULE_EXPORT VarResBase : public Dialed, public eResistor
 {
     public:
-        VarResBase( QObject* parent, QString type, QString id );
+        VarResBase( QString type, QString id );
         ~VarResBase();
 
         double maxVal()  { return m_maxVal; }

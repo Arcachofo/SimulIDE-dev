@@ -7,8 +7,8 @@
 #include "circuit.h"
 #include "shield.h"
 
-BoardSubc::BoardSubc( QObject* parent, QString type, QString id )
-         : SubCircuit( parent, type, id )
+BoardSubc::BoardSubc( QString type, QString id )
+         : SubCircuit( type, id )
 {
     m_subcType = Chip::Board;
     //m_shield = NULL;

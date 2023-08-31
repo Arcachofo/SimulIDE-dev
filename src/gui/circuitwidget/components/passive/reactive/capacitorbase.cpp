@@ -13,8 +13,10 @@
 #include "doubleprop.h"
 #include "intprop.h"
 
-CapacitorBase::CapacitorBase( QObject* parent, QString type, QString id )
-             : Reactive( parent, type, id )
+#define tr(str) simulideTr("Capacitor",str)
+
+CapacitorBase::CapacitorBase( QString type, QString id )
+             : Reactive( type, id )
 {
     m_area = QRectF( -10, -10, 20, 20 );
 

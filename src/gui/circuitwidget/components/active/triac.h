@@ -16,10 +16,10 @@ class eResistor;
 class MAINMODULE_EXPORT Triac : public Component, public eElement
 {
     public:
-        Triac( QObject* parent, QString type, QString id );
+        Triac( QString type, QString id );
         ~Triac();
 
- static Component* construct( QObject* parent, QString type, QString id );
+ static Component* construct( QString type, QString id );
  static LibraryItem* libraryItem();
 
         virtual void initialize() override;

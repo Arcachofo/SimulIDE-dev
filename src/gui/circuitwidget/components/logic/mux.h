@@ -15,10 +15,10 @@ class MAINMODULE_EXPORT Mux : public LogicComponent
     public:
         QRectF boundingRect() const override { return m_area; }
     
-        Mux( QObject* parent, QString type, QString id );
+        Mux( QString type, QString id );
         ~Mux();
 
-        static Component* construct( QObject* parent, QString type, QString id );
+        static Component* construct( QString type, QString id );
         static LibraryItem* libraryItem();
 
         virtual void stamp() override;

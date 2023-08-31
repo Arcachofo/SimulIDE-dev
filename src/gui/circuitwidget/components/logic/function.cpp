@@ -22,21 +22,23 @@
 #include "boolprop.h"
 #include "intprop.h"
 
-Component* Function::construct( QObject* parent, QString type, QString id )
-{ return new Function( parent, type, id ); }
+#define tr(str) simulideTr("Function",str)
+
+Component* Function::construct( QString type, QString id )
+{ return new Function( type, id ); }
 
 LibraryItem* Function::libraryItem()
 {
     return new LibraryItem(
-        QCoreApplication::translate("Function", "Function"),
+        tr("Function"),
         "Arithmetic",
         "subc.png",
         "Function",
         Function::construct );
 }
 
-Function::Function( QObject* parent, QString type, QString id )
-        : IoComponent( parent, type, id )
+Function::Function( QString type, QString id )
+        : IoComponent( type, id )
         , ScriptModule( id )
 {
     m_lastDir = Circuit::self()->getFilePath();
@@ -212,12 +214,10 @@ void Function::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
 {
     menu->addSeparator();
     QAction* loadDaAction = menu->addAction( QIcon(":/load.svg"),tr("Load Functions") );
-    connect( loadDaAction, &QAction::triggered,
-                     this, &Function::loadData, Qt::UniqueConnection );
+    QObject::connect( loadDaAction, &QAction::triggered, [=](){ loadData(); } );
 
     QAction* saveDaAction = menu->addAction(QIcon(":/save.png"), tr("Save Functions") );
-    connect( saveDaAction, &QAction::triggered,
-                     this, &Function::saveData, Qt::UniqueConnection );
+    QObject::connect( saveDaAction, &QAction::triggered, [=](){ saveData(); } );
     menu->addSeparator();
     Component::contextMenu( event, menu );
 }
@@ -313,7 +313,7 @@ void Function::setNumOutputs( int outs )
                 m_proxys.at(i)->setPos( QPoint( 0, -halfH+(int)i*16+1 ) );
             }else{
                 QPushButton* button = m_buttons.takeLast();
-                disconnect( button, &QPushButton::released, this, &Function::onbuttonclicked );
+                //QObject::disconnect( button, &QPushButton::released, this, &Function::onbuttonclicked );
                 delete button;
 
                 m_proxys.removeLast();
@@ -349,8 +349,7 @@ void Function::setNumOutputs( int outs )
                 m_proxys.append( proxy );
                 m_funcList.append( "" );
 
-                connect( button, &QPushButton::released,
-                           this, &Function::onbuttonclicked, Qt::UniqueConnection );
+                QObject::connect( button, &QPushButton::released, [=](){ onbuttonclicked(); } );
     }   }   }
     
     Circuit::self()->update();

@@ -12,21 +12,23 @@
 
 #include "doubleprop.h"
 
-Component* CurrSource::construct( QObject* parent, QString type, QString id )
-{ return new CurrSource( parent, type, id ); }
+#define tr(str) simulideTr("Current Source",str)
+
+Component* CurrSource::construct( QString type, QString id )
+{ return new CurrSource( type, id ); }
 
 LibraryItem* CurrSource::libraryItem()
 {
     return new LibraryItem(
-        tr( "Current Source" ),
+        tr("Current Source"),
         "Sources",
         "cursource.png",
         "Current Source",
         CurrSource::construct );
 }
 
-CurrSource::CurrSource( QObject* parent, QString type, QString id )
-          : VarSource( parent, type, id )
+CurrSource::CurrSource( QString type, QString id )
+          : VarSource( type, id )
 {
     m_pin.resize(1);
     m_pin[0] = m_outPin = new Pin( 0, QPoint(28,16), id+"-outPin", 0, this );

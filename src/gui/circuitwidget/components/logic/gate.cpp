@@ -10,8 +10,10 @@
 
 #include "boolprop.h"
 
-Gate::Gate( QObject* parent, QString type, QString id, int inputs )
-    : LogicComponent( parent, type, id )
+#define tr(str) simulideTr("Gate",str)
+
+Gate::Gate( QString type, QString id, int inputs )
+    : LogicComponent( type, id )
 {
     m_width = 2;
     m_initState = false;

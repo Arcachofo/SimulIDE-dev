@@ -10,13 +10,11 @@
 #include "e-element.h"
 #include "pin.h"
 
-
 class MAINMODULE_EXPORT ConnBase : public Component, public eElement
 {
     public:
-        ConnBase( QObject* parent, QString type, QString id );
+        ConnBase( QString type, QString id );
         ~ConnBase();
-
 
         int  size() { return m_size; }
         void setSize( int size );

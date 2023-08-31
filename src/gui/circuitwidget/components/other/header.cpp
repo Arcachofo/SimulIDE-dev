@@ -13,21 +13,23 @@
 
 #include "boolprop.h"
 
-Component* Header::construct( QObject* parent, QString type, QString id )
-{ return new Header( parent, type, id ); }
+#define tr(str) simulideTr("Header",str)
+
+Component* Header::construct( QString type, QString id )
+{ return new Header( type, id ); }
 
 LibraryItem* Header::libraryItem()
 {
     return new LibraryItem(
-        tr( "Header" ),
+        tr("Header"),
         "Connectors",
         "header.png",
         "Header",
         Header::construct);
 }
 
-Header::Header( QObject* parent, QString type, QString id )
-      : ConnBase( parent, type, id )
+Header::Header( QString type, QString id )
+      : ConnBase( type, id )
 {
     this->setZValue(-1 );
 

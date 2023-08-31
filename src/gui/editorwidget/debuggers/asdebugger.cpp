@@ -10,6 +10,8 @@
 #include "scriptcpu.h"
 #include "mcu.h"
 
+#define tr(str) QCoreApplication::translate("Compiler",str)
+
 asDebugger::asDebugger( CodeEditor* parent, OutPanelText* outPane )
           : BaseDebugger( parent, outPane )
 {

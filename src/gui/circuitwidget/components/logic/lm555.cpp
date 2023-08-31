@@ -12,21 +12,21 @@
 #include "iopin.h"
 #include "e-node.h"
 
-Component* Lm555::construct( QObject* parent, QString type, QString id )
-{ return new Lm555( parent, type, id ); }
+Component* Lm555::construct( QString type, QString id )
+{ return new Lm555( type, id ); }
 
 LibraryItem* Lm555::libraryItem()
 {
     return new LibraryItem(
-        tr( "lm555" ),
+        "LM555",
         "Other Logic",
         "ic2.png",
         "Lm555",
         Lm555::construct );
 }
 
-Lm555::Lm555( QObject* parent, QString type, QString id )
-     : Component( parent, type, id )
+Lm555::Lm555( QString type, QString id )
+     : Component( type, id )
      , eElement( id )
      , m_ePinA( (id+"-ePinA"), 0 )
      , m_ePinB( (id+"-ePinB"), 0 )

@@ -21,10 +21,10 @@ struct sample_t{
 class MAINMODULE_EXPORT LAnalizer : public PlotBase
 {
     public:
-        LAnalizer( QObject* parent, QString type, QString id );
+        LAnalizer( QString type, QString id );
         ~LAnalizer();
 
- static Component* construct( QObject* parent, QString type, QString id );
+ static Component* construct( QString type, QString id );
  static LibraryItem* libraryItem();
 
         virtual void updateStep() override;

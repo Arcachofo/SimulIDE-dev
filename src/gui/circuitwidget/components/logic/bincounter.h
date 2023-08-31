@@ -13,10 +13,10 @@ class LibraryItem;
 class MAINMODULE_EXPORT BinCounter : public LogicComponent
 {
     public:
-        BinCounter( QObject* parent, QString type, QString id );
+        BinCounter( QString type, QString id );
         ~BinCounter();
 
-        static Component* construct( QObject* parent, QString type, QString id );
+        static Component* construct( QString type, QString id );
         static LibraryItem* libraryItem();
 
         bool srInv() { return m_resetInv; }

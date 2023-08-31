@@ -7,14 +7,11 @@
 #include "circuit.h"
 #include "custombutton.h"
 
-PushBase::PushBase( QObject* parent, QString type, QString id )
-        : SwitchBase( parent, type, id )
+PushBase::PushBase( QString type, QString id )
+        : SwitchBase( type, id )
 {
-    connect( m_button, &CustomButton::pressed,
-                 this, &PushBase::onbuttonPressed, Qt::UniqueConnection );
-
-    connect( m_button, &CustomButton::released,
-                 this, &PushBase::onbuttonReleased, Qt::UniqueConnection );
+    QObject::connect( m_button, &CustomButton::pressed , [=](){ onbuttonPressed(); } );
+    QObject::connect( m_button, &CustomButton::released, [=](){ onbuttonReleased(); } );
 }
 PushBase::~PushBase(){}
 

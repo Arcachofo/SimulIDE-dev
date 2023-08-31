@@ -21,10 +21,10 @@ class QToolButton;
 class MAINMODULE_EXPORT KY023 : public Component, public eElement
 {
     public:
-        KY023( QObject* parent, QString type, QString id );
+        KY023( QString type, QString id );
         ~KY023();
 
-        static Component* construct( QObject* parent, QString type, QString id );
+        static Component* construct( QString type, QString id );
         static LibraryItem* libraryItem();
         
         virtual void updateStep() override;

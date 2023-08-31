@@ -13,10 +13,10 @@ class LibraryItem;
 class MAINMODULE_EXPORT Clock : public ClockBase
 {
     public:
-        Clock( QObject* parent, QString type, QString id );
+        Clock( QString type, QString id );
         ~Clock();
 
- static Component* construct( QObject* parent, QString type, QString id );
+ static Component* construct( QString type, QString id );
  static LibraryItem* libraryItem();
 
         virtual void runEvent() override;

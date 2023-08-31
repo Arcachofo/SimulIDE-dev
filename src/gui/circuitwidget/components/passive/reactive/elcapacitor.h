@@ -13,10 +13,10 @@ class LibraryItem;
 class MAINMODULE_EXPORT elCapacitor : public CapacitorBase
 {
     public:
-        elCapacitor( QObject* parent, QString type, QString id );
+        elCapacitor( QString type, QString id );
         ~elCapacitor();
 
- static Component* construct( QObject* parent, QString type, QString id );
+ static Component* construct( QString type, QString id );
  static LibraryItem* libraryItem();
 
         virtual void updateStep() override;

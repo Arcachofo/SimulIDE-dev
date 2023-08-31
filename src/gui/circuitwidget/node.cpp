@@ -13,8 +13,8 @@
 #include "doubleprop.h"
 #include "pointprop.h"
 
-Node::Node( QObject* parent, QString type, QString id )
-    : Component( parent, type, id )
+Node::Node( QString type, QString id )
+    : Component( type, id )
 {
     setZValue( 101 );
 
@@ -98,7 +98,7 @@ void Node::joinConns( int c0, int c1 )
 
     if( pin1->conPin() != pin0 )
     {
-        Connector* con = new Connector( Circuit::self(), "Connector", "Connector-"+Circuit::self()->newSceneId(), pin0->conPin() );
+        Connector* con = new Connector( "Connector", "Connector-"+Circuit::self()->newSceneId(), pin0->conPin() );
         Circuit::self()->conList()->append( con );
 
         QStringList list0 = con0->pointList();

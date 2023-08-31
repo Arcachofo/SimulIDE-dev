@@ -16,10 +16,10 @@ class eResistor;
 class MAINMODULE_EXPORT Diac : public Component, public eElement
 {
     public:
-        Diac( QObject* parent, QString type, QString id );
+        Diac( QString type, QString id );
         ~Diac();
 
- static Component* construct( QObject* parent, QString type, QString id );
+ static Component* construct( QString type, QString id );
  static LibraryItem* libraryItem();
 
         virtual void initialize() override;

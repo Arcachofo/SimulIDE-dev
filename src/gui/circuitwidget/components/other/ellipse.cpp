@@ -7,21 +7,23 @@
 
 #include "ellipse.h"
 
-Component* Ellipse::construct( QObject* parent, QString type, QString id )
-{ return new Ellipse( parent, type, id ); }
+#define tr(str) simulideTr("Ellipse",str)
+
+Component* Ellipse::construct( QString type, QString id )
+{ return new Ellipse( type, id ); }
 
 LibraryItem* Ellipse::libraryItem()
 {
     return new LibraryItem(
-        tr( "Ellipse" ),
+        tr("Ellipse"),
         "Graphical",
         "ellipse.png",
         "Ellipse",
         Ellipse::construct);
 }
 
-Ellipse::Ellipse( QObject* parent, QString type, QString id )
-       : Shape( parent, type, id )
+Ellipse::Ellipse( QString type, QString id )
+       : Shape( type, id )
 {
 }
 Ellipse::~Ellipse(){}

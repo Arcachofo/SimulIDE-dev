@@ -15,10 +15,10 @@ class IoPin;
 class MAINMODULE_EXPORT Rail : public Component, public eElement
 {
     public:
-        Rail( QObject* parent, QString type, QString id );
+        Rail( QString type, QString id );
         ~Rail();
 
- static Component* construct( QObject* parent, QString type, QString id );
+ static Component* construct( QString type, QString id );
  static LibraryItem* libraryItem();
 
         double volt() { return m_volt; }

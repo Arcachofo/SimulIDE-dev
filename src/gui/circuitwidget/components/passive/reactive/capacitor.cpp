@@ -8,21 +8,23 @@
 #include "capacitor.h"
 #include "itemlibrary.h"
 
-Component* Capacitor::construct( QObject* parent, QString type, QString id )
-{ return new Capacitor( parent, type, id ); }
+#define tr(str) simulideTr("Capacitor",str)
+
+Component* Capacitor::construct( QString type, QString id )
+{ return new Capacitor( type, id ); }
 
 LibraryItem* Capacitor::libraryItem()
 {
     return new LibraryItem(
-        tr( "Capacitor" ),
+        tr("Capacitor"),
         "Reactive",
         "capacitor.png",
         "Capacitor",
         Capacitor::construct);
 }
 
-Capacitor::Capacitor( QObject* parent, QString type, QString id )
-         : CapacitorBase( parent, type, id )
+Capacitor::Capacitor( QString type, QString id )
+         : CapacitorBase( type, id )
 {}
 Capacitor::~Capacitor(){}
 

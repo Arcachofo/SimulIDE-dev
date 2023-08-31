@@ -7,21 +7,23 @@
 
 #include "rectangle.h"
 
-Component* Rectangle::construct( QObject* parent, QString type, QString id )
-{ return new Rectangle( parent, type, id ); }
+#define tr(str) simulideTr("Rectangle",str)
+
+Component* Rectangle::construct( QString type, QString id )
+{ return new Rectangle( type, id ); }
 
 LibraryItem* Rectangle::libraryItem()
 {
     return new LibraryItem(
-        tr( "Rectangle" ),
+        tr("Rectangle"),
         "Graphical",
         "rectangle.png",
         "Rectangle",
         Rectangle::construct);
 }
 
-Rectangle::Rectangle( QObject* parent, QString type, QString id )
-         : Shape( parent, type, id )
+Rectangle::Rectangle( QString type, QString id )
+         : Shape( type, id )
 {
 }
 Rectangle::~Rectangle(){}

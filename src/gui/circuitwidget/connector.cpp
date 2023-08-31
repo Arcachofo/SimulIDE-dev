@@ -16,8 +16,9 @@
 
 #include "stringprop.h"
 
-Connector::Connector( QObject* parent, QString type, QString id, Pin* startpin, Pin* endpin )
-         : CompBase( parent, type, id )
+Connector::Connector( QString type, QString id, Pin* startpin, Pin* endpin )
+         : CompBase( type, id )
+         , QObject( )
 {
     if( id.isEmpty() ) qDebug() << "ERROR! Connector::Connector empty Id";
 
@@ -355,7 +356,7 @@ void Connector::splitCon(int index, Pin* pin0, Pin* pin2 )
 
     QString id = "Connector-"+Circuit::self()->newConnectorId();
 
-    Connector* new_connector = new Connector( Circuit::self(), "Connector", id, pin2 );
+    Connector* new_connector = new Connector( "Connector", id, pin2 );
     Circuit::self()->conList()->append( new_connector );
 
     int newindex = 0;

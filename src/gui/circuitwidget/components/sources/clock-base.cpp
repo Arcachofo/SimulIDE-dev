@@ -10,8 +10,8 @@
 
 #include "boolprop.h"
 
-ClockBase::ClockBase( QObject* parent, QString type, QString id )
-         : FixedVolt( parent, type, id )
+ClockBase::ClockBase( QString type, QString id )
+         : FixedVolt( type, id )
 {
     m_area = QRect(-14,-8, 22, 16 );
 

@@ -14,21 +14,23 @@
 #include "boolprop.h"
 #include "intprop.h"
 
-Component* Push::construct( QObject* parent, QString type, QString id )
-{ return new Push( parent, type, id ); }
+#define tr(str) simulideTr("Push",str)
+
+Component* Push::construct( QString type, QString id )
+{ return new Push( type, id ); }
 
 LibraryItem* Push::libraryItem()
 {
     return new LibraryItem(
-        tr( "Push" ),
+        tr("Push"),
         "Switches",
         "push.png",
         "Push",
         Push::construct);
 }
 
-Push::Push( QObject* parent, QString type, QString id )
-    : PushBase( parent, type, id )
+Push::Push( QString type, QString id )
+    : PushBase( type, id )
 {
     m_area = QRectF(-11,-9, 22, 11 );
     m_proxy->setPos(-8, 4 );

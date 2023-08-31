@@ -16,10 +16,10 @@ class eNode;
 class MAINMODULE_EXPORT Relay : public MechContact
 {
     public:
-        Relay( QObject* parent, QString type, QString id );
+        Relay( QString type, QString id );
         ~Relay();
 
- static Component* construct( QObject* parent, QString type, QString id );
+ static Component* construct( QString type, QString id );
  static LibraryItem* libraryItem();
 
         double iTrig() { return m_trigCurrent; }

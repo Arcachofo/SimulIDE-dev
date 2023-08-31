@@ -15,9 +15,8 @@ class QGraphicsProxyWidget;
 
 class MAINMODULE_EXPORT PlotBase : public Component, public ScriptModule
 {
-        Q_OBJECT
     public:
-        PlotBase( QObject* parent, QString type, QString id );
+        PlotBase( QString type, QString id );
         ~PlotBase();
 
         virtual bool setPropStr( QString prop, QString val ) override;
@@ -77,7 +76,7 @@ class MAINMODULE_EXPORT PlotBase : public Component, public ScriptModule
 
         virtual void remove() override;
 
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
 
     protected:
         int m_bufferSize;

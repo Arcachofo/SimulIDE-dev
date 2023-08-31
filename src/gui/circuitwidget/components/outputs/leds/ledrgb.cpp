@@ -15,21 +15,23 @@
 #include "boolprop.h"
 #include "doubleprop.h"
 
-Component* LedRgb::construct( QObject* parent, QString type, QString id )
-{ return new LedRgb( parent, type, id ); }
+#define tr(str) simulideTr("Led RGB",str)
+
+Component* LedRgb::construct( QString type, QString id )
+{ return new LedRgb( type, id ); }
 
 LibraryItem* LedRgb::libraryItem()
 {
     return new LibraryItem(
-        tr( "Led Rgb" ),
+        tr("Led Rgb"),
         "Leds",
         "ledrgb.png",
         "LedRgb",
         LedRgb::construct);
 }
 
-LedRgb::LedRgb( QObject* parent, QString type, QString id )
-      : Component( parent, type, id )
+LedRgb::LedRgb( QString type, QString id )
+      : Component( type, id )
       , eElement( id )
 {
     m_graphical = true;

@@ -17,8 +17,10 @@
 
 #include "doubleprop.h"
 
-Component* Triac::construct( QObject* parent, QString type, QString id )
-{ return new Triac( parent, type, id ); }
+#define tr(str) simulideTr("Triac",str)
+
+Component* Triac::construct( QString type, QString id )
+{ return new Triac( type, id ); }
 
 LibraryItem* Triac::libraryItem()
 {
@@ -30,8 +32,8 @@ LibraryItem* Triac::libraryItem()
         Triac::construct );
 }
 
-Triac::Triac( QObject* parent, QString type, QString id )
-     : Component( parent, type, id )
+Triac::Triac( QString type, QString id )
+     : Component( type, id )
      , eElement( id )
 {
     m_area =  QRectF( -8, -16, 16, 32 );

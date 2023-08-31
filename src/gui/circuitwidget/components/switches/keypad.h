@@ -14,10 +14,10 @@ class LibraryItem;
 class MAINMODULE_EXPORT KeyPad : public Component, public eElement
 {
     public:
-        KeyPad( QObject* parent, QString type, QString id );
+        KeyPad( QString type, QString id );
         ~KeyPad();
 
- static Component* construct( QObject* parent, QString type, QString id );
+ static Component* construct( QString type, QString id );
  static LibraryItem* libraryItem();
 
         int rows() { return m_rows; }

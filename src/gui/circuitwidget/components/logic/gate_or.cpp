@@ -11,21 +11,23 @@
 #include "intprop.h"
 #include "boolprop.h"
 
-Component* OrGate::construct( QObject* parent, QString type, QString id )
-{ return new OrGate( parent, type, id ); }
+#define tr(str) simulideTr("Gate",str)
+
+Component* OrGate::construct( QString type, QString id )
+{ return new OrGate( type, id ); }
 
 LibraryItem* OrGate::libraryItem()
 {
     return new LibraryItem(
-        QCoreApplication::translate("OrGate","Or Gate"),
+        tr("Or Gate"),
         "Gates",
         "orgate.png",
         "Or Gate",
         OrGate::construct );
 }
 
-OrGate::OrGate( QObject* parent, QString type, QString id )
-      : Gate( parent, type, id, 2 )
+OrGate::OrGate( QString type, QString id )
+      : Gate( type, id, 2 )
 {
     addPropGroup( { tr("Electric"), IoComponent::inputProps()
 +QList<ComProperty*>({

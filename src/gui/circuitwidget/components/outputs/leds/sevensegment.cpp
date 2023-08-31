@@ -16,21 +16,23 @@
 #include "boolprop.h"
 #include "intprop.h"
 
-Component* SevenSegment::construct( QObject* parent, QString type, QString id )
-{ return new SevenSegment( parent, type, id ); }
+#define tr(str) simulideTr("Seven Segment",str)
+
+Component* SevenSegment::construct( QString type, QString id )
+{ return new SevenSegment( type, id ); }
 
 LibraryItem* SevenSegment::libraryItem()
 {
     return new LibraryItem(
-        tr( "7 Segment" ),
+        tr("7 Segment"),
         "Leds",
         "seven_segment.png",
         "Seven Segment",
         SevenSegment::construct );
 }
 
-SevenSegment::SevenSegment( QObject* parent, QString type, QString id )
-            : Component( parent, type, id )
+SevenSegment::SevenSegment( QString type, QString id )
+            : Component( type, id )
             , eElement( id )
 {
     m_graphical = true;
@@ -241,8 +243,8 @@ void SevenSegment::createDisplay(int n )
     {
         pinid = m_id+"-led_"+QString( 97+i );
         LedSmd* lsmd;
-        if( i<7 ) lsmd = new LedSmd( this, "LEDSMD", pinid, QRectF(0, 0, 13.5, 1.5) ); // Segment
-        else      lsmd = new LedSmd( this, "LEDSMD", pinid, QRectF(0, 0, 1.5, 1.5) );  // Point
+        if( i<7 ) lsmd = new LedSmd( "LEDSMD", pinid, QRectF(0, 0, 13.5, 1.5) ); // Segment
+        else      lsmd = new LedSmd( "LEDSMD", pinid, QRectF(0, 0, 1.5, 1.5) );  // Point
 
         lsmd->setParentItem(this);
         lsmd->setFlag( QGraphicsItem::ItemIsSelectable, false );

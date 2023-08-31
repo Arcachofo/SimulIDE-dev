@@ -11,21 +11,23 @@
 
 #include "boolprop.h"
 
-Component* Buffer::construct( QObject* parent, QString type, QString id )
-{ return new Buffer( parent, type, id ); }
+#define tr(str) simulideTr("Buffer",str)
+
+Component* Buffer::construct( QString type, QString id )
+{ return new Buffer( type, id ); }
 
 LibraryItem* Buffer::libraryItem()
 {
     return new LibraryItem(
-        QCoreApplication::translate("Buffer", "Buffer"),
+        tr("Buffer"),
         "Gates",
         "buffer.png",
         "Buffer",
         Buffer::construct );
 }
 
-Buffer::Buffer( QObject* parent, QString type, QString id )
-      : Gate( parent, type, id, 1 )
+Buffer::Buffer( QString type, QString id )
+      : Gate( type, id, 1 )
 {
     m_area = QRect(-8, -8, 16, 16 );
     

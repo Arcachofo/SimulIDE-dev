@@ -38,7 +38,7 @@ PropDialog::PropDialog( QWidget* parent, QString help )
 
 void PropDialog::setComponent( Component* comp )
 {
-    this->setWindowTitle( "Uid: "+comp->objectName() );
+    this->setWindowTitle( "Uid: "+comp->getUid() );
     type->setText( "Type: "+comp->itemType() );
     labelBox->setText( comp->idLabel() );
     tabList->clear();

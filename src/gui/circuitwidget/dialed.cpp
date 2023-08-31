@@ -5,6 +5,7 @@
 
 #include <QAbstractSlider>
 #include <QGraphicsProxyWidget>
+#include <QCoreApplication>
 
 #include "dialed.h"
 #include "dialwidget.h"
@@ -14,8 +15,10 @@
 #include "boolprop.h"
 #include "doubleprop.h"
 
-Dialed::Dialed( QObject* parent, QString type, QString id )
-      : Component( parent, type, id )
+#define tr(str) simulideTr("Dialed",str)
+
+Dialed::Dialed( QString type, QString id )
+      : Component( type, id )
 {
     m_areaDial = QRectF(-11, 8, 22, 22 );
     m_areaComp = QRectF(-11,-11, 22, 16 );
@@ -30,8 +33,7 @@ Dialed::Dialed( QObject* parent, QString type, QString id )
     m_proxy->setPos( QPoint(-m_dialW.width()/2, 7) );
     m_slider = false;
 
-    connect( m_dialW.dial(), &QAbstractSlider::valueChanged,
-             this,           &Dialed::dialChanged, Qt::UniqueConnection );
+    QObject::connect( m_dialW.dial(), &QAbstractSlider::valueChanged, [=](int v){ dialChanged(v); } );
 
     Simulator::self()->addToUpdateList( this );
 }
@@ -66,13 +68,11 @@ void Dialed::setSlider( bool s )
 {
     m_slider = s;
 
-    disconnect( m_dialW.dial(), &QAbstractSlider::valueChanged,
-                this,           &Dialed::dialChanged );
+    /// QObject::disconnect( m_dialW.dial(), &QAbstractSlider::valueChanged );
 
     m_dialW.setType( s ? 1: 0 );
 
-    connect( m_dialW.dial(), &QAbstractSlider::valueChanged,
-             this,           &Dialed::dialChanged, Qt::UniqueConnection );
+    QObject::connect( m_dialW.dial(), &QAbstractSlider::valueChanged, [=](int v){ dialChanged(v); } );
 
     updateProxy();
 }

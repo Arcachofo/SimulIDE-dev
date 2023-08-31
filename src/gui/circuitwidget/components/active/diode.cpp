@@ -14,21 +14,23 @@
 #include "doubleprop.h"
 #include "stringprop.h"
 
-Component* Diode::construct( QObject* parent, QString type, QString id )
-{ return new Diode( parent, type, id ); }
+#define tr(str) simulideTr("Diode",str)
+
+Component* Diode::construct( QString type, QString id )
+{ return new Diode( type, id ); }
 
 LibraryItem* Diode::libraryItem()
 {
     return new LibraryItem(
-        QCoreApplication::translate("Diode", "Diode"),
+        tr("Diode"),
         "Rectifiers",
         "diode.png",
         "Diode",
         Diode::construct);
 }
 
-Diode::Diode( QObject* parent, QString type, QString id, bool zener )
-     : Comp2Pin( parent, type, id )
+Diode::Diode( QString type, QString id, bool zener )
+     : Comp2Pin( type, id )
      , eDiode( id )
 {
     m_area = QRect(-12, -8, 24, 16 );

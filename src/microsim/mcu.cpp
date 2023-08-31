@@ -39,6 +39,8 @@
 
 #include "propdialog.h"
 
+#define tr(str) simulideTr("Mcu",str)
+
 Mcu* Mcu::m_pSelf = NULL;
 
 LibraryItem* Mcu::libraryItem()
@@ -51,10 +53,10 @@ LibraryItem* Mcu::libraryItem()
         Mcu::construct );
 }
 
-Component* Mcu::construct( QObject* parent, QString type, QString id )
+Component* Mcu::construct( QString type, QString id )
 {
     m_error = 0;
-    Mcu* mcu = new Mcu( parent, type, id );
+    Mcu* mcu = new Mcu( type, id );
     if( !m_error) m_error = McuCreator::createMcu( mcu, id );
     if( !m_error) mcu->setLogicSymbol( false );
 
@@ -68,8 +70,8 @@ Component* Mcu::construct( QObject* parent, QString type, QString id )
     return mcu;
 }
 
-Mcu::Mcu( QObject* parent, QString type, QString id )
-   : Chip( parent, type, id )
+Mcu::Mcu( QString type, QString id )
+   : Chip( type, id )
    , m_eMcu( this, id )
 {
     qDebug() << "        Initializing"<<id;
@@ -456,27 +458,23 @@ void Mcu::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
 
 void Mcu::contextMenu( QGraphicsSceneContextMenuEvent*, QMenu* menu )
 {
-
     QAction* mainAction = menu->addAction( QIcon(":/subc.png"),tr("Main Mcu") );
-    connect( mainAction, &QAction::triggered,
-                   this, &Mcu::slotmain, Qt::UniqueConnection );
+    QObject::connect( mainAction, &QAction::triggered
+                      , [=](){ slotmain(); } );
 
     if( m_scriptLink )
     {
         QAction* linkCompAction = menu->addAction( QIcon(":/subcl.png"),tr("Link to Component") );
-        connect( linkCompAction, &QAction::triggered,
-                           this, &Mcu::slotLinkComp, Qt::UniqueConnection );
+        QObject::connect( linkCompAction, &QAction::triggered, [=](){ slotLinkComp(); } );
     }
 
     if( m_eMcu.flashSize() )
     {
         QAction* loadAction = menu->addAction( QIcon(":/load.svg"),tr("Load firmware") );
-        connect( loadAction, &QAction::triggered,
-                       this, &Mcu::slotLoad, Qt::UniqueConnection );
+        QObject::connect( loadAction, &QAction::triggered, [=](){ slotLoad(); } );
 
         QAction* reloadAction = menu->addAction( QIcon(":/reload.svg"),tr("Reload firmware") );
-        connect( reloadAction, &QAction::triggered,
-                         this, &Mcu::slotReload, Qt::UniqueConnection );
+        QObject::connect( reloadAction, &QAction::triggered, [=](){ slotReload(); } );
 
         menu->addSeparator();
     }
@@ -484,18 +482,15 @@ void Mcu::contextMenu( QGraphicsSceneContextMenuEvent*, QMenu* menu )
     if( m_eMcu.romSize() )
     {
         QAction* loadDaAction = menu->addAction( QIcon(":/open.png"),tr("Load EEPROM data from file") );
-        connect( loadDaAction, &QAction::triggered,
-                         this, &Mcu::loadEEPROM, Qt::UniqueConnection );
+        QObject::connect( loadDaAction, &QAction::triggered, [=](){ loadEEPROM(); } );
 
         QAction* saveDaAction = menu->addAction(QIcon(":/save.png"), tr("Save EEPROM data to file") );
-        connect( saveDaAction, &QAction::triggered,
-                         this, &Mcu::saveEEPROM, Qt::UniqueConnection );
+        QObject::connect( saveDaAction, &QAction::triggered, [=](){ saveEEPROM(); } );
     }
     menu->addSeparator();
 
     QAction* openRamTab = menu->addAction( QIcon(":/terminal.svg"),tr("Open Mcu Monitor.") );
-    connect( openRamTab, &QAction::triggered,
-                   this, &Mcu::slotOpenMcuMonitor, Qt::UniqueConnection );
+    QObject::connect( openRamTab, &QAction::triggered, [=](){ slotOpenMcuMonitor(); } );
 
     if( m_eMcu.m_usarts.size() )
     {
@@ -505,10 +500,10 @@ void Mcu::contextMenu( QGraphicsSceneContextMenuEvent*, QMenu* menu )
         for( uint i=0; i<m_eMcu.m_usarts.size(); ++i )
         {
             QAction* openSerMonAct = serMonMenu->addAction( "USart"+QString::number(i+1) );
-            connect( openSerMonAct, &QAction::triggered, sm, QOverload<>::of(&QSignalMapper::map) );
+            QObject::connect( openSerMonAct, &QAction::triggered, sm, QOverload<>::of(&QSignalMapper::map) );
             sm->setMapping( openSerMonAct, i+1 );
         }
-        connect( sm, QOverload<int>::of(&QSignalMapper::mapped), this, &Mcu::slotOpenTerm );
+        QObject::connect( sm, QOverload<int>::of(&QSignalMapper::mapped), [=](int n){ slotOpenTerm(n);} );
     }
     menu->addSeparator();
 }

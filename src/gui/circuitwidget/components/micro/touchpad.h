@@ -18,10 +18,10 @@ class Pin;
 class MAINMODULE_EXPORT TouchPad : public Component, public eElement
 {
     public:
-        TouchPad( QObject* parent, QString type, QString id );
+        TouchPad( QString type, QString id );
         ~TouchPad();
 
-        static Component* construct( QObject* parent, QString type, QString id );
+        static Component* construct( QString type, QString id );
         static LibraryItem* libraryItem();
 
         virtual void initialize() override;

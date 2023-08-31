@@ -14,10 +14,10 @@ class LibraryItem;
 class MAINMODULE_EXPORT OrGate : public Gate
 {
     public:
-        OrGate( QObject* parent, QString type, QString id );
+        OrGate( QString type, QString id );
         ~OrGate();
 
-        static Component* construct( QObject* parent, QString type, QString id );
+        static Component* construct( QString type, QString id );
         static LibraryItem* libraryItem();
 
         virtual QPainterPath shape() const override;

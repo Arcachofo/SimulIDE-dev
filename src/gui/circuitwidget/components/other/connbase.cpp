@@ -11,9 +11,11 @@
 
 #include "intprop.h"
 
-ConnBase::ConnBase( QObject* parent, QString type, QString id )
-       : Component( parent, type, id )
-       , eElement( id )
+#define tr(str) simulideTr("ConnBase",str)
+
+ConnBase::ConnBase( QString type, QString id )
+        : Component( type, id )
+        , eElement( id )
 {
     m_graphical = true;
     //this->setZValue(-1 );

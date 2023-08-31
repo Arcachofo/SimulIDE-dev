@@ -10,8 +10,8 @@
 #include "hd44780_base.h"
 #include "utils.h"
 
-Hd44780_Base::Hd44780_Base( QObject* parent, QString type, QString id )
-            : Component( parent, type, id )
+Hd44780_Base::Hd44780_Base( QString type, QString id )
+            : Component( type, id )
             , m_fontImg( ":font2.png" )
 {
     m_graphical = true;

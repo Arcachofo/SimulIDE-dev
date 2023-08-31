@@ -12,21 +12,23 @@
 
 #include "stringprop.h"
 
-Component* Led::construct( QObject* parent, QString type, QString id )
-{ return new Led( parent, type, id ); }
+#define tr(str) simulideTr("Led",str)
+
+Component* Led::construct( QString type, QString id )
+{ return new Led( type, id ); }
 
 LibraryItem* Led::libraryItem()
 {
     return new LibraryItem(
-        tr( "Led" ),
+        tr("Led"),
         "Leds",
         "led.png",
         "Led",
         Led::construct);
 }
 
-Led::Led( QObject* parent, QString type, QString id )
-   : LedBase( parent, type, id )
+Led::Led( QString type, QString id )
+   : LedBase( type, id )
 {
     m_area = QRect(-8, -10, 20, 20 );
 
@@ -68,8 +70,7 @@ void Led::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
     QMenu* menu = new QMenu();
 
     QAction* linkCompAction = menu->addAction( QIcon(":/subcl.png"),tr("Link to Component") );
-    connect( linkCompAction, &QAction::triggered,
-                       this, &Led::slotLinkComp, Qt::UniqueConnection );
+    QObject::connect( linkCompAction, &QAction::triggered, [=](){ slotLinkComp(); } );
 
     menu->addSeparator();
 

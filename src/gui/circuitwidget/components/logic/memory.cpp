@@ -18,21 +18,23 @@
 #include "boolprop.h"
 #include "intprop.h"
 
-Component* Memory::construct( QObject* parent, QString type, QString id )
-{ return new Memory( parent, type, id ); }
+#define tr(str) simulideTr("Memory",str)
+
+Component* Memory::construct( QString type, QString id )
+{ return new Memory( type, id ); }
 
 LibraryItem* Memory::libraryItem()
 {
     return new LibraryItem(
-        tr( "Ram/Rom" ),
+        tr("Ram/Rom"),
         "Memory",
         "2to3g.png",
         "Memory",
         Memory::construct );
 }
 
-Memory::Memory( QObject* parent, QString type, QString id )
-      : IoComponent( parent, type, id )
+Memory::Memory( QString type, QString id )
+      : IoComponent( type, id )
       , eElement( id )
       , MemData()
 {
@@ -283,16 +285,13 @@ void Memory::deleteDataBits( int bits )
 void Memory::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
 {
     QAction* loadAction = menu->addAction( QIcon(":/load.svg"),tr("Load data") );
-    connect( loadAction, &QAction::triggered,
-                   this, &Memory::loadData, Qt::UniqueConnection );
+    QObject::connect( loadAction, &QAction::triggered, [=](){ loadData(); } );
 
     QAction* saveAction = menu->addAction(QIcon(":/save.png"), tr("Save data") );
-    connect( saveAction, &QAction::triggered,
-                   this, &Memory::saveData, Qt::UniqueConnection );
+    QObject::connect( saveAction, &QAction::triggered, [=](){ saveData(); } );
 
     QAction* showEepAction = menu->addAction(QIcon(":/save.png"), tr("Show Memory Table") );
-    connect( showEepAction, &QAction::triggered,
-                      this, &Memory::slotShowTable, Qt::UniqueConnection );
+    QObject::connect( showEepAction, &QAction::triggered, [=](){ slotShowTable(); } );
 
     menu->addSeparator();
     Component::contextMenu( event, menu );

@@ -25,10 +25,10 @@
 class MAINMODULE_EXPORT Pcd8544 : public Component, public eElement
 {
     public:
-        Pcd8544( QObject* parent, QString type, QString id );
+        Pcd8544( QString type, QString id );
         ~Pcd8544();
         
-        static Component* construct( QObject* parent, QString type, QString id );
+        static Component* construct( QString type, QString id );
         static LibraryItem* libraryItem();
         
         virtual void stamp() override;

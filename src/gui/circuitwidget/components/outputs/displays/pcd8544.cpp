@@ -21,8 +21,8 @@
 #include "pcd8544.h"
 
 
-Component* Pcd8544::construct( QObject* parent, QString type, QString id )
-{ return new Pcd8544( parent, type, id ); }
+Component* Pcd8544::construct( QString type, QString id )
+{ return new Pcd8544( type, id ); }
 
 LibraryItem* Pcd8544::libraryItem()
 {
@@ -34,8 +34,8 @@ LibraryItem* Pcd8544::libraryItem()
         Pcd8544::construct );
 }
 
-Pcd8544::Pcd8544( QObject* parent, QString type, QString id )
-       : Component( parent, type, id )
+Pcd8544::Pcd8544( QString type, QString id )
+       : Component( type, id )
        , eElement(  id+"-eElement"  )
        , m_pRst( 270, QPoint(-32, 40), id+"-PinRst", 0, this )
        , m_pCs ( 270, QPoint(-16, 40), id+"-PinCs" , 0, this )

@@ -15,10 +15,10 @@ class LibraryItem;
 class MAINMODULE_EXPORT Hd44780 : public Hd44780_Base, public eElement
 {
     public:
-        Hd44780( QObject* parent, QString type, QString id );
+        Hd44780( QString type, QString id );
         ~Hd44780();
         
-        static Component* construct( QObject* parent, QString type, QString id );
+        static Component* construct( QString type, QString id );
         static LibraryItem* libraryItem();
 
         virtual void initialize() override;

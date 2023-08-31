@@ -14,10 +14,10 @@ class LibraryItem;
 class MAINMODULE_EXPORT LedBar : public Component
 {
     public:
-        LedBar( QObject* parent, QString type, QString id );
+        LedBar( QString type, QString id );
         ~LedBar();
 
-        static Component* construct( QObject* parent, QString type, QString id );
+        static Component* construct( QString type, QString id );
         static LibraryItem* libraryItem();
 
         QString colorStr();

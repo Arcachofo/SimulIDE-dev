@@ -11,7 +11,7 @@
 class MAINMODULE_EXPORT BcdBase : public LogicComponent
 {
     public:
-        BcdBase( QObject* parent, QString type, QString id );
+        BcdBase( QString type, QString id );
         ~BcdBase();
 
         bool tristate() { return true; }

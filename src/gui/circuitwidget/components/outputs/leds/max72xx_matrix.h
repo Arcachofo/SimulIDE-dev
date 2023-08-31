@@ -15,10 +15,10 @@ class Pin;
 class MAINMODULE_EXPORT Max72xx_matrix : public LogicComponent
 {
     public:
-        Max72xx_matrix( QObject* parent, QString type, QString id );
+        Max72xx_matrix( QString type, QString id );
         ~Max72xx_matrix();
 
- static Component* construct( QObject* parent, QString type, QString id );
+ static Component* construct( QString type, QString id );
  static LibraryItem* libraryItem();
 
         QString colorStr() { return m_enumUids.at((int)m_ledColor ); }

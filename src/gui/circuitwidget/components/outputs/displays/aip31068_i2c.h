@@ -15,10 +15,10 @@ class IoPin;
 class MAINMODULE_EXPORT Aip31068_i2c : public Hd44780_Base, public TwiModule
 {
     public:
-        Aip31068_i2c( QObject* parent, QString type, QString id );
+        Aip31068_i2c( QString type, QString id );
         ~Aip31068_i2c();
         
-        static Component* construct( QObject* parent, QString type, QString id );
+        static Component* construct( QString type, QString id );
         static LibraryItem* libraryItem();
 
         virtual void initialize() override;

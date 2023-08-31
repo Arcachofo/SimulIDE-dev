@@ -17,8 +17,10 @@
 #include "boolprop.h"
 #include "intprop.h"
 
-Component* TouchPad::construct( QObject* parent, QString type, QString id )
-{ return new TouchPad( parent, type, id ); }
+#define tr(str) simulideTr("TouchPadR",str)
+
+Component* TouchPad::construct( QString type, QString id )
+{ return new TouchPad( type, id ); }
 
 LibraryItem* TouchPad::libraryItem()
 {
@@ -30,8 +32,8 @@ LibraryItem* TouchPad::libraryItem()
         TouchPad::construct);
 }
 
-TouchPad::TouchPad( QObject* parent, QString type, QString id )
-     : Component( parent, type, id )
+TouchPad::TouchPad( QString type, QString id )
+     : Component( type, id )
      , eElement( id )
      , m_resXA( id+"-resXA" )
      , m_resXB( id+"-resXB" )

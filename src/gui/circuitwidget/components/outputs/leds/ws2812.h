@@ -14,10 +14,10 @@ class LibraryItem;
 class MAINMODULE_EXPORT WS2812 : public Component, public eClockedDevice
 {
     public:
-        WS2812( QObject* parent, QString type, QString id );
+        WS2812( QString type, QString id );
         ~WS2812();
 
- static Component* construct( QObject* parent, QString type, QString id );
+ static Component* construct( QString type, QString id );
  static LibraryItem *libraryItem();
 
         int  rows() { return m_rows; }

@@ -7,21 +7,21 @@
 #include "itemlibrary.h"
 #include "iopin.h"
 
-Component* FlipFlopT::construct( QObject* parent, QString type, QString id )
-{ return new FlipFlopT( parent, type, id ); }
+Component* FlipFlopT::construct( QString type, QString id )
+{ return new FlipFlopT( type, id ); }
 
 LibraryItem* FlipFlopT::libraryItem()
 {
     return new LibraryItem(
-        QCoreApplication::translate("FlipFlopT", "FlipFlop T" ),
+        simulideTr("FlipFlopT", "FlipFlop T" ),
         "Memory",
         "2to2.png",
         "FlipFlopT",
         FlipFlopT::construct );
 }
 
-FlipFlopT::FlipFlopT( QObject* parent, QString type, QString id )
-         : FlipFlopBase( parent, type, id )
+FlipFlopT::FlipFlopT( QString type, QString id )
+         : FlipFlopBase( type, id )
 {
     m_width  = 3;
     m_height = 3;

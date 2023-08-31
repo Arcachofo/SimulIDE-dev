@@ -9,7 +9,7 @@ class LibraryItem;
 class MAINMODULE_EXPORT TextComponent : public Component, public Linkable
 {
     public:
-        TextComponent( QObject* parent, QString type, QString id );
+        TextComponent( QString type, QString id );
         ~TextComponent();
         
         QRectF boundingRect() const override
@@ -18,7 +18,7 @@ class MAINMODULE_EXPORT TextComponent : public Component, public Linkable
                            m_area.width()+m_border+2, m_area.height()+m_border+2 ); 
         }
 
- static Component* construct( QObject* parent, QString type, QString id );
+ static Component* construct( QString type, QString id );
  static LibraryItem* libraryItem();
 
         virtual void updateStep() override;

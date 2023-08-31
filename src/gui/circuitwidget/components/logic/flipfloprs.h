@@ -13,10 +13,10 @@ class LibraryItem;
 class MAINMODULE_EXPORT FlipFlopRS : public FlipFlopBase
 {
     public:
-        FlipFlopRS( QObject* parent, QString type, QString id );
+        FlipFlopRS( QString type, QString id );
         ~FlipFlopRS();
 
-        static Component* construct( QObject* parent, QString type, QString id );
+        static Component* construct( QString type, QString id );
         static LibraryItem *libraryItem();
 
         virtual void voltChanged() override;

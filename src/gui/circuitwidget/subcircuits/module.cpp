@@ -11,8 +11,10 @@
 
 #include "doubleprop.h"
 
-ModuleSubc::ModuleSubc( QObject* parent, QString type, QString id )
-          : ShieldSubc( parent, type, id )
+#define tr(str) simulideTr("ModuleSubc",str)
+
+ModuleSubc::ModuleSubc( QString type, QString id )
+          : ShieldSubc( type, id )
 {
     m_subcType = Chip::Module;
     setZValue( 2 );

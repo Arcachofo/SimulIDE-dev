@@ -28,11 +28,11 @@ class MAINMODULE_EXPORT Mcu : public Chip, public Linkable
         friend class McuCreator;
 
     public:
-        Mcu( QObject* parent, QString type, QString id );
+        Mcu( QString type, QString id );
         ~Mcu();
 
  static Mcu* self() { return m_pSelf; }
- static Component* construct( QObject* parent, QString type, QString id );
+ static Component* construct( QString type, QString id );
  static LibraryItem* libraryItem();
 
         void setup( QString type );

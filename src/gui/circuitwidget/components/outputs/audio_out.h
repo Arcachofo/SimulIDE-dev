@@ -16,10 +16,10 @@ class LibraryItem;
 class AudioOut : public Component, public eResistor
 {
     public:
-        AudioOut( QObject* parent, QString type, QString id );
+        AudioOut( QString type, QString id );
         ~AudioOut();
     
- static Component* construct( QObject* parent, QString type, QString id );
+ static Component* construct( QString type, QString id );
  static LibraryItem* libraryItem();
 
         virtual void initialize() override;

@@ -15,10 +15,10 @@ class LibraryItem;
 class MAINMODULE_EXPORT LedMatrix : public Component, public eElement
 {
     public:
-        LedMatrix( QObject* parent, QString type, QString id );
+        LedMatrix( QString type, QString id );
         ~LedMatrix();
 
- static Component* construct( QObject* parent, QString type, QString id );
+ static Component* construct( QString type, QString id );
  static LibraryItem* libraryItem();
 
         QString colorStr();

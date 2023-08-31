@@ -14,21 +14,23 @@
 #include "doubleprop.h"
 #include "intprop.h"
 
-Component* ADC::construct( QObject* parent, QString type, QString id )
-{ return new ADC( parent, type, id ); }
+#define tr(str) simulideTr("ADC",str)
+
+Component* ADC::construct( QString type, QString id )
+{ return new ADC( type, id ); }
 
 LibraryItem* ADC::libraryItem()
 {
     return new LibraryItem(
-        QCoreApplication::translate("ADC", "ADC"),
+        tr("ADC"),
         "Other Logic",
         "1to3.png",
         "ADC",
         ADC::construct );
 }
 
-ADC::ADC( QObject* parent, QString type, QString id )
-   : LogicComponent( parent, type, id )
+ADC::ADC( QString type, QString id )
+   : LogicComponent( type, id )
 {
     m_width  = 4;
     m_height = 9;

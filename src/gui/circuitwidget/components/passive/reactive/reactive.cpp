@@ -8,8 +8,10 @@
 #include "e-node.h"
 #include "pin.h"
 
-Reactive::Reactive( QObject* parent, QString type, QString id )
-        : Comp2Pin( parent, type, id )
+#define tr(str) simulideTr("Reactive",str)
+
+Reactive::Reactive( QString type, QString id )
+        : Comp2Pin( type, id )
         , eReactive( id )
 {
     m_area = QRectF( -10, -10, 20, 20 );

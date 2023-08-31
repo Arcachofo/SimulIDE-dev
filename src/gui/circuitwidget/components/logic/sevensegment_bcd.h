@@ -13,10 +13,10 @@ class LibraryItem;
 class MAINMODULE_EXPORT SevenSegmentBCD : public BcdBase
 {
     public:
-        SevenSegmentBCD( QObject* parent, QString type, QString id );
+        SevenSegmentBCD( QString type, QString id );
         ~SevenSegmentBCD();
 
- static Component* construct( QObject* parent, QString type, QString id );
+ static Component* construct( QString type, QString id );
  static LibraryItem* libraryItem();
 
         virtual void updateStep() override;

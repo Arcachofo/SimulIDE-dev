@@ -15,10 +15,10 @@ class LibraryItem;
 class MAINMODULE_EXPORT MuxAnalog : public Component, public eElement
 {
     public:
-        MuxAnalog( QObject* parent, QString type, QString id );
+        MuxAnalog( QString type, QString id );
         ~MuxAnalog();
         
- static Component* construct( QObject* parent, QString type, QString id );
+ static Component* construct( QString type, QString id );
  static LibraryItem* libraryItem();
 
         virtual void stamp() override;

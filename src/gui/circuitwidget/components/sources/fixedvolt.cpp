@@ -15,21 +15,23 @@
 #include "doubleprop.h"
 #include "boolprop.h"
 
-Component* FixedVolt::construct( QObject* parent, QString type, QString id )
-{ return new FixedVolt( parent, type, id ); }
+#define tr(str) simulideTr("Fixed Voltage",str)
+
+Component* FixedVolt::construct( QString type, QString id )
+{ return new FixedVolt( type, id ); }
 
 LibraryItem* FixedVolt::libraryItem()
 {
     return new LibraryItem(
-        tr( "Fixed Volt." ),
+        tr("Fixed Volt."),
         "Sources",
         "voltage.png",
         "Fixed Voltage",
         FixedVolt::construct );
 }
 
-FixedVolt::FixedVolt( QObject* parent, QString type, QString id )
-          : Component( parent, type, id )
+FixedVolt::FixedVolt( QString type, QString id )
+          : Component( type, id )
           , eElement( id )
 {
     m_area = QRect( -10, -10, 20, 20 );
@@ -56,8 +58,7 @@ FixedVolt::FixedVolt( QObject* parent, QString type, QString id )
     
     Simulator::self()->addToUpdateList( this );
 
-    connect( m_button, &CustomButton::clicked,
-             this,     &FixedVolt::onbuttonclicked, Qt::UniqueConnection );
+    QObject::connect( m_button, &CustomButton::clicked, [=](){ onbuttonclicked(); } );
 
     addPropGroup( { tr("Main"), {
 new DoubProp<FixedVolt>( "Voltage", tr("Voltage"),"V", this, &FixedVolt::volt, &FixedVolt::setVolt )

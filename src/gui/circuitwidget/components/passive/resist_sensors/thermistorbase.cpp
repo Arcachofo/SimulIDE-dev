@@ -7,8 +7,10 @@
 
 #include "doubleprop.h"
 
-ThermistorBase::ThermistorBase( QObject* parent, QString type, QString id )
-              : VarResBase( parent, type, id  )
+#define tr(str) simulideTr("Thermistor",str)
+
+ThermistorBase::ThermistorBase( QString type, QString id )
+              : VarResBase( type, id  )
 {
     setValLabelPos(-16, 30, 0);
 

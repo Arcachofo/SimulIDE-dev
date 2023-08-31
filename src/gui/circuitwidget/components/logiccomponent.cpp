@@ -10,8 +10,10 @@
 #include "circuit.h"
 #include "iopin.h"
 
-LogicComponent::LogicComponent( QObject* parent, QString type, QString id )
-              : IoComponent( parent, type, id )
+#define tr(str) simulideTr("LogicComponent",str)
+
+LogicComponent::LogicComponent( QString type, QString id )
+              : IoComponent( type, id )
               , eClockedDevice( id )
 {
     m_oePin     = NULL;

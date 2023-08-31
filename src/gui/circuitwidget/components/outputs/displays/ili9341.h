@@ -15,10 +15,10 @@ class LibraryItem;
 class MAINMODULE_EXPORT Ili9341 : public Component, public eClockedDevice
 {
     public:
-        Ili9341( QObject* parent, QString type, QString id );
+        Ili9341( QString type, QString id );
         ~Ili9341();
         
-        static Component* construct( QObject* parent, QString type, QString id );
+        static Component* construct( QString type, QString id );
         static LibraryItem* libraryItem();
 
         virtual void stamp() override;
@@ -27,7 +27,7 @@ class MAINMODULE_EXPORT Ili9341 : public Component, public eClockedDevice
         virtual void updateStep() override;
         virtual void remove() override;
         
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
 
     protected:
         void proccessCommand();

@@ -19,8 +19,10 @@
 #include "intprop.h"
 #include "boolprop.h"
 
-Component* Esp01::construct( QObject* parent, QString type, QString id )
-{ return new Esp01( parent, type, id ); }
+#define tr(str) simulideTr("Esp01",str)
+
+Component* Esp01::construct( QString type, QString id )
+{ return new Esp01( type, id ); }
 
 LibraryItem* Esp01::libraryItem()
 {
@@ -32,8 +34,8 @@ LibraryItem* Esp01::libraryItem()
         Esp01::construct );
 }
 
-Esp01::Esp01( QObject* parent, QString type, QString id )
-     : Component( parent, type, id )
+Esp01::Esp01( QString type, QString id )
+     : Component( type, id )
      , UsartModule( NULL, id+"-Uart" )
      , eElement( id )
 {
@@ -61,17 +63,17 @@ Esp01::Esp01( QObject* parent, QString type, QString id )
 
     setBaudRate( 115200 );
 
-    m_connectSM = new QSignalMapper( this );
-    connect( m_connectSM, QOverload<int>::of(&QSignalMapper::mapped),
-                    this, &Esp01::tcpConnected );
+    m_connectSM = new QSignalMapper();
+    QObject::connect( m_connectSM, QOverload<int>::of(&QSignalMapper::mapped),
+                     [=](int i){ tcpConnected(i); } );
 
-    m_discontSM = new QSignalMapper( this );
-    connect( m_discontSM, QOverload<int>::of(&QSignalMapper::mapped),
-                    this, &Esp01::tcpConnected );
+    m_discontSM = new QSignalMapper();
+    QObject::connect( m_discontSM, QOverload<int>::of(&QSignalMapper::mapped),
+                     [=](int i){ tcpConnected(i); } );
 
-    m_readyReSM = new QSignalMapper( this );
-    connect( m_readyReSM, QOverload<int>::of(&QSignalMapper::mapped),
-                    this, &Esp01::tcpConnected );
+    m_readyReSM = new QSignalMapper();
+    QObject::connect( m_readyReSM, QOverload<int>::of(&QSignalMapper::mapped),
+                     [=](int i){ tcpConnected(i); } );
 
     Simulator::self()->addToUpdateList( this );
 
@@ -347,15 +349,15 @@ void Esp01::connectTcp( int link )
         tcpSocket = new QTcpSocket();
         m_tcpSockets[link] = tcpSocket;
 
-        connect( tcpSocket, &QTcpSocket::connected ,
+        QObject::connect( tcpSocket, &QTcpSocket::connected ,
                  m_connectSM, QOverload<>::of(&QSignalMapper::map), Qt::UniqueConnection );
         m_connectSM->setMapping( tcpSocket, link );
 
-        connect( tcpSocket, &QTcpSocket::disconnected,
+        QObject::connect( tcpSocket, &QTcpSocket::disconnected,
                  m_discontSM, QOverload<>::of(&QSignalMapper::map), Qt::UniqueConnection );
         m_discontSM->setMapping( tcpSocket, link );
 
-        connect( tcpSocket, &QTcpSocket::readyRead,
+        QObject::connect( tcpSocket, &QTcpSocket::readyRead,
                  m_readyReSM, QOverload<>::of(&QSignalMapper::map), Qt::UniqueConnection );
         m_readyReSM->setMapping( tcpSocket, link );
     }
@@ -418,8 +420,7 @@ void Esp01::setSerialMon( bool s )
 void Esp01::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
 {
     QAction* openSerMon = menu->addAction( QIcon(":/terminal.svg"),tr("Open Serial Monitor.") );
-    connect( openSerMon, &QAction::triggered,
-                   this, &Esp01::slotOpenTerm, Qt::UniqueConnection );
+    QObject::connect( openSerMon, &QAction::triggered, [=](){ slotOpenTerm(); } );
 
     menu->addSeparator();
     Component::contextMenu( event, menu );

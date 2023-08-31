@@ -13,21 +13,23 @@
 
 #include "boolprop.h"
 
-Component* Ks0108::construct( QObject* parent, QString type, QString id )
-{ return new Ks0108( parent, type, id ); }
+#define tr(str) simulideTr("KS108",str)
+
+Component* Ks0108::construct( QString type, QString id )
+{ return new Ks0108( type, id ); }
 
 LibraryItem* Ks0108::libraryItem()
 {
     return new LibraryItem(
-        "Ks0108",
+        "KS0108",
         "Displays",
         "ks0108.png",
         "Ks0108",
         Ks0108::construct );
 }
 
-Ks0108::Ks0108( QObject* parent, QString type, QString id )
-      : Component( parent, type, id )
+Ks0108::Ks0108( QString type, QString id )
+      : Component( type, id )
       , eElement( (id+"-eElement") )
       , m_pinRst( 270, QPoint(-56, 56), id+"-PinRst" , 0, this )
       , m_pinCs2( 270, QPoint(-48, 56), id+"-PinCs2" , 0, this )

@@ -6,10 +6,12 @@
 #ifndef COMPBASE_H
 #define COMPBASE_H
 
-#include <QObject>
 #include <QString>
 #include <QPointF>
 #include <QHash>
+#include <QCoreApplication>
+
+#define simulideTr(comp_name,str) QCoreApplication::translate(comp_name,str)
 
 class ComProperty;
 
@@ -28,10 +30,10 @@ class PropDialog;
 class QDomElement;
 class QGraphicsItemGroup;
 
-class MAINMODULE_EXPORT CompBase : public QObject
+class MAINMODULE_EXPORT CompBase //: public QObject
 {
     public:
-        CompBase( QObject* parent, QString type, QString id );
+        CompBase( QString type, QString id );
         ~CompBase();
 
         void addPropGroup( propGroup pg, bool list=true );

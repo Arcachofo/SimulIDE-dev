@@ -11,21 +11,23 @@
 #include "intprop.h"
 #include "boolprop.h"
 
-Component* AndGate::construct( QObject* parent, QString type, QString id )
-{ return new AndGate( parent, type, id ); }
+#define tr(str) simulideTr("Gate",str)
+
+Component* AndGate::construct( QString type, QString id )
+{ return new AndGate( type, id ); }
 
 LibraryItem* AndGate::libraryItem()
 {
     return new LibraryItem(
-        QCoreApplication::translate("AndGate","And Gate" ),
+        tr("And Gate" ),
         "Gates",
         "andgate.png",
         "And Gate",
         AndGate::construct );
 }
 
-AndGate::AndGate( QObject* parent, QString type, QString id )
-       : Gate( parent, type, id, 2 )
+AndGate::AndGate( QString type, QString id )
+       : Gate( type, id, 2 )
 {
     addPropGroup( { tr("Electric"), IoComponent::inputProps()
 +QList<ComProperty*>({

@@ -11,7 +11,7 @@
 class MAINMODULE_EXPORT Shape : public Component
 {
     public:
-        Shape( QObject* parent, QString type, QString id );
+        Shape( QString type, QString id );
         ~Shape();
         
         QRectF boundingRect() const {

@@ -13,21 +13,23 @@
 
 #include "doubleprop.h"
 
-Component* Rail::construct( QObject* parent, QString type, QString id )
-{ return new Rail( parent, type, id ); }
+#define tr(str) simulideTr("Rail",str)
+
+Component* Rail::construct( QString type, QString id )
+{ return new Rail( type, id ); }
 
 LibraryItem* Rail::libraryItem()
 {
     return new LibraryItem(
-        tr( "Rail" ),
+        tr("Rail"),
         "Sources",
         "rail.png",
         "Rail",
         Rail::construct );
 }
 
-Rail::Rail( QObject* parent, QString type, QString id )
-    : Component( parent, type, id )
+Rail::Rail( QString type, QString id )
+    : Component( type, id )
     , eElement( id )
 {
     setLabelPos(-64,-24 );

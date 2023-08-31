@@ -16,21 +16,23 @@
 #include "boolprop.h"
 #include "intprop.h"
 
-Component* Demux::construct( QObject* parent, QString type, QString id )
-{ return new Demux( parent, type, id ); }
+#define tr(str) simulideTr("Demux",str)
+
+Component* Demux::construct( QString type, QString id )
+{ return new Demux( type, id ); }
 
 LibraryItem* Demux::libraryItem()
 {
     return new LibraryItem(
-        QCoreApplication::translate("Demux", "Demux"),
-         "Converters" ,
+        tr("Demux"),
+        "Converters",
         "demux.png",
         "Demux",
         Demux::construct );
 }
 
-Demux::Demux( QObject* parent, QString type, QString id )
-     : LogicComponent( parent, type, id )
+Demux::Demux( QString type, QString id )
+     : LogicComponent( type, id )
 {
     m_width  = 4;
     m_height = 10;

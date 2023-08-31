@@ -14,10 +14,10 @@ class IoPin;
 class MAINMODULE_EXPORT VoltSource : public VarSource
 {
     public:
-        VoltSource( QObject* parent, QString type, QString id );
+        VoltSource( QString type, QString id );
         ~VoltSource();
 
-        static Component* construct( QObject* parent, QString type, QString id );
+        static Component* construct( QString type, QString id );
         static LibraryItem* libraryItem();
 
         virtual void updateStep() override;

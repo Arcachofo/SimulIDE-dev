@@ -16,8 +16,10 @@
 #include "doubleprop.h"
 #include "stringprop.h"
 
-Component* Transformer::construct( QObject* parent, QString type, QString id )
-{ return new Transformer( parent, type, id ); }
+#define tr(str) simulideTr("Transformer",str)
+
+Component* Transformer::construct( QString type, QString id )
+{ return new Transformer( type, id ); }
 
 LibraryItem* Transformer::libraryItem()
 {
@@ -29,8 +31,8 @@ LibraryItem* Transformer::libraryItem()
         Transformer::construct );
 }
 
-Transformer::Transformer( QObject* parent, QString type, QString id )
-           : Component( parent, type, id )
+Transformer::Transformer( QString type, QString id )
+           : Component( type, id )
            , eElement( id )
 {
     m_coupCoeff = 0.99;

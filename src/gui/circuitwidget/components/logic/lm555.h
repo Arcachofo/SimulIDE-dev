@@ -19,10 +19,10 @@ class MAINMODULE_EXPORT Lm555 : public Component, public eElement
 {
     public:
 
-        Lm555( QObject* parent, QString type, QString id );
+        Lm555( QString type, QString id );
         ~Lm555();
         
-        static Component* construct( QObject* parent, QString type, QString id );
+        static Component* construct( QString type, QString id );
         static LibraryItem *libraryItem();
 
         virtual void initialize() override;

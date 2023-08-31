@@ -13,7 +13,7 @@ class LibraryItem;
 class MAINMODULE_EXPORT WaveGen : public ClockBase
 {
     public:
-        WaveGen( QObject* parent, QString type, QString id );
+        WaveGen( QString type, QString id );
         ~WaveGen();
         
         enum wave_type {
@@ -25,7 +25,7 @@ class MAINMODULE_EXPORT WaveGen : public ClockBase
             Wav
         };
 
- static Component* construct( QObject* parent, QString type, QString id );
+ static Component* construct( QString type, QString id );
  static LibraryItem* libraryItem();
 
         virtual bool setPropStr( QString prop, QString val ) override;

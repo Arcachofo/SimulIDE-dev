@@ -11,7 +11,7 @@
 class MAINMODULE_EXPORT Comp2Pin : public Component
 {
     public:
-        Comp2Pin( QObject* parent, QString type, QString id );
+        Comp2Pin( QString type, QString id );
         ~Comp2Pin(){}
 };
 

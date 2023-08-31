@@ -14,10 +14,10 @@ class LibraryItem;
 class MAINMODULE_EXPORT Mosfet : public Component, public eMosfet
 {
     public:
-        Mosfet( QObject* parent, QString type, QString id );
+        Mosfet( QString type, QString id );
         ~Mosfet();
 
- static Component* construct( QObject* parent, QString type, QString id );
+ static Component* construct( QString type, QString id );
  static LibraryItem* libraryItem();
 
         virtual void updateStep() override;

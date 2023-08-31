@@ -19,23 +19,25 @@
 #include "intprop.h"
 #include "boolprop.h"
 
+#define tr(str) simulideTr("Resistor Dip",str)
+
 eNode ResistorDip::m_puEnode("");
 
-Component* ResistorDip::construct( QObject* parent, QString type, QString id )
-{ return new ResistorDip( parent, type, id ); }
+Component* ResistorDip::construct( QString type, QString id )
+{ return new ResistorDip( type, id ); }
 
 LibraryItem* ResistorDip::libraryItem()
 {
     return new LibraryItem(
-        tr( "ResistorDip" ),
+        tr("ResistorDip"),
         "Resistors",
         "resistordip.png",
         "ResistorDip",
         ResistorDip::construct);
 }
 
-ResistorDip::ResistorDip( QObject* parent, QString type, QString id )
-           : Component( parent, type, id )
+ResistorDip::ResistorDip( QString type, QString id )
+           : Component( type, id )
            , eElement( id )
 {
     m_size = 0;

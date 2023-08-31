@@ -16,21 +16,23 @@
 #include "boolprop.h"
 #include "intprop.h"
 
-Component* Mux::construct( QObject* parent, QString type, QString id )
-{ return new Mux( parent, type, id ); }
+#define tr(str) simulideTr("Mux",str)
+
+Component* Mux::construct( QString type, QString id )
+{ return new Mux( type, id ); }
 
 LibraryItem* Mux::libraryItem()
 {
     return new LibraryItem(
-        tr( "Mux" ),
-         "Converters" ,
+        tr("Mux"),
+        "Converters" ,
         "mux.png",
         "Mux",
         Mux::construct );
 }
 
-Mux::Mux( QObject* parent, QString type, QString id )
-   : LogicComponent( parent, type, id )
+Mux::Mux( QString type, QString id )
+   : LogicComponent( type, id )
 {
     m_width  = 4;
     m_height = 10;
