@@ -83,8 +83,8 @@ class MAINMODULE_EXPORT eMcu : public DataSpace, public eIou
 
         double freq() { return m_freq; }
         void setFreq( double freq );
-        uint64_t psCycle() { return m_psCycle; }  // picoseconds per instruction cycle
-        void setPsCycle( uint64_t p ) { m_psCycle = p; }
+        uint64_t psInst() { return m_psInst; }  // picoseconds per instruction cycle
+        void setInstCycle( double p ){ m_cPerInst = m_cPerTick = p; }
 
         McuTimer* getTimer( QString name );
         McuPort* getMcuPort( QString name );
@@ -141,9 +141,11 @@ class MAINMODULE_EXPORT eMcu : public DataSpace, public eIou
         McuIntOsc*  m_intOsc;
         McuComp*    m_comparator;
 
-        double m_freq;           // Clock Frequency in MegaHerzs
-        double m_cPerInst;       // Clock ticks per Instruction Cycle
-        uint64_t m_psCycle;      // picoseconds per Instruction Cycle
+        double m_freq;         // Clock Frequency in MegaHerzs
+        double m_cPerInst;     // Clock ticks per Instruction Cycle
+        double m_cPerTick;     // Clock ticks  per cpu Cycle
+        uint64_t m_psInst;     // picoseconds per Instruction Cycle
+        uint64_t m_psTick;     // picoseconds per Instruction Cycle
 
         bool m_clkState;
 

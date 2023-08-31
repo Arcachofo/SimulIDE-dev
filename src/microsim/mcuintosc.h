@@ -37,7 +37,7 @@ class McuIntOsc : public McuModule, public eElement
         void configPins( bool inIo, bool outIo, bool clkOut ); // From Config Word
 
     protected:
-        uint64_t m_psCycle;
+        uint64_t m_psInst;
 
         double m_intOscFreq;
         double m_configFreq;

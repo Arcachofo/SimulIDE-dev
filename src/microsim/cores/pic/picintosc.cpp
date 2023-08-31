@@ -32,7 +32,7 @@ PicIntOsc::~PicIntOsc(){}
 void PicIntOsc::stamp()
 {
     m_configFreq = m_mcu->freq();
-    m_psCycle = m_mcu->psCycle()/2;
+    m_psInst = m_mcu->psInst()/2;
     if( m_cfgWordCtrl ) McuIntOsc::stamp();
 }
 
@@ -71,7 +71,7 @@ void PicIntOsc00::configureA( uint8_t newOSCCON )
     bool intOsc = !m_cfgWordCtrl || m_clkInIO; // Not controlled by CONFIG1 or controlled and set to INTOSC
     double freq = intOsc ? m_intOscFreq : m_mcu->component()->extFreq();
     m_mcu->setFreq( freq );
-    m_psCycle = m_mcu->psCycle()/2;
+    m_psInst = m_mcu->psInst()/2;
     //QString msg = intOsc ? "Internal" : "External";
     //qDebug() << msg<< "Clock"<< freq << "Hz" <<"\n";
 }
@@ -92,7 +92,7 @@ void PicIntOsc01::configureA( uint8_t newOSCCON )
 
     double freq = m_clkInIO ? m_intOscFreq : m_mcu->component()->extFreq(); // Not controlled by CONFIG1 or controlled and set to INTOSC
     m_mcu->setFreq( freq );
-    m_psCycle = m_mcu->psCycle()/2;
+    m_psInst = m_mcu->psInst()/2;
 }
 
 // -------------------------------------------
@@ -131,5 +131,5 @@ void PicIntOsc02::configureA( uint8_t newOSCCON )
     bool intOsc = !m_cfgWordCtrl || m_clkInIO; // Not controlled by CONFIG1 or controlled and set to INTOSC
     double freq = intOsc ? m_intOscFreq : m_mcu->component()->extFreq();
     m_mcu->setFreq( freq );
-    m_psCycle = m_mcu->psCycle()/2;
+    m_psInst = m_mcu->psInst()/2;
 }

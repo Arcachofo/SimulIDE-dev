@@ -90,12 +90,12 @@ void eMcu::runEvent()
     {
         if( cyclesDone > 1 ) cyclesDone -= 1;
         else                 m_debugger->stepDebug();
-        Simulator::self()->addEvent( m_psCycle, this );
+        Simulator::self()->addEvent( m_psTick, this );
     }
     else if( m_state >= mcuRunning && m_freq > 0 )
     {
         stepCpu();
-        Simulator::self()->addEvent( cyclesDone*m_psCycle, this );
+        Simulator::self()->addEvent( cyclesDone*m_psTick, this );
     }
 }
 
@@ -156,7 +156,7 @@ void eMcu::hardReset( bool r )
         m_state = mcuStopped;
     }else{
         m_state = mcuRunning;
-        if( m_freq > 0 ) Simulator::self()->addEvent( m_psCycle, this );
+        if( m_freq > 0 ) Simulator::self()->addEvent( m_psTick, this );
     }
 }
 
@@ -186,11 +186,12 @@ void eMcu::setFreq( double freq )
 
     if( freq > 0 )
     {
-        m_psCycle = 1e12*(m_cPerInst/freq); // Set Simulation cycles per Instruction cycle
+        m_psInst = 1e12*(m_cPerInst/freq); // Set Simulation cycles per Instruction cycle
+        m_psTick = 1e12*(m_cPerTick/freq); // Set Simulation cycles per Instruction cycle
         if( m_freq == 0 && m_state >= mcuRunning )// Previously stopped by freq = 0
         {
             Simulator::self()->cancelEvents( this );
-            if( !m_clkPin   ) Simulator::self()->addEvent( m_psCycle, this );
+            if( !m_clkPin   ) Simulator::self()->addEvent( m_psTick, this );
         }
     }
     m_freq = freq;

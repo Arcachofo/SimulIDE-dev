@@ -64,7 +64,7 @@ void I51Core::reset()
     m_laPin->setOutState( false );
     m_laPin->updateStep();
 
-    m_psStep = m_mcu->psCycle()/12;  // We are doing 2 Read cycles per Machine cycle
+    m_psStep = m_mcu->psInst()/12;  // We are doing 2 Read cycles per Machine cycle
     m_addrSetTime = 3*m_psStep;    // Addr pins
     m_laEnEndTime = 4*m_psStep;    // LA 0
     m_readSetTime = 6*m_psStep;    // PSEN 0

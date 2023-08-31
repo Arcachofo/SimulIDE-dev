@@ -38,7 +38,7 @@ void McuIntOsc::stamp()
         if( m_clkOut )
         {
             m_clkOutPin->setPinMode( output );
-            Simulator::self()->addEvent( m_psCycle, this );
+            Simulator::self()->addEvent( m_psInst, this );
         }
     }
 }
@@ -46,7 +46,7 @@ void McuIntOsc::stamp()
 void McuIntOsc::runEvent()
 {
     m_clkOutPin->toggleOutState();
-    Simulator::self()->addEvent( m_psCycle, this );
+    Simulator::self()->addEvent( m_psInst, this );
 }
 
 void McuIntOsc::enableExtOsc( bool en ) // From Mcu, AVR or PIC with no cfg word

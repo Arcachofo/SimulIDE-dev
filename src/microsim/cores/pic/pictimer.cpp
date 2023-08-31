@@ -103,7 +103,7 @@ void PicTimer0::configureA( uint8_t NewOPTION )
          m_prescaler = 1;                    // Prescaler asigned to Watchdog
     else m_prescaler = m_prescList.at( ps ); // Prescaler asigned to TIMER0
 
-    m_scale = m_prescaler*m_mcu->psCycle();
+    m_scale = m_prescaler*m_mcu->psInst();
 
     m_clkEdge = getRegBitsVal( NewOPTION, m_T0SE );
 
@@ -134,7 +134,7 @@ void PicTimer2::configureA( uint8_t NewT2CON )
     uint8_t presc = getRegBitsVal( NewT2CON, m_T2CKPS );
     uint8_t postc = getRegBitsVal( NewT2CON, m_TOUTPS );
     m_prescaler = m_prescList.at( presc ) * (postc+1);
-    m_scale     = m_prescaler*m_mcu->psCycle();
+    m_scale     = m_prescaler*m_mcu->psInst();
 
     bool en = getRegBitsBool( NewT2CON, m_TMR2ON );
     if( en != m_running ) enable( en );
@@ -217,7 +217,7 @@ PicTimer160::~PicTimer160(){}
 
 void PicTimer160::configureClock()
 {
-    m_scale = m_prescaler*m_mcu->psCycle();
+    m_scale = m_prescaler*m_mcu->psInst();
     enableExtClock( m_mode == 1 );
 }
 
@@ -235,11 +235,11 @@ void PicTimer161::configureClock()
 {
     switch( m_mode ) {
     case 0:
-        m_scale = m_prescaler*m_mcu->psCycle();
+        m_scale = m_prescaler*m_mcu->psInst();
         enableExtClock( false );
         break;
     case 1:
-        m_scale = m_prescaler*m_mcu->psCycle()/4;
+        m_scale = m_prescaler*m_mcu->psInst()/4;
         enableExtClock( false );
         break;
     case 2:

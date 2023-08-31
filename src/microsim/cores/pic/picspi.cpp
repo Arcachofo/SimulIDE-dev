@@ -21,7 +21,7 @@ PicSpi::~PicSpi(){}
 
 void PicSpi::setMode( spiMode_t mode )
 {
-    m_clockPeriod = 4*m_mcu->psCycle()*m_prescaler/2;
+    m_clockPeriod = 4*m_mcu->psInst()*m_prescaler/2;
 
     if( mode == m_mode ) return;
     m_mode = mode;

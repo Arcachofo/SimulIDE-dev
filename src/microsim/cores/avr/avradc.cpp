@@ -83,7 +83,7 @@ void AvrAdc::configureA( uint8_t newADCSRA ) // ADCSRA
     }
 
     uint8_t prs = getRegBitsVal( newADCSRA, m_ADPS );
-    m_convTime = m_mcu->psCycle()*13*m_prescList[prs];
+    m_convTime = m_mcu->psInst()*13*m_prescList[prs];
 
     m_autoTrigger = getRegBitsBool( newADCSRA, m_ADATE );
     if( m_autoTrigger ) autotriggerConf();
@@ -96,7 +96,7 @@ void AvrAdc::configureA( uint8_t newADCSRA ) // ADCSRA
         if( m_initCycles ) // Recalculate m_convTime in case of Free Running
         {
             m_initCycles = 0;
-            m_convTime = m_mcu->psCycle()*13*m_prescList[prs];
+            m_convTime = m_mcu->psInst()*13*m_prescList[prs];
         }
     }
 }

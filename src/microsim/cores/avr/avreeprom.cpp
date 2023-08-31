@@ -67,7 +67,7 @@ void AvrEeprom::configureA( uint8_t newEECR ) // EECR is being written
         }
         bool oldEempe = getRegBitsBool( *m_EECR, m_EEMPE );
         if( !oldEempe ) // Shedule EEMPE clear: 4 cycles
-            Simulator::self()->addEvent( m_mcu->psCycle()*4, this );
+            Simulator::self()->addEvent( m_mcu->psInst()*4, this );
     }
 }
 
