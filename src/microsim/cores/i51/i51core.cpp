@@ -434,7 +434,7 @@ void I51Core::XRLa() { ACC ^= m_op0; }
 
 void I51Core::SUBB()
 {
-    if( STATUS(Cy) ) m_op0--;
+    if( STATUS(Cy) ) ACC--;
     subFlags( ACC, m_op0 );
     ACC -= m_op0;
 }
