@@ -51,7 +51,8 @@ class MAINMODULE_EXPORT I51Core : public McuCpu, public eElement
 
             aORIG=1<<4,
             aBIT =1<<5,
-            a16BIT=1<<6
+            a16BIT_LOW=1<<6,
+            a16BIT_HIGH=1<<7
         };
 
         virtual void stamp() override;
@@ -59,6 +60,8 @@ class MAINMODULE_EXPORT I51Core : public McuCpu, public eElement
 
         virtual void reset() override;
         virtual void runStep() override;
+
+        virtual void INTERRUPT( uint32_t addr ) override;
 
     protected:
 
@@ -244,10 +247,6 @@ class MAINMODULE_EXPORT I51Core : public McuCpu, public eElement
         inline void movx_a_indir_rx();
         inline void movx_indir_dptr_a();
         inline void movx_indir_rx_a();
-
-        // CpuBase interface
-public:
-        void INTERRUPT(uint32_t addr);
 };
 
 #endif

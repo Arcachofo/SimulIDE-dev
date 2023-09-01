@@ -161,17 +161,19 @@ void I51Core::runStep()
             readOperand();
             m_tmpPC++;
         }
-        else m_cpuState = cpu_EXEC; // All operands ready
+        if( m_dataEvent.isEmpty() ) m_cpuState = cpu_EXEC; // All operands ready
     }
     else if( m_cpuState == cpu_RESET ) m_cpuState = cpu_FETCH; // First cycle used fetching first instruction
 
     if( m_cpuState == cpu_EXEC )  // Execute Instruction
     {
         //qDebug("Before exec: PC:%x opcode:%x op0:%x opaddr:%x op2:%x",m_PC,m_opcode,m_op0,m_opAddr,m_op2);
-        m_PC = m_tmpPC;
-        Exec();
-        m_tmpPC = m_PC;
-        m_cpuState = cpu_FETCH;
+        if( m_cycle & 1 )  { // 1 machine cyle = 2 read cycle, so (m_cycle+1) should be multiple of 2
+            m_PC = m_tmpPC;
+            Exec();
+            m_tmpPC = m_PC;
+            m_cpuState = cpu_FETCH;
+        }
     }
     if( extPGM )// m_mcu->extMem->read( m_tmpPC, ExtMemModule::EN | ExtMemModule::LA );
     {
@@ -191,10 +193,8 @@ void I51Core::readOperand()
         if( addrMode & aORIG ) m_op0 = m_pgmData;
         else if( addrMode & aRELA ) m_op2 = m_pgmData;
         else {
-            if( addrMode & a16BIT ) {  // 16 bit address
-                if     ( m_cycle == 1 ) m_opAddr  = (uint16_t)m_pgmData << 8;
-                else if( m_cycle == 2 ) m_opAddr |= m_pgmData;
-            }
+            if      ( addrMode & a16BIT_HIGH ) m_opAddr  = (uint16_t)m_pgmData << 8; //16bit address high
+            else if ( addrMode & a16BIT_LOW  ) m_opAddr |= m_pgmData;                //16bit address low
             else m_opAddr = m_pgmData;
         }
     }
@@ -226,8 +226,8 @@ void I51Core::opr2Dir() { m_dataEvent.append( aDIRE | aRELA ); }       // m_op2 
 void I51Core::addrRgx() { m_opAddr = m_RxAddr; }
 void I51Core::addrInd() { m_opAddr = checkAddr( I_RX_VAL );}           //
 void I51Core::addrI08() { m_dataEvent.append( aIMME ); }               // m_opAddr = data;
-void I51Core::addrI16() { m_dataEvent.append( aIMME | a16BIT);
-                          m_dataEvent.append( aIMME | a16BIT); }       // m_opAddr = data16;
+void I51Core::addrI16() { m_dataEvent.append( aIMME | a16BIT_HIGH);
+                          m_dataEvent.append( aIMME | a16BIT_LOW); }   // m_opAddr = data16;
 void I51Core::addrDir() { m_dataEvent.append( aDIRE         ); }       // m_opAddr = data;
 void I51Core::addrBit( bool invert ) { m_dataEvent.append( aBIT );     // m_opAddr = addr, m_op0 = bitMask
                                        m_invert = invert; }
@@ -513,7 +513,7 @@ void I51Core::movx_indir_rx_a()
     else { if( aCPU->mExtData ) aCPU->mExtData[address &( aCPU->mExtDataSize - 1 )] = ACC; }*/
 }
 
-void I51Core::INTERRUPT(uint32_t addr)
+void I51Core::INTERRUPT( uint32_t addr )
 {
     pushStack8( m_PC & 0xFF );
     pushStack8( m_PC >> 8 );
