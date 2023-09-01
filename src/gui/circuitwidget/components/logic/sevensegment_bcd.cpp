@@ -12,16 +12,18 @@
 #include "iopin.h"
 #include "ledbase.h"
 
+#define tr(str) simulideTr("SevenSegmentBCD",str)
+
 Component* SevenSegmentBCD::construct( QString type, QString id )
 { return new SevenSegmentBCD( type, id ); }
 
 LibraryItem* SevenSegmentBCD::libraryItem()
 {
     return new LibraryItem(
-        simulideTr("7-Seg BCD","7 Seg BCD"), /// FIXME: only charaters in Component type
+        tr("7 Seg BCD"),
         "Other Logic",
         "7segbcd.png",
-        "7-Seg BCD",
+        "7-Seg BCD", /// FIXME: only charaters in Component type
         SevenSegmentBCD::construct );
 }
 

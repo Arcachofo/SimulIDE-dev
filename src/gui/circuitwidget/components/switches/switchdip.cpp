@@ -154,16 +154,14 @@ void SwitchDip::createSwitches( int c )
         
         QGraphicsProxyWidget* proxy = Circuit::self()->addWidget( button );
         proxy->setParentItem( this );
-        proxy->setPos( QPoint( 3, -27+i*8 ) );
+        proxy->setPos( QPoint( 3,-27+i*8 ) );
         m_proxys.append( proxy );
         QObject::connect( button, &QPushButton::released, [=](){ onbuttonclicked(); });
-        
-        QPoint pinpos = QPoint(-8,-32+8+i*8 );
-        Pin* pin = new Pin( 180, pinpos, butId+"-pinP", 0, this);
+
+        Pin* pin = new Pin( 180, QPoint(-8,-32+8+i*8 ), butId+"-pinP", 0, this, 5 );
         m_pin[index] = pin;
-        
-        pinpos = QPoint( 16,-32+8+i*8 );
-        pin = new Pin( 0, pinpos, butId+"-pinN", 0, this);
+
+        pin = new Pin( 0, QPoint( 16,-32+8+i*8 ), butId+"-pinN", 0, this, 5 );
         m_pin[index+1] = pin;
         
         m_state |= 1<<i;                          // default state = on;

@@ -6,17 +6,13 @@
 #ifndef CONNECTOR_H
 #define CONNECTOR_H
 
-#include <QObject>
-
 #include "compbase.h"
 
 class ConnectorLine;
 class Pin;
 
-class MAINMODULE_EXPORT Connector : public CompBase, public QObject
+class MAINMODULE_EXPORT Connector : public CompBase
 {
-    //Q_OBJECT /// FIXME
-
     public:
         Connector( QString type, QString id, Pin* startpin, Pin* endpin = NULL );
         ~Connector();

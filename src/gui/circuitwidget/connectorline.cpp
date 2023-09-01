@@ -13,9 +13,11 @@
 #include "circuit.h"
 #include "node.h"
 #include "utils.h"
+
+#define tr(str) simulideTr("ConnectorLine",str)
  
 ConnectorLine::ConnectorLine( int x1, int y1, int x2, int y2, Connector* connector )
-             : QGraphicsObject()
+             : QGraphicsItem()
 {
     m_pConnector = connector;
     
@@ -320,8 +322,7 @@ void ConnectorLine::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
        QMenu menu;
 
        QAction* removeAction = menu.addAction( tr("Remove") );
-       connect( removeAction, SIGNAL(triggered()),
-                       this, SLOT(remove()), Qt::UniqueConnection );
+       QObject::connect( removeAction, &QAction::triggered, [=](){ remove(); } );
 
        menu.exec(event->screenPos());
 }   }

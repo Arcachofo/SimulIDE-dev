@@ -6,13 +6,12 @@
 #ifndef CONNECTORLINE_H
 #define CONNECTORLINE_H
 
-#include <QGraphicsObject>
+#include <QGraphicsItem>
 
 class Connector;
  
-class MAINMODULE_EXPORT ConnectorLine : public QGraphicsObject
+class MAINMODULE_EXPORT ConnectorLine : public QGraphicsItem
 {
-    Q_OBJECT
     Q_INTERFACES(QGraphicsItem)
 
     public:

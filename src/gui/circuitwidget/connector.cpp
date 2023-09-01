@@ -18,7 +18,6 @@
 
 Connector::Connector( QString type, QString id, Pin* startpin, Pin* endpin )
          : CompBase( type, id )
-         , QObject( )
 {
     if( id.isEmpty() ) qDebug() << "ERROR! Connector::Connector empty Id";
 
@@ -365,8 +364,6 @@ void Connector::splitCon(int index, Pin* pin0, Pin* pin2 )
     {
         ConnectorLine* lline = m_conLineList.takeAt( index );
         new_connector->lineList()->insert( newindex, lline );
-
-        lline->setParent( new_connector );
         lline->setConnector( new_connector );
 
         if( newindex > 1 ) new_connector->incActLine();
