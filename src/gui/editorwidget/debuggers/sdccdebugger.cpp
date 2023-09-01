@@ -10,6 +10,7 @@
 #include "sdccdebugger.h"
 #include "codeeditor.h"
 #include "utils.h"
+#include "outpaneltext.h"
 
 #include "gputilsdebug.h"
 
@@ -60,13 +61,76 @@ bool SdccDebugger::postProcess()
         bool ok = GputilsDebug::getVariables( this );
         if( !ok ) return false;
         return GputilsDebug::mapFlashToSource( this );
-    }
-    else //if( m_family == "msc51" )
-    {
+    } else {
         bool ok = findCSEG();
         if( !ok ) return false;
-        return BaseDebugger::postProcess();
-}   }
+
+        m_flashToSource.clear();
+        //m_sourceToFlash.clear();
+
+        QString lstFile = m_buildPath+m_fileName+".lst";
+        if( !QFileInfo::exists( lstFile ) )
+        {
+            m_outPane->appendLine( "\n"+tr("Warning: lst file doesn't exist:")+"\n"+lstFile );
+            return false;
+        }
+        m_outPane->appendText( "\nMapping Flash to Source... " );
+        QString srcFile = m_fileDir + m_fileName + m_fileExt;
+        QStringList lstLines = fileToStringList( lstFile, "SdccDebugger::postProcess" );
+
+        int lstLineNumber = 0;
+        int srcLineNumber = 0;
+
+        QString file = m_fileName+m_fileExt;
+        bool found = false;
+        for( QString lstLine : lstLines )
+        {
+            lstLineNumber++;
+            if( lstLine.contains( file ) )
+            {
+                QString str = lstLine.split( file ).takeLast();
+                QStringList words = str.remove(":").split(" ");
+                words.removeAll("");
+                if( words.isEmpty() ) continue;
+                str = words.first();
+                bool ok = false;
+                srcLineNumber = str.toInt( &ok );
+                if( ok ) {
+                    found = true;
+                }
+            } else if( found )
+            {
+                QStringList words = lstLine.split(" ");
+                words.removeAll("");
+                if ( words.isEmpty() ) continue;
+                else if ( words.contains( ";" ) ) continue;     // comment
+                else if ( words.last().endsWith( ":" ) ) continue; // label;
+                else {  // don't have []
+                    bool hasBrackets = false;
+                    foreach (const QString& word, words) {
+                        if ( word.startsWith( '[' ) && word.endsWith( ']' ) ) {
+                            hasBrackets = true;
+                            break;
+                        }
+                    }
+                    if ( !hasBrackets ) continue;
+                }
+                found = false;
+
+                bool ok = false;
+                lstLine = words[0];
+                int address = lstLine.toInt( &ok, 16 );
+                if( ok )
+                {
+                    qDebug("%d %x", srcLineNumber, m_codeStart+address);
+                    setLineToFlash( {srcFile, srcLineNumber}, m_codeStart+address );
+                }
+            }
+        }
+        m_outPane->appendLine( QString::number( m_flashToSource.size() )+" lines mapped" );
+        return true;
+    }
+}
 
 bool SdccDebugger::findCSEG()
 {
