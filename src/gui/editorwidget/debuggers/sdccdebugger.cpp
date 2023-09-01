@@ -65,6 +65,8 @@ bool SdccDebugger::postProcess()
         bool ok = findCSEG();
         if( !ok ) return false;
 
+        m_langLevel = m_fileExt != ".asm";
+
         m_flashToSource.clear();
         //m_sourceToFlash.clear();
 
@@ -83,47 +85,121 @@ bool SdccDebugger::postProcess()
 
         QString file = m_fileName+m_fileExt;
         bool found = false;
-        for( QString lstLine : lstLines )
+
+        if( m_langLevel ) // High level language
         {
-            lstLineNumber++;
-            if( lstLine.contains( file ) )
+            for( QString lstLine : lstLines )
             {
-                QString str = lstLine.split( file ).takeLast();
-                QStringList words = str.remove(":").split(" ");
-                words.removeAll("");
-                if( words.isEmpty() ) continue;
-                str = words.first();
-                bool ok = false;
-                srcLineNumber = str.toInt( &ok );
-                if( ok ) {
-                    found = true;
+                lstLineNumber++;
+                if( lstLine.contains( file ) )
+                {
+                    QString str = lstLine.split( file ).takeLast();
+                    QStringList words = str.remove(":").split(" ");
+                    words.removeAll("");
+                    if( words.isEmpty() ) continue;
+                    str = words.first();
+                    bool ok = false;
+                    srcLineNumber = str.toInt( &ok );
+                    if( ok ) {
+                        found = true;
+                    }
+                } else if( found )
+                {
+                    QStringList words = lstLine.split(" ");
+                    words.removeAll("");
+                    if( words.isEmpty() ) continue;
+                    else if( words.contains( ";" ) ) continue;     // comment
+                    else if( words.last().endsWith( ":" ) ) continue; // label;
+                    else {  // don't have []
+                        bool hasBrackets = false;
+                        foreach( const QString& word, words ) {
+                            if( word.startsWith( '[' ) && word.endsWith( ']' ) ) {
+                                hasBrackets = true;
+                                break;
+                            }
+                        }
+                        if( !hasBrackets ) continue;
+                    }
+                    found = false;
+
+                    bool ok = false;
+                    lstLine = words[0];
+                    int address = lstLine.toInt( &ok, 16 );
+                    if( ok )
+                    {
+                        //qDebug("%d %x", srcLineNumber, m_codeStart+address);
+                        setLineToFlash( {srcFile, srcLineNumber}, m_codeStart+address );
+                    }
                 }
-            } else if( found )
+            }
+        }else // asm
+        {
+            int listFileSize = lstLines.size();
+            int lastListLine = 0;
+            QString lstLine;
+            QStringList srcLines = fileToStringList( srcFile, "BaseDebugger::postProcess" );
+            QString funcName;
+            for( QString srcLine : srcLines ) // Get Functions
             {
+                if( srcLine.startsWith(";")) continue;
+                if( !srcLine.toUpper().contains("CALL") ) continue;
+                srcLine = srcLine.replace("\t", " ");
+                QStringList l = srcLine.split(" ");
+                l.removeAll("");
+                funcName = l.last();
+                if( !funcName.isEmpty() ) m_functions[funcName.toUpper()] = -1;
+            }
+
+            bool areaCSEG = false;
+            for( QString srcLine : srcLines )
+            {
+                srcLineNumber++;
+                srcLine = srcLine.replace("\t", " ").remove(" ");
+                if( srcLine.startsWith(";")) continue;
+                if( srcLine.contains(".area") ){
+                    areaCSEG = srcLine.contains("CSEG");
+                    continue;
+                }
+                lastListLine = lstLineNumber;
+
+                while( true )
+                {
+                    if( ++lstLineNumber >= listFileSize ) break;   // End of lst file
+                    lstLine = lstLines.at( lstLineNumber-1 );
+                    lstLine = lstLine.replace("\t", " ");
+
+                    QString line = lstLine;
+                    line = line.remove(" ");
+                    if( line.contains( srcLine ) ) break;          // Line found
+                }
+                if( lstLineNumber >= listFileSize )
+                {
+                    lstLineNumber = lastListLine; /// lstLineNumber = 0;
+                    continue;
+                }
                 QStringList words = lstLine.split(" ");
                 words.removeAll("");
-                if ( words.isEmpty() ) continue;
-                else if ( words.contains( ";" ) ) continue;     // comment
-                else if ( words.last().endsWith( ":" ) ) continue; // label;
-                else {  // don't have []
-                    bool hasBrackets = false;
-                    foreach (const QString& word, words) {
-                        if ( word.startsWith( '[' ) && word.endsWith( ']' ) ) {
-                            hasBrackets = true;
-                            break;
-                        }
+
+                if( words.size() < 5 ){
+                    if( words.last().endsWith( ":" ) )                 // Find Subroutines
+                    {
+                        funcName = srcLine.left( srcLine.indexOf(":") ).toUpper();
+                        if( !m_functions.contains( funcName ) ) funcName = "";
                     }
-                    if ( !hasBrackets ) continue;
+                    continue;
                 }
-                found = false;
+                if( !lstLine.contains("[") ) continue;
 
                 bool ok = false;
-                lstLine = words[0];
-                int address = lstLine.toInt( &ok, 16 );
-                if( ok )
+                int address = words.at( 0 ).toInt( &ok, 16 ); // Avoid things like "8: E = %10000000" (vasm)
+                if( !ok ) continue;
+                if( areaCSEG ) address += m_codeStart;
+
+                m_flashToSource[ address ] = {srcFile, srcLineNumber};
+                if( !funcName.isEmpty() )                  // Subroutine starting here
                 {
-                    qDebug("%d %x", srcLineNumber, m_codeStart+address);
-                    setLineToFlash( {srcFile, srcLineNumber}, m_codeStart+address );
+                    m_functions[funcName] = address;
+                    funcName = "";
                 }
             }
         }
