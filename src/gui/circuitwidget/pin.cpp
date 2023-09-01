@@ -17,7 +17,7 @@
 #include "circuit.h"
 #include "simulator.h"
 
-Pin::Pin( int angle, const QPoint pos, QString id, int index, Component* parent )
+Pin::Pin( int angle, const QPoint pos, QString id, int index, Component* parent, int length )
    : QGraphicsItem( parent )
    , ePin( id, index )
    , m_label( parent )
@@ -69,7 +69,7 @@ Pin::Pin( int angle, const QPoint pos, QString id, int index, Component* parent 
     setConnector( NULL );
     setPos( pos );
     setRotation( 180-angle );
-    setLength(8);
+    Pin::setLength( length );
     setCursor( Qt::CrossCursor );
     setFlag( QGraphicsItem::ItemStacksBehindParent, true );
     setFlag( QGraphicsItem::ItemIsSelectable, false );

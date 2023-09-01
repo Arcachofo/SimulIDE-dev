@@ -29,7 +29,7 @@ class MAINMODULE_EXPORT Pin : public QGraphicsItem, public ePin, public Updatabl
     Q_INTERFACES(QGraphicsItem)
 
     public:
-        Pin( int angle, const QPoint pos, QString id, int index, Component* parent=0 );
+        Pin( int angle, const QPoint pos, QString id, int index, Component* parent=0, int length=8 );
         ~Pin();
 
         enum pinType_t{
@@ -45,7 +45,7 @@ class MAINMODULE_EXPORT Pin : public QGraphicsItem, public ePin, public Updatabl
 
         QString pinId() { return m_id; }
         
-        bool unused() {return m_unused; }
+        bool unused() { return m_unused; }
         void setUnused( bool unused );
 
         int length() { return m_length; }
