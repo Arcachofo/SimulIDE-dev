@@ -59,7 +59,7 @@
     <name>Aip31068_i2c</name>
     <message>
         <source>Aip31068_i2c</source>
-        <translation>AIP31068_I2C</translation>
+        <translation type="vanished">AIP31068_I2C</translation>
     </message>
     <message>
         <source>Displays</source>
@@ -92,6 +92,17 @@
     <message>
         <source>_Columns</source>
         <translation type="vanished">_Столбцов</translation>
+    </message>
+    <message>
+        <source>Aip31068 I2C</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Amperimeter</name>
+    <message>
+        <source>Ampmeter</source>
+        <translation type="unfinished">Амперметр</translation>
     </message>
 </context>
 <context>
@@ -517,7 +528,7 @@ p, li { white-space: pre-wrap; }
     <name>BinCounter</name>
     <message>
         <source>Counter</source>
-        <translation>Счётчик</translation>
+        <translation type="vanished">Счётчик</translation>
     </message>
     <message>
         <source>Logic/Arithmetic</source>
@@ -554,6 +565,10 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Arithmetic</source>
         <translation type="obsolete">Арифметика</translation>
+    </message>
+    <message>
+        <source>Binary Counter</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -786,11 +801,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Power Circuit</source>
-        <translation>Запустить симуляцию</translation>
+        <translation type="vanished">Запустить симуляцию</translation>
     </message>
     <message>
         <source>Power the Circuit</source>
-        <translation>Запустить симуляцию</translation>
+        <translation type="vanished">Запустить симуляцию</translation>
     </message>
     <message>
         <source>Pause Simulation</source>
@@ -921,6 +936,18 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Running</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Start Simulation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Stop Simulation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Resume Simulation</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2263,7 +2290,7 @@ Can&apos;t find file:
     <name>FlipFlopD</name>
     <message>
         <source>FlipFlop D</source>
-        <translation>D-триггер</translation>
+        <translation type="vanished">D-триггер</translation>
     </message>
     <message>
         <source>Logic/Memory</source>
@@ -2278,7 +2305,7 @@ Can&apos;t find file:
     <name>FlipFlopJK</name>
     <message>
         <source>FlipFlop JK</source>
-        <translation>JK-триггер</translation>
+        <translation type="vanished">JK-триггер</translation>
     </message>
     <message>
         <source>Logic/Memory</source>
@@ -2293,7 +2320,7 @@ Can&apos;t find file:
     <name>FlipFlopRS</name>
     <message>
         <source>FlipFlop RS</source>
-        <translation>RS-триггер</translation>
+        <translation type="vanished">RS-триггер</translation>
     </message>
     <message>
         <source>Logic/Memory</source>
@@ -2312,7 +2339,7 @@ Can&apos;t find file:
     <name>FlipFlopT</name>
     <message>
         <source>FlipFlop T</source>
-        <translation>T-триггер</translation>
+        <translation type="vanished">T-триггер</translation>
     </message>
     <message>
         <source>Logic/Memory</source>
@@ -2327,7 +2354,7 @@ Can&apos;t find file:
     <name>FreqMeter</name>
     <message>
         <source>FreqMeter</source>
-        <translation>Частотомер</translation>
+        <translation type="vanished">Частотомер</translation>
     </message>
     <message>
         <source>Meters</source>
@@ -2341,12 +2368,16 @@ Can&apos;t find file:
         <source>Filter</source>
         <translation>Фильтр</translation>
     </message>
+    <message>
+        <source>Frequency Meter</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FullAdder</name>
     <message>
         <source>Full Adder</source>
-        <translation>Сумматор</translation>
+        <translation type="vanished">Сумматор</translation>
     </message>
     <message>
         <source>Logic/Arithmetic</source>
@@ -2452,7 +2483,7 @@ Can&apos;t find file:
     <name>Hd44780</name>
     <message>
         <source>Hd44780</source>
-        <translation>HD44780</translation>
+        <translation type="vanished">HD44780</translation>
     </message>
     <message>
         <source>Displays</source>
@@ -3277,7 +3308,7 @@ Can&apos;t find file:
     <name>Lm555</name>
     <message>
         <source>lm555</source>
-        <translation>LM555</translation>
+        <translation type="vanished">LM555</translation>
     </message>
     <message>
         <source>Logic/Other Logic</source>
@@ -3422,7 +3453,7 @@ Can&apos;t find file:
     <name>Max72xx_matrix</name>
     <message>
         <source>Max72xx_matrix</source>
-        <translation>Max72xx матрица</translation>
+        <translation type="vanished">Max72xx матрица</translation>
     </message>
     <message>
         <source>Leds</source>
@@ -3467,6 +3498,10 @@ Can&apos;t find file:
     <message>
         <source>White</source>
         <translation type="unfinished">Белый</translation>
+    </message>
+    <message>
+        <source>Max72xx matrix</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3603,17 +3638,17 @@ Can&apos;t find file:
     <name>MemData</name>
     <message>
         <source>Save Data</source>
-        <translation>Сохранить данные</translation>
+        <translation type="vanished">Сохранить данные</translation>
     </message>
     <message>
         <source>Cannot write file %1:
 %2.</source>
-        <translation>Не удаётся записать файл %1:
+        <translation type="vanished">Не удаётся записать файл %1:
 %2.</translation>
     </message>
     <message>
         <source>All files (*.*);;.data (*.data);;.bin (*.bin)</source>
-        <translation>Все файлы (*.*);;.data (*.data);;.bin (*.bin)</translation>
+        <translation type="vanished">Все файлы (*.*);;.data (*.data);;.bin (*.bin)</translation>
     </message>
 </context>
 <context>
@@ -3621,6 +3656,14 @@ Can&apos;t find file:
     <message>
         <source>Form</source>
         <translation>Форма</translation>
+    </message>
+    <message>
+        <source>Save Data</source>
+        <translation type="unfinished">Сохранить данные</translation>
+    </message>
+    <message>
+        <source>Load Data</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3697,11 +3740,11 @@ Can&apos;t find file:
     <name>Meters</name>
     <message>
         <source>Ampmeter</source>
-        <translation type="unfinished">Амперметр</translation>
+        <translation type="obsolete">Амперметр</translation>
     </message>
     <message>
         <source>Voltmeter</source>
-        <translation type="unfinished">Вольтметр</translation>
+        <translation type="obsolete">Вольтметр</translation>
     </message>
 </context>
 <context>
@@ -4813,7 +4856,7 @@ Not valid Package file:
     </message>
     <message>
         <source>Peripherals</source>
-        <translation>Периферия</translation>
+        <translation type="vanished">Периферия</translation>
     </message>
     <message>
         <source>Port Name</source>
@@ -4839,12 +4882,20 @@ Not valid Package file:
         <source>Open</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Serial Port</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Main</source>
+        <translation type="unfinished">Основные</translation>
+    </message>
 </context>
 <context>
     <name>Servo</name>
     <message>
         <source>Servo</source>
-        <translation>Сервопривод</translation>
+        <translation type="vanished">Сервопривод</translation>
     </message>
     <message>
         <source>Motors</source>
@@ -4877,6 +4928,10 @@ Not valid Package file:
     <message>
         <source>Max. Pulse Width</source>
         <translation>Макс. ширина импульса</translation>
+    </message>
+    <message>
+        <source>Servo Motor</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4934,7 +4989,7 @@ Not valid Package file:
     <name>SevenSegmentBCD</name>
     <message>
         <source>7 Seg BCD</source>
-        <translation>7-сегментный декодер</translation>
+        <translation type="vanished">7-сегментный декодер</translation>
     </message>
     <message>
         <source>Logic/Other Logic</source>
@@ -4991,7 +5046,7 @@ Not valid Package file:
     <name>ShiftReg</name>
     <message>
         <source>Shift Reg.</source>
-        <translation>Регистр сдвига</translation>
+        <translation type="vanished">Регистр сдвига</translation>
     </message>
     <message>
         <source>Logic/Arithmetic</source>
@@ -5020,6 +5075,10 @@ Not valid Package file:
     <message>
         <source>Arithmetic</source>
         <translation type="obsolete">Арифметика</translation>
+    </message>
+    <message>
+        <source>Shift Register</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5184,7 +5243,7 @@ Not valid Package file:
     <name>SubCircuit</name>
     <message>
         <source>Subcircuit</source>
-        <translation>Подсхема</translation>
+        <translation type="vanished">Подсхема</translation>
     </message>
     <message>
         <source>There are no data files for </source>
@@ -5247,7 +5306,7 @@ Not valid Package file:
     <name>SubPackage</name>
     <message>
         <source>Package</source>
-        <translation>Корпус</translation>
+        <translation type="vanished">Корпус</translation>
     </message>
     <message>
         <source>Other</source>
@@ -5749,6 +5808,13 @@ Do you want to save your changes?
     </message>
 </context>
 <context>
+    <name>Voltimeter</name>
+    <message>
+        <source>Voltmeter</source>
+        <translation type="unfinished">Вольтметр</translation>
+    </message>
+</context>
+<context>
     <name>WS2812</name>
     <message>
         <source>WS2812 Led</source>
@@ -5916,7 +5982,7 @@ Do you want to save your changes?
     <name>Zener</name>
     <message>
         <source>Zener Diode</source>
-        <translation>Стабилитрон</translation>
+        <translation type="vanished">Стабилитрон</translation>
     </message>
     <message>
         <source>Rectifiers</source>

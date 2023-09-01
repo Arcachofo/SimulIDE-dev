@@ -16,7 +16,7 @@
 #include "boolprop.h"
 #include "intprop.h"
 
-#define tr(str) simulideTr("Seven Segment",str)
+#define tr(str) simulideTr("SevenSegment",str)
 
 Component* SevenSegment::construct( QString type, QString id )
 { return new SevenSegment( type, id ); }

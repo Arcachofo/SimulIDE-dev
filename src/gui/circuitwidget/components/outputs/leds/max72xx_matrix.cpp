@@ -14,7 +14,7 @@
 #include "stringprop.h"
 #include "intprop.h"
 
-#define tr(str) simulideTr("Max72xx matrix",str)
+#define tr(str) simulideTr("Max72xx_matrix",str)
 
 Component* Max72xx_matrix::construct( QString type, QString id )
 { return new Max72xx_matrix( type, id ); }
@@ -22,7 +22,7 @@ Component* Max72xx_matrix::construct( QString type, QString id )
 LibraryItem* Max72xx_matrix::libraryItem()
 {
     return new LibraryItem(
-        tr( "Max72xx matrix" ),
+        tr("Max72xx matrix"),
         "Leds",
         "max72xx.png",
         "Max72xx_matrix",

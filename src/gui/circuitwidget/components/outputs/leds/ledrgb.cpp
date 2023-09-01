@@ -15,7 +15,7 @@
 #include "boolprop.h"
 #include "doubleprop.h"
 
-#define tr(str) simulideTr("Led RGB",str)
+#define tr(str) simulideTr("LedRgb",str)
 
 Component* LedRgb::construct( QString type, QString id )
 { return new LedRgb( type, id ); }

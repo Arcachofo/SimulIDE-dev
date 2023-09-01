@@ -13,7 +13,7 @@
 
 #include "boolprop.h"
 
-#define tr(str) simulideTr("KS108",str)
+#define tr(str) simulideTr("Ks0108",str)
 
 Component* Ks0108::construct( QString type, QString id )
 { return new Ks0108( type, id ); }

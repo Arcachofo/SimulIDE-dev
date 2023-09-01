@@ -11,7 +11,7 @@
 #include "intprop.h"
 #include "boolprop.h"
 
-#define tr(str) simulideTr("Counter",str)
+#define tr(str) simulideTr("BinCounter",str)
 
 Component *BinCounter::construct( QString type, QString id)
 { return new BinCounter( type, id); }

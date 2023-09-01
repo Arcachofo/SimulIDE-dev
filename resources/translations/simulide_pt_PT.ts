@@ -58,10 +58,6 @@
 <context>
     <name>Aip31068_i2c</name>
     <message>
-        <source>Aip31068_i2c</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Main</source>
         <translation type="unfinished"></translation>
     </message>
@@ -79,6 +75,17 @@
     </message>
     <message>
         <source>I2C Frequency</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Aip31068 I2C</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Amperimeter</name>
+    <message>
+        <source>Ampmeter</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -453,7 +460,7 @@ p, li { white-space: pre-wrap; }
     <name>BinCounter</name>
     <message>
         <source>Counter</source>
-        <translation type="unfinished">Contador</translation>
+        <translation type="obsolete">Contador</translation>
     </message>
     <message>
         <source>Logic/Arithmetic</source>
@@ -490,6 +497,10 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Arithmetic</source>
         <translation type="obsolete">Aritméticos</translation>
+    </message>
+    <message>
+        <source>Binary Counter</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -706,11 +717,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Power Circuit</source>
-        <translation type="unfinished">Ativar circuito</translation>
+        <translation type="obsolete">Ativar circuito</translation>
     </message>
     <message>
         <source>Power the Circuit</source>
-        <translation type="unfinished">Ativa o circuito</translation>
+        <translation type="obsolete">Ativa o circuito</translation>
     </message>
     <message>
         <source>Pause Simulation</source>
@@ -827,6 +838,18 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Running</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Start Simulation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Stop Simulation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Resume Simulation</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2102,7 +2125,7 @@ Can&apos;t find file:
     <name>FlipFlopD</name>
     <message>
         <source>FlipFlop D</source>
-        <translation type="unfinished">Flip-flop D</translation>
+        <translation type="obsolete">Flip-flop D</translation>
     </message>
     <message>
         <source>Logic/Memory</source>
@@ -2117,7 +2140,7 @@ Can&apos;t find file:
     <name>FlipFlopJK</name>
     <message>
         <source>FlipFlop JK</source>
-        <translation type="unfinished">Flip-flop JK</translation>
+        <translation type="obsolete">Flip-flop JK</translation>
     </message>
     <message>
         <source>Logic/Memory</source>
@@ -2131,10 +2154,6 @@ Can&apos;t find file:
 <context>
     <name>FlipFlopRS</name>
     <message>
-        <source>FlipFlop RS</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Logic/Memory</source>
         <translation type="obsolete">Lógicos/Memórias</translation>
     </message>
@@ -2145,10 +2164,6 @@ Can&apos;t find file:
 </context>
 <context>
     <name>FlipFlopT</name>
-    <message>
-        <source>FlipFlop T</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>Logic/Memory</source>
         <translation type="obsolete">Lógicos/Memórias</translation>
@@ -2161,10 +2176,6 @@ Can&apos;t find file:
 <context>
     <name>FreqMeter</name>
     <message>
-        <source>FreqMeter</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Meters</source>
         <translation type="obsolete">Medidores</translation>
     </message>
@@ -2176,12 +2187,16 @@ Can&apos;t find file:
         <source>Filter</source>
         <translation type="unfinished">Filtro</translation>
     </message>
+    <message>
+        <source>Frequency Meter</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FullAdder</name>
     <message>
         <source>Full Adder</source>
-        <translation type="unfinished">Somador completo</translation>
+        <translation type="obsolete">Somador completo</translation>
     </message>
     <message>
         <source>Logic/Arithmetic</source>
@@ -2283,7 +2298,7 @@ Can&apos;t find file:
     <name>Hd44780</name>
     <message>
         <source>Hd44780</source>
-        <translation type="unfinished">HD44780</translation>
+        <translation type="obsolete">HD44780</translation>
     </message>
     <message>
         <source>Main</source>
@@ -3028,7 +3043,7 @@ Can&apos;t find file:
     <name>Lm555</name>
     <message>
         <source>lm555</source>
-        <translation type="unfinished">LM555</translation>
+        <translation type="obsolete">LM555</translation>
     </message>
     <message>
         <source>Logic/Other Logic</source>
@@ -3167,10 +3182,6 @@ Can&apos;t find file:
 <context>
     <name>Max72xx_matrix</name>
     <message>
-        <source>Max72xx_matrix</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Main</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3208,6 +3219,10 @@ Can&apos;t find file:
     </message>
     <message>
         <source>White</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Max72xx matrix</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3341,23 +3356,27 @@ Can&apos;t find file:
     <name>MemData</name>
     <message>
         <source>Save Data</source>
-        <translation>Guardar dados</translation>
+        <translation type="vanished">Guardar dados</translation>
     </message>
     <message>
         <source>Cannot write file %1:
 %2.</source>
-        <translation>Não foi possível guardar o ficheiro %1:
+        <translation type="vanished">Não foi possível guardar o ficheiro %1:
 %2.</translation>
-    </message>
-    <message>
-        <source>All files (*.*);;.data (*.data);;.bin (*.bin)</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>MemTable</name>
     <message>
         <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save Data</source>
+        <translation type="unfinished">Guardar dados</translation>
+    </message>
+    <message>
+        <source>Load Data</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3414,17 +3433,6 @@ Can&apos;t find file:
     <message>
         <source>Memory</source>
         <translation type="obsolete">Memórias</translation>
-    </message>
-</context>
-<context>
-    <name>Meters</name>
-    <message>
-        <source>Ampmeter</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Voltmeter</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4332,10 +4340,6 @@ p, li { white-space: pre-wrap; }
 %2.</translation>
     </message>
     <message>
-        <source>Peripherals</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Port Name</source>
         <translation type="unfinished">Nome da porta</translation>
     </message>
@@ -4359,12 +4363,20 @@ p, li { white-space: pre-wrap; }
         <source>Open</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Serial Port</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Main</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Servo</name>
     <message>
         <source>Servo</source>
-        <translation type="unfinished">Servo</translation>
+        <translation type="obsolete">Servo</translation>
     </message>
     <message>
         <source>Main</source>
@@ -4392,6 +4404,10 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Max. Pulse Width</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Servo Motor</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4442,7 +4458,7 @@ p, li { white-space: pre-wrap; }
     <name>SevenSegmentBCD</name>
     <message>
         <source>7 Seg BCD</source>
-        <translation type="unfinished">7 segmentos BCD</translation>
+        <translation type="obsolete">7 segmentos BCD</translation>
     </message>
     <message>
         <source>Logic/Other Logic</source>
@@ -4499,7 +4515,7 @@ p, li { white-space: pre-wrap; }
     <name>ShiftReg</name>
     <message>
         <source>Shift Reg.</source>
-        <translation type="unfinished">Registador de deslocamento</translation>
+        <translation type="obsolete">Registador de deslocamento</translation>
     </message>
     <message>
         <source>Logic/Arithmetic</source>
@@ -4528,6 +4544,10 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Arithmetic</source>
         <translation type="obsolete">Aritméticos</translation>
+    </message>
+    <message>
+        <source>Shift Register</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4676,7 +4696,7 @@ p, li { white-space: pre-wrap; }
     <name>SubCircuit</name>
     <message>
         <source>Subcircuit</source>
-        <translation type="unfinished">Subcircuito</translation>
+        <translation type="obsolete">Subcircuito</translation>
     </message>
     <message>
         <source>There are no data files for </source>
@@ -4695,7 +4715,7 @@ p, li { white-space: pre-wrap; }
     <name>SubPackage</name>
     <message>
         <source>Package</source>
-        <translation type="unfinished">Pacote</translation>
+        <translation type="obsolete">Pacote</translation>
     </message>
     <message>
         <source>Other</source>
@@ -5134,6 +5154,13 @@ Deseja guardar as alterações?
     </message>
 </context>
 <context>
+    <name>Voltimeter</name>
+    <message>
+        <source>Voltmeter</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>WS2812</name>
     <message>
         <source>WS2812 Led</source>
@@ -5275,13 +5302,6 @@ Deseja guardar as alterações?
     <message>
         <source>Invert Inputs</source>
         <translation type="unfinished">Inverter entradas</translation>
-    </message>
-</context>
-<context>
-    <name>Zener</name>
-    <message>
-        <source>Zener Diode</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

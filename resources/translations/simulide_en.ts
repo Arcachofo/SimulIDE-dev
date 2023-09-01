@@ -50,10 +50,6 @@
 <context>
     <name>Aip31068_i2c</name>
     <message>
-        <source>Aip31068_i2c</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Main</source>
         <translation type="unfinished"></translation>
     </message>
@@ -71,6 +67,17 @@
     </message>
     <message>
         <source>I2C Frequency</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Aip31068 I2C</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Amperimeter</name>
+    <message>
+        <source>Ampmeter</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -412,10 +419,6 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>BinCounter</name>
     <message>
-        <source>Counter</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Main</source>
         <translation type="unfinished"></translation>
     </message>
@@ -441,6 +444,10 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Edges</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Binary Counter</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -628,14 +635,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Power Circuit</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Power the Circuit</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Pause Simulation</source>
         <translation type="unfinished"></translation>
     </message>
@@ -739,6 +738,18 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Running</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Start Simulation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Stop Simulation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Resume Simulation</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1919,39 +1930,7 @@ Can&apos;t find file:
     </message>
 </context>
 <context>
-    <name>FlipFlopD</name>
-    <message>
-        <source>FlipFlop D</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>FlipFlopJK</name>
-    <message>
-        <source>FlipFlop JK</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>FlipFlopRS</name>
-    <message>
-        <source>FlipFlop RS</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>FlipFlopT</name>
-    <message>
-        <source>FlipFlop T</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>FreqMeter</name>
-    <message>
-        <source>FreqMeter</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>Main</source>
         <translation type="unfinished"></translation>
@@ -1960,13 +1939,13 @@ Can&apos;t find file:
         <source>Filter</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Frequency Meter</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FullAdder</name>
-    <message>
-        <source>Full Adder</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>Electric</source>
         <translation type="unfinished"></translation>
@@ -2048,10 +2027,6 @@ Can&apos;t find file:
 </context>
 <context>
     <name>Hd44780</name>
-    <message>
-        <source>Hd44780</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>Main</source>
         <translation type="unfinished"></translation>
@@ -2752,13 +2727,6 @@ Can&apos;t find file:
     </message>
 </context>
 <context>
-    <name>Lm555</name>
-    <message>
-        <source>lm555</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>LogicComponent</name>
     <message>
         <source>None</source>
@@ -2882,10 +2850,6 @@ Can&apos;t find file:
 <context>
     <name>Max72xx_matrix</name>
     <message>
-        <source>Max72xx_matrix</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Main</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2923,6 +2887,10 @@ Can&apos;t find file:
     </message>
     <message>
         <source>White</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Max72xx matrix</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3041,25 +3009,17 @@ Can&apos;t find file:
     </message>
 </context>
 <context>
-    <name>MemData</name>
+    <name>MemTable</name>
+    <message>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message>
         <source>Save Data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cannot write file %1:
-%2.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>All files (*.*);;.data (*.data);;.bin (*.bin)</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>MemTable</name>
-    <message>
-        <source>Form</source>
+        <source>Load Data</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3107,17 +3067,6 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Asynchronous</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>Meters</name>
-    <message>
-        <source>Ampmeter</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Voltmeter</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3899,10 +3848,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Peripherals</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Port Name</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3926,13 +3871,17 @@ p, li { white-space: pre-wrap; }
         <source>Open</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Serial Port</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Main</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Servo</name>
-    <message>
-        <source>Servo</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>Main</source>
         <translation type="unfinished"></translation>
@@ -3959,6 +3908,10 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Max. Pulse Width</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Servo Motor</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4002,13 +3955,6 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Resistance</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>SevenSegmentBCD</name>
-    <message>
-        <source>7 Seg BCD</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4057,10 +4003,6 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>ShiftReg</name>
     <message>
-        <source>Shift Reg.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Main</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4078,6 +4020,10 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Edges</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Shift Register</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4222,10 +4168,6 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>SubCircuit</name>
     <message>
-        <source>Subcircuit</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Main</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4236,10 +4178,6 @@ p, li { white-space: pre-wrap; }
 </context>
 <context>
     <name>SubPackage</name>
-    <message>
-        <source>Package</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>Board Mode</source>
         <translation type="unfinished"></translation>
@@ -4645,6 +4583,13 @@ Do you want to save your changes?
     </message>
 </context>
 <context>
+    <name>Voltimeter</name>
+    <message>
+        <source>Voltmeter</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>WS2812</name>
     <message>
         <source>WS2812 Led</source>
@@ -4773,13 +4718,6 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Invert Inputs</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>Zener</name>
-    <message>
-        <source>Zener Diode</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

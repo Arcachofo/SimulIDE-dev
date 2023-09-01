@@ -6,13 +6,15 @@
 #include "ampmeter.h"
 #include "itemlibrary.h"
 
+#define tr(str) simulideTr("Amperimeter",str)
+
 Component* Amperimeter::construct( QString type, QString id )
 { return new Amperimeter( type, id ); }
 
 LibraryItem* Amperimeter::libraryItem()
 {
     return new LibraryItem(
-        simulideTr("Meters","Ampmeter"),
+        tr("Ampmeter"),
         "Meters",
         "amperimeter.png",
         "Amperimeter",

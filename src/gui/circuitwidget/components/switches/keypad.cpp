@@ -13,7 +13,7 @@
 #include "stringprop.h"
 #include "intprop.h"
 
-#define tr(str) simulideTr("Keypad",str)
+#define tr(str) simulideTr("KeyPad",str)
 
 Component* KeyPad::construct( QString type, QString id )
 { return new KeyPad( type, id ); }

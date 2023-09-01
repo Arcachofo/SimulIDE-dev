@@ -15,7 +15,7 @@
 #include "doubleprop.h"
 #include "intprop.h"
 
-#define tr(str) simulideTr("Dc Motor",str)
+#define tr(str) simulideTr("DcMotor",str)
 
 Component* DcMotor::construct( QString type, QString id )
 { return new DcMotor( type, id ); }

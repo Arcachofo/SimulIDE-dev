@@ -14,7 +14,7 @@
 #include "stringprop.h"
 #include "boolprop.h"
 
-#define tr(str) simulideTr("Led",str)
+#define tr(str) simulideTr("LedBase",str)
 
 eNode LedBase::m_gndEnode("");
 

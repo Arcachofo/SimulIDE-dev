@@ -10,7 +10,7 @@
 
 #include "boolprop.h"
 
-#define tr(str) simulideTr("Gate",str)
+#define tr(str) simulideTr("XorGate",str)
 
 Component* XorGate::construct( QString type, QString id )
 { return new XorGate( type, id ); }

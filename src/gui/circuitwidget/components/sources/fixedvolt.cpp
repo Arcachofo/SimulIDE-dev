@@ -15,7 +15,7 @@
 #include "doubleprop.h"
 #include "boolprop.h"
 
-#define tr(str) simulideTr("Fixed Voltage",str)
+#define tr(str) simulideTr("FixedVolt",str)
 
 Component* FixedVolt::construct( QString type, QString id )
 { return new FixedVolt( type, id ); }

@@ -19,6 +19,8 @@
 #include "e-diode.h"
 #include "linkable.h"
 
+#define tr(str) QCoreApplication::translate("CircuitView",str)
+
 CircuitView*  CircuitView::m_pSelf = NULL;
 
 CircuitView::CircuitView( QWidget *parent )

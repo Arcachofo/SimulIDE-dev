@@ -16,7 +16,7 @@
 #include "boolprop.h"
 #include "intprop.h"
 
-#define tr(str) simulideTr("Led Matrix",str)
+#define tr(str) simulideTr("LedMatrix",str)
 
 Component* LedMatrix::construct( QString type, QString id )
 { return new LedMatrix( type, id ); }

@@ -11,7 +11,7 @@
 #include "intprop.h"
 #include "boolprop.h"
 
-#define tr(str) simulideTr("Gate",str)
+#define tr(str) simulideTr("OrGate",str)
 
 Component* OrGate::construct( QString type, QString id )
 { return new OrGate( type, id ); }

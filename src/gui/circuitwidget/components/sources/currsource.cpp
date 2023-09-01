@@ -12,7 +12,7 @@
 
 #include "doubleprop.h"
 
-#define tr(str) simulideTr("Current Source",str)
+#define tr(str) simulideTr("CurrSource",str)
 
 Component* CurrSource::construct( QString type, QString id )
 { return new CurrSource( type, id ); }

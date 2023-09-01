@@ -12,7 +12,7 @@
 
 #include "doubleprop.h"
 
-#define tr(str) simulideTr("Voltage Source",str)
+#define tr(str) simulideTr("VoltSource",str)
 
 Component* VoltSource::construct( QString type, QString id )
 { return new VoltSource( type, id ); }

@@ -18,7 +18,7 @@
 #include "doubleprop.h"
 #include "boolprop.h"
 
-#define tr(str) simulideTr("opAmp",str)
+#define tr(str) simulideTr("OpAmp",str)
 
 Component* OpAmp::construct( QString type, QString id )
 { return new OpAmp( type, id ); }

@@ -7,13 +7,15 @@
 #include "itemlibrary.h"
 #include "e-pin.h"
 
+#define tr(str) simulideTr("Voltimeter",str)
+
 Component* Voltimeter::construct( QString type, QString id )
 { return new Voltimeter( type, id ); }
 
 LibraryItem* Voltimeter::libraryItem()
 {
     return new LibraryItem(
-        simulideTr("Meters","Voltmeter"),
+        tr("Voltmeter"),
         "Meters",
         "voltimeter.png",
         "Voltimeter",

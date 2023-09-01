@@ -15,7 +15,7 @@
 
 #include "doubleprop.h"
 
-#define tr(str) simulideTr("Servo Motor",str)
+#define tr(str) simulideTr("Servo",str)
 
 Component* Servo::construct( QString type, QString id )
 { return new Servo( type, id ); }

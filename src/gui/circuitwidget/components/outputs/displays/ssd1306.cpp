@@ -15,7 +15,7 @@
 #include "stringprop.h"
 #include "intprop.h"
 
-#define tr(str) simulideTr("SSD1306",str)
+#define tr(str) simulideTr("Ssd1306",str)
 
 Component* Ssd1306::construct( QString type, QString id )
 { return new Ssd1306( type, id ); }

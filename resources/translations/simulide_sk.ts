@@ -82,8 +82,15 @@
         <translation type="vanished">_Stĺpce</translation>
     </message>
     <message>
-        <source>Aip31068_i2c</source>
+        <source>Aip31068 I2C</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Amperimeter</name>
+    <message>
+        <source>Ampmeter</source>
+        <translation type="unfinished">Ampérmeter</translation>
     </message>
 </context>
 <context>
@@ -467,7 +474,7 @@ p, li { white-space: pre-wrap; }
     <name>BinCounter</name>
     <message>
         <source>Counter</source>
-        <translation>Počítadlo</translation>
+        <translation type="vanished">Počítadlo</translation>
     </message>
     <message>
         <source>Main</source>
@@ -496,6 +503,10 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Edges</source>
         <translation>Hrany</translation>
+    </message>
+    <message>
+        <source>Binary Counter</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -712,11 +723,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Power Circuit</source>
-        <translation>Simulovať</translation>
+        <translation type="vanished">Simulovať</translation>
     </message>
     <message>
         <source>Power the Circuit</source>
-        <translation>Napájane obvodu</translation>
+        <translation type="vanished">Napájane obvodu</translation>
     </message>
     <message>
         <source>Pause Simulation</source>
@@ -848,6 +859,18 @@ Nemožno nájsť súbor:
     </message>
     <message>
         <source>&amp;%1 %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Start Simulation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Stop Simulation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Resume Simulation</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2091,35 +2114,35 @@ Súbor nemožno nájsť:
     <name>FlipFlopD</name>
     <message>
         <source>FlipFlop D</source>
-        <translation>Klopný obvod D</translation>
+        <translation type="vanished">Klopný obvod D</translation>
     </message>
 </context>
 <context>
     <name>FlipFlopJK</name>
     <message>
         <source>FlipFlop JK</source>
-        <translation>Klopný obvod JK</translation>
+        <translation type="vanished">Klopný obvod JK</translation>
     </message>
 </context>
 <context>
     <name>FlipFlopRS</name>
     <message>
         <source>FlipFlop RS</source>
-        <translation>Klopný obvod RS</translation>
+        <translation type="vanished">Klopný obvod RS</translation>
     </message>
 </context>
 <context>
     <name>FlipFlopT</name>
     <message>
         <source>FlipFlop T</source>
-        <translation>Klopný obvod T</translation>
+        <translation type="vanished">Klopný obvod T</translation>
     </message>
 </context>
 <context>
     <name>FreqMeter</name>
     <message>
         <source>FreqMeter</source>
-        <translation>Frekvenciometer</translation>
+        <translation type="vanished">Frekvenciometer</translation>
     </message>
     <message>
         <source>Main</source>
@@ -2129,12 +2152,16 @@ Súbor nemožno nájsť:
         <source>Filter</source>
         <translation>Filter</translation>
     </message>
+    <message>
+        <source>Frequency Meter</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FullAdder</name>
     <message>
         <source>Full Adder</source>
-        <translation>Úplná sčítačka</translation>
+        <translation type="vanished">Úplná sčítačka</translation>
     </message>
     <message>
         <source>Electric</source>
@@ -2245,10 +2272,6 @@ Súbor nemožno nájsť:
     <message>
         <source>_Columns</source>
         <translation type="vanished">_stĺpcov</translation>
-    </message>
-    <message>
-        <source>Hd44780</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2985,13 +3008,6 @@ Súbor nemožno nájsť:
     </message>
 </context>
 <context>
-    <name>Lm555</name>
-    <message>
-        <source>lm555</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>LogicComponent</name>
     <message>
         <source>None</source>
@@ -3117,7 +3133,7 @@ Súbor nemožno nájsť:
     <name>Max72xx_matrix</name>
     <message>
         <source>Max72xx_matrix</source>
-        <translation>MAX72XX matica</translation>
+        <translation type="vanished">MAX72XX matica</translation>
     </message>
     <message>
         <source>Main</source>
@@ -3158,6 +3174,10 @@ Súbor nemožno nájsť:
     <message>
         <source>Color</source>
         <translation type="unfinished">Farba</translation>
+    </message>
+    <message>
+        <source>Max72xx matrix</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3294,23 +3314,31 @@ Súbor nemožno nájsť:
     <name>MemData</name>
     <message>
         <source>Save Data</source>
-        <translation>Uložiť dáta</translation>
+        <translation type="vanished">Uložiť dáta</translation>
     </message>
     <message>
         <source>Cannot write file %1:
 %2.</source>
-        <translation>Nemožno zapísať súbor: %1
+        <translation type="vanished">Nemožno zapísať súbor: %1
 %2.</translation>
     </message>
     <message>
         <source>All files (*.*);;.data (*.data);;.bin (*.bin)</source>
-        <translation>Všetky súbory (*.*);;.data (*.data);;.bin (*.bin)</translation>
+        <translation type="vanished">Všetky súbory (*.*);;.data (*.data);;.bin (*.bin)</translation>
     </message>
 </context>
 <context>
     <name>MemTable</name>
     <message>
         <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save Data</source>
+        <translation type="unfinished">Uložiť dáta</translation>
+    </message>
+    <message>
+        <source>Load Data</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3380,11 +3408,11 @@ Súbor nemožno nájsť:
     <name>Meters</name>
     <message>
         <source>Ampmeter</source>
-        <translation type="unfinished">Ampérmeter</translation>
+        <translation type="obsolete">Ampérmeter</translation>
     </message>
     <message>
         <source>Voltmeter</source>
-        <translation type="unfinished">Voltmeter</translation>
+        <translation type="obsolete">Voltmeter</translation>
     </message>
 </context>
 <context>
@@ -3777,7 +3805,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Peripherals</source>
-        <translation type="vanished">Periférie</translation>
+        <translation>Periférie</translation>
     </message>
     <message>
         <source>Ampmeter</source>
@@ -4037,10 +4065,6 @@ Neplatný súbor balíka:
     </message>
     <message>
         <source>Other Outputs</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Peripherals</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4430,22 +4454,22 @@ Neplatný súbor balíka:
     </message>
     <message>
         <source>Serial Port</source>
-        <translation type="vanished">Sériový port</translation>
+        <translation>Sériový port</translation>
     </message>
     <message>
         <source>Open</source>
         <translation>Otvoriť</translation>
     </message>
     <message>
-        <source>Peripherals</source>
-        <translation type="unfinished"></translation>
+        <source>Main</source>
+        <translation type="unfinished">Základné</translation>
     </message>
 </context>
 <context>
     <name>Servo</name>
     <message>
         <source>Servo</source>
-        <translation>Servomotor</translation>
+        <translation type="vanished">Servomotor</translation>
     </message>
     <message>
         <source>Main</source>
@@ -4473,6 +4497,10 @@ Neplatný súbor balíka:
     </message>
     <message>
         <source>Max. Pulse Width</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Servo Motor</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4527,7 +4555,7 @@ Neplatný súbor balíka:
     <name>SevenSegmentBCD</name>
     <message>
         <source>7 Seg BCD</source>
-        <translation>7 Seg. BCD</translation>
+        <translation type="vanished">7 Seg. BCD</translation>
     </message>
 </context>
 <context>
@@ -4576,7 +4604,7 @@ Neplatný súbor balíka:
     <name>ShiftReg</name>
     <message>
         <source>Shift Reg.</source>
-        <translation>Posúvny register</translation>
+        <translation type="vanished">Posúvny register</translation>
     </message>
     <message>
         <source>Main</source>
@@ -4597,6 +4625,10 @@ Neplatný súbor balíka:
     <message>
         <source>Edges</source>
         <translation>Hrany</translation>
+    </message>
+    <message>
+        <source>Shift Register</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4749,7 +4781,7 @@ Neplatný súbor balíka:
     <name>SubCircuit</name>
     <message>
         <source>Subcircuit</source>
-        <translation>Podobvod</translation>
+        <translation type="vanished">Podobvod</translation>
     </message>
     <message>
         <source>Main</source>
@@ -4772,7 +4804,7 @@ Neplatný súbor balíka:
     <name>SubPackage</name>
     <message>
         <source>Package</source>
-        <translation>Puzdro</translation>
+        <translation type="vanished">Puzdro</translation>
     </message>
     <message>
         <source>Board Mode</source>
@@ -5215,6 +5247,13 @@ Chcete uložiť zmeny?
     </message>
 </context>
 <context>
+    <name>Voltimeter</name>
+    <message>
+        <source>Voltmeter</source>
+        <translation type="unfinished">Voltmeter</translation>
+    </message>
+</context>
+<context>
     <name>WS2812</name>
     <message>
         <source>WS2812 Led</source>
@@ -5370,7 +5409,7 @@ Chcete uložiť zmeny?
     <name>Zener</name>
     <message>
         <source>Zener Diode</source>
-        <translation>Zenerová dióda</translation>
+        <translation type="vanished">Zenerová dióda</translation>
     </message>
 </context>
 <context>

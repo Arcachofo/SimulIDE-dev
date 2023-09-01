@@ -17,7 +17,7 @@
 #include "boolprop.h"
 #include "intprop.h"
 
-#define tr(str) simulideTr("I2CRAM",str)
+#define tr(str) simulideTr("I2CRam",str)
 
 Component* I2CRam::construct( QString type, QString id )
 { return new I2CRam( type, id ); }
