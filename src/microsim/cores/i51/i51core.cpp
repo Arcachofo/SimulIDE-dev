@@ -272,6 +272,7 @@ void I51Core::SJMP() { m_PC += (int8_t)m_opAddr; }
 
 void I51Core::ACALL()
 {
+    m_RET_ADDR = m_PC;
     pushStack8( m_PC & 0xFF );
     pushStack8( m_PC >> 8 );
     AJMP();
@@ -297,6 +298,7 @@ void I51Core::RLC()
 
 void I51Core::LCALL()
 {
+    m_RET_ADDR = m_PC;
     pushStack8( m_PC & 0xFF );
     pushStack8( m_PC >> 8 );
     m_PC = m_opAddr;
