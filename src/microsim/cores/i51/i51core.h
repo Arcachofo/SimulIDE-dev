@@ -244,6 +244,10 @@ class MAINMODULE_EXPORT I51Core : public McuCpu, public eElement
         inline void movx_a_indir_rx();
         inline void movx_indir_dptr_a();
         inline void movx_indir_rx_a();
+
+        // CpuBase interface
+public:
+        void INTERRUPT(uint32_t addr);
 };
 
 #endif

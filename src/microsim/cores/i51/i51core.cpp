@@ -513,6 +513,15 @@ void I51Core::movx_indir_rx_a()
     else { if( aCPU->mExtData ) aCPU->mExtData[address &( aCPU->mExtDataSize - 1 )] = ACC; }*/
 }
 
+void I51Core::INTERRUPT(uint32_t addr)
+{
+    pushStack8( m_PC & 0xFF );
+    pushStack8( m_PC >> 8 );
+    m_PC = ( addr & 0xFFFF );
+    m_cpuState = cpu_FETCH;
+    m_tmpPC = m_PC;
+}
+
 void I51Core::Decode()
 {
     m_dataEvent.clear();
