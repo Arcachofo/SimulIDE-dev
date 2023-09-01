@@ -32,6 +32,7 @@ class MAINMODULE_EXPORT IoPin : public Pin, public eElement
 
         virtual void initialize() override;
         virtual void stamp() override;
+        virtual void updateStep() override;
         virtual void runEvent() override;
 
         virtual void scheduleState( bool state, uint64_t time );
@@ -64,20 +65,14 @@ class MAINMODULE_EXPORT IoPin : public Pin, public eElement
         virtual double getVoltage() override;
         inline void setVoltage( double volt )
         {
-            if( volt == m_outVolt ) return;
+            if( m_outVolt == volt ) return;
             m_outVolt = volt;
             ePin::stampCurrent( m_outVolt*m_admit );
         }
         inline void setOutStatFast( bool state )
         {
             m_outState = m_nextState = state;
-            if( state ){
-                m_outVolt = m_outHighV;
-                setPinState( out_high ); // High colors
-            }else{
-                m_outVolt = m_outLowV;
-                setPinState( out_low ); // Low colors
-            }
+            m_outVolt = state ? m_outHighV : m_outLowV;
             ePin::stampCurrent( m_outVolt*m_admit );
         }
 
