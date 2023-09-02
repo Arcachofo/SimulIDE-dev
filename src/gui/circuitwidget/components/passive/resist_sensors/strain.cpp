@@ -18,7 +18,7 @@
 #include "doubleprop.h"
 #include "propdialog.h"
 
-#define tr(str) simulideTr("Starin",str)
+#define tr(str) simulideTr("Strain",str)
 
 Component *Strain::construct( QString type, QString id)
 { return new Strain ( type, id); }

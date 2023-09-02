@@ -1558,7 +1558,7 @@ Nemohu najít soubor:
 <context>
     <name>ConnectorLine</name>
     <message>
-        <location filename="../../src/gui/circuitwidget/connectorline.cpp" line="+322"/>
+        <location filename="../../src/gui/circuitwidget/connectorline.cpp" line="+324"/>
         <source>Remove</source>
         <translation type="unfinished">Odstranit</translation>
     </message>
@@ -2788,12 +2788,18 @@ Chcete uložit změny?
         <source>Logic/Memory</source>
         <translation type="vanished">Logika/Paměti</translation>
     </message>
+    <message>
+        <location filename="../../src/gui/circuitwidget/components/logic/flipflopd.cpp" line="+18"/>
+        <source>FlipFlopD</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FlipFlopJK</name>
     <message>
+        <location filename="../../src/gui/circuitwidget/components/logic/flipflopjk.cpp" line="+18"/>
         <source>FlipFlop JK</source>
-        <translation type="vanished">Klopný obvod JK</translation>
+        <translation>Klopný obvod JK</translation>
     </message>
     <message>
         <source>Memory</source>
@@ -2807,8 +2813,9 @@ Chcete uložit změny?
 <context>
     <name>FlipFlopRS</name>
     <message>
+        <location filename="../../src/gui/circuitwidget/components/logic/flipfloprs.cpp" line="+19"/>
         <source>FlipFlop RS</source>
-        <translation type="vanished">Klopný obvod RS</translation>
+        <translation>Klopný obvod RS</translation>
     </message>
     <message>
         <source>Memory</source>
@@ -2826,8 +2833,9 @@ Chcete uložit změny?
 <context>
     <name>FlipFlopT</name>
     <message>
+        <location filename="../../src/gui/circuitwidget/components/logic/flipflopt.cpp" line="+18"/>
         <source>FlipFlop T</source>
-        <translation type="vanished">Klopný obvod T</translation>
+        <translation>Klopný obvod T</translation>
     </message>
     <message>
         <source>Memory</source>
@@ -2867,8 +2875,9 @@ Chcete uložit změny?
 <context>
     <name>FullAdder</name>
     <message>
+        <location filename="../../src/gui/circuitwidget/components/logic/fulladder.cpp" line="+18"/>
         <source>Full Adder</source>
-        <translation type="vanished">Úplná sčítačka</translation>
+        <translation>Úplná sčítačka</translation>
     </message>
     <message>
         <source>Logic/Arithmetic</source>
@@ -2879,7 +2888,7 @@ Chcete uložit změny?
         <translation type="obsolete">Aritmetické funkce</translation>
     </message>
     <message>
-        <location filename="../../src/gui/circuitwidget/components/logic/fulladder.cpp" line="+40"/>
+        <location line="+22"/>
         <source>Electric</source>
         <translation>Elektrické</translation>
     </message>
@@ -5692,6 +5701,14 @@ Neplatný soubor s pouzdrem
     </message>
 </context>
 <context>
+    <name>SdccDebugger</name>
+    <message>
+        <location filename="../../src/gui/editorwidget/debuggers/sdccdebugger.cpp" line="+76"/>
+        <source>Warning: lst file doesn&apos;t exist:</source>
+        <translation type="unfinished">Varování: Soubor lst neexistuje:</translation>
+    </message>
+</context>
+<context>
     <name>SerialMonitor</name>
     <message>
         <location filename="../../src/gui/serial/serialmon.ui" line="+14"/>
@@ -5915,8 +5932,9 @@ Neplatný soubor s pouzdrem
 <context>
     <name>SevenSegmentBCD</name>
     <message>
+        <location filename="../../src/gui/circuitwidget/components/logic/sevensegment_bcd.cpp" line="+23"/>
         <source>7 Seg BCD</source>
-        <translation type="vanished">Sedmisegmentová BCD</translation>
+        <translation>Sedmisegmentová BCD</translation>
     </message>
     <message>
         <source>Other Logic</source>
@@ -6815,7 +6833,7 @@ Chcete uložit změny?
         <translation type="vanished">Aktivní součástky</translation>
     </message>
     <message>
-        <location line="+37"/>
+        <location line="+35"/>
         <source>Main</source>
         <translation>Základní</translation>
     </message>
@@ -7073,8 +7091,9 @@ Chcete uložit změny?
 <context>
     <name>Zener</name>
     <message>
+        <location filename="../../src/gui/circuitwidget/components/active/zener.cpp" line="+17"/>
         <source>Zener Diode</source>
-        <translation type="vanished">Zenerova dioda</translation>
+        <translation>Zenerova dioda</translation>
     </message>
     <message>
         <source>Rectifiers</source>

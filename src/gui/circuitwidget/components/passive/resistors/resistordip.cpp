@@ -19,7 +19,7 @@
 #include "intprop.h"
 #include "boolprop.h"
 
-#define tr(str) simulideTr("Resistor Dip",str)
+#define tr(str) simulideTr("ResistorDip",str)
 
 eNode ResistorDip::m_puEnode("");
 

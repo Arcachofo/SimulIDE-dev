@@ -13,7 +13,7 @@
 #include "intprop.h"
 #include "propdialog.h"
 
-#define tr(str) simulideTr("LDR",str)
+#define tr(str) simulideTr("Ldr",str)
 
 Component* Ldr::construct( QString type, QString id )
 { return new Ldr( type, id ); }

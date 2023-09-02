@@ -7,13 +7,15 @@
 #include "itemlibrary.h"
 #include "iopin.h"
 
+#define tr(str) simulideTr("FlipFlopD",str)
+
 Component* FlipFlopD::construct( QString type, QString id )
 { return new FlipFlopD( type, id ); }
 
 LibraryItem* FlipFlopD::libraryItem()
 {
     return new LibraryItem(
-        simulideTr("FlipFlopD", "FlipFlop D"),
+        tr("FlipFlopD"),
         "Memory",
         "2to2.png",
         "FlipFlopD",

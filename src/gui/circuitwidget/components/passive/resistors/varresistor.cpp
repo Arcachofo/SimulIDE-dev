@@ -12,7 +12,7 @@
 #include "doubleprop.h"
 #include "propdialog.h"
 
-#define tr(str) simulideTr("Var Resistor",str)
+#define tr(str) simulideTr("VarResistor",str)
 
 Component* VarResistor::construct( QString type, QString id )
 { return new VarResistor( type, id ); }

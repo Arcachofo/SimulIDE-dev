@@ -2252,6 +2252,10 @@ Can&apos;t find file:
         <source>Memory</source>
         <translation type="obsolete">Memoria</translation>
     </message>
+    <message>
+        <source>FlipFlopD</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FlipFlopJK</name>
@@ -2262,6 +2266,10 @@ Can&apos;t find file:
     <message>
         <source>Memory</source>
         <translation type="obsolete">Memoria</translation>
+    </message>
+    <message>
+        <source>FlipFlop JK</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2278,6 +2286,10 @@ Can&apos;t find file:
         <source>Memory</source>
         <translation type="obsolete">Memoria</translation>
     </message>
+    <message>
+        <source>FlipFlop RS</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FlipFlopT</name>
@@ -2288,6 +2300,10 @@ Can&apos;t find file:
     <message>
         <source>Memory</source>
         <translation type="obsolete">Memoria</translation>
+    </message>
+    <message>
+        <source>FlipFlop T</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2317,7 +2333,7 @@ Can&apos;t find file:
     <name>FullAdder</name>
     <message>
         <source>Full Adder</source>
-        <translation type="vanished">Sumador Completo</translation>
+        <translation>Sumador Completo</translation>
     </message>
     <message>
         <source>Logic/Arithmetic</source>
@@ -4644,6 +4660,13 @@ Archivo packae no valido:</translation>
     </message>
 </context>
 <context>
+    <name>SdccDebugger</name>
+    <message>
+        <source>Warning: lst file doesn&apos;t exist:</source>
+        <translation type="unfinished">Warning: archivo lst no existe:</translation>
+    </message>
+</context>
+<context>
     <name>SerialMonitor</name>
     <message>
         <source>Send Text:</source>
@@ -4826,6 +4849,10 @@ Archivo packae no valido:</translation>
     <message>
         <source>Other Logic</source>
         <translation type="obsolete">Otros (Logica)</translation>
+    </message>
+    <message>
+        <source>7 Seg BCD</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5797,7 +5824,7 @@ Quiere guardar los cambios?
     <name>Zener</name>
     <message>
         <source>Zener Diode</source>
-        <translation type="vanished">Diodo Zener</translation>
+        <translation>Diodo Zener</translation>
     </message>
     <message>
         <source>Rectifiers</source>

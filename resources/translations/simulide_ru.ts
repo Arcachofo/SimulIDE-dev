@@ -2300,12 +2300,16 @@ Can&apos;t find file:
         <source>Memory</source>
         <translation type="obsolete">Память</translation>
     </message>
+    <message>
+        <source>FlipFlopD</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FlipFlopJK</name>
     <message>
         <source>FlipFlop JK</source>
-        <translation type="vanished">JK-триггер</translation>
+        <translation>JK-триггер</translation>
     </message>
     <message>
         <source>Logic/Memory</source>
@@ -2320,7 +2324,7 @@ Can&apos;t find file:
     <name>FlipFlopRS</name>
     <message>
         <source>FlipFlop RS</source>
-        <translation type="vanished">RS-триггер</translation>
+        <translation>RS-триггер</translation>
     </message>
     <message>
         <source>Logic/Memory</source>
@@ -2339,7 +2343,7 @@ Can&apos;t find file:
     <name>FlipFlopT</name>
     <message>
         <source>FlipFlop T</source>
-        <translation type="vanished">T-триггер</translation>
+        <translation>T-триггер</translation>
     </message>
     <message>
         <source>Logic/Memory</source>
@@ -2377,7 +2381,7 @@ Can&apos;t find file:
     <name>FullAdder</name>
     <message>
         <source>Full Adder</source>
-        <translation type="vanished">Сумматор</translation>
+        <translation>Сумматор</translation>
     </message>
     <message>
         <source>Logic/Arithmetic</source>
@@ -4800,6 +4804,13 @@ Not valid Package file:
     </message>
 </context>
 <context>
+    <name>SdccDebugger</name>
+    <message>
+        <source>Warning: lst file doesn&apos;t exist:</source>
+        <translation type="unfinished">Внимание: lst файл не найден:</translation>
+    </message>
+</context>
+<context>
     <name>SerialMonitor</name>
     <message>
         <source>Dialog</source>
@@ -4989,7 +5000,7 @@ Not valid Package file:
     <name>SevenSegmentBCD</name>
     <message>
         <source>7 Seg BCD</source>
-        <translation type="vanished">7-сегментный декодер</translation>
+        <translation>7-сегментный декодер</translation>
     </message>
     <message>
         <source>Logic/Other Logic</source>
@@ -5982,7 +5993,7 @@ Do you want to save your changes?
     <name>Zener</name>
     <message>
         <source>Zener Diode</source>
-        <translation type="vanished">Стабилитрон</translation>
+        <translation>Стабилитрон</translation>
     </message>
     <message>
         <source>Rectifiers</source>

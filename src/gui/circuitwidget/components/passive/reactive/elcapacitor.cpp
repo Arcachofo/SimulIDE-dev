@@ -10,7 +10,7 @@
 #include "simulator.h"
 #include "e-pin.h"
 
-#define tr(str) simulideTr("Capacitor",str)
+#define tr(str) simulideTr("elCapacitor",str)
 
 Component* elCapacitor::construct( QString type, QString id )
 { return new elCapacitor( type, id ); }

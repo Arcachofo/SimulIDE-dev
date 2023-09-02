@@ -1928,6 +1928,34 @@ Do you want to save your changes?
     </message>
 </context>
 <context>
+    <name>FlipFlopD</name>
+    <message>
+        <source>FlipFlopD</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>FlipFlopJK</name>
+    <message>
+        <source>FlipFlop JK</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>FlipFlopRS</name>
+    <message>
+        <source>FlipFlop RS</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>FlipFlopT</name>
+    <message>
+        <source>FlipFlop T</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>FreqMeter</name>
     <message>
         <source>Frequency Meter</source>
@@ -1950,6 +1978,10 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Edges</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Full Adder</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3788,6 +3820,13 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
+    <name>SdccDebugger</name>
+    <message>
+        <source>Warning: lst file doesn&apos;t exist:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>SerialMonitor</name>
     <message>
         <source>Dialog</source>
@@ -3949,6 +3988,13 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Resistance</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SevenSegmentBCD</name>
+    <message>
+        <source>7 Seg BCD</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4712,6 +4758,13 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Edges</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Zener</name>
+    <message>
+        <source>Zener Diode</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

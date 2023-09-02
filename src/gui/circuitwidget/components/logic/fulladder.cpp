@@ -15,7 +15,7 @@ Component* FullAdder::construct( QString type, QString id)
 LibraryItem* FullAdder::libraryItem()
 {
     return new LibraryItem(
-        simulideTr("FullAdder", "Full Adder"),
+        tr("Full Adder"),
         "Arithmetic",
         "2to2.png",
         "FullAdder",

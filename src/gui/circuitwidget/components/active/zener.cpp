@@ -6,13 +6,15 @@
 #include "zener.h"
 #include "itemlibrary.h"
 
+#define tr(str) simulideTr("Zener",str)
+
 Component* Zener::construct( QString type, QString id )
 { return new Zener( type, id ); }
 
 LibraryItem* Zener::libraryItem()
 {
     return new LibraryItem(
-        simulideTr("Zener","Zener Diode"),
+        tr("Zener Diode"),
         "Rectifiers",
         "zener.png",
         "Zener",

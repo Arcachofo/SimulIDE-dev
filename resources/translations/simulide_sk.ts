@@ -2116,26 +2116,30 @@ Súbor nemožno nájsť:
         <source>FlipFlop D</source>
         <translation type="vanished">Klopný obvod D</translation>
     </message>
+    <message>
+        <source>FlipFlopD</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FlipFlopJK</name>
     <message>
         <source>FlipFlop JK</source>
-        <translation type="vanished">Klopný obvod JK</translation>
+        <translation>Klopný obvod JK</translation>
     </message>
 </context>
 <context>
     <name>FlipFlopRS</name>
     <message>
         <source>FlipFlop RS</source>
-        <translation type="vanished">Klopný obvod RS</translation>
+        <translation>Klopný obvod RS</translation>
     </message>
 </context>
 <context>
     <name>FlipFlopT</name>
     <message>
         <source>FlipFlop T</source>
-        <translation type="vanished">Klopný obvod T</translation>
+        <translation>Klopný obvod T</translation>
     </message>
 </context>
 <context>
@@ -2161,7 +2165,7 @@ Súbor nemožno nájsť:
     <name>FullAdder</name>
     <message>
         <source>Full Adder</source>
-        <translation type="vanished">Úplná sčítačka</translation>
+        <translation>Úplná sčítačka</translation>
     </message>
     <message>
         <source>Electric</source>
@@ -4370,6 +4374,13 @@ Neplatný súbor balíka:
     </message>
 </context>
 <context>
+    <name>SdccDebugger</name>
+    <message>
+        <source>Warning: lst file doesn&apos;t exist:</source>
+        <translation type="unfinished">Varovanie: Súbor neexistuje:</translation>
+    </message>
+</context>
+<context>
     <name>SerialMonitor</name>
     <message>
         <source>Send Text:</source>
@@ -4555,7 +4566,7 @@ Neplatný súbor balíka:
     <name>SevenSegmentBCD</name>
     <message>
         <source>7 Seg BCD</source>
-        <translation type="vanished">7 Seg. BCD</translation>
+        <translation>7 Seg. BCD</translation>
     </message>
 </context>
 <context>
@@ -5409,7 +5420,7 @@ Chcete uložiť zmeny?
     <name>Zener</name>
     <message>
         <source>Zener Diode</source>
-        <translation type="vanished">Zenerová dióda</translation>
+        <translation>Zenerová dióda</translation>
     </message>
 </context>
 <context>

@@ -2112,26 +2112,30 @@ Can&apos;t find file:
         <source>FlipFlop D</source>
         <translation type="vanished">D触发器</translation>
     </message>
+    <message>
+        <source>FlipFlopD</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FlipFlopJK</name>
     <message>
         <source>FlipFlop JK</source>
-        <translation type="vanished">JK触发器</translation>
+        <translation>JK触发器</translation>
     </message>
 </context>
 <context>
     <name>FlipFlopRS</name>
     <message>
         <source>FlipFlop RS</source>
-        <translation type="vanished">RS触发器</translation>
+        <translation>RS触发器</translation>
     </message>
 </context>
 <context>
     <name>FlipFlopT</name>
     <message>
         <source>FlipFlop T</source>
-        <translation type="vanished">T触发器</translation>
+        <translation>T触发器</translation>
     </message>
 </context>
 <context>
@@ -2157,7 +2161,7 @@ Can&apos;t find file:
     <name>FullAdder</name>
     <message>
         <source>Full Adder</source>
-        <translation type="vanished">全加器</translation>
+        <translation>全加器</translation>
     </message>
     <message>
         <source>Electric</source>
@@ -4357,6 +4361,13 @@ Not valid Package file:
     </message>
 </context>
 <context>
+    <name>SdccDebugger</name>
+    <message>
+        <source>Warning: lst file doesn&apos;t exist:</source>
+        <translation type="unfinished">警告: lst文件不存在: </translation>
+    </message>
+</context>
+<context>
     <name>SerialMonitor</name>
     <message>
         <source>Send Text:</source>
@@ -4546,7 +4557,7 @@ Not valid Package file:
     <name>SevenSegmentBCD</name>
     <message>
         <source>7 Seg BCD</source>
-        <translation type="vanished">7段BCD数码管</translation>
+        <translation>7段BCD数码管</translation>
     </message>
 </context>
 <context>
@@ -5404,7 +5415,7 @@ Do you want to save your changes?
     <name>Zener</name>
     <message>
         <source>Zener Diode</source>
-        <translation type="vanished">稳压二极管</translation>
+        <translation>稳压二极管</translation>
     </message>
 </context>
 <context>

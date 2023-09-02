@@ -2135,12 +2135,16 @@ Can&apos;t find file:
         <source>Memory</source>
         <translation type="obsolete">Memórias</translation>
     </message>
+    <message>
+        <source>FlipFlopD</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FlipFlopJK</name>
     <message>
         <source>FlipFlop JK</source>
-        <translation type="obsolete">Flip-flop JK</translation>
+        <translation type="unfinished">Flip-flop JK</translation>
     </message>
     <message>
         <source>Logic/Memory</source>
@@ -2161,6 +2165,10 @@ Can&apos;t find file:
         <source>Memory</source>
         <translation type="obsolete">Memórias</translation>
     </message>
+    <message>
+        <source>FlipFlop RS</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FlipFlopT</name>
@@ -2171,6 +2179,10 @@ Can&apos;t find file:
     <message>
         <source>Memory</source>
         <translation type="obsolete">Memórias</translation>
+    </message>
+    <message>
+        <source>FlipFlop T</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2196,7 +2208,7 @@ Can&apos;t find file:
     <name>FullAdder</name>
     <message>
         <source>Full Adder</source>
-        <translation type="obsolete">Somador completo</translation>
+        <translation type="unfinished">Somador completo</translation>
     </message>
     <message>
         <source>Logic/Arithmetic</source>
@@ -4285,6 +4297,13 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
+    <name>SdccDebugger</name>
+    <message>
+        <source>Warning: lst file doesn&apos;t exist:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>SerialMonitor</name>
     <message>
         <source>Send Text:</source>
@@ -4458,7 +4477,7 @@ p, li { white-space: pre-wrap; }
     <name>SevenSegmentBCD</name>
     <message>
         <source>7 Seg BCD</source>
-        <translation type="obsolete">7 segmentos BCD</translation>
+        <translation type="unfinished">7 segmentos BCD</translation>
     </message>
     <message>
         <source>Logic/Other Logic</source>
@@ -5302,6 +5321,13 @@ Deseja guardar as alterações?
     <message>
         <source>Invert Inputs</source>
         <translation type="unfinished">Inverter entradas</translation>
+    </message>
+</context>
+<context>
+    <name>Zener</name>
+    <message>
+        <source>Zener Diode</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

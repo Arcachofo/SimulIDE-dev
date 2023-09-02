@@ -2235,12 +2235,16 @@ Can&apos;t find file:
         <source>Memory</source>
         <translation type="obsolete">Bellek</translation>
     </message>
+    <message>
+        <source>FlipFlopD</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FlipFlopJK</name>
     <message>
         <source>FlipFlop JK</source>
-        <translation type="obsolete">FlipFlop JK</translation>
+        <translation type="unfinished">FlipFlop JK</translation>
     </message>
     <message>
         <source>Logic/Memory</source>
@@ -2255,7 +2259,7 @@ Can&apos;t find file:
     <name>FlipFlopRS</name>
     <message>
         <source>FlipFlop RS</source>
-        <translation type="obsolete">FlipFlop RS</translation>
+        <translation type="unfinished">FlipFlop RS</translation>
     </message>
     <message>
         <source>Logic/Memory</source>
@@ -2279,6 +2283,10 @@ Can&apos;t find file:
     <message>
         <source>Memory</source>
         <translation type="obsolete">Bellek</translation>
+    </message>
+    <message>
+        <source>FlipFlop T</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2304,7 +2312,7 @@ Can&apos;t find file:
     <name>FullAdder</name>
     <message>
         <source>Full Adder</source>
-        <translation type="obsolete">Tam Toplayıcı</translation>
+        <translation type="unfinished">Tam Toplayıcı</translation>
     </message>
     <message>
         <source>Logic/Arithmetic</source>
@@ -4503,6 +4511,13 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
+    <name>SdccDebugger</name>
+    <message>
+        <source>Warning: lst file doesn&apos;t exist:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>SerialMonitor</name>
     <message>
         <source>Dialog</source>
@@ -4688,7 +4703,7 @@ p, li { white-space: pre-wrap; }
     <name>SevenSegmentBCD</name>
     <message>
         <source>7 Seg BCD</source>
-        <translation type="obsolete">7 Seg BCD</translation>
+        <translation type="unfinished">7 Seg BCD</translation>
     </message>
     <message>
         <source>Other Logic</source>
@@ -5620,6 +5635,13 @@ Değişiklikler kaydedilsin mi?
     <message>
         <source>Edges</source>
         <translation type="obsolete">Edges</translation>
+    </message>
+</context>
+<context>
+    <name>Zener</name>
+    <message>
+        <source>Zener Diode</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

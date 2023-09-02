@@ -2533,12 +2533,16 @@ Can&apos;t find file:
         <source>Memory</source>
         <translation type="obsolete">Speicher</translation>
     </message>
+    <message>
+        <source>FlipFlopD</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FlipFlopJK</name>
     <message>
         <source>FlipFlop JK</source>
-        <translation type="vanished">JK-Flipflop</translation>
+        <translation>JK-Flipflop</translation>
     </message>
     <message>
         <source>Logic/Memory</source>
@@ -2553,7 +2557,7 @@ Can&apos;t find file:
     <name>FlipFlopRS</name>
     <message>
         <source>FlipFlop RS</source>
-        <translation type="vanished">RS-Flipflop</translation>
+        <translation>RS-Flipflop</translation>
     </message>
     <message>
         <source>Logic/Memory</source>
@@ -2577,6 +2581,10 @@ Can&apos;t find file:
     <message>
         <source>Memory</source>
         <translation type="obsolete">Speicher</translation>
+    </message>
+    <message>
+        <source>FlipFlop T</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2606,7 +2614,7 @@ Can&apos;t find file:
     <name>FullAdder</name>
     <message>
         <source>Full Adder</source>
-        <translation type="vanished">Volladdierer</translation>
+        <translation>Volladdierer</translation>
     </message>
     <message>
         <source>Logic/Arithmetic</source>
@@ -4954,6 +4962,13 @@ Keine valide Package Datei:
     </message>
 </context>
 <context>
+    <name>SdccDebugger</name>
+    <message>
+        <source>Warning: lst file doesn&apos;t exist:</source>
+        <translation type="unfinished">Warnung: lst Datei nicht gefunden:</translation>
+    </message>
+</context>
+<context>
     <name>SerialMonitor</name>
     <message>
         <source>Send Text:</source>
@@ -5151,7 +5166,7 @@ Keine valide Package Datei:
     <name>SevenSegmentBCD</name>
     <message>
         <source>7 Seg BCD</source>
-        <translation type="vanished">7 Segment BCD Anzeige</translation>
+        <translation>7 Segment BCD Anzeige</translation>
     </message>
     <message>
         <source>Logic/Other Logic</source>
@@ -6189,6 +6204,10 @@ Sollen die Änderungen gespeichert werden?
     <message>
         <source>Active</source>
         <translation type="vanished">Aktive Bauteile</translation>
+    </message>
+    <message>
+        <source>Zener Diode</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
