@@ -22,10 +22,10 @@ eLed::~eLed() {}
 
 void eLed::initialize()
 {
-    m_prevStep    = 0;
-    m_avgCurrent  = 0.;
-    m_intensity   = 25;
-    m_brightness  = 0;
+    m_prevStep     = 0;
+    m_avgCurrent   = 0.;
+    m_intensity    = 0;
+    m_brightness   = 0;
     m_totalCurrent = 0;
     m_lastPeriod   = 0;
 
@@ -92,8 +92,8 @@ void eLed::updateBright()
     if( !Simulator::self()->isRunning() )
     {
         m_totalCurrent = 0;
-        m_lastPeriod = 0;
-        m_intensity = 25;
+        m_lastPeriod   = 0;
+        m_intensity    = 0;
         return;
     }
     updateVI();
@@ -101,7 +101,7 @@ void eLed::updateBright()
     if( Simulator::self()->isPauseDebug() )
     {
         double bright = qPow( m_current/m_maxCurrent, 1.0/2.0 );
-        m_intensity  = uint32_t(bright*255)+25;
+        m_intensity  = uint32_t(bright*255);
     }
     else{
         uint64_t psPF = Simulator::self()->realPsPF();//stepsPerFrame();
@@ -114,7 +114,7 @@ void eLed::updateBright()
 
             m_totalCurrent  = 0;
             m_lastPeriod = 0;
-            m_intensity  = uint32_t(m_brightness*255)+25;
+            m_intensity  = uint32_t(m_brightness*255);
         }
     }
 }

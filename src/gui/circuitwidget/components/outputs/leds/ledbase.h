@@ -37,7 +37,7 @@ class MAINMODULE_EXPORT LedBase : public Component, public eLed
         virtual void initialize() override;
         virtual void updateStep() override;
 
- static QColor getColor( LedColor c, int intensity );
+ static QColor getColor( LedColor c, int bright );
 
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
 
@@ -46,6 +46,8 @@ class MAINMODULE_EXPORT LedBase : public Component, public eLed
         virtual void drawForeground( QPainter* p )=0;
         
         bool   m_grounded;
+
+ static int m_overBright;
         
         LedColor m_ledColor;
 

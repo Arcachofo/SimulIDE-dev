@@ -17,6 +17,7 @@
 #define tr(str) simulideTr("LedBase",str)
 
 eNode LedBase::m_gndEnode("");
+int   LedBase::m_overBright = 0;
 
 LedBase::LedBase( QString type, QString id )
        : Component( type, id )
@@ -94,6 +95,7 @@ void LedBase::updateStep()
         m_changed = false;
         voltChanged();
     }
+
 }
 
 void LedBase::setGrounded( bool grounded )
@@ -110,9 +112,9 @@ void LedBase::setGrounded( bool grounded )
     else           pin1->setEnode( NULL );
 }
 
-void LedBase::setColorStr( QString color )
+void LedBase::setColorStr( QString foreColor )
 {
-    int ledColor = getEnumIndex( color );
+    int ledColor = getEnumIndex( foreColor );
     m_ledColor = (LedColor)ledColor;
     double thr;
     switch( m_ledColor ) {
@@ -130,58 +132,63 @@ void LedBase::setColorStr( QString color )
         setValLabelText( m_enumNames.at( ledColor ) );
 }
 
-QColor LedBase::getColor( LedColor c, int intensity )
+QColor LedBase::getColor(LedColor c, int bright )
 {
-    int overBight = 100;
-    QColor color;
+    m_overBright = 0;
+    int secL = bright/3;
+    int secH = bright/2;
+    int secX = bright*2/3;
+    QColor foreColor;
 
-    if( intensity > 25 )
+    if( bright > 255 )
     {
-        intensity += 15;       // Set a Minimun Bright
-        if( intensity > 255 )
-        {
-            overBight += intensity-255;
-            intensity = 255;
-    }   }
-    switch( c ) {
-        case yellow: color = QColor( intensity, intensity,               overBight*2/3 ); break;
-        case red:    color = QColor( intensity, intensity/4+overBight/2, overBight/2 );   break;
-        case green:  color = QColor( overBight, intensity,               intensity*2/3 ); break;
-        case blue:   color = QColor( overBight, intensity*2/3,           intensity );     break;
-        case orange: color = QColor( intensity, intensity*2/3,           overBight );     break;
-        case purple: color = QColor( intensity, intensity/4+overBight/2, intensity );     break;
-        case white:  color = QColor( intensity, intensity,               intensity );     break;
+        m_overBright = (bright-255);
+        secL += m_overBright;
+        bright = 255;
     }
-    return color;
+    switch( c ) {
+        case yellow: foreColor = QColor( bright, bright, secL ); break;
+        case red:    foreColor = QColor( bright, secH  , secH ); break;
+        case green:  foreColor = QColor( secL  , bright, secL ); break;
+        case blue:   foreColor = QColor( secH  , secH  , bright ); break;
+        case orange: foreColor = QColor( bright, secX  , secL ); break;
+        case purple: foreColor = QColor( bright, secL  , bright ); break;
+        case white:  foreColor = QColor( bright, bright, bright ); break;
+    }
+    return foreColor;
 }
 void LedBase::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
 {
     Component::paint( p, option, widget );
 
     QPen pen( Qt::black, 4, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin );
-    QColor color;
+    QColor foreColor;
+    QColor backColor = QColor(0,0,0);
 
     if( m_warning/*m_current > m_maxCurrent*1.2*/ ) // Led overcurrent
     {
         p->setBrush( QColor( 255, 150, 0 ) );
-        color = QColor( Qt::red );
-        pen.setColor( color );
+        foreColor = QColor( Qt::red );
+        pen.setColor( foreColor );
     }
     if( m_crashed )  // Led extreme overcurrent
     {
         p->setBrush( Qt::white );
-        color = QColor( Qt::white );
-        pen.setColor( color );
+        foreColor = QColor( Qt::white );
+        pen.setColor( foreColor );
     }else{
-        color = getColor( m_ledColor, m_intensity );
+        foreColor = getColor( m_ledColor, m_intensity );
+        int over = m_overBright*2;
+        backColor = QColor( over, over, m_overBright );
     }
+    pen.setColor( backColor );
     p->setPen( pen );
+    p->setBrush( backColor );
     drawBackground( p );
     
-    pen.setColor( color );
+    pen.setColor( foreColor );
     pen.setWidth( 2 );
     p->setPen( pen );
-    p->setBrush( color );
-
+    p->setBrush( foreColor );
     drawForeground( p );
 }
