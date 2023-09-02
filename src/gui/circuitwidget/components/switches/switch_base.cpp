@@ -31,10 +31,11 @@ SwitchBase::SwitchBase( QString type, QString id )
     m_proxy->setParentItem( this );
     m_proxy->setPos(-20,-16 );
     m_proxy->setTransformOriginPoint( m_proxy->boundingRect().center() );
-
-    QObject::connect( Circuit::self(), &Circuit::keyEvent, [=](QString k, bool p){ keyEvent(k,p); } );
+    m_keyEventConn = QObject::connect( Circuit::self(), &Circuit::keyEvent, [=](QString k, bool p){ keyEvent(k,p); } );
 }
-SwitchBase::~SwitchBase(){}
+SwitchBase::~SwitchBase(){
+    QObject::disconnect( m_keyEventConn );
+}
 
 void SwitchBase::updateStep()
 {

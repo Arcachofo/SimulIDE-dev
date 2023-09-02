@@ -39,6 +39,8 @@ class MAINMODULE_EXPORT SwitchBase : public MechContact
         
         CustomButton* m_button;
         QGraphicsProxyWidget* m_proxy;
+
+        QMetaObject::Connection m_keyEventConn;
 };
 
 #endif
