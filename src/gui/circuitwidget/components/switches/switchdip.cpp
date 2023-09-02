@@ -180,10 +180,7 @@ void SwitchDip::deleteSwitches( int d )
     }
     for( int i=start; i<m_size; i++ )
     {
-        QPushButton* button = m_buttons.takeLast();
-        /// FIXME: disconnect( button, &QPushButton::released, this, &SwitchDip::onbuttonclicked );
-        delete button;
-        
+        delete m_buttons.takeLast();
         m_proxys.removeLast();
     }
     m_size = m_size-d;

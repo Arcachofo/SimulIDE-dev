@@ -60,8 +60,8 @@
     
     <port name="PORT3" pins="8" outreg="P3" outmask="11111111" 
                                 pullups="11111111" opencol="11111111">
-        <extint name="EXT_0" pin="PORT32" configbits="EX0"/>
-        <extint name="EXT_1" pin="PORT33" configbits="EX1"/>
+        <extint name="EXT_0" pin="PORT32" configbits="IT0"/>
+        <extint name="EXT_1" pin="PORT33" configbits="IT1"/>
     </port>
     
     <ioport name="PORTE" pins="ALE,PSEN,EA" />
