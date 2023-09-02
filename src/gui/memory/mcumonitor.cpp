@@ -157,7 +157,8 @@ void MCUMonitor::updateStep()
         for( uint32_t i=0; i<m_processor->flashSize(); ++i )
             m_flashMonitor->setValue( i, m_processor->getFlashValue(i));
 
-        if( Simulator::self()->simState() == SIM_RUNNING )
+        if( Simulator::self()->simState() == SIM_RUNNING
+         || Simulator::self()->simState() == SIM_PAUSED )
             m_flashMonitor->setAddrSelected( pc, m_jumpToAddress );
     }
 }
