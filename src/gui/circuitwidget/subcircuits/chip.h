@@ -41,9 +41,9 @@ class MAINMODULE_EXPORT Chip : public Component, public eElement
 
         int pkgWidth() { return m_width; }
 
-        void setBackImage( QImage* image ) { m_backImage = image; }
+        void setBackData( std::vector<std::vector<int>>* d ) { m_backData = d; }
 
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
 
     protected:
         virtual Pin* addPin( QString id, QString type, QString label,
@@ -75,7 +75,8 @@ class MAINMODULE_EXPORT Chip : public Component, public eElement
 
         QList<Pin*> m_unusedPins;
 
-        QImage*  m_backImage;
+        std::vector<std::vector<int>>* m_backData;
+        //QImage*  m_backImage;
         QPixmap* m_backPixmap;
         QGraphicsTextItem m_label;
 };

@@ -35,19 +35,19 @@ void ScriptDisplay::registerScriptMetods( asIScriptEngine* engine ) // Static: r
     engine->RegisterObjectType("Display", 0, asOBJ_REF | asOBJ_NOCOUNT );
 
     engine->RegisterObjectMethod("Display", "void setWidth(int w)"
-                                   , asMETHODPR( ScriptDisplay, setWidth, (int), void)
+                                   , asMETHODPR( ScriptDisplay, setWidth, (uint), void)
                                    , asCALL_THISCALL );
 
     engine->RegisterObjectMethod("Display", "void setHeight(int h)"
-                                   , asMETHODPR( ScriptDisplay, setHeight, (int), void)
+                                   , asMETHODPR( ScriptDisplay, setHeight, (uint), void)
                                    , asCALL_THISCALL );
 
     engine->RegisterObjectMethod("Display", "void setBackground(int b)"
                                    , asMETHODPR( ScriptDisplay, setBackground, (int), void)
                                    , asCALL_THISCALL );
 
-    engine->RegisterObjectMethod("Display", "void setPixel(int x, int y, int color)"
-                                   , asMETHODPR( ScriptDisplay, setPixel, (int,int,int), void)
+    engine->RegisterObjectMethod("Display", "void setPixel(uint x, uint y, int color)"
+                                   , asMETHODPR( ScriptDisplay, setPixel, (uint,uint,int), void)
                                    , asCALL_THISCALL );
 
     //engine->RegisterObjectMethod("Display", "void setNextPixel(int color)"

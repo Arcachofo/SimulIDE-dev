@@ -44,7 +44,7 @@ Chip::Chip( QString type, QString id )
     m_initialized = false;
     m_pkgeFile = "";
     m_backPixmap = NULL;
-    m_backImage  = NULL;
+    m_backData   = NULL;
     
     m_lsColor = QColor( 255, 255, 255 );
     m_icColor = QColor( 50, 50, 70 );
@@ -261,14 +261,18 @@ void Chip::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* 
     if( m_backPixmap ) p->drawPixmap( m_area.x(), m_area.y(),m_width*8, m_height*8, *m_backPixmap );
     else{
         p->drawRoundedRect( m_area, 1, 1);
-        if( m_backImage  )
+        if( m_backData  )
         {
-            int w = m_backImage->width();
+            /*int w = m_backImage->width();
             int h = m_backImage->height();
             int mW = m_area.x()+(m_width*8 - w)/2;
             int mH = m_area.y()+(m_height*8 - h)/2;
             p->drawRoundedRect( mW, mH, w, h, 1, 1);
-            p->drawImage( mW, +mH, *m_backImage ); // Image centered
+            p->drawImage( mW, +mH, *m_backImage ); // Image centered*/
+
+            for( int x=0; x<m_width; x++ )
+                for( int y=0; y<m_height; y++ )
+                    p->fillRect( x, y, 1, 1, QColor(m_backData->at(x).at(y) ) );
         }
         else if( !m_isLS && m_background.isEmpty() )
         {

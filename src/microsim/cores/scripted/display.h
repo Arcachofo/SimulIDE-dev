@@ -16,24 +16,25 @@
 class Display : public QWidget, public Updatable, public eElement
 {
     public:
-        Display( int width, int height, QString name, QWidget* parent );
+        Display( uint width, uint height, QString name, QWidget* parent );
         ~Display();
 
         virtual void initialize() override;
         virtual void updateStep() override;
 
-        void setWidth( int w );
-        void setHeight( int h );
-        void setSize( int w, int h );
+        void setWidth( uint w );
+        void setHeight( uint h );
+        void setSize( uint w, uint h );
         void setBackground( int b );
-        void setPixel( int x, int y, int color );
+        void setPixel( uint x, uint y, int color );
+
         //void setNextPixel( int color );
         //void setLine( std::vector<int> line );
         //void setStart( int x, int y ) { m_x = x; m_y = y; }
 
         void setMonitorScale( double scale );
 
-        QImage* getImage() { return &m_image; }
+        std::vector<std::vector<int>>* getBackData() { return &m_data; }
 
     protected:
         virtual void paintEvent( QPaintEvent* e ) override;
@@ -42,8 +43,8 @@ class Display : public QWidget, public Updatable, public eElement
 
         bool m_changed;
 
-        int m_width;
-        int m_height;
+        uint m_width;
+        uint m_height;
 
         int m_x;
         int m_y;
@@ -52,9 +53,8 @@ class Display : public QWidget, public Updatable, public eElement
 
         int m_background;
 
+        std::vector<std::vector<int>> m_data;
         QRectF  m_area;
-
-        QImage m_image;    //Visual representation
 };
 
 #endif

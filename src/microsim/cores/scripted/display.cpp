@@ -8,22 +8,19 @@
 #include "display.h"
 #include "simulator.h"
 
-Display::Display( int w, int h, QString name, QWidget* parent )
+Display::Display( uint w, uint h, QString name, QWidget* parent )
        : QWidget( parent )
        , Updatable()
        , eElement( name )
-       , m_image( w, h, QImage::Format_RGB888 )
 {
     m_width  = w;
     m_height = h;
-    m_scale  = 0;
+    m_scale  = 1;
 
     m_background= 0;
     m_changed = false;
 
-    m_image.fill( 0 );
-
-    this->setFixedSize( m_width, m_height );
+    updtImageSize();
 }
 Display::~Display(){}
 
@@ -45,21 +42,21 @@ void Display::updateStep()
     update();
 }
 
-void Display::setWidth( int w )
+void Display::setWidth( uint w )
 {
     if( m_width == w || w < 1 ) return;
     m_width = w;
     m_changed = true;
 }
 
-void Display::setHeight( int h )
+void Display::setHeight( uint h )
 {
     if( m_height == h || h < 1 ) return;
     m_height = h;
     m_changed = true;
 }
 
-void Display::setSize( int w, int h )
+void Display::setSize( uint w, uint h )
 {
     if( w < 1 || h < 1 ) return;
     m_width  = w;
@@ -83,7 +80,7 @@ void Display::setBackground( int b )
 {
     if( m_background == b ) return;
     m_background = b;
-    m_image.fill( m_background );
+    updtImageSize();
 }
 
 /*void Display::setLine( std::vector<int> line )
@@ -106,25 +103,24 @@ void Display::setBackground( int b )
     setPixel( m_x, m_y, color );
 }*/
 
-void Display::setPixel( int x, int y, int color )
+void Display::setPixel( uint x, uint y, int color )
 {
-    if( x >= m_width || y >= m_height || x < 0 || y < 0 ) return;
-    m_image.setPixel( x, y, color|0xFF000000/*QColor(color).rgb()*/ );
+    if( x >= m_width || y >= m_height ) return;
+    m_data[x][y] = color;
 }
 
 void Display::updtImageSize()
 {
-    m_image = m_image.scaled( m_width, m_height );
-    m_image.fill( m_background );
+    m_data.resize( m_width, std::vector<int>(m_height, m_background) );
     this->setFixedSize( m_width*m_scale, m_height*m_scale );
 }
 
 void Display::paintEvent( QPaintEvent* )
 {
-    if( !m_scale ) return;
-
     QPainter p(this);
 
-    p.drawImage( 0, 0, m_image.scaled( width(), height() ) );
+    for( uint x=0; x<m_width; x++ )
+        for( uint y=0; y<m_height; y++ )
+            p.fillRect( x*m_scale, y*m_scale, m_scale, m_scale, QColor(m_data[x][y]) );
 }
 

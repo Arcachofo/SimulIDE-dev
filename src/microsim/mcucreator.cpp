@@ -1172,7 +1172,7 @@ void McuCreator::createDisplay( QDomElement* e )
     else display = new Display( width, height, name, CircuitWidget::self() );
 
     if( e->hasAttribute("embeed") )
-        m_mcuComp->setBackImage( display->getImage() );
+        m_mcuComp->setBackData( display->getBackData() );
 
     if( e->hasAttribute("monitorscale") )
     {
@@ -1180,7 +1180,7 @@ void McuCreator::createDisplay( QDomElement* e )
         display->setMonitorScale( scale );
         m_displays.append( display );
     }
-    else delete display; /// Fix ???
+    else delete display; /// FIXME ???
 }
 
 void McuCreator::createStack( QDomElement* s )
