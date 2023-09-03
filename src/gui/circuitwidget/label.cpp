@@ -9,6 +9,7 @@
 
 #include "label.h"
 #include "component.h"
+#include "QDebug"
 
 Label::Label()
      : QGraphicsTextItem()
@@ -41,8 +42,45 @@ void Label::mouseMoveEvent( QGraphicsSceneMouseEvent* event )
 {
     event->accept();
     setPos(  pos() + mapToItem( m_parentComp, event->pos() ) - mapToItem( m_parentComp, event->lastPos() ) );
-    m_labelx = int(pos().x());
-    m_labely = int(pos().y());
+    float x = pos().x();
+    float y = pos().y();
+
+    QFontMetrics fm(this->font());
+    QString text = toPlainText();
+    int hf=hFlip();
+    int vf=vFlip();
+    if( m_labelrot == -90 ) {
+        if( hf < 0 && vf < 0 ) {
+            m_labelx = x - fm.height();
+            m_labely = y + fm.horizontalAdvance( text );
+        } else if( hf < 0 ) {
+            m_labelx = x;
+            m_labely = y + fm.horizontalAdvance( text );
+        } else if( vf < 0 ) {
+            m_labelx = x - fm.height();
+            m_labely = y;
+        } else {
+            m_labelx = x;
+            m_labely = y;
+        }
+    } else if( m_labelrot == 90 ) {
+        if( hf < 0 && vf < 0 ) {
+            m_labelx = x + fm.height();
+            m_labely = y - fm.horizontalAdvance( text );
+        } else if( hf < 0 ) {
+            m_labelx = x;
+            m_labely = y - fm.horizontalAdvance( text );
+        } else if( vf < 0 ) {
+            m_labelx = x + fm.height();
+            m_labely = y;
+        } else {
+            m_labelx = x;
+            m_labely = y;
+        }
+    } else {
+        m_labelx = hf<0 ? x - fm.horizontalAdvance( text ) : x ;
+        m_labely = vf<0 ? y - fm.height() : y ;
+    }
 }
 
 void Label::mouseReleaseEvent( QGraphicsSceneMouseEvent* event )
@@ -72,8 +110,22 @@ void Label::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
         connect(rotate180Action, &QAction::triggered,
                            this, &Label::rotate180, Qt::UniqueConnection );
 
-        /*QAction* selectedAction = */menu.exec(event->screenPos());
+        menu.exec(event->screenPos());
     }
+}
+
+int Label::hFlip()
+{
+    int val = 1;
+    if( m_parentComp != nullptr ) val = ( m_parentComp->hflip()>0 )? val : -val;
+    return val;
+}
+
+int Label::vFlip()
+{
+    int val = 1;
+    if( m_parentComp != nullptr ) val = ( m_parentComp->vflip()>0 )? val : -val;
+    return val;
 }
 
 void Label::setLabelPos( QPointF pos )
@@ -84,9 +136,46 @@ void Label::setLabelPos( QPointF pos )
 
 void Label::updtLabelPos()
 {
-    setX( m_labelx );
-    setY( m_labely );
-    setRotation( m_labelrot );
+    QFontMetrics fm(this->font());
+    QString text = toPlainText();
+    bool vertical = ( m_labelrot == 90 || m_labelrot == -90 );
+    int hf=hFlip();
+    int vf=vFlip();
+    int rotate = (vertical && ((vf<0) ^ (hf<0))) ? -m_labelrot : m_labelrot;
+    if( m_labelrot == -90 ) {
+        if( hf < 0 && vf < 0 ) {
+            setX( m_labelx + fm.height() );
+            setY( m_labely - fm.horizontalAdvance( text ) );
+        } else if( hf < 0 ) {
+            setX( m_labelx );
+            setY( m_labely - fm.horizontalAdvance( text ) );
+        } else if( vf < 0 ) {
+            setX( m_labelx + fm.height() );
+            setY( m_labely);
+        } else {
+            setX( m_labelx );
+            setY( m_labely );
+        }
+    } else if( m_labelrot == 90 ) {
+        if( hf < 0 && vf < 0 ) {
+            setX( m_labelx - fm.height() );
+            setY( m_labely + fm.horizontalAdvance( text ) );
+        } else if( hf < 0 ) {
+            setX( m_labelx );
+            setY( m_labely + fm.horizontalAdvance( text ) );
+        } else if( vf < 0 ) {
+            setX( m_labelx - fm.height() );
+            setY( m_labely );
+        } else {
+            setX( m_labelx );
+            setY( m_labely );
+        }
+    } else {
+        setX( hf<0 ? m_labelx + fm.horizontalAdvance( text ) : m_labelx );
+        setY( vf<0 ? m_labely + fm.height() : m_labely );
+    }
+    //if( text == "R1") qDebug()<<" -- "<<pos()<<m_labelx<<m_labely;
+    setRotation( rotate );
     adjustSize();
 }
 
@@ -111,16 +200,5 @@ void Label::rotate180()
     m_labelrot = int(rotation()) ;
 }
 
-void Label::H_flip( int hf )
-{
-    if( !isEnabled() ) return;
-    setTransform( QTransform::fromScale(hf, 1) );
-}
-
-void Label::V_flip( int vf )
-{
-    if( !isEnabled() ) return;
-    setTransform( QTransform::fromScale(1, vf) );
-}
 void Label::updateGeometry(int, int, int) { document()->setTextWidth( -1 ); }
 

@@ -53,7 +53,7 @@ class MAINMODULE_EXPORT Component : public CompBase, public QGraphicsItem, publi
         int getIdRot();
         void setIdRot( int r );
 
-        void setLabelPos( int x, int y, int rot=0 );
+        void setLabelPos( float x, float y, int rot=0 );
         void updtLabelPos();
 
         bool showVal() { return m_showVal; }
@@ -65,7 +65,7 @@ class MAINMODULE_EXPORT Component : public CompBase, public QGraphicsItem, publi
         int  getValRot();
         void setValRot( int r );
 
-        void setValLabelPos( int x, int y, int rot );
+        void setValLabelPos( float x, float y, int rot );
         void updtValLabelPos();
 
         virtual void setValLabelText( QString t ) override;

@@ -20,7 +20,7 @@ class Label : public QGraphicsTextItem
 
         void setComponent( Component* parent );
 
-        QPointF getLabelPos() { return pos(); }
+        QPointF getLabelPos() { return QPointF( m_labelx, m_labely ); }
         void setLabelPos( QPointF pos );
         void updtLabelPos();
 
@@ -33,8 +33,6 @@ class Label : public QGraphicsTextItem
         void rotateCW();
         void rotateCCW();
         void rotate180();
-        void H_flip( int hf );
-        void V_flip( int vf );
         void updateGeometry(int, int, int);
 
     protected:
@@ -42,12 +40,14 @@ class Label : public QGraphicsTextItem
         void mouseMoveEvent( QGraphicsSceneMouseEvent* event );
         void mouseReleaseEvent( QGraphicsSceneMouseEvent* event );
         void contextMenuEvent( QGraphicsSceneContextMenuEvent* event );
+        int hFlip();
+        int vFlip();
 
     private:
         Component* m_parentComp;
 
-        int m_labelx;
-        int m_labely;
+        float m_labelx;
+        float m_labely;
         int m_labelrot;
 };
 #endif

@@ -461,8 +461,9 @@ void Component::setflip()
 {
     setTransform( QTransform::fromScale( m_Hflip, m_Vflip ) );
     m_idLabel->setTransform( QTransform::fromScale( m_Hflip, m_Vflip ) );
+    m_idLabel->updtLabelPos();
     m_valLabel->setTransform( QTransform::fromScale( m_Hflip, m_Vflip ) );
-
+    m_valLabel->updtLabelPos();
     for( Pin* pin : m_signalPin ) pin->flip( m_Hflip, m_Vflip );
 
     if( !m_hidden ) moveSignal();    // Used by sockets
@@ -480,7 +481,7 @@ void Component::rotateAngle( double a )
 }
 
 QString Component::idLabel() { return m_idLabel->toPlainText(); }
-void Component::setIdLabel( QString id ) { m_idLabel->setPlainText( id ); }
+void Component::setIdLabel( QString id ) { m_idLabel->setPlainText( id ); m_idLabel->updtLabelPos(); }
 
 QPointF Component::getIdPos() { return m_idLabel->getLabelPos(); }
 void Component::setIdPos( QPointF p ) { m_idLabel->setLabelPos( p ); }
@@ -488,7 +489,7 @@ void Component::setIdPos( QPointF p ) { m_idLabel->setLabelPos( p ); }
 int Component::getIdRot() { return m_idLabel->getAngle(); }
 void Component::setIdRot( int r ) { m_idLabel->setAngle(r); }
 
-void Component::setLabelPos( int x, int y, int rot )
+void Component::setLabelPos( float x, float y, int rot )
 {
     m_idLabel->m_labelx = x;
     m_idLabel->m_labely = y;
@@ -506,7 +507,7 @@ void Component::setValPos( QPointF p ) { m_valLabel->setLabelPos( p ); }
 int Component::getValRot() { return m_valLabel->getAngle(); }
 void Component::setValRot( int r ) { m_valLabel->setAngle(r); }
 
-void Component::setValLabelPos( int x, int y, int rot )
+void Component::setValLabelPos( float x, float y, int rot )
 {
     m_valLabel->m_labelx = x;
     m_valLabel->m_labely = y;
@@ -516,7 +517,7 @@ void Component::setValLabelPos( int x, int y, int rot )
 
 void Component::updtValLabelPos() { m_valLabel->updtLabelPos(); }
 
-void Component::setValLabelText( QString t ) { m_valLabel->setPlainText( t ); }
+void Component::setValLabelText( QString t ) { m_valLabel->setPlainText( t ); m_valLabel->updtLabelPos(); }
 QString Component::getValLabelText() { return m_valLabel->toPlainText(); }
 
 QString Component::showProp()
