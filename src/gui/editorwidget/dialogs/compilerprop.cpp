@@ -5,6 +5,7 @@
 
 #include "compilerprop.h"
 #include "propdialog.h"
+#include "propval.h"
 #include "codeeditor.h"
 #include "basedebugger.h"
 #include "editorwindow.h"
@@ -28,7 +29,7 @@ CompilerProp::CompilerProp( CodeEditor* parent )
     
     double scale = MainWindow::self()->fontScale();
     this->resize( 300*scale, 200*scale );
-    this->setMinimumWidth( 300*scale );
+    this->setMinimumWidth( 250*scale );
 }
 
 void CompilerProp::on_compilerBox_currentIndexChanged( int index )
@@ -44,13 +45,11 @@ void CompilerProp::on_compilerBox_currentIndexChanged( int index )
 void CompilerProp::on_setPathButton_clicked()
 {
     m_compiler->getToolPath();
-    updateDialog();
 }
 
 void CompilerProp::on_setInclButton_clicked()
 {
     m_compiler->getIncludePath();
-    updateDialog();
 }
 
 void CompilerProp::on_toolPath_editingFinished()
@@ -65,21 +64,6 @@ void CompilerProp::on_inclPath_editingFinished()
     m_compiler->setIncludePath( path );
 }
 
-void CompilerProp::updateDialog()
-{
-    toolPathLabel->setVisible( true );
-    toolPath->setVisible( true );
-    setPathButton->setVisible( true );
-    toolPath->setText( m_compiler->toolPath() );
-
-    inclPathLabel->setVisible( true );
-    inclPath->setVisible( true );
-    setInclButton->setVisible( true );
-    inclPath->setText( m_compiler->includePath() );
-
-    this->adjustSize();
-}
-
 void CompilerProp::setCompiler( Compiler* compiler )
 {
     m_blocked = true;
@@ -91,22 +75,22 @@ void CompilerProp::setCompiler( Compiler* compiler )
     if( compName == "Arduino" ) inclPathLabel->setText( tr("Libraries Path") );
     else                        inclPathLabel->setText( tr("Include Path") );
 
-    if( compName == "None" )
+    bool paths = compName != "None";
+
+    toolPathLabel->setVisible( paths );
+    toolPath->setVisible( paths );
+    setPathButton->setVisible( paths );
+
+    inclPathLabel->setVisible( paths );
+    inclPath->setVisible( paths );
+    setInclButton->setVisible( paths );
+
+    if( paths )
     {
-        toolPathLabel->setVisible( false );
-        toolPath->setVisible( false );
-        setPathButton->setVisible( false );
-
-        inclPathLabel->setVisible( false );
-        inclPath->setVisible( false );
-        setInclButton->setVisible( false );
-    }else{
         PropDialog* pd = m_compiler->compilerProps();
-
-        for( PropVal* propWidget : pd->propWidgets() )
-            verticalLayout->addWidget( (QWidget*)propWidget );
-
-        updateDialog();
+        for( QWidget* propWidget : pd->propWidgets() )
+            verticalLayout->addWidget( propWidget );
     }
+    this->adjustSize();
     m_blocked = false;
 }

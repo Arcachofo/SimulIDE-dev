@@ -65,26 +65,37 @@ bool EditorWidget::close()
 
 void EditorWidget::newFile()
 {
-    CodeEditor* codeEditor = new CodeEditor( this, &m_outPane );
+    addDocument( "", true );
+}
 
-    codeEditor->setVerticalScrollBar( new scrollWidget( codeEditor, Qt::Vertical ) );
+void EditorWidget::addDocument(  QString file, bool main  )
+{
+    CodeEditor* ce = new CodeEditor( this, &m_outPane );
+    ce->setVerticalScrollBar( new scrollWidget( ce, Qt::Vertical ) );
 
-    m_docWidget->addTab( codeEditor, "New" );
-    m_docWidget->setCurrentWidget( codeEditor );
+    QString tabString = file.isEmpty() ? tr("NEW") : getFileName(file);
+    m_docWidget->addTab( ce, tabString );
 
-    connect( codeEditor->document(), SIGNAL( contentsChanged()),
-             this,                   SLOT(   documentWasModified()), Qt::UniqueConnection);
+    if( !file.isEmpty() ){
+        ce->setPlainText( fileToString( file, "EditorWidget::addDocument" ) );
+        ce->setFile( file );
+    }
+    connect( ce->document(), &QTextDocument::contentsChanged,
+                       this, &EditorWidget::documentWasModified, Qt::UniqueConnection);
 
-    m_fileList["New"] = codeEditor;
-    codeEditor->document()->setModified( true );
-    documentWasModified();
-    enableFileActs( true );
-    enableDebugActs( true );
+    m_fileList[file] = ce;
+    if( main ){
+        m_docWidget->setCurrentWidget( ce );
+        if( file.isEmpty() ) ce->document()->setModified( true ); // New
+        documentWasModified();
+        enableFileActs( true );
+        enableDebugActs( true );
+    }
 }
 
 void EditorWidget::open()
 {
-    const QString dir = m_lastDir;
+    QString dir = m_lastDir;
     QString fileName = QFileDialog::getOpenFileName( this, tr("Load File"), dir,
                        tr("All files")+" (*);;Arduino (*.ino);;Asm (*.asm);;GcBasic (*.gcb)" );
 
@@ -100,7 +111,7 @@ void EditorWidget::openRecentFile()
         QFile pfile( file );
         if( pfile.exists() ) loadFile( file );
         else{
-            const QMessageBox::StandardButton ret
+            QMessageBox::StandardButton ret
             = QMessageBox::warning( this, "EditorWidget::openRecentFile",
                                    tr("\nCan't find file:\n")+
                                    file+"\n\n"+
@@ -143,27 +154,30 @@ void EditorWidget::keyPressEvent( QKeyEvent* event )
 {
     if( event->modifiers() & Qt::ControlModifier )
     {
-        if( event->key() == Qt::Key_N )
-        {
-            newFile();
-        }
+        if     ( event->key() == Qt::Key_N ) newFile();
+        else if( event->key() == Qt::Key_O ) open();
+        else if( event->key() == Qt::Key_R ) reload();
         else if( event->key() == Qt::Key_S )
         {
             if( event->modifiers() & Qt::ShiftModifier) saveAs();
             else                                        save();
         }
-        else if( event->key() == Qt::Key_O )
-        {
-            open();
-        }
-        else if( event->key() == Qt::Key_R )
-        {
-            reload();
-        }
     }
 }
 
-void EditorWidget::loadFile( const QString &filePath )
+void EditorWidget::restoreFile( QString filePath )
+{
+    if( !QFileInfo::exists( filePath ) )
+    {
+        m_outPane.appendLine( tr("File doesn't exist")+":\n"+filePath );
+        return;
+    }
+    if( m_fileList.contains( filePath ) ) return;
+
+    addDocument( filePath, false );
+}
+
+void EditorWidget::loadFile( QString filePath )
 {
     if( !QFileInfo::exists( filePath ) )
     {
@@ -175,30 +189,16 @@ void EditorWidget::loadFile( const QString &filePath )
         m_docWidget->setCurrentWidget( m_fileList.value( filePath ) );
         return;
     }
-    newFile();
     QApplication::setOverrideCursor( Qt::WaitCursor );
 
-    CodeEditor* ce = getCodeEditor();
-    ce->setPlainText( fileToString( filePath, "EditorWidget::loadFile" ) );
-    ce->setFile( filePath );
+    addDocument( filePath, true );
 
     m_lastDir = filePath;
-
-    int index = m_docWidget->currentIndex();
-    m_fileList.remove("New");
-    m_fileList[filePath] = ce;
-    m_docWidget->setTabText( index, getFileName(filePath) );
 
     enableFileActs( true );
     enableDebugActs( true );
 
-    QSettings* settings = MainWindow::self()->settings();
-    QStringList files = settings->value("recentFileList").toStringList();
-    files.removeAll( filePath );
-    files.prepend( filePath );
-    while( files.size() > MaxRecentFiles ) files.removeLast();
-    settings->setValue("recentFileList", files );
-    updateRecentFileActions();
+    addRecentFile( filePath );
 
     QApplication::restoreOverrideCursor();
 }
@@ -237,7 +237,7 @@ bool EditorWidget::saveAs()
     return saveFile( fileName );
 }
 
-bool EditorWidget::saveFile( const QString &fileName )
+bool EditorWidget::saveFile( QString fileName )
 {
     QFile file( fileName );
     if( !file.open( QFile::WriteOnly | QFile::Text) )
@@ -347,6 +347,17 @@ void EditorWidget::confCompiler()
 {
     CodeEditor* ce = getCodeEditor();
     if( ce ) ce->compProps();
+}
+
+void EditorWidget::addRecentFile( QString filePath )
+{
+    QSettings* settings = MainWindow::self()->settings();
+    QStringList files = settings->value("recentFileList").toStringList();
+    files.removeAll( filePath );
+    files.prepend( filePath );
+    while( files.size() > MaxRecentFiles ) files.removeLast();
+    settings->setValue("recentFileList", files );
+    updateRecentFileActions();
 }
 
 void EditorWidget::updateRecentFileActions()

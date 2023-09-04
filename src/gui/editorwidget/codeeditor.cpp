@@ -12,6 +12,7 @@
 #include "codeeditor.h"
 #include "outpaneltext.h"
 #include "compilerprop.h"
+#include "comproperty.h"
 #include "highlighter.h"
 #include "basedebugger.h"
 #include "mainwindow.h"
@@ -536,6 +537,7 @@ void CodeEditor::loadConfig()
         return;
     }
 
+    QHash<QString, QString> properties;
     QDomDocument domDoc = fileToDomDoc( fileF, "EditorWidget::loadConfig" );
     if( domDoc.isNull() ) return;
 
@@ -557,9 +559,24 @@ void CodeEditor::loadConfig()
         for( int i=0; i<atrs.count(); ++i )
         {
             QDomAttr atr = atrs.item(i).toAttr();
-            m_compiler->setPropStr( atr.name(), atr.value() );
+            properties[atr.name()] = atr.value();
         }
         node = node.nextSibling();
+    }
+    if( !m_compiler ) return;
+
+    QList<propGroup>* groups = m_compiler->properties(); // Set properties in correct order
+    for( propGroup group : *groups )
+    {
+        QList<ComProperty*> propList = group.propList;
+        if( propList.isEmpty() ) continue;
+        for( ComProperty* prop : propList )
+        {
+            QString pn = prop->name();
+            if( !properties.contains( pn ) ) continue;
+            prop->setValStr( properties.value( pn ) );
+            properties.remove( pn );
+        }
     }
 }
 

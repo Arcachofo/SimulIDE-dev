@@ -77,8 +77,8 @@ class EditorWindow : public EditorWidget, public Updatable
 
         CodeEditor*   m_debugDoc;
         BaseDebugger* m_debugger;
+
         bool m_stepOver;
-        //bool m_driveCirc;
         bool m_updateScreen;
         bool m_jumpToBrk;
         int m_lastCycle;

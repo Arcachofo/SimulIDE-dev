@@ -30,9 +30,11 @@ class EditorWidget : public QWidget
 
        CodeEditor* getCodeEditor();
 
+       QStringList getFiles() { return m_fileList.keys(); }
+       void restoreFile( QString filePath );
 
     public slots:
-       void loadFile( const QString &filePath );
+       void loadFile( QString filePath );
        bool save();
        virtual void pause(){;}
        virtual void stop(){;}
@@ -51,7 +53,6 @@ class EditorWidget : public QWidget
         void documentWasModified();
         void tabChanged( int tab );
 
-
         void cut()   { getCodeEditor()->cut(); }
         void copy()  { getCodeEditor()->copy(); }
         void paste() { getCodeEditor()->paste(); }
@@ -65,7 +66,6 @@ class EditorWidget : public QWidget
         void compile() { getCodeEditor()->compile(); } /// m_compiler.compile( getCodeEditor()->getFilePath() );
 
         virtual bool upload() {return false;}
-
 
     protected:
         void dropEvent( QDropEvent* event );
@@ -84,10 +84,13 @@ class EditorWidget : public QWidget
         void setStepActs( bool s );
 
         enum { MaxRecentFiles = 10 };
+        void addRecentFile( QString filePath );
         void updateRecentFileActions();
 
         bool maybeSave();
-        bool saveFile( const QString &fileName );
+        bool saveFile( QString fileName );
+
+        void addDocument( QString file, bool main );
 
         OutPanelText m_outPane;
 

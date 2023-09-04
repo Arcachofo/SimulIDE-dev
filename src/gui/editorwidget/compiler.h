@@ -22,16 +22,11 @@ class Compiler : public QObject, public CompBase
         Compiler( CodeEditor* editor, OutPanelText* outPane );
         ~Compiler();
 
-        void clearCompiler();
-        void loadCompiler( QString file );
-        virtual int compile( bool debug );
-
         QString compName() { return m_compName; }
         void setCompName( QString n ){;} // Dummy
 
-        QString fileName() { return m_fileName; }
-        QString buildPath() { return m_buildPath; }
-        QString file() { return m_file ; }
+        bool openFiles() { return m_openFiles; }
+        void setOpenFiles( bool o ) { m_openFiles = o; }
 
         virtual QString toolPath() { return m_toolPath; }
         virtual void setToolPath( QString path );
@@ -57,6 +52,14 @@ class Compiler : public QObject, public CompBase
 
         QString fileList();
         void setFileList( QString fl );
+
+        QString fileName() { return m_fileName; }
+        QString buildPath() { return m_buildPath; }
+        QString file() { return m_file ; }
+
+        void clearCompiler();
+        void loadCompiler( QString file );
+        virtual int compile( bool debug );
 
         virtual QString toString() override;
 
@@ -91,6 +94,7 @@ class Compiler : public QObject, public CompBase
         bool m_useFamily;
         bool m_useDevice;
         bool m_uploadHex;
+        bool m_openFiles;
 
         QString m_compName;
         QString m_toolPath;

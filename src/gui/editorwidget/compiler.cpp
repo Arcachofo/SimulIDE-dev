@@ -19,6 +19,7 @@
 #include "utils.h"
 
 #include "stringprop.h"
+#include "boolprop.h"
 
 Compiler::Compiler( CodeEditor* editor, OutPanelText* outPane )
         : QObject( editor )
@@ -34,16 +35,18 @@ Compiler::Compiler( CodeEditor* editor, OutPanelText* outPane )
     m_fileName = getBareName( m_file );
     m_firmware = "";
     m_buildPath = m_fileDir;
+    m_openFiles = false;
 
     m_id = m_file; /// FIXME: ??? do we really need this?
 
     clearCompiler();
 
     addPropGroup( { "Settings", {
-new StrProp<Compiler>( "Compiler", tr("Compiler"),"", this, &Compiler::compName, &Compiler::setCompName, propHidden ),
-new StrProp<Compiler>( "Circuit" , "Circuit"     ,"", this, &Compiler::circuit,  &Compiler::setCircuit, propHidden ),
-new StrProp<Compiler>( "FileList", "FileList"    ,"", this, &Compiler::fileList, &Compiler::setFileList, propHidden ),
-new StrProp<Compiler>( "Breakpoints", "Breakpoints","", this, &Compiler::breakpoints, &Compiler::setBreakpoints, propHidden ),
+new StrProp<Compiler> ( "Compiler" , tr("Compiler")     ,"", this, &Compiler::compName,    &Compiler::setCompName, propHidden ),
+new BoolProp<Compiler>( "OpenFiles", tr("Restore files"),"", this, &Compiler::openFiles,   &Compiler::setOpenFiles ),
+new StrProp<Compiler> ( "Circuit"  , "Circuit"          ,"", this, &Compiler::circuit,     &Compiler::setCircuit, propHidden ),
+new StrProp<Compiler> ( "FileList" , "FileList"         ,"", this, &Compiler::fileList,    &Compiler::setFileList, propHidden ),
+new StrProp<Compiler> ( "Breakpoints", "Breakpoints"    ,"", this, &Compiler::breakpoints, &Compiler::setBreakpoints, propHidden ),
     }, 0} );
 }
 Compiler::~Compiler(){}
@@ -314,7 +317,7 @@ QString Compiler::circuit()
 
 void Compiler::setCircuit( QString c )
 {
-    /// TODO
+    if( m_openFiles ) Circuit::self()->loadCircuit( c );
 }
 
 QString Compiler::breakpoints()
@@ -337,12 +340,19 @@ void Compiler::setBreakpoints( QString bp )
 
 QString Compiler::fileList()
 {
-    return m_fileList.join(",");
+    QStringList fileList = EditorWindow::self()->getFiles();
+    fileList.removeAll( m_file );
+
+    return fileList.join(",");;
 }
 
 void Compiler::setFileList( QString fl )
 {
-    /// m_fileList = fl.split(","); /// TODO: open files
+    if( !m_openFiles ) return;
+    QStringList fileList = fl.split(",");
+    fileList.removeOne("");
+
+    for( QString file : fileList ) EditorWindow::self()->restoreFile( file );
 }
 
 QString Compiler::toString()
