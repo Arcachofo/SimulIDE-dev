@@ -63,7 +63,16 @@ void Reactive::updateStep()
     }
     if( m_warning ) update();
 
-    uint64_t reactStep = Simulator::self()->reactStep();
+    if( m_changed )
+    {
+        m_changed = false;
+        m_warning = false;
+        m_stepError = false;
+        m_reacStep = Simulator::self()->reactStep(); // Time in ps
+        updtReactStep();
+    }
+    update();
+    /*uint64_t reactStep = Simulator::self()->reactStep();
     if( m_reacStep != reactStep )
     {
         m_reacStep = reactStep; // Time in ps
@@ -75,7 +84,7 @@ void Reactive::updateStep()
         m_warning = false;
         m_stepError = false;
         updtReactStep();
-    }
+    }*/
 }
 
 void Reactive::setValue( double c )
