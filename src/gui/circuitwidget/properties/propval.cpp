@@ -9,7 +9,7 @@
 #include "propdialog.h"
 #include "comproperty.h"
 
-PropVal::PropVal( PropDialog* parent, Component* comp, ComProperty* prop )
+PropVal::PropVal( PropDialog* parent, CompBase* comp, ComProperty* prop )
        : QWidget( parent )
 {
     m_propDialog = parent;

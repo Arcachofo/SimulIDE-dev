@@ -163,42 +163,39 @@ void EditorWidget::keyPressEvent( QKeyEvent* event )
     }
 }
 
-void EditorWidget::loadFile( const QString &fileName )
+void EditorWidget::loadFile( const QString &filePath )
 {
-    if( !QFileInfo::exists( fileName ) )
+    if( !QFileInfo::exists( filePath ) )
     {
-        m_outPane.appendLine( tr("File doesn't exist")+":\n"+fileName );
+        m_outPane.appendLine( tr("File doesn't exist")+":\n"+filePath );
         return;
     }
-    if( m_fileList.contains( fileName ) )
+    if( m_fileList.contains( filePath ) )
     {
-        m_docWidget->setCurrentWidget( m_fileList.value( fileName ) );
+        m_docWidget->setCurrentWidget( m_fileList.value( filePath ) );
         return;
     }
     newFile();
     QApplication::setOverrideCursor( Qt::WaitCursor );
 
     CodeEditor* ce = getCodeEditor();
-    ce->setPlainText( fileToString( fileName, "EditorWidget::loadFile" ) );
-    ce->setFile( fileName );
+    ce->setPlainText( fileToString( filePath, "EditorWidget::loadFile" ) );
+    ce->setFile( filePath );
 
-    QFile file( fileName +".brk" );
-    if( file.exists() ) loadBreakpoints( fileName +".brk" );
-
-    m_lastDir = fileName;
+    m_lastDir = filePath;
 
     int index = m_docWidget->currentIndex();
     m_fileList.remove("New");
-    m_fileList[fileName] = ce;
-    m_docWidget->setTabText( index, getFileName(fileName) );
+    m_fileList[filePath] = ce;
+    m_docWidget->setTabText( index, getFileName(filePath) );
 
     enableFileActs( true );
     enableDebugActs( true );
 
     QSettings* settings = MainWindow::self()->settings();
     QStringList files = settings->value("recentFileList").toStringList();
-    files.removeAll( fileName );
-    files.prepend( fileName );
+    files.removeAll( filePath );
+    files.prepend( filePath );
     while( files.size() > MaxRecentFiles ) files.removeLast();
     settings->setValue("recentFileList", files );
     updateRecentFileActions();
@@ -260,7 +257,7 @@ bool EditorWidget::saveFile( const QString &fileName )
     out << ce->toPlainText();
     file.close();
 
-    saveBreakpoints( fileName );
+    ce->saveConfig();
 
     ce->document()->setModified( false );
     documentWasModified();
@@ -270,43 +267,6 @@ bool EditorWidget::saveFile( const QString &fileName )
 
     QApplication::restoreOverrideCursor();
     return true;
-}
-
-void EditorWidget::saveBreakpoints( QString fileName )
-{
-    fileName = fileName +".brk";
-    QFile file( fileName );
-    if( file.exists() ) file.remove();
-
-    QList<int>* brkList = getCodeEditor()->getBreakPoints();
-    if( brkList->isEmpty() ) return;
-
-    QString brkListStr;
-    for( int brk : *brkList )
-        brkListStr.append( QString::number( brk )+"," );
-
-    if( !file.open( QFile::WriteOnly | QFile::Text) )
-    {
-        QMessageBox::warning(this, "EditorWindow::saveBreakpoints",
-                             tr("Cannot write file %1:\n%2.")
-                             .arg( fileName )
-                             .arg( file.errorString() ));
-        return;
-    }
-    QTextStream out( &file );
-    out.setCodec("UTF-8");
-    out << brkListStr;
-    file.close();
-}
-
-void EditorWidget::loadBreakpoints( const QString &fileName )
-{
-    QString brkListStr = fileToString( fileName, "EditorWidget::loadBreakpoints" );
-    QStringList list = brkListStr.split(",");
-    list.removeOne("");
-
-    CodeEditor* ce = getCodeEditor();
-    for( QString brk : list ) ce->addBreakPoint( brk.toInt() );
 }
 
 bool EditorWidget::maybeSave()
@@ -386,9 +346,7 @@ void EditorWidget::confEditor()
 void EditorWidget::confCompiler()
 {
     CodeEditor* ce = getCodeEditor();
-    if( !ce ) return;
-    BaseDebugger* comp = ce->getCompiler();
-    if( comp ) comp->compProps();
+    if( ce ) ce->compProps();
 }
 
 void EditorWidget::updateRecentFileActions()

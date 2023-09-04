@@ -9,7 +9,7 @@
 #include "utils.h"
 #include "comproperty.h"
 
-NumVal::NumVal( PropDialog* parent, Component* comp, ComProperty* prop )
+NumVal::NumVal( PropDialog* parent, CompBase* comp, ComProperty* prop )
       : PropVal( parent, comp, prop )
 {
     setupUi(this);
@@ -55,10 +55,10 @@ void NumVal::on_showVal_toggled( bool checked )
     m_blocked = true;
 
     if( checked ){
-        m_component->setShowProp( m_propName );
-        m_component->setValLabelText( getValWithUnit() );
+        m_component->setPropStr("ShowProp", m_propName );
+        m_component->setPropStr("ValLabelText", getValWithUnit() );
     }
-    else m_component->setShowProp( "" );
+    else m_component->setPropStr("ShowProp", "" );  //setShowProp( "" );
     m_propDialog->updtValues();
     m_propDialog->changed();
     m_blocked = false;
@@ -92,14 +92,14 @@ void NumVal::updtValues()
     if( m_blocked ) return;
     m_blocked = true;
 
-    showVal->setChecked( m_component->showProp() == m_propName );
+    showVal->setChecked( m_component->getPropStr("ShowProp") == m_propName );
 
     double multiplier = 1;
     if( m_useMult ) multiplier = getMultiplier( unitBox->currentText() );
     double val = m_property->getValue()/multiplier;
     valueBox->setValue( val );
 
-    if( showVal->isChecked() ) m_component->setValLabelText( m_property->getValStr() );
+    if( showVal->isChecked() ) m_component->setPropStr("ValLabelText", m_property->getValStr() );
 
     /*QString valStr = m_property->getValStr();
     QStringList l = valStr.split(" ");

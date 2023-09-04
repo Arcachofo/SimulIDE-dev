@@ -17,7 +17,7 @@ class EnumVal : public PropVal, private Ui::EnumVal
     Q_OBJECT
     
     public:
-        EnumVal( PropDialog* parent, Component* comp, ComProperty* prop );
+        EnumVal( PropDialog* parent, CompBase* comp, ComProperty* prop );
         ~EnumVal();
 
         virtual void setup() override;

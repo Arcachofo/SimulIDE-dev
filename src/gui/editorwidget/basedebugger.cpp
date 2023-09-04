@@ -275,7 +275,9 @@ void BaseDebugger::stepDebug()
 
 void BaseDebugger::getInfoInFile( QString line )
 {
-    QString device = getValue( line, "device" );
+    /// FIXME
+    /// TODELETE
+    /*QString device = getValue( line, "device" );
     if( !device.isEmpty() )
     {
         m_device = device;
@@ -291,7 +293,7 @@ void BaseDebugger::getInfoInFile( QString line )
         m_family = family;
         if( m_compDialog ) m_compDialog->setFamily( m_family );
         m_outPane->appendLine( tr("Found Family definition in file: ") + family );
-    }
+    }*/
 }
 
 QString BaseDebugger::getValue( QString line, QString key ) // Static

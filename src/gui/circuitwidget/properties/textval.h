@@ -9,7 +9,6 @@
 #include "ui_textval.h"
 #include "propval.h"
 
-class Component;
 class PropDialog;
 class Scripted;
 
@@ -18,7 +17,7 @@ class TextVal : public PropVal, private Ui::TextVal
     Q_OBJECT
     
     public:
-        TextVal( PropDialog* parent, Component* comp, ComProperty* prop );
+        TextVal( PropDialog* parent, CompBase* comp, ComProperty* prop );
         ~TextVal();
         
         virtual void setup() override;

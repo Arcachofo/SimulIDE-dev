@@ -319,11 +319,6 @@ void WaveGen::slotProperties()
     udtProperties();
 }
 
-void WaveGen::updtValues()
-{
-    //m_propDialog
-}
-
 void WaveGen::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
 {
     if( m_waveType == Wav )

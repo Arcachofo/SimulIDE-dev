@@ -232,7 +232,7 @@ void EditorWindow::stopDebbuger()
     m_debugger = NULL;
 }
 
-BaseDebugger* EditorWindow::createDebugger( QString name, CodeEditor* ce , QString code )
+BaseDebugger* EditorWindow::createDebugger( QString name, CodeEditor* ce, QString code )
 {
     BaseDebugger* debugger = NULL;
     QString type = m_compilers.value( name ).type;

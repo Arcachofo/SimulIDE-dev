@@ -37,7 +37,7 @@ class EditorWindow : public EditorWidget, public Updatable
 
         BaseDebugger* debugger() { return m_debugger; }
 
-        virtual void updateStep();
+        virtual void updateStep() override;
 
         bool debugStarted() { return (m_state > DBG_STOPPED); }
         void lineReached( codeLine_t line );
@@ -45,7 +45,7 @@ class EditorWindow : public EditorWidget, public Updatable
 
         bebugState_t debugState() { return m_state; }
 
-        BaseDebugger* createDebugger(QString name, CodeEditor* ce, QString code="" );
+        BaseDebugger* createDebugger( QString name, CodeEditor* ce, QString code="" );
 
         QStringList compilers() { return m_compilers.keys(); }
         QStringList assemblers() { return m_assemblers.keys(); }
@@ -62,7 +62,7 @@ class EditorWindow : public EditorWidget, public Updatable
         virtual void step() override;
         virtual void stepOver() override;
         virtual void reset() override;
-        virtual bool upload();
+        virtual bool upload() override;
 
         void initDebbuger();
 

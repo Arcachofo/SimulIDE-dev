@@ -12,6 +12,7 @@ class BaseDebugger;
 class LineNumberArea;
 class Highlighter;
 class OutPanelText;
+class CompilerProp;
 
 class CodeEditor : public QPlainTextEdit
 {
@@ -25,6 +26,9 @@ class CodeEditor : public QPlainTextEdit
         QString getFilePath() { return m_file ; }
 
         void setSyntaxFile( QString file );
+
+        void loadConfig();
+        void saveConfig();
 
         int debugLine() { return m_debugLine; }
         void setDebugLine( int line ) { m_debugLine = line; }
@@ -45,6 +49,7 @@ class CodeEditor : public QPlainTextEdit
 
         BaseDebugger* getCompiler() { return m_compiler; }
         void setCompiler( BaseDebugger* comp );
+        void compProps();
 
         QList<int> getFound();
         void setFound( QList<QTextEdit::ExtraSelection> sel );
@@ -86,12 +91,12 @@ class CodeEditor : public QPlainTextEdit
         void contextMenuEvent( QContextMenuEvent* event );
 
     private:
-        QString changeCompilerFromCode();
         int  getSyntaxCoincidences();
         void remBreakPoint( int line );
 
         void indentSelection( bool unIndent );
 
+        CompilerProp* m_compDialog;
         BaseDebugger* m_compiler;
         OutPanelText* m_outPane;
 

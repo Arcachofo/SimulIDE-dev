@@ -17,7 +17,7 @@ class NumVal : public PropVal, private Ui::NumVal
     Q_OBJECT
     
     public:
-        NumVal( PropDialog* parent, Component* comp, ComProperty* prop );
+        NumVal( PropDialog* parent, CompBase* comp, ComProperty* prop );
         ~NumVal();
 
         virtual void setup() override;

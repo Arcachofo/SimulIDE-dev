@@ -36,14 +36,14 @@ PropDialog::PropDialog( QWidget* parent, QString help )
     helpText->setText( help );
 }
 
-void PropDialog::setComponent( Component* comp )
+void PropDialog::setComponent( CompBase* comp )
 {
     this->setWindowTitle( "Uid: "+comp->getUid() );
     type->setText( "Type: "+comp->itemType() );
-    labelBox->setText( comp->idLabel() );
+    labelBox->setText( comp->getPropStr("label") );
     tabList->clear();
     m_component = comp;
-    showLabel->setChecked( comp->showId() );
+    showLabel->setChecked( comp->getPropStr("Show_id") == "true" );
 
     int w=0, index=0;
     QList<propGroup>* groups = comp->properties();
@@ -53,24 +53,28 @@ void PropDialog::setComponent( Component* comp )
         if( group.flags & groupHidden ) continue;
 
         bool groupEnabled = true;
-        if( comp->parentItem() && (group.flags & groupNoCopy) ) groupEnabled = false;
+        bool isMaincomp = comp->getPropStr("mainComp") == "true";
+        if( isMaincomp && (group.flags & groupNoCopy) ) groupEnabled = false;
 
         QList<ComProperty*> propList = group.propList;
         if( !propList.isEmpty() )
         {
             index++;
-            QWidget* propWidget = new QWidget( tabList );
-            propWidget->setLayout( new QVBoxLayout( propWidget ));
-            propWidget->layout()->setSpacing( 9 );
-            propWidget->setSizePolicy( QSizePolicy::Preferred, QSizePolicy::Preferred );
+            QWidget* groupWidget = new QWidget( tabList );
+            groupWidget->setLayout( new QVBoxLayout( groupWidget ));
+            groupWidget->layout()->setSpacing( 9 );
+            groupWidget->setSizePolicy( QSizePolicy::Preferred, QSizePolicy::Preferred );
+            groupWidget->setObjectName( group.name );
 
             for( ComProperty* prop : propList )
             {
+                if( prop->flags() & propHidden ) continue; // Property hidden
+
                 if( prop->name() == "" ) // Just a label
                 {
                     LabelVal* mp = new LabelVal( this );
                     mp->setLabelVal( prop->capt() );
-                    propWidget->layout()->addWidget( mp );
+                    groupWidget->layout()->addWidget( mp );
                     continue;
                 }
                 QString type = prop->type();
@@ -90,16 +94,16 @@ void PropDialog::setComponent( Component* comp )
                 w = mp->width();
                 mp->setMinimumWidth( w );
                 m_propList.append( mp );
-                propWidget->layout()->addWidget( mp );
+                groupWidget->layout()->addWidget( mp );
 
                 bool propEnabled = true;
-                if( comp->parentItem() && (prop->flags() & propNoCopy) ) propEnabled = false;
+                if( isMaincomp && (prop->flags() & propNoCopy) ) propEnabled = false;
 
                 mp->setEnabled( groupEnabled && propEnabled );
             }
-            propWidget->setMinimumHeight( propList.size()*30);
-            propWidget->setMinimumWidth( w+40 );
-            tabList->addTab( propWidget, group.name );
+            groupWidget->setMinimumHeight( propList.size()*30);
+            groupWidget->setMinimumWidth( w+40 );
+            tabList->addTab( groupWidget, group.name );
     }   }
     if( tabList->count() == 0 ) tabList->setVisible( false ); // Hide tab widget if empty
     adjustWidgets();
@@ -117,12 +121,13 @@ void PropDialog::showProp( QString name, bool show )
 
 void PropDialog::on_labelBox_editingFinished()
 {
-    m_component->setIdLabel( labelBox->text() );
+    m_component->setPropStr("label", labelBox->text() );
 }
 
 void PropDialog::on_showLabel_toggled( bool checked )
 {
-    m_component->setShowId( checked );
+    QString show = checked ? "true" : "false";
+    m_component->setPropStr("Show_id", show );
 }
 
 void PropDialog::on_tabList_currentChanged( int )
@@ -172,7 +177,6 @@ void PropDialog::adjustWidgets()
 void PropDialog::updtValues()
 {
     for( PropVal* prop : m_propList ) prop->updtValues();
-    m_component->updtValues();
 }
 
 void PropDialog::changed()

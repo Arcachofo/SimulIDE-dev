@@ -5,6 +5,7 @@
 
 #include <QPainter>
 #include <QTextDocumentFragment>
+#include <QDomDocument>
 #include <QSettings>
 #include <QDebug>
 
@@ -38,8 +39,9 @@ CodeEditor::CodeEditor( QWidget* parent, OutPanelText* outPane )
     m_outPane   = outPane;
     m_lNumArea  = new LineNumberArea( this );
     m_hlighter  = new Highlighter( document() );
-    
-    m_compiler = EditorWindow::self()->createDebugger( "", this, "00" );
+
+    m_compiler   = NULL;
+    m_compDialog = NULL;
     m_debugLine = 0;
     m_brkAction = 0;
     m_help = "";
@@ -72,12 +74,29 @@ CodeEditor::CodeEditor( QWidget* parent, OutPanelText* outPane )
 CodeEditor::~CodeEditor()
 {
     m_documents.removeAll( this );
+
+    if( m_compDialog )
+    {
+        m_compDialog->setParent( NULL );
+        m_compDialog->close();
+        delete m_compDialog;
+    }
 }
 
 void CodeEditor::setCompiler( BaseDebugger* compiler )
 {
     if( m_compiler ) delete m_compiler;
     m_compiler = compiler;
+}
+
+void CodeEditor::compProps()
+{
+    if( !m_compDialog )
+    {
+        m_compDialog = new CompilerProp( this );
+        m_compDialog->setCompiler( m_compiler );
+    }
+    m_compDialog->show();
 }
 
 void CodeEditor::setSyntaxFile( QString file )
@@ -88,21 +107,23 @@ void CodeEditor::setSyntaxFile( QString file )
 void CodeEditor::setFile( const QString filePath )
 {
     if( m_file == filePath ) return;
+    m_file = filePath;
 
     m_numLines = document()->blockCount();
 
     if( m_compiler ) delete m_compiler;
     m_compiler = NULL;
+    loadConfig();
 
     m_outPane->appendLine( "-------------------------------------------------------" );
     m_outPane->appendLine( tr(" File: ")+filePath+"\n" );
 
-    m_file = filePath;
+
     QDir::setCurrent( m_file );
 
     QString extension = getFileExt( filePath );
 
-    QString compiler = changeCompilerFromCode();
+    /// QString compiler = changeCompilerFromCode(); /// TODELETE
 
     QString code = "00";
 
@@ -184,7 +205,7 @@ void CodeEditor::setFile( const QString filePath )
     {
         //m_compiler = new B16AsmDebugger( this, m_outPane );
     }*/
-    if( !m_compiler ) m_compiler = EditorWindow::self()->createDebugger( compiler, this, code );
+    if( !m_compiler ) m_compiler = EditorWindow::self()->createDebugger( "None", this, code );
     m_outPane->appendLine( "-------------------------------------------------------" );
 }
 
@@ -235,7 +256,7 @@ bool CodeEditor::compile( bool debug )
 {
     if( document()->isModified() )
     {
-        changeCompilerFromCode();
+        //changeCompilerFromCode();
 
         if( !EditorWindow::self()->save() )
         {
@@ -483,22 +504,84 @@ void CodeEditor::contextMenuEvent( QContextMenuEvent* event )
     menu.exec( event->globalPos() );
 }
 
-QString CodeEditor::changeCompilerFromCode()
+void CodeEditor::loadConfig()
 {
-    QString line = this->document()->findBlockByLineNumber(0).text();
-    QString compiler = BaseDebugger::getValue( line, "compiler" );
-    if( compiler.isEmpty() ) compiler = "None";
-    else{
-        m_outPane->appendLine( tr("Found Compiler definition in file: ") + compiler );
-        if( m_compiler != NULL )
+    QString fileF = m_file +".cfg";
+    QFile file( fileF );
+    if( !file.exists() )  // No .cfg file, Still support old brk files and file info
+    {
+        QString fileF = m_file +".brk";
+        QFile fileB( fileF );
+        if( fileB.exists() )
         {
-            if( m_compiler->compName()==compiler ) return compiler;
-            delete m_compiler;
+            QString bp = fileToString( fileF, "EditorWidget::loadConfig" );
+            QStringList list = bp.split(",");
+            list.removeOne("");
+            for( QString brk : list ) addBreakPoint( brk.toInt() );
         }
-        m_compiler = EditorWindow::self()->createDebugger( compiler, this );
-        m_compiler->getInfoInFile( line );
+
+        QString line = this->document()->findBlockByLineNumber(0).text();
+        QString compiler = BaseDebugger::getValue( line, "compiler" );
+        if( !compiler.isEmpty() )
+        {
+            m_outPane->appendLine( tr("Found Compiler definition in file: ") + compiler );
+            if( m_compiler != NULL )
+            {
+                if( m_compiler->compName() == compiler ) return ;
+                delete m_compiler;
+            }
+            m_compiler = EditorWindow::self()->createDebugger( compiler, this );
+            m_compiler->getInfoInFile( line );
+        }
+        return;
     }
-    return compiler;
+
+    QDomDocument domDoc = fileToDomDoc( fileF, "EditorWidget::loadConfig" );
+    if( domDoc.isNull() ) return;
+
+    QDomElement root = domDoc.documentElement();
+    if( root.tagName() != "compiler" ) return;
+    //if( root.hasAttribute("") )
+
+    QDomNode node = root.firstChild();
+    while( !node.isNull() )
+    {
+        QDomElement el = node.toElement();
+        if( el.tagName() != "item" ) continue;
+        if( !el.hasAttribute("Compiler") ) break;
+
+        QString compName = el.attribute("Compiler");
+        m_compiler = EditorWindow::self()->createDebugger( compName, this );
+
+        QDomNamedNodeMap atrs = el.attributes();
+        for( int i=0; i<atrs.count(); ++i )
+        {
+            QDomAttr atr = atrs.item(i).toAttr();
+            m_compiler->setPropStr( atr.name(), atr.value() );
+        }
+        node = node.nextSibling();
+    }
+}
+
+void CodeEditor::saveConfig()
+{
+    if( !m_compiler ) return;
+
+    QString fileName = m_file +".cfg";
+    QFile file( fileName );
+    if( file.exists() ) file.remove();
+
+    QString config = m_compiler->toString();
+
+    if( !file.open( QFile::WriteOnly | QFile::Text) )
+    {
+        m_outPane->appendLine( tr("Cannot write file")+":\n"+fileName+"\n"+file.errorString() );
+        return;
+    }
+    QTextStream out( &file );
+    out.setCodec("UTF-8");
+    out << config;
+    file.close();
 }
 
 int CodeEditor::lineNumberAreaWidth()

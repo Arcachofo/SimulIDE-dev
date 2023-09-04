@@ -8,7 +8,7 @@
 #include "propdialog.h"
 #include "comproperty.h"
 
-EnumVal::EnumVal( PropDialog* parent, Component* comp, ComProperty* prop )
+EnumVal::EnumVal( PropDialog* parent, CompBase* comp, ComProperty* prop )
        : PropVal( parent, comp, prop )
 {
     setupUi(this);
@@ -39,10 +39,10 @@ void EnumVal::on_showVal_toggled( bool checked )
     m_blocked = true;
 
     if( checked ){
-        m_component->setShowProp( m_propName );
-        m_component->setValLabelText( valueBox->currentText() );
+        m_component->setPropStr("ShowProp", m_propName );  //setShowProp( m_propName );
+        m_component->setPropStr("ValLabelText", valueBox->currentText() ); //setValLabelText( valueBox->currentText() );
     }
-    else m_component->setShowProp( "" );
+    else m_component->setPropStr("ShowProp", "" );  //setShowProp( "" );
     m_propDialog->updtValues();
     m_propDialog->changed();
     m_blocked = false;
@@ -54,7 +54,7 @@ void EnumVal::on_valueBox_currentIndexChanged( QString val )
     int index = valueBox->currentIndex();
     m_property->setValStr( m_enums.at( index ) );
 
-    if( showVal->isChecked() ) m_component->setValLabelText( val );
+    if( showVal->isChecked() ) m_component->setPropStr("ValLabelText", val ); //setValLabelText( val );
     m_propDialog->changed();
 }
 
@@ -63,8 +63,7 @@ void EnumVal::updtValues()
     if( m_blocked ) return;
     m_blocked = true;
 
-    bool checked = m_component->showProp() == m_propName;
-    showVal->setChecked( checked );
+    showVal->setChecked( m_component->getPropStr("ShowProp") == m_propName );
 
     m_blocked = false;
 }

@@ -1,4 +1,4 @@
-/***************************************************************************
+﻿/***************************************************************************
  *   Copyright (C) 2012 by Santiago González                               *
  *                                                                         *
  ***( see copyright.txt file at root folder )*******************************/
@@ -9,24 +9,41 @@
 
 #include "inodebugger.h"
 #include "outpaneltext.h"
+#include "propdialog.h"
 #include "mainwindow.h"
 #include "circuit.h"
 #include "utils.h"
 
-static const char* InoDebugger_properties[] = {
-    QT_TRANSLATE_NOOP("App::Property","Board"),
-    QT_TRANSLATE_NOOP("App::Property","Custom Board")
-};
+#include "stringprop.h"
 
 InoDebugger::InoDebugger( CodeEditor* parent, OutPanelText* outPane )
            : AvrGccDebugger( parent, outPane )
 {
-    Q_UNUSED( InoDebugger_properties );
-
     m_version = 0;
-    m_Ardboard = Uno;
-    m_ArdboardList << "uno" << "megaADK" << "nano" << "diecimila" << "leonardo" << "custom";
+    m_board = "Uno";
     m_buildPath = MainWindow::self()->getConfigPath("codeeditor/buildIno");
+
+    m_enumUids = QStringList()
+        << "Uno"
+        << "Mega"
+        << "Nano"
+        << "Duemilanove"
+//        << "Leonardo"
+        << "Custom";
+
+    m_enumNames = QStringList()
+            << "Uno"
+            << "Mega"
+            << "Nano"
+            << "Duemilanove"
+//            << "Leonardo"
+            << tr("custom");
+
+    addProperty( "Settings",
+new StrProp<InoDebugger>( "Board"      , tr("Board")       ,"", this, &InoDebugger::getBoard,    &InoDebugger::setBoard,0,"enum" ) );
+
+    addProperty( "Settings",
+new StrProp<InoDebugger>( "CustomBoard", tr("Custom Board"),"", this, &InoDebugger::customBoard, &InoDebugger::setCustomBoard, 0 ) );
 }
 InoDebugger::~InoDebugger() {}
 
@@ -143,14 +160,18 @@ int InoDebugger::compile( bool debug )
     cCachePath = addQuotes( cCachePath );
 
     QString boardSource;
-    QString boardName = getBoard();
-    if( boardName.isEmpty() ){
-        if( m_Ardboard == Custom ) boardSource = "Custom ";
-        else                       boardSource = "Arduino";
-    }else                          boardSource = "In File";
+    QString boardName = m_board.toLower();
 
-    if( m_Ardboard < Custom ) boardName = "arduino:avr:"+m_ArdboardList.at( m_Ardboard );
-    else                      boardName = m_customBoard;
+    if( boardName == "custom" )
+    {
+        boardName = m_customBoard;
+        boardSource = "Custom ";
+    }else{
+        if( boardName == "duemilanove" ) boardName = "diecimila";
+        else if( boardName == "mega" )   boardName = "megaADK";
+        boardName = "arduino:avr:"+boardName;
+        boardSource = "Arduino";
+    }
 
     QString command = addQuotes( m_arduinoPath+m_builder );
     if( m_version == 1 )
@@ -228,29 +249,16 @@ bool InoDebugger::postProcess()
     return ok;
 }
 
-QString InoDebugger::getBoard()
+PropDialog* InoDebugger::compilerProps()
 {
-    QString board = m_board.toLower();
-    if( board.isEmpty() ) return board;
-
-    if( board == "duemilanove" ) board = "diecimila";
-    else if( board == "mega" )   board = "megaADK";
-
-    if( !m_ArdboardList.contains( board ) )
-    {
-        m_customBoard = m_board;
-        m_Ardboard    = Custom;
-    }
-    else m_Ardboard = (board_t) m_ArdboardList.indexOf( board);
-
-    return board;
+    PropDialog* p = Compiler::compilerProps();
+    p->showProp("CustomBoard", m_board == "Custom" );
+    return p;
 }
 
-void InoDebugger::setBoardName( QString board )
+void InoDebugger::setBoard( QString board )
 {
     m_board = board;
-    getBoard();
-    if( m_Ardboard ) m_outPane->appendLine( tr("Found Board definition in file: ") + board );
+    if( m_propDialog )
+        m_propDialog->showProp("CustomBoard", board == "Custom" );
 }
-
-#include "moc_inodebugger.cpp"

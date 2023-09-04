@@ -7,6 +7,7 @@
 
 #include "compbase.h"
 #include "circuit.h"
+#include "propdialog.h"
 #include "comproperty.h"
 
 CompBase::CompBase( QString type, QString id )
@@ -14,11 +15,16 @@ CompBase::CompBase( QString type, QString id )
     m_id   = id;
     m_type = type;
 
-    m_group = NULL;
     m_propDialog = NULL;
 }
 CompBase::~CompBase()
 {
+    /*if( m_propDialog )
+    {
+        m_propDialog->setParent( NULL );
+        m_propDialog->close();
+        delete m_propDialog;
+    }*/
     for( ComProperty* p : m_propHash.values() ) delete p;
 }
 

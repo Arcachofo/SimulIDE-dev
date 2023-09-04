@@ -68,16 +68,13 @@ class MAINMODULE_EXPORT Component : public CompBase, public QGraphicsItem, publi
         void setValLabelPos( float x, float y, int rot );
         void updtValLabelPos();
 
-        virtual void setValLabelText( QString t ) override;
+        void setValLabelText( QString t );
         QString getValLabelText();
 
-        virtual QString showProp() override;
-        virtual void    setShowProp( QString prop ) override;
+        QString showProp();
+        void setShowProp( QString prop );
 
         bool isGraphical() { return m_graphical; }
-
-        bool isMainComp() { return m_isMainComp; }
-        void setMainComp( bool m ) { m_isMainComp = m; }
 
         QPointF boardPos() { return m_boardPos; }
         void    setBoardPos( QPointF pos ) { m_boardPos = pos; }
@@ -97,6 +94,9 @@ class MAINMODULE_EXPORT Component : public CompBase, public QGraphicsItem, publi
         int  vflip() { return m_Vflip; }
         void setVflip( int vf );
 
+        bool isMainComp() { return m_isMainComp; }
+        void setMainComp( bool m ) { m_isMainComp = m; }
+
         virtual std::vector<Pin*> getPins() { return m_pin; }
 
         //QString print();
@@ -107,8 +107,6 @@ class MAINMODULE_EXPORT Component : public CompBase, public QGraphicsItem, publi
         virtual void setBackground( QString bck ) { m_background = bck;}
 
         virtual void registerEnode( eNode*, int n=-1 ) {;}
-
-        virtual void updtValues() {;}
 
         virtual void inStateChanged( int ){;}
 
@@ -160,6 +158,7 @@ class MAINMODULE_EXPORT Component : public CompBase, public QGraphicsItem, publi
         void contextMenuEvent( QGraphicsSceneContextMenuEvent* event ) override;
         void mouseDoubleClickEvent( QGraphicsSceneMouseEvent* event ) override;
 
+        bool m_isMainComp;
         bool m_graphical;
         bool m_showId;
         bool m_showVal;
@@ -183,7 +182,6 @@ class MAINMODULE_EXPORT Component : public CompBase, public QGraphicsItem, publi
 
  static int m_error;
 
-        QString m_help;
         QString m_background;   // BackGround Image path
 
         QColor  m_color;
@@ -198,6 +196,8 @@ class MAINMODULE_EXPORT Component : public CompBase, public QGraphicsItem, publi
 
         std::vector<Pin*> m_pin;
         QList<Pin*> m_signalPin;
+
+        //QGraphicsItemGroup* m_group;
 };
 
 typedef Component* (*createItemPtr)( QString type, QString id );

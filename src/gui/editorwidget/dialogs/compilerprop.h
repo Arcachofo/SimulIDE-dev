@@ -20,8 +20,8 @@ class CompilerProp : public QDialog, private Ui::CompilerProp
         CompilerProp( CodeEditor* parent );
 
         void setCompiler( Compiler* compiler );
-        void setFamily( QString fam );
-        void setDevice( QString dev );
+        //void setFamily( QString fam );
+        //void setDevice( QString dev );
         //void setBoard( int index );
 
     public slots:
@@ -33,11 +33,11 @@ class CompilerProp : public QDialog, private Ui::CompilerProp
         void on_toolPath_editingFinished();
         void on_inclPath_editingFinished();
 
-        void on_familyText_editingFinished();
+        /*void on_familyText_editingFinished();
         void on_deviceText_editingFinished();
 
         void on_ardBoard_currentIndexChanged( int index );
-        void on_customBoard_textEdited( QString board );
+        void on_customBoard_textEdited( QString board );*/
 
     private:
         void updateDialog();

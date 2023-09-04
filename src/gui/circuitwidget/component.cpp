@@ -37,6 +37,8 @@ Component::Component( QString type, QString id )
     m_Vflip  = 1;
     m_color  = QColor( Qt::white );
 
+    //m_group = NULL;
+
     m_showId     = false;
     m_showVal    = false;
     m_moving     = false;
@@ -142,6 +144,7 @@ bool Component::setPropStr( QString prop, QString val )
             p->setValStr( vstr );
         }
     }
+    else if( prop =="ValLabelText" ) setValLabelText( val );
     else return CompBase::setPropStr( prop, val );
     return true;
 }
@@ -396,12 +399,6 @@ void Component::slotGroup()
 
 void Component::remove()
 {
-    if( m_propDialog )
-    {
-        m_propDialog->setParent( NULL );
-        m_propDialog->close();
-        delete m_propDialog;
-    }
     for( uint i=0; i<m_pin.size(); i++ )
         if( m_pin[i] ) m_pin[i]->removeConnector();
 

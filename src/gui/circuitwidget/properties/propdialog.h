@@ -10,7 +10,7 @@
 #ifndef PROPDIALOG_H
 #define PROPDIALOG_H
 
-class Component;
+class CompBase;
 class PropVal;
 
 class PropDialog : public QDialog, private Ui::PropDialog
@@ -20,11 +20,13 @@ class PropDialog : public QDialog, private Ui::PropDialog
     public:
         PropDialog( QWidget* parent=0, QString help="" );
 
-        void setComponent( Component* comp );
+        void setComponent( CompBase* comp );
         void showProp( QString name, bool show );
         void updtValues();
 
         void changed();
+
+        QList<PropVal*> propWidgets() { return m_propList; }
 
     public slots:
         void on_labelBox_editingFinished();
@@ -34,7 +36,7 @@ class PropDialog : public QDialog, private Ui::PropDialog
         void adjustWidgets();
 
     private:
-        Component* m_component;
+        CompBase* m_component;
 
         bool m_helpExpanded;
 

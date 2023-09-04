@@ -34,7 +34,7 @@ double NumProp::getVal( const QString &val, CompBase* comp )
         QString unit = l.last();
         if( !unit.startsWith("_") ) m_unit = unit;
     }
-    if( comp->showProp() == m_name ) comp->setValLabelText( QString::number( v )+" "+m_unit );
+    if( comp->getPropStr("ShowProp") == m_name ) comp->setPropStr("ValLabelText", QString::number( v )+" "+m_unit );
 
     return  v*getMultiplier( m_unit );
 }

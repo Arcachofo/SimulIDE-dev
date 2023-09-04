@@ -8,7 +8,7 @@
 #include "propdialog.h"
 #include "comproperty.h"
 
-BoolVal::BoolVal( PropDialog* parent, Component* comp, ComProperty* prop )
+BoolVal::BoolVal( PropDialog* parent, CompBase* comp, ComProperty* prop )
        : PropVal( parent, comp, prop )
 {
     setupUi(this);

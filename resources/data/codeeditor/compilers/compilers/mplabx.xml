@@ -1,6 +1,6 @@
 <!DOCTYPE SimulIDE>
 
-<compiler name="Mplabx_xc8" type="xc8" buildPath="build" useDevice="true">
+<compiler name="Mplabx_xc8" type="xc8" buildPath="build" >
     
     <step 
         command="bin/xc8-cc"

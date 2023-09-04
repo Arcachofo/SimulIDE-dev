@@ -17,7 +17,7 @@ class StringVal : public PropVal, private Ui::StringVal
     Q_OBJECT
     
     public:
-        StringVal( PropDialog* parent, Component* comp, ComProperty* prop );
+        StringVal( PropDialog* parent, CompBase* comp, ComProperty* prop );
         ~StringVal();
 
         virtual void setup() override;

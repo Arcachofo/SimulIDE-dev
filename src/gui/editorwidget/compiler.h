@@ -9,11 +9,12 @@
 #include <QString>
 #include <QProcess>
 
+#include "compbase.h"
+
 class OutPanelText;
 class CodeEditor;
-class CompilerProp;
 
-class Compiler : public QObject
+class Compiler : public QObject, public CompBase
 {
     Q_OBJECT
 
@@ -26,6 +27,8 @@ class Compiler : public QObject
         virtual int compile( bool debug );
 
         QString compName() { return m_compName; }
+        void setCompName( QString n ){;} // Dummy
+
         QString fileName() { return m_fileName; }
         QString buildPath() { return m_buildPath; }
         QString file() { return m_file ; }
@@ -46,13 +49,24 @@ class Compiler : public QObject
         void setDevice( QString d ) { m_device = d; }
         bool useDevice() { return m_useDevice; }
 
-        void compProps();
+        QString circuit();
+        void setCircuit( QString c );
+
+        QString breakpoints();
+        void setBreakpoints( QString bp );
+
+        QString fileList();
+        void setFileList( QString fl );
+
+        virtual QString toString() override;
+
+        virtual PropDialog* compilerProps();
 
         bool isProjectFile( QString file ) { return m_fileList.contains( file ); }
 
         void readSettings();
 
-        virtual void getInfoInFile( QString line ){;}
+        virtual void getInfoInFile( QString line ){;}  /// TODELETE
 
         bool checkCommand( QString c );
 
@@ -72,7 +86,6 @@ class Compiler : public QObject
         QString getPath( QString msg, QString oldPath );
         void toolChainNotFound();
 
-        CompilerProp* m_compDialog;
         CodeEditor* m_editor;
 
         bool m_useFamily;
@@ -91,7 +104,6 @@ class Compiler : public QObject
         QString m_type;
         QString m_family;
         QString m_device;
-        QString m_board;
         QString m_firmware;
         QString m_file;
         QString m_fileDir;

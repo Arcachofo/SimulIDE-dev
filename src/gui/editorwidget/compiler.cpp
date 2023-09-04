@@ -10,20 +10,23 @@
 
 #include "compiler.h"
 #include "simulator.h"
+#include "circuit.h"
 #include "editorwindow.h"
 #include "outpaneltext.h"
 #include "compilerprop.h"
+#include "propdialog.h"
 #include "mainwindow.h"
 #include "utils.h"
 
+#include "stringprop.h"
+
 Compiler::Compiler( CodeEditor* editor, OutPanelText* outPane )
         : QObject( editor )
+        , CompBase( "Compiler", "" )
         , m_compProcess( this )
 {
     m_editor = editor;
     m_outPane = outPane;
-
-    m_compDialog = NULL;
 
     m_file     = QDir::toNativeSeparators( editor->getFilePath() );
     m_fileDir  = getFileDir( m_file );
@@ -32,9 +35,18 @@ Compiler::Compiler( CodeEditor* editor, OutPanelText* outPane )
     m_firmware = "";
     m_buildPath = m_fileDir;
 
+    m_id = m_file; /// FIXME: ??? do we really need this?
+
     clearCompiler();
+
+    addPropGroup( { "Settings", {
+new StrProp<Compiler>( "Compiler", tr("Compiler"),"", this, &Compiler::compName, &Compiler::setCompName, propHidden ),
+new StrProp<Compiler>( "Circuit" , "Circuit"     ,"", this, &Compiler::circuit,  &Compiler::setCircuit, propHidden ),
+new StrProp<Compiler>( "FileList", "FileList"    ,"", this, &Compiler::fileList, &Compiler::setFileList, propHidden ),
+new StrProp<Compiler>( "Breakpoints", "Breakpoints","", this, &Compiler::breakpoints, &Compiler::setBreakpoints, propHidden ),
+    }, 0} );
 }
-Compiler::~Compiler( ){}
+Compiler::~Compiler(){}
 
 void Compiler::clearCompiler()
 {
@@ -43,7 +55,6 @@ void Compiler::clearCompiler()
     m_arguments.clear();
     m_argsDebug.clear();
     m_type.clear();
-    m_useDevice = false;
 }
 
 QString Compiler::replaceData( QString str )
@@ -94,12 +105,6 @@ void Compiler::loadCompiler( QString file )
     if( compiler.hasAttribute("inclPath") ) inclPath = compiler.attribute( "inclPath" );
     if( !inclPath.isEmpty() ) m_inclPath = inclPath;
 
-    m_useFamily = compiler.hasAttribute("useFamily")
-              && (compiler.attribute("useFamily") == "true");
-
-    m_useDevice = compiler.hasAttribute("useDevice")
-              && (compiler.attribute("useDevice") == "true") ;
-
     QDomNode node = compiler.firstChild();
     while( !node.isNull() )
     {
@@ -110,6 +115,12 @@ void Compiler::loadCompiler( QString file )
             QString arguments = step.attribute("arguments");
             QString argsDebug = step.attribute("argsDebug");
             if( argsDebug.isEmpty() ) argsDebug = arguments ;
+
+            if( argsDebug.contains("$device") ) addProperty( "Settings",
+                new StrProp<Compiler>( "Device"  , tr("Device")  ,"", this, &Compiler::device,   &Compiler::setDevice, 0 ) );
+
+            if( argsDebug.contains("$family") ) addProperty( "Settings",
+                new StrProp<Compiler>( "Family"  , tr("Family")  ,"", this, &Compiler::family,   &Compiler::setFamily, 0 ) );
 
             m_command.append( command );
             m_arguments.append( arguments );
@@ -148,7 +159,7 @@ int Compiler::compile( bool debug )
         QString arguments = debug ? m_argsDebug.at(i) : m_arguments.at(i);
         arguments = replaceData( arguments );
 
-        if( m_useFamily && arguments.contains("$family") )
+        if( arguments.contains("$family") )
         {
             if( m_family.isEmpty() )
             {
@@ -158,7 +169,7 @@ int Compiler::compile( bool debug )
             }
             else arguments = arguments.replace( "$family", m_family );
         }
-        if( m_useDevice && arguments.contains("$device") )
+        if( arguments.contains("$device") )
         {
             if( m_device.isEmpty() )
             {
@@ -296,14 +307,63 @@ void Compiler::readSettings()
     if( settings->contains( prop ) ) m_inclPath = settings->value( prop ).toString();
 }
 
-void Compiler::compProps()
+QString Compiler::circuit()
 {
-    if( !m_compDialog )
+    return Circuit::self()->getFilePath();
+}
+
+void Compiler::setCircuit( QString c )
+{
+    /// TODO
+}
+
+QString Compiler::breakpoints()
+{
+    QList<int>* brkList = m_editor->getBreakPoints();
+
+    QString brkListStr;
+    for( int brk : *brkList ) brkListStr.append( QString::number( brk )+"," );
+
+    return brkListStr;
+}
+
+void Compiler::setBreakpoints( QString bp )
+{
+    QStringList list = bp.split(",");
+    list.removeOne("");
+
+    for( QString brk : list ) m_editor->addBreakPoint( brk.toInt() );
+}
+
+QString Compiler::fileList()
+{
+    return m_fileList.join(",");
+}
+
+void Compiler::setFileList( QString fl )
+{
+    /// m_fileList = fl.split(","); /// TODO: open files
+}
+
+QString Compiler::toString()
+{
+    QString header = "<compiler version=\""+QString( APP_VERSION )+"\" rev=\""+QString( REVNO )+"\" ";
+    header += "file=\""+m_file+"\" ";
+    header += ">\n";
+
+    return header+CompBase::toString()+"\n</compiler>";
+}
+
+PropDialog* Compiler::compilerProps()
+{
+    if( !m_propDialog )
     {
-        m_compDialog = new CompilerProp( m_editor );
-        m_compDialog->setCompiler( this );
+        if( m_help == "" ) m_help = MainWindow::self()->getHelp( m_compName );
+
+        m_propDialog = new PropDialog( m_editor, m_help );
+        m_propDialog->setComponent( this );
     }
-    m_compDialog->show();
+    return m_propDialog;
 }
 
 bool Compiler::checkCommand( QString executable )

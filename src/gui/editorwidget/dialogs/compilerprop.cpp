@@ -4,6 +4,7 @@
  ***( see copyright.txt file at root folder )*******************************/
 
 #include "compilerprop.h"
+#include "propdialog.h"
 #include "codeeditor.h"
 #include "basedebugger.h"
 #include "editorwindow.h"
@@ -27,6 +28,7 @@ CompilerProp::CompilerProp( CodeEditor* parent )
     
     double scale = MainWindow::self()->fontScale();
     this->resize( 300*scale, 200*scale );
+    this->setMinimumWidth( 300*scale );
 }
 
 void CompilerProp::on_compilerBox_currentIndexChanged( int index )
@@ -37,7 +39,6 @@ void CompilerProp::on_compilerBox_currentIndexChanged( int index )
     BaseDebugger* comp = EditorWindow::self()->createDebugger( compName, m_document );
     setCompiler( comp );
     m_document->setCompiler( comp );
-    if( compName != "None" ) updateDialog();
 }
 
 void CompilerProp::on_setPathButton_clicked()
@@ -64,47 +65,6 @@ void CompilerProp::on_inclPath_editingFinished()
     m_compiler->setIncludePath( path );
 }
 
-void CompilerProp::on_deviceText_editingFinished()
-{
-    QString dev = deviceText->text();
-    m_compiler->setDevice( dev );
-}
-
-void CompilerProp::setDevice( QString dev )
-{
-    deviceText->setText( dev );
-}
-
-/*void CompilerProp::setBoard( int index )
-{
-    ardBoard->setCurrentIndex( index );
-}*/
-
-void CompilerProp::on_familyText_editingFinished()
-{
-    QString fam = familyText->text();
-    m_compiler->setFamily( fam );
-}
-
-void CompilerProp::setFamily( QString fam )
-{
-    familyText->setText( fam );
-}
-
-void CompilerProp::on_ardBoard_currentIndexChanged( int index )
-{
-    m_compiler->setProperty( "Board", index );
-    QString board = ardBoard->itemText( index );
-    bool showCustom = board == "Custom";
-    customLabel->setVisible( showCustom  );
-    customBoard->setVisible( showCustom  );
-}
-
-void CompilerProp::on_customBoard_textEdited( QString board )
-{
-    m_compiler->setProperty( "Custom_Board", board );
-}
-
 void CompilerProp::updateDialog()
 {
     toolPathLabel->setVisible( true );
@@ -117,15 +77,7 @@ void CompilerProp::updateDialog()
     setInclButton->setVisible( true );
     inclPath->setText( m_compiler->includePath() );
 
-    bool useFamily = m_compiler->useFamily();
-    familyText->setVisible( useFamily );
-    familyLabel->setVisible( useFamily );
-    familyText->setText( m_compiler->family() );
-
-    bool useDevice = m_compiler->useDevice();
-    deviceText->setVisible( useDevice );
-    deviceLabel->setVisible( useDevice );
-    deviceText->setText( m_compiler->device() );
+    this->adjustSize();
 }
 
 void CompilerProp::setCompiler( Compiler* compiler )
@@ -139,29 +91,8 @@ void CompilerProp::setCompiler( Compiler* compiler )
     if( compName == "Arduino" ) inclPathLabel->setText( tr("Libraries Path") );
     else                        inclPathLabel->setText( tr("Include Path") );
 
-    if( compName != "None" )
+    if( compName == "None" )
     {
-        updateDialog();
-
-        QVariant boardV = compiler->property( "Board" );
-        if( !boardV.isValid() )
-        {
-            boardLabel->setVisible( false );
-            ardBoard->setVisible( false );
-            customLabel->setVisible( false );
-            customBoard->setVisible( false );
-        }else{                                  // Arduino compiler
-            boardLabel->setVisible( true );
-            ardBoard->setVisible( true );
-            ardBoard->setCurrentIndex( boardV.toInt() );
-            bool showCustom = false;
-            QString board = ardBoard->currentText();
-            if( board == "Custom" ) showCustom = true;
-            customLabel->setVisible( showCustom  );
-            customBoard->setVisible( showCustom  );
-            customBoard->setText( compiler->property( "Custom_Board" ).toString() );
-    }   }
-    else{
         toolPathLabel->setVisible( false );
         toolPath->setVisible( false );
         setPathButton->setVisible( false );
@@ -169,17 +100,13 @@ void CompilerProp::setCompiler( Compiler* compiler )
         inclPathLabel->setVisible( false );
         inclPath->setVisible( false );
         setInclButton->setVisible( false );
+    }else{
+        PropDialog* pd = m_compiler->compilerProps();
 
-        familyText->setVisible( false );
-        familyLabel->setVisible( false );
+        for( PropVal* propWidget : pd->propWidgets() )
+            verticalLayout->addWidget( (QWidget*)propWidget );
 
-        deviceText->setVisible( false );
-        deviceLabel->setVisible( false );
-
-        boardLabel->setVisible( false );
-        ardBoard->setVisible( false );
-        customLabel->setVisible( false );
-        customBoard->setVisible( false );
+        updateDialog();
     }
     m_blocked = false;
 }

@@ -8,7 +8,7 @@
 #include "comproperty.h"
 #include "propdialog.h"
 
-StringVal::StringVal( PropDialog* parent, Component* comp, ComProperty* prop )
+StringVal::StringVal( PropDialog* parent, CompBase* comp, ComProperty* prop )
          : PropVal( parent, comp, prop )
 {
     setupUi(this);

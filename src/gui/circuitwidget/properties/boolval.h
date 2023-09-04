@@ -17,7 +17,7 @@ class BoolVal : public PropVal, private Ui::BoolVal
     Q_OBJECT
     
     public:
-        BoolVal( PropDialog* parent, Component* comp, ComProperty* prop );
+        BoolVal( PropDialog* parent, CompBase* comp, ComProperty* prop );
         ~BoolVal();
         
         virtual void setup() override;

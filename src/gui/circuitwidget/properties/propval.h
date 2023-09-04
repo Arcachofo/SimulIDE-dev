@@ -8,7 +8,7 @@
 
 #include <QWidget>
 
-class Component;
+class CompBase;
 class PropDialog;
 class QComboBox;
 class ComProperty;
@@ -16,7 +16,7 @@ class ComProperty;
 class PropVal : public QWidget
 {
     public:
-        PropVal( PropDialog* parent, Component* comp, ComProperty* prop );
+        PropVal( PropDialog* parent, CompBase* comp, ComProperty* prop );
         ~PropVal();
 
         virtual void setup()=0;
@@ -34,7 +34,7 @@ class PropVal : public QWidget
 
         QString m_propName;
 
-        Component*   m_component;
+        CompBase*   m_component;
         ComProperty* m_property;
         PropDialog*  m_propDialog;
 };

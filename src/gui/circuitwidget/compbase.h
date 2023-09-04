@@ -57,18 +57,10 @@ class MAINMODULE_EXPORT CompBase //: public QObject
         QString itemType()  { return m_type; }
         void setItemType( QString ) {;}
 
-        virtual void setValLabelText( QString ){;}
-
-        virtual QString showProp(){return "";}
-        virtual void setShowProp( QString ){;}
-
     protected:
         QString m_id;
         QString m_type;
-
-        bool m_isMainComp;
-
-        QGraphicsItemGroup* m_group;
+        QString m_help;
 
         PropDialog* m_propDialog;
         QList<propGroup> m_propGroups;
