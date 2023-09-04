@@ -29,6 +29,7 @@ class CircuitView : public QGraphicsView
         void dragLeaveEvent( QDragLeaveEvent* event );
 
         void mousePressEvent( QMouseEvent* event );
+        void mouseMoveEvent( QMouseEvent *event );
         void mouseReleaseEvent( QMouseEvent* event );
 
         void overrideCursor( const QCursor &cursor );
@@ -56,6 +57,9 @@ class CircuitView : public QGraphicsView
         Circuit*    m_circuit;
 
         QPointF m_eventpoint;
+
+        QPoint m_mousePressPos;
+        bool m_waitForDragStart;
 };
 
 #endif

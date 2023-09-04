@@ -6,7 +6,7 @@
 #ifndef LINKABLE_H
 #define LINKABLE_H
 
-#include <QList>
+#include <QSet>
 
 class Component;
 
@@ -25,7 +25,7 @@ class MAINMODULE_EXPORT Linkable
 
         void startLinking();
 
-        virtual void createLinks( QList<Component*>* );
+        virtual void createLinks( QSet<Component*>* );
         virtual void compSelected( Component* comp );
 
     protected:

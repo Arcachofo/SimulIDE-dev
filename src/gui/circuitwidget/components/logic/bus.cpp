@@ -77,7 +77,7 @@ void Bus::setNumLines( int lines )
     for( int i=1; i<=m_numLines; i++ )
     {
         Pin* pin = m_pin[i];
-        if( pin->connector() ) pin->connector()->remove();
+        if( pin->connector() ) Circuit::self()->removeConnector( pin->connector() );
         if( pin->scene() ) Circuit::self()->removeItem( pin );
         m_signalPin.removeAll( pin );
         delete pin;

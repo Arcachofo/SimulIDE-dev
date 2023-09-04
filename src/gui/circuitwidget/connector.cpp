@@ -326,8 +326,6 @@ void Connector::remove()
 
     if( m_startPin ) m_startPin->remove();
     if( m_endPin )   m_endPin->remove();
-
-    Circuit::self()->conList()->removeOne( this );
     remLines();
 }
 
@@ -356,7 +354,7 @@ void Connector::splitCon(int index, Pin* pin0, Pin* pin2 )
     QString id = "Connector-"+Circuit::self()->newConnectorId();
 
     Connector* new_connector = new Connector( "Connector", id, pin2 );
-    Circuit::self()->conList()->append( new_connector );
+    Circuit::self()->conList()->insert( new_connector );
 
     int newindex = 0;
     int size = m_conLineList.size();
@@ -374,8 +372,8 @@ void Connector::splitCon(int index, Pin* pin0, Pin* pin2 )
     
     new_connector->closeCon( m_endPin );    // Close new_connector first please
     closeCon( pin0 );                       // Close this
-    ///Circuit::self()->addCompState( this, "remove", stateAdd );
-    ///Circuit::self()->addCompState( new_connector, "remove", stateAdd );
+    ///Circuit::self()->addCompState( this, COMP_STATE_CREATED, stateAdd );
+    ///Circuit::self()->addCompState( new_connector, COMP_STATE_CREATED, stateAdd );
 }
 
 void Connector::updateLines()

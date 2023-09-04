@@ -181,7 +181,7 @@ void Component::mousePressEvent( QGraphicsSceneMouseEvent* event )
             m_selecComp->compSelected( this );
             //return;
         }
-        else if( event->modifiers() == Qt::ControlModifier ) setSelected( !isSelected() );
+        else if( event->modifiers() & Qt::ControlModifier ) setSelected( !isSelected() );
         else{
             QList<QGraphicsItem*> itemlist = Circuit::self()->selectedItems();
             if( !isSelected() )     // Unselect everything and select this
@@ -215,7 +215,7 @@ void Component::mouseMoveEvent( QGraphicsSceneMouseEvent* event )
     QPointF delta( 0, 0 );
     if( m_boardMode && event->modifiers() == Qt::ControlModifier )
          delta = event->scenePos() - event->lastScenePos();
-    else delta = toGrid(event->scenePos()) - toGrid(event->lastScenePos());
+    else delta = toGrid( event->scenePos()) - toGrid(event->lastScenePos() );
 
     if( !(fabs( delta.x() )> 0) && !(fabs( delta.y() )> 0) ) return;
 

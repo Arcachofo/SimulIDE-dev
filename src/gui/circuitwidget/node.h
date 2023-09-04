@@ -26,7 +26,7 @@ class MAINMODULE_EXPORT Node : public Component, public QObject
         virtual void setHidden( bool hid, bool hidArea=false, bool hidLabel=false ) override;
 
         void inStateChanged( int rem=1 ) override;
-        void checkRemove();
+        bool checkRemove();
 
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
 

@@ -100,7 +100,7 @@ void CircuitView::dragEnterEvent( QDragEnterEvent* event )
         }
         m_enterItem->setPos( mapToScene( event->pos() ) );
         m_circuit->addItem( m_enterItem );
-        m_circuit->compList()->append( m_enterItem );
+        m_circuit->compList()->insert( m_enterItem );
         m_circuit->addCompState( m_enterItem, "remove" );
         this->setFocus();
     }
@@ -124,7 +124,23 @@ void CircuitView::dragLeaveEvent( QDragLeaveEvent* event )
 
 void CircuitView::mousePressEvent( QMouseEvent* event )
 {
-    if( event->button() == Qt::MidButton )
+    m_waitForDragStart = false;
+
+    if( event->button() == Qt::LeftButton
+     && event->modifiers() & Qt::ControlModifier
+     && event->modifiers() & Qt::ShiftModifier
+     && !m_circuit->is_constarted() )
+    {
+        if( itemAt( event->pos() )->isSelected() )
+        {
+            itemAt( event->pos() )->setSelected( false );
+            m_mousePressPos = event->pos();
+            m_waitForDragStart = true;
+            event->accept();
+        }
+        QGraphicsView::mousePressEvent( event );
+    }
+    else if( event->button() == Qt::MidButton )
     {
         event->accept();
         setDragMode( QGraphicsView::ScrollHandDrag );
@@ -138,6 +154,28 @@ void CircuitView::mousePressEvent( QMouseEvent* event )
             QGraphicsView::mousePressEvent( &eve );
     }   }
     else QGraphicsView::mousePressEvent( event );
+}
+
+void CircuitView::mouseMoveEvent( QMouseEvent* event )
+{
+    if( m_waitForDragStart )
+    {
+        m_waitForDragStart = false;
+
+        if( event->modifiers() & Qt::ControlModifier
+         && event->modifiers() & Qt::ShiftModifier )
+        {
+            event->accept();
+
+            if( !m_circuit->selectedItems().isEmpty() )
+            {
+                event->accept();
+                Circuit::self()->copy( m_mousePressPos );
+                Circuit::self()->paste( event->pos() );
+            }
+        }
+    }
+    QGraphicsView::mouseMoveEvent( event );
 }
 
 void CircuitView::mouseReleaseEvent( QMouseEvent* event )

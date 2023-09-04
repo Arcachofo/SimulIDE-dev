@@ -141,7 +141,7 @@ Component* SubCircuit::construct( QString type, QString id )
     }
     if( m_error > 0 )
     {
-        Circuit::self()->compList()->removeOne( subcircuit );
+        Circuit::self()->compList()->remove( subcircuit );
         delete subcircuit;
         m_error = 0;
         return NULL;
@@ -318,7 +318,7 @@ void SubCircuit::loadSubCircuit( QString fileName )
                             addPropGroup( npg, false );
                         }*/
                     }
-                    m_compList.append( comp );
+                    m_compList.insert( comp );
 
                     if( comp->m_linkable )
                     {
@@ -351,8 +351,8 @@ Pin* SubCircuit::addPin( QString id, QString type, QString label, int pos, int x
         if( !m_isLS ) color = QColor( 250, 250, 200 );
 
         Tunnel* tunnel = new Tunnel( "Tunnel", m_id+"-"+id );
-        Circuit::self()->compList()->removeOne( tunnel );
-        m_compList.append( tunnel );
+        Circuit::self()->compList()->remove( tunnel );
+        m_compList.insert( tunnel );
 
         QString pId = m_id+"-"+id;
         tunnel->setParentItem( this );

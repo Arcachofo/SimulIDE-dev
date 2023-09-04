@@ -12,6 +12,7 @@
 
 #include "doubleprop.h"
 #include "pointprop.h"
+#include "pin.h"
 
 Node::Node( QString type, QString id )
     : Component( type, id )
@@ -49,13 +50,13 @@ void Node::registerEnode( eNode* enode, int n )
         if( m_pin[i]->conPin() ) m_pin[i]->registerPinsW( enode, n );
 }
 
-void Node::checkRemove() // Only remove if there are less than 3 connectors
+bool Node::checkRemove() // Only remove if there are less than 3 connectors
 {
     int con[2] = { 0, 0 };
     int conectors = 0;
     int conecteds = 0;
 
-    for( int i=0; i< 3; i++)
+    for( int i=0; i< 3 ; i++)
     {
         Connector* co = m_pin[i]->connector();
         if( co )
@@ -65,27 +66,26 @@ void Node::checkRemove() // Only remove if there are less than 3 connectors
             {
                 co->setStartPin( NULL );
                 co->setEndPin( NULL );
-                co->remove();
+                Circuit::self()->removeConnector( co );
                 continue;
             }
             if( conecteds == 0 ) { conecteds++; con[0] = i; }
             else con[1] = i;
             conectors++;
     }   }
-    if( conectors < 3 ) 
+    if( conectors < 3 )
     {
-        if( conectors == 2 ) joinConns( con[0], con[1] );  // 2 Conn
+        if( conectors == 2) joinConns( con[0], con[1] );  // 2 Conn
         else                 m_pin[con[0]]->removeConnector();
 
+        Circuit::self()->addCompState( this, COMP_STATE_REMOVED, stateAdd );
         if( !Circuit::self()->deleting() )
         {
-            Circuit::self()->nodeList()->removeOne( this );
-            Circuit::self()->compMap()->remove( m_id );
-            if( this->scene() ) Circuit::self()->removeItem( this );
-            this->deleteLater();
+            Circuit::self()->removeNode( this );
         }
-        Circuit::self()->addCompState( this, "new", stateAdd );
-}   }
+        return true;
+    } else return false;
+}
 
 void Node::joinConns( int c0, int c1 )
 {
@@ -99,7 +99,7 @@ void Node::joinConns( int c0, int c1 )
     if( pin1->conPin() != pin0 )
     {
         Connector* con = new Connector( "Connector", "Connector-"+Circuit::self()->newSceneId(), pin0->conPin() );
-        Circuit::self()->conList()->append( con );
+        Circuit::self()->conList()->insert( con );
 
         QStringList list0 = con0->pointList();
         QStringList list1 = con1->pointList();
@@ -125,18 +125,18 @@ void Node::joinConns( int c0, int c1 )
 
         con->setPointList( plist );
         con->closeCon( pin1->conPin() );
-        ///Circuit::self()->addCompState( con, "remove", stateAdd );
+        ///Circuit::self()->addCompState( con, COMP_STATE_CREATED, stateAdd );
         if( this->isSelected() ) con->setSelected( true );
     }
-    Circuit::self()->addCompState( con0, "new", stateAdd );
+    Circuit::self()->addCompState( con0, COMP_STATE_REMOVED, stateAdd );
     con0->setStartPin( NULL );
     con0->setEndPin( NULL );
-    con0->remove();
+    Circuit::self()->removeConnector( con0 );
 
-    Circuit::self()->addCompState( con1, "new", stateAdd );
+    Circuit::self()->addCompState( con1, COMP_STATE_REMOVED, stateAdd );
     con1->setStartPin( NULL );
     con1->setEndPin( NULL );
-    con1->remove();
+    Circuit::self()->removeConnector( con1 );
 }
 
 void Node::setHidden( bool hid, bool , bool )

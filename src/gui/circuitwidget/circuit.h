@@ -13,12 +13,15 @@
 #include "connector.h"
 #include "pin.h"
 
+#define COMP_STATE_REMOVED "__COMP_STATE_REMOVED__"
+#define COMP_STATE_CREATED "__COMP_STATE_CREATED__"
+
 enum stateMode{
-    stateNew=1,
-    stateAdd=2,
-    stateNewAdd=1+2,
-    stateSave=4,
-    stateAll=1+2+4
+    stateNew = 1,
+    stateAdd = 2,
+    stateSave = 4,
+    stateNewAdd = stateNew | stateAdd,
+    stateAddSave = stateAdd | stateSave
 };
 
 class CircuitView;
@@ -52,14 +55,17 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
         void setAutoBck( int secs );
 
         void removeItems();
-        void removeComp( Component* comp );
+        void removeComp( Component* comp);
+        void removeNode( Node* node );
+        void removeConnector( Connector * conn );
         void clearCircuit();
         bool deleting() { return m_deleting; }
         void compRemoved( bool removed ) { m_compRemoved = removed; }
         void saveState();
         void unSaveState();
-        void addCompState( CompBase* c, QString p, stateMode=stateAll );
-
+        void addCompState( CompBase* c, QString p, stateMode=stateAddSave );
+        void beginBatchProcess() { m_batchProcess++; }
+        void endBatchProcess() { Q_ASSERT( m_batchProcess>0 ); m_batchProcess--; }
         void setChanged();
 
         void deselectAll();
@@ -83,9 +89,9 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
 
         void addNode( Node* node );
 
-        QList<Component*>* compList() { return &m_compList; }
-        QList<Connector*>* conList()  { return &m_conList; }
-        QList<Node*>*      nodeList() { return &m_nodeList; }
+        QSet<Component*>* compList() { return &m_compList; }
+        QSet<Connector*>* conList()  { return &m_conList; }
+        QSet<Node*>*      nodeList() { return &m_nodeList; }
         QHash<QString, CompBase*>* compMap() { return &m_compMap;}
 
         Component* getCompById( QString id );
@@ -103,6 +109,9 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
         void addPin( Pin* pin, QString pinId ) { m_pinMap[ pinId ] = pin; m_LdPinMap[ pinId ] = pin; }
         void remPin( QString pinId ) { m_pinMap.remove( pinId ); }
         void updatePin( ePin* epin, QString oldId, QString newId );
+
+        QString getSeqNumber( QString name );
+        QString replaceId( QString pinName );
 
         const QString getFilePath() const { return m_filePath; }
         void setFilePath( QString f ) { m_filePath = f; }
@@ -137,10 +146,9 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
             QString valStr;
         };
         struct circState{       // Circuit State to be restored by Undo/Redo
-            QList<compState> remove;
-            QList<compState> create;
-            int size() { return remove.size()+create.size(); }
-            void clear() { remove.clear(); create.clear(); }
+            QList<compState> compStates;
+            int size() { return compStates.size(); }
+            void clear() { compStates.clear(); }
         };
 
         bool restoreState( circState step );
@@ -148,8 +156,8 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
         bool saveString( QString &fileName, QString doc );
         QString circuitHeader();
         QString circuitToString();
-        QString getSeqNumber( QString name );
-        QString replaceId( QString pinName );
+        void clearRemovedComps();
+        void addCompRemovedState( const QString& id, const QString& strVal);
 
         void updatePinName( QString* name );
 
@@ -184,15 +192,19 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
         bool m_redo;
         bool m_acceptKeys;
         bool m_createSubc;
+        int m_batchProcess;
 
         QPointF m_eventpoint;
         QPointF m_deltaMove;
 
-        QList<Component*> m_compList;   // Component list
-        QList<Connector*> m_conList;    // Connector list
-        QList<Node*>      m_nodeList;   // Node list
+        QSet<Component*> m_compList;   // Component list
+        QSet<Connector*> m_conList;    // Connector list
+        QSet<Node*>      m_nodeList;   // Node list
 
         SubPackage* m_board;
+
+        QSet<Component *> m_removedComps; // removed component list;
+        QSet<Connector *> m_removedConnectors; // remove connector list;
 
         QHash<QString, Pin*>      m_pinMap;   // Pin Id to Pin*
         QHash<QString, Pin*>      m_LdPinMap; // Pin Id to Pin* while loading/pasting/importing

@@ -33,7 +33,7 @@ void Linkable::setLinks( QString links )
     m_linkedStr = links;
 }
 
-void Linkable::createLinks( QList<Component*>* compList )
+void Linkable::createLinks( QSet<Component*>* compList )
 {
     QStringList components = m_linkedStr.split(",");
     for( QString uid : components )

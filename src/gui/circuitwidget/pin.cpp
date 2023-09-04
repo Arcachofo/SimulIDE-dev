@@ -143,7 +143,7 @@ void  Pin::setConnector( Connector* connector )
 
 void Pin::removeConnector()
 {
-    if( my_connector ) my_connector->remove();
+    if( my_connector ) Circuit::self()->removeConnector( my_connector );
     setConnector( NULL );
 }
 
@@ -191,7 +191,7 @@ void Pin::isMoved()
     else if( this->isVisible() && !my_connector )
     {                                       // Auto-Connect
         if( !Circuit::self()->isBusy()
-         && (QApplication::queryKeyboardModifiers() & Qt::ShiftModifier) )
+         && (QApplication::queryKeyboardModifiers() == Qt::ShiftModifier) )
             connectPin( true );
     }
     setLabelPos();

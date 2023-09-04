@@ -210,7 +210,7 @@ void TextComponent::setText( QString text )
     if( !Simulator::self()->isRunning() ) updateStep();
 }
 
-void TextComponent::createLinks( QList<Component*>* compList )
+void TextComponent::createLinks( QSet<Component*>* compList )
 {
     m_changed = true;
     Linkable::createLinks( compList );

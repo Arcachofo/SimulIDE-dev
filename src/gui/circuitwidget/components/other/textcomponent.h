@@ -50,7 +50,7 @@ class MAINMODULE_EXPORT TextComponent : public Component, public Linkable
         qreal opac() { return m_opac; }
         void setOpac( qreal op );
 
-        virtual void createLinks( QList<Component*>*compList ) override;
+        virtual void createLinks( QSet<Component*>*compList ) override;
         virtual void compSelected( Component* comp ) override;
         virtual void setLinkedString( QString str, int i=0 ) override;
         virtual void setLinkedValue( double v, int i=0 ) override;
