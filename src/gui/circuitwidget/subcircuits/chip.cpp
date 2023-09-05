@@ -109,7 +109,7 @@ void Chip::initChip()
         m_height  = root.attribute( "height" ).toInt();
         m_area = QRect( 0, 0, 8*m_width, 8*m_height );
 
-        for( Pin* pin : m_unusedPins ) deletePin( pin );
+        for( Pin* pin : m_unusedPins ) if( pin ) deletePin( pin );
         m_unusedPins.clear();
         m_ePin.clear();
         m_pin.clear();
@@ -193,12 +193,6 @@ void Chip::addNewPin( QString id, QString type, QString label, int pos, int xpos
         m_ePin.emplace_back( pin );
         m_pin.emplace_back( pin );
     }
-}
-
-void Chip::deletePin( Pin* pin )
-{
-    if( !pin ) return;
-    deletePin( pin );
 }
 
 void Chip::setLogicSymbol( bool ls )

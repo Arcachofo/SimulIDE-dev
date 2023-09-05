@@ -54,7 +54,6 @@ class MAINMODULE_EXPORT Chip : public Component, public eElement
 
         void addNewPin( QString id, QString type, QString label,
                         int pos, int xpos, int ypos, int angle, int length=8, int space=0 );
-        void deletePin( Pin* pin );
 
         virtual void initChip();
         virtual void initPackage( QDomElement root );
