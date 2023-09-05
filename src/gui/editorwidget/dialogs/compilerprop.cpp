@@ -15,6 +15,7 @@ CompilerProp::CompilerProp( CodeEditor* parent )
             : QDialog( parent )
 {
     setupUi(this);
+    m_compiler = nullptr;
     m_document = parent;
 
     setPathButton->setMaximumWidth( setPathButton->height() );
@@ -26,7 +27,7 @@ CompilerProp::CompilerProp( CodeEditor* parent )
     compilerBox->insertSeparator( compilerBox->count() );
     compilerBox->insertItems( compilerBox->count(), EditorWindow::self()->assemblers() );
     m_blocked = false;
-    
+
     double scale = MainWindow::self()->fontScale();
     this->resize( 300*scale, 200*scale );
     this->setMinimumWidth( 250*scale );
@@ -67,10 +68,22 @@ void CompilerProp::on_inclPath_editingFinished()
 void CompilerProp::setCompiler( Compiler* compiler )
 {
     m_blocked = true;
+
+    if( m_compiler ) {
+        PropDialog* pd = m_compiler->compilerProps();
+        for( QWidget* propWidget : pd->propWidgets() )
+        {
+            verticalLayout->removeWidget( propWidget );
+            propWidget->setVisible(false); // hacking to layout
+        }
+    }
     m_compiler = compiler;
 
     QString compName = compiler->compName();
     compilerBox->setCurrentText( compName );
+
+    toolPath->setText( m_compiler->toolPath() );
+    inclPath->setText( m_compiler->includePath() );
 
     if( compName == "Arduino" ) inclPathLabel->setText( tr("Libraries Path") );
     else                        inclPathLabel->setText( tr("Include Path") );
