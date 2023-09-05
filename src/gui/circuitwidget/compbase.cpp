@@ -19,12 +19,6 @@ CompBase::CompBase( QString type, QString id )
 }
 CompBase::~CompBase()
 {
-    /*if( m_propDialog )
-    {
-        m_propDialog->setParent( NULL );
-        m_propDialog->close();
-        delete m_propDialog;
-    }*/
     for( ComProperty* p : m_propHash.values() ) delete p;
 }
 

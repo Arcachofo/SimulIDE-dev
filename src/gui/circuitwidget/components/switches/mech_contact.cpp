@@ -98,12 +98,8 @@ void MechContact::SetupSwitches( int poles, int throws )
         delete m_ePin[ epinN ];
         if( m_numthrows > 1 ) delete m_ePin[ epinN+2 ];
     }
-    for( uint i=start; i<m_pin.size(); i++ )
-    {
-        m_pin[i]->removeConnector();
-        m_signalPin.removeAll( m_pin[i] );
-        delete m_pin[i];
-    }
+    for( uint i=start; i<m_pin.size(); i++ ) deletePin( m_pin[i] );
+
     m_numPoles = poles;
     m_numthrows = throws;
 

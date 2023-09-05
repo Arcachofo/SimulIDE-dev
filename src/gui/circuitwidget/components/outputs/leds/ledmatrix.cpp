@@ -123,7 +123,7 @@ void LedMatrix::createMatrix()
             lsmd->setFlag( QGraphicsItem::ItemIsSelectable, false );
             lsmd->setAcceptedMouseButtons(0);
             m_led[row][col] = lsmd;
-            Circuit::self()->compList()->remove( lsmd );
+            //Circuit::self()->compList()->remove( lsmd );
     }   }
     for( int col=0; col<m_cols; ++col )
     {
@@ -138,23 +138,11 @@ void LedMatrix::deleteMatrix()
 {
     for( int row=0; row<m_rows; ++row )
     {
-        for( int col=0; col<m_cols; ++col )
-        {
-            LedSmd* lsmd = m_led[row][col];
-            Circuit::self()->removeComp( lsmd );
-        }
-        Pin* pin = m_rowPin[row];
-        pin->removeConnector();
-        m_signalPin.removeAll( pin );
-        delete pin;
+        for( int col=0; col<m_cols; ++col ) delete m_led[row][col];
+        deletePin( m_rowPin[row] );
     }
-    for( int col=0; col<m_cols; col++ )
-    {
-        Pin* pin = m_colPin[col];
-        pin->removeConnector();
-        m_signalPin.removeAll( pin );
-        delete pin;
-    }
+    for( int col=0; col<m_cols; col++ ) deletePin( m_colPin[col] );
+
     m_led.clear();
     m_rowPin.clear();
     m_colPin.clear();

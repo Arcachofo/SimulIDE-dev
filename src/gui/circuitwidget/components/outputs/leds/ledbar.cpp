@@ -98,14 +98,8 @@ void LedBar::deleteLeds( int d )
     if( grounded() )
     { for( int i=start; i<m_size; i++ ) m_led[i]->setGrounded( false ); }
 
-    for( int i=start*2; i<m_size*2; i++ )
-    {
-        Pin* pin = m_pin[i];
-        pin->removeConnector();
-        m_signalPin.removeAll( pin );
-        delete pin;
-    }
-    for( int i=start; i<m_size; i++ )  Circuit::self()->removeComp( m_led[i] );
+    for( int i=start*2; i<m_size*2; i++ ) deletePin( m_pin[i] );
+    for( int i=start;   i<m_size;   i++ ) delete m_led[i];
     m_size = m_size-d;
     m_led.resize( m_size );
     m_pin.resize( m_size*2 );

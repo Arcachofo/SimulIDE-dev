@@ -679,16 +679,16 @@ void Circuit::removeComp( Component* comp )
     m_removedComps.insert( comp );
 }
 
-void Circuit::removeNode( Node *node )
+void Circuit::removeNode( Node* node )
 {
-    if (!m_nodeList.contains(node)) return;
+    if( !m_nodeList.contains(node) ) return;
     m_nodeList.remove( node );
     m_compMap.remove( node->getUid() );
     removeItem( node );
     m_removedComps.insert( node );
 }
 
-void Circuit::removeConnector( Connector *conn )
+void Circuit::removeConnector( Connector* conn )
 {
     if (!m_conList.contains(conn)) return;
     conn->remove();
@@ -700,14 +700,21 @@ void Circuit::clearCircuit() // Remove everything ( Clear Circuit )
 {
     if( m_conStarted ) return;
     m_deleting = true;
-    beginBatchProcess();
-    QSet<Component *> compList = m_compList;
-    for( Component *comp : compList ) removeComp( comp );
-    QSet<Node *> nodeList = m_nodeList;
-    for( Node *node : nodeList ) removeNode( node );
-    m_pinMap.clear();
+
+    QSet<Component*> compList = m_compList;
+    for( Component* comp : compList )
+    {
+        comp->remove();
+        if( comp->scene() ) removeItem( comp );
+        delete comp;
+    }
+    QSet<Node*> nodeList = m_nodeList;
+    for( Node* node : nodeList )
+    {
+        if( node->scene() ) removeItem( node );
+        delete node;
+    }
     m_deleting = false;
-    endBatchProcess();
 }
 
 void Circuit::deselectAll()

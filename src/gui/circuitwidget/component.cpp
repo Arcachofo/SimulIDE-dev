@@ -405,6 +405,13 @@ void Component::remove()
     Circuit::self()->compRemoved( true );
 }
 
+void Component::deletePin( Pin* pin )
+{
+    pin->removeConnector();
+    m_signalPin.removeAll( pin );
+    delete pin;
+}
+
 void Component::slotProperties()
 {
     if( !m_propDialog )

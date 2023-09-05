@@ -68,13 +68,8 @@ void ConnBase::deletePins( int d )
 
     for( int i=start; i<m_size; i++ )
     {
-        m_pin[i]->removeConnector();
-        m_signalPin.removeAll( m_pin[i] );
-        delete m_pin[i];
-
-        m_sockPins[i]->removeConnector();
-        m_signalPin.removeAll( m_sockPins[i] );
-        delete m_sockPins[i];
+        deletePin( m_pin[i] );
+        deletePin( m_sockPins[i] );
     }
     m_size = m_size-d;
     m_pin.resize( m_size*2 );

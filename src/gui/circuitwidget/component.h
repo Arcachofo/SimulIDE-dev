@@ -121,6 +121,7 @@ class MAINMODULE_EXPORT Component : public CompBase, public QGraphicsItem, publi
 
         virtual void setflip();
 
+        void deletePin( Pin* pin );
         void addSignalPin( Pin* pin );
         void remSignalPin( Pin* pin );
 

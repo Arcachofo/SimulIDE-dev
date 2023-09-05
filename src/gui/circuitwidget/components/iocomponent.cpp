@@ -405,14 +405,8 @@ void IoComponent::deletePins( std::vector<IoPin*>* pinList, uint pins )
     if( pins > oldSize ) pins = oldSize;
 
     uint newSize = oldSize-pins;
-    for( uint i=oldSize-1; i>newSize-1; --i )
-    {
-        Pin* pin = pinList->at(i);
-        pin->removeConnector();
-        if( pin->scene() ) Circuit::self()->removeItem( pin );
-        m_signalPin.removeAll( pin );
-        delete pin;
-    }
+    for( uint i=oldSize-1; i>newSize-1; --i ) deletePin( pinList->at(i) );
+
     pinList->resize( newSize );
 }
 

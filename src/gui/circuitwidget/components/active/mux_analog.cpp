@@ -161,14 +161,7 @@ void MuxAnalog::createAddrBits( int c )
 
 void MuxAnalog::deleteAddrBits( int d )
 {
-    int start = m_addrBits-d;
-
-    for( int i=start; i<m_addrBits; i++ )
-    {
-        m_addrPin[i]->removeConnector();
-        m_signalPin.removeAll( m_addrPin[i] );
-        delete m_addrPin[i];
-    }
+    for( int i=m_addrBits-d; i<m_addrBits; i++ ) deletePin( m_addrPin[i] );
     m_addrBits = m_addrBits-d;
     m_addrPin.resize( m_addrBits );
 }
@@ -202,9 +195,7 @@ void MuxAnalog::deleteResistors( int d )
 
     for( int i=start; i<m_channels; ++i )
     {
-        m_chanPin[i]->removeConnector();
-        m_signalPin.removeAll( m_chanPin[i] );
-        delete m_chanPin[i];
+        deletePin( m_chanPin[i] );
         delete m_ePin[i];
         delete m_resistor[i];
     }

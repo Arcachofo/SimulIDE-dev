@@ -198,10 +198,7 @@ void Chip::addNewPin( QString id, QString type, QString label, int pos, int xpos
 void Chip::deletePin( Pin* pin )
 {
     if( !pin ) return;
-
-    pin->removeConnector();
-    m_signalPin.removeAll( pin );
-    delete pin;
+    deletePin( pin );
 }
 
 void Chip::setLogicSymbol( bool ls )

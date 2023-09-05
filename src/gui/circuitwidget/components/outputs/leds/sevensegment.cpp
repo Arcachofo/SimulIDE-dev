@@ -218,12 +218,8 @@ void SevenSegment::setMaxCurrent( double current )
 
 void SevenSegment::deleteDisplay(int n )
 {
-    Pin* pin = m_commonPin[n];
-    pin->removeConnector();
-    m_signalPin.removeAll( pin );
-    delete pin;
-
-    for( int i=0; i<8; ++i ) Circuit::self()->removeComp( m_segment[n*8+i] );
+    deletePin( m_commonPin[n] );
+    for( int i=0; i<8; ++i ) delete m_segment[n*8+i];
 }
 
 void SevenSegment::createDisplay(int n )

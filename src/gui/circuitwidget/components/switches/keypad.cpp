@@ -79,15 +79,9 @@ void KeyPad::setupButtons()
     for( PushBase* button : m_buttons ) 
     {
        m_buttons.removeOne( button );
-       Circuit::self()->removeComp( button );
+       delete button;
     }
-    for( Pin* pin : m_pin ) 
-    {
-        pin->removeConnector();
-        if( pin->scene() ) Circuit::self()->removeItem( pin );
-        m_signalPin.removeAll( pin );
-        delete pin;
-    }
+    for( Pin* pin : m_pin ) deletePin( pin );
     m_pin.resize( m_rows + m_cols );
     
     int labelMax = m_keyLabels.size()-1;

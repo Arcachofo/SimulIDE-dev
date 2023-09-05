@@ -69,19 +69,13 @@ void Bus::registerEnode( eNode* enode, int n )
 
 void Bus::setNumLines( int lines )
 {
-    if( Simulator::self()->isRunning() )  CircuitWidget::self()->powerCircOff();
+    if( Simulator::self()->isRunning() ) CircuitWidget::self()->powerCircOff();
 
     if( lines == m_numLines ) return;
     if( lines < 1 ) return;
 
-    for( int i=1; i<=m_numLines; i++ )
-    {
-        Pin* pin = m_pin[i];
-        if( pin->connector() ) Circuit::self()->removeConnector( pin->connector() );
-        if( pin->scene() ) Circuit::self()->removeItem( pin );
-        m_signalPin.removeAll( pin );
-        delete pin;
-    }
+    for( int i=1; i<=m_numLines; i++ ) deletePin( m_pin[i] );
+
     m_numLines = lines;
 
     m_pin.resize( lines+2 );
