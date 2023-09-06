@@ -108,9 +108,13 @@ void Label::updtLabelPos()
     QFontMetrics fm(this->font());
     QString text = toPlainText();
 
-    QPointF p = adjustPos( m_labelx, m_labely, fm.horizontalAdvance( text ), fm.height() );
+    int width  = fm.horizontalAdvance( text );
+    int height = fm.height();
+
+    QPointF p = adjustPos( m_labelx, m_labely, width, height );
     setPos( p );
-    //if( text == "R1") qDebug()<<" -- "<<pos()<<m_labelx<<m_labely;
+
+    setTransformOriginPoint( width/2, height/2 );
     setRotation( m_labelrot*vFlip()*hFlip() );
     adjustSize();
 }
