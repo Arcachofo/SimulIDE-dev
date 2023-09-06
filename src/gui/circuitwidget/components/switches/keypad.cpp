@@ -153,9 +153,7 @@ void KeyPad::setKeyLabels( QString keyLabels )
 
 void KeyPad::remove()
 {
-    for( PushBase* button : m_buttons ) 
-        Circuit::self()->removeComp( button );
-
+    for( PushBase* button : m_buttons ) delete button;
     Component::remove();
 }
 

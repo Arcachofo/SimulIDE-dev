@@ -55,20 +55,19 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
         void setAutoBck( int secs );
 
         void removeItems();
-        void removeComp( Component* comp);
+        void removeComp( Component* comp) ;
         void removeNode( Node* node );
-        void removeConnector( Connector * conn );
+        void removeConnector( Connector* conn );
         void clearCircuit();
-        bool deleting() { return m_deleting; }
+
         void compRemoved( bool removed ) { m_compRemoved = removed; }
         void saveState();
         void unSaveState();
         void addCompState( CompBase* c, QString p, stateMode=stateAddSave );
-        void beginBatchProcess() { m_batchProcess++; }
-        void endBatchProcess() { Q_ASSERT( m_batchProcess>0 ); m_batchProcess--; }
+        void beginBatchProcess();
+        void endBatchProcess();
         void setChanged();
 
-        void deselectAll();
         void accepKeys( bool a ) { m_acceptKeys = a; }
 
         Pin* findPin( int x, int y, QString id );
@@ -90,7 +89,7 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
         void addNode( Node* node );
 
         QSet<Component*>* compList() { return &m_compList; }
-        QSet<Connector*>* conList()  { return &m_conList; }
+        QSet<Connector*>* conList()  { return &m_connList; }
         QSet<Node*>*      nodeList() { return &m_nodeList; }
         QHash<QString, CompBase*>* compMap() { return &m_compMap;}
 
@@ -126,7 +125,6 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
         void paste( QPointF eventpoint );
         void undo();
         void redo();
-        void clearUndoRedo();
         void importCirc( QPointF eventpoint );
         //void bom();
         void saveBackup();
@@ -156,8 +154,11 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
         bool saveString( QString &fileName, QString doc );
         QString circuitHeader();
         QString circuitToString();
-        void clearRemovedComps();
+        //void clearRemovedComps();
         void addCompRemovedState( const QString& id, const QString& strVal);
+
+        void clearUndoRedo();
+        void finishUndoRedo();
 
         void updatePinName( QString* name );
 
@@ -198,13 +199,13 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
         QPointF m_deltaMove;
 
         QSet<Component*> m_compList;   // Component list
-        QSet<Connector*> m_conList;    // Connector list
+        QSet<Connector*> m_connList;    // Connector list
         QSet<Node*>      m_nodeList;   // Node list
 
         SubPackage* m_board;
 
-        QSet<Component *> m_removedComps; // removed component list;
-        QSet<Connector *> m_removedConnectors; // remove connector list;
+        QSet<CompBase*> m_removedComps; // removed component list;
+        //QSet<Connector *> m_removedConns; // remove connector list;
 
         QHash<QString, Pin*>      m_pinMap;   // Pin Id to Pin*
         QHash<QString, Pin*>      m_LdPinMap; // Pin Id to Pin* while loading/pasting/importing

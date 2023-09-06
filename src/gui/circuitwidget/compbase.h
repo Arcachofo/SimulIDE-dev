@@ -34,7 +34,7 @@ class MAINMODULE_EXPORT CompBase //: public QObject
 {
     public:
         CompBase( QString type, QString id );
-        ~CompBase();
+        virtual ~CompBase();
 
         void addPropGroup( propGroup pg, bool list=true );
         void remPropGroup( QString name );

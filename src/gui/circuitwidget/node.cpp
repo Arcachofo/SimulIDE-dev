@@ -31,7 +31,7 @@ Node::Node( QString type, QString id )
     remPropGroup( "CompGraphic" );
     addPropGroup( { "CompGraphic", {
 new PointProp <Component>( "Pos","","",this, &Component::position, &Component::setPosition )
-    }} );
+    },0} );
 }
 Node::~Node(){}
 
@@ -56,7 +56,7 @@ bool Node::checkRemove() // Only remove if there are less than 3 connectors
     int conectors = 0;
     int conecteds = 0;
 
-    for( int i=0; i< 3 ; i++)
+    for( int i=0; i<3; i++ )
     {
         Connector* co = m_pin[i]->connector();
         if( co )
@@ -76,15 +76,14 @@ bool Node::checkRemove() // Only remove if there are less than 3 connectors
     if( conectors < 3 )
     {
         if( conectors == 2) joinConns( con[0], con[1] );  // 2 Conn
-        else                 m_pin[con[0]]->removeConnector();
+        else                m_pin[con[0]]->removeConnector();
 
-        Circuit::self()->addCompState( this, COMP_STATE_REMOVED, stateAdd );
-        if( !Circuit::self()->deleting() )
-        {
-            Circuit::self()->removeNode( this );
-        }
+        //////Circuit::self()->addCompState( this, COMP_STATE_REMOVED, stateAdd );
+        Circuit::self()->removeNode( this );
+
         return true;
-    } else return false;
+    }
+    else return false;
 }
 
 void Node::joinConns( int c0, int c1 )
@@ -128,12 +127,12 @@ void Node::joinConns( int c0, int c1 )
         ///Circuit::self()->addCompState( con, COMP_STATE_CREATED, stateAdd );
         if( this->isSelected() ) con->setSelected( true );
     }
-    Circuit::self()->addCompState( con0, COMP_STATE_REMOVED, stateAdd );
+    //////Circuit::self()->addCompState( con0, COMP_STATE_REMOVED, stateAdd );
     con0->setStartPin( NULL );
     con0->setEndPin( NULL );
     Circuit::self()->removeConnector( con0 );
 
-    Circuit::self()->addCompState( con1, COMP_STATE_REMOVED, stateAdd );
+    //////Circuit::self()->addCompState( con1, COMP_STATE_REMOVED, stateAdd );
     con1->setStartPin( NULL );
     con1->setEndPin( NULL );
     Circuit::self()->removeConnector( con1 );

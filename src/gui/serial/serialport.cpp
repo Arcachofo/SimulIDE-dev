@@ -192,7 +192,7 @@ void SerialPort::frameSent( uint8_t data )
 void SerialPort::slotClose()
 {
     close();
-    Circuit::self()->removeComp( this );
+    //Circuit::self()->removeComp( this );  /// ???
 }
 
 void SerialPort::onbuttonclicked()

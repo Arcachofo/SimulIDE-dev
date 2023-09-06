@@ -89,7 +89,7 @@ int ScriptModule::compileScript()
     if( r < 0 ) { qDebug() << "\nScriptModule::compileScript: AddScriptSection() failed\n"; return -1; }
 
     r = mod->Build();
-    if( r < 0 ) { qDebug() << Qt::endl << m_elmId+" ScriptModule::compileScript Error"<< Qt::endl; return -1; }
+    if( r < 0 ) { qDebug() << endl << m_elmId+" ScriptModule::compileScript Error"<< endl; return -1; }
 
     //qDebug() << "\nScriptModule::compileScript: Build() Success\n";
     return 0;

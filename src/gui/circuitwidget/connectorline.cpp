@@ -254,9 +254,7 @@ bool ConnectorLine::connectToWire( QPoint point1 )
 
     if( Circuit::self()->is_constarted() )   // A Connector wants to connect here (ends in a node)
     {
-        /// Circuit::self()->addCompState( m_pConnector, COMP_STATE_REMOVED, stateAdd );
         m_pConnector->splitCon( index, node->getPin(0), node->getPin(2) );
-        /// Circuit::self()->addCompState( node, COMP_STATE_CREATED, stateAdd );
         Circuit::self()->closeconnector( node->getPin(1) );
     }
     else                                     // A new Connector created here (starts in a node)
@@ -264,9 +262,7 @@ bool ConnectorLine::connectToWire( QPoint point1 )
         Pin* pin = node->getPin(1);
         if( m_isBus ) pin->setIsBus( true );
         Circuit::self()->newconnector( pin );
-        /// Circuit::self()->addCompState( m_pConnector, COMP_STATE_REMOVED, stateAdd );
         m_pConnector->splitCon( index, node->getPin(0), node->getPin(2) );
-        /// Circuit::self()->addCompState( node, COMP_STATE_CREATED, stateAdd );
     }
     return true;
 }

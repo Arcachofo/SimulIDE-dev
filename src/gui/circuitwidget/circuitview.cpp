@@ -101,7 +101,7 @@ void CircuitView::dragEnterEvent( QDragEnterEvent* event )
         m_enterItem->setPos( mapToScene( event->pos() ) );
         m_circuit->addItem( m_enterItem );
         m_circuit->compList()->insert( m_enterItem );
-        m_circuit->addCompState( m_enterItem, "remove" );
+        m_circuit->addCompState( m_enterItem, COMP_STATE_CREATED );
         this->setFocus();
     }
 }
@@ -115,30 +115,25 @@ void CircuitView::dragMoveEvent( QDragMoveEvent* event )
 void CircuitView::dragLeaveEvent( QDragLeaveEvent* event )
 {
     event->accept();
-    if ( m_enterItem )
-    {
-        m_circuit->removeComp( m_enterItem );
-        Circuit::self()->unSaveState();
-        m_enterItem = NULL;
-}   }
+    if( !m_enterItem ) return;
+
+    m_circuit->removeComp( m_enterItem );
+    Circuit::self()->unSaveState();
+    m_enterItem = NULL;
+}
 
 void CircuitView::mousePressEvent( QMouseEvent* event )
 {
     m_waitForDragStart = false;
 
-    if( event->button() == Qt::LeftButton
+    if( event->button()   == Qt::LeftButton
      && event->modifiers() & Qt::ControlModifier
      && event->modifiers() & Qt::ShiftModifier
      && !m_circuit->is_constarted() )
     {
-        if( itemAt( event->pos() )->isSelected() )
-        {
-            itemAt( event->pos() )->setSelected( false );
-            m_mousePressPos = event->pos();
-            m_waitForDragStart = true;
-            event->accept();
-        }
-        QGraphicsView::mousePressEvent( event );
+        itemAt( event->pos() )->setSelected( false );
+        m_mousePressPos = event->pos();
+        m_waitForDragStart = true;
     }
     else if( event->button() == Qt::MidButton )
     {
@@ -146,14 +141,12 @@ void CircuitView::mousePressEvent( QMouseEvent* event )
         setDragMode( QGraphicsView::ScrollHandDrag );
 
         QGraphicsView::mousePressEvent( event );
+        if( event->isAccepted() ) return;
 
-        if( !event->isAccepted() )
-        {
-            QMouseEvent eve( QEvent::MouseButtonPress, event->pos(),
-                Qt::LeftButton, Qt::LeftButton, Qt::NoModifier   );
-            QGraphicsView::mousePressEvent( &eve );
-    }   }
-    else QGraphicsView::mousePressEvent( event );
+        event = new QMouseEvent( QEvent::MouseButtonPress, event->pos(),
+                                 Qt::LeftButton, Qt::LeftButton, Qt::NoModifier );
+    }
+    QGraphicsView::mousePressEvent( event );
 }
 
 void CircuitView::mouseMoveEvent( QMouseEvent* event )
@@ -163,16 +156,13 @@ void CircuitView::mouseMoveEvent( QMouseEvent* event )
         m_waitForDragStart = false;
 
         if( event->modifiers() & Qt::ControlModifier
-         && event->modifiers() & Qt::ShiftModifier )
+         && event->modifiers() & Qt::ShiftModifier
+         && !m_circuit->selectedItems().isEmpty() )
         {
             event->accept();
-
-            if( !m_circuit->selectedItems().isEmpty() )
-            {
-                event->accept();
-                Circuit::self()->copy( m_mousePressPos );
-                Circuit::self()->paste( event->pos() );
-            }
+            m_circuit->beginBatchProcess();
+            m_circuit->copy( m_mousePressPos );
+            m_circuit->paste( event->pos() );
         }
     }
     QGraphicsView::mouseMoveEvent( event );
@@ -275,7 +265,7 @@ void CircuitView::importCirc()
 { Circuit::self()->importCirc( m_eventpoint ); }
 
 void CircuitView::slotPaste()
-{ Circuit::self()->paste( m_eventpoint ); }
+{ m_circuit->paste( m_eventpoint ); }
 
 void CircuitView::saveImage()
 {

@@ -346,7 +346,7 @@ void Connector::closeCon( Pin* endpin )
     for( ConnectorLine* line : m_conLineList ) line->setCursor( Qt::CrossCursor );
 }
 
-void Connector::splitCon(int index, Pin* pin0, Pin* pin2 )
+void Connector::splitCon( int index, Pin* pin0, Pin* pin2 )
 {
     if( !m_endPin ) return;
     disconnectLines( index-1, index );
@@ -371,9 +371,10 @@ void Connector::splitCon(int index, Pin* pin0, Pin* pin2 )
     else             m_actLine = 0;
     
     new_connector->closeCon( m_endPin );    // Close new_connector first please
+    Circuit::self()->addCompState( new_connector, COMP_STATE_CREATED, stateAdd );
+
     closeCon( pin0 );                       // Close this
-    ///Circuit::self()->addCompState( this, COMP_STATE_CREATED, stateAdd );
-    ///Circuit::self()->addCompState( new_connector, COMP_STATE_CREATED, stateAdd );
+    Circuit::self()->addCompState( this, "pointlist", stateAdd );
 }
 
 void Connector::updateLines()

@@ -152,7 +152,7 @@ Component* SubCircuit::construct( QString type, QString id )
 LibraryItem* SubCircuit::libraryItem()
 {
     return new LibraryItem(
-        simulideTr("Subcircuit","Subcircuit"),
+        tr("Subcircuit"),
         "",         // Category Not dispalyed
         "",
         "Subcircuit",
@@ -462,7 +462,8 @@ void SubCircuit::remove()
     for( Component* comp : m_compList )
     {
         comp->setParentItem( NULL );
-        Circuit::self()->removeComp( comp );
+        comp->remove();
+        //Circuit::self()->removeComp( comp );
     }
     m_pin.clear();
     Component::remove();
