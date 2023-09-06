@@ -315,29 +315,9 @@ void Circuit::loadStrDoc( QString &doc )
                     int itemY = pointList.last().toInt();
                     endpin = findPin( itemX, itemY, endpinid );
                 }
-                if( startpin && startpin->connector() )
-                {
-                    if( m_undo || m_redo )  /// There is a connector not yet removed.
-                                            /// Node::checkRemove() line 127: addCompState() is disabled
-                                            /// That addCompState() should go end of the list to be done before this
-                                            /// But with the "remove at the end" it is not posible
-                                            /// So the connector is removed here
-                                            /// TODO: avoid create new connector in Node::joinConns
-                    {
-                        addCompState( startpin->connector(), COMP_STATE_REMOVED, stateAdd );
-                        startpin->connector()->remove();
-                    }
-                    else startpin = NULL;
-                }
-                if( endpin && endpin->connector() )
-                {
-                    if( m_undo || m_redo )
-                    {
-                        addCompState( startpin->connector(), COMP_STATE_REMOVED, stateAdd );
-                        endpin->connector()->remove();
-                    }
-                    else endpin   = NULL;
-                }
+                if( startpin && startpin->connector() ) startpin = NULL;
+                if( endpin   && endpin->connector()   ) endpin   = NULL;
+
 
                 if( startpin && endpin )    // Create Connector
                 {
@@ -633,6 +613,7 @@ void Circuit::removeItems()                     // Remove Selected items
     }
     /// addCompState( NULL, "New State", stateNew );
 
+
     for( Connector* conn : oldConns ) {
         if( !m_connList.contains( conn ) ) addCompRemovedState( conn->getUid(), compStrMap.value(conn) );
     }
@@ -641,6 +622,9 @@ void Circuit::removeItems()                     // Remove Selected items
     }
     for( Component* comp : oldComps ) {
         if( !m_compList.contains( comp ) ) addCompRemovedState( comp->getUid(), compStrMap.value(comp) );
+    }
+    for( Connector* conn : m_connList ) { // New Connectors
+        if( !oldConns.contains( conn ) ) addCompState( conn, COMP_STATE_CREATED, stateAdd );
     }
 
     for( QGraphicsItem* item : selectedItems() ) item->setSelected( false );
@@ -794,8 +778,8 @@ void Circuit::addCompState( CompBase* c, QString p, stateMode state )
     QString type = "NULL";
     if( c ) type = c->itemType();
 
-    if ( c ) qDebug() << "Circuit::addCompState" << c->getUid() << p << state;
-    else     qDebug() << "Circuit::addCompState" << type<<p<<state;
+    if ( c ) qDebug() << "Circuit::addCompState    " << c->getUid() << p << state;
+    else     qDebug() << "Circuit::addCompState    " << type<<p<<state;
 
     if( state & stateNew )
     {
@@ -860,7 +844,7 @@ bool Circuit::restoreState( circState step )
         QString propVal  = cState.valStr;
         CompBase* comp   = m_compMap.value( compName );
 
-qDebug() << "Circuit::restoreState ---------  "<<compName<<cState.property<<comp;
+qDebug() << "Circuit::restoreState -->"<<compName<<cState.property<<comp;
 
         if( propName == COMP_STATE_REMOVED )
         {
