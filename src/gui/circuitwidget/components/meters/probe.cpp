@@ -103,6 +103,13 @@ void Probe::setVolt( double volt )
     setValLabelText( QString("%1 V").arg(float(int( volt*100+0.5 ))/100) );
 }
 
+void Probe::rotateAngle( double a )
+{
+    Component::rotateAngle( a );
+    m_idLabel->rotateAngle(-a );
+    m_valLabel->rotateAngle(-a );
+}
+
 QPainterPath Probe::shape() const
 {
     QPainterPath path;

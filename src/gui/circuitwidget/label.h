@@ -26,6 +26,7 @@ class Label : public QGraphicsTextItem
 
         int  getAngle()            { return m_labelrot; }
         void setAngle( int angle ) { m_labelrot = angle;  }
+        void rotateAngle( double a );
 
         QString itemType() { return "Label"; }
 
@@ -44,6 +45,8 @@ class Label : public QGraphicsTextItem
         int vFlip();
 
     private:
+        QPointF adjustPos( float x, float y, int width, int height );
+
         Component* m_parentComp;
 
         float m_labelx;

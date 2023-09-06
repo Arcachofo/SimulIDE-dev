@@ -465,8 +465,8 @@ void Component::setflip()
 {
     setTransform( QTransform::fromScale( m_Hflip, m_Vflip ) );
     m_idLabel->setTransform( QTransform::fromScale( m_Hflip, m_Vflip ) );
-    m_idLabel->updtLabelPos();
     m_valLabel->setTransform( QTransform::fromScale( m_Hflip, m_Vflip ) );
+    m_idLabel->updtLabelPos();
     m_valLabel->updtLabelPos();
     for( Pin* pin : m_signalPin ) pin->flip( m_Hflip, m_Vflip );
 
@@ -475,12 +475,12 @@ void Component::setflip()
 
 void Component::rotateCW()   { rotateAngle( 90 ); }
 void Component::rotateCCW()  { rotateAngle(-90 ); }
-void Component::rotateHalf() { rotateAngle(-180 ); }
+void Component::rotateHalf() { rotateAngle(-180); }
 
 void Component::rotateAngle( double a )
 {
     if( !m_hidden ) Circuit::self()->addCompState( this, "rotation" );
-    Component::setRotation( rotation() + a );
+    Component::setRotation( rotation() + a*m_Hflip*m_Vflip );
     if( !m_hidden ) moveSignal();
 }
 

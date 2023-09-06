@@ -28,6 +28,8 @@ class MAINMODULE_EXPORT Probe : public Component, public eElement
         double threshold() { return m_voltTrig; }
         void setThreshold( double t ) { m_voltTrig = t; }
 
+        virtual void rotateAngle( double a ) override;
+
         virtual QPainterPath shape() const override;
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
 
