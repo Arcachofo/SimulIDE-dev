@@ -86,7 +86,7 @@ void ShieldSubc::slotAttach()
                 if( board->subcType() < Board ) continue;
 
                 if( Simulator::self()->isRunning() ) CircuitWidget::self()->powerCircOff();
-                Circuit::self()->saveState();
+                /// FIXME UNDO REDO: Circuit::self()->saveState(); /// FIXME UNDO REDO
 
                 m_circPos = this->pos();
                 m_board = board;
@@ -109,7 +109,7 @@ void ShieldSubc::slotDetach()
     if( m_board )
     {
         if( Simulator::self()->isRunning() ) CircuitWidget::self()->powerCircOff();
-        Circuit::self()->saveState();
+        /// FIXME UNDO REDO: Circuit::self()->saveState();
 
         this->moveTo( this->scenePos()+QPointF( 8,-8 ) );
         setBoard( NULL );

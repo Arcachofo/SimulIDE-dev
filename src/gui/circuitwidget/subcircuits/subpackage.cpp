@@ -338,7 +338,9 @@ void SubPackage::editPin()
 }
 
 void SubPackage::editFinished( int )
-{ if( m_changed ) Circuit::self()->saveState(); }
+{
+    /// FIXME UNDOREDO: if( m_changed ) Circuit::self()->saveState();
+}
 
 void SubPackage::deleteEventPin()
 {
@@ -473,7 +475,7 @@ void SubPackage::slotSave()
 
 void SubPackage::loadPackage()
 {
-    Circuit::self()->addCompState( this, "Package_File" );
+    /// FIXME UNDOREDO: Circuit::self()->addCompState( this, "Package_File" );
 
     QDir pkgDir;
     QString dir;

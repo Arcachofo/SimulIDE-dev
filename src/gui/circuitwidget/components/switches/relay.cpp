@@ -39,6 +39,7 @@ Relay::Relay( QString type, QString id )
 
     m_pin0 = 4;
 
+    /// FIXME: use new to be Undo/Redo friendly. Or use eInductor and paint()
     m_inductor = (Inductor*)Circuit::self()->createItem( "Inductor", m_id+"-inductor" );//new Inductor( this, "Inductor", m_id+"-inductor" );
     m_inductor->setParentItem( this );
     m_inductor->moveTo( QPointF( 0, 0 ) );

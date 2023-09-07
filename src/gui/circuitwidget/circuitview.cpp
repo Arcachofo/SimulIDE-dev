@@ -101,7 +101,7 @@ void CircuitView::dragEnterEvent( QDragEnterEvent* event )
         m_enterItem->setPos( mapToScene( event->pos() ) );
         m_circuit->addItem( m_enterItem );
         m_circuit->compList()->insert( m_enterItem );
-        m_circuit->addCompState( m_enterItem, COMP_STATE_CREATED );
+        m_circuit->saveCompState( m_enterItem->getUid(), COMP_STATE_CREATED, "" );
         this->setFocus();
     }
 }
@@ -160,7 +160,7 @@ void CircuitView::mouseMoveEvent( QMouseEvent* event )
          && !m_circuit->selectedItems().isEmpty() )
         {
             event->accept();
-            m_circuit->beginBatchProcess();
+            m_circuit->beginCicuitModify(); /// FIXME UNDOREDO
             m_circuit->copy( m_mousePressPos );
             m_circuit->paste( event->pos() );
         }

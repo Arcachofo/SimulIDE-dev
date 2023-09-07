@@ -243,6 +243,10 @@ bool ConnectorLine::connectToWire( QPoint point1 )
         line = new ConnectorLine( point1.x(), point1.y(), m_p2X, p2().y(), m_pConnector );
         m_pConnector->addConLine( line, index );
     }
+    if( Simulator::self()->isRunning() )  CircuitWidget::self()->powerCircOff();
+
+    if( !Circuit::self()->is_constarted() ) Circuit::self()->beginCicuitChange(); // A new Connector started here
+
     QString type = "Node";
     QString id = type +"-"+ Circuit::self()->newSceneId();
 
@@ -250,18 +254,16 @@ bool ConnectorLine::connectToWire( QPoint point1 )
     node->setPos( point1.x(), point1.y());
     Circuit::self()->addNode( node );
 
-    if( Simulator::self()->isRunning() )  CircuitWidget::self()->powerCircOff();
-
     if( Circuit::self()->is_constarted() )   // A Connector wants to connect here (ends in a node)
     {
         m_pConnector->splitCon( index, node->getPin(0), node->getPin(2) );
-        Circuit::self()->closeconnector( node->getPin(1) );
+        Circuit::self()->closeconnector( node->getPin(1), true );
     }
     else                                     // A new Connector created here (starts in a node)
     {
         Pin* pin = node->getPin(1);
         if( m_isBus ) pin->setIsBus( true );
-        Circuit::self()->newconnector( pin );
+        Circuit::self()->newconnector( pin, false );
         m_pConnector->splitCon( index, node->getPin(0), node->getPin(2) );
     }
     return true;
@@ -275,7 +277,7 @@ void ConnectorLine::mouseMoveEvent( QGraphicsSceneMouseEvent* event )
 
     if( !m_moving && !Circuit::self()->is_constarted() )
     {
-        Circuit::self()->addCompState( m_pConnector, "pointList", stateNewAdd );
+        Circuit::self()->saveCompState( m_pConnector->getUid(), "pointList", m_pConnector->pointList().join(",") );
         m_moving = true;
     }
 
@@ -304,7 +306,6 @@ void ConnectorLine::mouseReleaseEvent( QGraphicsSceneMouseEvent* event )
     m_moveP1 = false;
     m_moveP2 = false;
     m_pConnector->remNullLines();
-    if( m_moving ) Circuit::self()->saveState();
     m_moving = false;
 }
 

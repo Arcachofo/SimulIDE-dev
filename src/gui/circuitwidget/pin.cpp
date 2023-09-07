@@ -168,8 +168,8 @@ Pin* Pin::connectPin( bool connect )      // Auto-Connect
               && pin->isVisible() && !pin->isObscuredBy( m_component ) ) _pin = pin;
             if( connect )
             {
-                Circuit::self()->newconnector( this );
-                Circuit::self()->closeconnector( pin );
+                Circuit::self()->newconnector( this, true );
+                Circuit::self()->closeconnector( pin, true );
             }
             break;
         }
@@ -219,8 +219,8 @@ void Pin::mousePressEvent( QGraphicsSceneMouseEvent* event )
                 { event->ignore(); return; }
             }
             event->accept();
-            if( Circuit::self()->is_constarted() ) Circuit::self()->closeconnector( this );
-            else                                   Circuit::self()->newconnector( this );
+            if( Circuit::self()->is_constarted() ) Circuit::self()->closeconnector( this, true );
+            else                                   Circuit::self()->newconnector( this, true );
 }   }   }
 
 void Pin::setLabelText( QString label, bool over )
