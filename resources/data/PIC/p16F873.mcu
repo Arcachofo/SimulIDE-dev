@@ -1,7 +1,7 @@
 <!DOCTYPE SimulIDE>
 
 <mcu name="p16F873" core="Pic14" data="512" prog="4096" progword="2" eeprom="128"
-            inst_cycle="4">
+            inst_cycle="4" freq="20000000">
             
     <include file="pic/pic14_regs.xml" />
     <include file="p16F87x/p16F87x_regs.xml" />

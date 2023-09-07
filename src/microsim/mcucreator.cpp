@@ -131,15 +131,13 @@ int McuCreator::processFile( QString fileName, bool main )
 
     if( root.hasAttribute("core") ) m_core = root.attribute("core");
 
-    if( root.hasAttribute("progword") )   mcu->m_wordSize = root.attribute("progword").toUInt(0,0);
-    if( root.hasAttribute("inst_cycle") ) mcu->setInstCycle( root.attribute("inst_cycle").toDouble() );
-    if( root.hasAttribute("cpu_cycle") )  mcu->m_cPerTick = root.attribute("cpu_cycle").toDouble();
     if( root.hasAttribute("data") )       createDataMem( root.attribute("data").toUInt(0,0) );
     if( root.hasAttribute("prog") )       createProgMem( root.attribute("prog").toUInt(0,0) );
+    if( root.hasAttribute("progword") )   mcu->m_wordSize = root.attribute("progword").toUInt(0,0);
     if( root.hasAttribute("eeprom") )     createRomMem( root.attribute("eeprom").toUInt(0,0) );
-    if( root.hasAttribute("freq") )       m_mcuComp->setFreq( root.attribute("freq").toDouble() );
-    else if( m_core == "AVR")             m_mcuComp->setFreq( 16*1e6 );
-    else if( m_core.startsWith("Pic") )   m_mcuComp->setFreq( 20*1e6 );
+    if( root.hasAttribute("inst_cycle") ) mcu->setInstCycle( root.attribute("inst_cycle").toDouble() );
+    if( root.hasAttribute("cpu_cycle") )  mcu->m_cPerTick = root.attribute("cpu_cycle").toDouble();
+    if( root.hasAttribute("freq") )       m_mcuComp->setExtFreq( root.attribute("freq").toDouble() );
 
     int error = 0;
     QDomNode node = root.firstChild();

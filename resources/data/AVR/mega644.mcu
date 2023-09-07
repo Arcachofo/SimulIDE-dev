@@ -1,6 +1,6 @@
 <!DOCTYPE SimulIDE>
 
-<mcu name="mega644" core="AVR" data="4352" prog="65536" progword="2" eeprom="2048" inst_cycle="1">
+<mcu name="mega644" core="AVR" data="4352" prog="65536" progword="2" eeprom="2048" inst_cycle="1" freq="16000000" >
 
     <include file="avr/avr_gpr.xml" />
     <include file="megaxx4/mxx4_regs.xml" />

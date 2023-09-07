@@ -5,6 +5,8 @@
                      resetpin="PORTP3">
   </port>
 
+  <intosc name="intosc" />
+
   <timer name="TIMER0" type="800" configregsA="OPTION"
                        counter="TMR0"
                        clockpin="PORTP2"

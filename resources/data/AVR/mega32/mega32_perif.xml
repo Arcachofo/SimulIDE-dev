@@ -18,6 +18,8 @@
     <extint name="INT1" pin="PORTD3" configbits="ISC10,ISC11"/>
   </port>
 
+  <intosc name="intosc" />
+
   <timer name="TIMER0" type="821" configregsA="TCCR0"
                        counter="TCNT0" 
                        clockpin="PORTB0" 
