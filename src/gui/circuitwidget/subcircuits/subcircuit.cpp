@@ -254,7 +254,7 @@ void SubCircuit::loadSubCircuit( QString fileName )
                 Component* comp = NULL;
 
                 if( type == "Node" ) comp = new Node( type, newUid );
-                else                 comp = circ->createItem( type, newUid );
+                else                 comp = circ->createItem( type, newUid, false );
 
                 if( comp ){
                     QString propName = "";
@@ -296,28 +296,8 @@ void SubCircuit::loadSubCircuit( QString fileName )
                         QString program = mcu->program();
                         if( !program.isEmpty() ) mcu->load( m_subcDir+"/"+program );
                     }
-                    if( comp->isMainComp() )
-                    {
-                        m_mainComponents[uid] = comp; // This component will add it's Context Menu and properties
+                    if( comp->isMainComp() ) m_mainComponents[uid] = comp; // This component will add it's Context Menu and properties
 
-                        /*QList<propGroup>* props = comp->properties();
-                        for( propGroup pg : *props )
-                        {
-                            if( pg.flags & groupNoCopy ) continue;
-
-                            propGroup npg;
-                            int len = label.lastIndexOf("-");
-                            npg.name = label.mid( 0, len )+" "+pg.name;
-                            npg.flags = pg.flags;
-
-                            for( ComProperty* p : pg.propList ) // Copy properties
-                            {
-                                if( p->flags() & propNoCopy ) continue;
-                                npg.propList.append( p );
-                            }
-                            addPropGroup( npg, false );
-                        }*/
-                    }
                     m_compList.insert( comp );
 
                     if( comp->m_linkable )
@@ -459,12 +439,7 @@ Component* SubCircuit::getMainComp( QString name )
 
 void SubCircuit::remove()
 {
-    for( Component* comp : m_compList )
-    {
-        comp->setParentItem( NULL );
-        comp->remove();
-        //Circuit::self()->removeComp( comp );
-    }
+    for( Component* comp : m_compList ) comp->remove();
     m_pin.clear();
     Component::remove();
 }

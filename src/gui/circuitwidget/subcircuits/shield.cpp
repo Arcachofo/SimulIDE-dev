@@ -86,7 +86,7 @@ void ShieldSubc::slotAttach()
                 if( board->subcType() < Board ) continue;
 
                 if( Simulator::self()->isRunning() ) CircuitWidget::self()->powerCircOff();
-                /// FIXME UNDO REDO: Circuit::self()->saveState(); /// FIXME UNDO REDO
+                /// FIXME UNDOREDO: Circuit::self()->saveState();
 
                 m_circPos = this->pos();
                 m_board = board;

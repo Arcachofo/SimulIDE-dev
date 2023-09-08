@@ -349,29 +349,34 @@ void Connector::closeCon( Pin* endpin )
 void Connector::splitCon( int index, Pin* pin0, Pin* pin2 )
 {
     if( !m_endPin ) return;
-    disconnectLines( index-1, index );
 
     QString id = "Connector-"+Circuit::self()->newConnectorId();
+    Connector* con0 = new Connector( "Connector", id, m_startPin );
+    Circuit::self()->conList()->insert( con0 );
 
-    Connector* new_connector = new Connector( "Connector", id, pin2 );
-    Circuit::self()->conList()->insert( new_connector );
+    id = "Connector-"+Circuit::self()->newConnectorId();
+    Connector* con1 = new Connector( "Connector", id, pin2 );
+    Circuit::self()->conList()->insert( con1 );
 
+    disconnectLines( index-1, index );
+    Connector* con = con0;
     int newindex = 0;
     int size = m_conLineList.size();
-    for( int i=index; i<size; ++i )
+    for( int i=0; i<size; ++i )
     {
-        ConnectorLine* lline = m_conLineList.takeAt( index );
-        new_connector->lineList()->insert( newindex, lline );
-        lline->setConnector( new_connector );
-
-        if( newindex > 1 ) new_connector->incActLine();
-        ++newindex;
+        if( i == index ){ con = con1; newindex = 0; }
+        ConnectorLine* line = m_conLineList.takeFirst();
+        con->lineList()->insert( newindex, line );
+        line->setConnector( con );
+        if( newindex > 1 ) con->incActLine();
+        newindex++;
     }
-    if( index > 1 )  m_actLine = index-2;
-    else             m_actLine = 0;
-    
-    new_connector->closeCon( m_endPin );    // Close new_connector first please
-    closeCon( pin0 );                       // Close this
+    con1->closeCon( m_endPin );    // Close con1 first please
+    con0->closeCon( pin0 );        // con0
+
+    m_startPin = nullptr;
+    m_endPin   = nullptr;
+    Circuit::self()->removeConnector( this );
 }
 
 void Connector::updateLines()

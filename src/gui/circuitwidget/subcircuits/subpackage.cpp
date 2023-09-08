@@ -475,8 +475,6 @@ void SubPackage::slotSave()
 
 void SubPackage::loadPackage()
 {
-    /// FIXME UNDOREDO: Circuit::self()->addCompState( this, "Package_File" );
-
     QDir pkgDir;
     QString dir;
 
@@ -492,6 +490,8 @@ void SubPackage::loadPackage()
                        tr("Packages (*.package);;All files (*.*)"));
 
     if( fileName.isEmpty() ) return; // User cancels loading
+
+    Circuit::self()->saveCompState( m_id, "Package_File", fileName );
     setPackage( fileName );
 
     QDir pdir = QFileInfo( Circuit::self()->getFilePath() ).absoluteDir();

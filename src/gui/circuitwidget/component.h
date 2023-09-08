@@ -108,7 +108,7 @@ class MAINMODULE_EXPORT Component : public CompBase, public QGraphicsItem, publi
 
         virtual void registerEnode( eNode*, int n=-1 ) {;}
 
-        virtual void inStateChanged( int ){;}
+        virtual void pinMessage( int ){;}
 
         virtual void move( QPointF delta ) { setPos( pos() + delta ); moveSignal(); }//emit moved(); }
         void moveTo( QPointF pos ){ setPos( pos ); moveSignal(); }//emit moved(); }

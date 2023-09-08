@@ -87,7 +87,7 @@ Pin::~Pin()
 void Pin::remove()
 {
     setConnector( NULL );
-    m_component->inStateChanged( 1 );          // Used by node to remove
+    if( !Circuit::self()->undoRedo() ) m_component->pinMessage( 1 ); // Used by node to remove
     m_component->remSignalPin( this );
 }
 
@@ -339,7 +339,7 @@ void Pin::setIsBus( bool bus )
     if( my_connector ) my_connector->setIsBus( true );
     if( m_conPin ) m_conPin->setIsBus( true );
     
-    m_component->inStateChanged( 2 );         // Propagate Is Bus (Node)
+    m_component->pinMessage( 2 );         // Propagate Is Bus (Node)
 
     update();
 }

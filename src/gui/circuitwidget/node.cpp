@@ -35,7 +35,7 @@ new PointProp <Component>( "Pos","","",this, &Component::position, &Component::s
 }
 Node::~Node(){}
 
-void Node::inStateChanged( int rem ) // Called by pin
+void Node::pinMessage( int rem ) // Called by pin
 {
     if     ( rem == 1 ) checkRemove();
     else if( rem == 2 ) // Propagate Is Bus

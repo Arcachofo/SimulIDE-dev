@@ -70,6 +70,7 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
         void endCicuitModify();
         void beginCicuitChange(); // Does create/remove
         void endCicuitChange();   // Does create/remove
+        bool undoRedo() { return m_undo || m_redo; }
         //------------------------------------------------
 
         void setChanged();
@@ -81,7 +82,7 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
         void loadCircuit( QString fileName );
         bool saveCircuit( QString fileName );
 
-        Component* createItem( QString name, QString id );
+        Component* createItem( QString name, QString id, bool map=true );
 
         QString newSceneId() { return QString::number(++m_seqNumber); }
         QString newConnectorId() { return QString::number(++m_conNumber); }
@@ -160,13 +161,10 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
 
         inline void clearCircuitState() { m_circState.clear(); }
         bool restoreState( circState step );
-        //void clearRemovedComps();
-        //void addCompRemovedState( const QString& id, const QString& strVal);
         void clearUndoRedo();
         void finishUndoRedo();
 
         QSet<CompBase*> m_removedComps; // removed component list;
-        //QSet<Connector *> m_removedConns; // remove connector list;
 
         circState m_circState;
         QList<circState> m_undoStack;
