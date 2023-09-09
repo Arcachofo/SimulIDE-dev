@@ -17,7 +17,7 @@
 #include "boolprop.h"
 #include "intprop.h"
 
-#define tr(str) simulideTr("TouchPadR",str)
+#define tr(str) simulideTr("TouchPad",str)
 
 Component* TouchPad::construct( QString type, QString id )
 { return new TouchPad( type, id ); }
@@ -25,7 +25,7 @@ Component* TouchPad::construct( QString type, QString id )
 LibraryItem* TouchPad::libraryItem()
 {
     return new LibraryItem(
-        tr( "TouchPad (Resistive)" ),
+        tr("TouchPad (Resistive)"),
         "Peripherals",
         "touch.png",
         "TouchPadR",
