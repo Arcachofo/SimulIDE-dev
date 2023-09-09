@@ -120,12 +120,18 @@ QList<CodeEditor*> EditorWidget::getCodeEditors()
 
 bool EditorWidget::close()
 {
-    writeSettings();
-
     for( int i=0; i<m_docWidget->count(); i++ )
-        closeTab( m_docWidget->currentIndex() );
-
-    return maybeSave();
+    {
+        m_docWidget->setCurrentIndex( i );
+        if( !maybeSave() ) return false;
+    }
+    while( m_docWidget->count() )
+    {
+        m_docWidget->setCurrentIndex( 0 );
+        closeTab( 0 );
+    }
+    writeSettings();
+    return true;
 }
 
 void EditorWidget::newFile()
