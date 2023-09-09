@@ -79,13 +79,18 @@ void CustomDial::paintEvent( QPaintEvent* e )
           if(ticks %2 != 0) ticks = ticks -1;
        }
        painter.save();
-       pen.setColor( QColor(110,110,110) );
-       painter.setPen( pen) ;
        painter.translate( width/2.0, height/2.0);
        painter.rotate(-startAngle);
 
        qreal angleStep = spanAngle/ticks;
        for( int i=0; i<=ticks; ++i) {
+           if (i==0) {
+               pen.setColor( QColor( "red" ) );
+               painter.setPen( pen) ;
+           } else {
+               pen.setColor( QColor(110,110,110) );
+               painter.setPen( pen) ;
+           }
            painter.drawLine( QPointF(width/2-3, 0), QPointF(width/2, 0) );
            painter.rotate( angleStep );
        }
