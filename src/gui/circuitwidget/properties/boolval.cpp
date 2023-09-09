@@ -17,7 +17,7 @@ BoolVal::~BoolVal() {;}
 
 void BoolVal::setup( bool )
 {
-    nameLabel->setText( m_property->capt() );
+    trueVal->setText( m_property->capt() );
     m_blocked = true;
 
     bool checked = (m_property->getValStr() == "true");
