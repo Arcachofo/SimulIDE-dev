@@ -40,7 +40,7 @@ Component* SubPackage::construct( QString type, QString id )
 LibraryItem* SubPackage::libraryItem()
 {
     return new LibraryItem(
-        simulideTr("Package", "Package" ),
+        tr("Package"),
         "Other",
         "resistordip.png",
         "Package",
@@ -593,6 +593,7 @@ void SubPackage::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWi
 //_____________________________________________________________
 //_____________________________________________________________
 
+#define tr(str) simulideTr("EditDialog",str)
 
 EditDialog::EditDialog( SubPackage* pack, Pin* eventPin, QWidget* parent )
           : QDialog( parent, Qt::WindowCloseButtonHint )
