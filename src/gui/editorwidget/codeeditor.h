@@ -8,13 +8,14 @@
 
 #include <QPlainTextEdit>
 
+#include "compbase.h"
+
 class BaseDebugger;
 class LineNumberArea;
 class Highlighter;
 class OutPanelText;
-class CompilerProp;
 
-class CodeEditor : public QPlainTextEdit
+class CodeEditor : public QPlainTextEdit, public CompBase
 {
     Q_OBJECT
 
@@ -22,13 +23,39 @@ class CodeEditor : public QPlainTextEdit
         CodeEditor( QWidget* parent, OutPanelText* outPane );
         ~CodeEditor();
 
-        void setFile(const QString filePath);
-        QString getFilePath() { return m_file ; }
+        void setFile( QString filePath );
+        QString getFile() { return m_file ; }
+
+        QString compName();
+        void setCompName( QString n );
+
+        bool saveAtClose() { return m_saveAtClose; }
+        void setSaveAtClose( bool s ) { m_saveAtClose = s; }
+
+        bool loadCompiler() { return m_loadCompiler; }
+        void setLoadCompiler( bool l ) { m_loadCompiler = l; }
+
+        bool loadBreakp() { return m_loadBreakp; }
+        void setLoadBreakp( bool l ) { m_loadBreakp = l; }
+
+        bool openFiles() { return m_openFiles; }
+        void setOpenFiles( bool o ) { m_openFiles = o; }
+
+        QString circuit();
+        void setCircuit( QString c );
+
+        QString breakpoints();
+        void setBreakpoints( QString bp );
+
+        QString fileList();
+        void setFileList( QString fl );
 
         void setSyntaxFile( QString file );
 
         void loadConfig();
         void saveConfig();
+
+        void closing() { if( m_saveAtClose ) saveConfig(); }
 
         int debugLine() { return m_debugLine; }
         void setDebugLine( int line ) { m_debugLine = line; }
@@ -38,8 +65,8 @@ class CodeEditor : public QPlainTextEdit
         void addWarning( int w ) { if( !m_warnings.contains( w ) ) m_warnings.append( w );}
 
         QList<int>* getBreakPoints() { return &m_brkPoints; }
-        QList<int>* getErrors()   { return &m_errors; }
-        QList<int>* getWarnings() { return &m_warnings; }
+        QList<int>* getErrors()      { return &m_errors; }
+        QList<int>* getWarnings()    { return &m_warnings; }
 
         void startDebug();
         void stopDebug();
@@ -48,8 +75,9 @@ class CodeEditor : public QPlainTextEdit
         int  lineNumberAreaWidth();
 
         BaseDebugger* getCompiler() { return m_compiler; }
-        void setCompiler( BaseDebugger* comp );
-        void compProps();
+        //void setCompiler( BaseDebugger* comp );
+
+        void fileProps();
 
         QList<int> getFound();
         void setFound( QList<QTextEdit::ExtraSelection> sel );
@@ -58,26 +86,14 @@ class CodeEditor : public QPlainTextEdit
 
         void updateScreen();
 
- static void readSettings();
- static int  fontSize() { return m_fontSize; }
- static void setFontSize( int size );
-
- static int  tabSize() { return m_tabSize; }
- static void setTabSize( int size );
-
- static bool showSpaces() { return m_showSpaces; }
- static void setShowSpaces( bool on );
-
- static bool spaceTabs() { return m_spaceTabs; }
- static void setSpaceTabs( bool on );
-
         void toggleBreak() { m_brkAction = 3; }
+
+        bool compile( bool debug=false );
 
     public slots:
         void slotAddBreak() { m_brkAction = 1; }
         void slotRemBreak() { m_brkAction = 2; }
         void slotClearBreak() { m_brkPoints.clear(); }
-        bool compile( bool debug=false );
 
     private slots:
         void updateLineNumberAreaWidth(int) { setViewportMargins( lineNumberAreaWidth(), 0, 0, 0 ); }
@@ -96,7 +112,6 @@ class CodeEditor : public QPlainTextEdit
 
         void indentSelection( bool unIndent );
 
-        CompilerProp* m_compDialog;
         BaseDebugger* m_compiler;
         OutPanelText* m_outPane;
 
@@ -116,19 +131,18 @@ class CodeEditor : public QPlainTextEdit
         int m_debugLine;
         int m_numLines;
 
- static bool m_showSpaces;
- static bool m_spaceTabs;
+        bool m_saveAtClose;
+        bool m_openFiles;
+        bool m_openCircuit;
+        bool m_loadCompiler;
+        bool m_loadBreakp;
+
+        QString m_tab;
+        QFont m_font;
 
  static QStringList m_picInstr;
  static QStringList m_avrInstr;
  static QStringList m_i51Instr;
-
- static int m_fontSize;
- static int m_tabSize;
-
- static QString m_tab;
-
- static QFont m_font;
 
  static QList<CodeEditor*> m_documents;
 };

@@ -15,7 +15,7 @@ EnumVal::EnumVal( PropDialog* parent, CompBase* comp, ComProperty* prop )
 }
 EnumVal::~EnumVal() {}
 
-void EnumVal::setup()
+void EnumVal::setup( bool isComp )
 {
     valLabel->setText( m_property->capt() );
     m_blocked = true;
@@ -27,6 +27,8 @@ void EnumVal::setup()
 
     QString valStr = m_property->getValStr();
     valueBox->setCurrentIndex( m_enums.indexOf( valStr) );
+
+    if( !isComp ) showVal->setVisible( false );
 
     m_blocked = false;
     updtValues();

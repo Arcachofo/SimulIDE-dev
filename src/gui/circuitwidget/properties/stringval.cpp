@@ -15,7 +15,7 @@ StringVal::StringVal( PropDialog* parent, CompBase* comp, ComProperty* prop )
 }
 StringVal::~StringVal() {}
 
-void StringVal::setup()
+void StringVal::setup( bool )
 {
     valLabel->setText( m_property->capt() );
     updtValues();

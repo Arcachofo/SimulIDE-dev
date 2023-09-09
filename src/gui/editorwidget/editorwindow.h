@@ -52,6 +52,11 @@ class EditorWindow : public EditorWidget, public Updatable
 
         OutPanelText* outPane() { return &m_outPane; }
 
+        QString tabString() { return m_tab; }
+
+        QFont getFont() { return m_font; }
+        void scaleFont( int s ) { m_fontSize += s;}
+
     public slots:
         virtual void pause() override;
         virtual void stop() override;
@@ -67,7 +72,9 @@ class EditorWindow : public EditorWidget, public Updatable
         void initDebbuger();
 
     private:
+
  static EditorWindow*  m_pSelf;
+
         bool uploadFirmware( bool debug );
         void stepDebug( bool over=false );
         void stopDebbuger();
@@ -89,8 +96,6 @@ class EditorWindow : public EditorWidget, public Updatable
 
         bebugState_t m_state;
         bebugState_t m_resume;
-
-        QFont m_font;
 
         QMap<QString, compilData_t> m_compilers;
         QMap<QString, compilData_t> m_assemblers;

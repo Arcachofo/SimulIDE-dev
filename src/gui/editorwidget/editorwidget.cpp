@@ -17,41 +17,106 @@
 
 #include "editorwidget.h"
 #include "findreplace.h"
+#include "propdialog.h"
 #include "scrollbar.h"
-#include "editorprop.h"
 #include "basedebugger.h"
 #include "mainwindow.h"
 #include "simulator.h"
 #include "utils.h"
 
+#include "intprop.h"
+#include "boolprop.h"
+
 EditorWidget::EditorWidget( QWidget* parent )
             : QWidget( parent )
+            , CompBase( "Editor", "" )
             , m_outPane( this )
             , m_settingsMenu( this )
             , m_fileMenu( this )
 {
-    m_editDialog = NULL;
-
     setAcceptDrops( true );
 
     createActions();
     createToolBars();
     createWidgets();
-
     updateRecentFileActions();
     readSettings();
+
+    addPropGroup( { tr("Editor Settings"), {
+new IntProp <EditorWidget>("FontSize" , tr("Font Size"),"_Pixels", this,
+                        &EditorWidget::fontSize,    &EditorWidget::setFontSize, 0 ),
+new IntProp <EditorWidget>("TabSize"  , tr("Tab Size"),"_Spaces", this,
+                        &EditorWidget::tabSize,    &EditorWidget::setTabSize, 0 ),
+new BoolProp<EditorWidget>("SpaceTabs", tr("Tabs as spaces"),"", this
+                        , &EditorWidget::spaceTabs, &EditorWidget::setSpaceTabs ),
+new BoolProp<EditorWidget>("ShowSpaces", tr("Show Spaces and Tabs"),"", this
+                        , &EditorWidget::showSpaces, &EditorWidget::setShowSpaces ),
+    }, 0} );
 }
 EditorWidget::~EditorWidget(){}
+
+void EditorWidget::setFontSize( int size )
+{
+    m_fontSize = size;
+    m_font.setPixelSize( size );
+    MainWindow::self()->settings()->setValue( "Editor_font_size", QString::number(m_fontSize) );
+
+    for( CodeEditor* ce : getCodeEditors() ) ce->setFont( m_font );
+
+    setTabSize( m_tabSize );
+}
+
+void EditorWidget::setTabSize( int size )
+{
+    m_tabSize = size;
+    MainWindow::self()->settings()->setValue( "Editor_tab_size", QString::number(m_tabSize) );
+
+    for( CodeEditor* ce : getCodeEditors() ) ce->setTabStopWidth( m_tabSize*m_fontSize*2/3 );
+}
+
+void EditorWidget::setShowSpaces( bool show )
+{
+    m_showSpaces = show;
+
+    for( CodeEditor* ce : getCodeEditors() ) docShowSpaces( ce );
+
+    QString showStr = m_showSpaces ? "true" : "false";
+    MainWindow::self()->settings()->setValue( "Editor_show_spaces", showStr );
+}
+
+void EditorWidget::docShowSpaces( CodeEditor* ce )
+{
+    QTextOption option = ce->document()->defaultTextOption();
+
+    if( m_showSpaces ) option.setFlags( option.flags() | QTextOption::ShowTabsAndSpaces  );
+    else               option.setFlags( option.flags() & ~QTextOption::ShowTabsAndSpaces );
+
+    ce->document()->setDefaultTextOption( option );
+}
+
+void EditorWidget::setSpaceTabs( bool on )
+{
+    m_spaceTabs = on;
+
+    if( on ) { m_tab = ""; for( int i=0; i<m_tabSize; i++) m_tab += " "; }
+    else m_tab = "\t";
+
+    if( m_spaceTabs )
+         MainWindow::self()->settings()->setValue( "Editor_spaces_tabs", "true" );
+    else MainWindow::self()->settings()->setValue( "Editor_spaces_tabs", "false" );
+}
 
 CodeEditor* EditorWidget::getCodeEditor()
 {
     return (CodeEditor*)m_docWidget->currentWidget();
 }
 
-/*CodeEditor* EditorWidget::getCodeEditor( QString file )
+QList<CodeEditor*> EditorWidget::getCodeEditors()
 {
-    return (CodeEditor*)m_fileList.value( file );
-}*/
+    QList<CodeEditor*> list;
+    for( QWidget* widget : m_fileList.values() ) list.append( (CodeEditor*)widget );
+    return list;
+}
 
 bool EditorWidget::close()
 {
@@ -72,6 +137,8 @@ void EditorWidget::addDocument(  QString file, bool main  )
 {
     CodeEditor* ce = new CodeEditor( this, &m_outPane );
     ce->setVerticalScrollBar( new scrollWidget( ce, Qt::Vertical ) );
+    ce->setTabStopWidth( m_tabSize*m_fontSize*2/3 );
+    docShowSpaces( ce );
 
     QString tabString = file.isEmpty() ? tr("NEW") : getFileName(file);
     m_docWidget->addTab( ce, tabString );
@@ -90,6 +157,7 @@ void EditorWidget::addDocument(  QString file, bool main  )
         documentWasModified();
         enableFileActs( true );
         enableDebugActs( true );
+        updateDoc();
     }
 }
 
@@ -191,13 +259,10 @@ void EditorWidget::loadFile( QString filePath )
     }
     QApplication::setOverrideCursor( Qt::WaitCursor );
 
-    addDocument( filePath, true );
-
     m_lastDir = filePath;
-
+    addDocument( filePath, true );
     enableFileActs( true );
     enableDebugActs( true );
-
     addRecentFile( filePath );
 
     QApplication::restoreOverrideCursor();
@@ -211,7 +276,7 @@ void EditorWidget::reload()
 
 bool EditorWidget::save()
 {
-    QString file = getCodeEditor()->getFilePath();
+    QString file = getCodeEditor()->getFile();
     if( file.isEmpty() ) return saveAs();
     else                 return saveFile( file );
 }
@@ -220,7 +285,7 @@ bool EditorWidget::saveAs()
 {
     CodeEditor* ce = getCodeEditor();
 
-    QFileInfo fi = QFileInfo( ce->getFilePath() );
+    QFileInfo fi = QFileInfo( ce->getFile() );
     QString ext  = fi.suffix();
     QString path = fi.absolutePath();
     if( path == "" ) path = m_lastDir;
@@ -257,8 +322,7 @@ bool EditorWidget::saveFile( QString fileName )
     out << ce->toPlainText();
     file.close();
 
-    ce->saveConfig();
-
+    //ce->saveConfig();
     ce->document()->setModified( false );
     documentWasModified();
 
@@ -305,10 +369,14 @@ void EditorWidget::documentWasModified()
     if( doc->isUndoAvailable() ) undoAct->setEnabled( true );
 }
 
-void EditorWidget::tabChanged( int )
+void EditorWidget::updateDoc( int )
 {
-    //qDebug() << "EditorWindow::tabChanged" << m_docWidget->currentIndex() << tab;
-    m_findRepDialog->setEditor( getCodeEditor() );
+    CodeEditor* ce = getCodeEditor();
+    m_findRepDialog->setEditor( ce );
+    if( !ce ) return;
+    bool show = ce->compName() == "None" ? false : true;
+    confCompAct->setVisible( show );
+    confFileAct->setVisible( true );
 }
 
 void EditorWidget::closeTab( int index )
@@ -319,6 +387,7 @@ void EditorWidget::closeTab( int index )
     if( !maybeSave() ) return;
 
     CodeEditor* ce = getCodeEditor();
+    ce->closing();
     m_fileList.remove( m_fileList.key( ce ) );
     m_docWidget->removeTab( index );
     delete ce;
@@ -328,6 +397,8 @@ void EditorWidget::closeTab( int index )
         enableFileActs( false );
         enableDebugActs( false );
         m_findRepDialog->hide();
+        confFileAct->setVisible( false );
+        confCompAct->setVisible( false );
     }
 
     int last = m_docWidget->count()-1;
@@ -339,14 +410,29 @@ void EditorWidget::closeTab( int index )
 
 void EditorWidget::confEditor()
 {
-    if( !m_editDialog ) m_editDialog = new EditorProp( this );
-    m_editDialog->show();
+    if( !m_propDialog )
+    {
+        if( m_help == "" ) m_help = MainWindow::self()->getHelp( "editor" );
+
+        m_propDialog = new PropDialog( this, m_help );
+        m_propDialog->setComponent( this, false );
+    }
+    m_propDialog->show();
+}
+
+void EditorWidget::confFile()
+{
+    CodeEditor* ce = getCodeEditor();
+    if( ce ) ce->fileProps();
 }
 
 void EditorWidget::confCompiler()
 {
     CodeEditor* ce = getCodeEditor();
-    if( ce ) ce->compProps();
+    if( !ce ) return;
+    Compiler* c = ce->getCompiler();
+    if( !c || c->compName() == "None" ) return;
+    c->compilerProps();
 }
 
 void EditorWidget::addRecentFile( QString filePath )
@@ -380,6 +466,31 @@ void EditorWidget::updateRecentFileActions()
 void EditorWidget::readSettings()
 {
     QSettings* settings = MainWindow::self()->settings();
+
+    m_showSpaces = false;
+    m_spaceTabs  = false;
+    m_fontSize = 14;
+    m_tabSize = 4;
+
+    m_font.setFamily("Ubuntu Mono");
+    m_font.setWeight( 50 );
+    m_font.setPixelSize( m_fontSize );
+
+    if( settings->contains( "Editor_show_spaces" ) )
+        setShowSpaces( settings->value( "Editor_show_spaces" ).toBool() );
+
+    if( settings->contains( "Editor_tab_size" ) )
+        setTabSize( settings->value( "Editor_tab_size" ).toInt() );
+    else setTabSize( 4 );
+
+    if( settings->contains( "Editor_font_size" ) )
+        setFontSize( settings->value( "Editor_font_size" ).toInt() );
+
+    bool spacesTab = false;
+    if( settings->contains( "Editor_spaces_tabs" ) )
+        spacesTab = settings->value( "Editor_spaces_tabs" ).toBool();
+
+    setSpaceTabs( spacesTab );
 
     restoreGeometry( settings->value("geometry").toByteArray() );
     m_docWidget->restoreGeometry( settings->value("docWidget/geometry").toByteArray() );
@@ -480,7 +591,7 @@ void EditorWidget::createWidgets()
     connect( m_docWidget, SIGNAL( tabCloseRequested(int)),
              this,        SLOT(   closeTab(int)), Qt::UniqueConnection);
 
-    connect( m_docWidget, SIGNAL(currentChanged(int)), this, SLOT(tabChanged(int)), Qt::UniqueConnection);
+    connect( m_docWidget, SIGNAL(currentChanged(int)), this, SLOT(updateDoc(int)), Qt::UniqueConnection);
 
     m_findRepDialog = new FindReplace( this );
     m_findRepDialog->setModal( false );
@@ -492,9 +603,15 @@ void EditorWidget::createActions()
     confEditAct->setStatusTip(tr("Editor Settings"));
     connect( confEditAct, SIGNAL(triggered()), this, SLOT(confEditor()), Qt::UniqueConnection);
 
+    confFileAct = new QAction(QIcon(":/blank.png"), tr("File Settings"), this);
+    confFileAct->setStatusTip(tr("Compiler Settings"));
+    connect( confFileAct, SIGNAL(triggered()), this, SLOT(confFile()), Qt::UniqueConnection);
+    confFileAct->setVisible( false );
+
     confCompAct = new QAction(QIcon(":/blank.png"), tr("Compiler Settings"), this);
     confCompAct->setStatusTip(tr("Compiler Settings"));
     connect( confCompAct, SIGNAL(triggered()), this, SLOT(confCompiler()), Qt::UniqueConnection);
+    confCompAct->setVisible( false );
 
     for( int i=0; i<MaxRecentFiles; i++ )
     {
@@ -602,6 +719,7 @@ void EditorWidget::createActions()
 void EditorWidget::createToolBars()
 {
     m_settingsMenu.addAction( confEditAct );
+    m_settingsMenu.addAction( confFileAct );
     m_settingsMenu.addAction( confCompAct );
 
     QToolButton* settingsButton = new QToolButton( this );

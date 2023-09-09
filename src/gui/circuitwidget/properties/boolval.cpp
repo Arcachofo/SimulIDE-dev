@@ -15,7 +15,7 @@ BoolVal::BoolVal( PropDialog* parent, CompBase* comp, ComProperty* prop )
 }
 BoolVal::~BoolVal() {;}
 
-void BoolVal::setup()
+void BoolVal::setup( bool )
 {
     nameLabel->setText( m_property->capt() );
     m_blocked = true;

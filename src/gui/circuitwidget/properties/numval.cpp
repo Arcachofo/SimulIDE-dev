@@ -20,10 +20,12 @@ NumVal::NumVal( PropDialog* parent, CompBase* comp, ComProperty* prop )
 }
 NumVal::~NumVal() {}
 
-void NumVal::setup()
+void NumVal::setup( bool isComp )
 {
     valLabel->setText( m_property->capt() );
     m_blocked = true;
+
+    if( !isComp ) showVal->setVisible( false );
 
     QString unit = m_property->unit();
 

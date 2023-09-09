@@ -20,7 +20,7 @@ class NumVal : public PropVal, private Ui::NumVal
         NumVal( PropDialog* parent, CompBase* comp, ComProperty* prop );
         ~NumVal();
 
-        virtual void setup() override;
+        virtual void setup( bool isComp ) override;
         virtual void updtValues() override;
 
         virtual QString getValWithUnit() override;

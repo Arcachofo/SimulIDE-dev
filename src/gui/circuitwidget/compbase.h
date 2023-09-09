@@ -40,6 +40,7 @@ class MAINMODULE_EXPORT CompBase //: public QObject
         void remPropGroup( QString name );
         void addProperty( QString group, ComProperty* p );
         void removeProperty( QString prop );
+        void loadProperties( QDomElement* el );
         QList<propGroup>* properties() { return &m_propGroups; } // Circuit needs pointer bcos properties can change (ex: loadHex changes Config)
 
         virtual QStringList getEnumUids( QString )  { return m_enumUids; }

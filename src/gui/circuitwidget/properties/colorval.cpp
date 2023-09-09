@@ -17,7 +17,7 @@ ColorVal::ColorVal( PropDialog* parent, Component* comp, ComProperty* prop )
 }
 ColorVal::~ColorVal(){}
 
-void ColorVal::setup()
+void ColorVal::setup( bool )
 {
     valLabel->setText( m_property->capt() );
 

@@ -6,34 +6,31 @@
 #include <QPainter>
 #include <QTextDocumentFragment>
 #include <QDomDocument>
-#include <QSettings>
 #include <QDebug>
 
 #include "codeeditor.h"
 #include "outpaneltext.h"
-#include "compilerprop.h"
 #include "comproperty.h"
 #include "highlighter.h"
 #include "basedebugger.h"
 #include "mainwindow.h"
 #include "editorwindow.h"
+#include "propdialog.h"
+#include "circuit.h"
 #include "utils.h"
+
+#include "stringprop.h"
+#include "boolprop.h"
 
 QStringList CodeEditor::m_picInstr = QString("addlw addwf andlw andwf banksel bcf bov bsf btfsc btg btfss clrf clrw clrwdt comf decf decfsz goto incf incfsz iorlw iorwf movf movlw movwf reset retfie retlw return rlf rrf sublw subwf swapf xorlw xorwf").split(" ");
 QStringList CodeEditor::m_avrInstr = QString("nop add adc adiw call inc sleep sub subi sbc sbci sbiw and andi or ori eor elpm fmul fmuls fmulsu mul muls smp com neg sbr cbr dec tst clr ser mul rjmp ijmp jmp rcall icall ret reti cpse cp cpc cpi sbrc sbrs sbic sbis brbs brbc breq brne brcs break brcc brsh brlo brmi brpl brge brlt brhs brhc brts brtc brvs brvc brie brid mov movw ldi lds ld ldd sts st std lpm in out push pop lsl lsr rol ror asr swap bset bclr sbi cbi bst bld sec clc sen cln sez clz sei cli ses cls sev clv set clt seh clh wdr des eicall eijmp lac las lat spm xch").split(" ");
 QStringList CodeEditor::m_i51Instr = QString("nop ajmp ljmp rr inc jbc acall lcall rrc dec jb ajmp ret rl add jnb reti rlc addc jc jnz orl jmp jnc anl jz xrl mov sjmp ajmp movc subb mul cpl cjne push clr swap xch pop setb da djnz xchd movx").split(" ");
 
-bool    CodeEditor::m_showSpaces = false;
-bool    CodeEditor::m_spaceTabs  = false;
-int     CodeEditor::m_fontSize = 13;
-int     CodeEditor::m_tabSize = 4;
-QString CodeEditor::m_tab;
-QFont   CodeEditor::m_font = QFont();
-
 QList<CodeEditor*> CodeEditor::m_documents;
 
 CodeEditor::CodeEditor( QWidget* parent, OutPanelText* outPane )
           : QPlainTextEdit( parent )
+          , CompBase("File", "" )
 {
     m_documents.append( this );
 
@@ -41,17 +38,25 @@ CodeEditor::CodeEditor( QWidget* parent, OutPanelText* outPane )
     m_lNumArea  = new LineNumberArea( this );
     m_hlighter  = new Highlighter( document() );
 
+    m_saveAtClose  = false;
+    m_openFiles    = false;
+    m_openCircuit  = false;
+    m_loadCompiler = false;
+    m_loadBreakp   = false;
+
     m_compiler   = NULL;
-    m_compDialog = NULL;
     m_debugLine = 0;
     m_brkAction = 0;
     m_help = "";
 
-    setFont( m_font );
-    setFontSize( m_fontSize );
-    setTabSize( m_tabSize );
-    setShowSpaces( m_showSpaces );
-    setSpaceTabs( m_spaceTabs );
+    m_tab = EditorWindow::self()->tabString();
+
+    m_enumUids = m_enumNames = EditorWindow::self()->compilers()+EditorWindow::self()->assemblers();
+    m_enumUids.prepend("None");
+    m_enumNames.prepend(tr("None"));
+
+    setFont( EditorWindow::self()->getFont() );
+
     setAcceptDrops( false );
 
     QPalette p = palette();
@@ -71,44 +76,113 @@ CodeEditor::CodeEditor( QWidget* parent, OutPanelText* outPane )
     setLineWrapMode( QPlainTextEdit::NoWrap );
     updateLineNumberAreaWidth( 0 );
     highlightCurrentLine();
+
+    addPropGroup( { "type", {
+new StrProp <CodeEditor>("itemtype" ,"","", this, &CodeEditor::itemType, &CodeEditor::setItemType ),
+    }, groupHidden} );
+
+    addPropGroup( { tr("File Settings"), {
+new StrProp <CodeEditor>("Compiler"    , tr("Compiler")     ,"", this, &CodeEditor::compName,    &CodeEditor::setCompName, 0, "enum"),
+new BoolProp<CodeEditor>("SaveAtClose", tr("Save Settings at file close"),"", this
+                        , &CodeEditor::saveAtClose, &CodeEditor::setSaveAtClose ),
+new ComProperty("", "separator","","",0),
+new ComProperty("", tr("Actions after opening this file:"),"","",0),
+new BoolProp<CodeEditor>("LoadCompiler", tr("Load Compiler")   ,"", this, &CodeEditor::loadCompiler, &CodeEditor::setLoadCompiler ),
+new BoolProp<CodeEditor>("LoadBreakp"  , tr("Load Breakpoints"),"", this, &CodeEditor::loadBreakp,   &CodeEditor::setLoadBreakp ),
+new BoolProp<CodeEditor>("OpenFiles"   , tr("Restore files")   ,"", this, &CodeEditor::openFiles,    &CodeEditor::setOpenFiles ),
+    }, 0} );
+
+    addPropGroup( { "Hidden", {
+new StrProp <CodeEditor>("File"     , "File"         ,"", this, &CodeEditor::getFile,     &CodeEditor::setFile, 0 ),
+new StrProp <CodeEditor>("Circuit"  , "Circuit"      ,"", this, &CodeEditor::circuit,     &CodeEditor::setCircuit, 0 ),
+new StrProp <CodeEditor>("FileList" , "FileList"     ,"", this, &CodeEditor::fileList,    &CodeEditor::setFileList, 0 ),
+new StrProp <CodeEditor>("Breakpoints", "Breakpoints","", this, &CodeEditor::breakpoints, &CodeEditor::setBreakpoints, 0 ),
+    }, groupHidden} );
 }
 CodeEditor::~CodeEditor()
 {
     m_documents.removeAll( this );
+}
 
-    if( m_compDialog )
+void CodeEditor::setSyntaxFile( QString file ){ m_hlighter->readSyntaxFile( file ); }
+
+void CodeEditor::fileProps()
+{
+    if( !m_propDialog )
     {
-        m_compDialog->setParent( NULL );
-        m_compDialog->close();
-        delete m_compDialog;
+        if( m_help == "" ) m_help = MainWindow::self()->getHelp( "codeeditor" );
+
+        m_propDialog = new PropDialog( this, m_help );
+        m_propDialog->setComponent( this, false );
+    }
+    m_propDialog->show();
+}
+
+QString CodeEditor::compName()
+{
+    if( m_compiler ) return m_compiler->compName();
+    return "";
+}
+
+void CodeEditor::setCompName( QString name )
+{
+    if( !name .isEmpty() )
+    {
+        if( m_compiler != NULL )
+        {
+            if( m_compiler->compName() == name  ) return ;
+            delete m_compiler;
+        }
+        m_compiler = EditorWindow::self()->createDebugger( name , this );
+        EditorWindow::self()->updateDoc();
     }
 }
 
-void CodeEditor::setCompiler( BaseDebugger* compiler )
+QString CodeEditor::circuit()
 {
-    if( m_compiler ) delete m_compiler;
-    m_compiler = compiler;
+    if( !m_openFiles ) return "";
+    return Circuit::self()->getFilePath();
+}
+void CodeEditor::setCircuit( QString c )
+{ if( m_openFiles ) Circuit::self()->loadCircuit( c ); }
+
+QString CodeEditor::breakpoints()
+{
+    if( !m_loadBreakp ) return "";
+    QString brkListStr;
+    for( int brk : m_brkPoints ) brkListStr.append( QString::number( brk )+"," );
+    return brkListStr;
 }
 
-void CodeEditor::compProps()
+void CodeEditor::setBreakpoints( QString bp )
 {
-    if( !m_compDialog )
-    {
-        m_compDialog = new CompilerProp( this );
-        m_compDialog->setCompiler( m_compiler );
-    }
-    m_compDialog->show();
+    if( !m_loadBreakp ) return;
+    QStringList list = bp.split(",");
+    list.removeAll("");
+    for( QString brk : list ) addBreakPoint( brk.toInt() );
 }
 
-void CodeEditor::setSyntaxFile( QString file )
+QString CodeEditor::fileList()
 {
-    m_hlighter->readSyntaxFile( file );
+    if( !m_openFiles ) return "";
+    QStringList fileList = EditorWindow::self()->getFiles();
+    fileList.removeAll( m_file );
+    return fileList.join(",");
 }
 
-void CodeEditor::setFile( const QString filePath )
+void CodeEditor::setFileList( QString fl )
+{
+    if( !m_openFiles ) return;
+    QStringList fileList = fl.split(",");
+    fileList.removeOne("");
+    for( QString file : fileList ) EditorWindow::self()->restoreFile( file );
+}
+
+void CodeEditor::setFile( QString filePath )
 {
     if( m_file == filePath ) return;
     m_file = filePath;
+    m_id = getFileName( m_file );
 
     m_numLines = document()->blockCount();
 
@@ -119,13 +193,8 @@ void CodeEditor::setFile( const QString filePath )
     m_outPane->appendLine( "-------------------------------------------------------" );
     m_outPane->appendLine( tr(" File: ")+filePath+"\n" );
 
-
     QDir::setCurrent( m_file );
-
     QString extension = getFileExt( filePath );
-
-    /// QString compiler = changeCompilerFromCode(); /// TODELETE
-
     QString code = "00";
 
     if( extension == ".gcb" )
@@ -257,8 +326,6 @@ bool CodeEditor::compile( bool debug )
 {
     if( document()->isModified() )
     {
-        //changeCompilerFromCode();
-
         if( !EditorWindow::self()->save() )
         {
             m_outPane->appendLine( "Error: File not saved" );
@@ -339,93 +406,15 @@ void CodeEditor::updateScreen()
     update();
 }
 
-void CodeEditor::readSettings() // Static
-{
-    m_font.setFamily("Ubuntu Mono");
-    m_font.setWeight( 50 );
-    m_font.setPixelSize( m_fontSize );
-
-    QSettings* settings = MainWindow::self()->settings();
-
-    if( settings->contains( "Editor_show_spaces" ) )
-        setShowSpaces( settings->value( "Editor_show_spaces" ).toBool() );
-
-    if( settings->contains( "Editor_tab_size" ) )
-        setTabSize( settings->value( "Editor_tab_size" ).toInt() );
-    else setTabSize( 4 );
-
-    if( settings->contains( "Editor_font_size" ) )
-        setFontSize( settings->value( "Editor_font_size" ).toInt() );
-
-    bool spacesTab = false;
-    if( settings->contains( "Editor_spaces_tabs" ) )
-        spacesTab = settings->value( "Editor_spaces_tabs" ).toBool();
-
-    setSpaceTabs( spacesTab );
-}
-
-void CodeEditor::setFontSize( int size )
-{
-    m_fontSize = size;
-    m_font.setPixelSize( size );
-    MainWindow::self()->settings()->setValue( "Editor_font_size", QString::number(m_fontSize) );
-
-    for( CodeEditor* doc : m_documents )
-    {
-        doc->setFont( m_font );
-        doc->setTabSize( m_tabSize );
-}   }
-
-void CodeEditor::setTabSize( int size )
-{
-    m_tabSize = size;
-    MainWindow::self()->settings()->setValue( "Editor_tab_size", QString::number(m_tabSize) );
-
-    for( CodeEditor* doc : m_documents )
-    {
-        doc->setTabStopWidth( m_tabSize*m_fontSize*2/3 );
-        if( m_spaceTabs ) doc->setSpaceTabs( true );
-}   }
-
-void CodeEditor::setShowSpaces( bool on )
-{
-    m_showSpaces = on;
-
-    for( CodeEditor* doc : m_documents )
-    {
-        QTextOption option = doc->document()->defaultTextOption();
-
-        if( on ) option.setFlags(option.flags() | QTextOption::ShowTabsAndSpaces);
-        else     option.setFlags(option.flags() & ~QTextOption::ShowTabsAndSpaces);
-
-        doc->document()->setDefaultTextOption(option);
-    }
-    if( m_showSpaces )
-         MainWindow::self()->settings()->setValue( "Editor_show_spaces", "true" );
-    else MainWindow::self()->settings()->setValue( "Editor_show_spaces", "false" );
-}
-
-void CodeEditor::setSpaceTabs( bool on )
-{
-    m_spaceTabs = on;
-
-    if( on ) { m_tab = ""; for( int i=0; i<m_tabSize; i++) m_tab += " "; }
-    else m_tab = "\t";
-
-    if( m_spaceTabs )
-         MainWindow::self()->settings()->setValue( "Editor_spaces_tabs", "true" );
-    else MainWindow::self()->settings()->setValue( "Editor_spaces_tabs", "false" );
-}
-
 void CodeEditor::keyPressEvent( QKeyEvent* event )
 {
     if( event->key() == Qt::Key_Plus && (event->modifiers() & Qt::ControlModifier) )
     {
-        setFontSize( m_fontSize+1 );
+        EditorWindow::self()->scaleFont( 1 );
     }
     else if( event->key() == Qt::Key_Minus && (event->modifiers() & Qt::ControlModifier) )
     {
-        setFontSize( m_fontSize-1 );
+        EditorWindow::self()->scaleFont( -1 );
     }
     else if( event->key() == Qt::Key_F && (event->modifiers() & Qt::ControlModifier) )
     {
@@ -532,51 +521,29 @@ void CodeEditor::loadConfig()
                 delete m_compiler;
             }
             m_compiler = EditorWindow::self()->createDebugger( compiler, this );
-            m_compiler->getInfoInFile( line );
         }
         return;
-    }
+    }//---------------------------------------------------------------------------
 
     QHash<QString, QString> properties;
     QDomDocument domDoc = fileToDomDoc( fileF, "EditorWidget::loadConfig" );
     if( domDoc.isNull() ) return;
 
     QDomElement root = domDoc.documentElement();
-    if( root.tagName() != "compiler" ) return;
-    //if( root.hasAttribute("") )
+    if( root.tagName() != "document" ) return;
 
     QDomNode node = root.firstChild();
     while( !node.isNull() )
     {
         QDomElement el = node.toElement();
         if( el.tagName() != "item" ) continue;
-        if( !el.hasAttribute("Compiler") ) break;
 
-        QString compName = el.attribute("Compiler");
-        m_compiler = EditorWindow::self()->createDebugger( compName, this );
+        QString type = el.attribute("itemtype");
 
-        QDomNamedNodeMap atrs = el.attributes();
-        for( int i=0; i<atrs.count(); ++i )
-        {
-            QDomAttr atr = atrs.item(i).toAttr();
-            properties[atr.name()] = atr.value();
-        }
+        if( type == m_type ) loadProperties( &el ); // CodeEditor
+        else if( type == "Compiler" && m_compiler ) m_compiler->loadProperties( &el ); // Compiler
+
         node = node.nextSibling();
-    }
-    if( !m_compiler ) return;
-
-    QList<propGroup>* groups = m_compiler->properties(); // Set properties in correct order
-    for( propGroup group : *groups )
-    {
-        QList<ComProperty*> propList = group.propList;
-        if( propList.isEmpty() ) continue;
-        for( ComProperty* prop : propList )
-        {
-            QString pn = prop->name();
-            if( !properties.contains( pn ) ) continue;
-            prop->setValStr( properties.value( pn ) );
-            properties.remove( pn );
-        }
     }
 }
 
@@ -588,7 +555,12 @@ void CodeEditor::saveConfig()
     QFile file( fileName );
     if( file.exists() ) file.remove();
 
-    QString config = m_compiler->toString();
+    QString config = "<document version=\""+QString( APP_VERSION )+"\" rev=\""+QString( REVNO )+"\" ";
+    //config += "file=\""+m_file+"\" ";
+    config += ">\n";
+    config += this->toString();
+    if( getEnumIndex( compName() ) ) config += m_compiler->toString();
+    config += "\n</document>";
 
     if( !file.open( QFile::WriteOnly | QFile::Text) )
     {
@@ -874,6 +846,5 @@ void LineNumberArea::mousePressEvent( QMouseEvent* event )
         this->repaint();
     }
 }
-
 
 #include "moc_codeeditor.cpp"

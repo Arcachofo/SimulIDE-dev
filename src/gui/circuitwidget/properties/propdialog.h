@@ -20,7 +20,7 @@ class PropDialog : public QDialog, private Ui::PropDialog
     public:
         PropDialog( QWidget* parent=0, QString help="" );
 
-        void setComponent( CompBase* comp );
+        void setComponent( CompBase* comp, bool isComp=true );
         void showProp( QString name, bool show );
         void updtValues();
 
@@ -30,7 +30,7 @@ class PropDialog : public QDialog, private Ui::PropDialog
 
     public slots:
         void on_labelBox_editingFinished();
-        void on_showLabel_toggled( bool checked );
+        void on_showButton_toggled( bool checked );
         void on_tabList_currentChanged( int );
         void on_helpButton_clicked();
         void adjustWidgets();

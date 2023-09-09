@@ -7,7 +7,6 @@
 
 #include "basedebugger.h"
 #include "editorwindow.h"
-#include "compilerprop.h"
 #include "simulator.h"
 #include "cpubase.h"
 #include "mcu.h"
@@ -63,7 +62,6 @@ bool BaseDebugger::upload()
 void BaseDebugger::preProcess()
 {
     QStringList lines = fileToStringList( m_file, "BaseDebugger::preProcess" );
-    getInfoInFile( lines.first() );
     m_codeStart = 0;
 }
 
@@ -272,29 +270,6 @@ void BaseDebugger::stepDebug()
                 m_prevLine = line;
                 EditorWindow::self()->lineReached( line );
 }   }   }   }
-
-void BaseDebugger::getInfoInFile( QString line )
-{
-    /// FIXME
-    /// TODELETE
-    /*QString device = getValue( line, "device" );
-    if( !device.isEmpty() )
-    {
-        m_device = device;
-        if( m_compDialog ) m_compDialog->setDevice( m_device );
-        m_outPane->appendLine( tr("Found Device definition in file: ") + device );
-    }
-    QString board = getValue( line, "board" );
-    if( !board.isEmpty() ) setBoardName( board );
-
-    QString family = getValue( line, "family" );
-    if( !family.isEmpty() )
-    {
-        m_family = family;
-        if( m_compDialog ) m_compDialog->setFamily( m_family );
-        m_outPane->appendLine( tr("Found Family definition in file: ") + family );
-    }*/
-}
 
 QString BaseDebugger::getValue( QString line, QString key ) // Static
 {

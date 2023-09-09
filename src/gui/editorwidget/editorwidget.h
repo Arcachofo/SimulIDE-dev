@@ -9,22 +9,34 @@
 #include <QWidget>
 #include <QMenu>
 
+#include "compbase.h"
 #include "codeeditor.h"
 #include "outpaneltext.h"
 
 class QTabWidget;
 class QToolBar;
 class CodeEditor;
-class EditorProp;
 class FindReplace;
 
-class EditorWidget : public QWidget
+class EditorWidget : public QWidget, public CompBase
 {
     Q_OBJECT
 
     public:
         EditorWidget( QWidget* parent );
         ~EditorWidget();
+
+        int  fontSize() { return m_fontSize; }
+        void setFontSize( int size );
+
+        int  tabSize() { return m_tabSize; }
+        void setTabSize( int size );
+
+        bool showSpaces() { return m_showSpaces; }
+        void setShowSpaces( bool show );
+
+        bool spaceTabs() { return m_spaceTabs; }
+        void setSpaceTabs( bool on );
 
         bool close();
 
@@ -41,9 +53,11 @@ class EditorWidget : public QWidget
        virtual void run(){;}
        void findReplaceDialog();
        void reload();
+       void updateDoc( int tab=0 );
 
     protected slots:
         void confEditor();
+        void confFile();
         void confCompiler();
         void openRecentFile();
         void newFile();
@@ -51,7 +65,6 @@ class EditorWidget : public QWidget
         bool saveAs();
         void closeTab(int);
         void documentWasModified();
-        void tabChanged( int tab );
 
         void cut()   { getCodeEditor()->cut(); }
         void copy()  { getCodeEditor()->copy(); }
@@ -68,6 +81,10 @@ class EditorWidget : public QWidget
         virtual bool upload() {return false;}
 
     protected:
+        void docShowSpaces( CodeEditor* ce );
+
+        QList<CodeEditor*> getCodeEditors();
+
         void dropEvent( QDropEvent* event );
         void dragEnterEvent( QDragEnterEvent* event);
         void keyPressEvent( QKeyEvent* event );
@@ -92,15 +109,22 @@ class EditorWidget : public QWidget
 
         void addDocument( QString file, bool main );
 
+        QFont m_font;
+        int m_fontSize;
+        int m_tabSize;
+
+        QString m_tab;
+
+        bool m_showSpaces;
+        bool m_spaceTabs;
+
         OutPanelText m_outPane;
 
         QString     m_lastDir;
         QHash<QString, QWidget*> m_fileList;
 
         QTabWidget*  m_docWidget;
-
         FindReplace* m_findRepDialog;
-        EditorProp* m_editDialog;
 
         QMenu m_settingsMenu;
         QMenu m_fileMenu;
@@ -111,7 +135,9 @@ class EditorWidget : public QWidget
         QToolBar* m_debuggerToolBar;
 
         QAction* confEditAct;
+        QAction* confFileAct;
         QAction* confCompAct;
+
         QAction* recentFileActs[MaxRecentFiles];
         QAction* newAct;
         QAction* openAct;

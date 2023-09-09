@@ -15,7 +15,7 @@ TextVal::TextVal( PropDialog* parent, CompBase* comp, ComProperty* prop )
 }
 TextVal::~TextVal() {}
 
-void TextVal::setup()
+void TextVal::setup( bool )
 {
     //valLabel->setText( m_property->capt() );
     //m_scriptComp = (Scripted*)m_component;

@@ -27,7 +27,7 @@ PropDialog::PropDialog( QWidget* parent, QString help )
     m_component = NULL;
 
     m_scale = MainWindow::self()->fontScale();
-    m_minW  = 350*m_scale;
+    m_minW  = 280*m_scale;
     m_minH  = 100*m_scale;
 
     m_helpExpanded = false;
@@ -36,14 +36,21 @@ PropDialog::PropDialog( QWidget* parent, QString help )
     helpText->setText( help );
 }
 
-void PropDialog::setComponent( CompBase* comp )
+void PropDialog::setComponent( CompBase* comp, bool isComp )
 {
-    this->setWindowTitle( "Uid: "+comp->getUid() );
+    QString title = isComp ? "Uid: " : "";
+    this->setWindowTitle( title+comp->getUid() );
     type->setText( "Type: "+comp->itemType() );
-    labelBox->setText( comp->getPropStr("label") );
+    if( isComp ) labelBox->setText( comp->getPropStr("label") );
+    else{
+        labelLabel->setVisible( false );
+        labelBox->setVisible( false );
+        showButton->setVisible( false );
+        labelShow->setVisible( false );
+    }
     tabList->clear();
     m_component = comp;
-    showLabel->setChecked( comp->getPropStr("Show_id") == "true" );
+    showButton->setChecked( comp->getPropStr("Show_id") == "true" );
 
     int w=0, index=0;
     QList<propGroup>* groups = comp->properties();
@@ -72,9 +79,18 @@ void PropDialog::setComponent( CompBase* comp )
 
                 if( prop->name() == "" ) // Just a label
                 {
-                    LabelVal* mp = new LabelVal( this );
-                    mp->setLabelVal( prop->capt() );
-                    groupWidget->layout()->addWidget( mp );
+                    QString text = prop->capt();
+                    if( text == "separator")
+                    {
+                        QFrame* line = new QFrame;
+                        line->setFrameShape( QFrame::HLine );
+                        line->setFrameShadow( QFrame::Sunken );
+                        groupWidget->layout()->addWidget( line );
+                    }else{
+                        LabelVal* mp = new LabelVal( this );
+                        mp->setLabelVal( text );
+                        groupWidget->layout()->addWidget( mp );
+                    }
                     continue;
                 }
                 QString type = prop->type();
@@ -90,9 +106,9 @@ void PropDialog::setComponent( CompBase* comp )
 
                 if( !mp ) continue;
 
-                mp->setup();
-                w = mp->width();
-                mp->setMinimumWidth( w );
+                mp->setup( isComp );
+                //w = mp->width();
+                //mp->setMinimumWidth( w );
                 m_propList.append( mp );
                 groupWidget->layout()->addWidget( mp );
 
@@ -101,8 +117,8 @@ void PropDialog::setComponent( CompBase* comp )
 
                 mp->setEnabled( groupEnabled && propEnabled );
             }
-            groupWidget->setMinimumHeight( propList.size()*30);
-            groupWidget->setMinimumWidth( w+40 );
+            groupWidget->setMinimumHeight( propList.size()*22*m_scale);
+            groupWidget->setMinimumWidth( 250*m_scale );
             tabList->addTab( groupWidget, group.name );
     }   }
     if( tabList->count() == 0 ) tabList->setVisible( false ); // Hide tab widget if empty
@@ -124,7 +140,7 @@ void PropDialog::on_labelBox_editingFinished()
     m_component->setPropStr("label", labelBox->text() );
 }
 
-void PropDialog::on_showLabel_toggled( bool checked )
+void PropDialog::on_showButton_toggled( bool checked )
 {
     QString show = checked ? "true" : "false";
     m_component->setPropStr("Show_id", show );
@@ -152,9 +168,8 @@ void PropDialog::adjustWidgets()
     int h = 0;
     int w = 0;
     QWidget* widget = tabList->currentWidget();
-    if( widget )
-    {
-        h = widget->minimumHeight()+150*m_scale;
+    if( widget ){
+        h = widget->minimumHeight()+100*m_scale;
         w = widget->minimumWidth()+25*m_scale;
     }
     if( h < m_minH ) h = m_minH;
@@ -169,7 +184,7 @@ void PropDialog::adjustWidgets()
     this->setMaximumHeight( h+100 );
 
     this->setMinimumWidth( w );
-    this->setMaximumWidth( w+50 );
+    this->setMaximumWidth( w+150 );
 
     this->adjustSize();
 }

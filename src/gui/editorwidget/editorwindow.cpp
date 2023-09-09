@@ -4,6 +4,7 @@
  ***( see copyright.txt file at root folder )*******************************/
 
 #include <QDomDocument>
+#include <QSettings>
 #include <QTimer>
 
 #include "editorwindow.h"
@@ -23,6 +24,7 @@
 #include "picasmdebugger.h"
 #include "asdebugger.h"
 
+
 EditorWindow* EditorWindow::m_pSelf = NULL;
 
 EditorWindow::EditorWindow( QWidget* parent )
@@ -36,7 +38,7 @@ EditorWindow::EditorWindow( QWidget* parent )
     m_state     = DBG_STOPPED;
     m_stepOver  = false;
 
-    CodeEditor::readSettings();
+    readSettings();
     loadCompilers();
 }
 EditorWindow::~EditorWindow(){}

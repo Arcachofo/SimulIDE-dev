@@ -20,7 +20,7 @@ class ColorVal : public PropVal, private Ui::ColorVal
         ColorVal( PropDialog* parent, Component* comp, ComProperty* prop );
         ~ColorVal();
 
-        virtual void setup() override;
+        virtual void setup( bool ) override;
         virtual void updtValues() override;
 
     public slots:

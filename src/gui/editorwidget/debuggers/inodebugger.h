@@ -28,7 +28,7 @@ class InoDebugger : public AvrGccDebugger
         virtual bool upload() override;
         virtual int  compile( bool debug ) override;
 
-        virtual PropDialog* compilerProps() override;
+        virtual void compilerProps() override;
 
     protected:
         virtual bool postProcess() override;

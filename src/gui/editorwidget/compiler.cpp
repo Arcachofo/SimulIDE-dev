@@ -3,6 +3,7 @@
  *                                                                         *
  ***( see copyright.txt file at root folder )*******************************/
 
+#include <QRegularExpression>
 #include <QDomDocument>
 #include <QFileDialog>
 #include <QSettings>
@@ -10,16 +11,14 @@
 
 #include "compiler.h"
 #include "simulator.h"
-#include "circuit.h"
 #include "editorwindow.h"
 #include "outpaneltext.h"
-#include "compilerprop.h"
 #include "propdialog.h"
 #include "mainwindow.h"
 #include "utils.h"
 
 #include "stringprop.h"
-#include "boolprop.h"
+//#include "boolprop.h"
 
 Compiler::Compiler( CodeEditor* editor, OutPanelText* outPane )
         : QObject( editor )
@@ -29,24 +28,25 @@ Compiler::Compiler( CodeEditor* editor, OutPanelText* outPane )
     m_editor = editor;
     m_outPane = outPane;
 
-    m_file     = QDir::toNativeSeparators( editor->getFilePath() );
+    m_file     = QDir::toNativeSeparators( editor->getFile() );
     m_fileDir  = getFileDir( m_file );
     m_fileExt  = getFileExt( m_file );
     m_fileName = getBareName( m_file );
     m_firmware = "";
     m_buildPath = m_fileDir;
-    m_openFiles = false;
-
-    m_id = m_file; /// FIXME: ??? do we really need this?
+    m_fileProps = false;
 
     clearCompiler();
 
-    addPropGroup( { "Settings", {
-new StrProp<Compiler> ( "Compiler" , tr("Compiler")     ,"", this, &Compiler::compName,    &Compiler::setCompName, propHidden ),
-new BoolProp<Compiler>( "OpenFiles", tr("Restore files"),"", this, &Compiler::openFiles,   &Compiler::setOpenFiles ),
-new StrProp<Compiler> ( "Circuit"  , "Circuit"          ,"", this, &Compiler::circuit,     &Compiler::setCircuit, propHidden ),
-new StrProp<Compiler> ( "FileList" , "FileList"         ,"", this, &Compiler::fileList,    &Compiler::setFileList, propHidden ),
-new StrProp<Compiler> ( "Breakpoints", "Breakpoints"    ,"", this, &Compiler::breakpoints, &Compiler::setBreakpoints, propHidden ),
+    addPropGroup( { "Hidden", {
+new StrProp<Compiler>("itemtype"     ,"" ,"", this, &Compiler::itemType, &Compiler::setItemType ),
+new StrProp<Compiler>("compilertype" ,"" ,"", this, &Compiler::compName, &Compiler::setCompName ),
+    }, groupHidden} );
+
+    addPropGroup( { tr("Compiler Settings"), {
+new ComProperty("", tr("For this compiler type:"),"","",0),
+new StrProp<Compiler> ("ToolPath" , tr("Tool Path")   ,"", this
+                       , &Compiler::toolPath,    &Compiler::setToolPath, 0),
     }, 0} );
 }
 Compiler::~Compiler(){}
@@ -57,7 +57,7 @@ void Compiler::clearCompiler()
     m_command.clear();
     m_arguments.clear();
     m_argsDebug.clear();
-    m_type.clear();
+    m_compilerType.clear();
 }
 
 QString Compiler::replaceData( QString str )
@@ -92,7 +92,10 @@ void Compiler::loadCompiler( QString file )
     QString inclPath = "";
 
     m_compName = compiler.attribute( "name" );
-    m_type     = compiler.attribute( "type" );
+    m_id = m_compName;
+
+    m_compilerType = compiler.attribute( "type" );
+
     if( compiler.hasAttribute("syntax") ) m_editor->setSyntaxFile( compiler.attribute( "syntax" )+".syntax" );
     if( compiler.hasAttribute("buildPath") )
     {
@@ -114,17 +117,33 @@ void Compiler::loadCompiler( QString file )
         QDomElement step = node.toElement();
         if( step.tagName() == "step")
         {
+            QString args;
             QString command   = step.attribute("command");
             QString arguments = step.attribute("arguments");
             QString argsDebug = step.attribute("argsDebug");
-            if( argsDebug.isEmpty() ) argsDebug = arguments ;
+            if( argsDebug.isEmpty() ) args = argsDebug = arguments ;
+            else args = arguments + argsDebug;
 
-            if( argsDebug.contains("$device") ) addProperty( "Settings",
-                new StrProp<Compiler>( "Device"  , tr("Device")  ,"", this, &Compiler::device,   &Compiler::setDevice, 0 ) );
-
-            if( argsDebug.contains("$family") ) addProperty( "Settings",
-                new StrProp<Compiler>( "Family"  , tr("Family")  ,"", this, &Compiler::family,   &Compiler::setFamily, 0 ) );
-
+            if( args.contains("$inclPath") )
+            {
+                addProperty( tr("Compiler Settings"),
+                new StrProp<Compiler> ("InclPath", tr("Include Path"),"", this
+                                       , &Compiler::includePath, &Compiler::setIncludePath, 0) );
+            }
+            if( args.contains("$device") )
+            {
+                addFilePropHead();
+                addProperty( tr("Compiler Settings"),
+                new StrProp<Compiler>("Device"  , tr("Device")  ,"", this
+                                      , &Compiler::device,   &Compiler::setDevice, 0 ) );
+            }
+            if( args.contains("$family") )
+            {
+                addFilePropHead();
+                addProperty( tr("Compiler Settings"),
+                new StrProp<Compiler>("Family"  , tr("Family")  ,""
+                                      , this, &Compiler::family,   &Compiler::setFamily, 0 ) );
+            }
             m_command.append( command );
             m_arguments.append( arguments );
             m_argsDebug.append( argsDebug );
@@ -134,6 +153,18 @@ void Compiler::loadCompiler( QString file )
     readSettings();
     //m_outPane->appendLine( "-------------------------------------------------------" );
     m_outPane->appendLine( m_compName+tr(" Compiler successfully loaded.\n") );
+}
+
+void Compiler::addFilePropHead()
+{
+    if( m_fileProps ) return;
+    m_fileProps = true;
+
+    addProperty( "Compiler Settings",
+    new ComProperty("", "separator","","",0) );
+
+    addProperty( "Compiler Settings",
+    new ComProperty("", tr("For this file:"),"","",0) );
 }
 
 int Compiler::compile( bool debug )
@@ -310,70 +341,16 @@ void Compiler::readSettings()
     if( settings->contains( prop ) ) m_inclPath = settings->value( prop ).toString();
 }
 
-QString Compiler::circuit()
+void Compiler::compilerProps()
 {
-    return Circuit::self()->getFilePath();
-}
-
-void Compiler::setCircuit( QString c )
-{
-    if( m_openFiles ) Circuit::self()->loadCircuit( c );
-}
-
-QString Compiler::breakpoints()
-{
-    QList<int>* brkList = m_editor->getBreakPoints();
-
-    QString brkListStr;
-    for( int brk : *brkList ) brkListStr.append( QString::number( brk )+"," );
-
-    return brkListStr;
-}
-
-void Compiler::setBreakpoints( QString bp )
-{
-    QStringList list = bp.split(",");
-    list.removeOne("");
-
-    for( QString brk : list ) m_editor->addBreakPoint( brk.toInt() );
-}
-
-QString Compiler::fileList()
-{
-    QStringList fileList = EditorWindow::self()->getFiles();
-    fileList.removeAll( m_file );
-
-    return fileList.join(",");;
-}
-
-void Compiler::setFileList( QString fl )
-{
-    if( !m_openFiles ) return;
-    QStringList fileList = fl.split(",");
-    fileList.removeOne("");
-
-    for( QString file : fileList ) EditorWindow::self()->restoreFile( file );
-}
-
-QString Compiler::toString()
-{
-    QString header = "<compiler version=\""+QString( APP_VERSION )+"\" rev=\""+QString( REVNO )+"\" ";
-    header += "file=\""+m_file+"\" ";
-    header += ">\n";
-
-    return header+CompBase::toString()+"\n</compiler>";
-}
-
-PropDialog* Compiler::compilerProps()
-{
+    if( m_compName == "None" ) return;
     if( !m_propDialog )
     {
         if( m_help == "" ) m_help = MainWindow::self()->getHelp( m_compName );
-
         m_propDialog = new PropDialog( m_editor, m_help );
-        m_propDialog->setComponent( this );
+        m_propDialog->setComponent( this, false );
     }
-    return m_propDialog;
+    m_propDialog->show();
 }
 
 bool Compiler::checkCommand( QString executable )

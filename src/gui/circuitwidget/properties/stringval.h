@@ -20,7 +20,7 @@ class StringVal : public PropVal, private Ui::StringVal
         StringVal( PropDialog* parent, CompBase* comp, ComProperty* prop );
         ~StringVal();
 
-        virtual void setup() override;
+        virtual void setup( bool ) override;
         virtual void updtValues() override;
 
     public slots:

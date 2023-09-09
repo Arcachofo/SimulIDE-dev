@@ -19,7 +19,7 @@ class PropVal : public QWidget
         PropVal( PropDialog* parent, CompBase* comp, ComProperty* prop );
         ~PropVal();
 
-        virtual void setup()=0;
+        virtual void setup( bool isComp )=0;
         virtual void updtValues() {;}
 
         virtual QString getValWithUnit() { return ""; }

@@ -20,6 +20,35 @@ CompBase::CompBase( QString type, QString id )
 CompBase::~CompBase()
 {
     for( ComProperty* p : m_propHash.values() ) delete p;
+    if( m_propDialog )
+    {
+        m_propDialog->setParent( NULL );
+        m_propDialog->close();
+        delete m_propDialog;
+    }
+}
+
+void CompBase::loadProperties( QDomElement* el ) // Set properties in correct order
+{
+    QHash<QString, QString> properties;
+    QDomNamedNodeMap atrs = el->attributes();
+    for( int i=0; i<atrs.count(); ++i )
+    {
+        QDomAttr atr = atrs.item(i).toAttr();
+        properties[atr.name()] = atr.value();
+    }
+    for( propGroup group : m_propGroups )
+    {
+        QList<ComProperty*> propList = group.propList;
+        if( propList.isEmpty() ) continue;
+        for( ComProperty* prop : propList )
+        {
+            QString pn = prop->name();
+            if( !properties.contains( pn ) ) continue;
+            prop->setValStr( properties.value( pn ) );
+            properties.remove( pn );
+        }
+    }
 }
 
 void CompBase::remPropGroup( QString name )

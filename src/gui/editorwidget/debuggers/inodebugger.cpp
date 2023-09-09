@@ -39,11 +39,18 @@ InoDebugger::InoDebugger( CodeEditor* parent, OutPanelText* outPane )
 //            << "Leonardo"
             << tr("custom");
 
-    addProperty( "Settings",
-new StrProp<InoDebugger>( "Board"      , tr("Board")       ,"", this, &InoDebugger::getBoard,    &InoDebugger::setBoard,0,"enum" ) );
+    addProperty( tr("Compiler Settings"),
+    new StrProp<Compiler> ("InclPath", tr("Libraries Path"),"", this
+                           , &Compiler::includePath, &Compiler::setIncludePath, 0) );
 
-    addProperty( "Settings",
-new StrProp<InoDebugger>( "CustomBoard", tr("Custom Board"),"", this, &InoDebugger::customBoard, &InoDebugger::setCustomBoard, 0 ) );
+    addFilePropHead();
+
+    addProperty( "Compiler Settings",
+    new StrProp<InoDebugger>( "Board", tr("Board"),"", this
+                          , &InoDebugger::getBoard,&InoDebugger::setBoard,0,"enum" ) );
+
+    addProperty( "Compiler Settings",
+    new StrProp<InoDebugger>( "CustomBoard", tr("Custom Board"),"", this, &InoDebugger::customBoard, &InoDebugger::setCustomBoard, 0 ) );
 }
 InoDebugger::~InoDebugger() {}
 
@@ -249,11 +256,10 @@ bool InoDebugger::postProcess()
     return ok;
 }
 
-PropDialog* InoDebugger::compilerProps()
+void InoDebugger::compilerProps()
 {
-    PropDialog* p = Compiler::compilerProps();
-    p->showProp("CustomBoard", m_board == "Custom" );
-    return p;
+    Compiler::compilerProps();
+    m_propDialog->showProp("CustomBoard", m_board == "Custom" );
 }
 
 void InoDebugger::setBoard( QString board )

@@ -23,10 +23,7 @@ class Compiler : public QObject, public CompBase
         ~Compiler();
 
         QString compName() { return m_compName; }
-        void setCompName( QString n ){;} // Dummy
-
-        bool openFiles() { return m_openFiles; }
-        void setOpenFiles( bool o ) { m_openFiles = o; }
+        void setCompName( QString ) {;}
 
         virtual QString toolPath() { return m_toolPath; }
         virtual void setToolPath( QString path );
@@ -44,15 +41,6 @@ class Compiler : public QObject, public CompBase
         void setDevice( QString d ) { m_device = d; }
         bool useDevice() { return m_useDevice; }
 
-        QString circuit();
-        void setCircuit( QString c );
-
-        QString breakpoints();
-        void setBreakpoints( QString bp );
-
-        QString fileList();
-        void setFileList( QString fl );
-
         QString fileName() { return m_fileName; }
         QString buildPath() { return m_buildPath; }
         QString file() { return m_file ; }
@@ -61,21 +49,19 @@ class Compiler : public QObject, public CompBase
         void loadCompiler( QString file );
         virtual int compile( bool debug );
 
-        virtual QString toString() override;
-
-        virtual PropDialog* compilerProps();
+        virtual void compilerProps();
 
         bool isProjectFile( QString file ) { return m_fileList.contains( file ); }
 
         void readSettings();
-
-        virtual void getInfoInFile( QString line ){;}  /// TODELETE
 
         bool checkCommand( QString c );
 
         OutPanelText* outPane() { return m_outPane; }
 
     protected:
+        void addFilePropHead();
+
         virtual void preProcess(){;}
         virtual bool postProcess(){return false;}
 
@@ -94,7 +80,7 @@ class Compiler : public QObject, public CompBase
         bool m_useFamily;
         bool m_useDevice;
         bool m_uploadHex;
-        bool m_openFiles;
+        bool m_fileProps;
 
         QString m_compName;
         QString m_toolPath;
@@ -105,7 +91,7 @@ class Compiler : public QObject, public CompBase
         QStringList m_argsDebug;
         QStringList m_fileList;
 
-        QString m_type;
+        QString m_compilerType;
         QString m_family;
         QString m_device;
         QString m_firmware;
