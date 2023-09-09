@@ -303,6 +303,7 @@ bool EditorWidget::saveAs()
     QString fileName = QFileDialog::getSaveFileName( this, tr("Save Document As"), path, extensions );
     if( fileName.isEmpty() ) return false;
 
+    m_fileList.remove( ce->getFile() );
     m_fileList[fileName] = ce;
 
     return saveFile( fileName );
