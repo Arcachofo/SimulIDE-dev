@@ -6,11 +6,11 @@
 #include "propdialog.h"
 #include "component.h"
 #include "circuit.h"
-#include "labelval.h"
-//#include "propval.h"
 
+#include "labelval.h"
 #include "numval.h"
-#include "stringval.h"
+#include "pathval.h"
+#include "strval.h"
 #include "textval.h"
 #include "enumval.h"
 #include "boolval.h"
@@ -99,7 +99,8 @@ void PropDialog::setComponent( CompBase* comp, bool isComp )
                 if     ( type == "double"  ) mp = new NumVal( this, comp, prop );
                 else if( type == "uint"    ) mp = new NumVal( this, comp, prop );
                 else if( type == "int"     ) mp = new NumVal( this, comp, prop );
-                else if( type == "string"  ) mp = new StringVal( this, comp, prop );
+                else if( type == "string"  ) mp = new StrVal( this, comp, prop );
+                else if( type == "path"    ) mp = new PathVal( this, comp, prop );
                 else if( type == "textEdit") mp = new TextVal( this, comp, prop );
                 else if( type == "enum"    ) mp = new EnumVal( this, comp, prop );
                 else if( type == "bool"    ) mp = new BoolVal( this, comp, prop );

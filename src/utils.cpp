@@ -4,6 +4,7 @@
  ***( see copyright.txt file at root folder )*******************************/
 
 #include <QDomDocument>
+#include <QFileDialog>
 #include <QString>
 #include <QDebug>
 #include <QFile>
@@ -114,6 +115,18 @@ QString getFileExt( const QString &filepath ) // File extension with "."
 QString changeExt( const QString &filepath, const QString &ext )
 {
     return getFileDir( filepath )+getBareName( filepath )+ext;
+}
+
+QString getDirDialog( QString msg, QString oldPath )
+{
+    QString path = QFileDialog::getExistingDirectory( NULL
+                         , msg
+                         , oldPath
+                         , QFileDialog::ShowDirsOnly
+                         | QFileDialog::DontResolveSymlinks);
+
+    if( !path.isEmpty() && !path.endsWith(QDir::separator()) ) path += QDir::separator();
+    return path;
 }
 
 //---------------------------------------------------

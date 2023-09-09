@@ -308,15 +308,10 @@ QString MainWindow::getHelp( QString name )
 
 void MainWindow::getUserPath()
 {
-    QString path = QFileDialog::getExistingDirectory( NULL
-                         , tr("Select User data directory")
-                         , m_userDir
-                         , QFileDialog::ShowDirsOnly
-                         | QFileDialog::DontResolveSymlinks);
+    QString path = getDirDialog( tr("Select User data directory"), m_userDir );
 
-    if( !path.isEmpty())
+    if( !path.isEmpty() )
     {
-         if( !path.endsWith("/") ) path += "/";
          m_settings->setValue("userPath", path);
          m_userDir = path;
     }

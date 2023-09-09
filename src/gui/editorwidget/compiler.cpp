@@ -45,8 +45,8 @@ new StrProp<Compiler>("compilertype" ,"" ,"", this, &Compiler::compName, &Compil
 
     addPropGroup( { tr("Compiler Settings"), {
 new ComProperty("", tr("For this compiler type:"),"","",0),
-new StrProp<Compiler> ("ToolPath" , tr("Tool Path")   ,"", this
-                       , &Compiler::toolPath,    &Compiler::setToolPath, 0),
+new StrProp<Compiler> ("ToolPath", tr("Tool Path"),"", this
+                      , &Compiler::toolPath, &Compiler::setToolPath, 0,"path"),
     }, 0} );
 }
 Compiler::~Compiler(){}
@@ -288,36 +288,18 @@ int Compiler::getFirstNumber( QString txt )
     return number;
 }
 
-QString Compiler::getPath( QString msg, QString oldPath )
-{
-    QString path = QFileDialog::getExistingDirectory( NULL
-                         , msg
-                         , oldPath
-                         , QFileDialog::ShowDirsOnly
-                         | QFileDialog::DontResolveSymlinks);
-
-    if( !path.isEmpty() && !path.endsWith(QDir::separator()) ) path += QDir::separator();
-    return path;
-}
-
-void Compiler::getToolPath()
-{
-    QString path = getPath( tr("Select Compiler Toolchain directory"), toolPath() );
-    if( !path.isEmpty() ) setToolPath( path );
-}
-
 void Compiler::setToolPath( QString path )
 {
     m_toolPath = path;
     MainWindow::self()->settings()->setValue( m_compName+"_toolPath", m_toolPath );
 }
 
-void Compiler::getIncludePath()
+/*void Compiler::getIncludePath()
 {
     QString oldPath = m_inclPath.isEmpty() ? m_fileDir : m_inclPath;
     QString path = getPath( tr("Select Compiler Include directory"), oldPath );
     if( !path.isEmpty() ) setIncludePath( path );
-}
+}*/
 
 void Compiler::setIncludePath( QString path )
 {

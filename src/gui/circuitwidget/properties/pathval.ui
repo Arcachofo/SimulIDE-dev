@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>StringVal</class>
- <widget class="QWidget" name="StringVal">
+ <class>PathVal</class>
+ <widget class="QWidget" name="PathVal">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
     <width>331</width>
-    <height>25</height>
+    <height>29</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -49,6 +49,34 @@
     <widget class="QLineEdit" name="value">
      <property name="text">
       <string notr="true"/>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="setPathButton">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>30</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="toolTip">
+      <string>Select directory</string>
+     </property>
+     <property name="locale">
+      <locale language="C" country="AnyCountry"/>
+     </property>
+     <property name="text">
+      <string notr="true">...</string>
+     </property>
+     <property name="autoDefault">
+      <bool>false</bool>
      </property>
     </widget>
    </item>

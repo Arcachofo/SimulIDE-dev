@@ -27,19 +27,15 @@ class Compiler : public QObject, public CompBase
 
         virtual QString toolPath() { return m_toolPath; }
         virtual void setToolPath( QString path );
-        void getToolPath();
 
         QString includePath() { return m_inclPath; }
         void setIncludePath( QString path );
-        void getIncludePath();
 
         QString family() { return m_family; }
         void setFamily( QString f ) { m_family = f; }
-        bool useFamily() { return m_useFamily; }
 
         QString device() { return m_device; }
         void setDevice( QString d ) { m_device = d; }
-        bool useDevice() { return m_useDevice; }
 
         QString fileName() { return m_fileName; }
         QString buildPath() { return m_buildPath; }
@@ -72,13 +68,10 @@ class Compiler : public QObject, public CompBase
 
         int runBuildStep( QString fullCommand );
         QString replaceData( QString str );
-        QString getPath( QString msg, QString oldPath );
         void toolChainNotFound();
 
         CodeEditor* m_editor;
 
-        bool m_useFamily;
-        bool m_useDevice;
         bool m_uploadHex;
         bool m_fileProps;
 

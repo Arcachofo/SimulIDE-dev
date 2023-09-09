@@ -6,7 +6,7 @@
 #ifndef STRPROP_H
 #define STRPROP_H
 
-#include "strprop.h"
+#include "strbaseprop.h"
 
 template <class Comp>
 class MAINMODULE_EXPORT StrProp : public StrBaseProp

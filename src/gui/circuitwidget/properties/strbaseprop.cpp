@@ -3,7 +3,7 @@
  *                                                                         *
  ***( see copyright.txt file at root folder )*******************************/
 
-#include"strprop.h"
+#include"strbaseprop.h"
 
 QString StrBaseProp::getStr( QString str )
 {
@@ -21,4 +21,3 @@ double StrBaseProp::getValue()
 {
     return getValStr().toDouble();
 }
-

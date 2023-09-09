@@ -3,33 +3,33 @@
  *                                                                         *
  ***( see copyright.txt file at root folder )*******************************/
 
-#include "stringval.h"
+#include "strval.h"
 #include "component.h"
 #include "comproperty.h"
 #include "propdialog.h"
 
-StringVal::StringVal( PropDialog* parent, CompBase* comp, ComProperty* prop )
-         : PropVal( parent, comp, prop )
+StrVal::StrVal( PropDialog* parent, CompBase* comp, ComProperty* prop )
+      : PropVal( parent, comp, prop )
 {
     setupUi(this);
 }
-StringVal::~StringVal() {}
+StrVal::~StrVal() {}
 
-void StringVal::setup( bool )
+void StrVal::setup( bool )
 {
     valLabel->setText( m_property->capt() );
     updtValues();
     this->adjustSize();
 }
 
-void StringVal::on_value_editingFinished()
+void StrVal::on_value_editingFinished()
 {
     m_property->setValStr( value->text() );
     updtValues();
     m_propDialog->changed();
 }
 
-void StringVal::updtValues()
+void StrVal::updtValues()
 {
     QString text = m_property->getValStr();
     value->setText( text );

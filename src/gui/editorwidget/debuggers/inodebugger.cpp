@@ -40,14 +40,14 @@ InoDebugger::InoDebugger( CodeEditor* parent, OutPanelText* outPane )
             << tr("custom");
 
     addProperty( tr("Compiler Settings"),
-    new StrProp<Compiler> ("InclPath", tr("Libraries Path"),"", this
-                           , &Compiler::includePath, &Compiler::setIncludePath, 0) );
+    new StrProp<Compiler>("InclPath", tr("Libraries Path"),"", this
+                           , &Compiler::includePath, &Compiler::setIncludePath, 0,"path") );
 
     addFilePropHead();
 
     addProperty( "Compiler Settings",
     new StrProp<InoDebugger>( "Board", tr("Board"),"", this
-                          , &InoDebugger::getBoard,&InoDebugger::setBoard,0,"enum" ) );
+                          , &InoDebugger::getBoard,&InoDebugger::setBoard, 0,"enum") );
 
     addProperty( "Compiler Settings",
     new StrProp<InoDebugger>( "CustomBoard", tr("Custom Board"),"", this, &InoDebugger::customBoard, &InoDebugger::setCustomBoard, 0 ) );

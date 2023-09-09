@@ -6,7 +6,7 @@
 #ifndef SCRIPTPROP_H
 #define SCRIPTPROP_H
 
-#include "strprop.h"
+#include "strbaseprop.h"
 
 template <class Comp>
 class MAINMODULE_EXPORT ScriptProp : public StrBaseProp
