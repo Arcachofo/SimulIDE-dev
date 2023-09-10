@@ -132,11 +132,11 @@
     <name>App::Property</name>
     <message>
         <source>Board</source>
-        <translation>Kart</translation>
+        <translation type="vanished">Kart</translation>
     </message>
     <message>
         <source>Custom Board</source>
-        <translation>Özel kart</translation>
+        <translation type="vanished">Özel kart</translation>
     </message>
 </context>
 <context>
@@ -422,14 +422,6 @@ p, li { white-space: pre-wrap; }
         <source>Warning: lst file doesn&apos;t exist:</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Found Device definition in file: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Found Family definition in file: </source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>Battery</name>
@@ -572,13 +564,6 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Binary Counter</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>BoolVal</name>
-    <message>
-        <source>value</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1005,6 +990,42 @@ Can&apos;t find file:
         <source>Remove</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>None</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Compiler</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save Settings at file close</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Actions after opening this file:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load Compiler</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load Breakpoints</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Restore files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot write file</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Compiler</name>
@@ -1038,19 +1059,39 @@ Can&apos;t find file:
         <translation type="obsolete">     Hata! Derlenemedi</translation>
     </message>
     <message>
-        <source>Select Compiler Toolchain directory</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select Compiler Include directory</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Executable not found</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Check that Tool Path is correct</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Compiler Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>For this compiler type:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tool Path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Include Path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Family</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>For this file:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1062,95 +1103,35 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Board</source>
-        <translation type="unfinished">Kart</translation>
+        <translation type="obsolete">Kart</translation>
     </message>
     <message>
         <source>Uno</source>
-        <translation type="unfinished">Uno</translation>
+        <translation type="obsolete">Uno</translation>
     </message>
     <message>
         <source>Mega</source>
-        <translation type="unfinished">Mega</translation>
+        <translation type="obsolete">Mega</translation>
     </message>
     <message>
         <source>Nano</source>
-        <translation type="unfinished">Nano</translation>
+        <translation type="obsolete">Nano</translation>
     </message>
     <message>
         <source>Duemilanove</source>
-        <translation type="unfinished">Duemilanove</translation>
+        <translation type="obsolete">Duemilanove</translation>
     </message>
     <message>
         <source>Leonardo</source>
-        <translation type="unfinished">Leonardo</translation>
+        <translation type="obsolete">Leonardo</translation>
     </message>
     <message>
         <source>Custom</source>
-        <translation type="unfinished">Özel</translation>
+        <translation type="obsolete">Özel</translation>
     </message>
     <message>
         <source>Custom Board</source>
-        <translation type="unfinished">Özel kart</translation>
-    </message>
-    <message>
-        <source>Compiler Settings</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select Arduino Board</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Tool Path:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Include Path:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Set custom Arduino Board</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select tool path</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Compiler:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select include path</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select Compiler</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select MCU model</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Device</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select MCU family/architecture</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Family</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Libraries Path</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Include Path</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Özel kart</translation>
     </message>
 </context>
 <context>
@@ -1737,7 +1718,7 @@ Can&apos;t find file:
     <name>EditorProp</name>
     <message>
         <source>Editor / Debugger</source>
-        <translation>Editör / Hata Ayıklayıcı</translation>
+        <translation type="vanished">Editör / Hata Ayıklayıcı</translation>
     </message>
     <message>
         <source>Editor</source>
@@ -1749,27 +1730,27 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Font Size</source>
-        <translation>Font Boyutu</translation>
+        <translation type="vanished">Font Boyutu</translation>
     </message>
     <message>
         <source>Tab Size</source>
-        <translation>Tab Boyutu</translation>
+        <translation type="vanished">Tab Boyutu</translation>
     </message>
     <message>
         <source>Pixels</source>
-        <translation>Pixels</translation>
+        <translation type="vanished">Pixels</translation>
     </message>
     <message>
         <source>Tabs as Spaces</source>
-        <translation>Space olarak tab</translation>
+        <translation type="vanished">Space olarak tab</translation>
     </message>
     <message>
         <source>Show Spaces</source>
-        <translation>Boşlukları Göster</translation>
+        <translation type="vanished">Boşlukları Göster</translation>
     </message>
     <message>
         <source>Spaces</source>
-        <translation>Boşluklar</translation>
+        <translation type="vanished">Boşluklar</translation>
     </message>
 </context>
 <context>
@@ -1994,6 +1975,30 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Last Files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Font Size</source>
+        <translation type="unfinished">Font Boyutu</translation>
+    </message>
+    <message>
+        <source>Tab Size</source>
+        <translation type="unfinished">Tab Boyutu</translation>
+    </message>
+    <message>
+        <source>Tabs as spaces</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show Spaces and Tabs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NEW</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File Settings</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2600,8 +2605,24 @@ Can&apos;t find file:
 <context>
     <name>InoDebugger</name>
     <message>
-        <source>Found Board definition in file: </source>
+        <source>custom</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Compiler Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Libraries Path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Board</source>
+        <translation type="unfinished">Kart</translation>
+    </message>
+    <message>
+        <source>Custom Board</source>
+        <translation type="unfinished">Özel kart</translation>
     </message>
 </context>
 <context>
@@ -3809,6 +3830,17 @@ Can&apos;t find file:
     </message>
 </context>
 <context>
+    <name>PathVal</name>
+    <message>
+        <source>TextLabel</source>
+        <translation type="unfinished">Etiket</translation>
+    </message>
+    <message>
+        <source>Select directory</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>PlotBase</name>
     <message>
         <source>Main</source>
@@ -4888,6 +4920,13 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
+    <name>StrVal</name>
+    <message>
+        <source>TextLabel</source>
+        <translation type="unfinished">Etiket</translation>
+    </message>
+</context>
+<context>
     <name>Strain</name>
     <message>
         <source>Force Strain Gauge</source>
@@ -4938,14 +4977,14 @@ p, li { white-space: pre-wrap; }
     <name>StringVal</name>
     <message>
         <source>TextLabel</source>
-        <translation>Etiket</translation>
+        <translation type="vanished">Etiket</translation>
     </message>
 </context>
 <context>
     <name>SubCircuit</name>
     <message>
         <source>Subcircuit</source>
-        <translation type="obsolete">Alt devre</translation>
+        <translation type="unfinished">Alt devre</translation>
     </message>
     <message>
         <source>There are no data files for </source>
@@ -4980,7 +5019,7 @@ p, li { white-space: pre-wrap; }
     <name>SubPackage</name>
     <message>
         <source>Package</source>
-        <translation type="obsolete">Paket</translation>
+        <translation type="unfinished">Paket</translation>
     </message>
     <message>
         <source>Other</source>
@@ -5044,7 +5083,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Select Main Component</source>
-        <translation type="unfinished">Ana Elemanı Seç</translation>
+        <translation type="obsolete">Ana Elemanı Seç</translation>
     </message>
     <message>
         <source>
@@ -5068,6 +5107,10 @@ Değişiklikler kaydedilsin mi?
         <source>Cannot write file %1:
 %2.</source>
         <translation type="unfinished">%1 dosyasına yazılamıyor: %2.</translation>
+    </message>
+    <message>
+        <source>Select Main Components</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

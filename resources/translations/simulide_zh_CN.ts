@@ -136,11 +136,11 @@
     <name>App::Property</name>
     <message>
         <source>Board</source>
-        <translation>板</translation>
+        <translation type="vanished">板</translation>
     </message>
     <message>
         <source>Custom Board</source>
-        <translation>自定义板</translation>
+        <translation type="vanished">自定义板</translation>
     </message>
 </context>
 <context>
@@ -386,11 +386,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Found Device definition in file: </source>
-        <translation>在此文件中找到设备定义: </translation>
+        <translation type="vanished">在此文件中找到设备定义: </translation>
     </message>
     <message>
         <source>Found Family definition in file: </source>
-        <translation>在此文件中找到家族定义: </translation>
+        <translation type="vanished">在此文件中找到家族定义: </translation>
     </message>
 </context>
 <context>
@@ -517,7 +517,7 @@ p, li { white-space: pre-wrap; }
     <name>BoolVal</name>
     <message>
         <source>value</source>
-        <translation>值</translation>
+        <translation type="vanished">值</translation>
     </message>
 </context>
 <context>
@@ -952,6 +952,42 @@ Can&apos;t find file:
         <source>Remove</source>
         <translation>删除</translation>
     </message>
+    <message>
+        <source>None</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Compiler</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save Settings at file close</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Actions after opening this file:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load Compiler</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load Breakpoints</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Restore files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot write file</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Compiler</name>
@@ -979,11 +1015,11 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Select Compiler Toolchain directory</source>
-        <translation>选择编译器工具链文件夹</translation>
+        <translation type="vanished">选择编译器工具链文件夹</translation>
     </message>
     <message>
         <source>Select Compiler Include directory</source>
-        <translation>选择编译器Include文件夹</translation>
+        <translation type="vanished">选择编译器Include文件夹</translation>
     </message>
     <message>
         <source>Executable not found</source>
@@ -993,100 +1029,128 @@ Can&apos;t find file:
         <source>Check that Tool Path is correct</source>
         <translation>检查工具路径是否正确</translation>
     </message>
+    <message>
+        <source>Compiler Settings</source>
+        <translation type="unfinished">编译器设置</translation>
+    </message>
+    <message>
+        <source>For this compiler type:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tool Path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Include Path</source>
+        <translation type="unfinished">Include路径</translation>
+    </message>
+    <message>
+        <source>Device</source>
+        <translation type="unfinished">设备</translation>
+    </message>
+    <message>
+        <source>Family</source>
+        <translation type="unfinished">家族</translation>
+    </message>
+    <message>
+        <source>For this file:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>CompilerProp</name>
     <message>
         <source>Compiler Settings</source>
-        <translation>编译器设置</translation>
+        <translation type="vanished">编译器设置</translation>
     </message>
     <message>
         <source>Board</source>
-        <translation>板</translation>
+        <translation type="vanished">板</translation>
     </message>
     <message>
         <source>Select Arduino Board</source>
-        <translation>选择Arduino板</translation>
+        <translation type="vanished">选择Arduino板</translation>
     </message>
     <message>
         <source>Uno</source>
-        <translation>Uno</translation>
+        <translation type="vanished">Uno</translation>
     </message>
     <message>
         <source>Mega</source>
-        <translation>Mega</translation>
+        <translation type="vanished">Mega</translation>
     </message>
     <message>
         <source>Nano</source>
-        <translation>Nano</translation>
+        <translation type="vanished">Nano</translation>
     </message>
     <message>
         <source>Duemilanove</source>
-        <translation>Duemilanove</translation>
+        <translation type="vanished">Duemilanove</translation>
     </message>
     <message>
         <source>Leonardo</source>
-        <translation>Leonardo</translation>
+        <translation type="vanished">Leonardo</translation>
     </message>
     <message>
         <source>Custom</source>
-        <translation>自定义</translation>
+        <translation type="vanished">自定义</translation>
     </message>
     <message>
         <source>Tool Path:</source>
-        <translation>工具路径: </translation>
+        <translation type="vanished">工具路径: </translation>
     </message>
     <message>
         <source>Include Path:</source>
-        <translation>Include路径: </translation>
+        <translation type="vanished">Include路径: </translation>
     </message>
     <message>
         <source>Set custom Arduino Board</source>
-        <translation>设置自定义Arduino板</translation>
+        <translation type="vanished">设置自定义Arduino板</translation>
     </message>
     <message>
         <source>Custom Board</source>
-        <translation>自定义板</translation>
+        <translation type="vanished">自定义板</translation>
     </message>
     <message>
         <source>Select tool path</source>
-        <translation>选择工具路径</translation>
+        <translation type="vanished">选择工具路径</translation>
     </message>
     <message>
         <source>Compiler:</source>
-        <translation>编译器:</translation>
+        <translation type="vanished">编译器:</translation>
     </message>
     <message>
         <source>Select include path</source>
-        <translation>选择include路径</translation>
+        <translation type="vanished">选择include路径</translation>
     </message>
     <message>
         <source>Select Compiler</source>
-        <translation>选择编译器</translation>
+        <translation type="vanished">选择编译器</translation>
     </message>
     <message>
         <source>Select MCU model</source>
-        <translation>选择MCU型号</translation>
+        <translation type="vanished">选择MCU型号</translation>
     </message>
     <message>
         <source>Device</source>
-        <translation>设备</translation>
+        <translation type="vanished">设备</translation>
     </message>
     <message>
         <source>Select MCU family/architecture</source>
-        <translation>选择MCU家族/体系</translation>
+        <translation type="vanished">选择MCU家族/体系</translation>
     </message>
     <message>
         <source>Family</source>
-        <translation>家族</translation>
+        <translation type="vanished">家族</translation>
     </message>
     <message>
         <source>Libraries Path</source>
-        <translation>库文件夹路径</translation>
+        <translation type="vanished">库文件夹路径</translation>
     </message>
     <message>
         <source>Include Path</source>
-        <translation>Include路径</translation>
+        <translation type="vanished">Include路径</translation>
     </message>
 </context>
 <context>
@@ -1639,7 +1703,7 @@ Can&apos;t find file:
     <name>EditorProp</name>
     <message>
         <source>Editor / Debugger</source>
-        <translation>编辑器 / 调试器</translation>
+        <translation type="vanished">编辑器 / 调试器</translation>
     </message>
     <message>
         <source>Editor</source>
@@ -1651,27 +1715,27 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Font Size</source>
-        <translation>字体大小</translation>
+        <translation type="vanished">字体大小</translation>
     </message>
     <message>
         <source>Tab Size</source>
-        <translation>Tab缩进数</translation>
+        <translation type="vanished">Tab缩进数</translation>
     </message>
     <message>
         <source>Pixels</source>
-        <translation>像素</translation>
+        <translation type="vanished">像素</translation>
     </message>
     <message>
         <source>Tabs as Spaces</source>
-        <translation>用空格缩进</translation>
+        <translation type="vanished">用空格缩进</translation>
     </message>
     <message>
         <source>Show Spaces</source>
-        <translation>显示空格</translation>
+        <translation type="vanished">显示空格</translation>
     </message>
     <message>
         <source>Spaces</source>
-        <translation>空格</translation>
+        <translation type="vanished">空格</translation>
     </message>
 </context>
 <context>
@@ -1896,6 +1960,30 @@ Can&apos;t find file:
     <message>
         <source>&amp;%1 %2</source>
         <translation>&amp;%1 %2</translation>
+    </message>
+    <message>
+        <source>Font Size</source>
+        <translation type="unfinished">字体大小</translation>
+    </message>
+    <message>
+        <source>Tab Size</source>
+        <translation type="unfinished">Tab缩进数</translation>
+    </message>
+    <message>
+        <source>Tabs as spaces</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show Spaces and Tabs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NEW</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File Settings</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2431,7 +2519,27 @@ Can&apos;t find file:
     <name>InoDebugger</name>
     <message>
         <source>Found Board definition in file: </source>
-        <translation>在此文件中找到板定义: </translation>
+        <translation type="vanished">在此文件中找到板定义: </translation>
+    </message>
+    <message>
+        <source>custom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Compiler Settings</source>
+        <translation type="unfinished">编译器设置</translation>
+    </message>
+    <message>
+        <source>Libraries Path</source>
+        <translation type="unfinished">库文件夹路径</translation>
+    </message>
+    <message>
+        <source>Board</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Custom Board</source>
+        <translation type="unfinished">自定义板</translation>
     </message>
 </context>
 <context>
@@ -3636,6 +3744,17 @@ Can&apos;t find file:
     </message>
 </context>
 <context>
+    <name>PathVal</name>
+    <message>
+        <source>TextLabel</source>
+        <translation type="unfinished">TextLabel</translation>
+    </message>
+    <message>
+        <source>Select directory</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>PlotBase</name>
     <message>
         <source>Main</source>
@@ -4734,6 +4853,13 @@ Not valid Package file:
     </message>
 </context>
 <context>
+    <name>StrVal</name>
+    <message>
+        <source>TextLabel</source>
+        <translation type="unfinished">TextLabel</translation>
+    </message>
+</context>
+<context>
     <name>Strain</name>
     <message>
         <source>Force Strain Gauge</source>
@@ -4780,14 +4906,14 @@ Not valid Package file:
     <name>StringVal</name>
     <message>
         <source>TextLabel</source>
-        <translation>TextLabel</translation>
+        <translation type="vanished">TextLabel</translation>
     </message>
 </context>
 <context>
     <name>SubCircuit</name>
     <message>
         <source>Subcircuit</source>
-        <translation type="vanished">子电路</translation>
+        <translation>子电路</translation>
     </message>
     <message>
         <source>Main</source>
@@ -4810,7 +4936,7 @@ Not valid Package file:
     <name>SubPackage</name>
     <message>
         <source>Package</source>
-        <translation type="vanished">包</translation>
+        <translation>包</translation>
     </message>
     <message>
         <source>Board Mode</source>
@@ -4870,7 +4996,7 @@ Not valid Package file:
     </message>
     <message>
         <source>Select Main Component</source>
-        <translation>选择主组件</translation>
+        <translation type="vanished">选择主组件</translation>
     </message>
     <message>
         <source>
@@ -4895,6 +5021,10 @@ Do you want to save your changes?
 %2.</source>
         <translation>无法写入文件%1:
 %2.</translation>
+    </message>
+    <message>
+        <source>Select Main Components</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

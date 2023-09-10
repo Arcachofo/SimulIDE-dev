@@ -149,11 +149,11 @@
     <name>App::Property</name>
     <message>
         <source>Board</source>
-        <translation>Placa</translation>
+        <translation type="vanished">Placa</translation>
     </message>
     <message>
         <source>Custom Board</source>
-        <translation>Placa &quot;Custom&quot;</translation>
+        <translation type="vanished">Placa &quot;Custom&quot;</translation>
     </message>
 </context>
 <context>
@@ -409,11 +409,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Found Device definition in file: </source>
-        <translation>Encontrada definición de Modelo en archivo: </translation>
+        <translation type="vanished">Encontrada definición de Modelo en archivo: </translation>
     </message>
     <message>
         <source>Found Family definition in file: </source>
-        <translation>Encontrada definición de Familia en archivo: </translation>
+        <translation type="vanished">Encontrada definición de Familia en archivo: </translation>
     </message>
 </context>
 <context>
@@ -564,7 +564,7 @@ p, li { white-space: pre-wrap; }
     <name>BoolVal</name>
     <message>
         <source>value</source>
-        <translation>Valor</translation>
+        <translation type="vanished">Valor</translation>
     </message>
 </context>
 <context>
@@ -984,31 +984,67 @@ Can&apos;t find file:
     </message>
     <message>
         <source>     WARNING: Compilation Not Done</source>
-        <translation type="unfinished">     WARNING: Compilation No ejecutada</translation>
+        <translation>     WARNING: Compilation No ejecutada</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation type="unfinished">Deshacer</translation>
+        <translation>Deshacer</translation>
     </message>
     <message>
         <source>Redo</source>
-        <translation type="unfinished">Rehacer</translation>
+        <translation>Rehacer</translation>
     </message>
     <message>
         <source>Cut</source>
-        <translation type="unfinished">Cortar</translation>
+        <translation>Cortar</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation type="unfinished">Copiar</translation>
+        <translation>Copiar</translation>
     </message>
     <message>
         <source>Paste</source>
-        <translation type="unfinished">Pegar</translation>
+        <translation>Pegar</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished">Eliminar</translation>
+        <translation>Eliminar</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation>Ninguno</translation>
+    </message>
+    <message>
+        <source>File Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Compiler</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save Settings at file close</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Actions after opening this file:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load Compiler</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load Breakpoints</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Restore files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot write file</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1049,11 +1085,11 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Select Compiler Toolchain directory</source>
-        <translation>Seleccionar carpeta de compilador</translation>
+        <translation type="vanished">Seleccionar carpeta de compilador</translation>
     </message>
     <message>
         <source>Select Compiler Include directory</source>
-        <translation>Seleccionar carpeta de includes</translation>
+        <translation type="vanished">Seleccionar carpeta de includes</translation>
     </message>
     <message>
         <source>Executable not found</source>
@@ -1063,12 +1099,40 @@ Can&apos;t find file:
         <source>Check that Tool Path is correct</source>
         <translation>Comprobar que la ruta al ejecutable es correcta</translation>
     </message>
+    <message>
+        <source>Compiler Settings</source>
+        <translation type="unfinished">Configuración de Compilador</translation>
+    </message>
+    <message>
+        <source>For this compiler type:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tool Path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Include Path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Device</source>
+        <translation type="unfinished">Modelo</translation>
+    </message>
+    <message>
+        <source>Family</source>
+        <translation type="unfinished">Familia</translation>
+    </message>
+    <message>
+        <source>For this file:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>CompilerProp</name>
     <message>
         <source>Compiler Settings</source>
-        <translation>Configuración de Compilador</translation>
+        <translation type="vanished">Configuración de Compilador</translation>
     </message>
     <message>
         <source>Drive Circuit</source>
@@ -1076,91 +1140,63 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Board</source>
-        <translation>Placa</translation>
+        <translation type="vanished">Placa</translation>
     </message>
     <message>
         <source>Select Arduino Board</source>
-        <translation>Seleccionar Placa Arduino</translation>
+        <translation type="vanished">Seleccionar Placa Arduino</translation>
     </message>
     <message>
         <source>Custom</source>
-        <translation>Personalizado</translation>
+        <translation type="vanished">Personalizado</translation>
     </message>
     <message>
         <source>Tool Path:</source>
-        <translation>Ruta al compilador:</translation>
+        <translation type="vanished">Ruta al compilador:</translation>
     </message>
     <message>
         <source>Include Path:</source>
-        <translation>Ruta a includes:</translation>
+        <translation type="vanished">Ruta a includes:</translation>
     </message>
     <message>
         <source>Set custom Arduino Board</source>
-        <translation>Placa Arduino Personalizada</translation>
+        <translation type="vanished">Placa Arduino Personalizada</translation>
     </message>
     <message>
         <source>Custom Board</source>
-        <translation>Placa personalizada</translation>
+        <translation type="vanished">Placa personalizada</translation>
     </message>
     <message>
         <source>Select tool path</source>
-        <translation>Seleccionar ruta al compilador:</translation>
+        <translation type="vanished">Seleccionar ruta al compilador:</translation>
     </message>
     <message>
         <source>Compiler:</source>
-        <translation>Compilador:</translation>
+        <translation type="vanished">Compilador:</translation>
     </message>
     <message>
         <source>Select include path</source>
-        <translation>Seleccionar ruta a includes:</translation>
+        <translation type="vanished">Seleccionar ruta a includes:</translation>
     </message>
     <message>
         <source>Select Compiler</source>
-        <translation>Seleccionar Compilador</translation>
+        <translation type="vanished">Seleccionar Compilador</translation>
     </message>
     <message>
         <source>Select MCU model</source>
-        <translation>Seleccionar modelo de MCU</translation>
+        <translation type="vanished">Seleccionar modelo de MCU</translation>
     </message>
     <message>
         <source>Device</source>
-        <translation>Modelo</translation>
+        <translation type="vanished">Modelo</translation>
     </message>
     <message>
         <source>Select MCU family/architecture</source>
-        <translation>Seleccionar familia/arquitecture de MCU</translation>
+        <translation type="vanished">Seleccionar familia/arquitecture de MCU</translation>
     </message>
     <message>
         <source>Family</source>
-        <translation>Familia</translation>
-    </message>
-    <message>
-        <source>Uno</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Mega</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Nano</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Duemilanove</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Leonardo</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Libraries Path</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Include Path</source>
-        <translation type="unfinished"></translation>
+        <translation type="vanished">Familia</translation>
     </message>
 </context>
 <context>
@@ -1760,7 +1796,7 @@ Can&apos;t find file:
     <name>EditorProp</name>
     <message>
         <source>Editor / Debugger</source>
-        <translation>Editor / Depurador</translation>
+        <translation type="vanished">Editor / Depurador</translation>
     </message>
     <message>
         <source>Show Help</source>
@@ -1768,27 +1804,23 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Font Size</source>
-        <translation>Tamaño Texto</translation>
+        <translation type="vanished">Tamaño Texto</translation>
     </message>
     <message>
         <source>Tab Size</source>
-        <translation>Tamaño Tab</translation>
+        <translation type="vanished">Tamaño Tab</translation>
     </message>
     <message>
         <source>Tabs as Spaces</source>
-        <translation>Tabs como Espacios</translation>
+        <translation type="vanished">Tabs como Espacios</translation>
     </message>
     <message>
         <source>Show Spaces</source>
-        <translation>Mostar Espacios</translation>
+        <translation type="vanished">Mostar Espacios</translation>
     </message>
     <message>
         <source>Spaces</source>
-        <translation>Espacios</translation>
-    </message>
-    <message>
-        <source>Pixels</source>
-        <translation type="unfinished"></translation>
+        <translation type="vanished">Espacios</translation>
     </message>
 </context>
 <context>
@@ -2013,6 +2045,30 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Last Files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Font Size</source>
+        <translation type="unfinished">Tamaño Texto</translation>
+    </message>
+    <message>
+        <source>Tab Size</source>
+        <translation type="unfinished">Tamaño Tab</translation>
+    </message>
+    <message>
+        <source>Tabs as spaces</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show Spaces and Tabs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NEW</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File Settings</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2643,7 +2699,27 @@ Can&apos;t find file:
     <name>InoDebugger</name>
     <message>
         <source>Found Board definition in file: </source>
-        <translation>Encontrada definición de Placa en archivo: </translation>
+        <translation type="vanished">Encontrada definición de Placa en archivo: </translation>
+    </message>
+    <message>
+        <source>custom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Compiler Settings</source>
+        <translation type="unfinished">Configuración de Compilador</translation>
+    </message>
+    <message>
+        <source>Libraries Path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Board</source>
+        <translation type="unfinished">Placa</translation>
+    </message>
+    <message>
+        <source>Custom Board</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3892,6 +3968,17 @@ Can&apos;t find file:
     </message>
 </context>
 <context>
+    <name>PathVal</name>
+    <message>
+        <source>TextLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select directory</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>PlotBase</name>
     <message>
         <source>Main</source>
@@ -5045,6 +5132,13 @@ Archivo packae no valido:</translation>
     </message>
 </context>
 <context>
+    <name>StrVal</name>
+    <message>
+        <source>TextLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Strain</name>
     <message>
         <source>Force Strain Gauge</source>
@@ -5092,17 +5186,10 @@ Archivo packae no valido:</translation>
     </message>
 </context>
 <context>
-    <name>StringVal</name>
-    <message>
-        <source>TextLabel</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>SubCircuit</name>
     <message>
         <source>Subcircuit</source>
-        <translation type="vanished">Subcircuito</translation>
+        <translation>Subcircuito</translation>
     </message>
     <message>
         <source>There are no data files for </source>
@@ -5225,7 +5312,7 @@ Archivo packae no valido:</translation>
     </message>
     <message>
         <source>Select Main Component</source>
-        <translation>Seleccionar Componente Principal</translation>
+        <translation type="vanished">Seleccionar Componente Principal</translation>
     </message>
     <message>
         <source>
@@ -5250,6 +5337,14 @@ Quiere guardar los cambios?
 %2.</source>
         <translation>No se pudo escribir el archivo %1:
 %2.</translation>
+    </message>
+    <message>
+        <source>Package</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select Main Components</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

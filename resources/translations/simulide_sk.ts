@@ -132,11 +132,11 @@
     <name>App::Property</name>
     <message>
         <source>Board</source>
-        <translation>Doska</translation>
+        <translation type="vanished">Doska</translation>
     </message>
     <message>
         <source>Custom Board</source>
-        <translation>Vlastná doska</translation>
+        <translation type="vanished">Vlastná doska</translation>
     </message>
 </context>
 <context>
@@ -382,11 +382,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Found Device definition in file: </source>
-        <translation>Nájdená definícia &apos;device&apos; v súbore: </translation>
+        <translation type="vanished">Nájdená definícia &apos;device&apos; v súbore: </translation>
     </message>
     <message>
         <source>Found Family definition in file: </source>
-        <translation>Nájdená definícia &apos;family&apos; v súbore: </translation>
+        <translation type="vanished">Nájdená definícia &apos;family&apos; v súbore: </translation>
     </message>
 </context>
 <context>
@@ -513,7 +513,7 @@ p, li { white-space: pre-wrap; }
     <name>BoolVal</name>
     <message>
         <source>value</source>
-        <translation>hodnota</translation>
+        <translation type="vanished">hodnota</translation>
     </message>
 </context>
 <context>
@@ -951,6 +951,42 @@ Nemožno nájsť súbor:
         <source>Remove</source>
         <translation>Odstrániť</translation>
     </message>
+    <message>
+        <source>None</source>
+        <translation type="unfinished">Žiadny</translation>
+    </message>
+    <message>
+        <source>File Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Compiler</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save Settings at file close</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Actions after opening this file:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load Compiler</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load Breakpoints</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Restore files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot write file</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Compiler</name>
@@ -978,11 +1014,11 @@ Nemožno nájsť súbor:
     </message>
     <message>
         <source>Select Compiler Toolchain directory</source>
-        <translation>Vyberte cestu k priečinku s prekladačom</translation>
+        <translation type="vanished">Vyberte cestu k priečinku s prekladačom</translation>
     </message>
     <message>
         <source>Select Compiler Include directory</source>
-        <translation>Vyberte cestu k hlavičkovým súborom</translation>
+        <translation type="vanished">Vyberte cestu k hlavičkovým súborom</translation>
     </message>
     <message>
         <source>Executable not found</source>
@@ -992,100 +1028,128 @@ Nemožno nájsť súbor:
         <source>Check that Tool Path is correct</source>
         <translation>Skontrolujte či je cesta k priečinku s prekladačom správna</translation>
     </message>
+    <message>
+        <source>Compiler Settings</source>
+        <translation type="unfinished">Nastavenia prekladača</translation>
+    </message>
+    <message>
+        <source>For this compiler type:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tool Path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Include Path</source>
+        <translation type="unfinished">Cesta k hlavičkovým súborom</translation>
+    </message>
+    <message>
+        <source>Device</source>
+        <translation type="unfinished">Mikrokontrolér</translation>
+    </message>
+    <message>
+        <source>Family</source>
+        <translation type="unfinished">Rodina</translation>
+    </message>
+    <message>
+        <source>For this file:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>CompilerProp</name>
     <message>
         <source>Compiler Settings</source>
-        <translation>Nastavenia prekladača</translation>
+        <translation type="vanished">Nastavenia prekladača</translation>
     </message>
     <message>
         <source>Board</source>
-        <translation>Doska</translation>
+        <translation type="vanished">Doska</translation>
     </message>
     <message>
         <source>Select Arduino Board</source>
-        <translation>Vyberte arduino dosku</translation>
+        <translation type="vanished">Vyberte arduino dosku</translation>
     </message>
     <message>
         <source>Uno</source>
-        <translation>Uno</translation>
+        <translation type="vanished">Uno</translation>
     </message>
     <message>
         <source>Mega</source>
-        <translation>Mega</translation>
+        <translation type="vanished">Mega</translation>
     </message>
     <message>
         <source>Nano</source>
-        <translation>Nano</translation>
+        <translation type="vanished">Nano</translation>
     </message>
     <message>
         <source>Duemilanove</source>
-        <translation>Duemilanove</translation>
+        <translation type="vanished">Duemilanove</translation>
     </message>
     <message>
         <source>Leonardo</source>
-        <translation>Leonardo</translation>
+        <translation type="vanished">Leonardo</translation>
     </message>
     <message>
         <source>Custom</source>
-        <translation>Vlastná</translation>
+        <translation type="vanished">Vlastná</translation>
     </message>
     <message>
         <source>Tool Path:</source>
-        <translation>Cesta k priečinku s prekladačom:</translation>
+        <translation type="vanished">Cesta k priečinku s prekladačom:</translation>
     </message>
     <message>
         <source>Include Path:</source>
-        <translation>Cesta k hlavičkovým súborom:</translation>
+        <translation type="vanished">Cesta k hlavičkovým súborom:</translation>
     </message>
     <message>
         <source>Set custom Arduino Board</source>
-        <translation>Vybrať vlastnú arduino dosku</translation>
+        <translation type="vanished">Vybrať vlastnú arduino dosku</translation>
     </message>
     <message>
         <source>Custom Board</source>
-        <translation>Vlastná doska</translation>
+        <translation type="vanished">Vlastná doska</translation>
     </message>
     <message>
         <source>Select tool path</source>
-        <translation>Vyberte cestu k priečinku s prekladačom</translation>
+        <translation type="vanished">Vyberte cestu k priečinku s prekladačom</translation>
     </message>
     <message>
         <source>Compiler:</source>
-        <translation>Prekladač:</translation>
+        <translation type="vanished">Prekladač:</translation>
     </message>
     <message>
         <source>Select include path</source>
-        <translation>Vyberte cestu k hlavičkovým súborom</translation>
+        <translation type="vanished">Vyberte cestu k hlavičkovým súborom</translation>
     </message>
     <message>
         <source>Select Compiler</source>
-        <translation>Vyberte prekladač</translation>
+        <translation type="vanished">Vyberte prekladač</translation>
     </message>
     <message>
         <source>Select MCU model</source>
-        <translation>Vyberte typ MCU</translation>
+        <translation type="vanished">Vyberte typ MCU</translation>
     </message>
     <message>
         <source>Device</source>
-        <translation>Mikrokontrolér</translation>
+        <translation type="vanished">Mikrokontrolér</translation>
     </message>
     <message>
         <source>Select MCU family/architecture</source>
-        <translation>Vyberte rodinu/architektúru MCU</translation>
+        <translation type="vanished">Vyberte rodinu/architektúru MCU</translation>
     </message>
     <message>
         <source>Family</source>
-        <translation>Rodina</translation>
+        <translation type="vanished">Rodina</translation>
     </message>
     <message>
         <source>Libraries Path</source>
-        <translation>Cesta ku knižniciam</translation>
+        <translation type="vanished">Cesta ku knižniciam</translation>
     </message>
     <message>
         <source>Include Path</source>
-        <translation>Cesta k hlavičkovým súborom</translation>
+        <translation type="vanished">Cesta k hlavičkovým súborom</translation>
     </message>
 </context>
 <context>
@@ -1638,7 +1702,7 @@ Nemožno nájsť súbor:
     <name>EditorProp</name>
     <message>
         <source>Editor / Debugger</source>
-        <translation>Editor / Ladiaci nástroj</translation>
+        <translation type="vanished">Editor / Ladiaci nástroj</translation>
     </message>
     <message>
         <source>Editor</source>
@@ -1650,27 +1714,27 @@ Nemožno nájsť súbor:
     </message>
     <message>
         <source>Font Size</source>
-        <translation>Veľkosť písma</translation>
+        <translation type="vanished">Veľkosť písma</translation>
     </message>
     <message>
         <source>Tab Size</source>
-        <translation>Šírka tabulátora</translation>
+        <translation type="vanished">Šírka tabulátora</translation>
     </message>
     <message>
         <source>Pixels</source>
-        <translation>Pixelov</translation>
+        <translation type="vanished">Pixelov</translation>
     </message>
     <message>
         <source>Tabs as Spaces</source>
-        <translation>Tabulátory vyplniť medzerami</translation>
+        <translation type="vanished">Tabulátory vyplniť medzerami</translation>
     </message>
     <message>
         <source>Show Spaces</source>
-        <translation>Zobraziť medzery</translation>
+        <translation type="vanished">Zobraziť medzery</translation>
     </message>
     <message>
         <source>Spaces</source>
-        <translation>Medzier(y)</translation>
+        <translation type="vanished">Medzier(y)</translation>
     </message>
 </context>
 <context>
@@ -1895,6 +1959,30 @@ Súbor nemožno nájsť:
     </message>
     <message>
         <source>&amp;%1 %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Font Size</source>
+        <translation type="unfinished">Veľkosť písma</translation>
+    </message>
+    <message>
+        <source>Tab Size</source>
+        <translation type="unfinished">Šírka tabulátora</translation>
+    </message>
+    <message>
+        <source>Tabs as spaces</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show Spaces and Tabs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NEW</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File Settings</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2431,7 +2519,27 @@ Súbor nemožno nájsť:
     <name>InoDebugger</name>
     <message>
         <source>Found Board definition in file: </source>
-        <translation>Nájdená definícia dosky v súbore: </translation>
+        <translation type="vanished">Nájdená definícia dosky v súbore: </translation>
+    </message>
+    <message>
+        <source>custom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Compiler Settings</source>
+        <translation type="unfinished">Nastavenia prekladača</translation>
+    </message>
+    <message>
+        <source>Libraries Path</source>
+        <translation type="unfinished">Cesta ku knižniciam</translation>
+    </message>
+    <message>
+        <source>Board</source>
+        <translation type="unfinished">Doska</translation>
+    </message>
+    <message>
+        <source>Custom Board</source>
+        <translation type="unfinished">Vlastná doska</translation>
     </message>
 </context>
 <context>
@@ -3649,6 +3757,17 @@ Súbor nemožno nájsť:
     </message>
 </context>
 <context>
+    <name>PathVal</name>
+    <message>
+        <source>TextLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select directory</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>PlotBase</name>
     <message>
         <source>Main</source>
@@ -4739,6 +4858,13 @@ Neplatný súbor balíka:
     </message>
 </context>
 <context>
+    <name>StrVal</name>
+    <message>
+        <source>TextLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Strain</name>
     <message>
         <source>Force Strain Gauge</source>
@@ -4782,17 +4908,10 @@ Neplatný súbor balíka:
     </message>
 </context>
 <context>
-    <name>StringVal</name>
-    <message>
-        <source>TextLabel</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>SubCircuit</name>
     <message>
         <source>Subcircuit</source>
-        <translation type="vanished">Podobvod</translation>
+        <translation>Podobvod</translation>
     </message>
     <message>
         <source>Main</source>
@@ -4815,7 +4934,7 @@ Neplatný súbor balíka:
     <name>SubPackage</name>
     <message>
         <source>Package</source>
-        <translation type="vanished">Puzdro</translation>
+        <translation>Puzdro</translation>
     </message>
     <message>
         <source>Board Mode</source>
@@ -4875,7 +4994,7 @@ Neplatný súbor balíka:
     </message>
     <message>
         <source>Select Main Component</source>
-        <translation>Vybrať hlavný komponent</translation>
+        <translation type="vanished">Vybrať hlavný komponent</translation>
     </message>
     <message>
         <source>
@@ -4900,6 +5019,10 @@ Chcete uložiť zmeny?
 %2.</source>
         <translation>Nemožno zapísať súbor %1
 %2.</translation>
+    </message>
+    <message>
+        <source>Select Main Components</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

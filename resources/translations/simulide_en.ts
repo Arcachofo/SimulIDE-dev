@@ -105,17 +105,6 @@
     </message>
 </context>
 <context>
-    <name>App::Property</name>
-    <message>
-        <source>Board</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Custom Board</source>
-        <translation></translation>
-    </message>
-</context>
-<context>
     <name>AppDialog</name>
     <message>
         <source>Settings</source>
@@ -342,14 +331,6 @@ p, li { white-space: pre-wrap; }
         <source>Warning: lst file doesn&apos;t exist:</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Found Device definition in file: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Found Family definition in file: </source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>Battery</name>
@@ -448,13 +429,6 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Binary Counter</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>BoolVal</name>
-    <message>
-        <source>value</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -822,6 +796,42 @@ Can&apos;t find file:
         <source>Remove</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>None</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Compiler</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save Settings at file close</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Actions after opening this file:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load Compiler</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load Breakpoints</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Restore files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot write file</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Compiler</name>
@@ -847,14 +857,6 @@ Can&apos;t find file:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Select Compiler Toolchain directory</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select Compiler Include directory</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Executable not found</source>
         <translation type="unfinished"></translation>
     </message>
@@ -862,79 +864,20 @@ Can&apos;t find file:
         <source>Check that Tool Path is correct</source>
         <translation type="unfinished"></translation>
     </message>
-</context>
-<context>
-    <name>CompilerProp</name>
     <message>
         <source>Compiler Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Board</source>
+        <source>For this compiler type:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Select Arduino Board</source>
+        <source>Tool Path</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Uno</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Mega</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Nano</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Duemilanove</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Leonardo</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Custom</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Tool Path:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Include Path:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Set custom Arduino Board</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Custom Board</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select tool path</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Compiler:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select include path</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select Compiler</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select MCU model</source>
+        <source>Include Path</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -942,19 +885,11 @@ Can&apos;t find file:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Select MCU family/architecture</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Family</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Libraries Path</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Include Path</source>
+        <source>For this file:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1479,37 +1414,6 @@ Can&apos;t find file:
     </message>
 </context>
 <context>
-    <name>EditorProp</name>
-    <message>
-        <source>Editor / Debugger</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Font Size</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Tab Size</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pixels</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Tabs as Spaces</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Show Spaces</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Spaces</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>EditorWidget</name>
     <message>
         <source>Load File</source>
@@ -1716,6 +1620,30 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Last Files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Font Size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tab Size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tabs as spaces</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show Spaces and Tabs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NEW</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File Settings</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2220,7 +2148,23 @@ Can&apos;t find file:
 <context>
     <name>InoDebugger</name>
     <message>
-        <source>Found Board definition in file: </source>
+        <source>custom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Compiler Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Libraries Path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Board</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Custom Board</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3271,6 +3215,17 @@ Can&apos;t find file:
     </message>
 </context>
 <context>
+    <name>PathVal</name>
+    <message>
+        <source>TextLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select directory</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>PlotBase</name>
     <message>
         <source>Main</source>
@@ -4162,6 +4117,13 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
+    <name>StrVal</name>
+    <message>
+        <source>TextLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Strain</name>
     <message>
         <source>Force Strain Gauge</source>
@@ -4205,13 +4167,6 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>StringVal</name>
-    <message>
-        <source>TextLabel</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>SubCircuit</name>
     <message>
         <source>Main</source>
@@ -4219,6 +4174,10 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Logic Symbol</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Subcircuit</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4269,10 +4228,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Select Main Component</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>
 Package has been modified.
 Do you want to save your changes?
@@ -4290,6 +4245,14 @@ Do you want to save your changes?
     <message>
         <source>Cannot write file %1:
 %2.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Package</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select Main Components</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

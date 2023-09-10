@@ -166,14 +166,12 @@
 <context>
     <name>App::Property</name>
     <message>
-        <location filename="../../src/gui/editorwidget/debuggers/inodebugger.cpp" line="+17"/>
         <source>Board</source>
-        <translation>Deska</translation>
+        <translation type="vanished">Deska</translation>
     </message>
     <message>
-        <location line="+1"/>
         <source>Custom Board</source>
-        <translation>Vlastní deska</translation>
+        <translation type="vanished">Vlastní deska</translation>
     </message>
 </context>
 <context>
@@ -511,7 +509,7 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>BaseDebugger</name>
     <message>
-        <location filename="../../src/gui/editorwidget/basedebugger.cpp" line="+48"/>
+        <location filename="../../src/gui/editorwidget/basedebugger.cpp" line="+47"/>
         <source>FirmWare Uploaded to </source>
         <translation>Firmware nahraný do </translation>
     </message>
@@ -526,22 +524,20 @@ p, li { white-space: pre-wrap; }
         <translation>Chyba při nahrávání firmware.do </translation>
     </message>
     <message>
-        <location line="+234"/>
         <source>Found Device definition in file: </source>
-        <translation>Nalezen popis mikroprocesoru v souboru: </translation>
+        <translation type="vanished">Nalezen popis mikroprocesoru v souboru: </translation>
     </message>
     <message>
-        <location line="+10"/>
         <source>Found Family definition in file: </source>
-        <translation>Nalezen popis rodiny v souboru: </translation>
+        <translation type="vanished">Nalezen popis rodiny v souboru: </translation>
     </message>
     <message>
-        <location line="-257"/>
+        <location line="-13"/>
         <source>Error: Hex file doesn&apos;t exist:</source>
         <translation>Chyba: Soubor hex neexistuje:</translation>
     </message>
     <message>
-        <location line="+43"/>
+        <location line="+42"/>
         <source>Warning: lst file doesn&apos;t exist:</source>
         <translation>Varování: Soubor lst neexistuje:</translation>
     </message>
@@ -715,9 +711,8 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>BoolVal</name>
     <message>
-        <location filename="../../src/gui/circuitwidget/properties/boolval.ui" line="+41"/>
         <source>value</source>
-        <translation>Hodnota</translation>
+        <translation type="vanished">Hodnota</translation>
     </message>
 </context>
 <context>
@@ -863,12 +858,12 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>Circuit</name>
     <message>
-        <location filename="../../src/gui/circuitwidget/circuit.cpp" line="+544"/>
+        <location filename="../../src/gui/circuitwidget/circuit.cpp" line="+545"/>
         <source>Load Circuit</source>
         <translation>Otevřít obvod</translation>
     </message>
     <message>
-        <location line="-41"/>
+        <location line="-42"/>
         <source>Cannot write file %1:
 %2.</source>
         <translation>Nemohu zapsat soubor %1:
@@ -879,7 +874,7 @@ p, li { white-space: pre-wrap; }
         <translation type="vanished">Seznam materiálu</translation>
     </message>
     <message>
-        <location line="+42"/>
+        <location line="+43"/>
         <source>Circuits (*.sim*);;All files (*.*)</source>
         <translation>Obvody (*.sim*);;Všechny soubory (*.*)</translation>
     </message>
@@ -891,7 +886,7 @@ p, li { white-space: pre-wrap; }
         <translation type="vanished">Přizpůsobit velikosti plochy</translation>
     </message>
     <message>
-        <location filename="../../src/gui/circuitwidget/circuitview.cpp" line="+186"/>
+        <location filename="../../src/gui/circuitwidget/circuitview.cpp" line="+211"/>
         <source>Paste</source>
         <translation>Vložit</translation>
     </message>
@@ -1207,22 +1202,62 @@ Nemohu najít soubor:
 <context>
     <name>CodeEditor</name>
     <message>
-        <location filename="../../src/gui/editorwidget/codeeditor.cpp" line="+98"/>
+        <location filename="../../src/gui/editorwidget/codeeditor.cpp" line="+56"/>
+        <source>None</source>
+        <translation type="unfinished">Žádný</translation>
+    </message>
+    <message>
+        <location line="+28"/>
+        <source>File Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Compiler</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Save Settings at file close</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Actions after opening this file:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Load Compiler</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Load Breakpoints</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Restore files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+102"/>
         <source> File: </source>
         <translation> Soubor: </translation>
     </message>
     <message>
-        <location line="+41"/>
+        <location line="+36"/>
         <source>File recognized as: </source>
         <translation>Soubor rozpoznán jako: </translation>
     </message>
     <message>
-        <location line="+118"/>
+        <location line="+116"/>
         <source>     WARNING: Compilation Not Done</source>
         <translation type="unfinished">     Varování: Překlad neproveden</translation>
     </message>
     <message>
-        <location line="+192"/>
+        <location line="+114"/>
         <source>Undo</source>
         <translation type="unfinished">Zpět</translation>
     </message>
@@ -1252,12 +1287,17 @@ Nemohu najít soubor:
         <translation type="unfinished">Odstranit</translation>
     </message>
     <message>
-        <location line="+21"/>
+        <location line="+35"/>
         <source>Found Compiler definition in file: </source>
         <translation>Nalezen popis překladače v souboru: </translation>
     </message>
     <message>
-        <location line="-13"/>
+        <location line="+50"/>
+        <source>Cannot write file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-77"/>
         <source>Reload Document</source>
         <translation>Znovu načíst dokument</translation>
     </message>
@@ -1265,11 +1305,49 @@ Nemohu najít soubor:
 <context>
     <name>Compiler</name>
     <message>
-        <location filename="../../src/gui/editorwidget/compiler.cpp" line="+122"/>
+        <location filename="../../src/gui/editorwidget/compiler.cpp" line="+46"/>
+        <location line="+83"/>
+        <location line="+7"/>
+        <location line="+7"/>
+        <source>Compiler Settings</source>
+        <translation type="unfinished">Nastavení překladače</translation>
+    </message>
+    <message>
+        <location line="-96"/>
+        <source>For this compiler type:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Tool Path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+82"/>
+        <source>Include Path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Device</source>
+        <translation type="unfinished">Mikroprocesor</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Family</source>
+        <translation type="unfinished">Rodina</translation>
+    </message>
+    <message>
+        <location line="+11"/>
         <source> Compiler successfully loaded.
 </source>
         <translation> Překladač je úspěšně načten.
 </translation>
+    </message>
+    <message>
+        <location line="+12"/>
+        <source>For this file:</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+5"/>
@@ -1304,17 +1382,15 @@ Nemohu najít soubor:
         <translation type="vanished">     Chyba!!! Překlad selhal</translation>
     </message>
     <message>
-        <location line="+95"/>
         <source>Select Compiler Toolchain directory</source>
-        <translation>Vyberte cestu k překladači</translation>
+        <translation type="vanished">Vyberte cestu k překladači</translation>
     </message>
     <message>
-        <location line="+13"/>
         <source>Select Compiler Include directory</source>
-        <translation>Vyberte cestu k hlavičkovým souborům</translation>
+        <translation type="vanished">Vyberte cestu k hlavičkovým souborům</translation>
     </message>
     <message>
-        <location line="+12"/>
+        <location line="+102"/>
         <source>Executable not found</source>
         <translation>Spustitelný soubor nenalezen</translation>
     </message>
@@ -1327,9 +1403,8 @@ Nemohu najít soubor:
 <context>
     <name>CompilerProp</name>
     <message>
-        <location filename="../../src/gui/editorwidget/dialogs/compilerprop.ui" line="+32"/>
         <source>Compiler Settings</source>
-        <translation>Nastavení překladače</translation>
+        <translation type="vanished">Nastavení překladače</translation>
     </message>
     <message>
         <source>Set if Debugger should drive Circuit simulation</source>
@@ -1340,124 +1415,94 @@ Nemohu najít soubor:
         <translation type="vanished">Řídit obvod</translation>
     </message>
     <message>
-        <location line="+285"/>
         <source>Board</source>
-        <translation>Deska</translation>
+        <translation type="vanished">Deska</translation>
     </message>
     <message>
-        <location line="+13"/>
         <source>Select Arduino Board</source>
-        <translation>Vyberte typ desky Arduina</translation>
+        <translation type="vanished">Vyberte typ desky Arduina</translation>
     </message>
     <message>
-        <location line="+7"/>
         <source>Uno</source>
-        <translation>Uno</translation>
+        <translation type="vanished">Uno</translation>
     </message>
     <message>
-        <location line="+5"/>
         <source>Mega</source>
-        <translation>Mega</translation>
+        <translation type="vanished">Mega</translation>
     </message>
     <message>
-        <location line="+5"/>
         <source>Nano</source>
-        <translation>Nano</translation>
+        <translation type="vanished">Nano</translation>
     </message>
     <message>
-        <location line="+5"/>
         <source>Duemilanove</source>
-        <translation>Duemilanove</translation>
+        <translation type="vanished">Duemilanove</translation>
     </message>
     <message>
-        <location line="+5"/>
         <source>Leonardo</source>
-        <translation>Leonardo</translation>
+        <translation type="vanished">Leonardo</translation>
     </message>
     <message>
-        <location line="+5"/>
         <source>Custom</source>
-        <translation>Vlastní</translation>
+        <translation type="vanished">Vlastní</translation>
     </message>
     <message>
-        <location line="-241"/>
         <source>Tool Path:</source>
-        <translation>Cesta k překladači:</translation>
+        <translation type="vanished">Cesta k překladači:</translation>
     </message>
     <message>
-        <location line="+67"/>
         <source>Include Path:</source>
-        <translation>Cesta k hlavičkovým souborům:</translation>
+        <translation type="vanished">Cesta k hlavičkovým souborům:</translation>
     </message>
     <message>
-        <location line="+199"/>
         <source>Set custom Arduino Board</source>
-        <translation>Vyberte vlastní desku Arduina</translation>
+        <translation type="vanished">Vyberte vlastní desku Arduina</translation>
     </message>
     <message>
-        <location line="-13"/>
         <source>Custom Board</source>
-        <translation>Vlastní deska</translation>
+        <translation type="vanished">Vlastní deska</translation>
     </message>
     <message>
-        <location line="-228"/>
         <source>Select tool path</source>
-        <translation>Vyberte cestu k překladači</translation>
+        <translation type="vanished">Vyberte cestu k překladači</translation>
     </message>
     <message>
         <source>...</source>
         <translation type="vanished">...</translation>
     </message>
     <message>
-        <location line="-92"/>
         <source>Compiler:</source>
-        <translation>Překladač:</translation>
+        <translation type="vanished">Překladač:</translation>
     </message>
     <message>
-        <location line="+159"/>
         <source>Select include path</source>
-        <translation>Vyberte cestu k hlavičkovým souborům</translation>
+        <translation type="vanished">Vyberte cestu k hlavičkovým souborům</translation>
     </message>
     <message>
-        <location line="-143"/>
         <source>Select Compiler</source>
-        <translation>Vyberte překladač</translation>
+        <translation type="vanished">Vyberte překladač</translation>
     </message>
     <message>
-        <location line="+224"/>
         <source>Select MCU model</source>
-        <translation>Vyberte typ mikroprocesoru</translation>
+        <translation type="vanished">Vyberte typ mikroprocesoru</translation>
     </message>
     <message>
-        <location line="-13"/>
         <source>Device</source>
-        <translation>Mikroprocesor</translation>
+        <translation type="vanished">Mikroprocesor</translation>
     </message>
     <message>
-        <location line="-17"/>
         <source>Select MCU family/architecture</source>
-        <translation>Vyberte rodinu nebo architekturu mikroprocesoru</translation>
+        <translation type="vanished">Vyberte rodinu nebo architekturu mikroprocesoru</translation>
     </message>
     <message>
-        <location line="-13"/>
         <source>Family</source>
-        <translation>Rodina</translation>
-    </message>
-    <message>
-        <location filename="../../src/gui/editorwidget/dialogs/compilerprop.cpp" line="+139"/>
-        <source>Libraries Path</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Include Path</source>
-        <translation type="unfinished"></translation>
+        <translation type="vanished">Rodina</translation>
     </message>
 </context>
 <context>
     <name>Component</name>
     <message>
-        <location filename="../../src/gui/circuitwidget/component.cpp" line="+331"/>
+        <location filename="../../src/gui/circuitwidget/component.cpp" line="+329"/>
         <source>Copy</source>
         <translation>Kopírovat</translation>
     </message>
@@ -1558,7 +1603,7 @@ Nemohu najít soubor:
 <context>
     <name>ConnectorLine</name>
     <message>
-        <location filename="../../src/gui/circuitwidget/connectorline.cpp" line="+324"/>
+        <location filename="../../src/gui/circuitwidget/connectorline.cpp" line="+321"/>
         <source>Remove</source>
         <translation type="unfinished">Odstranit</translation>
     </message>
@@ -2102,7 +2147,7 @@ Nemohu najít soubor:
 <context>
     <name>EditDialog</name>
     <message>
-        <location filename="../../src/gui/circuitwidget/subcircuits/subpackage.cpp" line="+600"/>
+        <location filename="../../src/gui/circuitwidget/subcircuits/subpackage.cpp" line="+603"/>
         <source>Pin Name:</source>
         <translation>Název pinu:</translation>
     </message>
@@ -2173,9 +2218,8 @@ Nemohu najít soubor:
 <context>
     <name>EditorProp</name>
     <message>
-        <location filename="../../src/gui/editorwidget/dialogs/editorprop.ui" line="+32"/>
         <source>Editor / Debugger</source>
-        <translation>Editor / Debugger</translation>
+        <translation type="vanished">Editor / Debugger</translation>
     </message>
     <message>
         <source>Editor</source>
@@ -2186,52 +2230,46 @@ Nemohu najít soubor:
         <translation type="vanished">Zobrazit nápovědu</translation>
     </message>
     <message>
-        <location line="+16"/>
         <source>Font Size</source>
-        <translation>Velikost písma</translation>
+        <translation type="vanished">Velikost písma</translation>
     </message>
     <message>
-        <location line="+34"/>
         <source>Tab Size</source>
-        <translation>Šířka tabulátoru</translation>
+        <translation type="vanished">Šířka tabulátoru</translation>
     </message>
     <message>
-        <location line="-11"/>
         <source>Pixels</source>
-        <translation>bodů</translation>
+        <translation type="vanished">bodů</translation>
     </message>
     <message>
-        <location line="+59"/>
         <source>Tabs as Spaces</source>
-        <translation>Mezery místo tabulátorů</translation>
+        <translation type="vanished">Mezery místo tabulátorů</translation>
     </message>
     <message>
-        <location line="+13"/>
         <source>Show Spaces</source>
-        <translation>Zobrazit mezery</translation>
+        <translation type="vanished">Zobrazit mezery</translation>
     </message>
     <message>
-        <location line="-35"/>
         <source>Spaces</source>
-        <translation>mezer</translation>
+        <translation type="vanished">mezer</translation>
     </message>
 </context>
 <context>
     <name>EditorWidget</name>
     <message>
-        <location filename="../../src/gui/editorwidget/editorwidget.cpp" line="+88"/>
+        <location filename="../../src/gui/editorwidget/editorwidget.cpp" line="+174"/>
         <source>Load File</source>
         <translation>Otevřít soubor</translation>
     </message>
     <message>
         <location line="+1"/>
-        <location line="+143"/>
+        <location line="+126"/>
         <location line="+1"/>
         <source>All files</source>
         <translation>Všechny soubory</translation>
     </message>
     <message>
-        <location line="-128"/>
+        <location line="-111"/>
         <source>
 Can&apos;t find file:
 </source>
@@ -2247,25 +2285,25 @@ Nemohu najít soubor:
 </translation>
     </message>
     <message>
-        <location line="+63"/>
+        <location line="+54"/>
+        <location line="+12"/>
         <source>File doesn&apos;t exist</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+65"/>
+        <location line="+45"/>
         <source>Save Document As</source>
         <translation>Uložit soubor jako</translation>
     </message>
     <message>
-        <location line="+14"/>
-        <location line="+42"/>
+        <location line="+15"/>
         <source>Cannot write file %1:
 %2.</source>
         <translation>Nemohu zapsat soubor %1:
 %2.</translation>
     </message>
     <message>
-        <location line="+28"/>
+        <location line="+32"/>
         <source>
 The Document has been modified.
 Do you want to save your changes?
@@ -2276,24 +2314,56 @@ Chcete uložit změny?
 </translation>
     </message>
     <message>
-        <location line="+84"/>
+        <location line="+115"/>
         <source>&amp;%1 %2</source>
         <translation>&amp;%1 %2</translation>
     </message>
     <message>
-        <location line="+119"/>
+        <location line="-421"/>
+        <location line="+565"/>
         <location line="+1"/>
         <source>Editor Settings</source>
         <translation>Nastavení editoru</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="-565"/>
+        <source>Font Size</source>
+        <translation type="unfinished">Velikost písma</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Tab Size</source>
+        <translation type="unfinished">Šířka tabulátoru</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Tabs as spaces</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Show Spaces and Tabs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+98"/>
+        <source>NEW</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+464"/>
+        <source>File Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <location line="+4"/>
         <location line="+1"/>
         <source>Compiler Settings</source>
         <translation>Nastavení překladače</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+12"/>
         <source>&amp;New	Ctrl+N</source>
         <translation>&amp;Nový	Ctrl+N</translation>
     </message>
@@ -2487,7 +2557,7 @@ Chcete uložit změny?
         <translation>Spustit debugger</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+12"/>
         <source>Settings</source>
         <translation>Nastavení</translation>
     </message>
@@ -2504,7 +2574,7 @@ Chcete uložit změny?
 <context>
     <name>EditorWindow</name>
     <message>
-        <location filename="../../src/gui/editorwidget/editorwindow.cpp" line="+77"/>
+        <location filename="../../src/gui/editorwidget/editorwindow.cpp" line="+79"/>
         <source>Starting Debbuger...</source>
         <translation>Spouštění debuggeru...</translation>
     </message>
@@ -3230,9 +3300,33 @@ Chcete uložit změny?
 <context>
     <name>InoDebugger</name>
     <message>
-        <location filename="../../src/gui/editorwidget/debuggers/inodebugger.cpp" line="+235"/>
         <source>Found Board definition in file: </source>
-        <translation>Nalezen popis desky v souboru: </translation>
+        <translation type="vanished">Nalezen popis desky v souboru: </translation>
+    </message>
+    <message>
+        <location filename="../../src/gui/editorwidget/debuggers/inodebugger.cpp" line="+40"/>
+        <source>custom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Compiler Settings</source>
+        <translation type="unfinished">Nastavení překladače</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Libraries Path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Board</source>
+        <translation type="unfinished">Deska</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Custom Board</source>
+        <translation type="unfinished">Vlastní deska</translation>
     </message>
 </context>
 <context>
@@ -3758,7 +3852,7 @@ Chcete uložit změny?
 <context>
     <name>LedBase</name>
     <message>
-        <location filename="../../src/gui/circuitwidget/components/outputs/leds/ledbase.cpp" line="+39"/>
+        <location filename="../../src/gui/circuitwidget/components/outputs/leds/ledbase.cpp" line="+40"/>
         <source>Yellow</source>
         <translation>Žlutá</translation>
     </message>
@@ -3954,7 +4048,7 @@ Chcete uložit změny?
 <context>
     <name>LineNumberArea</name>
     <message>
-        <location filename="../../src/gui/editorwidget/codeeditor.cpp" line="+272"/>
+        <location filename="../../src/gui/editorwidget/codeeditor.cpp" line="+333"/>
         <source>Add BreakPoint</source>
         <translation>Přidat breakpoint</translation>
     </message>
@@ -4128,12 +4222,12 @@ Chcete uložit změny?
         <translation>Nápověda není dostupná</translation>
     </message>
     <message>
-        <location line="+39"/>
+        <location line="+38"/>
         <source>Select User data directory</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-76"/>
+        <location line="-75"/>
         <source>Search Components</source>
         <translation>Hledání komponent</translation>
     </message>
@@ -4217,7 +4311,7 @@ Chcete uložit změny?
     </message>
     <message>
         <location filename="../../src/microsim/mcu.cpp" line="+79"/>
-        <location line="+116"/>
+        <location line="+115"/>
         <location line="+4"/>
         <location line="+1"/>
         <location line="+3"/>
@@ -4226,12 +4320,12 @@ Chcete uložit změny?
         <translation>Základní</translation>
     </message>
     <message>
-        <location line="-35"/>
+        <location line="-34"/>
         <source>Files not found for: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+24"/>
+        <location line="+23"/>
         <source>Frequency</source>
         <translation>Kmitočet</translation>
     </message>
@@ -4748,6 +4842,20 @@ Chcete uložit změny?
         <location line="+52"/>
         <source>Filter</source>
         <translation>Filtr</translation>
+    </message>
+</context>
+<context>
+    <name>PathVal</name>
+    <message>
+        <location filename="../../src/gui/circuitwidget/properties/pathval.ui" line="+44"/>
+        <source>TextLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+26"/>
+        <location filename="../../src/gui/circuitwidget/properties/pathval.cpp" line="+35"/>
+        <source>Select directory</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6173,6 +6281,14 @@ Neplatný soubor s pouzdrem
     </message>
 </context>
 <context>
+    <name>StrVal</name>
+    <message>
+        <location filename="../../src/gui/circuitwidget/properties/strval.ui" line="+44"/>
+        <source>TextLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Strain</name>
     <message>
         <location filename="../../src/gui/circuitwidget/components/passive/resist_sensors/strain.cpp" line="+29"/>
@@ -6230,18 +6346,11 @@ Neplatný soubor s pouzdrem
     </message>
 </context>
 <context>
-    <name>StringVal</name>
-    <message>
-        <location filename="../../src/gui/circuitwidget/properties/stringval.ui" line="+44"/>
-        <source>TextLabel</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>SubCircuit</name>
     <message>
+        <location filename="../../src/gui/circuitwidget/subcircuits/subcircuit.cpp" line="+155"/>
         <source>Subcircuit</source>
-        <translation type="vanished">Podobvod</translation>
+        <translation>Podobvod</translation>
     </message>
     <message>
         <source>There are no data files for </source>
@@ -6292,7 +6401,7 @@ Neplatný soubor s pouzdrem
         <translation type="vanished">Připojit</translation>
     </message>
     <message>
-        <location filename="../../src/gui/circuitwidget/subcircuits/subcircuit.cpp" line="+137"/>
+        <location line="-18"/>
         <source>Main</source>
         <translation>Základní</translation>
     </message>
@@ -6305,11 +6414,12 @@ Neplatný soubor s pouzdrem
 <context>
     <name>SubPackage</name>
     <message>
+        <location filename="../../src/gui/circuitwidget/subcircuits/subpackage.cpp" line="-601"/>
         <source>Package</source>
-        <translation type="vanished">Pouzdro</translation>
+        <translation>Pouzdro</translation>
     </message>
     <message>
-        <location filename="../../src/gui/circuitwidget/subcircuits/subpackage.cpp" line="-367"/>
+        <location line="+231"/>
         <source>
 Package has been modified.
 Do you want to save your changes?
@@ -6334,23 +6444,28 @@ Chcete uložit změny?
     </message>
     <message>
         <location line="+3"/>
-        <location line="+260"/>
+        <location line="+262"/>
         <source>Save Package</source>
         <translation>Uložit pouzdro</translation>
     </message>
     <message>
-        <location line="+21"/>
+        <location line="-251"/>
+        <source>Select Main Components</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+270"/>
         <source>Load Package File</source>
         <translation>Načíst soubor s pouzdrem</translation>
     </message>
     <message>
-        <location line="-20"/>
-        <location line="+21"/>
+        <location line="-18"/>
+        <location line="+19"/>
         <source>Packages (*.package);;All files (*.*)</source>
         <translation>Pouzdra (*.package);;Všechny soubory (*.*)</translation>
     </message>
     <message>
-        <location line="+19"/>
+        <location line="+21"/>
         <source>Cannot write file %1:
 %2.</source>
         <translation>Nemohu zapsat soubor %1:
@@ -6365,12 +6480,11 @@ Chcete uložit změny?
         <translation type="vanished">Upravit pin </translation>
     </message>
     <message>
-        <location line="-290"/>
         <source>Select Main Component</source>
-        <translation>Vybrat hlavní komponentu</translation>
+        <translation type="vanished">Vybrat hlavní komponentu</translation>
     </message>
     <message>
-        <location line="-150"/>
+        <location line="-442"/>
         <source>Board Mode</source>
         <translation>Režim desky</translation>
     </message>
@@ -6718,7 +6832,7 @@ Chcete uložit změny?
 <context>
     <name>Tunnel</name>
     <message>
-        <location filename="../../src/gui/circuitwidget/components/other/tunnel.cpp" line="+31"/>
+        <location filename="../../src/gui/circuitwidget/components/other/tunnel.cpp" line="+32"/>
         <source>Tunnel.</source>
         <translation>Tunel</translation>
     </message>
@@ -7011,7 +7125,7 @@ Chcete uložit změny?
         <translation>Střední hodnota</translation>
     </message>
     <message>
-        <location line="+240"/>
+        <location line="+235"/>
         <source>Load Wav File</source>
         <translation>Načíst soubor Wav</translation>
     </message>

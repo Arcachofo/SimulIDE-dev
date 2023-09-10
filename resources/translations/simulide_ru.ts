@@ -152,11 +152,11 @@
     <name>App::Property</name>
     <message>
         <source>Board</source>
-        <translation>Плата</translation>
+        <translation type="vanished">Плата</translation>
     </message>
     <message>
         <source>Custom Board</source>
-        <translation>Заказная плата</translation>
+        <translation type="vanished">Заказная плата</translation>
     </message>
 </context>
 <context>
@@ -420,11 +420,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Found Device definition in file: </source>
-        <translation>Найдено определение устройства в файле: </translation>
+        <translation type="vanished">Найдено определение устройства в файле: </translation>
     </message>
     <message>
         <source>Found Family definition in file: </source>
-        <translation>Найдено определение семейства в файле: </translation>
+        <translation type="vanished">Найдено определение семейства в файле: </translation>
     </message>
 </context>
 <context>
@@ -575,7 +575,7 @@ p, li { white-space: pre-wrap; }
     <name>BoolVal</name>
     <message>
         <source>value</source>
-        <translation>значение</translation>
+        <translation type="vanished">значение</translation>
     </message>
 </context>
 <context>
@@ -1024,6 +1024,42 @@ Can&apos;t find file:
         <source>Remove</source>
         <translation type="unfinished">Удалить</translation>
     </message>
+    <message>
+        <source>None</source>
+        <translation type="unfinished">Не выбран</translation>
+    </message>
+    <message>
+        <source>File Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Compiler</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save Settings at file close</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Actions after opening this file:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load Compiler</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load Breakpoints</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Restore files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot write file</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Compiler</name>
@@ -1063,11 +1099,11 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Select Compiler Toolchain directory</source>
-        <translation>Выберите каталог с тулчейном компялитора</translation>
+        <translation type="vanished">Выберите каталог с тулчейном компялитора</translation>
     </message>
     <message>
         <source>Select Compiler Include directory</source>
-        <translation>Выберите каталог с компилятором</translation>
+        <translation type="vanished">Выберите каталог с компилятором</translation>
     </message>
     <message>
         <source>Executable not found</source>
@@ -1077,12 +1113,40 @@ Can&apos;t find file:
         <source>Check that Tool Path is correct</source>
         <translation>Проверьте правильности пути до тулчейна</translation>
     </message>
+    <message>
+        <source>Compiler Settings</source>
+        <translation type="unfinished">Настройки компилятора</translation>
+    </message>
+    <message>
+        <source>For this compiler type:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tool Path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Include Path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Device</source>
+        <translation type="unfinished">Устройство</translation>
+    </message>
+    <message>
+        <source>Family</source>
+        <translation type="unfinished">Семейство</translation>
+    </message>
+    <message>
+        <source>For this file:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>CompilerProp</name>
     <message>
         <source>Compiler Settings</source>
-        <translation>Настройки компилятора</translation>
+        <translation type="vanished">Настройки компилятора</translation>
     </message>
     <message>
         <source>Set if Debugger should drive Circuit simulation</source>
@@ -1094,91 +1158,63 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Board</source>
-        <translation>Плата</translation>
+        <translation type="vanished">Плата</translation>
     </message>
     <message>
         <source>Select Arduino Board</source>
-        <translation>Выбрать плату Arduino</translation>
+        <translation type="vanished">Выбрать плату Arduino</translation>
     </message>
     <message>
         <source>Custom</source>
-        <translation>Настройка</translation>
+        <translation type="vanished">Настройка</translation>
     </message>
     <message>
         <source>Tool Path:</source>
-        <translation>Каталог инстументов:</translation>
+        <translation type="vanished">Каталог инстументов:</translation>
     </message>
     <message>
         <source>Include Path:</source>
-        <translation>Включить путь:</translation>
+        <translation type="vanished">Включить путь:</translation>
     </message>
     <message>
         <source>Set custom Arduino Board</source>
-        <translation>Выбрать настройку платы Arduino</translation>
+        <translation type="vanished">Выбрать настройку платы Arduino</translation>
     </message>
     <message>
         <source>Custom Board</source>
-        <translation>Заказная плата</translation>
+        <translation type="vanished">Заказная плата</translation>
     </message>
     <message>
         <source>Select tool path</source>
-        <translation>Выбрать каталог инструментов</translation>
+        <translation type="vanished">Выбрать каталог инструментов</translation>
     </message>
     <message>
         <source>Compiler:</source>
-        <translation>Компилятор:</translation>
+        <translation type="vanished">Компилятор:</translation>
     </message>
     <message>
         <source>Select include path</source>
-        <translation>Выбрать включенный путь</translation>
+        <translation type="vanished">Выбрать включенный путь</translation>
     </message>
     <message>
         <source>Select Compiler</source>
-        <translation>Выбрать компилятор</translation>
+        <translation type="vanished">Выбрать компилятор</translation>
     </message>
     <message>
         <source>Select MCU model</source>
-        <translation>Выбрать модель МК</translation>
+        <translation type="vanished">Выбрать модель МК</translation>
     </message>
     <message>
         <source>Device</source>
-        <translation>Устройство</translation>
+        <translation type="vanished">Устройство</translation>
     </message>
     <message>
         <source>Select MCU family/architecture</source>
-        <translation>Выбрать семейство/архитектуру МК</translation>
+        <translation type="vanished">Выбрать семейство/архитектуру МК</translation>
     </message>
     <message>
         <source>Family</source>
-        <translation>Семейство</translation>
-    </message>
-    <message>
-        <source>Uno</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Mega</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Nano</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Duemilanove</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Leonardo</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Libraries Path</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Include Path</source>
-        <translation type="unfinished"></translation>
+        <translation type="vanished">Семейство</translation>
     </message>
 </context>
 <context>
@@ -1790,7 +1826,7 @@ Can&apos;t find file:
     <name>EditorProp</name>
     <message>
         <source>Editor / Debugger</source>
-        <translation>Редактор / Отладчик</translation>
+        <translation type="vanished">Редактор / Отладчик</translation>
     </message>
     <message>
         <source>Editor</source>
@@ -1802,27 +1838,27 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Font Size</source>
-        <translation>Размер шрифта</translation>
+        <translation type="vanished">Размер шрифта</translation>
     </message>
     <message>
         <source>Tab Size</source>
-        <translation>Шаг табуляции</translation>
+        <translation type="vanished">Шаг табуляции</translation>
     </message>
     <message>
         <source>Pixels</source>
-        <translation>Пиксели</translation>
+        <translation type="vanished">Пиксели</translation>
     </message>
     <message>
         <source>Tabs as Spaces</source>
-        <translation>Табуляция как пробелы</translation>
+        <translation type="vanished">Табуляция как пробелы</translation>
     </message>
     <message>
         <source>Show Spaces</source>
-        <translation>Показать пробелы</translation>
+        <translation type="vanished">Показать пробелы</translation>
     </message>
     <message>
         <source>Spaces</source>
-        <translation>Пробелы</translation>
+        <translation type="vanished">Пробелы</translation>
     </message>
 </context>
 <context>
@@ -2051,6 +2087,30 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Last Files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Font Size</source>
+        <translation type="unfinished">Размер шрифта</translation>
+    </message>
+    <message>
+        <source>Tab Size</source>
+        <translation type="unfinished">Шаг табуляции</translation>
+    </message>
+    <message>
+        <source>Tabs as spaces</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show Spaces and Tabs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NEW</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File Settings</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2691,7 +2751,27 @@ Can&apos;t find file:
     <name>InoDebugger</name>
     <message>
         <source>Found Board definition in file: </source>
-        <translation>Найдено определение платы в файле: </translation>
+        <translation type="vanished">Найдено определение платы в файле: </translation>
+    </message>
+    <message>
+        <source>custom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Compiler Settings</source>
+        <translation type="unfinished">Настройки компилятора</translation>
+    </message>
+    <message>
+        <source>Libraries Path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Board</source>
+        <translation type="unfinished">Плата</translation>
+    </message>
+    <message>
+        <source>Custom Board</source>
+        <translation type="unfinished">Заказная плата</translation>
     </message>
 </context>
 <context>
@@ -3977,6 +4057,17 @@ Can&apos;t find file:
     </message>
 </context>
 <context>
+    <name>PathVal</name>
+    <message>
+        <source>TextLabel</source>
+        <translation type="unfinished">Метка</translation>
+    </message>
+    <message>
+        <source>Select directory</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>PlotBase</name>
     <message>
         <source>Main</source>
@@ -5197,6 +5288,13 @@ Not valid Package file:
     </message>
 </context>
 <context>
+    <name>StrVal</name>
+    <message>
+        <source>TextLabel</source>
+        <translation type="unfinished">Метка</translation>
+    </message>
+</context>
+<context>
     <name>Strain</name>
     <message>
         <source>Force Strain Gauge</source>
@@ -5247,14 +5345,14 @@ Not valid Package file:
     <name>StringVal</name>
     <message>
         <source>TextLabel</source>
-        <translation>Метка</translation>
+        <translation type="vanished">Метка</translation>
     </message>
 </context>
 <context>
     <name>SubCircuit</name>
     <message>
         <source>Subcircuit</source>
-        <translation type="vanished">Подсхема</translation>
+        <translation>Подсхема</translation>
     </message>
     <message>
         <source>There are no data files for </source>
@@ -5317,7 +5415,7 @@ Not valid Package file:
     <name>SubPackage</name>
     <message>
         <source>Package</source>
-        <translation type="vanished">Корпус</translation>
+        <translation>Корпус</translation>
     </message>
     <message>
         <source>Other</source>
@@ -5381,7 +5479,7 @@ Not valid Package file:
     </message>
     <message>
         <source>Select Main Component</source>
-        <translation>Выбрать основной компонент</translation>
+        <translation type="vanished">Выбрать основной компонент</translation>
     </message>
     <message>
         <source>
@@ -5406,6 +5504,10 @@ Do you want to save your changes?
 %2.</source>
         <translation>Не удаётся записать файл %1:
 %2.</translation>
+    </message>
+    <message>
+        <source>Select Main Components</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
