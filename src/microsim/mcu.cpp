@@ -173,7 +173,6 @@ Mcu::Mcu( QString type, QString id )
             return;
         }
     }
-
     QSettings* settings = MainWindow::self()->settings();
     m_lastFirmDir = settings->value("lastFirmDir").toString();
 
@@ -203,7 +202,7 @@ if( m_eMcu.romSize() )
 addProperty(tr("Main"),new BoolProp<Mcu>("saveEepr" , tr("EEPROM persitent"),"", this, &Mcu::saveEepr,   &Mcu::setSaveEepr ));
 
 if( QFileInfo::exists( m_pkgeFile.replace(".package","_LS.package") ) )
-addProperty(tr("Main"),new BoolProp<Mcu>( "Logic_Symbol", tr("Logic Symbol"),"", this, &Mcu::logicSymbol, &Mcu::setLogicSymbol, propNoCopy ) );
+addProperty(tr("Main"),new BoolProp<Mcu>( "Logic_Symbol", tr("Logic Symbol"),"", this, &Mcu::logicSymbol, &Mcu::setLogicSymbol, propNoCopy ));
 
 
 // Config Property Group ------------------------------------

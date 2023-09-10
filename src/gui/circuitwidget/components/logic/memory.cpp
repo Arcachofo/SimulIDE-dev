@@ -117,7 +117,7 @@ void Memory::voltChanged()        // Some Pin Changed State, Manage it
 {
     bool cs = m_CsPin->getInpState();
     bool we = m_WePin->getInpState();
-    bool oe = m_oePin->getInpState() && cs && !we; // Enable output buffers only if OE & CS & Read
+    bool oe = cs && !we && m_oePin->getInpState(); // Enable output buffers only if OE & CS & Read
     if( m_oe != oe )
     {
         m_oe = oe;

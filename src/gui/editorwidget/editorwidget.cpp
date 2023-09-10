@@ -120,7 +120,8 @@ QList<CodeEditor*> EditorWidget::getCodeEditors()
 
 bool EditorWidget::close()
 {
-    for( int i=0; i<m_docWidget->count(); i++ )
+    int count = m_docWidget->count();
+    for( int i=0; i<count; i++ )
     {
         m_docWidget->setCurrentIndex( i );
         if( !maybeSave() ) return false;
