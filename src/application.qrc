@@ -102,6 +102,8 @@
         <file alias="zoomfit.svg">../src/icons/mainwindow/zoomfit.svg</file>
         <file alias="zoomsel.svg">../src/icons/mainwindow/zoomsel.svg</file>
         <file alias="zoomone.svg">../src/icons/mainwindow/zoomone.svg</file>
+
+        <file alias="link.png">../src/icons/mainwindow/link.png</file>
     
         <file alias="csource.png">../src/icons/components/csource.png</file>
         <file alias="led.png">../src/icons/components/led.png</file>

@@ -191,19 +191,16 @@ void CircuitView::overrideCursor( const QCursor &cursor )
 
 void CircuitView::contextMenuEvent( QContextMenuEvent* event )
 {
+    if( Linkable::m_selecComp ){ // Cancel link to components
+        Linkable::stopLinking();
+        return;
+    }
     QGuiApplication::restoreOverrideCursor();
     QGraphicsView::contextMenuEvent( event );
 
     if( m_circuit->is_constarted() ) m_circuit->deleteNewConnector();
     else if( !event->isAccepted() )
     {
-        if( Component::m_selecComp ) // Cancel link to components
-        {
-            Component::m_selecComp->compSelected( NULL );
-            Component::m_selecComp = NULL;
-            return;
-        }
-
         QPointF eventPos = mapToScene( event->globalPos() ) ;
         m_eventpoint = mapToScene( event->pos()  );
 

@@ -1040,8 +1040,10 @@ void Circuit::mousePressEvent( QGraphicsSceneMouseEvent* event )
 {
     if( event->button() == Qt::LeftButton )
     {
-        if( m_conStarted )  event->accept();
+        if( m_conStarted ) event->accept();
         QGraphicsScene::mousePressEvent( event );
+
+        if( !event->isAccepted() ) Linkable::stopLinking(); // Click in empty place
     }
     else if( event->button() == Qt::RightButton )
     {
@@ -1082,13 +1084,17 @@ void Circuit::keyPressEvent( QKeyEvent* event )
         QGraphicsScene::keyPressEvent( event );
         return;
     }
-
     int key = event->key();
 
     if( m_conStarted )
     {
         if( key == Qt::Key_Escape ) deleteNewConnector();
         else QGraphicsScene::keyPressEvent( event );
+        return;
+    }
+    if( key == Qt::Key_Escape )
+    {
+        Linkable::stopLinking();
         return;
     }
     if( event->modifiers() & Qt::AltModifier ) // Create Component shortcut

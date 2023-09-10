@@ -216,7 +216,7 @@ void SubPackage::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu
         menu->addAction( m_boardModeAction );
         QObject::connect( m_boardModeAction, &QAction::triggered, [=](){ boardModeSlot(); } );
     }
-    QAction* mainCompAction = menu->addAction( QIcon(":/subcl.png"),tr("Select Main Component") );
+    QAction* mainCompAction = menu->addAction( QIcon(":/subcl.png"),tr("Select Main Components") );
     QObject::connect( mainCompAction, &QAction::triggered, [=](){ mainComp(); } );
 
     Component::contextMenu( event, menu );

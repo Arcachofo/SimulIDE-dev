@@ -26,7 +26,6 @@
 
 int  Component::m_error = 0;
 bool Component::m_boardMode = false;
-Linkable* Component::m_selecComp = NULL;
 
 Component::Component( QString type, QString id )
          : CompBase( type, id )
@@ -176,10 +175,8 @@ void Component::mousePressEvent( QGraphicsSceneMouseEvent* event )
     if( event->button() == Qt::LeftButton )
     {
         event->accept();
-        if( m_selecComp )
-        {
-            m_selecComp->compSelected( this );
-            //return;
+        if( Linkable::m_selecComp ){
+            Linkable::m_selecComp->compSelected( this );
         }
         else if( event->modifiers() & Qt::ControlModifier ) setSelected( !isSelected() );
         else{
@@ -605,7 +602,7 @@ void Component::paint( QPainter* p, const QStyleOptionGraphicsItem*, QWidget* )
         if( m_opCount > 0.6 ) m_opCount = 0.0;
         p->setOpacity( m_opCount+opaci );
     }
-    else if( m_selecComp && m_linkNumber >= 0 ){
+    else if( Linkable::m_selecComp && m_linkNumber >= 0 ){ // This Component is linked
         p->setOpacity( 0.3 );
         p->fillRect( boundingRect(), Qt::blue  );
         p->setOpacity( 1 );

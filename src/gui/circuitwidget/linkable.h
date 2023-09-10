@@ -7,6 +7,7 @@
 #define LINKABLE_H
 
 #include <QSet>
+#include <QCursor>
 
 class Component;
 
@@ -24,6 +25,9 @@ class MAINMODULE_EXPORT Linkable
         bool hasLinks() { return !m_linkedStr.isEmpty(); }
 
         void startLinking();
+ static void stopLinking();
+
+ static Linkable* m_selecComp;
 
         virtual void createLinks( QSet<Component*>* );
         virtual void compSelected( Component* comp );
@@ -32,6 +36,8 @@ class MAINMODULE_EXPORT Linkable
         QList<Component*> m_linkedComp;
 
         QString m_linkedStr;
+
+        QCursor m_linkCursor;
 };
 
 #endif

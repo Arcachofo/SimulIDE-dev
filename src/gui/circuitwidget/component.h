@@ -131,9 +131,9 @@ class MAINMODULE_EXPORT Component : public CompBase, public QGraphicsItem, publi
         virtual void setLinkedValue( double v, int i=0 ){;}
         virtual void setLinkedString( QString str, int i=0 ){;}
         virtual void setLinked( bool l ){ m_linked = l;}
+
         bool m_linkable;
         int m_linkNumber;
- static Linkable* m_selecComp;
 
  static bool m_boardMode;
 

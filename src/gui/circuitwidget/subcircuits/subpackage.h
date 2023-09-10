@@ -40,7 +40,7 @@ class MAINMODULE_EXPORT SubPackage : public Chip, public Linkable
         virtual void setLogicSymbol( bool ls ) override;
         virtual void remove() override;
 
-        virtual void compSelected( Component* comp ) override;
+        virtual void compSelected( Component* comp ) override;  // Use link mechanism to select main components
 
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
 

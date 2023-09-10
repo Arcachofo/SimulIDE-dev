@@ -10,10 +10,14 @@
 #include "component.h"
 #include "circuit.h"
 
-Linkable::Linkable(){}
+Linkable* Linkable::m_selecComp = NULL;
+
+Linkable::Linkable()
+        : m_linkCursor( QPixmap(":/link.png"), 10, 10 )
+{}
 Linkable::~Linkable()
 {
-    if( Component::m_selecComp == this ) Linkable::compSelected( NULL ); // Cancel link to components
+    if( m_selecComp == this ) Linkable::compSelected( NULL ); // Cancel link to components
 }
 
 QString Linkable::getLinks()
@@ -53,8 +57,8 @@ void Linkable::createLinks( QSet<Component*>* compList )
 
 void Linkable::startLinking()  // Start linking Components
 {
-    if( Component::m_selecComp ) Component::m_selecComp->compSelected( NULL ); // Finish previous linking
-    Component::m_selecComp = this;
+    if( m_selecComp ) m_selecComp->compSelected( NULL ); // Finish previous linking
+    m_selecComp = this;
 
     for( int i=0; i<m_linkedComp.size(); ++i ) // Set numbers for visualization
     {
@@ -62,8 +66,17 @@ void Linkable::startLinking()  // Start linking Components
         comp->m_linkNumber = i;
         comp->update();
     }
-    QGuiApplication::setOverrideCursor( Qt::PointingHandCursor );
+    QGuiApplication::setOverrideCursor( m_linkCursor ); // ( Qt::PointingHandCursor );
     Circuit::self()->update();
+}
+
+void Linkable::stopLinking() // Static
+{
+     if( !m_selecComp ) return;
+     m_selecComp->compSelected( NULL );
+     m_selecComp = NULL;
+
+     QGuiApplication::restoreOverrideCursor();
 }
 
 void Linkable::compSelected( Component* comp )
@@ -88,7 +101,7 @@ void Linkable::compSelected( Component* comp )
     }
     else       // End of linking Components
     {
-        Component::m_selecComp = NULL;
+        m_selecComp = NULL;
 
         for( Component* comp : m_linkedComp )  // Clear numbers for visualization
             comp->m_linkNumber = -1;
