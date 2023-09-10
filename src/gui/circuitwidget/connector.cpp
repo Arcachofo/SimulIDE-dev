@@ -383,7 +383,10 @@ void Connector::updateLines()
 {
     eNode* enode = startPin()->getEnode();
     if( enode && enode->voltchanged() )
-    { for( ConnectorLine*  line : m_conLineList ) line->update(); }
+    {
+        enode->setVoltChanged( false );
+        for( ConnectorLine*  line : m_conLineList ) line->update();
+    }
 }
 
 void Connector::setIsBus( bool bus )

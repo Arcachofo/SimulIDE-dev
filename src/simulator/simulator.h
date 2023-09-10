@@ -146,7 +146,7 @@ class MAINMODULE_EXPORT Simulator : public QObject
         int m_error;
         int m_warning;
         int m_timerId;
-        int m_timerTick;
+        int m_timerTick_ms;
         int m_slopeSteps;
         uint m_updtCnt;
 
@@ -168,7 +168,8 @@ class MAINMODULE_EXPORT Simulator : public QObject
         uint64_t m_refTime;
         uint64_t m_lastRefT;
         uint64_t m_loopTime;
-        double   m_load;
+        uint64_t m_guiTime;
+        double   m_simLoad;
 
         QElapsedTimer m_RefTimer;
 };

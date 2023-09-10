@@ -14,6 +14,7 @@
 #include "updatable.h"
 #include "outpaneltext.h"
 #include "mainwindow.h"
+#include "infowidget.h"
 #include "circuitwidget.h"
 #include "circmatrix.h"
 #include "e-element.h"
@@ -30,7 +31,7 @@ Simulator::Simulator( QObject* parent )
 
     m_fps = 20;
     m_timerId   = 0;
-    m_timerTick = 50;   // 50 ms default
+    m_timerTick_ms = 50;   // 50 ms default
     m_psPerSec  = 1e12;
     m_stepSize  = 1e6;
     m_stepsPS   = 1e6;
@@ -68,8 +69,9 @@ inline void Simulator::solveMatrix()
         m_warning = 2;             // Warning if diagonal element = 0.
 }
 
-void Simulator::timerEvent( QTimerEvent* e )  //update at m_timerTick rate (50 ms, 20 Hz max)
+void Simulator::timerEvent( QTimerEvent* e )  //update at m_timerTick_ms rate (50 ms, 20 Hz max)
 {
+    uint64_t guiTime = m_RefTimer.nsecsElapsed();
     e->accept();
 
     if( m_state == SIM_WAITING ) return;
@@ -80,7 +82,7 @@ void Simulator::timerEvent( QTimerEvent* e )  //update at m_timerTick rate (50 m
         CircuitWidget::self()->setError( m_errors.value( m_error ) );
         return;
     }
-    if( m_warning > 0 )
+    else if( m_warning > 0 )
     {
         int type = (m_warning < 100)? 1:2;
         CircuitWidget::self()->setMsg( m_warnings.value( m_warning), type );
@@ -97,7 +99,24 @@ void Simulator::timerEvent( QTimerEvent* e )  //update at m_timerTick rate (50 m
         m_state = state;
     }
 
-    if( Circuit::self()->animate() )
+    for( Updatable* el : m_updateList ) el->updateStep();
+    EditorWindow::self()->outPane()->updateStep(); // OutPanel in Editor can be created before this simulator.
+
+    // Calculate Simulation Load
+    double timer_ns = m_timerTick_ms*1e6;
+    uint64_t simLoop = 0;
+    if( m_loopTime > m_refTime ) simLoop = m_loopTime-m_refTime;
+    m_simLoad = (m_simLoad+100*simLoop/timer_ns)/2;
+
+    // Get Simulation times
+    m_realPsPF = m_circTime-m_tStep;
+    m_tStep    = m_circTime;
+    m_refTime  = m_RefTimer.nsecsElapsed();
+
+    if( m_state == SIM_RUNNING ) // Run Circuit in a parallel thread
+        m_CircuitFuture = QtConcurrent::run( this, &Simulator::runCircuit );
+
+    if( Circuit::self()->animate() ) // Moved here to be in parallel with runCircuit thread
     {
         uint updateRate = m_fps/5;
         if( updateRate < 1 ) updateRate = 1;
@@ -105,34 +124,23 @@ void Simulator::timerEvent( QTimerEvent* e )  //update at m_timerTick rate (50 m
         {
             m_updtCnt = 0;
             Circuit::self()->updateConnectors();
-            for( eNode* enode : m_eNodeList ) enode->setVoltChanged( false );
         }
     }
-    for( Updatable* el : m_updateList ) el->updateStep();
-    EditorWindow::self()->outPane()->updateStep(); // OutPanel in Editor can be created before this simulator.
-
-    // Calculate Load
-    uint64_t loop = 0;
-    if( m_loopTime > m_refTime ) loop = m_loopTime-m_refTime;
-    m_load = (m_load+100*loop/((double)m_timerTick*1e6))/2;
-
-    // Get Real Simulation Speed
-    m_realPsPF = m_circTime-m_tStep;
-    m_tStep   = m_circTime;
-    m_refTime = m_RefTimer.nsecsElapsed();
-
-    if( m_state == SIM_RUNNING ) // Run Circuit in a parallel thread
-        m_CircuitFuture = QtConcurrent::run( this, &Simulator::runCircuit );
-
+    // Calculate Real Simulation Speed
     uint64_t deltaRefTime = m_refTime-m_lastRefT;
     if( deltaRefTime >= 1e9 )               // We want steps per 1 Sec = 1e9 ns
     {
+        double guiLoad = 100*(double)m_guiTime/(double)deltaRefTime;
+        m_guiTime = 0;
+
         m_realSpeed = (m_tStep-m_lastStep)*10.0/deltaRefTime;
-        CircuitWidget::self()->setRate( m_realSpeed, m_load );
+        InfoWidget::self()->setRate( m_realSpeed, m_simLoad, guiLoad );
         m_lastStep = m_tStep;
         m_lastRefT = m_refTime;
     }
-    CircuitWidget::self()->setCircTime( m_tStep );
+    InfoWidget::self()->setCircTime( m_tStep );
+
+    m_guiTime += m_RefTimer.nsecsElapsed()-guiTime; // Time in this function
 }
 
 void Simulator::runCircuit()
@@ -203,7 +211,8 @@ void Simulator::solveCircuit()
 void Simulator::resetSim()
 {
     m_state    = SIM_STOPPED;
-    m_load     = 0;
+    m_simLoad  = 0;
+    m_guiTime  = 0;
     m_error    = 0;
     m_warning  = 0;
     m_lastStep = 0;
@@ -214,7 +223,7 @@ void Simulator::resetSim()
     ///m_pauseCirc = false;
     m_realPsPF = 1;
 
-    CircuitWidget::self()->setCircTime( 0 );
+    InfoWidget::self()->setCircTime( 0 );
     clearEventList();
     m_changedNode = NULL;
     m_voltChanged = NULL;
@@ -344,7 +353,7 @@ void Simulator::stopTimer()
     this->killTimer( m_timerId );
     m_timerId = 0;
 
-    CircuitWidget::self()->setRate( 0, 0 );
+    InfoWidget::self()->setRate( 0, 0 );
     CircuitWidget::self()->setMsg( " "+tr("Stopped")+" ", 1 );
     Circuit::self()->update();
     qDebug() << "\n    Simulation Stopped ";
@@ -357,7 +366,7 @@ void Simulator::initTimer()
     CircuitWidget::self()->setMsg( " "+tr("Running")+" ", 0 );
     m_refTime  = m_RefTimer.nsecsElapsed();
     m_loopTime = m_refTime;
-    m_timerId = this->startTimer( m_timerTick, Qt::PreciseTimer );
+    m_timerId = this->startTimer( m_timerTick_ms, Qt::PreciseTimer );
     m_state = SIM_RUNNING;
 }
 
@@ -388,9 +397,9 @@ void Simulator::setPsPerSec( uint64_t psPs )
         m_psPF = 1;
         fps = psPs;
     }
-    m_timerTick = 1000/fps;  // in ms
+    m_timerTick_ms = 1000/fps;  // in ms
 
-    CircuitWidget::self()->setTargetSpeed( 100*m_psPerSec/1e12 );
+    InfoWidget::self()->setTargetSpeed( 100*m_psPerSec/1e12 );
 }
 
 void Simulator::clearEventList()

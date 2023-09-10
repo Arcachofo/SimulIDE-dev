@@ -79,7 +79,7 @@ CircuitWidget::CircuitWidget( QWidget *parent  )
     if( m_lastCircDir.isEmpty() )  m_lastCircDir = appPath + "..share/simulide/examples";
     
     newCircuit();
-    setRate( 0, 0 );
+    m_infoWidget->setRate();
 }
 CircuitWidget::~CircuitWidget() { }
 
@@ -93,7 +93,7 @@ void CircuitWidget::clear()
         m_appPropW = NULL;
     }
     m_circView.clear();
-    setCircTime( 0 );
+    m_infoWidget->setCircTime( 0 );
 }
 
 void CircuitWidget::createActions()
@@ -321,7 +321,7 @@ void CircuitWidget::loadCirc( QString path )
 
         updateRecentFiles();
 
-        setCircTime( 0 );
+        m_infoWidget->setCircTime( 0 );
 }   }
 
 void CircuitWidget::saveCirc()
@@ -400,7 +400,7 @@ void CircuitWidget::powerCircDebug( bool paused )
     MainWindow::self()->setState("❚❚");
     setMsg( " "+tr("Debug")+"❚❚", 3 );
 
-    m_infoWidget->setRate( -1, 0 );  //m_rateLabel->setText( tr("Speed: Debugger") );
+    m_infoWidget->setRate(-1 );  //m_rateLabel->setText( tr("Speed: Debugger") );
 }
 
 void CircuitWidget::pauseDebug()
@@ -461,15 +461,10 @@ void CircuitWidget::about()
     m_about->show();
 }
 
-void CircuitWidget::setRate( double rate, int load )
-{
-    m_infoWidget->setRate( rate, load );
-}
-
 void CircuitWidget::setError( QString error )
 {
     setMsg( error, 2 );
-    setRate( -1, 0 );
+    m_infoWidget->setRate( -1 );
 }
 
 void CircuitWidget::setMsg( QString msg, int type )
@@ -480,16 +475,6 @@ void CircuitWidget::setMsg( QString msg, int type )
     else if( type == 3 ) m_msgLabel->setStyleSheet("QLabel { background-color: blue;       color: white;  font-weight: bold;}");
     else if( type == 4 ) m_msgLabel->setStyleSheet("QLabel { background-color: lightblue;  color: black;  font-weight: bold;}");
     m_msgLabel->setText( "   "+msg+"   " );
-}
-
-void CircuitWidget::setCircTime( uint64_t tStep )
-{
-    m_infoWidget->setCircTime( tStep );
-}
-
-void CircuitWidget::setTargetSpeed( double s )
-{
-    m_infoWidget->setTargetSpeed( s );
 }
 
 void CircuitWidget::updateRecentFiles()

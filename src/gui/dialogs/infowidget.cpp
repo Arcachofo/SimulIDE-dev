@@ -7,10 +7,13 @@
 #include "mainwindow.h"
 #include "mcu.h"
 
+InfoWidget*  InfoWidget::m_pSelf = nullptr;
+
 InfoWidget::InfoWidget( QWidget* parent )
           : QWidget( parent )
 {
     setupUi( this );
+    m_pSelf = this;
 
     QFont font( "Ubuntu", 10, QFont::Bold );
     double fontScale = MainWindow::self()->fontScale();
@@ -22,8 +25,10 @@ InfoWidget::InfoWidget( QWidget* parent )
     targetSpeed->setFont( font );
     realSpeedLabel->setFont( font );
     realSpeed->setFont( font );
-    loadPerLabel->setFont( font );
-    loadPer->setFont( font );
+    simLoadLabel->setFont( font );
+    simLoadVal->setFont( font );
+    guiLoadLabel->setFont( font );
+    guiLoadVal->setFont( font );
     mainMcuLabel->setFont( font );
     mainMcu->setFont( font );
     mainMcuName->setFont( font );
@@ -57,7 +62,7 @@ void InfoWidget::setTargetSpeed( double s )
     }
 }
 
-void InfoWidget::setRate( double rate, int load )
+void InfoWidget::setRate( double rate, double simLoad, double guiLoad )
 {
     if( Mcu::self() )
     {
@@ -71,16 +76,18 @@ void InfoWidget::setRate( double rate, int load )
         else             realSpeed->setText( tr("Circuit ERROR!!!") );
     }else{
         //if( (load > 150) || (load < 0) ) load = 0;
-        double speed = (double)rate/100;
+        double speed = rate/100;
         QString Srate = QString::number( speed,'f', 2 );
         if( speed < 100 ) Srate = "0"+Srate;
         if( speed < 10 )  Srate = "0"+Srate;
-        QString Sload = QString::number( load,'f', 2 );
-        if( load < 100 ) Sload = "0"+Sload;
-        if( load < 10 )  Sload = "0"+Sload;
+        QString Sload = QString::number( simLoad,'f', 2 );
+        while( Sload.size() < 6 ) Sload = "0"+Sload;
+        QString Gload = QString::number( guiLoad,'f', 2 );
+        while( Gload.size() < 6 ) Gload = "0"+Gload;
 
         realSpeed->setText( Srate+" %" );
-        loadPer->setText( Sload+" %    ");
+        simLoadVal->setText( Sload+" %    ");
+        guiLoadVal->setText( Gload+" %    ");
 }   }
 
 void InfoWidget::setCircTime( uint64_t tStep )

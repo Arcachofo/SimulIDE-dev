@@ -369,8 +369,8 @@ void ConnectorLine::paint( QPainter* p, const QStyleOptionGraphicsItem* option, 
     else if( m_isBus ) color =  Qt::darkGreen;
     else if( Circuit::self()->animate() )
     {
-        if( m_pConnector->getVoltage() > 2.5 ) color = QColor( 200, 50, 50 );
-        else                                color = QColor( 50, 50, 200 );
+        if( m_pConnector->getVoltage() > 2.5 ) color = QColor( 200, 50, 50  );
+        else                                   color = QColor( 50,  50, 200 );
         //int volt = 50*int( m_pConnector->getVoltage() );
         //if( volt > 250 )volt = 250;
         //if( volt < 0 ) volt = 0;

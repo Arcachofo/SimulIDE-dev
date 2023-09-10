@@ -31,11 +31,8 @@ class MAINMODULE_EXPORT CircuitWidget : public QWidget
 
         void clear();
 
-        void setRate( double rate , int load );
         void setError( QString error );
         void setMsg(QString msg , int type);
-        void setCircTime( uint64_t tStep );
-        void setTargetSpeed( double s );
 
         void powerCircOn();
         void powerCircOff();
@@ -68,7 +65,7 @@ class MAINMODULE_EXPORT CircuitWidget : public QWidget
         void createActions();
         void createToolBars();
 
- static CircuitWidget*  m_pSelf;
+ static CircuitWidget* m_pSelf;
 
         enum { MaxRecentFiles = 10 };
         void updateRecentFiles();
