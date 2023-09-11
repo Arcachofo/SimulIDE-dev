@@ -64,7 +64,7 @@ void Interrupt::flagCleared( uint8_t )  // Interrupt flag was cleared by softwar
 
 void Interrupt::writeFlag( uint8_t v ) // Clear Interrupt flag by writting 1 to it
 {
-    if( (v & m_flagMask) == 0 ){
+    if( v & m_flagMask ){
         clearFlag();
         m_mcu->m_regOverride = m_ram[m_flagReg];
     }
