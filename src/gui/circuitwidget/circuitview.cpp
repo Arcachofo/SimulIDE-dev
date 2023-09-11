@@ -131,9 +131,16 @@ void CircuitView::mousePressEvent( QMouseEvent* event )
      && event->modifiers() & Qt::ShiftModifier
      && !m_circuit->is_constarted() )
     {
-        itemAt( event->pos() )->setSelected( false );
-        m_mousePressPos = event->pos();
-        m_waitForDragStart = true;
+        QGraphicsItem* item = itemAt( event->pos() );
+        if( item )                                                  // Check if item exists before start drag:
+        {
+            while ( item->parentItem() ) item = item->parentItem(); // Make sure the item deselected is the top graphic item.
+
+            if( !item->isSelected() ) m_circuit->clearSelection();  // If the comp is not selected when drag starts, clear all the selections.
+            item->setSelected( false );
+            m_mousePressPos = event->pos();
+            m_waitForDragStart = true;
+        }
     }
     else if( event->button() == Qt::MidButton )
     {
