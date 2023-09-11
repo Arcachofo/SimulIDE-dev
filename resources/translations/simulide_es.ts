@@ -3951,6 +3951,42 @@ Can&apos;t find file:
         <source>Dialog</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Time Div</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Time Pos</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Volt Div</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Volt Pos</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Filter</source>
+        <translation type="unfinished">Filtro</translation>
+    </message>
+    <message>
+        <source>Auto</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Trigger</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hide</source>
+        <translation type="unfinished">Ocultar</translation>
+    </message>
+    <message>
+        <source>Tracks</source>
+        <translation type="unfinished">Pistas</translation>
+    </message>
 </context>
 <context>
     <name>Oscope</name>
@@ -5975,11 +6011,15 @@ Quiere guardar los cambios?
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Load:</source>
+        <source>Main MCU:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Main MCU:</source>
+        <source>Engine Load:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Update Load:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

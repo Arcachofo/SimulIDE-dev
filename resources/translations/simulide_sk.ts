@@ -3706,39 +3706,39 @@ Súbor nemožno nájsť:
     </message>
     <message>
         <source>Time Div</source>
-        <translation type="vanished">Časová základňa</translation>
+        <translation>Časová základňa</translation>
     </message>
     <message>
         <source>Time Pos</source>
-        <translation type="vanished">Časový posun</translation>
+        <translation>Časový posun</translation>
     </message>
     <message>
         <source>Volt Div</source>
-        <translation type="vanished">Napäťová základňa</translation>
+        <translation>Napäťová základňa</translation>
     </message>
     <message>
         <source>Volt Pos</source>
-        <translation type="vanished">Napäťový posun</translation>
+        <translation>Napäťový posun</translation>
     </message>
     <message>
         <source>Filter</source>
-        <translation type="vanished">Filter</translation>
+        <translation>Filter</translation>
     </message>
     <message>
         <source>Auto</source>
-        <translation type="vanished">Auto</translation>
+        <translation>Auto</translation>
     </message>
     <message>
         <source>Trigger</source>
-        <translation type="vanished">Trigger</translation>
+        <translation>Trigger</translation>
     </message>
     <message>
         <source>Hide</source>
-        <translation type="vanished">Skryť</translation>
+        <translation>Skryť</translation>
     </message>
     <message>
         <source>Tracks</source>
-        <translation type="vanished">Stopy</translation>
+        <translation>Stopy</translation>
     </message>
     <message>
         <source>Dialog</source>
@@ -5595,11 +5595,15 @@ Chcete uložiť zmeny?
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Load:</source>
+        <source>Main MCU:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Main MCU:</source>
+        <source>Engine Load:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Update Load:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

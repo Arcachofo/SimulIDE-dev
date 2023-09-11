@@ -4036,6 +4036,42 @@ Can&apos;t find file:
         <source>Dialog</source>
         <translation>Диалог</translation>
     </message>
+    <message>
+        <source>Time Div</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Time Pos</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Volt Div</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Volt Pos</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Filter</source>
+        <translation type="unfinished">Фильтр</translation>
+    </message>
+    <message>
+        <source>Auto</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Trigger</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hide</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tracks</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Oscope</name>
@@ -6152,11 +6188,19 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Load:</source>
-        <translation>Загрузка:</translation>
+        <translation type="vanished">Загрузка:</translation>
     </message>
     <message>
         <source>Main MCU:</source>
         <translation>Основной CPU</translation>
+    </message>
+    <message>
+        <source>Engine Load:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Update Load:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

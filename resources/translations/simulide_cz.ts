@@ -858,7 +858,7 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>Circuit</name>
     <message>
-        <location filename="../../src/gui/circuitwidget/circuit.cpp" line="+545"/>
+        <location filename="../../src/gui/circuitwidget/circuit.cpp" line="+547"/>
         <source>Load Circuit</source>
         <translation>Otevřít obvod</translation>
     </message>
@@ -886,7 +886,7 @@ p, li { white-space: pre-wrap; }
         <translation type="vanished">Přizpůsobit velikosti plochy</translation>
     </message>
     <message>
-        <location filename="../../src/gui/circuitwidget/circuitview.cpp" line="+211"/>
+        <location filename="../../src/gui/circuitwidget/circuitview.cpp" line="+218"/>
         <source>Paste</source>
         <translation>Vložit</translation>
     </message>
@@ -1128,12 +1128,12 @@ Nemohu najít soubor:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+81"/>
+        <location line="+66"/>
         <source>&amp;%1 %2</source>
         <translation>&amp;%1 %2</translation>
     </message>
     <message>
-        <location line="-361"/>
+        <location line="-346"/>
         <location line="+1"/>
         <source>Settings</source>
         <translation>Nastavení</translation>
@@ -3287,7 +3287,7 @@ Chcete uložit změny?
 <context>
     <name>InfoWidget</name>
     <message>
-        <location filename="../../src/gui/dialogs/infowidget.cpp" line="+70"/>
+        <location filename="../../src/gui/dialogs/infowidget.cpp" line="+75"/>
         <source>Speed: Debugger</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4826,6 +4826,51 @@ Chcete uložit změny?
         <source>Dialog</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location line="+332"/>
+        <source>Time Div</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+102"/>
+        <source>Time Pos</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+127"/>
+        <source>Volt Div</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+99"/>
+        <source>Volt Pos</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+103"/>
+        <source>Filter</source>
+        <translation type="unfinished">Filtr</translation>
+    </message>
+    <message>
+        <location line="+107"/>
+        <source>Auto</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+152"/>
+        <source>Trigger</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+152"/>
+        <source>Hide</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+170"/>
+        <source>Tracks</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Oscope</name>
@@ -6153,8 +6198,8 @@ Neplatný soubor s pouzdrem
 <context>
     <name>Simulator</name>
     <message>
-        <location filename="../../src/simulator/simulator.cpp" line="+90"/>
-        <location line="+267"/>
+        <location filename="../../src/simulator/simulator.cpp" line="+92"/>
+        <location line="+274"/>
         <source>Running</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7258,7 +7303,7 @@ Chcete uložit změny?
 <context>
     <name>infoWidget</name>
     <message>
-        <location filename="../../src/gui/dialogs/infowidget.ui" line="+103"/>
+        <location filename="../../src/gui/dialogs/infowidget.ui" line="+130"/>
         <source>Simulation Time:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7274,11 +7319,16 @@ Chcete uložit změny?
     </message>
     <message>
         <location line="+57"/>
-        <source>Load:</source>
+        <source>Engine Load:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+228"/>
+        <location line="+456"/>
+        <source>Update Load:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-228"/>
         <source>Main MCU:</source>
         <translation type="unfinished"></translation>
     </message>
