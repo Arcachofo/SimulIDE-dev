@@ -333,8 +333,10 @@ void Circuit::loadStrDoc( QString &doc )
                 }
                 else if( !m_pasting /*&& !m_undo && !m_redo*/ )// Start or End pin not found
                 {
-                    if( !startpin ) qDebug() << "\n   ERROR!!  Circuit::loadStrDoc:  null startpin in Connector" << uid << startpinid;
-                    if( !endpin   ) qDebug() << "\n   ERROR!!  Circuit::loadStrDoc:  null endpin in Connector"   << uid << endpinid;
+                    if( !startpin )
+                        qDebug() << "\n   ERROR!!  Circuit::loadStrDoc:  null startpin in Connector" << uid << startpinid;
+                    if( !endpin   )
+                        qDebug() << "\n   ERROR!!  Circuit::loadStrDoc:  null endpin in Connector"   << uid << endpinid;
             }   }
             else if( type == "Node")
             {

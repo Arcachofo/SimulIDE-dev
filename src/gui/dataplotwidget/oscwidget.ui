@@ -349,7 +349,7 @@
             </font>
            </property>
            <property name="text">
-            <string notr="true">Time Div</string>
+            <string>Time Div</string>
            </property>
           </widget>
          </item>
@@ -451,7 +451,7 @@
             </font>
            </property>
            <property name="text">
-            <string notr="true">Time Pos</string>
+            <string>Time Pos</string>
            </property>
           </widget>
          </item>
@@ -578,7 +578,7 @@
             </font>
            </property>
            <property name="text">
-            <string notr="true">Volt Div</string>
+            <string>Volt Div</string>
            </property>
           </widget>
          </item>
@@ -677,7 +677,7 @@
             </font>
            </property>
            <property name="text">
-            <string notr="true">Volt Pos</string>
+            <string>Volt Pos</string>
            </property>
           </widget>
          </item>
@@ -780,7 +780,7 @@
           </font>
          </property>
          <property name="text">
-          <string notr="true">Filter</string>
+          <string>Filter</string>
          </property>
         </widget>
        </item>
@@ -887,7 +887,7 @@
           </font>
          </property>
          <property name="text">
-          <string notr="true">Auto</string>
+          <string>Auto</string>
          </property>
         </widget>
        </item>
@@ -1039,7 +1039,7 @@
           </font>
          </property>
          <property name="text">
-          <string notr="true">Trigger</string>
+          <string>Trigger</string>
          </property>
         </widget>
        </item>
@@ -1191,7 +1191,7 @@
           </font>
          </property>
          <property name="text">
-          <string notr="true">Hide</string>
+          <string>Hide</string>
          </property>
         </widget>
        </item>
@@ -1361,7 +1361,7 @@
           </font>
          </property>
          <property name="text">
-          <string notr="true">Tracks</string>
+          <string>Tracks</string>
          </property>
         </widget>
        </item>
@@ -1477,12 +1477,6 @@
     <bool>true</bool>
    </property>
   </buttongroup>
-  <buttongroup name="autoGroup">
-   <property name="exclusive">
-    <bool>true</bool>
-   </property>
-  </buttongroup>
-  <buttongroup name="trackGroup"/>
   <buttongroup name="hideGroup">
    <property name="exclusive">
     <bool>false</bool>
@@ -1493,5 +1487,11 @@
     <bool>true</bool>
    </property>
   </buttongroup>
+  <buttongroup name="autoGroup">
+   <property name="exclusive">
+    <bool>true</bool>
+   </property>
+  </buttongroup>
+  <buttongroup name="trackGroup"/>
  </buttongroups>
 </ui>

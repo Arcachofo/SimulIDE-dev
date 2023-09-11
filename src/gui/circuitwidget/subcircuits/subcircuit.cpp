@@ -92,7 +92,7 @@ Component* SubCircuit::construct( QString type, QString id )
         }
     }
     if( m_subcDir.isEmpty() ){
-        qDebug() << "SubCircuit::construct: No Circuit files found for"+name+"\n";
+        qDebug() << "SubCircuit::construct: No Circuit files found for"<<name<<endl;
         return NULL;
     }
     QString pkgeFile  = m_subcDir+"/"+name+".package";
@@ -104,7 +104,7 @@ Component* SubCircuit::construct( QString type, QString id )
 
     if( !dip ){        // Check if package file exist, if not try LS
         if( !ls ){
-            qDebug() << "SubCircuit::construct: No package files found for "+name+"\n"+pkgeFile+"\n";
+            qDebug() << "SubCircuit::construct: No package files found for "<<name<<endl<<pkgeFile<<endl;
             return NULL;
         }
         pkgeFile = pkgFileLS;

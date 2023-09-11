@@ -32,8 +32,8 @@ void NumVal::setup( bool isComp )
     if( unit.isEmpty() || unit.startsWith("_") )
     {
         m_useMult = false;
-        unitBox->setStyleSheet( "QComboBox::drop-down {border-width: 0px;} \
-                                 QComboBox::down-arrow {image: url(noimg); border-width: 0px;}");
+        //unitBox->setStyleSheet( "QComboBox::drop-down {width: 0px;}" )
+        //                         QComboBox::down-arrow {image: url(noimg); border-width: 0px;}");
         if( unit.startsWith("_") ) unitBox->addItem( unit.remove("_") ); // No multiplier
     }else{
         m_useMult = true;
@@ -60,7 +60,7 @@ void NumVal::on_showVal_toggled( bool checked )
         m_component->setPropStr("ShowProp", m_propName );
         m_component->setPropStr("ValLabelText", getValWithUnit() );
     }
-    else m_component->setPropStr("ShowProp", "" );  //setShowProp( "" );
+    else m_component->setPropStr("ShowProp", "" );
     m_propDialog->updtValues();
     m_propDialog->changed();
     m_blocked = false;
@@ -102,11 +102,6 @@ void NumVal::updtValues()
     valueBox->setValue( val );
 
     if( showVal->isChecked() ) m_component->setPropStr("ValLabelText", m_property->getValStr() );
-
-    /*QString valStr = m_property->getValStr();
-    QStringList l = valStr.split(" ");
-    valueBox->setValue( l.first().toDouble() );
-    unitBox->setCurrentText( l.last() );*/
 
     m_blocked = false;
 }
