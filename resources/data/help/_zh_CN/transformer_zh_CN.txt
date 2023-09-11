@@ -1,0 +1,10 @@
+变压器(Transformer)
+
+参数: (默认值)
+
+主要特性:
+
+- 耦合系数: (0.99)
+- 基础电感(Base Inductance)
+- 初级(Primary)
+- 次级(Secondary)

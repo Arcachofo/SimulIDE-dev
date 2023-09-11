@@ -21,3 +21,5 @@
 
 - 温度: (20 ºC)
    当前温度.
+
+#include dialed

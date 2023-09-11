@@ -954,39 +954,39 @@ Can&apos;t find file:
     </message>
     <message>
         <source>None</source>
-        <translation type="unfinished"></translation>
+        <translation>无</translation>
     </message>
     <message>
         <source>File Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>文件设置</translation>
     </message>
     <message>
         <source>Compiler</source>
-        <translation type="unfinished"></translation>
+        <translation>编译器</translation>
     </message>
     <message>
         <source>Save Settings at file close</source>
-        <translation type="unfinished"></translation>
+        <translation>关闭文件时保存设置</translation>
     </message>
     <message>
         <source>Actions after opening this file:</source>
-        <translation type="unfinished"></translation>
+        <translation>打开此文件后执行的动作:</translation>
     </message>
     <message>
         <source>Load Compiler</source>
-        <translation type="unfinished"></translation>
+        <translation>加载编译器</translation>
     </message>
     <message>
         <source>Load Breakpoints</source>
-        <translation type="unfinished"></translation>
+        <translation>加载断点</translation>
     </message>
     <message>
         <source>Restore files</source>
-        <translation type="unfinished"></translation>
+        <translation>打开相关的文件</translation>
     </message>
     <message>
         <source>Cannot write file</source>
-        <translation type="unfinished"></translation>
+        <translation>无法写入文件</translation>
     </message>
 </context>
 <context>
@@ -1031,31 +1031,31 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Compiler Settings</source>
-        <translation type="unfinished">编译器设置</translation>
+        <translation>编译器设置</translation>
     </message>
     <message>
         <source>For this compiler type:</source>
-        <translation type="unfinished"></translation>
+        <translation>此编译器相关设置</translation>
     </message>
     <message>
         <source>Tool Path</source>
-        <translation type="unfinished"></translation>
+        <translation>程序路径</translation>
     </message>
     <message>
         <source>Include Path</source>
-        <translation type="unfinished">Include路径</translation>
+        <translation>包含文件路径</translation>
     </message>
     <message>
         <source>Device</source>
-        <translation type="unfinished">设备</translation>
+        <translation>设备</translation>
     </message>
     <message>
         <source>Family</source>
-        <translation type="unfinished">家族</translation>
+        <translation>家族</translation>
     </message>
     <message>
         <source>For this file:</source>
-        <translation type="unfinished"></translation>
+        <translation>此文件相关设置</translation>
     </message>
 </context>
 <context>
@@ -1963,27 +1963,27 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Font Size</source>
-        <translation type="unfinished">字体大小</translation>
+        <translation>字体大小</translation>
     </message>
     <message>
         <source>Tab Size</source>
-        <translation type="unfinished">Tab缩进数</translation>
+        <translation>缩进/制表符(Tab)空格数</translation>
     </message>
     <message>
         <source>Tabs as spaces</source>
-        <translation type="unfinished"></translation>
+        <translation>将Tab转换为空格</translation>
     </message>
     <message>
         <source>Show Spaces and Tabs</source>
-        <translation type="unfinished"></translation>
+        <translation>显示空格和制表符</translation>
     </message>
     <message>
         <source>NEW</source>
-        <translation type="unfinished"></translation>
+        <translation>新文件</translation>
     </message>
     <message>
         <source>File Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>文件设置</translation>
     </message>
 </context>
 <context>
@@ -2152,7 +2152,7 @@ Can&apos;t find file:
     <name>FixedVolt</name>
     <message>
         <source>Fixed Volt.</source>
-        <translation>固定稳压器</translation>
+        <translation>稳压电源(带开关)</translation>
     </message>
     <message>
         <source>Main</source>
@@ -2202,7 +2202,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>FlipFlopD</source>
-        <translation type="unfinished"></translation>
+        <translation>D触发器</translation>
     </message>
 </context>
 <context>
@@ -2523,23 +2523,23 @@ Can&apos;t find file:
     </message>
     <message>
         <source>custom</source>
-        <translation type="unfinished"></translation>
+        <translation>自定义</translation>
     </message>
     <message>
         <source>Compiler Settings</source>
-        <translation type="unfinished">编译器设置</translation>
+        <translation>编译器设置</translation>
     </message>
     <message>
         <source>Libraries Path</source>
-        <translation type="unfinished">库文件夹路径</translation>
+        <translation>库文件夹路径</translation>
     </message>
     <message>
         <source>Board</source>
-        <translation type="unfinished"></translation>
+        <translation>板(Board)</translation>
     </message>
     <message>
         <source>Custom Board</source>
-        <translation type="unfinished">自定义板</translation>
+        <translation>自定义板</translation>
     </message>
 </context>
 <context>
@@ -2685,11 +2685,11 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Base Time Step</source>
-        <translation>基准时间步长</translation>
+        <translation>时间单位(Timescale)</translation>
     </message>
     <message>
         <source>Export at pause</source>
-        <translation>暂停时导出</translation>
+        <translation>暂停时自动导出</translation>
     </message>
     <message>
         <source>Logic Analyzer</source>
@@ -3713,23 +3713,43 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Filter</source>
-        <translation type="vanished">过滤器</translation>
+        <translation>过滤器</translation>
     </message>
     <message>
         <source>Auto</source>
-        <translation type="vanished">自动</translation>
+        <translation>自动</translation>
     </message>
     <message>
         <source>Trigger</source>
-        <translation type="vanished">触发器</translation>
+        <translation>触发器</translation>
     </message>
     <message>
         <source>Hide</source>
-        <translation type="vanished">隐藏</translation>
+        <translation>隐藏</translation>
     </message>
     <message>
         <source>Dialog</source>
         <translation>对话框</translation>
+    </message>
+    <message>
+        <source>Time Div</source>
+        <translation type="unfinished">Time Div</translation>
+    </message>
+    <message>
+        <source>Time Pos</source>
+        <translation type="unfinished">Time Pos</translation>
+    </message>
+    <message>
+        <source>Volt Div</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Volt Pos</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tracks</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3747,11 +3767,11 @@ Can&apos;t find file:
     <name>PathVal</name>
     <message>
         <source>TextLabel</source>
-        <translation type="unfinished">TextLabel</translation>
+        <translation>TextLabel</translation>
     </message>
     <message>
         <source>Select directory</source>
-        <translation type="unfinished"></translation>
+        <translation>选择目录</translation>
     </message>
 </context>
 <context>
@@ -3785,7 +3805,7 @@ Can&apos;t find file:
     <name>Potentiometer</name>
     <message>
         <source>Potentiometer</source>
-        <translation>电位器</translation>
+        <translation>电位器/滑动变阻器</translation>
     </message>
     <message>
         <source>Main</source>
@@ -4047,7 +4067,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Keys</source>
-        <translation type="unfinished">Keys</translation>
+        <translation>Keys</translation>
     </message>
     <message>
         <source>Ternary</source>
@@ -4241,7 +4261,7 @@ Not valid Package file:
     <name>Rail</name>
     <message>
         <source>Rail.</source>
-        <translation type="vanished">Rail电源</translation>
+        <translation type="vanished">稳压电源(Rail)</translation>
     </message>
     <message>
         <source>Main</source>
@@ -4253,7 +4273,7 @@ Not valid Package file:
     </message>
     <message>
         <source>Rail</source>
-        <translation>Rail电源</translation>
+        <translation>稳压电源(Rail)</translation>
     </message>
 </context>
 <context>
@@ -4483,7 +4503,7 @@ Not valid Package file:
     <name>SdccDebugger</name>
     <message>
         <source>Warning: lst file doesn&apos;t exist:</source>
-        <translation type="unfinished">警告: lst文件不存在: </translation>
+        <translation>警告: lst文件不存在:</translation>
     </message>
 </context>
 <context>
@@ -4856,7 +4876,7 @@ Not valid Package file:
     <name>StrVal</name>
     <message>
         <source>TextLabel</source>
-        <translation type="unfinished">TextLabel</translation>
+        <translation>TextLabel</translation>
     </message>
 </context>
 <context>
@@ -4936,7 +4956,7 @@ Not valid Package file:
     <name>SubPackage</name>
     <message>
         <source>Package</source>
-        <translation>包</translation>
+        <translation>包(Package)</translation>
     </message>
     <message>
         <source>Board Mode</source>
@@ -5024,7 +5044,7 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Select Main Components</source>
-        <translation type="unfinished"></translation>
+        <translation>选择主组件</translation>
     </message>
 </context>
 <context>
@@ -5495,7 +5515,7 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Floating</source>
-        <translation type="unfinished"></translation>
+        <translation>Floating</translation>
     </message>
     <message>
         <source>Load Wav File</source>
@@ -5598,11 +5618,19 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Load:</source>
-        <translation>负载:</translation>
+        <translation type="vanished">负载:</translation>
     </message>
     <message>
         <source>Main MCU:</source>
         <translation>主MCU:</translation>
+    </message>
+    <message>
+        <source>Engine Load:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Update Load:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

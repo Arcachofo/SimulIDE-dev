@@ -1,7 +1,7 @@
 - 对Set/Reset引脚取反: (是)
    对Set和Reset引脚取反.
 
-- 对Clock引脚取反: (no)
+- 对Clock引脚取反: (否)
    对Clock引脚取反.
 
 - 触发类型: (Clock)

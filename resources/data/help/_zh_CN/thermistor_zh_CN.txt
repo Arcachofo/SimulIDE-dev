@@ -1,7 +1,6 @@
 热敏电阻(NTC thermistor).
 
-
-Property: (default value)
+属性值: (默认值)
 
 主要特性:
 - 最小值: (0 ºC)
@@ -23,3 +22,5 @@ Property: (default value)
 
 - R25: (10000 Ω)
    25 ºC时的电阻值.
+
+#include dialed
