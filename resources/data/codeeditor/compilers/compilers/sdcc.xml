@@ -3,6 +3,6 @@
 <compiler name="SDCC" type="sdcc" buildPath="build" >
     <step 
         command="sdcc"
-        arguments=" -o$buildPath $filePath"
+        arguments=" $extraArgs -o$buildPath $filePath"
     />
 </compiler>

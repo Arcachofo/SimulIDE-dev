@@ -31,6 +31,9 @@ class Compiler : public QObject, public CompBase
         QString includePath() { return m_inclPath; }
         void setIncludePath( QString path );
 
+        QString extraArgs() { return m_extraArgs; }
+        void setextraArgs( QString s ) { m_extraArgs = s; }
+
         QString family() { return m_family; }
         void setFamily( QString f ) { m_family = f; }
 
@@ -79,6 +82,7 @@ class Compiler : public QObject, public CompBase
         QString m_toolPath;
         QString m_inclPath;
         QString m_buildPath;
+        QString m_extraArgs;
         QStringList m_command;
         QStringList m_arguments;
         QStringList m_argsDebug;

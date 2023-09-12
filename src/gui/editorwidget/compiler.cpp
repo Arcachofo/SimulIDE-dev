@@ -66,12 +66,13 @@ QString Compiler::replaceData( QString str )
     QString inclPath  = addQuotes( m_inclPath );
     QString buildPath = addQuotes( m_buildPath );
 
-    str = str.replace( "$filePath", filePath )
-             .replace( "$fileDir" , m_fileDir )
-             .replace( "$fileName", m_fileName )
-             .replace( "$fileExt" , m_fileExt )
-             .replace( "$inclPath", inclPath )
-             .replace( "$buildPath", buildPath );
+    str = str.replace( "$filePath" , filePath )
+             .replace( "$fileDir"  , m_fileDir )
+             .replace( "$fileName" , m_fileName )
+             .replace( "$fileExt"  , m_fileExt )
+             .replace( "$inclPath" , inclPath )
+             .replace( "$buildPath", buildPath )
+             .replace( "$extraArgs", m_extraArgs );
     return str;
 }
 
@@ -129,6 +130,13 @@ void Compiler::loadCompiler( QString file )
                 addProperty( tr("Compiler Settings"),
                 new StrProp<Compiler> ("InclPath", tr("Include Path"),"", this
                                        , &Compiler::includePath, &Compiler::setIncludePath, 0) );
+            }
+            if( args.contains("$extraArgs") )
+            {
+                addFilePropHead();
+                addProperty( tr("Compiler Settings"),
+                new StrProp<Compiler> ("extraArgs", tr("Extra build arguments"),"", this
+                                       , &Compiler::extraArgs, &Compiler::setextraArgs, 0) );
             }
             if( args.contains("$device") )
             {
