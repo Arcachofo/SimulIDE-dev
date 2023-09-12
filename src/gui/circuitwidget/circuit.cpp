@@ -713,6 +713,7 @@ void Circuit::saveState()
     // clear Removed Comps;
     for( CompBase* comp : m_removedComps ) delete comp;
     m_removedComps.clear();
+    /// qDebug() << "Circuit::saveState -------------------------------------"<<endl;
 }
 
 void Circuit::unSaveState()
@@ -736,6 +737,15 @@ void Circuit::endCicuitModify() // Don't create/remove
         m_cicuitChange--;
         if( m_cicuitChange == 0 ) saveState();
     }
+}
+
+void Circuit::cancelCicuitModify()
+{
+    endCicuitChange();
+    undo();
+    m_redoStack.takeLast();
+    m_redoIndex--;
+    /// qDebug() << "Circuit::cancelCicuitModify--------------------------------"<<endl;
 }
 
 void Circuit::beginCicuitChange() // Save current state
@@ -763,7 +773,7 @@ void Circuit::endCicuitChange()   //
 
 void Circuit::calcCicuitChange()   // Calculates created/removed
 {
-    /// qDebug() << "Circuit::calcCicuitChange  Removed:";
+    /// qDebug() << "Circuit::calcCicuitChange Removed:";
     // Items Removed
     for( Connector* conn : m_oldConns-m_connList ) addCompState( conn->getUid(), COMP_STATE_REMOVED, m_compStrMap.value(conn) );
     for( Node*      node : m_oldNodes-m_nodeList ) addCompState( node->getUid(), COMP_STATE_REMOVED, m_compStrMap.value(node) );
@@ -785,7 +795,7 @@ void Circuit::saveCompState( QString name, QString property, QString value )
 void Circuit::addCompState( QString name, QString property, QString value )
 {
     if( m_loading || m_deleting ) return;
-    /// qDebug() << "Circuit::addCompState      " << name << property << value;
+    /// qDebug() << "Circuit::addCompState      " << name << property;// << value;
 
     compState cState{ name, property, value };
 
@@ -813,7 +823,7 @@ bool Circuit::restoreState( circState step )
         QString propVal  = cState.valStr;
         CompBase* comp   = m_compMap.value( compName );
 
-/// /// qDebug() << "Circuit::restoreState -->"<< compName << propName << comp;
+    /// qDebug() << "Circuit::restoreState -->  "<< compName << propName << comp;
 
         if( propName == COMP_STATE_REMOVED )       // Create Item
         {
@@ -996,7 +1006,8 @@ void Circuit::deleteNewConnector()
     if( !m_conStarted ) return;
     removeConnector( m_newConnector );
     m_conStarted = false;
-    unSaveState();
+
+    cancelCicuitModify();
 }
 
 void Circuit::updateConnectors()

@@ -68,6 +68,7 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
         void saveCompState( QString name, QString property, QString value );
         void beginCicuitModify();
         void endCicuitModify();
+        void cancelCicuitModify();
         void beginCicuitChange(); // Does create/remove
         void endCicuitChange();   // Does create/remove
         void calcCicuitChange();   // Does create/remove
