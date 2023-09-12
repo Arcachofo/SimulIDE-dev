@@ -39,11 +39,13 @@ Buffer::Buffer( QString type, QString id )
     },0} );
     addPropGroup( { tr("Electric"), IoComponent::inputProps()
 +QList<ComProperty*>({
-new BoolProp<Buffer>("Invert_Inputs", tr("Invert Inputs"),"", this, &Buffer::invertInps, &Buffer::setInvertInps, propNoCopy )
+new BoolProp<Buffer>("Invert_Inputs", tr("Invert Inputs"),"", this
+                    , &Buffer::invertInps, &Buffer::setInvertInps, propNoCopy )
                     })
                     +IoComponent::outputProps()+IoComponent::outputType()
 +QList<ComProperty*>({
-new BoolProp<Buffer>("Tristate", tr("Tristate"),"", this, &Buffer::tristate, &Buffer::setTristate, propNoCopy )
+new BoolProp<Buffer>("Tristate", tr("Tristate"),"", this
+                     , &Buffer::tristate, &Buffer::setTristate, propNoCopy )
                     })
     ,0} );
     addPropGroup( { tr("Edges") , Gate::edgeProps(),0 } );

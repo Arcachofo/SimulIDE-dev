@@ -70,6 +70,7 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
         void endCicuitModify();
         void beginCicuitChange(); // Does create/remove
         void endCicuitChange();   // Does create/remove
+        void calcCicuitChange();   // Does create/remove
         bool undoRedo() { return m_undo || m_redo; }
         //------------------------------------------------
 

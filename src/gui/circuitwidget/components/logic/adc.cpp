@@ -40,8 +40,10 @@ ADC::ADC( QString type, QString id )
     m_maxVolt = 5;
 
     addPropGroup( { tr("Main"), {
-new IntProp <ADC>("Num_Bits", tr("Size")         ,"_Bits", this, &ADC::numOuts, &ADC::setNumOutputs, 0,"uint" ),
-new DoubProp<ADC>("Vref"    , tr("Reference Voltage"),"V", this, &ADC::maxVolt, &ADC::setMaxVolt ),
+new IntProp <ADC>("Num_Bits", tr("Size"),"_Bits", this
+                 , &ADC::numOuts, &ADC::setNumOutputs, propNoCopy,"uint" ),
+
+new DoubProp<ADC>("Vref", tr("Reference Voltage"),"V", this, &ADC::maxVolt, &ADC::setMaxVolt ),
     },groupNoCopy} );
     addPropGroup( { tr("Electric"), IoComponent::outputProps()+IoComponent::outputType(),0 } );
     addPropGroup( { tr("Edges")   , IoComponent::edgeProps()                            ,0 } );

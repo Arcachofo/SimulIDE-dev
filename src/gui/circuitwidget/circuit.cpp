@@ -122,7 +122,7 @@ QString Circuit::replaceId( QString pinName )
 
 Pin* Circuit::findPin( int x, int y, QString id )
 {
-    /// qDebug() << "Circuit::findPin" << id;
+    // qDebug() << "Circuit::findPin" << id;
     QRectF itemRect = QRectF ( x-4, y-4, 8, 8 );
 
     QList<QGraphicsItem*> list = items( itemRect ); // List of items in (x, y)
@@ -333,10 +333,8 @@ void Circuit::loadStrDoc( QString &doc )
                 }
                 else if( !m_pasting /*&& !m_undo && !m_redo*/ )// Start or End pin not found
                 {
-                    if( !startpin )
-                        qDebug() << "\n   ERROR!!  Circuit::loadStrDoc:  null startpin in Connector" << uid << startpinid;
-                    if( !endpin   )
-                        qDebug() << "\n   ERROR!!  Circuit::loadStrDoc:  null endpin in Connector"   << uid << endpinid;
+                    if( !startpin ) qDebug() << "\n   ERROR!!  Circuit::loadStrDoc:  null startpin in Connector" << uid << startpinid;
+                    if( !endpin   ) qDebug() << "\n   ERROR!!  Circuit::loadStrDoc:  null endpin in Connector"   << uid << endpinid;
             }   }
             else if( type == "Node")
             {
@@ -726,14 +724,14 @@ void Circuit::unSaveState()
 
 void Circuit::beginCicuitModify() // Don't create/remove
 {
-    //qDebug() << "Circuit::beginCicuitModify";
+    /// qDebug() << "Circuit::beginCicuitModify";
     if( !m_cicuitChange ) clearCircuitState();
     m_cicuitChange++;
 }
 
 void Circuit::endCicuitModify() // Don't create/remove
 {
-    //qDebug() << "Circuit::endCicuitModify";
+    /// qDebug() << "Circuit::endCicuitModify";
     if( m_cicuitChange > 0 ){
         m_cicuitChange--;
         if( m_cicuitChange == 0 ) saveState();
@@ -742,7 +740,7 @@ void Circuit::endCicuitModify() // Don't create/remove
 
 void Circuit::beginCicuitChange() // Save current state
 {
-    //qDebug() << "Circuit::beginCicuitChange";
+    /// qDebug() << "Circuit::beginCicuitChange";
     beginCicuitModify();
 
     m_oldConns = m_connList;
@@ -756,20 +754,25 @@ void Circuit::beginCicuitChange() // Save current state
     for( Component* comp : m_oldComps ) m_compStrMap.insert( comp, comp->toString() );
 }
 
-void Circuit::endCicuitChange()   // Calculates created/removed
+void Circuit::endCicuitChange()   //
 {
-    //qDebug() << "Circuit::endCicuitChange  Removed";
+    /// qDebug() << "Circuit::endCicuitChange";
+    calcCicuitChange();
+    endCicuitModify();
+}
+
+void Circuit::calcCicuitChange()   // Calculates created/removed
+{
+    /// qDebug() << "Circuit::calcCicuitChange  Removed:";
     // Items Removed
     for( Connector* conn : m_oldConns-m_connList ) addCompState( conn->getUid(), COMP_STATE_REMOVED, m_compStrMap.value(conn) );
     for( Node*      node : m_oldNodes-m_nodeList ) addCompState( node->getUid(), COMP_STATE_REMOVED, m_compStrMap.value(node) );
     for( Component* comp : m_oldComps-m_compList ) addCompState( comp->getUid(), COMP_STATE_REMOVED, m_compStrMap.value(comp) );
-    //qDebug() << "Circuit::endCicuitChange  Created";
+    /// qDebug() << "Circuit::endCicuitChange  Created:";
     // Items Created
     for( Component* comp : m_compList-m_oldComps ) addCompState( comp->getUid(), COMP_STATE_CREATED, "" );
     for( Node*      node : m_nodeList-m_oldNodes ) addCompState( node->getUid(), COMP_STATE_CREATED, "" );
     for( Connector* conn : m_connList-m_oldConns ) addCompState( conn->getUid(), COMP_STATE_CREATED, "" );
-    //qDebug() << "Circuit::endCicuitChange  Done";
-    endCicuitModify();
 }
 
 void Circuit::saveCompState( QString name, QString property, QString value )
@@ -782,7 +785,7 @@ void Circuit::saveCompState( QString name, QString property, QString value )
 void Circuit::addCompState( QString name, QString property, QString value )
 {
     if( m_loading || m_deleting ) return;
-    //qDebug() << "Circuit::addCompState    " << name << property;// << value;
+    /// qDebug() << "Circuit::addCompState      " << name << property << value;
 
     compState cState{ name, property, value };
 
@@ -810,7 +813,7 @@ bool Circuit::restoreState( circState step )
         QString propVal  = cState.valStr;
         CompBase* comp   = m_compMap.value( compName );
 
-//qDebug() << "Circuit::restoreState -->"<< compName << propName << comp;
+/// /// qDebug() << "Circuit::restoreState -->"<< compName << propName << comp;
 
         if( propName == COMP_STATE_REMOVED )       // Create Item
         {
@@ -844,11 +847,11 @@ void Circuit::undo()
 {
     if( m_busy || m_deleting || m_conStarted || m_undoIndex < 0 ) return;
 
-//qDebug() << "\nCircuit::undo"<<m_undoIndex<<m_redoIndex;
+/// qDebug() << "\nCircuit::undo"<<m_undoIndex<<m_redoIndex;
 
     if( m_undoIndex > m_undoStack.size() )
     {
-        qDebug() << "Circuit::redo index Error"<< m_undoStack.size()<<m_undoIndex;
+        qDebug() << "Circuit::undo index Error"<< m_undoStack.size()<<m_undoIndex;
         clearUndoRedo();
         return;
     }
@@ -867,7 +870,7 @@ void Circuit::redo()
 {
     if( m_busy || m_deleting || m_conStarted || m_redoIndex < 0 ) return;
 
-//qDebug() << "\nCircuit::redo"<<m_undoIndex<<m_redoIndex;
+/// qDebug() << "\nCircuit::redo"<<m_undoIndex<<m_redoIndex;
 
     if( m_redoIndex > m_redoStack.size() )
     {

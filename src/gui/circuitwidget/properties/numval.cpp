@@ -5,9 +5,10 @@
 
 #include "numval.h"
 #include "component.h"
+#include "circuit.h"
 #include "propdialog.h"
-#include "utils.h"
 #include "comproperty.h"
+#include "utils.h"
 
 NumVal::NumVal( PropDialog* parent, CompBase* comp, ComProperty* prop )
       : PropVal( parent, comp, prop )
@@ -71,11 +72,23 @@ void NumVal::on_valueBox_valueChanged( double val )
     if( m_blocked ) return;
     m_blocked = true;
 
+    QString oldValue;
+    bool undo = m_property->flags() & propNoCopy;
+    if( undo ){
+        oldValue = m_property->getValStr();
+        Circuit::self()->beginCicuitChange();
+    }
     if( m_useMult ) m_property->setValStr( getValWithUnit() );
     else            m_property->setValStr( QString::number( valueBox->value() ) );
     m_blocked = false;
     m_propDialog->updtValues();
     m_propDialog->changed();
+
+    if( undo ){
+        Circuit::self()->calcCicuitChange();
+        Circuit::self()->addCompState( m_component->getUid(), m_propName, oldValue );
+        Circuit::self()->endCicuitModify();
+    }
 }
 
 void NumVal::on_unitBox_currentTextChanged( QString unit )

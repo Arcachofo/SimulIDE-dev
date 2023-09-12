@@ -10,7 +10,7 @@
 
 enum propFlags{
     propHidden = 1,
-    propNoCopy = 1<<1,
+    propNoCopy = 1<<1
 };
 
 class MAINMODULE_EXPORT ComProperty

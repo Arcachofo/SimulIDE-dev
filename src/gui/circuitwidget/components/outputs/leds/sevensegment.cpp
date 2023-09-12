@@ -70,15 +70,20 @@ SevenSegment::SevenSegment( QString type, QString id )
     setNumDisplays( 1 );
 
     addPropGroup( { tr("Main"), {
-new IntProp <SevenSegment>("NumDisplays"  , tr("Size")     ,"_7seg", this, &SevenSegment::numDisplays,  &SevenSegment::setNumDisplays, propNoCopy ),
-new StrProp <SevenSegment>("Color"        , tr("Color")        ,"" , this, &SevenSegment::colorStr,     &SevenSegment::setColorStr,0,"enum" ),
-new BoolProp<SevenSegment>("Vertical_Pins", tr("Vertical Pins"),"" , this, &SevenSegment::verticalPins, &SevenSegment::setVerticalPins, propNoCopy )
+new StrProp <SevenSegment>("Color", tr("Color"),"", this, &SevenSegment::colorStr, &SevenSegment::setColorStr,0,"enum" ),
+new IntProp <SevenSegment>("NumDisplays"  , tr("Size"),"_7seg", this
+                          , &SevenSegment::numDisplays, &SevenSegment::setNumDisplays, propNoCopy ),
+
+new BoolProp<SevenSegment>("Vertical_Pins", tr("Vertical Pins"),"" , this
+                          , &SevenSegment::verticalPins, &SevenSegment::setVerticalPins, propNoCopy )
     }, 0} );
     addPropGroup( { tr("Electric"), {
-new BoolProp<SevenSegment>("CommonCathode", tr("Common Cathode") ,"",  this, &SevenSegment::isComCathode, &SevenSegment::setComCathode, propNoCopy),
-new DoubProp<SevenSegment>("Threshold"    , tr("Forward Voltage"),"V", this, &SevenSegment::threshold,    &SevenSegment::setThreshold ),
-new DoubProp<SevenSegment>("MaxCurrent"   , tr("Max Current")    ,"A", this, &SevenSegment::maxCurrent,   &SevenSegment::setMaxCurrent ),
-new DoubProp<SevenSegment>("Resistance"   , tr("Resistance")     ,"Ω", this, &SevenSegment::resistance,   &SevenSegment::setResistance ),
+new BoolProp<SevenSegment>("CommonCathode", tr("Common Cathode") ,"",  this
+                          , &SevenSegment::isComCathode, &SevenSegment::setComCathode, propNoCopy ),
+
+new DoubProp<SevenSegment>("Threshold" , tr("Forward Voltage"),"V", this, &SevenSegment::threshold,  &SevenSegment::setThreshold ),
+new DoubProp<SevenSegment>("MaxCurrent", tr("Max Current")    ,"A", this, &SevenSegment::maxCurrent, &SevenSegment::setMaxCurrent ),
+new DoubProp<SevenSegment>("Resistance", tr("Resistance")     ,"Ω", this, &SevenSegment::resistance, &SevenSegment::setResistance ),
     },0} );
 }
 SevenSegment::~SevenSegment() { }

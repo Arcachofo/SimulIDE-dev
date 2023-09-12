@@ -80,13 +80,28 @@ DynamicMemory::DynamicMemory( QString type, QString id )
     Simulator::self()->addToUpdateList( this );
 
     addPropGroup( { tr("Main"), {
-new IntProp <DynamicMemory>("Row_Bits"   , tr("Row Address Size")   ,"_Bits", this, &DynamicMemory::rowAddrBits,   &DynamicMemory::setRowAddrBits,0,"uint" ),
-new IntProp <DynamicMemory>("Column_Bits", tr("Column Address Size"),"_Bits", this, &DynamicMemory::colAddrBits,   &DynamicMemory::setColAddrBits,0,"uint" ),
-new IntProp <DynamicMemory>("Data_Bits"  , tr("Data Size")          ,"_Bits", this, &DynamicMemory::dataBits,      &DynamicMemory::setDataBits,0,"uint" ),
-new DoubProp<DynamicMemory>("Refresh"    , tr("Refresh period")     ,"ps"   , this, &DynamicMemory::refreshPeriod, &DynamicMemory::setRefreshPeriod )
-    },groupNoCopy} );
-    addPropGroup( { tr("Electric"), IoComponent::inputProps()+IoComponent::outputProps()+IoComponent::outputType(),0 } );
-    addPropGroup( { tr("Edges")   , IoComponent::edgeProps(),0 } );
+        new IntProp <DynamicMemory>("Row_Bits", tr("Row Address Size"),"_Bits", this
+                , &DynamicMemory::rowAddrBits, &DynamicMemory::setRowAddrBits, propNoCopy,"uint" ),
+
+        new IntProp <DynamicMemory>("Column_Bits", tr("Column Address Size"),"_Bits", this
+                , &DynamicMemory::colAddrBits, &DynamicMemory::setColAddrBits, propNoCopy,"uint" ),
+
+        new IntProp <DynamicMemory>("Data_Bits", tr("Data Size"),"_Bits", this
+                , &DynamicMemory::dataBits, &DynamicMemory::setDataBits, propNoCopy,"uint" ),
+
+        new DoubProp<DynamicMemory>("Refresh", tr("Refresh period"),"ps", this
+                , &DynamicMemory::refreshPeriod, &DynamicMemory::setRefreshPeriod )
+    }, groupNoCopy } );
+
+    addPropGroup( { tr("Electric")
+       ,IoComponent::inputProps()
+       +IoComponent::outputProps()
+       +IoComponent::outputType()
+    ,0 } );
+
+    addPropGroup( { tr("Edges")
+        ,IoComponent::edgeProps()
+    ,0 } );
 }
 DynamicMemory::~DynamicMemory(){}
 

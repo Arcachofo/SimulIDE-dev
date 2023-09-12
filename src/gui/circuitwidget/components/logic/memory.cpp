@@ -70,15 +70,32 @@ Memory::Memory( QString type, QString id )
     Simulator::self()->addToUpdateList( this );
 
     addPropGroup( { tr("Main"), {
-new IntProp <Memory>("Address_Bits", tr("Address Size"),"_Bits", this, &Memory::addrBits,   &Memory::setAddrBits,0,"uint" ),
-new IntProp <Memory>("Data_Bits"   , tr("Data Size")   ,"_Bits", this, &Memory::dataBits,   &Memory::setDataBits,0,"uint" ),
-new BoolProp<Memory>("Persistent"  , tr("Persistent")  ,""     , this, &Memory::persistent, &Memory::setPersistent ),
-new BoolProp<Memory>("Asynch"      , tr("Asynchronous")  ,""   , this, &Memory::asynchro,   &Memory::setAsynchro )
+        new IntProp <Memory>("Address_Bits", tr("Address Size"),"_Bits", this
+                    , &Memory::addrBits, &Memory::setAddrBits, propNoCopy,"uint" ),
+
+        new IntProp <Memory>("Data_Bits", tr("Data Size")   ,"_Bits", this
+                    , &Memory::dataBits, &Memory::setDataBits, propNoCopy,"uint" ),
+
+        new BoolProp<Memory>("Persistent", tr("Persistent"),"", this
+                    , &Memory::persistent, &Memory::setPersistent ),
+
+        new BoolProp<Memory>("Asynch", tr("Asynchronous"),"", this
+                    , &Memory::asynchro, &Memory::setAsynchro )
     }, groupNoCopy} );
-    addPropGroup( { tr("Electric"), IoComponent::inputProps()+IoComponent::outputProps()+IoComponent::outputType(),0 } );
-    addPropGroup( { tr("Edges")   , IoComponent::edgeProps(),0 } );
+
+    addPropGroup( { tr("Electric")
+        , IoComponent::inputProps()
+        + IoComponent::outputProps()
+        + IoComponent::outputType()
+    ,0 } );
+
+    addPropGroup( { tr("Edges")
+        , IoComponent::edgeProps()
+    ,0 } );
+
     addPropGroup( { "Hidden", {
-new StrProp<Memory>("Mem","","", this, &Memory::getMem, &Memory::setMem)
+        new StrProp<Memory>("Mem","","", this
+                , &Memory::getMem, &Memory::setMem)
     }, groupHidden} );
 }
 Memory::~Memory(){}
