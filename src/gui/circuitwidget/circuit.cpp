@@ -950,7 +950,7 @@ void Circuit::copy( QPointF eventpoint )
     }   }
     QString circuit;
     for( CompBase* comp : complist ) circuit += comp->toString();
-    for( CompBase* con :  conlist )  circuit += con->toString();
+    for( CompBase* con  :  conlist ) circuit += con->toString();
 
     QApplication::clipboard()->setText( circuit );
 }
@@ -960,22 +960,18 @@ void Circuit::paste( QPointF eventpoint )
     if( m_conStarted ) return;
     if( m_simulator->isRunning() ) CircuitWidget::self()->powerCircOff();
 
-    bool animate = m_animate;
     m_busy    = true;
     m_pasting = true;
     for( QGraphicsItem*item : selectedItems() ) item->setSelected( false );
 
     m_deltaMove = toGrid(eventpoint) - m_eventpoint;
 
-    QString circuit = circuitHeader();
-    circuit += QApplication::clipboard()->text();
-    circuit += "\n</circuit>";
+    QString circuit = QApplication::clipboard()->text();
 
     beginUndoStep();
     loadStrDoc( circuit );
     endUndoStep();
 
-    setAnimate( animate );
     m_pasting = false;
     m_busy = false;
 }
