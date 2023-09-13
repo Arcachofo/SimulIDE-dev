@@ -216,7 +216,7 @@ void SubPackage::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu
         menu->addAction( m_boardModeAction );
         QObject::connect( m_boardModeAction, &QAction::triggered, [=](){ boardModeSlot(); } );
     }
-    QAction* mainCompAction = menu->addAction( QIcon(":/subcl.png"),tr("Select Main Components") );
+    QAction* mainCompAction = menu->addAction( QIcon(":/subcl.png"),tr("Select Exposed Components") );
     QObject::connect( mainCompAction, &QAction::triggered, [=](){ mainComp(); } );
 
     Component::contextMenu( event, menu );
@@ -491,7 +491,7 @@ void SubPackage::loadPackage()
 
     if( fileName.isEmpty() ) return; // User cancels loading
 
-    Circuit::self()->saveCompState( m_id, "Package_File", fileName );
+    Circuit::self()->saveCompChange( m_id, "Package_File", fileName );
     setPackage( fileName );
 
     QDir pdir = QFileInfo( Circuit::self()->getFilePath() ).absoluteDir();

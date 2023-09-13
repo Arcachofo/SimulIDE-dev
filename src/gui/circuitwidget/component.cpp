@@ -148,7 +148,7 @@ bool Component::setPropStr( QString prop, QString val )
     return true;
 }
 
-void Component::substitution( QString &propName ) // static
+void Component::substitution( QString &propName ) // static, Old: TODELETE
 {
     if     ( propName == "Volts"       ) propName = "Voltage";
     else if( propName == "id"          ) propName = "label";
@@ -204,7 +204,7 @@ void Component::mouseMoveEvent( QGraphicsSceneMouseEvent* event )
     {
         Component* parentComp = static_cast<Component*>( this->parentItem() );
         parentComp->mouseMoveEvent( event );
-        if( !m_hidden ) moveSignal();// emit moved();
+        if( !m_hidden ) moveSignal();
         return;
     }
     event->accept();
@@ -218,54 +218,51 @@ void Component::mouseMoveEvent( QGraphicsSceneMouseEvent* event )
 
     QList<QGraphicsItem*> itemlist = Circuit::self()->selectedItems();
 
-    if( !m_moving ) // Get lists of elements to move and save Undo state
+    if( !m_moving )         // Get lists of elements to move and save Undo state
     {
-        Circuit::self()->beginCicuitModify();
+        Circuit::self()->beginCircuitChanges();
 
         m_conMoveList.clear();
         m_compMoveList.clear();
 
         for( QGraphicsItem* item : itemlist )
         {
-            if( item->type() == UserType+2 ) // ConnectorLine selected
+            if( item->type() == UserType+2 )          // ConnectorLine selected
             {
                 ConnectorLine* line =  qgraphicsitem_cast<ConnectorLine*>( item );
                 Connector* con = line->connector();
-                if( !m_conMoveList.contains( con ) ) // Connectors selected
+                if( !m_conMoveList.contains( con ) )  // Connectors selected
                 {
                     m_conMoveList.append( con );
-                    Circuit::self()->addCompState( con->getUid(), "pointList", con->pListStr() );
+                    Circuit::self()->addCompChange( con->getUid(), "pointList", con->pListStr() );
                 }
             }
-            else if( item->type() == UserType+1 ) // Component selected
+            else if( item->type() == UserType+1 )     // Component selected
             {
                 Component* comp =  qgraphicsitem_cast<Component*>( item );
-                Circuit::self()->addCompState( comp->getUid(), "Pos", comp->getPropStr("Pos") );
+                Circuit::self()->addCompChange( comp->getUid(), "Pos", comp->getPropStr("Pos") );
                 m_compMoveList.append( comp );
                 std::vector<Pin*> pins = comp->getPins();
                 for( Pin* pin : pins )
-                {
+                {                                     // Connectors attached to selected Component
                     if( !pin ) continue;
                     Connector* con = pin->connector();
-                    if( con && !m_conMoveList.contains( con ) ) // Connector attached to selected Component
-                    {
+                    if( con && !m_conMoveList.contains( con ) ){
                         m_conMoveList.append( con );
-                        Circuit::self()->addCompState( con->getUid(), "pointList", con->pListStr() );
-                    }
-                }
-            }
-        }
+                        Circuit::self()->addCompChange( con->getUid(), "pointList", con->pListStr() );
+        }   }   }   }
+
         m_moving = true;
-        Circuit::self()->saveState();
+        Circuit::self()->saveChanges();
     }
-    for( QGraphicsItem* item : itemlist )
+    for( QGraphicsItem* item : itemlist )                        // Move ConnectorLine
     {
-        if( item->type() != UserType+2 ) continue; // ConnectorLine
+        if( item->type() != UserType+2 ) continue;
         ConnectorLine* line =  qgraphicsitem_cast<ConnectorLine*>( item );
         line->moveSimple( delta );
     }
-    for( Component* comp : m_compMoveList ) comp->move( delta );       // Move Components selected
-    for( Connector* con  : m_conMoveList )                             // Update Connectors
+    for( Component* comp : m_compMoveList ) comp->move( delta ); // Move Components selected
+    for( Connector* con  : m_conMoveList )                       // Update Connectors
     {
         con->startPin()->isMoved();
         con->endPin()->isMoved();
@@ -430,14 +427,14 @@ void Component::slotProperties()
 
 void Component::slotH_flip()
 {
-    if( !m_hidden ) Circuit::self()->saveCompState( m_id, "hflip", getPropStr("hflip") );
+    if( !m_hidden ) Circuit::self()->saveCompChange( m_id, "hflip", getPropStr("hflip") );
     m_Hflip = -m_Hflip;
     setflip();
 }
 
 void Component::slotV_flip()
 {
-    if( !m_hidden ) Circuit::self()->saveCompState( m_id, "vflip", getPropStr("vflip") );
+    if( !m_hidden ) Circuit::self()->saveCompChange( m_id, "vflip", getPropStr("vflip") );
     m_Vflip = -m_Vflip;
     setflip();
 }
@@ -474,7 +471,7 @@ void Component::rotateHalf() { rotateAngle(-180); }
 
 void Component::rotateAngle( double a )
 {
-    if( !m_hidden ) Circuit::self()->saveCompState( m_id, "rotation", getPropStr("rotation") );
+    if( !m_hidden ) Circuit::self()->saveCompChange( m_id, "rotation", getPropStr("rotation") );
     Component::setRotation( rotation() + a*m_Hflip*m_Vflip );
     if( !m_hidden ) moveSignal();
 }

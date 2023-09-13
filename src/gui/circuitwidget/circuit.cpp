@@ -679,14 +679,14 @@ void Circuit::setChanged()
     if( !title.endsWith('*') ) MainWindow::self()->setWindowTitle(title+'*');
 }
 
-void Circuit::saveState()
+void Circuit::saveChanges()
 {
-    if( m_conStarted || m_circState.size() == 0 ) return;
+    if( m_conStarted || m_circChange.size() == 0 ) return;
     setChanged();
 
     if( m_undo )
     {
-        m_redoStack.append( m_circState );
+        m_redoStack.append( m_circChange );
         m_redoIndex++;
     }
     else{                     // Redo or new state
@@ -697,7 +697,7 @@ void Circuit::saveState()
                 m_redoIndex = -1;
                 while( m_undoStack.size() > (m_undoIndex+1) ) m_undoStack.removeLast();
             }
-            m_undoStack.append( m_circState );
+            m_undoStack.append( m_circChange );
             if( m_undoStack.size() > m_maxUndoSteps )
             {
                 m_undoStack.takeFirst();
@@ -706,56 +706,56 @@ void Circuit::saveState()
         }
         m_undoIndex++;
     }
-    clearCircuitState();
+    clearCircChanges();
     m_cicuitChange = 0;  // Ends all CicuitChanges
 
-    // clear Removed Comps;
+    // Delete Removed Components;
     for( CompBase* comp : m_removedComps ) delete comp;
     m_removedComps.clear();
-    /// qDebug() << "Circuit::saveState -------------------------------------"<<endl;
+    /// qDebug() << "Circuit::saveChanges -------------------------------------"<<endl;
 }
 
-void Circuit::unSaveState()
+void Circuit::removeLastUndo()
 {
     if( m_undoStack.isEmpty() ) return;
     m_undoStack.takeLast();
     m_undoIndex--;
 }
 
-void Circuit::beginCicuitModify() // Don't create/remove
+void Circuit::beginCircuitChanges() // Don't create/remove
 {
-    /// qDebug() << "Circuit::beginCicuitModify";
-    if( !m_cicuitChange ) clearCircuitState();
+    /// qDebug() << "Circuit::beginCircuitChanges";
+    if( !m_cicuitChange ) clearCircChanges();
     m_cicuitChange++;
 }
 
-void Circuit::endCicuitModify() // Don't create/remove
+void Circuit::endCircuitChanges() // Don't create/remove
 {
-    /// qDebug() << "Circuit::endCicuitModify";
+    /// qDebug() << "Circuit::endCircuitChanges";
     if( m_cicuitChange > 0 ){
         m_cicuitChange--;
-        if( m_cicuitChange == 0 ) saveState();
+        if( m_cicuitChange == 0 ) saveChanges();
     }
 }
 
 void Circuit::cancelUndoStep()
 {
-    calcCicuitChange();
-    if( m_circState.size() )
+    calcCircuitChanges();
+    if( m_circChange.size() )
     {
-        endCicuitModify();
+        endCircuitChanges();
         undo();
         m_redoStack.takeLast();
         m_redoIndex--;
     }
     else m_cicuitChange = 0;
-    /// qDebug() << "Circuit::cancelCicuitModify--------------------------------"<<endl;
+    /// qDebug() << "Circuit::cancelUndoStep--------------------------------"<<endl;
 }
 
 void Circuit::beginUndoStep() // Save current state
 {
     /// qDebug() << "Circuit::beginUndoStep";
-    beginCicuitModify();
+    beginCircuitChanges();
 
     m_oldConns = m_connList;
     m_oldComps = m_compList;
@@ -771,56 +771,56 @@ void Circuit::beginUndoStep() // Save current state
 void Circuit::endUndoStep()   //
 {
     /// qDebug() << "Circuit::endUndoStep";
-    calcCicuitChange();
-    endCicuitModify();
+    calcCircuitChanges();
+    endCircuitChanges();
 }
 
-void Circuit::calcCicuitChange()   // Calculates created/removed
+void Circuit::calcCircuitChanges()   // Calculates created/removed
 {
-    /// qDebug() << "Circuit::calcCicuitChange Removed:";
+    /// qDebug() << "Circuit::calcCicuitChanges Removed:";
     // Items Removed
-    for( Connector* conn : m_oldConns-m_connList ) addCompState( conn->getUid(), COMP_STATE_REMOVED, m_compStrMap.value(conn) );
-    for( Node*      node : m_oldNodes-m_nodeList ) addCompState( node->getUid(), COMP_STATE_REMOVED, m_compStrMap.value(node) );
-    for( Component* comp : m_oldComps-m_compList ) addCompState( comp->getUid(), COMP_STATE_REMOVED, m_compStrMap.value(comp) );
-    /// qDebug() << "Circuit::endUndoStep  Created:";
+    for( Connector* conn : m_oldConns-m_connList ) addCompChange( conn->getUid(), COMP_STATE_REMOVED, m_compStrMap.value(conn) );
+    for( Node*      node : m_oldNodes-m_nodeList ) addCompChange( node->getUid(), COMP_STATE_REMOVED, m_compStrMap.value(node) );
+    for( Component* comp : m_oldComps-m_compList ) addCompChange( comp->getUid(), COMP_STATE_REMOVED, m_compStrMap.value(comp) );
+    /// qDebug() << "Circuit::calcCicuitChanges  Created:";
     // Items Created
-    for( Component* comp : m_compList-m_oldComps ) addCompState( comp->getUid(), COMP_STATE_CREATED, "" );
-    for( Node*      node : m_nodeList-m_oldNodes ) addCompState( node->getUid(), COMP_STATE_CREATED, "" );
-    for( Connector* conn : m_connList-m_oldConns ) addCompState( conn->getUid(), COMP_STATE_CREATED, "" );
+    for( Component* comp : m_compList-m_oldComps ) addCompChange( comp->getUid(), COMP_STATE_CREATED, "" );
+    for( Node*      node : m_nodeList-m_oldNodes ) addCompChange( node->getUid(), COMP_STATE_CREATED, "" );
+    for( Connector* conn : m_connList-m_oldConns ) addCompChange( conn->getUid(), COMP_STATE_CREATED, "" );
 }
 
-void Circuit::saveCompState( QString name, QString property, QString value )
+void Circuit::saveCompChange( QString component, QString property, QString value )
 {
-    clearCircuitState();
-    addCompState( name, property, value );
-    saveState();
+    clearCircChanges();
+    addCompChange( component, property, value );
+    saveChanges();
 }
 
-void Circuit::addCompState( QString name, QString property, QString value )
+void Circuit::addCompChange( QString component, QString property, QString value )
 {
     if( m_loading || m_deleting ) return;
-    /// qDebug() << "Circuit::addCompState      " << name << property;// << value;
+    /// qDebug() << "Circuit::addCompChange      " << name << property;// << value;
 
-    compState cState{ name, property, value };
+    compChange cState{ component, property, value };
 
-    if ( m_undo ) m_circState.compStates.prepend( cState );
-    else          m_circState.compStates.append( cState );
+    if ( m_undo ) m_circChange.compChanges.prepend( cState );
+    else          m_circChange.compChanges.append( cState );
 }
 
-bool Circuit::restoreState( circState step )
+bool Circuit::restoreState( circChange step )
 {
     if( m_simulator->isRunning() ) CircuitWidget::self()->powerCircOff();
     m_busy = true;
 
-    clearCircuitState();
+    clearCircChanges();
 
     int iStep, i;
-    if( m_undo ) { iStep = -1; i = step.compStates.size()-1; }
+    if( m_undo ) { iStep = -1; i = step.compChanges.size()-1; }
     else         { iStep =  1; i = 0; }
 
-    while( i>=0 && i < step.compStates.size() )
+    while( i>=0 && i < step.compChanges.size() )
     {
-        compState cState = step.compStates[i];
+        compChange cState = step.compChanges[i];
         i += iStep;
         QString compName = cState.component;
         QString propName = cState.property;
@@ -832,24 +832,24 @@ bool Circuit::restoreState( circState step )
         if( propName == COMP_STATE_REMOVED )       // Create Item
         {
             loadStrDoc( propVal );
-            if( m_newComp ) addCompState( m_newComp->getUid(), COMP_STATE_CREATED, "" );
+            if( m_newComp ) addCompChange( m_newComp->getUid(), COMP_STATE_CREATED, "" );
         }
         else if( propName == COMP_STATE_CREATED )  // Remove Item
         {
             if( !comp ) continue;
-            addCompState( comp->getUid(), COMP_STATE_REMOVED, comp->toString() );
+            addCompChange( comp->getUid(), COMP_STATE_REMOVED, comp->toString() );
 
             if     ( comp->itemType() == "Connector" ) removeConnector( (Connector*)comp );
             else if( comp->itemType() == "Node"      ) removeNode( (Node*)comp );
             else                                       removeComp( (Component*)comp );
         }
-        else {                            // Property
+        else {                                     // Property
             if( !comp ) continue;
-            addCompState( compName, propName, comp->getPropStr( propName ) );
+            addCompChange( compName, propName, comp->getPropStr( propName ) );
             comp->setPropStr( propName, propVal );
         }
     }
-    saveState();
+    saveChanges();
 
     m_LdPinMap.clear();
     m_busy = false;
@@ -870,7 +870,7 @@ void Circuit::undo()
         return;
     }
     m_undo = true;
-    circState step = m_undoStack.at( m_undoIndex );
+    circChange step = m_undoStack.at( m_undoIndex );
     if( restoreState( step ) )
     {
         m_undoIndex--;
@@ -893,7 +893,7 @@ void Circuit::redo()
         return;
     }
     m_redo = true;
-    circState step = m_redoStack.at( m_redoIndex );
+    circChange step = m_redoStack.at( m_redoIndex );
     if( restoreState( step ) )
     {
         m_redoIndex--;
@@ -1133,7 +1133,7 @@ void Circuit::keyPressEvent( QKeyEvent* event )
                 enterItem->setPos( toGrid( CircuitView::self()->mapToScene( cPos ) ) );
                 addItem( enterItem );
                 m_compList.insert( enterItem );
-                saveCompState( enterItem->getUid(), COMP_STATE_CREATED, "" );
+                saveCompChange( enterItem->getUid(), COMP_STATE_CREATED, "" );
             }
         }
     }
@@ -1238,7 +1238,7 @@ void Circuit::dropEvent( QGraphicsSceneDragDropEvent* event )
                 enterItem->setBackground( file );
                 addItem( enterItem );
                 m_compList.insert( enterItem );
-                saveCompState( enterItem->getUid(), COMP_STATE_CREATED, "" );
+                saveCompChange( enterItem->getUid(), COMP_STATE_CREATED, "" );
         }   }
         else CircuitWidget::self()->loadCirc( id );
 }   }

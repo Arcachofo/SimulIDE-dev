@@ -62,16 +62,16 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
         void clearCircuit();
 
         //--- Undo/Redo ----------------------------------
-        void saveState();
-        void unSaveState();
-        void addCompState( QString name, QString property, QString value  );
-        void saveCompState( QString name, QString property, QString value );
-        void beginCicuitModify();
-        void endCicuitModify();
-        void cancelUndoStep(); // Revert changes done
-        void beginUndoStep();  // Record current state
-        void calcCicuitChange();   // Calculate total changes
-        void endUndoStep();    // Does create/remove
+        void saveChanges();
+        void removeLastUndo();
+        void addCompChange( QString component, QString property, QString value  );
+        void saveCompChange( QString component, QString property, QString value );
+        void beginCircuitChanges();
+        void endCircuitChanges();
+        void calcCircuitChanges(); // Calculate total changes
+        void cancelUndoStep();     // Revert changes done
+        void beginUndoStep();      // Record current state
+        void endUndoStep();        // Does create/remove
         bool undoRedo() { return m_undo || m_redo; }
         //------------------------------------------------
 
@@ -150,27 +150,27 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
  static Circuit*  m_pSelf;
 
         //--- Undo/Redo ----------------------------------
-        struct compState{       // Component State to be restored by Undo/Redo
+        struct compChange{       // Component Change to be performed by Undo/Redo to complete a Circuit change
             QString component;
             QString property;
             QString valStr;
         };
-        struct circState{       // Circuit State to be restored by Undo/Redo
-            QList<compState> compStates;
-            int size() { return compStates.size(); }
-            void clear() { compStates.clear(); }
+        struct circChange{       // Circuit Change to be performed by Undo/Redo to restore circuit state
+            QList<compChange> compChanges;
+            int size() { return compChanges.size(); }
+            void clear() { compChanges.clear(); }
         };
 
-        inline void clearCircuitState() { m_circState.clear(); }
-        bool restoreState( circState step );
+        inline void clearCircChanges() { m_circChange.clear(); }
+        bool restoreState( circChange step );
         void clearUndoRedo();
         void finishUndoRedo();
 
         QSet<CompBase*> m_removedComps; // removed component list;
 
-        circState m_circState;
-        QList<circState> m_undoStack;
-        QList<circState> m_redoStack;
+        circChange m_circChange;
+        QList<circChange> m_undoStack;
+        QList<circChange> m_redoStack;
 
         QSet<Connector*> m_oldConns;
         QSet<Component*> m_oldComps;

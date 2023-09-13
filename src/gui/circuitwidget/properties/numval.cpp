@@ -85,9 +85,9 @@ void NumVal::on_valueBox_valueChanged( double val )
     m_propDialog->changed();
 
     if( undo ){
-        Circuit::self()->calcCicuitChange();
-        Circuit::self()->addCompState( m_component->getUid(), m_propName, oldValue );
-        Circuit::self()->endCicuitModify();
+        Circuit::self()->calcCircuitChanges();
+        Circuit::self()->addCompChange( m_component->getUid(), m_propName, oldValue );
+        Circuit::self()->endCircuitChanges();
     }
 }
 

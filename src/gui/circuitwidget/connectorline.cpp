@@ -277,7 +277,7 @@ void ConnectorLine::mouseMoveEvent( QGraphicsSceneMouseEvent* event )
 
     if( !m_moving && !Circuit::self()->is_constarted() )
     {
-        Circuit::self()->saveCompState( m_pConnector->getUid(), "pointList", m_pConnector->pListStr() );
+        Circuit::self()->saveCompChange( m_pConnector->getUid(), "pointList", m_pConnector->pListStr() );
         m_moving = true;
     }
 
