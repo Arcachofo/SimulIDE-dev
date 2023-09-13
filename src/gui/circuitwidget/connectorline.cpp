@@ -245,7 +245,7 @@ bool ConnectorLine::connectToWire( QPoint point1 )
     }
     if( Simulator::self()->isRunning() )  CircuitWidget::self()->powerCircOff();
 
-    if( !Circuit::self()->is_constarted() ) Circuit::self()->beginCicuitChange(); // A new Connector started here
+    if( !Circuit::self()->is_constarted() ) Circuit::self()->beginUndoStep(); // A new Connector started here
 
     QString type = "Node";
     QString id = type +"-"+ Circuit::self()->newSceneId();

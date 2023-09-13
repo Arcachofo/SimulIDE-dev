@@ -68,10 +68,10 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
         void saveCompState( QString name, QString property, QString value );
         void beginCicuitModify();
         void endCicuitModify();
-        void cancelCicuitModify();
-        void beginCicuitChange(); // Does create/remove
-        void endCicuitChange();   // Does create/remove
-        void calcCicuitChange();   // Does create/remove
+        void cancelUndoStep(); // Revert changes done
+        void beginUndoStep();  // Record current state
+        void calcCicuitChange();   // Calculate total changes
+        void endUndoStep();    // Does create/remove
         bool undoRedo() { return m_undo || m_redo; }
         //------------------------------------------------
 

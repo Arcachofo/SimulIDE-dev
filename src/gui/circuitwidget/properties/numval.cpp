@@ -76,7 +76,7 @@ void NumVal::on_valueBox_valueChanged( double val )
     bool undo = m_property->flags() & propNoCopy;
     if( undo ){
         oldValue = m_property->getValStr();
-        Circuit::self()->beginCicuitChange();
+        Circuit::self()->beginUndoStep();
     }
     if( m_useMult ) m_property->setValStr( getValWithUnit() );
     else            m_property->setValStr( QString::number( valueBox->value() ) );
