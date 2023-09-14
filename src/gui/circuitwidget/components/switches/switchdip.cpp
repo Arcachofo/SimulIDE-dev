@@ -49,8 +49,10 @@ SwitchDip::SwitchDip( QString type, QString id )
     Simulator::self()->addToUpdateList( this );
 
     addPropGroup( { tr("Main"), {
-new IntProp<SwitchDip>("Size", tr("Size"),tr("_Switches"), this, &SwitchDip::size, &SwitchDip::setSize,0,"uint" )
-    }, groupNoCopy} );
+new IntProp<SwitchDip>("Size", tr("Size"),tr("_Lines"), this
+                      , &SwitchDip::size, &SwitchDip::setSize, propNoCopy,"uint" )
+    }, groupNoCopy } );
+
     addPropGroup( {"Hidden", {
 new IntProp<SwitchDip>("State", "","", this, &SwitchDip::state, &SwitchDip::setState,0,"uint" )
     }, groupHidden} );

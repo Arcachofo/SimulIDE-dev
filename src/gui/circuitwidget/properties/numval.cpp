@@ -5,7 +5,7 @@
 
 #include "numval.h"
 #include "component.h"
-#include "circuit.h"
+//#include "circuit.h"
 #include "propdialog.h"
 #include "comproperty.h"
 #include "utils.h"
@@ -49,7 +49,6 @@ void NumVal::setup( bool isComp )
     }
     m_blocked = false;
     updtValues();
-    ///this->adjustSize();
 }
 
 void NumVal::on_showVal_toggled( bool checked )
@@ -72,23 +71,12 @@ void NumVal::on_valueBox_valueChanged( double val )
     if( m_blocked ) return;
     m_blocked = true;
 
-    QString oldValue;
-    bool undo = m_property->flags() & propNoCopy;
-    if( undo ){
-        oldValue = m_property->getValStr();
-        Circuit::self()->beginUndoStep();
-    }
+    prepareChange();
     if( m_useMult ) m_property->setValStr( getValWithUnit() );
     else            m_property->setValStr( QString::number( valueBox->value() ) );
     m_blocked = false;
     m_propDialog->updtValues();
-    m_propDialog->changed();
-
-    if( undo ){
-        Circuit::self()->calcCircuitChanges();
-        Circuit::self()->addCompChange( m_component->getUid(), m_propName, oldValue );
-        Circuit::self()->endCircuitChanges();
-    }
+    saveChanges();
 }
 
 void NumVal::on_unitBox_currentTextChanged( QString unit )

@@ -101,7 +101,10 @@ void CompBase::removeProperty( QString prop )
 bool CompBase::setPropStr( QString prop, QString val )
 {
     ComProperty* p = m_propHash.value( prop );
-    if( p ) p->setValStr( val );
+    if( p ){
+        p->setValStr( val );
+        if( m_propDialog ) m_propDialog->updtValues();
+    }
     else return false;
     return true;
 }

@@ -24,9 +24,9 @@ void StrVal::setup( bool )
 
 void StrVal::on_value_editingFinished()
 {
+    prepareChange();
     m_property->setValStr( value->text() );
-    updtValues();
-    m_propDialog->changed();
+    saveChanges();
 }
 
 void StrVal::updtValues()

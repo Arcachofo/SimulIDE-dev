@@ -30,9 +30,10 @@ void BoolVal::setup( bool )
 void BoolVal::on_trueVal_toggled( bool checked )
 {
     if( m_blocked ) return;
+
+    prepareChange();
     m_property->setValStr( checked ? "true" : "false" );
-    m_propDialog->updtValues();
-    m_propDialog->changed();
+    saveChanges();
 }
 
 void BoolVal::updtValues()

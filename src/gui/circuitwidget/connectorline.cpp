@@ -216,7 +216,6 @@ bool ConnectorLine::connectToWire( QPoint point1 )
 {
     int index;
     int myindex = m_pConnector->lineList()->indexOf( this );
-    ConnectorLine* line;
 
     if((( dy() == 0 && fabs( point1.x()-m_p2X ) < 8 ) // point near the p2 corner
      || ( dx() == 0 && fabs( point1.y()-m_p2Y ) < 8 ) )
@@ -225,7 +224,6 @@ bool ConnectorLine::connectToWire( QPoint point1 )
     if( myindex == m_pConnector->lineList()->size()-1 ) return false;
     point1 = p2();
     index = myindex+1;
-    line = m_pConnector->lineList()->at( index );
     }
     else if((( dy() == 0 && fabs( point1.x()-m_p1X ) < 8 ) // point near the p1 corner
           || ( dx() == 0 && fabs( point1.y()-m_p1Y ) < 8 ) )
@@ -233,14 +231,13 @@ bool ConnectorLine::connectToWire( QPoint point1 )
     {
         if( myindex == 0 ) return false;
         point1 = p1();
-        line = this;
         index = myindex;
     }
-    else{                               // split this line in two
+    else{                                           // split this line in two
         if( dy() == 0 ) point1.setY( m_p1Y );
         else            point1.setX( m_p1X );
         index = myindex+1;
-        line = new ConnectorLine( point1.x(), point1.y(), m_p2X, p2().y(), m_pConnector );
+        ConnectorLine* line = new ConnectorLine( point1.x(), point1.y(), m_p2X, p2().y(), m_pConnector );
         m_pConnector->addConLine( line, index );
     }
     if( Simulator::self()->isRunning() )  CircuitWidget::self()->powerCircOff();
@@ -259,8 +256,7 @@ bool ConnectorLine::connectToWire( QPoint point1 )
         m_pConnector->splitCon( index, node->getPin(0), node->getPin(2) );
         Circuit::self()->closeconnector( node->getPin(1), true );
     }
-    else                                     // A new Connector created here (starts in a node)
-    {
+    else{                                    // A new Connector created here (starts in a node)
         Pin* pin = node->getPin(1);
         if( m_isBus ) pin->setIsBus( true );
         Circuit::self()->newconnector( pin, false );

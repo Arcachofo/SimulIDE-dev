@@ -53,11 +53,13 @@ void EnumVal::on_showVal_toggled( bool checked )
 void EnumVal::on_valueBox_currentIndexChanged( QString val )
 {
     if( m_blocked ) return;
+
+    prepareChange();
     int index = valueBox->currentIndex();
     m_property->setValStr( m_enums.at( index ) );
 
     if( showVal->isChecked() ) m_component->setPropStr("ValLabelText", val ); //setValLabelText( val );
-    m_propDialog->changed();
+    saveChanges();
 }
 
 void EnumVal::updtValues()

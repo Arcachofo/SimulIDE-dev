@@ -13,8 +13,7 @@
 #include "connector.h"
 #include "pin.h"
 
-#define COMP_STATE_REMOVED "__COMP_STATE_REMOVED__"
-#define COMP_STATE_CREATED "__COMP_STATE_CREATED__"
+#define COMP_STATE_NEW "__COMP_STATE_NEW__"
 
 enum stateMode{
     stateNew = 1,
@@ -64,10 +63,10 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
         //--- Undo/Redo ----------------------------------
         void saveChanges();
         void removeLastUndo();
-        void addCompChange( QString component, QString property, QString value  );
-        void saveCompChange( QString component, QString property, QString value );
-        void beginCircuitChanges();
-        void endCircuitChanges();
+        void addCompChange(  QString component, QString property, QString undoVal );
+        void saveCompChange( QString component, QString property, QString undoVal );
+        void beginCircuitBatch();
+        void endCircuitBatch();
         void calcCircuitChanges(); // Calculate total changes
         void cancelUndoStep();     // Revert changes done
         void beginUndoStep();      // Record current state
@@ -150,10 +149,11 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
  static Circuit*  m_pSelf;
 
         //--- Undo/Redo ----------------------------------
-        struct compChange{       // Component Change to be performed by Undo/Redo to complete a Circuit change
-            QString component;
-            QString property;
-            QString valStr;
+        struct compChange{      // Component Change to be performed by Undo/Redo to complete a Circuit change
+            QString component;  // Component name
+            QString property;   // Property name
+            QString undoValue;  // Property value for Undo step
+            QString redoValue;  // Property value for Redo step
         };
         struct circChange{       // Circuit Change to be performed by Undo/Redo to restore circuit state
             QList<compChange> compChanges;
@@ -162,16 +162,16 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
         };
 
         inline void clearCircChanges() { m_circChange.clear(); }
-        bool restoreState( circChange step );
-        void clearUndoRedo();
-        void finishUndoRedo();
+        void deleteRemoved();
+        void restoreState();
 
-        QSet<CompBase*> m_removedComps; // removed component list;
+        int m_maxUndoSteps;
+        int m_undoIndex;
 
         circChange m_circChange;
         QList<circChange> m_undoStack;
-        QList<circChange> m_redoStack;
 
+        QSet<CompBase*>  m_removedComps; // removed component list;
         QSet<Connector*> m_oldConns;
         QSet<Component*> m_oldComps;
         QSet<Node*>      m_oldNodes;
@@ -196,9 +196,6 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
         int m_seqNumber;
         int m_conNumber;
         int m_error;
-        int m_maxUndoSteps;
-        int m_undoIndex;
-        int m_redoIndex;
 
         bool m_pasting;
         bool m_deleting;
@@ -214,7 +211,7 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
         bool m_redo;
         bool m_acceptKeys;
         bool m_createSubc;
-        int m_cicuitChange;
+        int m_cicuitBatch;
 
         QPointF m_eventpoint;
         QPointF m_deltaMove;

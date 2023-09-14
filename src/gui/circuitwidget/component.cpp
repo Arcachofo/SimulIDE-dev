@@ -220,7 +220,7 @@ void Component::mouseMoveEvent( QGraphicsSceneMouseEvent* event )
 
     if( !m_moving )         // Get lists of elements to move and save Undo state
     {
-        Circuit::self()->beginCircuitChanges();
+        Circuit::self()->beginCircuitBatch();
 
         m_conMoveList.clear();
         m_compMoveList.clear();

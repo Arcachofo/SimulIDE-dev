@@ -30,7 +30,12 @@ class PropVal : public QWidget
         void addDividers( QComboBox* unitBox, QString unit );
         void addMultipliers( QComboBox* unitBox, QString unit );
 
+        void prepareChange();
+        void saveChanges();
+
         bool m_blocked;
+        bool m_undo;
+        QString m_oldValue;
 
         QString m_propName;
 

@@ -8,6 +8,7 @@
 #include "propval.h"
 #include "propdialog.h"
 #include "comproperty.h"
+#include "circuit.h"
 
 PropVal::PropVal( PropDialog* parent, CompBase* comp, ComProperty* prop )
        : QWidget( parent )
@@ -37,3 +38,21 @@ void PropVal::addMultipliers( QComboBox* unitBox, QString unit )
     unitBox->addItem("T"+unit );
 }
 
+void PropVal::prepareChange()
+{
+    m_undo = m_property->flags() & propNoCopy;
+    if( !m_undo ) return;
+    m_oldValue = m_property->getValStr();
+    Circuit::self()->beginUndoStep();
+}
+
+void PropVal::saveChanges()
+{
+    if( m_undo ){ // Don'use endUndoStep() because We need addCompChange() before endCircuitBatch()
+        Circuit::self()->calcCircuitChanges();
+        Circuit::self()->addCompChange( m_component->getUid(), m_propName, m_oldValue );
+        Circuit::self()->endCircuitBatch();
+    }
+    else m_propDialog->changed();
+    m_propDialog->updtValues();
+}
