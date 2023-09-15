@@ -119,6 +119,14 @@ void Diode::updateStep()
     if( m_changed ) voltChanged(); // m_changed cleared at eDiode::voltChanged
 }
 
+void Diode::voltChanged()
+{
+    eDiode::voltChanged();
+    if( !m_converged ) return;
+
+    for( Component* comp : m_linkedComp ) comp->setLinkedValue( m_current );
+}
+
 void Diode::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
 {
     Component::paint( p, option, widget );

@@ -55,6 +55,8 @@ class MAINMODULE_EXPORT eDiode : public eResistor
         void SetParameters( double sc, double ec, double bv, double sr );
         void updateValues();
 
+        bool m_converged;
+
         double m_vt;
         double m_satCur;
         double m_emCoef;

@@ -30,8 +30,9 @@ eDiode::~eDiode(){}
 
 void eDiode::stamp()
 {
-    m_admit = m_bAdmit;
-    m_voltPN = 0;
+    m_converged = true;
+    m_admit   = m_bAdmit;
+    m_voltPN  = 0;
     m_current = 0;
 
     eResistor::stamp();
@@ -51,7 +52,8 @@ void eDiode::voltChanged()
     double voltPN = m_ePin[0]->getVoltage() - m_ePin[1]->getVoltage();
 
     if( m_changed ) m_changed = false;
-    else if( qFabs( voltPN - m_voltPN ) < .01 ) { m_step = 0; return; } // Converged
+    else if( qFabs( voltPN - m_voltPN ) < .01 ) { m_step = 0; m_converged = true; return; } // Converged
+    m_converged = false;
     Simulator::self()->notCorverged();
 
     m_step += .01;
