@@ -162,6 +162,7 @@ LibraryItem* SubCircuit::libraryItem()
 SubCircuit::SubCircuit( QString type, QString id )
           : Chip( type, id )
 {
+    m_lsColor = QColor( 235, 240, 255 );
     m_icColor = QColor( 20, 30, 60 );
     //m_mainComponent = NULL;
 }

@@ -34,7 +34,7 @@ Rail::Rail( QString type, QString id )
 {
     setLabelPos(-64,-24 );
 
-    m_area = QRect(-4, -8, 12, 16 );
+    m_area = QRect(-2, -8, 12, 16 );
     m_changed = false;
 
     m_pin.resize(1);

@@ -22,7 +22,6 @@ class MAINMODULE_EXPORT Led : public LedBase, public Linkable
 
         virtual void voltChanged() override;
 
-    public slots:
         void slotLinkComp() { Linkable::startLinking(); }
 
     protected:

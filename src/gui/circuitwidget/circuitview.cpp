@@ -38,13 +38,12 @@ CircuitView::CircuitView( QWidget *parent )
 
     //viewport()->setFixedSize( 3200, 2400 );
     bool scrollBars = MainWindow::self()->settings()->value( "Circuit/showScroll" ).toBool();
-    if( scrollBars )
-    {
+    if( scrollBars ){
         setHorizontalScrollBarPolicy( Qt::ScrollBarAlwaysOn );
-        setVerticalScrollBarPolicy( Qt::ScrollBarAlwaysOn );
+        setVerticalScrollBarPolicy(   Qt::ScrollBarAlwaysOn );
     }else{
         setHorizontalScrollBarPolicy( Qt::ScrollBarAlwaysOff );
-        setVerticalScrollBarPolicy( Qt::ScrollBarAlwaysOff );
+        setVerticalScrollBarPolicy(   Qt::ScrollBarAlwaysOff );
     }
     //setViewportUpdateMode( QGraphicsView::FullViewportUpdate );
     //setCacheMode( CacheBackground );
@@ -129,15 +128,14 @@ void CircuitView::mousePressEvent( QMouseEvent* event )
     if( event->button()   == Qt::LeftButton
      && event->modifiers() & Qt::ControlModifier
      && event->modifiers() & Qt::ShiftModifier
-     && !m_circuit->is_constarted() )
+     && !m_circuit->is_constarted() )                   // Prepare Copy by drag
     {
         QGraphicsItem* item = itemAt( event->pos() );
-        if( item )                                                  // Check if item exists before start drag:
-        {
+        if( item ){                                                 // Check if item exists before start drag:
             while ( item->parentItem() ) item = item->parentItem(); // Make sure the item deselected is the top graphic item.
 
             if( !item->isSelected() ) m_circuit->clearSelection();  // If the comp is not selected when drag starts, clear all the selections.
-            item->setSelected( false );
+            else                      item->setSelected( false );
             m_mousePressPos = event->pos();
             m_waitForDragStart = true;
         }
@@ -164,10 +162,10 @@ void CircuitView::mouseMoveEvent( QMouseEvent* event )
 
         if( event->modifiers() & Qt::ControlModifier
          && event->modifiers() & Qt::ShiftModifier
-         && !m_circuit->selectedItems().isEmpty() )
+         && !m_circuit->selectedItems().isEmpty() )     // Start Copy by drag
         {
             event->accept();
-            m_circuit->beginCircuitBatch();     // Add this to force paste() to not save changes
+            m_circuit->beginCircuitBatch();     // Do this to force paste() to not save changes
             m_circuit->copy( m_mousePressPos ); // Component move after paste() will save changes
             m_circuit->paste( event->pos() );   // paste() will call beginUndoStep()
         }
@@ -265,11 +263,9 @@ void CircuitView::zoomOne()
     m_scale = 1;
 }
 
-void CircuitView::importCirc()
-{ Circuit::self()->importCirc( m_eventpoint ); }
+void CircuitView::importCirc() { Circuit::self()->importCircuit(); }
 
-void CircuitView::slotPaste()
-{ m_circuit->paste( m_eventpoint ); }
+void CircuitView::slotPaste() { m_circuit->paste( m_eventpoint ); }
 
 void CircuitView::saveImage()
 {

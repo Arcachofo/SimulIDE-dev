@@ -15,14 +15,6 @@
 
 #define COMP_STATE_NEW "__COMP_STATE_NEW__"
 
-enum stateMode{
-    stateNew = 1,
-    stateAdd = 2,
-    stateSave = 4,
-    stateNewAdd = stateNew | stateAdd,
-    stateAddSave = stateAdd | stateSave
-};
-
 class CircuitView;
 class SubPackage;
 class Simulator;
@@ -133,7 +125,7 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
         void paste( QPointF eventpoint );
         void undo();
         void redo();
-        void importCirc( QPointF eventpoint );
+        void importCircuit();
         //void bom();
         void saveBackup();
 
@@ -147,36 +139,6 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
 
     private:
  static Circuit*  m_pSelf;
-
-        //--- Undo/Redo ----------------------------------
-        struct compChange{      // Component Change to be performed by Undo/Redo to complete a Circuit change
-            QString component;  // Component name
-            QString property;   // Property name
-            QString undoValue;  // Property value for Undo step
-            QString redoValue;  // Property value for Redo step
-        };
-        struct circChange{       // Circuit Change to be performed by Undo/Redo to restore circuit state
-            QList<compChange> compChanges;
-            int size() { return compChanges.size(); }
-            void clear() { compChanges.clear(); }
-        };
-
-        inline void clearCircChanges() { m_circChange.clear(); }
-        void deleteRemoved();
-        void restoreState();
-
-        int m_maxUndoSteps;
-        int m_undoIndex;
-
-        circChange m_circChange;
-        QList<circChange> m_undoStack;
-
-        QSet<CompBase*>  m_removedComps; // removed component list;
-        QSet<Connector*> m_oldConns;
-        QSet<Component*> m_oldComps;
-        QSet<Node*>      m_oldNodes;
-        QMap<CompBase*, QString> m_compStrMap;
-        //-------------------------------------------------
 
         void loadStrDoc( QString &doc );
         bool saveString( QString &fileName, QString doc );
@@ -230,6 +192,36 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
         QTimer m_bckpTimer;
 
         Simulator* m_simulator;
+
+        //--- Undo/Redo ----------------------------------
+
+        struct compChange{      // Component Change to be performed by Undo/Redo to complete a Circuit change
+            QString component;  // Component name
+            QString property;   // Property name
+            QString undoValue;  // Property value for Undo step
+            QString redoValue;  // Property value for Redo step
+        };
+        struct circChange{       // Circuit Change to be performed by Undo/Redo to restore circuit state
+            QList<compChange> compChanges;
+            int size() { return compChanges.size(); }
+            void clear() { compChanges.clear(); }
+        };
+
+        inline void clearCircChanges() { m_circChange.clear(); }
+        void deleteRemoved();
+        void restoreState();
+
+        int m_maxUndoSteps;
+        int m_undoIndex;
+
+        circChange m_circChange;
+        QList<circChange> m_undoStack;
+
+        QSet<CompBase*>  m_removedComps; // removed component list;
+        QSet<Connector*> m_oldConns;
+        QSet<Component*> m_oldComps;
+        QSet<Node*>      m_oldNodes;
+        QMap<CompBase*, QString> m_compStrMap;
 };
 
 #endif

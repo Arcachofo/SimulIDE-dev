@@ -209,7 +209,7 @@ void EditorWindow::pauseAt( codeLine_t line )
     m_debugFile = line.file;
     m_debugLine = line.lineNumber;
 
-    int cycle = eMcu::self()->cycle();
+    uint64_t cycle = eMcu::self()->cycle();
     double time = Simulator::self()->circTime()/1e6;
     m_outPane.appendLine( tr("Line ")+QString::number( m_debugLine )+"\t"
                          +tr("Clock Cycles: ")+QString::number( cycle-m_lastCycle )+"\t"

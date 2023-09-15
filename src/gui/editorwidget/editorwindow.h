@@ -88,7 +88,7 @@ class EditorWindow : public EditorWidget, public Updatable
         bool m_stepOver;
         bool m_updateScreen;
         bool m_jumpToBrk;
-        int m_lastCycle;
+        uint64_t m_lastCycle;
         double m_lastTime;
 
         QString m_debugFile;

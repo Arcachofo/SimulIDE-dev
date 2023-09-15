@@ -509,19 +509,19 @@ bool Circuit::saveString( QString &fileName, QString doc )
     return true;
 }
 
-bool Circuit::saveCircuit( QString fileName )
+bool Circuit::saveCircuit( QString filePath )
 {
     if( m_conStarted ) return false;
 
     QApplication::setOverrideCursor(Qt::WaitCursor);
 
     QString oldFilePath = m_filePath;
-    m_filePath = fileName;
+    m_filePath = filePath;
 
-    bool saved = saveString( fileName, circuitToString() );
+    bool saved = saveString( filePath, circuitToString() );
     if( saved )
     {
-        qDebug() << "\nCircuit Saved: \n" << fileName;
+        qDebug() << "\nCircuit Saved: \n" << filePath;
         QFile file( m_backupPath );
         if( file.exists() ) QFile::remove( m_backupPath ); // Remove backup file
     }
@@ -531,26 +531,24 @@ bool Circuit::saveCircuit( QString fileName )
     return saved;
 }
 
-void Circuit::importCirc(  QPointF eventpoint  )
+void Circuit::importCircuit()
 {
     if( m_conStarted ) return;
-    m_pasting = true;
-    if( m_simulator->isRunning() ) CircuitWidget::self()->powerCircOff();
 
-    m_deltaMove = QPointF( 160, 160 );//toGrid(eventpoint);
+    m_deltaMove = QPointF( 0, 0 );
 
-    const QString dir = m_filePath;
-    QString fileName = QFileDialog::getOpenFileName( 0l, tr("Load Circuit"), dir,
+    QString filePath = QFileDialog::getOpenFileName( 0l, tr("Import Circuit"), m_filePath,
                                           tr("Circuits (*.sim*);;All files (*.*)"));
 
-    if( !fileName.isEmpty()
-     && (fileName.endsWith(".simu") || fileName.endsWith(".sim1")) )
+    if( !filePath.isEmpty()
+     && ( filePath.endsWith(".simu") || filePath.endsWith(".sim1") ) )
     {
-        beginUndoStep();
-        loadCircuit( fileName );
-        endUndoStep();
+        QString doc = fileToString( filePath, "Circuit::importCirc" );
+        QApplication::clipboard()->setText( doc );
+
+        m_eventpoint = QPointF(0,0);
+        paste( QPointF(0,0) );
     }
-    m_pasting = false;
 }
 
 Component* Circuit::createItem( QString type, QString id, bool map )
@@ -578,31 +576,28 @@ void Circuit::removeItems()                     // Remove Selected items
     QList<Connector*> conns;
     QList<Component*> comps;
 
-    // remove all connectors
-    for( QGraphicsItem* item : selectedItems() )
+    for( QGraphicsItem* item : selectedItems() )    // Find all items to be removed
     {
-        if( item->type() == QGraphicsItem::UserType+2 ) // ConnectorLine
+        if( item->type() == QGraphicsItem::UserType+2 )      // ConnectorLine: add Connector to list
         {
             ConnectorLine* line = qgraphicsitem_cast<ConnectorLine*>( item );
             Connector* con = line->connector();
             if( !conns.contains( con ) ) conns.append( con );
         }
-        else if( item->type() == QGraphicsItem::UserType+1 ) // Component
+        else if( item->type() == QGraphicsItem::UserType+1 ) // Component: add Component to list
         {
             Component* comp = qgraphicsitem_cast<Component*>( item );
             comps.append( comp );
         }
     }
-    for( Connector* conn : conns ) removeConnector( conn );
-
+    for( Connector* conn : conns ) removeConnector( conn );         // Remove Connectors (does not delete)
     for( Component* comp: comps ){
-        if( comp->itemType() == "Node" ) removeNode( (Node*)comp );
-        else                             removeComp( comp );
+        if( comp->itemType() == "Node" ) removeNode( (Node*)comp ); // Remove Nodes (does not delete)
+        else                             removeComp( comp );        // Remove Components (does not delete)
     }
-    endUndoStep(); // Calculates created/removed
+    endUndoStep();                                           // Calculates items actually created/removed
 
     for( QGraphicsItem* item : selectedItems() ) item->setSelected( false );
-
     m_busy = false;
 }
 
@@ -643,15 +638,13 @@ void Circuit::clearCircuit() // Remove everything ( Clear Circuit )
     m_deleting = true;
     if( m_simulator->isRunning() ) CircuitWidget::self()->powerCircOff();
 
-    QSet<Component*> compList = m_compList;
-    for( Component* comp : compList )
+    for( Component* comp : m_compList )
     {
         comp->remove();
         if( comp->scene() ) removeItem( comp );
         delete comp;
     }
-    QSet<Node*> nodeList = m_nodeList;
-    for( Node* node : nodeList )
+    for( Node* node : m_nodeList )
     {
         if( node->scene() ) removeItem( node );
         delete node;
@@ -694,8 +687,7 @@ void Circuit::saveChanges()
 
     clearCircChanges();
     m_cicuitBatch = 0;  // Ends all CicuitChanges
-
-    deleteRemoved(); // Delete Removed Components;
+    deleteRemoved();    // Delete Removed Components;
 
     /// qDebug() << "Circuit::saveChanges ---------------------------"<<m_undoIndex<<m_undoStack.size()<<endl;
 }
@@ -786,11 +778,8 @@ void Circuit::saveCompChange( QString component, QString property, QString undoV
 
 void Circuit::addCompChange( QString component, QString property, QString undoVal )
 {
-    if( m_loading || m_deleting ) return;
-    /// qDebug() << "Circuit::addCompChange      " << component << property;// << value;
-
+    if( m_loading || m_deleting ) return;                      /// qDebug() << "Circuit::addCompChange      " << component << property;// << value;
     compChange cChange{ component, property, undoVal, "" };
-
     m_circChange.compChanges.append( cChange );
 }
 
@@ -811,13 +800,11 @@ void Circuit::restoreState()
         i += iStep;
         QString propName   = cChange->property;
         QString propVal    = m_undo ? cChange->undoValue : cChange->redoValue;
-        CompBase* comp     = m_compMap.value( cChange->component );
+        CompBase* comp     = m_compMap.value( cChange->component );             /// qDebug() << "Circuit::restoreState"<< cChange->component << propName << comp;
 
-    /// qDebug() << "Circuit::restoreState"<< cChange->component << propName << comp;
-
-        if( propName == COMP_STATE_NEW )                       // Create/Remove Item
+        if( propName == COMP_STATE_NEW )  // Create/Remove Item
         {
-            if( propVal.isEmpty() )               // Remove item
+            if( propVal.isEmpty() )       // Remove item
             {
                 if( !comp ) continue;
                 if( m_undo && cChange->redoValue.isEmpty() ) cChange->redoValue = comp->toString();
@@ -826,16 +813,16 @@ void Circuit::restoreState()
                 else if( comp->itemType() == "Node"      ) removeNode( (Node*)comp );
                 else                                       removeComp( (Component*)comp );
             }
-            else loadStrDoc( propVal );           // Create Item
+            else loadStrDoc( propVal );   // Create Item
         }
-        else if( comp )
+        else if( comp )                   // Modify Property
         {
             if( m_undo && cChange->redoValue.isEmpty() ) cChange->redoValue = comp->getPropStr( propName );
-            comp->setPropStr( propName, propVal ); // Property
+            comp->setPropStr( propName, propVal );
         }
     }
     m_busy = false;
-    deleteRemoved(); // Delete Removed Components;
+    deleteRemoved();                      // Delete Removed Components;
     for( Connector* con : m_connList ) {
         if( m_board && m_board->m_boardMode ) con->setVisib( false );
         else{
@@ -848,8 +835,7 @@ void Circuit::restoreState()
 
 void Circuit::undo()
 {
-    if( m_busy || m_deleting || m_conStarted || m_undoIndex < 0 ) return;
-/// qDebug() << "\nCircuit::undo"<<m_undoIndex<<m_undoStack.size();
+    if( m_busy || m_deleting || m_conStarted || m_undoIndex < 0 ) return; /// qDebug() << "\nCircuit::undo"<<m_undoIndex<<m_undoStack.size();
     m_undo = true;
     restoreState();
     m_undoIndex--;
@@ -860,8 +846,7 @@ void Circuit::redo()
 {
     if( m_busy || m_deleting || m_conStarted || m_undoIndex >= (m_undoStack.size()-1) ) return;
     m_redo = true;
-    m_undoIndex++;
-/// qDebug() << "\nCircuit::redo"<<m_undoIndex<<m_undoStack.size();
+    m_undoIndex++;                                 /// qDebug() << "\nCircuit::redo"<<m_undoIndex<<m_undoStack.size();
     restoreState();
     m_redo = false;
 }
@@ -903,6 +888,14 @@ void Circuit::paste( QPointF eventpoint )
 
     m_busy    = true;
     m_pasting = true;
+
+    if( m_eventpoint == QPointF(1e6,1e6) ) // We don't have origin point
+    {
+        QRectF itemsRect = selectionArea().boundingRect();
+        m_eventpoint = toGrid( itemsRect.topLeft() );
+    }
+    if( eventpoint == QPointF(1e6,1e6) ) eventpoint = m_eventpoint+QPointF( 8, 8 );
+
     for( QGraphicsItem*item : selectedItems() ) item->setSelected( false );
 
     m_deltaMove = toGrid(eventpoint) - m_eventpoint;
@@ -1082,8 +1075,9 @@ void Circuit::keyPressEvent( QKeyEvent* event )
     {
         if( key == Qt::Key_C )
         {
-            QPoint p = CircuitWidget::self()->mapFromGlobal(QCursor::pos());
-            copy( m_graphicView->mapToScene( p ) );
+            //QPoint p = CircuitWidget::self()->mapFromGlobal(QCursor::pos());
+            //copy( m_graphicView->mapToScene( p ) );
+            copy( QPointF(1e6,1e6) ); // We don't have an origin
             clearSelection();
         }
         if( key == Qt::Key_X )
@@ -1094,8 +1088,9 @@ void Circuit::keyPressEvent( QKeyEvent* event )
         }
         else if( key == Qt::Key_V )
         {
-            QPoint p = CircuitWidget::self()->mapFromGlobal(QCursor::pos());
-            paste( m_graphicView->mapToScene( p ) );
+            //QPoint p = CircuitWidget::self()->mapFromGlobal(QCursor::pos());
+            //paste( m_graphicView->mapToScene( p ) );
+            paste( QPointF(1e6,1e6) ); // We don't have a destination
         }
         else if( key == Qt::Key_Z )
         {

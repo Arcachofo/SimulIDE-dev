@@ -51,15 +51,9 @@ Led::~Led(){}
 void Led::voltChanged()
 {
     eLed::voltChanged();
+    if( !m_converged ) return;
 
-    if( m_converged )
-    {
-        for( int i=0; i<m_linkedComp.size(); ++i )
-        {
-            Component* comp = m_linkedComp.at( i );
-            comp->setLinkedValue( m_current );  //update();
-        }
-    }
+    for( Component* comp : m_linkedComp ) comp->setLinkedValue( m_current );
 }
 
 void Led::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )

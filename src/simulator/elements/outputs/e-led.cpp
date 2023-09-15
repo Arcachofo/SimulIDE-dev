@@ -22,6 +22,7 @@ eLed::~eLed() {}
 
 void eLed::initialize()
 {
+    m_converged = true;
     m_prevStep     = 0;
     m_avgCurrent   = 0.;
     m_intensity    = 0;

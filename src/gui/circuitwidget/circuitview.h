@@ -53,8 +53,8 @@ class CircuitView : public QGraphicsView
         qreal m_scale;
         QString m_help;
  
-        Component*  m_enterItem;
-        Circuit*    m_circuit;
+        Component* m_enterItem;
+        Circuit*   m_circuit;
 
         QPointF m_eventpoint;
 

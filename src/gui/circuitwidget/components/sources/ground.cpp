@@ -27,7 +27,7 @@ LibraryItem* Ground::libraryItem()
 Ground::Ground( QString type, QString id )
       : Component( type, id )
 {
-    m_area = QRect(-10,-10, 20, 14 );
+    m_area = QRect(-8,-10, 16, 12 );
 
     m_pin.resize(1);
     IoPin* pin = new IoPin( 90, QPoint( 0,-16 ), id+"-Gnd", 0, this, source );
