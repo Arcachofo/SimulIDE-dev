@@ -239,7 +239,7 @@ void Pin::setLabelText( QString label, bool over )
     setLabelPos();
 }
 
-void Pin::setSpace( int s )
+void Pin::setSpace( double s )
 {
     m_space = s;
     setLabelPos();
@@ -249,12 +249,12 @@ void Pin::setLabelPos()
 {
     QFontMetrics fm( m_label.font() );
 
-    int xlabelpos = pos().x();
-    int ylabelpos = pos().y();
+    double xlabelpos = pos().x();
+    double ylabelpos = pos().y();
     m_labelheight = (fm.height()+1)/2;
     m_labelWidth  = fm.width(m_label.text());
-    int space = m_space ? m_space : ( m_labelheight < 4 ) ? 2 : m_labelheight/2;
-    int offset = m_length + space;
+    double space  = m_space ? m_space : (( m_labelheight < 4 ) ? 2 : m_labelheight/2);
+    double offset = m_length + space;
 
     if( m_angle == 0 )         // Right side
     {

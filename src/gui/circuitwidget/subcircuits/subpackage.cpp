@@ -378,7 +378,7 @@ void SubPackage::setPinAngle( int i )
     update();
 }
 
-void SubPackage::setPinSpace( int space )
+void SubPackage::setPinSpace( double space )
 {
     m_eventPin->setSpace( space );
 }
@@ -616,8 +616,8 @@ EditDialog::EditDialog( SubPackage* pack, Pin* eventPin, QWidget* parent )
     idLayout->addWidget( m_idLabel );
     idLayout->addWidget( m_idLineEdit );
 
-    m_spaceLabel = new QLabel( tr("Name Space:") );
-    m_spaceBox = new QSpinBox();
+    m_spaceLabel = new QLabel( tr("Space to Pin:") );
+    m_spaceBox   = new QDoubleSpinBox();
     m_spaceBox->setValue( eventPin->space() );
     QHBoxLayout* spaceLayout = new QHBoxLayout;
     spaceLayout->addWidget( m_spaceLabel );
@@ -670,8 +670,8 @@ EditDialog::EditDialog( SubPackage* pack, Pin* eventPin, QWidget* parent )
     QObject::connect( m_idLineEdit, &QLineEdit::textEdited,
                       [=](const QString &s){ m_package->setPinId(s); } );
 
-    QObject::connect( m_spaceBox, QOverload<int>::of(&QSpinBox::valueChanged),
-                      [=](int s){ m_package->setPinSpace(s); } );
+    QObject::connect( m_spaceBox, QOverload<double>::of(&QDoubleSpinBox::valueChanged),
+                      [=](double s){ m_package->setPinSpace(s); } );
 
     QObject::connect( m_angleBox, QOverload<int>::of(&QComboBox::currentIndexChanged),
                       [=](int a){ m_package->setPinAngle(a); }  );

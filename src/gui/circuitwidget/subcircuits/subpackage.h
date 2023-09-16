@@ -11,7 +11,6 @@
 
 class LibraryItem;
 class QAction;
-class QSpinBox;
 
 class MAINMODULE_EXPORT SubPackage : public Chip, public Linkable
 {
@@ -49,7 +48,7 @@ class MAINMODULE_EXPORT SubPackage : public Chip, public Linkable
         void setPinId( QString id );
         void setPinName( QString name );
         void setPinAngle( int i );
-        void setPinSpace( int space );
+        void setPinSpace( double space );
         void boardModeSlot();
         void setBoardMode( bool mode );
         void mainComp() { Linkable::startLinking(); }
@@ -62,7 +61,6 @@ class MAINMODULE_EXPORT SubPackage : public Chip, public Linkable
         void loadPackage();
         void slotSave();
         void editFinished( int r );
-
 
         void mousePressEvent( QGraphicsSceneMouseEvent* event ) override;
         void hoverMoveEvent( QGraphicsSceneHoverEvent* event ) override;
@@ -101,6 +99,7 @@ class QLabel;
 class QLineEdit;
 class QCheckBox;
 class QComboBox;
+class QDoubleSpinBox;
 
 class EditDialog : public QDialog
 {
@@ -120,7 +119,7 @@ class EditDialog : public QDialog
         QLineEdit* m_idLineEdit;
 
         QLabel*    m_spaceLabel;
-        QSpinBox*  m_spaceBox;
+        QDoubleSpinBox* m_spaceBox;
 
         QLabel*    m_angleLabel;
         QComboBox* m_angleBox;
