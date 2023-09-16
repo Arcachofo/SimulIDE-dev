@@ -603,12 +603,13 @@ void Circuit::removeItems()                     // Remove Selected items
 
 void Circuit::removeComp( Component* comp )
 {
+    if( comp->parentItem() ) return; // subcircuit
     m_compRemoved = false;
     comp->remove();
     if( !m_compRemoved ) return;
 
     if( m_compList.contains( comp ) ) m_compList.remove( comp );
-    if( comp->scene() ) removeItem( comp );
+    removeItem( comp );
     m_compMap.remove( comp->getUid() );
     m_removedComps.insert( comp );
 }
