@@ -211,9 +211,16 @@ void EditorWindow::pauseAt( codeLine_t line )
 
     uint64_t cycle = eMcu::self()->cycle();
     double time = Simulator::self()->circTime()/1e6;
-    m_outPane.appendLine( tr("Line ")+QString::number( m_debugLine )+"\t"
-                         +tr("Clock Cycles: ")+QString::number( cycle-m_lastCycle )+"\t"
-                         +tr("Time us: ")+QString::number( time-m_lastTime ));
+
+    QString lineStr = QString::number( m_debugLine );
+    while( lineStr.length() < 6 ) lineStr.append(" ");
+
+    QString cycleStr = QString::number( cycle-m_lastCycle );
+    while( cycleStr.length() < 15 ) cycleStr.append(" ");
+
+    m_outPane.appendLine( tr("Line ")+lineStr
+                        + tr("Clock Cycles: ")+cycleStr
+                        + tr("Time us: ")+QString::number( time-m_lastTime ));
     m_lastCycle = cycle;
     m_lastTime = time;
     m_updateScreen = true;
