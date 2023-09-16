@@ -62,7 +62,7 @@ CircuitWidget::CircuitWidget( QWidget *parent  )
     m_mainSplitter->addWidget( m_panelSplitter );
     m_mainSplitter->setSizes( {500, 100} );
 
-    QFont font( "Ubuntu", 10, QFont::Bold );
+    QFont font( MainWindow::self()->defaultFontName(), 10, QFont::Bold );
     double scale = MainWindow::self()->fontScale();
     font.setPixelSize( 14*scale );
     m_msgLabel = new QLabel( this );

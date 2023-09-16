@@ -53,6 +53,9 @@ class AppDialog : public QDialog, private Ui::AppDialog
 
         void on_slopeStepsBox_editingFinished();
 
+    private slots:
+        void on_fontName_currentFontChanged( const QFont &f );
+
     private:
         void updtHelp();
         void updtSpeed();

@@ -19,6 +19,7 @@ AppDialog::AppDialog( QWidget* parent )
 
     // App Settings
     language->setCurrentIndex( (int)MainWindow::self()->lang() );
+    fontName->setCurrentText( MainWindow::self()->defaultFontName() );
     fontScale->setValue( MainWindow::self()->fontScale() );
     userPath->setText( MainWindow::self()->userPath() );
 
@@ -242,3 +243,9 @@ void AppDialog::on_slopeStepsBox_editingFinished()
 {
     Simulator::self()->setSlopeSteps( slopeStepsBox->value() );
 }
+
+void AppDialog::on_fontName_currentFontChanged( const QFont &f )
+{
+    MainWindow::self()->setDefaultFontName( f.family() );
+}
+

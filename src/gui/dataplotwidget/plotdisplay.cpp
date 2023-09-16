@@ -42,14 +42,14 @@ PlotDisplay::PlotDisplay( QWidget* parent )
     m_expand = false;
 
     double fontScale = MainWindow::self()->fontScale();
-    m_fontB.setFamily("Ubuntu");
+    m_fontB.setFamily( MainWindow::self()->defaultFontName() );
     m_fontB.setPixelSize( 9.2*fontScale );
     m_fontB.setBold( true );
-    m_fontXS.setFamily("Ubuntu");
+    m_fontXS.setFamily( MainWindow::self()->defaultFontName() );
     m_fontXS.setPixelSize( 8 );
-    m_fontS.setFamily("Ubuntu");
+    m_fontS.setFamily( MainWindow::self()->defaultFontName() );
     m_fontS.setPixelSize( 11 );
-    m_fontL.setFamily("Ubuntu");
+    m_fontL.setFamily( MainWindow::self()->defaultFontName() );
     m_fontL.setPixelSize( 12 );
 
     m_scaleColor[0] = QColor( 70, 70, 70 );

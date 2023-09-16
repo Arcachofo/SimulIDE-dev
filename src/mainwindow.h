@@ -58,6 +58,9 @@ class MAINMODULE_EXPORT MainWindow : public QMainWindow
 
         Langs lang() { return m_lang; }
         void setLang( Langs lang );
+
+        void setDefaultFontName( const QString& fontName );
+        QString defaultFontName() { return m_fontName; }
         
         float fontScale() { return m_fontScale; }
         void setFontScale( float scale );
@@ -95,6 +98,7 @@ class MAINMODULE_EXPORT MainWindow : public QMainWindow
         void createToolBars();
         void writeSettings();
         
+        QString m_fontName;
         float m_fontScale;
         int m_autoBck;
         

@@ -15,7 +15,7 @@ InfoWidget::InfoWidget( QWidget* parent )
     setupUi( this );
     m_pSelf = this;
 
-    QFont font( "Ubuntu", 10, QFont::Bold );
+    QFont font( MainWindow::self()->defaultFontName() , 10, QFont::Bold );
     double fontScale = MainWindow::self()->fontScale();
     font.setPixelSize( 12*fontScale );
 

@@ -9,6 +9,7 @@
 #include "custombutton.h"
 #include "customdial.h"
 #include "customslider.h"
+#include "mainwindow.h"
 
 VoltWidget::VoltWidget()
 {
@@ -19,7 +20,7 @@ VoltWidget::VoltWidget()
     pushButton->setCheckable( true );
 
     QFont font;
-    font.setFamily("Ubuntu");
+    font.setFamily( MainWindow::self()->defaultFontName() );
     font.setPixelSize(8);
     font.setLetterSpacing( QFont::PercentageSpacing, 100 );
 #ifdef _WIN32

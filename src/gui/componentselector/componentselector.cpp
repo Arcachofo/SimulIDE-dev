@@ -194,7 +194,7 @@ void ComponentSelector::addItem( QString caption, QTreeWidgetItem* catItem, QStr
     QTreeWidgetItem* item = new QTreeWidgetItem(0);
     float scale = MainWindow::self()->fontScale();
     QFont font;
-    font.setFamily("Ubuntu");
+    font.setFamily( MainWindow::self()->defaultFontName() );
     font.setBold( true );
     font.setPixelSize( 11*scale );
 
@@ -235,7 +235,7 @@ QTreeWidgetItem* ComponentSelector::addCategory( QString nameTr, QString name, Q
     QTreeWidgetItem* catItem = NULL;
 
     QFont font;
-    font.setFamily("Ubuntu");
+    font.setFamily( MainWindow::self()->defaultFontName() );
     font.setBold( true );
     float fontScale = MainWindow::self()->fontScale();
     bool expanded = false;

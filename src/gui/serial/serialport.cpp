@@ -17,6 +17,7 @@
 #include "usartrx.h"
 #include "iopin.h"
 #include "utils.h"
+#include "mainwindow.h"
 
 #include "stringprop.h"
 #include "boolprop.h"
@@ -71,7 +72,7 @@ SerialPort::SerialPort( QString type, QString id )
     m_button->setText( "Open" );
 
     QFont font = m_button->font();
-    font.setFamily("Ubuntu");
+    font.setFamily( MainWindow::self()->defaultFontName() );
     font.setPixelSize(12);
     m_button->setFont( font );
 

@@ -36,7 +36,7 @@ MainWindow::MainWindow()
     m_autoBck = 15;
     m_state = "■";
     m_version = "SimulIDE-"+QString( APP_VERSION )+" R"+QString( REVNO );
-    
+
     this->setWindowTitle( m_version );
 
     QString appImg = QProcessEnvironment::systemEnvironment().value( QStringLiteral("APPIMAGE") );
@@ -69,6 +69,15 @@ MainWindow::MainWindow()
     setFontScale( scale );
     //----------------------------------------------
 
+    QString fontName = "Ubuntu";
+    if( m_settings->contains( "fontName" ) ) fontName = m_settings->value( "fontName" ).toString();
+    setDefaultFontName( fontName );
+
+    QFont df=qApp->font();
+    df.setFamily( fontName );
+    qApp->setFont( df );
+    setFont( df );
+
     QApplication::setStyle( QStyleFactory::create("Fusion") ); //applyStyle();
     createWidgets();
 
@@ -85,7 +94,9 @@ MainWindow::MainWindow()
     QDir compSetDir = m_filesDir.absoluteFilePath("data");
     if( compSetDir.exists() ) ComponentSelector::self()->LoadCompSetAt( compSetDir );
 
+
     readSettings();
+
 
     QString backPath = getConfigPath( "backup.sim1" );
     if( QFile::exists( backPath ) )
@@ -109,7 +120,7 @@ void MainWindow::closeEvent( QCloseEvent *event )
 {
     if( !m_editor->close() )      { event->ignore(); return; }
     if( !m_circuit->newCircuit()) { event->ignore(); return; }
-    
+
     writeSettings();
     event->accept();
 }
@@ -129,12 +140,13 @@ void MainWindow::readSettings()
 void MainWindow::writeSettings()
 {
     m_settings->setValue( "autoBck",   m_autoBck );
+    m_settings->setValue( "fontName", m_fontName );
     m_settings->setValue( "fontScale", m_fontScale );
     m_settings->setValue( "geometry",  saveGeometry() );
     m_settings->setValue( "windowState", saveState() );
     m_settings->setValue( "Centralsplitter/geometry", m_Centralsplitter->saveState() );
     m_settings->setValue( "Circsplitter/geometry", CircuitWidget::self()->splitter()->saveState() );
-    
+
     for( QString name : m_components->getCategories() )
     {
         QTreeWidgetItem* item = m_components->getCategory( name );
@@ -196,6 +208,11 @@ void MainWindow::setLang( Langs lang ) // From appDialog
     settings()->setValue( "language", loc() );
 }
 
+void MainWindow::setDefaultFontName( const QString& fontName )
+{
+    m_fontName = fontName;
+}
+
 void MainWindow::setFile( QString file )
 {
     m_file = file;
@@ -248,7 +265,7 @@ void MainWindow::createWidgets()
 
     m_circuit = new CircuitWidget( this );
     m_Centralsplitter->addWidget( m_circuit );
-    
+
     m_editor = new EditorWindow( this );
     m_editor->setObjectName(QString::fromUtf8("editor"));
     m_Centralsplitter->addWidget( m_editor );

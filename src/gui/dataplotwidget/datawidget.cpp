@@ -5,6 +5,7 @@
 
 #include "datawidget.h"
 #include "oscope.h"
+#include "mainwindow.h"
 
 DataWidget::DataWidget( QWidget* parent, Oscope* oscope )
           : QWidget( parent )
@@ -19,7 +20,7 @@ DataWidget::DataWidget( QWidget* parent, Oscope* oscope )
     m_chNames.append( channel3 );
 
     QFont font;
-    font.setFamily("Ubuntu");
+    font.setFamily( MainWindow::self()->defaultFontName() );
     font.setPixelSize( 9 );
     font.setBold( true );
     freq0->setFont( font );

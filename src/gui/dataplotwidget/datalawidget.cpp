@@ -5,7 +5,7 @@
 
 #include "datalawidget.h"
 #include "logicanalizer.h"
-//#include "mainwindow.h"
+#include "mainwindow.h"
 
 DataLaWidget::DataLaWidget( QWidget* parent, PlotBase* pb )
             : QWidget( parent )
@@ -24,7 +24,7 @@ DataLaWidget::DataLaWidget( QWidget* parent, PlotBase* pb )
     m_chNames.append( channel7 );
 
     QFont font = m_chNames.at(0)->font();
-    font.setFamily("Ubuntu");
+    font.setFamily( MainWindow::self()->defaultFontName() );
     font.setPixelSize( 9 );
     font.setBold( true );
     expandButton->setFont( font );

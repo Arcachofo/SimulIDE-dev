@@ -13,7 +13,7 @@ CustomButton::CustomButton( QWidget* parent )
             : QToolButton( parent )
 {
     QFont f = this->font();
-    f.setFamily("Ubuntu");
+    f.setFamily( MainWindow::self()->defaultFontName() );
     f.setPixelSize(11);
     setFont( f );
 

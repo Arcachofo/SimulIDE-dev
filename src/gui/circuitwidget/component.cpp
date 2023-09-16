@@ -58,7 +58,7 @@ Component::Component( QString type, QString id )
     m_circRot  = 0;
 
     QFont font;
-    font.setFamily("Ubuntu");
+    font.setFamily( MainWindow::self()->defaultFontName() );
     font.setPixelSize( 10 );
     font.setLetterSpacing( QFont::PercentageSpacing, 100 );
 #ifdef _WIN32
