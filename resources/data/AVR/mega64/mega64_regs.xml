@@ -189,7 +189,7 @@
   <!-- 0x1B (0x3B) PORTA     PORTA7 PORTA6 PORTA5 PORTA4 PORTA3 PORTA2 PORTA1 PORTA0 -->
     <register  name="PORTA"   addr="0x001B" reset=""  mask="" bits="PORTA0,PORTA1,PORTA2,PORTA3,PORTA4,PORTA5,PORTA6,PORTA7" />
   <!-- 0x1C (0x3C) EECR      0 0 0 0 EERIE EEMWE EEWE EERE -->
-    <register  name="EECR"    addr="0x001C" reset=""  mask="00001111" bits="EERE,EEWE,EEMWE,EERIE,0,0,0,0" />
+    <register  name="EECR"    addr="0x001C" reset=""  mask="00001111" bits="EERE,EEWE|EEPE,EEMWE|EEMPE,EERIE,0,0,0,0" />
   <!-- 0x1D (0x3D) EEDR      EEPROM Data Register -->
     <register  name="EEDR"    addr="0x001D" reset=""  mask="" bits="EEDR0,EEDR1,EEDR2,EEDR3,EEDR4,EEDR5,EEDR6,EEDR7" />
   <!-- 0x1E (0x3E) EEARL     EEPROM Address Register Low Byte -->

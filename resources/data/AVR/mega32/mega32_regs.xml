@@ -64,7 +64,7 @@
     <register  name="PORTA"   addr="0x001B"  reset=""  mask="" />
 
     <register  name="EECR"    addr="0x001C"  reset=""  mask="" 
-               bits="EERE,EEWE,EEMWE,EERIE,0,0,0,0" />
+               bits="EERE,EEWE|EEPE,EEMWE|EEMPE,EERIE,0,0,0,0" />
 
     <register  name="EEDR"    addr="0x001D"  reset=""  mask=""  />
 
