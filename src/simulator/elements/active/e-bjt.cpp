@@ -45,6 +45,7 @@ eBJT::~eBJT(){}
 
 void eBJT::stamp()
 {
+    m_changed = true;
     m_step = 0;
     m_voltBE = 0;
     m_voltBC = 0;
