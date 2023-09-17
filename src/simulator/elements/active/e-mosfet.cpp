@@ -38,8 +38,7 @@ void eMosfet::stamp()
     m_accuracy = 5e-6;
 
     if( (m_ePin[0]->isConnected())
-      &&(m_ePin[1]->isConnected())
-      &&(m_ePin[2]->isConnected()) )
+      &&(m_ePin[1]->isConnected()) )
     {
         eResistor::stamp();
 
@@ -48,15 +47,15 @@ void eMosfet::stamp()
 
         m_ePin[0]->getEnode()->addToNoLinList(this);
         m_ePin[1]->getEnode()->addToNoLinList(this);
-        m_ePin[2]->getEnode()->addToNoLinList(this);
     }
+    if( m_ePin[2]->isConnected() ) m_ePin[2]->getEnode()->addToNoLinList(this);
 }
 
 void eMosfet::voltChanged()
 {
     double Vd = m_ePin[0]->getVoltage();
     double Vs = m_ePin[1]->getVoltage();
-    double Vg = m_ePin[2]->getVoltage();
+    double Vg = m_ePin[2]->isConnected() ? m_ePin[2]->getVoltage() : Vs;
     double Vgs = Vg-Vs;
     double Vds = Vd-Vs;
 
@@ -67,20 +66,20 @@ void eMosfet::voltChanged()
     
     if( gateV < 0 ) gateV = 0;
 
-    double admit = cero_doub;
+    double admit = m_depletion ? 1/m_RDSon : cero_doub;
+    double maxCurrDS = Vds*admit;
     double current = 0;
-    double maxCurrDS = Vds*m_admit;
-    double DScurrent = m_accuracy*2;
+    //double DScurrent = m_accuracy*2;
     
     if( gateV > 0 )
     {
-        admit = 1/m_RDSon;
+        admit = m_depletion ? cero_doub : 1/m_RDSon;
         double satK = 1+Vds/100;
         if( Vds > gateV ) Vds =gateV;
 
-        DScurrent = (gateV*Vds-qPow(Vds,2)/2)*satK/m_kRDSon;
+        double DScurrent = (gateV*Vds-qPow(Vds,2)/2)*satK/m_kRDSon;
         if( DScurrent > maxCurrDS ) DScurrent = maxCurrDS;
-        current = maxCurrDS-DScurrent;
+        current = m_depletion ? DScurrent : maxCurrDS-DScurrent;
     }
     if( m_Pchannel ) current = -current;
     
