@@ -66,9 +66,7 @@ void EnumVal::updtValues()
 {
     if( m_blocked ) return;
     m_blocked = true;
-
     showVal->setChecked( m_component->getPropStr("ShowProp") == m_propName );
-
     m_blocked = false;
 }
 

@@ -81,8 +81,8 @@ new DoubProp<OpAmp>( "Gain"     , tr("Gain")            ,"" , this, &OpAmp::gain
 new DoubProp<OpAmp>( "Out_Imped", tr("Output Impedance"),"Ω", this, &OpAmp::outImp, &OpAmp::setOutImp ),
     },0} );
     addPropGroup( { tr("Supply"), {
-new BoolProp<OpAmp>("Power_Pins" , tr("Use Supply Pins")   ,"" , this, &OpAmp::powerPins,  &OpAmp::setPowerPins ),
-new BoolProp<OpAmp>("Switch_Pins", tr("Switch Supply Pins"),"" , this, &OpAmp::switchPins, &OpAmp::setSwitchPins ),
+new BoolProp<OpAmp>("Power_Pins" , tr("Use Supply Pins")   ,"" , this, &OpAmp::powerPins,  &OpAmp::setPowerPins, propNoCopy ),
+new BoolProp<OpAmp>("Switch_Pins", tr("Switch Supply Pins"),"" , this, &OpAmp::switchPins, &OpAmp::setSwitchPins, propNoCopy ),
 new DoubProp<OpAmp>("Volt_Pos"   , tr("V+")                ,"V", this, &OpAmp::voltPos,    &OpAmp::setVoltPos ),
 new DoubProp<OpAmp>("Volt_Neg"   , tr("V-")                ,"V", this, &OpAmp::voltNeg,    &OpAmp::setVoltNeg ),
     },0} );
