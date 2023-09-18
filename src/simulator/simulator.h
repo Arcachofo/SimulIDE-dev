@@ -148,7 +148,6 @@ class MAINMODULE_EXPORT Simulator : public QObject
         int m_timerId;
         int m_timerTick_ms;
         int m_slopeSteps;
-        uint m_updtCnt;
 
         uint64_t m_fps;
         uint32_t m_NLstep;

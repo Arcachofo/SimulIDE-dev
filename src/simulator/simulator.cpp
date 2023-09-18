@@ -71,10 +71,10 @@ inline void Simulator::solveMatrix()
 
 void Simulator::timerEvent( QTimerEvent* e )  //update at m_timerTick_ms rate (50 ms, 20 Hz max)
 {
-    uint64_t guiTime = m_RefTimer.nsecsElapsed();
     e->accept();
 
     if( m_state == SIM_WAITING ) return;
+    uint64_t guiTime = m_RefTimer.nsecsElapsed();
 
     if( m_error )
     {
@@ -118,13 +118,8 @@ void Simulator::timerEvent( QTimerEvent* e )  //update at m_timerTick_ms rate (5
 
     if( Circuit::self()->animate() ) // Moved here to be in parallel with runCircuit thread
     {
-        uint updateRate = m_fps/5;
-        if( updateRate < 1 ) updateRate = 1;
-        if( ++m_updtCnt >= updateRate )     // Animate at FPS/5 with minimum 4 FPS
-        {
-            m_updtCnt = 0;
+        if( (m_RefTimer.nsecsElapsed()-guiTime) > 2e8 ) // Animate at 5 FPS
             Circuit::self()->updateConnectors();
-        }
     }
     // Calculate Real Simulation Speed
     uint64_t deltaRefTime = m_refTime-m_lastRefT;
