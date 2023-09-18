@@ -413,7 +413,7 @@ void McuCreator::getRegisters( QDomElement* e, uint16_t offset )
             else{
                 uint8_t resetVal = el.attribute("reset").toUInt(0,2);
                 QString    wMask = el.attribute("mask");
-                QString bits = el.attribute( "bits" );
+                QString     bits = el.attribute("bits");
 
                 if( !wMask.isEmpty() ) mcu->m_regMask[regAddr] = wMask.toUInt(0,2);
                 mcu->m_addrMap[regAddr] = regAddr;
@@ -1250,7 +1250,7 @@ void McuCreator::createInterrupt( QDomElement* el )
     {                               // If clear="0" deactivate autoclear
         uint8_t val = el->attribute("clear").toUInt();
         if( val ) watchBitNames( intFlag, R_WRITE, iv, &Interrupt::writeFlag, mcu );
-        else iv->m_autoClear = false;
+        else      iv->m_autoClear = false;
     }
     if( el->hasAttribute("pin") )
     {

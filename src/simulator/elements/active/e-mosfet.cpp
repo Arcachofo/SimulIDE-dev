@@ -67,9 +67,8 @@ void eMosfet::voltChanged()
     if( gateV < 0 ) gateV = 0;
 
     double admit = m_depletion ? 1/m_RDSon : cero_doub;
-    double maxCurrDS = Vds*admit;
+    double maxCurrDS = Vds*m_admit;
     double current = 0;
-    //double DScurrent = m_accuracy*2;
     
     if( gateV > 0 )
     {
@@ -79,7 +78,7 @@ void eMosfet::voltChanged()
 
         double DScurrent = (gateV*Vds-qPow(Vds,2)/2)*satK/m_kRDSon;
         if( DScurrent > maxCurrDS ) DScurrent = maxCurrDS;
-        current = m_depletion ? DScurrent : maxCurrDS-DScurrent;
+        current = m_depletion ? DScurrent : (maxCurrDS-DScurrent);
     }
     if( m_Pchannel ) current = -current;
     
