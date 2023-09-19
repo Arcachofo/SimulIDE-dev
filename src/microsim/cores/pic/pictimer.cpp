@@ -21,6 +21,7 @@ McuTimer* PicTimer::createTimer( eMcu* mcu, QString name, int type  ) // Static
 PicTimer::PicTimer(  eMcu* mcu, QString name )
         : McuTimer( mcu, name )
 {
+    m_sleepMode = 0xFF;
 }
 PicTimer::~PicTimer(){}
 

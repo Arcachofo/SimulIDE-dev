@@ -8,6 +8,7 @@
 #include "e_mcu.h"
 #include "datautils.h"
 #include "regwatcher.h"
+#include "simulator.h"
 
 PicAdc* PicAdc::createAdc( eMcu* mcu, QString name, int type )
 {
@@ -22,6 +23,8 @@ PicAdc* PicAdc::createAdc( eMcu* mcu, QString name, int type )
 PicAdc::PicAdc( eMcu* mcu, QString name )
       : McuAdc( mcu, name )
 {
+    m_sleepMode = 0xFF;
+
     m_ADON = getRegBits( "ADON", mcu );
     m_GODO = getRegBits( "GO/DONE", mcu );
     m_ADFM = getRegBits( "ADFM", mcu );
@@ -43,8 +46,7 @@ void PicAdc::configureA( uint8_t newADCON0 ) // ADCON0
     m_enabled = getRegBitsBool( newADCON0, m_ADON );
 
     uint8_t prs = getRegBitsVal( newADCON0, m_ADSC );
-    if( prs == 3 ) m_convTime = 4*12*1e6;
-    else           m_convTime = m_mcu->psInst()*12*m_prescList[prs];
+    setAdcClock( prs );
 
     m_channel = getRegBitsVal( newADCON0, m_CHS );
 
@@ -58,11 +60,24 @@ void PicAdc::endConversion()
     clearRegBits( m_GODO ); // Clear GO/DONE bit
 }
 
+void PicAdc::setAdcClock( uint8_t prs )
+{
+    m_adcClock = (prs == 3);
+    if( m_adcClock ) m_convTime = 4*12*1e6;
+    else             m_convTime = m_mcu->psInst()*12*m_prescList[prs];
+}
+
+void PicAdc::sleep( int mode )
+{
+    McuModule::sleep( mode );
+    m_sleeping = m_sleeping && !m_adcClock; // Only sleep if running on system clock
+}
+
 //------------------------------------------------------
 //-- PIC ADC Type 0 ------------------------------------
 
 PicAdc00::PicAdc00( eMcu* mcu, QString name )
-       : PicAdc( mcu, name )
+        : PicAdc( mcu, name )
 {
     m_ADSC = getRegBits( "ADSC0,ADCS1", mcu );
     m_CHS  = getRegBits( "CHS0,CHS1,CHS2", mcu );
@@ -203,8 +218,7 @@ void PicAdc11::configureA( uint8_t newADCON0 )
 void PicAdc11::setANSEL( uint8_t newANSEL )
 {
     uint8_t prs = getRegBitsVal( newANSEL, m_ADSC );
-    if( prs == 3 ) m_convTime = 4*12*1e6;
-    else           m_convTime = m_mcu->psInst()*12*m_prescList[prs];
+    setAdcClock( prs );
     PicAdc1::setANSEL( newANSEL );
 }
 
@@ -212,7 +226,7 @@ void PicAdc11::setANSEL( uint8_t newANSEL )
 //-- PIC ADC Type 2 p16f1826 ---------------------------
 
 PicAdc20::PicAdc20( eMcu* mcu, QString name )
-       : PicAdc( mcu, name )
+        : PicAdc( mcu, name )
 {
     m_ADSC = getRegBits( "ADCS0,ADCS1,ADCS2", mcu );
     m_CHS  = getRegBits( "CHS0,CHS1,CHS2,CHS3,CHS4", mcu );
@@ -235,8 +249,7 @@ void PicAdc20::configureB( uint8_t newADCON1 )
     m_mode = getRegBitsVal( newADCON1, m_ADXREF );
 
     uint8_t prs = getRegBitsVal( newADCON1, m_ADSC );
-    if( prs == 3 ) m_convTime = 4*12*1e6;
-    else           m_convTime = m_mcu->psInst()*12*m_prescList[prs];
+    setAdcClock( prs );
 }
 
 void PicAdc20::updtVref()

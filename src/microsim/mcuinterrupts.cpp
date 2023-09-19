@@ -82,7 +82,7 @@ void Interrupt::raise( uint8_t v )
             if( m_intPin ) m_intPin->setOutState( false );
 
             if( m_mcu->isSleeping()
-             && m_wakeup & m_mcu->sleepMode() )
+             && (m_wakeup & m_mcu->sleepMode()) )
                 m_mcu->sleep( false ); // Exit sleep
         }
         if( !m_callBacks.isEmpty() ) { for( McuModule* mod : m_callBacks ) mod->callBack(); }

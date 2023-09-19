@@ -22,11 +22,13 @@ McuAdc::~McuAdc(){}
 
 void McuAdc::initialize()
 {
-    m_channel = 0;
+    m_channel  = 0;
     m_chOffset = 0;
-    m_enabled = false;
+    m_enabled    = false;
     m_converting = false;
     m_leftAdjust = false;
+    m_adcClock   = false;
+    m_sleeping   = false;
 }
 
 void McuAdc::runEvent()

@@ -93,8 +93,6 @@ void McuTimer::clockStep()  // Timer driven by external clock
 
 void McuTimer::runEvent()            // Overflow
 {
-    //if( m_name == "TIMER1") /// DELETEME
-    //    m_running = m_running;
     if( !m_running ) return;
 
     for( McuOcUnit* ocUnit : m_ocUnit ) ocUnit->tov();
@@ -127,9 +125,6 @@ void McuTimer::sheduleEvents()
         uint64_t cycles = (ovfPeriod-m_countVal)*m_scale; // cycles in ps
         uint64_t ovfCycle = circTime + cycles;// In simulation time (ps)
 
-        //if( m_name == "TIMER0") /// DELETEME
-        //    m_running = m_running;
-
         if( m_ovfCycle != ovfCycle )
         {
             m_ovfCycle = ovfCycle;
@@ -144,9 +139,10 @@ void McuTimer::enable( uint8_t en )
 {
     bool e = en > 0;
     if( m_running == e ) return;
-    updtCount();    // If disabling, write counter values to Ram
+
+    updtCount();        // If disabling, write counter values to Ram
     m_running = e;
-    updtCycles();  // This will shedule or cancel events
+    updtCycles();       // This will shedule or cancel events
 }
 
 void McuTimer::countWriteL( uint8_t val ) // Someone wrote to counter low byte
@@ -160,7 +156,7 @@ void McuTimer::countWriteH( uint8_t val ) // Someone wrote to counter high byte
 {
     updtCount();
     *m_countH = val;
-    updtCycles();      // update & Reshedule
+    updtCycles();       // update & Reshedule
 }
 
 void McuTimer::updtCount( uint8_t )       // Write counter values to Ram
@@ -198,8 +194,7 @@ void McuTimer::enableExtClock( bool en )
     m_extClock = en; //m_clkSrc = en? clkEXT : clkMCU;
     updtCycles();      // update & Reshedule
 
-    if( m_clockPin )
-    {
+    if( m_clockPin ){
         m_clockPin->changeCallBack( this, en );
         m_clkState = m_clockPin->getInpState();
     }

@@ -29,8 +29,11 @@ class MAINMODULE_EXPORT PicAdc : public McuAdc
         //virtual void configureB( uint8_t newADCON1 ) override;
         //virtual void callBack() override { if( !m_converting ) startConversion(); }
 
+        virtual void sleep( int mode ) override;
+
     protected:
         virtual void endConversion() override;
+        void setAdcClock( uint8_t prs );
 
         uint8_t m_mode;
 

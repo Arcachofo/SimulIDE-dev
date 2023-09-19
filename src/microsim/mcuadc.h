@@ -35,6 +35,7 @@ class MAINMODULE_EXPORT McuAdc : public McuPrescaled, public eElement
         bool m_enabled;
         bool m_converting;
         bool m_leftAdjust;
+        bool m_adcClock;
 
         uint16_t m_adcValue; // Value obtained in last conversion
         uint16_t m_maxValue; // Maximum value = 2^m_bits

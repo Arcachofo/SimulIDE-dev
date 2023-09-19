@@ -14,6 +14,8 @@ PicInterrupt::PicInterrupt( QString name, uint16_t vector, eMcu* mcu )
 
     m_autoClear = false;
     //m_remember  = true;
+
+    m_wakeup = 0xFF; // Any interrupt triggered during sleep will wakeup MCU
 }
 PicInterrupt::~PicInterrupt(){}
 
