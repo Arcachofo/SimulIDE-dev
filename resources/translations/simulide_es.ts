@@ -272,7 +272,7 @@
     </message>
     <message>
         <source>Steps per Second    </source>
-        <translation type="unfinished">Pasos por Segundo</translation>
+        <translation type="unfinished">Pasos por Segundo    </translation>
     </message>
     <message>
         <source>ps</source>
@@ -683,7 +683,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Module</source>
-        <translation type="unfinished">Modulo</translation>
+        <translation>Modulo</translation>
     </message>
 </context>
 <context>
@@ -877,16 +877,19 @@ Quiere guardar los cambios?</translation>
         <source>
 Can&apos;t find file:
 </source>
-        <translation type="unfinished"></translation>
+        <translation>
+No se pudo encontrar el archivo:
+</translation>
     </message>
     <message>
         <source>Do you want to remove it from Recent Circuits?
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Quiere eliminarlo de la lista?
+</translation>
     </message>
     <message>
         <source>Circuits (*.sim1);;All files (*.*)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Circuitos (*.sim1);;Todos los archivos (*.*)</translation>
     </message>
     <message>
         <source>Zoom to fit</source>
