@@ -125,7 +125,7 @@ QString getDirDialog( QString msg, QString oldPath )
                          , QFileDialog::ShowDirsOnly
                          | QFileDialog::DontResolveSymlinks);
 
-    if( !path.isEmpty() && !path.endsWith(QDir::separator()) ) path += QDir::separator();
+    if( !path.isEmpty() && !path.endsWith("/") ) path += "/";
     return path;
 }
 

@@ -34,6 +34,7 @@ void PathVal::on_setPathButton_clicked()
 {
     QString path = getDirDialog( tr("Select directory"), value->text() );
     value->setText( path );
+    on_value_editingFinished();
 }
 
 void PathVal::updtValues()
