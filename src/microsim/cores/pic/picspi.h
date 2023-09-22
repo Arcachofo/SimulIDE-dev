@@ -25,6 +25,7 @@ class PicSpi : public McuSpi
         virtual void writeStatus( uint8_t newSSPSTAT ) override;
         virtual void writeSpiReg( uint8_t newSSPBUF ) override;
         virtual void endTransaction() override;
+        virtual void sleep( int mode ) override;
 
     protected:
 

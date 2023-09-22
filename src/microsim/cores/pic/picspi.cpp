@@ -13,6 +13,8 @@
 PicSpi::PicSpi( eMcu* mcu, QString name )
       : McuSpi( mcu, name )
 {
+    m_sleepMode = 0xFF;
+
     m_SSPEN = getRegBits( "SSPEN", mcu );
     m_CKP   = getRegBits( "CKP", mcu );
     m_CKE   = getRegBits( "CKE", mcu );
@@ -86,3 +88,10 @@ void PicSpi::endTransaction()
     *m_dataReg = m_srReg;
     m_interrupt->raise();
 }
+
+void PicSpi::sleep( int mode )
+{
+    McuModule::sleep( mode );
+    if( m_sleeping ) Simulator::self()->cancelEvents( this );
+}
+
