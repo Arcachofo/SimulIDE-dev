@@ -129,6 +129,24 @@ QString getDirDialog( QString msg, QString oldPath )
     return path;
 }
 
+QString findFile( QString dir, QString fileName )
+{
+    QDir pathDir( dir );
+    for( QFileInfo fileInfo : pathDir.entryInfoList() )
+    {
+        if( fileInfo.isFile() )
+        {
+            if( fileInfo.fileName() == fileName ) return fileInfo.absoluteFilePath();
+        }
+        else if( !fileInfo.fileName().endsWith(".") )
+        {
+            QString found = findFile( fileInfo.absoluteFilePath(), fileName );
+            if( !found.isEmpty() ) return found;
+        }
+    }
+    return "";
+}
+
 //---------------------------------------------------
 
 QDomDocument fileToDomDoc( const QString &fileName, const QString &caller )

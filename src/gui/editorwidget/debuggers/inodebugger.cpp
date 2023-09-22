@@ -83,14 +83,17 @@ void InoDebugger::setToolPath( QString path )
         m_outPane->appendLine( "Found Arduino Version 1" );
     }
     else{
-        builder = "resources/app/node_modules/arduino-ide-extension/build/arduino-cli";
+        builder = "arduino-cli";
         #ifndef Q_OS_UNIX
         builder += ".exe";
         #endif
-        if( QFile::exists( path+builder) )
+
+        builder = findFile( path+"resources/app/", builder );
+
+        if( QFile::exists( builder) )
         {
             m_version = 2;
-            QString command = path+builder;
+            QString command = builder;
             command = addQuotes( command );
             command += " config dump";
 
@@ -111,6 +114,8 @@ void InoDebugger::setToolPath( QString path )
                 QStringList dirList = toolDir.entryList( QDir::Dirs, QDir::Name | QDir::Reversed );
                 if( !dirList.isEmpty() ) m_toolPath += dirList[0]+"/bin/";
             }
+            QDir pathDir( path );
+            builder = pathDir.relativeFilePath( builder );
             m_outPane->appendLine( "Found Arduino Version 2" );
         }
         else{                                          // Executable not found

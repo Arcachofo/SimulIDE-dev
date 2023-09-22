@@ -66,6 +66,8 @@ QString changeExt( const QString &filepath, const QString &ext );
 
 QString getDirDialog( QString msg, QString oldPath );
 
+QString findFile( QString dir, QString fileName );
+
 //---------------------------------------------------
 
 QDomDocument fileToDomDoc( const QString &fileName, const QString &caller );
