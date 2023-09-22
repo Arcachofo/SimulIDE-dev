@@ -108,6 +108,7 @@ class EditorWidget : public QWidget, public CompBase
         bool saveFile( QString fileName );
 
         void addDocument( QString file, bool main );
+        int calcTabstopWidth();
 
         QFont m_font;
         int m_fontSize;

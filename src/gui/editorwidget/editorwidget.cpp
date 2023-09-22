@@ -71,7 +71,7 @@ void EditorWidget::setTabSize( int size )
     m_tabSize = size;
     MainWindow::self()->settings()->setValue( "Editor_tab_size", QString::number(m_tabSize) );
 
-    for( CodeEditor* ce : getCodeEditors() ) ce->setTabStopWidth( m_tabSize*m_fontSize*2/3 );
+    for( CodeEditor* ce : getCodeEditors() ) ce->setTabStopWidth( calcTabstopWidth() );
 }
 
 void EditorWidget::setShowSpaces( bool show )
@@ -144,7 +144,7 @@ void EditorWidget::addDocument(  QString file, bool main  )
 {
     CodeEditor* ce = new CodeEditor( this, &m_outPane );
     ce->setVerticalScrollBar( new scrollWidget( ce, Qt::Vertical ) );
-    ce->setTabStopWidth( m_tabSize*m_fontSize*2/3 );
+    ce->setTabStopWidth( calcTabstopWidth() );
     docShowSpaces( ce );
 
     QString tabString = file.isEmpty() ? tr("NEW") : getFileName(file);
@@ -166,6 +166,13 @@ void EditorWidget::addDocument(  QString file, bool main  )
         enableDebugActs( true );
         updateDoc();
     }
+}
+
+int EditorWidget::calcTabstopWidth() 
+{
+    QFontMetrics fm( m_font );
+    QString spaces( m_tabSize, QChar(' ') );
+    return fm.horizontalAdvance( spaces );
 }
 
 void EditorWidget::open()
