@@ -23,6 +23,8 @@ class CodeEditor : public QPlainTextEdit, public CompBase
         CodeEditor( QWidget* parent, OutPanelText* outPane );
         ~CodeEditor();
 
+        void dummySetter( QString ) {;}
+
         void setFile( QString filePath );
         QString getFile() { return m_file ; }
 

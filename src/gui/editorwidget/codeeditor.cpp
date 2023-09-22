@@ -93,7 +93,7 @@ new BoolProp<CodeEditor>("OpenFiles"   , tr("Restore files")   ,"", this, &CodeE
     }, 0} );
 
     addPropGroup( { "Hidden", {
-new StrProp <CodeEditor>("File"     , "File"         ,"", this, &CodeEditor::getFile,     &CodeEditor::setFile, 0 ),
+new StrProp <CodeEditor>("File"     , "File"         ,"", this, &CodeEditor::getFile,     &CodeEditor::dummySetter, 0 ),
 new StrProp <CodeEditor>("Circuit"  , "Circuit"      ,"", this, &CodeEditor::circuit,     &CodeEditor::setCircuit, 0 ),
 new StrProp <CodeEditor>("FileList" , "FileList"     ,"", this, &CodeEditor::fileList,    &CodeEditor::setFileList, 0 ),
 new StrProp <CodeEditor>("Breakpoints", "Breakpoints","", this, &CodeEditor::breakpoints, &CodeEditor::setBreakpoints, 0 ),
