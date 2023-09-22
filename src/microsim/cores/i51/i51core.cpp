@@ -255,12 +255,12 @@ void I51Core::addFlags( uint8_t value1, uint8_t value2, uint8_t acc )
     write_S_Bit( OV, (((value1 & 127)+(value2 & 127 ) + acc )^c ) & 1<<7); // Overflow: overflow from 6th or 7th bit, but not both
 }
 
-void I51Core::subFlags( uint8_t value1, uint8_t value2 )
+void I51Core::subFlags( uint8_t value1, uint8_t value2, uint8_t acc  )
 {
-    uint8_t c = ((value1-value2)>>1) & 1<<7; //Carry: overflow from 7th bit to 8th bit
+    uint8_t c = ((value1-value2-acc)>>1) & 1<<7; //Carry: overflow from 7th bit to 8th bit
     write_S_Bit( Cy, c );                                             // Carry: overflow from 7th bit to 8th bit
-    write_S_Bit( AC, ((value1 & 0x0F)-(value2 & 0x0F)) & 1<<4 );
-    write_S_Bit( OV, (((value1 & 127)-(value2 & 127)) ^ c ) & 1<<7);
+    write_S_Bit( AC, ((value1 & 0x0F)-(value2 & 0x0F) - acc ) & 1<<4 );
+    write_S_Bit( OV, (((value1 & 127)-(value2 & 127) - acc ) ^ c ) & 1<<7);
 }
 
 // INSTRUCTIONS -----------------------------
@@ -434,9 +434,9 @@ void I51Core::XRLa() { ACC ^= m_op0; }
 
 void I51Core::SUBB()
 {
-    if( STATUS(Cy) ) ACC--;
-    subFlags( ACC, m_op0 );
-    ACC -= m_op0;
+    uint8_t carry = STATUS(Cy) ? 1 : 0;
+    subFlags( ACC, m_op0, carry);
+    ACC -= m_op0 + carry;
 }
 
 void I51Core::XCH() //
