@@ -30,9 +30,9 @@ int SdccDebugger::compile( bool debug )
         QFileInfo hexInfo(m_buildPath+m_fileName+".hex");
 
         if( !hexInfo.exists() // hex file not exists
-                || ( ihxInfo.exists() && (hexInfo.lastModified() < ihxInfo.lastModified()))) // ihx file is newer
+         || ( ihxInfo.exists() && (hexInfo.lastModified() < ihxInfo.lastModified()))) // ihx file is newer
         {
-            QString packihx = "packihx";
+            QString packihx = m_toolPath+"packihx";
         #ifndef Q_OS_UNIX
             packihx += ".exe";
         #endif
