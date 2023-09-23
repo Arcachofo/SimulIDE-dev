@@ -65,8 +65,9 @@ inline void Simulator::solveMatrix()
         m_changedNode->stampMatrix();
         m_changedNode = m_changedNode->nextCH;
     }
-    if( !m_matrix->solveMatrix() ) // m_matrix sets the eNode voltages
-        m_warning = 2;             // Warning if diagonal element = 0.
+    //if( !m_matrix->solveMatrix() ) // m_matrix sets the eNode voltages
+    //    m_warning = 2;             // Warning if diagonal element = 0.
+    m_matrix->solveMatrix();
 }
 
 void Simulator::timerEvent( QTimerEvent* e )  //update at m_timerTick_ms rate (50 ms, 20 Hz max)

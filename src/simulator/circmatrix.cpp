@@ -120,6 +120,7 @@ void CircMatrix::analyze()
 
 bool CircMatrix::solveMatrix()
 {
+    bool ok = true;
     for( int i=0; i<m_bList.size(); ++i )
     {
         if( !m_admitChanged[i] && !m_currChanged[i] ) continue;
@@ -148,12 +149,12 @@ bool CircMatrix::solveMatrix()
         }
         else{
             if( m_admitChanged[i] ) factorMatrix( n, i );
-            if( !luSolve( n, i )  ) return false;
+            if( !luSolve( n, i ) ) ok = false;
         }
         m_currChanged[i]  = false;
         m_admitChanged[i] = false;
     }
-    return true;
+    return ok;
 }
 
 void CircMatrix::factorMatrix( int n, int group ) // factors a matrix into upper and lower triangular matrices by gaussian elimination.
