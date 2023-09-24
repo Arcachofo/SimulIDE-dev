@@ -89,6 +89,7 @@ void MuxAnalog::updateStep()
 
 void MuxAnalog::voltChanged()
 {
+    bool oldEnabled = m_enabled;
     m_enabled = m_enPin->getVoltage() < 2.5;
 
     int address = 0;
@@ -97,9 +98,9 @@ void MuxAnalog::voltChanged()
         bool state = (m_addrPin[i]->getVoltage()>2.5);
         if( state ) address += pow( 2, i );
     }
+    if ( oldEnabled != m_enabled || address != m_address )
+        Simulator::self()->addEvent( 10000/*m_propDelay*/, this );
     m_address = address;
-
-    Simulator::self()->addEvent( 10000/*m_propDelay*/, this );
 }
 
 void MuxAnalog::runEvent()
