@@ -168,6 +168,7 @@ void Csource::setVoltage( double v )
 
 void Csource::setLinkedValue( double v, int i )
 {
+    if( m_currControl ) v /= m_admit;
     setVoltage( v );
 }
 
