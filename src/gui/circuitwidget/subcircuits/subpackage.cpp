@@ -68,6 +68,7 @@ SubPackage::SubPackage( QString type, QString id )
 
     m_boardModeAction = new QAction( tr("Board Mode") );
     m_boardModeAction->setCheckable( true );
+    QObject::connect( m_boardModeAction, &QAction::triggered, [=](){ boardModeSlot(); } );
     m_boardMode = false;
     
     setAcceptHoverEvents( true );
@@ -214,7 +215,6 @@ void SubPackage::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu
     {
         m_boardModeAction->setChecked( m_boardMode );
         menu->addAction( m_boardModeAction );
-        QObject::connect( m_boardModeAction, &QAction::triggered, [=](){ boardModeSlot(); } );
     }
     QAction* mainCompAction = menu->addAction( QIcon(":/subcl.png"),tr("Select Exposed Components") );
     QObject::connect( mainCompAction, &QAction::triggered, [=](){ mainComp(); } );
@@ -256,7 +256,8 @@ void SubPackage::setBoardMode( bool mode )
                 comp->setRotation( comp->boardRot() );
         }   }
         else{
-            comp->setBoardPos( comp->pos()-this->pos() );
+            QPointF p = comp->pos()-this->pos();
+            comp->setBoardPos( p );
             comp->setBoardRot( comp->rotation() );
             comp->setPos( comp->circPos() );
             comp->setRotation( comp->circRot() );
