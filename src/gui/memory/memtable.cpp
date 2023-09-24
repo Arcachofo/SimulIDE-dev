@@ -194,16 +194,6 @@ void MemTable::setAddrSelected( int addr, bool jump )
     if( jump ) table->scrollToItem( table->item( row, col ) );
 }
 
-void MemTable::setCanSaveLoad(bool val)
-{
-    m_canSaveLoad=val;
-}
-
-bool MemTable::canSaveLoad()
-{
-    return m_canSaveLoad;
-}
-
 void MemTable::on_table_itemChanged( QTableWidgetItem* item )
 {
     if( m_blocked ) return;

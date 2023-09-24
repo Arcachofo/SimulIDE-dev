@@ -25,8 +25,6 @@ class MemTable : public QWidget, private Ui::MemTable
         void setValue( int address, int val );
         void setCellBytes( int bytes );
         void setAddrSelected( int addr ,bool jump );
-        void setCanSaveLoad( bool val);
-        bool canSaveLoad();
 
     signals:
         void dataChanged( int address, int val );
