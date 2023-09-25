@@ -347,14 +347,12 @@ void eNode::updateConnectors()
     if( !m_voltChanged ) return;
     m_voltChanged = false;
 
-    Connection* first = m_firstAdmit; // list of connections
-    while( first ){
-        Pin* pin = first->epin->getPin();
+    for( ePin* epin : m_ePinList ){
+        Pin* pin = epin->getPin();
         if( pin && pin->isVisible() ){
             Connector* conn = pin->connector();
             if( conn ) conn->updateLines();
         }
-        first = first->next;
     }
 }
 
