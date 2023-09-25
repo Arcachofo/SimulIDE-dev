@@ -28,6 +28,10 @@ class MAINMODULE_EXPORT Reactive : public Comp2Pin, public eReactive
         int autoStep() { return m_autoStep; }
         void setAutoStep( int a );
 
+        virtual void setCurrentValue( double c ){;}
+
+        virtual void setLinkedValue( double v, int i=0 ) override;
+
     private:
         eNode* m_midEnode;
         eResistor* m_resistor;

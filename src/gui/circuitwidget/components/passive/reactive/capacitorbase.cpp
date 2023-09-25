@@ -23,7 +23,7 @@ CapacitorBase::CapacitorBase( QString type, QString id )
     m_pin[0]->setLength( 12 );
     m_pin[1]->setLength( 12 );
 
-    m_value = 0.00001; // Farads
+    m_value = m_capacitance = 0.00001; // Farads
 
     addPropGroup( { tr("Main"), {
 new DoubProp<CapacitorBase>( "Capacitance", tr("Capacitance")    , "F"    , this, &CapacitorBase::value   , &CapacitorBase::setValue ),
@@ -36,3 +36,9 @@ new IntProp <CapacitorBase>( "AutoStep"   , tr("Auto Step")      ,"_Steps", this
     setPropStr( "Capacitance", "10 µF" );
 }
 CapacitorBase::~CapacitorBase(){}
+
+void CapacitorBase::setCurrentValue( double c )
+{
+    m_capacitance = c;
+    m_changed = true;
+}

@@ -5,6 +5,7 @@
 
 #include "reactive.h"
 #include "simulator.h"
+#include "propdialog.h"
 #include "e-node.h"
 #include "pin.h"
 
@@ -70,6 +71,7 @@ void Reactive::updateStep()
         m_stepError = false;
         m_reacStep = Simulator::self()->reactStep(); // Time in ps
         updtReactStep();
+        if( m_propDialog ) m_propDialog->updtValues();
     }
     update();
     /*uint64_t reactStep = Simulator::self()->reactStep();
@@ -90,7 +92,7 @@ void Reactive::updateStep()
 void Reactive::setValue( double c )
 {
     m_value = c;
-    m_changed = true;
+    setCurrentValue( c );
 }
 
 void Reactive::setResist( double resist )
@@ -103,4 +105,9 @@ void Reactive::setAutoStep( int a )
     if( a > 2 ) a = 2;
     m_autoStep = a;
     m_changed = true;
+}
+
+void Reactive::setLinkedValue( double v, int i )
+{
+    setCurrentValue( m_value*v/1000 );
 }

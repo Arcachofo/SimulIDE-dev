@@ -21,13 +21,17 @@ class MAINMODULE_EXPORT Inductor : public Reactive
 
         double indCurrent() { return m_curSource; }
 
+        virtual void setCurrentValue( double c ) override;
+
         Pin* getPin( int n ) { return m_pin[n]; }
         
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
 
     protected:
-        virtual double updtRes()  override { return m_value/m_tStep; }
+        virtual double updtRes()  override { return m_inductance/m_tStep; }
         virtual double updtCurr() override { return m_curSource - m_volt*m_admit; }
+
+        double m_inductance;
 };
 
 #endif

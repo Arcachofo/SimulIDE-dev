@@ -34,7 +34,7 @@ Inductor::Inductor( QString type, QString id )
     m_pin[0]->setLength( 4 );
     m_pin[1]->setLength( 4 );
 
-    m_value = 1; // H
+    m_value = m_inductance = 1; // H
 
     addPropGroup( { tr("Main"), {
 new DoubProp<Inductor>( "Inductance", tr("Inductance")     , "H"     , this, &Inductor::value,    &Inductor::setValue ),
@@ -59,4 +59,10 @@ void Inductor::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidg
     p->drawArc( QRectF(-12,-4.5, 10, 10 ),-45*16 , 220*16 );
     p->drawArc( QRectF( -5,-4.5, 10, 10 ), 225*16,-270*16 );
     p->drawArc( QRectF(  2,-4.5, 10, 10 ), 225*16,-220*16 );
+}
+
+void Inductor::setCurrentValue( double c )
+{
+    m_inductance = c;
+    m_changed = true;
 }

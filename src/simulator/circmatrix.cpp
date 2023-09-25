@@ -159,13 +159,13 @@ bool CircMatrix::solveMatrix()
 
 void CircMatrix::factorMatrix( int n, int group ) // factors a matrix into upper and lower triangular matrices by gaussian elimination.
 {
-    dp_matrix_t&  ap  = m_aList[group];
-    d_matrix_t& a = m_aFaList[group];
+    dp_matrix_t& ap = m_aList[group];
+    d_matrix_t&   a = m_aFaList[group];
 
     /*std::cout << "\nAdmitance Matrix:\n"<< std::endl;
     for( int i=0; i<n; i++ )
     {
-        for( int j=0; j<n; ++j ) { std::cout << std::setw(15); std::cout << a[i][j]; }
+        for( int j=0; j<n; ++j ) { std::cout << std::setw(15); std::cout << *ap[i][j]; }
         std::cout << std::endl;
     }*/
 
@@ -192,7 +192,7 @@ void CircMatrix::factorMatrix( int n, int group ) // factors a matrix into upper
                 for( i=j+1; i<n; ++i ) a[i][j] /= div;
         }
     }
-    /*std::cout << "\nFactored Matrix: << std::endl;
+    /*std::cout << "\nFactored Matrix:\n" << std::endl;
     for( int i=0; i<n; i++ )
     {
         for( int j=0; j<n; j++ ) { std::cout << std::setw(15); std::cout << a[i][j]; }
@@ -204,6 +204,13 @@ bool CircMatrix::luSolve( int n, int group ) // Solves the set of n linear equat
 {                                            // On input, b[0..n-1] is the right hand side of the equations, and on output, contains the solution.
     const d_matrix_t&  a  = m_aFaList[group];
     const dp_vector_t& bp = m_bList[group];
+
+    /*std::cout << "\nCurrent vector:\n" << std::endl;
+    for( int i=0; i<n; i++ )
+    {
+        std::cout << std::setw(15); std::cout << *bp[i];
+        std::cout << std::endl;
+    }*/
 
     d_vector_t b;
     b.resize( n , 0 );
