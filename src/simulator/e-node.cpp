@@ -4,7 +4,9 @@
  ***( see copyright.txt file at root folder )*******************************/
 
 #include "e-node.h"
+#include "pin.h"
 #include "e-pin.h"
+#include "connector.h"
 #include "e-element.h"
 #include "circmatrix.h"
 #include "simulator.h"
@@ -35,6 +37,7 @@ eNode::~eNode()
 
 void eNode::initialize()
 {
+    m_voltChanged  = true; // Used for wire animation
     m_switched     = false;
     m_single       = false;
     m_changed      = false;
@@ -337,6 +340,22 @@ void eNode::addToNoLinList( eElement* el )
     newLinked->next = m_nonLinEl; // Prepend
     m_nonLinEl = newLinked;
     //qDebug() <<m_id<< el->getId();
+}
+
+void eNode::updateConnectors()
+{
+    if( !m_voltChanged ) return;
+    m_voltChanged = false;
+
+    Connection* first = m_firstAdmit; // list of connections
+    while( first ){
+        Pin* pin = first->epin->getPin();
+        if( pin && pin->isVisible() ){
+            Connector* conn = pin->connector();
+            if( conn ) conn->updateLines();
+        }
+        first = first->next;
+    }
 }
 
 void eNode::clearElmList( CallBackElement* first )

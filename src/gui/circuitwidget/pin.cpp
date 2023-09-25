@@ -414,12 +414,7 @@ void Pin::paint( QPainter* painter, const QStyleOptionGraphicsItem* option, QWid
 
     if     ( m_unused  ) pen.setColor( QColor( 75, 120, 170 ));
     else if( m_isBus   ) pen.setColor( Qt::darkGreen );
-    else if( m_animate )
-    {
-        if( m_pinState == undef_state )
-            pen.setColor( (getVoltage() > 2.5) ? m_color[out_high] : m_color[out_low] );
-        else pen.setColor( m_color[m_pinState] );
-    }
+    else if( m_animate ) pen.setColor( m_color[m_pinState] );
 
     painter->setPen(pen);
     if( m_length > 1 ) painter->drawLine( 0, 0, m_length-1, 0);

@@ -60,14 +60,13 @@ Simulator::~Simulator()
 
 inline void Simulator::solveMatrix()
 {
-    while( m_changedNode )
-    {
+    while( m_changedNode ){
         m_changedNode->stampMatrix();
         m_changedNode = m_changedNode->nextCH;
     }
     //if( !m_matrix->solveMatrix() ) // m_matrix sets the eNode voltages
     //    m_warning = 2;             // Warning if diagonal element = 0.
-    m_matrix->solveMatrix();
+    m_matrix->solveMatrix(); // m_matrix sets the eNode voltages
 }
 
 void Simulator::timerEvent( QTimerEvent* e )  //update at m_timerTick_ms rate (50 ms, 20 Hz max)
@@ -75,7 +74,7 @@ void Simulator::timerEvent( QTimerEvent* e )  //update at m_timerTick_ms rate (5
     e->accept();
 
     if( m_state == SIM_WAITING ) return;
-    uint64_t guiTime = m_RefTimer.nsecsElapsed();
+    uint64_t currentTime = m_RefTimer.nsecsElapsed();
 
     if( m_error )
     {
@@ -112,17 +111,20 @@ void Simulator::timerEvent( QTimerEvent* e )  //update at m_timerTick_ms rate (5
     // Get Simulation times
     m_realPsPF = m_circTime-m_tStep;
     m_tStep    = m_circTime;
-    m_refTime  = m_RefTimer.nsecsElapsed();
 
     if( m_state == SIM_RUNNING ) // Run Circuit in a parallel thread
         m_CircuitFuture = QtConcurrent::run( this, &Simulator::runCircuit );
 
     if( Circuit::self()->animate() ) // Moved here to be in parallel with runCircuit thread
     {
-        if( (m_RefTimer.nsecsElapsed()-guiTime) > 2e8 ) // Animate at 5 FPS
-            Circuit::self()->updateConnectors();
+        if( (currentTime-m_updtTime) >= 2e8 ){ // Animate at 5 FPS
+            //Circuit::self()->updateConnectors();
+            for( eNode* node : m_eNodeList) node->updateConnectors();
+            m_updtTime = currentTime;
+        }
     }
     // Calculate Real Simulation Speed
+    m_refTime  = m_RefTimer.nsecsElapsed();
     uint64_t deltaRefTime = m_refTime-m_lastRefT;
     if( deltaRefTime >= 1e9 )               // We want steps per 1 Sec = 1e9 ns
     {
@@ -136,7 +138,7 @@ void Simulator::timerEvent( QTimerEvent* e )  //update at m_timerTick_ms rate (5
     }
     InfoWidget::self()->setCircTime( m_tStep );
 
-    m_guiTime += m_RefTimer.nsecsElapsed()-guiTime; // Time in this function
+    m_guiTime += m_RefTimer.nsecsElapsed()-currentTime; // Time in this function
 }
 
 void Simulator::runCircuit()
@@ -215,6 +217,7 @@ void Simulator::resetSim()
     m_tStep    = 0;
     m_lastRefT = 0;
     m_circTime = 1;
+    m_updtTime = 0;
     m_NLstep   = 0;
     ///m_pauseCirc = false;
     m_realPsPF = 1;

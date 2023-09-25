@@ -140,8 +140,8 @@ void McuPin::setPullup( bool up )
         m_inpState = up;
         uint8_t val = up ? m_pinMask : 0;
         m_port->pinChanged( m_pinMask, val );
-        if     ( m_pinMode == openCo ) setPinState( up? open_high  : open_low  ); // High : Low colors
-        else if( m_pinMode == input  ) setPinState( up? input_high : input_low ); // High : Low colors
+        //if     ( m_pinMode == openCo ) setPinState( up? open_high  : open_low  ); // High : Low colors
+        //else if( m_pinMode == input  ) setPinState( up? input_high : input_low ); // High : Low colors
     }
 }
 

@@ -83,7 +83,7 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
         void newconnector( Pin* startpin, bool save=true );
         void closeconnector( Pin* endpin, bool save=false );
         void deleteNewConnector();
-        void updateConnectors();
+        //void updateConnectors();
         Connector* getNewConnector() { return m_newConnector; }
 
         void addNode( Node* node );

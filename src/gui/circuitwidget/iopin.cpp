@@ -68,18 +68,19 @@ void IoPin::updateStep()
 {
     if( m_unused ) return;
 
-    if( m_stateZ ) setPinState( undef_state );
+    if( m_stateZ ) m_pinState = undef_state;
     else{
+        bool state = getInpState();
         switch( m_pinMode ) // Pin colors in animation
         {
-            case undef_mode: return;
-            case input:  setPinState( m_inpState? input_high : input_low  ); break;
+            case undef_mode: m_pinState = undef_state; break;
+            case input:  m_pinState = state? input_high : input_low; break;
             case openCo:{
                     pinState_t low = m_outState ? driven_low : open_low;
-                    setPinState( m_inpState? open_high  : low );
+                    m_pinState = state? open_high  : low ;
                 }break;
-            case output: setPinState( m_outState? out_high : out_low ); break;
-            case source: break;
+            case output:
+            case source: m_pinState = state? out_high : out_low; break;
         }
     }
     update();

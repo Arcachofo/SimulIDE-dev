@@ -944,8 +944,8 @@ void Circuit::deleteNewConnector()
     cancelUndoStep();
 }
 
-void Circuit::updateConnectors()
-{ for( Connector* con : m_connList ) con->updateLines(); }
+/*void Circuit::updateConnectors()
+{ for( Connector* con : m_connList ) con->updateLines(); }*/
 
 void Circuit::addNode( Node* node )
 {

@@ -149,7 +149,7 @@ IoPin* IoPort::createPin( int i, QString id, Component* comp )
 {
     IoPin* pin = new IoPin( 0, QPoint(0,0), comp->getUid()+"-"+id, i, comp, input );
     pin->setOutHighV( 5 );
-    pin->setPinState( input_low );
+    //pin->setPinState( input_low );
     return pin;
 }
 

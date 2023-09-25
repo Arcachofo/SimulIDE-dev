@@ -92,7 +92,7 @@ void IntMemCore::runEvent()
         {
             bool state = m_dataPin[i]->getInpState();
             if( state ) value += pow( 2, i );
-            m_dataPin[i]->setPinState( state? input_high:input_low ); // High-Low colors
+            //m_dataPin[i]->setPinState( state? input_high:input_low ); // High-Low colors
         }
         m_mcu->writeReg( m_addr, value );
     }
@@ -110,7 +110,7 @@ void IntMemCore::write( bool w )
         {
             bool state = m_dataPin[i]->getInpState();
             if( state ) value += pow( 2, i );
-            m_dataPin[i]->setPinState( state? input_high:input_low ); // High-Low colors
+            //m_dataPin[i]->setPinState( state? input_high:input_low ); // High-Low colors
         }
         m_mcu->writeReg( m_addr, value );
     }

@@ -45,14 +45,16 @@ class MAINMODULE_EXPORT eNode
 
         double getVolt() { return m_volt; }
         void   setVolt( double volt );
-        bool voltchanged() { return m_voltChanged; }
-        void setVoltChanged( bool changed ){ m_voltChanged = changed; }
+        //bool voltchanged() { return m_voltChanged; }
+        //void setVoltChanged( bool changed ){ m_voltChanged = changed; }
 
         void initialize();
         void stampMatrix();
 
         void setSingle( bool single ) { m_single = single; } // This eNode can calculate it's own Volt
         void setSwitched( bool switched ){ m_switched = switched; } // This eNode has switches attached
+
+        void updateConnectors();
 
         QList<ePin*> getEpins() { return m_ePinList; }
 

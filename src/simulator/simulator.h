@@ -168,6 +168,7 @@ class MAINMODULE_EXPORT Simulator : public QObject
         uint64_t m_lastRefT;
         uint64_t m_loopTime;
         uint64_t m_guiTime;
+        uint64_t m_updtTime;
         double   m_simLoad;
 
         QElapsedTimer m_RefTimer;

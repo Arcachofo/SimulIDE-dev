@@ -381,12 +381,14 @@ void Connector::splitCon( int index, Pin* pin0, Pin* pin2 )
 
 void Connector::updateLines()
 {
-    eNode* enode = startPin()->getEnode();
+    for( ConnectorLine* line : m_conLineList ) line->update();
+
+    /*eNode* enode = startPin()->getEnode();
     if( enode && enode->voltchanged() )
     {
         enode->setVoltChanged( false );
-        for( ConnectorLine*  line : m_conLineList ) line->update();
-    }
+        for( ConnectorLine* line : m_conLineList ) line->update();
+    }*/
 }
 
 void Connector::setIsBus( bool bus )
