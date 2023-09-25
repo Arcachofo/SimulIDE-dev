@@ -629,7 +629,7 @@ void I51Core::Decode()
             case 0x82: addrBit();            break;   // 2-2 ANLc  C  <- C&b
             case 0x83:                       break;   // 1-2 MOVCp Ac += (PC)
             case 0x84:                       break;   // 1-4 DIVab Ac <- Ac/B
-            case 0x85: addrDir(); operDir(); break;   // 3-2 MOVm  Di <- Di
+            case 0x85: operDir(); addrDir(); break;   // 3-2 MOVm  Di <- Di ( 0x85 source addr, dest addr )
             case 0x86:
             case 0x87: addrDir(); operInd(); break;   // 2-2 MOVm Di <- In  @Indirect
 
