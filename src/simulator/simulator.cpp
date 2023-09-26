@@ -331,6 +331,7 @@ void Simulator::stopSim()
 
     clearEventList();
     m_changedNode = NULL;
+    if( EditorWindow::self()->debugState() > DBG_STOPPED ) EditorWindow::self()->stop();
 }
 
 void Simulator::pauseSim() // Only pause simulation, don't update UI
