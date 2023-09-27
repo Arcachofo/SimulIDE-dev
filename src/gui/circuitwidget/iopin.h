@@ -97,15 +97,15 @@ class MAINMODULE_EXPORT IoPin : public Pin, public eElement
             double gndAdmit = m_gndAdmit + m_gndAdmEx;
             m_admit         = vddAdmit+gndAdmit;
 
-            ///m_outVolt = m_outHighV*vddAdmit/m_admit;
-            ///ePin::stampAdmitance( m_admit );
-            ///stampVolt( m_outVolt );
+            m_outVolt = m_outHighV*vddAdmit/m_admit;
+            ePin::stampAdmitance( m_admit );
+            stampVolt( m_outVolt );
             /// Optimized to:
-            double current = m_outHighV*vddAdmit;
+            /*double current = m_outHighV*vddAdmit;
             if( m_enode ){
                 m_enode->stampAdmitance( this, m_admit  );
                 m_enode->stampCurrent( this, current );
-            }else m_outVolt = current/m_admit;          // Used by getVoltage()
+            }else m_outVolt = current/m_admit;          // Used by getVoltage()*/
         }
         inline void stampAll();
         inline void stampVolt( double v) { ePin::stampCurrent( v*m_admit ); }
