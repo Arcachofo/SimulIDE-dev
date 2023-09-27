@@ -205,7 +205,7 @@ void IoComponent::setInvertOuts( bool inverted )
 
 void IoComponent::setInvertInps( bool invert )
 {
-    if( m_invInputs == invert ) return;
+    //if( m_invInputs == invert ) return;
     m_invInputs = invert;
     Simulator::self()->pauseSim();
     for( IoPin* pin : m_inPin ) pin->setInverted( invert );

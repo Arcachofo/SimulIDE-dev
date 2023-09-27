@@ -74,6 +74,7 @@ void Gate::setNumInputs( int inputs )
 {
     if( inputs < m_minInputs ) return;
     IoComponent::setNumInps( inputs, "" );
+    setInvertInps( invertInps() );
     m_outPin[0]->setY( 0 );
     m_area = QRect( -11, -4*m_inPin.size(), 19, 4*2*m_inPin.size() );
 }
