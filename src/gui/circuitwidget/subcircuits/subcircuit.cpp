@@ -452,8 +452,8 @@ void SubCircuit::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu
     for( Component* mainComp : m_mainComponents.values() )
     {
         QString compType = mainComp->getUid();
-        int pos = compType.indexOf("_")+1;
-        int len = compType.lastIndexOf("-")-pos;
+        int pos  = compType.indexOf("_")+1;
+        int len  = compType.lastIndexOf("-")-pos;
         compType = compType.mid( pos, len );
 
         QMenu* submenu = menu->addMenu( QIcon(":/subc.png"), compType );

@@ -58,6 +58,8 @@ class MAINMODULE_EXPORT CompBase
         QString itemType()  { return m_type; }
         void setItemType( QString ) {;}
 
+        virtual bool isHidden() { return false;}
+
     protected:
         QString m_id;
         QString m_type;

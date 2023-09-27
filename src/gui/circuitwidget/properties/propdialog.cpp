@@ -52,7 +52,7 @@ void PropDialog::setComponent( CompBase* comp, bool isComp )
     m_component = comp;
     showButton->setChecked( comp->getPropStr("Show_id") == "true" );
 
-    int w=0, index=0;
+    int index=0;
     QList<propGroup>* groups = comp->properties();
 
     for( propGroup group : *groups )
@@ -60,7 +60,7 @@ void PropDialog::setComponent( CompBase* comp, bool isComp )
         if( group.flags & groupHidden ) continue;
 
         bool groupEnabled = true;
-        bool isMaincomp = comp->getPropStr("mainComp") == "true";
+        bool isMaincomp = comp->isHidden() && (comp->getPropStr("mainComp") == "true"); // main Compoenent & is in subcircuit
         if( isMaincomp && (group.flags & groupNoCopy) ) groupEnabled = false;
 
         QList<ComProperty*> propList = group.propList;

@@ -409,7 +409,7 @@ void Esp01::connectReply( QByteArray OP, int link )
 
 void Esp01::slotOpenTerm()
 {
-    openMonitor( m_id, 0 );
+    openMonitor( idLabel(), 0 );
 }
 
 void Esp01::setSerialMon( bool s )
