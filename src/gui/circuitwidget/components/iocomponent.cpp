@@ -396,6 +396,7 @@ void IoComponent::setNumPins( std::vector<IoPin*>* pinList, uint pins
             if( !label.isEmpty() ) pinList->at(i)->setLabelText( label+num );
             pinList->at(i)->setLabelColor( QColor( 0, 0, 0 ) );
     }   }
+    setflip();
     Circuit::self()->update();
 }
 
