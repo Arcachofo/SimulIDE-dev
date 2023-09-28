@@ -60,6 +60,7 @@ void ADC::voltChanged()
 {
     double volt = m_inPin[0]->getVoltage();
     m_nextOutVal = volt*m_maxValue/m_maxVolt+0.1;
+    if( m_nextOutVal > m_maxValue ) m_nextOutVal = m_maxValue;
     LogicComponent::scheduleOutPuts( this );
 }
 
