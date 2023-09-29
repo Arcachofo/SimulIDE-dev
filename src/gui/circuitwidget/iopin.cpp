@@ -71,6 +71,7 @@ void IoPin::updateStep()
     if( m_stateZ ) m_pinState = undef_state;
     else{
         bool state = getInpState();
+        if( m_inverted ) state = !state;
         switch( m_pinMode ) // Pin colors in animation
         {
             case undef_mode: m_pinState = undef_state; break;
