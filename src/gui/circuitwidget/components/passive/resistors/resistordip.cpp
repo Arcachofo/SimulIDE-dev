@@ -103,8 +103,8 @@ void ResistorDip::createResistors( int c )
         m_resistor[i]->setEpin( 0, m_pin[index] );
 
         m_pin[index+1] = new Pin( 0, QPoint( 16,-32+8+i*8 ), reid+"-ePin"+QString::number(index+1), 0, this);
-        m_pin[index+1]->setEnabled( !m_pullUp );
-        m_pin[index+1]->setVisible( !m_pullUp );
+        m_pin[index+1]->setEnabled( !m_pullUp ); //
+        m_pin[index+1]->setVisible( !m_pullUp ); //
         m_resistor[i]->setEpin( 1, m_pin[index+1] );
 }   }
 
@@ -172,7 +172,7 @@ void ResistorDip::remove()
     Component::remove();
 }
 
-void ResistorDip::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget )
+void ResistorDip::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
 {
     Component::paint( p, option, widget );
     p->drawRoundRect( QRect( -9, -28, 18, m_size*8 ), 2, 2 );
