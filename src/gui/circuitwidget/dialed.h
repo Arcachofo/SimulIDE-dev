@@ -22,7 +22,7 @@ class MAINMODULE_EXPORT Dialed : public Component
         void setSlider( bool s );
 
         double scale() { return m_dialW.scale(); }
-        void setScale( double s ) { m_dialW.setScale(s); updateProxy(); }
+        void setScale( double s );
 
         virtual void setHidden( bool hid, bool hidArea=false, bool hidLabel=false ) override;
 

@@ -77,6 +77,13 @@ void Dialed::setSlider( bool s )
     updateProxy();
 }
 
+void Dialed::setScale( double s )
+{
+    if( s <= 0 ) return;
+    m_dialW.setScale(s);
+    updateProxy();
+}
+
 void Dialed::setHidden( bool hide, bool hidArea, bool hidLabel )
 {
     Component::setHidden( hide, hidArea, hidLabel );
