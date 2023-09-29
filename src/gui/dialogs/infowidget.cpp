@@ -78,8 +78,7 @@ void InfoWidget::setRate( double rate, double simLoad, double guiLoad )
         //if( (load > 150) || (load < 0) ) load = 0;
         double speed = rate/100;
         QString Srate = QString::number( speed,'f', 2 );
-        if( speed < 100 ) Srate = "0"+Srate;
-        if( speed < 10 )  Srate = "0"+Srate;
+        while( Srate.size() < 6 ) Srate = "0"+Srate;
         QString Sload = QString::number( simLoad,'f', 2 );
         while( Sload.size() < 6 ) Sload = "0"+Sload;
         QString Gload = QString::number( guiLoad,'f', 2 );
