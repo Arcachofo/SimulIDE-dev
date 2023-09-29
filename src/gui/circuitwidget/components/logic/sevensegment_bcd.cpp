@@ -25,7 +25,7 @@ LibraryItem* SevenSegmentBCD::libraryItem()
         tr("7 Seg BCD"),
         "Other Logic",
         "7segbcd.png",
-        "7-Seg BCD", /// FIXME: only charaters in Component type
+        "7-Seg BCD", /// FIXME: only alphanumeric in Component type
         SevenSegmentBCD::construct );
 }
 
@@ -36,16 +36,17 @@ SevenSegmentBCD::SevenSegmentBCD( QString type, QString id )
 
     m_width  = 4;
     m_height = 6;
-    m_color = Qt::black;
-    m_intensity = 255;
+    m_color  = Qt::black;
 
     QStringList pinList;
 
     pinList // Inputs:
-            << "ID04  "
-            << "ID03  "
-            << "ID02  "
-            << "ID01  "
+            << "ID041"
+            << "ID032"
+            << "ID024"
+            << "ID018"
+            << "IU04E"
+            << "IU01."
             ;
     init( pinList );
     for( uint i=0; i<m_inPin.size(); ++i )
@@ -54,14 +55,16 @@ SevenSegmentBCD::SevenSegmentBCD( QString type, QString id )
         m_inPin[i]->setSpace( 1 );
         m_inPin[i]->setFontSize( 4 );
         m_inPin[i]->setLabelColor( QColor( 250, 250, 200 ) );
-        m_inPin[i]->setLabelText( QString::number( pow(2,i) ) );
-        m_inPin[i]->setLabelPos();
     }
 
     m_showEnablePin = false;
-    m_enablePin = NULL;
+    m_enablePin = m_inPin[4];
+    m_enablePin->setInverted( true );
+    m_enablePin->setVisible( false );
+
     m_showDotPin = false;
-    m_dotPin = NULL;
+    m_dotPin = m_inPin[5];
+    m_dotPin->setVisible( false );
 
     setLabelPos(-16,-40, 0);
 
@@ -71,77 +74,45 @@ new BoolProp<SevenSegmentBCD>("Show_Point_Pin", tr("Show Point Pin"),"", this
 new BoolProp<SevenSegmentBCD>("Show_Enable_Pin", tr("Show Enable Pin"),"", this
                       , &SevenSegmentBCD::isShowEnablePin, &SevenSegmentBCD::setShowEnablePin, propNoCopy )
     },groupNoCopy} );
-        
+
     Simulator::self()->addToUpdateList( this );
-    
+
     initialize();
 }
 SevenSegmentBCD::~SevenSegmentBCD(){}
 
-void SevenSegmentBCD::stamp()
-{
-    BcdBase::stamp();
-    if( m_enablePin ) m_enablePin->changeCallBack( this );
-    if( m_dotPin ) m_dotPin->changeCallBack( this );
-}
-
 void SevenSegmentBCD::updateStep()
 {
     if( !m_changed ) return;
+    m_changed = false;
+
+    if( m_enablePin->getInpState() ){
+        BcdBase::voltChanged();
+        if( m_dotPin->getInpState() ) m_digit |= 0x80;
+    }
+    else m_digit = 0;
 
     update();
-    m_changed = false;
 }
 
-void SevenSegmentBCD::voltChanged()
+void SevenSegmentBCD::voltChanged() { m_changed = true; }
+
+void SevenSegmentBCD::setShowEnablePin( bool show )
 {
-    m_changed = true;
-    bool enabled = true;
-    if( m_showEnablePin ) enabled = m_enablePin->getVoltage() > 2.5;
-    if( !enabled ) m_digit = 0;
-    else {
-        BcdBase::voltChanged();
-        bool dotted = false;
-        if( m_showDotPin ) dotted = m_dotPin->getVoltage() > 2.5;
-        if( dotted ) m_digit |= 0x80;
-    }
+    if( m_showEnablePin == show ) return;
+    m_showEnablePin = show;
+
+    if( !show ) m_enablePin->removeConnector();
+    m_enablePin->setVisible( show );
 }
 
-void SevenSegmentBCD::setShowEnablePin(bool v)
+void SevenSegmentBCD::setShowDotPin( bool show )
 {
-    if( m_showEnablePin == v) return;
-    m_showEnablePin = v;
-    if( v ) {
-        m_enablePin = createPin("IU02", m_id+"-enable");
-        m_enablePin->setInverted( true );
-        m_enablePin->setX( m_inPin[0]->x() );
-        m_enablePin->setFontSize( 4 );
-        m_enablePin->setLabelColor( QColor( 250, 250, 200 ) );
-        m_enablePin->setLabelText( "E" );
-        m_enablePin->setLabelPos();
-    } else {
-        m_enablePin->removeConnector();
-        delete m_enablePin;
-        m_enablePin = NULL;
-    }
-}
+    if( m_showDotPin == show) return;
+    m_showDotPin = show;
 
-void SevenSegmentBCD::setShowDotPin(bool v)
-{
-    if( m_showDotPin == v) return;
-    m_showDotPin = v;
-    if( v ) {
-        m_dotPin = createPin("IU01", m_id+"-input-dot");
-        m_dotPin->setX( m_inPin[3]->x() );
-        m_dotPin->setFontSize( 4 );
-        m_dotPin->setLabelColor( QColor( 250, 250, 200 ) );
-        m_dotPin->setLabelText( "." );
-        m_dotPin->setLabelPos();
-    } else {
-        m_dotPin->removeConnector();
-        delete m_dotPin;
-        m_dotPin = NULL;
-    }
+    if( !show ) m_dotPin->removeConnector();
+    m_dotPin->setVisible( show );
 }
 
 void SevenSegmentBCD::setLinked( bool l )
@@ -162,40 +133,25 @@ void SevenSegmentBCD::setLinkedValue( double v, int i )
     m_changed = true;
 }
 
-std::vector<Pin*> SevenSegmentBCD::getPins()
-{
-    std::vector<Pin*> pins = BcdBase::getPins();
-    if( m_dotPin  ) pins.emplace_back( m_dotPin );
-    if( m_enablePin ) pins.emplace_back( m_enablePin );
-    return pins;
-}
-
-void SevenSegmentBCD::remove()
-{
-    if( m_enablePin ) m_enablePin->removeConnector();
-    if( m_dotPin ) m_dotPin->removeConnector();
-    BcdBase::remove();
-}
-
 void SevenSegmentBCD::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
 {
     Component::paint( p, option, widget );
     p->drawRect( m_area );
 
-    const int mg =  6;// Margin around number
+    const int mg =  6; // Margin around number
     const int ds =  1; // "Slope"
-    const int tk =  4; // Line thick
+    const int tk =  4; // Line thickness
     const int x1 =  m_area.x()+mg;
     const int x2 = -m_area.x()-mg;
     const int y1 =  m_area.y()+mg;
     const int y2 = -m_area.y()-mg;
 
     QPen pen;
-    pen.setWidth(tk);
-    QColor color = LedBase::getColor( (LedBase::LedColor)0, m_intensity );
+    pen.setWidth( tk );
+    QColor color = LedBase::getColor( (LedBase::LedColor)0, 255 );
     pen.setColor( color );
-    pen.setCapStyle(Qt::RoundCap);
-    p->setPen(pen);
+    pen.setCapStyle( Qt::RoundCap );
+    p->setPen( pen );
 
     if( m_digit & 1<<0 ) p->drawLine( x1+tk+ds, y1,    x2-tk+ds, y1    );
     if( m_digit & 1<<1 ) p->drawLine( x2+ds,    y1+tk, x2,      -tk    );

@@ -20,26 +20,20 @@ class MAINMODULE_EXPORT SevenSegmentBCD : public BcdBase
  static LibraryItem* libraryItem();
 
         virtual void updateStep() override;
+        virtual void voltChanged() override;
 
         bool isShowEnablePin() { return m_showEnablePin; }
-        void setShowEnablePin( bool v );
+        void setShowEnablePin( bool show );
 
         bool isShowDotPin() { return m_showDotPin; }
-        void setShowDotPin( bool v );
+        void setShowDotPin( bool show );
 
         virtual void setLinked( bool l ) override;
         virtual void setLinkedValue( double v, int i=0  ) override;
 
-        void voltChanged() override;
-        std::vector<Pin *> getPins() override;
-        void remove() override;
-        void stamp() override;
-
         void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
 
     private:
-        int m_intensity;
-
         bool m_showEnablePin;
         bool m_showDotPin;
 
