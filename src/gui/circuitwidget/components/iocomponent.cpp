@@ -26,14 +26,13 @@ IoComponent::IoComponent( QString type, QString id)
     m_inImp = 1e9;
     m_ouImp = 40;
 
-    //m_rndPD = false;
-    m_invInputs = false;
-    m_invOutputs  = false;
+    m_invInputs  = false;
+    m_invOutputs = false;
 
-    m_propSize = 1;
+    m_propSize  = 1;
     m_propDelay = 10*1000; // 10 ns
-    m_timeLH = 3000;
-    m_timeHL = 4000;
+    m_timeLH    = 3000;
+    m_timeHL    = 4000;
 }
 IoComponent::~IoComponent(){}
 

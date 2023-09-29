@@ -57,7 +57,11 @@ void LogicComponent::remove()
 }
 
 void LogicComponent::setOePin( IoPin* pin )
-{ pin->setInverted( true ); m_oePin = pin; }
+{
+    m_oePin = pin;
+    pin->setInverted( true );
+    m_oePin->setLabelText("OE ");
+}
 
 bool LogicComponent::outputEnabled()
 {
@@ -84,12 +88,7 @@ void LogicComponent::setTristate( bool t )  // Activate or deactivate OE Pin
 {
     if( !m_oePin ) return;
 
-    if( !t )
-    {
-        m_oePin->removeConnector();
-        m_oePin->setLabelText( "" );
-    }
-    else m_oePin->setLabelText( "OE " );
+    if( !t ) m_oePin->removeConnector();
 
     m_oePin->setVisible( t );
     m_tristate = t;
