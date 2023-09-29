@@ -336,6 +336,8 @@ void Function::setNumOutputs( int outs )
             }else{
                 QString num = QString::number(i);
                 m_outPin[i] = new IoPin( 0, QPoint(24, -halfH+i*16+8 ), m_id+"-out"+num, i, this, output );
+                initPin( m_outPin[i] );
+                m_outPin[i]->setInverted( m_invOutputs );
 
                 QPushButton* button = new QPushButton( );
                 button->setMaximumSize( 14,14 );
