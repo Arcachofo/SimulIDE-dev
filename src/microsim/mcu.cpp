@@ -521,17 +521,14 @@ void Mcu::slotLinkComp()
 
 void Mcu::slotOpenMcuMonitor()
 {
-    if( !m_mcuMonitor )
-    {
-        m_mcuMonitor = new MCUMonitor( CircuitWidget::self(), &m_eMcu );
-        m_mcuMonitor->setWindowTitle( idLabel() );
-    }
+    if( !m_mcuMonitor ) m_mcuMonitor = new MCUMonitor( CircuitWidget::self(), &m_eMcu );
+    m_mcuMonitor->setWindowTitle( findIdLabel() );
     m_mcuMonitor->show();
 }
 
 void Mcu::slotOpenTerm( int num )
 {
-    m_eMcu.m_usarts.at(num-1)->openMonitor( idLabel(), num );
+    m_eMcu.m_usarts.at(num-1)->openMonitor( findIdLabel(), num );
     m_serialMon = num;
 }
 
@@ -543,6 +540,16 @@ int Mcu::serialMon()
 }
 
 void Mcu::setSerialMon( int s ) { if( s>=0 ) slotOpenTerm( s ); }
+
+QString Mcu::findIdLabel() /// FIXME: move to Component??
+{
+    QString label = idLabel();
+    if( this->parentItem() ){
+        Component* comp = qgraphicsitem_cast<Component*>( this->parentItem() );
+        label = comp->idLabel();
+    }
+    return label;
+}
 
 void Mcu::setLinkedValue( double v, int i )
 {
