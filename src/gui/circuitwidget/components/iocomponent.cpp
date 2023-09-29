@@ -205,7 +205,7 @@ void IoComponent::setInvertOuts( bool inverted )
 
 void IoComponent::setInvertInps( bool invert )
 {
-    //if( m_invInputs == invert ) return;
+    if( m_invInputs == invert ) return;
     m_invInputs = invert;
     Simulator::self()->pauseSim();
     for( IoPin* pin : m_inPin ) pin->setInverted( invert );
@@ -392,6 +392,7 @@ void IoComponent::setNumPins( std::vector<IoPin*>* pinList, uint pins
             pinList->at(i) = new IoPin( angle, QPoint( x, y ), pinId, i, this, mode );
             initPin( pinList->at(i) );
             if( mode == output && m_invOutputs ) pinList->at(i)->setInverted( true );
+            if( mode == input && m_invInputs ) pinList->at(i)->setInverted( true );
 
             if( !label.isEmpty() ) pinList->at(i)->setLabelText( label+num );
             pinList->at(i)->setLabelColor( QColor( 0, 0, 0 ) );
