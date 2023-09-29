@@ -12,6 +12,8 @@
 #include "iopin.h"
 #include "ledbase.h"
 
+#include "boolprop.h"
+
 #define tr(str) simulideTr("SevenSegmentBCD",str)
 
 Component* SevenSegmentBCD::construct( QString type, QString id )
@@ -55,7 +57,20 @@ SevenSegmentBCD::SevenSegmentBCD( QString type, QString id )
         m_inPin[i]->setLabelText( QString::number( pow(2,i) ) );
         m_inPin[i]->setLabelPos();
     }
+
+    m_showEnablePin = false;
+    m_enablePin = NULL;
+    m_showDotPin = false;
+    m_dotPin = NULL;
+
     setLabelPos(-16,-40, 0);
+
+    addPropGroup( { tr("Main"), {
+new BoolProp<SevenSegmentBCD>("Show_Point_Pin", tr("Show Point Pin"),"", this
+                      , &SevenSegmentBCD::isShowDotPin, &SevenSegmentBCD::setShowDotPin, propNoCopy ),
+new BoolProp<SevenSegmentBCD>("Show_Enable_Pin", tr("Show Enable Pin"),"", this
+                      , &SevenSegmentBCD::isShowEnablePin, &SevenSegmentBCD::setShowEnablePin, propNoCopy )
+    },groupNoCopy} );
         
     Simulator::self()->addToUpdateList( this );
     
@@ -63,12 +78,70 @@ SevenSegmentBCD::SevenSegmentBCD( QString type, QString id )
 }
 SevenSegmentBCD::~SevenSegmentBCD(){}
 
+void SevenSegmentBCD::stamp()
+{
+    BcdBase::stamp();
+    if( m_enablePin ) m_enablePin->changeCallBack( this );
+    if( m_dotPin ) m_dotPin->changeCallBack( this );
+}
+
 void SevenSegmentBCD::updateStep()
 {
     if( !m_changed ) return;
 
     update();
     m_changed = false;
+}
+
+void SevenSegmentBCD::voltChanged()
+{
+    m_changed = true;
+    bool enabled = true;
+    if( m_showEnablePin ) enabled = m_enablePin->getVoltage() > 2.5;
+    if( !enabled ) m_digit = 0;
+    else {
+        BcdBase::voltChanged();
+        bool dotted = false;
+        if( m_showDotPin ) dotted = m_dotPin->getVoltage() > 2.5;
+        if( dotted ) m_digit |= 0x80;
+    }
+}
+
+void SevenSegmentBCD::setShowEnablePin(bool v)
+{
+    if( m_showEnablePin == v) return;
+    m_showEnablePin = v;
+    if( v ) {
+        m_enablePin = createPin("IU02", m_id+"-enable");
+        m_enablePin->setInverted( true );
+        m_enablePin->setX( m_inPin[0]->x() );
+        m_enablePin->setFontSize( 4 );
+        m_enablePin->setLabelColor( QColor( 250, 250, 200 ) );
+        m_enablePin->setLabelText( "E" );
+        m_enablePin->setLabelPos();
+    } else {
+        m_enablePin->removeConnector();
+        delete m_enablePin;
+        m_enablePin = NULL;
+    }
+}
+
+void SevenSegmentBCD::setShowDotPin(bool v)
+{
+    if( m_showDotPin == v) return;
+    m_showDotPin = v;
+    if( v ) {
+        m_dotPin = createPin("IU01", m_id+"-input-dot");
+        m_dotPin->setX( m_inPin[3]->x() );
+        m_dotPin->setFontSize( 4 );
+        m_dotPin->setLabelColor( QColor( 250, 250, 200 ) );
+        m_dotPin->setLabelText( "." );
+        m_dotPin->setLabelPos();
+    } else {
+        m_dotPin->removeConnector();
+        delete m_dotPin;
+        m_dotPin = NULL;
+    }
 }
 
 void SevenSegmentBCD::setLinked( bool l )
@@ -87,6 +160,21 @@ void SevenSegmentBCD::setLinkedValue( double v, int i )
     if( i == 0 ) m_digit = m_values[vInt]; // Display value
     else         m_digit = vInt;           // 1 bit for each segment
     m_changed = true;
+}
+
+std::vector<Pin*> SevenSegmentBCD::getPins()
+{
+    std::vector<Pin*> pins = BcdBase::getPins();
+    if( m_dotPin  ) pins.emplace_back( m_dotPin );
+    if( m_enablePin ) pins.emplace_back( m_enablePin );
+    return pins;
+}
+
+void SevenSegmentBCD::remove()
+{
+    if( m_enablePin ) m_enablePin->removeConnector();
+    if( m_dotPin ) m_dotPin->removeConnector();
+    BcdBase::remove();
 }
 
 void SevenSegmentBCD::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
