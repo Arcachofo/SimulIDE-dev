@@ -64,6 +64,8 @@ inline void PicMrCore::SLEEP()
     m_mcu->sleep( true );
 }
 
+void PicMrCore::exitSleep() { write_S_Bit( TO, false ); }
+
 inline void PicMrCore::CLRWDT()
 {
     write_S_Bit( PD, true );

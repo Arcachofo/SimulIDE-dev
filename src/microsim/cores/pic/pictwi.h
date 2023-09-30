@@ -33,6 +33,8 @@ class PicTwi : public McuTwi
         virtual void bufferEmpty() override;
         virtual void readByte() override;
 
+        virtual void sleep( int mode ) override;
+
     protected:
         virtual void setTwiState( twiState_t state ) override;
         uint8_t getStaus() { return *m_statReg &= 0b11111000; }

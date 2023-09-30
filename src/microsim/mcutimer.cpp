@@ -73,12 +73,12 @@ void McuTimer::sleep( int mode )
 
     if( m_extClock ) return;
 
-    if( m_sleeping ) // Wakeup
+    if( m_sleeping ) // Sleep
     {
         Simulator::self()->cancelEvents( this );
         updtCount();                              /// Update counter
     }
-    else             // Sleep
+    else             // Wakeup
     {
         updtCycles();                             /// update & Reshedule
     }

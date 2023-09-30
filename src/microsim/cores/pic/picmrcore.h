@@ -79,6 +79,8 @@ class MAINMODULE_EXPORT PicMrCore : public McuCpu
         uint8_t add( uint8_t val1, uint8_t val2 );
         uint8_t sub( uint8_t val1, uint8_t val2 );
 
+        virtual void exitSleep() override;
+
         // Miscellaneous instructions
         inline void RETURN();
         inline void RETFIE();

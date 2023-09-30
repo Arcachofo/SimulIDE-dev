@@ -71,7 +71,8 @@ void PicAdc::sleep( int mode )
 {
     McuModule::sleep( mode );
     m_sleeping = m_sleeping && !m_adcClock; // Only sleep if running on system clock
-    if( m_sleeping ) Simulator::self()->cancelEvents( this );
+    if( m_sleeping ) pauseEvents();
+    else             resumeEvents();
 }
 
 //------------------------------------------------------

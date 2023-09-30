@@ -32,12 +32,14 @@ void UartRx::enable( uint8_t en )
 
 void UartRx::voltChanged()
 {
+    if( m_sleeping ) return;
+
     bool bit = m_ioPin->getInpState();
 
     if( m_state == usartRXEND ) rxEnd();
 
-    if     ( !m_startHigh && bit ) m_startHigh = true;
-    else if( m_startHigh && !bit )                     // Start bit detected
+    if     ( !m_startHigh &&  bit ) m_startHigh = true;
+    else if(  m_startHigh && !bit )                     // Start bit detected
     {
         m_ioPin->changeCallBack( this, false );
         Simulator::self()->addEvent( m_period/2, this ); // Shedule reception

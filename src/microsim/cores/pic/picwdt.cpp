@@ -32,7 +32,7 @@ void PicWdt::runEvent()
     if( m_sleeping )
     {
         m_mcu->sleep( false );
-        /// TODO: TO bit in the Status register is cleared
+        m_mcu->cpu()->exitSleep(); // TO bit in the Status register is cleared
     }
     else McuWdt::runEvent();
 }

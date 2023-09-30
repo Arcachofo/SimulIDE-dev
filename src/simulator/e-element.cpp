@@ -13,6 +13,7 @@ eElement::eElement( QString id )
     nextChanged = NULL;
     nextEvent  = NULL;
     eventTime = 0;
+    m_pendingTime = 0;
     added = false;
     m_step = 0;
 
@@ -40,3 +41,20 @@ ePin* eElement::getEpin( int num )
 
 void eElement::setEpin( int num, ePin* pin )
 { m_ePin[num] = pin; }
+
+void eElement::pauseEvents()
+{
+    if( eventTime )
+    {
+        m_pendingTime = eventTime - Simulator::self()->circTime();
+        Simulator::self()->cancelEvents( this );
+    }
+    else m_pendingTime = 0;
+}
+
+void eElement::resumeEvents()
+{
+    if( !m_pendingTime ) return;
+    Simulator::self()->addEvent( m_pendingTime, this );
+    m_pendingTime = 0;
+}

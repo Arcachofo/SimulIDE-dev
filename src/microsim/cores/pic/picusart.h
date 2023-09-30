@@ -34,6 +34,8 @@ class MAINMODULE_EXPORT PicUsart : public McuUsart
         void setSPBRGH(  uint8_t val );
         void setBaurrate( uint8_t val=0 );
 
+        virtual void sleep( int mode ) override;
+
     private:
         bool m_enabled;
 

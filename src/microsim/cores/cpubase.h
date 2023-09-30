@@ -31,6 +31,8 @@ class MAINMODULE_EXPORT CpuBase : public CoreBase
 
         virtual uint getPC() { return m_PC; }
 
+        virtual void exitSleep() {;}
+
     protected:
         eMcu* m_mcu;
 

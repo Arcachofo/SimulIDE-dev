@@ -30,6 +30,9 @@ class MAINMODULE_EXPORT eElement
 
         QString getId(){ return m_elmId; }
 
+        void pauseEvents();
+        void resumeEvents();
+
         static constexpr double cero_doub = 1e-14;
         static constexpr double high_imp  = 1e14;
 
@@ -41,6 +44,8 @@ class MAINMODULE_EXPORT eElement
         uint64_t eventTime;
 
     protected:
+        uint64_t m_pendingTime;
+
         std::vector<ePin*> m_ePin;
 
         QString m_elmId;

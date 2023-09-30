@@ -92,6 +92,7 @@ void PicSpi::endTransaction()
 void PicSpi::sleep( int mode )
 {
     McuModule::sleep( mode );
-    if( m_sleeping ) Simulator::self()->cancelEvents( this );
+    if( m_sleeping ) pauseEvents();
+    else             resumeEvents();
 }
 

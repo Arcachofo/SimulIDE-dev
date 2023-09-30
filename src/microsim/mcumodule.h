@@ -30,6 +30,8 @@ class MAINMODULE_EXPORT McuModule
         virtual void callBack() {;}
         virtual void sleep( int mode );
 
+        void setSleepMode( uint8_t m ) { m_sleepMode = m; }
+
         virtual void setInterrupt( Interrupt* i ) { m_interrupt = i; }
         Interrupt* getInterrupt() { return m_interrupt; }
 

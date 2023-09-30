@@ -138,5 +138,3 @@ void UartTR::setPins( QList<IoPin*> pinList )
     m_pinList = pinList;
     m_ioPin = pinList.at(0);
 }
-
-

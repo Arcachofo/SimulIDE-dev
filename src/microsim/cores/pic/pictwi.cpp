@@ -8,10 +8,13 @@
 #include "e_mcu.h"
 #include "mcuinterrupts.h"
 #include "datautils.h"
+#include "simulator.h"
 
 PicTwi::PicTwi( eMcu* mcu, QString name )
       : McuTwi( mcu, name )
 {
+    m_sleepMode = 0xFF;
+
     // SSPCON
     m_WCOL    = getRegBits("WCOL"   , mcu );
 
@@ -213,4 +216,11 @@ void PicTwi::readByte()
 void PicTwi::readTwiReg( uint8_t val )
 {
     clearRegBits( m_BF );
+}
+
+void PicTwi::sleep( int mode )
+{
+    McuModule::sleep( mode );
+    if( m_sleeping ) pauseEvents();
+    else             resumeEvents();
 }

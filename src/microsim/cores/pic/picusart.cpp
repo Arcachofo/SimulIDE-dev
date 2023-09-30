@@ -15,6 +15,10 @@
 PicUsart::PicUsart( eMcu* mcu,  QString name, int number )
         : McuUsart( mcu, name, number )
 {
+    m_sleepMode = 0xFF;
+    m_sender->setSleepMode( 0xFF );
+    m_receiver->setSleepMode( 0xFF );
+
     m_enabled = false;
     m_SPBRG  = NULL;
     m_SPBRGL = NULL;
@@ -162,4 +166,11 @@ void PicUsart::parityError()
 void PicUsart::frameError()
 {
     setRegBits( m_FERR );
+}
+
+void PicUsart::sleep( int mode )
+{
+    McuModule::sleep( mode );
+    if( m_sleeping ) m_sender->pauseEvents();
+    else             m_sender->resumeEvents();
 }
