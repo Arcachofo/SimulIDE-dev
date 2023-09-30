@@ -5,6 +5,7 @@
 
 #include "i51timer.h"
 #include "e_mcu.h"
+#include "mcupin.h"
 #include "simulator.h"
 #include "datautils.h"
 
@@ -18,6 +19,9 @@ I51Timer::I51Timer( eMcu* mcu, QString name)
     m_TxM  = getRegBits( "T"+n+"M0,T"+n+"M1", mcu );
     m_CTx  = getRegBits( "C/T"+n, mcu );
     m_GATE = getRegBits( "GATE"+n, mcu );
+
+    m_int0Pin = mcu->getMcuPin("P32");
+    m_int1Pin = mcu->getMcuPin("P33");
 }
 I51Timer::~I51Timer(){}
 
@@ -28,6 +32,24 @@ void I51Timer::initialize()
     m_ovfMatch = 0x1FFF;
     m_ovfPeriod = m_ovfMatch + 1;
     m_gate = 0;
+}
+
+void I51Timer::voltChanged()
+{
+    /// TODO: If we are in gate mode check if we need to enable/disble
+    /// if( m_number == 0 ) // This is Timer0
+    /// if( m_number == 1 ) // This is Timer1
+
+    McuTimer::voltChanged();  // External Clock Pin changed voltage
+}
+
+void I51Timer::enable( uint8_t en )
+{
+    /// TODO: If we are in gate mode check if we should enable or not
+    /// if( m_number == 0 ) // This is Timer0
+    /// if( m_number == 1 ) // This is Timer1
+
+    McuTimer::enable( en );
 }
 
 void I51Timer::configureA( uint8_t newTMOD ) // TxM0,TxM1
@@ -61,13 +83,16 @@ void I51Timer::configureA( uint8_t newTMOD ) // TxM0,TxM1
     bool extClock = getRegBitsVal( newTMOD, m_CTx );
     if( extClock != m_extClock )
     {
-        m_extClock = extClock;
+        enableExtClock( extClock );
     }
-    bool gate = getRegBitsVal( newTMOD, m_GATE );
+    bool gate = getRegBitsBool( newTMOD, m_GATE );
     if( gate != m_gate )
     {
         m_gate = gate;
-        /// TODO
+        //if( m_gate )
+
+        m_int0Pin->changeCallBack( this, gate ); // Call voltchanged() or not
+        m_int1Pin->changeCallBack( this, gate );
     }
 }
 

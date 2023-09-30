@@ -60,7 +60,7 @@ class MAINMODULE_EXPORT McuTimer : public McuPrescaled, public eElement
         virtual void updtCycles();
         void clockStep();
 
-        int     m_number;
+        int m_number;
 
         uint64_t m_scale;                   // Picoseconds per timer Tick
 
