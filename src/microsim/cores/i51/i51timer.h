@@ -25,14 +25,18 @@ class MAINMODULE_EXPORT I51Timer : public McuTimer
         virtual void updtCount( uint8_t val=0 ) override;
 
     protected:
+
+        virtual void doUpdateEnable();
+
+    protected:
         bool m_gate;
+        bool m_trEnabled; // states of the TR flag
 
         regBits_t m_TxM;
         regBits_t m_CTx;
         regBits_t m_GATE;
 
-        McuPin* m_int0Pin;
-        McuPin* m_int1Pin;
+        McuPin* m_gatePin;
 };
 
 #endif

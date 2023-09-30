@@ -20,9 +20,14 @@ I51Timer::I51Timer( eMcu* mcu, QString name)
     m_CTx  = getRegBits( "C/T"+n, mcu );
     m_GATE = getRegBits( "GATE"+n, mcu );
 
-    m_int0Pin = mcu->getMcuPin("P32");
-    m_int1Pin = mcu->getMcuPin("P33");
+    m_trEnabled = false;
+    if( n == "0" ) m_gatePin = mcu->getMcuPin("P32");
+    else if( n == "1" ) m_gatePin = mcu->getMcuPin("P33");
+    else m_gatePin = NULL;
+    //Ensure gate pin ok;
+    Q_ASSERT( m_gatePin != NULL );
 }
+
 I51Timer::~I51Timer(){}
 
 void I51Timer::initialize()
@@ -36,20 +41,14 @@ void I51Timer::initialize()
 
 void I51Timer::voltChanged()
 {
-    /// TODO: If we are in gate mode check if we need to enable/disble
-    /// if( m_number == 0 ) // This is Timer0
-    /// if( m_number == 1 ) // This is Timer1
-
+    doUpdateEnable(); // check gate state;
     McuTimer::voltChanged();  // External Clock Pin changed voltage
 }
 
 void I51Timer::enable( uint8_t en )
 {
-    /// TODO: If we are in gate mode check if we should enable or not
-    /// if( m_number == 0 ) // This is Timer0
-    /// if( m_number == 1 ) // This is Timer1
-
-    McuTimer::enable( en );
+    m_trEnabled = en;
+    doUpdateEnable();
 }
 
 void I51Timer::configureA( uint8_t newTMOD ) // TxM0,TxM1
@@ -80,7 +79,7 @@ void I51Timer::configureA( uint8_t newTMOD ) // TxM0,TxM1
         m_ovfPeriod = m_ovfMatch+1;
     }
 
-    bool extClock = getRegBitsVal( newTMOD, m_CTx );
+    bool extClock = getRegBitsBool( newTMOD, m_CTx );
     if( extClock != m_extClock )
     {
         enableExtClock( extClock );
@@ -89,10 +88,8 @@ void I51Timer::configureA( uint8_t newTMOD ) // TxM0,TxM1
     if( gate != m_gate )
     {
         m_gate = gate;
-        //if( m_gate )
-
-        m_int0Pin->changeCallBack( this, gate ); // Call voltchanged() or not
-        m_int1Pin->changeCallBack( this, gate );
+        m_gatePin->changeCallBack( this, gate ); // Call voltchanged() or not
+        doUpdateEnable();
     }
 }
 
@@ -156,4 +153,10 @@ void I51Timer::updtCount( uint8_t )     // Write counter values to Ram
             else if( m_number == 1 ) COUNT_H = countVal & 0xFF;
         }
     }
+}
+
+void I51Timer::doUpdateEnable()
+{
+    // getVoltage is only called when m_trEnabled is true and m_gate is true
+    McuTimer::enable( m_trEnabled && ( !m_gate || ( m_gatePin->getVoltage() > 2.5 ) ) );
 }
