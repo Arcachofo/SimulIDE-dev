@@ -170,6 +170,13 @@ void SerialPort::readData()
     m_uartData += m_serial->readAll();
 }
 
+void SerialPort::setflip()
+{
+    Component::setflip();
+    m_proxy->setPos( QPoint( -4 + ( m_Hflip>0 ? 0 : m_button->width() ), -10 + ( m_Vflip>0 ? 0 : m_button->height() ) ) );
+    m_proxy->setTransform( QTransform::fromScale( m_Hflip, m_Vflip ) );
+}
+
 void SerialPort::byteReceived( uint8_t byte )
 {
     m_receiver->getData();

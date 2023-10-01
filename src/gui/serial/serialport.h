@@ -60,6 +60,7 @@ class MAINMODULE_EXPORT SerialPort : public Component, public UsartModule, publi
         void readData();
 
     protected:
+        virtual void setflip() override;
         virtual void contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu );
 
     private:
