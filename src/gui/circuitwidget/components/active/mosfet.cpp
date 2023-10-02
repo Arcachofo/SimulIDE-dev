@@ -61,6 +61,7 @@ void Mosfet::updateStep()
     if( !m_changed ) return;
     m_changed = false;
 
+    updateValues();
     voltChanged();
 }
 

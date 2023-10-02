@@ -30,17 +30,15 @@ class MAINMODULE_EXPORT eMosfet : public eResistor
         void setThreshold( double th );
         
     protected:
-        bool converged( double pre, double post );
+        void updateValues();
 
+        double m_accuracy;
+        double m_lastCurrent;
         double m_threshold;
         double m_kRDSon;
         double m_RDSon;
         double m_gateV;
         double m_Gth;
-
-        double m_Vd;
-        double m_Vs;
-        double m_Vg;
 
         bool m_Pchannel;
         bool m_depletion;
