@@ -9,4 +9,7 @@
                   
         <register name="FSR"     addr="0x04" bits=""/>
     </regblock>
+    
+    <sleep name="SLEEP"/>
+    
 </parts>
