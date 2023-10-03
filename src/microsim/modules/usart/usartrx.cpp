@@ -25,8 +25,9 @@ void UartRx::enable( uint8_t en )
     m_runHardware = m_ioPin->isConnected();
     while( !m_inBuffer.empty() ) m_inBuffer.pop();
 
+    m_state = usartSTOPPED;
+
     if( enabled ) processData( 0 ); // Start reading
-    else m_state = usartSTOPPED;
     m_frame = 0;
 }
 
@@ -41,8 +42,9 @@ void UartRx::voltChanged()
     if     ( !m_startHigh &&  bit ) m_startHigh = true;
     else if(  m_startHigh && !bit )                     // Start bit detected
     {
+        m_state = usartRECEIVE;
         m_ioPin->changeCallBack( this, false );
-        Simulator::self()->addEvent( m_period/2, this ); // Shedule reception
+        if( m_period ) Simulator::self()->addEvent( m_period/2, this ); // Shedule reception
     }
 }
 
@@ -55,39 +57,38 @@ void UartRx::runEvent()
         if( m_runHardware )
         {
             readBit();
-            if( m_state == usartRXEND ) Simulator::self()->addEvent( m_period/2, this ); // End of Byte
-            else                        Simulator::self()->addEvent( m_period, this ); // Shedule next sample
-        }
-        else{
+            if( m_period )
+            {
+                if( m_state == usartRXEND ) Simulator::self()->addEvent( m_period/2, this ); // End of Byte
+                else                        Simulator::self()->addEvent( m_period, this );   // Shedule next sample
+            }
+        }else{
             if( !m_inBuffer.empty() )
             {
                 byteReceived( m_inBuffer.front() );
                 m_inBuffer.pop();
             }
-            Simulator::self()->addEvent( m_period*(m_framesize ), this );
-            return;
+            if( m_period ) Simulator::self()->addEvent( m_period*(m_framesize ), this );
     }   }
     else if( m_state == usartRXEND ) rxEnd();
 }
 
 void UartRx::processData( uint8_t )
 {
-    m_state = usartRECEIVE;
     m_framesize = 1+mDATABITS+mPARITY+mSTOPBITS;
     m_currentBit = 0;
     m_fifoP = 2;
     m_startHigh = false;
 
-    if( m_period )
-    {
-         if( m_runHardware )
-         {
-             if( m_ioPin->getInpState() ) m_startHigh = true;
-             m_ioPin->changeCallBack( this, true );             // Wait for start bit
-            // Simulator::self()->addEvent( m_period/2, this ); // Shedule reception
-         }
-         else Simulator::self()->addEvent( m_period*m_framesize, this ); // Shedule Byte received
-}   }
+     if( m_runHardware )
+     {
+         m_startHigh = m_ioPin->getInpState();
+         m_ioPin->changeCallBack( this, true );             // Wait for start bit
+     }else{
+         m_state = usartRECEIVE;
+         if( m_period ) Simulator::self()->addEvent( m_period*m_framesize, this ); // Shedule Byte received
+     }
+}
 
 void UartRx::readBit()
 {
@@ -106,13 +107,17 @@ void UartRx::rxEnd()
     m_frame >>= 1;  // Start bit
     byteReceived( m_frame );
 
-    m_state = usartRECEIVE;
     m_currentBit = 0;
-
     m_frame = 0;
 
-    Simulator::self()->cancelEvents( this );
-    //m_ioPin->changeCallBack( this, true ); // Wait for next start bit
+    if( m_runHardware )
+    {
+        m_state = usartSTOPPED;
+        m_ioPin->changeCallBack( this, true ); // Wait for next start bit
+    }
+    else m_state = usartRECEIVE;
+
+    if( m_period ) Simulator::self()->cancelEvents( this );
 }
 
 void UartRx::byteReceived( uint16_t frame )
