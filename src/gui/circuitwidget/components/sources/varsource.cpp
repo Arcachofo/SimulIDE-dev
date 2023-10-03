@@ -4,7 +4,6 @@
  ***( see copyright.txt file at root folder )*******************************/
 
 #include <QGraphicsProxyWidget>
-#include <QPushButton>
 #include <QDial>
 #include <QPainter>
 

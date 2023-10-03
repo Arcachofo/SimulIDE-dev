@@ -10,7 +10,7 @@
 #include "scriptmodule.h"
 
 class LibraryItem;
-class QPushButton;
+class CustomButton;
 class QGraphicsProxyWidget;
 
 class MAINMODULE_EXPORT Function : public IoComponent, public ScriptModule
@@ -41,7 +41,7 @@ class MAINMODULE_EXPORT Function : public IoComponent, public ScriptModule
         double getOutputVoltage( int pin );
         
     public slots:
-        void onbuttonclicked();
+        void onbuttonclicked( int i );
         void loadData();
         void saveData();
         
@@ -55,7 +55,7 @@ class MAINMODULE_EXPORT Function : public IoComponent, public ScriptModule
         asIScriptFunction* m_voltChanged;
         QStringList m_funcList;
 
-        QList<QPushButton*> m_buttons;
+        QList<CustomButton*> m_buttons;
         QList<QGraphicsProxyWidget*> m_proxys;
 
         QString m_lastDir;

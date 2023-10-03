@@ -85,7 +85,7 @@ void SwitchDip::updateStep()
     m_changed = false;
 
     int i = 0;
-    for( QPushButton* button : m_buttons ) 
+    for( QPushButton* button : m_buttons )
     {
         double admit = 0;
         if( button->isChecked()  ) admit = 1e3;
@@ -102,7 +102,7 @@ void SwitchDip::onbuttonclicked()
     m_changed = true;
 
     int i = 0;
-    for( QPushButton* button : m_buttons ) 
+    for( QPushButton* button : m_buttons )
     {
         if( button->isChecked()  ) 
         {
@@ -122,7 +122,7 @@ void SwitchDip::setState( int state )
     if( m_state == state ) return;
     m_state = state;
 
-    for( QPushButton* button : m_buttons ) 
+    for( QPushButton* button : m_buttons )
     {
         bool switchState = state&1;
         state >>= 1;
@@ -149,6 +149,7 @@ void SwitchDip::createSwitches( int c )
         button->setMaximumSize( 6, 6 );
         button->setGeometry(-6,-6, 6, 6);
 
+        button->setCursor( Qt::PointingHandCursor );
         button->setCheckable( true );
         button->setChecked( true );
         button->setIcon(QIcon(":/switchbut.png"));

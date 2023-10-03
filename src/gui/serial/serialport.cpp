@@ -4,7 +4,6 @@
  ***( see copyright.txt file at root folder )*******************************/
 
 #include <QGraphicsProxyWidget>
-#include <QPushButton>
 #include <QPainter>
 #include <QMenu>
 
@@ -18,6 +17,7 @@
 #include "iopin.h"
 #include "utils.h"
 #include "mainwindow.h"
+#include "custombutton.h"
 
 #include "stringprop.h"
 #include "boolprop.h"
@@ -65,7 +65,7 @@ SerialPort::SerialPort( QString type, QString id )
     m_flowControl = QSerialPort::NoFlowControl;
     setBaudRate( 9600 );
 
-    m_button = new QPushButton( );
+    m_button = new CustomButton( );
     m_button->setMaximumSize( 36, 20 );
     m_button->setGeometry(-36,-20, 36, 20 );
     m_button->setCheckable( true );
@@ -80,7 +80,7 @@ SerialPort::SerialPort( QString type, QString id )
     m_proxy->setParentItem( this );
     m_proxy->setPos( QPoint(-4,-10) );
 
-    QObject::connect( m_button, &QPushButton::clicked  , [=](){ onbuttonclicked(); });
+    QObject::connect( m_button, &CustomButton::clicked  , [=](){ onbuttonclicked(); });
     QObject::connect( m_serial, &QSerialPort::readyRead, [=](){ readData(); } );
 
     Simulator::self()->addToUpdateList( this );

@@ -13,7 +13,7 @@
 #include "usartmodule.h"
 
 class LibraryItem;
-class QPushButton;
+class CustomButton;
 class QGraphicsProxyWidget;
 
 class MAINMODULE_EXPORT SerialPort : public Component, public UsartModule, public eElement
@@ -67,7 +67,7 @@ class MAINMODULE_EXPORT SerialPort : public Component, public UsartModule, publi
         void open();
         void close();
 
-        QPushButton* m_button;
+        CustomButton* m_button;
         QGraphicsProxyWidget* m_proxy;
 
         QSerialPort* m_serial;

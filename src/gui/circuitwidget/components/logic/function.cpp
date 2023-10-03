@@ -5,7 +5,6 @@
 
 #include <QMenu>
 #include <QFileDialog>
-#include <QPushButton>
 #include <QInputDialog>
 #include <QGraphicsProxyWidget>
 
@@ -17,6 +16,7 @@
 #include "itemlibrary.h"
 #include "utils.h"
 #include "iopin.h"
+#include "custombutton.h"
 
 #include "stringprop.h"
 #include "boolprop.h"
@@ -265,11 +265,11 @@ void Function::saveData()
 
 void Function::remove()
 {
-    for( QPushButton* button : m_buttons ) 
+    for( CustomButton* button : m_buttons )
     {
-       m_buttons.removeOne( button );
        delete button;
     }
+    m_buttons.clear();
     IoComponent::remove();
 }
 
@@ -317,8 +317,8 @@ void Function::setNumOutputs( int outs )
                 m_outPin[i]->setY( -halfH+(int)i*16+8 );
                 m_proxys.at(i)->setPos( QPoint( 0, -halfH+(int)i*16+1 ) );
             }else{
-                QPushButton* button = m_buttons.takeLast();
-                //QObject::disconnect( button, &QPushButton::released, this, &Function::onbuttonclicked );
+                CustomButton* button = m_buttons.takeLast();
+                //QObject::disconnect( button, &CustomButton::released, this, &Function::onbuttonclicked );
                 delete button;
 
                 m_proxys.removeLast();
@@ -339,14 +339,14 @@ void Function::setNumOutputs( int outs )
                 initPin( m_outPin[i] );
                 m_outPin[i]->setInverted( m_invOutputs );
 
-                QPushButton* button = new QPushButton( );
+                CustomButton* button = new CustomButton( );
                 button->setMaximumSize( 14,14 );
                 button->setGeometry(-14,-14,14,14);
                 QFont font = button->font();
                 font.setPixelSize(7);
                 button->setFont(font);
                 button->setText( "O"+num );
-                button->setCheckable( true );
+//                button->setCheckable( true );
                 m_buttons.append( button );
 
                 QGraphicsProxyWidget* proxy = Circuit::self()->addWidget( button );
@@ -356,19 +356,19 @@ void Function::setNumOutputs( int outs )
                 m_proxys.append( proxy );
                 m_funcList.append( "" );
 
-                QObject::connect( button, &QPushButton::released, [=](){ onbuttonclicked(); } );
+                QObject::connect( button, &CustomButton::released, [=](){ onbuttonclicked( i ); } );
     }   }   }
     
     Circuit::self()->update();
 }
 
-void Function::onbuttonclicked()
+void Function::onbuttonclicked( int  i )
 {
-    int i = 0;
-    for( QPushButton* button : m_buttons ){
-       if( button->isChecked()  ){ button->setChecked( false ); break; }
-       ++i;
-    }
+//    int i = 0;
+//    for( CustomButton* button : m_buttons ){
+//       if( button->isChecked()  ){ button->setChecked( false ); break; }
+//       ++i;
+//    }
     bool ok;
     QString text = QInputDialog::getText(0l, tr("Set Function"),
                                              "Output "+QString::number(i)+tr(" Function:"),
