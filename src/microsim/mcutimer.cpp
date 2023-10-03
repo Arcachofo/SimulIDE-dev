@@ -163,14 +163,19 @@ void McuTimer::updtCount( uint8_t )       // Write counter values to Ram
 {
     if( !m_running ) return;// If no running, values were already written at timer stop.
 
-    if( !m_extClock )
-    {
-        uint64_t time2Ovf = m_ovfCycle-Simulator::self()->circTime(); // Next overflow time - current time
-        uint64_t cycles2Ovf = time2Ovf/m_scale;
-        if( m_ovfMatch > cycles2Ovf ) m_countVal = m_ovfMatch-cycles2Ovf;
-    }
+    calcCounter();
+
     if( m_countL ) *m_countL = m_countVal & 0xFF;
     if( m_countH ) *m_countH = (m_countVal>>8) & 0xFF;
+}
+
+void McuTimer::calcCounter()
+{
+    if( m_extClock ) return;
+
+    uint64_t time2Ovf = m_ovfCycle-Simulator::self()->circTime(); // Next overflow time - current time
+    uint64_t cycles2Ovf = time2Ovf/m_scale;
+    if( m_ovfMatch > cycles2Ovf ) m_countVal = m_ovfMatch-cycles2Ovf;
 }
 
 void McuTimer::updtCycles() // Recalculate ovf, comps, etc

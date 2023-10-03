@@ -59,6 +59,7 @@ class MAINMODULE_EXPORT McuTimer : public McuPrescaled, public eElement
         virtual void sheduleEvents();
         virtual void updtCycles();
         void clockStep();
+        void calcCounter();
 
         int m_number;
 

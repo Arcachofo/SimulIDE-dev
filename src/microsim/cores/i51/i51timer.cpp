@@ -127,31 +127,29 @@ void I51Timer::updtCycles() // Recalculate ovf, comps, etc
 
 void I51Timer::updtCount( uint8_t )     // Write counter values to Ram
 {
-    if( m_running ) // If no running, values were already written at timer stop.
-    {
-        if( m_mode == 1 ) // 16 bits
-        {
-            McuTimer::updtCount();
-            return;
-        }
-        uint64_t timTime = m_ovfCycle-Simulator::self()->circTime(); // Next overflow time - current time
-        uint16_t countVal = timTime/m_mcu->psInst()/m_prescaler;
+    if( !m_running ) return; // If no running, values were already written at timer stop.
 
-        if( m_mode == 0 )  // 13 bits
-        {
-            COUNT_L = countVal & 0b00011111;
-            COUNT_H = (countVal>>5) & 0xFF;
-        }
-        else if( m_mode == 2 ) // 8 bits
-        {
-            COUNT_L = countVal & 0xFF;
-            //if( m_countH ) m_countH[0] = (countVal>>8) & 0xFF;
-        }
-        else                 // 8+8 bits
-        {
-            if     ( m_number == 0 ) COUNT_L = countVal & 0xFF;
-            else if( m_number == 1 ) COUNT_H = countVal & 0xFF;
-        }
+    if( m_mode == 1 ) // 16 bits
+    {
+        McuTimer::updtCount();
+        return;
+    }
+    calcCounter();
+
+    if( m_mode == 0 )  // 13 bits
+    {
+        COUNT_L = m_countVal & 0b00011111;
+        COUNT_H = (m_countVal>>5) & 0xFF;
+    }
+    else if( m_mode == 2 ) // 8 bits
+    {
+        COUNT_L = m_countVal & 0xFF;
+        //if( m_countH ) m_countH[0] = (countVal>>8) & 0xFF;
+    }
+    else                 // 8+8 bits
+    {
+        if     ( m_number == 0 ) COUNT_L = m_countVal & 0xFF;
+        else if( m_number == 1 ) COUNT_H = m_countVal & 0xFF;
     }
 }
 
