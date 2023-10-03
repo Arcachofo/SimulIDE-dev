@@ -1115,7 +1115,19 @@ void Circuit::keyPressEvent( QKeyEvent* event )
         }
         else if( key == Qt::Key_R )
         {
-            for( Component* com : m_compList ) if( com->isSelected() ) com->rotateCW();
+            if ( event->modifiers() & Qt::ShiftModifier ) {
+                for( Component* com : m_compList ) if( com->isSelected() ) com->rotateCCW();
+            } else {
+                for( Component* com : m_compList ) if( com->isSelected() ) com->rotateCW();
+            }
+        }
+        else if( key == Qt::Key_L )
+        {
+            if ( event->modifiers() & Qt::ShiftModifier ) {
+                for( Component* com : m_compList ) if( com->isSelected() ) com->slotV_flip();
+            } else {
+                for( Component* com : m_compList ) if( com->isSelected() ) com->slotH_flip();
+            }
         }
         else QGraphicsScene::keyPressEvent( event );
     }

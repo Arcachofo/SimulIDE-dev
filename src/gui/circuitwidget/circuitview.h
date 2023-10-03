@@ -27,6 +27,7 @@ class CircuitView : public QGraphicsView
         void dragMoveEvent( QDragMoveEvent* event );
         void dragEnterEvent( QDragEnterEvent* event );
         void dragLeaveEvent( QDragLeaveEvent* event );
+        void dropEvent( QDropEvent* event );
 
         void mousePressEvent( QMouseEvent* event );
         void mouseMoveEvent( QMouseEvent *event );

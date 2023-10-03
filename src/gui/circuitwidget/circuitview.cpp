@@ -121,6 +121,16 @@ void CircuitView::dragLeaveEvent( QDragLeaveEvent* event )
     m_enterItem = NULL;
 }
 
+void CircuitView::dropEvent(QDropEvent *event)
+{
+    event->accept();
+    if( !m_enterItem ) return;
+
+    Circuit::self()->clearSelection();
+    m_enterItem->setSelected( true );
+    m_enterItem = NULL;
+}
+
 void CircuitView::mousePressEvent( QMouseEvent* event )
 {
     m_waitForDragStart = false;

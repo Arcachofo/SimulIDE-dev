@@ -342,16 +342,16 @@ void Component::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu 
     QAction* rotateCWAction = menu->addAction( QIcon( ":/rotatecw.svg"),tr("Rotate CW")+"\tCtrl+R" );
     QObject::connect( rotateCWAction, &QAction::triggered, [=](){ rotateCW(); } );
 
-    QAction* rotateCCWAction = menu->addAction(QIcon( ":/rotateccw.svg"),tr("Rotate CCW") );
+    QAction* rotateCCWAction = menu->addAction(QIcon( ":/rotateccw.svg"),tr("Rotate CCW")+"\tCtrl+Shift+R" );
     QObject::connect( rotateCCWAction, &QAction::triggered, [=](){ rotateCCW(); } );
 
     QAction* rotateHalfAction = menu->addAction(QIcon(":/rotate180.svg"),tr("Rotate 180") );
     QObject::connect( rotateHalfAction, &QAction::triggered, [=](){ rotateHalf(); } );
     
-    QAction* H_flipAction = menu->addAction(QIcon(":/hflip.svg"),tr("Horizontal Flip") );
+    QAction* H_flipAction = menu->addAction(QIcon(":/hflip.svg"),tr("Horizontal Flip")+"\tCtrl+L" );
     QObject::connect( H_flipAction, &QAction::triggered, [=](){ slotH_flip(); } );
     
-    QAction* V_flipAction = menu->addAction(QIcon(":/vflip.svg"),tr("Vertical Flip") );
+    QAction* V_flipAction = menu->addAction(QIcon(":/vflip.svg"),tr("Vertical Flip")+"\tCtrl+Shift+L" );
     QObject::connect( V_flipAction, &QAction::triggered, [=](){ slotV_flip(); } );
 
     menu->exec(event->screenPos());
