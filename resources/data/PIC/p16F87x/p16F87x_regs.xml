@@ -56,8 +56,8 @@
         <register name="PIE2"    addr="0x8D" 
                   bits="CCP2IE,0,0,BCLIE,EEIE,0,0,0"/>
                   
-        <register name="PCON"    addr="0x8E" 
-                  bits="BOR,POR,0,OSCF" reset="00001000"/>
+        <register name="PCON"    addr="0x8E" reset="00001000"
+                  bits="BOR,POR,0,OSCF" />
                   
         <register name="SSPCON2" addr="0x91" mask="10111111"
                   bits="SEN,RSEN,PEN,RCEN,ACKEN,ACKDT,ACKSTAT,GCEN" />
