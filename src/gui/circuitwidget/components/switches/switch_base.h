@@ -30,11 +30,12 @@ class MAINMODULE_EXPORT SwitchBase : public MechContact
         
         CustomButton* button() { return m_button; }
 
-    public slots:
         virtual void onbuttonclicked();
         virtual void keyEvent( QString key, bool pressed ){;}
 
     protected:
+        //virtual void setflip() override;
+
         QString m_key;
         
         CustomButton* m_button;

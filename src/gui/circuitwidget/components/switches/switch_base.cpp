@@ -64,6 +64,13 @@ void SwitchBase::rotateText( double angle )
     m_proxy->setRotation( rot + angle );
 }
 
+/*void SwitchBase::setflip()
+{
+    Component::setflip();
+    m_proxy->setPos( -8 + ( m_Hflip>0 ? 0 : 16 ), 4 + ( m_Vflip>0 ? 0 : 16 ) );
+    m_proxy->setTransform( QTransform::fromScale( m_Hflip, m_Vflip ) );
+}*/
+
 void SwitchBase::setHidden( bool hide, bool hidArea, bool hidLabel )
 {
     Component::setHidden( hide, hidArea, hidLabel );
@@ -86,6 +93,7 @@ void SwitchBase::onbuttonclicked()
 void SwitchBase::setKey( QString key )
 {
     if( key.size()>1 ) key = key.left( 1 );
+    if( key.isLower() ) key = key.toUpper();
     m_key = key;
     m_button->setText( key );
 }
