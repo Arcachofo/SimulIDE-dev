@@ -97,10 +97,14 @@ void CircuitView::dragEnterEvent( QDragEnterEvent* event )
             SubCircuit* subC = static_cast<SubCircuit*>( m_enterItem );
             if( subC->subcType() < Chip::Board ) subC->setLogicSymbol( true );
         }
-        m_enterItem->setPos( mapToScene( event->pos() ) );
+        m_circuit->clearSelection();
         m_circuit->addItem( m_enterItem );
         m_circuit->compList()->insert( m_enterItem );
         m_circuit->saveCompChange( m_enterItem->getUid(), COMP_STATE_NEW, "" );
+
+        m_enterItem->setPos( mapToScene( event->pos() ) );
+        m_enterItem->setSelected( true );
+
         this->setFocus();
     }
 }
@@ -118,16 +122,6 @@ void CircuitView::dragLeaveEvent( QDragLeaveEvent* event )
 
     m_circuit->removeComp( m_enterItem );
     Circuit::self()->removeLastUndo();
-    m_enterItem = NULL;
-}
-
-void CircuitView::dropEvent(QDropEvent *event)
-{
-    event->accept();
-    if( !m_enterItem ) return;
-
-    Circuit::self()->clearSelection();
-    m_enterItem->setSelected( true );
     m_enterItem = NULL;
 }
 
