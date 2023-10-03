@@ -40,15 +40,15 @@ ResistorDip::ResistorDip( QString type, QString id )
            : Component( type, id )
            , eElement( id )
 {
+    m_pullUp = false;
+    m_puVolt = 5;
+
     m_size = 0;
     setSize( 8 );
 
     setLabelPos(-24,-40, 0);
     setValLabelPos( 5,-26, 90 );
     m_valLabel->setAcceptedMouseButtons( 0 );
-
-    m_pullUp = false;
-    m_puVolt = 5;
 
     Simulator::self()->addToUpdateList( this );
 
