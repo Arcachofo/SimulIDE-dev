@@ -29,6 +29,11 @@ I51Usart::I51Usart( eMcu* mcu, QString name, int number )
 }
 I51Usart::~I51Usart(){}
 
+void I51Usart::reset()
+{
+    m_mode = 0xFF;
+}
+
 void I51Usart::configureA( uint8_t val ) //SCON
 {
     uint8_t mode = val >> 6;

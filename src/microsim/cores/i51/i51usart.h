@@ -17,6 +17,8 @@ class MAINMODULE_EXPORT I51Usart : public McuUsart
         I51Usart( eMcu* mcu, QString name, int number );
         ~I51Usart();
 
+        virtual void reset() override;
+
         virtual void configureA( uint8_t val ) override;
         virtual void step();
         virtual uint8_t getBit9();
