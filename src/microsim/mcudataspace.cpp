@@ -28,7 +28,7 @@ DataSpace::~DataSpace()
 
 void DataSpace::initialize()
 {
-    for( uint i=0; i<m_dataMem.size(); i++ ) writeReg( i, 0, false );
+    for( uint i=0; i<m_dataMem.size(); i++ ) m_dataMem[i]=0;
 
     for( QString regName : m_regInfo.keys() )  // Set Registers Reset Values
     {
