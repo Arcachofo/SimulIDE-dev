@@ -52,6 +52,8 @@ class MAINMODULE_EXPORT I51T1Int : public Interrupt
 
     private:
         I51Usart* m_usart;
+
+        int m_counter;
 };
 
 #endif

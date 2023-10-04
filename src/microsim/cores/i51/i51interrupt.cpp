@@ -75,13 +75,20 @@ I51T1Int::~I51T1Int(){}
 void I51T1Int::reset()
 {
     m_usart = NULL;
+    m_counter = 0;
     Interrupt::reset();
 }
 
 void I51T1Int::raise( uint8_t v )
 {
-    //if( !m_enabled ) return;
-
-    if( m_usart ) m_usart->step();
+    if( m_usart )
+    {
+        m_counter++;
+        if( m_counter == 16 )
+        {
+            m_counter = 0;
+            m_usart->step();
+        }
+    }
     Interrupt::raise( v );
 }
