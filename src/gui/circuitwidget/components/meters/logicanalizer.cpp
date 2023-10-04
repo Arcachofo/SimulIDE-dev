@@ -319,7 +319,7 @@ void LAnalizer::dumpData( const QString &fn )
 
     QString varDef;
     QString dumpVars = "\n$dumpvars\n";
-    uint64_t gcd = 0;
+    uint64_t gcd = 1;  // Problems in Pulseview using gcd
 
     for( uint ch=0; ch<8; ++ch )
     {
@@ -355,15 +355,15 @@ void LAnalizer::dumpData( const QString &fn )
             pVal = val;
             time = (time-startTime)/m_timeStep;
 
-            if( gcd > 0 ) gcd = getGcd( gcd, time ); // Get Greatest Common Denominator
-            else          gcd = time;
+            //if( gcd > 0 ) gcd = getGcd( gcd, time ); // Get Greatest Common Denominator
+            //else          gcd = time;
 
             samples.insert( time, { val, ch } );
             if( time == lastTime ) break;            // All samples before endTime already registered
         }
     }
     dumpVars += "$end\n";
-    if( gcd < 1 ) gcd = 1; // This should not happen
+    //if( gcd < 1 ) gcd = 1; // This should not happen
 
     out <<"$timescale "<< gcd*m_timeStep <<"ps $end"<< endl<< endl;
     out << varDef;
