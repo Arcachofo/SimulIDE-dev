@@ -19,19 +19,27 @@ class MAINMODULE_EXPORT I51Usart : public McuUsart
 
         virtual void reset() override;
 
-        virtual void configureA( uint8_t val ) override;
+        virtual void configureA( uint8_t newSCON ) override;
+        virtual void configureB( uint8_t newPCON ) override;
         virtual void step();
         virtual uint8_t getBit9();
         virtual void setBit9( uint8_t bit );
 
     private:
         McuTimer* m_timer1;
-        uint8_t*  m_scon;
 
+        // SCON
+        uint8_t*  m_scon;
+        regBits_t m_SM;
         regBits_t m_bit9Tx;
         regBits_t m_bit9Rx;
 
-        //bool m_timerConnected;
+        //PCON
+        regBits_t m_SMOD;
+
+        uint8_t m_smodVal;
+        bool m_smodDiv;
+
         bool m_useTimer;
 };
 

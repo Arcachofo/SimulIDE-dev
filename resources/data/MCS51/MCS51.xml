@@ -78,7 +78,7 @@
                          interrupt="T1_OVF" >
     </timer>
     
-    <usart name="USART0" number="1" configregsA="SCON" >
+    <usart name="USART0" number="1" configregsA="SCON" configregsB="PCON" >
         <trunit type="tx" pin="PORT31" register="SBUF" interrupt="USART_T" />
         <trunit type="rx" pin="PORT30" enable="REN"    interrupt="USART_R" />
     </usart>

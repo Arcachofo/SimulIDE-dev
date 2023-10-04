@@ -20,23 +20,27 @@ I51Usart::I51Usart( eMcu* mcu, QString name, int number )
     m_dataMask = 0xFF;
     m_parity   = parNONE;
 
-    //m_timerConnected = false;
     m_timer1 = mcu->getTimer( "TIMER1" );
 
     m_scon = mcu->getReg( "SCON" );
+
+    m_SM     = getRegBits( "SM1,SM0", mcu );
     m_bit9Tx = getRegBits( "TB8", mcu );
     m_bit9Rx = getRegBits( "RB8", mcu );
+
+    m_SMOD = getRegBits( "SMOD", mcu );
 }
 I51Usart::~I51Usart(){}
 
 void I51Usart::reset()
 {
     m_mode = 0xFF;
+    m_smodDiv = false;
 }
 
-void I51Usart::configureA( uint8_t val ) //SCON
+void I51Usart::configureA(uint8_t newSCON ) //SCON
 {
-    uint8_t mode = val >> 6;
+    uint8_t mode = getRegBitsVal( newSCON, m_SM );
     if( mode == m_mode ) return;
     m_mode = mode;
 
@@ -77,10 +81,20 @@ void I51Usart::configureA( uint8_t val ) //SCON
     else t1Int->setUsart( NULL );
 }
 
+void I51Usart::configureB( uint8_t newPCON )
+{
+    m_smodVal = getRegBitsVal( newPCON, m_SMOD );
+}
+
 void I51Usart::step()
 {
     if( !m_useTimer ) return;
 
+    if( (m_smodVal & 1) == 0 )
+    {
+        m_smodDiv = !m_smodDiv;
+        if( m_smodDiv ) return;
+    }
     m_sender->runEvent();
     m_receiver->runEvent();
 }
