@@ -57,11 +57,8 @@ void UartRx::runEvent()
         if( m_runHardware )
         {
             readBit();
-            if( m_period )
-            {
-                if( m_state == usartRXEND ) Simulator::self()->addEvent( m_period/2, this ); // End of Byte
-                else                        Simulator::self()->addEvent( m_period, this );   // Shedule next sample
-            }
+            if( m_state == usartRXEND ) rxEnd(); //Simulator::self()->addEvent( m_period/2, this ); // End of Byte
+            else if( m_period )         Simulator::self()->addEvent( m_period, this );   // Shedule next sample
         }else{
             if( !m_inBuffer.empty() )
             {
@@ -94,11 +91,11 @@ void UartRx::readBit()
 {
     bool bit = m_ioPin->getInpState();
 
-    if( bit ) m_frame += 1<<m_currentBit;    // Get bit into frame
+    if( bit ) m_frame += 1<<m_currentBit;      // Get bit into frame
     if( ++m_currentBit == m_framesize )
     {
         m_ioPin->changeCallBack( this, true ); // Wait for next start bit
-        m_state = usartRXEND;  // Data reception finished
+        m_state = usartRXEND;                  // Data reception finished
     }
 }
 
