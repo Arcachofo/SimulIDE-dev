@@ -34,18 +34,17 @@ I51Usart::~I51Usart(){}
 
 void I51Usart::reset()
 {
+    m_sender->enable( false ); // Sender has no enable bit, so disable it here
     m_mode = 0xFF;
     m_smodDiv = false;
     m_smodVal = 0;
 }
 
-void I51Usart::configureA(uint8_t newSCON ) //SCON
+void I51Usart::configureA( uint8_t newSCON ) //SCON
 {
     uint8_t mode = getRegBitsVal( newSCON, m_SM );
     if( mode == m_mode ) return;
     m_mode = mode;
-
-    m_sender->enable( true );
 
     m_useTimer = false;
 
@@ -85,6 +84,12 @@ void I51Usart::configureA(uint8_t newSCON ) //SCON
 void I51Usart::configureB( uint8_t newPCON )
 {
     m_smodVal = getRegBitsVal( newPCON, m_SMOD );
+}
+
+void I51Usart::sendByte( uint8_t data )
+{
+    if( !m_sender->isEnabled() ) m_sender->enable( true );       // This must be a reset writting to SBUF
+    else                         m_sender->processData( data );
 }
 
 void I51Usart::step()

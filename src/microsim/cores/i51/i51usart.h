@@ -21,6 +21,9 @@ class MAINMODULE_EXPORT I51Usart : public McuUsart
 
         virtual void configureA( uint8_t newSCON ) override;
         virtual void configureB( uint8_t newPCON ) override;
+
+        virtual void sendByte( uint8_t data ) override;
+
         virtual void step();
         virtual uint8_t getBit9();
         virtual void setBit9( uint8_t bit );
