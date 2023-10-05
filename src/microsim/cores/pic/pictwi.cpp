@@ -171,13 +171,18 @@ void PicTwi::setTwiState( twiState_t state )  // Set new Status value
         setRegBits( m_P );
         m_interrupt->raise();
     }
-    else if( state == TWI_MTX_ADR_ACK  || state == TWI_MTX_ADR_NACK    // Master Addr transmitted
-          || state == TWI_MTX_DATA_ACK || state == TWI_MTX_DATA_NACK ) // Master Data transmitted
+    else if( state == TWI_MTX_ADR_ACK    // ACK Master Addr transmitted for Write
+          || state == TWI_MRX_ADR_ACK    // ACK Master Addr transmitted for Read
+          || state == TWI_MTX_DATA_ACK ) // ACK Master Data transmitted
     {
-        if( state == TWI_MTX_ADR_ACK
-         || state == TWI_MTX_DATA_ACK ) clearRegBits( m_ACKSTAT );
-        else                            setRegBits( m_ACKSTAT );
-
+        clearRegBits( m_ACKSTAT );
+        m_interrupt->raise();
+    }
+    else if( state == TWI_MTX_ADR_NACK    // NACK Master Addr transmitted for Write
+          || state == TWI_MRX_ADR_NACK    // NACK Master Addr transmitted for Read
+          || state == TWI_MTX_DATA_NACK ) // NACK Master Data transmitted
+    {
+        setRegBits( m_ACKSTAT );
         m_interrupt->raise();
     }
     else if( state == TWI_MRX_DATA_ACK || state == TWI_MRX_DATA_NACK ) // Master Data received
