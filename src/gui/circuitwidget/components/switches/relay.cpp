@@ -48,6 +48,8 @@ Relay::Relay( QString type, QString id )
 
     m_pin[0] = m_inductor->getPin( 0 );
     m_pin[1] = m_inductor->getPin( 1 );
+    addSignalPin( m_pin[0] );
+    addSignalPin( m_pin[1] );
 
     m_trigCurrent = 0.02;
     m_relCurrent  = 0.01;
