@@ -36,6 +36,7 @@ void I51Usart::reset()
 {
     m_mode = 0xFF;
     m_smodDiv = false;
+    m_smodVal = 0;
 }
 
 void I51Usart::configureA(uint8_t newSCON ) //SCON
