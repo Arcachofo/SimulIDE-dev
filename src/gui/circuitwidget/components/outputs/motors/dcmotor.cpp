@@ -47,11 +47,13 @@ DcMotor::DcMotor( QString type, QString id )
     m_ePin[0] = m_pin[0] = new Pin( 180, QPoint(-40,0), m_id+"-lPin", 0, this);
     m_pin[0]->setLength( 4 );
     m_pin[0]->setFontSize( 9 );
+    m_pin[0]->setSpace( 1.7 );
     m_pin[0]->setLabelText("+");
 
     m_ePin[1] =m_pin[1] = new Pin( 0, QPoint(40,0), m_id+"-rPin", 1, this);
     m_pin[1]->setLength( 4 );
     m_pin[1]->setFontSize( 9 );
+    m_pin[1]->setSpace( 1.7 );
     m_pin[1]->setLabelText("–");  // U+2013
 
     setShowId( true );
