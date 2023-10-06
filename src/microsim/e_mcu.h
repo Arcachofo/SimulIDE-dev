@@ -55,8 +55,8 @@ class MAINMODULE_EXPORT eMcu : public DataSpace, public eIou
         virtual void voltChanged() override;
         virtual void runEvent() override;
 
-        inline bool isSleeping() { return m_state == mcuSleeping; }
-        inline int  sleepMode()  { return m_sleepModule->mode(); }
+        inline mcuState_t state() { return m_state; }
+        inline int sleepMode() { return m_sleepModule->mode(); }
 
         void stepCpu();
 

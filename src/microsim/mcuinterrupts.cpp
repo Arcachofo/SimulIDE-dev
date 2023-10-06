@@ -81,7 +81,7 @@ void Interrupt::raise( uint8_t v )
             m_interrupts->addToPending( this ); // Add to pending interrupts
             if( m_intPin ) m_intPin->setOutState( false );
 
-            if( m_mcu->isSleeping()
+            if( m_mcu->state() == mcuSleeping
              && (m_wakeup & m_mcu->sleepMode()) )
                 m_mcu->sleep( false ); // Exit sleep
         }

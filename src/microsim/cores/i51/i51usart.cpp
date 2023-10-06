@@ -35,7 +35,7 @@ I51Usart::~I51Usart(){}
 
 void I51Usart::reset()
 {
-    m_sender->enable( false ); // Sender has no enable bit, so disable it here
+    m_sender->enable( true ); // Sender always enabled
     m_mode = 0xFF;
     m_smodDiv = false;
     m_smodVal = 0;
@@ -100,8 +100,7 @@ void I51Usart::configureB( uint8_t newPCON )
 
 void I51Usart::sendByte( uint8_t data )
 {
-    if( !m_sender->isEnabled() ) m_sender->enable( true );       // This must be a reset writting to SBUF
-    else                         m_sender->processData( data );
+    if( m_mcu->state() != mcuStopped ) m_sender->processData( data );
 }
 
 void I51Usart::step()

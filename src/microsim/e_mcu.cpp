@@ -127,6 +127,7 @@ void eMcu::setDebugging( bool d )
 
 void eMcu::reset()
 {
+    m_state = mcuStopped;
     m_cycle = 0;
     cyclesDone = 0;
 
@@ -153,7 +154,6 @@ void eMcu::hardReset( bool r )
 
     if( r ){
         reset();
-        m_state = mcuStopped;
     }else{
         m_state = mcuRunning;
         if( m_freq > 0 ) Simulator::self()->addEvent( m_psTick, this );
