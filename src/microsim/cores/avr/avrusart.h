@@ -65,6 +65,7 @@ class MAINMODULE_EXPORT AvrUsart : public McuUsart
         regBits_t m_FE;
         regBits_t m_DOR;
         regBits_t m_UPE;
+        regBits_t m_MPCM;
 };
 
 #endif

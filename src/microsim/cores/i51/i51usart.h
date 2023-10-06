@@ -36,6 +36,7 @@ class MAINMODULE_EXPORT I51Usart : public McuUsart
         regBits_t m_SM;
         regBits_t m_bit9Tx;
         regBits_t m_bit9Rx;
+        regBits_t m_SM2;
 
         //PCON
         regBits_t m_SMOD;

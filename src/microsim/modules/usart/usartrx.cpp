@@ -13,6 +13,7 @@ UartRx::UartRx( UsartModule* usart, eMcu* mcu, QString name )
       : UartTR( usart, mcu, name )
 {
     m_period = 0;
+    m_ignoreData = false;
 }
 UartRx::~UartRx( ){}
 
@@ -132,9 +133,11 @@ void UartRx::byteReceived( uint16_t frame )
     }
     if( (frame & 1<<(mDATABITS+mPARITY)) == 0 ) frame |= frameError; // Frame Error: wrong stop bit
 
+    if( mDATABITS == 9 && m_ignoreData && (frame & 1<<8) == 0 ) return; // Multi-proccesor data frame
+
     m_fifoP--;
     m_fifo[m_fifoP] = frame;
-    if( m_fifoP == 1 && m_interrupt ) m_interrupt->raise();
+    if( m_fifoP == 1 ) m_interrupt->raise();
     m_usart->byteReceived( frame & mDATAMASK );
 }
 
@@ -150,7 +153,7 @@ uint8_t UartRx::getData()
     if( frame & frameError )  m_usart->frameError();
 
     if( ++m_fifoP == 2 && m_interrupt ) m_interrupt->clearFlag(); // Fifo empty
-    else m_fifo[1] = m_fifo[0];    // Advance fifo
+    else                                m_fifo[1] = m_fifo[0];    // Advance fifo
 
     return data;
 }

@@ -27,6 +27,7 @@ I51Usart::I51Usart( eMcu* mcu, QString name, int number )
     m_SM     = getRegBits( "SM1,SM0", mcu );
     m_bit9Tx = getRegBits( "TB8", mcu );
     m_bit9Rx = getRegBits( "RB8", mcu );
+    m_SM2    = getRegBits( "SM2", mcu );
 
     m_SMOD = getRegBits( "SMOD", mcu );
 }
@@ -46,17 +47,26 @@ void I51Usart::configureA( uint8_t newSCON ) //SCON
     if( mode == m_mode ) return;
     m_mode = mode;
 
+    bool sm2 = getRegBitsBool( newSCON, m_SM2 );
+
     m_useTimer = false;
 
     switch( mode )
     {
         case 0:             // Synchronous
             /// TODO //setPeriod(  m_mcu->psInst() );// Fixed baudrate 32 or 64
+            sm2 = 0;
             m_dataBits = 8;
             break;
         case 1:             // Asynchronous Timer1
             m_useTimer = true;
             m_dataBits = 8;
+            sm2 = 0;
+            /// TODO: Ignore frame if wrong Stop bit:
+            ///     override frameError() // Frame Error: wrong stop bit
+            ///
+            /// also parityError() and overrunError() not inplemented in 8051
+            ///
             break;
         case 2:             // Asynchronous MCU Clock
             setPeriod(  m_mcu->psInst() );// Fixed baudrate 32 or 64
@@ -67,6 +77,8 @@ void I51Usart::configureA( uint8_t newSCON ) //SCON
             m_dataBits = 9;
             break;
     }
+
+    m_receiver->ignoreData( sm2 );
 
     I51T1Int* t1Int = static_cast<I51T1Int*>( m_timer1->getInterrupt() ); //  .connect( this, &I51Usart::step );
     if( m_useTimer )

@@ -49,6 +49,7 @@ AvrUsart::AvrUsart( eMcu* mcu,  QString name, int number )
     m_RXC   = getRegBits( "RXC"+n, mcu );
     m_FE    = getRegBits( "FE"+n, mcu );
     m_DOR   = getRegBits( "DOR"+n, mcu );
+    m_MPCM  = getRegBits( "MPCM"+n, mcu );
 
     if( n == "" ) m_UPE = getRegBits( "PE", mcu );
     else          m_UPE = getRegBits( "UPE"+n, mcu );
@@ -57,6 +58,9 @@ AvrUsart::~AvrUsart(){}
 
 void AvrUsart::configureA( uint8_t newUCSRnA )
 {
+    bool mpcm = getRegBitsBool( newUCSRnA, m_MPCM );
+    m_receiver->ignoreData( mpcm );
+
     bool speedx2 = getRegBitsBool( newUCSRnA, m_u2xn ); // Double Speed?
     if( speedx2 == m_speedx2 ) return;
     m_speedx2 = speedx2;

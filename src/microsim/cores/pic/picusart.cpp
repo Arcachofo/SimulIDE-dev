@@ -51,6 +51,8 @@ PicUsart::PicUsart( eMcu* mcu,  QString name, int number )
     m_rxEn = getRegBits( "CREN", mcu );
     m_TX9  = getRegBits( "TX9", mcu );
     m_RX9  = getRegBits( "RX9", mcu );
+    m_ADDEN = getRegBits( "ADDEN", mcu );
+
     m_TXIF = getRegBits( "TXIF", mcu );
     m_TRMT = getRegBits( "TMRT", mcu );
     m_RCIF = getRegBits( "RCIF", mcu );
@@ -95,6 +97,9 @@ void PicUsart::configureB( uint8_t newRCSTA ) // RCSTA changed
 
     bool rxEn = getRegBitsVal( newRCSTA, m_rxEn );
     if( rxEn != m_receiver->isEnabled() ) m_receiver->enable( rxEn );
+
+    bool adden = getRegBitsBool( newRCSTA, m_ADDEN );
+    m_receiver->ignoreData( adden );
 }
 
 void PicUsart::setSPBRGL(  uint8_t val )
