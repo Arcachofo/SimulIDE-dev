@@ -92,7 +92,10 @@ void Console::keyPressEvent( QKeyEvent* e )
         }break;*/
         case Qt::Key_Up:
         case Qt::Key_Down: break;
-        case Qt::Key_Return: m_sendCommand = true; break;
+        case Qt::Key_Return:{
+            m_sendCommand = true;
+            QPlainTextEdit::keyPressEvent(e);
+        }break;
         default:{
             if( m_command.isEmpty() ){
                 QTextCharFormat tf = currentCharFormat();

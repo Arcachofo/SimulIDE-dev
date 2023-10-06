@@ -163,7 +163,7 @@ class MAINMODULE_EXPORT I51Core : public McuCpu, public eElement
             addr = checkAddr( addr );
             return McuCpu::GET_RAM( addr );
         }
-        inline void SET_RAM( uint16_t addr , uint8_t val ) override
+        inline void SET_RAM( uint16_t addr, uint8_t val ) override
         {
             addr = checkAddr( addr );
             McuCpu::SET_RAM( addr, val );
