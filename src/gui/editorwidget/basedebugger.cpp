@@ -46,7 +46,7 @@ bool BaseDebugger::upload()
         ok = Mcu::self()->load( m_firmware );
         if( ok ) m_outPane->appendText( "\n"+tr("FirmWare Uploaded to ") );
         else     m_outPane->appendText( "\n"+tr("Error uploading firmware to ") );
-        m_outPane->appendLine( Mcu::self()->device() );
+        m_outPane->appendLine( Mcu::self()->idLabel()+"("+ Mcu::self()->device() +")" );
         m_outPane->appendLine( m_firmware+"\n" );
     }
     if( ok ){
