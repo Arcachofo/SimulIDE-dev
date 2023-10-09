@@ -123,17 +123,6 @@ void PicUsart::setBaurrate( uint8_t )
     setPeriod( mult*(SPBRG+1)*m_mcu->psInst() ); // period in picoseconds
 }
 
-uint8_t PicUsart::getBit9Tx()
-{
-    return getRegBitsVal( *m_TXSTA, m_bit9Tx );
-}
-
-void PicUsart::setBit9Rx( uint8_t bit )
-{
-    if( bit ) setRegBits( m_bit9Rx );
-    else      clearRegBits( m_bit9Rx );
-}
-
 void PicUsart::sendByte(  uint8_t data )
 {
     if( getRegBitsBool( *m_PIR1, m_TXIF ) )  // TXREG is empty
@@ -158,19 +147,13 @@ void PicUsart::bufferEmpty()
     setRegBits( m_TRMT ); // Set TMRT bit
 }
 
-void PicUsart::overrunError()
+void PicUsart::setRxFlags( uint16_t frame )
 {
-    setRegBits( m_OERR );
-}
+    if( m_dataBits == 9 ) setBit9Rx( ( frame & (1<<8) ) ? 1 : 0 );
 
-void PicUsart::parityError()
-{
-    //setRegBits( );
-}
-
-void PicUsart::frameError()
-{
-    setRegBits( m_FERR );
+    writeRegBits( m_FERR, frame & frameError );  // frameError
+    writeRegBits( m_OERR, frame & dataOverrun ); // overrun error
+    //writeRegBits(     , frame & parityError);  // parityError
 }
 
 void PicUsart::sleep( int mode )

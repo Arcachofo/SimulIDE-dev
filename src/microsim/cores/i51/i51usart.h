@@ -24,9 +24,9 @@ class MAINMODULE_EXPORT I51Usart : public McuUsart
 
         virtual void sendByte( uint8_t data ) override;
 
+        virtual void setRxFlags( uint16_t frame ) override;
+
         virtual void step();
-        virtual uint8_t getBit9();
-        virtual void setBit9( uint8_t bit );
 
     private:
         McuTimer* m_timer1;
@@ -34,8 +34,6 @@ class MAINMODULE_EXPORT I51Usart : public McuUsart
         // SCON
         uint8_t*  m_scon;
         regBits_t m_SM;
-        regBits_t m_bit9Tx;
-        regBits_t m_bit9Rx;
         regBits_t m_SM2;
 
         //PCON

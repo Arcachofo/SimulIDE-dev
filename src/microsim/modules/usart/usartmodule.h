@@ -22,6 +22,12 @@ enum parity_t{
     parODD=3,
 };
 
+enum rxError_t{
+    frameError =1<<12,
+    dataOverrun=1<<13,
+    parityError=1<<14
+};
+
 class IoPin;
 class UartTx;
 class UartRx;
@@ -48,14 +54,10 @@ class MAINMODULE_EXPORT UsartModule
         virtual void frameSent( uint8_t data );
         virtual void readByte( uint8_t data ){;}
         virtual void byteReceived( uint8_t data );
-
-        virtual void overrunError(){;}
-        virtual void parityError(){;}
-        virtual void frameError(){;}
+        virtual void setRxFlags( uint16_t frame ){;}
 
         void openMonitor( QString id, int num=0 );
         void monitorClosed();
-        void uartIn( uint8_t value );
 
         uint8_t m_mode;
         uint8_t m_stopBits;
@@ -93,13 +95,11 @@ class MAINMODULE_EXPORT UartTR : public McuModule, public eElement
             usartTRANSMIT,
             usartTXEND,
             usartRECEIVE,
-            usartRXEND,
         };
 
         virtual void initialize() override;
 
-        virtual void processData( uint8_t data )=0;
-        virtual void enable( uint8_t en ){;}
+        virtual void enable( uint8_t ){;}
         virtual uint8_t getData() { return  m_data; }
 
         virtual void configureA( uint8_t val ) override;
@@ -130,7 +130,7 @@ class MAINMODULE_EXPORT UartTR : public McuModule, public eElement
         state_t m_state;
 
         bool m_enabled;
-        bool m_runHardware; // If m_ioPin is not connected don't run hardware
+        //bool m_runHardware; // If m_ioPin is not connected don't run hardware
 
         uint64_t m_period; // Baudrate period
 };

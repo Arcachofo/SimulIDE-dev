@@ -44,21 +44,24 @@ void I51Usart::reset()
 void I51Usart::configureA( uint8_t newSCON ) //SCON
 {
     uint8_t mode = getRegBitsVal( newSCON, m_SM );
-    if( mode == m_mode ) return;
-    m_mode = mode;
-
     bool sm2 = getRegBitsBool( newSCON, m_SM2 );
+
+    if( mode == m_mode ){
+        if( mode == 2 || mode == 3 ) m_receiver->ignoreData( sm2 );
+        return;
+    }
+    m_mode = mode;
 
     m_useTimer = false;
 
     switch( mode )
     {
-        case 0:             // Synchronous
+        case 0:             // Synchronous 8 bit
             /// TODO //setPeriod(  m_mcu->psInst() );// Fixed baudrate 32 or 64
             sm2 = 0;
             m_dataBits = 8;
             break;
-        case 1:             // Asynchronous Timer1
+        case 1:             // Asynchronous Timer1 8 bits
             m_useTimer = true;
             m_dataBits = 8;
             sm2 = 0;
@@ -68,11 +71,11 @@ void I51Usart::configureA( uint8_t newSCON ) //SCON
             /// also parityError() and overrunError() not inplemented in 8051
             ///
             break;
-        case 2:             // Asynchronous MCU Clock
+        case 2:             // Asynchronous MCU Clock 9 bits
             setPeriod(  m_mcu->psInst() );// Fixed baudrate 32 or 64
             m_dataBits = 9;
             break;
-        case 3:             // Asynchronous Timer1
+        case 3:             // Asynchronous Timer1 9 bits
             m_useTimer = true;
             m_dataBits = 9;
             break;
@@ -80,14 +83,10 @@ void I51Usart::configureA( uint8_t newSCON ) //SCON
 
     m_receiver->ignoreData( sm2 );
 
-    I51T1Int* t1Int = static_cast<I51T1Int*>( m_timer1->getInterrupt() ); //  .connect( this, &I51Usart::step );
+    I51T1Int* t1Int = static_cast<I51T1Int*>( m_timer1->getInterrupt() );
     if( m_useTimer )
     {
-        //if( !m_timerConnected )
-        {
-            //m_timerConnected = true;
-            t1Int->setUsart( this );
-        }
+        t1Int->setUsart( this );
         setPeriod( 0 );
     }
     else t1Int->setUsart( NULL );
@@ -116,14 +115,9 @@ void I51Usart::step()
     m_receiver->runEvent();
 }
 
-uint8_t I51Usart::getBit9()
+void I51Usart::setRxFlags( uint16_t frame )
 {
-    return getRegBitsVal( SCON, m_bit9Tx );
+    //writeRegBits( m_FE, frame & frameError );   // frameError
+    //writeRegBits( m_DOR, frame & dataOverrun ); // overrun error
+    //writeRegBits( m_UPE, frame & parityError ); // parityError
 }
-
-void I51Usart::setBit9( uint8_t bit )
-{
-    SCON &= ~m_bit9Rx.mask;
-    if( bit ) SCON |= m_bit9Rx.mask;
-}
-

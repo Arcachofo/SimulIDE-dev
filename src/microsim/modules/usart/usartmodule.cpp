@@ -85,10 +85,6 @@ void UsartModule::monitorClosed()
     m_serialMon = false;
 }
 
-void UsartModule::uartIn( uint8_t value ) // Data sent from external source (Serial Monitor)
-{
-    m_receiver->queueData( value );
-}
 //---------------------------------------
 //---------------------------------------
 
@@ -106,7 +102,6 @@ UartTR::~UartTR( ){}
 void UartTR::initialize()
 {
     m_enabled = false;
-    m_runHardware = false;
 }
 
 void UartTR::configureA( uint8_t val ) // Select Pin

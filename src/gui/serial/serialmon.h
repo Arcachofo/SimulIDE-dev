@@ -26,6 +26,8 @@ class SerialMonitor : public QDialog, private Ui::SerialMonitor, public Updatabl
         void printIn( int value );
         void printOut( int value );
 
+        void activateSend();
+
     public slots:
         void on_text_returnPressed();
         void on_value_returnPressed();

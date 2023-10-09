@@ -21,6 +21,12 @@ SerialMonitor::SerialMonitor( QWidget* parent, UsartModule* usart )
     panelLayout->addWidget( &m_uartInPanel );
     panelLayout->addWidget( &m_uartOutPanel );
 
+    text->setVisible( false );
+    value->setVisible( false );
+    addCrButton->setVisible( false );
+    textLabel->setVisible( false );
+    sendLabel->setVisible( false );
+
     m_usart = usart;
     m_printMode = 0;
     m_addCR = false;
@@ -36,7 +42,7 @@ void SerialMonitor::updateStep()
     if( m_outBuffer.isEmpty() ) return;
 
     for( int i=0; i<m_outBuffer.size(); i++ )
-        m_usart->uartIn( m_outBuffer.at(i) );
+        m_usart->sendByte( m_outBuffer.at(i) );
 
     m_outBuffer.clear();
 }
@@ -84,6 +90,15 @@ QString SerialMonitor::valToString( int val )
         case 4: text = decToBase( byte,  2, 8 )+" ";        // BIN
     }
     return text;
+}
+
+void SerialMonitor::activateSend()
+{
+    text->setVisible( true );
+    value->setVisible( true );
+    addCrButton->setVisible( true );
+    textLabel->setVisible( true );
+    sendLabel->setVisible( true );
 }
 
 void SerialMonitor::closeEvent( QCloseEvent *event )

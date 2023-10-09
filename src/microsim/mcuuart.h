@@ -22,10 +22,16 @@ class MAINMODULE_EXPORT McuUsart : public McuModule, public UsartModule
         virtual void frameSent( uint8_t data ) override;
         virtual void readByte( uint8_t data ) override;
 
+        virtual uint8_t getBit9Tx() override;
+        virtual void setBit9Rx( uint8_t bit ) override;
+
     protected:
         int m_number;
 
         bool m_speedx2;
+
+        regBits_t m_bit9Tx;
+        regBits_t m_bit9Rx;
 };
 
 #endif

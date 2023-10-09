@@ -9,6 +9,7 @@
 #include "usarttx.h"
 #include "e_mcu.h"
 #include "mcuinterrupts.h"
+#include "datautils.h"
 
 McuUsart::McuUsart( eMcu* mcu, QString name, int number )
         : McuModule( mcu, name )
@@ -32,4 +33,14 @@ void McuUsart::frameSent( uint8_t data )
 void McuUsart::readByte( uint8_t )
 {
     m_mcu->m_regOverride = m_receiver->getData();
+}
+
+uint8_t McuUsart::getBit9Tx()
+{
+    return getRegBitsVal( m_bit9Tx );
+}
+
+void McuUsart::setBit9Rx( uint8_t bit )
+{
+    writeRegBits( m_bit9Rx, bit );
 }

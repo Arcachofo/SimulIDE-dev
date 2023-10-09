@@ -89,6 +89,7 @@
 #include "resistordip.h"
 #include "rtd.h"
 #include "serialport.h"
+#include "serialterm.h"
 #include "servo.h"
 #include "sevensegment.h"
 #include "sevensegment_bcd.h"
@@ -233,6 +234,7 @@ void ItemLibrary::loadItems()
     addItem( Ds18b20::libraryItem() );
     addItem( new LibraryItem( QObject::tr("Peripherals"), "Micro", "perif.png","Peripherals", NULL ) );
     addItem( SerialPort::libraryItem() );
+    addItem( SerialTerm::libraryItem() );
     addItem( TouchPad::libraryItem() );
     addItem( KY023::libraryItem() );
     addItem( KY040::libraryItem() );

@@ -20,15 +20,11 @@ class MAINMODULE_EXPORT AvrUsart : public McuUsart
         virtual void configureA( uint8_t newUCSRnA ) override;
         virtual void configureB( uint8_t newUCSRnB ) override;
         virtual void configureC( uint8_t newUCSRnC ) override;
-        virtual uint8_t getBit9Tx() override;
-        virtual void setBit9Rx( uint8_t bit ) override;
 
         virtual void sendByte( uint8_t data ) override;
         virtual void frameSent( uint8_t data ) override;
 
-        virtual void overrunError() override;
-        virtual void parityError() override;
-        virtual void frameError() override;
+        virtual void setRxFlags( uint16_t frame ) override;
 
         void setBaurrate( uint8_t ubrr=0 );
 
@@ -37,16 +33,13 @@ class MAINMODULE_EXPORT AvrUsart : public McuUsart
         void setUBRRnH( uint8_t v );
 
         uint8_t*  m_UCSRnA;
-        uint8_t*  m_UCSRnB;
+        //uint8_t*  m_UCSRnB;
         uint8_t*  m_UBRRnL;
         uint8_t*  m_UBRRnH;
         uint8_t  m_UBRRHval;
 
         uint8_t m_ucsz01;
         uint8_t m_ucsz2;
-
-        regBits_t m_bit9Tx;
-        regBits_t m_bit9Rx;
 
         regBits_t m_txEn;
         regBits_t m_rxEn;

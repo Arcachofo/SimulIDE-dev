@@ -20,7 +20,6 @@ void UartTx::enable( uint8_t en )
     bool enabled = en > 0;
     if( enabled == m_enabled ) return;
     m_enabled = enabled;
-    m_runHardware = m_ioPin->isConnected();//   ->connector();
 
     if( enabled ){
         m_state = usartIDLE;
@@ -41,7 +40,6 @@ void UartTx::runEvent()
         m_state = usartIDLE;
         m_ioPin->setOutState( true );
         m_usart->frameSent( m_data );
-        /// m_interrupt->raise();
 }   }
 
 void UartTx::processData( uint8_t data )
@@ -80,25 +78,17 @@ void UartTx::startTransmission() // Data loaded to ShiftReg
         m_framesize++;
     }
     m_currentBit = 0;
-    if( m_period )
-    {
-        if( m_runHardware ) sendBit(); // Start transmission
-        else{                          // Not running Hardwware
-            m_state = usartTXEND;      // Shedule End of transmission
-            Simulator::self()->addEvent( m_period*m_framesize, this );
-}   }   }
+    if( m_period ) sendBit(); // Start transmission
+
+}
 
 void UartTx::sendBit()
 {
     m_ioPin->setOutState( m_frame & 1 );
     m_frame >>= 1;
 
-    m_currentBit++;
-    if( m_currentBit == m_framesize ) // Data transmission finished
-    {
-        m_state = usartTXEND;
-    }
-    if( m_period )
-        Simulator::self()->addEvent( m_period, this ); // Shedule next bit
+    if( ++m_currentBit == m_framesize ) m_state = usartTXEND; // Data transmission finished
+
+    if( m_period ) Simulator::self()->addEvent( m_period, this ); // Shedule next bit
 }
 
