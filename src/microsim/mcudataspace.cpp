@@ -92,7 +92,7 @@ uint8_t* DataSpace::getReg( QString reg )                // Get pointer to Reg d
     return &m_dataMem[m_regInfo.value( reg ).address];
 }
 
-uint8_t DataSpace::getRamValue( int address ) { return readReg( getMapperAddr(address) ); }
+uint8_t DataSpace::getRamValue( int address ) { return m_dataMem[ getMapperAddr(address) ]; }
 
 void DataSpace::setRamValue( int address, uint8_t value ) // Setting RAM from external source (McuMonitor)
 { writeReg( getMapperAddr(address), value ); }
