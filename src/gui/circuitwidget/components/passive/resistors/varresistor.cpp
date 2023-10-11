@@ -38,6 +38,7 @@ new DoubProp<VarResistor>( "Max_Resistance", tr("Maximum Resistance"), "Ω", thi
 new DoubProp<VarResistor>( "Value_Ohm"     , tr("Current Value")     , "Ω", this, &VarResistor::getVal, &VarResistor::setVal ),
 new DoubProp<VarResistor>( "Dial_Step"     , tr("Dial Step")         , "Ω", this, &VarResistor::getStep,&VarResistor::setStep ),
     },0 } );
+    addPropGroup( { tr("Dial"), Dialed::dialProps(), groupNoCopy } );
 }
 VarResistor::~VarResistor(){}
 
