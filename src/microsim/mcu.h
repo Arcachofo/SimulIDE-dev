@@ -119,7 +119,7 @@ class MAINMODULE_EXPORT Mcu : public Chip, public Linkable
  static Mcu* m_pSelf;
 
         virtual void contextMenu( QGraphicsSceneContextMenuEvent* e, QMenu* m ) override;
-        virtual void contextMenuEvent(QGraphicsSceneContextMenuEvent* e) override;
+        //virtual void contextMenuEvent(QGraphicsSceneContextMenuEvent* e) override;
 
         QString findIdLabel();
 

@@ -447,7 +447,7 @@ bool Mcu::load( QString fileName )
     return true;
 }
 
-void Mcu::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
+/*void Mcu::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
 {
     if( !acceptedMouseButtons() ) event->ignore();
     else{
@@ -456,9 +456,9 @@ void Mcu::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
         contextMenu( event, menu );
         Component::contextMenu( event, menu );
         menu->deleteLater();
-}   }
+}   }*/
 
-void Mcu::contextMenu( QGraphicsSceneContextMenuEvent*, QMenu* menu )
+void Mcu::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
 {
     QAction* mainAction = menu->addAction( QIcon(":/subc.png"),tr("Main Mcu") );
     QObject::connect( mainAction, &QAction::triggered
@@ -508,6 +508,7 @@ void Mcu::contextMenu( QGraphicsSceneContextMenuEvent*, QMenu* menu )
         QObject::connect( sm, QOverload<int>::of(&QSignalMapper::mapped), [=](int n){ slotOpenTerm(n);} );
     }
     menu->addSeparator();
+    Component::contextMenu( event, menu );
 }
 
 void Mcu::slotmain()
