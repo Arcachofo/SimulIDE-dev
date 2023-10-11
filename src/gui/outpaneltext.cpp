@@ -47,13 +47,14 @@ void OutPanelText::updateStep()
 {
     if( m_textBuffer.isEmpty() ) return;
 
+    moveCursor( QTextCursor::End );
+    insertPlainText( m_textBuffer );
+    m_textBuffer.clear();
+
     if( this->document()->characterCount() > 100000 )
         setPlainText( this->toPlainText().right( 90000 ) );
 
     moveCursor( QTextCursor::End );
-    insertPlainText( m_textBuffer );
-    moveCursor( QTextCursor::End );
-    m_textBuffer.clear();
 }
 
 // CLASS OutHighlighter ***********************************************

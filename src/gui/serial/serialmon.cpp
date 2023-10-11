@@ -36,8 +36,10 @@ SerialMonitor::SerialMonitor( QWidget* parent, UsartModule* usart )
 
 void SerialMonitor::updateStep()
 {
-    m_uartInPanel.updateStep();
-    m_uartOutPanel.updateStep();
+    if( isVisible() ){
+        m_uartInPanel.updateStep();
+        m_uartOutPanel.updateStep();
+    }
 
     if( m_outBuffer.isEmpty() ) return;
 
@@ -61,7 +63,6 @@ void SerialMonitor::on_value_returnPressed()
 
 void SerialMonitor::on_printBox_currentIndexChanged( int index )
 {
-    //qDebug() << index;
     m_printMode = index;
 }
 
@@ -81,7 +82,7 @@ QString SerialMonitor::valToString( int val )
 
     QString text = "";
 
-    switch ( m_printMode )
+    switch( m_printMode )
     {
         case 0: text.append( byte );                 break; // ASCII
         case 1: text = decToBase( byte, 16, 2 )+" "; break; // HEX
