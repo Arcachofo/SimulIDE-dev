@@ -30,13 +30,14 @@ SerialMonitor::SerialMonitor( QWidget* parent, UsartModule* usart )
     m_usart = usart;
     m_printMode = 0;
     m_addCR = false;
+    m_paused = false;
 
     Simulator::self()->addToUpdateList( this );
 }
 
 void SerialMonitor::updateStep()
 {
-    if( isVisible() ){
+    if( isVisible() && !m_paused ){
         m_uartInPanel.updateStep();
         m_uartOutPanel.updateStep();
     }
@@ -51,6 +52,7 @@ void SerialMonitor::updateStep()
 
 void SerialMonitor::on_text_returnPressed()
 {
+    if( m_paused ) return;
     m_outBuffer.append( text->text().toLocal8Bit() );
 
     if( m_addCR ) m_outBuffer.append( 13 );//    m_usart->uartIn( 13 );
@@ -58,6 +60,7 @@ void SerialMonitor::on_text_returnPressed()
 
 void SerialMonitor::on_value_returnPressed()
 {
+    if( m_paused ) return;
     m_outBuffer.append( value->text().toInt() );
 }
 
@@ -68,11 +71,13 @@ void SerialMonitor::on_printBox_currentIndexChanged( int index )
 
 void SerialMonitor::printIn( int value ) // Receive one byte on Uart
 {
+    if( m_paused ) return;
     m_uartInPanel.appendText( valToString( value ) );
 }
 
 void SerialMonitor::printOut( int value ) // Send value to OutPanelText
 {
+    if( m_paused ) return;
     m_uartOutPanel.appendText( valToString( value ) );
 }
 

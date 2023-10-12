@@ -33,6 +33,7 @@ class SerialMonitor : public QDialog, private Ui::SerialMonitor, public Updatabl
         void on_value_returnPressed();
         void on_printBox_currentIndexChanged( int index );
         void on_addCrButton_clicked() { m_addCR = addCrButton->isChecked(); }
+        void on_pauseButton_clicked() { m_paused = pauseButton->isChecked(); }
         void on_clearIn_clicked() { m_uartInPanel.clear(); }
         void on_clearOut_clicked() { m_uartOutPanel.clear(); }
 
@@ -49,6 +50,7 @@ class SerialMonitor : public QDialog, private Ui::SerialMonitor, public Updatabl
 
         int  m_printMode;
         bool m_addCR;
+        bool m_paused;
 
         QByteArray m_outBuffer;
 };
