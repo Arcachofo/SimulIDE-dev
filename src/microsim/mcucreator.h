@@ -50,6 +50,7 @@ class MAINMODULE_EXPORT McuCreator
         static void createMsspUnit( QDomElement* c );
         static void createUsart( QDomElement* u );
         static void createAdc( QDomElement* e );
+        static void createDac( QDomElement* e );
         static void createAcomp( QDomElement* e );
         static void createVref( QDomElement* e );
         static void createTwi( QDomElement* e );

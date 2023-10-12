@@ -18,7 +18,7 @@ class PicDac:  public McuDac
         PicDac( eMcu* mcu, QString name );
         ~PicDac();
 
-        //virtual void initialize() override;
+        virtual void initialize() override;
 
         virtual void configureA( uint8_t newDACCON1 ) override;
 

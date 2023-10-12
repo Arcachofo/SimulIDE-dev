@@ -51,6 +51,10 @@
                   adcpins="PORTA0,PORTA1,PORTA2,PORTA3,PORTA4,PORTB6,PORTB7,PORTB5,PORTB4,PORTB3,PORTB2,PORTB1"
                   vrefpins="PORTA3,PORTA2"/>
 
+  <dac name="DAC" configregsA="DACCON0"
+                  dacreg="DACCON1"
+                  pins="PORTA3,PORTA2,PORTA2" />
+
   <comp name="COMP1" type="20" configregsA="CM1CON0" configregsB="CM1CON1"
                      interrupt="COMP1"
                      pins="PORTA0,PORTA3,PORTA2" />

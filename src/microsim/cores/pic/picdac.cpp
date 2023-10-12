@@ -19,12 +19,26 @@ PicDac::PicDac( eMcu* mcu, QString name )
     m_DACEN  = getRegBits( "DACEN", mcu );
     m_DACLPS = getRegBits( "DACLPS", mcu );
     m_DACOE  = getRegBits( "DACOE", mcu );
-    m_DACPSS = getRegBits( "DACPSS", mcu );
+    m_DACPSS = getRegBits( "DACPSS0,DACPSS1", mcu );
     m_DACNSS = getRegBits( "DACNSS", mcu );
 
     m_DACR = getRegBits( "DACR", mcu );
 }
 PicDac::~PicDac(){}
+
+void PicDac::initialize()
+{
+    McuDac::initialize();
+
+    if( m_pins.size() == 0 ) return;
+    m_pRefPin = m_pins.at(0);
+
+    if( m_pins.size() > 1 )
+    {
+        m_nRefPin = m_pins.at(1);
+        if( m_pins.size() > 2 ) m_outPin = m_pins.at(2);
+    }
+}
 
 void PicDac::configureA( uint8_t newDACCON1 ) // ADCON0
 {

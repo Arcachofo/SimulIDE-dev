@@ -14,6 +14,8 @@ class McuPin;
 
 class McuDac: public McuModule, public eElement
 {
+        friend class McuCreator;
+
     public:
         McuDac( eMcu* mcu, QString name );
         ~McuDac();
@@ -28,16 +30,18 @@ class McuDac: public McuModule, public eElement
         bool m_outVoltEn;
 
         double m_outVolt;
-        double m_vRefP;                // Positive Reference Voltage
-        double m_vRefN;                // Negative Reference Voltage
+        double m_vRefP;      // Positive Reference Voltage
+        double m_vRefN;      // Negative Reference Voltage
 
-        uint8_t* m_dacReg;             // Output value Register
+        uint8_t* m_dacReg;   // Output value Register
 
         uint8_t m_outVal;
 
-        McuPin* m_pRefPin;             // Positive Vref Pin
-        McuPin* m_nRefPin;             // Negative Vref Pin
-        McuPin* m_outPin;              // Output Pin
+        std::vector<McuPin*> m_pins;
+
+        McuPin* m_pRefPin;   // Positive Vref Pin
+        McuPin* m_nRefPin;   // Negative Vref Pin
+        McuPin* m_outPin;    // Output Pin
 };
 
 #endif

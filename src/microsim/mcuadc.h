@@ -56,7 +56,7 @@ class MAINMODULE_EXPORT McuAdc : public McuPrescaled, public eElement
 
         double m_fixedVref;
         double m_vRefP;                // Positive Reference Voltage
-        double m_vRefN;                // Positive Reference Voltage
+        double m_vRefN;                // Negative Reference Voltage
 };
 
 #endif

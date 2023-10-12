@@ -53,6 +53,7 @@
 #include "pictwi.h"
 #include "picspi.h"
 #include "picadc.h"
+#include "picdac.h"
 #include "piccomparator.h"
 #include "picvref.h"
 #include "picwdt.h"
@@ -160,6 +161,7 @@ int McuCreator::processFile( QString fileName, bool main )
         else if( part == "msspunit" )   createMsspUnit( &el );
         else if( part == "usart" )      createUsart( &el );
         else if( part == "adc" )        createAdc( &el );
+        else if( part == "dac" )        createDac( &el );
         else if( part == "comp" )       createAcomp( &el );
         else if( part == "vref" )       createVref( &el );
         else if( part == "twi" )        createTwi( &el );
@@ -999,6 +1001,34 @@ void McuCreator::createAdc( QDomElement* e )
         {
             McuPin* pin = mcu->getMcuPin( pinName );
             if( pin ) adc->m_refPin.emplace_back( pin );
+    }   }
+}
+
+void McuCreator::createDac( QDomElement* e )
+{
+    McuDac* dac = NULL;
+    QString name = e->attribute( "name" );
+
+    if( m_core == "Pic14e") dac = new PicDac( mcu, name );
+    else return;
+
+    mcu->m_modules.emplace_back( dac );
+
+    setConfigRegs( e, dac );
+
+    if( e->hasAttribute("dacreg") )
+    {
+        QString dacReg = e->attribute("dacreg");
+        dac->m_dacReg = mcu->getReg( dacReg );
+        watchRegNames( dacReg, R_WRITE, dac, &McuDac::outRegChanged, mcu );
+    }
+    if( e->hasAttribute("pins") )
+    {
+        QStringList pins = e->attribute("pins").remove(" ").split(",");
+        for( QString pinName : pins )
+        {
+            McuPin* pin = mcu->getMcuPin( pinName );
+            if( pin ) dac->m_pins.emplace_back( pin );
     }   }
 }
 
