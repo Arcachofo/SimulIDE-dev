@@ -172,13 +172,12 @@ void AvrTimer8bit::updtWgm()
 
 void AvrTimer8bit::topReg0Changed( uint8_t val )
 {
-    if( *m_topReg0L == val ) return;
     *m_topReg0L = val;
 
     uint16_t  ovf = 0xFF;
     if( (m_wgmMode == wgmCTC)
       ||((m_wgm32Val) && ( (m_wgmMode == wgmPHAS)
-                      ||(m_wgmMode == wgmFAST)) ) )
+                         ||(m_wgmMode == wgmFAST)) ) )
     { ovf = val; } // Top = OCRA
 
     if( m_ovfMatch != ovf ){
