@@ -1060,7 +1060,7 @@ void McuCreator::createVref( QDomElement* e )
     QString name = e->attribute( "name" );
     McuVref* vref = NULL;
     if     ( m_core == "Pic14" )  vref = new PicVref( mcu, name );
-    else if( m_core == "Pic14e" ) vref = new PicVref( mcu, name );
+    else if( m_core == "Pic14e" ) vref = new PicVrefE( mcu, name );
     if( !vref ) return;
 
     mcu->m_modules.emplace_back( vref );

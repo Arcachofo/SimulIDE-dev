@@ -8,6 +8,7 @@
 #include "picdac.h"
 #include "e_mcu.h"
 #include "mcupin.h"
+#include "picvref.h"
 #include "datautils.h"
 
 PicDac::PicDac( eMcu* mcu, QString name )
@@ -22,7 +23,9 @@ PicDac::PicDac( eMcu* mcu, QString name )
     m_DACPSS = getRegBits( "DACPSS0,DACPSS1", mcu );
     m_DACNSS = getRegBits( "DACNSS", mcu );
 
-    m_DACR = getRegBits( "DACR", mcu );
+    m_DACR = getRegBits( "DACR0,DACR1,DACR2,DACR3,DACR4", mcu );
+
+     m_fvr = (PicVrefE*)mcu->vrefModule();
 }
 PicDac::~PicDac(){}
 
@@ -40,36 +43,56 @@ void PicDac::initialize()
     }
 }
 
-void PicDac::configureA( uint8_t newDACCON1 ) // ADCON0
+void PicDac::voltChanged()
 {
-    m_enabled   = getRegBitsBool( newDACCON1, m_DACEN );
-    m_daclps    = getRegBitsBool( newDACCON1, m_DACLPS );
-    m_outVoltEn = getRegBitsBool( newDACCON1, m_DACOE );
-
-    m_vRefP = 0;
-    uint8_t dacPss = getRegBitsVal( newDACCON1, m_DACPSS );
-    switch( dacPss ) {
-        case 0: m_vRefP = 5;                       break; // VDD
-        case 1: {                                         // VREF+
-            if( m_pRefPin ) m_vRefP = m_pRefPin->getVoltage();
-            else qDebug() << "PicDac::configureA: Error: NULL VREF+ Pin";
-        } break;
-        case 2:                                    break; /// TODO: FVR Buffer2 output
-        case 3:                                    break; // Reserved, do not use
-    }
-    m_vRefN = 0;
-    uint8_t dacNss = getRegBitsVal( newDACCON1, m_DACNSS );
-    switch( dacNss ) {
-        case 0:                                    break; // VSS
-        case 1: {                                         // VREF-
-            if( m_nRefPin ) m_vRefN = m_nRefPin->getVoltage();
-            else qDebug() << "PicDac::configureA: Error: NULL VREF- Pin";
-        } break;
-    }
+    if( m_usePinP && m_pRefPin ) m_vRefP = m_pRefPin->getVoltage();
+    if( m_usePinN && m_nRefPin ) m_vRefN = m_nRefPin->getVoltage();
     updtOutVolt();
 }
 
-void PicDac::outRegChanged( uint8_t val ) // ADCON1 is written
+void PicDac::configureA( uint8_t newDACCON0 ) //
+{
+    m_enabled = getRegBitsBool( newDACCON0, m_DACEN );
+    m_daclps  = getRegBitsBool( newDACCON0, m_DACLPS );
+
+    m_outVoltEn = getRegBitsBool( newDACCON0, m_DACOE );
+    if( m_outPin )
+    {
+        if( m_outVoltEn ) m_outPin->setPinMode( output );
+        m_outPin->controlPin( m_outVoltEn, m_outVoltEn );
+    }
+    else           qDebug() << "PicDac::configureA: Error: NULL Out Pin";
+
+    m_useFVR  = false;
+    m_usePinP = false;
+    m_vRefP = 0;
+    uint8_t dacPss = getRegBitsVal( newDACCON0, m_DACPSS );
+    switch( dacPss ) {
+        case 0: m_vRefP = 5;            break; // VDD
+        case 1: {                              // VREF+
+            if( m_pRefPin ) m_usePinP = true;
+            else            qDebug() << "PicDac::configureA: Error: NULL VREF+ Pin";
+        } break;
+        case 2: m_useFVR = true;        break; // FVR Buffer2 output
+        case 3:                         break; // Reserved, do not use
+    }
+    m_usePinN = false;
+    m_vRefN = 0;
+    uint8_t dacNss = getRegBitsVal( newDACCON0, m_DACNSS );
+    switch( dacNss ) {
+        case 0:                            break; // VSS
+        case 1: {                                 // VREF-
+            if( m_nRefPin ) m_usePinN = true;
+            else            qDebug() << "PicDac::configureA: Error: NULL VREF- Pin";
+        } break;
+    }
+    if( m_pRefPin ) m_pRefPin->changeCallBack( this, m_usePinP );
+    if( m_nRefPin ) m_nRefPin->changeCallBack( this, m_usePinN );
+
+    voltChanged();
+}
+
+void PicDac::outRegChanged( uint8_t val ) // DACON1 is written
 {
     m_outVal = getRegBitsVal( val, m_DACR );
     updtOutVolt();
@@ -77,12 +100,15 @@ void PicDac::outRegChanged( uint8_t val ) // ADCON1 is written
 
 void PicDac::updtOutVolt()
 {
-    if( m_enabled ) m_outVolt = ( m_vRefP-m_vRefN )*m_outVal/2e5 + m_vRefN;
+    if( m_useFVR ) m_vRefP = m_fvr->getDacVref();
+
+    if( m_enabled ) m_outVolt = ( m_vRefP-m_vRefN )*(double)m_outVal/32 + m_vRefN;
     else            m_outVolt = m_daclps ? m_vRefP : m_vRefN;
 
-    if( m_outPin ){
-        if( m_outVoltEn ) m_outPin->setVoltage( m_outVolt );
-    }
-    else qDebug() << "PicDac::outRegChanged: Error: NULL Out Pin";
+    if( m_outPin && m_outVoltEn ) m_outPin->setVoltage( m_outVolt );
+}
 
+void PicDac::callBack() // Called by FVR
+{
+    updtOutVolt();
 }

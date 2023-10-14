@@ -11,6 +11,7 @@
 
 class eMcu;
 class McuPin;
+class PicVrefE;
 
 class PicDac:  public McuDac
 {
@@ -19,13 +20,20 @@ class PicDac:  public McuDac
         ~PicDac();
 
         virtual void initialize() override;
+        virtual void voltChanged() override;
 
-        virtual void configureA( uint8_t newDACCON1 ) override;
+        virtual void configureA( uint8_t newDACCON0 ) override;
 
         virtual void outRegChanged( uint8_t val ) override;
 
+        virtual void callBack() override;
+
     protected:
         void updtOutVolt();
+
+        bool m_useFVR;
+        bool m_usePinP;
+        bool m_usePinN;
 
         // DACCON0
         regBits_t m_DACEN;
@@ -38,6 +46,8 @@ class PicDac:  public McuDac
         regBits_t m_DACR;
 
         uint8_t m_daclps;
+
+        PicVrefE* m_fvr;
 };
 
 #endif

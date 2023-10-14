@@ -30,4 +30,24 @@ class MAINMODULE_EXPORT PicVref : public McuVref
         regBits_t m_VR;
 };
 
+class MAINMODULE_EXPORT PicVrefE : public McuVref
+{
+    public:
+        PicVrefE( eMcu* mcu, QString name );
+        ~PicVrefE();
+
+        virtual void configureA( uint8_t newFVRCON ) override;
+
+        double getAdcVref();
+        double getDacVref();
+
+    private:
+        double m_adcVref;
+        double m_dacVref;
+
+        regBits_t m_FVREN;
+        regBits_t m_CDAFVR;
+        regBits_t m_ADFVR;
+};
+
 #endif
