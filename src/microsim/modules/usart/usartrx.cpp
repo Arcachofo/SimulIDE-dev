@@ -13,6 +13,7 @@ UartRx::UartRx( UsartModule* usart, eMcu* mcu, QString name )
       : UartTR( usart, mcu, name )
 {
     m_period = 0;
+    m_fifoSize = 2;
     m_ignoreData = false;
 }
 UartRx::~UartRx( ){}
@@ -28,7 +29,7 @@ void UartRx::enable( uint8_t en )
         m_state = usartIDLE;
         m_framesize = 1+mDATABITS+mPARITY+mSTOPBITS;
         m_currentBit = 0;
-        m_fifoP = 2;
+        m_fifoP = -1;
         m_startHigh = m_ioPin->getInpState();
     }else{
         m_state = usartSTOPPED;
@@ -44,8 +45,6 @@ void UartRx::voltChanged()
     if( !m_enabled || m_sleeping ) return;
 
     bool bit = m_ioPin->getInpState();
-
-    /// if( m_state == usartRXEND ) rxEnd(); ???
 
     if     ( !m_startHigh &&  bit ) m_startHigh = true;
     else if(  m_startHigh && !bit )                     // Start bit detected
@@ -93,9 +92,9 @@ void UartRx::byteReceived( uint16_t frame )
 {
     if( mDATABITS == 9 && m_ignoreData && (frame & 1<<8) == 0 ) return; // Multi-proccesor data frame
 
-    if( m_fifoP == 0 )                                  // Overrun error
+    if( m_fifoP == m_fifoSize )                         // Overrun error
     {
-        m_fifoP = 1;                                    // Overwite FIFO
+        m_fifoP--;                                      // Overwite FIFO
         frame |= dataOverrun;
     }
     if( (frame & 1<<(mDATABITS+mPARITY)) == 0 )         // Check Stop bit
@@ -107,24 +106,24 @@ void UartRx::byteReceived( uint16_t frame )
         bool parityBit = frame & 1<<mDATABITS;
         if( parity != parityBit ) frame |= parityError; // Parity error
     }
-    m_fifoP--;
+    m_fifoP++;
     m_fifo[m_fifoP] = frame;
-
-    if( m_fifoP == 1 ) setRxFlags();
+    if( m_fifoP == 0 ) setRxFlags();                    // First byte received
 
     m_usart->byteReceived( frame & mDATAMASK );
 }
 
 uint8_t UartRx::getData()
 {
-    if( m_fifoP == 2 ) return 0;  // No data available
+    if( m_fifoP == -1 ) return 0;                    // No data available
 
-    uint16_t frame = m_fifo[1];
+    uint16_t frame = m_fifo[0];
     uint8_t  data = frame & mDATAMASK;
 
-    if( ++m_fifoP == 1 )
+    m_fifoP--;
+    if( m_fifoSize > 1 && m_fifoP == 0 )             // Advance fifo
     {
-        m_fifo[1] = m_fifo[0];    // Advance fifo
+        m_fifo[0] = m_fifo[1];
         setRxFlags();
     }
     else if( m_interrupt ) m_interrupt->clearFlag(); // Fifo empty
@@ -134,7 +133,7 @@ uint8_t UartRx::getData()
 
 void UartRx::setRxFlags()
 {
-    uint16_t frame = m_fifo[1];
+    uint16_t frame = m_fifo[0];
     if( mDATABITS == 9 ) m_usart->setBit9Rx( ( frame & (1<<8) ) ? 1 : 0 );
 
     m_usart->setRxFlags( frame );         // New data in Rx Reg, set new flags

@@ -8,7 +8,6 @@
 #include "usartrx.h"
 #include "mcutimer.h"
 #include "e_mcu.h"
-#include "i51interrupt.h"
 #include "datautils.h"
 
 #define SCON *m_scon
@@ -16,6 +15,7 @@
 I51Usart::I51Usart( eMcu* mcu, QString name, int number )
         : McuUsart( mcu, name, number )
 {
+    m_receiver->setFifoSize( 1 );
     m_stopBits = 1;
     m_dataMask = 0xFF;
     m_parity   = parNONE;
@@ -39,12 +39,13 @@ void I51Usart::reset()
     m_mode = 0xFF;
     m_smodDiv = false;
     m_smodVal = 0;
+    m_counter = 0;
 }
 
 void I51Usart::configureA( uint8_t newSCON ) //SCON
 {
     uint8_t mode = getRegBitsVal( newSCON, m_SM );
-    bool sm2 = getRegBitsBool( newSCON, m_SM2 );
+    bool     sm2 = getRegBitsBool( newSCON, m_SM2 );
 
     if( mode == m_mode ){
         if( mode == 2 || mode == 3 ) m_receiver->ignoreData( sm2 );
@@ -52,44 +53,35 @@ void I51Usart::configureA( uint8_t newSCON ) //SCON
     }
     m_mode = mode;
 
-    m_useTimer = false;
+    bool  useTimer = false;
 
     switch( mode )
     {
         case 0:             // Synchronous 8 bit
-            /// TODO //setPeriod(  m_mcu->psInst() );// Fixed baudrate 32 or 64
+            /// TODO
+            // setPeriod(  m_mcu->psInst() );// Fixed baudrate 32 or 64
             sm2 = 0;
             m_dataBits = 8;
             break;
         case 1:             // Asynchronous Timer1 8 bits
-            m_useTimer = true;
+            useTimer = true;
             m_dataBits = 8;
             sm2 = 0;
-            /// TODO: Ignore frame if wrong Stop bit:
-            ///     override frameError() // Frame Error: wrong stop bit
-            ///
-            /// also parityError() and overrunError() not inplemented in 8051
-            ///
             break;
         case 2:             // Asynchronous MCU Clock 9 bits
-            setPeriod(  m_mcu->psInst() );// Fixed baudrate 32 or 64
+            setPeriod( m_mcu->psInst() );// Fixed baudrate 32 or 64
             m_dataBits = 9;
             break;
         case 3:             // Asynchronous Timer1 9 bits
-            m_useTimer = true;
+            useTimer = true;
             m_dataBits = 9;
             break;
     }
 
     m_receiver->ignoreData( sm2 );
 
-    I51T1Int* t1Int = static_cast<I51T1Int*>( m_timer1->getInterrupt() );
-    if( m_useTimer )
-    {
-        t1Int->setUsart( this );
-        setPeriod( 0 );
-    }
-    else t1Int->setUsart( NULL );
+    m_timer1->getInterrupt()->callBack( this, useTimer );
+    if( useTimer ) setPeriod( 0 );
 }
 
 void I51Usart::configureB( uint8_t newPCON )
@@ -102,11 +94,12 @@ void I51Usart::sendByte( uint8_t data )
     if( m_mcu->state() != mcuStopped ) m_sender->processData( data );
 }
 
-void I51Usart::step()
+void I51Usart::callBack()
 {
-    if( !m_useTimer ) return;
+    if( ++m_counter != 16 ) return;
 
-    if( (m_smodVal & 1) == 0 )
+    m_counter = 0;
+    if( (m_smodVal & 1) == 0 ) // half speed
     {
         m_smodDiv = !m_smodDiv;
         if( m_smodDiv ) return;
@@ -115,9 +108,20 @@ void I51Usart::step()
     m_receiver->runEvent();
 }
 
+void I51Usart::readByte( uint8_t ) // Reading SBUF
+{
+    m_stopBitError = false;
+    uint8_t data = m_receiver->getData(); // This calls I51Usart::setRxFlags()
+
+    if( m_mode == 1 && m_stopBitError ) return; // Ignore frame
+    m_mcu->m_regOverride = data;
+}
+
 void I51Usart::setRxFlags( uint16_t frame )
 {
-    //writeRegBits( m_FE, frame & frameError );   // frameError
+    m_stopBitError = (frame & frameError) != 0;
+
+    //writeRegBits( m_FE , frame & frameError );  // frameError
     //writeRegBits( m_DOR, frame & dataOverrun ); // overrun error
     //writeRegBits( m_UPE, frame & parityError ); // parityError
 }

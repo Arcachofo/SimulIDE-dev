@@ -64,7 +64,6 @@
 
 #include "i51core.h"
 #include "i51timer.h"
-#include "i51interrupt.h"
 #include "i51usart.h"
 #include "i51port.h"
 
@@ -1248,9 +1247,9 @@ void McuCreator::createInterrupt( QDomElement* el )
     uint16_t intVector  = el->attribute("vector").toUInt(0,0);
 
     Interrupt* iv = NULL;
-    if     ( m_core == "8051" )  iv = I51Interrupt::getInterrupt( intName, intVector, mcu );
+    //if     ( m_core == "8051" )  iv = I51Interrupt::getInterrupt( intName, intVector, mcu );
     //else if( m_core == "AVR" )   iv = AVRInterrupt::getInterrupt( intName, intVector, mcu );
-    else if( m_core == "Pic14" ) iv = new PicInterrupt( intName, intVector, mcu );
+    if     ( m_core == "Pic14" ) iv = new PicInterrupt( intName, intVector, mcu );
     else if( m_core == "Pic14e") iv = new Pic14eInterrupt( intName, intVector, mcu );
     else                         iv = new Interrupt( intName, intVector, mcu );
     if( !iv ) return;

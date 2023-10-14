@@ -23,10 +23,10 @@ class MAINMODULE_EXPORT I51Usart : public McuUsart
         virtual void configureB( uint8_t newPCON ) override;
 
         virtual void sendByte( uint8_t data ) override;
-
+        virtual void readByte( uint8_t data ) override;
         virtual void setRxFlags( uint16_t frame ) override;
 
-        virtual void step();
+        virtual void callBack() override; // Called by Timer 1 interrupt
 
     private:
         McuTimer* m_timer1;
@@ -39,10 +39,12 @@ class MAINMODULE_EXPORT I51Usart : public McuUsart
         //PCON
         regBits_t m_SMOD;
 
+        int m_counter;
+
         uint8_t m_smodVal;
         bool m_smodDiv;
 
-        bool m_useTimer;
+        bool m_stopBitError;
 };
 
 #endif
