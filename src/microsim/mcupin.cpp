@@ -113,6 +113,12 @@ void McuPin::setDirection( bool out )
     setPinMode( m_portMode );
 }
 
+void McuPin::setOpenColl( bool o )
+{
+    m_openColl = o;
+    setDirection( m_isOut );
+}
+
 void McuPin::controlPin( bool outCtrl, bool dirCtrl )
 {
     if( !dirCtrl && m_dirCtrl ) // External control is being released

@@ -56,7 +56,7 @@ static inline void clearRegBits( regBits_t bits ) // Clear bits in a Register
     *(bits.reg) &= ~bits.mask;
 }
 
-static inline void writeRegBits( regBits_t bits, bool value ) // Clear bits in a Register
+static inline void writeRegBits( regBits_t bits, bool value ) // Set/Clear bits in a Register
 {
     if( value ) setRegBits( bits );
     else        clearRegBits( bits );

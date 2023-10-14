@@ -51,6 +51,8 @@ class MAINMODULE_EXPORT McuPin : public IoPin
 
         void setExtInt( uint mode );
 
+        void setOpenColl( bool o );
+
         static void registerScript( asIScriptEngine* engine );
 
     protected:
