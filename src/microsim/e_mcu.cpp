@@ -149,6 +149,9 @@ void eMcu::reset()
 
 void eMcu::hardReset( bool r )
 {
+    bool isReset = (m_state == mcuStopped);
+    if( r == isReset ) return;
+
     Simulator::self()->cancelEvents( this );
     if( m_clkPin ) m_clkPin->changeCallBack( this, !r );  // External clock
 
