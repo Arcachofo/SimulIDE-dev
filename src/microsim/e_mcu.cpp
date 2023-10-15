@@ -58,8 +58,8 @@ eMcu::~eMcu()
 
 void eMcu::stamp()
 {
-    reset();
-    m_state = mcuRunning;
+    //reset();
+    //m_state = mcuStopped;
     m_clkState = false;
 }
 
@@ -153,7 +153,7 @@ void eMcu::hardReset( bool r )
     if( r == isReset ) return;
 
     Simulator::self()->cancelEvents( this );
-    if( m_clkPin ) m_clkPin->changeCallBack( this, !r );  // External clock
+    if( m_clkPin ) m_clkPin->changeCallBack( this, false );  // External clock
 
     if( r ) reset();
     else    start();
@@ -161,8 +161,11 @@ void eMcu::hardReset( bool r )
 
 void eMcu::start()
 {
+    if( m_state == mcuRunning ) return;
     m_state = mcuRunning;
-    if( m_freq > 0 ) Simulator::self()->addEvent( m_psTick, this );
+
+    if     ( m_clkPin   ) m_clkPin->changeCallBack( this, true );  // External clock
+    else if( m_freq > 0 ) Simulator::self()->addEvent( m_psTick, this );
 }
 
 void eMcu::sleep( bool s )
