@@ -155,12 +155,14 @@ void eMcu::hardReset( bool r )
     Simulator::self()->cancelEvents( this );
     if( m_clkPin ) m_clkPin->changeCallBack( this, !r );  // External clock
 
-    if( r ){
-        reset();
-    }else{
-        m_state = mcuRunning;
-        if( m_freq > 0 ) Simulator::self()->addEvent( m_psTick, this );
-    }
+    if( r ) reset();
+    else    start();
+}
+
+void eMcu::start()
+{
+    m_state = mcuRunning;
+    if( m_freq > 0 ) Simulator::self()->addEvent( m_psTick, this );
 }
 
 void eMcu::sleep( bool s )

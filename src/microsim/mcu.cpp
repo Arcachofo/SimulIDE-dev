@@ -272,7 +272,7 @@ void Mcu::stamp()
         }
         m_resetPin->warning( !m_resetPin->connector() );
     }
-    else m_eMcu.hardReset( false );
+    else m_eMcu.start();;
 
     if( m_autoLoad )
     { if( !m_eMcu.m_firmware.isEmpty() ) load( m_eMcu.m_firmware ); }

@@ -78,6 +78,7 @@ class MAINMODULE_EXPORT eMcu : public DataSpace, public eIou
 
         void hardReset( bool r );
         void sleep( bool s );
+        void start();
 
         QString getFileName() { return m_firmware; }
 
