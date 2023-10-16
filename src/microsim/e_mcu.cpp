@@ -4,6 +4,7 @@
  ***( see copyright.txt file at root folder )*******************************/
 
 #include "e_mcu.h"
+#include "mcu.h"
 #include "cpubase.h"
 #include "mcuconfigword.h"
 #include "mcuport.h"
@@ -106,7 +107,8 @@ void eMcu::stepCpu()
         if( m_state == mcuRunning ) m_cpu->runStep();
         m_interrupts.runInterrupts();
     }else{
-        m_state = mcuStopped; /// TODO: Crash
+        m_state = mcuError;
+        m_component->crash();
         qDebug() << "eMcu::stepCpu: Error PC =" << m_cpu->getPC() << "PGM size =" << m_flashSize;
         qDebug() << "MCU stopped";
     }

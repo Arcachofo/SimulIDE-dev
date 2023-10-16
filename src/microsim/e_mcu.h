@@ -26,6 +26,7 @@ enum{
 
 enum mcuState_t{
     mcuStopped=0,
+    mcuError,
     mcuRunning,
     mcuSleeping
 };
