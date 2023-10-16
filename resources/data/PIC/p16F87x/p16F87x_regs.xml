@@ -25,7 +25,7 @@
                   bits="RX9D,OERR,FERR,ADEN,CREN,SREN,RX9,SPEN"/>
                   
         <register name="TXREG"   addr="0x19" bits=""/>
-        <register name="RCREG"   addr="0x1A" bits=""/>
+        <register name="RCREG"   addr="0x1A" mask="00000000" bits=""/>
         
         <register name="CCPR2L"  addr="0x1B" bits=""/>
         <register name="CCPR2H"  addr="0x1C" bits=""/>

@@ -184,7 +184,7 @@
                bits="RD,WR,WREN,WRERR,FREE,LWLO,CFGS,EEPGD" />
     
     <register  name="EECON2"  addr="0x0196"  reset=""  mask="" bits="" />
-    <register  name="RCREG"   addr="0x0199"  reset=""  mask="" bits="" />
+    <register  name="RCREG"   addr="0x0199"  reset=""  mask="00000000" bits="" />
     <register  name="TXREG"   addr="0x019A"  reset=""  mask="" bits="" />
     <register  name="SPBRGL"  addr="0x019B"  reset=""  mask="" bits="" />
     <register  name="SPBRGH"  addr="0x019C"  reset=""  mask="" bits="" />

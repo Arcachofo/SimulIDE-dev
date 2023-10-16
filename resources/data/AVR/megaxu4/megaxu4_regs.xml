@@ -123,7 +123,7 @@
     <register  name="UCSR1D"  addr="0x00CB" bits="RTSEN,CTSEN,0,0,0,0,0,0" />
     <register  name="UBRR1L"  addr="0x00CC" bits="UBRR_0,UBRR_1,UBRR_2,UBRR_3,UBRR_4,UBRR_5,UBRR_6,UBRR_7" />
     <register  name="UBRR1H"  addr="0x00CD" bits="UBRR_8,UBRR_9,UBRR_10,UBRR_11,0,0,0,0" />
-    <register  name="UDR1"    addr="0x00CE" bits="UDR1_0,UDR1_1,UDR1_2,UDR1_3,UDR1_4,UDR1_5,UDR1_6,UDR1_7" />
+    <register  name="UDR1"    addr="0x00CE" mask="00000000" />
     <register  name="OCR4A"   addr="0x00CF" bits="OCR4A0,OCR4A1,OCR4A2,OCR4A3,OCR4A4,OCR4A5,OCR4A6,OCR4A7" />
     <register  name="OCR4B"   addr="0x00D0" bits="OCR4B0,OCR4B1,OCR4B2,OCR4B3,OCR4B4,OCR4B5,OCR4B6,OCR4B7" />
     <register  name="OCR4C"   addr="0x00D1" bits="OCR4C0,OCR4C1,OCR4C2,OCR4C3,OCR4C4,OCR4C5,OCR4C6,OCR4C7" />

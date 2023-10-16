@@ -17,7 +17,7 @@
         <register name="P1"     addr="16"  bits="0-7" reset="11111111"/>
         
         <register name="SCON"   addr="24"  bits="RI,TI,RB8,TB8,REN,SM2,SM1,SM0"/>
-        <register name="SBUF"   addr="25"  bits=""/>
+        <register name="SBUF"   addr="25"  mask="00000000"/>
         
         <register name="P2"     addr="32"  bits="0-7" reset="11111111"/>
         <register name="IE"     addr="40"  bits="EX0,ET0,EX1,ET1,ES,ET2,0,EA"/>

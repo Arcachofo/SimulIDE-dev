@@ -157,7 +157,7 @@
   <!-- 0x0B (0x2B) UCSR0A    RXC0 TXC0 UDRE0 FE0 DOR0 UPE0 U2X0 MPCM0 -->
     <register  name="UCSR0A"  addr="0x000B" reset="00100000"  mask="01000011" bits="MPCM0,U2X0,UPE0,DOR0,FE0,UDRE0,TXC0,RXC0" />
   <!-- 0x0C (0x2C) UDR0      USART0 I/O Data Register -->
-    <register  name="UDR0"    addr="0x000C" bits="" />
+    <register  name="UDR0"    addr="0x000C" mask="00000000" bits="" />
   <!-- 0x0D (0x2D) SPCR      SPIE SPE DORD MSTR CPOL CPHA SPR1 SPR0 -->
     <register  name="SPCR"    addr="0x000D" bits="SPR0,SPR1,CPHA,CPOL,MSTR,DORD,SPE,SPIE" />
   <!-- 0x0E (0x2E) SPSR      SPIF WCOL 0 0 0 0 0 SPI2X -->
@@ -370,7 +370,7 @@
   <!-- (0x9B)      UCSR1A    RXC1 TXC1 UDRE1 FE1 DOR1 UPE1 U2X1 MPCM1 -->
     <register  name="UCSR1A"  addr="0x009B" reset="00100000"  mask="01000011" bits="MPCM1,U2X1,UPE1,DOR1,FE1,UDRE1,TXC1,RXC1" />
   <!-- (0x9C)      UDR1      USART1 I/O Data Register -->
-    <register  name="UDR1"    addr="0x009C" bits="" />
+    <register  name="UDR1"    addr="0x009C" mask="00000000" bits="" />
   <!-- (0x9D)      UCSR1C    0 UMSEL1 UPM11 UPM10 USBS1 UCSZ11 UCSZ10 UCPOL1 -->
     <register  name="UCSR1C"  addr="0x009D" reset="00000110"  mask="" bits="UCPOL1,UCSZ10,UCSZ11,USBS1,UPM10,UPM11,UMSEL1,0" />
   <!-- (0x9E)      Reserved  0 0 0 0 0 0 0 0 -->

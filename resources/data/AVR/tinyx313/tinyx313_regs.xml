@@ -17,7 +17,7 @@
     <register  name="UCSRA"   addr="0x000B"  reset="00100000"  mask="01000011" 
                bits="MPCM,U2X,UPE,DOR,FE,UDRE,TXC,RXC" />
 
-    <register  name="UDR"     addr="0x000C"  reset=""  mask="" />
+    <register  name="UDR"     addr="0x000C"  reset=""  mask="00000000" />
       
       
       

@@ -72,8 +72,8 @@ PicVrefE::PicVrefE( eMcu* mcu, QString name )
         : McuVref( mcu, name )
 {
     m_FVREN  = getRegBits("FVREN", mcu );
-    m_ADFVR  = getRegBits( "ADFVR0,ADFVR1", mcu );   // ADC Vref
-    m_CDAFVR = getRegBits( "CDAFVR0,CDAFVR1", mcu ); // DAC Vref
+    m_ADFVR  = getRegBits("ADFVR0,ADFVR1", mcu );   // ADC Vref
+    m_CDAFVR = getRegBits("CDAFVR0,CDAFVR1", mcu ); // DAC Vref
 }
 PicVrefE::~PicVrefE(){}
 

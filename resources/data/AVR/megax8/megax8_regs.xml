@@ -224,8 +224,7 @@
     <register  name="UBRR0H"  addr="0x00C5"  reset=""  mask="00001111" 
                bits="UBRR8,UBRR9,UBRR10,UBRR11,0,0,0,0" />
 
-    <register  name="UDR0"    addr="0x00C6"  reset=""  mask="" 
-               bits="UDR0_0,UDR0_1,UDR0_2,UDR0_3,UDR0_4,UDR0_5,UDR0_6,UDR0_7" />
+    <register  name="UDR0"    addr="0x00C6"  reset=""  mask="00000000" />
   </regblock>
   <stack  spreg="SPL,SPH" increment="postdec" />
 </parts>

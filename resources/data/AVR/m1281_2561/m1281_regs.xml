@@ -141,19 +141,19 @@
     <register  name="UCSR0C"  addr="0x00C2" bits="UCPOL0,UCPHA0,UDORD0,USBS0,UPM00,UPM01,UMSEL0,UMSEL1" />
     <register  name="UBRR0L"  addr="0x00C4" bits="_UBRR0,_UBRR1,UBRR2,UBRR3,UBRR4,UBRR5,UBRR6,UBRR7" />
     <register  name="UBRR0H"  addr="0x00C5" bits="UBRR8,UBRR9,UBRR10,UBRR11,0,0,0,0" />
-    <register  name="UDR0"    addr="0x00C6" bits="UDR0_0,UDR0_1,UDR0_2,UDR0_3,UDR0_4,UDR0_5,UDR0_6,UDR0_7" />
+    <register  name="UDR0"    addr="0x00C6" mask="00000000" />
     <register  name="UCSR1A"  addr="0x00C8" bits="MPCM1,U2X1,UPE1,DOR1,FE1,UDRE1,TXC1,RXC1" />
     <register  name="UCSR1B"  addr="0x00C9" bits="TXB81,RXB81,UCSZ12,TXEN1,RXEN1,UDRIE1,TXCIE1,RXCIE1" />
     <register  name="UCSR1C"  addr="0x00CA" bits="UCPOL1,UCPHA1,UDORD1,USBS1,UPM10,UPM11,UMSEL10,UMSEL11" />
     <register  name="UBRR1L"  addr="0x00CC" bits="UBRR_0,UBRR_1,UBRR_2,UBRR_3,UBRR_4,UBRR_5,UBRR_6,UBRR_7" />
     <register  name="UBRR1H"  addr="0x00CD" bits="UBRR_8,UBRR_9,UBRR_10,UBRR_11,0,0,0,0" />
-    <register  name="UDR1"    addr="0x00CE" bits="UDR1_0,UDR1_1,UDR1_2,UDR1_3,UDR1_4,UDR1_5,UDR1_6,UDR1_7" />
+    <register  name="UDR1"    addr="0x00CE" mask="00000000" />
     <register  name="UCSR2A"  addr="0x00D0" bits="MPCM2,U2X2,UPE2,DOR2,FE2,UDRE2,TXC2,RXC2" />
     <register  name="UCSR2B"  addr="0x00D1" bits="TXB82,RXB82,UCSZ22,TXEN2,RXEN2,UDRIE2,TXCIE2,RXCIE2" />
     <register  name="UCSR2C"  addr="0x00D2" bits="UCPOL2,UCSZ20,UCSZ21,USBS2,UPM20,UPM21,UMSEL20,UMSEL21" />
     <register  name="UBRR2L"  addr="0x00D4" bits="" />
     <register  name="UBRR2H"  addr="0x00D5" bits="" />
-    <register  name="UDR2"    addr="0x00D6" bits="" />
+    <register  name="UDR2"    addr="0x00D6" mask="00000000"/>
     <register  name="PINH"    addr="0x0100" bits="" />
     <register  name="DDRH"    addr="0x0101" bits="" />
     <register  name="PORTH"   addr="0x0102" bits="" />

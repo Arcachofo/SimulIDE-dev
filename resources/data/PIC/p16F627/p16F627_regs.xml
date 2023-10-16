@@ -28,7 +28,7 @@
                   bits="RX9D,OERR,FERR,ADEN,CREN,SREN,RX9,SPEN" />
                   
         <register name="TXREG"   addr="0x19" bits=""/>
-        <register name="RCREG"   addr="0x1A" bits=""/>
+        <register name="RCREG"   addr="0x1A" mask="00000000" bits=""/>
         <register name="CMCON"   addr="0x1F" mask="00111111"
                   bits="CM0,CM1,CM2,CIS,C1INV,C2INV,C1OUT,C2OUT" />
     </regblock>
