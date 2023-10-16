@@ -85,7 +85,7 @@ void eMcu::voltChanged()  // External clock
 
 void eMcu::runEvent()
 {
-    if( m_state == mcuStopped || m_state == mcuSleeping ) return;
+    if( m_state != mcuRunning ) return;
 
     if( m_debugging )
     {

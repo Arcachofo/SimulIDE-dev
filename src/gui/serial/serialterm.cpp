@@ -33,7 +33,7 @@ LibraryItem* SerialTerm::libraryItem()
     return new LibraryItem(
         tr("Serial Terminal"),
         "Peripherals",
-        "terminal.svg",
+        "serialterm.png",
         "SerialTerm",
         SerialTerm::construct );
 }
