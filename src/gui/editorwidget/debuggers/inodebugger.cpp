@@ -195,11 +195,12 @@ int InoDebugger::compile( bool debug )
         QString userLibrar;
         QString userHardwa = "";
 
-        if( ! m_sketchBook.isEmpty() ){
+        if( !m_sketchBook.isEmpty() ){
             if( m_inclPath.isEmpty() ) userLibrar = addQuotes( m_sketchBook+"/libraries" );
             else                       userLibrar = addQuotes( m_inclPath );
 
-            userHardwa = addQuotes( m_sketchBook+"/hardware" );
+            if( QDir( m_sketchBook+"/hardware" ).exists() )
+                userHardwa = addQuotes( m_sketchBook+"/hardware" );
         }
 
         command += " -compile";
