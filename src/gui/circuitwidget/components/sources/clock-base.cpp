@@ -48,14 +48,15 @@ void ClockBase::updateStep()
     if( !m_changed ) return;
     m_changed = false;
 
+    Simulator::self()->cancelEvents( this );
+    m_outpin->setOutState( false );
+    m_state = false;
+
     if( m_isRunning )
     {
         m_lastTime = Simulator::self()->circTime();
-        Simulator::self()->cancelEvents( this );
         Simulator::self()->addEvent( m_stepsPC/2, this );
     }
-    m_outpin->setOutState( false );
-    m_state = false;
 }
 
 void ClockBase::setAlwaysOn( bool on )
