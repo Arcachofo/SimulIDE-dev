@@ -111,6 +111,7 @@ void Display::setPixel( uint x, uint y, int color )
 
 void Display::updtImageSize()
 {
+    m_data.resize( 0, std::vector<int>(0) );
     m_data.resize( m_width, std::vector<int>(m_height, m_background) );
     this->setFixedSize( m_width*m_scale, m_height*m_scale );
 }
@@ -121,6 +122,6 @@ void Display::paintEvent( QPaintEvent* )
 
     for( uint x=0; x<m_width; x++ )
         for( uint y=0; y<m_height; y++ )
-            p.fillRect( x*m_scale, y*m_scale, m_scale, m_scale, QColor(m_data[x][y]) );
+            p.fillRect( QRectF( x*m_scale, y*m_scale, m_scale, m_scale ), QColor(m_data[x][y]) );
 }
 

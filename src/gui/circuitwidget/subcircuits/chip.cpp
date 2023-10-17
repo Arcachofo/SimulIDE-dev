@@ -249,7 +249,7 @@ void Chip::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* 
 {
     Component::paint( p, option, widget );
 
-    if( m_backPixmap ) p->drawPixmap( m_area.x(), m_area.y(),m_width*8, m_height*8, *m_backPixmap );
+    if( m_backPixmap ) p->drawPixmap( QRect(m_area.x(), m_area.y(), m_width*8, m_height*8), *m_backPixmap );
     else{
         p->drawRoundedRect( m_area, 1, 1);
         if( m_backData  )
@@ -261,9 +261,14 @@ void Chip::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* 
             p->drawRoundedRect( mW, mH, w, h, 1, 1);
             p->drawImage( mW, +mH, *m_backImage ); // Image centered*/
 
-            for( int x=0; x<m_width; x++ )
-                for( int y=0; y<m_height; y++ )
-                    p->fillRect( x, y, 1, 1, QColor(m_backData->at(x).at(y) ) );
+            int w = m_backData->size();
+            int h = m_backData->at(0).size();
+            int mW = m_area.x()+(m_width*8 - w)/2;
+            int mH = m_area.y()+(m_height*8 - h)/2;
+
+            for( int x=0; x<w; x++ )
+                for( int y=0; y<h; y++ )
+                    p->fillRect( QRectF( mW+x, mH+y, 1, 1), QColor(m_backData->at(x).at(y) ) );
         }
         else if( !m_isLS && m_background.isEmpty() )
         {
