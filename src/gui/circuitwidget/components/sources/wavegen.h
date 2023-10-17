@@ -39,6 +39,9 @@ class MAINMODULE_EXPORT WaveGen : public ClockBase
         int steps() { return m_steps; }
         void setSteps( int steps );
 
+        double phaseShift() { return m_phaseShift; }
+        void setPhaseShift( double p ) { m_phaseShift = p; }
+
         QString waveType() { return m_enumUids.at((int)m_waveType); }
         void setWaveType( QString t );
 
@@ -91,6 +94,7 @@ class MAINMODULE_EXPORT WaveGen : public ClockBase
         double m_lastVout;
         double m_halfW;
         double m_time;
+        double m_phaseShift;
         
         int      m_steps;
         uint64_t m_qSteps;

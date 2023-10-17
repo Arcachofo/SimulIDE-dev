@@ -45,6 +45,7 @@ WaveGen::WaveGen( QString type, QString id )
     m_bipolar  = false;
     m_floating = false;
     m_voltBase = -2.5;
+    m_phaseShift = 0;
     m_voltMid  = 0;
     m_lastVout = 0;
     m_waveType = Sine;
@@ -77,12 +78,13 @@ WaveGen::WaveGen( QString type, QString id )
 
     remPropGroup( tr("Main") );
     addPropGroup( { tr("Main"), {
-new StrProp <WaveGen>("Wave_Type", tr("Wave Type"),""      , this, &WaveGen::waveType, &WaveGen::setWaveType,0,"enum" ),
-new DoubProp<WaveGen>("Freq"     , tr("Frequency"),"Hz"    , this, &WaveGen::freq,     &WaveGen::setFreq ),
-new IntProp <WaveGen>("Steps"    , tr("Quality")  ,"_Steps", this, &WaveGen::steps,    &WaveGen::setSteps ),
-new DoubProp<WaveGen>("Duty"     , tr("Duty")     ,"_\%"   , this, &WaveGen::duty,     &WaveGen::setDuty ),
-new StrProp <WaveGen>("File"     , tr("File"),""           , this, &WaveGen::fileName, &WaveGen::setFile ),
-new BoolProp<WaveGen>("Always_On", tr("Always On"),""      , this, &WaveGen::alwaysOn, &WaveGen::setAlwaysOn )
+new StrProp <WaveGen>("Wave_Type", tr("Wave Type")  ,""      , this, &WaveGen::waveType,  &WaveGen::setWaveType,0,"enum" ),
+new DoubProp<WaveGen>("Freq"     , tr("Frequency")  ,"Hz"    , this, &WaveGen::freq,      &WaveGen::setFreq ),
+new IntProp <WaveGen>("Steps"    , tr("Quality")    ,"_Steps", this, &WaveGen::steps,     &WaveGen::setSteps ),
+new DoubProp<WaveGen>("Phase"    , tr("Phase shift"),"_º"    , this, &WaveGen::phaseShift,&WaveGen::setPhaseShift ),
+new DoubProp<WaveGen>("Duty"     , tr("Duty")       ,"_\%"   , this, &WaveGen::duty,      &WaveGen::setDuty ),
+new StrProp <WaveGen>("File"     , tr("File")       ,""      , this, &WaveGen::fileName,  &WaveGen::setFile ),
+new BoolProp<WaveGen>("Always_On", tr("Always On")  ,""      , this, &WaveGen::alwaysOn,  &WaveGen::setAlwaysOn )
     },0} );
     addPropGroup( { tr("Electric"), {
 new BoolProp<WaveGen>("Bipolar"   , tr("Bipolar")       ,"" , this, &WaveGen::bipolar,   &WaveGen::setBipolar, propNoCopy ),
@@ -136,7 +138,7 @@ void WaveGen::stamp()
 
 void WaveGen::runEvent()
 {
-    m_time = fmod( (Simulator::self()->circTime()-m_lastTime), m_fstepsPC );
+    m_time = fmod( (Simulator::self()->circTime()-m_lastTime) - m_stepsPC*m_phaseShift/360, m_fstepsPC );
     
     if     ( m_waveType == Sine )     genSine();
     else if( m_waveType == Saw )      genSaw();
