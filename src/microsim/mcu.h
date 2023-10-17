@@ -88,7 +88,7 @@ class MAINMODULE_EXPORT Mcu : public Chip, public Linkable
         CpuBase* cpu() { return m_eMcu.cpu(); }
 
         void reset() { m_eMcu.hardReset( true ); }
-        void crash() { m_crashed = true; }
+        void crash( bool c) { m_crashed = c; update(); }
 
         bool load( QString fileName );
 

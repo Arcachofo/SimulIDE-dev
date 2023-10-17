@@ -108,7 +108,7 @@ void eMcu::stepCpu()
         m_interrupts.runInterrupts();
     }else{
         m_state = mcuError;
-        m_component->crash();
+        m_component->crash( true );
         qDebug() << "eMcu::stepCpu: Error PC =" << m_cpu->getPC() << "PGM size =" << m_flashSize;
         qDebug() << "MCU stopped";
     }
@@ -129,6 +129,7 @@ void eMcu::setDebugging( bool d )
 
 void eMcu::reset()
 {
+    m_component->crash( false );
     m_state = mcuStopped;
     m_cycle = 0;
     cyclesDone = 0;
