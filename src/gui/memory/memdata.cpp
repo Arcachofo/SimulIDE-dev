@@ -61,6 +61,8 @@ bool MemData::loadData( QVector<int>* toData, bool resize, int bits )
 bool MemData::loadFile( QVector<int>* toData, QString file, bool resize, int bits, eMcu* eMcu )
 {
     m_eMcu = eMcu;
+    if( eMcu ) return loadHex( toData, file, resize, bits ); // MCUs file must be hex format
+
     if( resize ) toData->resize( 1 );
 
     QString ext = getFileExt( file ).toLower();
