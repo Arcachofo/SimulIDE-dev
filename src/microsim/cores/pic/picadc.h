@@ -102,6 +102,8 @@ class MAINMODULE_EXPORT PicAdc11 : public PicAdc1
         virtual void setANSEL( uint8_t newANSEL ) override;
 };
 
+class PicVrefE;
+
 class MAINMODULE_EXPORT PicAdc20 : public PicAdc
 {
     public:
@@ -115,6 +117,8 @@ class MAINMODULE_EXPORT PicAdc20 : public PicAdc
         virtual void updtVref() override;
 
         regBits_t m_ADXREF;
+
+        PicVrefE* m_fvr;
 };
 
 class MAINMODULE_EXPORT PicAdc3 : public PicAdc
