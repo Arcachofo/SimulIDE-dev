@@ -434,7 +434,7 @@ bool Mcu::load( QString fileName )
         return false;
 
     for( int i=0; i<size; ++i ) m_eMcu.setFlashValue( i, pgm.at(i) );
-    qDebug() << "Firmware succesfully loaded\n";
+    qDebug() << "Firmware successfully loaded\n";
 
     QString firmware = circuitDir.relativeFilePath( cleanPathAbs );
     if( m_eMcu.m_firmware != firmware ) Circuit::self()->setChanged();

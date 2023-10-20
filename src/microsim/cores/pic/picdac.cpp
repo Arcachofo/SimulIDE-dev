@@ -25,7 +25,7 @@ PicDac::PicDac( eMcu* mcu, QString name )
 
     m_DACR = getRegBits( "DACR0,DACR1,DACR2,DACR3,DACR4", mcu );
 
-     m_fvr = (PicVrefE*)mcu->vrefModule();
+    m_fvr = (PicVrefE*)mcu->vrefModule();
 }
 PicDac::~PicDac(){}
 

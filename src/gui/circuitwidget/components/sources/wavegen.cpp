@@ -80,8 +80,8 @@ WaveGen::WaveGen( QString type, QString id )
     addPropGroup( { tr("Main"), {
 new StrProp <WaveGen>("Wave_Type", tr("Wave Type")  ,""      , this, &WaveGen::waveType,  &WaveGen::setWaveType,0,"enum" ),
 new DoubProp<WaveGen>("Freq"     , tr("Frequency")  ,"Hz"    , this, &WaveGen::freq,      &WaveGen::setFreq ),
-new IntProp <WaveGen>("Steps"    , tr("Quality")    ,"_Steps", this, &WaveGen::steps,     &WaveGen::setSteps ),
 new DoubProp<WaveGen>("Phase"    , tr("Phase shift"),"_º"    , this, &WaveGen::phaseShift,&WaveGen::setPhaseShift ),
+new IntProp <WaveGen>("Steps"    , tr("Quality")    ,"_Steps", this, &WaveGen::steps,     &WaveGen::setSteps ),
 new DoubProp<WaveGen>("Duty"     , tr("Duty")       ,"_\%"   , this, &WaveGen::duty,      &WaveGen::setDuty ),
 new StrProp <WaveGen>("File"     , tr("File")       ,""      , this, &WaveGen::fileName,  &WaveGen::setFile ),
 new BoolProp<WaveGen>("Always_On", tr("Always On")  ,""      , this, &WaveGen::alwaysOn,  &WaveGen::setAlwaysOn )
