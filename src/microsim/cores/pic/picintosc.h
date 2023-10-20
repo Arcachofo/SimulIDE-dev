@@ -60,5 +60,6 @@ class PicIntOsc02 : public PicIntOsc
     protected:
         regBits_t m_SCS;
         regBits_t m_IRCF;
+        regBits_t m_SPLLEN;
 };
 #endif

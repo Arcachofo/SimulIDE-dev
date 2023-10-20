@@ -100,14 +100,15 @@ void PicIntOsc01::configureA( uint8_t newOSCCON )
 PicIntOsc02::PicIntOsc02( eMcu* mcu, QString name )
            : PicIntOsc( mcu, name )
 {
-    m_SCS  = getRegBits( "SCS0,SCS1", mcu );
-    m_IRCF = getRegBits( "IRCF0,IRCF1,IRCF2,IRCF3", mcu );
+    m_SCS    = getRegBits( "SCS0,SCS1", mcu );
+    m_IRCF   = getRegBits( "IRCF0,IRCF1,IRCF2,IRCF3", mcu );
+    m_SPLLEN = getRegBits( "SPLLEN", mcu );
 }
 PicIntOsc02::~PicIntOsc02(){}
 
 void PicIntOsc02::configureA( uint8_t newOSCCON )
 {
-    uint8_t ircf = getRegBitsVal(  newOSCCON, m_IRCF );
+    uint8_t ircf = getRegBitsVal( newOSCCON, m_IRCF );
     switch( ircf ) {
         case  0: // Fallthrough
         case  1: m_intOscFreq = 31*1e3;    break; // 31  kHz
@@ -122,14 +123,19 @@ void PicIntOsc02::configureA( uint8_t newOSCCON )
         case 11: m_intOscFreq = 1*1e6;     break; // 1 MHz
         case 12: m_intOscFreq = 2*1e6;     break; // 2 MHz
         case 13: m_intOscFreq = 4*1e6;     break; // 4 MHz (default)
-        case 14: m_intOscFreq = 8*1e6;     break; /// 8 MHz or 32 MHz HF(see Section 5.2.2.1 “HFINTOSC”)
+        case 14:{                                 // 8 MHz or 32 MHz HF(see Section 5.2.2.1 “HFINTOSC”)
+            double mult = m_multiplier;                                           // PLL enabled in cfg word?
+            if( mult == 1 ) mult = getRegBitsBool( newOSCCON, m_SPLLEN ) ? 4 : 1; // PLL set by SPLLEN bit
+            m_intOscFreq = 8*1e6*mult;
+        } break;
         case 15: m_intOscFreq = 16*1e6;    break; // 16 MHz
     }
     uint8_t scs = getRegBitsVal( newOSCCON, m_SCS );
-    m_cfgWordCtrl = scs == 0;
+    m_cfgWordCtrl = (scs == 0);
 
     bool intOsc = !m_cfgWordCtrl || m_clkInIO; // Not controlled by CONFIG1 or controlled and set to INTOSC
     double freq = intOsc ? m_intOscFreq : m_mcu->component()->extFreq();
+
     m_mcu->setFreq( freq );
     m_psInst = m_mcu->psInst()/2;
 }

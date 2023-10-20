@@ -19,6 +19,7 @@ ConfigWord* PicConfigWord::createCfgWord( eMcu* mcu, QString name, QString type 
     else if( type == "01" ) return new PicConfigWord01( mcu, name ); // 16F62x
     else if( type == "02" ) return new PicConfigWord02( mcu, name ); // 16F87x
     else if( type == "03" ) return new PicConfigWord03( mcu, name ); // 10F20x
+    else if( type == "04" ) return new PicConfigWord04( mcu, name ); // 16F182x
     return NULL;
 }
 
@@ -28,7 +29,7 @@ PicConfigWord::PicConfigWord( eMcu* mcu, QString name )
 }
 PicConfigWord::~PicConfigWord(){}
 
-void PicConfigWord::configClock( uint8_t fosc, bool wdte, bool mclr )
+void PicConfigWord::configClk( uint8_t fosc )
 {
     bool ioI = false; // m_CLKIN is IO?
     bool ioO = false; // m_CLKOUT is IO?
@@ -48,16 +49,21 @@ void PicConfigWord::configClock( uint8_t fosc, bool wdte, bool mclr )
     qDebug()<<msg;
     if( m_mcu->intOsc() ) m_mcu->intOsc()->configPins( ioI, ioO, clO );
     else qDebug() <<"PicConfigWord::setCfgWord Error: IntOsc does not exist";
-
-    if( wdte ) m_mcu->component()->enableWdt( true );
-    msg = wdte ? "Enabled":"Disabled";
-    qDebug()<<"      Watchdog:"<< msg;
-
-    if( mclr ) m_mcu->component()->enableRstPin( true );
-    msg = mclr ? "Enabled":"Disabled";
-    qDebug()<<"      MCLR:    "<< msg;
 }
 
+void PicConfigWord::configWdt( bool wdte )
+{
+    if( wdte ) m_mcu->component()->enableWdt( true );
+    QString msg = wdte ? "Enabled":"Disabled";
+    qDebug()<<"      Watchdog:"<< msg;
+}
+
+void PicConfigWord::configRst( bool mclr )
+{
+    if( mclr ) m_mcu->component()->enableRstPin( true );
+    QString msg = mclr ? "Enabled":"Disabled";
+    qDebug()<<"      MCLR:    "<< msg;
+}
 //-----------------------------
 
 PicConfigWord00::PicConfigWord00( eMcu* mcu, QString name )
@@ -73,10 +79,9 @@ bool PicConfigWord00::setCfgWord( uint16_t addr, uint16_t data )
 
     if( addr == 0x2007 )
     {
-        uint8_t fosc = data & 7;
-        bool wdte = data & 1<<3;
-        bool mclr = data & 1<<5;
-        configClock( fosc, wdte, mclr );
+        configClk( data & 7 );
+        configWdt( data & 1<<3 );
+        configRst( data & 1<<5 );
     }
     qDebug()<<"";
     return true;
@@ -97,10 +102,9 @@ bool PicConfigWord01::setCfgWord( uint16_t addr, uint16_t data )
 
     if( addr == 0x2007 )
     {
-        uint8_t fosc = (data & 3) | (data & 1<<4)>>2;
-        bool wdte = data & 1<<2;
-        bool mclr = data & 1<<5;
-        configClock( fosc, wdte, mclr );
+        configClk( (data & 3) | (data & 1<<4)>>2 );
+        configWdt( data & 1<<2 );
+        configRst( data & 1<<5 );
     }
     qDebug()<<"";
     return true;
@@ -135,10 +139,7 @@ bool PicConfigWord02::setCfgWord( uint16_t addr, uint16_t data )
         if( m_mcu->intOsc() ) m_mcu->intOsc()->configPins( false, clO, clO );
         else qDebug() <<"PicConfigWord02::setCfgWord Error: IntOsc does not exist";
 
-        bool wdte = data & 1<<2;
-        if( wdte ) m_mcu->component()->enableWdt( true );
-        msg = wdte ? "Enabled":"Disabled";
-        qDebug()<<"      Watchdog:"<< msg;
+        configWdt( data & 1<<2 );
     }
     qDebug()<<"";
     return true;
@@ -159,15 +160,8 @@ bool PicConfigWord03::setCfgWord( uint16_t addr, uint16_t data )
 
     if( addr == 0x2007 )
     {
-        bool wdte = data & 1<<2;
-        if( wdte ) m_mcu->component()->enableWdt( true );
-        QString msg = wdte ? "Enabled":"Disabled";
-        qDebug()<<"      Watchdog:"<< msg;
-
-        bool mclr = data & 1<<4;
-        if( mclr ) m_mcu->component()->enableRstPin( true );
-        msg = mclr ? "Enabled":"Disabled";
-        qDebug()<<"      MCLR:    "<< msg;
+        configWdt( data & 1<<2 );
+        configRst( data & 1<<4 );
     }
     qDebug()<<"";
     return true;
@@ -183,14 +177,17 @@ PicConfigWord04::~PicConfigWord04(){}
 
 bool PicConfigWord04::setCfgWord( uint16_t addr, uint16_t data )
 {
-    bool ok = ConfigWord::setCfgWord( addr, data );
+    bool ok = ConfigWord::setCfgWord( addr, data ); // Actually a cfg word address?
     if( !ok ) return false;
 
-    if( addr == 0x8007 )
+    McuIntOsc* intOsc = m_mcu->intOsc();
+    if( !intOsc ) qDebug() <<"PicConfigWord04::setCfgWord Error: IntOsc does not exist";
+
+    if( addr == 0x8007 ) // Config word 1
     {
         bool clO = (data & 1<<11) == 0; // m_CLKOUT outputs clock signal? CLKOUTEN
         bool ioO = !clO;  // m_CLKOUT is IO?
-        bool ioI = false; // m_CLKIN is IO?
+        bool ioI = false; // m_CLKIN  is IO?
 
         uint8_t fosc = data & 7;
 
@@ -206,18 +203,19 @@ bool PicConfigWord04::setCfgWord( uint16_t addr, uint16_t data )
             case 7:                    msg +="RC:       Ext Clock on OSC1    "; break; // External Clock on RA7/OSC1/CLKIN
         }
         qDebug()<<msg;
-        if( m_mcu->intOsc() ) m_mcu->intOsc()->configPins( ioI, ioO, clO );
-        else qDebug() <<"PicConfigWord04::setCfgWord Error: IntOsc does not exist";
+        if( intOsc ) intOsc->configPins( ioI, ioO, clO );
 
-        bool wdte = data & 1<<4;
-        if( wdte ) m_mcu->component()->enableWdt( true );
-        msg = wdte ? "Enabled":"Disabled";
-        qDebug()<<"      Watchdog:"<< msg;
-
-        bool mclr = data & 1<<6;
-        if( mclr ) m_mcu->component()->enableRstPin( true );
-        msg = mclr ? "Enabled":"Disabled";
-        qDebug()<<"      MCLR:    "<< msg;
+        configWdt( data & 1<<4 );
+        configRst( data & 1<<6 );
+    }
+    else if( addr == 0x8008 )  // Config word 2
+    {
+        bool pllen = data & 1<<8;
+        if( pllen ){
+            qDebug()<<"      PLL:      Enabled";
+            if( intOsc ) intOsc->setMultiplier( 4 );
+        }
+        else qDebug()<<"      PLL:      Disabled";
     }
     qDebug()<<"";
     return true;

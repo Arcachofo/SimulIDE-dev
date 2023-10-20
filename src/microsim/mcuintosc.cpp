@@ -18,6 +18,8 @@ McuIntOsc::McuIntOsc( eMcu* mcu, QString name )
     m_clkOut   = false;
     m_extClock = false;
 
+    m_multiplier = 1;
+
     m_clkOutPin = NULL;
     m_clkInPin  = NULL;
 

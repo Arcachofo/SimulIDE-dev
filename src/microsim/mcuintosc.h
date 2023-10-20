@@ -36,8 +36,12 @@ class McuIntOsc : public McuModule, public eElement
         //McuPin* getClkPin( int n );
         void configPins( bool inIo, bool outIo, bool clkOut ); // From Config Word
 
+        virtual void setMultiplier( uint8_t m ) { m_multiplier = m; }
+
     protected:
         uint64_t m_psInst;
+
+        uint8_t m_multiplier;
 
         double m_intOscFreq;
         double m_configFreq;

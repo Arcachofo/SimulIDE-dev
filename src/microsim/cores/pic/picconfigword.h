@@ -17,9 +17,12 @@ class PicConfigWord : public ConfigWord
         PicConfigWord( eMcu* mcu, QString name );
         ~PicConfigWord();
 
-        void configClock( uint8_t fosc, bool wdte, bool mcrl );
-
  static ConfigWord* createCfgWord( eMcu* mcu, QString name, QString type );
+
+    protected:
+        void configClk( uint8_t fosc );
+        void configWdt( bool wdte );
+        void configRst( bool mclr );
 };
 
 class PicConfigWord00 : public PicConfigWord

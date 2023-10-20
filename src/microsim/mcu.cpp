@@ -608,7 +608,7 @@ bool Mcu::rstPinEnabled()
     return (m_resetPin == m_portRstPin);
 }
 
-void Mcu::enableRstPin( bool en )
+void Mcu::enableRstPin( bool en ) // Called from Property or cfg word
 {
     if( !m_portRstPin ) return;
 
