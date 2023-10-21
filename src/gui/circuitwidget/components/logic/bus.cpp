@@ -82,6 +82,7 @@ void Bus::setNumLines( int lines )
 
     m_pin.resize( lines+2 );
     m_ePin.resize( lines+2 );
+    m_signalPin.clear();
     
     for( int i=1; i<=lines; i++ )
     {
@@ -93,6 +94,7 @@ void Bus::setNumLines( int lines )
         pin->setLabelText( " "+QString::number( m_startBit+i-1 )+" " );
         m_pin[i]  = pin;
         m_ePin[i] = pin;
+        m_signalPin.append( pin );
     }
     m_busPin1->setPos( QPoint( 0 ,-lines*8+8 ) );
     m_busPin1->isMoved();
@@ -101,6 +103,8 @@ void Bus::setNumLines( int lines )
 
     m_height = lines-1;
     m_area = QRect( -3,-m_height*8-2, 5, m_height*8+4 );
+
+    setflip();
     Circuit::self()->update();
 }
 
