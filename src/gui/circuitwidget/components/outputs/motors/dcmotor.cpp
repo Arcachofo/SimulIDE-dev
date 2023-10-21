@@ -31,10 +31,11 @@ LibraryItem* DcMotor::libraryItem()
 }
 
 DcMotor::DcMotor( QString type, QString id )
-       : Component( type, id )
+       : LinkedComponent( type, id )
        , eResistor( id )
 {
     m_graphical = true;
+
     
     m_area = QRectF( -35,-33, 70, 66 );
     m_color = QColor( 50, 50, 70 );
@@ -99,6 +100,13 @@ void DcMotor::updateStep()
     m_ang += m_motStPs*m_delta;
     m_ang = remainder( m_ang, (16.0*360.0) );
 
+    if(  m_linkedComp.size() )
+    {
+        double val = m_ang*1000/(16.0*360.0);
+        if( val > 0 ) val = 1000-val;
+        else          val = -val;
+        for( Component* comp : m_linkedComp ) comp->setLinkedValue( val ); // 0-1000
+    }
     m_delta = 0;
     m_updtTime = 0;
     update();
@@ -126,7 +134,8 @@ void DcMotor::setRpm( int rpm )
     update();
 }
 
-void DcMotor::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget )
+
+void DcMotor::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
 {
     Component::paint( p, option, widget );
 

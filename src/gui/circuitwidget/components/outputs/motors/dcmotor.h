@@ -6,12 +6,13 @@
 #ifndef DCMOTOR_H
 #define DCMOTOR_H
 
-#include "component.h"
+#include "linkedcomponent.h"
 #include "e-resistor.h"
+
 
 class LibraryItem;
 
-class MAINMODULE_EXPORT DcMotor : public Component, public eResistor
+class MAINMODULE_EXPORT DcMotor : public LinkedComponent, public eResistor
 {
     public:
         DcMotor( QString type, QString id );
@@ -30,7 +31,7 @@ class MAINMODULE_EXPORT DcMotor : public Component, public eResistor
 
         double volt() { return m_voltNom; }
         void setVolt( double v ) { m_voltNom = v; }
-        
+
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
 
     protected:

@@ -9,6 +9,7 @@
 #include "stepper.h"
 #include "simulator.h"
 #include "connector.h"
+#include "itemlibrary.h"
 
 #include "doubleprop.h"
 #include "boolprop.h"
@@ -30,7 +31,7 @@ LibraryItem* Stepper::libraryItem()
 }
 
 Stepper::Stepper( QString type, QString id )
-       : Component( type, id )
+       : LinkedComponent( type, id )
        , eElement( (id+"-eElement") )
        , m_resA1( (id+"-eEresistorA1") )
        , m_resA2( (id+"-eEresistorA2") )
@@ -104,6 +105,11 @@ void Stepper::stamp()
 
 void Stepper::updateStep()
 {
+    if(  m_linkedComp.size() )
+    {
+        double val = (16.0*360.0-m_ang)*1000/(16.0*360.0);
+        for( Component* comp : m_linkedComp ) comp->setLinkedValue( val ); // 0-1000
+    }
     if( m_changed )
     {
         m_changed = false;

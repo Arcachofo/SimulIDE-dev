@@ -6,13 +6,14 @@
 #ifndef STEPPER_H
 #define STEPPER_H
 
-#include "itemlibrary.h"
-#include "component.h"
+#include "linkedcomponent.h"
 #include "e-element.h"
 #include "e-resistor.h"
 #include "pin.h"
 
-class MAINMODULE_EXPORT Stepper : public Component, public eElement
+class LibraryItem;
+
+class MAINMODULE_EXPORT Stepper : public LinkedComponent, public eElement
 {
     public:
         Stepper( QString type, QString id );
