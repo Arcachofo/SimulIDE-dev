@@ -11,7 +11,7 @@
 
 class Component;
 
-class MAINMODULE_EXPORT Linkable
+class Linkable
 {
     public:
         Linkable();

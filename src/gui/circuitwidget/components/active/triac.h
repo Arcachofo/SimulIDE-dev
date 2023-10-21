@@ -13,7 +13,7 @@ class LibraryItem;
 class eDiode;
 class eResistor;
 
-class MAINMODULE_EXPORT Triac : public Component, public eElement
+class Triac : public Component, public eElement
 {
     public:
         Triac( QString type, QString id );

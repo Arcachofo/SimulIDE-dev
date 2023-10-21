@@ -12,7 +12,7 @@
 
 class LibraryItem;
 
-class MAINMODULE_EXPORT Diode : public Comp2Pin, public eDiode, public Linkable
+class Diode : public Comp2Pin, public eDiode, public Linkable
 {
     public:
         Diode( QString type, QString id, bool zener=false );

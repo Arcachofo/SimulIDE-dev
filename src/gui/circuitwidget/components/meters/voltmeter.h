@@ -10,7 +10,7 @@
 
 class LibraryItem;
 
-class MAINMODULE_EXPORT Voltimeter : public Meter
+class Voltimeter : public Meter
 {
     public:
         Voltimeter( QString type, QString id );

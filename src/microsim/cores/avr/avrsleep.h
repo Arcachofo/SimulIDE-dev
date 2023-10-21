@@ -21,7 +21,7 @@ enum sleepMode_t{
     sleepNone
 };
 
-class MAINMODULE_EXPORT AvrSleep : public McuSleep
+class AvrSleep : public McuSleep
 {
     public:
         AvrSleep( eMcu* mcu, QString name );
@@ -41,7 +41,7 @@ class MAINMODULE_EXPORT AvrSleep : public McuSleep
         std::vector<Interrupt*> m_wakeUps;
 };
 
-/*class MAINMODULE_EXPORT AvrSleep00 : public AvrSleep
+/*class AvrSleep00 : public AvrSleep
 {
     public:
         AvrSleep00( eMcu* mcu, QString name );

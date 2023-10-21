@@ -14,7 +14,7 @@
 
 #include "mcucpu.h"
 
-class MAINMODULE_EXPORT AvrCore : public McuCpu
+class AvrCore : public McuCpu
 {
     public:
         AvrCore( eMcu* mcu );

@@ -8,7 +8,7 @@
 
 #include "ledbase.h"
 
-class MAINMODULE_EXPORT LedSmd : public LedBase
+class LedSmd : public LedBase
 {
     public:
         LedSmd( QString type, QString id, QRectF area, ePin* pin0=NULL, ePin* pin1=NULL );

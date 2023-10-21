@@ -22,7 +22,7 @@
 #include "e-element.h"
 #include "pin.h"
 
-class MAINMODULE_EXPORT Pcd8544 : public Component, public eElement
+class Pcd8544 : public Component, public eElement
 {
     public:
         Pcd8544( QString type, QString id );

@@ -13,7 +13,7 @@
 class PlotDisplay;
 class QGraphicsProxyWidget;
 
-class MAINMODULE_EXPORT PlotBase : public Component, public ScriptModule
+class PlotBase : public Component, public ScriptModule
 {
     public:
         PlotBase( QString type, QString id );

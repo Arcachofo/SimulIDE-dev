@@ -12,7 +12,7 @@
 class IoPin;
 class LibraryItem;
 
-class MAINMODULE_EXPORT Hd44780 : public Hd44780_Base, public eElement
+class Hd44780 : public Hd44780_Base, public eElement
 {
     public:
         Hd44780( QString type, QString id );

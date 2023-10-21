@@ -11,7 +11,7 @@
 
 class LibraryItem;
 
-class MAINMODULE_EXPORT WS2812 : public Component, public eClockedDevice
+class WS2812 : public Component, public eClockedDevice
 {
     public:
         WS2812( QString type, QString id );

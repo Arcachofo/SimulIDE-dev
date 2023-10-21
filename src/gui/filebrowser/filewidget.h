@@ -14,7 +14,7 @@ class QListWidget;
 class QPushButton;
 class QListWidgetItem;
 
-class MAINMODULE_EXPORT FileWidget : public QSplitter
+class FileWidget : public QSplitter
 {
     Q_OBJECT
     

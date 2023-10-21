@@ -10,7 +10,7 @@
 
 class LibraryItem;
 
-class MAINMODULE_EXPORT Buffer : public Gate
+class Buffer : public Gate
 {
     public:
         Buffer( QString type, QString id );

@@ -9,7 +9,7 @@
 #include "mcuinterrupts.h"
 #include "mcutypes.h"
 
-class MAINMODULE_EXPORT AVRInterrupt : public Interrupt
+class AVRInterrupt : public Interrupt
 {
     public:
         AVRInterrupt( QString name, uint16_t vector, eMcu* mcu );

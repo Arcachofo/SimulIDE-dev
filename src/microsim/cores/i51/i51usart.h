@@ -11,7 +11,7 @@
 
 class McuTimer;
 
-class MAINMODULE_EXPORT I51Usart : public McuUsart
+class I51Usart : public McuUsart
 {
     public:
         I51Usart( eMcu* mcu, QString name, int number );

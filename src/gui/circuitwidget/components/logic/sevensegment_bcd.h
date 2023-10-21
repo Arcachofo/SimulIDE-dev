@@ -10,7 +10,7 @@
 
 class LibraryItem;
 
-class MAINMODULE_EXPORT SevenSegmentBCD : public BcdBase
+class SevenSegmentBCD : public BcdBase
 {
     public:
         SevenSegmentBCD( QString type, QString id );

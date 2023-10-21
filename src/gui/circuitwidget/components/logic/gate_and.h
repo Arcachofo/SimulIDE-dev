@@ -11,7 +11,7 @@
 
 class LibraryItem;
 
-class MAINMODULE_EXPORT AndGate : public Gate
+class AndGate : public Gate
 {
     public:
         AndGate( QString type, QString id );

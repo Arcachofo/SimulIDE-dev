@@ -9,7 +9,7 @@
 #include "mcucomparator.h"
 #include "mcutypes.h"
 
-class MAINMODULE_EXPORT AvrComp : public McuComp
+class AvrComp : public McuComp
 {
     public:
         AvrComp( eMcu* mcu, QString name );

@@ -12,7 +12,7 @@
 class LibraryItem;
 class IoPin;
 
-class MAINMODULE_EXPORT Rail : public Component, public eElement
+class Rail : public Component, public eElement
 {
     public:
         Rail( QString type, QString id );

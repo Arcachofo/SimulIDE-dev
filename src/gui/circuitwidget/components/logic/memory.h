@@ -12,7 +12,7 @@
 
 class LibraryItem;
 
-class MAINMODULE_EXPORT Memory : public IoComponent, public eElement, public MemData
+class Memory : public IoComponent, public eElement, public MemData
 {
     public:
         Memory( QString type, QString id );

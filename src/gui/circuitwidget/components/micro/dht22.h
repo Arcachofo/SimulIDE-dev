@@ -14,7 +14,7 @@ class QPushButton;
 class QGraphicsProxyWidget;
 class IoPin;
 
-class MAINMODULE_EXPORT Dht22 : public Component , public eElement
+class Dht22 : public Component , public eElement
 {
     public:
         Dht22( QString type, QString id );

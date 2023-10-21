@@ -8,7 +8,7 @@
 
 #include "varresbase.h"
 
-class MAINMODULE_EXPORT ThermistorBase : public VarResBase
+class ThermistorBase : public VarResBase
 {
     public:
         ThermistorBase( QString type, QString id );

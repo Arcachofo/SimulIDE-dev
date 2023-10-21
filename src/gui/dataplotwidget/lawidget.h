@@ -14,7 +14,7 @@
 
 class LAnalizer;
 
-class MAINMODULE_EXPORT LaWidget : public QDialog, private Ui::LaWidget
+class LaWidget : public QDialog, private Ui::LaWidget
 {
         Q_OBJECT
 

@@ -10,7 +10,7 @@
 
 class LibraryItem;
 
-class MAINMODULE_EXPORT Ldr : public VarResBase
+class Ldr : public VarResBase
 {
     public:
         Ldr( QString type, QString id );

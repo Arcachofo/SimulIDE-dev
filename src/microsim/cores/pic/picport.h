@@ -13,7 +13,7 @@ class eMcu;
 class McuPin;
 class Component;
 
-class MAINMODULE_EXPORT PicPort : public McuPort
+class PicPort : public McuPort
 {
     public:
         PicPort( eMcu* mcu, QString name );

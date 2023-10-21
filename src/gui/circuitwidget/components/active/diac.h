@@ -13,7 +13,7 @@ class LibraryItem;
 class eDiode;
 class eResistor;
 
-class MAINMODULE_EXPORT Diac : public Component, public eElement
+class Diac : public Component, public eElement
 {
     public:
         Diac( QString type, QString id );

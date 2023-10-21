@@ -15,7 +15,7 @@ class AvrTimer800;
 class AvrTimer16bit;
 class McuOcUnit;
 
-class MAINMODULE_EXPORT AvrAdc : public McuAdc
+class AvrAdc : public McuAdc
 {
     public:
         AvrAdc( eMcu* mcu, QString name );
@@ -71,7 +71,7 @@ class MAINMODULE_EXPORT AvrAdc : public McuAdc
         McuOcUnit* m_txOCB;
 };
 
-class MAINMODULE_EXPORT AvrAdc00 : public AvrAdc
+class AvrAdc00 : public AvrAdc
 {
     public:
         AvrAdc00( eMcu* mcu, QString name );
@@ -82,7 +82,7 @@ class MAINMODULE_EXPORT AvrAdc00 : public AvrAdc
         virtual void updtVref() override;
 };
 
-class MAINMODULE_EXPORT AvrAdc01 : public AvrAdc00
+class AvrAdc01 : public AvrAdc00
 {
     public:
         AvrAdc01( eMcu* mcu, QString name );
@@ -94,7 +94,7 @@ class MAINMODULE_EXPORT AvrAdc01 : public AvrAdc00
         virtual void autotriggerConf() override;
 };
 
-class MAINMODULE_EXPORT AvrAdc02 : public AvrAdc00
+class AvrAdc02 : public AvrAdc00
 {
     public:
         AvrAdc02( eMcu* mcu, QString name );
@@ -104,7 +104,7 @@ class MAINMODULE_EXPORT AvrAdc02 : public AvrAdc00
         virtual void updtVref() override;
 };
 
-class MAINMODULE_EXPORT AvrAdc03 : public AvrAdc00
+class AvrAdc03 : public AvrAdc00
 {
     public:
         AvrAdc03( eMcu* mcu, QString name );
@@ -116,7 +116,7 @@ class MAINMODULE_EXPORT AvrAdc03 : public AvrAdc00
         virtual void specialConv() override;
 };
 
-class MAINMODULE_EXPORT AvrAdc04 : public AvrAdc03
+class AvrAdc04 : public AvrAdc03
 {
     public:
         AvrAdc04( eMcu* mcu, QString name );
@@ -130,7 +130,7 @@ class MAINMODULE_EXPORT AvrAdc04 : public AvrAdc03
         regBits_t m_MUX5;
 };
 
-class MAINMODULE_EXPORT AvrAdc10 : public AvrAdc
+class AvrAdc10 : public AvrAdc
 {
     public:
         AvrAdc10( eMcu* mcu, QString name );
@@ -141,7 +141,7 @@ class MAINMODULE_EXPORT AvrAdc10 : public AvrAdc
         virtual void updtVref() override;
 };
 
-class MAINMODULE_EXPORT AvrAdc11 : public AvrAdc10
+class AvrAdc11 : public AvrAdc10
 {
     public:
         AvrAdc11( eMcu* mcu, QString name );

@@ -12,7 +12,7 @@
 class LibraryItem;
 class QAction;
 
-class MAINMODULE_EXPORT SubPackage : public Chip, public Linkable
+class SubPackage : public Chip, public Linkable
 {
         friend class Circuit;
 

@@ -10,7 +10,7 @@
 
 class eMcu;
 
-class MAINMODULE_EXPORT AvrSpi : public McuSpi
+class AvrSpi : public McuSpi
 {
     public:
         AvrSpi( eMcu* mcu, QString name );

@@ -10,7 +10,7 @@
 
 class LibraryItem;
 
-class MAINMODULE_EXPORT Capacitor : public CapacitorBase
+class Capacitor : public CapacitorBase
 {
     public:
         Capacitor( QString type, QString id );

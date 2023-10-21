@@ -22,7 +22,7 @@ enum cond_t{
 class PlotBase;
 class Pin;
 
-class MAINMODULE_EXPORT DataChannel : public eElement, public Updatable
+class DataChannel : public eElement, public Updatable
 {
         friend class PlotBase;
         friend class Oscope;

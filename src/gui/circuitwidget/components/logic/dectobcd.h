@@ -10,7 +10,7 @@
 
 class LibraryItem;
 
-class MAINMODULE_EXPORT DecToBcd : public LogicComponent
+class DecToBcd : public LogicComponent
 {
     public:
         DecToBcd( QString type, QString id );

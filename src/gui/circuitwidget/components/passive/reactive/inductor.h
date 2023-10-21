@@ -10,7 +10,7 @@
 
 class LibraryItem;
 
-class MAINMODULE_EXPORT Inductor : public Reactive
+class Inductor : public Reactive
 {
     public:
         Inductor( QString type, QString id );

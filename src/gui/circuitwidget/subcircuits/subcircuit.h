@@ -11,7 +11,7 @@
 class Tunnel;
 class LibraryItem;
 
-class MAINMODULE_EXPORT SubCircuit : public Chip
+class SubCircuit : public Chip
 {
     public:
         SubCircuit( QString type, QString id );

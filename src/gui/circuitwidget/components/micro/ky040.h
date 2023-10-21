@@ -15,7 +15,7 @@ class QToolButton;
 class IoPin;
 class CustomDial;
 
-class MAINMODULE_EXPORT KY040 : public Component, public eElement
+class KY040 : public Component, public eElement
 {
     public:
         KY040( QString type, QString id );

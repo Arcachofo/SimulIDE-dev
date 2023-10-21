@@ -10,7 +10,7 @@
 
 class LibraryItem;
 
-class MAINMODULE_EXPORT Demux : public LogicComponent
+class Demux : public LogicComponent
 {
     public:
         Demux( QString type, QString id );

@@ -11,7 +11,7 @@
 
 class LibraryItem;
 
-class MAINMODULE_EXPORT DynamicMemory : public LogicComponent, public MemData
+class DynamicMemory : public LogicComponent, public MemData
 {
     public:
         DynamicMemory( QString type, QString id );

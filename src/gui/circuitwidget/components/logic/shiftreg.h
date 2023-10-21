@@ -10,7 +10,7 @@
 
 class LibraryItem;
 
-class MAINMODULE_EXPORT ShiftReg : public LogicComponent
+class ShiftReg : public LogicComponent
 {
     public:
         ShiftReg( QString type, QString id );

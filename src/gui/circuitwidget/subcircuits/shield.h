@@ -8,7 +8,7 @@
 
 #include "board.h"
 
-class MAINMODULE_EXPORT ShieldSubc : public BoardSubc
+class ShieldSubc : public BoardSubc
 {
     public:
         ShieldSubc( QString type, QString id );

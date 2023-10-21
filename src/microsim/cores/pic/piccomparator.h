@@ -8,7 +8,7 @@
 
 #include "mcucomparator.h"
 
-class MAINMODULE_EXPORT PicComp : public McuComp
+class PicComp : public McuComp
 {
     public:
         PicComp( eMcu* mcu, QString name );
@@ -28,7 +28,7 @@ class MAINMODULE_EXPORT PicComp : public McuComp
         regBits_t m_CINV;
 };
 
-class MAINMODULE_EXPORT PicComp0 : public PicComp
+class PicComp0 : public PicComp
 {
     public:
         PicComp0( eMcu* mcu, QString name );
@@ -43,7 +43,7 @@ class MAINMODULE_EXPORT PicComp0 : public PicComp
         regBits_t m_CIS;
 };
 
-class MAINMODULE_EXPORT PicComp01 : public PicComp0
+class PicComp01 : public PicComp0
 {
     public:
         PicComp01( eMcu* mcu, QString name );
@@ -53,7 +53,7 @@ class MAINMODULE_EXPORT PicComp01 : public PicComp0
         virtual void setMode( uint8_t mode );
 };
 
-class MAINMODULE_EXPORT PicComp02 : public PicComp0
+class PicComp02 : public PicComp0
 {
     public:
         PicComp02( eMcu* mcu, QString name );
@@ -63,7 +63,7 @@ class MAINMODULE_EXPORT PicComp02 : public PicComp0
         virtual void setMode( uint8_t mode );
 };
 
-class MAINMODULE_EXPORT PicComp03 : public PicComp0
+class PicComp03 : public PicComp0
 {
     public:
         PicComp03( eMcu* mcu, QString name );
@@ -74,7 +74,7 @@ class MAINMODULE_EXPORT PicComp03 : public PicComp0
 };
 
 
-class MAINMODULE_EXPORT PicComp1 : public PicComp
+class PicComp1 : public PicComp
 {
     public:
         PicComp1( eMcu* mcu, QString name );
@@ -88,7 +88,7 @@ class MAINMODULE_EXPORT PicComp1 : public PicComp
         regBits_t m_CxCH;
 };
 
-class MAINMODULE_EXPORT PicComp11 : public PicComp1
+class PicComp11 : public PicComp1
 {
     public:
         PicComp11( eMcu* mcu, QString name );
@@ -99,7 +99,7 @@ class MAINMODULE_EXPORT PicComp11 : public PicComp1
     protected:
 };
 
-class MAINMODULE_EXPORT PicComp12 : public PicComp1
+class PicComp12 : public PicComp1
 {
     public:
         PicComp12( eMcu* mcu, QString name );
@@ -111,7 +111,7 @@ class MAINMODULE_EXPORT PicComp12 : public PicComp1
     protected:
 };
 
-class MAINMODULE_EXPORT PicComp20 : public PicComp
+class PicComp20 : public PicComp
 {
     public:
         PicComp20( eMcu* mcu, QString name );

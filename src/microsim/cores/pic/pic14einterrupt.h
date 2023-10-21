@@ -8,7 +8,7 @@
 
 #include "picinterrupt.h"
 
-class MAINMODULE_EXPORT Pic14eInterrupt : public PicInterrupt
+class Pic14eInterrupt : public PicInterrupt
 {
     public:
         Pic14eInterrupt( QString name, uint16_t vector, eMcu* mcu );

@@ -11,7 +11,7 @@
 
 class LibraryItem;
 
-class MAINMODULE_EXPORT Led : public LedBase, public Linkable
+class Led : public LedBase, public Linkable
 {
     public:
         Led( QString type, QString id );

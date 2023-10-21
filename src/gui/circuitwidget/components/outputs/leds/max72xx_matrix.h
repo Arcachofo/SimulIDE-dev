@@ -12,7 +12,7 @@ class LibraryItem;
 class IoPin;
 class Pin;
 
-class MAINMODULE_EXPORT Max72xx_matrix : public LogicComponent
+class Max72xx_matrix : public LogicComponent
 {
     public:
         Max72xx_matrix( QString type, QString id );

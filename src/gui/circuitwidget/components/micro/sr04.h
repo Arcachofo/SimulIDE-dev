@@ -12,7 +12,7 @@
 class LibraryItem;
 class IoPin;
 
-class MAINMODULE_EXPORT SR04 : public Component, public eElement
+class SR04 : public Component, public eElement
 {
     public:
         SR04( QString type, QString id );

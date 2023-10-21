@@ -8,7 +8,7 @@
 
 #include <QDoubleSpinBox>
 
-class MAINMODULE_EXPORT PlotSpinBox : public QDoubleSpinBox
+class PlotSpinBox : public QDoubleSpinBox
 {
     public:
         PlotSpinBox( QWidget* parent );

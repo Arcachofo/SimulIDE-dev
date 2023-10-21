@@ -10,7 +10,7 @@
 
 class LibraryItem;
 
-class MAINMODULE_EXPORT FullAdder : public LogicComponent
+class FullAdder : public LogicComponent
 {
     public:
         FullAdder( QString type, QString id );

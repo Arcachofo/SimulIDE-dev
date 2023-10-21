@@ -9,7 +9,7 @@
 #include "mcumodule.h"
 #include "e-element.h"
 
-class MAINMODULE_EXPORT McuSleep : public McuModule, public eElement
+class McuSleep : public McuModule, public eElement
 {
         friend class McuCreator;
 

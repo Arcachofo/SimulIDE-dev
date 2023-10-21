@@ -13,7 +13,7 @@
 #define REG_SPH      m_sph[0]
 #define STATUS(bit) (*m_STATUS & (1<<bit))
 
-class MAINMODULE_EXPORT CpuBase : public CoreBase
+class CpuBase : public CoreBase
 {
         friend class McuCreator;
 

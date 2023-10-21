@@ -10,7 +10,7 @@
 
 class PicPwmUnit;
 
-class MAINMODULE_EXPORT PicOcUnit : public McuOcUnit
+class PicOcUnit : public McuOcUnit
 {
         friend class PicCcpUnit;
 
@@ -35,7 +35,7 @@ static PicPwmUnit* createPwmUnit( eMcu* mcu, QString name, int type );
         regBits_t m_GODO;
 };
 
-class MAINMODULE_EXPORT PicPwmUnit : public McuOcUnit
+class PicPwmUnit : public McuOcUnit
 {
         friend class PicCcpUnit;
 
@@ -62,14 +62,14 @@ class MAINMODULE_EXPORT PicPwmUnit : public McuOcUnit
         regBits_t m_DCxB;
 };
 
-class MAINMODULE_EXPORT PicPwmUnit00 : public PicPwmUnit
+class PicPwmUnit00 : public PicPwmUnit
 {
     public:
         PicPwmUnit00( eMcu* mcu, QString name );
         ~PicPwmUnit00();
 };
 
-class MAINMODULE_EXPORT PicPwmUnit01 : public PicPwmUnit
+class PicPwmUnit01 : public PicPwmUnit
 {
     public:
         PicPwmUnit01( eMcu* mcu, QString name );

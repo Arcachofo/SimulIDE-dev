@@ -8,7 +8,7 @@
 
 #include "logiccomponent.h"
 
-class MAINMODULE_EXPORT FlipFlopBase : public LogicComponent
+class FlipFlopBase : public LogicComponent
 {
     public:
         FlipFlopBase( QString type, QString id );

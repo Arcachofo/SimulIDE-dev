@@ -9,7 +9,7 @@
 #include "mcuport.h"
 
 
-class MAINMODULE_EXPORT AvrPort : public McuPort
+class AvrPort : public McuPort
 {
     public:
         AvrPort( eMcu* mcu, QString name );

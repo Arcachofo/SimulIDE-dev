@@ -14,7 +14,7 @@
 
 class OutHighlighter;
 
-class MAINMODULE_EXPORT OutPanelText : public QPlainTextEdit, public Updatable
+class OutPanelText : public QPlainTextEdit, public Updatable
 {
     Q_OBJECT
     public:

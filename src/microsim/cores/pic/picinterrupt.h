@@ -9,7 +9,7 @@
 #include "mcuinterrupts.h"
 #include "mcutypes.h"
 
-class MAINMODULE_EXPORT PicInterrupt : public Interrupt
+class PicInterrupt : public Interrupt
 {
     public:
         PicInterrupt( QString name, uint16_t vector, eMcu* mcu );

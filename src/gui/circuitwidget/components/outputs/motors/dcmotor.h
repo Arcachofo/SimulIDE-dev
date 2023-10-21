@@ -12,7 +12,7 @@
 
 class LibraryItem;
 
-class MAINMODULE_EXPORT DcMotor : public LinkedComponent, public eResistor
+class DcMotor : public LinkedComponent, public eResistor
 {
     public:
         DcMotor( QString type, QString id );

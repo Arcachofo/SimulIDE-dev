@@ -16,7 +16,7 @@ class IoPin;
 class Component;
 class asIScriptEngine;
 
-class MAINMODULE_EXPORT IoPort :public eElement
+class IoPort :public eElement
 {
         friend class McuCreator;
 

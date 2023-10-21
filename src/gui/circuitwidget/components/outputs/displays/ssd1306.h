@@ -16,7 +16,7 @@
 class LibraryItem;
 class IoPin;
 
-class MAINMODULE_EXPORT Ssd1306 : public Component, public TwiModule
+class Ssd1306 : public Component, public TwiModule
 {
     public:
         Ssd1306( QString type, QString id );

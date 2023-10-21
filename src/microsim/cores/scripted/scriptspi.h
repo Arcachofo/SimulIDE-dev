@@ -12,7 +12,7 @@
 class ScriptCpu;
 class asIScriptFunction;
 
-class MAINMODULE_EXPORT ScriptSpi : public McuSpi, public ScriptPerif
+class ScriptSpi : public McuSpi, public ScriptPerif
 {
     public:
         ScriptSpi( eMcu* mcu, QString name );

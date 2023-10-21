@@ -10,7 +10,7 @@
 
 class CompBase;
 
-class MAINMODULE_EXPORT NumProp : public ComProperty
+class NumProp : public ComProperty
 {
     public:
         NumProp( QString name, QString caption, QString unit, QString type, uint8_t flags )

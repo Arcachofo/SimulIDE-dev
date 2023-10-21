@@ -9,7 +9,7 @@
 #include "component.h"
 #include "e-resistor.h"
 
-class MAINMODULE_EXPORT MechContact : public Component, public eElement
+class MechContact : public Component, public eElement
 {
     public:
         MechContact( QString type, QString id );

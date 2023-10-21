@@ -11,7 +11,7 @@
 class ConnectorLine;
 class Pin;
 
-class MAINMODULE_EXPORT Connector : public CompBase
+class Connector : public CompBase
 {
     public:
         Connector( QString type, QString id, Pin* startpin, Pin* endpin = NULL );

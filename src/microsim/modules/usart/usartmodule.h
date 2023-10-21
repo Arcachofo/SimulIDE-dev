@@ -33,7 +33,7 @@ class UartTx;
 class UartRx;
 class SerialMonitor;
 
-class MAINMODULE_EXPORT UsartModule
+class UsartModule
 {
         friend class eMcu;
     public:
@@ -81,7 +81,7 @@ class MAINMODULE_EXPORT UsartModule
 
 class Interrupt;
 
-class MAINMODULE_EXPORT UartTR : public McuModule, public eElement
+class UartTR : public McuModule, public eElement
 {
         friend class McuCreator;
 

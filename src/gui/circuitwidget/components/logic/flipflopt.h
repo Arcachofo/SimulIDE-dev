@@ -10,7 +10,7 @@
 
 class LibraryItem;
 
-class MAINMODULE_EXPORT FlipFlopT : public FlipFlopBase
+class FlipFlopT : public FlipFlopBase
 {
     public:
         FlipFlopT( QString type, QString id );

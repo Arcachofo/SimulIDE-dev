@@ -9,7 +9,7 @@
 #include "scriptmodule.h"
 #include "mcuport.h"
 
-class MAINMODULE_EXPORT ScriptPort : public ScriptModule, public McuPort
+class ScriptPort : public ScriptModule, public McuPort
 {
     public:
         ScriptPort( eMcu* mcu, QString name );

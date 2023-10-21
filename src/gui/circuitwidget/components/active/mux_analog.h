@@ -12,7 +12,7 @@
 class eResistor;
 class LibraryItem;
 
-class MAINMODULE_EXPORT MuxAnalog : public Component, public eElement
+class MuxAnalog : public Component, public eElement
 {
     public:
         MuxAnalog( QString type, QString id );

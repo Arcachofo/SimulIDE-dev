@@ -26,7 +26,7 @@
 
 #define Z80CORE_MAX_T_INT 1000000   // Maximum T cycles after interrupt
 
-class MAINMODULE_EXPORT Z80Core : public CpuBase, public eElement
+class Z80Core : public CpuBase, public eElement
 {
     public:
         Z80Core( eMcu* mcu );

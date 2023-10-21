@@ -8,7 +8,7 @@
 
 #include "component.h"
 
-class MAINMODULE_EXPORT Shape : public Component
+class Shape : public Component
 {
     public:
         Shape( QString type, QString id );

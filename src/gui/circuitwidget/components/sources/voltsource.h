@@ -11,7 +11,7 @@
 class LibraryItem;
 class IoPin;
 
-class MAINMODULE_EXPORT VoltSource : public VarSource
+class VoltSource : public VarSource
 {
     public:
         VoltSource( QString type, QString id );

@@ -10,7 +10,7 @@
 
 class LibraryItem;
 
-class MAINMODULE_EXPORT Ground : public Component
+class Ground : public Component
 {
     public:
         Ground( QString type, QString id );

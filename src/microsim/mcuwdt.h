@@ -11,7 +11,7 @@
 
 class eMcu;
 
-class MAINMODULE_EXPORT McuWdt : public McuPrescaled, public eElement
+class McuWdt : public McuPrescaled, public eElement
 {
         friend class McuCreator;
 

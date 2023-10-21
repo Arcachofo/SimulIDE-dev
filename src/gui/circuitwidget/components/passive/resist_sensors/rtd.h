@@ -14,7 +14,7 @@
 
 class LibraryItem;
 
-class MAINMODULE_EXPORT RTD : public ThermistorBase
+class RTD : public ThermistorBase
 {
      public:
         RTD( QString type, QString id );

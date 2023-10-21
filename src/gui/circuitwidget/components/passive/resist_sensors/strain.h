@@ -14,7 +14,7 @@
 
 class LibraryItem;
 
-class MAINMODULE_EXPORT Strain : public VarResBase
+class Strain : public VarResBase
 {
     public:
         Strain( QString type, QString id );

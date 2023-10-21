@@ -12,7 +12,7 @@
 class eMcu;
 //class McuPin;
 
-class MAINMODULE_EXPORT AvrTwi : public McuTwi
+class AvrTwi : public McuTwi
 {
     public:
         AvrTwi( eMcu* mcu, QString name );

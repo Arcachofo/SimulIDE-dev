@@ -11,7 +11,7 @@
 
 #include "e-node.h"
 
-class MAINMODULE_EXPORT CircMatrix
+class CircMatrix
 {
     typedef std::vector<int>                  i_vector_t;
     typedef std::vector<double>               d_vector_t;

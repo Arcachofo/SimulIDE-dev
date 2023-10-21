@@ -10,7 +10,7 @@
 #include "e-element.h"
 #include "pin.h"
 
-class MAINMODULE_EXPORT ConnBase : public Component, public eElement
+class ConnBase : public Component, public eElement
 {
     public:
         ConnBase( QString type, QString id );

@@ -10,7 +10,7 @@
 #include "dialed.h"
 #include "dialwidget.h"
 
-class MAINMODULE_EXPORT VarResBase : public Dialed, public eResistor
+class VarResBase : public Dialed, public eResistor
 {
     public:
         VarResBase( QString type, QString id );

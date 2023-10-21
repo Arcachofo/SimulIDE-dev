@@ -11,7 +11,7 @@
 
 class IoPin;
 
-class MAINMODULE_EXPORT LogicComponent : public IoComponent, public eClockedDevice
+class LogicComponent : public IoComponent, public eClockedDevice
 {
     public:
         LogicComponent( QString type, QString id );

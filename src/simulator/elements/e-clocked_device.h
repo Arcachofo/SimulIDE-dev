@@ -26,7 +26,7 @@ enum trigger_t {
 class eElement;
 class IoPin;
 
-class MAINMODULE_EXPORT eClockedDevice : public eElement
+class eClockedDevice : public eElement
 {
     public:
         eClockedDevice( QString id );

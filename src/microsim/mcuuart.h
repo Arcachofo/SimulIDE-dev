@@ -9,7 +9,7 @@
 #include "usartmodule.h"
 #include "mcumodule.h"
 
-class MAINMODULE_EXPORT McuUsart : public McuModule, public UsartModule
+class McuUsart : public McuModule, public UsartModule
 {
         friend class McuCreator;
 

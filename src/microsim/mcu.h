@@ -23,7 +23,7 @@ class LibraryItem;
 class MCUMonitor;
 class ScriptCpu;
 
-class MAINMODULE_EXPORT Mcu : public Chip, public Linkable
+class Mcu : public Chip, public Linkable
 {
         friend class McuCreator;
 

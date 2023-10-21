@@ -10,7 +10,7 @@
 
 class IoPin;
 
-class MAINMODULE_EXPORT Gate : public LogicComponent
+class Gate : public LogicComponent
 {
     public:
         Gate( QString type, QString id, int inputs );

@@ -16,12 +16,20 @@ class AvrUsi : public McuModule
         AvrUsi( eMcu* mcu, QString name );
         ~AvrUsi();
 
+        virtual void reset() override;
         virtual void configureA( uint8_t ) override;
         virtual void configureB( uint8_t ) override;
 
     private:
-        void clockStep();
+        inline void stepCounter();
+        inline void softCounter( bool clk, bool toggle );
+        inline void shiftData();
+        inline void toggleClock();
 
+        bool m_softClk;
+        bool m_clkEdge;
+
+        uint8_t* m_dataReg;
         uint8_t* m_bufferReg;
         uint8_t* m_statusReg;
 

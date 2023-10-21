@@ -12,7 +12,7 @@
 
 class eNode;
 
-class MAINMODULE_EXPORT LedBase : public Component, public eLed
+class LedBase : public Component, public eLed
 {
     public:
         LedBase( QString type, QString id );

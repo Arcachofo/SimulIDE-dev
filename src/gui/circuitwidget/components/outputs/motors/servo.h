@@ -10,7 +10,7 @@
 
 class LibraryItem;
 
-class MAINMODULE_EXPORT Servo : public LogicComponent
+class Servo : public LogicComponent
 {
     public:
         Servo( QString type, QString id );

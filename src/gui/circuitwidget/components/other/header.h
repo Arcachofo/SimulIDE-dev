@@ -10,7 +10,7 @@
 
 class LibraryItem;
 
-class MAINMODULE_EXPORT Header : public ConnBase
+class Header : public ConnBase
 {
     public:
         Header( QString type, QString id );

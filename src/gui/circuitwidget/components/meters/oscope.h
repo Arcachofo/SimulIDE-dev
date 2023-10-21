@@ -13,7 +13,7 @@ class OscopeChannel;
 class OscWidget;
 class DataWidget;
 
-class MAINMODULE_EXPORT Oscope : public PlotBase
+class Oscope : public PlotBase
 {
     public:
         Oscope( QString type, QString id );

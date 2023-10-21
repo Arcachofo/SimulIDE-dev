@@ -9,7 +9,7 @@
 #include "strbaseprop.h"
 
 template <class Comp>
-class MAINMODULE_EXPORT StrProp : public StrBaseProp
+class StrProp : public StrBaseProp
 {
     public:
         StrProp( QString name, QString caption, QString unit, Comp* comp

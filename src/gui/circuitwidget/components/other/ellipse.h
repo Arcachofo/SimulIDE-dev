@@ -9,7 +9,7 @@
 #include "itemlibrary.h"
 #include "shape.h"
 
-class MAINMODULE_EXPORT Ellipse : public Shape
+class Ellipse : public Shape
 {
     public:
         Ellipse( QString type, QString id );

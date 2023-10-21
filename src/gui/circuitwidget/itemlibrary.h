@@ -10,7 +10,7 @@
 
 class LibraryItem;
 
-class MAINMODULE_EXPORT ItemLibrary
+class ItemLibrary
 {
     public:
         ItemLibrary();
@@ -33,7 +33,7 @@ class MAINMODULE_EXPORT ItemLibrary
 };
 
 
-class MAINMODULE_EXPORT LibraryItem
+class LibraryItem
 {
     public:
         LibraryItem( QString name, QString category, QString iconName,

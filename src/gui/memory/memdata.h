@@ -11,7 +11,7 @@
 class MemTable;
 class eMcu;
 
-class MAINMODULE_EXPORT MemData
+class MemData
 {
     public:
         MemData();

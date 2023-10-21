@@ -10,7 +10,7 @@
 
 class LibraryItem;
 
-class MAINMODULE_EXPORT BinCounter : public LogicComponent
+class BinCounter : public LogicComponent
 {
     public:
         BinCounter( QString type, QString id );

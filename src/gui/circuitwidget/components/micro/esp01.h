@@ -14,7 +14,7 @@ class LibraryItem;
 class QTcpSocket;
 class QSignalMapper;
 
-class MAINMODULE_EXPORT Esp01 : public Component, public UsartModule, public eElement
+class Esp01 : public Component, public UsartModule, public eElement
 {
     public:
         Esp01( QString type, QString id );

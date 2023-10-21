@@ -10,7 +10,7 @@
 
 class LibraryItem;
 
-class MAINMODULE_EXPORT Mux : public LogicComponent
+class Mux : public LogicComponent
 {
     public:
         QRectF boundingRect() const override { return m_area; }

@@ -8,7 +8,7 @@
 
 #include "mcutimer.h"
 
-class MAINMODULE_EXPORT PicTimer : public McuTimer
+class PicTimer : public McuTimer
 {
     public:
         PicTimer( eMcu* mcu, QString name );
@@ -27,7 +27,7 @@ class MAINMODULE_EXPORT PicTimer : public McuTimer
 };
 
 
-class MAINMODULE_EXPORT PicTimer8bit : public PicTimer
+class PicTimer8bit : public PicTimer
 {
     public:
         PicTimer8bit( eMcu* mcu, QString name );
@@ -36,7 +36,7 @@ class MAINMODULE_EXPORT PicTimer8bit : public PicTimer
     protected:
 };
 
-class MAINMODULE_EXPORT PicTimer0 : public PicTimer8bit
+class PicTimer0 : public PicTimer8bit
 {
     public:
         PicTimer0( eMcu* mcu, QString name );
@@ -53,7 +53,7 @@ class MAINMODULE_EXPORT PicTimer0 : public PicTimer8bit
         regBits_t m_PS;
 };
 
-class MAINMODULE_EXPORT PicTimer2 : public PicTimer8bit
+class PicTimer2 : public PicTimer8bit
 {
     public:
         PicTimer2( eMcu* mcu, QString name );
@@ -72,7 +72,7 @@ class MAINMODULE_EXPORT PicTimer2 : public PicTimer8bit
 };
 
 
-class MAINMODULE_EXPORT PicTimer16bit : public PicTimer
+class PicTimer16bit : public PicTimer
 {
     public:
         PicTimer16bit( eMcu* mcu, QString name );
@@ -97,7 +97,7 @@ class MAINMODULE_EXPORT PicTimer16bit : public PicTimer
         regBits_t m_TMR1ON;
 };
 
-class MAINMODULE_EXPORT PicTimer160 : public PicTimer16bit
+class PicTimer160 : public PicTimer16bit
 {
     public:
         PicTimer160( eMcu* mcu, QString name );
@@ -107,7 +107,7 @@ class MAINMODULE_EXPORT PicTimer160 : public PicTimer16bit
         virtual void configureClock() override;
 };
 
-class MAINMODULE_EXPORT PicTimer161 : public PicTimer16bit
+class PicTimer161 : public PicTimer16bit
 {
     public:
         PicTimer161( eMcu* mcu, QString name );

@@ -8,7 +8,7 @@
 
 #include "picmrcore.h"
 
-class MAINMODULE_EXPORT Pic14eCore : public PicMrCore
+class Pic14eCore : public PicMrCore
 {
     public:
         Pic14eCore( eMcu* mcu );

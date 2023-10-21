@@ -11,7 +11,7 @@
 
 class LibraryItem;
 
-class MAINMODULE_EXPORT Lamp : public Comp2Pin, public eResistor
+class Lamp : public Comp2Pin, public eResistor
 {
     public:
         Lamp( QString type, QString id );

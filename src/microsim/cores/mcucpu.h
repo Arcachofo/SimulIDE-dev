@@ -9,7 +9,7 @@
 #include "cpubase.h"
 
 
-class MAINMODULE_EXPORT McuCpu : public CpuBase
+class McuCpu : public CpuBase
 {
     public:
         McuCpu( eMcu* mcu );

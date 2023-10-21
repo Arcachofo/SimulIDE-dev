@@ -10,7 +10,7 @@
 
 class LibraryItem;
 
-class MAINMODULE_EXPORT Image : public Shape
+class Image : public Shape
 {
     public:
         Image( QString type, QString id );

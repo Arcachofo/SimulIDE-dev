@@ -12,7 +12,7 @@
 class eMcu;
 class McuPin;
 
-class MAINMODULE_EXPORT McuTwi : public McuPrescaled, public TwiModule
+class McuTwi : public McuPrescaled, public TwiModule
 {
         friend class McuCreator;
 

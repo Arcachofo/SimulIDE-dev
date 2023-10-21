@@ -12,7 +12,7 @@
 
 class LibraryItem;
 
-class MAINMODULE_EXPORT Transformer : public Component, public eElement
+class Transformer : public Component, public eElement
 {
         struct winding_t
         {

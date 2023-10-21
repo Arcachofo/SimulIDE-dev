@@ -23,7 +23,7 @@ enum pinMode_t{
 class eNode;
 class asIScriptEngine;
 
-class MAINMODULE_EXPORT IoPin : public Pin, public eElement
+class IoPin : public Pin, public eElement
 {
         friend class Function;
     public:

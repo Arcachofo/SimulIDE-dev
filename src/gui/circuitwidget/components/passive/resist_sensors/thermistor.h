@@ -10,7 +10,7 @@
 
 class LibraryItem;
 
-class MAINMODULE_EXPORT Thermistor : public ThermistorBase
+class Thermistor : public ThermistorBase
 {
     public:
         Thermistor( QString type, QString id );

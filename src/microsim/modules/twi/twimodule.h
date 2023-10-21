@@ -17,7 +17,7 @@ enum twiMode_t{
 
 class eSource;
 
-class MAINMODULE_EXPORT TwiModule : public eClockedDevice
+class TwiModule : public eClockedDevice
 {
     public:
         TwiModule( QString name );

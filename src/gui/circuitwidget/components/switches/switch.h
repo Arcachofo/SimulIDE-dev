@@ -10,7 +10,7 @@
 
 class LibraryItem;
 
-class MAINMODULE_EXPORT Switch : public SwitchBase
+class Switch : public SwitchBase
 {
     public:
         Switch( QString type, QString id );

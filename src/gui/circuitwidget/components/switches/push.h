@@ -10,7 +10,7 @@
 
 class LibraryItem;
 
-class MAINMODULE_EXPORT Push : public PushBase
+class Push : public PushBase
 {
     public:
         Push( QString type, QString id );

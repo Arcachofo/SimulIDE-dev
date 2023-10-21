@@ -15,7 +15,7 @@ using namespace std;
 class ScriptPerif;
 class Mcu;
 
-class MAINMODULE_EXPORT ScriptCpu : public ScriptModule, public McuCpu
+class ScriptCpu : public ScriptModule, public McuCpu
 {
     public:
         ScriptCpu( eMcu* mcu );

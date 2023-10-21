@@ -11,7 +11,7 @@
 class LibraryItem;
 class Pin;
 
-class MAINMODULE_EXPORT CurrSource : public VarSource
+class CurrSource : public VarSource
 {
     public:
         CurrSource( QString type, QString id );

@@ -11,7 +11,7 @@
 
 class LibraryItem;
 
-class MAINMODULE_EXPORT I2CToParallel : public IoComponent, public TwiModule
+class I2CToParallel : public IoComponent, public TwiModule
 {
     public:
         I2CToParallel( QString type, QString id );

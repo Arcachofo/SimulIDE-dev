@@ -13,7 +13,7 @@
 class eElement;
 class Pin;
 
-class MAINMODULE_EXPORT ePin
+class ePin
 {
     public:
         ePin( QString id, int index );

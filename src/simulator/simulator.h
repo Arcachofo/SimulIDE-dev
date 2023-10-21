@@ -29,7 +29,7 @@ class Socket;
 class eNode;
 class CircMatrix;
 
-class MAINMODULE_EXPORT Simulator : public QObject
+class Simulator : public QObject
 {
         friend class eNode;
 

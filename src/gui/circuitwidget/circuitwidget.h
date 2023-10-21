@@ -19,7 +19,7 @@ class AboutDialog;
 class AppDialog;
 class InfoWidget;
 
-class MAINMODULE_EXPORT CircuitWidget : public QWidget
+class CircuitWidget : public QWidget
 {
     Q_OBJECT
 

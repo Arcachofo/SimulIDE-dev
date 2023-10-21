@@ -12,7 +12,7 @@
 
 class LibraryItem;
 
-class MAINMODULE_EXPORT Dial : public Dialed, public Linkable
+class Dial : public Dialed, public Linkable
 {
     public:
         Dial( QString type, QString id );

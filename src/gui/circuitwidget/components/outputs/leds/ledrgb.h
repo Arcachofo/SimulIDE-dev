@@ -12,7 +12,7 @@
 
 class LibraryItem;
 
-class MAINMODULE_EXPORT LedRgb : public Component, public eElement
+class LedRgb : public Component, public eElement
 {
     public:
         LedRgb( QString type, QString id );

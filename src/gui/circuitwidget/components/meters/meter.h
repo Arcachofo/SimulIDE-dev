@@ -11,7 +11,7 @@
 
 class IoPin;
 
-class MAINMODULE_EXPORT Meter : public Component, public eResistor
+class Meter : public Component, public eResistor
 {
     public:
         Meter( QString type, QString id );

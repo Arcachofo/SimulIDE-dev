@@ -13,7 +13,7 @@ enum propFlags{
     propNoCopy = 1<<1
 };
 
-class MAINMODULE_EXPORT ComProperty
+class ComProperty
 {
     public:
         ComProperty( QString name, QString caption, QString unit, QString type, uint8_t flags );

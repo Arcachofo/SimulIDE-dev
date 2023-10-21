@@ -24,7 +24,7 @@ enum pinState_t{
 class Connector;
 class LaChannel;
 
-class MAINMODULE_EXPORT Pin : public QGraphicsItem, public ePin, public Updatable
+class Pin : public QGraphicsItem, public ePin, public Updatable
 {
     Q_INTERFACES(QGraphicsItem)
 

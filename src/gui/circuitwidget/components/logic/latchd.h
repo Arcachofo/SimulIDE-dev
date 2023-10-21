@@ -10,7 +10,7 @@
 
 class LibraryItem;
 
-class MAINMODULE_EXPORT LatchD : public LogicComponent
+class LatchD : public LogicComponent
 {
     public:
         LatchD( QString type, QString id );

@@ -17,7 +17,7 @@ class Interrupts;
 class McuModule;
 class IoPin;
 
-class MAINMODULE_EXPORT Interrupt
+class Interrupt
 {
         friend class McuCreator;
 
@@ -79,7 +79,7 @@ class MAINMODULE_EXPORT Interrupt
 
 //------------------------               ------------------------
 //---------------------------------------------------------------
-class MAINMODULE_EXPORT Interrupts
+class Interrupts
 {
         friend class McuCreator;
 

@@ -13,7 +13,7 @@ class LibraryItem;
 class QPushButton;
 class QGraphicsProxyWidget;
 
-class MAINMODULE_EXPORT SwitchDip : public Component, public eElement
+class SwitchDip : public Component, public eElement
 {
     public:
         SwitchDip( QString type, QString id );

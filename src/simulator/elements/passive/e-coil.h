@@ -10,7 +10,7 @@
 
 class eNode;
 
-class MAINMODULE_EXPORT eCoil : public eResistor
+class eCoil : public eResistor
 {
     public:
         eCoil( int i, int s, int t, double h, double r, QString id );

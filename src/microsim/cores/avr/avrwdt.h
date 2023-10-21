@@ -10,7 +10,7 @@
 
 class eMcu;
 
-class MAINMODULE_EXPORT AvrWdt : public McuWdt
+class AvrWdt : public McuWdt
 {
     public:
         AvrWdt( eMcu* mcu, QString name );
@@ -43,7 +43,7 @@ class MAINMODULE_EXPORT AvrWdt : public McuWdt
         regBits_t m_WDRF;
 };
 
-class MAINMODULE_EXPORT AvrWdt00 : public AvrWdt
+class AvrWdt00 : public AvrWdt
 {
     public:
         AvrWdt00( eMcu* mcu, QString name );
@@ -59,7 +59,7 @@ class MAINMODULE_EXPORT AvrWdt00 : public AvrWdt
         regBits_t m_WDP3;
 };
 
-class MAINMODULE_EXPORT AvrWdt01 : public AvrWdt
+class AvrWdt01 : public AvrWdt
 {
     public:
         AvrWdt01( eMcu* mcu, QString name );

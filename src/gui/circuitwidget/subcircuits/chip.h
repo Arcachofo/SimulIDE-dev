@@ -11,7 +11,7 @@
 
 class QDomElement;
 
-class MAINMODULE_EXPORT Chip : public Component, public eElement
+class Chip : public Component, public eElement
 {
     public:
         Chip( QString type, QString id );

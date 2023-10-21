@@ -22,7 +22,7 @@
 class IoPort;
 class IoPin;
 
-class MAINMODULE_EXPORT Mcs65Cpu : public Mcs65Interface
+class Mcs65Cpu : public Mcs65Interface
 {
     public:
         Mcs65Cpu( eMcu* mcu );

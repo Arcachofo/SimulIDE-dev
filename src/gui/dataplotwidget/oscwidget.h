@@ -13,7 +13,7 @@
 
 class Oscope;
 
-class MAINMODULE_EXPORT OscWidget : public QDialog, private Ui::OscWidget
+class OscWidget : public QDialog, private Ui::OscWidget
 {
         Q_OBJECT
 

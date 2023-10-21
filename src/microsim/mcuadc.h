@@ -12,7 +12,7 @@
 class eMcu;
 class McuPin;
 
-class MAINMODULE_EXPORT McuAdc : public McuPrescaled, public eElement
+class McuAdc : public McuPrescaled, public eElement
 {
         friend class McuCreator;
 

@@ -18,6 +18,7 @@ AvrUsi::AvrUsi( eMcu* mcu, QString name )
     m_DIpin = NULL;
     m_CKpin = NULL;
 
+    m_dataReg   = mcu->getReg("USIDR");
     m_bufferReg = mcu->getReg("USIBR");
     m_statusReg = mcu->getReg("USISR");
 
@@ -29,6 +30,12 @@ AvrUsi::AvrUsi( eMcu* mcu, QString name )
     m_USICNT = getRegBits("USICNT0,USICNT1,USICNT2,USICNT3", mcu );
 }
 AvrUsi::~AvrUsi(){}
+
+void AvrUsi::reset()
+{
+    m_clkEdge = false;
+    m_counter = 0;
+}
 
 void AvrUsi::configureA( uint8_t newUSICR )
 {
@@ -50,27 +57,38 @@ void AvrUsi::configureA( uint8_t newUSICR )
         if( m_DOpin ) m_DOpin->controlPin( spi, false );
         else          qDebug() << "AvrUsi::configureA: Error: null DO Pin";
 
+        if( twi ) // 2 Wire mode: SDA (DI) & SCL (USCK) open collector if DDRB=out, pullups disabled
+        {
+
+        }
         if( m_DIpin ) m_DIpin->setOpenColl( twi );
         else          qDebug() << "AvrUsi::configureA: Error: null DI Pin";
 
         if( m_CKpin ) m_CKpin->setOpenColl( twi );
         else          qDebug() << "AvrUsi::configureA: Error: null CK Pin";
-
-        if( twi ) // 2 Wire mode: SDA (DI) & SCL (USCK) open collector if DDRB=out, pullups disabled
-        {
-
-        }
     }
+
+    bool usiClk = getRegBitsBool( newUSICR, m_USICLK );
+    bool usiCt  = getRegBitsBool( newUSICR, m_USITC ); // toggles the USCK/SCL value
 
     uint8_t clockMode = getRegBitsVal( newUSICR, m_USICS );
     if( m_clockMode != clockMode )
     {
         m_clockMode = clockMode;
-        switch ( clockMode ) {
-            case 0: break; // No Clock / Software clock strobe (USICLK)
-            case 1: break; // Timer0 Compare Match
-            case 2: break; // External, positive edge
-            case 3: break; // External, negative edge
+        m_clkEdge = false;
+
+        switch( clockMode ) {
+            case 0:{                                       // Software clock strobe (USICLK)
+                m_clkEdge = true;
+                softCounter( usiClk, true );
+                shiftData();
+            } break;
+            case 1:                    break;              // Timer0 Compare Match
+            case 2: m_clkEdge = true;                      // External, positive edge
+            case 3:{                                       // External, negative edge
+                if( usiClk ) softCounter( usiCt, false );  // Software clock strobe (USITC) for counter
+                // Clock pin: external
+            }
         }
     }
 }
@@ -80,8 +98,34 @@ void AvrUsi::configureB( uint8_t newUSISR )
     m_counter = getRegBitsVal( newUSISR, m_USICNT ); // USICNT[3:0]: Counter Value
 }
 
-void AvrUsi::clockStep()
+void AvrUsi::softCounter( bool clk, bool toggle )
 {
-    m_counter++;
-    *m_statusReg = overrideBits( m_counter, m_USICNT );
+    if( ( m_clkEdge && (clk && !m_softClk))
+     || (!m_clkEdge && (m_softClk && !clk )) )
+    {
+        stepCounter();
+        if( toggle ) toggleClock();
+    }
+    m_softClk = clk;
+}
+
+void AvrUsi::stepCounter()
+{
+    *m_statusReg = overrideBits( m_counter, m_USICNT ); // increment counter
+
+    if( ++m_counter == 8 ){
+        m_counter = 0;
+        m_interrupt->raise();
+    }
+}
+
+void AvrUsi::shiftData()
+{
+    *m_dataReg   = *m_dataReg<<1;                         // Shift data reg
+    // Read input
+}
+
+void AvrUsi::toggleClock()
+{
+    if( m_CKpin ) m_CKpin->toggleOutState();
 }

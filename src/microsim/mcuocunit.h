@@ -20,7 +20,7 @@ enum ocAct_t{
     ocSET,
 };
 
-class MAINMODULE_EXPORT McuOcUnit : public McuModule, public eElement
+class McuOcUnit : public McuModule, public eElement
 {
         friend class McuCreator;
 

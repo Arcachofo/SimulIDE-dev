@@ -29,7 +29,7 @@ struct memOp_t
     uint32_t*   addr;
 };
 
-class MAINMODULE_EXPORT CpuExtMem : public eElement
+class CpuExtMem : public eElement
 {
     public:
         CpuExtMem( eMcu* mcu );

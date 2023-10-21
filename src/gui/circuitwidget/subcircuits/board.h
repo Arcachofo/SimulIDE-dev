@@ -10,7 +10,7 @@
 
 class ShieldSubc;
 
-class MAINMODULE_EXPORT BoardSubc : public SubCircuit
+class BoardSubc : public SubCircuit
 {
     public:
         BoardSubc( QString type, QString id );

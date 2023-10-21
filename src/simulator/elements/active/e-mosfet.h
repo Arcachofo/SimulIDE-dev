@@ -8,7 +8,7 @@
 
 #include "e-resistor.h"
 
-class MAINMODULE_EXPORT eMosfet : public eResistor
+class eMosfet : public eResistor
 {
     public:
         eMosfet( QString id );

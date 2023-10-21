@@ -13,7 +13,7 @@ class ScriptCpu;
 
 class asIScriptFunction;
 
-class MAINMODULE_EXPORT ScriptUsart : public McuUsart, public ScriptPerif
+class ScriptUsart : public McuUsart, public ScriptPerif
 {
     public:
         ScriptUsart( eMcu* mcu, QString name, int number );

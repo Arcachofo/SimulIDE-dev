@@ -12,7 +12,7 @@
 class LibraryItem;
 class IoPin;
 
-class MAINMODULE_EXPORT OpAmp : public Component, public eElement
+class OpAmp : public Component, public eElement
 {
     public:
         OpAmp( QString type, QString id );

@@ -8,7 +8,7 @@
 
 #include "mcuicunit.h"
 
-class MAINMODULE_EXPORT AvrIcUnit : public McuIcUnit
+class AvrIcUnit : public McuIcUnit
 {
     public:
         AvrIcUnit( eMcu* mcu, QString name );

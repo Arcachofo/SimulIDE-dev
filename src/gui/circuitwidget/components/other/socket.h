@@ -10,7 +10,7 @@
 
 class LibraryItem;
 
-class MAINMODULE_EXPORT Socket : public ConnBase
+class Socket : public ConnBase
 {
     public:
         Socket( QString type, QString id );

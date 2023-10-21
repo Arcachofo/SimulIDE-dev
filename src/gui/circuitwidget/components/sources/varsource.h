@@ -10,7 +10,7 @@
 #include "voltwidget.h"
 #include "e-element.h"
 
-class MAINMODULE_EXPORT VarSource : public Component, public eElement
+class VarSource : public Component, public eElement
 {
     public:
         VarSource( QString type, QString id );

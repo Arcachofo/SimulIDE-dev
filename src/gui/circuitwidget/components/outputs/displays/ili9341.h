@@ -12,7 +12,7 @@
 
 class LibraryItem;
 
-class MAINMODULE_EXPORT Ili9341 : public Component, public eClockedDevice
+class Ili9341 : public Component, public eClockedDevice
 {
     public:
         Ili9341( QString type, QString id );

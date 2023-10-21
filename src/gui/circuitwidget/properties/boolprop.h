@@ -9,7 +9,7 @@
 #include "comproperty.h"
 
 template <class Comp>
-class MAINMODULE_EXPORT BoolProp : public ComProperty
+class BoolProp : public ComProperty
 {
     public:
         BoolProp( QString name, QString caption, QString unit, Comp* comp

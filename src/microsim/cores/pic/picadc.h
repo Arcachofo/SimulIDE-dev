@@ -15,7 +15,7 @@ class PicTimer80;
 class PicTimer16bit;
 //class McuOcUnit;
 
-class MAINMODULE_EXPORT PicAdc : public McuAdc
+class PicAdc : public McuAdc
 {
     public:
         PicAdc( eMcu* mcu, QString name );
@@ -45,7 +45,7 @@ class MAINMODULE_EXPORT PicAdc : public McuAdc
         regBits_t m_ADFM;
 };
 
-class MAINMODULE_EXPORT PicAdc00 : public PicAdc
+class PicAdc00 : public PicAdc
 {
     public:
         PicAdc00( eMcu* mcu, QString name );
@@ -62,7 +62,7 @@ class MAINMODULE_EXPORT PicAdc00 : public PicAdc
         regBits_t m_PCFG;
 };
 
-class MAINMODULE_EXPORT PicAdc1 : public PicAdc
+class PicAdc1 : public PicAdc
 {
     public:
         PicAdc1( eMcu* mcu, QString name );
@@ -80,7 +80,7 @@ class MAINMODULE_EXPORT PicAdc1 : public PicAdc
         regBits_t m_VCFG;
 };
 
-class MAINMODULE_EXPORT PicAdc10 : public PicAdc1
+class PicAdc10 : public PicAdc1
 {
     public:
         PicAdc10( eMcu* mcu, QString name );
@@ -91,7 +91,7 @@ class MAINMODULE_EXPORT PicAdc10 : public PicAdc1
         void setANSELH( uint8_t newANSELH );
 };
 
-class MAINMODULE_EXPORT PicAdc11 : public PicAdc1
+class PicAdc11 : public PicAdc1
 {
     public:
         PicAdc11( eMcu* mcu, QString name );
@@ -104,7 +104,7 @@ class MAINMODULE_EXPORT PicAdc11 : public PicAdc1
 
 class PicVrefE;
 
-class MAINMODULE_EXPORT PicAdc20 : public PicAdc
+class PicAdc20 : public PicAdc
 {
     public:
         PicAdc20( eMcu* mcu, QString name );
@@ -121,7 +121,7 @@ class MAINMODULE_EXPORT PicAdc20 : public PicAdc
         PicVrefE* m_fvr;
 };
 
-class MAINMODULE_EXPORT PicAdc3 : public PicAdc
+class PicAdc3 : public PicAdc
 {
     public:
         PicAdc3( eMcu* mcu, QString name );

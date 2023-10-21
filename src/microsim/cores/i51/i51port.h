@@ -9,7 +9,7 @@
 #include "mcuport.h"
 
 
-class MAINMODULE_EXPORT I51Port : public McuPort
+class I51Port : public McuPort
 {
     public:
         I51Port( eMcu* mcu, QString name );

@@ -14,7 +14,7 @@ class McuPin;
 class McuOcUnit;
 class McuIcUnit;
 
-class MAINMODULE_EXPORT McuTimer : public McuPrescaled, public eElement
+class McuTimer : public McuPrescaled, public eElement
 {
         friend class McuCreator;
 

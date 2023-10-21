@@ -12,7 +12,7 @@
 class LibraryItem;
 class eNode;
 
-class MAINMODULE_EXPORT Bus : public Component, public eElement
+class Bus : public Component, public eElement
 {
     public:
         Bus( QString type, QString id );

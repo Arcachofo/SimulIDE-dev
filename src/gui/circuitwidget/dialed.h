@@ -10,7 +10,7 @@
 #include "e-element.h"
 #include "dialwidget.h"
 
-class MAINMODULE_EXPORT Dialed : public Component
+class Dialed : public Component
 {
     public:
         Dialed( QString type, QString id );

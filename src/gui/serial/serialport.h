@@ -16,7 +16,7 @@ class LibraryItem;
 class CustomButton;
 class QGraphicsProxyWidget;
 
-class MAINMODULE_EXPORT SerialPort : public Component, public UsartModule, public eElement
+class SerialPort : public Component, public UsartModule, public eElement
 {
     public:
         SerialPort( QString type, QString id );

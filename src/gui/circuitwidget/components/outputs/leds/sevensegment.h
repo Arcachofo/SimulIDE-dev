@@ -12,7 +12,7 @@
 
 class LibraryItem;
 
-class MAINMODULE_EXPORT SevenSegment : public Component, public eElement
+class SevenSegment : public Component, public eElement
 {
     public:
         SevenSegment( QString type, QString id );

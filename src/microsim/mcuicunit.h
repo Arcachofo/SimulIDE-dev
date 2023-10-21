@@ -12,7 +12,7 @@
 class McuPin;
 class McuTimer;
 
-class MAINMODULE_EXPORT McuIcUnit : public McuModule, public eElement
+class McuIcUnit : public McuModule, public eElement
 {
         friend class McuCreator;
 

@@ -11,7 +11,7 @@
 
 class LibraryItem;
 
-class MAINMODULE_EXPORT KeyPad : public Component, public eElement
+class KeyPad : public Component, public eElement
 {
     public:
         KeyPad( QString type, QString id );

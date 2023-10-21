@@ -12,7 +12,7 @@
 
 class IoPin;
 
-class MAINMODULE_EXPORT RtClock : public eElement
+class RtClock : public eElement
 {
     public:
         RtClock( QString id );

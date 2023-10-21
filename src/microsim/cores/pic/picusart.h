@@ -11,7 +11,7 @@
 
 class McuTimer;
 
-class MAINMODULE_EXPORT PicUsart : public McuUsart
+class PicUsart : public McuUsart
 {
     public:
         PicUsart( eMcu* mcu, QString name, int number );

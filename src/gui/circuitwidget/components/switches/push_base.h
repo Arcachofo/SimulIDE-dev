@@ -8,7 +8,7 @@
 
 #include "switch_base.h"
 
-class MAINMODULE_EXPORT PushBase : public SwitchBase
+class PushBase : public SwitchBase
 {
     public:
         PushBase( QString type, QString id );

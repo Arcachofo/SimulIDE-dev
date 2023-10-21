@@ -10,7 +10,7 @@
 
 class LibraryItem;
 
-class MAINMODULE_EXPORT DAC : public LogicComponent
+class DAC : public LogicComponent
 {
     public:
         DAC( QString type, QString id );

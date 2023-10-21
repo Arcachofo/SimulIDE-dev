@@ -108,8 +108,6 @@ CONFIG *= c++11
 
 REV_NO = $$system( bzr revno )
 DEFINES += REVNO=\\\"$$REV_NO\\\"
-
-DEFINES += MAINMODULE_EXPORT=
 DEFINES += APP_VERSION=\\\"$$VERSION$$RELEASE\\\"
 
 BUILD_DATE = $$system($(which date) +\"\\\"%d-%m-%y\\\"\")

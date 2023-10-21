@@ -13,7 +13,7 @@
 class eMcu;
 class Interrupt;
 
-class MAINMODULE_EXPORT McuModule
+class McuModule
 {
         friend class McuCreator;
 

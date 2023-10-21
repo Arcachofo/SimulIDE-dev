@@ -40,7 +40,7 @@ class ConfigWord;
 class McuComp;
 class CpuBase;
 
-class MAINMODULE_EXPORT eMcu : public DataSpace, public eIou
+class eMcu : public DataSpace, public eIou
 {
         friend class McuCreator;
         friend class McuCpu;

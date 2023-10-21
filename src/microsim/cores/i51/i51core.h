@@ -18,7 +18,7 @@
     EXCEPTION_ILLEGAL_OPCODE     // for the single 'reserved' opcode in the architecture
 };*/
 
-class MAINMODULE_EXPORT I51Core : public McuCpu, public eElement
+class I51Core : public McuCpu, public eElement
 {
     public:
         I51Core( eMcu* mcu );

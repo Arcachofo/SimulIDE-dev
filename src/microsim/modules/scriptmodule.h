@@ -13,7 +13,7 @@
 #include "e-element.h"
 
 
-class MAINMODULE_EXPORT ScriptModule : public eElement
+class ScriptModule : public eElement
 {
     public:
         ScriptModule( QString name );

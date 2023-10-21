@@ -8,7 +8,7 @@
 
 #include "subcircuit.h"
 
-class MAINMODULE_EXPORT LogicSubc : public SubCircuit
+class LogicSubc : public SubCircuit
 {
     public:
         LogicSubc( QString type, QString id );

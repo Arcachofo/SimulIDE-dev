@@ -12,7 +12,7 @@
 
 class LibraryItem;
 
-class MAINMODULE_EXPORT Potentiometer : public Dialed, public eElement
+class Potentiometer : public Dialed, public eElement
 {
     public:
         Potentiometer( QString type, QString id );

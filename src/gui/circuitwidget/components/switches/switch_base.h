@@ -11,7 +11,7 @@
 class CustomButton;
 class QGraphicsProxyWidget;
 
-class MAINMODULE_EXPORT SwitchBase : public MechContact
+class SwitchBase : public MechContact
 {
     public:
         SwitchBase( QString type, QString id );

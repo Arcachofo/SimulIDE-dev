@@ -9,7 +9,7 @@
 #include "component.h"
 #include "pin.h"
 
-class MAINMODULE_EXPORT Node : public Component
+class Node : public Component
 {
     public:
         QRectF boundingRect() const override { return QRect(-4,-4, 8, 8 ); }

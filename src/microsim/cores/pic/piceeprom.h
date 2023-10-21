@@ -8,7 +8,7 @@
 
 #include "mcueeprom.h"
 
-class MAINMODULE_EXPORT PicEeprom : public McuEeprom
+class PicEeprom : public McuEeprom
 {
         friend class McuCreator;
 

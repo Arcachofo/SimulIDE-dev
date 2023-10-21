@@ -10,7 +10,7 @@
 
 #include "scripthelper.h"
 
-class MAINMODULE_EXPORT DSpinBox : public QDoubleSpinBox
+class DSpinBox : public QDoubleSpinBox
 {
     public:
         DSpinBox( QWidget* parent );

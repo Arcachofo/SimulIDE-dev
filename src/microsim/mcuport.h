@@ -16,7 +16,7 @@ class eMcu;
 class McuPin;
 class Component;
 
-class MAINMODULE_EXPORT McuPort : public McuModule
+class McuPort : public McuModule
 {
         friend class McuCreator;
         friend class McuPorts;

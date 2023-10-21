@@ -11,7 +11,7 @@
 
 class LibraryItem;
 
-class MAINMODULE_EXPORT LedBar : public Component
+class LedBar : public Component
 {
     public:
         LedBar( QString type, QString id );

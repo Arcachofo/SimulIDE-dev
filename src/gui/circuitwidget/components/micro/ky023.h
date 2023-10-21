@@ -18,7 +18,7 @@ class LibraryItem;
 class IoPin;
 class QToolButton;
 
-class MAINMODULE_EXPORT KY023 : public Component, public eElement
+class KY023 : public Component, public eElement
 {
     public:
         KY023( QString type, QString id );

@@ -13,7 +13,7 @@
 class eElement;
 class IoPin;
 
-class MAINMODULE_EXPORT IoComponent : public Component
+class IoComponent : public Component
 {
     public:
         IoComponent( QString type, QString id );

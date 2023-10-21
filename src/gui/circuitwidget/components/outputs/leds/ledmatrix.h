@@ -12,7 +12,7 @@
 
 class LibraryItem;
 
-class MAINMODULE_EXPORT LedMatrix : public Component, public eElement
+class LedMatrix : public Component, public eElement
 {
     public:
         LedMatrix( QString type, QString id );

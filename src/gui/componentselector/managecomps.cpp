@@ -52,7 +52,6 @@ void manCompDialog::addItem( QTreeWidgetItem* item )
     if( item->isHidden() ) listItem->setCheckState( Qt::Unchecked );
     else                   listItem->setCheckState( Qt::Checked );
 
-
     QTableWidgetItem* shortItem = new QTableWidgetItem();
     if( m_shortCuts.contains( name ) ) shortItem->setText( m_shortCuts.value( name ) );
 

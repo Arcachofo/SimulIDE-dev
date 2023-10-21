@@ -12,7 +12,7 @@
 class eNode;
 class Pin;
 
-class MAINMODULE_EXPORT LaChannel : public DataChannel
+class LaChannel : public DataChannel
 {
         friend class LAnalizer;
 

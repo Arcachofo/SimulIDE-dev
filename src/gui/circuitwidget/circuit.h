@@ -20,7 +20,7 @@ class SubPackage;
 class Simulator;
 class Node;
 
-class MAINMODULE_EXPORT Circuit : public QGraphicsScene
+class Circuit : public QGraphicsScene
 {
     friend class SubCircuit;
     friend class Simulator;

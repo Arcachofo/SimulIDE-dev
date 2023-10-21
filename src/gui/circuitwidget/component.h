@@ -19,7 +19,7 @@ class Connector;
 class ConnectorLine;
 class Linkable;
 
-class MAINMODULE_EXPORT Component : public CompBase, public QGraphicsItem, public Updatable
+class Component : public CompBase, public QGraphicsItem, public Updatable
 {
     Q_INTERFACES( QGraphicsItem )
 

@@ -8,7 +8,7 @@
 
 #include "logiccomponent.h"
 
-class MAINMODULE_EXPORT BcdBase : public LogicComponent
+class BcdBase : public LogicComponent
 {
     public:
         BcdBase( QString type, QString id );

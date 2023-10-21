@@ -8,7 +8,7 @@
 
 #include "mcuvref.h"
 
-class MAINMODULE_EXPORT PicVref : public McuVref
+class PicVref : public McuVref
 {
     public:
         PicVref( eMcu* mcu, QString name );
@@ -30,7 +30,7 @@ class MAINMODULE_EXPORT PicVref : public McuVref
         regBits_t m_VR;
 };
 
-class MAINMODULE_EXPORT PicVrefE : public McuVref
+class PicVrefE : public McuVref
 {
     public:
         PicVrefE( eMcu* mcu, QString name );

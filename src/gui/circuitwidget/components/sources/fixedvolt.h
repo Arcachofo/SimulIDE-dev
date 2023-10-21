@@ -16,7 +16,7 @@ class IoPin;
 class LibraryItem;
 class CustomButton;
 
-class MAINMODULE_EXPORT FixedVolt : public Component, public eElement
+class FixedVolt : public Component, public eElement
 {
     public:
         FixedVolt( QString type, QString id );

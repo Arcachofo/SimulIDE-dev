@@ -14,7 +14,7 @@
 
 class RamTable;
 
-class MAINMODULE_EXPORT DataSpace
+class DataSpace
 {
     public:
         DataSpace();

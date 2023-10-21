@@ -9,7 +9,7 @@
 #include "mcuicunit.h"
 
 
-class MAINMODULE_EXPORT PicIcUnit : public McuIcUnit
+class PicIcUnit : public McuIcUnit
 {
     friend class PicCcpUnit;
 

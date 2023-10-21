@@ -10,7 +10,7 @@
 
 class LibraryItem;
 
-class MAINMODULE_EXPORT ADC : public LogicComponent
+class ADC : public LogicComponent
 {
     public:
         ADC( QString type, QString id );

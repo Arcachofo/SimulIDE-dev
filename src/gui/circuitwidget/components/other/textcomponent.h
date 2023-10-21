@@ -6,7 +6,7 @@
 
 class LibraryItem;
 
-class MAINMODULE_EXPORT TextComponent : public LinkedComponent
+class TextComponent : public LinkedComponent
 {
     public:
         TextComponent( QString type, QString id );

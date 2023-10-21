@@ -13,7 +13,7 @@
 
 class McuPin;
 
-class MAINMODULE_EXPORT McuVref : public McuModule, public eElement
+class McuVref : public McuModule, public eElement
 {
         friend class McuCreator;
 

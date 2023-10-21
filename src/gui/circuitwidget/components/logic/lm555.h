@@ -15,7 +15,7 @@ class LibraryItem;
 class IoPin;
 class eNode;
 
-class MAINMODULE_EXPORT Lm555 : public Component, public eElement
+class Lm555 : public Component, public eElement
 {
     public:
 

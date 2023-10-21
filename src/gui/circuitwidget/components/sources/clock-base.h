@@ -8,7 +8,7 @@
 
 #include "fixedvolt.h"
 
-class MAINMODULE_EXPORT ClockBase : public FixedVolt
+class ClockBase : public FixedVolt
 {
     public:
         ClockBase( QString type, QString id );

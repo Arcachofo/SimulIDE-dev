@@ -12,7 +12,7 @@
 class LibraryItem;
 class IoPin;
 
-class MAINMODULE_EXPORT Aip31068_i2c : public Hd44780_Base, public TwiModule
+class Aip31068_i2c : public Hd44780_Base, public TwiModule
 {
     public:
         Aip31068_i2c( QString type, QString id );

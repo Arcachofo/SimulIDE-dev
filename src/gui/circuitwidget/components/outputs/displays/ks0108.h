@@ -12,7 +12,7 @@
 
 class LibraryItem;
 
-class MAINMODULE_EXPORT Ks0108 : public Component, public eElement
+class Ks0108 : public Component, public eElement
 {
     public:
         Ks0108( QString type, QString id );

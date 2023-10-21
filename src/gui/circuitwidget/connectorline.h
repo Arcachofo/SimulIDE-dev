@@ -10,7 +10,7 @@
 
 class Connector;
  
-class MAINMODULE_EXPORT ConnectorLine : public QGraphicsItem
+class ConnectorLine : public QGraphicsItem
 {
     Q_INTERFACES(QGraphicsItem)
 

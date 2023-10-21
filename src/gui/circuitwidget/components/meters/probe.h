@@ -12,7 +12,7 @@
 class IoPin;
 class LibraryItem;
 
-class MAINMODULE_EXPORT Probe : public Component, public eElement
+class Probe : public Component, public eElement
 {
     public:
         Probe( QString type, QString id );

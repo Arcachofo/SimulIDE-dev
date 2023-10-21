@@ -14,7 +14,7 @@
 class LibraryItem;
 class IoPin;
 
-class MAINMODULE_EXPORT Ds18b20 : public Component , public eElement
+class Ds18b20 : public Component , public eElement
 {
     public:
         Ds18b20( QString type, QString id );

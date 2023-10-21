@@ -30,7 +30,7 @@ class PropDialog;
 class QDomElement;
 class QGraphicsItemGroup;
 
-class MAINMODULE_EXPORT CompBase
+class CompBase
 {
     public:
         CompBase( QString type, QString id );

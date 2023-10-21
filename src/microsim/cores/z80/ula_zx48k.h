@@ -23,7 +23,7 @@
 #include "cpubase.h"
 #include "e-element.h"
 
-class MAINMODULE_EXPORT ULA_ZX48k : public CpuBase, public eElement
+class ULA_ZX48k : public CpuBase, public eElement
 {
     public:
         ULA_ZX48k( eMcu* mcu );

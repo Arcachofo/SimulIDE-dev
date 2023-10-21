@@ -12,7 +12,7 @@
 class Cpu;
 typedef void (Cpu::* funcPt_t)();
 
-class MAINMODULE_EXPORT Cpu : public CpuBase, public CpuExtMem
+class Cpu : public CpuBase, public CpuExtMem
 {
     public:
         Cpu( eMcu* mcu );

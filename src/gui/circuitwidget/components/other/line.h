@@ -9,7 +9,7 @@
 #include "itemlibrary.h"
 #include "shape.h"
 
-class MAINMODULE_EXPORT Line : public Shape
+class Line : public Shape
 {
     public:
         Line( QString type, QString id );

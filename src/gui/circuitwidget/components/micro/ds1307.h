@@ -12,7 +12,7 @@
 
 class LibraryItem;
 
-class MAINMODULE_EXPORT DS1307 : public Component, public TwiModule
+class DS1307 : public Component, public TwiModule
 {
     public:
         DS1307( QString type, QString id );

@@ -9,7 +9,7 @@
 #include "e-reactive.h"
 #include "comp2pin.h"
 
-class MAINMODULE_EXPORT Reactive : public Comp2Pin, public eReactive
+class Reactive : public Comp2Pin, public eReactive
 {
     public:
         Reactive( QString type, QString id );

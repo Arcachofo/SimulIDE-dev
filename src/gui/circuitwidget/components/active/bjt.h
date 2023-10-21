@@ -11,7 +11,7 @@
 
 class LibraryItem;
 
-class MAINMODULE_EXPORT BJT : public Component, public eBJT
+class BJT : public Component, public eBJT
 {
     public:
         BJT( QString type, QString id );

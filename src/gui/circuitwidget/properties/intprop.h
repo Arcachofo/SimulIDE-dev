@@ -9,7 +9,7 @@
 #include "numprop.h"
 
 template <class Comp>
-class MAINMODULE_EXPORT IntProp : public NumProp
+class IntProp : public NumProp
 {
     public:
         IntProp( QString name, QString caption, QString unit, Comp* comp

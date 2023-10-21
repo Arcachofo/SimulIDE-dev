@@ -12,7 +12,6 @@
 class ComponentSelector;
 class CircuitWidget;
 class EditorWindow;
-class QPluginLoader;
 class FileWidget;
 class QVBoxLayout;
 class QLineEdit;
@@ -35,7 +34,7 @@ enum Langs {
     Turkish
 };
 
-class MAINMODULE_EXPORT MainWindow : public QMainWindow
+class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
@@ -114,11 +113,10 @@ class MAINMODULE_EXPORT MainWindow : public QMainWindow
         QString m_file;
         QString m_userDir;
 
-        QHash<QString, QPluginLoader*>  m_plugins;
-        QHash<QString, QString>  m_help;
+        QHash<QString, QString> m_help;
         
         CircuitWidget* m_circuit;
-        ComponentSelector*  m_components;
+        ComponentSelector* m_components;
         QWidget*      m_componentWidget;
         QVBoxLayout*  m_componentWidgetLayout;
         QLineEdit*    m_searchComponent;

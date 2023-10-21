@@ -11,7 +11,7 @@
 
 class LibraryItem;
 
-class MAINMODULE_EXPORT Csource : public Component, public eResistor
+class Csource : public Component, public eResistor
 {
     public:
         Csource( QString type, QString id );

@@ -13,7 +13,6 @@
 #include <QLineEdit>
 #include <QTextStream>
 #include <QDebug>
-#include <QPluginLoader>
 #include <QStyleFactory>
 #include <QProcessEnvironment>
 

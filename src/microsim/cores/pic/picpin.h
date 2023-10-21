@@ -12,7 +12,7 @@ class Component;
 class McuPort;
 class eMcu;
 
-class MAINMODULE_EXPORT PicPin : public McuPin
+class PicPin : public McuPin
 {
     friend class McuPort;
 

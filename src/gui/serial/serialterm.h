@@ -14,7 +14,7 @@ class LibraryItem;
 class CustomButton;
 class QGraphicsProxyWidget;
 
-class MAINMODULE_EXPORT SerialTerm : public Component, public UsartModule, public eElement
+class SerialTerm : public Component, public UsartModule, public eElement
 {
     public:
         SerialTerm( QString type, QString id );

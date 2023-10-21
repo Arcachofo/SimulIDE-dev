@@ -8,7 +8,7 @@
 
 #include "mcueeprom.h"
 
-class MAINMODULE_EXPORT AvrEeprom : public McuEeprom
+class AvrEeprom : public McuEeprom
 {
         friend class McuCreator;
 

@@ -15,7 +15,7 @@ enum wgmMode_t{
     wgmFAST,
 };
 
-class MAINMODULE_EXPORT AvrTimer : public McuTimer
+class AvrTimer : public McuTimer
 {
     friend class McuCreator;
 
@@ -52,7 +52,7 @@ class MAINMODULE_EXPORT AvrTimer : public McuTimer
         McuOcUnit* m_OCC;
 };
 
-class MAINMODULE_EXPORT AvrTimer8bit : public AvrTimer
+class AvrTimer8bit : public AvrTimer
 {
     public:
         AvrTimer8bit( eMcu* mcu, QString name );
@@ -65,7 +65,7 @@ class MAINMODULE_EXPORT AvrTimer8bit : public AvrTimer
 
 };
 
-class MAINMODULE_EXPORT AvrTimer800 : public AvrTimer8bit
+class AvrTimer800 : public AvrTimer8bit
 {
     public:
         AvrTimer800( eMcu* mcu, QString name );
@@ -75,7 +75,7 @@ class MAINMODULE_EXPORT AvrTimer800 : public AvrTimer8bit
         virtual void configureClock() override;
 };
 
-class MAINMODULE_EXPORT AvrTimer801 : public McuTimer
+class AvrTimer801 : public McuTimer
 {
     public:
         AvrTimer801( eMcu* mcu, QString name );
@@ -89,7 +89,7 @@ class MAINMODULE_EXPORT AvrTimer801 : public McuTimer
         void configureClock();
 };
 
-class MAINMODULE_EXPORT AvrTimer810 : public AvrTimer
+class AvrTimer810 : public AvrTimer
 {
     public:
         AvrTimer810( eMcu* mcu, QString name );
@@ -112,14 +112,14 @@ class MAINMODULE_EXPORT AvrTimer810 : public AvrTimer
         McuPin* m_oc1BiPin;
 };
 
-class MAINMODULE_EXPORT AvrTimer820 : public AvrTimer8bit
+class AvrTimer820 : public AvrTimer8bit
 {
     public:
         AvrTimer820( eMcu* mcu, QString name );
         ~AvrTimer820();
 };
 
-class MAINMODULE_EXPORT AvrTimer821 : public AvrTimer8bit
+class AvrTimer821 : public AvrTimer8bit
 {
     public:
         AvrTimer821( eMcu* mcu, QString name );
@@ -129,7 +129,7 @@ class MAINMODULE_EXPORT AvrTimer821 : public AvrTimer8bit
 };
 
 
-class MAINMODULE_EXPORT AvrTimer16bit : public AvrTimer
+class AvrTimer16bit : public AvrTimer
 {
     public:
         AvrTimer16bit( eMcu* mcu, QString name );

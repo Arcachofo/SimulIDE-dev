@@ -13,7 +13,7 @@
 
 class LibraryItem;
 
-class MAINMODULE_EXPORT Stepper : public LinkedComponent, public eElement
+class Stepper : public LinkedComponent, public eElement
 {
     public:
         Stepper( QString type, QString id );

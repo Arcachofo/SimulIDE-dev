@@ -10,7 +10,7 @@
 
 class LibraryItem;
 
-class MAINMODULE_EXPORT Zener : public Diode
+class Zener : public Diode
 {
     public:
         Zener( QString type, QString id );

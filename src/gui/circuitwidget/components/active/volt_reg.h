@@ -11,7 +11,7 @@
 
 class LibraryItem;
 
-class MAINMODULE_EXPORT VoltReg : public Component, public eResistor
+class VoltReg : public Component, public eResistor
 {
     public:
         VoltReg( QString type, QString id );

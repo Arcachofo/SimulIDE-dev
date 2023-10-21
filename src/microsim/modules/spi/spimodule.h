@@ -16,7 +16,7 @@ enum spiMode_t{
 
 class IoPin;
 
-class MAINMODULE_EXPORT SpiModule : public eClockedDevice
+class SpiModule : public eClockedDevice
 {
     public:
         SpiModule( QString name );

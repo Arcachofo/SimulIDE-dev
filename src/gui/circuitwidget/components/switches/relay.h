@@ -13,7 +13,7 @@
 class LibraryItem;
 class eNode;
 
-class MAINMODULE_EXPORT Relay : public MechContact
+class Relay : public MechContact
 {
     public:
         Relay( QString type, QString id );

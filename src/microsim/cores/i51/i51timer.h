@@ -8,7 +8,7 @@
 
 #include "mcutimer.h"
 
-class MAINMODULE_EXPORT I51Timer : public McuTimer
+class I51Timer : public McuTimer
 {
     public:
         I51Timer( eMcu* mcu, QString name );

@@ -8,7 +8,7 @@
 
 #include "mcuwdt.h"
 
-class MAINMODULE_EXPORT PicWdt : public McuWdt
+class PicWdt : public McuWdt
 {
     public:
         PicWdt( eMcu* mcu, QString name );

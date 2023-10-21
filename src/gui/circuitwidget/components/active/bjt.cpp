@@ -44,7 +44,6 @@ BJT::BJT( QString type, QString id )
     m_ePin[2] = m_pin[2] = new Pin( 180, QPoint(-16, 0), id+"-base"     , 0, this );
 
     Simulator::self()->addToUpdateList( this );
-    initialize();
 
     addPropGroup( { tr("Main"), {
 new BoolProp<BJT>( "PNP"  , tr("PNP")      ,"" , this, &BJT::pnp      , &BJT::setPnp ),
@@ -68,8 +67,8 @@ void BJT::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* w
     else                                                        p->setBrush( Qt::white );
 
     p->drawEllipse( m_area );
-    p->drawLine( -12, 0,-4, 0 );
-    p->drawLine(  -4,-8,-4, 8 );
+    p->drawLine(-12, 0,-4, 0 );
+    p->drawLine( -4,-8,-4, 8 );
     p->drawLine( -4,-4, 8,-12 );
     p->drawLine( -4, 4, 8, 12 );
     
@@ -82,8 +81,8 @@ void BJT::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* w
         p->drawPolygon(points, 3);
     }else{
         QPointF points[3] = {
-        QPointF( 6, 10.7 ),
+        QPointF( 6  , 10.7 ),
         QPointF( 2.4, 10 ),
-        QPointF( 4, 7.5 ) };
+        QPointF( 4  , 7.5 ) };
         p->drawPolygon(points, 3);
 }   }

@@ -6,7 +6,7 @@
 #ifndef UPDATABLE_H
 #define UPDATABLE_H
 
-class MAINMODULE_EXPORT Updatable
+class Updatable
 {
     public:
         Updatable();

@@ -10,7 +10,7 @@
 
 class LibraryItem;
 
-class MAINMODULE_EXPORT Amperimeter : public Meter
+class Amperimeter : public Meter
 {
     public:
         Amperimeter( QString type, QString id );

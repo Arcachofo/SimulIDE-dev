@@ -10,7 +10,7 @@
 #include "e-element.h"
 #include "pin.h"
 
-class MAINMODULE_EXPORT Hd44780_Base : public Component
+class Hd44780_Base : public Component
 {
     public:
         Hd44780_Base( QString type, QString id );

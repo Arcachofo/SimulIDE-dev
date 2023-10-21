@@ -21,7 +21,7 @@ class McuSpi;
 class ScriptPerif;
 class Display;
 
-class MAINMODULE_EXPORT McuCreator
+class McuCreator
 {
     public:
         McuCreator();

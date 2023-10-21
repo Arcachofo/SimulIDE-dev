@@ -8,7 +8,7 @@
 
 #include "reactive.h"
 
-class MAINMODULE_EXPORT CapacitorBase : public Reactive
+class CapacitorBase : public Reactive
 {
     public:
         CapacitorBase( QString type, QString id );

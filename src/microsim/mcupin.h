@@ -13,7 +13,7 @@ class McuPort;
 class eMcu;
 class Interrupt;
 
-class MAINMODULE_EXPORT McuPin : public IoPin
+class McuPin : public IoPin
 {
     friend class McuPort;
     friend class McuCreator;

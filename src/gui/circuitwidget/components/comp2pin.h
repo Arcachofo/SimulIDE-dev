@@ -8,7 +8,7 @@
 
 #include "component.h"
 
-class MAINMODULE_EXPORT Comp2Pin : public Component
+class Comp2Pin : public Component
 {
     public:
         Comp2Pin( QString type, QString id );

@@ -12,7 +12,7 @@ class LibraryItem;
 class eNode;
 class Pin;
 
-class MAINMODULE_EXPORT Tunnel : public Component
+class Tunnel : public Component
 {
     public:
         Tunnel( QString type, QString id );

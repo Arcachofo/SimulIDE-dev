@@ -8,7 +8,7 @@
 
 #include "e-resistor.h"
 
-class MAINMODULE_EXPORT eReactive : public eResistor
+class eReactive : public eResistor
 {
     public:
         eReactive( QString id );

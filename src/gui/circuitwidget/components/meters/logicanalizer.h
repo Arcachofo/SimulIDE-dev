@@ -18,7 +18,7 @@ struct sample_t{
     uint channel;
 };
 
-class MAINMODULE_EXPORT LAnalizer : public PlotBase
+class LAnalizer : public PlotBase
 {
     public:
         LAnalizer( QString type, QString id );

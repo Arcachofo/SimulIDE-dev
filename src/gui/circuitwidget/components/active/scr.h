@@ -13,7 +13,7 @@ class LibraryItem;
 class eDiode;
 class eResistor;
 
-class MAINMODULE_EXPORT SCR : public Component, public eElement
+class SCR : public Component, public eElement
 {
     public:
         SCR( QString type, QString id );

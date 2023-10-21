@@ -9,7 +9,7 @@
 #include "itemlibrary.h"
 #include "shape.h"
 
-class MAINMODULE_EXPORT Rectangle : public Shape
+class Rectangle : public Shape
 {
     public:
         Rectangle( QString type, QString id );

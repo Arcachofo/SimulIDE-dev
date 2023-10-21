@@ -11,7 +11,7 @@
 
 class LibraryItem;
 
-class MAINMODULE_EXPORT Mosfet : public Component, public eMosfet
+class Mosfet : public Component, public eMosfet
 {
     public:
         Mosfet( QString type, QString id );

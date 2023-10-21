@@ -12,7 +12,7 @@ enum {
     C=0,DC,Z,PD,TO,RP0,RP1,IRP
 };
 
-class MAINMODULE_EXPORT PicMrCore : public McuCpu
+class PicMrCore : public McuCpu
 {
     public:
         PicMrCore( eMcu* mcu );

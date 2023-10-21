@@ -8,7 +8,7 @@
 
 #include "e-resistor.h"
 
-class MAINMODULE_EXPORT eLed : public eResistor
+class eLed : public eResistor
 {
     public:
         eLed( QString id );

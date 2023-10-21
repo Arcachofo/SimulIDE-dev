@@ -15,7 +15,7 @@
 class LibraryItem;
 class Pin;
 
-class MAINMODULE_EXPORT TouchPad : public Component, public eElement
+class TouchPad : public Component, public eElement
 {
     public:
         TouchPad( QString type, QString id );

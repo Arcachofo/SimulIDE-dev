@@ -16,7 +16,7 @@ class IoPort;
 class IoPin;
 class Watcher;
 
-class MAINMODULE_EXPORT eIou : public eElement
+class eIou : public eElement
 {
     public:
         eIou( Mcu* comp, QString id );

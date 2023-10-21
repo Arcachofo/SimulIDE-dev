@@ -11,7 +11,7 @@
 
 class McuPin;
 
-class MAINMODULE_EXPORT McuComp : public McuModule, public eElement
+class McuComp : public McuModule, public eElement
 {
         friend class McuCreator;
 

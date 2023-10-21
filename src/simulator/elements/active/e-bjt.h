@@ -8,7 +8,7 @@
 
 #include "e-element.h"
 
-class MAINMODULE_EXPORT eBJT : public eElement
+class eBJT : public eElement
 {
     public:
 

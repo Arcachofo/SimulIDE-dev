@@ -8,7 +8,7 @@
 
 #include "shield.h"
 
-class MAINMODULE_EXPORT ModuleSubc : public ShieldSubc
+class ModuleSubc : public ShieldSubc
 {
     public:
         ModuleSubc( QString type, QString id );

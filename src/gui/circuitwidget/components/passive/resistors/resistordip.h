@@ -13,7 +13,7 @@ class LibraryItem;
 class eResistor;
 class Pin;
 
-class MAINMODULE_EXPORT ResistorDip : public Component, public eElement
+class ResistorDip : public Component, public eElement
 {
     public:
         ResistorDip( QString type, QString id );

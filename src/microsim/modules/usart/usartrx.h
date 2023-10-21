@@ -10,7 +10,7 @@
 
 #include "usartmodule.h"
 
-class MAINMODULE_EXPORT UartRx : public UartTR
+class UartRx : public UartTR
 {
     public:
         UartRx( UsartModule* usart, eMcu* mcu, QString name );

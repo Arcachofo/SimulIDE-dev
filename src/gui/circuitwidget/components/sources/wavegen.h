@@ -10,7 +10,7 @@
 
 class LibraryItem;
 
-class MAINMODULE_EXPORT WaveGen : public ClockBase
+class WaveGen : public ClockBase
 {
     public:
         WaveGen( QString type, QString id );

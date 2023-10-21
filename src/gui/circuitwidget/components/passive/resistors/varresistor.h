@@ -10,7 +10,7 @@
 
 class LibraryItem;
 
-class MAINMODULE_EXPORT VarResistor : public VarResBase
+class VarResistor : public VarResBase
 {
     public:
         VarResistor( QString type, QString id );

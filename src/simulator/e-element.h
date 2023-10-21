@@ -11,7 +11,7 @@
 
 class ePin;
 
-class MAINMODULE_EXPORT eElement
+class eElement
 {
     public:
         eElement( QString id );

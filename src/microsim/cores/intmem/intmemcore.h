@@ -11,7 +11,7 @@
 
 class McuPin;
 
-class MAINMODULE_EXPORT IntMemCore : public CpuBase , public eElement
+class IntMemCore : public CpuBase , public eElement
 {
     friend class McuCreator;
 

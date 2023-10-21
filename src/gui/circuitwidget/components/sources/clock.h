@@ -10,7 +10,7 @@
 
 class LibraryItem;
 
-class MAINMODULE_EXPORT Clock : public ClockBase
+class Clock : public ClockBase
 {
     public:
         Clock( QString type, QString id );

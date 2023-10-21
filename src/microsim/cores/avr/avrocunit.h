@@ -8,7 +8,7 @@
 
 #include "mcuocunit.h"
 
-class MAINMODULE_EXPORT AvrOcUnit : public McuOcUnit
+class AvrOcUnit : public McuOcUnit
 {
         friend class McuCreator;
 

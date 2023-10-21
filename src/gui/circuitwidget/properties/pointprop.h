@@ -12,7 +12,7 @@
 #include "proputils.h"
 
 template <class Comp>
-class MAINMODULE_EXPORT PointProp : public ComProperty
+class PointProp : public ComProperty
 {
     public:
         PointProp( QString name, QString caption, QString unit, Comp* comp

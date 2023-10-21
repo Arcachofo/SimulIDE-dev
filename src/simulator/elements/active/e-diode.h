@@ -20,7 +20,7 @@ struct diodeData_t
 
 class eNode;
 
-class MAINMODULE_EXPORT eDiode : public eResistor
+class eDiode : public eResistor
 {
     public:
         eDiode( QString id );

@@ -13,7 +13,7 @@ class LibraryItem;
 class CustomButton;
 class QGraphicsProxyWidget;
 
-class MAINMODULE_EXPORT Function : public IoComponent, public ScriptModule
+class Function : public IoComponent, public ScriptModule
 {
     public:
         Function( QString type, QString id );

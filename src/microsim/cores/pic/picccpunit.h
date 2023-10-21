@@ -21,7 +21,7 @@ enum ccpMode_t{
     ccpPWM,
 };
 
-class MAINMODULE_EXPORT PicCcpUnit : public McuModule, public eElement
+class PicCcpUnit : public McuModule, public eElement
 {
     friend class McuCreator;
 
