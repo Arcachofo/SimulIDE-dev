@@ -49,7 +49,7 @@ void InfoWidget::setTargetSpeed( double s )
 
         QString name;
         Mcu* mcu = Mcu::self();
-        if( mcu->isMainComp() )
+        if( mcu->isMainComp() && mcu->parentItem() )
         {
             Component* comp = static_cast<Component*>( mcu->parentItem() );
             name = comp->idLabel();
