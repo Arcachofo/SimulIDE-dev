@@ -4,6 +4,7 @@
  ***( see copyright.txt file at root folder )*******************************/
 
 #include <QPainter>
+#include <QMenu>
 
 #include "diode.h"
 #include "itemlibrary.h"
@@ -125,6 +126,24 @@ void Diode::voltChanged()
     if( !m_converged ) return;
 
     for( Component* comp : m_linkedComp ) comp->setLinkedValue( m_current );
+}
+
+void Diode::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
+{
+    if( !acceptedMouseButtons() ) { event->ignore(); return; }
+
+    event->accept();
+    QMenu* menu = new QMenu();
+
+    if( !parentItem() )
+    {
+        QAction* linkCompAction = menu->addAction( QIcon(":/subcl.png"),tr("Link to Component") );
+        QObject::connect( linkCompAction, &QAction::triggered, [=](){ slotLinkComp(); } );
+
+        menu->addSeparator();
+    }
+    Component::contextMenu( event, menu );
+    menu->deleteLater();
 }
 
 void Diode::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )

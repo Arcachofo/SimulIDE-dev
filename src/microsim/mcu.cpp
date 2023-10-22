@@ -466,7 +466,7 @@ void Mcu::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
     QObject::connect( mainAction, &QAction::triggered
                       , [=](){ slotmain(); } );
 
-    if( m_scriptLink )
+    if( m_scriptLink && !parentItem() )
     {
         QAction* linkCompAction = menu->addAction( QIcon(":/subcl.png"),tr("Link to Component") );
         QObject::connect( linkCompAction, &QAction::triggered, [=](){ slotLinkComp(); } );

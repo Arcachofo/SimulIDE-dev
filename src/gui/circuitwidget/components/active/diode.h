@@ -19,7 +19,7 @@ class Diode : public Comp2Pin, public eDiode, public Linkable
         ~Diode();
 
  static Component* construct( QString type, QString id );
- static LibraryItem *libraryItem();
+ static LibraryItem* libraryItem();
 
         virtual void voltChanged() override;
 
@@ -32,9 +32,12 @@ class Diode : public Comp2Pin, public eDiode, public Linkable
         virtual double res() override{ return m_resistor->res(); }
         virtual void setResSafe( double resist ) override { m_resistor->setResSafe(resist);}
 
-
+        void slotLinkComp() { Linkable::startLinking(); }
 
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
+
+    protected:
+        virtual void contextMenuEvent( QGraphicsSceneContextMenuEvent* event ) override;
 
     private:
         bool m_isZener;

@@ -118,11 +118,13 @@ void Dial::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
     event->accept();
     QMenu* menu = new QMenu();
 
-    QAction* linkCompAction = menu->addAction( QIcon(":/subcl.png"),tr("Link to Component") );
-    QObject::connect( linkCompAction, &QAction::triggered, [=](){ slotLinkComp(); } );
+    if( !parentItem() )
+    {
+        QAction* linkCompAction = menu->addAction( QIcon(":/subcl.png"),tr("Link to Component") );
+        QObject::connect( linkCompAction, &QAction::triggered, [=](){ slotLinkComp(); } );
 
-    menu->addSeparator();
-
+        menu->addSeparator();
+    }
     Component::contextMenu( event, menu );
     menu->deleteLater();
 }
