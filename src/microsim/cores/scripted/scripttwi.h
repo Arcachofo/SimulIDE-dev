@@ -19,7 +19,9 @@ class ScriptTwi : public McuTwi, public ScriptPerif
 
         virtual void reset() override;
 
-        void byteReceived( uint8_t data );
+        void setAddress( uint8_t a );
+
+        virtual void readByte() override;
         void sendByte( uint8_t data );
 
         virtual void registerScript( ScriptCpu* cpu ) override;

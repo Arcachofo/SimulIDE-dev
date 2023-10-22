@@ -15,10 +15,6 @@ ScriptTwi::ScriptTwi( eMcu* mcu, QString name )
 }
 ScriptTwi::~ScriptTwi(){}
 
-void ScriptTwi::reset()
-{
-}
-
 void ScriptTwi::registerScript( ScriptCpu* cpu )
 {
     m_scriptCpu = cpu;
@@ -37,6 +33,10 @@ void ScriptTwi::registerScript( ScriptCpu* cpu )
     engine->RegisterObjectMethod("TWI", "void sendByte(uint8 b)"
                                    , asMETHODPR( ScriptTwi, sendByte, (uint8_t), void)
                                    , asCALL_THISCALL );
+
+    engine->RegisterObjectMethod("TWI", "void setAddress(uint8 a)"
+                                   , asMETHODPR( ScriptTwi, setAddress, (uint8_t), void)
+                                   , asCALL_THISCALL );
 }
 
 void ScriptTwi::startScript()
@@ -45,13 +45,26 @@ void ScriptTwi::startScript()
     m_byteReceived = aEngine->GetModule(0)->GetFunctionByDecl("void byteReceived( uint d )");
 }
 
-void ScriptTwi::byteReceived( uint8_t data )
+void ScriptTwi::reset()
+{
+    if( m_sda ) m_sda->setPinMode( openCo );
+    if( m_scl ) m_scl->setPinMode( openCo );
+}
+
+void ScriptTwi::setAddress( uint8_t a )
+{
+    m_cCode = m_address = a;
+}
+
+void ScriptTwi::readByte()
 {
     if( !m_byteReceived ) return;
 
     m_scriptCpu->prepare( m_byteReceived );
-    m_scriptCpu->context()->SetArgDWord( 0, data );
+    m_scriptCpu->context()->SetArgDWord( 0, m_rxReg );
     m_scriptCpu->execute();
+
+    TwiModule::readByte();
 }
 
 void ScriptTwi::sendByte( uint8_t data )
