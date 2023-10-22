@@ -279,7 +279,10 @@ void SubPackage::remove()
         if     ( ret == QMessageBox::Save ) slotSave();
         else if( ret == QMessageBox::Cancel ) return;
     }
-    Component::remove();
+    for( int i=0; i<m_pkgePins.size(); i++ )
+        m_pkgePins.at( i )->removeConnector();
+
+    Circuit::self()->compRemoved( true );
 }
 
 void SubPackage::setWidth( int width )
@@ -349,7 +352,7 @@ void SubPackage::deleteEventPin()
     m_changed = true;
 
     m_pkgePins.removeOne( m_eventPin );
-    m_signalPin.removeOne( m_eventPin );
+    //m_signalPin.removeOne( m_eventPin ); // ToDelete
     delete m_eventPin;
     m_eventPin = NULL;
     
