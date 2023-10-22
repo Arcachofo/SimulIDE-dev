@@ -59,7 +59,7 @@ void RTD::updateStep()
     double res = sensorFunction( m_value );
     eResistor::setRes( res );
    if( m_propDialog ) m_propDialog->updtValues();
-   else if( m_showProperty == "Temp" ) setValLabelText( getPropStr( "Temp" ) );
+   else setValLabelText( getPropStr( showProp() ) );
     //m_lastTime = time;
 }
 

@@ -55,7 +55,7 @@ void Thermistor::updateStep()
     double res = m_r25*qPow( e, m_bVal*k );
     eResistor::setRes( res );
     if( m_propDialog ) m_propDialog->updtValues();
-    else if( m_showProperty == "Temp" ) setValLabelText( getPropStr( "Temp" ) );
+    else setValLabelText( getPropStr( showProp() ) );
 }
 
 void Thermistor::setBval( int bval )

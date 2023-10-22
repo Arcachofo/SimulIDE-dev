@@ -89,7 +89,7 @@ void Strain::updateStep()
     double res = sensorFunction( m_value );
     eResistor::setRes( res );
     if( m_propDialog ) m_propDialog->updtValues();
-    else if( m_showProperty == "Force_N" ) setValLabelText( getPropStr( "Force_N" ) );
+    else setValLabelText( getPropStr( showProp() ) );
 }
 
 void Strain::senseChanged( int val ) // Called when dial is rotated

@@ -113,7 +113,7 @@ void Potentiometer::updateStep()
     m_resB.setRes( res2 );
 
     if( m_propDialog ) m_propDialog->updtValues();
-    else if( m_showProperty == "Value_Ohm" ) setValLabelText( getPropStr( "Value_Ohm" ) );
+    else setValLabelText( getPropStr( showProp() ) );
 }
 
 double Potentiometer::getVal() { return m_resist*m_dialW.value()/1000; }
@@ -137,7 +137,10 @@ void Potentiometer::setRes( double res ) // Called when property resistance is c
 
 void Potentiometer::setLinkedValue( double v, int i )
 {
-    if( i ) setRes( v );
+    if( i )
+    {
+        setRes( v );
+    }
     else Dialed::setLinkedValue( v, i );
 }
 
