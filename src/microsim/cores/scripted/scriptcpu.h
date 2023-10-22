@@ -42,7 +42,7 @@ class ScriptCpu : public ScriptModule, public McuCpu
         virtual int getCpuReg( QString reg ) override;
         virtual QString getStrReg( QString ) override;
 
-        void addProperty( QString group, QString name, QString type );
+        void addProperty( QString group, QString name, QString type, QString unit );
         QString getProp( ComProperty* p );
         void setProp( ComProperty* p, QString val );
 

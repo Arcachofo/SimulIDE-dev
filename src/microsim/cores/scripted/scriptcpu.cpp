@@ -15,6 +15,7 @@
 #include "watcher.h"
 #include "console.h"
 #include "mcu.h"
+#include "utils.h"
 
 #include "scriptprop.h"
 
@@ -347,9 +348,9 @@ QString ScriptCpu::getStrReg( QString val )
     return QString::fromStdString( str );
 }
 
-void ScriptCpu::addProperty( QString group, QString name, QString type )
+void ScriptCpu::addProperty( QString group, QString name, QString type, QString unit )
 {
-    ComProperty* p = new ScriptProp<ScriptCpu>( name, name, "", this
+    ComProperty* p = new ScriptProp<ScriptCpu>( name, name, unit, this
                                               , &ScriptCpu::getProp, &ScriptCpu::setProp, type );
     m_scriptProps.push_back( p );
 
@@ -413,11 +414,18 @@ void ScriptCpu::setProp( ComProperty* p, QString val )
         std::string str = val.toStdString();
         m_context->SetArgObject( 0, &str );
     }
-    else if( type == "int"    ) m_context->SetArgDWord(  0, val.toInt() );
-    else if( type == "uint"   ) m_context->SetArgDWord(  0, val.toUInt() );
-    else if( type == "double" ) m_context->SetArgDouble( 0, val.toDouble() );
     else if( type == "bool"   ) m_context->SetArgByte(   0, val == "true" );
-
+    else{
+        double multiplier = 1;
+        QStringList l = val.split(" ");
+        if( l.size() > 1 ){
+            val = l.first();
+            multiplier = getMultiplier( l.at(1) );
+        }
+        if     ( type == "int"    ) m_context->SetArgDWord(  0, val.toInt()*multiplier );
+        else if( type == "uint"   ) m_context->SetArgDWord(  0, val.toUInt()*multiplier );
+        else if( type == "double" ) m_context->SetArgDouble( 0, val.toDouble()*multiplier );
+    }
     execute();
 }
 

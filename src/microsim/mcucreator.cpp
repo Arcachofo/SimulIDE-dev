@@ -223,8 +223,9 @@ int McuCreator::processFile( QString fileName, bool main )
                         {
                             QString name = el.attribute("name");
                             QString type = el.attribute("type");
+                            QString unit = el.attribute("unit");
 
-                            cpu->addProperty( group, name, type );
+                            cpu->addProperty( group, name, type, unit );
                         }
                         node = node.nextSibling();
                     }
