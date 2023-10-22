@@ -47,8 +47,6 @@ void ScriptTwi::startScript()
 
 void ScriptTwi::reset()
 {
-    if( m_sda ) m_sda->setPinMode( openCo );
-    if( m_scl ) m_scl->setPinMode( openCo );
 }
 
 void ScriptTwi::setAddress( uint8_t a )

@@ -137,10 +137,7 @@ void Potentiometer::setRes( double res ) // Called when property resistance is c
 
 void Potentiometer::setLinkedValue( double v, int i )
 {
-    if( i )
-    {
-        setRes( v );
-    }
+    if( i ) setRes( v );
     else Dialed::setLinkedValue( v, i );
 }
 

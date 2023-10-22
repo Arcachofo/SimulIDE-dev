@@ -274,14 +274,10 @@ void SubPackage::remove()
         = QMessageBox::warning( 0l, "SubPackage::remove",
                                tr("\nPackage has been modified.\n"
                                   "Do you want to save your changes?\n"),
-                               QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
+                               QMessageBox::Save | QMessageBox::Discard );
                                
-        if     ( ret == QMessageBox::Save ) slotSave();
-        else if( ret == QMessageBox::Cancel ) return;
+        if( ret == QMessageBox::Save ) slotSave();
     }
-    for( int i=0; i<m_pkgePins.size(); i++ )
-        m_pkgePins.at( i )->removeConnector();
-
     Circuit::self()->compRemoved( true );
 }
 

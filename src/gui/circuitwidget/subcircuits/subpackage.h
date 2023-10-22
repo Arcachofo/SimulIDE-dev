@@ -37,6 +37,7 @@ class SubPackage : public Chip, public Linkable
         void savePackage( QString fileName );
         virtual void setSubcTypeStr( QString s ) override;
         virtual void setLogicSymbol( bool ls ) override;
+
         virtual void remove() override;
 
         virtual void compSelected( Component* comp ) override;  // Use link mechanism to select main components
