@@ -31,10 +31,17 @@ LibraryItem* Diode::libraryItem()
 }
 
 Diode::Diode( QString type, QString id, bool zener )
-     : Comp2Pin( type, id )
+     : LinkedComponent( type, id )
      , eDiode( id )
 {
     m_area = QRect(-12, -8, 24, 16 );
+
+    m_pin.resize(2);
+    m_pin[0] = new Pin( 180, QPoint(-16, 0 ), id+"-lPin", 0, this);
+    m_pin[1] = new Pin( 0,   QPoint( 16, 0 ), id+"-rPin", 1, this);
+
+    setValLabelPos(-16, 6, 0 );
+    setLabelPos(-16,-24, 0 );
 
     m_enumUids = m_enumNames = m_diodes.keys();
 
@@ -126,24 +133,6 @@ void Diode::voltChanged()
     if( !m_converged ) return;
 
     for( Component* comp : m_linkedComp ) comp->setLinkedValue( m_current );
-}
-
-void Diode::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
-{
-    if( !acceptedMouseButtons() ) { event->ignore(); return; }
-
-    event->accept();
-    QMenu* menu = new QMenu();
-
-    if( !parentItem() )
-    {
-        QAction* linkCompAction = menu->addAction( QIcon(":/subcl.png"),tr("Link to Component") );
-        QObject::connect( linkCompAction, &QAction::triggered, [=](){ slotLinkComp(); } );
-
-        menu->addSeparator();
-    }
-    Component::contextMenu( event, menu );
-    menu->deleteLater();
 }
 
 void Diode::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
