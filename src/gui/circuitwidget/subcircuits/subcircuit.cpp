@@ -434,7 +434,7 @@ void SubCircuit::setLogicSymbol( bool ls )
 
 Component* SubCircuit::getMainComp( QString name )
 {
-    if( name.isEmpty() ) return m_mainComponents.value( m_mainComponents.keys().first() );
+    if( name.isEmpty() && m_mainComponents.size() ) return m_mainComponents.value( m_mainComponents.keys().first() );
     return m_mainComponents.value(name);
 }
 
