@@ -1150,10 +1150,10 @@ void McuCreator::createSpi( QDomElement* e )
     setPrescalers( e->attribute("prescalers"), m_spi );
 
     QStringList pins = e->attribute("pins").remove(" ").split(",");
-    m_spi->setMosiPin( mcu->getMcuPin( pins.value(0) ) );
-    m_spi->setMisoPin( mcu->getMcuPin( pins.value(1) ) );
-    m_spi->setSckPin(  mcu->getMcuPin( pins.value(2) ) );
-    m_spi->setSsPin(   mcu->getMcuPin( pins.value(3) ) );
+    m_spi->setMosiPin( mcu->getIoPin( pins.value(0) ) );
+    m_spi->setMisoPin( mcu->getIoPin( pins.value(1) ) );
+    m_spi->setSckPin(  mcu->getIoPin( pins.value(2) ) );
+    m_spi->setSsPin(   mcu->getIoPin( pins.value(3) ) );
 }
 
 void McuCreator::createWdt( QDomElement* e )

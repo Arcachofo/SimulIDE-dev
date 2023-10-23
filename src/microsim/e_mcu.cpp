@@ -246,7 +246,7 @@ McuPin* eMcu::getMcuPin( QString pinName )
 
 IoPin*  eMcu::getIoPin( QString pinName )
 {
-    if( pinName.isEmpty() ) return NULL;
+    if( pinName.isEmpty() || pinName == "0" ) return NULL;
     IoPin* pin = eIou::getIoPin( pinName );
 
     if( !pin ) pin = getMcuPin( pinName );

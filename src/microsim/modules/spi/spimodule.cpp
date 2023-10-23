@@ -128,11 +128,9 @@ void SpiModule::step()
         else             m_srReg <<= 1;
 
         if( m_dataInPin->getInpState() ) m_srReg |= m_inBit;
-    }
-    else if( m_dataOutPin )                 // Write one bit (Only if dataOut Pin exist)
-    {
+    }else{
         if( m_bitCount == 8 ) endTransaction();
-        else                  m_dataOutPin->scheduleState( (m_srReg & m_outBit)>0, 0 );
+        if( m_dataOutPin ) m_dataOutPin->scheduleState( (m_srReg & m_outBit)>0, 0 );// Write one bit (Only if dataOut Pin exist)
     }
 }
 

@@ -68,7 +68,7 @@ void ScriptSpi::sendByte( uint8_t data )
 void ScriptSpi::endTransaction()
 {
     SpiModule::endTransaction();
-    *m_dataReg = m_srReg;
-    byteReceived( *m_dataReg );
+    if( m_dataReg ) *m_dataReg = m_srReg;
+    byteReceived( m_srReg );
 }
 
