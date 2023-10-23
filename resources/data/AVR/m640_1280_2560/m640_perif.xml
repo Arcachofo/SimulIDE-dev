@@ -135,7 +135,7 @@
   <spi name="SPI" dataregs="SPDR" statusreg="SPSR" configregsA="SPCR"
                    interrupt="SPI"
                    prescalers="4,16,64,128,2,8,32,64"
-                   pins="PORTB3,PORTB2,PORTB1,PORTB0" /><!-- "MOSI,MISO,SCK,SS" -->
+                   pins="PORTB2,PORTB3,PORTB1,PORTB0" /><!-- "MOSI,MISO,SCK,SS" -->
     
   <wdt name="WDT00" configregsA="WDTCSR" interrupt="WDT"
                     prescalers="512,256,128,64,32,16,8,4,2,1,1,1,1,1,1,1"/>
