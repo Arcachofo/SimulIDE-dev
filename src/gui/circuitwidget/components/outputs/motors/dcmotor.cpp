@@ -35,7 +35,6 @@ DcMotor::DcMotor( QString type, QString id )
        , eResistor( id )
 {
     m_graphical = true;
-
     
     m_area = QRectF( -35,-33, 70, 66 );
     m_color = QColor( 50, 50, 70 );

@@ -157,7 +157,7 @@ void PlotBase::updateConds( QString conds )
         conds.replace( "ch"+n+"f", m_condTo.value("ch"+n+"f") );
     }
     m_script = "void pause() { pb.m_pause = "+conds+";}";
-    qDebug() << m_script <<endl;
+    /// qDebug() << m_script <<endl;
     int r = compileScript();
     if( r < 0 ) { qDebug() << "PlotBase::updateConds Failed to compile expression:"<<conds; return; }
 
