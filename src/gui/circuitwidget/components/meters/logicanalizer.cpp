@@ -314,7 +314,7 @@ void LAnalizer::dumpData( const QString &fn )
 
     uint64_t endTime = m_display->endTime()+m_timePos;
     uint64_t lastTime = (endTime-startTime)/m_timeStep;
-    uint64_t pTime;
+    uint64_t pTime = 0;
     double pVal=-1;
 
     QString varDef;

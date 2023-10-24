@@ -63,9 +63,6 @@ SerialTerm::SerialTerm( QString type, QString id )
 
     setBaudRate( 9600 );
 
-    //QObject::connect( m_button, &CustomButton::clicked  , [=](){ onbuttonclicked(); });
-    //QObject::connect( m_serial, &QSerialTerm::readyRead, [=](){ readData(); } );
-
     Simulator::self()->addToUpdateList( this );
 
     addPropGroup( { tr("Main"), {
@@ -85,7 +82,6 @@ SerialTerm::~SerialTerm(){}
 
 void SerialTerm::stamp()
 {
-    //m_serData.clear();
     m_uartData.clear();
     m_sender->enable( true );
     m_receiver->enable( true );
@@ -111,13 +107,6 @@ void SerialTerm::runEvent()
     UsartModule::sendByte( m_uartData.at( 0 ) ); // Start transaction
     m_uartData = m_uartData.right( m_uartData.size()-1 );
 }
-
-/*void SerialTerm::setflip()
-{
-    Component::setflip();
-    m_proxy->setPos( QPoint( -4 + ( m_Hflip>0 ? 0 : m_button->width() ), -10 + ( m_Vflip>0 ? 0 : m_button->height() ) ) );
-    m_proxy->setTransform( QTransform::fromScale( m_Hflip, m_Vflip ) );
-}*/
 
 void SerialTerm::sendByte( uint8_t data )
 {
@@ -188,5 +177,3 @@ void SerialTerm::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWi
     else p->setBrush( Qt::black );
     p->drawRoundedRect(-5, 5, 8, 6, 2, 2 ); // Rx led
 }
-
-//#include "moc_serialport.cpp"

@@ -1,0 +1,33 @@
+<circuit version="1.1.0" rev="2011" stepSize="1000000" stepsPS="1000000" NLsteps="100000" reaStep="1000000" animate="0" >
+
+<item itemtype="MCU" CircId="ScriptSPI-3" mainComp="true" Show_id="true" Show_Val="false" Pos="-316,-276" rotation="0" hflip="1" vflip="1" label="ScriptSPI" idLabPos="0,-20" labelrot="0" valLabPos="-16,20" valLabRot="0" Links="Potentiometer-9," />
+
+<item itemtype="Potentiometer" CircId="Potentiometer-9" mainComp="false" ShowProp="Resistance" Show_id="false" Show_Val="true" Pos="-236,-260" rotation="-90" hflip="1" vflip="1" label="Potentiometer-9" idLabPos="-16,-40" labelrot="0" valLabPos="23.4725,-29.2722" valLabRot="90" Resistance="100 kΩ" Value_Ohm="0 Ω" Slider="false" Scale="1" />
+
+<item itemtype="Tunnel" CircId="Tunnel-11" mainComp="false" Show_id="false" Show_Val="false" Pos="-220,-236" rotation="0" hflip="-1" vflip="1" label="Tunnel-11" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" Name="RL" IsBus="false" />
+
+<item itemtype="Tunnel" CircId="Tunnel-14" mainComp="false" Show_id="false" Show_Val="false" Pos="-332,-252" rotation="0" hflip="1" vflip="1" label="Tunnel-14" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" Name="CS" IsBus="false" />
+
+<item itemtype="Tunnel" CircId="Tunnel-13" mainComp="false" Show_id="false" Show_Val="false" Pos="-332,-260" rotation="0" hflip="1" vflip="1" label="Tunnel-13" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" Name="CLK" IsBus="false" />
+
+<item itemtype="Package" CircId="Package-7" mainComp="false" Show_id="true" Show_Val="false" Pos="-296,-220" rotation="0" hflip="1" vflip="1" label="Package" idLabPos="-4.29487,-14.9242" labelrot="0" valLabPos="-16,20" valLabRot="0" SubcType="Logic" Width="4 _Cells" Height="4 _Cells" Package_File="SPIDigipot_LS.package" Logic_Symbol="true" />
+
+<item itemtype="Tunnel" CircId="Tunnel-8" mainComp="false" Show_id="false" Show_Val="false" Pos="-212,-260" rotation="0" hflip="-1" vflip="1" label="Tunnel-8" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" Name="RW" IsBus="false" />
+
+<item itemtype="Tunnel" CircId="Tunnel-10" mainComp="false" Show_id="false" Show_Val="false" Pos="-220,-284" rotation="0" hflip="-1" vflip="1" label="Tunnel-10" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" Name="RH" IsBus="false" />
+
+<item itemtype="Tunnel" CircId="Tunnel-12" mainComp="false" Show_id="false" Show_Val="false" Pos="-332,-268" rotation="0" hflip="1" vflip="1" label="Tunnel-12" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" Name="SDI" IsBus="false" />
+
+<item itemtype="Connector" uid="Connector-29" startpinid="Tunnel-14-pin" endpinid="ScriptSPI-3-PORTACS" pointList="-332,-252,-324,-252" />
+
+<item itemtype="Connector" uid="Connector-24" startpinid="Tunnel-10-pin" endpinid="Potentiometer-9-PinB" pointList="-220,-284,-236,-284,-236,-276" />
+
+<item itemtype="Connector" uid="Connector-28" startpinid="Tunnel-13-pin" endpinid="ScriptSPI-3-PORTASCK" pointList="-332,-260,-324,-260" />
+
+<item itemtype="Connector" uid="Connector-26" startpinid="Tunnel-8-pin" endpinid="Potentiometer-9-PinM" pointList="-212,-260,-220,-260" />
+
+<item itemtype="Connector" uid="Connector-25" startpinid="Tunnel-11-pin" endpinid="Potentiometer-9-PinA" pointList="-220,-236,-236,-236,-236,-244" />
+
+<item itemtype="Connector" uid="Connector-27" startpinid="Tunnel-12-pin" endpinid="ScriptSPI-3-PORTASDI" pointList="-332,-268,-324,-268" />
+
+</circuit>
