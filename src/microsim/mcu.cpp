@@ -165,6 +165,12 @@ Mcu::Mcu( QString type, QString id )
 
         QFile dataFile( m_dataFile );
         QFile pkgeFile( m_pkgeFile );
+        if( !pkgeFile.exists() )   // Check if package file exist, if not try LS or no LS
+        {
+            if     ( m_pkgeFile.endsWith("_LS.package")) m_pkgeFile.replace( "_LS.package", ".package" );
+            else if( m_pkgeFile.endsWith(".package"))    m_pkgeFile.replace( ".package", "_LS.package" );
+            pkgeFile.setFileName( m_pkgeFile );
+        }
         if( !dataFile.exists() || !pkgeFile.exists() )
         {
             MessageBoxNB( "Mcu::Mcu", "                               \n"+
