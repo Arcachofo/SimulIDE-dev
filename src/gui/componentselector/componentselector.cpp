@@ -57,13 +57,16 @@ void ComponentSelector::LoadLibraryItems()
     {
         QString category = item->category();
 
-        QString icon = ":/"+item->iconfile();
+        QString icon = item->iconfile();
+        QString iconFile = MainWindow::self()->getFilePath("data/images")+"/"+icon;
+        if( !QFile::exists( iconFile ) ) iconFile = ":/"+icon; // Image not in simulide data folder, use hardcoded image
+
         if( item->createItemFnPtr() )
         {
             QTreeWidgetItem* catItem = getCategory( category );
-            if( catItem ) addItem( item->name(), catItem, icon, item->type() );
+            if( catItem ) addItem( item->name(), catItem, iconFile, item->type() );
         }
-        else addCategory( item->name(), item->type(), category, icon );
+        else addCategory( item->name(), item->type(), category, iconFile );
     }
 }
 

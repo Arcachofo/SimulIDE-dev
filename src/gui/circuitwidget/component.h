@@ -104,7 +104,8 @@ class Component : public CompBase, public QGraphicsItem, public Updatable
         virtual bool isHidden() override { return m_hidden; }
         virtual void setHidden( bool hid, bool hidArea=false, bool hidLabel=false );
 
-        virtual void setBackground( QString bck ) { m_background = bck;}
+        virtual QString background() { return m_background; }
+        virtual void setBackground( QString bck );
 
         virtual void registerEnode( eNode*, int n=-1 ) {;}
 
@@ -184,6 +185,7 @@ class Component : public CompBase, public QGraphicsItem, public Updatable
  static int m_error;
 
         QString m_background;   // BackGround Image path
+        QPixmap* m_backPixmap;  // Background Pixmap
 
         QColor  m_color;
         QRectF  m_area;         // bounding rect

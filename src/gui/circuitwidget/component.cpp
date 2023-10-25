@@ -36,6 +36,7 @@ Component::Component( QString type, QString id )
     m_Vflip  = 1;
     m_color  = QColor( Qt::white );
 
+    m_backPixmap = NULL;
     //m_group = NULL;
 
     m_showId     = false;
@@ -557,6 +558,15 @@ void Component::setHidden( bool hid, bool hidArea, bool hidLabel )
         m_valLabel->setVisible( m_showVal );
         m_idLabel->setVisible( m_showId );
     }
+}
+
+void Component::setBackground( QString bck )
+{
+    m_background = MainWindow::self()->getFilePath("data/images")+"/"+bck;
+    if( !QFile::exists( m_background ) ) m_background = ":/"+bck; // Image not in simulide data folder, use hardcoded image
+
+    m_backPixmap = new QPixmap( m_background );
+    m_background = bck;
 }
 
 /*QString Component::print()

@@ -20,7 +20,7 @@ class Image : public Shape
  static LibraryItem* libraryItem();
 
         virtual void setBackground( QString bck ) override;
-        QString background();
+        virtual QString background() override;
 
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
 

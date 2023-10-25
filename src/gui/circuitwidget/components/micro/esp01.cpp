@@ -40,7 +40,7 @@ Esp01::Esp01( QString type, QString id )
      , eElement( id )
 {
     m_area = QRect(-28,-20, 56, 40 );
-    m_background = ":/esp01.png";
+    setBackground("esp01.png");
     setLabelPos(-20,-34, 0 );
 
     m_serialMon = false;
@@ -431,5 +431,5 @@ void Esp01::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget*
     Component::paint( p, option, widget );
 
     p->drawRoundedRect( m_area, 2, 2 );
-    p->drawPixmap( QRect(-28,-20, 56, 40 ), QPixmap( m_background ) );
+    p->drawPixmap( QRect(-28,-20, 56, 40 ), *m_backPixmap );
 }

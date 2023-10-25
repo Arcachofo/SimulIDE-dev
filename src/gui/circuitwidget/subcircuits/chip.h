@@ -28,7 +28,6 @@ class Chip : public Component, public eElement
         bool logicSymbol() { return m_isLS; }
         virtual void setLogicSymbol( bool ls );
 
-        QString background() { return m_background; }
         virtual void setBackground( QString bck ) override;
 
         QString name() { return m_name; }
@@ -75,8 +74,7 @@ class Chip : public Component, public eElement
         QList<Pin*> m_unusedPins;
 
         std::vector<std::vector<int>>* m_backData;
-        //QImage*  m_backImage;
-        QPixmap* m_backPixmap;
+
         QGraphicsTextItem m_label;
 };
 

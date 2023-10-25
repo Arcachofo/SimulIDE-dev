@@ -32,7 +32,7 @@ DS1307::DS1307( QString type, QString id )
       , m_clock( id+"_clock" )
 {
     m_area = QRect(-28,-20, 56, 40 );
-    m_background = ":/dsxxx.png";
+    setBackground("dsxxx.png");
     setLabelPos(-20,-34, 0 );
 
     m_pin.resize( 3 );
@@ -190,5 +190,5 @@ void DS1307::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget
     Component::paint( p, option, widget );
 
     p->drawRoundedRect( m_area, 2, 2 );
-    p->drawPixmap( QRect(-28,-20, 56, 40 ), QPixmap( m_background ));
+    p->drawPixmap( QRect(-28,-20, 56, 40 ), *m_backPixmap );
 }

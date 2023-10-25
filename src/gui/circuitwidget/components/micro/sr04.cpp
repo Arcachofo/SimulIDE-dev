@@ -9,6 +9,7 @@
 #include "iopin.h"
 #include "itemlibrary.h"
 #include "simulator.h"
+#include "mainwindow.h"
 
 Component* SR04::construct( QString type, QString id )
 { return new SR04( type, id ); }
@@ -18,7 +19,7 @@ LibraryItem* SR04::libraryItem()
     return new LibraryItem(
         "HC-SR04",
         "Sensors",
-        "sr04.png",
+        "sr04_ico.png",
         "SR04",
         SR04::construct);
 }
@@ -27,10 +28,10 @@ SR04::SR04( QString type, QString id )
     : Component( type, id )
     , eElement( id )
 {
-    m_area = QRect( -10*8, -4*8, 21*8, 9*8 );
+    m_area = QRect(-10*8,-4*8, 21*8, 9*8 );
+    setBackground("sr04.png");
     setLabelPos(-16,-48, 0);
-    m_background = ":/sr04.png";
-    
+
     m_pin.resize(5);
 
     m_inpin = new Pin( 180, QPoint(-11*8,-3*8), id+"-inpin", 0, this );
@@ -116,5 +117,5 @@ void SR04::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* 
     int ox = m_area.x();
     int oy = m_area.y();
 
-    p->drawPixmap( ox, oy, QPixmap( m_background ));
+    p->drawPixmap( ox, oy, *m_backPixmap );
 }
