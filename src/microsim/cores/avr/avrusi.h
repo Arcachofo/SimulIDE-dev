@@ -7,27 +7,30 @@
 #define AVRUSI_H
 
 #include "mcumodule.h"
+#include "e-element.h"
 
 class McuPin;
 
-class AvrUsi : public McuModule
+class AvrUsi : public McuModule, public eElement
 {
     public:
         AvrUsi( eMcu* mcu, QString name );
         ~AvrUsi();
 
         virtual void reset() override;
+        virtual void voltChanged() override;
+
         virtual void configureA( uint8_t ) override;
         virtual void configureB( uint8_t ) override;
 
     private:
         inline void stepCounter();
-        inline void softCounter( bool clk, bool toggle );
         inline void shiftData();
         inline void toggleClock();
 
         bool m_softClk;
         bool m_clkEdge;
+        bool m_clkState;
 
         uint8_t* m_dataReg;
         uint8_t* m_bufferReg;

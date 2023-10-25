@@ -14,7 +14,7 @@
     <register  name="ACSR"    addr="0x0008" mask="11111011"
                bits="ACIS0,ACIS1,0,ACIE,ACI,ACO,ACBG,ACD" />
                
-    <register  name="USICR"   addr="0x000D" mask="11111100"
+    <register  name="USICR"   addr="0x000D" mask=""
                bits="USITC,USICLK,USICS0,USICS1,USIWM0,USIWM1,USIOIE,USISIE" />
                
     <register  name="USISR"   addr="0x000E" 

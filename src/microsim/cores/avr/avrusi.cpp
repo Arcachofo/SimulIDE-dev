@@ -13,6 +13,7 @@
 
 AvrUsi::AvrUsi( eMcu* mcu, QString name )
       : McuModule( mcu, name )
+      , eElement( name )
 {
     m_DOpin = NULL;
     m_DIpin = NULL;
@@ -34,7 +35,23 @@ AvrUsi::~AvrUsi(){}
 void AvrUsi::reset()
 {
     m_clkEdge = false;
+    m_clkState = false;
     m_counter = 0;
+}
+
+void AvrUsi::voltChanged()  // Clk Pin changed
+{
+    bool clk = m_CKpin->getInpState();
+    if( m_clkState == clk ) return;
+
+    if( !m_softClk ) stepCounter();
+
+    if( ( m_clkEdge && (!m_clkState &&  clk))   // Rising  edge
+     || (!m_clkEdge && ( m_clkState && !clk)) ) // Falling edge
+    {
+        stepCounter();
+    }
+    m_clkState = clk;
 }
 
 void AvrUsi::configureA( uint8_t newUSICR )
@@ -69,7 +86,11 @@ void AvrUsi::configureA( uint8_t newUSICR )
     }
 
     bool usiClk = getRegBitsBool( newUSICR, m_USICLK );
-    bool usiCt  = getRegBitsBool( newUSICR, m_USITC ); // toggles the USCK/SCL value
+    m_softClk = usiClk;
+    bool usiCt  = getRegBitsBool( newUSICR, m_USITC ); // toggles the USCK/SCL Pin
+    if( usiCt ) toggleClock();
+
+    bool extClock = false;
 
     uint8_t clockMode = getRegBitsVal( newUSICR, m_USICS );
     if( m_clockMode != clockMode )
@@ -78,35 +99,27 @@ void AvrUsi::configureA( uint8_t newUSICR )
         m_clkEdge = false;
 
         switch( clockMode ) {
-            case 0:{                                       // Software clock strobe (USICLK)
-                m_clkEdge = true;
-                softCounter( usiClk, true );
+            case 0:{                                 // Software clock strobe (USICLK)
+                stepCounter();
                 shiftData();
             } break;
-            case 1:                    break;              // Timer0 Compare Match
-            case 2: m_clkEdge = true;                      // External, positive edge
-            case 3:{                                       // External, negative edge
-                if( usiClk ) softCounter( usiCt, false );  // Software clock strobe (USITC) for counter
-                // Clock pin: external
+            case 1:                    break;        /// TODO: Timer0 Compare Match
+            case 2: m_clkEdge = true;                // External, positive edge
+            case 3:{                                 // External, negative edge
+                if( usiClk && usiCt ) stepCounter(); // Software clock strobe (USITC) for counter
+                else ;                               // stepCounter(): external both edges
+                extClock = true;                     // shiftData():   external m_clkEdge
             }
         }
     }
+    if( m_CKpin ) m_CKpin->changeCallBack( this, extClock );
+
+    m_mcu->m_regOverride = newUSICR & 0b11111100; // USICLK & USITC always read as 0
 }
 
 void AvrUsi::configureB( uint8_t newUSISR )
 {
     m_counter = getRegBitsVal( newUSISR, m_USICNT ); // USICNT[3:0]: Counter Value
-}
-
-void AvrUsi::softCounter( bool clk, bool toggle )
-{
-    if( ( m_clkEdge && (clk && !m_softClk))
-     || (!m_clkEdge && (m_softClk && !clk )) )
-    {
-        stepCounter();
-        if( toggle ) toggleClock();
-    }
-    m_softClk = clk;
 }
 
 void AvrUsi::stepCounter()
@@ -121,8 +134,9 @@ void AvrUsi::stepCounter()
 
 void AvrUsi::shiftData()
 {
-    *m_dataReg   = *m_dataReg<<1;                         // Shift data reg
+    *m_dataReg = *m_dataReg<<1;                         // Shift data reg
     // Read input
+    if( m_DOpin ) m_DOpin->scheduleState( *m_dataReg & 1<<7, 0 ); // Set output *m_dataReg & 1<<7
 }
 
 void AvrUsi::toggleClock()
