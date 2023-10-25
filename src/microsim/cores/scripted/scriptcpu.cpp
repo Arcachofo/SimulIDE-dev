@@ -418,10 +418,8 @@ void ScriptCpu::setProp( ComProperty* p, QString val )
     else{
         double multiplier = 1;
         QStringList l = val.split(" ");
-        if( l.size() > 1 ){
-            val = l.first();
-            multiplier = getMultiplier( l.at(1) );
-        }
+        val = l.first();
+        if( l.size() > 1 ) multiplier = getMultiplier( l.at(1) );
         if     ( type == "int"    ) m_context->SetArgDWord(  0, val.toInt()*multiplier );
         else if( type == "uint"   ) m_context->SetArgDWord(  0, val.toUInt()*multiplier );
         else if( type == "double" ) m_context->SetArgDouble( 0, val.toDouble()*multiplier );
