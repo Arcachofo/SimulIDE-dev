@@ -67,11 +67,11 @@ class MainWindow : public QMainWindow
         int autoBck() { return m_autoBck; }
         void setAutoBck( int secs ) { m_autoBck = secs; }
 
-        QString getFilePath( QString file );
-        QString getConfigPath( QString file );
-
         QString getHelp( QString name, bool save=true );
 
+        QString getFilePath( QString file );              // Get file path in SimulIDE folders
+        QString getConfigPath( QString file );            // Get file path in config folder
+        QString getDataFilePath( QString file );          // Get file path in data folder, first user folder, if not SimulIDE folder
         QString getUserFilePath( QString f );             // Get file path in user folder
         QString userPath() { return m_userDir; }          // User folder path
         void setUserPath( QString p ) { m_userDir = p; }

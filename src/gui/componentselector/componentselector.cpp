@@ -58,7 +58,7 @@ void ComponentSelector::LoadLibraryItems()
         QString category = item->category();
 
         QString icon = item->iconfile();
-        QString iconFile = MainWindow::self()->getFilePath("data/images")+"/"+icon;
+        QString iconFile = MainWindow::self()->getDataFilePath("images/"+icon );
         if( !QFile::exists( iconFile ) ) iconFile = ":/"+icon; // Image not in simulide data folder, use hardcoded image
 
         if( item->createItemFnPtr() )
@@ -137,7 +137,7 @@ void ComponentSelector::loadXml( const QString &setFile )
             {
                 icon = reader.attributes().value("icon").toString();
                 if( !icon.startsWith(":/") )
-                    icon.prepend( MainWindow::self()->getFilePath("data/images") + "/");
+                    icon = MainWindow::self()->getDataFilePath("images/"+icon);
             }
 
             QString category = reader.attributes().value("category").toString();
@@ -169,7 +169,7 @@ void ComponentSelector::loadXml( const QString &setFile )
                     {
                         icon = reader.attributes().value("icon").toString();
                         if( !icon.startsWith(":/") )
-                            icon.prepend( MainWindow::self()->getFilePath("data/images") + "/");
+                            icon = MainWindow::self()->getDataFilePath("images/"+icon);
                     }
                     QString name = reader.attributes().value("name").toString();
                     if( m_components.contains( name ) ) continue;

@@ -18,9 +18,7 @@ Highlighter::~Highlighter(){}
 
 void Highlighter::readSyntaxFile( QString fileName )
 {
-    QString path = MainWindow::self()->getUserFilePath("codeeditor/syntax/");
-    if( path.isEmpty() || !QDir( path ).exists() )
-        path = MainWindow::self()->getFilePath("data/codeeditor/syntax/");
+    QString path = MainWindow::self()->getDataFilePath("codeeditor/syntax/");
 
     if( !QDir( path ).exists() ) return;
 

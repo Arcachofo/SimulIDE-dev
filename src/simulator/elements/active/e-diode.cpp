@@ -163,7 +163,7 @@ void eDiode::getModels() // Static
     m_leds.insert( "Custom", {0, 0, 0, 0} );
     m_leds.insert( "RGY Default", {0.0932, 3.73, 0, 0.042} );
 
-    QString modelsFile = MainWindow::self()->getFilePath( "data/diodes.model" );
+    QString modelsFile = MainWindow::self()->getDataFilePath( "diodes.model" );
 
     QDomDocument domDoc = fileToDomDoc( modelsFile, "Diode::getModels");
     QDomNode node = domDoc.documentElement().firstChild();

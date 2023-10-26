@@ -558,7 +558,7 @@ void Component::setHidden( bool hid, bool hidArea, bool hidLabel )
 
 void Component::setBackground( QString bck )
 {
-    m_background = MainWindow::self()->getFilePath("data/images")+"/"+bck;
+    m_background = MainWindow::self()->getDataFilePath("images")+"/"+bck;
     if( !QFile::exists( m_background ) ) m_background = ":/"+bck; // Image not in simulide data folder, use hardcoded image
 
     m_backPixmap = new QPixmap( m_background );

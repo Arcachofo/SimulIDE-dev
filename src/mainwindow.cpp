@@ -299,9 +299,9 @@ QString MainWindow::getHelp( QString name, bool save )
     else locale = "";
 
     name= name.toLower().replace( " ", "" );
-    QString dfPath = getFilePath("data/help/"+localeFolder+name+locale+".txt");
+    QString dfPath = getDataFilePath("help/"+localeFolder+name+locale+".txt");
 
-    if( !QFileInfo::exists( dfPath ) ) dfPath = getFilePath( "data/help/"+name+".txt" );
+    if( !QFileInfo::exists( dfPath ) ) dfPath = getDataFilePath( "help/"+name+".txt" );
     if( QFileInfo::exists( dfPath ) )
     {
         help.clear();
@@ -339,6 +339,21 @@ QString MainWindow::getUserFilePath( QString f )
 
 QString MainWindow::getFilePath( QString file )   { return m_filesDir.absoluteFilePath( file ); }
 QString MainWindow::getConfigPath( QString file ) { return m_configDir.absoluteFilePath( file ); }
+QString MainWindow::getDataFilePath( QString file )
+{
+    QString path;
+    if( Circuit::self() )
+    {
+        QDir    circuitDir = QFileInfo( Circuit::self()->getFilePath() ).absoluteDir();
+        path = circuitDir.absoluteFilePath("data/"+file );
+        if( QDir( path ).exists() ) return path;              // File in Circuit data folder
+    }
+    path = MainWindow::self()->getUserFilePath( file );       // File in user data folder
+    if( path.isEmpty() || !QDir( path ).exists() )
+        path = getFilePath("data/"+file );                    // File in SimulIDE data folder
+
+    return path;
+}
 QSettings* MainWindow::settings() { return m_settings; }
 QSettings* MainWindow::compSettings() { return m_compSettings; }
 
