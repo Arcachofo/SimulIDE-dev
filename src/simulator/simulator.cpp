@@ -49,6 +49,7 @@ Simulator::Simulator( QObject* parent )
     m_warnings[100] = "AVR crashed !!!";
 
     resetSim();
+    CircuitWidget::self()->setMsg( " "+tr("Stopped")+" ", 1 );
 
     m_RefTimer.start();
 }
@@ -227,8 +228,6 @@ void Simulator::resetSim()
     m_changedNode = NULL;
     m_voltChanged = NULL;
     m_nonLinear = NULL;
-
-    CircuitWidget::self()->setMsg( " "+tr("Stopped")+" ", 1 );
 }
 
 void Simulator::createNodes()
