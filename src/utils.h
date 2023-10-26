@@ -56,13 +56,13 @@ void MessageBoxNB( const QString &title, const QString &message );
 
 //---------------------------------------------------
 
-QString addQuotes( const QString &string );
+QString addQuotes( QString string );
 QString remQuotes( QString string );
-QString getBareName( const QString &filepath );
-QString getFileName( const QString &filepath );
-QString getFileDir( const QString &filepath );
-QString getFileExt( const QString &filepath );
-QString changeExt( const QString &filepath, const QString &ext );
+QString getBareName( QString filepath );
+QString getFileName( QString filepath );
+QString getFileDir( QString filepath );
+QString getFileExt( QString filepath );
+QString changeExt( QString filepath, QString ext );
 
 QString getDirDialog( QString msg, QString oldPath );
 

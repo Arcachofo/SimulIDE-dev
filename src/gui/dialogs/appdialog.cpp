@@ -82,8 +82,7 @@ void AppDialog::on_tabList_currentChanged( int )
 }
 void AppDialog::updtHelp()
 {
-    if( m_showHelp )
-    {
+    if( m_showHelp ){
         if( !helpText->isVisible() ) mainLayout->addWidget( helpText );
     }
     else mainLayout->removeWidget( helpText );
