@@ -557,7 +557,7 @@ void EditorWidget::enableDebugActs( bool enable )
     loadAct->setEnabled( enable );
 }
 
-void EditorWidget::setStepActs(  bool s )
+void EditorWidget::setStepActs( bool s )
 {
     runAct->setEnabled( s );
     stepAct->setEnabled( s );

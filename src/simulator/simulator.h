@@ -114,8 +114,8 @@ class Simulator : public QObject
 
         inline void clearEventList();
 
-        inline void stopTimer();
-        inline void initTimer();
+        //inline void stopTimer();
+        //inline void initTimer();
 
         eElement* m_firstEvent;
 

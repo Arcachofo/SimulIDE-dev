@@ -372,13 +372,14 @@ void CircuitWidget::powerCircOn()
     pauseSimAct->setIcon( QIcon(":/pausesim.png") );
     pauseSimAct->setEnabled( true );
     MainWindow::self()->setState("▶");
+    setMsg( " "+tr("Running")+" ", 0 );
+
     Simulator::self()->startSim();
 }
 
 void CircuitWidget::powerCircOff()
 {
-    if( Simulator::self()->isPaused()
-     || Simulator::self()->isRunning() ) Simulator::self()->stopSim();
+    if( Simulator::self()->isRunning() ) Simulator::self()->stopSim();
 
     powerCircAct->setIcon( QIcon(":/poweroff.png") );
     powerCircAct->setText(tr("Start Simulation"));
@@ -389,9 +390,9 @@ void CircuitWidget::powerCircOff()
     MainWindow::self()->setState("■");
 }
 
-void CircuitWidget::powerCircDebug( bool paused )
+void CircuitWidget::powerCircDebug()
 {
-    Simulator::self()->startSim( paused );
+    if( Simulator::self()->isRunning() ) Simulator::self()->stopSim();
 
     powerCircAct->setIcon( QIcon(":/powerdeb.png") );
     powerCircAct->setIconText("Debug");
@@ -401,6 +402,8 @@ void CircuitWidget::powerCircDebug( bool paused )
     setMsg( " "+tr("Debug")+"❚❚", 3 );
 
     m_infoWidget->setRate(-1 );  //m_rateLabel->setText( tr("Speed: Debugger") );
+
+    Simulator::self()->startSim( true );
 }
 
 void CircuitWidget::pauseDebug()

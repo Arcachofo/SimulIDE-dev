@@ -36,7 +36,7 @@ class CircuitWidget : public QWidget
 
         void powerCircOn();
         void powerCircOff();
-        void powerCircDebug( bool paused );
+        void powerCircDebug();
         void pauseDebug();
         void resumeDebug();
 

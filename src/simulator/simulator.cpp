@@ -316,14 +316,32 @@ void Simulator::startSim( bool paused )
 
     qDebug() << "\n    Simulation Running... \n";
 
-    initTimer();
-    if( paused ) pauseSim();
+    if( paused ) // We are debugging
+    {
+        m_oldState = SIM_RUNNING;
+        m_state    = SIM_PAUSED;
+    }
+    else m_state = SIM_RUNNING;
+
+    if( m_timerId != 0 ) this->killTimer( m_timerId );               // Stop Timer
+    m_refTime  = m_RefTimer.nsecsElapsed();
+    m_loopTime = m_refTime;
+    m_timerId = this->startTimer( m_timerTick_ms, Qt::PreciseTimer ); // Init Timer
 }
 
 void Simulator::stopSim()
 {
-    stopTimer();
+    if( m_timerId != 0 ){                   // Stop Timer
+        this->killTimer( m_timerId );
+        m_timerId = 0;
+    }
     if( !m_CircuitFuture.isFinished() ) m_CircuitFuture.waitForFinished();
+
+    InfoWidget::self()->setRate( 0, 0 );
+    CircuitWidget::self()->setMsg( " "+tr("Stopped")+" ", 1 );
+    Circuit::self()->update();
+    qDebug() << "\n    Simulation Stopped ";
+    m_state = SIM_STOPPED;
 
     for( eNode* node  : m_eNodeList  )  node->setVolt( 0 );
     for( eElement* el : m_elementList ) el->initialize();
@@ -347,7 +365,7 @@ void Simulator::resumeSim()
     m_state = m_oldState;
 }
 
-void Simulator::stopTimer()
+/*void Simulator::stopTimer()
 {
     if( m_timerId == 0 ) return;
     this->killTimer( m_timerId );
@@ -358,9 +376,9 @@ void Simulator::stopTimer()
     Circuit::self()->update();
     qDebug() << "\n    Simulation Stopped ";
     m_state = SIM_STOPPED;
-}
+}*/
 
-void Simulator::initTimer()
+/*void Simulator::initTimer()
 {
     if( m_timerId != 0 ) return;
     CircuitWidget::self()->setMsg( " "+tr("Running")+" ", 0 );
@@ -368,7 +386,7 @@ void Simulator::initTimer()
     m_loopTime = m_refTime;
     m_timerId = this->startTimer( m_timerTick_ms, Qt::PreciseTimer );
     m_state = SIM_RUNNING;
-}
+}*/
 
 void Simulator::setFps( uint64_t fps )
 {

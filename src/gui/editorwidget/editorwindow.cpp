@@ -35,8 +35,8 @@ EditorWindow::EditorWindow( QWidget* parent )
     m_debugDoc = NULL;
     m_debugger = NULL;
 
-    m_state     = DBG_STOPPED;
-    m_stepOver  = false;
+    m_state    = DBG_STOPPED;
+    m_stepOver = false;
 
     readSettings();
     loadCompilers();
@@ -46,15 +46,33 @@ EditorWindow::~EditorWindow(){}
 void EditorWindow::updateStep()
 {
     if( !m_updateScreen ) return;
-
-    loadFile( m_debugFile );
-    CodeEditor* ce = getCodeEditor();
-    ce->setDebugLine( m_debugLine );
-    if( m_jumpToBrk ) ce->updateScreen();
-    else              ce->update();
-    //m_debugDoc->updateScreen();
     m_updateScreen = false;
-    m_jumpToBrk = false;
+
+    QString debugFile = m_debugLine.file;
+    int     debugLine = m_debugLine.lineNumber;
+
+    uint64_t cycle = eMcu::self()->cycle();
+    double time    = Simulator::self()->circTime()/1e6;
+
+    QString lineStr = QString::number( debugLine );
+    while( lineStr.length() < 6 ) lineStr.append(" ");
+
+    QString cycleStr = QString::number( cycle-m_lastCycle );
+    while( cycleStr.length() < 15 ) cycleStr.append(" ");
+
+    m_outPane.appendLine( tr("Line ")+lineStr
+                        + tr("Clock Cycles: ")+cycleStr
+                        + tr("Time us: ")+QString::number( time-m_lastTime ));
+    m_lastCycle = cycle;
+    m_lastTime = time;
+
+    if( m_debugFile != debugFile ){
+        m_debugFile = debugFile;
+        loadFile( debugFile );
+    }
+    CodeEditor* ce = getCodeEditor();
+    ce->setDebugLine( debugLine );
+    ce->updateScreen();
 }
 
 bool EditorWindow::upload()
@@ -81,30 +99,27 @@ void EditorWindow::debug()
 }
 
 void EditorWindow::run()
-{ 
-    setStepActs( false );
-
+{
     if( m_state == DBG_STOPPED ) return;
+    setStepActs( false );
     m_state = DBG_RUNNING;
     m_debugger->run();
     CircuitWidget::self()->resumeDebug();
 }
 
 void EditorWindow::step()
-{ 
-    setStepActs( false );
-    stepDebug();
+{
+    stepDebug( false );
 }
 
 void EditorWindow::stepOver()
 {
-    setStepActs( false );
     stepDebug( true );
 }
 
 void EditorWindow:: pause()
 {
-    if( m_state < DBG_STEPING )  return;
+    if( m_state < DBG_STEPING ) return;
     CircuitWidget::self()->pauseDebug();
 
     m_resume = m_state;
@@ -117,16 +132,13 @@ void EditorWindow:: pause()
 
 void EditorWindow::reset()
 {
-    //CircuitWidget::self()->powerCircOff();
-    Simulator::self()->stopSim();
+    CircuitWidget::self()->powerCircDebug();
 
     m_debugDoc->setDebugLine( 1 );
     m_debugDoc->updateScreen();
 
     m_lastCycle = 0;
     m_state = DBG_PAUSED;
-
-    CircuitWidget::self()->powerCircDebug( true );
 }
 
 void EditorWindow::stop()
@@ -143,13 +155,14 @@ void EditorWindow::initDebbuger()
     m_debugDoc = NULL;
     m_debugger = NULL;
     m_state = DBG_STOPPED;
-    m_jumpToBrk = false;
+
     bool ok = uploadFirmware( true );
 
     if( ok )  // OK: Start Debugging
     {
-        m_debugDoc = getCodeEditor();
-        m_debugger = m_debugDoc->getCompiler();
+        m_debugDoc  = getCodeEditor();
+        m_debugFile = m_debugDoc->getFile();
+        m_debugger  = m_debugDoc->getCompiler();
         m_debugDoc->startDebug();
 
         stepOverAct->setVisible( true /*m_stepOver*/ );
@@ -180,12 +193,9 @@ void EditorWindow::stepDebug( bool over )
 
     if( m_debugger->stepFromLine( over ) )
     {
+        setStepActs( false );
         m_state = DBG_STEPING;
         CircuitWidget::self()->resumeDebug();
-    }else{                                // First step to PC = 0
-        setStepActs( true );
-        m_jumpToBrk = true;
-        m_updateScreen = true;
     }
 }
 
@@ -196,33 +206,16 @@ void EditorWindow::lineReached( codeLine_t line ) // Processor reached PC relate
         if( m_fileList.contains( line.file ) )
         {
             CodeEditor* ce = (CodeEditor*)m_fileList.value( line.file );
-            if( !ce->getBreakPoints()->contains( line.lineNumber ) ) return;
+            if( ce && !ce->getBreakPoints()->contains( line.lineNumber ) ) return;
         }
         else return;
     }
     pause();
-    m_jumpToBrk = true;
 }
 
 void EditorWindow::pauseAt( codeLine_t line )
 {
-    m_debugFile = line.file;
-    m_debugLine = line.lineNumber;
-
-    uint64_t cycle = eMcu::self()->cycle();
-    double time = Simulator::self()->circTime()/1e6;
-
-    QString lineStr = QString::number( m_debugLine );
-    while( lineStr.length() < 6 ) lineStr.append(" ");
-
-    QString cycleStr = QString::number( cycle-m_lastCycle );
-    while( cycleStr.length() < 15 ) cycleStr.append(" ");
-
-    m_outPane.appendLine( tr("Line ")+lineStr
-                        + tr("Clock Cycles: ")+cycleStr
-                        + tr("Time us: ")+QString::number( time-m_lastTime ));
-    m_lastCycle = cycle;
-    m_lastTime = time;
+    m_debugLine = line;
     m_updateScreen = true;
 }
 

@@ -212,6 +212,7 @@ void BaseDebugger::run()
     m_running = true;
     stepFromLine();
 }
+
 void BaseDebugger::pause()
 {
     m_running = false;
@@ -249,7 +250,7 @@ void BaseDebugger::stepDebug()
 
     if( lastPC != PC )
     {
-        if( m_over ){       // Step Over entry
+        if( m_over ){                                 // Step Over entry
             if( m_functions.values().contains( PC ) )
             {
                 m_exitPC = eMcu::self()->cpu()->RET_ADDR();
@@ -257,7 +258,7 @@ void BaseDebugger::stepDebug()
                 return;
             }
         }
-        if( m_exitPC )     // Step Over exit
+        if( m_exitPC )                               // Step Over exit
         {
             if( PC == m_exitPC ) m_exitPC = 0;
             else return;
