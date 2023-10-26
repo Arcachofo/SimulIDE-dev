@@ -245,6 +245,13 @@ void Chip::setBackground( QString bck )
     update();
 }
 
+void Chip::findHelp()
+{
+    QString helpFile = changeExt( m_dataFile, "txt" );
+    if( QFileInfo::exists( helpFile ) ) m_help = fileToString( helpFile, "Chip::findHelp" );
+    else                                m_help = MainWindow::self()->getHelp( m_name, false );
+}
+
 void Chip::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
 {
     Component::paint( p, option, widget );

@@ -168,12 +168,13 @@ SubCircuit::SubCircuit( QString type, QString id )
 }
 SubCircuit::~SubCircuit(){}
 
-void SubCircuit::loadSubCircuit( QString fileName )
+void SubCircuit::loadSubCircuit( QString file )
 {
-    QString doc = fileToString( fileName, "SubCircuit::loadSubCircuit" );
+    m_dataFile = file;
+    QString doc = fileToString( file, "SubCircuit::loadSubCircuit" );
 
     QString oldFilePath = Circuit::self()->getFilePath();
-    Circuit::self()->setFilePath( fileName );             // Path to find subcircuits/Scripted in our data folder
+    Circuit::self()->setFilePath( file );             // Path to find subcircuits/Scripted in our data folder
 
     QStringList graphProps;
     for( propGroup pg : m_propGroups ) // Create list of "Graphical" poperties (We don't need them)

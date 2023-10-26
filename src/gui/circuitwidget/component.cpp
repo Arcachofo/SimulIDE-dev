@@ -409,16 +409,12 @@ void Component::slotProperties()
 {
     if( !m_propDialog )
     {
-        if(( m_help == "" )&&( m_type != "Connector" )&&( m_type != "Node" ))
+        if( m_help == "" )
         {
             QString name = m_type;
 
-            if( ( m_type == "Subcircuit" )
-              ||( m_type == "MCU" )
-              ||( m_type == "PIC" ))
-            { name = m_id.split("-").first(); }
-
-            m_help = MainWindow::self()->getHelp( name );
+            if( m_type == "Subcircuit"|| m_type == "MCU" ) findHelp();
+            else m_help = MainWindow::self()->getHelp( name, false );
         }
         m_propDialog = new PropDialog( CircuitWidget::self(), m_help );
         m_propDialog->setComponent( this );

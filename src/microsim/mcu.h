@@ -135,7 +135,6 @@ class Mcu : public Chip, public Linkable
         int m_serialMon;
 
         QString m_lastFirmDir;  // Last firmware folder used
-        QString m_dataFile;
         QString m_device;       // Name of device
 
         eMcu m_eMcu;

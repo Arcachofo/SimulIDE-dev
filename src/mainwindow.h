@@ -70,7 +70,7 @@ class MainWindow : public QMainWindow
         QString getFilePath( QString file );
         QString getConfigPath( QString file );
 
-        QString getHelp( QString name );
+        QString getHelp( QString name, bool save=true );
 
         QString getUserFilePath( QString f );             // Get file path in user folder
         QString userPath() { return m_userDir; }          // User folder path

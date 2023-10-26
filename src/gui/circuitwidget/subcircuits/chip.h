@@ -57,6 +57,8 @@ class Chip : public Component, public eElement
         virtual void initChip();
         virtual void initPackage( QDomElement root );
 
+        virtual void findHelp() override;
+
         int m_width;
         int m_height;
         
@@ -70,6 +72,7 @@ class Chip : public Component, public eElement
 
         QString m_name;
         QString m_pkgeFile;     // file containig package defs
+        QString m_dataFile;
 
         QList<Pin*> m_unusedPins;
 
