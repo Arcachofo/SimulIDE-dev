@@ -92,7 +92,7 @@
     <register  name="MCUSR"   addr="0x0034"  reset=""  mask="" 
                bits="PORF,EXTREF,BORF,WDRF,0,0,0,0" />
     
-    <register  name="MCUCR"   addr="0x0035"  reset=""  mask="00010011" 
+    <register  name="MCUCR"   addr="0x0035"  reset=""  mask="" 
                bits="ISC00,ISC01,ISC10,ISC11,SM0,SE,SM1,PUD" />
     
     <register  name="OCR0A"   addr="0x0036"  reset=""  mask="" />
@@ -109,7 +109,7 @@
     <register  name="EIFR"    addr="0x003A"  reset=""  mask="11100000" 
                bits="0,0,0,0,0,PCIF,INTF0,INTF1" />
     
-    <register  name="GIMSK"   addr="0x003B"  reset=""  mask="00000111" 
+    <register  name="GIMSK"   addr="0x003B"  reset=""  mask="11100000" 
                bits="0,0,0,0,0,PCIE,INT0,INT1" />
     
     <register  name="OCR0B"   addr="0x003C"  reset=""  mask="" />
