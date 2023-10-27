@@ -49,6 +49,10 @@ MainWindow::MainWindow()
     m_settings     = new QSettings( getConfigPath("simulide.ini"), QSettings::IniFormat, this );
     m_compSettings = new QSettings( getConfigPath("compList.ini"), QSettings::IniFormat, this );
 
+    m_userDir = m_settings->value( "userPath" ).toString();
+    if( m_userDir.isEmpty() || !QDir( m_userDir ).exists() )
+        m_userDir = getConfigPath("addons");
+
     // Fonts --------------------------------------
     QFontDatabase::addApplicationFont( ":/Ubuntu-R.ttf" );
     QFontDatabase::addApplicationFont( ":/Ubuntu-B.ttf" );
@@ -80,9 +84,6 @@ MainWindow::MainWindow()
     QApplication::setStyle( QStyleFactory::create("Fusion") ); //applyStyle();
     createWidgets();
 
-    m_userDir = m_settings->value( "userPath" ).toString();
-    if( m_userDir.isEmpty() || !QDir( m_userDir ).exists() )
-        m_userDir = getConfigPath("addons");
     if( !m_userDir.isEmpty() && QDir( m_userDir ).exists() )
     {
         ComponentSelector::self()->LoadCompSetAt( m_userDir );
@@ -344,12 +345,16 @@ QString MainWindow::getDataFilePath( QString file )
     QString path;
     if( Circuit::self() )
     {
-        QDir    circuitDir = QFileInfo( Circuit::self()->getFilePath() ).absoluteDir();
-        path = circuitDir.absoluteFilePath("data/"+file );
-        if( QDir( path ).exists() ) return path;              // File in Circuit data folder
+        QString circPath = Circuit::self()->getFilePath();
+        if( !circPath.isEmpty() )
+        {
+            QDir    circuitDir = QFileInfo( circPath ).absoluteDir();
+            path = circuitDir.absoluteFilePath("data/"+file );
+            if( QFileInfo::exists( path ) ) return path;          // File in Circuit data folder
+        }
     }
     path = MainWindow::self()->getUserFilePath( file );       // File in user data folder
-    if( path.isEmpty() || !QDir( path ).exists() )
+    if( path.isEmpty() || !QFileInfo::exists( path ) )
         path = getFilePath("data/"+file );                    // File in SimulIDE data folder
 
     return path;

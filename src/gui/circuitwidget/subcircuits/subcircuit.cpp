@@ -7,6 +7,7 @@
 
 #include "subcircuit.h"
 #include "itemlibrary.h"
+#include "mainwindow.h"
 #include "componentselector.h"
 #include "circuitwidget.h"
 #include "simulator.h"
@@ -80,8 +81,7 @@ Component* SubCircuit::construct( QString type, QString id )
                 if( element.attribute("name") == name )
                 {
                     if( element.hasAttribute("folder") ) folder = element.attribute("folder");
-                    QFileInfo fi( dataFile );
-                    m_subcDir = fi.absolutePath()+"/"+folder+"/"+name;
+                    m_subcDir = MainWindow::self()->getDataFilePath( folder+"/"+name );
                     found = true;
                 }
                 if( found ) break;

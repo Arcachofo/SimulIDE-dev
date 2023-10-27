@@ -172,14 +172,16 @@ void ComponentSelector::loadXml( const QString &setFile )
                             icon = MainWindow::self()->getDataFilePath("images/"+icon);
                     }
                     QString name = reader.attributes().value("name").toString();
-                    if( m_components.contains( name ) ) continue;
-                    m_components.append( name );
+                    if( !m_components.contains( name ) )
+                    {
+                        m_components.append( name );
 
-                    m_xmlFileList[ name ] = setFile;   // Save xml File used to create this item
-                    if( reader.attributes().hasAttribute("info") )
-                        name += "???"+reader.attributes().value("info").toString();
+                        m_xmlFileList[ name ] = setFile;   // Save xml File used to create this item
+                        if( reader.attributes().hasAttribute("info") )
+                            name += "???"+reader.attributes().value("info").toString();
 
-                    if( catItem ) addItem( name, catItem, icon, type );
+                        if( catItem ) addItem( name, catItem, icon, type );
+                    }
                     reader.skipCurrentElement();
     }   }   }   }
     QString compSetName = setFile.split( "/").last();
