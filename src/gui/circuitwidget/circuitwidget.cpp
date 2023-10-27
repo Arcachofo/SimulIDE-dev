@@ -388,6 +388,10 @@ void CircuitWidget::powerCircOff()
     pauseSimAct->setEnabled( false );
     pauseSimAct->setText(tr("Pause Simulation"));
     MainWindow::self()->setState("■");
+    setMsg( " "+tr("Stopped")+" ", 1 );
+
+    m_infoWidget->setRate( 0, 0 );
+    Circuit::self()->update();
 }
 
 void CircuitWidget::powerCircDebug()

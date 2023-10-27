@@ -10,6 +10,7 @@
 #include "circuit.h"
 #include "simulator.h"
 #include "itemlibrary.h"
+#include "circuitwidget.h"
 #include "pin.h"
 
 #include "boolprop.h"
@@ -115,11 +116,11 @@ void LedRgb::updateStep()
 
 void LedRgb::setComCathode( bool cat )
 {
+    if( Simulator::self()->isRunning() ) CircuitWidget::self()->powerCircOff();
     m_commonCathode = cat;
     if( cat ) m_area = QRect(-8, -10, 20, 20 );
     else      m_area = QRect(-12, -10, 20, 20 );
 
-    if( Simulator::self()->isRunning() ) Simulator::self()->stopSim();
     Circuit::self()->update();
 }
 

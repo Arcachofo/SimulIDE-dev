@@ -333,14 +333,11 @@ void Simulator::stopSim()
     if( m_timerId != 0 ){                   // Stop Timer
         this->killTimer( m_timerId );
         m_timerId = 0;
+        m_state = SIM_STOPPED;
     }
     if( !m_CircuitFuture.isFinished() ) m_CircuitFuture.waitForFinished();
 
-    InfoWidget::self()->setRate( 0, 0 );
-    CircuitWidget::self()->setMsg( " "+tr("Stopped")+" ", 1 );
-    Circuit::self()->update();
     qDebug() << "\n    Simulation Stopped ";
-    m_state = SIM_STOPPED;
 
     for( eNode* node  : m_eNodeList  )  node->setVolt( 0 );
     for( eElement* el : m_elementList ) el->initialize();
