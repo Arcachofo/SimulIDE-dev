@@ -221,7 +221,7 @@ int InoDebugger::compile( bool debug )
     {
         command += " compile";
         command += " --no-color";
-        if( debug ) command += " --optimize-for-debug";
+        /// if( debug ) command += " --optimize-for-debug"; // Maybe problems in Arduino 2.2.1: Mapping Flash to Source... 0 lines mapped
         command += " --fqbn="+boardName;
         command += " --build-path "+cBuildPath;
         command += " --build-cache-path "+cCachePath;
