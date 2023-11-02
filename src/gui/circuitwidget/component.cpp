@@ -53,10 +53,14 @@ Component::Component( QString type, QString id )
     m_showProperty = "";
     m_linkNumber = -1;
 
-    m_boardPos = QPointF( -1e6, -1e6 );
+    m_boardPos = QPointF(-1e6,-1e6 );
     m_boardRot = -1e6;
     m_circPos  = QPointF(0, 0);
     m_circRot  = 0;
+    m_boardHflip = 1;
+    m_boardVflip = 1;
+    m_circHflip = 1;
+    m_circVflip = 1;
 
     QFont font;
     font.setFamily( MainWindow::self()->defaultFontName() );
@@ -112,7 +116,9 @@ new IntProp  <Component>("valLabRot","","", this, &Component::getValRot, &Compon
 new PointProp<Component>("boardPos", "","", this, &Component::boardPos, &Component::setBoardPos ),
 new PointProp<Component>("circPos" , "","", this, &Component::circPos,  &Component::setCircPos ),
 new DoubProp <Component>("boardRot", "","", this, &Component::boardRot, &Component::setBoardRot ),
-new DoubProp <Component>("circRot" , "","", this, &Component::circRot,  &Component::setCircRot )
+new DoubProp <Component>("circRot" , "","", this, &Component::circRot,  &Component::setCircRot ),
+new IntProp  <Component>("boardHflip" ,"","", this, &Component::boardHflip,  &Component::setBoardHflip ),
+new IntProp  <Component>("boardVflip" ,"","", this, &Component::boardVflip,  &Component::setBoardVflip ),
     }, groupHidden | groupNoCopy } );
 }
 Component::~Component(){}

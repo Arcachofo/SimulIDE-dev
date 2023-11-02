@@ -88,6 +88,18 @@ class Component : public CompBase, public QGraphicsItem, public Updatable
         double circRot() { return m_circRot; }
         void   setCircRot( double rot ) { m_circRot = rot; }
 
+        int  boardVflip() { return m_boardVflip; }
+        void setBoardVflip( int vf ) { m_boardVflip = vf; }
+
+        int  boardHflip() { return m_boardHflip; }
+        void setBoardHflip( int hf ) { m_boardHflip = hf; }
+
+        int  circVflip() { return m_circVflip; }
+        void setCircVflip( int vf ) { m_circVflip = vf; }
+
+        int  circHflip() { return m_circHflip; }
+        void setCircHflip( int hf ) { m_circHflip = hf; }
+
         int  hflip() { return m_Hflip; }
         virtual void setHflip( int hf );
 
@@ -176,6 +188,10 @@ class Component : public CompBase, public QGraphicsItem, public Updatable
         QPointF m_circPos;
         double  m_boardRot;
         double  m_circRot;
+        int     m_boardHflip;
+        int     m_boardVflip;
+        int     m_circHflip;
+        int     m_circVflip;
 
         QString m_showProperty; // Property shown in val Label
 

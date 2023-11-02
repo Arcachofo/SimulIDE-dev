@@ -271,17 +271,18 @@ void SubCircuit::loadSubCircuit( QString file )
                     if( m_subcType >= Board && comp->isGraphical() )
                     {
                         QPointF pos = comp->boardPos();
-                        if( pos == QPointF( -1e6, -1e6 ) ) // Don't show Components not placed
+                        if( pos == QPointF(-1e6,-1e6 ) ) // Don't show Components not placed
                         {
                             pos = QPointF( 0, 0 );
                             comp->setVisible( false );
                         }
                         comp->moveTo( pos );
                         comp->setRotation( comp->boardRot() );
+                        comp->setHflip( comp->boardHflip() );
+                        comp->setVflip( comp->boardVflip() );
                         if( !this->collidesWithItem( comp ) ) // Don't show Components out of Board
                         {
-                            pos = QPointF( 0, 0 );
-                            comp->moveTo( pos );
+                            comp->moveTo( QPointF( 0, 0 ) );
                             comp->setVisible( false );
                         }
                         comp->setHidden( true, true, true ); // Boards: hide non graphical

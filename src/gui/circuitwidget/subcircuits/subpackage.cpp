@@ -246,21 +246,32 @@ void SubPackage::setBoardMode( bool mode )
     for( Component* comp : *Circuit::self()->compList() )
     {
         if( comp->itemType() == "Package" ) continue;
-        if( mode )
+
+        if( mode )   // We are in Board mode
         {
             comp->setCircPos( comp->pos() );
             comp->setCircRot( comp->rotation() );
-            if( comp->boardRot() != -1e+6 )  // Board Position already defined
+            comp->setCircHflip( comp->hflip() );
+            comp->setCircVflip( comp->vflip() );
+
+            if( comp->boardRot() != -1e+6 )  // Board Rotation already defined
             {
                 comp->setPos( comp->boardPos() + this->pos() );
                 comp->setRotation( comp->boardRot() );
-        }   }
-        else{
-            QPointF p = comp->pos()-this->pos();
-            comp->setBoardPos( p );
+                comp->setHflip( comp->boardHflip() );
+                comp->setVflip( comp->boardVflip() );
+            }
+        }else        // We are in Circuit mode
+        {
+            comp->setBoardPos( comp->pos()-this->pos() );
             comp->setBoardRot( comp->rotation() );
+            comp->setBoardHflip( comp->hflip() );
+            comp->setBoardVflip( comp->vflip() );
+
             comp->setPos( comp->circPos() );
             comp->setRotation( comp->circRot() );
+            comp->setHflip( comp->circHflip() );
+            comp->setVflip( comp->circVflip() );
         }
         comp->setHidden( mode, false, mode );
     }
