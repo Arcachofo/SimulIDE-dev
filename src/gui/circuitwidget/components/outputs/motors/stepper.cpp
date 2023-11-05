@@ -55,7 +55,13 @@ Stepper::Stepper( QString type, QString id )
     m_Ppos = 4;
     m_steps = 32;
     m_stpang = 360*8/m_steps;
-        
+
+    m_pin.emplace_back( &m_pinA1 );
+    m_pin.emplace_back( &m_pinA2 );
+    m_pin.emplace_back( &m_pinCo );
+    m_pin.emplace_back( &m_pinB1 );
+    m_pin.emplace_back( &m_pinB2 );
+
     m_pinA1.setLabelText( " A+" );
     m_pinA2.setLabelText( " A-" );
     m_pinCo.setLabelText( " Co" );
@@ -208,7 +214,7 @@ void Stepper::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidge
     Component::paint( p, option, widget );
 
     //p->setBrush( QColor(250, 210, 230) );
-    p->drawRoundRect(-64,-40, 25, 80 );
+    if( !m_hidden ) p->drawRoundRect(-64,-40, 25, 80 );
 
     p->setBrush( QColor(50, 70, 100) ); 
     p->drawRoundRect(-48,-48, 96, 96 );
