@@ -124,9 +124,8 @@ bool BaseDebugger::postProcess()
                 words.removeAll("");
                 if( words.isEmpty() ) continue;
                 str = words.first();
-                bool ok = false;
-                srcLineNumber = str.toInt( &ok );
-                if( ok ) found = true;
+
+                srcLineNumber = str.toInt( &found ); // src line number found
             }
         }
     }

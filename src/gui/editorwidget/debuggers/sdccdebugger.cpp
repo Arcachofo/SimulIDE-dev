@@ -58,9 +58,64 @@ bool SdccDebugger::postProcess()
 
     if( m_family.startsWith("pic") )
     {
-        bool ok = GputilsDebug::getVariables( this );
+        /*bool ok = GputilsDebug::getVariables( this );
         if( !ok ) return false;
-        return GputilsDebug::mapFlashToSource( this );
+        return GputilsDebug::mapFlashToSource( this );*/
+
+        m_flashToSource.clear();
+
+        QString lstFile = m_buildPath+m_fileName+".lst";
+        if( !QFileInfo::exists( lstFile ) )
+        {
+            m_outPane->appendLine( "\n"+tr("Warning: lst file doesn't exist:")+"\n"+lstFile );
+            return false;
+        }
+        m_outPane->appendText( "\nMapping Flash to Source... " );
+        QString srcFile = m_fileDir + m_fileName + m_fileExt;
+        QStringList lstLines = fileToStringList( lstFile, "SdccDebugger::postProcess" );
+
+        QString file = m_fileName+m_fileExt;
+        bool readAddr = false;
+        QString lineNum;
+
+        for( QString lstLine : lstLines )
+        {
+            //qDebug() << line;
+            if( lstLine.isEmpty() ) continue;
+            if( readAddr )
+            {
+                readAddr = false;
+                bool ok = false;
+                int lineN = lineNum.toInt( &ok );
+                if( !ok ) continue;
+
+                lstLine = lstLine.replace("\t"," ");
+                QStringList words = lstLine.split(" ");
+                words.removeAll("");
+                if( words.size() < 5 ) continue;
+
+                ok = false;
+                int addr = words.at(0).toInt( &ok, 16 );
+                if( !ok ) continue;
+
+                setLineToFlash( {srcFile, lineN }, addr );
+                continue;
+            }
+            if( lstLine.contains(".line") && lstLine.contains( file ))
+            {
+                QStringList words = lstLine.split("\"");
+
+                lineNum = words.at(0);
+                lineNum = lineNum.remove(";").replace("\t"," ");
+                words = lineNum.split(" ");
+                words.removeAll("");
+                if( words.size() < 2 ) continue;
+                lineNum = words.at(1);
+                readAddr = true;
+        }   }
+        outPane()->appendLine( QString::number( flashToSourceSize() )+" lines mapped" );
+        return true;
+
     } else {
         bool ok = findCSEG();
         if( !ok ) return false;
