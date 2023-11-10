@@ -194,21 +194,16 @@ void Stepper::setBipolar( bool bi )
 {
     m_bipolar = bi;
     m_pinCo.removeConnector();
-    m_pinCo.setVisible( !bi );
+    m_pinCo.setVisible( !bi && !m_hidden );
 }
 
-void Stepper::remove()
+void Stepper::setHidden( bool hid, bool hidArea, bool hidLabel )
 {
-    m_pinA1.removeConnector();
-    m_pinA2.removeConnector();
-    m_pinCo.removeConnector();
-    m_pinB1.removeConnector();
-    m_pinB2.removeConnector();
-    
-    Component::remove();
+    Component::setHidden( hid, hidArea, hidLabel );
+    m_pinCo.setVisible( !m_bipolar && !m_hidden );
 }
 
-void Stepper::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget )
+void Stepper::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
 {
     p->setRenderHint( QPainter::Antialiasing );
     Component::paint( p, option, widget );

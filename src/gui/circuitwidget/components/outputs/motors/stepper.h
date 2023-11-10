@@ -22,6 +22,10 @@ class Stepper : public LinkedComponent, public eElement
  static Component* construct( QString type, QString id );
  static LibraryItem* libraryItem();
 
+        virtual void stamp() override;
+        virtual void voltChanged() override;
+        virtual void updateStep() override;
+
         int steps() { return m_steps; }
         void setSteps( int steps ); //" 4, 8,16,32"
         
@@ -31,11 +35,8 @@ class Stepper : public LinkedComponent, public eElement
         bool bipolar() { return m_bipolar; }
         void setBipolar( bool bi );
 
-        virtual void stamp() override;
-        virtual void voltChanged() override;
-        virtual void updateStep() override;
-        virtual void remove() override;
-        
+        virtual void setHidden( bool hid, bool hidArea=false, bool hidLabel=false ) override;
+
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
 
     protected:
