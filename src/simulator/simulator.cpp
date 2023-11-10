@@ -333,8 +333,8 @@ void Simulator::stopSim()
     if( m_timerId != 0 ){                   // Stop Timer
         this->killTimer( m_timerId );
         m_timerId = 0;
-        m_state = SIM_STOPPED;
     }
+    m_state = SIM_STOPPED;
     if( !m_CircuitFuture.isFinished() ) m_CircuitFuture.waitForFinished();
 
     qDebug() << "\n    Simulation Stopped ";
