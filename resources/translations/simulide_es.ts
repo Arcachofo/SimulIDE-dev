@@ -334,6 +334,10 @@ p, li { white-space: pre-wrap; }
         <source>Slovenčina</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Font</source>
+        <translation type="unfinished">Fuente</translation>
+    </message>
 </context>
 <context>
     <name>AudioOut</name>
@@ -696,7 +700,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Load Circuit</source>
-        <translation>Abrir Circuito</translation>
+        <translation type="vanished">Abrir Circuito</translation>
     </message>
     <message>
         <source>Circuits (*.sim*);;All files (*.*)</source>
@@ -705,6 +709,10 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Bill Of Materials</source>
         <translation type="vanished">Lista de Materiales</translation>
+    </message>
+    <message>
+        <source>Import Circuit</source>
+        <translation type="unfinished">Importar Circuito</translation>
     </message>
 </context>
 <context>
@@ -939,6 +947,10 @@ No se pudo encontrar el archivo:
         <source>Resume Simulation</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Stopped</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Clock</name>
@@ -1128,6 +1140,10 @@ No se pudo encontrar el archivo:
     </message>
     <message>
         <source>For this file:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Extra build arguments</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1791,7 +1807,7 @@ No se pudo encontrar el archivo:
         <translation>Abajo</translation>
     </message>
     <message>
-        <source>Name Space:</source>
+        <source>Space to Pin:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2035,7 +2051,9 @@ Quiere guardar los cambios?</translation>
         <source>
 Can&apos;t find file:
 </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">
+No se pudo encontrar el archivo:
+</translation>
     </message>
     <message>
         <source>Do you want to remove it from Recent Files?
@@ -3317,6 +3335,13 @@ Can&apos;t find file:
     <message>
         <source>Clear All BreakPoints</source>
         <translation>BorrarTodos los Puntos de Ruptura</translation>
+    </message>
+</context>
+<context>
+    <name>LinkedComponent</name>
+    <message>
+        <source>Link to Component</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4838,6 +4863,10 @@ Archivo packae no valido:</translation>
         <source>BIN</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Pause</source>
+        <translation type="unfinished">Pausar</translation>
+    </message>
 </context>
 <context>
     <name>SerialPort</name>
@@ -4882,6 +4911,33 @@ Archivo packae no valido:</translation>
     <message>
         <source>Main</source>
         <translation type="unfinished">Basico</translation>
+    </message>
+</context>
+<context>
+    <name>SerialTerm</name>
+    <message>
+        <source>Serial Terminal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Main</source>
+        <translation type="unfinished">Basico</translation>
+    </message>
+    <message>
+        <source>Baudrate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Data Bits</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Stop Bits</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open Serial Monitor.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4978,6 +5034,18 @@ Archivo packae no valido:</translation>
     </message>
     <message>
         <source>7 Seg BCD</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Main</source>
+        <translation type="unfinished">Basico</translation>
+    </message>
+    <message>
+        <source>Show Point Pin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show Enable Pin</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5382,7 +5450,7 @@ Quiere guardar los cambios?
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Select Main Components</source>
+        <source>Select Exposed Components</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5437,7 +5505,11 @@ Quiere guardar los cambios?
     </message>
     <message>
         <source>_Switches</source>
-        <translation>_Interruptores</translation>
+        <translation type="vanished">_Interruptores</translation>
+    </message>
+    <message>
+        <source>_Lines</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5484,10 +5556,6 @@ Quiere guardar los cambios?
     </message>
     <message>
         <source>Font Color</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Link to Component</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5729,6 +5797,10 @@ Quiere guardar los cambios?
         <source>Dial Step</source>
         <translation>Paso del Dial</translation>
     </message>
+    <message>
+        <source>Dial</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>VoltReg</name>
@@ -5893,6 +5965,10 @@ Quiere guardar los cambios?
     </message>
     <message>
         <source>Floating</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Phase shift</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

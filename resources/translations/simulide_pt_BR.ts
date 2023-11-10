@@ -293,6 +293,10 @@ p, li { white-space: pre-wrap; }
         <source>Slovenčina</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Font</source>
+        <translation type="unfinished">Fonte</translation>
+    </message>
 </context>
 <context>
     <name>AudioOut</name>
@@ -616,7 +620,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Load Circuit</source>
-        <translation type="unfinished">Abrir circuito</translation>
+        <translation type="obsolete">Abrir circuito</translation>
     </message>
     <message>
         <source>Circuits (*.sim*);;All files (*.*)</source>
@@ -625,6 +629,10 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Bill Of Materials</source>
         <translation type="obsolete">Lista de materiais</translation>
+    </message>
+    <message>
+        <source>Import Circuit</source>
+        <translation type="unfinished">Importar circuito</translation>
     </message>
 </context>
 <context>
@@ -841,6 +849,10 @@ Can&apos;t find file:
         <source>Resume Simulation</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Stopped</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Clock</name>
@@ -1017,6 +1029,10 @@ Can&apos;t find file:
     </message>
     <message>
         <source>For this file:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Extra build arguments</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1611,7 +1627,7 @@ Can&apos;t find file:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Name Space:</source>
+        <source>Space to Pin:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3041,6 +3057,13 @@ Can&apos;t find file:
     </message>
 </context>
 <context>
+    <name>LinkedComponent</name>
+    <message>
+        <source>Link to Component</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Lm555</name>
     <message>
         <source>lm555</source>
@@ -4397,6 +4420,10 @@ p, li { white-space: pre-wrap; }
         <source>BIN</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Pause</source>
+        <translation type="unfinished">Pausar</translation>
+    </message>
 </context>
 <context>
     <name>SerialPort</name>
@@ -4437,6 +4464,33 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Main</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SerialTerm</name>
+    <message>
+        <source>Serial Terminal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Main</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Baudrate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Data Bits</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Stop Bits</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open Serial Monitor.</source>
+        <translation type="unfinished">Abrir monitor serial</translation>
     </message>
 </context>
 <context>
@@ -4534,6 +4588,18 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Other Logic</source>
         <translation type="obsolete">Outros lógicos</translation>
+    </message>
+    <message>
+        <source>Main</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show Point Pin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show Enable Pin</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4869,7 +4935,7 @@ Deseja salvar as alterações?
 %2.</translation>
     </message>
     <message>
-        <source>Select Main Components</source>
+        <source>Select Exposed Components</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4923,7 +4989,7 @@ Deseja salvar as alterações?
         <translation type="unfinished">Tamanho</translation>
     </message>
     <message>
-        <source>_Switches</source>
+        <source>_Lines</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4967,10 +5033,6 @@ Deseja salvar as alterações?
     </message>
     <message>
         <source>Font Color</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Link to Component</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5181,6 +5243,10 @@ Deseja salvar as alterações?
         <source>Dial Step</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Dial</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>VoltReg</name>
@@ -5345,6 +5411,10 @@ Deseja salvar as alterações?
     </message>
     <message>
         <source>Floating</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Phase shift</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

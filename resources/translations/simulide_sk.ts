@@ -315,6 +315,10 @@ p, li { white-space: pre-wrap; }
         <source>简体中文</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Font</source>
+        <translation type="unfinished">Písmo</translation>
+    </message>
 </context>
 <context>
     <name>AudioOut</name>
@@ -637,7 +641,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Load Circuit</source>
-        <translation>Otvoriť obvod</translation>
+        <translation type="vanished">Otvoriť obvod</translation>
     </message>
     <message>
         <source>Circuits (*.sim*);;All files (*.*)</source>
@@ -646,6 +650,10 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Bill Of Materials</source>
         <translation type="vanished">Zoznam materiálov</translation>
+    </message>
+    <message>
+        <source>Import Circuit</source>
+        <translation type="unfinished">Importovať obvod</translation>
     </message>
 </context>
 <context>
@@ -809,7 +817,7 @@ Chcete uložiť zmeny?
     </message>
     <message>
         <source>Stopped</source>
-        <translation type="vanished">Zastavená</translation>
+        <translation>Zastavená</translation>
     </message>
     <message>
         <source>Paused</source>
@@ -1054,6 +1062,10 @@ Nemožno nájsť súbor:
     </message>
     <message>
         <source>For this file:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Extra build arguments</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1674,10 +1686,6 @@ Nemožno nájsť súbor:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Name Space:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Pin Angle:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1695,6 +1703,10 @@ Nemožno nájsť súbor:
     </message>
     <message>
         <source>Bottom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Space to Pin:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3117,6 +3129,13 @@ Súbor nemožno nájsť:
     <message>
         <source>Clear All BreakPoints</source>
         <translation>Odstrániť všetky značky</translation>
+    </message>
+</context>
+<context>
+    <name>LinkedComponent</name>
+    <message>
+        <source>Link to Component</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4553,6 +4572,10 @@ Neplatný súbor balíka:
         <source>BIN</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Pause</source>
+        <translation type="unfinished">Pauza</translation>
+    </message>
 </context>
 <context>
     <name>SerialPort</name>
@@ -4593,6 +4616,33 @@ Neplatný súbor balíka:
     <message>
         <source>Main</source>
         <translation type="unfinished">Základné</translation>
+    </message>
+</context>
+<context>
+    <name>SerialTerm</name>
+    <message>
+        <source>Serial Terminal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Main</source>
+        <translation type="unfinished">Základné</translation>
+    </message>
+    <message>
+        <source>Baudrate</source>
+        <translation type="unfinished">Prenosová rýchlosť</translation>
+    </message>
+    <message>
+        <source>Data Bits</source>
+        <translation type="unfinished">Počet dátových bitov</translation>
+    </message>
+    <message>
+        <source>Stop Bits</source>
+        <translation type="unfinished">Počet stop bitov</translation>
+    </message>
+    <message>
+        <source>Open Serial Monitor.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4686,6 +4736,18 @@ Neplatný súbor balíka:
     <message>
         <source>7 Seg BCD</source>
         <translation>7 Seg. BCD</translation>
+    </message>
+    <message>
+        <source>Main</source>
+        <translation type="unfinished">Základné</translation>
+    </message>
+    <message>
+        <source>Show Point Pin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show Enable Pin</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5021,7 +5083,7 @@ Chcete uložiť zmeny?
 %2.</translation>
     </message>
     <message>
-        <source>Select Main Components</source>
+        <source>Select Exposed Components</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5072,7 +5134,11 @@ Chcete uložiť zmeny?
     </message>
     <message>
         <source>_Switches</source>
-        <translation>_spínačov</translation>
+        <translation type="vanished">_spínačov</translation>
+    </message>
+    <message>
+        <source>_Lines</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5115,10 +5181,6 @@ Chcete uložiť zmeny?
     </message>
     <message>
         <source>Font Color</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Link to Component</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5341,6 +5403,10 @@ Chcete uložiť zmeny?
         <source>Dial Step</source>
         <translation>Krok</translation>
     </message>
+    <message>
+        <source>Dial</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>VoltReg</name>
@@ -5505,6 +5571,10 @@ Chcete uložiť zmeny?
     </message>
     <message>
         <source>Wav files (*.wav);;All files (*.*)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Phase shift</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
