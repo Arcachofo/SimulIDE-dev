@@ -32,6 +32,8 @@ class Battery : public Comp2Pin, public eResistor
 
     private:
         double m_volt;
+
+        bool m_connected;
 };
 
 #endif
