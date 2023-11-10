@@ -1,11 +1,18 @@
 <parts>
   <regblock  name="I/O_REG" start="0x0020" end="0x005F" offset="32">
-      
-    <register  name="UBRR0H"  addr="0x0001"  reset=""  mask="00001111" />
+    <register  name="UBRRH"   addr="0x0000"  reset="" />
+
+    <register  name="DIDR"    addr="0x0001"  reset=""  mask="00000011" 
+               bits="AIN0D,AIN1D,0,0,0,0,0,0"/>
+
+    <register  name="UBRRH"   addr="0x0002"  reset=""  mask="00001111" />
                
     <register  name="UCSRC"   addr="0x0003"  reset="00000110"  mask="" 
                bits="UCPOL,UCSZ0,UCSZ1,USBS,UPM0,UPM1,UMSEL,0" />
       
+    <register  name="PCMSK1"  addr="0x0004"  reset=""  mask="00000111" />
+    <register  name="PCMSK2"  addr="0x0005"  reset=""  mask="01111111" />
+
     <register  name="ACSR"    addr="0x0008"  reset=""  mask="11011111" 
                bits="ACIS0,ACIS1,ACIC,ACIE,ACI,ACO,ACBG,ACD" />
                
@@ -46,8 +53,7 @@
     <register  name="EEDR"    addr="0x001D"  reset=""  mask="" />
     <register  name="EEAR"    addr="0x001E"  reset=""  mask="" />
     
-    <register  name="PCMSK"   addr="0x0020"  reset=""  mask="" 
-               bits="PCINT0,PCINT1,PCINT2,PCINT3,PCINT4,PCINT5,PCINT6,PCINT7" />
+    <register  name="PCMSK0"  addr="0x0020"  reset=""  mask="" />
     
     <register  name="WDTCSR"  addr="0x0021"  reset=""  mask="" 
                bits="WDP0,WDP1,WDP2,WDE,WDCE,WDP3,WDIE,WDIF" />
@@ -85,7 +91,6 @@
     
     <register  name="TCNT0"   addr="0x0032"  reset=""  mask="" />
     
-    
     <register  name="TCCR0B"  addr="0x0033"  reset=""  mask="11001111" 
                bits="CS00,CS01,CS02,WGM02,0,0,FOC0B,FOC0A" />
     
@@ -97,20 +102,20 @@
     
     <register  name="OCR0A"   addr="0x0036"  reset=""  mask="" />
     
-    <register  name="SPMCSR"  addr="0x0037"  reset=""  mask="00011111" 
+    <register  name="SPMCSR"  addr="0x0037"  reset=""  mask="00111111" 
                bits="SELFPRGEN,PGERS,PGWRT,RFLB,CTPB,0,0,0" />
     
-    <register  name="TIFR"    addr="0x0038"  reset=""  mask="00100111" 
+    <register  name="TIFR"    addr="0x0038"  reset=""  mask="11101111" 
                bits=",OCF0A,TOV0,OCF0B,ICF1,0,OCF1B,OCF1A,TOV1" />
     
-    <register  name="TIMSK"   addr="0x0039"  reset=""  mask="00000111" 
+    <register  name="TIMSK"   addr="0x0039"  reset=""  mask="11101111" 
                bits="OCIE0A,TOIE0,OCIE0B,ICIE1,0,OCIE1B,OCIE1A,TOIE1" />
     
-    <register  name="EIFR"    addr="0x003A"  reset=""  mask="11100000" 
-               bits="0,0,0,0,0,PCIF,INTF0,INTF1" />
+    <register  name="GIFR"    addr="0x003A"  reset=""  mask="11111000" 
+               bits="0,0,0,PCIF1,PCIF2,PCIF0,INTF0,INTF1" />
     
-    <register  name="GIMSK"   addr="0x003B"  reset=""  mask="11100000" 
-               bits="0,0,0,0,0,PCIE,INT0,INT1" />
+    <register  name="GIMSK"   addr="0x003B"  reset=""  mask="11111000" 
+               bits="0,0,0,PCIE1,PCIE2,PCIE0,INT0,INT1" />
     
     <register  name="OCR0B"   addr="0x003C"  reset=""  mask="" />
     <register  name="SPL"     addr="0x003D"  reset=""  mask="" bits="" />
