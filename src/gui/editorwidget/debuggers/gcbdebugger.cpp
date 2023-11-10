@@ -160,9 +160,10 @@ bool GcbDebugger::mapFlashToSource()  // Map asm_source_line <=> gcb_source_line
 
     bool haveVariable = false;
     QString asmLine;
-    while( !asmLines.isEmpty() && !asmLine.contains("BASPROGRAMSTART:") )
+    while( !asmLines.isEmpty() && !asmLine.startsWith("BASPROGRAMSTART") )
     {
         asmLine = asmLines.takeFirst();
+
         if     ( asmLine.isEmpty() ) continue;
         else if( asmLine.contains("locations for variables") ) haveVariable = true;
         else if( asmLine.startsWith(";*"))                    haveVariable = false;
