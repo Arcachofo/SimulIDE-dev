@@ -173,8 +173,10 @@ void Stepper::voltChanged()
 
 void Stepper::setSteps( int steps ) //" 4, 8,16,32"
 {
+    int remainder =  ( steps > m_steps && steps % 4 ) ? 4 : 0;
     m_steps = steps/4;
     m_steps *= 4;
+    m_steps += remainder;
     if( m_steps < 4 ) m_steps = 4;
     m_stpang = 360*8/m_steps;
     m_ang  = 0;
