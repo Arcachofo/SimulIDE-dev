@@ -135,6 +135,8 @@ class AvrTimer16bit : public AvrTimer
         AvrTimer16bit( eMcu* mcu, QString name );
         ~AvrTimer16bit();
 
+        virtual void runEvent() override;
+
         virtual void topReg0Changed( uint8_t val ) override;
         void ICRXLchanged( uint8_t val );
         //void ICRXHchanged( uint8_t val );
@@ -143,6 +145,8 @@ class AvrTimer16bit : public AvrTimer
         virtual void updtWgm() override;
         virtual void configureClock() override;
         void setICRX( QString reg );
+
+        bool m_useICR;
 
         uint8_t* m_topReg1L;
         uint8_t* m_topReg1H;

@@ -397,33 +397,41 @@ AvrTimer16bit::AvrTimer16bit( eMcu* mcu, QString name )
 }
 AvrTimer16bit::~AvrTimer16bit(){}
 
+void AvrTimer16bit::runEvent()            // Overflow
+{
+    if( !m_running ) return;
+
+    if( m_wgmMode == wgmFAST && m_useICR && m_ICunit ) m_ICunit->getInterrupt()->raise();
+    McuTimer::runEvent();
+}
+
 void AvrTimer16bit::updtWgm()
 {
     uint8_t WGM = m_wgm32Val + m_wgm10Val;
 
     wgmMode_t mode = wgmNORM;
     uint16_t  ovf  = 0xFFFF;
-    bool useICR = false;
+    m_useICR = false;
 
     switch( WGM ){
-        case 1:  mode = wgmPHAS; ovf = 0x00FF;  break; // PWM, Phase Correct, 8-bit
-        case 2:  mode = wgmPHAS; ovf = 0x01FF;  break; // PWM, Phase Correct, 9-bit
-        case 3:  mode = wgmPHAS; ovf = 0x03FF;  break; // PWM, Phase Correct, 10-bit
-        case 4:  mode = wgmCTC;  ovf = OCRXA16; break; // CTC
-        case 5:  mode = wgmFAST; ovf = 0x00FF;  break; // Fast PWM, 8-bit
-        case 6:  mode = wgmFAST; ovf = 0x01FF;  break; // Fast PWM, 9-bit
-        case 7:  mode = wgmFAST; ovf = 0x03FF;  break; // Fast PWM, 10-bit
-        case 8:  mode = wgmPHAS; useICR = true; break; // PWM, Phase and Frequency Correct
-        case 9:  mode = wgmPHAS; ovf = OCRXA16; break; // PWM, Phase and Frequency Correct
-        case 10: mode = wgmPHAS; useICR = true; break; // PWM, Phase Correct
-        case 11: mode = wgmPHAS; ovf = OCRXA16; break; // PWM, Phase Correct
-        case 12: mode = wgmCTC;  useICR = true; break; // CTC
-        case 13:                                break; // (Reserved)
-        case 14: mode = wgmFAST; useICR = true; break; // Fast PWM ICRX
-        case 15: mode = wgmFAST; ovf = OCRXA16; break; // Fast PWM OCRXA
+        case 1:  mode = wgmPHAS; ovf = 0x00FF;    break; // PWM, Phase Correct, 8-bit
+        case 2:  mode = wgmPHAS; ovf = 0x01FF;    break; // PWM, Phase Correct, 9-bit
+        case 3:  mode = wgmPHAS; ovf = 0x03FF;    break; // PWM, Phase Correct, 10-bit
+        case 4:  mode = wgmCTC;  ovf = OCRXA16;   break; // CTC
+        case 5:  mode = wgmFAST; ovf = 0x00FF;    break; // Fast PWM, 8-bit
+        case 6:  mode = wgmFAST; ovf = 0x01FF;    break; // Fast PWM, 9-bit
+        case 7:  mode = wgmFAST; ovf = 0x03FF;    break; // Fast PWM, 10-bit
+        case 8:  mode = wgmPHAS; m_useICR = true; break; // PWM, Phase and Frequency Correct
+        case 9:  mode = wgmPHAS; ovf = OCRXA16;   break; // PWM, Phase and Frequency Correct
+        case 10: mode = wgmPHAS; m_useICR = true; break; // PWM, Phase Correct
+        case 11: mode = wgmPHAS; ovf = OCRXA16;   break; // PWM, Phase Correct
+        case 12: mode = wgmCTC;  m_useICR = true; break; // CTC
+        case 13:                                  break; // (Reserved)
+        case 14: mode = wgmFAST; m_useICR = true; break; // Fast PWM ICRX
+        case 15: mode = wgmFAST; ovf = OCRXA16;   break; // Fast PWM OCRXA
     }
-    if( useICR ) ovf = ICRX16;
-    if( m_ICunit ) m_ICunit->enable( !useICR );
+    if( m_useICR ) ovf = ICRX16;
+    if( m_ICunit ) m_ICunit->enable( !m_useICR );
 
     m_wgmMode = mode;
     bool shedule = m_ovfMatch != ovf;
