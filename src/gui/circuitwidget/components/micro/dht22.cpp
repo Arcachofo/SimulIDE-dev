@@ -38,6 +38,7 @@ Dht22::Dht22( QString type, QString id )
 {
     m_area = QRect(-28,-20, 56, 40 );
 
+    m_graphical = true;
     m_temp = 22.5;
     m_humi = 68.5;
     m_tempInc = 0.5;

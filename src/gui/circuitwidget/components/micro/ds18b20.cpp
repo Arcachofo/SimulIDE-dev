@@ -38,7 +38,8 @@ LibraryItem* Ds18b20::libraryItem()
 Ds18b20::Ds18b20( QString type, QString id )
        : Component( type, id )
        , eElement( id )
-{    
+{
+    m_graphical = true;
     m_area = QRect(-28,-16, 56, 32 );
 
     srand( time(0) );

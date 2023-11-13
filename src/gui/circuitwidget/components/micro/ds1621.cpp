@@ -37,6 +37,8 @@ DS1621::DS1621( QString type, QString id )
       : IoComponent( type, id )
       , TwiModule( id )
 {
+    m_graphical = true;
+
     m_width  = 7;
     m_height = 4;
 

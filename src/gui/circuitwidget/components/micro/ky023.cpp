@@ -42,6 +42,8 @@ KY023::KY023( QString type, QString id )
      : Component( type, id )
      , eElement( id )
 {
+    m_graphical = true;
+
     m_area = QRect( -WIDTH/2, -HEIGHT/2 + GAP, WIDTH, HEIGHT );
 
     m_joystickW.setupWidget();

@@ -39,6 +39,8 @@ Esp01::Esp01( QString type, QString id )
      , UsartModule( NULL, id+"-Uart" )
      , eElement( id )
 {
+    m_graphical = true;
+
     m_area = QRect(-28,-20, 56, 40 );
     setBackground("esp01.png");
     setLabelPos(-20,-34, 0 );

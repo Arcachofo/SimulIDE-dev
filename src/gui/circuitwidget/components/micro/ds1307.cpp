@@ -31,6 +31,8 @@ DS1307::DS1307( QString type, QString id )
       , TwiModule( id )
       , m_clock( id+"_clock" )
 {
+    m_graphical = true;
+
     m_area = QRect(-28,-20, 56, 40 );
     setBackground("dsxxx.png");
     setLabelPos(-20,-34, 0 );

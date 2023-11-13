@@ -47,6 +47,8 @@ TouchPad::TouchPad( QString type, QString id )
         , m_ePinTA( id+"-ePinTA", 1 )
         , m_ePinTB( id+"-ePinTB", 1 )
 {
+    m_graphical = true;
+
     m_eNodeX = NULL;
     m_eNodeY = NULL;
 
@@ -259,7 +261,9 @@ void TouchPad::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidg
     p->setBrush( Qt::transparent );
     p->drawRoundedRect( QRect(-m_width/2,-m_height-2, m_width, m_height ), 2, 2 );
 
-    p->setBrush( QColor(50, 70, 100) );
-    p->drawRoundedRect( QRect(-20,-2, 40, 18 ), 2, 2 );
+    if( !m_hidden ){
+        p->setBrush( QColor(50, 70, 100) );
+        p->drawRoundedRect( QRect(-20,-2, 40, 18 ), 2, 2 );
+    }
 }
 

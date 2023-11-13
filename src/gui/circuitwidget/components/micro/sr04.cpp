@@ -28,6 +28,8 @@ SR04::SR04( QString type, QString id )
     : Component( type, id )
     , eElement( id )
 {
+    m_graphical = true;
+
     m_area = QRect(-10*8,-4*8, 21*8, 9*8 );
     setBackground("sr04.png");
     setLabelPos(-16,-48, 0);
