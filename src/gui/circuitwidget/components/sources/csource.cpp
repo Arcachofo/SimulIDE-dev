@@ -157,12 +157,13 @@ void Csource::setVoltage( double v )
 {
     double curr = v;
 
+    if( m_currSource ) curr = -curr;
     if( m_currControl )              curr *= m_admit;
     if( !m_currSource && curr != 0 ) curr /= cero_doub;
 
     curr *= m_gain;
-    m_pin[2]->stampCurrent(-curr );
-    m_pin[3]->stampCurrent( curr );
+    m_pin[2]->stampCurrent( curr );
+    m_pin[3]->stampCurrent(-curr );
 }
 
 
