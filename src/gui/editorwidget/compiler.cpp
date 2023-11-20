@@ -28,7 +28,7 @@ Compiler::Compiler( CodeEditor* editor, OutPanelText* outPane )
     m_editor = editor;
     m_outPane = outPane;
 
-    m_file     = QDir::toNativeSeparators( editor->getFile() );
+    m_file     = editor->getFile();
     m_fileDir  = getFileDir( m_file );
     m_fileExt  = getFileExt( m_file );
     m_fileName = getBareName( m_file );

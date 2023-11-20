@@ -3,8 +3,9 @@
  *                                                                         *
  ***( see copyright.txt file at root folder )*******************************/
 
-#include <QDebug>
+//#include <QDebug>
 #include <QFileInfo>
+#include <QDir>
 
 #include "avrgccdebugger.h"
 #include "e_mcu.h"
@@ -185,6 +186,7 @@ bool AvrGccDebugger::mapFlashToSource()
         if( !checkCommand( addr2li ) )
             m_outPane->appendLine( "\nWarning: avr-addr2line executable not detected:\n"+addr2li );
     }
+
     m_outPane->appendText( "\nMapping Flash to Source... " );
     avrSize = addQuotes( avrSize );
     addr2li = addQuotes( addr2li );
@@ -193,6 +195,7 @@ bool AvrGccDebugger::mapFlashToSource()
     getSize.start( avrSize + " " + m_elfPath );
     getSize.waitForFinished();
     QString lines = getSize.readAllStandardOutput();
+
     getSize.close();
     bool ok = false;
     int flashSize;
@@ -228,6 +231,7 @@ bool AvrGccDebugger::mapFlashToSource()
             if( idx == -1 ) continue;
 
             QString filePath = QFileInfo( p_stdout.left( idx ) ).filePath();//  .fileName();
+
             if( m_fileList.contains( filePath ) )
             {
                 bool ok = false;

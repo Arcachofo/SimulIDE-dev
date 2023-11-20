@@ -5,7 +5,7 @@
 
 #include <QApplication>
 #include <QSettings>
-#include <QDebug>
+//#include <QDebug>
 
 #include "inodebugger.h"
 #include "outpaneltext.h"
