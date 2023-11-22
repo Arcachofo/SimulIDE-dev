@@ -135,13 +135,13 @@ void Memory::voltChanged()        // Some Pin Changed State, Manage it
     bool cs = m_CsPin->getInpState();
     bool we = m_WePin->getInpState();
     bool oe = cs && !we && m_oePin->getInpState(); // Enable output buffers only if OE & CS & Read
-    if( m_oe != oe )
+    if( m_oe != oe || m_cs != cs || m_we != we )
     {
         m_oe = oe;
         for( IoPin* pin : m_outPin )         // Enable/Disable output buffers
         {
             pin->setPinMode( oe ? output : input );
-            if( m_asynchro ) pin->changeCallBack( this, m_cs && m_we );
+            if( m_asynchro ) pin->changeCallBack( this, cs && we );
         }
     }
     // Operate only if Asynchronous or change in CS or WE
