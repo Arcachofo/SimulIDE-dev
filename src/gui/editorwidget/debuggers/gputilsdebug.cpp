@@ -37,7 +37,11 @@ bool GputilsDebug::getVariables( BaseDebugger* debugger )
     gpvc += ".exe";
 #endif
     if( !debugger->checkCommand( gpvc ) )
-        debugger->outPane()->appendLine( "\nWarning: gpvc executable not detected:\n"+gpvc );
+    {
+        gpvc = "gpvc";
+        if( !debugger->checkCommand( gpvc ) )
+            debugger->outPane()->appendLine( "\nWarning: gpvc executable not detected:\n"+gpvc );
+    }
 
     debugger->outPane()->appendText( "\nSearching for variables... " );
     gpvc    = addQuotes( gpvc );
@@ -138,7 +142,7 @@ bool GputilsDebug::mapFlashToSource( BaseDebugger* debugger )
             debugger->setLineToFlash( {debugger->file(), lineN }, addr );
             continue;
         }
-        if( line.startsWith( ";") && line.contains(".line") )
+        if( line.startsWith(";") && line.contains(".line") )
         {
             QStringList words = line.split("\"");
             QString file = getFileName( words.at(1) );

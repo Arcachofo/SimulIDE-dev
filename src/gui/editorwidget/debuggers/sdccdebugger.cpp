@@ -61,6 +61,7 @@ bool SdccDebugger::postProcess()
         /*bool ok = GputilsDebug::getVariables( this );
         if( !ok ) return false;
         return GputilsDebug::mapFlashToSource( this );*/
+        GputilsDebug::getVariables( this );
 
         m_flashToSource.clear();
 
