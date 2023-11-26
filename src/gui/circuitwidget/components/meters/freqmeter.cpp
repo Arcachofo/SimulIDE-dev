@@ -36,6 +36,7 @@ FreqMeter::FreqMeter( QString type, QString id )
 {
     m_area = QRectF( -32, -10, 85, 20 );
     m_color = Qt::black;
+    m_graphical = true;
 
     m_ePin.resize( 1 );
     m_pin.resize( 1 );
