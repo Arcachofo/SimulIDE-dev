@@ -431,12 +431,13 @@ void McuCreator::getRegisters( QDomElement* e, uint16_t offset )
                     {
                         bitName = bitList.value( i );
                         if( bitName == "0" ) continue;
+
                         for( QString alias : bitName.split("|") ) // Bit name variations: alias first used bit name
                         {                                         // Example tiny WDTCR.WDTIE is 328 WDTCSR.WDIE
                             mcu->m_bitMasks.insert( alias, 1<<i );
                             mcu->m_bitRegs.insert( alias, regAddr );
                     }   }
-                    if( !stReg.isEmpty() && ( regName == stReg ) )
+                    if( !stReg.isEmpty() && ( regName == stReg ) ) // Status Register
                     {
                         mcu->m_sregAddr = regAddr;
                         mcu->setStatusBits( bitList );

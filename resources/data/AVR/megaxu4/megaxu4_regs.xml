@@ -1,20 +1,25 @@
 <parts>
   <regblock  name="I/O_REG" start="0x0020" end="0x005F" offset="32">
-    <register  name="PINB"   addr="0x0003" bits="PINB0,PINB1,PINB2,PINB3,PINB4,PINB5,PINB6,PINB7" />
-    <register  name="DDRB"   addr="0x0004" bits="DDB0,DDB1,DDB2,DDB3,DDB4,DDB5,DDB6,DDB7" />
-    <register  name="PORTB"  addr="0x0005" bits="PB0,PB1,PB2,PB3,PB4,PB5,PB6,PB7" />
+    <register  name="PINB"   addr="0x0003" bits="" />
+    <register  name="DDRB"   addr="0x0004" bits="" />
+    <register  name="PORTB"  addr="0x0005" bits="" />
+    
     <register  name="PINC"   addr="0x0006" bits="0,0,0,0,0,0,PINC6,PINC7" />
     <register  name="DDRC"   addr="0x0007" bits="0,0,0,0,0,0,DDC6,DDC7" />
     <register  name="PORTC"  addr="0x0008" bits="0,0,0,0,0,0,PC6,PC7" />
-    <register  name="PIND"   addr="0x0009" bits="PIND0,PIND1,PIND2,PIND3,PIND4,PIND5,PIND6,PIND7" />
-    <register  name="DDRD"   addr="0x000A" bits="DDD0,DDD1,DDD2,DDD3,DDD4,DDD5,DDD6,DDD7" />
-    <register  name="PORTD"  addr="0x000B" bits="PD0,PD1,PD2,PD3,PD4,PD5,PD6,PD7" />
+    
+    <register  name="PIND"   addr="0x0009" bits="" />
+    <register  name="DDRD"   addr="0x000A" bits="" />
+    <register  name="PORTD"  addr="0x000B" bits="" />
+    
     <register  name="PINE"   addr="0x000C" bits="0,0,PINE2,0,0,0,PINE6,0" />
     <register  name="DDRE"   addr="0x000D" bits="0,0,DDE2,0,0,0,DDE6,0" />
     <register  name="PORTE"  addr="0x000E" bits="0,0,PE2,0,0,0,PE6,0" />
+    
     <register  name="PINF"   addr="0x000F" bits="PINF0,PINF1,0,0,PINF4,PINF5,PINF6,PINF7" />
     <register  name="DDRF"   addr="0x0010" bits="DDF0,DDF1,0,0,DDF4,DDF5,DDF6,DDF7" />
     <register  name="PORTF"  addr="0x0011" bits="PF0,PF1,0,0,PF4,PF5,PF6,PF7" />
+    
     <register  name="TIFR0"  addr="0x0015" bits="TOV0,OCF0A,OCF0B,0,0,0,0,0" />
     <register  name="TIFR1"  addr="0x0016" bits="TOV1,OCF1A,OCF1B,OCF1C,0,ICF1,0,0" />
     <register  name="TIFR2"  addr="0x0017" bits="" />

@@ -1,384 +1,226 @@
-<!--
-(0xFF)      Reserved  0 0 0 0 0 0 0 0
-:           Reserved  0 0 0 0 0 0 0 0
-(0x9E)      Reserved  0 0 0 0 0 0 0 0
-(0x9D)      UCSR1C    0 UMSEL1 UPM11 UPM10 USBS1 UCSZ11 UCSZ10 UCPOL1
-(0x9C)      UDR1      USART1 I/O Data Register
-(0x9B)      UCSR1A    RXC1 TXC1 UDRE1 FE1 DOR1 UPE1 U2X1 MPCM1
-(0x9A)      UCSR1B    RXCIE1 TXCIE1 UDRIE1 RXEN1 TXEN1 UCSZ12 RXB81 TXB81
-(0x99)      UBRR1L    USART1 Baud Rate Register Low
-(0x98)      UBRR1H    0 0 0 0 USART1 Baud Rate Register High
-(0x97)      Reserved  0 0 0 0 0 0 0 0
-(0x96)      Reserved  0 0 0 0 0 0 0 0
-(0x95)      UCSR0C    0 UMSEL0 UPM01 UPM00 USBS0 UCSZ01 UCSZ00 UCPOL0
-(0x94)      Reserved  0 0 0 0 0 0 0 0
-(0x93)      Reserved  0 0 0 0 0 0 0 0
-(0x92)      Reserved  0 0 0 0 0 0 0 0
-(0x91)      Reserved  0 0 0 0 0 0 0 0
-(0x90)      UBRR0H    0 0 0 0 USART0 Baud Rate Register High
-(0x8F)      Reserved  0 0 0 0 0 0 0 0
-(0x8E)      ADCSRB    0 0 0 0 0 ADTS2 ADTS1 ADTS0
-(0x8D)      Reserved  0 0 0 0 0 0 0 0
-(0x8C)      TCCR3C    FOC3A FOC3B FOC3C 0 0 0 0 0
-(0x8B)      TCCR3A    COM3A1 COM3A0 COM3B1 COM3B0 COM3C1 COM3C0 WGM31 WGM30
-(0x8A)      TCCR3B    ICNC3 ICES3 0 WGM33 WGM32 CS32 CS31 CS30
-(0x89)      TCNT3H    Timer/Counter3 0 Counter Register High Byte
-(0x88)      TCNT3L    Timer/Counter3 0 Counter Register Low Byte
-(0x87)      OCR3AH    Timer/Counter3 0 Output Compare Register A High Byte
-(0x86)      OCR3AL    Timer/Counter3 0 Output Compare Register A Low Byte
-(0x85)      OCR3BH    Timer/Counter3 0 Output Compare Register B High Byte
-(0x84)      OCR3BL    Timer/Counter3 0 Output Compare Register B Low Byte
-(0x83)      OCR3CH    Timer/Counter3 0 Output Compare Register C High Byte
-(0x82)      OCR3CL    Timer/Counter3 0 Output Compare Register C Low Byte
-(0x81)      ICR3H     Timer/Counter3  0 Input Capture Register High Byte
-(0x80)      ICR3L     Timer/Counter3  0 Input Capture Register Low Byte
-(0x7F)      Reserved  0 0 0 0 0 0 0 0
-(0x7E)      Reserved  0 0 0 0 0 0 0 0
-(0x7D)      ETIMSK    0 0 TICIE3 OCIE3A OCIE3B TOIE3 OCIE3C OCIE1C
-(0x7C)      ETIFR     0 0 ICF3 OCF3A OCF3B TOV3 OCF3C OCF1C
-(0x7B)      Reserved  0 0 0 0 0 0 0 0
-(0x7A)      TCCR1C    FOC1A FOC1B FOC1C 0 0 0 0 0
-(0x79)      OCR1CH    Timer/Counter1 0 Output Compare Register C High Byte
-(0x78)      OCR1CL    Timer/Counter1 0 Output Compare Register C Low Byte
-(0x77)      Reserved  0 0 0 0 0 0 0 0
-(0x76)      Reserved  0 0 0 0 0 0 0 0
-(0x75)      Reserved  0 0 0 0 0 0 0 0
-(0x74)      TWCR      TWINT TWEA TWSTA TWSTO TWWC TWEN 0 TWIE
-(0x73)      TWDR      Two-wire Serial Interface Data Register
-(0x72)      TWAR      TWA6 TWA5 TWA4 TWA3 TWA2 TWA1 TWA0 TWGCE
-(0x71)      TWSR      TWS7 TWS6 TWS5 TWS4 TWS3 0 TWPS1 TWPS0
-(0x70)      TWBR      Two-wire Serial Interface Bit Rate Register
-(0x6F)      OSCCAL    Oscillator Calibration Register
-(0x6E)      Reserved  0 0 0 0 0 0 0 0
-(0x6D)      XMCRA     0 SRL2 SRL1 SRL0 SRW01 SRW00 SRW11 0
-(0x6C)      XMCRB     XMBK 0 0 0 0 XMM2 XMM1 XMM0
-(0x6B)      Reserved  0 0 0 0 0 0 0 0
-(0x6A)      EICRA     ISC31 ISC30 ISC21 ISC20 ISC11 ISC10 ISC01 ISC00
-(0x69)      Reserved  0 0 0 0 0 0 0 0
-(0x68)      SPMCSR    SPMIE RWWSB 0 RWWSRE BLBSET PGWRT PGERS SPMEN
-(0x67)      Reserved  0 0 0 0 0 0 0 0
-(0x66)      Reserved  0 0 0 0 0 0 0 0
-(0x65)      PORTG     0 0 0 PORTG4 PORTG3 PORTG2 PORTG1 PORTG0
-(0x64)      DDRG      0 0 0 DDG4 DDG3 DDG2 DDG1 DDG0
-(0x63)      PING      0 0 0 PING4 PING3 PING2 PING1 PING0
-(0x62)      PORTF     PORTF7 PORTF6 PORTF5 PORTF4 PORTF3 PORTF2 PORTF1 PORTF0
-(0x61)      DDRF      DDF7 DDF6 DDF5 DDF4 DDF3 DDF2 DDF1 DDF0
-(0x60)      Reserved  0 0 0 0 0 0 0 0
-0x3F (0x5F) SREG      I T H S V N Z C
-0x3E (0x5E) SPH       SP15 SP14 SP13 SP12 SP11 SP10 SP9 SP8
-0x3D (0x5D) SPL       SP7 SP6 SP5 SP4 SP3 SP2 SP1 SP0
-0x3C (0x5C) XDIV      XDIVEN XDIV6 XDIV5 XDIV4 XDIV3 XDIV2 XDIV1 XDIV0
-0x3B (0x5B) Reserved  0 0 0 0 0 0 0 0
-0x3A (0x5A) EICRB     ISC71 ISC70 ISC61 ISC60 ISC51 ISC50 ISC41 ISC40
-0x39 (0x59) EIMSK     INT7 INT6 INT5 INT4 INT3 INT2 INT0 INT0
-0x38 (0x58) EIFR      INTF7 INTF6 INTF5 INTF4 INTF3 INTF2 INTF1 INTF0
-0x37 (0x57) TIMSK     OCIE2 TOIE2 TICIE1 OCIE1A OCIE1B TOIE1 OCIE0 TOIE0
-0x36 (0x56) TIFR      OCF2 TOV2 ICF1 OCF1A OCF1B TOV1 OCF0 TOV0
-0x35 (0x55) MCUCR     SRE SRW10 SE SM1 SM0 SM2 IVSEL IVCE
-0x34 (0x54) MCUCSR    JTD 0 0 JTRF WDRF BORF EXTRF PORF
-0x33 (0x53) TCCR0     FOC0 WGM00 COM01 COM00 WGM01 CS02 CS01 CS00
-0x32 (0x52) TCNT0     Timer/Counter0 (8 Bit)
-0x31 (0x51) OCR0      Timer/Counter0 Output Compare Register
-0x30 (0x50) ASSR      0 0 0 0 AS0 TCN0UB OCR0UB TCR0UB
-0x2F (0x4F) TCCR1A    COM1A1 COM1A0 COM1B1 COM1B0 COM1C1 COM1C0 WGM11 WGM10
-0x2E (0x4E) TCCR1B    ICNC1 ICES1 0 WGM13 WGM12 CS12 CS11 CS10
-0x2D (0x4D) TCNT1H    Timer/Counter1 0 Counter Register High Byte
-0x2C (0x4C) TCNT1L    Timer/Counter1 0 Counter Register Low Byte
-0x2B (0x4B) OCR1AH    Timer/Counter1 0 Output Compare Register A High Byte
-0x2A (0x4A) OCR1AL    Timer/Counter1 0 Output Compare Register A Low Byte
-0x29 (0x49) OCR1BH    Timer/Counter1 0 Output Compare Register B High Byte
-0x28 (0x48) OCR1BL    Timer/Counter1 0 Output Compare Register B Low Byte
-0x27 (0x47) ICR1H     Timer/Counter1 0 Input Capture Register High Byte
-0x26 (0x46) ICR1L     Timer/Counter1 0 Input Capture Register Low Byte
-0x25 (0x45) TCCR2     FOC2 WGM20 COM21 COM20 WGM21 CS22 CS21 CS20
-0x24 (0x44) TCNT2     Timer/Counter2 (8 Bit)
-0x23 (0x43) OCR2      Timer/Counter2 Output Compare Register
-0x22 (0x42) OCDR      IDRD/OCDR7 OCDR6 OCDR5 OCDR4 OCDR3 OCDR2 OCDR1 OCDR0
-0x21 (0x41) WDTCR     0 0 0 WDCE WDE WDP2 WDP1 WDP0
-0x20 (0x40) SFIOR     TSM 0 0 0 ACME PUD PSR0 PSR321
-0x1F (0x3F) EEARH     0 0 0 0 EEPROM Address Register High
-0x1E (0x3E) EEARL     EEPROM Address Register Low Byte
-0x1D (0x3D) EEDR      EEPROM Data Register
-0x1C (0x3C) EECR      0 0 0 0 EERIE EEMWE EEWE EERE
-0x1B (0x3B) PORTA     PORTA7 PORTA6 PORTA5 PORTA4 PORTA3 PORTA2 PORTA1 PORTA0
-0x1A (0x3A) DDRA      DDA7 DDA6 DDA5 DDA4 DDA3 DDA2 DDA1 DDA0
-0x19 (0x39) PINA      PINA7 PINA6 PINA5 PINA4 PINA3 PINA2 PINA1 PINA0
-0x18 (0x38) PORTB     PORTB7 PORTB6 PORTB5 PORTB4 PORTB3 PORTB2 PORTB1 PORTB0
-0x17 (0x37) DDRB      DDB7 DDB6 DDB5 DDB4 DDB3 DDB2 DDB1 DDB0
-0x16 (0x36) PINB      PINB7 PINB6 PINB5 PINB4 PINB3 PINB2 PINB1 PINB0
-0x15 (0x35) PORTC     PORTC7 PORTC6 PORTC5 PORTC4 PORTC3 PORTC2 PORTC1 PORTC0
-0x14 (0x34) DDRC      DDC7 DDC6 DDC5 DDC4 DDC3 DDC2 DDC1 DDC0
-0x13 (0x33) PINC      PINC7 PINC6 PINC5 PINC4 PINC3 PINC2 PINC1 PINC0
-0x12 (0x32) PORTD     PORTD7 PORTD6 PORTD5 PORTD4 PORTD3 PORTD2 PORTD1 PORTD0
-0x11 (0x31) DDRD      DDD7 DDD6 DDD5 DDD4 DDD3 DDD2 DDD1 DDD0
-0x10 (0x30) PIND      PIND7 PIND6 PIND5 PIND4 PIND3 PIND2 PIND1 PIND0
-0x0F (0x2F) SPDR      SPI Data Register
-0x0E (0x2E) SPSR      SPIF WCOL 0 0 0 0 0 SPI2X
-0x0D (0x2D) SPCR      SPIE SPE DORD MSTR CPOL CPHA SPR1 SPR0
-0x0C (0x2C) UDR0      USART0 I/O Data Register
-0x0B (0x2B) UCSR0A    RXC0 TXC0 UDRE0 FE0 DOR0 UPE0 U2X0 MPCM0
-0x0A (0x2A) UCSR0B    RXCIE0 TXCIE0 UDRIE0 RXEN0 TXEN0 UCSZ02 RXB80 TXB80
-0x09 (0x29) UBRR0L    USART0 Baud Rate Register Low
-0x08 (0x28) ACSR      ACD ACBG ACO ACI ACIE ACIC ACIS1 ACIS0
-0x07 (0x27) ADMUX     REFS1 REFS0 ADLAR MUX4 MUX3 MUX2 MUX1 MUX0
-0x06 (0x26) ADCSRA    ADEN ADSC ADATE ADIF ADIE ADPS2 ADPS1 ADPS0
-0x05 (0x25) ADCH      ADC Data Register High Byte
-0x04 (0x24) ADCL      ADC Data Register Low byte
-0x03 (0x23) PORTE     PORTE7 PORTE6 PORTE5 PORTE4 PORTE3 PORTE2 PORTE1 PORTE0
-0x02 (0x22) DDRE      DDE7 DDE6 DDE5 DDE4 DDE3 DDE2 DDE1 DDE0
-0x01 (0x21) PINE      PINE7 PINE6 PINE5 PINE4 PINE3 PINE2 PINE1 PINE0
-0x00 (0x20) PINF      PINF7 PINF6 PINF5 PINF4 PINF3 PINF2 PINF1 PINF0
--->
-<parts>
+s<parts>
   <regblock  name="I/O_REG" start="0x0020" end="0x005F" offset="32">
-  <!-- lets comment for every line -->
-  <!-- 0x00 (0x20) PINF      PINF7 PINF6 PINF5 PINF4 PINF3 PINF2 PINF1 PINF0 -->
-    <register  name="PINF"    addr="0x0000" bits="PINF0,PINF1,PINF2,PINF3,PINF4,PINF5,PINF6,PINF7" />
-  <!-- 0x01 (0x21) PINE      PINE7 PINE6 PINE5 PINE4 PINE3 PINE2 PINE1 PINE0 -->
-    <register  name="PINE"    addr="0x0001" bits="PINE0,PINE1,PINE2,PINE3,PINE4,PINE5,PINE6,PINE7" />
-  <!-- 0x02 (0x22) DDRE      DDE7 DDE6 DDE5 DDE4 DDE3 DDE2 DDE1 DDE0 -->
-    <register  name="DDRE"    addr="0x0002" bits="DDE0,DDE1,DDE2,DDE3,DDE4,DDE5,DDE6,DDE7" />
-  <!-- 0x03 (0x23) PORTE     PORTE7 PORTE6 PORTE5 PORTE4 PORTE3 PORTE2 PORTE1 PORTE0 -->
-    <register  name="PORTE"   addr="0x0003" bits="PORTE0,PORTE1,PORTE2,PORTE3,PORTE4,PORTE5,PORTE6,PORTE7" />
-  <!-- 0x04 (0x24) ADCL      ADC Data Register Low byte -->
+    <register  name="PINF"    addr="0x0000" bits="" />
+    
+    <register  name="PINE"    addr="0x0001" bits="" />
+    <register  name="DDRE"    addr="0x0002" bits="" />
+    <register  name="PORTE"   addr="0x0003" bits="" />
+    
     <register  name="ADCL"    addr="0x0004" bits="" />
-  <!-- 0x05 (0x25) ADCH      ADC Data Register High Byte -->
     <register  name="ADCH"    addr="0x0005" bits="" />
-  <!-- 0x06 (0x26) ADCSRA    ADEN ADSC ADATE ADIF ADIE ADPS2 ADPS1 ADPS0 -->
-    <register  name="ADCSRA"  addr="0x0006" bits="ADPS0,ADPS1,ADPS2,ADIE,ADIF,ADATE,ADSC,ADEN" />
-  <!-- 0x07 (0x27) ADMUX     REFS1 REFS0 ADLAR MUX4 MUX3 MUX2 MUX1 MUX0 -->
-    <register  name="ADMUX"   addr="0x0007" reset=""  mask="11101111" bits="MUX0,MUX1,MUX2,MUX3,MUX4,ADLAR,REFS0,REFS1" />
-  <!-- 0x08 (0x28) ACSR      ACD ACBG ACO ACI ACIE ACIC ACIS1 ACIS0 -->
-    <register  name="ACSR"    addr="0x0008" reset=""  mask="11011111" bits="ACIS0,ACIS1,ACIC,ACIE,ACI,ACO,ACBG,ACD" />
-  <!-- 0x09 (0x29) UBRR0L    USART0 Baud Rate Register Low -->
+    <register  name="ADCSRA"  addr="0x0006" 
+               bits="ADPS0,ADPS1,ADPS2,ADIE,ADIF,ADATE,ADSC,ADEN" />
+               
+    <register  name="ADMUX"   addr="0x0007" reset=""  mask="11101111" 
+               bits="MUX0,MUX1,MUX2,MUX3,MUX4,ADLAR,REFS0,REFS1" />
+
+    <register  name="ACSR"    addr="0x0008" reset=""  mask="11011111" 
+               bits="ACIS0,ACIS1,ACIC,ACIE,ACI,ACO,ACBG,ACD" />
+               
     <register  name="UBRR0L"  addr="0x0009" bits="" />
-  <!-- 0x0A (0x2A) UCSR0B    RXCIE0 TXCIE0 UDRIE0 RXEN0 TXEN0 UCSZ02 RXB80 TXB80 -->
+
     <register  name="UCSR0B"  addr="0x000A" reset=""  mask="11111101" bits="TXB80,RXB80,UCSZ02,TXEN0,RXEN0,UDRIE0,TXCIE0,RXCIE0" />
-  <!-- 0x0B (0x2B) UCSR0A    RXC0 TXC0 UDRE0 FE0 DOR0 UPE0 U2X0 MPCM0 -->
-    <register  name="UCSR0A"  addr="0x000B" reset="00100000"  mask="01000011" bits="MPCM0,U2X0,UPE0,DOR0,FE0,UDRE0,TXC0,RXC0" />
-  <!-- 0x0C (0x2C) UDR0      USART0 I/O Data Register -->
+
+    <register  name="UCSR0A"  addr="0x000B" reset="00100000"  mask="01000011" 
+               bits="MPCM0,U2X0,UPE0,DOR0,FE0,UDRE0,TXC0,RXC0" />
+
     <register  name="UDR0"    addr="0x000C" mask="00000000" bits="" />
-  <!-- 0x0D (0x2D) SPCR      SPIE SPE DORD MSTR CPOL CPHA SPR1 SPR0 -->
-    <register  name="SPCR"    addr="0x000D" bits="SPR0,SPR1,CPHA,CPOL,MSTR,DORD,SPE,SPIE" />
-  <!-- 0x0E (0x2E) SPSR      SPIF WCOL 0 0 0 0 0 SPI2X -->
-    <register  name="SPSR"    addr="0x000E" reset=""  mask="00000001" bits="SPI2X,0,0,0,0,0,WCOL,SPIF" />
-  <!-- 0x0F (0x2F) SPDR      SPI Data Register -->
+    <register  name="SPCR"    addr="0x000D" 
+               bits="SPR0,SPR1,CPHA,CPOL,MSTR,DORD,SPE,SPIE" />
+
+    <register  name="SPSR"    addr="0x000E" reset=""  mask="00000001" 
+               bits="SPI2X,0,0,0,0,0,WCOL,SPIF" />
+
     <register  name="SPDR"    addr="0x000F" reset=""  mask="" bits="" />
-  <!-- 0x10 (0x30) PIND      PIND7 PIND6 PIND5 PIND4 PIND3 PIND2 PIND1 PIND0 -->
-    <register  name="PIND"    addr="0x0010" reset=""  mask="00000000" bits="PIND0,PIND1,PIND2,PIND3,PIND4,PIND5,PIND6,PIND7" />
-  <!-- 0x11 (0x31) DDRD      DDD7 DDD6 DDD5 DDD4 DDD3 DDD2 DDD1 DDD0 -->
-    <register  name="DDRD"    addr="0x0011" reset=""  mask="" bits="DDD0,DDD1,DDD2,DDD3,DDD4,DDD5,DDD6,DDD7" />
-  <!-- 0x12 (0x32) PORTD     PORTD7 PORTD6 PORTD5 PORTD4 PORTD3 PORTD2 PORTD1 PORTD0 -->
-    <register  name="PORTD"   addr="0x0012" reset=""  mask="" bits="PORTD0,PORTD1,PORTD2,PORTD3,PORTD4,PORTD5,PORTD6,PORTD7" />
-  <!-- 0x13 (0x33) PINC      PINC7 PINC6 PINC5 PINC4 PINC3 PINC2 PINC1 PINC0 -->
-    <register  name="PINC"    addr="0x0013" reset=""  mask="00000000" bits="PINC0,PINC1,PINC2,PINC3,PINC4,PINC5,PINC6,PINC7" />
-  <!-- 0x14 (0x34) DDRC      DDC7 DDC6 DDC5 DDC4 DDC3 DDC2 DDC1 DDC0 -->
-    <register  name="DDRC"    addr="0x0014" reset=""  mask="01111111" bits="DDC0,DDC1,DDC2,DDC3,DDC4,DDC5,DDC6,DDC7" />
-  <!-- 0x15 (0x35) PORTC     PORTC7 PORTC6 PORTC5 PORTC4 PORTC3 PORTC2 PORTC1 PORTC0 -->
-    <register  name="PORTC"   addr="0x0015" reset=""  mask="01111111" bits="PORTC0,PORTC1,PORTC2,PORTC3,PORTC4,PORTC5,PORTC6,PORTC7" />
-  <!-- 0x16 (0x36) PINB      PINB7 PINB6 PINB5 PINB4 PINB3 PINB2 PINB1 PINB0 -->
-    <register  name="PINB"    addr="0x0016" reset=""  mask="00000000" bits="PINB0,PINB1,PINB2,PINB3,PINB4,PINB5,PINB6,PINB7" />
-  <!-- 0x17 (0x37) DDRB      DDB7 DDB6 DDB5 DDB4 DDB3 DDB2 DDB1 DDB0 -->
-    <register  name="DDRB"    addr="0x0017" reset=""  mask="" bits="DDB0,DDB1,DDB2,DDB3,DDB4,DDB5,DDB6,DDB7" />
-  <!-- 0x18 (0x38) PORTB     PORTB7 PORTB6 PORTB5 PORTB4 PORTB3 PORTB2 PORTB1 PORTB0 -->
-    <register  name="PORTB"   addr="0x0018" reset=""  mask="" bits="PORTB0,PORTB1,PORTB2,PORTB3,PORTB4,PORTB5,PORTB6,PORTB7" />
-  <!-- 0x19 (0x39) PINA      PINA7 PINA6 PINA5 PINA4 PINA3 PINA2 PINA1 PINA0 -->
-    <register  name="PINA"    addr="0x0019" reset=""  mask="00000000" bits="PINA0,PINA1,PINA2,PINA3,PINA4,PINA5,PINA6,PINA7" />
-  <!-- 0x1A (0x3A) DDRA      DDA7 DDA6 DDA5 DDA4 DDA3 DDA2 DDA1 DDA0 -->
-    <register  name="DDRA"    addr="0x001A" reset=""  mask="" bits="DDA0,DDA1,DDA2,DDA3,DDA4,DDA5,DDA6,DDA7" />
-  <!-- 0x1B (0x3B) PORTA     PORTA7 PORTA6 PORTA5 PORTA4 PORTA3 PORTA2 PORTA1 PORTA0 -->
-    <register  name="PORTA"   addr="0x001B" reset=""  mask="" bits="PORTA0,PORTA1,PORTA2,PORTA3,PORTA4,PORTA5,PORTA6,PORTA7" />
-  <!-- 0x1C (0x3C) EECR      0 0 0 0 EERIE EEMWE EEWE EERE -->
-    <register  name="EECR"    addr="0x001C" reset=""  mask="00001111" bits="EERE,EEWE|EEPE,EEMWE|EEMPE,EERIE,0,0,0,0" />
-  <!-- 0x1D (0x3D) EEDR      EEPROM Data Register -->
-    <register  name="EEDR"    addr="0x001D" reset=""  mask="" bits="EEDR0,EEDR1,EEDR2,EEDR3,EEDR4,EEDR5,EEDR6,EEDR7" />
-  <!-- 0x1E (0x3E) EEARL     EEPROM Address Register Low Byte -->
+
+    <register  name="PIND"    addr="0x0010" reset=""  mask="00000000" bits="" />
+
+    <register  name="DDRD"    addr="0x0011" reset=""  mask="" bits="" />
+
+    <register  name="PORTD"   addr="0x0012" reset=""  mask="" bits="" />
+
+    <register  name="PINC"    addr="0x0013" reset=""  mask="00000000" 
+               bits="PINC0,PINC1,PINC2,PINC3,PINC4,PINC5,PINC6,PINC7" />
+
+    <register  name="DDRC"    addr="0x0014" reset=""  mask="01111111" bits="" />
+
+    <register  name="PORTC"   addr="0x0015" reset=""  mask="01111111" bits="" />
+
+    <register  name="PINB"    addr="0x0016" reset=""  mask="00000000" bits="" />
+
+    <register  name="DDRB"    addr="0x0017" reset=""  mask="" bits="" />
+
+    <register  name="PORTB"   addr="0x0018" reset=""  mask="" bits="" />
+
+    <register  name="PINA"    addr="0x0019" reset=""  mask="00000000" bits="" />
+
+    <register  name="DDRA"    addr="0x001A" reset=""  mask="" bits="" />
+
+    <register  name="PORTA"   addr="0x001B" reset=""  mask="" bits="" />
+
+    <register  name="EECR"    addr="0x001C" reset=""  mask="00001111" 
+               bits="EERE,EEWE|EEPE,EEMWE|EEMPE,EERIE,0,0,0,0" />
+
+    <register  name="EEDR"    addr="0x001D" reset=""  mask="" 
+               bits="EEDR0,EEDR1,EEDR2,EEDR3,EEDR4,EEDR5,EEDR6,EEDR7" />
+
     <register  name="EEARL"    addr="0x001E" bits="EEAR0,EEAR1,EEAR2,EEAR3,EEAR4,EEAR5,EEAR6,EEAR7" />
-  <!-- 0x1F (0x3F) EEARH     0 0 0 0 EEPROM Address Register High -->
+
     <register  name="EEARH"    addr="0x001F" reset=""  mask="00000111" bits="EEAR8,EEAR9,EEAR10,0,0,0,0,0" />
-  <!-- 0x20 (0x40) SFIOR     TSM 0 0 0 ACME PUD PSR0 PSR321 -->
+
     <register  name="SFIOR"   addr="0x0020" bits="PSR321,PSR0,PUD,ACME,0,0,0,TSM" />
-  <!-- 0x21 (0x41) WDTCR     0 0 0 WDCE WDE WDP2 WDP1 WDP0 -->
-    <register  name="WDTCR"   addr="0x0021" reset=""  mask="00011111" bits="WDP0,WDP1,WDP2,WDE,WDCE,0,0,0" />
-  <!-- 0x22 (0x42) OCDR      IDRD/OCDR7 OCDR6 OCDR5 OCDR4 OCDR3 OCDR2 OCDR1 OCDR0 -->
-    <register  name="OCDR"    addr="0x0022" bits="OCDR0,OCDR1,OCDR2,OCDR3,OCDR4,OCDR5,OCDR6,IDRD" />
-  <!-- 0x23 (0x43) OCR2      Timer/Counter2 Output Compare Register -->
 
-<!-- this region copy from mega8 -start -->
-    <!-- <register  name="OCR2"    addr="0x0023" bits="OCR20,OCR21,OCR22,OCR23,OCR24,OCR25,OCR26,OCR27" /> -->
-    <!-- 0x23 (0x43) OCR2      Timer/Counter2 Output Compare Register -->
+    <register  name="WDTCR"   addr="0x0021" reset=""  mask="00011111" 
+               bits="WDP0,WDP1,WDP2,WDE,WDCE,0,0,0" />
+
+    <register  name="OCDR"    addr="0x0022" 
+               bits="OCDR0,OCDR1,OCDR2,OCDR3,OCDR4,OCDR5,OCDR6,IDRD" />
+
     <register  name="OCR2"    addr="0x0023"  reset=""  mask="" bits="" />
-    <!-- 0x24 (0x44) TCNT2     Timer/Counter2 (8 Bit) -->
     <register  name="TCNT2"   addr="0x0024"  reset=""  mask="" bits="" />
-    <!-- 0x25 (0x45) TCCR2     FOC2 WGM20 COM21 COM20 WGM21 CS22 CS21 CS20 -->
-    <register  name="TCCR2"   addr="0x0025"  reset=""  mask="" bits="CS20,CS21,CS22,WGM21,COM20,COM21,WGM20,FOC2" />
-    <!-- 0x26 (0x46) ICR1L     Timer/Counter1  0 Input Capture Register Low Byte -->
-    <register  name="ICR1L"   addr="0x0026"  reset=""  mask="" bits="" />
-    <!-- 0x27 (0x47) ICR1H     Timer/Counter1  0 Input Capture Register High Byte -->
-    <register  name="ICR1H"   addr="0x0027"  reset=""  mask="" bits="" />
-    <!-- 0x28 (0x48) OCR1BL    Timer/Counter1 0 Output Compare Register B Low Byte -->
-    <register  name="OCR1BL"  addr="0x0028"  reset=""  mask="" bits="" />
-    <!-- 0x29 (0x49) OCR1BH    Timer/Counter1 0 Output Compare Register B High Byte -->
-    <register  name="OCR1BH"  addr="0x0029"  reset=""  mask="" bits="" />
-    <!-- 0x2A (0x4A) OCR1AL    Timer/Counter1 0 Output Compare Register A Low Byte -->
-    <register  name="OCR1AL"  addr="0x002A"  reset=""  mask="" bits="" />
-    <!-- 0x2B (0x4B) OCR1AH    Timer/Counter1 0 Output Compare Register A High Byte -->
-    <register  name="OCR1AH"  addr="0x002B"  reset=""  mask="" bits="" />
-    <!-- 0x2C (0x4C) TCNT1L    Timer/Counter1 0 Counter Register Low Byte -->
-    <register  name="TCNT1L"  addr="0x002C"  reset=""  mask="" bits="" />
-    <!-- 0x2D (0x4D) TCNT1H    Timer/Counter1 0 Counter Register High Byte -->
-    <register  name="TCNT1H"  addr="0x002D"  reset=""  mask="" bits="" />
-    <!-- 0x2E (0x4E) TCCR1B    ICNC1 ICES1 0 WGM13 WGM12 CS12 CS11 CS10 -->
-    <register  name="TCCR1B"  addr="0x002E"  reset=""  mask="11011111" bits="CS10,CS11,CS12,WGM12,WGM13,0,ICES1,ICNC1" />
-<!-- this region copy from mega8 -end -->
+    <register  name="TCCR2"   addr="0x0025"  reset=""  mask="" 
+               bits="CS20,CS21,CS22,WGM21,COM20,COM21,WGM20,FOC2" />
 
-  <!-- 0x2F (0x4F) TCCR1A    COM1A1 COM1A0 COM1B1 COM1B0 COM1C1 COM1C0 WGM11 WGM10 -->
-    <register  name="TCCR1A"  addr="0x002F" reset=""  mask="" bits="WGM10,WGM11,COM1C0,COM1C1,COM1B0,COM1B1,COM1A0,COM1A1" />
-  <!-- 0x30 (0x50) ASSR      0 0 0 0 AS0 TCN0UB OCR0UB TCR0UB -->
-    <register  name="ASSR"    addr="0x0030" reset=""  mask=""  bits="TCR0UB,OCR0UB,TCN0UB,AS0,0,0,0,0" />
-  <!-- 0x31 (0x51) OCR0      Timer/Counter0 Output Compare Register -->
+    <register  name="ICR1L"   addr="0x0026"  reset=""  mask="" bits="" />
+    <register  name="ICR1H"   addr="0x0027"  reset=""  mask="" bits="" />
+    <register  name="OCR1BL"  addr="0x0028"  reset=""  mask="" bits="" />
+    <register  name="OCR1BH"  addr="0x0029"  reset=""  mask="" bits="" />
+    <register  name="OCR1AL"  addr="0x002A"  reset=""  mask="" bits="" />
+
+    <register  name="OCR1AH"  addr="0x002B"  reset=""  mask="" bits="" />
+    <register  name="TCNT1L"  addr="0x002C"  reset=""  mask="" bits="" />
+    <register  name="TCNT1H"  addr="0x002D"  reset=""  mask="" bits="" />
+
+    <register  name="TCCR1B"  addr="0x002E"  reset=""  mask="11011111" 
+               bits="CS10,CS11,CS12,WGM12,WGM13,0,ICES1,ICNC1" />
+
+    <register  name="TCCR1A"  addr="0x002F" reset=""  mask="" 
+               bits="WGM10,WGM11,COM1C0,COM1C1,COM1B0,COM1B1,COM1A0,COM1A1" />
+
+    <register  name="ASSR"    addr="0x0030" reset=""  mask=""  
+               bits="TCR0UB,OCR0UB,TCN0UB,AS0,0,0,0,0" />
+
     <register  name="OCR0"    addr="0x0031"  reset=""  mask="" bits="" />
-  <!-- 0x32 (0x52) TCNT0     Timer/Counter0 (8 Bit) -->
     <register  name="TCNT0"   addr="0x0032"  reset=""  mask="" bits="" />
-  <!-- 0x33 (0x53) TCCR0     FOC0 WGM00 COM01 COM00 WGM01 CS02 CS01 CS00 -->
-    <register  name="TCCR0"   addr="0x0033"  reset=""  mask="" bits="CS00,CS01,CS02,WGM01,COM00,COM01,WGM00,FOC0" />
-  <!-- 0x34 (0x54) MCUCSR    JTD 0 0 JTRF WDRF BORF EXTRF PORF -->
-    <register  name="MCUCSR"  addr="0x0034" reset=""  mask=""  bits="PORF,EXTRF,BORF,WDRF,JTRF,0,0,JTD" />
-  <!-- 0x35 (0x55) MCUCR     SRE SRW10 SE SM1 SM0 SM2 IVSEL IVCE -->
-    <register  name="MCUCR"   addr="0x0035" reset=""  mask=""  bits="IVCE,IVSEL,SM2,SM0,SM1,SE,SRW10,SRE" />
-  <!-- 0x36 (0x56) TIFR      OCF2 TOV2 ICF1 OCF1A OCF1B TOV1 OCF0 TOV0 -->
-    <register  name="TIFR"    addr="0x0036" reset=""  mask=""  bits="TOV0,OCF0,TOV1,OCF1B,OCF1A,ICF1,TOV2,OCF2" />
-  <!-- 0x37 (0x57) TIMSK     OCIE2 TOIE2 TICIE1 OCIE1A OCIE1B TOIE1 OCIE0 TOIE0 -->
-    <register  name="TIMSK"   addr="0x0037" reset=""  mask="" bits="TOIE0,OCIE0,TOIE1,OCIE1B,OCIE1A,TICIE1,TOIE2,OCIE2" />
-  <!-- 0x38 (0x58) EIFR      INTF7 INTF6 INTF5 INTF4 INTF3 INTF2 INTF1 INTF0 -->
+
+    <register  name="TCCR0"   addr="0x0033"  reset=""  mask="" 
+               bits="CS00,CS01,CS02,WGM01,COM00,COM01,WGM00,FOC0" />
+
+    <register  name="MCUCSR"  addr="0x0034" reset=""  mask=""  
+               bits="PORF,EXTRF,BORF,WDRF,JTRF,0,0,JTD" />
+
+    <register  name="MCUCR"   addr="0x0035" reset=""  mask=""  
+               bits="IVCE,IVSEL,SM2,SM0,SM1,SE,SRW10,SRE" />
+
+    <register  name="TIFR"    addr="0x0036" reset=""  mask=""  
+               bits="TOV0,OCF0,TOV1,OCF1B,OCF1A,ICF1,TOV2,OCF2" />
+
+    <register  name="TIMSK"   addr="0x0037" reset=""  mask="" 
+               bits="TOIE0,OCIE0,TOIE1,OCIE1B,OCIE1A,TICIE1,TOIE2,OCIE2" />
+
     <register  name="EIFR"    addr="0x0038" bits="INTF0,INTF1,INTF2,INTF3,INTF4,INTF5,INTF6,INTF7" />
-  <!-- 0x39 (0x59) EIMSK     INT7 INT6 INT5 INT4 INT3 INT2 INT0 INT0 -->
+
     <register  name="EIMSK"   addr="0x0039" bits="INT0,INT1,INT2,INT3,INT4,INT5,INT6,INT7" />
-  <!-- 0x3A (0x5A) EICRB     ISC71 ISC70 ISC61 ISC60 ISC51 ISC50 ISC41 ISC40 -->
+
     <register  name="EICRB"   addr="0x003A" bits="ISC40,ISC41,ISC50,ISC51,ISC60,ISC61,ISC70,ISC71" />
-  <!-- 0x3B (0x5B) Reserved  0 0 0 0 0 0 0 0 -->
-  <!-- 0x3C (0x5C) XDIV       XDIVEN XDIV6 XDIV5 XDIV4 XDIV3 XDIV2 XDIV1 XDIV0 -->
+
+
     <register  name="XDIV"    addr="0x003C" bits="XDIV0,XDIV1,XDIV2,XDIV3,XDIV4,XDIV5,XDIV6,XDIVEN" />
-  <!-- 0x3D (0x5D) SPL        SP7 SP6 SP5 SP4 SP3 SP2 SP1 SP0 -->
+
     <register  name="SPL"     addr="0x003D" reset=""  mask="" bits="" />
-  <!-- 0x3E (0x5E) SPH        SP15 SP14 SP13 SP12 SP11 SP10 SP9 SP8 -->
+
     <register  name="SPH"     addr="0x003E" reset=""  mask="" bits="" />
-  <!-- 0x3F (0x5F) SREG       I T H S V N Z C -->
-    <!-- <register  name="SREG"    addr="0x003F" bits="C,Z,N,V,S,H,T,I" /> -->
   </regblock>
 
 
   <regblock  name="EXT_I/O_REG" start="0x0060" end="0x00FF" offset="0">
-  <!-- (0x60)      Reserved  0 0 0 0 0 0 0 0 -->
-  <!-- (0x61)      DDRF      DDF7 DDF6 DDF5 DDF4 DDF3 DDF2 DDF1 DDF0 -->
-    <register  name="DDRF"    addr="0x0061" bits="DDF0,DDF1,DDF2,DDF3,DDF4,DDF5,DDF6,DDF7" />
-  <!-- (0x62)      PORTF     PORTF7 PORTF6 PORTF5 PORTF4 PORTF3 PORTF2 PORTF1 PORTF0 -->
-    <register  name="PORTF"   addr="0x0062" bits="PORTF0,PORTF1,PORTF2,PORTF3,PORTF4,PORTF5,PORTF6,PORTF7" />
-  <!-- (0x63)      PING      0 0 0 PING4 PING3 PING2 PING1 PING0 -->
-    <register  name="PING"    addr="0x0063" bits="PING0,PING1,PING2,PING3,PING4,0,0,0" />
-  <!-- (0x64)      DDRG      0 0 0 DDG4 DDG3 DDG2 DDG1 DDG0 -->
-    <register  name="DDRG"    addr="0x0064" bits="DDG0,DDG1,DDG2,DDG3,DDG4,0,0,0" />
-  <!-- (0x65)      PORTG     0 0 0 PORTG4 PORTG3 PORTG2 PORTG1 PORTG0 -->
-    <register  name="PORTG"   addr="0x0065" bits="PORTG0,PORTG1,PORTG2,PORTG3,PORTG4,0,0,0" Mask="00011111"/>
-  <!-- (0x66)      Reserved  0 0 0 0 0 0 0 0 -->
-  <!-- (0x67)      Reserved  0 0 0 0 0 0 0 0 -->
-  <!-- (0x68)      SPMCSR    SPMIE RWWSB 0 RWWSRE BLBSET PGWRT PGERS SPMEN -->
-    <register  name="SPMCSR"  addr="0x0068" bits="SPMEN,PGERS,PGWRT,BLBSET,RWWSRE,0,RWWSB,SPMIE" />
-  <!-- (0x69)      Reserved  0 0 0 0 0 0 0 0 -->
-  <!-- (0x6A)      EICRA     ISC31 ISC30 ISC21 ISC20 ISC11 ISC10 ISC01 ISC00 -->
+
+    <register  name="DDRF"    addr="0x0061" bits="" />
+
+    <register  name="PORTF"   addr="0x0062" bits="" />
+
+    <register  name="PING"    addr="0x0063" bits="" />
+
+    <register  name="DDRG"    addr="0x0064" bits="" />
+
+    <register  name="PORTG"   addr="0x0065" bits="" Mask="00011111"/>
+
+    <register  name="SPMCSR"  addr="0x0068" 
+               bits="SPMEN,PGERS,PGWRT,BLBSET,RWWSRE,0,RWWSB,SPMIE" />
+
     <register  name="EICRA"   addr="0x006A" bits="ISC00,ISC01,ISC10,ISC11,ISC20,ISC21,ISC30,ISC31" />
-  <!-- (0x6B)      Reserved  0 0 0 0 0 0 0 0 -->
-  <!-- (0x6C)      XMCRB     XMBK 0 0 0 0 XMM2 XMM1 XMM0 -->
+
     <register  name="XMCRB"   addr="0x006C" bits="XMM0,XMM1,XMM2,0,0,0,0,XMBK" />
-  <!-- (0x6D)      XMCRA     0 SRL2 SRL1 SRL0 SRW01 SRW00 SRW11 0 -->
+
     <register  name="XMCRA"   addr="0x006D" bits="0,SRW11,SRW00,SRW01,SRL0,SRL1,SRL2,0" />
-  <!-- (0x6E)      Reserved  0 0 0 0 0 0 0 0 -->
-  <!-- (0x6F)      OSCCAL    Oscillator Calibration Register -->
+
     <register  name="OSCCAL"  addr="0x006F" reset=""  mask="" bits="" />
-  <!-- (0x70)      TWBR      Two-wire Serial Interface Bit Rate Register -->
+
     <register  name="TWBR"    addr="0x0070" reset=""  mask="" bits="TWBR0,TWBR1,TWBR2,TWBR3,TWBR4,TWBR5,TWBR6,TWBR7" />
-  <!-- (0x71)      TWSR      TWS7 TWS6 TWS5 TWS4 TWS3 0 TWPS1 TWPS0 -->
+
     <register  name="TWSR"    addr="0x0071" reset="11111000"  mask="00000011" bits="TWPS0,TWPS1,0,TWS3,TWS4,TWS5,TWS6,TWS7" />
-  <!-- (0x72)      TWAR      TWA6 TWA5 TWA4 TWA3 TWA2 TWA1 TWA0 TWGCE -->
+
     <register  name="TWAR"    addr="0x0072" reset="11111110"  mask="" bits="TWGCE,TWA0,TWA1,TWA2,TWA3,TWA4,TWA5,TWA6" />
-  <!-- (0x73)      TWDR      Two-wire Serial Interface Data Register -->
+
     <register  name="TWDR"    addr="0x0073" reset="11111111"  mask="" bits="TWD0,TWD1,TWD2,TWD3,TWD4,TWD5,TWD6,TWD7" />
-  <!-- (0x74)      TWCR      TWINT TWEA TWSTA TWSTO TWWC TWEN 0 TWIE -->
-    <register  name="TWCR"    addr="0x0074" reset=""  mask="11110101" bits="TWIE,0,TWEN,TWWC,TWSTO,TWSTA,TWEA,TWINT" />
-  <!-- (0x75)      Reserved  0 0 0 0 0 0 0 0 -->
-  <!-- (0x76)      Reserved  0 0 0 0 0 0 0 0 -->
-  <!-- (0x77)      Reserved  0 0 0 0 0 0 0 0 -->
-  <!-- (0x78)      OCR1CL    Timer/Counter1 0 Output Compare Register C Low Byte -->
+
+    <register  name="TWCR"    addr="0x0074" reset=""  mask="11110101" 
+               bits="TWIE,0,TWEN,TWWC,TWSTO,TWSTA,TWEA,TWINT" />
+
     <register  name="OCR1CL"  addr="0x0078" bits="" />
-  <!-- (0x79)      OCR1CH    Timer/Counter1 0 Output Compare Register C High Byte -->
     <register  name="OCR1CH"  addr="0x0079" bits="" />
-  <!-- (0x7A)      TCCR1C    FOC1A FOC1B FOC1C 0 0 0 0 0 -->
-    <register  name="TCCR1C"  addr="0x007A" reset=""  mask="11100000" bits="0,0,0,0,0,FOC1C,FOC1B,FOC1A" />
-  <!-- (0x7B)      Reserved  0 0 0 0 0 0 0 0 -->
-  <!-- (0x7C)      ETIFR     0 0 ICF3 OCF3A OCF3B TOV3 OCF3C OCF1C -->
-    <register  name="ETIFR"   addr="0x007C" bits="OCF1C,OCF3C,TOV3,OCF3B,OCF3A,ICF3,0,0" />
-  <!-- (0x7D)      ETIMSK    0 0 TICIE3 OCIE3A OCIE3B TOIE3 OCIE3C OCIE1C -->
-    <register  name="ETIMSK"  addr="0x007D" bits="OCIE1C,OCIE3C,TOIE3,OCIE3B,OCIE3A,TICIE3,0,0" />
-  <!-- (0x7E)      Reserved  0 0 0 0 0 0 0 0 -->
-  <!-- (0x7F)      Reserved  0 0 0 0 0 0 0 0 -->
-  <!-- (0x80)      ICR3L     Timer/Counter3  0 Input Capture Register Low Byte -->
+
+    <register  name="TCCR1C"  addr="0x007A" reset=""  mask="11100000" 
+               bits="0,0,0,0,0,FOC1C,FOC1B,FOC1A" />
+
+    <register  name="ETIFR"   addr="0x007C" 
+               bits="OCF1C,OCF3C,TOV3,OCF3B,OCF3A,ICF3,0,0" />
+
+    <register  name="ETIMSK"  addr="0x007D" 
+               bits="OCIE1C,OCIE3C,TOIE3,OCIE3B,OCIE3A,TICIE3,0,0" />
+
     <register  name="ICR3L"   addr="0x0080" bits="" />
-  <!-- (0x81)      ICR3H     Timer/Counter3  0 Input Capture Register High Byte -->
     <register  name="ICR3H"   addr="0x0081" bits="" />
-  <!-- (0x82)      OCR3CL    Timer/Counter3 0 Output Compare Register C Low Byte -->
     <register  name="OCR3CL"  addr="0x0082" bits="" />
-  <!-- (0x83)      OCR3CH    Timer/Counter3 0 Output Compare Register C High Byte -->
-    <register  name="OCR3CH"  addr="0x0083" bits="" />
-  <!-- (0x84)      OCR3BL    Timer/Counter3 0 Output Compare Register B Low Byte -->
     <register  name="OCR3BL"  addr="0x0084" bits="" />
-  <!-- (0x85)      OCR3BH    Timer/Counter3 0 Output Compare Register B High Byte -->
     <register  name="OCR3BH"  addr="0x0085" bits="" />
-  <!-- (0x86)      OCR3AL    Timer/Counter3 0 Output Compare Register A Low Byte -->
     <register  name="OCR3AL"  addr="0x0086" bits="" />
-  <!-- (0x87)      OCR3AH    Timer/Counter3 0 Output Compare Register A High Byte -->
     <register  name="OCR3AH"  addr="0x0087" bits="" />
-  <!-- (0x88)      TCNT3L    Timer/Counter3 0 Counter Register Low Byte -->
     <register  name="TCNT3L"  addr="0x0088" bits="" />
-  <!-- (0x89)      TCNT3H    Timer/Counter3 0 Counter Register High Byte -->
     <register  name="TCNT3H"  addr="0x0089" bits="" />
-  <!-- (0x8A)      TCCR3B    ICNC3 ICES3 0 WGM33 WGM32 CS32 CS31 CS30 -->
-    <register  name="TCCR3B"  addr="0x008A" reset=""  mask="11011111" bits="CS30,CS31,CS32,WGM32,WGM33,0,ICES3,ICNC3" />
-  <!-- (0x8B)      TCCR3A    COM3A1 COM3A0 COM3B1 COM3B0 COM3C1 COM3C0 WGM31 WGM30 -->
-    <register  name="TCCR3A"  addr="0x008B" bits="WGM30,WGM31,COM3C0,COM3C1,COM3B0,COM3B1,COM3A0,COM3A1" />
-  <!-- (0x8C)      TCCR3C    FOC3A FOC3B FOC3C 0 0 0 0 0 -->
-    <register  name="TCCR3C"  addr="0x008C" reset=""  mask="11100000" bits="0,0,0,0,0,FOC3C,FOC3B,FOC3A" />
-  <!-- (0x8D)      Reserved  0 0 0 0 0 0 0 0 -->
-  <!-- (0x8E)      ADCSRB    0 0 0 0 0 ADTS2 ADTS1 ADTS0 -->
-    <register  name="ADCSRB"  addr="0x008E" reset=""  mask="00000111" bits="ADTS0,ADTS1,ADTS2,0,0,0,0,0" />
-  <!-- (0x8F)      Reserved  0 0 0 0 0 0 0 0 -->
-  <!-- (0x90)      UBRR0H    0 0 0 0 USART0 Baud Rate Register High -->
-    <register  name="UBRR0H"  addr="0x0090" reset=""  mask="00001111" bits="UBRR8,UBRR9,UBRR10,UBRR11,0,0,0,0" />
-  <!-- (0x91)      Reserved  0 0 0 0 0 0 0 0 -->
-  <!-- (0x92)      Reserved  0 0 0 0 0 0 0 0 -->
-  <!-- (0x93)      Reserved  0 0 0 0 0 0 0 0 -->
-  <!-- (0x94)      Reserved  0 0 0 0 0 0 0 0 -->
-  <!-- (0x95)      UCSR0C    0 UMSEL0 UPM01 UPM00 USBS0 UCSZ01 UCSZ00 UCPOL0 -->
-    <register  name="UCSR0C"  addr="0x0095" reset="00000110"  mask="" bits="UCPOL0,UCSZ00,UCSZ01,USBS0,UPM00,UPM01,UMSEL0,0" />
-  <!-- (0x96)      Reserved  0 0 0 0 0 0 0 0 -->
-  <!-- (0x97)      Reserved  0 0 0 0 0 0 0 0 -->
-  <!-- (0x98)      UBRR1H    0 0 0 0 USART1 Baud Rate Register High -->
-    <register  name="UBRR1H"  addr="0x0098" reset=""  mask="00001111" bits="UBRR8,UBRR9,UBRR10,UBRR11,0,0,0,0" />
-  <!-- (0x99)      UBRR1L    USART1 Baud Rate Register Low -->
+    <register  name="TCCR3B"  addr="0x008A" reset=""  mask="11011111" 
+               bits="CS30,CS31,CS32,WGM32,WGM33,0,ICES3,ICNC3" />
+
+    <register  name="TCCR3A"  addr="0x008B" 
+               bits="WGM30,WGM31,COM3C0,COM3C1,COM3B0,COM3B1,COM3A0,COM3A1" />
+
+    <register  name="TCCR3C"  addr="0x008C" reset=""  mask="11100000" 
+               bits="0,0,0,0,0,FOC3C,FOC3B,FOC3A" />
+
+    <register  name="ADCSRB"  addr="0x008E" reset=""  mask="00000111" 
+               bits="ADTS0,ADTS1,ADTS2,0,0,0,0,0" />
+
+    <register  name="UBRR0H"  addr="0x0090" reset=""  mask="00001111" bits="" />
+
+    <register  name="UCSR0C"  addr="0x0095" reset="00000110"  mask=""
+               bits="UCPOL0,UCSZ00,UCSZ01,USBS0,UPM00,UPM01,UMSEL0,0" />
+
+    <register  name="UBRR1H"  addr="0x0098" reset=""  mask="00001111" bits="" />
+
     <register  name="UBRR1L"  addr="0x0099" bits="" />
-  <!-- (0x9A)      UCSR1B    RXCIE1 TXCIE1 UDRIE1 RXEN1 TXEN1 UCSZ12 RXB81 TXB81 -->
-    <register  name="UCSR1B"  addr="0x009A" reset=""  mask="11111101" bits="TXB81,RXB81,UCSZ12,TXEN1,RXEN1,UDRIE1,TXCIE1,RXCIE1" />
-  <!-- (0x9B)      UCSR1A    RXC1 TXC1 UDRE1 FE1 DOR1 UPE1 U2X1 MPCM1 -->
-    <register  name="UCSR1A"  addr="0x009B" reset="00100000"  mask="01000011" bits="MPCM1,U2X1,UPE1,DOR1,FE1,UDRE1,TXC1,RXC1" />
-  <!-- (0x9C)      UDR1      USART1 I/O Data Register -->
+
+    <register  name="UCSR1B"  addr="0x009A" reset=""  mask="11111101" 
+               bits="TXB81,RXB81,UCSZ12,TXEN1,RXEN1,UDRIE1,TXCIE1,RXCIE1" />
+
+    <register  name="UCSR1A"  addr="0x009B" reset="00100000"  mask="01000011" 
+               bits="MPCM1,U2X1,UPE1,DOR1,FE1,UDRE1,TXC1,RXC1" />
+
     <register  name="UDR1"    addr="0x009C" mask="00000000" bits="" />
-  <!-- (0x9D)      UCSR1C    0 UMSEL1 UPM11 UPM10 USBS1 UCSZ11 UCSZ10 UCPOL1 -->
-    <register  name="UCSR1C"  addr="0x009D" reset="00000110"  mask="" bits="UCPOL1,UCSZ10,UCSZ11,USBS1,UPM10,UPM11,UMSEL1,0" />
-  <!-- (0x9E)      Reserved  0 0 0 0 0 0 0 0 -->
-  <!-- (0x9F)      Reserved  0 0 0 0 0 0 0 0 -->
+
+    <register  name="UCSR1C"  addr="0x009D" reset="00000110"  mask="" 
+               bits="UCPOL1,UCSZ10,UCSZ11,USBS1,UPM10,UPM11,UMSEL1,0" />
 
   </regblock>
-
-  <!-- <datablock name="RAM" start="0x0100" end="0x10FF"/> -->
 
   <stack  spreg="SPL,SPH" increment="postdec" />
 </parts>

@@ -79,11 +79,9 @@
     <register  name="ASSR"    addr="0x0022"  reset=""  mask="" 
                bits="TCR2UB,OCR2UB,TCN2UB,AS2,0,0,0,0" />
 
-    <register  name="OCR2"    addr="0x0023"  reset=""  mask="" 
-               bits="OCR2_0,OCR2_1,OCR2_2,OCR2_3,OCR2_4,OCR2_5,OCR2_6,OCR2_7" />
+    <register  name="OCR2"    addr="0x0023"  reset=""  mask="" bits="" />
 
-    <register  name="TCNT2"   addr="0x0024"  reset=""  mask="" 
-               bits="TCNT2_0,TCNT2_1,TCNT2_2,TCNT2_3,TCNT2_4,TCNT2_5,TCNT2_6,TCNT2_7" />
+    <register  name="TCNT2"   addr="0x0024"  reset=""  mask="" bits="" />
 
     <register  name="TCCR2"   addr="0x0025"  reset=""  mask="" 
                bits="CS20,CS21,CS22,CTC2,COM20,COM21,PWM2,FOC2" />

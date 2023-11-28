@@ -43,32 +43,17 @@
 
     <register  name="SPDR"    addr="0x000F"  reset=""  mask="" bits="" />
     
-    <register  name="PIND"    addr="0x0010"  reset=""  mask="00000000" 
-               bits="PIND0,PIND1,PIND2,PIND3,PIND4,PIND5,PIND6,PIND7" />
-
-    <register  name="DDRD"    addr="0x0011"  reset=""  mask="" 
-               bits="DDD0,DDD1,DDD2,DDD3,DDD4,DDD5,DDD6,DDD7" />
-
-    <register  name="PORTD"   addr="0x0012"  reset=""  mask="" 
-               bits="PORTD0,PORTD1,PORTD2,PORTD3,PORTD4,PORTD5,PORTD6,PORTD7" />
+    <register  name="PIND"    addr="0x0010"  reset=""  mask="00000000"  bits="" />
+    <register  name="DDRD"    addr="0x0011"  reset=""  mask=""  bits="" />
+    <register  name="PORTD"   addr="0x0012"  reset=""  mask=""  bits="" />
     
-    <register  name="PINC"    addr="0x0013"  reset=""  mask="00000000" 
-               bits="PINC0,PINC1,PINC2,PINC3,PINC4,PINC5,PINC6,0" />
-
-    <register  name="DDRC"    addr="0x0014"  reset=""  mask="01111111" 
-               bits="DDC0,DDC1,DDC2,DDC3,DDC4,DDC5,DDC6,0" />
-
-    <register  name="PORTC"   addr="0x0015"  reset=""  mask="01111111" 
-               bits="PORTC0,PORTC1,PORTC2,PORTC3,PORTC4,PORTC5,PORTC6,0" />
+    <register  name="PINC"    addr="0x0013"  reset=""  mask="00000000" bits="" />
+    <register  name="DDRC"    addr="0x0014"  reset=""  mask="01111111" bits="" />
+    <register  name="PORTC"   addr="0x0015"  reset=""  mask="01111111"  bits="" />
     
-    <register  name="PINB"    addr="0x0016"  reset=""  mask="00000000" 
-               bits="PINB0,PINB1,PINB2,PINB3,PINB4,PINB5,PINB6,PINB7" />
-
-    <register  name="DDRB"    addr="0x0017"  reset=""  mask="" 
-               bits="DDB0,DDB1,DDB2,DDB3,DDB4,DDB5,DDB6,DDB7" />
-
-    <register  name="PORTB"   addr="0x0018"  reset=""  mask="" 
-               bits="PORTB0,PORTB1,PORTB2,PORTB3,PORTB4,PORTB5,PORTB6,PORTB7" />
+    <register  name="PINB"    addr="0x0016"  reset=""  mask="00000000" bits="" />
+    <register  name="DDRB"    addr="0x0017"  reset=""  mask=""  bits="" />
+    <register  name="PORTB"   addr="0x0018"  reset=""  mask=""  bits="" />
     
     <register  name="EECR"    addr="0x001C"  reset=""  mask="00001111" 
                bits="EERE,EEWE|EEPE,EEMWE|EEMPE,EERIE,0,0,0,0" />
@@ -145,8 +130,8 @@
     <register  name="GICR"   addr="0x003B"  reset=""  mask="" 
                bits="IVCE,IVSEL,0,0,0,0,INT0,INT1" />
     
-    <register  name="SPL"     addr="0x003D"  reset=""  mask="" bits="" />
-    <register  name="SPH"     addr="0x003E"  reset=""  mask="" bits="" />
+    <register  name="SPL"    addr="0x003D"  reset=""  mask="" bits="" />
+    <register  name="SPH"    addr="0x003E"  reset=""  mask="" bits="" />
   </regblock>
   <datablock name="RAM" start="0x0060" end="0x045F"/>
 

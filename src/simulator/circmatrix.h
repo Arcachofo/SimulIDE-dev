@@ -13,11 +13,10 @@
 
 class CircMatrix
 {
-    typedef std::vector<int>                  i_vector_t;
-    typedef std::vector<double>               d_vector_t;
-    typedef std::vector<double*>              dp_vector_t;
-    typedef std::vector<std::vector<double>>  d_matrix_t;
-    typedef std::vector<std::vector<double*>> dp_matrix_t;
+    typedef std::vector<double>      d_vector_t;
+    typedef std::vector<double*>     dp_vector_t;
+    typedef std::vector<d_vector_t>  d_matrix_t;
+    typedef std::vector<dp_vector_t> dp_matrix_t;
 
     public:
         CircMatrix();

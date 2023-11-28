@@ -29,9 +29,11 @@
                bits="AIN0D,AIN1D,ADC1D,ADC3D,ADC2D,ADC0D,0,0" />
                
     <register  name="PCMSK"   addr="0x0015" mask="00111111" />
+    
     <register  name="PINB"    addr="0x0016" />
     <register  name="DDRB"    addr="0x0017" />
     <register  name="PORTB"   addr="0x0018" />
+    
     <register  name="EECR"    addr="0x001C" mask="00111111"
                bits="EERE,EEPE,EEMPE,EERIE,EEPM0,EEPM1,0,0" />
                

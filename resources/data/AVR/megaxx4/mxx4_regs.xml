@@ -1,21 +1,21 @@
 <parts>
   <regblock  name="I/O_REG" start="0x0020" end="0x005F" offset="32">
       
-    <register  name="PINA"    addr="0x0000" bits="PINA0,PINA1,PINA2,PINA3,PINA4,PINA5,PINA6,PINA7" />
-    <register  name="DDRA"    addr="0x0001" bits="DDA0,DDA1,DDA2,DDA3,DDA4,DDA5,DDA6,DDA7" />
-    <register  name="PORTA"   addr="0x0002" bits="PA0,PA1,PA2,PA3,PA4,PA5,PA6,PA7" />
+    <register  name="PINA"    addr="0x0000" bits="" />
+    <register  name="DDRA"    addr="0x0001" bits="" />
+    <register  name="PORTA"   addr="0x0002" bits="" />
     
-    <register  name="PINB"    addr="0x0003" bits="PINB0,PINB1,PINB2,PINB3,PINB4,PINB5,PINB6,PINB7" />
-    <register  name="DDRB"    addr="0x0004" bits="DDB0,DDB1,DDB2,DDB3,DDB4,DDB5,DDB6,DDB7" />
-    <register  name="PORTB"   addr="0x0005" bits="PB0,PB1,PB2,PB3,PB4,PB5,PB6,PB7" />
+    <register  name="PINB"    addr="0x0003" bits="" />
+    <register  name="DDRB"    addr="0x0004" bits="" />
+    <register  name="PORTB"   addr="0x0005" bits="" />
     
-    <register  name="PINC"    addr="0x0006" bits="PINC0,PINC1,PINC2,PINC3,PINC4,PINC5,PINC6,PINC7" />
-    <register  name="DDRC"    addr="0x0007" bits="DDC0,DDC1,DDC2,DDC3,DDC4,DDC5,DDC6,DDC7" />
-    <register  name="PORTC"   addr="0x0008" bits="PC0,PC1,PC2,PC3,PC4,PC5,PC6,PC7" />
+    <register  name="PINC"    addr="0x0006" bits="" />
+    <register  name="DDRC"    addr="0x0007" bits="" />
+    <register  name="PORTC"   addr="0x0008" bits="" />
     
-    <register  name="PIND"    addr="0x0009" bits="PIND0,PIND1,PIND2,PIND3,PIND4,PIND5,PIND6,PIND7" />
-    <register  name="DDRD"    addr="0x000A" bits="DDD0,DDD1,DDD2,DDD3,DDD4,DDD5,DDD6,DDD7" />
-    <register  name="PORTD"   addr="0x000B" bits="PD0,PD1,PD2,PD3,PD4,PD5,PD6,PD7" />
+    <register  name="PIND"    addr="0x0009" bits="" />
+    <register  name="DDRD"    addr="0x000A" bits="" />
+    <register  name="PORTD"   addr="0x000B" bits="" />
                
     <register  name="TIFR0"   addr="0x0015"  reset=""  mask="00000111" 
                bits="TOV0,OCF0A,OCF0B,0,0,0,0,0" />
@@ -51,7 +51,9 @@
     <register  name="OCR0B"   addr="0x0028" />
     <register  name="GPIOR1"  addr="0x002A" />
     <register  name="GPIOR2"  addr="0x002B" />
-    <register  name="SPCR"    addr="0x002C" bits="SPR0,SPR1,CPHA,CPOL,MSTR,DORD,SPE,SPIE" />
+    <register  name="SPCR"    addr="0x002C" 
+               bits="SPR0,SPR1,CPHA,CPOL,MSTR,DORD,SPE,SPIE" />
+               
     <register  name="SPSR"    addr="0x002D"  reset=""  mask="00000001" 
                bits="SPI2X,0,0,0,0,0,WCOL,SPIF" />
                
@@ -60,22 +62,39 @@
                bits="ACIS0,ACIS1,ACIC,ACIE,ACI,ACO,ACBG,ACD" />
                
     <register  name="OCDR"    addr="0x0031" />
-    <register  name="SMCR"    addr="0x0033" bits="SE,SM0,SM1,SM2,0,0,0,0" />
-    <register  name="MCUSR"   addr="0x0034" bits="PORF,EXTRF,BORF,WDRF,JTRF,0,0,0" />
+    <register  name="SMCR"    addr="0x0033" 
+               bits="SE,SM0,SM1,SM2,0,0,0,0" />
+               
+    <register  name="MCUSR"   addr="0x0034" 
+               bits="PORF,EXTRF,BORF,WDRF,JTRF,0,0,0" />
+               
     <register  name="MCUCR"   addr="0x0035"  reset=""  mask="10010011" 
                bits="IVCE,IVSEL,0,0,PUD,BODSE,BODS,JTD" />
                
-    <register  name="SPMCSR"  addr="0x0037" bits="SPMEN,PGERS,PGWRT,BLBSET,RWWSRE,SIGRD,RWWSB,SPMIE" />
+    <register  name="SPMCSR"  addr="0x0037" 
+               bits="SPMEN,PGERS,PGWRT,BLBSET,RWWSRE,SIGRD,RWWSB,SPMIE" />
+               
     <register  name="SPL"     addr="0x003D" bits="" />
     <register  name="SPH"     addr="0x003E" bits="" />
   </regblock>
+  
   <regblock  name="EXT_I/O_REG" start="0x0060" end="0x01FF" offset="0">
-    <register  name="WDTCSR"  addr="0x0060" bits="WDP0,WDP1,WDP2,WDE,WDCE,WDP3,WDIE,WDIF" />
-    <register  name="CLKPR"   addr="0x0061" bits="CLKPS0,CLKPS1,CLKPS2,CLKPS3,0,0,0,CLKPCE" />
-    <register  name="PRR0"    addr="0x0064" bits="PRADC,PRUSART0,PRSPI,PRTIM1,PRUSART1,PRTIM0,PRTIM2,PRTWI" />
-    <register  name="PRR1"    addr="0x0065" bits="PRTIM3,0,0,0,0,0,0,0" />
+    <register  name="WDTCSR"  addr="0x0060" 
+               bits="WDP0,WDP1,WDP2,WDE,WDCE,WDP3,WDIE,WDIF" />
+               
+    <register  name="CLKPR"   addr="0x0061" 
+               bits="CLKPS0,CLKPS1,CLKPS2,CLKPS3,0,0,0,CLKPCE" />
+               
+    <register  name="PRR0"    addr="0x0064" 
+               bits="PRADC,PRUSART0,PRSPI,PRTIM1,PRUSART1,PRTIM0,PRTIM2,PRTWI" />
+               
+    <register  name="PRR1"    addr="0x0065" 
+               bits="PRTIM3,0,0,0,0,0,0,0" />
+               
     <register  name="OSCCAL"  addr="0x0066" />
-    <register  name="PCICR"   addr="0x0068" bits="PCIE0,PCIE1,PCIE2,PCIE3,0,0,0,0" />
+    <register  name="PCICR"   addr="0x0068" 
+               bits="PCIE0,PCIE1,PCIE2,PCIE3,0,0,0,0" />
+               
     <register  name="EICRA"   addr="0x0069" bits="ISC00,ISC01,ISC10,ISC11,ISC20,ISC21,0," />
     <register  name="PCMSK0"  addr="0x006B" bits="PCINT0,PCINT1,PCINT2,PCINT3,PCINT4,PCINT5,PCINT6,PCINT7" />
     <register  name="PCMSK1"  addr="0x006C" bits="PCINT8,PCINT9,PCINT10,PCINT11,PCINT12,PCINT13,PCINT14,PCINT15" />
@@ -96,16 +115,22 @@
     <register  name="ADCL"    addr="0x0078"  reset=""  mask="00000000" />
     <register  name="ADCH"    addr="0x0079"  reset=""  mask="00000000" />
                
-    <register  name="ADCSRA"  addr="0x007A" bits="ADPS0,ADPS1,ADPS2,ADIE,ADIF,ADATE,ADSC,ADEN" />
+    <register  name="ADCSRA"  addr="0x007A" 
+               bits="ADPS0,ADPS1,ADPS2,ADIE,ADIF,ADATE,ADSC,ADEN" />
+               
     <register  name="ADCSRB"  addr="0x007B"  reset=""  mask="01001111"
                bits="ADTS0,ADTS1,ADTS2,MUX5,0,0,ACME,0" />
                
-    <register  name="ADMUX"   addr="0x007C" bits="MUX0,MUX1,MUX2,MUX3,MUX4,ADLAR,REFS0,REFS1" />
+    <register  name="ADMUX"   addr="0x007C" 
+               bits="MUX0,MUX1,MUX2,MUX3,MUX4,ADLAR,REFS0,REFS1" />
+               
     <register  name="DIDR0"   addr="0x007E" bits="ADC0D,ADC1D,ADC2D,ADC3D,ADC4D,ADC5D,ADC6D,ADC7D" />
     <register  name="DIDR1"   addr="0x007F"  reset=""  mask="00000011"
                bits="AIN0D,AIN1D,0,0,0,0,0,0" />
                
-    <register  name="TCCR1A"  addr="0x0080" bits="WGM10,WGM11,COM1C0,COM1C1,COM1B0,COM1B1,COM1A0,COM1A1" />
+    <register  name="TCCR1A"  addr="0x0080" 
+               bits="WGM10,WGM11,COM1C0,COM1C1,COM1B0,COM1B1,COM1A0,COM1A1" />
+               
     <register  name="TCCR1B"  addr="0x0081"  reset=""  mask="11011111"
                bits="CS10,CS11,CS12,WGM12,WGM13,0,ICES1,ICNC1" />
                
@@ -120,7 +145,9 @@
     <register  name="OCR1AH"  addr="0x0089" bits="" />
     <register  name="OCR1BL"  addr="0x008A" bits="" />
     <register  name="OCR1BH"  addr="0x008B" bits="" />
-    <register  name="TCCR3A"  addr="0x0090" bits="WGM30,WGM31,0,0,COM3B0,COM3B1,COM3A0,COM3A1" />
+    <register  name="TCCR3A"  addr="0x0090" 
+               bits="WGM30,WGM31,0,0,COM3B0,COM3B1,COM3A0,COM3A1" />
+               
     <register  name="TCCR3B"  addr="0x0091"  reset=""  mask="11011111"
                bits="CS30,CS31,CS32,WGM32,WGM33,0,ICES3,ICNC3" />
                
@@ -147,7 +174,9 @@
     <register  name="TCNT2"   addr="0x00B2" />
     <register  name="OCR2A"   addr="0x00B3" />
     <register  name="OCR2B"   addr="0x00B4" />
-    <register  name="ASSR"    addr="0x00B6" bits="TCR2BUB,TCR2AUB,OCR2BUB,OCR2AUB,TCN2UB,AS2,EXCLK,0" />
+    <register  name="ASSR"    addr="0x00B6" 
+               bits="TCR2BUB,TCR2AUB,OCR2BUB,OCR2AUB,TCN2UB,AS2,EXCLK,0" />
+               
     <register  name="TWBR"    addr="0x00B8" />
     <register  name="TWSR"    addr="0x00B9"  reset="11111000"  mask="00000011" 
                bits="TWPS0,TWPS1,0,TWS3,TWS4,TWS5,TWS6,TWS7" />
