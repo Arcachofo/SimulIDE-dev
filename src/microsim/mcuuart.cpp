@@ -32,7 +32,7 @@ void McuUsart::frameSent( uint8_t data )
 
 void McuUsart::readByte( uint8_t )
 {
-    m_mcu->m_regOverride = m_receiver->getData();
+    if( m_mcu->isCpuRead() ) m_mcu->m_regOverride = m_receiver->getData();
 }
 
 uint8_t McuUsart::getBit9Tx()

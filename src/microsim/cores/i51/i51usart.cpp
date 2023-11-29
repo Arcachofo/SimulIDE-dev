@@ -110,11 +110,14 @@ void I51Usart::callBack()
 
 void I51Usart::readByte( uint8_t ) // Reading SBUF
 {
-    m_stopBitError = false;
-    uint8_t data = m_receiver->getData(); // This calls I51Usart::setRxFlags()
+    if( m_mcu->isCpuRead() )
+    {
+        m_stopBitError = false;
+        uint8_t data = m_receiver->getData(); // This calls I51Usart::setRxFlags()
 
-    if( m_mode == 1 && m_stopBitError ) return; // Ignore frame
-    m_mcu->m_regOverride = data;
+        if( m_mode == 1 && m_stopBitError ) return; // Ignore frame
+        m_mcu->m_regOverride = data;
+    }
 }
 
 void I51Usart::setRxFlags( uint16_t frame )

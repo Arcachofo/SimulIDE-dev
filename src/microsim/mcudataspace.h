@@ -44,12 +44,15 @@ class DataSpace
         void setStatusBits( QStringList bits ) { m_statusBits = bits; }
         QStringList getStatusBits() { return m_statusBits; }
 
+        bool isCpuRead() { return m_isCpuRead; }
+
         int m_regOverride;                         // Register value is overriden at write time
 
     protected:
         uint16_t m_regStart;                       // First address of SFR section
         uint16_t m_regEnd;                         // Last  address of SFR Section
 
+        bool m_isCpuRead;
         uint32_t m_ramSize;
         std::vector<uint8_t>  m_dataMem;           // Whole Ram space including Registers
         std::vector<uint16_t> m_addrMap;           // Maps addresses in Data space

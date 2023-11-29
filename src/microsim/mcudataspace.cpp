@@ -28,6 +28,8 @@ DataSpace::~DataSpace()
 
 void DataSpace::initialize()
 {
+    m_isCpuRead = true;   // RAM read is cpu read by default
+
     for( uint i=0; i<m_dataMem.size(); i++ ) writeReg( i, 0, false );
 
     for( QString regName : m_regInfo.keys() )  // Set Registers Reset Values
@@ -94,7 +96,12 @@ uint8_t* DataSpace::getReg( QString reg )                // Get pointer to Reg d
     return &m_dataMem[m_regInfo.value( reg ).address];
 }
 
-uint8_t DataSpace::getRamValue( int address ) { return m_dataMem[ getMapperAddr(address) ]; }
+uint8_t DataSpace::getRamValue( int address ) // Read RAM from Mcu Monitor
+{
+    m_isCpuRead = false;
+    return readReg( getMapperAddr(address) );
+    m_isCpuRead = true;
+}
 
 void DataSpace::setRamValue( int address, uint8_t value ) // Setting RAM from external source (McuMonitor)
 { writeReg( getMapperAddr(address), value ); }
