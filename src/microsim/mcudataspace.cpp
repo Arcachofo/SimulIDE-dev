@@ -63,9 +63,7 @@ void DataSpace::writeReg( uint16_t addr, uint8_t v, bool masked )
     if( masked ) // Protect Read Only bits from being written
     {
         if( addr < m_regMask.size() ) mask = m_regMask[addr];
-        if( mask == 0x00 ) return;
-
-        if( mask != 0xFF ) v = (m_dataMem[addr] & ~mask) | (v & mask);
+        if( mask != 0xFF && mask != 0x00 ) v = (m_dataMem[addr] & ~mask) | (v & mask);
     }
     regSignal_t* regSignal = m_regSignals.value( addr );
     if( regSignal )
@@ -74,7 +72,7 @@ void DataSpace::writeReg( uint16_t addr, uint8_t v, bool masked )
         regSignal->on_write.emitValue( v );
         if( m_regOverride >= 0 ) v = (uint8_t)m_regOverride; // Value overriden in callback
     }
-    m_dataMem[addr] = v;
+    if( mask != 0x00 ) m_dataMem[addr] = v;
 }
 
 uint16_t DataSpace::getRegAddress( QString reg )// Get Reg address by name
