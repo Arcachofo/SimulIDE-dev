@@ -17,14 +17,24 @@ void watchRegister( uint16_t addr, int write
 {
     if( addr == 0 ) qDebug() << "Warning: watchRegister address 0 ";
 
-    regSignal_t* regSignal = mcu->regSignals()->value( addr );
-    if( !regSignal )
+    if( write )
     {
-        regSignal = new regSignal_t;
-        mcu->regSignals()->insert( addr, regSignal );
+        McuSignal* regSignal = mcu->writeSignals()->value( addr );
+        if( !regSignal )
+        {
+            regSignal = new McuSignal;
+            mcu->writeSignals()->insert( addr, regSignal );
+        }
+        regSignal->connect( inst, func, mask );
+    }else{
+        McuSignal* regSignal = mcu->readSignals()->value( addr );
+        if( !regSignal )
+        {
+            regSignal = new McuSignal;
+            mcu->readSignals()->insert( addr, regSignal );
+        }
+        regSignal->connect( inst, func, mask  );
     }
-    if( write ) regSignal->on_write.connect( inst, func, mask );
-    else        regSignal->on_read.connect( inst, func, mask  );
 }
 
 template <class T>                // Add callback for Register changes by names

@@ -14,11 +14,6 @@ struct regInfo_t{
     uint8_t  resetVal;
 };
 
-struct regSignal_t{
-    McuSignal on_write;
-    McuSignal on_read;
-};
-
 struct regBits_t{
     uint8_t bit0=0;
     uint8_t mask=0;

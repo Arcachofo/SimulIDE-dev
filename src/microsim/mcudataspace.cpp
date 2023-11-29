@@ -19,10 +19,14 @@ DataSpace::DataSpace()
 
 DataSpace::~DataSpace()
 {
-    for( uint16_t addr : m_regSignals.keys() )
-        delete m_regSignals.value( addr );
+    for( uint16_t addr : m_readSignals.keys() )
+        delete m_readSignals.value( addr );
 
-    m_regSignals.clear();
+    for( uint16_t addr : m_writeSignals.keys() )
+        delete m_writeSignals.value( addr );
+
+    m_readSignals.clear();
+    m_writeSignals.clear();
     m_dataMem.clear();
 }
 
@@ -46,11 +50,11 @@ void DataSpace::initialize()
 uint8_t DataSpace::readReg( uint16_t addr )
 {
     uint8_t v = m_dataMem[addr];
-    regSignal_t* regSignal = m_regSignals.value( addr );
+    McuSignal* regSignal = m_readSignals.value( addr );
     if( regSignal )
     {
         m_regOverride = -1;
-        regSignal->on_read.emitValue( v );
+        regSignal->emitValue( v );
         if( m_regOverride >= 0 ) v = (uint8_t)m_regOverride; // Value overriden in callback
         else                     v = m_dataMem[addr];        // Timers update their counters in callback
     }
@@ -65,11 +69,11 @@ void DataSpace::writeReg( uint16_t addr, uint8_t v, bool masked )
         if( addr < m_regMask.size() ) mask = m_regMask[addr];
         if( mask != 0xFF && mask != 0x00 ) v = (m_dataMem[addr] & ~mask) | (v & mask);
     }
-    regSignal_t* regSignal = m_regSignals.value( addr );
+    McuSignal* regSignal = m_writeSignals.value( addr );
     if( regSignal )
     {
         m_regOverride = -1;
-        regSignal->on_write.emitValue( v );
+        regSignal->emitValue( v );
         if( m_regOverride >= 0 ) v = (uint8_t)m_regOverride; // Value overriden in callback
     }
     if( mask != 0x00 ) m_dataMem[addr] = v;
