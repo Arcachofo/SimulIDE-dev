@@ -100,7 +100,9 @@ void Probe::setVolt( double volt )
     if( !m_showVal ) return;
     if( qFabs(volt) < 0.01 ) volt = 0;
     
-    setValLabelText( QString("%1 V").arg(float(int( volt*100+0.5 ))/100) );
+    float v = ( volt > 0 ) ? 0.5 : -0.5;
+    v = float(int( v+volt*100 ))/100;
+    setValLabelText( QString("%1 V").arg(v) );
 }
 
 void Probe::rotateAngle( double a )
