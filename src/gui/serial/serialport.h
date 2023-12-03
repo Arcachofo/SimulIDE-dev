@@ -29,6 +29,9 @@ class SerialPort : public Component, public UsartModule, public eElement
         virtual void updateStep() override;
         virtual void runEvent() override;
 
+        bool autoOpen() { return m_autoOpen; }
+        void setAutoOpen( bool a ) { m_autoOpen = a; }
+
         QString port(){return m_portName;}
         void setPort( QString name ){ m_portName = name; update();}
 
@@ -74,6 +77,7 @@ class SerialPort : public Component, public UsartModule, public eElement
 
         bool m_receiving;
         bool m_sending;
+        bool m_autoOpen;
 
         QByteArray m_serData;
         QByteArray m_uartData;

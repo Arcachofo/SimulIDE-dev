@@ -61,6 +61,7 @@ SerialPort::SerialPort( QString type, QString id )
 
     m_serial = new QSerialPort( /*this*/ );
     m_receiving = false;
+    m_autoOpen  = false;
 
     m_flowControl = QSerialPort::NoFlowControl;
     setBaudRate( 9600 );
@@ -86,8 +87,8 @@ SerialPort::SerialPort( QString type, QString id )
     Simulator::self()->addToUpdateList( this );
 
     addPropGroup( { tr("Main"), {
-//new BoolProp  <Chip>( "Logic_Symbol","","", this, &Chip::logicSymbol, &Chip::setLogicSymbol ),
-new StrProp<SerialPort>( "Port", tr("Port Name"),"", this, &SerialPort::port,  &SerialPort::setPort ),
+new BoolProp<SerialPort>( "Auto", tr("Auto Open"),"", this, &SerialPort::autoOpen, &SerialPort::setAutoOpen ),
+new StrProp <SerialPort>( "Port", tr("Port Name"),"", this, &SerialPort::port    , &SerialPort::setPort ),
     }, 0 } );
 
     addPropGroup( { "Config", {
@@ -109,6 +110,8 @@ void SerialPort::stamp()
     m_receiver->enable( true );
     m_sending = false;
     m_receiving = false;
+
+    if( m_autoOpen && !m_serial->isOpen() ) m_button->click();
 }
 
 void SerialPort::updateStep()
