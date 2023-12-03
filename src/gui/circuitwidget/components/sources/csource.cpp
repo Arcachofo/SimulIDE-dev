@@ -3,6 +3,8 @@
  *                                                                         *
  ***( see copyright.txt file at root folder )*******************************/
 
+#include <QtMath>
+
 #include "csource.h"
 #include "simulator.h"
 #include "circuitwidget.h"
@@ -88,6 +90,7 @@ void Csource::stamp()
     m_pin[2]->createCurrent();
     m_pin[3]->createCurrent();
 
+    m_lastCurr = 0;
     m_changed = true;
     updateStep();
 }
@@ -156,6 +159,8 @@ void Csource::updateStep()
 void Csource::setVoltage( double v )
 {
     double curr = v;
+    if( qFabs( curr - m_lastCurr ) < 1e-5 ) return;
+    m_lastCurr = curr;
 
     if( m_currSource ) curr = -curr;
     if( m_currControl )              curr *= m_admit;
@@ -165,7 +170,6 @@ void Csource::setVoltage( double v )
     m_pin[2]->stampCurrent( curr );
     m_pin[3]->stampCurrent(-curr );
 }
-
 
 void Csource::setLinkedValue( double v, int i )
 {

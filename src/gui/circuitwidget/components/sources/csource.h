@@ -59,6 +59,8 @@ class Csource : public Component, public eResistor
         double m_curr;
         double m_gain;
 
+        double m_lastCurr;
+
         bool m_controlPins;
         bool m_currSource;
         bool m_currControl;
