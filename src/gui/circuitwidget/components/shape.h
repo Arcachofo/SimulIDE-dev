@@ -36,7 +36,6 @@ class Shape : public Component
         double opac() { return m_opac; }
         void setOpac( double op );
 
-
         QString colorStr() { return m_color.name(); }
         void setColorStr( QString n ) { setColor( QColor(n) ); }
         
