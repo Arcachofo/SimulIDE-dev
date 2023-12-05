@@ -31,7 +31,7 @@ The high-performance Microchip picoPower 8-bit AVR RISC-based microcontroller
 256 Byte SRAM,
 18 general purpose I/O lines,
 32 general purpose working registers,
-2  timer/counters (8-bit¡ 16-bit),
+2  timer/counters (8-bit√Å 16-bit),
 4-channel PWM,
 1 comparators,
 internal and external interrupts,
