@@ -324,8 +324,8 @@ void Connector::remove()
 {
     if( Simulator::self()->isRunning() )  CircuitWidget::self()->powerCircOff();
 
-    if( m_startPin ) m_startPin->remove();
-    if( m_endPin )   m_endPin->remove();
+    if( m_startPin ) m_startPin->connectorRemoved();
+    if( m_endPin )   m_endPin->connectorRemoved();
     remLines();
 }
 

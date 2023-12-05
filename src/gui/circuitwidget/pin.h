@@ -85,7 +85,7 @@ class Pin : public QGraphicsItem, public ePin, public Updatable
 
         void moveBy( int dx, int dy );
 
-        void remove();
+        void connectorRemoved();
 
         void registerEnode( eNode* enode, int n=-1 );
         void registerPinsW( eNode* enode, int n=-1 );

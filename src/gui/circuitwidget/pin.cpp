@@ -84,11 +84,11 @@ Pin::~Pin()
     Circuit::self()->remPin( m_id );
 }
 
-void Pin::remove()
+void Pin::connectorRemoved()
 {
     setConnector( NULL );
     if( !Circuit::self()->undoRedo() ) m_component->pinMessage( 1 ); // Used by node to remove
-    m_component->remSignalPin( this );
+    /// m_component->remSignalPin( this ); after conn removed it can't auto-connect again
 }
 
 void Pin::setUnused( bool unused )
