@@ -216,6 +216,10 @@ void Csource::setCurrSource( bool c )
 
 void Csource::setControlPins( bool set )
 {
+    int length = set ? 8 : 10;
+    m_pin[2]->setLength( length );
+    m_pin[3]->setLength( length );
+
     m_controlPins = set;
     m_changed = true;
     if( !Simulator::self()->isRunning() ) updateStep();
@@ -242,16 +246,6 @@ void Csource::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidge
 {
     Component::paint( p, option, widget );
 
-    QPainterPath path;
-    QVector<QPointF> points;
-    points << QPointF(-8, 0 )
-           << QPointF( 0,-13 )
-           << QPointF( 8, 0 )
-           << QPointF( 0, 13 );
-
-    path.addPolygon( QPolygonF(points) );
-    path.closeSubpath();
-
     QPen pen = p->pen();
 
     if( m_controlPins )
@@ -262,7 +256,23 @@ void Csource::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidge
     }
     pen.setWidth(2);
     p->setPen(pen);
-    p->drawPath( path );
+
+    if( !m_controlPins && !m_linked )
+    {
+        p->drawEllipse(-10,-10, 20, 20 );
+    }
+    else{
+        QPainterPath path;
+        QVector<QPointF> points;
+        points << QPointF(-8, 0 )
+               << QPointF( 0,-13 )
+               << QPointF( 8, 0 )
+               << QPointF( 0, 13 );
+
+        path.addPolygon( QPolygonF(points) );
+        path.closeSubpath();
+        p->drawPath( path );
+    }
 
     pen.setWidth(1);
     p->setPen(pen);
