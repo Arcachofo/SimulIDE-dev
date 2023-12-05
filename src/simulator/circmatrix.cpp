@@ -128,29 +128,9 @@ bool CircMatrix::solveMatrix()
         m_eNodeActive = &(m_eNodeActList[i]);
         int n = m_eNodeActive->size();
 
-        if( n == 2 )
-        {
-            double a00 = *m_aList[i][0][0];
-            double a01 = *m_aList[i][0][1];
-            double a10 = *m_aList[i][1][0];
-            double a11 = *m_aList[i][1][1];
+        if( m_admitChanged[i] ) factorMatrix( n, i );
+        if( !luSolve( n, i ) ) ok = false;
 
-            double det = ( a00 * a11 ) - ( a01 * a10 );
-            if( det == 0 ) return false;
-
-            double bi0 = *m_bList[i][0];
-            double bi1 = *m_bList[i][1];
-
-            double b0 = ( bi0 * a11 ) - ( a01 * bi1 );
-            double b1 = ( a00 * bi1 ) - ( bi0 * a10 );
-
-            m_eNodeActive->at(0)->setVolt( b0 / det );
-            m_eNodeActive->at(1)->setVolt( b1 / det );
-        }
-        else{
-            if( m_admitChanged[i] ) factorMatrix( n, i );
-            if( !luSolve( n, i ) ) ok = false;
-        }
         m_currChanged[i]  = false;
         m_admitChanged[i] = false;
     }
