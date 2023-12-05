@@ -141,8 +141,8 @@ void Csource::updateStep()
 
         if( m_currSource )
         {
-            m_pin[2]->stampCurrent( m_curr );
-            m_pin[3]->stampCurrent(-m_curr );
+            m_pin[2]->stampCurrent(-m_curr );
+            m_pin[3]->stampCurrent( m_curr );
         }else{
             m_pin[2]->stampCurrent( m_volt/cero_doub );
             m_pin[3]->stampCurrent(-m_volt/cero_doub );
@@ -159,12 +159,12 @@ void Csource::updateStep()
 void Csource::setVoltage( double v )
 {
     double curr = v;
-    if( qFabs( curr - m_lastCurr ) < 1e-5 ) return;
+    //if( qFabs( curr - m_lastCurr ) < 1e-5 ) return;
     m_lastCurr = curr;
 
-    if( m_currSource ) curr = -curr;
-    if( m_currControl )              curr *= m_admit;
-    if( !m_currSource && curr != 0 ) curr /= cero_doub;
+    if( m_currSource   ) curr = -curr;      // Current source
+    else if( curr != 0 ) curr /= cero_doub; // Voltage source
+    if( m_currControl  ) curr *= m_admit;   // Current controlled
 
     curr *= m_gain;
     m_pin[2]->stampCurrent( curr );
