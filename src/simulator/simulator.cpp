@@ -306,12 +306,12 @@ void Simulator::startSim( bool paused )
 
     double sps100 = 100*(double)m_psPerSec/1e12; // Speed %
 
-    qDebug()  << "\nFPS:  " << m_fps      << "\tFrames per Sec"
-              << "\nSpeed:" << sps100     << "%"
-//              << "\nStep: " << m_stepSize << "\tpicoseconds"
-              << "\nSpeed:" << m_psPerSec << "\tps per Sec"
-              << "\nps/Fr:" << m_psPF     << "\tps per Frame"
-              << "\nNonLi:" << m_maxNlstp << "\tMax Iterations";
+    qDebug()  << "\nSpeed:" <<         sps100      << "%"
+              << "\nSpeed:" << (double)m_psPerSec  << "\tps per Sec"
+              << "\nFPS:  " <<         m_fps       << "\tFrames per Sec"
+              << "\nFrame:" << (double)m_psPF      << "\tps per Frame"
+              << "\nNonLi:" << (double)m_maxNlstp  << "\tMax Iterations"
+              << "\nReact:" << (double)m_reactStep << "\tps Reactive step";
 
     qDebug() << "\n    Simulation Running... \n";
 

@@ -1,4 +1,4 @@
-s<parts>
+<parts>
   <regblock  name="I/O_REG" start="0x0020" end="0x005F" offset="32">
     <register  name="PINF"    addr="0x0000" bits="" />
     

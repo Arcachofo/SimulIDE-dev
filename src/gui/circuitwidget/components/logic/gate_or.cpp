@@ -39,7 +39,7 @@ new IntProp <OrGate>( "Num_Inputs", tr("Input Size"),"_Inputs", this
                     })
 +IoComponent::outputProps()+IoComponent::outputType(),0 } );
 
-    addPropGroup( { tr("Edges")   , Gate::edgeProps(),0 } );
+    addPropGroup( { tr("Edges"), Gate::edgeProps(),0 } );
 
     removeProperty("pd_n");
 }
