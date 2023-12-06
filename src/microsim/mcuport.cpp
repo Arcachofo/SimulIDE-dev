@@ -46,7 +46,7 @@ void McuPort::pinChanged( uint8_t pinMask, uint8_t val ) // Pin number in pinMas
     if( pinState == m_pinState ) return;
     m_pinState = pinState;
 
-    if( m_intMask & pinMask ) m_interrupt->raise(); // Pin change interrupt
+    if( (m_intMask & pinMask) && m_interrupt ) m_interrupt->raise(); // Pin change interrupt
 
     if( m_sleeping ) return;
     if( m_inAddr ) *m_inReg = m_pinState; //m_mcu->writeReg( m_inAddr, m_pinState, false ); // Write to RAM
