@@ -21,7 +21,7 @@ class Potentiometer : public Dialed, public eElement
  static Component* construct( QString type, QString id );
  static LibraryItem* libraryItem();
 
-        virtual void stamp() override;
+        virtual void initialize() override;
         virtual void updateStep() override;
 
         double getVal();

@@ -81,7 +81,7 @@ new DoubProp<Potentiometer>( "Value_Ohm" , tr("Current Value"),"Ω", this, &Pote
 }
 Potentiometer::~Potentiometer() {}
 
-void Potentiometer::stamp()
+void Potentiometer::initialize()
 {
     m_midEnode = m_pinM.getEnode();  // Get eNode from middle Pin
     if( !m_midEnode ) m_midEnode = new eNode( m_id+"-mideNode" ); // Not connected: Create mid eNode
