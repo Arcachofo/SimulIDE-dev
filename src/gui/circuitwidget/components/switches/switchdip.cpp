@@ -69,8 +69,8 @@ void SwitchDip::stamp()
         eNode* node0 = m_pin[pin1]->getEnode();
         eNode* node1 = m_pin[pin2]->getEnode();
 
-        if( node0 ) node0->setSwitched( true );
-        if( node1 ) node1->setSwitched( true );
+        //if( node0 ) node0->setSwitched( true );
+        //if( node1 ) node1->setSwitched( true );
 
         m_pin[pin1]->setEnodeComp( node1 );
         m_pin[pin2]->setEnodeComp( node0 );

@@ -53,13 +53,13 @@ void KeyPad::stamp()
     {
         Pin* rowPin = m_pin[row];
         eNode* rowNode = rowPin->getEnode();
-        if( rowNode ) rowNode->setSwitched( true );
+        //if( rowNode ) rowNode->setSwitched( true );
         
         for( int col=0; col<m_cols; col++ )
         {
             Pin* colPin = m_pin[m_rows+col];
             eNode* colNode = colPin->getEnode();
-            if( colNode ) colNode->setSwitched( true );
+            //if( colNode ) colNode->setSwitched( true );
             
             PushBase* button = m_buttons.at( row*m_cols+col );
             

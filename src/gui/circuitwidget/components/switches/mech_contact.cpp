@@ -40,7 +40,7 @@ void MechContact::stamp()
     for( uint i=m_pin0; i<m_ePin.size(); ++i )
     {
         eNode* enode = m_ePin[i]->getEnode();
-        if( enode ) enode->setSwitched( true );
+        //if( enode ) enode->setSwitched( true );
     }
     setSwitch( m_nClose );
 }

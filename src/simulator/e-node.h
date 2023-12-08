@@ -52,7 +52,7 @@ class eNode
         void stampMatrix();
 
         void setSingle( bool single ) { m_single = single; } // This eNode can calculate it's own Volt
-        void setSwitched( bool switched ){ m_switched = switched; } // This eNode has switches attached
+        //void setSwitched( bool switched ){ m_switched = switched; } // This eNode has switches attached
 
         void updateConnectors();
 
@@ -117,7 +117,7 @@ class eNode
         bool m_voltChanged;
         bool m_changed;
         bool m_single;
-        bool m_switched;
+        //bool m_switched;
 };
 #endif
 

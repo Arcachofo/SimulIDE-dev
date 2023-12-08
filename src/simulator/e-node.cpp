@@ -38,7 +38,7 @@ eNode::~eNode()
 void eNode::initialize()
 {
     m_voltChanged  = true; // Used for wire animation
-    m_switched     = false;
+    //m_switched     = false;
     m_single       = false;
     m_changed      = false;
     m_currChanged  = false;
@@ -101,7 +101,7 @@ void eNode::stampAdmitance( ePin* epin, double admit ) // Be sure msg doesn't co
         conn = conn->next;
     }
 
-    if( admit == 0 ) m_switched = true;
+    //if( admit == 0 ) m_switched = true;
     m_admitChanged = true;
     changed();
 }
@@ -180,7 +180,7 @@ void eNode::stampMatrix()
     if( m_admitChanged )
     {
         m_totalAdmit = 0;
-        if( m_switched ) m_totalAdmit += 1e-12; // Weak connection to ground
+        //if( m_switched ) m_totalAdmit += 1e-12; // Weak connection to ground
 
         if( m_single ){
             Connection* conn = m_firstAdmit;
