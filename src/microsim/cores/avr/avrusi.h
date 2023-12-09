@@ -10,6 +10,8 @@
 #include "e-element.h"
 
 class McuPin;
+class AvrTimer800;
+class McuOcUnit;
 
 class AvrUsi : public McuModule, public eElement
 {
@@ -22,13 +24,16 @@ class AvrUsi : public McuModule, public eElement
 
         virtual void configureA( uint8_t ) override;
         virtual void configureB( uint8_t ) override;
+        virtual void callBack() override; // Called at Timer0 Compare Match
 
     private:
         inline void stepCounter();
         inline void shiftData();
         inline void toggleClock();
 
-        bool m_softClk;
+        bool m_timer;
+        bool m_extClk;
+        bool m_usiClk;
         bool m_clkEdge;
         bool m_clkState;
 
@@ -52,6 +57,10 @@ class AvrUsi : public McuModule, public eElement
         McuPin* m_DOpin;
         McuPin* m_DIpin;
         McuPin* m_CKpin;
+
+        AvrTimer800* m_timer0;
+        McuOcUnit* m_t0OCA;
+        McuOcUnit* m_t0OCB;
 };
 
 #endif
