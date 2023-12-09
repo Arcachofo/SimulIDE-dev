@@ -50,6 +50,8 @@ LibraryItem* SubPackage::libraryItem()
 SubPackage::SubPackage( QString type, QString id )
           : Chip( type, id )
 {
+    m_linkCursor = QCursor( QPixmap(":/expose.png"), 10, 10 );
+
     m_subcType = Chip::None;
     m_width  = 4;
     m_height = 8;
