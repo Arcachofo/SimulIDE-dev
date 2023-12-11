@@ -182,6 +182,7 @@
     <register  name="ICR3L"   addr="0x0080" bits="" />
     <register  name="ICR3H"   addr="0x0081" bits="" />
     <register  name="OCR3CL"  addr="0x0082" bits="" />
+    <register  name="OCR3CH"  addr="0x0083" bits="" />
     <register  name="OCR3BL"  addr="0x0084" bits="" />
     <register  name="OCR3BH"  addr="0x0085" bits="" />
     <register  name="OCR3AL"  addr="0x0086" bits="" />

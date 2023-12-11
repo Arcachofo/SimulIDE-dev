@@ -21,9 +21,10 @@
         <item name="mega32"    package="AVR/mega32/mega32"    data="AVR/mega32" />
         <item name="mega48"    package="AVR/megax8/megax8"    data="AVR/mega48" />
         <item name="m48 TQFP"  package="AVR/megax8/mx8_tqfp"  data="AVR/mega48" />
-        <item name="mega64"    package="AVR/mega64/mega64"    data="AVR/mega64" />
+        <item name="mega64"    package="AVR/mega64_128/mega64" data="AVR/mega64" />
         <item name="mega88"    package="AVR/megax8/megax8"    data="AVR/mega88" />
         <item name="m88 TQFP"  package="AVR/megax8/mx8_tqfp"  data="AVR/mega88" />
+        <item name="mega128"   package="AVR/mega64_128/mega64" data="AVR/mega128" />
         <item name="mega164"   package="AVR/mega32/mega32"    data="AVR/mega164" />
         <item name="mega168"   package="AVR/megax8/megax8"    data="AVR/mega168" />
         <item name="m168 TQFP" package="AVR/megax8/mx8_tqfp"  data="AVR/mega168" />
