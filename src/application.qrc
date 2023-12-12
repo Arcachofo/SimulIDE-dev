@@ -35,10 +35,11 @@
         <file alias="qt_tr.qm">../resources/qm/qt_tr.qm</file>
         <file alias="qt_zh_CN.qm">../resources/qm/qt_zh_CN.qm</file>
         <file alias="qt_sk.qm">../resources/qm/qt_sk.qm</file>
+        
+        <file alias="simulide.png">../resources/icons/simulide.png</file>
 
         <file alias="null.png">../src/icons/components/null.png</file>
-        
-        <file alias="simulide.png">../src/icons/simulide.png</file>
+
         <file alias="null-0.png">../src/icons/components/null-0.png</file>
         <file alias="new.svg">../src/icons/mainwindow/new.svg</file>
         <file alias="open.svg">../src/icons/mainwindow/open.svg</file>

@@ -89,7 +89,7 @@ QMAKE_CXXFLAGS_DEBUG += -O0
 win32 {
     OS = Windows
     QMAKE_LIBS += -lwsock32
-    RC_ICONS += ../src/icons/simulide.ico
+    RC_ICONS += ../resources/icons/simulide.ico
 }
 linux {
     OS = Linux
@@ -98,7 +98,7 @@ linux {
 macx {
     OS = MacOs
     QMAKE_LFLAGS += -no-pie
-    ICON = ../src/icons/simulide.icns
+    ICON = ../resources/icons/simulide.icns
 }
 
 CONFIG += qt 
