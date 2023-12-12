@@ -12,6 +12,8 @@
 #include "iopin.h"
 #include "e-element.h"
 
+#include "scriptarray.h"
+
 class IoPin;
 class Component;
 class asIScriptEngine;
@@ -48,9 +50,8 @@ class IoPort :public eElement
             uint64_t time;
             uint     state;
         };
-        void trigger();
-        void addOutState( uint64_t t, uint s ) { m_outVector.emplace_back( outState_t{t, s} ); }
-        void setOutVector( std::vector<outState_t> v ) { m_outVector = v; }
+        void trigger( uint n=0 );
+        void addSequence(  CScriptArray* t, CScriptArray* s );
 
  static void registerScript( asIScriptEngine* engine );
 
@@ -73,7 +74,8 @@ class IoPort :public eElement
         std::vector<IoPin*> m_pins;
 
         uint m_index;
-        std::vector<outState_t> m_outVector;
+        std::vector<outState_t>* m_outVector;
+        std::vector<std::vector<outState_t>> m_outVectors;
 };
 
 #endif

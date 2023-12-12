@@ -516,7 +516,8 @@ void McuCreator::createIoPort( QDomElement* p )
 
     port->createPins( m_mcuComp, p->attribute("pins"), 0xFFFFFFFF );
 
-    QDomNode node = p->firstChild();
+    /// Scripts register outVectors by now
+    /*QDomNode node = p->firstChild();
     while( !node.isNull() )
     {
         QDomElement el = node.toElement();
@@ -528,7 +529,7 @@ void McuCreator::createIoPort( QDomElement* p )
             port->addOutState( time, state );
         }
         node = node.nextSibling();
-    }
+    }*/
 }
 
 void McuCreator::createMcuPort( QDomElement* p )
