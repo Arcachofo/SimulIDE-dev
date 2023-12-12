@@ -86,11 +86,13 @@ void SevenSegmentBCD::updateStep()
     if( !m_changed ) return;
     m_changed = false;
 
-    if( m_enablePin->getInpState() ){
-        BcdBase::voltChanged();
-        if( m_dotPin->getInpState() ) m_digit |= 0x80;
+    if( !m_linked ){
+        if( m_enablePin->getInpState() ){
+            BcdBase::voltChanged();
+            if( m_dotPin->getInpState() ) m_digit |= 0x80;
+        }
+        else m_digit = 0;
     }
-    else m_digit = 0;
 
     update();
 }
