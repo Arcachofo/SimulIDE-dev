@@ -116,7 +116,7 @@ void OpAmp::updateStep()
     if( !m_changed ) return;
     m_changed = false;
 
-    m_output->setImp( m_outImp );
+    m_output->setImpedance( m_outImp );
     voltChanged();
 }
 

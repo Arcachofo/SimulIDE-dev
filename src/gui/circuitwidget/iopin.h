@@ -55,7 +55,7 @@ class IoPin : public Pin, public eElement
         void startHL();
 
         virtual void  setOutputImp( double imp );
-        virtual void  setImp( double imp );
+        virtual void  setImpedance( double imp );
 
         virtual bool getInpState();
         virtual bool getOutState() { if( m_step ) return m_nextState; return m_outState; }

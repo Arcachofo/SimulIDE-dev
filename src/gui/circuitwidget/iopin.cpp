@@ -214,7 +214,7 @@ void IoPin::setStateZ( bool z )
     m_stateZ = z;
     if( z ){
         m_outVolt = m_outLowV;
-        setImp( m_openImp );
+        setImpedance( m_openImp );
     }else {
         pinMode_t pm = m_pinMode; // Force old pinMode
         m_pinMode = undef_mode;
@@ -236,7 +236,7 @@ void IoPin::setPullup( bool up )
     if( m_pinMode < output ) updtState();
 }
 
-void IoPin::setImp( double imp )
+void IoPin::setImpedance( double imp )
 {
     m_admit = 1/imp;
     stampAll();
@@ -311,8 +311,8 @@ void IoPin::registerScript( asIScriptEngine* engine )
                                    , asMETHODPR( IoPin, setVoltage, (double), void)
                                    , asCALL_THISCALL );
 
-    engine->RegisterObjectMethod("IoPin", "void setImp( double imp )"
-                                   , asMETHODPR( IoPin, setImp, (double), void)
+    engine->RegisterObjectMethod("IoPin", "void setImpedance( double imp )"
+                                   , asMETHODPR( IoPin, setImpedance, (double), void)
                                    , asCALL_THISCALL );
 
     engine->RegisterObjectMethod("IoPin", "void changeCallBack(eElement@ p, bool s)"

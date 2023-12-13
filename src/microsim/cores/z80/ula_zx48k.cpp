@@ -430,7 +430,7 @@ void ULA_ZX48k::portIO()
                  m_micTapePin->setVoltage( m_micSp5CTable[ index ] );    // Set MIC/TAPE output (Figure 19-6)
             else m_micTapePin->setVoltage( m_micSp6CTable[ index ] );    // Set MIC/TAPE output (Figure 19-6)
 
-            m_micTapePin->setImp( m_micSpImpTable[ index ] );
+            m_micTapePin->setImpedance( m_micSpImpTable[ index ] );
         }
     }
 }

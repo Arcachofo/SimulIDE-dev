@@ -124,15 +124,15 @@ void WaveGen::stamp()
         m_outpin->createCurrent();
         m_gndpin->createCurrent();
 
-        m_outpin->setImp( cero_doub );
-        m_gndpin->setImp( cero_doub );
+        m_outpin->setImpedance( cero_doub );
+        m_gndpin->setImpedance( cero_doub );
     }
     else{
         m_outpin->skipStamp( false );
         m_gndpin->skipStamp( false );
 
-        m_outpin->setImp( cero_doub );
-        m_gndpin->setImp( cero_doub );
+        m_outpin->setImpedance( cero_doub );
+        m_gndpin->setImpedance( cero_doub );
     }
 }
 
