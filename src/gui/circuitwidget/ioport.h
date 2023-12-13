@@ -48,10 +48,10 @@ class IoPort :public eElement
         // ----------------
         struct outState_t{
             uint64_t time;
-            uint     state;
+            uint64_t state;
         };
         void trigger( uint n=0 );
-        void addSequence(  CScriptArray* t, CScriptArray* s );
+        void addSequence(  CScriptArray* t );
 
  static void registerScript( asIScriptEngine* engine );
 

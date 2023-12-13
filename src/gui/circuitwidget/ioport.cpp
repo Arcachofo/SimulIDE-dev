@@ -191,20 +191,16 @@ IoPin* IoPort::getPin( QString pinName )
 // ---- Script Engine -------------------
 #include "angelscript.h"
 
-void IoPort::addSequence( CScriptArray* t, CScriptArray* s )
+void IoPort::addSequence( CScriptArray* t )
 {
-    if( t->GetElementTypeId() != asTYPEID_UINT64 ) return;
-    if( s->GetElementTypeId() != asTYPEID_UINT32 ) return;
-
-    int size  = t->GetSize();
-    int sizeS = s->GetSize();
-    if( sizeS < size ) size = sizeS;
-
     std::vector<outState_t> outVector;
-    for( int i=0; i<size; ++i )
+    for( uint i=0; i<t->GetSize(); ++i )
     {
-        uint64_t* time = (uint64_t*)t->At(i);
-        uint*    state = (uint*)s->At(i);
+        CScriptArray* pulse = (CScriptArray*)t->At(i);
+        if( pulse->GetSize() < 2 ) continue;
+
+        uint64_t* time  = (uint64_t*)pulse->At(0);
+        uint64_t* state = (uint64_t*)pulse->At(1);
         outVector.emplace_back( outState_t{*time, *state} );
     }
     if( outVector.size() ) m_outVectors.emplace_back( outVector );
@@ -230,8 +226,8 @@ void IoPort::registerScript( asIScriptEngine* engine )
                                    , asMETHODPR( IoPort, setOutState, (uint), void)
                                    , asCALL_THISCALL );
 
-    engine->RegisterObjectMethod("IoPort", "void addSequence( array<uint64>@ t, array<uint>@ s)"
-                                   , asMETHODPR( IoPort, addSequence, (CScriptArray*, CScriptArray*), void)
+    engine->RegisterObjectMethod("IoPort", "void addSequence( array<array<uint64>>@ t )"
+                                   , asMETHODPR( IoPort, addSequence, (CScriptArray*), void)
                                    , asCALL_THISCALL );
 
     engine->RegisterObjectMethod("IoPort", "void changeCallBack(eElement@ s, bool s)"
