@@ -212,4 +212,6 @@ void SwitchDip::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWid
 {
     Component::paint( p, option, widget );
     p->drawRoundRect( m_area, 4, 4 );
+
+    Component::paintSelected( p );
 }

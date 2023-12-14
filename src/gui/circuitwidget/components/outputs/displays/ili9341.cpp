@@ -434,4 +434,6 @@ void Ili9341::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidge
     p->setBrush( QColor(50, 70, 100) );
     p->drawRoundedRect( m_area,2,2 );
     p->drawImage(-120,-162,*m_pdisplayImg );
+
+    Component::paintSelected( p );
 }

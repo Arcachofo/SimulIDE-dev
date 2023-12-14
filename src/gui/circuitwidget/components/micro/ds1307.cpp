@@ -193,4 +193,6 @@ void DS1307::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget
 
     p->drawRoundedRect( m_area, 2, 2 );
     p->drawPixmap( QRect(-28,-20, 56, 40 ), *m_backPixmap );
+
+    Component::paintSelected( p );
 }

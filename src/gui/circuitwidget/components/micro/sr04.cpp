@@ -120,4 +120,6 @@ void SR04::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* 
     int oy = m_area.y();
 
     p->drawPixmap( ox, oy, *m_backPixmap );
+
+    Component::paintSelected( p );
 }

@@ -496,4 +496,6 @@ void WaveGen::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidge
 
     p->drawRoundedRect( m_area,2 ,2 );
     p->drawPixmap( m_area.x()+3, m_area.y()+4,16, 8, *m_wavePixmap );
+
+    Component::paintSelected( p );
 }

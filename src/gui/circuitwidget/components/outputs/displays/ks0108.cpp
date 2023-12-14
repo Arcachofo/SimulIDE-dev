@@ -267,4 +267,6 @@ void Ks0108::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget
     p->setBrush( QColor(200, 220, 180) );
     p->drawRoundedRect( -70, -48, 140, 76, 8, 8 );
     p->drawImage(-64,-42,*m_pdisplayImg );
+
+    Component::paintSelected( p );
 }

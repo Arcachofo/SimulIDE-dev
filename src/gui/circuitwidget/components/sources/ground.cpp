@@ -49,4 +49,6 @@ void Ground::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget
     p->drawLine(QLineF(-6.6,-8, 6.6,-8) );
     p->drawLine(QLineF(-4.3,-4, 4.3,-4) );
     p->drawLine(QLineF(-1.9, 0, 1.9, 0) );
+
+    Component::paintSelected( p );
 }

@@ -38,4 +38,6 @@ void Capacitor::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWid
 
     p->drawLine(-3,-6,-3, 6 );
     p->drawLine( 3,-6, 3, 6 );
+
+    Component::paintSelected( p );
 }

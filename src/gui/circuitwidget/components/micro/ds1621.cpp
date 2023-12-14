@@ -284,4 +284,6 @@ void DS1621::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget
     p->setPen( QColor(0, 0, 0) );
     //p->drawText(-9, -3, "°C" );
     p->drawText(-9, -3, QString::number( m_temp )+"°C" );
+
+    Component::paintSelected( p );
 }

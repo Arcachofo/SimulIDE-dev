@@ -127,4 +127,6 @@ void Probe::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget 
     else                              p->setBrush( QColor( 230, 230, 255 ) );
 
     p->drawEllipse( QRect(-8,-8, 16, 16 ) );
+
+    Component::paintSelected( p );
 }

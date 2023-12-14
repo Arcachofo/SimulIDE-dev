@@ -582,11 +582,8 @@ void Component::setBackground( QString bck )
     return str;
 }*/
 
-void Component::paint( QPainter* p, const QStyleOptionGraphicsItem*, QWidget* )
+void Component::paintSelected( QPainter* p )
 {
-    QPen pen( Qt::black, 1.5, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin );
-    QColor color;
-
     if( isSelected() )
     {
         //pen.setColor( Qt::darkGray);
@@ -594,6 +591,14 @@ void Component::paint( QPainter* p, const QStyleOptionGraphicsItem*, QWidget* )
         p->setOpacity( 0.5 );
         p->fillRect( boundingRect(), Qt::darkGray  );
     }
+}
+
+void Component::paint( QPainter* p, const QStyleOptionGraphicsItem*, QWidget* )
+{
+    QPen pen( Qt::black, 1.5, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin );
+    QColor color;
+
+
     color = m_color;
 
     if( m_warning || m_crashed )

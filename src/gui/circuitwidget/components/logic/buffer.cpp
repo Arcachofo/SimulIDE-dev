@@ -86,4 +86,6 @@ void Buffer::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget
         QPointF( 8,-1 )             };
 
     p->drawPolygon( points, 4 );
+
+    Component::paintSelected( p );
 }

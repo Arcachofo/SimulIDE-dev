@@ -141,4 +141,6 @@ void Strain::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget
         QPointF( 6, 0 ), };
 
     p->drawPolyline( points, 8 );
+
+    Component::paintSelected( p );
 }

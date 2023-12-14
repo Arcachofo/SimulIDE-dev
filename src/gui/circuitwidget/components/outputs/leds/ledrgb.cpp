@@ -217,4 +217,6 @@ void LedRgb::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget
     p->setPen(pen);
     p->setBrush( color );
     p->drawEllipse( m_area );
+
+    Component::paintSelected( p );
 }

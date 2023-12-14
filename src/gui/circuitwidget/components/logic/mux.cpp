@@ -173,4 +173,6 @@ void Mux::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* w
         QPointF( w,-h+2 )};
 
     p->drawPolygon(points, 4);
+
+    Component::paintSelected( p );
 }

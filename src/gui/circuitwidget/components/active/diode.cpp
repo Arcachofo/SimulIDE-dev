@@ -34,7 +34,7 @@ Diode::Diode( QString type, QString id, bool zener )
      : LinkedComponent( type, id )
      , eDiode( id )
 {
-    m_area = QRect(-12, -8, 24, 16 );
+    m_area = QRect(-10, -8, 20, 16 );
 
     m_pin.resize(2);
     m_pin[0] = new Pin( 180, QPoint(-16, 0 ), id+"-lPin", 0, this);
@@ -159,4 +159,6 @@ void Diode::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget*
     if( m_isZener ){
         p->drawLine( 7,-6, 4,-6 );
         p->drawLine( 7, 6, 10, 6 );
-}  }
+    }
+    Component::paintSelected( p );
+}

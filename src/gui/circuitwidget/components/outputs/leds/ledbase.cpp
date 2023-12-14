@@ -191,4 +191,6 @@ void LedBase::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidge
     p->setPen( pen );
     p->setBrush( foreColor );
     drawForeground( p );
+
+    Component::paintSelected( p );
 }

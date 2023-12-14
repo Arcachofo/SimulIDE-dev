@@ -132,4 +132,5 @@ void ConnBase::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidg
         //else                p->setBrush( Qt::black );
         //p->drawRoundRect(-2,-28+2+i*8, 3, 4, 1, 1 );
     }
+    Component::paintSelected( p );
 }

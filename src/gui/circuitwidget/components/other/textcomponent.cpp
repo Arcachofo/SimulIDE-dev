@@ -249,4 +249,5 @@ void TextComponent::paint( QPainter* p, const QStyleOptionGraphicsItem* option, 
         p->setBrush( Qt::transparent );
         p->drawRect( m_area );
     }
+    Component::paintSelected( p );
 }

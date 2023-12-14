@@ -82,7 +82,7 @@ class IoComponent : public Component
 
         virtual void setHidden( bool hid, bool hidArea=false, bool hidLabel=false ) override;
 
-        virtual void paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget ) override;
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem*, QWidget* ) override;
 
     protected:
         IoPin* createPin( QString data, QString id );

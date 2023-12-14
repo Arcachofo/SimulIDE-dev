@@ -103,4 +103,6 @@ void Battery::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidge
     p->drawLine(-2,-3,-2, 3 );
     p->drawLine( 3,-8, 3, 8 );
     p->drawLine( 8,-3, 8, 3 );
+
+    Component::paintSelected( p );
 }

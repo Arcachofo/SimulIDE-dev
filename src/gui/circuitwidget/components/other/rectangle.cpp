@@ -45,4 +45,5 @@ void Rectangle::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWid
         p->setBrush( Qt::transparent );
         p->drawRect( m_area );
     }
+    Component::paintSelected( p );
 }

@@ -73,4 +73,6 @@ void Clock::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget*
     p->drawLine( -5, 3, 1,  3 );
     p->drawLine(  1, 3, 1, -3 );
     p->drawLine(  1,-3, 4, -3 );
+
+    Component::paintSelected( p );
 }

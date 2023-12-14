@@ -152,4 +152,6 @@ void Node::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* 
     
     if( m_isBus ) p->drawEllipse( QPointF(0,0), 1.8, 1.8  );
     else          p->drawEllipse( QPointF(0,0), 1.4, 1.4 );
+
+    Component::paintSelected( p );
 }

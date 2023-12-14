@@ -119,4 +119,6 @@ void VoltReg::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidge
 {
     Component::paint( p, option, widget );
     p->drawRect( m_area );
+
+    Component::paintSelected( p );
 }

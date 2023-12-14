@@ -122,4 +122,6 @@ void Meter::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget*
     QPointF( 31, -8 ),
     QPointF( 26, -5 )   };
     p->drawPolygon(points, 3);*/
+
+    Component::paintSelected( p );
 }

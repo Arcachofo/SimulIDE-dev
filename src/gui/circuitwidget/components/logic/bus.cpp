@@ -131,4 +131,6 @@ void Bus::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* w
 
     p->drawRect( QRect( 0, -m_height*8, 0, m_height*8 ) );
               //QRect( -2, -m_height*8-4, 2, m_height*8+8 );
+
+    Component::paintSelected( p );
 }

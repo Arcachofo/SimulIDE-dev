@@ -31,6 +31,8 @@ LibraryItem* Inductor::libraryItem()
 Inductor::Inductor( QString type, QString id )
         : Reactive( type, id )
 {
+    m_area = QRectF(-10,-6, 20, 12 );
+
     m_pin[0]->setLength( 4 );
     m_pin[1]->setLength( 4 );
 
@@ -48,6 +50,12 @@ new IntProp <Inductor>( "AutoStep"  , tr("Auto Step")      , "_Steps", this, &In
 }
 Inductor::~Inductor(){}
 
+void Inductor::setCurrentValue( double c )
+{
+    m_inductance = c;
+    m_changed = true;
+}
+
 void Inductor::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
 {
     Component::paint( p, option, widget );
@@ -59,10 +67,6 @@ void Inductor::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidg
     p->drawArc( QRectF(-12,-4.5, 10, 10 ),-45*16 , 220*16 );
     p->drawArc( QRectF( -5,-4.5, 10, 10 ), 225*16,-270*16 );
     p->drawArc( QRectF(  2,-4.5, 10, 10 ), 225*16,-220*16 );
-}
 
-void Inductor::setCurrentValue( double c )
-{
-    m_inductance = c;
-    m_changed = true;
+    Component::paintSelected( p );
 }

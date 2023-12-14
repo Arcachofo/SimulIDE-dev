@@ -66,4 +66,6 @@ void AndGate::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidge
 {
     Component::paint( p, option, widget );
     p->drawChord( -27, m_area.y(), 36, m_area.height(), -1440/*-16*90*/, 2880/*16*180*/ );
+
+    Component::paintSelected( p );
 }

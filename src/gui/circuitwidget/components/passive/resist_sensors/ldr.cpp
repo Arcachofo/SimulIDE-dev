@@ -88,4 +88,6 @@ void Ldr::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* w
     p->drawLine( 1,-11, 5,-7 );
     p->drawLine( 5, -7, 5,-9 );
     p->drawLine( 5, -7, 3,-7 );
+
+    Component::paintSelected( p );
 }

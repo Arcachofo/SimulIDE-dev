@@ -214,81 +214,84 @@ void Hd44780_Base::paint( QPainter* p, const QStyleOptionGraphicsItem* option, Q
     p->setBrush( QColor(200, 220, 180) );
     p->drawRoundedRect( 4, -(29+m_imgHeight), m_imgWidth+12, m_imgHeight+12, 8, 8 );
 
-    if( m_dispOn == 0 ) return;
-
-    uint64_t circTime = Simulator::self()->circTime();
-    if( circTime-m_lastCircTime >= 409600*1e6 )  // Blink period = 409.6 ms
+    if( m_dispOn != 0 )
     {
-        m_lastCircTime = circTime;
-        if( m_cursorBlink ) m_blinking = !m_blinking;
-        else                m_blinking = false;
-    }
-
-    for( int row=0; row<m_rows; row++ )
-    {
-        for( int col=0; col<m_cols; col++ )
+        uint64_t circTime = Simulator::self()->circTime();
+        if( circTime-m_lastCircTime >= 409600*1e6 )  // Blink period = 409.6 ms
         {
-            int mem_pos = 0;
-            if( row < 2 ) mem_pos += row*40+col;
-            else          mem_pos += (row-2)*40+20+col;
+            m_lastCircTime = circTime;
+            if( m_cursorBlink ) m_blinking = !m_blinking;
+            else                m_blinking = false;
+        }
 
-            int lineEnd = 79;
-            int lineStart = 0;
-
-            if( m_lineLength == 40 )
+        for( int row=0; row<m_rows; row++ )
+        {
+            for( int col=0; col<m_cols; col++ )
             {
-                if( mem_pos < 40 ) lineEnd   = 39;
-                else               lineStart = 40;
-            }
-            mem_pos += m_shiftPos;
-            if( mem_pos>lineEnd )   mem_pos -= m_lineLength;
-            if( mem_pos<lineStart ) mem_pos += m_lineLength;
+                int mem_pos = 0;
+                if( row < 2 ) mem_pos += row*40+col;
+                else          mem_pos += (row-2)*40+20+col;
 
-            int char_num = m_DDram[mem_pos];
-            QImage charact( 10, 16, QImage::Format_RGB32 );
+                int lineEnd = 79;
+                int lineStart = 0;
 
-            if( mem_pos == m_DDaddr )
-            {
-                if( m_blinking )     // Draw black instead of character
+                if( m_lineLength == 40 )
                 {
-                    charact.fill(qRgb(0, 0, 0));
-                    p->drawImage(10+col*12,-(m_imgHeight+22)+row*18,charact );
-                    continue;
+                    if( mem_pos < 40 ) lineEnd   = 39;
+                    else               lineStart = 40;
                 }
-                if( m_cursorOn )     // Draw cursor if enabled
+                mem_pos += m_shiftPos;
+                if( mem_pos>lineEnd )   mem_pos -= m_lineLength;
+                if( mem_pos<lineStart ) mem_pos += m_lineLength;
+
+                int char_num = m_DDram[mem_pos];
+                QImage charact( 10, 16, QImage::Format_RGB32 );
+
+                if( mem_pos == m_DDaddr )
                 {
-                    charact = m_fontImg.copy( 0, 0, 10, 16 );
-                    int y = 14;
-                    for( int x=9; x>0; x-=2 )
+                    if( m_blinking )     // Draw black instead of character
                     {
-                        charact.setPixel(x,   y,   qRgb(0, 0, 0));
-                        charact.setPixel(x-1, y,   qRgb(0, 0, 0));
-                        charact.setPixel(x,   y+1, qRgb(0, 0, 0));
-                        charact.setPixel(x-1, y+1, qRgb(0, 0, 0));
+                        charact.fill(qRgb(0, 0, 0));
+                        p->drawImage(10+col*12,-(m_imgHeight+22)+row*18,charact );
+                        continue;
                     }
-                    p->drawImage(10+col*12,-(m_imgHeight+22)+row*18,charact );
-            }   }
-            if( char_num < 8 )                        // CGRam Character
-            {
-                charact = m_fontImg.copy( 0, 0, 10, 16 );
-                int addr = char_num*8;
-
-                for( int y=0; y<16; y+=2 )
-                {
-                    int data = m_CGram[ addr ];
-                    addr++;
-
-                    for( int x=9; x>0; x-=2 )
+                    if( m_cursorOn )     // Draw cursor if enabled
                     {
-                        if( data & 1 ) {
+                        charact = m_fontImg.copy( 0, 0, 10, 16 );
+                        int y = 14;
+                        for( int x=9; x>0; x-=2 )
+                        {
                             charact.setPixel(x,   y,   qRgb(0, 0, 0));
                             charact.setPixel(x-1, y,   qRgb(0, 0, 0));
                             charact.setPixel(x,   y+1, qRgb(0, 0, 0));
                             charact.setPixel(x-1, y+1, qRgb(0, 0, 0));
                         }
-                        data = data>>1;
-            }   }   }
-            else charact = m_fontImg.copy( char_num*10, 0, 10, 16 );
+                        p->drawImage(10+col*12,-(m_imgHeight+22)+row*18,charact );
+                }   }
+                if( char_num < 8 )                        // CGRam Character
+                {
+                    charact = m_fontImg.copy( 0, 0, 10, 16 );
+                    int addr = char_num*8;
 
-            p->drawImage( 10+col*12,-(m_imgHeight+22)+row*18,charact );
-}   }   }
+                    for( int y=0; y<16; y+=2 )
+                    {
+                        int data = m_CGram[ addr ];
+                        addr++;
+
+                        for( int x=9; x>0; x-=2 )
+                        {
+                            if( data & 1 ) {
+                                charact.setPixel(x,   y,   qRgb(0, 0, 0));
+                                charact.setPixel(x-1, y,   qRgb(0, 0, 0));
+                                charact.setPixel(x,   y+1, qRgb(0, 0, 0));
+                                charact.setPixel(x-1, y+1, qRgb(0, 0, 0));
+                            }
+                            data = data>>1;
+                }   }   }
+                else charact = m_fontImg.copy( char_num*10, 0, 10, 16 );
+
+                p->drawImage( 10+col*12,-(m_imgHeight+22)+row*18,charact );
+        }   }
+    }
+    Component::paintSelected( p );
+}

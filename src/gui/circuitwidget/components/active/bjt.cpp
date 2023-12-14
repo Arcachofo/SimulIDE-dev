@@ -85,4 +85,6 @@ void BJT::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* w
         QPointF( 2.4, 10 ),
         QPointF( 4  , 7.5 ) };
         p->drawPolygon(points, 3);
-}   }
+    }
+    Component::paintSelected( p );
+}

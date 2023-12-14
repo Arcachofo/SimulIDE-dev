@@ -18,7 +18,7 @@
 CapacitorBase::CapacitorBase( QString type, QString id )
              : Reactive( type, id )
 {
-    m_area = QRectF( -10, -10, 20, 20 );
+    m_area = QRectF(-10,-8, 20, 16 );
 
     m_pin[0]->setLength( 12 );
     m_pin[1]->setLength( 12 );

@@ -54,4 +54,6 @@ void elCapacitor::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QW
     p->drawLine(-3,-7, 3,-7 );
     p->drawLine(-3, 7, 3, 7 );
     p->drawLine(-3,-3,-3, 3 );
+
+    Component::paintSelected( p );
 }

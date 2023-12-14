@@ -282,4 +282,5 @@ void Chip::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* 
             else                      p->drawArc( boundingRect().width()/2-6, -4, 8, 8, 0, -2880 /* -16*180 */ );
         }
     }
+    Component::paintSelected( p );
 }

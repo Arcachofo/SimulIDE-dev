@@ -162,4 +162,6 @@ void Lamp::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* 
 
     p->drawLine(-5,-5, 5, 5 );
     p->drawLine(-5, 5, 5,-5 );
+
+    Component::paintSelected( p );
 }

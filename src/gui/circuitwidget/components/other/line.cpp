@@ -48,4 +48,6 @@ void Line::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* 
     p->setPen( pen );
 
     p->drawLine( -m_hSize/2, m_vSize/2, m_hSize/2, -m_vSize/2 );
+
+    Component::paintSelected( p );
 }

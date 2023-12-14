@@ -40,8 +40,6 @@ Tunnel::Tunnel( QString type, QString id )
       : Component( type, id )
 {
     m_size = 20;
-    m_area = QRect( -m_size-8-4, -4, m_size+4, 8 );
-    m_rotated = false;
     m_blocked = false;
     m_packed  = false;
     m_show    = false;
@@ -54,6 +52,7 @@ Tunnel::Tunnel( QString type, QString id )
     m_pin[0]->setSpace( 4 );
 
     setLabelPos(-16,-24, 0);
+    setRotated( false );
 
     addPropGroup( { tr("Main"), {
 new StrProp <Tunnel>("Name" , tr("Id") ,"", this, &Tunnel::name,  &Tunnel::setName ),
@@ -293,6 +292,7 @@ void Tunnel::paint( QPainter* p, const QStyleOptionGraphicsItem *option, QWidget
         p->fillRect( boundingRect(), Qt::darkBlue );
         p->setOpacity( 1 );
     }
+    Component::paintSelected( p );
 }
 
 eNode* Tunnel::getEnode( QString n )

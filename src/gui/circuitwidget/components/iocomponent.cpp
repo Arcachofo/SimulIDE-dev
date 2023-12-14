@@ -439,8 +439,10 @@ void IoComponent::setHidden( bool hid, bool hidArea, bool hidLabel )
     Component::setHidden( hid, hidArea, hidLabel );
 }
 
-void IoComponent::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget )
+void IoComponent::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
 {
     Component::paint( p, option, widget );
     p->drawRect( m_area );
+
+    Component::paintSelected( p );
 }

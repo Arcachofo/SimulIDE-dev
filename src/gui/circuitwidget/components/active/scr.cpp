@@ -36,7 +36,7 @@ SCR::SCR( QString type, QString id )
      : Component( type, id )
      , eElement( id )
 {
-    m_area =  QRectF( -8, -16, 16, 32 );
+    m_area = QRectF(-10,-8, 20, 16 );
     setLabelPos(-12,-30, 0 );
 
     m_holdCurr = 0.0082;
@@ -157,4 +157,6 @@ void SCR::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* w
     pen.setWidth( 3 );
     p->setPen( pen );
     p->drawLine( 7, -6, 7, 6 );
+
+    Component::paintSelected( p );
 }

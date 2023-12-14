@@ -158,4 +158,6 @@ void Potentiometer::paint( QPainter* p, const QStyleOptionGraphicsItem* option, 
 
     p->drawLine( 0, 6,-3, 9 );
     p->drawLine( 0, 6, 3, 9 );
+
+    Component::paintSelected( p );
 }

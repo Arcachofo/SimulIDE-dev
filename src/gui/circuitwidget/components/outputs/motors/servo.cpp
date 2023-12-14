@@ -184,4 +184,6 @@ void Servo::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget*
     p->rotate( m_pos-90 );
     p->drawRoundedRect( -8, -8, 48, 16, 8, 8 );
     p->restore();
+
+    Component::paintSelected( p );
 }

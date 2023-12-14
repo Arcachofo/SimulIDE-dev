@@ -224,4 +224,6 @@ void PlotBase::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidg
     pen.setWidth( 0 );
     pen.setColor( Qt::white );
     p->setPen(pen);
+
+    Component::paintSelected( p );
 }

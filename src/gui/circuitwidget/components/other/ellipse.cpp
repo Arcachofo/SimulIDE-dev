@@ -55,4 +55,5 @@ void Ellipse::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidge
         p->setBrush( Qt::transparent );
         p->drawEllipse( m_area );
     }
+    Component::paintSelected( p );
 }

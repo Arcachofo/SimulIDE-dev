@@ -248,4 +248,7 @@ void Max72xx_matrix::paint( QPainter* p, const QStyleOptionGraphicsItem* option,
                 p->setPen( pen );
                 p->drawEllipse( x, y, 6, 6 );
                 x += 8;
-}   }   }   }
+    }   }   }
+
+    Component::paintSelected( p );
+}

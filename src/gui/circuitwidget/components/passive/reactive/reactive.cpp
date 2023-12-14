@@ -15,8 +15,6 @@ Reactive::Reactive( QString type, QString id )
         : Comp2Pin( type, id )
         , eReactive( id )
 {
-    m_area = QRectF( -10, -10, 20, 20 );
-
     // Pin0--eReactive--ePin1--midEnode--ePin2--eResistor--Pin1
     m_ePin[0] = m_pin[0];
     setNumEpins( 3 );

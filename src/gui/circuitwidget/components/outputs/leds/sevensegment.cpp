@@ -284,4 +284,6 @@ void SevenSegment::paint( QPainter* p, const QStyleOptionGraphicsItem* option, Q
 {
     Component::paint( p, option, widget );
     p->drawRect( m_area );
+
+    Component::paintSelected( p );
 }

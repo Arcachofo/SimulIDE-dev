@@ -177,4 +177,7 @@ void WS2812::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget
         for( int col=0; col<m_cols; col++ ){
             p->setBrush( m_led[row*m_cols+col] );
             p->drawEllipse( -6+col*12, -6+row*12, 12, 12 );
-}   }   }
+    }   }
+
+    Component::paintSelected( p );
+}

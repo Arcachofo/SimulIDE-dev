@@ -67,4 +67,6 @@ void Push::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* 
         pen.setWidth(1);
         p->setPen(pen);
         p->drawLine(-0, 4-4*m_pin0, 0,-3*m_pin0-16*m_numPoles+4 );
-}   }
+    }
+    Component::paintSelected( p );
+}

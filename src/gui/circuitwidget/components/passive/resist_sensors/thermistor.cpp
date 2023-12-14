@@ -80,4 +80,6 @@ void Thermistor::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWi
     
     p->drawLine(-8, 6,  6,-8 );
     p->drawLine( 6,-8, 10,-8 );
+
+    Component::paintSelected( p );
 }

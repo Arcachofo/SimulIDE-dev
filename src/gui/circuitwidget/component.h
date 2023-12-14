@@ -172,6 +172,8 @@ class Component : public CompBase, public QGraphicsItem, public Updatable
         void contextMenuEvent( QGraphicsSceneContextMenuEvent* event ) override;
         void mouseDoubleClickEvent( QGraphicsSceneMouseEvent* event ) override;
 
+        void paintSelected( QPainter* );
+
         virtual void findHelp(){;}
 
         bool m_isMainComp;

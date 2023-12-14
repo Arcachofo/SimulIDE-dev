@@ -294,4 +294,5 @@ void Csource::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidge
         p->drawLine(-13, 5,-12, 7 );
         p->drawLine(-11, 5,-12, 7 );
     }
+    Component::paintSelected( p );
 }

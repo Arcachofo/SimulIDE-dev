@@ -176,4 +176,6 @@ void DcMotor::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidge
 
         p->setBrush( QColor(200, 100, 70) );
         p->drawPie(-20,-20, 40, 40, -16*90, exedd*16*180 );
-}   }
+    }
+    Component::paintSelected( p );
+}

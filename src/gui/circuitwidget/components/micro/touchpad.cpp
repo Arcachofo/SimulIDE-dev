@@ -265,5 +265,6 @@ void TouchPad::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidg
         p->setBrush( QColor(50, 70, 100) );
         p->drawRoundedRect( QRect(-20,-2, 40, 18 ), 2, 2 );
     }
+    Component::paintSelected( p );
 }
 

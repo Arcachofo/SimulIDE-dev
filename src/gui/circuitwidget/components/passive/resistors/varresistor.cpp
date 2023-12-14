@@ -61,4 +61,6 @@ void VarResistor::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QW
     p->drawLine(-6, 6, 8,-8 );
     p->drawLine( 8,-6, 8,-8 );
     p->drawLine( 8,-8, 6,-8 );
+
+    Component::paintSelected( p );
 }

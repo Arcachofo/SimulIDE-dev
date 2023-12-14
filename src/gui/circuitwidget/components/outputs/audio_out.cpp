@@ -213,4 +213,6 @@ void AudioOut::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidg
     if( m_deviceinfo.isNull() ){
         p->drawLine(0,-8, 7, 0 );
         p->drawLine( 7,-8,0, 0 );
-}   }
+    }
+    Component::paintSelected( p );
+}

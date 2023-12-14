@@ -101,4 +101,6 @@ void OrGate::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget
     QPen pen3( Qt::blue, 0.5, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin );
     p->setPen( pen3 );
     p->drawRect( m_area );*/
+
+    Component::paintSelected( p );
 }

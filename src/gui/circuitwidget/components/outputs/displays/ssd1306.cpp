@@ -449,4 +449,6 @@ void Ssd1306::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidge
     p->setBrush( QColor( 50, 70, 100 ) );
     p->drawRoundedRect( m_area, 2, 2 );
     p->drawImage(-64,-m_height/2-10, *m_pdisplayImg, 0, 0, m_width, m_height );
+
+    Component::paintSelected( p );
 }

@@ -179,7 +179,7 @@ void Lm555::runEvent()
     m_resD.setRes( m_outState ? high_imp : 1 );
 }
 
-void Lm555::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget )
+void Lm555::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
 {
     Component::paint( p, option, widget );
 
@@ -187,4 +187,6 @@ void Lm555::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget 
     
     //p->setPen( QColor( 170, 170, 150 ) );
     p->drawArc( boundingRect().width()/2-6, -4, 8, 8, 0, -2880 /* -16*180 */ );
+
+    Component::paintSelected( p );
 }

@@ -36,7 +36,7 @@ Diac::Diac( QString type, QString id )
      : Component( type, id )
      , eElement( id )
 {
-    m_area =  QRectF( -8, -16, 16, 32 );
+    m_area =  QRectF(-10,-16, 20, 32 );
     setLabelPos(-12,-30, 0 );
 
     m_resOn    = 500;
@@ -160,4 +160,6 @@ void Diac::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* 
 
     p->drawLine(-8,-16,-8, 16 );
     p->drawLine( 8,-16, 8, 16 );
+
+    Component::paintSelected( p );
 }

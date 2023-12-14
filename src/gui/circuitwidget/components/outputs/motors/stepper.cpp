@@ -231,4 +231,6 @@ void Stepper::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidge
 
     //p->setBrush( QColor(50, 70, 100) );
     p->drawEllipse(-25,-25, 50, 50);
+
+    Component::paintSelected( p );
 }

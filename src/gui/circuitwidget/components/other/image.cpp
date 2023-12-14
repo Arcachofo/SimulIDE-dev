@@ -25,7 +25,7 @@ LibraryItem* Image::libraryItem()
     return new LibraryItem(
         tr("Image"),
         "Graphical",
-        "image.png",
+        "img.png",
         "Image",
         Image::construct);
 }
@@ -135,4 +135,5 @@ void Image::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget*
         p->setBrush( Qt::transparent );
         p->drawRect( m_area );
     }
+    Component::paintSelected( p );
 }

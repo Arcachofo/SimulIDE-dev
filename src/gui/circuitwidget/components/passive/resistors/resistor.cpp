@@ -49,4 +49,6 @@ void Resistor::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidg
 {
     Component::paint( p, option, widget );
     p->drawRect( m_area );
+
+    Component::paintSelected( p );
 }

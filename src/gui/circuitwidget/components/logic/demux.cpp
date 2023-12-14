@@ -165,4 +165,6 @@ void Demux::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget 
         QPointF( w,-h-6 )};
 
     p->drawPolygon(points, 4);
+
+    Component::paintSelected( p );
 }

@@ -236,4 +236,6 @@ void Pcd8544::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidge
     p->setBrush( QColor(200, 220, 180) );
     p->drawRoundedRect( -48, -48, 96, 60, 8, 8 );
     p->drawImage(-42,-42,*m_pdisplayImg );
+
+    Component::paintSelected( p );
 }

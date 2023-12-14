@@ -176,4 +176,6 @@ void SerialTerm::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWi
     }
     else p->setBrush( Qt::black );
     p->drawRoundedRect(-5, 5, 8, 6, 2, 2 ); // Rx led
+
+    Component::paintSelected( p );
 }

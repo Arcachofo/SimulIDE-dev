@@ -135,4 +135,6 @@ void Dial::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* 
 
     Component::paint( p, option, widget );
     p->drawRect( m_area );
+
+    Component::paintSelected( p );
 }

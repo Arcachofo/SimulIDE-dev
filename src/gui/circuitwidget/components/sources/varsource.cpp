@@ -130,4 +130,6 @@ void VarSource::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWid
     p->drawRoundedRect( m_area, 2, 2 );
 
     //p->fillRect( m_area, Qt::darkGray );
+
+    Component::paintSelected( p );
 }

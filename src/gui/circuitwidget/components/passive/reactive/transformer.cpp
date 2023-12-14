@@ -404,6 +404,8 @@ void Transformer::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QW
     }
     p->drawLine(-2, 0,-2, 8*m_lenght );
     p->drawLine( 2, 0, 2, 8*m_lenght );
+
+    Component::paintSelected( p );
 }
 
 // Coil structure, example section with 3 coils: (VVVV = resistor)

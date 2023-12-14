@@ -264,6 +264,8 @@ void SerialPort::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWi
     font.setPixelSize(11);
     p->setFont( font );
     p->drawText( 40, 5, m_portName );
+
+    Component::paintSelected( p );
 }
 
 //#include "moc_serialport.cpp"

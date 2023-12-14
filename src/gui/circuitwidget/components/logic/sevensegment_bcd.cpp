@@ -168,4 +168,5 @@ void SevenSegmentBCD::paint( QPainter* p, const QStyleOptionGraphicsItem* option
         p->setBrush( QColor( 250, 250, 100) );
         p->drawPie( x2+ds, y2-ds, tk, tk, 0, 16*360 );
     };
+    Component::paintSelected( p );
 }

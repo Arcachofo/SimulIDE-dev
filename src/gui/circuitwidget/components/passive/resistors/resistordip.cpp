@@ -176,4 +176,6 @@ void ResistorDip::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QW
 {
     Component::paint( p, option, widget );
     p->drawRoundRect( QRect( -9, -28, 18, m_size*8 ), 2, 2 );
+
+    Component::paintSelected( p );
 }

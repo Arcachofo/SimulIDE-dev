@@ -278,4 +278,6 @@ void Dht22::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget*
     p->setPen( QColor(0, 0, 0) );
     p->drawText( -16, 1, QString::number( m_temp )+"°C" );
     p->drawText( -16,12, QString::number( m_humi )+" %" );
+
+    Component::paintSelected( p );
 }
