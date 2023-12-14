@@ -183,7 +183,7 @@
         <file alias="line.png">../src/icons/components/line.png</file>
         <file alias="rectangle.png">../src/icons/components/rectangle.png</file>
         <file alias="ws2812.png">../src/icons/components/ws2812.png</file>
-        <file alias="image.png">../src/icons/components/image.png</file>
+        <file alias="img.png">../src/icons/components/img.png</file>
         <file alias="tunnel.png">../src/icons/components/tunnel.png</file>
         <file alias="joystick.png">../src/icons/components/joystick.png</file>
         <file alias="rotencod.png">../src/icons/components/rotencod.png</file>
