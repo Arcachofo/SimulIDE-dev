@@ -72,6 +72,8 @@ class ScriptCpu : public ScriptModule, public McuCpu
         virtual void INTERRUPT( uint vector ) override;
 
     protected:
+        uint m_progWordMask;
+
         Mcu* m_mcuComp;
         asIScriptFunction* m_reset;
         asIScriptFunction* m_voltChanged;

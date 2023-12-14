@@ -27,6 +27,13 @@ ScriptCpu::ScriptCpu( eMcu* mcu )
 {
     m_watcher = NULL;
 
+    m_progWordMask = 0;
+    for( uint i=0; i<mcu->wordSize(); ++i )
+    {
+        m_progWordMask <<= 8;
+        m_progWordMask |= 0xFF;
+    }
+
     // Script functions
     m_reset       = NULL;
     m_voltChanged = NULL;
@@ -431,8 +438,8 @@ void ScriptCpu::addEvent( uint time ) { Simulator::self()->addEvent( time, this 
 void ScriptCpu::cancelEvents()        { Simulator::self()->cancelEvents( this ); }
 uint64_t ScriptCpu::circTime()        { return Simulator::self()->circTime(); }
 
-int  ScriptCpu::readPGM( uint addr )         { if( addr < m_progSize       ) return m_progMem[addr]; return -1; }
-void ScriptCpu::writePGM( uint addr, int v ) { if( addr < m_progSize       ) m_progMem[addr] = v; }
+int  ScriptCpu::readPGM( uint addr )         { if( addr < m_progSize       ) return m_progMem[addr] && m_progWordMask ; return -1; }
+void ScriptCpu::writePGM( uint addr, int v ) { if( addr < m_progSize       ) m_progMem[addr] = v && m_progWordMask; }
 int  ScriptCpu::readRAM( uint addr )         { if( addr <= m_dataMemEnd    ) return m_dataMem[addr]; return -1; }
 void ScriptCpu::writeRAM( uint addr, int v ) { SET_RAM( addr, v ); }
 int  ScriptCpu::readROM( uint addr )         { if( addr < m_mcu->romSize() ) return m_mcu->getRomValue( addr ); return -1; }
