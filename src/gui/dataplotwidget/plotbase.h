@@ -10,6 +10,7 @@
 #include "scriptmodule.h"
 #include "datachannel.h"
 
+class IoPin;
 class PlotDisplay;
 class QGraphicsProxyWidget;
 
@@ -29,6 +30,9 @@ class PlotBase : public Component, public ScriptModule
 
         int bufferSize() { return m_bufferSize; }
         void setBufferSize( int bs );
+
+        double inputAdmit(){ return m_inputAdmit; }
+        void setInputAdmit( double a );
 
         QString timDiv();
         void setTimDiv( QString td );
@@ -108,6 +112,9 @@ class PlotBase : public Component, public ScriptModule
         int m_timeStep;    // For export
         bool m_autoExport;
         QString m_exportFile;
+
+        double m_inputAdmit;
+        std::vector<IoPin*> m_inPin;
 
         asIScriptFunction* m_pauseFunc;
         QString m_conditions;

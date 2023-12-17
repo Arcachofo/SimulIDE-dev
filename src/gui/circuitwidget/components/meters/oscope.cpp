@@ -16,6 +16,7 @@
 #include "datawidget.h"
 #include "tunnel.h"
 #include "e-node.h"
+#include "iopin.h"
 
 #include "stringprop.h"
 #include "doubleprop.h"
@@ -52,12 +53,14 @@ Oscope::Oscope( QString type, QString id )
     m_display->setPlotBase( this );
     m_display->setFixedSize( m_baSizeX+6*8, m_baSizeY+2*8 );
 
+    m_inPin.resize(5);
     m_pin.resize(5);
-    m_pin[4] = new Pin( 180, QPoint( -80-8, 64 ), id+"-PinG", 0, this );
+    m_pin[4] = m_inPin[4] = new IoPin( 180, QPoint(-80-8, 64 ), id+"-PinG", 0, this, input );
 
     for( int i=0; i<4; i++ )
     {
-        m_pin[i] = new Pin( 180, QPoint( -80-8,-48+32*i ), id+"-Pin"+QString::number(i), 0, this );
+        m_pin[i] = m_inPin[i] = new IoPin( 180, QPoint(-80-8,-48+32*i ), id+"-Pin"+QString::number(i), 0, this, undef_mode );
+        m_inPin[i]->setInputAdmit( m_inputAdmit );
         m_channel[i] = new OscopeChannel( this, id+"Chan"+QString::number(i) );
         m_channel[i]->m_channel = i;
         m_channel[i]->m_ePin[0] = m_pin[i];
@@ -81,7 +84,7 @@ Oscope::Oscope( QString type, QString id )
     expand( false );
 
     addPropGroup( { "Hidden1", {
-new DoubProp<Oscope>("Filter", tr("Filter"), "V", this, &Oscope::filter, &Oscope::setFilter ),
+new DoubProp<Oscope>("Filter", "","V", this, &Oscope::filter,  &Oscope::setFilter ),
 new IntProp <Oscope>("Trigger","", "", this, &Oscope::trigger, &Oscope::setTrigger ),
 new IntProp <Oscope>("AutoSC" ,"", "", this, &Oscope::autoSC,  &Oscope::setAutoSC ),
 new IntProp <Oscope>("Tracks" ,"", "", this, &Oscope::tracks,  &Oscope::setTracks ),
@@ -144,6 +147,11 @@ void Oscope::updateStep()
         m_channel[i]->m_trigIndex = m_channel[i]->m_bufferCounter;
     }
     m_display->update(); //redrawScreen();
+
+    if( m_changed ){
+        m_changed = false;
+        for( IoPin* pin : m_inPin ) pin->stampAdmitance( m_inputAdmit );
+    }
 }
 
 void Oscope::expand( bool e )

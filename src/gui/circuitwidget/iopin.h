@@ -41,9 +41,10 @@ class IoPin : public Pin, public eElement
         void setPinMode( pinMode_t mode );
         void setPinMode( uint mode ) { setPinMode( (pinMode_t) mode ); }
 
-        void  setInputHighV( double volt ) { m_inpHighV = volt; }
-        void  setInputLowV( double volt ) { m_inpLowV = volt; }
-        virtual void  setInputImp( double imp );
+        void setInputHighV( double volt ) { m_inpHighV = volt; }
+        void setInputLowV( double volt )  { m_inpLowV  = volt; }
+        void setInputImp( double imp );
+        void setInputAdmit( double a ) { m_admit = a; }
 
         double outHighV() { return m_outHighV; }
         void  setOutHighV( double v ) { m_outHighV = v; }
@@ -54,8 +55,8 @@ class IoPin : public Pin, public eElement
         void startLH();
         void startHL();
 
-        virtual void  setOutputImp( double imp );
-        virtual void  setImpedance( double imp );
+        virtual void setOutputImp( double imp );
+        virtual void setImpedance( double imp );
 
         virtual bool getInpState();
         virtual bool getOutState() { if( m_step ) return m_nextState; return m_outState; }

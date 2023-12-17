@@ -16,6 +16,7 @@
 #include "datalawidget.h"
 #include "tunnel.h"
 #include "e-node.h"
+#include "iopin.h"
 
 #include "stringprop.h"
 #include "doubleprop.h"
@@ -55,9 +56,11 @@ LAnalizer::LAnalizer( QString type, QString id )
     m_display->setTracks( 8 );
 
     m_pin.resize(8);
+    m_inPin.resize(8);
     for( int i=0; i<8; ++i )
     {
-        m_pin[i] = new Pin( 180, QPoint( -80-8,-64+16*i ), id+"-Pin"+QString::number(i), 0, this );
+        m_pin[i] = m_inPin[i] = new IoPin( 180, QPoint(-80-8,-64+16*i ), id+"-Pin"+QString::number(i), 0, this, undef_mode );
+        m_inPin[i]->setInputAdmit( m_inputAdmit );
         LaChannel* ch = new LaChannel( this, id+"Chan"+QString::number(i) );
 
         ch->m_channel = i;
@@ -91,15 +94,11 @@ new IntProp <LAnalizer>("TimeStep"  ,tr("Base Time Step") ,"_ps", this, &LAnaliz
 new BoolProp<LAnalizer>("AutoExport",tr("Export at pause"),""   , this, &LAnalizer::autoExport, &LAnalizer::setAutoExport ),
     },0} );
 
-    addProperty("Hidden",
-new DoubProp<LAnalizer>("TresholdR","TresholdR","V", this, &LAnalizer::thresholdR, &LAnalizer::setThresholdR )
-     );
-    addProperty("Hidden",
-new StrProp<LAnalizer>("Bus" ,"Bus" , "", this, &LAnalizer::busStr,  &LAnalizer::setBusStr )
-    );
-    addProperty("Hidden",
-new DoubProp<LAnalizer>("TresholdF","TresholdF","V", this, &LAnalizer::thresholdF, &LAnalizer::setThresholdF )
-    );
+    addPropGroup( { "Hidden1", {
+new DoubProp<LAnalizer>("TresholdR","","V", this, &LAnalizer::thresholdR, &LAnalizer::setThresholdR ),
+new StrProp <LAnalizer>("Bus"      ,"", "", this, &LAnalizer::busStr,     &LAnalizer::setBusStr ),
+new DoubProp<LAnalizer>("TresholdF","","V", this, &LAnalizer::thresholdF, &LAnalizer::setThresholdF )
+    }, groupHidden } );
 }
 LAnalizer::~LAnalizer()
 {
@@ -157,6 +156,11 @@ void LAnalizer::updateStep()
         m_risEdge = 0;
     }
     m_display->update(); //redrawScreen();
+
+    if( m_changed ){
+        m_changed = false;
+        for( IoPin* pin : m_inPin ) pin->stampAdmitance( m_inputAdmit );
+    }
 }
 
 void LAnalizer::expand( bool e )

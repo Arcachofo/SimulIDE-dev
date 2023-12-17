@@ -8,6 +8,7 @@
 #include "simulator.h"
 #include "circuit.h"
 #include "circuitwidget.h"
+#include "iopin.h"
 #include "utils.h"
 
 #include "stringprop.h"
@@ -23,6 +24,8 @@ PlotBase::PlotBase( QString type, QString id )
     m_graphical = true;
     m_bufferSize = 600000;
 
+    m_inputAdmit = 1e-7;
+
     m_color[0] = QColor( 240, 240, 100 );
     m_color[1] = QColor( 220, 220, 255 );
     m_color[2] = QColor( 255, 210, 90  );
@@ -32,19 +35,19 @@ PlotBase::PlotBase( QString type, QString id )
     m_baSizeX = 135;
     m_baSizeY = 135;
 
-    int r;
+    //int r;
     m_pauseFunc = NULL;
     m_aEngine->RegisterObjectType("PlotBase",0, asOBJ_REF | asOBJ_NOCOUNT );
     m_aEngine->RegisterGlobalProperty("PlotBase pb", this );
-    r = m_aEngine->RegisterObjectProperty("PlotBase", "bool m_pause", asOFFSET(PlotBase,m_pause)); //assert( r >= 0 );
-    r = m_aEngine->RegisterObjectProperty("PlotBase", "int ch1", asOFFSET(PlotBase,m_condCh1)); //assert( r >= 0 );
-    r = m_aEngine->RegisterObjectProperty("PlotBase", "int ch2", asOFFSET(PlotBase,m_condCh2)); //assert( r >= 0 );
-    r = m_aEngine->RegisterObjectProperty("PlotBase", "int ch3", asOFFSET(PlotBase,m_condCh3)); //assert( r >= 0 );
-    r = m_aEngine->RegisterObjectProperty("PlotBase", "int ch4", asOFFSET(PlotBase,m_condCh4)); //assert( r >= 0 );
-    r = m_aEngine->RegisterObjectProperty("PlotBase", "int ch5", asOFFSET(PlotBase,m_condCh5)); //assert( r >= 0 );
-    r = m_aEngine->RegisterObjectProperty("PlotBase", "int ch6", asOFFSET(PlotBase,m_condCh6)); //assert( r >= 0 );
-    r = m_aEngine->RegisterObjectProperty("PlotBase", "int ch7", asOFFSET(PlotBase,m_condCh7)); //assert( r >= 0 );
-    r = m_aEngine->RegisterObjectProperty("PlotBase", "int ch8", asOFFSET(PlotBase,m_condCh8)); //assert( r >= 0 );
+    /*r = */m_aEngine->RegisterObjectProperty("PlotBase", "bool m_pause", asOFFSET(PlotBase,m_pause)); //assert( r >= 0 );
+    /*r = */m_aEngine->RegisterObjectProperty("PlotBase", "int ch1", asOFFSET(PlotBase,m_condCh1)); //assert( r >= 0 );
+    /*r = */m_aEngine->RegisterObjectProperty("PlotBase", "int ch2", asOFFSET(PlotBase,m_condCh2)); //assert( r >= 0 );
+    /*r = */m_aEngine->RegisterObjectProperty("PlotBase", "int ch3", asOFFSET(PlotBase,m_condCh3)); //assert( r >= 0 );
+    /*r = */m_aEngine->RegisterObjectProperty("PlotBase", "int ch4", asOFFSET(PlotBase,m_condCh4)); //assert( r >= 0 );
+    /*r = */m_aEngine->RegisterObjectProperty("PlotBase", "int ch5", asOFFSET(PlotBase,m_condCh5)); //assert( r >= 0 );
+    /*r = */m_aEngine->RegisterObjectProperty("PlotBase", "int ch6", asOFFSET(PlotBase,m_condCh6)); //assert( r >= 0 );
+    /*r = */m_aEngine->RegisterObjectProperty("PlotBase", "int ch7", asOFFSET(PlotBase,m_condCh7)); //assert( r >= 0 );
+    /*r = */m_aEngine->RegisterObjectProperty("PlotBase", "int ch8", asOFFSET(PlotBase,m_condCh8)); //assert( r >= 0 );
 
     QString n;
     for( int i=1; i<9; ++i ) // Condition simple to script: ch1l to (ch1==1)
@@ -62,9 +65,10 @@ PlotBase::PlotBase( QString type, QString id )
     m_exportFile = changeExt( Circuit::self()->getFilePath(), "_"+id+".vcd" );
 
     addPropGroup( { tr("Main"), {
-new IntProp<PlotBase>( "Basic_X"    ,tr("Screen Size X"),tr("_Pixels"), this, &PlotBase::baSizeX,    &PlotBase::setBaSizeX   ,0, "uint" ),
-new IntProp<PlotBase>( "Basic_Y"    ,tr("Screen Size Y"),tr("_Pixels"), this, &PlotBase::baSizeY,    &PlotBase::setBaSizeY   ,0, "uint" ),
-new IntProp<PlotBase>( "BufferSize" ,tr("Buffer Size")  ,tr("Samples"), this, &PlotBase::bufferSize, &PlotBase::setBufferSize,0,"uint" ),
+new IntProp <PlotBase>("Basic_X"   ,tr("Screen Size X"),tr("_Pixels"), this, &PlotBase::baSizeX,    &PlotBase::setBaSizeX   ,0,"uint" ),
+new IntProp <PlotBase>("Basic_Y"   ,tr("Screen Size Y"),tr("_Pixels"), this, &PlotBase::baSizeY,    &PlotBase::setBaSizeY   ,0,"uint" ),
+new IntProp <PlotBase>("BufferSize",tr("Buffer Size")  ,tr("Samples"), this, &PlotBase::bufferSize, &PlotBase::setBufferSize,0,"uint" ),
+new DoubProp<PlotBase>("InputAdmit",tr("Input Admittance"),"µ℧"       , this, &PlotBase::inputAdmit,   &PlotBase::setInputAdmit )
     }, groupNoCopy} );
     addPropGroup( {"Hidden", {
 new StrProp<PlotBase>( "TimDiv"  ,"","", this, &PlotBase::timDiv,  &PlotBase::setTimDiv ),
@@ -113,6 +117,13 @@ void PlotBase::setBufferSize( int bs )
         m_channel[i]->m_buffer.resize( m_bufferSize );
         m_channel[i]->m_time.resize( m_bufferSize );
     }
+}
+
+void PlotBase::setInputAdmit( double a )
+{
+    if( m_inputAdmit == a ) return;
+    m_inputAdmit = a;
+    m_changed = true;
 }
 
 QString PlotBase::timDiv()
