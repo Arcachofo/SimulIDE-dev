@@ -57,8 +57,14 @@ void AvrUsi::voltChanged()  // Clk Pin changed
     bool clk = m_CKpin->getInpState();
     if( m_clkState == clk ) return;
 
-    //if( m_mode = 3 ) // TWI
-    /// TODO: TWI start detector
+    if( m_mode > 1 ) // TWI start/stop detector
+    {
+        bool sdaState = m_DIpin->getInpState();
+        if( clk  ){
+            if     (  m_sdaState && !sdaState); // Start condition
+            else if( !m_sdaState &&  sdaState); // Stop condition
+        }
+    }
 
     if( !m_usiClk ) stepCounter();              // Counter Both edges
 
@@ -95,9 +101,12 @@ void AvrUsi::configureA( uint8_t newUSICR )
 
         if( m_DOpin ) m_DOpin->controlPin( spi, false );
 
-        //if( twi ) { }// 2 Wire mode: SDA (DI) & SCL (USCK) open collector if DDRB=out, pullups disabled
+        if( twi ) m_sdaState = m_DIpin->getInpState(); // 2 Wire mode: SDA (DI) & SCL (USCK) open collector if DDRB=out, pullups disabled
 
-        if( m_DIpin ) m_DIpin->setOpenColl( twi );
+        if( m_DIpin ){
+            m_DIpin->changeCallBack( this, twi );
+            m_DIpin->setOpenColl( twi );
+        }
         if( m_CKpin ) m_CKpin->setOpenColl( twi );
     }
     if( !m_mode ) return; // Disabled
@@ -112,11 +121,11 @@ void AvrUsi::configureA( uint8_t newUSICR )
 
         switch( clockMode ) {
             case 0:                   break; // Software clock strobe (USICLK)
-            case 1:     timer = true; break; /// TODO: Timer0 Compare Match
+            case 1:     timer = true; break; // Timer0 Compare Match
             case 2: m_clkEdge = true;        // External, shiftData() positive edge
             case 3:    extClk = true;        // External, shiftData() negative edge
         }
-        if( m_extClk != extClk ){                    // Activate/Deactivate External Clock
+        if( m_extClk != extClk ){            // Activate/Deactivate External Clock
             m_extClk = extClk;
             if( m_CKpin ) m_CKpin->changeCallBack( this, extClk );
         }

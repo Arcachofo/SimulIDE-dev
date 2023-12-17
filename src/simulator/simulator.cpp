@@ -10,7 +10,6 @@
 #include "simulator.h"
 #include "editorwindow.h"
 #include "circuit.h"
-#include "matrixsolver.h"
 #include "updatable.h"
 #include "outpaneltext.h"
 #include "mainwindow.h"

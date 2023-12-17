@@ -33,14 +33,14 @@ void PicDac::initialize()
 {
     McuDac::initialize();
 
-    if( m_pins.size() == 0 ) return;
-    m_pRefPin = m_pins.at(0);
+    if( m_pins.size() > 0 ) m_pRefPin = m_pins.at(0);
+    else qDebug() << "PicDac::configureA: Error: NULL VREF+ Pin";
 
-    if( m_pins.size() > 1 )
-    {
-        m_nRefPin = m_pins.at(1);
-        if( m_pins.size() > 2 ) m_outPin = m_pins.at(2);
-    }
+    if( m_pins.size() > 1 ) m_nRefPin = m_pins.at(1);
+    else qDebug() << "PicDac::configureA: Error: NULL VREF- Pin";
+
+    if( m_pins.size() > 2 ) m_outPin = m_pins.at(2);
+    else qDebug() << "PicDac::configureA: Error: NULL Out Pin";
 }
 
 void PicDac::voltChanged()
@@ -61,30 +61,23 @@ void PicDac::configureA( uint8_t newDACCON0 ) //
         if( m_outVoltEn ) m_outPin->setPinMode( output );
         m_outPin->controlPin( m_outVoltEn, m_outVoltEn );
     }
-    else           qDebug() << "PicDac::configureA: Error: NULL Out Pin";
 
     m_useFVR  = false;
     m_usePinP = false;
     m_vRefP = 0;
     uint8_t dacPss = getRegBitsVal( newDACCON0, m_DACPSS );
     switch( dacPss ) {
-        case 0: m_vRefP = 5;            break; // VDD
-        case 1: {                              // VREF+
-            if( m_pRefPin ) m_usePinP = true;
-            else            qDebug() << "PicDac::configureA: Error: NULL VREF+ Pin";
-        } break;
-        case 2: m_useFVR = true;        break; // FVR Buffer2 output
-        case 3:                         break; // Reserved, do not use
+        case 0: m_vRefP   = 5;     break; // VDD
+        case 1: m_usePinP = true;  break; // VREF+
+        case 2: m_useFVR  = true;  break; // FVR Buffer2 output
+        case 3:                    break; // Reserved, do not use
     }
     m_usePinN = false;
     m_vRefN = 0;
     uint8_t dacNss = getRegBitsVal( newDACCON0, m_DACNSS );
     switch( dacNss ) {
-        case 0:                            break; // VSS
-        case 1: {                                 // VREF-
-            if( m_nRefPin ) m_usePinN = true;
-            else            qDebug() << "PicDac::configureA: Error: NULL VREF- Pin";
-        } break;
+        case 0:                    break; // VSS
+        case 1: m_usePinN = true;  break; // VREF-
     }
     if( m_pRefPin ) m_pRefPin->changeCallBack( this, m_usePinP );
     if( m_nRefPin ) m_nRefPin->changeCallBack( this, m_usePinN );

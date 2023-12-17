@@ -36,6 +36,7 @@ class AvrUsi : public McuModule, public eElement
         bool m_usiClk;
         bool m_clkEdge;
         bool m_clkState;
+        bool m_sdaState;
 
         uint8_t* m_dataReg;
         uint8_t* m_bufferReg;

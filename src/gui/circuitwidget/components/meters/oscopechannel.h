@@ -14,7 +14,6 @@ class OscopeChannel : public DataChannel
         friend class Oscope;
 
     public:
-
         OscopeChannel( Oscope* oscope, QString id );
         ~OscopeChannel();
 
