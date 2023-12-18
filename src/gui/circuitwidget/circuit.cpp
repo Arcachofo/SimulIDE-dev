@@ -25,7 +25,7 @@
 #include "simulator.h"
 #include "e-node.h"
 #include "shield.h"
-#include "linkable.h"
+#include "linker.h"
 
 Circuit* Circuit::m_pSelf = NULL;
 
@@ -163,7 +163,7 @@ void Circuit::loadStrDoc( QString &doc )
 {
     QApplication::setOverrideCursor(Qt::WaitCursor);
 
-    QList<Linkable*> linkList;   // Linked  Component list
+    QList<Linker*> linkList;   // Linked  Component list
     QSet<Component*> compList;   // Pasting Component list
     QSet<Connector*> conList;    // Pasting Connector list
     QSet<Node*> nodeList;        // Pasting node list
@@ -432,9 +432,8 @@ void Circuit::loadStrDoc( QString &doc )
                     comp->updtLabelPos();
                     comp->updtValLabelPos();
                     compList.insert( comp );
-                    if( comp->m_linkable )
-                    {
-                        Linkable* l = dynamic_cast<Linkable*>(comp);
+                    if( comp->m_linker ){
+                        Linker* l = dynamic_cast<Linker*>(comp);
                         if( l->hasLinks() ) linkList.append( l );
                     }
                 }
@@ -448,7 +447,7 @@ void Circuit::loadStrDoc( QString &doc )
     }
     else for( Component* comp : compList ) { comp->moveSignal(); }
 
-    for( Linkable* l : linkList )
+    for( Linker* l : linkList )
         l->createLinks( &compList );
 
     m_compList.unite( compList );
@@ -993,7 +992,7 @@ void Circuit::mousePressEvent( QGraphicsSceneMouseEvent* event )
         if( m_conStarted ) event->accept();
         QGraphicsScene::mousePressEvent( event );
 
-        if( !event->isAccepted() ) Linkable::stopLinking(); // Click in empty place
+        if( !event->isAccepted() ) Linker::stopLinking(); // Click in empty place
     }
     else if( event->button() == Qt::RightButton )
     {
@@ -1044,7 +1043,7 @@ void Circuit::keyPressEvent( QKeyEvent* event )
     }
     if( key == Qt::Key_Escape )
     {
-        Linkable::stopLinking();
+        Linker::stopLinking();
         return;
     }
     if( event->modifiers() & Qt::AltModifier ) // Create Component shortcut

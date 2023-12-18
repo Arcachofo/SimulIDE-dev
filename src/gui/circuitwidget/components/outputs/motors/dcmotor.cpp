@@ -31,7 +31,7 @@ LibraryItem* DcMotor::libraryItem()
 }
 
 DcMotor::DcMotor( QString type, QString id )
-       : LinkedComponent( type, id )
+       : LinkerComponent( type, id )
        , eResistor( id )
 {
     m_graphical = true;

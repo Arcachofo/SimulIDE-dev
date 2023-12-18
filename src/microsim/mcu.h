@@ -10,7 +10,7 @@
 
 #include "e_mcu.h"
 #include "chip.h"
-#include "linkable.h"
+#include "linker.h"
 
 enum deviceType_t{
     typeNONE=0,
@@ -23,7 +23,7 @@ class LibraryItem;
 class MCUMonitor;
 class ScriptCpu;
 
-class Mcu : public Chip, public Linkable
+class Mcu : public Chip, public Linker
 {
         friend class McuCreator;
 

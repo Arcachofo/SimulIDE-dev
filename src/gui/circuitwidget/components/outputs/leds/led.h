@@ -7,11 +7,11 @@
 #define LED_H
 
 #include "ledbase.h"
-#include "linkable.h"
+#include "linker.h"
 
 class LibraryItem;
 
-class Led : public LedBase, public Linkable
+class Led : public LedBase, public Linker
 {
     public:
         Led( QString type, QString id );
@@ -22,7 +22,7 @@ class Led : public LedBase, public Linkable
 
         virtual void voltChanged() override;
 
-        void slotLinkComp() { Linkable::startLinking(); }
+        void slotLinkComp() { Linker::startLinking(); }
 
     protected:
         virtual void contextMenuEvent( QGraphicsSceneContextMenuEvent* event ) override;

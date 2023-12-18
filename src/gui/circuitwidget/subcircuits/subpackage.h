@@ -7,12 +7,12 @@
 #define SUBPACKAGE_H
 
 #include "chip.h"
-#include "linkable.h"
+#include "linker.h"
 
 class LibraryItem;
 class QAction;
 
-class SubPackage : public Chip, public Linkable
+class SubPackage : public Chip, public Linker
 {
         friend class Circuit;
 
@@ -29,7 +29,7 @@ class SubPackage : public Chip, public Linkable
         int height() { return m_height; }
         void setHeight( int height );
         
-        QString  package();
+        QString package();
         void setPackage( QString package );
 
         void setEventPin( Pin* pin ) { m_eventPin = pin; }
@@ -52,7 +52,7 @@ class SubPackage : public Chip, public Linkable
         void setPinSpace( double space );
         void boardModeSlot();
         void setBoardMode( bool mode );
-        void mainComp() { Linkable::startLinking(); }
+        void mainComp() { Linker::startLinking(); }
         void unusePin( bool unuse );
         void pointPin( bool point );
         void editPin();

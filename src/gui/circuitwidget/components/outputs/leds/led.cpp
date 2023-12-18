@@ -32,7 +32,7 @@ Led::Led( QString type, QString id )
 {
     m_area = QRect(-8, -10, 20, 20 );
 
-    m_linkable = true;
+    m_linker = true;
 
     m_pin.resize( 2 );
     m_pin[0] = new Pin( 180, QPoint(-16, 0 ), m_id+"-lPin", 0, this);

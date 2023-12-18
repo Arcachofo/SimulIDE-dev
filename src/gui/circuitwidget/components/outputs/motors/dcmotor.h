@@ -6,13 +6,13 @@
 #ifndef DCMOTOR_H
 #define DCMOTOR_H
 
-#include "linkedcomponent.h"
+#include "linkercomponent.h"
 #include "e-resistor.h"
 
 
 class LibraryItem;
 
-class DcMotor : public LinkedComponent, public eResistor
+class DcMotor : public LinkerComponent, public eResistor
 {
     public:
         DcMotor( QString type, QString id );

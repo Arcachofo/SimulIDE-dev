@@ -17,7 +17,7 @@
 #include "subcircuit.h"
 #include "utils.h"
 #include "e-diode.h"
-#include "linkable.h"
+#include "linker.h"
 
 #define tr(str) QCoreApplication::translate("CircuitView",str)
 
@@ -200,8 +200,8 @@ void CircuitView::overrideCursor( const QCursor &cursor )
 
 void CircuitView::contextMenuEvent( QContextMenuEvent* event )
 {
-    if( Linkable::m_selecComp ){ // Cancel link to components
-        Linkable::stopLinking();
+    if( Linker::m_selecComp ){ // Cancel link to components
+        Linker::stopLinking();
         return;
     }
     QGuiApplication::restoreOverrideCursor();

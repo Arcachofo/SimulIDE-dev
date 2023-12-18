@@ -17,7 +17,7 @@ class eNode;
 class Label;
 class Connector;
 class ConnectorLine;
-class Linkable;
+class Linker;
 
 class Component : public CompBase, public QGraphicsItem, public Updatable
 {
@@ -140,12 +140,13 @@ class Component : public CompBase, public QGraphicsItem, public Updatable
 
         virtual void paint( QPainter* painter, const QStyleOptionGraphicsItem*, QWidget* ) override;
 
+        virtual QVariant itemChange( GraphicsItemChange change, const QVariant &value ) override;
         // Link components
         virtual void setLinkedValue( double v, int i=0 ){;}
         virtual void setLinkedString( QString str, int i=0 ){;}
         virtual void setLinked( bool l ){ m_linked = l;}
 
-        bool m_linkable;
+        bool m_linker;
         int m_linkNumber;
 
  static bool m_boardMode;

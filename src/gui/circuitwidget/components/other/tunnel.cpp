@@ -6,7 +6,7 @@
 #include <QInputDialog>
 
 #include "tunnel.h"
-#include "linkable.h"
+#include "linker.h"
 #include "itemlibrary.h"
 #include "propdialog.h"
 #include "circuitwidget.h"
@@ -252,7 +252,7 @@ QRectF Tunnel::boundingRect() const
 
 void Tunnel::mousePressEvent( QGraphicsSceneMouseEvent* event )
 {
-    if( !Linkable::m_selecComp )  // Used when linking or creating Boards to set this as main component
+    if( !Linker::m_selecComp )  // Used when linking or creating Boards to set this as main component
         Component::mousePressEvent( event ); // Tunnel should not be linked or main component
 }
 

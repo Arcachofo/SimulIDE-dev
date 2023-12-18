@@ -31,7 +31,7 @@ LibraryItem* Stepper::libraryItem()
 }
 
 Stepper::Stepper( QString type, QString id )
-       : LinkedComponent( type, id )
+       : LinkerComponent( type, id )
        , eElement( (id+"-eElement") )
        , m_resA1( (id+"-eEresistorA1") )
        , m_resA2( (id+"-eEresistorA2") )

@@ -232,13 +232,15 @@ void Chip::setBackground( QString bck )
         m_color = QColor( rgb.at(0).toInt(), rgb.at(1).toInt(), rgb.at(2).toInt() );
     }
     else if( bck != "" ){
-        QDir    circuitDir = QFileInfo( Circuit::self()->getFilePath() ).absoluteDir();
-        QString pixmapPath = circuitDir.absoluteFilePath( "data/"+m_name+"/"+bck );
-        if( QFile::exists( pixmapPath ) ) m_backPixmap = new QPixmap( pixmapPath );     // Image in Circuit data/name folder
-        else{
-            pixmapPath = MainWindow::self()->getDataFilePath("images/"+bck );
-            if( QFile::exists( pixmapPath ) ) m_backPixmap = new QPixmap( pixmapPath ); // Image in some data/images folder (Circuit, user or SimulIDE)
+        QDir dir = QFileInfo( m_pkgeFile ).absoluteDir();
+        QString pixmapPath = dir.absoluteFilePath( bck );  // Image in subcircuit folder
+
+        if( !QFile::exists( pixmapPath ) ){
+            dir = QFileInfo( Circuit::self()->getFilePath() ).absoluteDir();
+            pixmapPath = dir.absoluteFilePath( bck );    // Image in circuit/data folder
         }
+        if( !QFile::exists( pixmapPath ) ) pixmapPath = MainWindow::self()->getDataFilePath("images/"+bck );
+        if( QFile::exists( pixmapPath ) ) m_backPixmap = new QPixmap( pixmapPath );
     }
     update();
 }

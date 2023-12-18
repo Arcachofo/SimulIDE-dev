@@ -31,7 +31,7 @@ LibraryItem* Diode::libraryItem()
 }
 
 Diode::Diode( QString type, QString id, bool zener )
-     : LinkedComponent( type, id )
+     : LinkerComponent( type, id )
      , eDiode( id )
 {
     m_area = QRect(-10, -8, 20, 16 );

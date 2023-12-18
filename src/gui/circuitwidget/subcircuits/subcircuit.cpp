@@ -17,7 +17,7 @@
 #include "e-node.h"
 #include "utils.h"
 #include "mcu.h"
-#include "linkable.h"
+#include "linker.h"
 
 #include "logicsubc.h"
 #include "board.h"
@@ -188,7 +188,7 @@ void SubCircuit::loadSubCircuit( QString file )
     numId = numId.split("-").last();
     Circuit* circ = Circuit::self();
 
-    QList<Linkable*> linkList;   // Linked  Component list
+    QList<Linker*> linkList;   // Linked  Component list
 
     QVector<QStringRef> docLines = doc.splitRef("\n");
     for( QStringRef line : docLines )
@@ -303,9 +303,8 @@ void SubCircuit::loadSubCircuit( QString file )
 
                     m_compList.insert( comp );
 
-                    if( comp->m_linkable )
-                    {
-                        Linkable* l = dynamic_cast<Linkable*>(comp);
+                    if( comp->m_linker ){
+                        Linker* l = dynamic_cast<Linker*>(comp);
                         if( l->hasLinks() ) linkList.append( l );
                     }
 
@@ -318,7 +317,7 @@ void SubCircuit::loadSubCircuit( QString file )
                 }   }
                 else qDebug() << "SubCircuit:"<<m_name<<m_id<< "ERROR Creating Component: "<<type<<uid<<label;
     }   }   }
-    for( Linkable* l : linkList )
+    for( Linker* l : linkList )
         l->createLinks( &m_compList );
 
     Circuit::self()->setFilePath( oldFilePath ); // Restore original filePath

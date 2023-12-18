@@ -14,7 +14,7 @@
 #include "circuit.h"
 #include "utils.h"
 #include "propdialog.h"
-#include "linkable.h"
+#include "linker.h"
 
 #include "doubleprop.h"
 #include "boolprop.h"
@@ -47,7 +47,7 @@ Component::Component( QString type, QString id )
     m_crashed    = false;
     m_warning    = false;
     m_graphical  = false;
-    m_linkable   = false;
+    m_linker     = false;
     m_linked     = false;
     m_background = "";
     m_showProperty = "";
@@ -171,6 +171,16 @@ void Component::substitution( QString &propName ) // static, Old: TODELETE
    /// else if( propName == "Inverted")    propName = "InvertOuts";
 }
 
+QVariant Component::itemChange( GraphicsItemChange change, const QVariant &value )
+{
+    if( m_linker && change == QGraphicsItem::ItemSelectedChange && value == false ) // Hide linked Components
+    {
+        Linker* linker = dynamic_cast<Linker*>(this);
+        linker->showLinked( false );
+    }
+    return QGraphicsItem::itemChange( change, value );
+}
+
 void Component::mousePressEvent( QGraphicsSceneMouseEvent* event )
 {
     if( this->parentItem() )
@@ -182,16 +192,24 @@ void Component::mousePressEvent( QGraphicsSceneMouseEvent* event )
     if( event->button() == Qt::LeftButton )
     {
         event->accept();
-        if( Linkable::m_selecComp ){
-            Linkable::m_selecComp->compSelected( this );
+        if( Linker::m_selecComp ){
+            Linker::m_selecComp->compSelected( this );
         }
-        else if( event->modifiers() & Qt::ControlModifier ) setSelected( !isSelected() );
+        else if( event->modifiers() & Qt::ControlModifier )
+        {
+            setSelected( !isSelected() );
+        }
         else{
             QList<QGraphicsItem*> itemlist = Circuit::self()->selectedItems();
             if( !isSelected() )     // Unselect everything and select this
             {
                 for( QGraphicsItem* item : itemlist ) item->setSelected( false );
                 setSelected( true );
+                if( m_linker && isSelected() ) // Show/Hide linked Components (we are not linking right now)
+                {
+                    Linker* linker = dynamic_cast<Linker*>(this);
+                    linker->showLinked( true );
+                }
             }
             else{                   // Deselect childs
                 for( QGraphicsItem* item : itemlist )
@@ -584,23 +602,6 @@ void Component::setBackground( QString bck )
 
 void Component::paintSelected( QPainter* p )
 {
-    if( isSelected() )
-    {
-        //pen.setColor( Qt::darkGray);
-        //color = Qt::darkGray;
-        p->setOpacity( 0.5 );
-        p->fillRect( boundingRect(), Qt::darkGray  );
-    }
-}
-
-void Component::paint( QPainter* p, const QStyleOptionGraphicsItem*, QWidget* )
-{
-    QPen pen( Qt::black, 1.5, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin );
-    QColor color;
-
-
-    color = m_color;
-
     if( m_warning || m_crashed )
     {
         double speed=0, opaci=1;
@@ -616,20 +617,35 @@ void Component::paint( QPainter* p, const QStyleOptionGraphicsItem*, QWidget* )
         if( m_opCount > 0.6 ) m_opCount = 0.0;
         p->setOpacity( m_opCount+opaci );
     }
-    else if( Linkable::m_selecComp && m_linkNumber >= 0 ){ // This Component is linked
+    if( isSelected() )
+    {
+        //pen.setColor( Qt::darkGray);
+        //color = Qt::darkGray;
+        p->setOpacity( 0.5 );
+        p->fillRect( boundingRect(), Qt::darkGray  );
+    }
+    else if( /*Linker::m_selecComp &&*/ m_linkNumber >= 0 ){ // This Component is linked
         p->setOpacity( 0.3 );
         p->fillRect( boundingRect(), Qt::blue  );
         p->setOpacity( 1 );
         p->drawText( boundingRect(), Qt::AlignCenter, QString::number(m_linkNumber) );
-        p->setOpacity( 0.12 );
     }
     else if( !m_hidden )
     {
         if( m_isMainComp ){
-            p->fillRect( boundingRect(), Qt::yellow  );
             p->setOpacity( 0.5 );
+            p->fillRect( boundingRect(), Qt::yellow  );
         }
     }
+}
+
+void Component::paint( QPainter* p, const QStyleOptionGraphicsItem*, QWidget* )
+{
+    QPen pen( Qt::black, 1.5, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin );
+    QColor color;
+
+    color = m_color;
+
     //p->drawPath( shape() );
     p->setBrush( color );
     p->setPen( pen );

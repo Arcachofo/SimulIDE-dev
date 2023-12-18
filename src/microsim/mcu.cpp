@@ -30,7 +30,6 @@
 #include "mcuintosc.h"
 #include "utils.h"
 #include "watcher.h"
-#include "linkable.h"
 
 #include "stringprop.h"
 #include "doubleprop.h"
@@ -96,7 +95,7 @@ Mcu::Mcu( QString type, QString id )
     m_autoLoad = false;
     m_scripted = false;
     m_resetPol = false;
-    m_linkable = true;
+    m_linker   = true;
 
     m_serialMon = -1;
 
@@ -528,7 +527,7 @@ void Mcu::slotmain()
 
 void Mcu::slotLinkComp()
 {
-    Linkable::startLinking();
+    Linker::startLinking();
 }
 
 void Mcu::slotOpenMcuMonitor()

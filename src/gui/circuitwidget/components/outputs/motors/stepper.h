@@ -6,14 +6,14 @@
 #ifndef STEPPER_H
 #define STEPPER_H
 
-#include "linkedcomponent.h"
+#include "linkercomponent.h"
 #include "e-element.h"
 #include "e-resistor.h"
 #include "pin.h"
 
 class LibraryItem;
 
-class Stepper : public LinkedComponent, public eElement
+class Stepper : public LinkerComponent, public eElement
 {
     public:
         Stepper( QString type, QString id );

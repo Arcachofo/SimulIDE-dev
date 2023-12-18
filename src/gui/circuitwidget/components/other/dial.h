@@ -8,11 +8,11 @@
 
 #include "dialed.h"
 #include "dialwidget.h"
-#include "linkable.h"
+#include "linker.h"
 
 class LibraryItem;
 
-class Dial : public Dialed, public Linkable
+class Dial : public Dialed, public Linker
 {
     public:
         Dial( QString type, QString id );
@@ -32,12 +32,10 @@ class Dial : public Dialed, public Linkable
         bool slider() { return m_slider; }
         void setSlider( bool s );
 
-        //virtual void compSelected( Component* comp ) override;
-
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
 
     public slots:
-        void slotLinkComp() { Linkable::startLinking(); }
+        void slotLinkComp() { Linker::startLinking(); }
 
     protected:
         virtual void contextMenuEvent( QGraphicsSceneContextMenuEvent* event ) override;

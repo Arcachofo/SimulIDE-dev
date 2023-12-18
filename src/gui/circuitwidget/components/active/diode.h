@@ -7,11 +7,11 @@
 #define DIODE_H
 
 #include "e-diode.h"
-#include "linkedcomponent.h"
+#include "linkercomponent.h"
 
 class LibraryItem;
 
-class Diode : public LinkedComponent, public eDiode
+class Diode : public LinkerComponent, public eDiode
 {
     public:
         Diode( QString type, QString id, bool zener=false );

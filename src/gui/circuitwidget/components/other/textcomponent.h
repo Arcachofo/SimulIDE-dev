@@ -2,11 +2,11 @@
 #define TEXTCOMPONENT_H
 
 #include "component.h"
-#include "linkedcomponent.h"
+#include "linkercomponent.h"
 
 class LibraryItem;
 
-class TextComponent : public LinkedComponent
+class TextComponent : public LinkerComponent
 {
     public:
         TextComponent( QString type, QString id );

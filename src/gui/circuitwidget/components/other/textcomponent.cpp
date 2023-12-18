@@ -36,7 +36,7 @@ LibraryItem* TextComponent::libraryItem()
 }
 
 TextComponent::TextComponent( QString type, QString id )
-             : LinkedComponent( type, id )
+             : LinkerComponent( type, id )
 {
     m_graphical = true;
     m_changed   = false;
@@ -207,14 +207,14 @@ void TextComponent::setText( QString text )
 void TextComponent::createLinks( QSet<Component*>* compList )
 {
     m_changed = true;
-    Linkable::createLinks( compList );
+    Linker::createLinks( compList );
     if( !Simulator::self()->isRunning() ) updateStep();
 }
 
 void TextComponent::compSelected( Component* comp )
 {
     m_changed = true;
-    Linkable::compSelected( comp );
+    Linker::compSelected( comp );
     if( !Simulator::self()->isRunning() ) updateStep();
 }
 
