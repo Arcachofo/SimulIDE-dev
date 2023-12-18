@@ -95,13 +95,14 @@ void ComponentSelector::LoadCompSetAt( QDir compSetDir )
 
             for( QString compName : dirList )
             {
+                QString ico;
                 QString path = compName+"/"+compName;
                 QString type;
-                if     ( compSetDir.exists( path+".sim1") ) type = "Subcircuit";
-                else if( compSetDir.exists( path+".mcu")  ) type = "MCU";
+                if     ( compSetDir.exists( path+".sim1") ) { ico = ":/subc.png"; type = "Subcircuit";}
+                else if( compSetDir.exists( path+".mcu")  ) { ico = ":/ic2.png"; type = "MCU";}
                 if( !type.isEmpty() )
                 {
-                    addItem( compName, catItem, "subc", type );
+                    addItem( compName, catItem, ico, type );
                     m_dirFileList[ compName ] = compSetDir.absoluteFilePath( compName );
                 }
             }
