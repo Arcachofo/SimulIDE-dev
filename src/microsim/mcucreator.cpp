@@ -1301,7 +1301,7 @@ void McuCreator::setInterrupt( QString intName, McuModule* module )
 {
     if( intName.isEmpty() ) return;
     Interrupt* inte = mcu->m_interrupts.m_intList.value( intName );
-    if( !inte ) qDebug() << "    Error: Interrupt not found: " << intName << Qt::endl;
+    if( !inte ) qDebug() << "    Error: Interrupt not found: " << intName << endl;
     module->setInterrupt( inte );
 }
 
