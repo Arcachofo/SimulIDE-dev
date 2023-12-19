@@ -327,9 +327,8 @@ void Component::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
     {
         Component* parentComp = static_cast<Component*>( this->parentItem() );
         parentComp->contextMenuEvent( event );
-        return;
     }
-    if( !acceptedMouseButtons() ) event->ignore();
+    else if( !acceptedMouseButtons() ) event->ignore();
     else{
         event->accept();
         QMenu* menu = new QMenu();

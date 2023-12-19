@@ -247,6 +247,8 @@ void Pin::setSpace( double s )
 
 void Pin::setLabelPos()
 {
+    if( m_labelText.isEmpty() ) return;
+
     QFontMetrics fm( m_label.font() );
 
     double xlabelpos = pos().x();
@@ -417,7 +419,7 @@ void Pin::paint( QPainter* painter, const QStyleOptionGraphicsItem* option, QWid
     else if( m_animate ) pen.setColor( m_color[m_pinState] );
 
     painter->setPen(pen);
-    if( m_length > 1 ) painter->drawLine( QPointF(0, 0), QPointF( m_length-0.5, 0) );
+    if( m_length > 1 ) painter->drawLine( QPointF(0, 0), QPointF( m_length-0.7, 0) );
     else               painter->drawLine( QPointF(-0.01, 0 ), QPointF( 0.03, 0 ) );
 
     if( m_inverted )

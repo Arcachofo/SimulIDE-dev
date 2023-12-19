@@ -172,7 +172,7 @@ void FreqMeter::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWid
 {
     Component::paint( p, option, widget );
     p->setBrush( Qt::black);
-    p->drawRect( m_area );
+    p->drawRoundedRect( m_area, 1, 1);
 
     Component::paintSelected( p );
 }
