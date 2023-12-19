@@ -189,7 +189,6 @@ void SubPackage::mousePressEvent( QGraphicsSceneMouseEvent* event )
 
         m_eventPin = new PackagePin( m_angle, QPoint(m_p1X,m_p1Y ), "name", 0, this );
         ///m_eventPin->setEnabled( false );
-        m_eventPin->setFlag( QGraphicsItem::ItemStacksBehindParent, false );
         m_eventPin->setPinId( "Id" );
         m_eventPin->setLabelColor( color );
         m_eventPin->setLabelPos();
@@ -227,6 +226,7 @@ void SubPackage::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu
 void SubPackage::compSelected( Component* comp )
 {
     if( comp) comp->setMainComp( !comp->isMainComp() );
+    else      Linker::compSelected( comp );
 }
 
 void SubPackage::boardModeSlot()
@@ -332,7 +332,6 @@ Pin* SubPackage::addPin( QString id, QString type, QString label, int pos, int x
     pin->setSpace( space );
     pin->setLabelText( label );
     pin->setInverted( type == "inverted" || type == "inv" );
-    //pin->setFlag( QGraphicsItem::ItemStacksBehindParent, false );
 
     m_pkgePins.append( pin );
     return pin;
@@ -427,7 +426,6 @@ void SubPackage::pointPin( bool point )
     else if( m_angle == 90 )  m_eventPin->moveBy( 0,-deltaL );// Top
     else if( m_angle == 270 ) m_eventPin->moveBy( 0, deltaL );// Bottom
 
-    m_eventPin->setFlag( QGraphicsItem::ItemStacksBehindParent, false );
     Circuit::self()->update();
     m_changed = true;
 }
