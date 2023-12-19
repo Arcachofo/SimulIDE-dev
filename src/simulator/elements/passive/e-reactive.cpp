@@ -12,7 +12,7 @@ eReactive::eReactive( QString id )
          : eResistor( id )
 {
     m_value    = 0;
-    m_autoStep = 0;
+    m_reacStep = 0;
     m_InitCurr = 0;
     m_InitVolt = 0;
 }
@@ -27,7 +27,6 @@ void eReactive::stamp()
         m_ePin[0]->createCurrent();
         m_ePin[1]->createCurrent();
 
-        m_reacStep = Simulator::self()->reactStep(); // Time in ps
         updtReactStep();
 
         m_volt = m_InitVolt;
@@ -42,37 +41,14 @@ void eReactive::stamp()
         m_ePin[0]->changeCallBack( this );
         m_ePin[1]->changeCallBack( this );
     }
-
-    m_lastTime = 0;
-    m_stepError = false;
     m_running = false;
 }
 
 void eReactive::voltChanged()
 {
-    uint64_t simTime = Simulator::self()->circTime();
-    m_deltaTime = simTime - m_lastTime;
-    m_lastTime = simTime;
-
-    if( m_deltaTime < m_reacStep && !m_stepError )
-    {
-        if( m_deltaTime > 10 )
-        {
-            if( m_autoStep )  // Auto-resize step
-            {
-                m_reacStep = m_deltaTime;
-                updtReactStep();
-            }
-            else m_stepError = true;
-        }
-    }
-    else if( m_stepError ) m_stepError = false;
-
-    if( !m_running )
-    {
-        m_running = true;
-        Simulator::self()->addEvent( m_reacStep, this );
-    }
+    if( m_running ) return;
+    m_running = true;
+    Simulator::self()->addEvent( m_timeStep, this );
 }
 
 void eReactive::runEvent()
@@ -86,15 +62,16 @@ void eReactive::runEvent()
 
         m_ePin[0]->stampCurrent( m_curSource );
         m_ePin[1]->stampCurrent(-m_curSource );
-        Simulator::self()->addEvent( m_reacStep, this );
+        Simulator::self()->addEvent( m_timeStep, this );
     }
     else m_running = false;
 }
 
 void eReactive::updtReactStep()
 {
-    if( m_autoStep ) m_reacStep = m_reacStep/m_autoStep;
-    m_tStep = (double)m_reacStep/1e12;         // Time in seconds
+    if( m_reacStep ) m_timeStep = m_reacStep;
+    else             m_timeStep = Simulator::self()->reactStep(); // Time in ps
+    m_tStep = (double)m_timeStep/1e12;         // Time in seconds
     eResistor::setRes( updtRes() );
 
     m_running = false;

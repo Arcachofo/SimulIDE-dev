@@ -69,9 +69,9 @@ new DoubProp<Relay>( "IOn" , tr("IOn") ,"A", this, &Relay::iTrig, &Relay::setITr
 new DoubProp<Relay>( "IOff", tr("IOff"),"A", this, &Relay::iRel,  &Relay::setIRel )
     }, 0} );
     addPropGroup( { tr("Coil"), {
-new DoubProp<Inductor>( "Inductance", tr("Inductance"),"H", m_inductor, &Inductor::value , &Inductor::setValue ),
-new DoubProp<Inductor>( "Rcoil"     , tr("Resistance"),"Ω", m_inductor, &Inductor::resist, &Inductor::setResist),
-new IntProp <Inductor>( "AutoStep"  , tr("Auto Step") , "_Steps", m_inductor, &Inductor::autoStep, &Inductor::setAutoStep,0,"uint" )
+new DoubProp<Inductor>("Inductance", tr("Inductance"),"H", m_inductor, &Inductor::value , &Inductor::setValue ),
+new DoubProp<Inductor>("Rcoil"     , tr("Resistance"),"Ω", m_inductor, &Inductor::resist, &Inductor::setResist),
+new DoubProp<Inductor>("ReaStep", tr("Reactive Step"),"ns", m_inductor, &Inductor::reaStep, &Inductor::setReaStep,0,"uint" )
     }, 0} );
 }
 Relay::~Relay(){}

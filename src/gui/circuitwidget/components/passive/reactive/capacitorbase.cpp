@@ -11,7 +11,6 @@
 #include "pin.h"
 
 #include "doubleprop.h"
-#include "intprop.h"
 
 #define tr(str) simulideTr("Capacitor",str)
 
@@ -26,10 +25,10 @@ CapacitorBase::CapacitorBase( QString type, QString id )
     m_value = m_capacitance = 0.00001; // Farads
 
     addPropGroup( { tr("Main"), {
-new DoubProp<CapacitorBase>( "Capacitance", tr("Capacitance")    , "F"    , this, &CapacitorBase::value   , &CapacitorBase::setValue ),
-new DoubProp<CapacitorBase>( "Resistance" , tr("Resistance")      ,"Ω"    , this, &CapacitorBase::resist  , &CapacitorBase::setResist ),
-new DoubProp<CapacitorBase>( "InitVolt"   , tr("Initial Voltage"), "V"    , this, &CapacitorBase::initVolt, &CapacitorBase::setInitVolt ),
-new IntProp <CapacitorBase>( "AutoStep"   , tr("Auto Step")      ,"_Steps", this, &CapacitorBase::autoStep, &CapacitorBase::setAutoStep,0,"uint" )
+new DoubProp<CapacitorBase>("Capacitance", tr("Capacitance")    , "F", this, &CapacitorBase::value   , &CapacitorBase::setValue ),
+new DoubProp<CapacitorBase>("Resistance" , tr("Resistance")      ,"Ω", this, &CapacitorBase::resist  , &CapacitorBase::setResist ),
+new DoubProp<CapacitorBase>("InitVolt"   , tr("Initial Voltage"), "V", this, &CapacitorBase::initVolt, &CapacitorBase::setInitVolt ),
+new DoubProp<CapacitorBase>("ReaStep"    , tr("Reactive Step")  ,"ns", this, &CapacitorBase::reaStep , &CapacitorBase::setReaStep,0,"uint" )
     },0 } );
 
     setShowProp("Capacitance");
