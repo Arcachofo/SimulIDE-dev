@@ -171,6 +171,12 @@ void Csource::setVoltage( double v )
     m_pin[3]->stampCurrent(-curr );
 }
 
+void Csource::setLinked( bool l )
+{
+    Component::setLinked( l );
+    setControlPins( m_controlPins );
+}
+
 void Csource::setLinkedValue( double v, int i )
 {
     if( m_currControl ) v /= m_admit;
@@ -216,7 +222,7 @@ void Csource::setCurrSource( bool c )
 
 void Csource::setControlPins( bool set )
 {
-    int length = set ? 8 : 10;
+    int length = (set || m_linked) ? 8 : 10;
     m_pin[2]->setLength( length );
     m_pin[3]->setLength( length );
 
