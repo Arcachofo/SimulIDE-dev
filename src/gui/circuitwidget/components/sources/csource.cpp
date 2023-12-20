@@ -108,10 +108,10 @@ void Csource::updateStep()
 
     udtProperties();
 
-    m_pin[0]->setEnabled( m_controlPins );
-    m_pin[0]->setVisible( m_controlPins );
-    m_pin[1]->setEnabled( m_controlPins );
-    m_pin[1]->setVisible( m_controlPins );
+    m_pin[0]->setEnabled( m_controlPins && !m_linked );
+    m_pin[0]->setVisible( m_controlPins && !m_linked );
+    m_pin[1]->setEnabled( m_controlPins && !m_linked );
+    m_pin[1]->setVisible( m_controlPins && !m_linked );
 
     if( m_currControl )
     {
@@ -254,7 +254,7 @@ void Csource::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidge
 
     QPen pen = p->pen();
 
-    if( m_controlPins )
+    if( m_controlPins && !m_linked )
     {
         pen.setWidth(1);
         p->setPen(pen);
@@ -292,7 +292,7 @@ void Csource::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidge
         p->drawLine( 0,-6, 0,-2 );
         p->drawLine(-2, 4, 2, 4 );
     }
-    if( m_currControl && m_controlPins )
+    if( m_currControl && m_controlPins && !m_linked )
     {
         pen.setWidthF(0.6);
         p->setPen(pen);
