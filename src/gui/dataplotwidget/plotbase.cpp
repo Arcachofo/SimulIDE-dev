@@ -68,7 +68,7 @@ PlotBase::PlotBase( QString type, QString id )
 new IntProp <PlotBase>("Basic_X"   ,tr("Screen Size X"),tr("_Pixels"), this, &PlotBase::baSizeX,    &PlotBase::setBaSizeX   ,0,"uint" ),
 new IntProp <PlotBase>("Basic_Y"   ,tr("Screen Size Y"),tr("_Pixels"), this, &PlotBase::baSizeY,    &PlotBase::setBaSizeY   ,0,"uint" ),
 new IntProp <PlotBase>("BufferSize",tr("Buffer Size")  ,tr("Samples"), this, &PlotBase::bufferSize, &PlotBase::setBufferSize,0,"uint" ),
-new DoubProp<PlotBase>("InputAdmit",tr("Input Admittance"),"µ℧"       , this, &PlotBase::inputAdmit,   &PlotBase::setInputAdmit )
+new DoubProp<PlotBase>("InputAdmit",tr("Admittance to ground"),"µ℧" , this, &PlotBase::inputAdmit, &PlotBase::setInputAdmit )
     }, groupNoCopy} );
     addPropGroup( {"Hidden", {
 new StrProp<PlotBase>( "TimDiv"  ,"","", this, &PlotBase::timDiv,  &PlotBase::setTimDiv ),
@@ -122,6 +122,7 @@ void PlotBase::setBufferSize( int bs )
 void PlotBase::setInputAdmit( double a )
 {
     if( m_inputAdmit == a ) return;
+    if( m_inputAdmit  < 0 ) return;
     m_inputAdmit = a;
     m_changed = true;
 }

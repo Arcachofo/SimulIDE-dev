@@ -63,10 +63,10 @@ class ScriptCpu : public ScriptModule, public McuCpu
         McuPort* getMcuPort( const string portName );
         McuPin*  getMcuPin( const string pinName );
 
-        string getPropStr( int index, const string p );               // Called from script:Get property p from linked component at index
-        void setLinkedValue( int index, double v, int i=0  );            // Called from script
+        string getPropStr( int index, const string p );               // Called from script: Get property p from linked component at index
+        void setLinkedValue( int index, double v, int i=0  );         // Called from script
         void setLinkedString( int index, const string str, int i=0 ); // Called from script
-        void setLinkedVal( double v, int i=0 );                          // Called from C++
+        void setLinkedVal( double v, int i=0 );                       // Called from C++
         void setLinkedStr( QString s, int i );                        // Called from C++
 
         virtual void INTERRUPT( uint vector ) override;
