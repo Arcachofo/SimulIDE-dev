@@ -59,6 +59,7 @@ SerialTerm::SerialTerm( QString type, QString id )
     m_pin[1] = pinRx;
     m_receiver->setPins( {pinRx} );
 
+    m_sending   = false;
     m_receiving = false;
 
     setBaudRate( 9600 );
