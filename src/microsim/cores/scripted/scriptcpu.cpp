@@ -290,6 +290,7 @@ void ScriptCpu::extClock( bool clkState )
 
 void ScriptCpu::command( QString c )
 {
+    if( c.isEmpty() ) return;
     if( !m_command ) return;
 
     prepare( m_command );

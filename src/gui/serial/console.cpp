@@ -58,9 +58,10 @@ void Console::updateStep()
     if( m_sendCommand )
     {
         m_sendCommand = false;
-
-        m_cpu->command( m_command );
-        m_command = "";
+        if( !m_command.isEmpty() ){
+            m_cpu->command( m_command );
+            m_command = "";
+        }
     }
 }
 
