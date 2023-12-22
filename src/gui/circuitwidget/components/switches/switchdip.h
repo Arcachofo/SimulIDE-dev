@@ -25,6 +25,9 @@ class SwitchDip : public Component, public eElement
         int  size() { return m_size; }
         void setSize( int size );
 
+        bool exclusive() { return m_exclusive; }
+        void setExclusive( bool e );
+
         int  state() { return m_state; }
         void setState( int state );
 
@@ -43,6 +46,8 @@ class SwitchDip : public Component, public eElement
     private:
         QList<QPushButton*> m_buttons;
         QList<QGraphicsProxyWidget*> m_proxys;
+
+        bool m_exclusive;
 
         int m_size;
         int m_state;

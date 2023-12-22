@@ -17,6 +17,7 @@
 #include "pin.h"
 
 #include "intprop.h"
+#include "boolprop.h"
 
 #define tr(str) simulideTr("SwitchDip",str)
 
@@ -49,8 +50,8 @@ SwitchDip::SwitchDip( QString type, QString id )
     Simulator::self()->addToUpdateList( this );
 
     addPropGroup( { tr("Main"), {
-new IntProp<SwitchDip>("Size", tr("Size"),tr("_Lines"), this
-                      , &SwitchDip::size, &SwitchDip::setSize, propNoCopy,"uint" )
+new IntProp <SwitchDip>("Size"     , tr("Size"),tr("_Lines"), this, &SwitchDip::size     , &SwitchDip::setSize, propNoCopy,"uint" ),
+new BoolProp<SwitchDip>("Exclusive", tr("Exclusive"),""     , this, &SwitchDip::exclusive, &SwitchDip::setExclusive ),
     }, groupNoCopy } );
 
     addPropGroup( {"Hidden", {
@@ -87,34 +88,45 @@ void SwitchDip::updateStep()
     int i = 0;
     for( QPushButton* button : m_buttons )
     {
+        bool   state = m_state & 1<<i;
         double admit = 0;
-        if( button->isChecked()  ) admit = 1e3;
-        
+
+        if( state  )
+        {
+            button->setIcon(QIcon(":/switchbut.png"));
+            admit = 1e3;
+        }else{
+            button->setIcon(QIcon(":/stop.svg"));
+        }
+        button->setChecked( state );
+
         int pin = i*2;
         m_pin[pin]->stampAdmitance( admit );
         m_pin[pin+1]->stampAdmitance( admit );
+
        i++;
     }
 }
 
 void SwitchDip::onbuttonclicked()
 {
-    m_changed = true;
-
     int i = 0;
     for( QPushButton* button : m_buttons )
     {
-        if( button->isChecked()  ) 
+        bool state = button->isChecked();
+        if( m_exclusive )
         {
-            button->setIcon(QIcon(":/switchbut.png"));
-            m_state |= 1<<i;
-        }else{
-            button->setIcon(QIcon(":/stop.svg"));
-            m_state &= ~(1<<i);
+            if( state == (bool)(m_state & 1<<i) )
+                state = false;
         }
+
+        if( state  )  m_state |= 1<<i;
+        else          m_state &= ~(1<<i);
+
         i++;
     }
-    update();
+    m_changed = true;
+    if( !Simulator::self()->isRunning() ) updateStep();
 }
 
 void SwitchDip::setState( int state )
@@ -133,6 +145,7 @@ void SwitchDip::setState( int state )
         else               button->setIcon(QIcon(":/stop.svg"));
     }
     m_changed = true;
+    if( !Simulator::self()->isRunning() ) updateStep();
 }
 
 void SwitchDip::createSwitches( int c )
@@ -200,6 +213,15 @@ void SwitchDip::setSize( int size )
     m_area = QRectF(-3,-28, 14, m_size*8 );
 
     Circuit::self()->update();
+}
+
+void SwitchDip::setExclusive( bool e )
+{
+    if( m_exclusive == e ) return;
+    m_exclusive = e;
+    if( e ) m_state = 0;
+    m_changed = true;
+    if( !Simulator::self()->isRunning() ) updateStep();
 }
 
 void SwitchDip::remove()
