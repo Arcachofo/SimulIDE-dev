@@ -15,6 +15,8 @@ class McuOcUnit;
 
 class AvrUsi : public McuModule, public eElement
 {
+    friend class McuCreator;
+
     public:
         AvrUsi( eMcu* mcu, QString name );
         ~AvrUsi();
@@ -54,6 +56,7 @@ class AvrUsi : public McuModule, public eElement
 
         // USISR
         regBits_t m_USICNT;
+        regBits_t m_USIPF;
 
         McuPin* m_DOpin;
         McuPin* m_DIpin;
@@ -62,6 +65,8 @@ class AvrUsi : public McuModule, public eElement
         AvrTimer800* m_timer0;
         McuOcUnit* m_t0OCA;
         McuOcUnit* m_t0OCB;
+
+        Interrupt* m_startInte;
 };
 
 #endif

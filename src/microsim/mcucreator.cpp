@@ -35,6 +35,7 @@
 #include "avradc.h"
 #include "avrtwi.h"
 #include "avrspi.h"
+#include "avrusi.h"
 #include "avrwdt.h"
 #include "avreeprom.h"
 #include "avrcomparator.h"
@@ -159,12 +160,13 @@ int McuCreator::processFile( QString fileName, bool main )
         else if( part == "ccpunit" )    createCcpUnit( &el );
         else if( part == "msspunit" )   createMsspUnit( &el );
         else if( part == "usart" )      createUsart( &el );
+        else if( part == "twi" )        createTwi( &el );
+        else if( part == "spi" )        createSpi( &el );
+        else if( part == "usi" )        createUsi( &el );
         else if( part == "adc" )        createAdc( &el );
         else if( part == "dac" )        createDac( &el );
         else if( part == "comp" )       createAcomp( &el );
         else if( part == "vref" )       createVref( &el );
-        else if( part == "twi" )        createTwi( &el );
-        else if( part == "spi" )        createSpi( &el );
         else if( part == "wdt" )        createWdt( &el );
         else if( part == "rom" )        createEeprom( &el );
         else if( part == "sleep" )      createSleep( &el );
@@ -1136,13 +1138,13 @@ void McuCreator::createSpi( QDomElement* e )
 
     setConfigRegs( e, m_spi );
 
-    if(  e->hasAttribute("dataregs") )
+    if( e->hasAttribute("dataregs") )
     {
         QString dataReg = e->attribute("dataregs");
         m_spi->m_dataReg = mcu->getReg( dataReg );
         watchRegNames( dataReg, R_WRITE, m_spi, &McuSpi::writeSpiReg, mcu );
     }
-    if(  e->hasAttribute("statusreg") )
+    if( e->hasAttribute("statusreg") )
     {
         QString statReg = e->attribute("statusreg");
         m_spi->m_statReg = mcu->getReg( statReg );
@@ -1156,6 +1158,39 @@ void McuCreator::createSpi( QDomElement* e )
     m_spi->setMisoPin( mcu->getIoPin( pins.value(1) ) );
     m_spi->setSckPin(  mcu->getIoPin( pins.value(2) ) );
     m_spi->setSsPin(   mcu->getIoPin( pins.value(3) ) );
+}
+
+void McuCreator::createUsi( QDomElement* e )
+{
+    QString name = e->attribute( "name" );
+    AvrUsi* usi = nullptr;
+    if( m_core == "AVR" ) usi = new AvrUsi( mcu, name );
+    else return;
+
+    mcu->m_modules.emplace_back( usi );
+
+    setConfigRegs( e, usi );
+
+    /*    if(  e->hasAttribute("dataregs") )
+    {
+        QString dataReg = e->attribute("dataregs");
+        usi->m_dataReg = mcu->getReg( dataReg );
+        watchRegNames( dataReg, R_WRITE, usi, &AvrUsi::writeSpiReg, mcu );
+    }
+    if(  e->hasAttribute("statusreg") )
+    {
+        QString statReg = e->attribute("statusreg");
+        usi->m_statusReg = mcu->getReg( statReg );
+        watchRegNames( statReg, R_WRITE, usi, &AvrUsi::writeStatus, mcu );
+    }*/
+
+    setInterrupt( e->attribute("interrupt") , usi );
+    usi->m_startInte = mcu->m_interrupts.m_intList.value( "USISTA" );
+
+    QStringList pins = e->attribute("pins").remove(" ").split(",");
+    usi->m_DOpin = mcu->getMcuPin( pins.value(0) );
+    usi->m_DIpin = mcu->getMcuPin( pins.value(1) );
+    usi->m_CKpin = mcu->getMcuPin( pins.value(2) );
 }
 
 void McuCreator::createWdt( QDomElement* e )

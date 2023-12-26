@@ -53,4 +53,8 @@
   <comp name="COM" configregsA="ACSR" configbitsB="AIN0D,AIN1D"
                    interrupt="ACOMP"
                    pins="PORTB0,PORTB1"/>
+                   
+  <usi name="USI" configregsA="USICR" configregsB="USISR"
+                  interrupt="USIOVF"
+                  pins="PORTB1,PORTB0,PORTB2" /><!-- "DO,DI,USCK" -->
 </parts>

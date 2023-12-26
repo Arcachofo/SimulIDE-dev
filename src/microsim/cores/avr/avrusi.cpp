@@ -31,6 +31,7 @@ AvrUsi::AvrUsi( eMcu* mcu, QString name )
     m_USIWM  = getRegBits("USIWM0,USIWM1", mcu );
 
     m_USICNT = getRegBits("USICNT0,USICNT1,USICNT2,USICNT3", mcu );
+    m_USIPF  = getRegBits("USIPF", mcu );
 
     m_timer0 = (AvrTimer800*)mcu->getTimer("TIMER0");
     m_t0OCA  = m_timer0->getOcUnit("OCA");
@@ -61,8 +62,8 @@ void AvrUsi::voltChanged()  // Clk Pin changed
     {
         bool sdaState = m_DIpin->getInpState();
         if( clk  ){
-            if     (  m_sdaState && !sdaState); // Start condition
-            else if( !m_sdaState &&  sdaState); // Stop condition
+            if     (  m_sdaState && !sdaState) { if( m_startInte ) m_startInte->raise(); }// Start condition
+            else if( !m_sdaState &&  sdaState) setRegBits( m_USIPF );                     // Stop condition, set USIPF flag
         }
     }
 
@@ -159,14 +160,20 @@ void AvrUsi::stepCounter()
 
     if( ++m_counter == 8 ){
         m_counter = 0;
-        m_interrupt->raise();
+        if( m_interrupt ) m_interrupt->raise();
     }
 }
 
 void AvrUsi::shiftData()
 {
     *m_dataReg = *m_dataReg<<1;                         // Shift data reg
-    // Read input
+
+    if( m_DIpin ) // Read input
+    {
+        bool bit0 = m_DIpin->getInpState();
+        if( bit0 ) *m_dataReg |= 1;
+        else       *m_dataReg &= ~1;
+    }
     if( m_DOpin ) m_DOpin->scheduleState( *m_dataReg & 1<<7, 0 ); // Set output *m_dataReg & 1<<7
 }
 

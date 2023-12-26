@@ -13,8 +13,8 @@
         <interrupt name="T0COA"   enable="OCIE0A"  flag="OCF0A"  priority="5"  vector="0x00A" clear="1"/>
         <interrupt name="T0COB"   enable="OCIE0B"  flag="OCF0B"  priority="4"  vector="0x00B" clear="1"/>
         <interrupt name="WDT"     enable="WDTIE"   flag="WDTIF"  priority="3"  vector="0x00C"/>
-        <interrupt name="USISTA"  enable="USISIE"  flag="USISIF" priority="2"  vector="0x00D"/>
-        <interrupt name="USIOVF"  enable="USIOIE"  flag="USIOIF" priority="1"  vector="0x00E"/>
+        <interrupt name="USISTA"  enable="USISIE"  flag="USISIF" priority="2"  vector="0x00D" clear="1"/>
+        <interrupt name="USIOVF"  enable="USIOIE"  flag="USIOIF" priority="1"  vector="0x00E" clear="1"/>
 
     </interrupts>
 </parts>
