@@ -94,7 +94,7 @@ class Circuit : public QGraphicsScene
         QHash<QString, CompBase*>* compMap() { return &m_compMap;}
 
         Component* getCompById( QString id );
-        QString origId( QString name ) { return m_idMap.value( name ); }
+        QString origId( QString name ) { return m_idMap.value( name ); } // used by Shield
 
         bool is_constarted() { return m_conStarted ; }
 

@@ -389,7 +389,7 @@ void Simulator::setFps( uint64_t fps )
     setPsPerSec( m_psPerSec );
 }
 
-void Simulator::setStepsPerSec( uint64_t sps ) // Only used by Load Circuit (old circuits)
+void Simulator::setStepsPerSec( uint64_t sps )
 {
     if( sps < 1 ) sps = 1;
 

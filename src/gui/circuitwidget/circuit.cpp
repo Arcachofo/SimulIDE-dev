@@ -559,6 +559,7 @@ Component* Circuit::createItem( QString type, QString id, bool map )
         if( item->type() != type ) continue;
 
         comp = item->createItemFnPtr()( type, id );
+        break;
     }
     if( map ) m_compMap[id] = comp;
     return comp;
