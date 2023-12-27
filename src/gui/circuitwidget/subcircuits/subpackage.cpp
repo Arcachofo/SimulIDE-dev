@@ -99,16 +99,17 @@ void SubPackage::setSubcTypeStr( QString s )
     subcType_t type = (subcType_t)index;
     if( m_subcType == type ) return;
 
+    SubPackage* currentBoard = Circuit::self()->getBoard();
     if( type >= Board )
     {
-        if( Circuit::self()->getBoard() ) // Only one board Package can be in the circuit
+        if( currentBoard && currentBoard != this ) // Only one board Package can be in the circuit
         {
             qDebug() << "SubPackage::setSubcTypeStr: ERROR: Only one Board allowed";
             return;
         }
         Circuit::self()->setBoard( this );
     }
-    else if( Circuit::self()->getBoard() == this ) Circuit::self()->setBoard( NULL );
+    else if( currentBoard == this ) Circuit::self()->setBoard( NULL );
 
     m_subcType = type;
 
