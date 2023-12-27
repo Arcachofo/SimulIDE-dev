@@ -67,10 +67,10 @@ void PicDac::configureA( uint8_t newDACCON0 ) //
     m_vRefP = 0;
     uint8_t dacPss = getRegBitsVal( newDACCON0, m_DACPSS );
     switch( dacPss ) {
-        case 0: m_vRefP   = 5;     break; // VDD
-        case 1: m_usePinP = true;  break; // VREF+
-        case 2: m_useFVR  = true;  break; // FVR Buffer2 output
-        case 3:                    break; // Reserved, do not use
+        case 0: m_vRefP = m_mcu->vdd(); break; // VDD
+        case 1: m_usePinP = true;       break; // VREF+
+        case 2: m_useFVR  = true;       break; // FVR Buffer2 output
+        case 3:                         break; // Reserved, do not use
     }
     m_usePinN = false;
     m_vRefN = 0;

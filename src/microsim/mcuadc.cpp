@@ -62,7 +62,7 @@ void McuAdc::startConversion()
 
 void McuAdc::updtVref()
 {
-    m_vRefP = 5;
+    m_vRefP = m_mcu->vdd();
     m_vRefN = 0;
 }
 

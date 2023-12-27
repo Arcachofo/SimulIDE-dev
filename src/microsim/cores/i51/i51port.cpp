@@ -17,8 +17,6 @@ I51Port::~I51Port(){}
 void I51Port::reset()
 {
     m_pinState = 255;
-    //if( m_rstIntMask ) m_intMask = 0;
-    /// for( McuPin* pin : m_pins ) pin->reset();
 }
 
 void I51Port::readPort( uint8_t )

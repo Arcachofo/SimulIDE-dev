@@ -35,6 +35,8 @@ class McuModule
         virtual void setInterrupt( Interrupt* i ) { m_interrupt = i; }
         Interrupt* getInterrupt() { return m_interrupt; }
 
+        eMcu* getMcu() { return m_mcu; }
+
     protected:
         QString m_name;
         eMcu*   m_mcu;

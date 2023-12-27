@@ -33,6 +33,8 @@ eMcu::eMcu( Mcu* comp, QString id )
     m_vrefModule = NULL;
     m_sleepModule = NULL;
 
+    m_vdd= 5;
+
     m_freq = 0;
     m_cPerInst = 1;
 
@@ -144,7 +146,7 @@ void eMcu::reset()
     if( m_cpu ) m_cpu->reset(); // Must be after all modules reset
     else qDebug() << "ERROR: eMcu::reset NULL Cpu";
 
-    for( McuPort*  mcuPort : m_mcuPorts ) mcuPort->readPort( 0 ); // Update Pin Input register
+    for( McuPort* mcuPort : m_mcuPorts ) mcuPort->readPort( 0 ); // Update Pin Input register
 
     if( !m_saveEepr )
         for( uint i=0; i<m_romSize; ++i ) setRomValue( i, 0xFF );

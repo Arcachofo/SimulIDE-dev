@@ -83,6 +83,8 @@ class eMcu : public DataSpace, public eIou
 
         QString getFileName() { return m_firmware; }
 
+        double vdd() { return m_vdd; }
+
         double freq() { return m_freq; }
         void setFreq( double freq );
         uint64_t psInst() { return m_psInst; }  // picoseconds per instruction cycle
@@ -142,6 +144,8 @@ class eMcu : public DataSpace, public eIou
         McuWdt*     m_wdt;
         McuIntOsc*  m_intOsc;
         McuComp*    m_comparator;
+
+        double m_vdd;
 
         double m_freq;         // Clock Frequency in MegaHerzs
         double m_cPerInst;     // Clock ticks per Instruction Cycle

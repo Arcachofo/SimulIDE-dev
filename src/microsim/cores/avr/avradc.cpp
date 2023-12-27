@@ -165,16 +165,16 @@ void AvrAdc00::autotriggerConf()
     m_freeRunning = trigger == 0;
     /// TODO                                     trigger == 1 // Analog Comparator
     /// TODO                                     trigger == 2 //External Interrupt Request 0
-    m_t0OCA->getInterrupt()->callBack( this, trigger == 3 );  // Timer/Counter0 Compare Match A
+    m_t0OCA->getInterrupt()->callBack(  this, trigger == 3 ); // Timer/Counter0 Compare Match A
     m_timer0->getInterrupt()->callBack( this, trigger == 4 ); // Timer/Counter0 Overflow
-    m_txOCB->getInterrupt()->callBack( this, trigger == 5 );  // Timer/Counter1 Compare Match B
+    m_txOCB->getInterrupt()->callBack(  this, trigger == 5 ); // Timer/Counter1 Compare Match B
     m_timer1->getInterrupt()->callBack( this, trigger == 6 ); // Timer/Counter1 Overflow
     /// TODO                                     trigger == 7 // Timer/Counter1 Capture Event
 }
 
 void AvrAdc00::updtVref()
 {
-    m_vRefP = 5;
+    m_vRefP = m_mcu->vdd();
     switch( m_refSelect ){
         case 0: m_vRefP = m_aRefPin->getVoltage(); break; // AREF
         case 1: m_vRefP = m_aVccPin->getVoltage(); break; // AVcc
@@ -215,7 +215,7 @@ AvrAdc02::~AvrAdc02(){}
 
 void AvrAdc02::updtVref()
 {
-    m_vRefP = 5;
+    m_vRefP = m_mcu->vdd();
     switch( m_refSelect ){
         case 1: m_vRefP = m_pRefPin->getVoltage();break; // External voltage reference at PA0 (AREF)
         case 2: m_vRefP = 1.1;                 break; // Internal Vref. 1.1 Volt
@@ -229,7 +229,7 @@ AvrAdc03::AvrAdc03( eMcu* mcu, QString name )
 {
     m_MUX = getRegBits( "MUX0,MUX1,MUX2,MUX3,MUX4", mcu );
 
-    m_fixedVref = 2.56;
+    m_fixedVref = 2.6;
 }
 AvrAdc03::~AvrAdc03(){}
 
@@ -323,7 +323,7 @@ void AvrAdc10::autotriggerConf()
 void AvrAdc10::updtVref()
 {
     if( m_refSelect == 1 ) m_vRefP = 1.1;///TODO // Internal Vref. = ??? 1.1 Volt
-    else                   m_vRefP = 5;
+    else                   m_vRefP = m_mcu->vdd();
 }
 
 //------------------------------------------------------
@@ -338,7 +338,7 @@ AvrAdc11::~AvrAdc11(){}
 
 void AvrAdc11::updtVref()
 {
-    m_vRefP = 5;
+    m_vRefP = m_mcu->vdd();
     switch( m_refSelect ){
         case 1: m_vRefP = m_pRefPin->getVoltage(); break; // External voltage reference at PB0 (AREF)
         case 2: m_vRefP = 1.1;  break;  // Internal Vref. 1.1 Volt

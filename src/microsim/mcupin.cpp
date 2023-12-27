@@ -5,6 +5,7 @@
 
 #include "mcupin.h"
 #include "mcuport.h"
+#include "e_mcu.h"
 #include "datautils.h"
 #include "mcuinterrupts.h"
 #include "simulator.h"
@@ -30,8 +31,7 @@ McuPin::McuPin( McuPort* port, int i, QString id, Component* mcu )
     m_changeCB = true;  // Always call VoltChanged()
     m_pinState = input_low;
 
-    setOutHighV( 5 );
-    initialize();
+    McuPin::initialize();
 }
 McuPin::~McuPin() {}
 
@@ -41,6 +41,11 @@ void McuPin::initialize()
     m_dirCtrl = false;
     m_isAnalog = false;
     //m_portState = false;
+
+    double vdd = m_port->getMcu()->vdd();
+    m_outHighV = vdd;
+    m_inpHighV = vdd/2;
+    m_inpLowV  = vdd/2;
 
     IoPin::initialize();
 }

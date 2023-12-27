@@ -39,9 +39,10 @@ class McuPort : public McuModule
 
         virtual void outChanged( uint8_t val );
         virtual void dirChanged( uint8_t val );
+
         void intChanged( uint8_t val );
-        virtual void setIntMask( uint8_t val) { m_intMask = val; }
-        virtual void rstIntMask( bool rst) { m_rstIntMask = rst; }
+        void setIntMask( uint8_t val) { m_intMask = val; }
+        void rstIntMask( bool rst) { m_rstIntMask = rst; }
 
         virtual void readPort( uint8_t );
 
@@ -51,10 +52,10 @@ class McuPort : public McuModule
         uint getInpState();                  // Direct control over pins
         void setPinMode( pinMode_t mode );   // Direct control over pins
 
-        uint16_t getOutAddr() { return m_outAddr; }
-        uint16_t getInAddr() { return m_inAddr; }
+        //uint16_t getOutAddr() { return m_outAddr; }
+        //uint16_t getInAddr() { return m_inAddr; }
 
-        static void registerScript( asIScriptEngine* engine );
+ static void registerScript( asIScriptEngine* engine );
 
     protected:
         void createPins( Mcu* mcuComp, QString pins, uint32_t pinMask );
