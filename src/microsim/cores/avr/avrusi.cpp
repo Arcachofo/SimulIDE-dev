@@ -162,7 +162,7 @@ void AvrUsi::stepCounter()
 {
     *m_statusReg = overrideBits( m_counter, m_USICNT ); // increment counter
 
-    if( ++m_counter == 8 ){
+    if( ++m_counter == 0x0F ){
         m_counter = 0;
         if( m_interrupt ) m_interrupt->raise();
     }
