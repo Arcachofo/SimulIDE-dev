@@ -17,8 +17,6 @@ class Connector : public CompBase
         Connector( QString type, QString id, Pin* startpin, Pin* endpin = NULL );
         ~Connector();
 
-        QString itemID() { return m_id; }
-
         QString pListStr() { return m_pointList.join(","); }
         QStringList pointList() { refreshPointList(); return m_pointList; }
         void setPointListStr( QString pl );

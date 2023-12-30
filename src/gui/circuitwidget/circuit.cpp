@@ -221,7 +221,7 @@ void Circuit::loadStrDoc( QString &doc )
                 {
                     QString compName = prop.toString();
                     mComp = subci->getMainComp( compName );
-                    if( !mComp ) qDebug() << "ERROR: Could not create Main Component:"<< compName;
+                    if( !mComp ) qDebug() << "ERROR: Could not get Main Component:"<< compName;
                 }
                 else if( mComp ) mComp->setPropStr( propName, prop.toString() );
 

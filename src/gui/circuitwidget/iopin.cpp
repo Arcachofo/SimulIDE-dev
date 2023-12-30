@@ -48,8 +48,9 @@ void IoPin::initialize()
 {
     m_step = 0;
     m_steps = Simulator::self()->slopeSteps();
-    m_inpState = false;
-    m_outState = false;
+
+    m_inpState  = false;
+    m_outState  = false;
     m_nextState = false;
 }
 
