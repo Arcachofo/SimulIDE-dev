@@ -19,7 +19,7 @@ class NumProp : public ComProperty
         ~NumProp(){;}
 
     protected:
-        const QString getValU( double val, QString &u );
+        //const QString getValU( double val, QString &u );
 
         double getVal( const QString &val, CompBase* comp );
 

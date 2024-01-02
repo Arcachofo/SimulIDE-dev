@@ -137,5 +137,5 @@ void ShieldSubc::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu
         }
 
         if( m_board ) m_board->contextMenu( event, menu );
-        else          Component::contextMenu( event, menu );
+        else          SubCircuit::contextMenu( event, menu );
 }

@@ -8,8 +8,8 @@
 #include "utils.h"
 #include "compbase.h"
 
-const QString NumProp::getValU( double val, QString &u )
-{ return QString::number( val )+" "+u; }
+//const QString NumProp::getValU( double val, QString &u )
+//{ return QString::number( val )+" "+u; }
 
 QString NumProp::getStr( double val )
 {
