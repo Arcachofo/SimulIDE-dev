@@ -18,6 +18,8 @@ SerialMonitor::SerialMonitor( QWidget* parent, UsartModule* usart )
 
     m_uartInPanel.setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding );
     m_uartOutPanel.setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding );
+    m_uartInPanel.setReadOnly( true );
+    m_uartOutPanel.setReadOnly( true );
     panelLayout->addWidget( &m_uartInPanel );
     panelLayout->addWidget( &m_uartOutPanel );
 
