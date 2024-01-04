@@ -20,7 +20,7 @@ class SwitchDip : public Component, public eElement
         ~SwitchDip();
 
         static Component* construct( QString type, QString id );
-        static LibraryItem *libraryItem();
+        static LibraryItem* libraryItem();
 
         int  size() { return m_size; }
         void setSize( int size );
@@ -40,6 +40,8 @@ class SwitchDip : public Component, public eElement
 
         void createSwitches( int c );
         void deleteSwitches( int d );
+
+        virtual void setHidden( bool hid, bool hidArea=false, bool hidLabel=false ) override;
 
         virtual void setLinkedValue( double v, int i=0 ) override;
 

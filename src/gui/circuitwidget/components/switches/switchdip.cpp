@@ -243,6 +243,12 @@ void SwitchDip::setCommonPin( bool c )
     }
 }
 
+void SwitchDip::setHidden( bool hid, bool hidArea, bool hidLabel )
+{
+    Component::setHidden( hid, hidArea, hidLabel );
+    { for( int i=2; i<m_size*2; i+=2 )  m_pin[i]->setVisible( !m_commonPin && !hid ); }
+}
+
 void SwitchDip::setLinkedValue( double v, int i )
 {
     if( i == 0 ) { int p = v; m_state = 1<<p; }
