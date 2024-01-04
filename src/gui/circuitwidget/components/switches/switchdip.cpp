@@ -39,7 +39,10 @@ SwitchDip::SwitchDip( QString type, QString id )
          , eElement( id )
 {
     m_graphical = true;
-    m_changed = true;
+    m_changed   = true;
+
+    m_commonPin = false;
+    m_exclusive = false;
 
     m_color = QColor( 50, 50, 70 );
     m_size = 0;
@@ -52,6 +55,7 @@ SwitchDip::SwitchDip( QString type, QString id )
     addPropGroup( { tr("Main"), {
 new IntProp <SwitchDip>("Size"     , tr("Size"),tr("_Lines"), this, &SwitchDip::size     , &SwitchDip::setSize, propNoCopy,"uint" ),
 new BoolProp<SwitchDip>("Exclusive", tr("Exclusive"),""     , this, &SwitchDip::exclusive, &SwitchDip::setExclusive ),
+new BoolProp<SwitchDip>("CommonPin", tr("Common Pin"),""    , this, &SwitchDip::commonPin, &SwitchDip::setCommonPin ),
     }, groupNoCopy } );
 
     addPropGroup( {"Hidden", {
@@ -62,12 +66,14 @@ SwitchDip::~SwitchDip(){}
 
 void SwitchDip::stamp()
 {
+    eNode* node0 = m_pin[0]->getEnode();
     for( int i=0; i<m_size; i++ )
     {
         int pin1 = i*2;
         int pin2 = pin1+1;
 
-        eNode* node0 = m_pin[pin1]->getEnode();
+        if( m_commonPin ) m_pin[pin1]->setEnode( node0 );
+        else              node0 = m_pin[pin1]->getEnode();
         eNode* node1 = m_pin[pin2]->getEnode();
 
         //if( node0 ) node0->setSwitched( true );
@@ -203,10 +209,11 @@ void SwitchDip::deleteSwitches( int d )
 
 void SwitchDip::setSize( int size )
 {
+    if( size < 1 ) size = 1;
+    if( m_size == size ) return;
+
     if( Simulator::self()->isRunning() )  CircuitWidget::self()->powerCircOff();
-    
-    if( size == 0 ) size = 8;
-    
+
     if     ( size < m_size ) deleteSwitches( m_size-size );
     else if( size > m_size ) createSwitches( size-m_size );
     
@@ -224,15 +231,27 @@ void SwitchDip::setExclusive( bool e )
     if( !Simulator::self()->isRunning() ) updateStep();
 }
 
+void SwitchDip::setCommonPin( bool c )
+{
+    if( m_commonPin == c ) return;
+    m_commonPin = c;
+
+    for( int i=2; i<m_size*2; i+=2 )
+    {
+        if( c ) m_pin[i]->removeConnector();
+        m_pin[i]->setVisible( !c );
+    }
+}
+
 void SwitchDip::remove()
 {
     deleteSwitches( m_size );
     Component::remove();
 }
 
-void SwitchDip::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
+void SwitchDip::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w )
 {
-    Component::paint( p, option, widget );
+    Component::paint( p, o, w );
     p->drawRoundRect( m_area, 4, 4 );
 
     Component::paintSelected( p );

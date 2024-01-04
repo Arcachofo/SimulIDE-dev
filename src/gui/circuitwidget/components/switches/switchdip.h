@@ -28,6 +28,9 @@ class SwitchDip : public Component, public eElement
         bool exclusive() { return m_exclusive; }
         void setExclusive( bool e );
 
+        bool commonPin() { return m_commonPin; }
+        void setCommonPin( bool c );
+
         int  state() { return m_state; }
         void setState( int state );
 
@@ -38,7 +41,7 @@ class SwitchDip : public Component, public eElement
         void createSwitches( int c );
         void deleteSwitches( int d );
 
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w ) override;
 
     public slots:
         void onbuttonclicked();
@@ -48,6 +51,7 @@ class SwitchDip : public Component, public eElement
         QList<QGraphicsProxyWidget*> m_proxys;
 
         bool m_exclusive;
+        bool m_commonPin;
 
         int m_size;
         int m_state;
