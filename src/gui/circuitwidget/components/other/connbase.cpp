@@ -93,10 +93,9 @@ void ConnBase::setSize( int size )
         m_pin[i] = m_sockPins[i-m_size];
         m_pin[i]->setIndex( i );
     }
-
     m_connPins.resize( size );
-    
     m_area = QRectF(-4, -28, 8, m_size*8 );
+    updatePins();
 
     Circuit::self()->update();
 }

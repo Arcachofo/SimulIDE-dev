@@ -48,14 +48,19 @@ void Header::setPointDown( bool down )
     m_pointDown = down;
     Pin::pinType_t type;
 
-    if( down ) { m_pinPixmap.load( ":/header_D.png" ); type = Pin::pinNormal; }
-    else       { m_pinPixmap.load( ":/header_U.png" ); type = Pin::pinHeader; }
+    type = down ? Pin::pinNormal :Pin::pinHeader;
 
     for( int i=0; i<m_size; i++ )
     {
         m_sockPins[i]->setFlag( QGraphicsItem::ItemStacksBehindParent, down );
         m_sockPins[i]->setPinType( type );
     }
+    updatePixmap();
+}
+
+void Header::updatePins()
+{
+    setPointDown( m_pointDown );
 }
 
 void Header::updatePixmap()
