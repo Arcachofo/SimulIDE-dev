@@ -29,6 +29,9 @@ class Dial : public Dialed, public Linker
          int minVal() { return m_minVal; }
          virtual void setMinVal( int min );
 
+         int steps() { return m_steps; }
+         void setSteps( int s );
+
         bool slider() { return m_slider; }
         void setSlider( bool s );
 
@@ -43,6 +46,7 @@ class Dial : public Dialed, public Linker
 
         int m_minVal;
         int m_maxVal;
+        int m_steps;
 };
 
 #endif
