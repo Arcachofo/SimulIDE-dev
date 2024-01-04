@@ -105,10 +105,13 @@ void ConnBase::setHidden( bool hid, bool hidArea, bool hidLabel )
 {
     Component::setHidden( hid, hidArea, hidLabel );
 
+    Component* parentComp = static_cast<Component*>( parentItem() );
+    if( !parentComp ) return;
+
     for( int i=0; i<m_size; i++ )
     {
         m_sockPins[i]->setVisible( true );
-        Component* parentComp = static_cast<Component*>( parentItem() );
+
         if( hid ) parentComp->addSignalPin( m_sockPins[i] );// connect(    parentComp, &Component::moved, m_sockPins[i], &Pin::isMoved, Qt::UniqueConnection );
         else      parentComp->remSignalPin( m_sockPins[i] );// disconnect( parentComp, &Component::moved, m_sockPins[i], &Pin::isMoved );
     }
