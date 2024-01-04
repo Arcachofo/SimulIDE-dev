@@ -41,6 +41,8 @@ class SwitchDip : public Component, public eElement
         void createSwitches( int c );
         void deleteSwitches( int d );
 
+        virtual void setLinkedValue( double v, int i=0 ) override;
+
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w ) override;
 
     public slots:

@@ -44,7 +44,7 @@ SwitchDip::SwitchDip( QString type, QString id )
     m_commonPin = false;
     m_exclusive = false;
 
-    m_color = QColor( 50, 50, 70 );
+    m_color = QColor( 100, 100, 120 );
     m_size = 0;
     m_state = 0;
     setSize( 8 );
@@ -99,10 +99,10 @@ void SwitchDip::updateStep()
 
         if( state  )
         {
-            button->setIcon(QIcon(":/switchbut.png"));
+            button->setIcon( QIcon(":/switchbut.png") );
             admit = 1e3;
         }else{
-            button->setIcon(QIcon(":/stop.svg"));
+            button->setIcon( QIcon(":/stop.svg") );
         }
         button->setChecked( state );
 
@@ -241,6 +241,13 @@ void SwitchDip::setCommonPin( bool c )
         if( c ) m_pin[i]->removeConnector();
         m_pin[i]->setVisible( !c );
     }
+}
+
+void SwitchDip::setLinkedValue( double v, int i )
+{
+    if( i == 0 ) { int p = v; m_state = 1<<p; }
+    else         m_state = v;
+    m_changed = true;
 }
 
 void SwitchDip::remove()
