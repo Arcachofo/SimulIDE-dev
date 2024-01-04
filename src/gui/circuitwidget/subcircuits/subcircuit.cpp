@@ -164,7 +164,6 @@ SubCircuit::SubCircuit( QString type, QString id )
 {
     m_lsColor = QColor( 235, 240, 255 );
     m_icColor = QColor( 20, 30, 60 );
-    //m_mainComponent = NULL;
 }
 SubCircuit::~SubCircuit(){}
 
@@ -317,8 +316,7 @@ void SubCircuit::loadSubCircuit( QString file )
                 }   }
                 else qDebug() << "SubCircuit:"<<m_name<<m_id<< "ERROR Creating Component: "<<type<<uid<<label;
     }   }   }
-    for( Linker* l : linkList )
-        l->createLinks( &m_compList );
+    for( Linker* l : linkList ) l->createLinks( &m_compList );
 
     Circuit::self()->setFilePath( oldFilePath ); // Restore original filePath
 }
@@ -347,11 +345,9 @@ Pin* SubCircuit::addPin( QString id, QString type, QString label, int pos, int x
         m_pinTunnels.insert( pId, tunnel );
 
         Pin* pin = tunnel->getPin();
-        /// pin->setObjectName( pId );
         pin->setId( pId );
         pin->setInverted( type == "inverted" || type == "inv" );
         addSignalPin( pin );
-        /// connect( this, &SubCircuit::moved, pin, &Pin::isMoved, Qt::UniqueConnection );
 
         tunnel->setRotated( angle >= 180 );      // Our Pins at left side
         if     ( angle == 180) tunnel->setRotation( 0 );

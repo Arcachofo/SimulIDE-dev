@@ -21,7 +21,7 @@ ModuleSubc::ModuleSubc( QString type, QString id )
 
     addPropGroup( { tr("Main"), {
 new DoubProp<ModuleSubc>( "Z_Value", tr("Z Value"),"", this, &ModuleSubc::zVal, &ModuleSubc::setZVal )
-    }} );
+    },0} );
 }
 ModuleSubc::~ModuleSubc(){}
 
