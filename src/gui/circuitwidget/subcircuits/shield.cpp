@@ -123,6 +123,14 @@ void ShieldSubc::renameTunnels()
     for( Tunnel* tunnel : m_subcTunnels ) tunnel->setName( m_id+"-"+tunnel->tunnelUid() );
 }
 
+void ShieldSubc::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
+{
+    event->accept();
+    QMenu* menu = new QMenu();
+    contextMenu( event, menu );
+    menu->deleteLater();
+}
+
 void ShieldSubc::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
 {
         event->accept();
