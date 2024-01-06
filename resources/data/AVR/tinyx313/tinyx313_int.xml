@@ -7,8 +7,8 @@
     <interrupt name="T1COA"   enable="OCIE1A" flag="OCF1A" priority="17" vector="0x0004" clear="1"/>
     <interrupt name="T1_OVF"  enable="TOIE1"  flag="TOV1"  priority="16" vector="0x0005" clear="1"/>
     <interrupt name="T0_OVF"  enable="TOIE0"  flag="TOV0"  priority="15" vector="0x0006" clear="1"/>
-    <interrupt name="USART_R" enable="RXCIE"  flag="RXC"   priority="14" vector="0x0007" clear="0"/>
-    <interrupt name="USART_U" enable="UDRIE"  flag="UDRE"  priority="13" vector="0x0008" clear="0"/>
+    <interrupt name="USART_R" enable="RXCIE"  flag="RXC"   priority="14" vector="0x0007" autoclear="0"/>
+    <interrupt name="USART_U" enable="UDRIE"  flag="UDRE"  priority="13" vector="0x0008" autoclear="0"/>
     <interrupt name="USART_T" enable="TXCIE"  flag="TXC"   priority="12" vector="0x0009" clear="1"/>
     <interrupt name="ACOMP"   enable="ACIE"   flag="ACI"   priority="11" vector="0x000A" clear="1"/>
     <interrupt name="PCINT0"  enable="PCIE0"  flag="PCIF0" priority="10" vector="0x000B" clear="1"/>

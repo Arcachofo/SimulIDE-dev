@@ -87,7 +87,7 @@ void Interrupt::raise( uint8_t v )
         }
         if( !m_callBacks.isEmpty() ) { for( McuModule* mod : m_callBacks ) mod->callBack(); }
     }
-    else if( m_autoClear ) clearFlag();
+    // else if( m_autoClear ) clearFlag();
 }
 
 void Interrupt::execute()

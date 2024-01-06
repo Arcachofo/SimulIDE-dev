@@ -26,7 +26,7 @@
         <interrupt name="T0COB"    enable="OCIE0B" flag="OCF0B" priority="35" vector="0x002C" clear="1"/>
         <interrupt name="T0_OVF"   enable="TOIE0"  flag="TOV0"  priority="34" vector="0x002E" clear="1"/>
         <interrupt name="SPI"      enable="SPIE"   flag="SPIF"  priority="33" vector="0x0030"/>
-        <interrupt name="USART0_R" enable="RXCIE0" flag="RXC0"  priority="32" vector="0x0032" clear="0"/>
+        <interrupt name="USART0_R" enable="RXCIE0" flag="RXC0"  priority="32" vector="0x0032" autoclear="0"/>
         <interrupt name="USART0_U" enable="UDRIE0" flag="UDRE0" priority="31" vector="0x0034"/>
         <interrupt name="USART0_T" enable="TXCIE0" flag="TXC0"  priority="30" vector="0x0036" clear="1"/>
         <interrupt name="ACOMP"    enable="ACIE"   flag="ACI"   priority="29" vector="0x0038"/>
@@ -39,11 +39,11 @@
         <interrupt name="T3COC"    enable="OCIE3C" flag="OCF3C" priority="23" vector="0x0044"/>
         <interrupt name="T3_OVF"   enable="TOIE3"  flag="TOV3"  priority="22" vector="0x0046" clear="1"/>
         
-        <interrupt name="USART1_R" enable="RXCIE1" flag="RXC1"  priority="21" vector="0x0048" clear="0"/>
+        <interrupt name="USART1_R" enable="RXCIE1" flag="RXC1"  priority="21" vector="0x0048" autoclear="0"/>
         <interrupt name="USART1_U" enable="UDRIE1" flag="UDRE1" priority="20" vector="0x004A"/>
         <interrupt name="USART1_T" enable="TXCIE1" flag="TXC1"  priority="19" vector="0x004C" clear="1"/>
         
-        <interrupt name="TWI"      enable="TWIE"   flag="TWINT" priority="18"  vector="0x004E" clear="0"/>
+        <interrupt name="TWI"      enable="TWIE"   flag="TWINT" priority="18"  vector="0x004E" autoclear="0"/>
         
         <interrupt name="SPM"      enable=""  flag="" priority="17" vector="0x0050"/>
         
@@ -59,11 +59,11 @@
         <interrupt name="T5COC"    enable="OCIE5C" flag="OCF5C" priority="8"  vector="0x0062"/>
         <interrupt name="T5_OVF"   enable="TOIE5"  flag="TOV5"  priority="7"  vector="0x0064" clear="1"/>
         
-        <interrupt name="USART2_R" enable="RXCIE2" flag="RXC2"  priority="6"  vector="0x0066" clear="0"/>
+        <interrupt name="USART2_R" enable="RXCIE2" flag="RXC2"  priority="6"  vector="0x0066" autoclear="0"/>
         <interrupt name="USART2_U" enable="UDRIE2" flag="UDRE2" priority="5"  vector="0x0068"/>
         <interrupt name="USART2_T" enable="TXCIE2" flag="TXC2"  priority="4"  vector="0x006A" clear="1"/>
         
-        <interrupt name="USART3_R" enable="RXCIE3" flag="RXC3"  priority="3"  vector="0x006C" clear="0"/>
+        <interrupt name="USART3_R" enable="RXCIE3" flag="RXC3"  priority="3"  vector="0x006C" autoclear="0"/>
         <interrupt name="USART3_U" enable="UDRIE3" flag="UDRE3" priority="2"  vector="0x006E"/>
         <interrupt name="USART3_T" enable="TXCIE3" flag="TXC3"  priority="1"  vector="0x0070" clear="1"/>
     </interrupts>

@@ -1315,9 +1315,14 @@ void McuCreator::createInterrupt( QDomElement* el )
         watchBitNames( intFlag, R_WRITE, iv, &Interrupt::flagCleared, mcu );
     }
     if( el->hasAttribute("clear") ) // If clear="1" Clear flag by writting 1 to it
-    {                               // If clear="0" deactivate autoclear
+    {
         uint8_t val = el->attribute("clear").toUInt();
         if( val ) watchBitNames( intFlag, R_WRITE, iv, &Interrupt::writeFlag, mcu );
+    }
+    if( el->hasAttribute("autoclear") ) // If autoclear="0" deactivate autoclear
+    {
+        uint8_t val = el->attribute("autoclear").toUInt();
+        if( val ) iv->m_autoClear = true;
         else      iv->m_autoClear = false;
     }
     if( el->hasAttribute("pin") )
