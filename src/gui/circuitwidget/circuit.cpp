@@ -641,6 +641,7 @@ void Circuit::clearCircuit() // Remove everything ( Clear Circuit )
 
     for( Component* comp : m_compList )
     {
+        //if( comp->parentItem() ) continue; // Shields are deleted with parent if attached
         comp->remove();
         if( comp->scene() ) removeItem( comp );
         delete comp;
