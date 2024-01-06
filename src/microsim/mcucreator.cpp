@@ -1187,10 +1187,7 @@ void McuCreator::createUsi( QDomElement* e )
     setInterrupt( e->attribute("interrupt") , usi );
     usi->m_startInte = mcu->m_interrupts.m_intList.value( "USISTA" );
 
-    QStringList pins = e->attribute("pins").remove(" ").split(",");
-    usi->m_DOpin = mcu->getMcuPin( pins.value(0) );
-    usi->m_DIpin = mcu->getMcuPin( pins.value(1) );
-    usi->m_CKpin = mcu->getMcuPin( pins.value(2) );
+    usi->setPins( e->attribute("pins").remove(" ") );
 }
 
 void McuCreator::createWdt( QDomElement* e )

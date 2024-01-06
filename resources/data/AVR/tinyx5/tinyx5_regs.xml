@@ -32,7 +32,8 @@
     
     <register  name="PINB"    addr="0x0016" />
     <register  name="DDRB"    addr="0x0017" />
-    <register  name="PORTB"   addr="0x0018" />
+    <register  name="PORTB"   addr="0x0018" 
+               bits="PORTB0,PORTB1,PORTB2,PORTB3,PORTB4,PORTB5,PORTB6,PORTB7"/><!-- "Needed for USI" -->
     
     <register  name="EECR"    addr="0x001C" mask="00111111"
                bits="EERE,EEPE,EEMPE,EERIE,EEPM0,EEPM1,0,0" />

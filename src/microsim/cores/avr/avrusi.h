@@ -28,6 +28,8 @@ class AvrUsi : public McuModule, public eElement
         virtual void configureB( uint8_t ) override;
         virtual void callBack() override; // Called at Timer0 Compare Match
 
+        void setPins( QString pinStr );
+
     private:
         inline void stepCounter();
         inline void shiftData();
@@ -57,6 +59,10 @@ class AvrUsi : public McuModule, public eElement
         // USISR
         regBits_t m_USICNT;
         regBits_t m_USIPF;
+
+        regBits_t m_DObit;
+        regBits_t m_DIbit;
+        regBits_t m_CKbit;
 
         McuPin* m_DOpin;
         McuPin* m_DIpin;

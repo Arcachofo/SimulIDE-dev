@@ -46,6 +46,8 @@ void AvrUsi::reset()
     m_usiClk   = false;
     m_clkEdge  = false;
     m_clkState = false;
+    m_clockMode = 0;
+    m_mode = 0;
     m_counter = 0;
 
     if( !m_DOpin ) qDebug() << "AvrUsi::configureA: Error: null DO Pin";
@@ -178,10 +180,40 @@ void AvrUsi::shiftData()
         if( bit0 ) *m_dataReg |= 1;
         else       *m_dataReg &= ~1;
     }
-    if( m_DOpin ) m_DOpin->scheduleState( *m_dataReg & 1<<7, 0 ); // Set output *m_dataReg & 1<<7
+    if( m_DOpin ) // Set output *m_dataReg & 1<<7
+    {
+        bool DoState = *m_dataReg & 1<<7;
+        if( DoState ) m_mcu->writeReg( m_DObit.regAddr, *m_DObit.reg & ~m_DObit.mask); // Set CLK Low
+        else          m_mcu->writeReg( m_DObit.regAddr, *m_DObit.reg |  m_DObit.mask); // Set CLK High
+    }
 }
 
 void AvrUsi::toggleClock()
 {
-    if( m_CKpin ) m_CKpin->toggleOutState();
+    if( !m_CKpin ) return;
+
+    bool clkState = getRegBitsBool( m_CKbit );
+
+    if( clkState ) m_mcu->writeReg( m_CKbit.regAddr, *m_CKbit.reg & ~m_CKbit.mask); // Set CLK Low
+    else           m_mcu->writeReg( m_CKbit.regAddr, *m_CKbit.reg |  m_CKbit.mask); // Set CLK High
+}
+
+void AvrUsi::setPins( QString pinStr )
+{
+    QStringList pins = pinStr.split(",");
+    if( pins.size() < 3 ){
+        qDebug() << "AvrUsi::setPins Error:" << pinStr;
+        return;
+    }
+    QString DOpin = pins.value(0);
+    QString DIpin = pins.value(1);
+    QString CKpin = pins.value(2);
+
+    m_DOpin = m_mcu->getMcuPin( DOpin );
+    m_DIpin = m_mcu->getMcuPin( DIpin );
+    m_CKpin = m_mcu->getMcuPin( CKpin );
+
+    m_DObit = getRegBits( DOpin, m_mcu );
+    m_DIbit = getRegBits( DIpin, m_mcu );
+    m_CKbit = getRegBits( CKpin, m_mcu );
 }
