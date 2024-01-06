@@ -21,6 +21,12 @@ static inline uint8_t overrideBits( uint8_t val, regBits_t bits ) // Replace bit
     return (val & ~bits.mask) | (*(bits.reg) | bits.mask);
 }
 
+static inline void replaceBits( uint8_t val, regBits_t bits ) // Replace bits in register with value
+{
+    *bits.reg &= ~bits.mask;
+    *bits.reg |= val & bits.mask;
+}
+
 static inline uint8_t getRegBits( uint8_t val, regBits_t rb )
 {
     return (val & rb.mask);

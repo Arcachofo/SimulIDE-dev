@@ -155,14 +155,14 @@ void AvrUsi::configureB( uint8_t newUSISR )
 {
     m_counter = getRegBitsVal( newUSISR, m_USICNT ); // USICNT[3:0]: Counter Value
 
-    bool oldUsiSR = getRegBitsBool( *m_statusReg, m_USIPF );
-    bool newUsiSR = getRegBitsBool(  newUSISR,    m_USIPF );
+    bool oldUsiSR = getRegBitsBool( m_USIPF );
+    bool newUsiSR = getRegBitsBool(  newUSISR, m_USIPF );
     if( oldUsiSR && newUsiSR ) m_mcu->m_regOverride = newUSISR & ~m_USIPF.mask; // clear USIPF by writing a 1 to it
 }
 
-void AvrUsi::stepCounter()
+void AvrUsi::stepCounter()  // increment counter
 {
-    *m_statusReg = overrideBits( m_counter, m_USICNT ); // increment counter
+    replaceBits( m_counter, m_USICNT ); // Write m_counter to status reg
 
     if( ++m_counter == 0x0F ){
         m_counter = 0;
