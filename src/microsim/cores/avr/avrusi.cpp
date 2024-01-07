@@ -12,6 +12,7 @@
 #include "mcuocunit.h"
 #include "mcuinterrupts.h"
 #include "datautils.h"
+#include "regwatcher.h"
 
 AvrUsi::AvrUsi( eMcu* mcu, QString name )
       : McuModule( mcu, name )
@@ -36,6 +37,8 @@ AvrUsi::AvrUsi( eMcu* mcu, QString name )
     m_timer0 = (AvrTimer800*)mcu->getTimer("TIMER0");
     m_t0OCA  = m_timer0->getOcUnit("OCA");
     m_t0OCB  = m_timer0->getOcUnit("OCB");
+
+    watchRegNames("USIDR", R_WRITE, this, &AvrUsi::dataRegWritten, mcu );
 }
 AvrUsi::~AvrUsi(){}
 
@@ -66,8 +69,8 @@ void AvrUsi::voltChanged()  // Clk Pin changed
     {
         bool sdaState = m_DIpin->getInpState();
         if( clk  ){
-            if     (  m_sdaState && !sdaState) { if( m_startInte ) m_startInte->raise(); }// Start condition
-            else if( !m_sdaState &&  sdaState) setRegBits( m_USIPF );                     // Stop condition, set USIPF flag
+            if     (  m_sdaState && !sdaState){ if( m_startInte ) m_startInte->raise(); } // Start condition
+            else if( !m_sdaState &&  sdaState) setRegBits( m_USIPF ); // Stop condition, set USIPF flag
         }
         m_sdaState = sdaState;
     }
@@ -159,15 +162,24 @@ void AvrUsi::configureA( uint8_t newUSICR )
             m_t0OCB->getInterrupt()->callBack( this, timer );
         }
     }
-    if( m_timer ) return;
 
     bool usiTc = getRegBitsBool( newUSICR, m_USITC ); // toggles the USCK/SCL Pin
-    if( usiTc ) toggleClock();
+    if( usiTc ) toggleClock();                        // USITC always toggles Clock (PORT Register)
 
     m_usiClk = getRegBitsBool( newUSICR, m_USICLK );
-    if( m_usiClk ){
-         if( !m_extClk  ) stepCounter(); // Software counter strobe (USICLK)
-         else if( usiTc ) stepCounter(); // Software counter strobe (USITC)
+
+    if( m_timer ) return;
+    if( m_extClk )          // USICS1 = 1
+    {
+        if( m_usiClk && usiTc ) stepCounter(); // Software counter strobe (USITC)
+    }
+    else                   // USICS1 = 0
+    {
+        if( m_usiClk ){
+            stepCounter(); // Software counter strobe (USICLK)
+            shiftData();   // shiftData at Active edge
+        }
+        else setOutput();  // setOutput at Opposite edge
     }
     m_mcu->m_regOverride = newUSICR & 0b11111100; // USICLK & USITC always read as 0
 }
@@ -179,6 +191,12 @@ void AvrUsi::configureB( uint8_t newUSISR )
     bool oldUsiSR = getRegBitsBool( m_USIPF );
     bool newUsiSR = getRegBitsBool(  newUSISR, m_USIPF );
     if( oldUsiSR && newUsiSR ) m_mcu->m_regOverride = newUSISR & ~m_USIPF.mask; // clear USIPF by writing a 1 to it
+}
+
+void AvrUsi::dataRegWritten( uint8_t newUSIDR )
+{
+    m_DoState = newUSIDR & 1<<7; // fetch fist bit
+    setOutput();
 }
 
 void AvrUsi::stepCounter()  // increment counter
@@ -196,6 +214,7 @@ void AvrUsi::stepCounter()  // increment counter
 void AvrUsi::shiftData()
 {
     *m_dataReg = *m_dataReg<<1;        // Shift Data Register
+    m_DoState  = *m_dataReg & 1<<7;
 
     if( m_DIpin ) // Read input
     {
@@ -209,7 +228,6 @@ void AvrUsi::setOutput()
 {
     if( m_dataPin ) // Set output *m_dataReg & 1<<7
     {
-        m_DoState = *m_dataReg & 1<<7;
         if( m_DoState ) m_mcu->writeReg( m_dataBit->regAddr, *m_dataBit->reg |  m_dataBit->mask); // Set dataBit High
         else            m_mcu->writeReg( m_dataBit->regAddr, *m_dataBit->reg & ~m_dataBit->mask); // Set dataBit Low
     }

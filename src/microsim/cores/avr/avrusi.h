@@ -35,6 +35,7 @@ class AvrUsi : public McuModule, public eElement
         inline void shiftData();
         inline void setOutput();
         inline void toggleClock();
+        void dataRegWritten( uint8_t newUSIDR );
 
         bool m_timer;
         bool m_extClk;
