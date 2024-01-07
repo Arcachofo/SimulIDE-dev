@@ -50,6 +50,10 @@ ResistorDip::ResistorDip( QString type, QString id )
     setValLabelPos( 5,-26, 90 );
     m_valLabel->setAcceptedMouseButtons( 0 );
 
+    QFont font = m_valLabel->font();
+    font.setPixelSize( 6 );
+    m_valLabel->setFont( font );
+
     Simulator::self()->addToUpdateList( this );
 
     addPropGroup( { tr("Main"), {
