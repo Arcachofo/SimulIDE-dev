@@ -50,6 +50,9 @@ void AvrUsi::reset()
     m_mode = 0;
     m_counter = 0;
 
+    m_dataPin = nullptr;
+    m_dataBit = nullptr;
+
     if( !m_DOpin ) qDebug() << "AvrUsi::configureA: Error: null DO Pin";
     if( !m_DIpin ) qDebug() << "AvrUsi::configureA: Error: null DI Pin";
     if( !m_CKpin ) qDebug() << "AvrUsi::configureA: Error: null CK Pin";
@@ -58,7 +61,6 @@ void AvrUsi::reset()
 void AvrUsi::voltChanged()  // Clk Pin changed
 {
     bool clk = m_CKpin->getInpState();
-    if( m_clkState == clk ) return;
 
     if( m_mode > 1 ) // TWI start/stop detector
     {
@@ -67,22 +69,34 @@ void AvrUsi::voltChanged()  // Clk Pin changed
             if     (  m_sdaState && !sdaState) { if( m_startInte ) m_startInte->raise(); }// Start condition
             else if( !m_sdaState &&  sdaState) setRegBits( m_USIPF );                     // Stop condition, set USIPF flag
         }
+        m_sdaState = sdaState;
     }
 
-    if( !m_usiClk ) stepCounter();              // Counter Both edges
-
-    if( ( m_clkEdge && (!m_clkState &&  clk))   // SR Rising  edge
-     || (!m_clkEdge && ( m_clkState && !clk)) ) // SR Falling edge
+    if( m_clkState == clk ) return;
+    if( m_extClk )
     {
-        shiftData();
+        if( !m_usiClk ) stepCounter();              // Counter Both edges
+
+        if( ( m_clkEdge && (!m_clkState &&  clk))   // SR Rising  edge
+         || (!m_clkEdge && ( m_clkState && !clk)) ) // SR Falling edge
+        {
+            shiftData();  // shiftData at Active edge
+        }
+        else if( (!m_clkEdge && (!m_clkState &&  clk))   // SR Falling edge
+              || ( m_clkEdge && ( m_clkState && !clk)) ) // SR Rising  edge
+        {
+            setOutput();  // setOutput at Opposite edge
+        }
     }
     m_clkState = clk;
 }
 
 void AvrUsi::callBack()  // Called at Timer0 Compare Match
 {
+    /// TODO: We need a falling edge...
+    ///
     stepCounter();
-    shiftData();
+    shiftData();   /// TODO: setOutput(); at opposite edge
 }
 
 void AvrUsi::configureA( uint8_t newUSICR )
@@ -103,11 +117,18 @@ void AvrUsi::configureA( uint8_t newUSICR )
         }
 
         if( m_DOpin ) m_DOpin->controlPin( spi, false );
+        // if( spi ) m_dataPin = m_DOpin; // ???
 
-        if( twi ) m_sdaState = m_DIpin->getInpState(); // 2 Wire mode: SDA (DI) & SCL (USCK) open collector if DDRB=out, pullups disabled
+        if( twi ) // 2 Wire mode: SDA (DI) & SCL (USCK) open collector if DDRB=out, pullups disabled
+        {
+            m_sdaState = m_DIpin->getInpState();
+            m_clkState = m_CKpin->getInpState();
+            m_dataPin = m_DIpin;
+            m_dataBit = &m_DIbit;
+        }
 
         if( m_DIpin ){
-            m_DIpin->changeCallBack( this, twi );
+            m_DIpin->changeCallBack( this, twi );  // Used for Start/Stop dtection
             m_DIpin->setOpenColl( twi );
         }
         if( m_CKpin ) m_CKpin->setOpenColl( twi );
@@ -166,13 +187,15 @@ void AvrUsi::stepCounter()  // increment counter
 
     if( ++m_counter == 0x0F ){
         m_counter = 0;
+        *m_bufferReg = *m_dataReg; // Transfer Data Register content to Buffer Register
+
         if( m_interrupt ) m_interrupt->raise();
     }
 }
 
 void AvrUsi::shiftData()
 {
-    *m_dataReg = *m_dataReg<<1;                         // Shift data reg
+    *m_dataReg = *m_dataReg<<1;        // Shift Data Register
 
     if( m_DIpin ) // Read input
     {
@@ -180,11 +203,15 @@ void AvrUsi::shiftData()
         if( bit0 ) *m_dataReg |= 1;
         else       *m_dataReg &= ~1;
     }
-    if( m_DOpin ) // Set output *m_dataReg & 1<<7
+}
+
+void AvrUsi::setOutput()
+{
+    if( m_dataPin ) // Set output *m_dataReg & 1<<7
     {
-        bool DoState = *m_dataReg & 1<<7;
-        if( DoState ) m_mcu->writeReg( m_DObit.regAddr, *m_DObit.reg & ~m_DObit.mask); // Set CLK Low
-        else          m_mcu->writeReg( m_DObit.regAddr, *m_DObit.reg |  m_DObit.mask); // Set CLK High
+        m_DoState = *m_dataReg & 1<<7;
+        if( m_DoState ) m_mcu->writeReg( m_dataBit->regAddr, *m_dataBit->reg |  m_dataBit->mask); // Set dataBit High
+        else            m_mcu->writeReg( m_dataBit->regAddr, *m_dataBit->reg & ~m_dataBit->mask); // Set dataBit Low
     }
 }
 
@@ -198,7 +225,7 @@ void AvrUsi::toggleClock()
     else           m_mcu->writeReg( m_CKbit.regAddr, *m_CKbit.reg |  m_CKbit.mask); // Set CLK High
 }
 
-void AvrUsi::setPins( QString pinStr )
+void AvrUsi::setPins( QString pinStr ) // "DO,DI,USCK"
 {
     QStringList pins = pinStr.split(",");
     if( pins.size() < 3 ){

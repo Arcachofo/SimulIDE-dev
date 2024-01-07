@@ -33,6 +33,7 @@ class AvrUsi : public McuModule, public eElement
     private:
         inline void stepCounter();
         inline void shiftData();
+        inline void setOutput();
         inline void toggleClock();
 
         bool m_timer;
@@ -41,6 +42,7 @@ class AvrUsi : public McuModule, public eElement
         bool m_clkEdge;
         bool m_clkState;
         bool m_sdaState;
+        bool m_DoState;
 
         uint8_t* m_dataReg;
         uint8_t* m_bufferReg;
@@ -63,10 +65,12 @@ class AvrUsi : public McuModule, public eElement
         regBits_t m_DObit;
         regBits_t m_DIbit;
         regBits_t m_CKbit;
+        regBits_t* m_dataBit;
 
         McuPin* m_DOpin;
         McuPin* m_DIpin;
         McuPin* m_CKpin;
+        McuPin* m_dataPin;
 
         AvrTimer800* m_timer0;
         McuOcUnit* m_t0OCA;
