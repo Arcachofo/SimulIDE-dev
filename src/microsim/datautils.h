@@ -67,4 +67,7 @@ static inline void writeRegBits( regBits_t bits, bool value ) // Set/Clear bits 
     if( value ) setRegBits( bits );
     else        clearRegBits( bits );
 }
+
+void writeBitsToReg( regBits_t bits, bool value, DataSpace* mcu ); // Write bits in a Register calling watchers
+
 #endif

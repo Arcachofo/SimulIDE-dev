@@ -47,7 +47,6 @@ class AvrUsi : public McuModule, public eElement
 
         uint8_t* m_dataReg;
         uint8_t* m_bufferReg;
-        uint8_t* m_statusReg;
 
         uint8_t m_mode;
         uint8_t m_clockMode;
@@ -63,21 +62,16 @@ class AvrUsi : public McuModule, public eElement
         regBits_t m_USICNT;
         regBits_t m_USIPF;
 
-        regBits_t m_DObit;
         regBits_t m_DIbit;
         regBits_t m_CKbit;
-        regBits_t* m_dataBit;
 
         McuPin* m_DOpin;
         McuPin* m_DIpin;
         McuPin* m_CKpin;
-        McuPin* m_dataPin;
 
-        AvrTimer800* m_timer0;
         McuOcUnit* m_t0OCA;
         McuOcUnit* m_t0OCB;
 
         Interrupt* m_startInte;
 };
-
 #endif

@@ -33,3 +33,8 @@ regBits_t getRegBits( QString bitNames, DataSpace* mcu ) // Get a set of bits in
     return regBits;
 }
 
+void writeBitsToReg( regBits_t bits, bool value, DataSpace* mcu ) // Set/Clear bits in a Register
+{
+    if( value ) mcu->writeReg( bits.regAddr, *bits.reg |  bits.mask);
+    else        mcu->writeReg( bits.regAddr, *bits.reg & ~bits.mask);
+}
