@@ -1039,18 +1039,18 @@ asETokenClass asCScriptEngine::ParseToken(const char *string, size_t stringLengt
 }
 
 // interface
-asIScriptModule *asCScriptEngine::GetModule(const char *module, asEGMFlags flag)
+asIScriptModule *asCScriptEngine::GetModule( const char *module, asEGMFlags flag )
 {
-    asCModule *mod = GetModule(module, false);
+    asCModule *mod = GetModule( module, false );
 
     if( flag == asGM_ALWAYS_CREATE )
     {
         if( mod != 0 ) mod->Discard();
-        return GetModule(module, true);
+        return GetModule( module, true );
     }
 
     if( mod == 0 && flag == asGM_CREATE_IF_NOT_EXISTS )
-        return GetModule(module, true);
+        return GetModule( module, true );
 
     return mod;
 }

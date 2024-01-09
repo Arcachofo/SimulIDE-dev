@@ -51,7 +51,7 @@ class IoPort :public eElement
             uint64_t state;
         };
         void trigger( uint n=0 );
-        void addSequence(  CScriptArray* t );
+        void addSequence( CScriptArray* t );
 
  static void registerScript( asIScriptEngine* engine );
 

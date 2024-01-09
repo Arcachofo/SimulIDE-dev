@@ -84,6 +84,8 @@ int ScriptModule::compileScript()
     std::string script = m_script.toStdString();
     int len = m_script.size();
 
+    m_aEngine->GarbageCollect( asGC_FULL_CYCLE );
+
     asIScriptModule* mod = m_aEngine->GetModule( 0, asGM_ALWAYS_CREATE );
     int r = mod->AddScriptSection("script", &script[0], len );
     if( r < 0 ) { qDebug() << "\nScriptModule::compileScript: AddScriptSection() failed\n"; return -1; }

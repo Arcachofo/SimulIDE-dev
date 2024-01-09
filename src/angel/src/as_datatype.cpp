@@ -28,6 +28,7 @@
    andreas@angelcode.com
 */
 
+// Modified 2023 by Santiago González
 
 //
 // as_datatype.cpp
@@ -124,8 +125,8 @@ asCDataType asCDataType::CreatePrimitive(eTokenType tt, bool isConst)
 {
 	asCDataType dt;
 
-	dt.tokenType        = tt;
-	dt.isReadOnly       = isConst;
+    dt.tokenType  = tt;
+    dt.isReadOnly = isConst;
 
 	return dt;
 }
@@ -154,13 +155,11 @@ bool asCDataType::IsNullHandle() const
 
 asCString asCDataType::Format(asSNameSpace *currNs, bool includeNamespace) const
 {
-	if( IsNullHandle() )
-		return "<null handle>";
+    if( IsNullHandle() ) return "<null handle>";
 
 	asCString str;
 
-	if( isReadOnly )
-		str = "const ";
+    if( isReadOnly ) str = "const ";
 
 	// If the type is not declared in the current namespace, then the namespace 
 	// must always be informed to guarantee that the correct type is informed
@@ -203,24 +202,15 @@ asCString asCDataType::Format(asSNameSpace *currNs, bool includeNamespace) const
 			str += ">";
 		}
 	}
-	else if( isAuto )
-	{
-		str += "<auto>";
-	}
-	else
-	{
-		str = "<unknown>";
-	}
+    else if( isAuto ) str += "<auto>";
+    else              str = "<unknown>";
 
 	if( isObjectHandle )
 	{
 		str += "@";
-		if( isConstHandle )
-			str += "const";
+        if( isConstHandle ) str += "const";
 	}
-
-	if( isReference )
-		str += "&";
+    if( isReference ) str += "&";
 
 	return str;
 }
@@ -278,14 +268,12 @@ int asCDataType::MakeHandle(bool b, bool acceptHandleForScope)
 			}
 		}
 	}
-
 	return 0;
 }
 
 int asCDataType::MakeArray(asCScriptEngine *engine, asCModule *module)
 {
-	if( engine->defaultArrayObjectType == 0 )
-		return asINVALID_TYPE;
+    if( engine->defaultArrayObjectType == 0 ) return asINVALID_TYPE;
 
 	bool tmpIsReadOnly = isReadOnly;
 	isReadOnly = false;
@@ -306,18 +294,12 @@ int asCDataType::MakeArray(asCScriptEngine *engine, asCModule *module)
 int asCDataType::MakeReference(bool b)
 {
 	isReference = b;
-
 	return 0;
 }
 
 int asCDataType::MakeReadOnly(bool b)
 {
-	if( isObjectHandle )
-	{
-		isConstHandle = b;
-		return 0;
-	}
-
+    if( isObjectHandle ) { isConstHandle = b; return 0; }
 	isReadOnly = b;
 	return 0;
 }
@@ -325,7 +307,6 @@ int asCDataType::MakeReadOnly(bool b)
 int asCDataType::MakeHandleToConst(bool b)
 {
 	if( !isObjectHandle ) return -1;
-
 	isReadOnly = b;
 	return 0;
 }
@@ -343,22 +324,16 @@ bool asCDataType::SupportHandles() const
 
 bool asCDataType::CanBeInstantiated() const
 {
-	if( GetSizeOnStackDWords() == 0 ) // Void
-		return false;
-
-	if( !IsObject() && !IsFuncdef() ) // Primitives
-		return true; 
-
-	if (IsNullHandle()) // null
-		return false;
+    if( GetSizeOnStackDWords() == 0 ) return false; // Void
+    if( !IsObject() && !IsFuncdef() ) return true; // Primitives
+    if( IsNullHandle() )              return false; // null
 
 	if( IsObjectHandle() && !(typeInfo->flags & asOBJ_NOHANDLE) ) // Handles
 		return true;
 
 	// Funcdefs cannot be instantiated without being handles
 	// The exception being delegates, but these can only be created as temporary objects
-	if (IsFuncdef())
-		return false;
+    if( IsFuncdef() ) return false;
 
 	asCObjectType *ot = CastToObjectType(typeInfo);
 	if( ot && (ot->flags & asOBJ_REF) && ot->beh.factories.GetLength() == 0 ) // ref types without factories
@@ -377,8 +352,7 @@ bool asCDataType::IsAbstractClass() const
 
 bool asCDataType::IsInterface() const
 {
-	if (typeInfo == 0)
-		return false;
+    if (typeInfo == 0) return false;
 
 	asCObjectType *ot = CastToObjectType(typeInfo);
 	return ot && ot->IsInterface();
@@ -386,14 +360,9 @@ bool asCDataType::IsInterface() const
 
 bool asCDataType::CanBeCopied() const
 {
-	// All primitives can be copied
-	if( IsPrimitive() ) return true;
-
-	// Plain-old-data structures can always be copied
-	if( typeInfo->flags & asOBJ_POD ) return true;
-
-	// It must be possible to instantiate the type
-	if( !CanBeInstantiated() ) return false;
+    if( IsPrimitive() )               return true;  // All primitives can be copied
+    if( typeInfo->flags & asOBJ_POD ) return true;  // Plain-old-data structures can always be copied
+    if( !CanBeInstantiated() )        return false; // It must be possible to instantiate the type
 
 	// It must have a default constructor or factory and the opAssign
 	// Alternatively it must have the copy constructor
@@ -407,9 +376,7 @@ bool asCDataType::CanBeCopied() const
 
 bool asCDataType::IsReadOnly() const
 {
-	if( isObjectHandle )
-		return isConstHandle;
-
+    if( isObjectHandle ) return isConstHandle;
 	return isReadOnly;
 }
 
@@ -421,15 +388,16 @@ bool asCDataType::IsHandleToConst() const
 
 bool asCDataType::IsObjectConst() const
 {
-	if( IsObjectHandle() )
-		return IsHandleToConst();
-
+    if( IsObjectHandle() ) return IsHandleToConst();
 	return IsReadOnly();
 }
 
 // TODO: 3.0.0: This should be removed
 bool asCDataType::IsArrayType() const
 {
+    if( !typeInfo ) return false;
+    if( !typeInfo->engine ) return false;
+
 	// This is only true if the type used is the default array type, i.e. the one used for the [] syntax form
 	if( typeInfo && typeInfo->engine->defaultArrayObjectType )
 		return typeInfo->name == typeInfo->engine->defaultArrayObjectType->name;
@@ -439,27 +407,22 @@ bool asCDataType::IsArrayType() const
 
 bool asCDataType::IsTemplate() const
 {
-	if( typeInfo && (typeInfo->flags & asOBJ_TEMPLATE) )
-		return true;
-
+    if( typeInfo && (typeInfo->flags & asOBJ_TEMPLATE) ) return true;
 	return false;
 }
 
 bool asCDataType::IsScriptObject() const
 {
-	if( typeInfo && (typeInfo->flags & asOBJ_SCRIPT_OBJECT) )
-		return true;
-
+    if( typeInfo && (typeInfo->flags & asOBJ_SCRIPT_OBJECT) ) return true;
 	return false;
 }
 
 asCDataType asCDataType::GetSubType(asUINT subtypeIndex) const
 {
-	asASSERT(typeInfo);
+    asASSERT( typeInfo );
 	asCObjectType *ot = CastToObjectType(typeInfo);
 	return ot->templateSubTypes[subtypeIndex];
 }
-
 
 bool asCDataType::operator !=(const asCDataType &dt) const
 {
@@ -501,24 +464,14 @@ bool asCDataType::IsEqualExceptConst(const asCDataType &dt) const
 {
 	if( !IsEqualExceptRefAndConst(dt) ) return false;
 	if( isReference != dt.isReference ) return false;
-
 	return true;
 }
 
 bool asCDataType::IsPrimitive() const
 {
-	// Enumerations are primitives
-	if( IsEnumType() )
-		return true;
-
-	// A registered object is never a primitive neither is a pointer nor an array
-	if( typeInfo )
-		return false;
-
-	// Null handle doesn't have a typeInfo, but it is not a primitive
-	if( tokenType == ttUnrecognizedToken )
-		return false;
-
+    if( IsEnumType() ) return true;  // Enumerations are primitives
+    if( typeInfo )     return false; // A registered object is never a primitive neither is a pointer nor an array
+    if( tokenType == ttUnrecognizedToken ) return false; // Null handle doesn't have a typeInfo, but it is not a primitive
 	return true;
 }
 
@@ -540,8 +493,7 @@ bool asCDataType::IsIntegerType() const
 		tokenType == ttInt64 )
 		return true;
 
-	// Enums are also integer types
-	return IsEnumType();
+    return IsEnumType(); // Enums are also integer types
 }
 
 bool asCDataType::IsUnsignedType() const
@@ -557,24 +509,19 @@ bool asCDataType::IsUnsignedType() const
 
 bool asCDataType::IsFloatType() const
 {
-	if( tokenType == ttFloat )
-		return true;
-
+    if( tokenType == ttFloat ) return true;
 	return false;
 }
 
 bool asCDataType::IsDoubleType() const
 {
-	if( tokenType == ttDouble )
-		return true;
-
+    if( tokenType == ttDouble ) return true;
 	return false;
 }
 
 bool asCDataType::IsBooleanType() const
 {
     if( tokenType == ttBool ) return true;
-
 	return false;
 }
 
@@ -616,12 +563,10 @@ int asCDataType::GetSizeInMemoryBytes() const
 		tokenType == ttUInt64 )
 		return 8;
 
-	if( tokenType == ttBool )
-		return AS_SIZEOF_BOOL;
+    if( tokenType == ttBool ) return AS_SIZEOF_BOOL;
 
 	// null handle
-	if( tokenType == ttUnrecognizedToken )
-		return 4*AS_PTR_SIZE;
+    if( tokenType == ttUnrecognizedToken ) return 4*AS_PTR_SIZE;
 
 	return 4;
 }
@@ -631,10 +576,8 @@ int asCDataType::GetSizeInMemoryDWords() const
 	int s = GetSizeInMemoryBytes();
 	if( s == 0 ) return 0;
 	if( s <= 4 ) return 1;
-	
-	// Pad the size to 4 bytes
-	if( s & 0x3 )
-		s += 4 - (s & 0x3);
+
+    if( s & 0x3 ) s += 4 - (s & 0x3); // Pad the size to 4 bytes
 
 	return s/4;
 }
@@ -662,11 +605,9 @@ bool asCDataType::IsEnumType() const
 	// Do a sanity check on the objectType, to verify that we aren't trying to access memory after it has been released
 	asASSERT(typeInfo == 0 || typeInfo->name.GetLength() < 100);
 
-	if (typeInfo && (typeInfo->flags & asOBJ_ENUM))
-		return true;
+    if (typeInfo && (typeInfo->flags & asOBJ_ENUM)) return true;
 
 	return false;
 }
 
 END_AS_NAMESPACE
-

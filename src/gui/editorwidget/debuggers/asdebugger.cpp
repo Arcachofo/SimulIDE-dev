@@ -15,6 +15,7 @@
 asDebugger::asDebugger( CodeEditor* parent, OutPanelText* outPane )
           : BaseDebugger( parent, outPane )
 {
+    m_device = NULL;
 }
 asDebugger::~asDebugger() {}
 
