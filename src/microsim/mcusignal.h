@@ -95,7 +95,7 @@ class McuSignal
                     break;
                 }
                 preSlot = posSlot;
-                posSlot= posSlot->nextCallBack;
+                posSlot = posSlot->nextCallBack;
         }   }
 
         void emitValue( uint8_t val ) // Calls all connected functions with masked val.

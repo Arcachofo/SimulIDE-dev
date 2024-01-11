@@ -88,7 +88,6 @@ void loop()
   totTime = (micros()-readTime)/1000; // ms
   readTime = readTime2-readTime;
   
-  
   display.clearDisplay();
   display.drawLine( 0, 24, 83, 24, BLACK); // 0 line
 

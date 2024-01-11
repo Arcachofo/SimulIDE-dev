@@ -103,7 +103,7 @@ void loop()
     lastreading = reading;
   }
   // Draw Frequency
-  unsigned long freq = numCicles*2000000/readTime;
+  unsigned long freq = numCicles*1000000/readTime;
   display.setCursor(1,0);
   display.print(freq);
   display.print( " Hz" );
