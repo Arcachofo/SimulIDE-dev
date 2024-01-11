@@ -135,7 +135,7 @@ void SerialTerm::frameSent( uint8_t data )
 
 void SerialTerm::slotOpenTerm()
 {
-    openMonitor( m_id, 0 );
+    openMonitor( m_id, 0, /*send=*/true );
     m_monitor->activateSend();
 }
 

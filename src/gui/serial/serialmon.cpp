@@ -8,7 +8,7 @@
 #include "simulator.h"
 #include "utils.h"
 
-SerialMonitor::SerialMonitor( QWidget* parent, UsartModule* usart )
+SerialMonitor::SerialMonitor( QWidget* parent, UsartModule* usart, bool send )
              : QDialog( parent )
              , Updatable()
              , m_uartInPanel(this)
@@ -23,12 +23,21 @@ SerialMonitor::SerialMonitor( QWidget* parent, UsartModule* usart )
     panelLayout->addWidget( &m_uartInPanel );
     panelLayout->addWidget( &m_uartOutPanel );
 
-    text->setVisible( false );
-    value->setVisible( false );
-    addCrButton->setVisible( false );
-    textLabel->setVisible( false );
-    sendLabel->setVisible( false );
+    if( !send ){
+        sendLayout->removeWidget( text );
+        sendLayout->removeWidget( value );
+        sendLayout->removeWidget( addCrButton );
+        sendLayout->removeWidget( textLabel );
+        sendLayout->removeWidget( sendLabel );
+        sendLayout->deleteLater();
 
+        line->setVisible( false );
+        text->setVisible( false );
+        value->setVisible( false );
+        addCrButton->setVisible( false );
+        textLabel->setVisible( false );
+        sendLabel->setVisible( false );
+    }
     m_usart = usart;
     m_printMode = 0;
     m_addCR = false;
@@ -50,6 +59,13 @@ void SerialMonitor::updateStep()
         m_usart->sendByte( m_outBuffer.at(i) );
 
     m_outBuffer.clear();
+}
+
+void SerialMonitor::on_pauseButton_clicked()
+{
+    m_paused = pauseButton->isChecked();
+    if( m_paused ) pauseButton->setText( tr("Resume") );
+    else           pauseButton->setText( tr("Pause") );
 }
 
 void SerialMonitor::on_text_returnPressed()
@@ -109,7 +125,7 @@ void SerialMonitor::activateSend()
     sendLabel->setVisible( true );
 }
 
-void SerialMonitor::closeEvent( QCloseEvent *event )
+void SerialMonitor::closeEvent( QCloseEvent* event )
 {
     event->accept();
     m_usart->monitorClosed();

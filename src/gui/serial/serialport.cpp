@@ -44,6 +44,7 @@ SerialPort::SerialPort( QString type, QString id )
           , eElement( (id+"-eElement") )
 {
     m_area = QRect(-34, -16, 160, 32 );
+    m_graphical = true;
     setLabelPos(-20,-32 );
 
     m_pin.resize(2);

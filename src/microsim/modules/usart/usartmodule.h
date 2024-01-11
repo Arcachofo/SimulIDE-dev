@@ -56,7 +56,7 @@ class UsartModule
         virtual void byteReceived( uint8_t data );
         virtual void setRxFlags( uint16_t frame ){;}
 
-        void openMonitor( QString id, int num=0 );
+        void openMonitor( QString id, int num=0, bool send=false );
         void monitorClosed();
 
         uint8_t m_mode;
