@@ -72,8 +72,10 @@ void Interrupt::writeFlag( uint8_t v ) // Clear Interrupt flag by writting 1 to 
 
 void Interrupt::raise( uint8_t v )
 {
-    if( v && !m_raised ){
+    if( v ){
+        if( m_raised ) return;
         m_raised = true;
+
         m_ram[m_flagReg] |= m_flagMask; // Set Interrupt flag
 
         if( m_enabled )
@@ -87,7 +89,7 @@ void Interrupt::raise( uint8_t v )
         }
         if( !m_callBacks.isEmpty() ) { for( McuModule* mod : m_callBacks ) mod->callBack(); }
     }
-    // else if( m_autoClear ) clearFlag();
+    else if( m_autoClear ) clearFlag();
 }
 
 void Interrupt::execute()

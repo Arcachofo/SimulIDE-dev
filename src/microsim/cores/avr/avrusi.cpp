@@ -43,7 +43,6 @@ AvrUsi::~AvrUsi(){}
 
 void AvrUsi::reset()
 {
-
     m_twi      = false;
     m_spi      = false;
     m_timer    = false;

@@ -22,12 +22,9 @@ void AvrOcUnit::configure( uint8_t val ) // COMNX0,COMNX1
     if( m_enabled == enabled ) return;
     m_enabled = enabled;
 
-    if( enabled ){                       // OC Pin connected
-        m_ocPin->controlPin( true, false );
-        m_ocPin->setOutState( false );
-   }else{                               // OC Pin disconnected
-        m_ocPin->controlPin( false, false );
-   }
+    m_ocPin->controlPin( enabled, false );
+    if( enabled ) m_ocPin->setOutState( false );  // OC Pin connected
+
     if( m_ocm ) m_ocm->setOcActive( this, enabled );
     else        m_ctrlPin = enabled;
 }
