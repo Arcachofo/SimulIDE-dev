@@ -107,6 +107,7 @@ class AvrTimer810 : public AvrTimer
         regBits_t m_CTC1;
         regBits_t m_PWM1A;
         regBits_t m_PWM1B;
+        regBits_t m_PSR1;
 
         McuPin* m_oc1AiPin;
         McuPin* m_oc1BiPin;

@@ -266,6 +266,7 @@ AvrTimer810::AvrTimer810( eMcu* mcu, QString name)
     m_CTC1  = getRegBits( "CTC1", mcu );
     m_PWM1A = getRegBits( "PWM1A", mcu );
     m_PWM1B = getRegBits( "PWM1B", mcu );
+    m_PSR1  = getRegBits( "PSR1", mcu );
 
     m_oc1AiPin = mcu->getMcuPin("PORTB0");
     m_oc1BiPin = mcu->getMcuPin("PORTB3");
@@ -300,6 +301,8 @@ void AvrTimer810::configureB( uint8_t newGTCCR ) // GTCCR
         updateOcUnit( m_OCB, pwm );
     }
     if( mode != m_mode ){ m_mode = mode; updateMode(); }
+
+    m_mcu->m_regOverride = newGTCCR & ~m_PSR1.mask; // PSR1 always read as 0
 }
 
 void AvrTimer810::updateOcUnit( McuOcUnit* ocUnit, bool pwm )
