@@ -43,6 +43,9 @@ AvrUsi::~AvrUsi(){}
 
 void AvrUsi::reset()
 {
+
+    m_twi      = false;
+    m_spi      = false;
     m_timer    = false;
     m_extClk   = false;
     m_usiClk   = false;
@@ -106,20 +109,23 @@ void AvrUsi::configureA( uint8_t newUSICR )
             case 2:                       // 2 Wire mode: Uses SDA (DI) and SCL (USCK) pins.
             case 3: twi = true;           // Same as 2 wire above & SCL held low at counter overflow
         }
-
-        if( m_DOpin ) m_DOpin->controlPin( spi, false );
-
-        if( twi ) // 2 Wire mode: SDA (DI) & SCL (USCK) open collector if DDRB=out, pullups disabled
-        {
-            m_sdaState = m_DIpin->getInpState();
-            m_clkState = m_CKpin->getInpState();
+        if( m_spi != spi ){
+            m_spi = spi;
+            if( m_DOpin ) m_DOpin->controlPin( spi, false );
         }
-
-        if( m_DIpin ){
-            m_DIpin->changeCallBack( this, twi );  // Used for Start/Stop detection
-            m_DIpin->setOpenColl( twi );
+        if( m_twi != twi ){
+            m_twi = twi;
+            if( twi ) // 2 Wire mode: SDA (DI) & SCL (USCK) open collector if DDRB=out, pullups disabled
+            {
+                m_sdaState = m_DIpin->getInpState();
+                m_clkState = m_CKpin->getInpState();
+            }
+            if( m_DIpin ){
+                m_DIpin->changeCallBack( this, twi );  // Used for Start/Stop detection
+                m_DIpin->setOpenColl( twi );
+            }
+            if( m_CKpin ) m_CKpin->setOpenColl( twi );
         }
-        if( m_CKpin ) m_CKpin->setOpenColl( twi );
     }
     if( !m_mode ) return; // Disabled
 
