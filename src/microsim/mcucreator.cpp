@@ -1317,7 +1317,7 @@ void McuCreator::createInterrupt( QDomElement* el )
     if( el->hasAttribute("clear") ) // If clear="1" Clear flag by writting 1 to it
     {
         uint8_t val = el->attribute("clear").toUInt();
-        if( val ) watchBitNames( intFlag, R_WRITE, iv, &Interrupt::writeFlag, mcu );
+        if( val ) watchRegister( iv->m_flagReg, R_WRITE, iv, &Interrupt::writeFlag, mcu );
     }
     if( el->hasAttribute("autoclear") ) // If autoclear="0" deactivate autoclear
     {
