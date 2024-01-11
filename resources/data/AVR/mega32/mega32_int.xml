@@ -12,7 +12,7 @@
     <interrupt name="T1_OVF"  enable="TOIE1"  flag="TOV1"  priority="12" vector="0x0012" clear="1"/>
     <interrupt name="T0CO"    enable="OCIE0A" flag="OCF0A" priority="11" vector="0x0014" clear="1"/>
     <interrupt name="T0_OVF"  enable="TOIE0"  flag="TOV0"  priority="10" vector="0x0016" clear="1"/>
-    <interrupt name="SPI"     enable="SPIE"   flag="SPIF"  priority="9"  vector="0x0018" clear="1"/>
+    <interrupt name="SPI"     enable="SPIE"   flag="SPIF"  priority="9"  vector="0x0018" />
     <interrupt name="USART_R" enable="RXCIE"  flag="RXC"   priority="8"  vector="0x001A" autoclear="0"/>
     <interrupt name="USART_U" enable="UDRIE"  flag="UDRE"  priority="7"  vector="0x001C" autoclear="0"/>
     <interrupt name="USART_T" enable="TXCIE"  flag="TXC"   priority="6"  vector="0x001E" clear="1"/>
