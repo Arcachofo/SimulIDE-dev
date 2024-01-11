@@ -43,7 +43,7 @@
                         interrupt="T1_OVF"
                         prescalers="0,1,8,64,256,1024,EXT_F,EXT_R" prselect="CS10,CS11,CS12" >
 
-    <ocunit name="OC1A" pin="PORTB5" ocreg="OCR1AL,OCR1AH" bits="COM1A0,COM1A1" interrupt ="T1COA" />
+    <ocunit name="OC1A" pin="PORTB5" ocreg="OCR1AL,OCR1AH" bits="COM1A0,COM1A1" interrupt="T1COA" />
     <ocunit name="OC1B" pin="PORTB6" ocreg="OCR1BL,OCR1BH" bits="COM1B0,COM1B1" interrupt="T1COB" />
     <ocunit name="OC1C" pin="PORTB7" ocreg="OCR1CL,OCR1CH" bits="COM1C0,COM1C1" interrupt="T1COC" />
   </timer>

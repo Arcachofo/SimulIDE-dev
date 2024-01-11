@@ -72,9 +72,6 @@ void AvrAdc::initialize()
 
 void AvrAdc::configureA( uint8_t newADCSRA ) // ADCSRA
 {
-    if( newADCSRA & m_ADIF.mask )
-          m_mcu->m_regOverride = newADCSRA & ~(m_ADIF.mask); // Clear ADIF by writting it to 1
-
     bool enabled = getRegBitsBool( newADCSRA, m_ADEN );
     if( m_enabled != enabled )
     {

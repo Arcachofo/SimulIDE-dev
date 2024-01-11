@@ -37,13 +37,6 @@ void AvrTwi::initialize()
 
 void AvrTwi::configureA( uint8_t newTWCR ) // TWCR is being written
 {
-    bool clearTwint = getRegBitsBool( newTWCR, m_TWINT );
-    if( clearTwint )                       /// Writting 1 to TWINT clears the flag
-    {
-        m_interrupt->clearFlag();
-        m_mcu->m_regOverride = newTWCR & ~m_TWINT.mask; // Clear TWINT flag
-    }
-
     bool oldEn  = getRegBitsBool( *m_TWCR, m_TWEN );
     bool enable = getRegBitsBool( newTWCR, m_TWEN );
 
@@ -82,6 +75,7 @@ void AvrTwi::configureA( uint8_t newTWCR ) // TWCR is being written
         else setMode( TWI_SLAVE ); // Slave: Stop Cond restarts Slave mode (can be used to recover from an error condition)
     }
 
+    bool clearTwint = getRegBitsBool( newTWCR, m_TWINT );
     bool twea = getRegBitsBool( newTWCR, m_TWEA );
     if( !newStop && !newStart && !clearTwint )
     {

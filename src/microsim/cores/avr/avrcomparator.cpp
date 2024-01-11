@@ -44,9 +44,6 @@ void AvrComp::voltChanged()
 
 void AvrComp::configureA( uint8_t newACSR ) // ACSR is being written
 {
-    //if( newACSR & m_ACI.mask )  // Done in interrupt (clear=1)
-    //    m_mcu->m_regOverride = newACSR & ~(m_ACI.mask); // Clear ACI by writting it to 1
-
     m_enabled = !getRegBitsBool( newACSR, m_ACD );
 
     m_acie = getRegBitsBool( newACSR, m_ACIE );  // Enable interrupt
