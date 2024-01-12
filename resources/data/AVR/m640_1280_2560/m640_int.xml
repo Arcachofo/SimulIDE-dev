@@ -33,7 +33,7 @@
         <interrupt name="ADC"      enable="ADIE"   flag="ADIF"  priority="28" vector="0x003A" clear="1"/>
         <interrupt name="EEPR"     enable="EERIE"  flag=""      priority="27" vector="0x003C"/>
         
-        <interrupt name="T3CAP"    enable=""  flag="" priority="26" vector="0x003E" clear="1"/>
+        <interrupt name="T3CAP"    enable="ICIE3"  flag="ICF3"  priority="26" vector="0x003E" clear="1"/>
         <interrupt name="T3COA"    enable="OCIE3A" flag="OCF3A" priority="25" vector="0x0040" clear="1"/>
         <interrupt name="T3COB"    enable="OCIE3B" flag="OCF3B" priority="24" vector="0x0042" clear="1"/>
         <interrupt name="T3COC"    enable="OCIE3C" flag="OCF3C" priority="23" vector="0x0044"/>
@@ -47,13 +47,13 @@
         
         <interrupt name="SPM"      enable=""  flag="" priority="17" vector="0x0050"/>
         
-        <interrupt name="T4CAP"    enable=""  flag="" priority="16" vector="0x0052" clear="1"/>
+        <interrupt name="T4CAP"    enable="ICIE4"  flag="ICF4"  priority="16" vector="0x0052" clear="1"/>
         <interrupt name="T4COA"    enable="OCIE4A" flag="OCF4A" priority="15" vector="0x0054" clear="1"/>
         <interrupt name="T4COB"    enable="OCIE4B" flag="OCF4B" priority="14" vector="0x0056" clear="1"/>
         <interrupt name="T4COC"    enable="OCIE4C" flag="OCF4C" priority="13" vector="0x0058"/>
         <interrupt name="T4_OVF"   enable="TOIE4"  flag="TOV4"  priority="12" vector="0x005A" clear="1"/>
         
-        <interrupt name="T5CAP"    enable=""  flag="" priority="11" vector="0x005C" clear="1"/>
+        <interrupt name="T5CAP"    enable="ICIE5"  flag="ICF5"  priority="11" vector="0x005C" clear="1"/>
         <interrupt name="T5COA"    enable="OCIE5A" flag="OCF5A" priority="10" vector="0x005E" clear="1"/>
         <interrupt name="T5COB"    enable="OCIE5B" flag="OCF5B" priority="9"  vector="0x0060" clear="1"/>
         <interrupt name="T5COC"    enable="OCIE5C" flag="OCF5C" priority="8"  vector="0x0062"/>

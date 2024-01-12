@@ -1,15 +1,11 @@
 <!DOCTYPE SimulIDE>
 
 <parts>
-  <port name="PORTA" pins="8" outreg="PORTA" inreg="PINA" dirreg="DDRA">
+  <port name="PORTA" pins="8" outreg="PORTA" inreg="PINA" dirreg="DDRA"/>
+  <port name="PORTB" pins="8" outreg="PORTB" inreg="PINB" dirreg="DDRB">
     <interrupt name="PCINT0" mask="PCMSK0"/>
   </port>
-  <port name="PORTB" pins="8" outreg="PORTB" inreg="PINB" dirreg="DDRB">
-    <interrupt name="PCINT1" mask="PCMSK1"/>
-  </port>
-  <port name="PORTC" pins="8" outreg="PORTC" inreg="PINC" dirreg="DDRC">
-    <interrupt name="PCINT2" mask="PCMSK2"/>
-  </port>
+  <port name="PORTC" pins="8" outreg="PORTC" inreg="PINC" dirreg="DDRC"/>
   <port name="PORTD" pins="8" outreg="PORTD" inreg="PIND" dirreg="DDRD">
     <extint name="INT0" pin="PORTD0" configbits="ISC00,ISC01"/>
     <extint name="INT1" pin="PORTD1" configbits="ISC10,ISC11"/>
@@ -46,6 +42,7 @@
     <ocunit name="OC1A" pin="PORTB5" ocreg="OCR1AL,OCR1AH" bits="COM1A0,COM1A1" interrupt="T1COA" />
     <ocunit name="OC1B" pin="PORTB6" ocreg="OCR1BL,OCR1BH" bits="COM1B0,COM1B1" interrupt="T1COB" />
     <ocunit name="OC1C" pin="PORTB7" ocreg="OCR1CL,OCR1CH" bits="COM1C0,COM1C1" interrupt="T1COC" />
+    <icunit name="IC1"  pin="PORTD4" icreg="ICR1L,ICR1H"   bits="ICES1,ICNC1"   interrupt="T1CAP" />
   </timer>
 
   <timer name="TIMER2"  type="820" configregsA="TCCR2A" configregsB="TCCR2B"
@@ -65,6 +62,7 @@
     <ocunit name="OC3A" pin="PORTE3" ocreg="OCR3AL,OCR3AH" bits="COM3A0,COM3A1" interrupt="T3COA" />
     <ocunit name="OC3B" pin="PORTE4" ocreg="OCR3BL,OCR3BH" bits="COM3B0,COM3B1" interrupt="T3COB" />
     <ocunit name="OC3C" pin="PORTE5" ocreg="OCR3CL,OCR3CH" bits="COM3C0,COM3C1" interrupt="T3COC" />
+    <icunit name="IC3"  pin="PORTE7" icreg="ICR3L,ICR3H"   bits="ICES3,ICNC3"   interrupt="T3CAP" />
   </timer>
 
   <usart name="USART0" number="1" configregsA="UCSR0C" configregsB="UCSR0B"

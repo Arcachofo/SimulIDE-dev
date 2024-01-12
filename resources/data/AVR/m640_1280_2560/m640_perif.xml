@@ -13,7 +13,6 @@
     <extint name="INT3" pin="PORTD3" configbits="ISC30,ISC31"/>
   </port>
   <port name="PORTE" pins="8" outreg="PORTE" inreg="PINE" dirreg="DDRE">
-    <interrupt name="PCINT1" bitmask="PCINT8"/>
     <extint name="INT4" pin="PORTE4" configbits="ISC40,ISC41"/>
     <extint name="INT5" pin="PORTE5" configbits="ISC50,ISC51"/>
     <extint name="INT6" pin="PORTE6" configbits="ISC60,ISC61"/>
@@ -23,7 +22,7 @@
   <port name="PORTG" pins="6" outreg="PORTG" inreg="PING" dirreg="DDRG"/>
   <port name="PORTH" pins="8" outreg="PORTH" inreg="PINH" dirreg="DDRH"/>
   <port name="PORTJ" pins="8" outreg="PORTJ" inreg="PINJ" dirreg="DDRJ">
-    <interrupt name="PCINT1" bitmask="PCINT9,PCINT10,PCINT11,PCINT12,PCINT13,PCINT14,PCINT15"/>
+    <interrupt name="PCINT1" mask="PCMSK1"/>
   </port>
   <port name="PORTK" pins="8" outreg="PORTK" inreg="PINK" dirreg="DDRK">
     <interrupt name="PCINT2" mask="PCMSK2"/>
@@ -50,6 +49,7 @@
     <ocunit name="OC1A" pin="PORTB5" ocreg="OCR1AL,OCR1AH" bits="COM1A0,COM1A1" interrupt="T1COA" />
     <ocunit name="OC1B" pin="PORTB6" ocreg="OCR1BL,OCR1BH" bits="COM1B0,COM1B1" interrupt="T1COB" />
     <ocunit name="OC1C" pin="PORTB7" ocreg="OCR1CL,OCR1CH" bits="COM1C0,COM1C1" interrupt="T1COC" />
+    <icunit name="IC1"  pin="PORTD4" icreg="ICR1L,ICR1H"   bits="ICES1,ICNC1"   interrupt="T1CAP" />
   </timer>
 
   <timer name="TIMER2" type="820" counter="TCNT2" configregsA="TCCR2A" configregsB="TCCR2B"
@@ -68,6 +68,7 @@
     <ocunit name="OC3A" pin="PORTE3" ocreg="OCR3AL,OCR3AH" bits="COM3A0,COM3A1" interrupt="T3COA" />
     <ocunit name="OC3B" pin="PORTE4" ocreg="OCR3BL,OCR3BH" bits="COM3B0,COM3B1" interrupt="T3COB" />
     <ocunit name="OC3C" pin="PORTE5" ocreg="OCR3CL,OCR3CH" bits="COM3C0,COM3C1" interrupt="T3COC" />
+    <icunit name="IC3"  pin="PORTE7" icreg="ICR3L,ICR3H"   bits="ICES3,ICNC3"   interrupt="T3CAP" />
   </timer>
 
   <timer name="TIMER4" type="160" counter="TCNT4L,TCNT4H" configregsA="TCCR4A" configregsB="TCCR4B"
@@ -78,6 +79,7 @@
     <ocunit name="OC4A" pin="PORTH3" ocreg="OCR4AL,OCR4AH" bits="COM4A0,COM4A1" interrupt="T4COA" />
     <ocunit name="OC4B" pin="PORTH4" ocreg="OCR4BL,OCR4BH" bits="COM4B0,COM4B1" interrupt="T4COB" />
     <ocunit name="OC4C" pin="PORTH5" ocreg="OCR4CL,OCR4CH" bits="COM4C0,COM4C1" interrupt="T4COC" />
+    <icunit name="IC4"  pin="PORTL0" icreg="ICR4L,ICR4H"   bits="ICES4,ICNC4"   interrupt="T4CAP" />
   </timer>
 
   <timer name="TIMER5" type="160" counter="TCNT5L,TCNT5H" configregsA="TCCR5A" configregsB="TCCR5B"
@@ -88,6 +90,7 @@
     <ocunit name="OC5A" pin="PORTL3" ocreg="OCR5AL,OCR5AH" bits="COM5A0,COM5A1" interrupt="T5COA" />
     <ocunit name="OC5B" pin="PORTL4" ocreg="OCR5BL,OCR5BH" bits="COM5B0,COM5B1" interrupt="T5COB" />
     <ocunit name="OC5C" pin="PORTL5" ocreg="OCR5CL,OCR5CH" bits="COM5C0,COM5C1" interrupt="T5COC" />
+    <icunit name="IC5"  pin="PORTL1" icreg="ICR5L,ICR5H"   bits="ICES5,ICNC5"   interrupt="T5CAP" />
   </timer>
 
   <usart name="USART0" number="1" configregsA="UCSR0A" configregsB="UCSR0B" configregsC="UCSR0C"
