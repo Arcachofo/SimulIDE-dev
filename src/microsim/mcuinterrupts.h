@@ -33,7 +33,7 @@ class Interrupt
         uint8_t enabled() { return m_enabled; }
         uint8_t raised() { return m_raised; }
         void clearFlag();
-        void flagCleared( uint8_t );
+        void flagCleared( uint8_t f=0 );
         void writeFlag( uint8_t v );
         void enableFlag( uint8_t en );
 
