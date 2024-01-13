@@ -33,7 +33,7 @@
                bits="TOV4,OCF4A,OCF4B,0,0,ICF4,0,0" />
 
     <register  name="PCIFR"   addr="0x001B"  reset=""  mask="" 
-               bits="PCIF0,PCIF1,PCIF2,0,0,0,0,0" />
+               bits="PCIF0,PCIF1,PCIF2,PCIF3,0,0,0,0" />
 
     <register  name="EIFR"    addr="0x001C"  reset=""  mask="" 
                bits="INTF0,INTF1,0,0,0,0,0,0" />
@@ -131,7 +131,7 @@
                bits="CAL0,CAL1,CAL2,CAL3,CAL4,CAL5,CAL6,CAL7" />
 
     <register  name="PCICR"   addr="0x0068"  reset=""  mask="" 
-               bits="PCIE0,PCIE1,PCIE2,0,0,0,0,0" />
+               bits="PCIE0,PCIE1,PCIE2,PCIE3,0,0,0,0" />
 
     <register  name="EICRA"   addr="0x0069"  reset=""  mask="" 
                bits="ISC00,ISC01,ISC10,ISC11,0,0,0,0" />

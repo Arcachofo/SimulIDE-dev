@@ -4,7 +4,7 @@
         <interrupt name="INT0"    enable="INT0"   flag="INTF0" priority="16" vector="0x001" clear="1"/>
         <interrupt name="PCINT0"  enable="PCIE0"  flag="PCIF0" priority="15" vector="0x002" clear="1"/>
         <interrupt name="PCINT1"  enable="PCIE1"  flag="PCIF1" priority="14" vector="0x003" clear="1"/>
-        <interrupt name="WDT"     enable="WDTIE"  flag="WDTIF" priority="13" vector="0x004" clear="1"/>
+        <interrupt name="WDT"     enable="WDIE"   flag="WDIF"  priority="13" vector="0x004" />
         <interrupt name="T1CAP"   enable="ICIE1"  flag="ICF1"  priority="12" vector="0x005" clear="1"/>
         <interrupt name="T1COA"   enable="OCIE1A" flag="OCF1A" priority="11" vector="0x006" clear="1"/>
         <interrupt name="T1COB"   enable="OCIE1B" flag="OCF1B" priority="10" vector="0x007" clear="1"/>
