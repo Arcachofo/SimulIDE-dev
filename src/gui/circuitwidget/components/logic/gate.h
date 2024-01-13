@@ -30,7 +30,7 @@ class Gate : public LogicComponent
     protected:
         virtual bool calcOutput( int inputs );
 
-        bool m_out;
+        //bool m_out;
         bool m_initState;
 
         int m_minInputs;
