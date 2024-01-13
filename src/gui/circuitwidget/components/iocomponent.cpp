@@ -77,7 +77,6 @@ void IoComponent::initState()
         m_outPin[i]->setStateZ( false );
         m_outPin[i]->setOutState( false );
     }
-    m_outsReady = true;
     m_nextOutVal = m_outValue = 0;
     while( !m_outQueue.empty()  ) m_outQueue.pop();
     while( !m_timeQueue.empty() ) m_timeQueue.pop();
@@ -85,14 +84,13 @@ void IoComponent::initState()
 
 void IoComponent::runOutputs()
 {
-    if( m_outQueue.empty() ) m_outValue = m_nextOutVal;
-    else{
-        m_outValue = m_outQueue.front();
-        m_outQueue.pop();
+    m_outValue = m_outQueue.front();
+    m_outQueue.pop();
 
+    if( !m_timeQueue.empty() )
+    {
         uint64_t nextTime = m_timeQueue.front()-Simulator::self()->circTime();
         m_timeQueue.pop();
-
         Simulator::self()->addEvent( nextTime, m_eElement );
     }
 
@@ -101,33 +99,24 @@ void IoComponent::runOutputs()
         bool state = m_outValue & (1<<i);
         m_outPin[i]->scheduleState( state, 0 );
     }
-    m_outsReady = m_outQueue.empty();
 }
 
 void IoComponent::scheduleOutPuts( eElement* el )
 {
-    uint64_t delay = m_propDelay*m_propSize;
-
-    if( m_outsReady ) // Event when outputs already dispatched
+    if(  m_outQueue.empty() )
     {
         if( m_nextOutVal == m_outValue ) return;
-
-        if( delay ){
-            Simulator::self()->addEvent( delay, el );
-            m_outsReady = false;
-        }
-        else runOutputs();
+        Simulator::self()->addEvent( m_propDelay*m_propSize, el );
     }
-    else             // New Event while previous Event not dispatched
+    else          // New Event while previous Event not dispatched
     {
-        if( !m_outQueue.empty() && m_nextOutVal == m_outQueue.back() ) return;
-
-        uint64_t nextTime = Simulator::self()->circTime()+delay;
+        if( m_nextOutVal == m_outQueue.back() ) return;
+        uint64_t nextTime = Simulator::self()->circTime()+m_propDelay*m_propSize;
         m_timeQueue.push( nextTime );
-        m_outQueue.push( m_nextOutVal );
 
         m_eElement = el;
     }
+    m_outQueue.push( m_nextOutVal );
 }
 
 void IoComponent::setInputHighV( double volt )

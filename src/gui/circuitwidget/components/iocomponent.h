@@ -111,7 +111,6 @@ class IoComponent : public Component
         bool m_openCol;
         bool m_invOutputs;
         bool m_invInputs;
-        bool m_outsReady;
 
         uint m_width;
         uint m_height;
