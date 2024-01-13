@@ -92,6 +92,7 @@ void IoComponent::runOutputs()
 
         uint64_t nextTime = m_timeQueue.front()-Simulator::self()->circTime();
         m_timeQueue.pop();
+
         Simulator::self()->addEvent( nextTime, m_eElement );
     }
 
@@ -110,11 +111,16 @@ void IoComponent::scheduleOutPuts( eElement* el )
     if( m_outsReady ) // Event when outputs already dispatched
     {
         if( m_nextOutVal == m_outValue ) return;
+
+        if( delay ){
+            Simulator::self()->addEvent( delay, el );
+            m_outsReady = false;
+        }
+        else runOutputs();
     }
     else             // New Event while previous Event not dispatched
     {
-        if( m_outQueue.empty() ) { if( m_nextOutVal == m_outValue ) return; }
-        else                     { if( m_nextOutVal == m_outQueue.back() ) return; }
+        if( !m_outQueue.empty() && m_nextOutVal == m_outQueue.back() ) return;
 
         uint64_t nextTime = Simulator::self()->circTime()+delay;
         m_timeQueue.push( nextTime );
@@ -122,8 +128,6 @@ void IoComponent::scheduleOutPuts( eElement* el )
 
         m_eElement = el;
     }
-    if( delay ) Simulator::self()->addEvent( delay, el );
-    else runOutputs();
 }
 
 void IoComponent::setInputHighV( double volt )
