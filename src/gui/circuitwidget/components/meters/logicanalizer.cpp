@@ -77,6 +77,8 @@ LAnalizer::LAnalizer( QString type, QString id )
         m_dataWidget->setColor( i, m_color[i%4] );
     }
     m_updtCount = 0;
+    m_thresholdR = 0;
+    m_thresholdF = 0;
 
     setThresholdR( 2.5 );
     setThresholdF( 2.5 );
@@ -227,26 +229,6 @@ void LAnalizer::setThresholdR( double thr )
     m_laWidget->updateThresholdR( thr );
 }
 
-QString LAnalizer::busStr()
-{
-    QString list;
-    QString bus;
-    for( int i=0; i<8; ++i ){
-        bus = m_channel[i]->isBus()? "true":"false";
-        list.append( bus ).append(",");
-    }
-    return list;
-}
-
-void LAnalizer::setBusStr( QString hc )
-{
-    QStringList list = hc.split(",");
-    for( int i=0; i<8; ++i ){
-        if( i == list.size() ) break;
-        bool bus = (list.at(i) == "true")? true:false;
-        m_laWidget->setIsBus( i, bus );
-}   }
-
 void LAnalizer::setThresholdF( double thr )
 {
     if( thr > m_thresholdR ) thr = m_thresholdR;
@@ -282,6 +264,26 @@ void LAnalizer::setTrigger( int ch )
     bool pauseOnCond = ( m_trigger == 8 ); // Pause on condition
     for( int i=0; i<8; i++ ) m_channel[i]->m_pauseOnCond = pauseOnCond;
 }
+
+QString LAnalizer::busStr()
+{
+    QString list;
+    QString bus;
+    for( int i=0; i<8; ++i ){
+        bus = m_channel[i]->isBus()? "true":"false";
+        list.append( bus ).append(",");
+    }
+    return list;
+}
+
+void LAnalizer::setBusStr( QString hc )
+{
+    QStringList list = hc.split(",");
+    for( int i=0; i<8; ++i ){
+        if( i == list.size() ) break;
+        bool bus = (list.at(i) == "true")? true:false;
+        m_laWidget->setIsBus( i, bus );
+}   }
 
 void LAnalizer::setConds( QString conds )
 {
