@@ -53,6 +53,4 @@ class eElement
         bool m_changed;
         double m_step;
 };
-
 #endif
-
