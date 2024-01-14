@@ -21,6 +21,7 @@ class FlipFlopBase : public LogicComponent
         void usePinsRS( bool rs );
 
         virtual void stamp() override;
+        virtual void updateStep() override;
         virtual void voltChanged() override;
         virtual void runEvent() override{ IoComponent::runOutputs(); }
 

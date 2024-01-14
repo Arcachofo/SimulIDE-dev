@@ -18,6 +18,7 @@ FlipFlopBase::FlipFlopBase( QString type, QString id )
 {
     m_dataPins = 0;
     m_useRS = true;
+    m_srInv = false;
 
     addPropGroup( { tr("Main"), {
 new BoolProp<FlipFlopBase>("UseRS", tr("Use Set/Reset Pins"),"", this
@@ -53,26 +54,37 @@ void FlipFlopBase::stamp()
     m_nextOutVal = m_outValue = m_Q0? 1:2;
 }
 
+void FlipFlopBase::updateStep()
+{
+    if( !m_changed ) return;
+    m_changed = false;
+
+    m_setPin->setInverted( m_srInv );   // Set
+    m_resetPin->setInverted( m_srInv ); // Reset
+
+    voltChanged();
+    Circuit::self()->update();
+}
+
 void FlipFlopBase::voltChanged()
 {
-    updateClock();
-    bool clkAllow = (m_clkState == Clock_Allow); // Get Clk to don't miss any clock changes
+    updateClock();  // Update Clk to don't miss any clock changes
 
     bool set   = sPinState();
     bool reset = rPinState();
 
-    if( set || reset)   m_nextOutVal = (set? 1:0) + (reset? 2:0);
-    else if( clkAllow ) calcOutput();
+    if( set || reset) m_nextOutVal = (set? 1:0) + (reset? 2:0);
+    else if( m_clkState == Clock_Allow ) calcOutput();
+
     scheduleOutPuts( this );
 }
 
 void FlipFlopBase::setSrInv( bool inv )
 {
+    if( m_srInv == inv ) return;
     m_srInv = inv;
-    m_setPin->setInverted( inv );   // Set
-    m_resetPin->setInverted( inv ); // Reset
 
-    Circuit::self()->update();
+    m_changed = true;
 }
 
 void FlipFlopBase::usePinsRS( bool rs )
