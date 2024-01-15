@@ -93,7 +93,6 @@ class IoComponent : public Component
         uint m_nextOutVal;
         std::queue<uint> m_outQueue;
         std::queue<uint64_t> m_timeQueue;
-        //uint m_nextOutDir;
 
         double m_propDelay; // Propagation delay
         double m_timeLH;    // Time for Output voltage to switch from 10% to 90% (1 gate)

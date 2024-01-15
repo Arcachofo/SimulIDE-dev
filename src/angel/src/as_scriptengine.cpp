@@ -4645,12 +4645,10 @@ int asCScriptEngine::CallScriptObjectMethod(void *obj, int funcId)
 void *asCScriptEngine::CreateUninitializedScriptObject(const asITypeInfo *type)
 {
     // This function only works for script classes. Registered types cannot be created this way.
-    if( type == 0 || !(type->GetFlags() & asOBJ_SCRIPT_OBJECT) )
-        return 0;
+    if( type == 0 || !(type->GetFlags() & asOBJ_SCRIPT_OBJECT) ) return 0;
 
     asCObjectType *objType = CastToObjectType(const_cast<asCTypeInfo*>(reinterpret_cast<const asCTypeInfo*>(type)));
-    if (objType == 0)
-        return 0;
+    if (objType == 0) return 0;
 
     // Construct the object, but do not call the actual constructor that initializes the members
     // The initialization will be done by the application afterwards, e.g. through serialization.
@@ -4845,9 +4843,7 @@ void asCScriptEngine::ReleaseScriptObject(void *obj, const asITypeInfo *type)
 
             // We'll have to trust that the memory for the object was allocated with CallAlloc.
             // This is true if the object was created in the context, or with CreateScriptObject.
-
-            // Then free the memory
-            CallFree(obj);
+            CallFree(obj); // Then free the memory
         }
     }
 }
@@ -4879,8 +4875,7 @@ int asCScriptEngine::BeginConfigGroup(const char *groupName)
 int asCScriptEngine::EndConfigGroup()
 {
     // Raise error if trying to end the default config
-    if( currentGroup == &defaultGroup )
-        return asERROR;
+    if( currentGroup == &defaultGroup ) return asERROR;
 
     currentGroup = &defaultGroup;
 
@@ -4912,12 +4907,10 @@ int asCScriptEngine::RemoveConfigGroup(const char *groupName)
                 RemoveTemplateInstanceType(generatedTemplateTypes[g]);
 
             // Make sure the group isn't referenced by anyone
-            if( group->refCount > 0 )
-                return asCONFIG_GROUP_IS_IN_USE;
+            if( group->refCount > 0 ) return asCONFIG_GROUP_IS_IN_USE;
 
             // Verify if any objects registered in this group is still alive
-            if( group->HasLiveObjects() )
-                return asCONFIG_GROUP_IS_IN_USE;
+            if( group->HasLiveObjects() ) return asCONFIG_GROUP_IS_IN_USE;
 
             // Remove the group from the list
             if( n == configGroups.GetLength() - 1 )

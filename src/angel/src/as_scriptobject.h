@@ -28,15 +28,11 @@
    andreas@angelcode.com
 */
 
-
-
 //
 // as_scriptobject.h
 //
 // A generic class for handling script declared structures
 //
-
-
 
 #ifndef AS_SCRIPTOBJECT_H
 #define AS_SCRIPTOBJECT_H
