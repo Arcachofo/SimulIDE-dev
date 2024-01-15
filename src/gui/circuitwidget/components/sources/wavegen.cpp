@@ -32,7 +32,7 @@ Component* WaveGen::construct( QString type, QString id )
 LibraryItem* WaveGen::libraryItem()
 {
     return new LibraryItem(
-        tr("Wave Gen."),
+        tr("Wave Generator"),
         "Sources",
         "wavegen.png",
         "WaveGen",

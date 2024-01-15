@@ -23,7 +23,7 @@ Component* FixedVolt::construct( QString type, QString id )
 LibraryItem* FixedVolt::libraryItem()
 {
     return new LibraryItem(
-        tr("Fixed Volt."),
+        tr("Fixed Voltage"),
         "Sources",
         "voltage.png",
         "Fixed Voltage",
