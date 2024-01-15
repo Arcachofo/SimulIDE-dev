@@ -141,6 +141,10 @@ ScriptCpu::ScriptCpu( eMcu* mcu )
                                    , asMETHODPR( ScriptCpu, getPropStr, (int,const string), string)
                                    , asCALL_THISCALL );
 
+    m_aEngine->RegisterObjectMethod("ScriptCpu", "void setPropStr( int index, const string p,const string v )"
+                                   , asMETHODPR( ScriptCpu, setPropStr, (int,const string,const string), void)
+                                   , asCALL_THISCALL );
+
     m_aEngine->RegisterObjectMethod("ScriptCpu", "void setLinkedValue( int index, double v, int i )"
                                    , asMETHODPR( ScriptCpu, setLinkedValue, (int,double,int), void)
                                    , asCALL_THISCALL );
@@ -485,8 +489,16 @@ string ScriptCpu::getPropStr( int index, const string p  )
     Component* comp = m_mcuComp->getLinkedComp( index );
     if( !comp ) return "";
 
-    QString propValue = comp->getPropStr( QString::fromStdString( p) );
+    QString propValue = comp->getPropStr( QString::fromStdString(p) );
     return propValue.toStdString();
+}
+
+void ScriptCpu::setPropStr( int index, const string p, const string v ) // Script should call this in updateStep()
+{
+    Component* comp = m_mcuComp->getLinkedComp( index );
+    if( !comp ) return;
+
+    comp->setPropStr( QString::fromStdString(p), QString::fromStdString(v) );
 }
 
 void ScriptCpu::setLinkedValue( int index, double v, int i )

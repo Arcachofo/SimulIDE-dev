@@ -64,6 +64,7 @@ class ScriptCpu : public ScriptModule, public McuCpu
         McuPin*  getMcuPin( const string pinName );
 
         string getPropStr( int index, const string p );               // Called from script: Get property p from linked component at index
+        void setPropStr( int index, const string p, const string v ); // Called from script: Set property p with value v in linked component at index
         void setLinkedValue( int index, double v, int i=0  );         // Called from script
         void setLinkedString( int index, const string str, int i=0 ); // Called from script
         void setLinkedVal( double v, int i=0 );                       // Called from C++
