@@ -22,7 +22,7 @@ class McuIntOsc : public McuModule, public eElement
         virtual void stamp() override;
         virtual void runEvent() override;
 
-        bool extClock() { return m_extClock; }
+        bool extClock();
         void enableExtOsc( bool en );
 
         bool clockOut() { return m_clkOut; }
