@@ -91,7 +91,7 @@ new StrProp<Function>("Functions", tr("Functions"),"", this, &Function::function
     addPropGroup( { tr("Electric"), IoComponent::inputProps()
 +QList<ComProperty*>({new BoolProp<Function>( "Invert_Inputs", tr("Invert Inputs"),"", this, &Function::invertInps, &Function::setInvertInps, propNoCopy )})
                     +IoComponent::outputProps()+IoComponent::outputType(),0 } );
-    addPropGroup( { tr("Edges"), IoComponent::edgeProps(),0 } );
+    addPropGroup( { tr("Timing"), IoComponent::edgeProps(),0 } );
 }
 Function::~Function(){}
 

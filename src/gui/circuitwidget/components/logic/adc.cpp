@@ -46,7 +46,7 @@ new IntProp <ADC>("Num_Bits", tr("Size"),"_Bits", this
 new DoubProp<ADC>("Vref", tr("Reference Voltage"),"V", this, &ADC::maxVolt, &ADC::setMaxVolt ),
     },groupNoCopy} );
     addPropGroup( { tr("Electric"), IoComponent::outputProps()+IoComponent::outputType(),0 } );
-    addPropGroup( { tr("Edges")   , IoComponent::edgeProps()                            ,0 } );
+    addPropGroup( { tr("Timing")  , IoComponent::edgeProps()                            ,0 } );
 }
 ADC::~ADC(){}
 

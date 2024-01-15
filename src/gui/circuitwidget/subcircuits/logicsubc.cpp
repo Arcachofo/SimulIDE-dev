@@ -27,19 +27,19 @@ LogicSubc::LogicSubc( QString type, QString id )
 
     addPropGroup( { tr("Electric"), {
     new ComProperty( "", tr("Inputs:"),"","",0),
-    new DoubProp<LogicSubc>( "Input_High_V", tr("Low to High Threshold"),"V", this, &LogicSubc::inputHighV, &LogicSubc::setInputHighV ),
-    new DoubProp<LogicSubc>( "Input_Low_V" , tr("High to Low Threshold"),"V", this, &LogicSubc::inputLowV,  &LogicSubc::setInputLowV ),
-    new DoubProp<LogicSubc>( "Input_Imped" , tr("Input Impedance")      ,"Ω", this, &LogicSubc::inputImp,   &LogicSubc::setInputImp ),
+    new DoubProp<LogicSubc>("Input_High_V", tr("Low to High Threshold"),"V", this, &LogicSubc::inputHighV, &LogicSubc::setInputHighV ),
+    new DoubProp<LogicSubc>("Input_Low_V" , tr("High to Low Threshold"),"V", this, &LogicSubc::inputLowV,  &LogicSubc::setInputLowV ),
+    new DoubProp<LogicSubc>("Input_Imped" , tr("Input Impedance")      ,"Ω", this, &LogicSubc::inputImp,   &LogicSubc::setInputImp ),
     new ComProperty( "", tr("Outputs:"),"","",0),
-    new DoubProp<LogicSubc>( "Out_High_V", tr("Output High Voltage"),"V", this, &LogicSubc::outHighV, &LogicSubc::setOutHighV ),
-    new DoubProp<LogicSubc>( "Out_Low_V" , tr("Output Low Voltage") ,"V", this, &LogicSubc::outLowV,  &LogicSubc::setOutLowV ),
-    new DoubProp<LogicSubc>( "Out_Imped" , tr("Output Impedance")   ,"Ω", this, &LogicSubc::outImp,  &LogicSubc::setOutImp )
-    } } );
-    addPropGroup( { tr("Edges"), {
-    new DoubProp<LogicSubc>( "Tpd_ps", tr("Gate Delay "),"ps", this, &LogicSubc::propDelay, &LogicSubc::setPropDelay ),
-    new DoubProp<LogicSubc>( "Tr_ps" , tr("Rise Time")  ,"ps", this, &LogicSubc::riseTime,  &LogicSubc::setRiseTime ),
-    new DoubProp<LogicSubc>( "Tf_ps" , tr("Fall Time")  ,"ps", this, &LogicSubc::fallTime,  &LogicSubc::setFallTime )
-    } } );
+    new DoubProp<LogicSubc>("Out_High_V", tr("Output High Voltage"),"V", this, &LogicSubc::outHighV, &LogicSubc::setOutHighV ),
+    new DoubProp<LogicSubc>("Out_Low_V" , tr("Output Low Voltage") ,"V", this, &LogicSubc::outLowV,  &LogicSubc::setOutLowV ),
+    new DoubProp<LogicSubc>("Out_Imped" , tr("Output Impedance")   ,"Ω", this, &LogicSubc::outImp,  &LogicSubc::setOutImp )
+    },0 } );
+    addPropGroup( { tr("Timing"), {
+    new DoubProp<LogicSubc>("Tpd_ps", tr("Gate Delay "),"ps", this, &LogicSubc::propDelay, &LogicSubc::setPropDelay ),
+    new DoubProp<LogicSubc>("Tr_ps" , tr("Rise Time")  ,"ps", this, &LogicSubc::riseTime,  &LogicSubc::setRiseTime ),
+    new DoubProp<LogicSubc>("Tf_ps" , tr("Fall Time")  ,"ps", this, &LogicSubc::fallTime,  &LogicSubc::setFallTime )
+    },0 } );
 }
 LogicSubc::~LogicSubc(){}
 

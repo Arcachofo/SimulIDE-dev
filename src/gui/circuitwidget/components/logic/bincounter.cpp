@@ -56,7 +56,7 @@ new BoolProp<BinCounter>("Reset_Inverted", tr("Set/Reset Inverted"),"", this, &B
 new IntProp <BinCounter>("Max_Value",      tr("Count to")          ,"", this, &BinCounter::maxVal,   &BinCounter::setMaxVal,0,"uint" ),
     },groupNoCopy} );
     addPropGroup( { tr("Electric"), IoComponent::inputProps()+IoComponent::outputProps(),0 } );
-    addPropGroup( { tr("Edges")   , IoComponent::edgeProps(),0 } );
+    addPropGroup( { tr("Timing")  , IoComponent::edgeProps(),0 } );
 }
 BinCounter::~BinCounter(){}
 

@@ -89,7 +89,7 @@ Memory::Memory( QString type, QString id )
         + IoComponent::outputType()
     ,0 } );
 
-    addPropGroup( { tr("Edges")
+    addPropGroup( { tr("Timing")
         , IoComponent::edgeProps()
     ,0 } );
 

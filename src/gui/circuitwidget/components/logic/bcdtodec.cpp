@@ -47,7 +47,7 @@ new BoolProp<BcdToDec>("_16_Bits", tr("16 Bits"),"", this
     addPropGroup( { tr("Electric"), IoComponent::inputProps()
 +QList<ComProperty*>({new BoolProp<BcdToDec>( "Invert_Inputs", tr("Invert Inputs"),"", this, &BcdToDec::invertInps, &BcdToDec::setInvertInps, propNoCopy )})
                     +IoComponent::outputProps()+IoComponent::outputType(),0 } );
-    addPropGroup( { tr("Edges"), IoComponent::edgeProps(),0 } );
+    addPropGroup( { tr("Timing"), IoComponent::edgeProps(),0 } );
 }
 BcdToDec::~BcdToDec(){}
 

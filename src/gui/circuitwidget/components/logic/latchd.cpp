@@ -66,7 +66,7 @@ LatchD::LatchD( QString type, QString id )
         +IoComponent::outputProps()+IoComponent::outputType()
     ,0 } );
 
-    addPropGroup( { tr("Edges"), IoComponent::edgeProps(),0 } );
+    addPropGroup( { tr("Timing"), IoComponent::edgeProps(),0 } );
 }
 LatchD::~LatchD(){}
 

@@ -35,7 +35,7 @@ new StrProp <FlipFlopBase>("Trigger"       , tr("Trigger Type")      ,"", this
     }, groupNoCopy } );
 
     addPropGroup( { tr("Electric"), IoComponent::inputProps()+IoComponent::outputProps(),0 } );
-    addPropGroup( { tr("Edges")   , IoComponent::edgeProps(),0 } );
+    addPropGroup( { tr("Timing")  , IoComponent::edgeProps(),0 } );
 }
 FlipFlopBase::~FlipFlopBase(){}
 
@@ -85,6 +85,7 @@ void FlipFlopBase::setSrInv( bool inv )
     m_srInv = inv;
 
     m_changed = true;
+    if( !Simulator::self()->isRunning() ) updateStep();
 }
 
 void FlipFlopBase::usePinsRS( bool rs )

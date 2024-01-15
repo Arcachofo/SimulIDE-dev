@@ -69,7 +69,7 @@ new IntProp<Mux>("Address_Bits" , tr("Address Size") ,"_bits", this
         +IoComponent::outputProps()
     ,0 } );
 
-    addPropGroup( { tr("Edges"), IoComponent::edgeProps(),0 } );
+    addPropGroup( { tr("Timing"), IoComponent::edgeProps(),0 } );
 }
 Mux::~Mux(){}
 

@@ -48,7 +48,7 @@ new BoolProp<Buffer>("Tristate", tr("Tristate"),"", this
                      , &Buffer::tristate, &Buffer::setTristate, propNoCopy )
                     })
     ,0} );
-    addPropGroup( { tr("Edges") , Gate::edgeProps(),0 } );
+    addPropGroup( { tr("Timing"), Gate::edgeProps(),0 } );
 
     removeProperty("pd_n");
 }

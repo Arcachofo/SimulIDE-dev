@@ -61,7 +61,7 @@ new BoolProp<DecToBcd>("Invert_Inputs", tr("Invert Inputs"),"", this
 
 +IoComponent::outputProps()+IoComponent::outputType(),0 } );
 
-    addPropGroup( { tr("Edges"), IoComponent::edgeProps(),0 } );
+    addPropGroup( { tr("Timing"), IoComponent::edgeProps(),0 } );
 }
 DecToBcd::~DecToBcd(){}
 

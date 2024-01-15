@@ -52,7 +52,7 @@ new DoubProp<DAC>("Vref", tr("Reference Voltage"),"V", this, &DAC::maxVolt, &DAC
 new BoolProp<IoComponent>( "Invert_Inputs", tr("Invert Inputs"),"", this
                          , &IoComponent::invertInps, &IoComponent::setInvertInps, propNoCopy )})
                   ,0} );
-    addPropGroup( { tr("Edges"), IoComponent::edgeProps(),0 } );
+    addPropGroup( { tr("Timing"), IoComponent::edgeProps(),0 } );
 }
 DAC::~DAC(){}
 

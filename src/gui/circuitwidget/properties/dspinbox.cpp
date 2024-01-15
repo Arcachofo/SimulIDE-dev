@@ -7,11 +7,13 @@
 
 #include "dspinbox.h"
 
-asIScriptEngine* DSpinBox::m_aEngine = asCreateScriptEngine();
+asIScriptEngine* DSpinBox::m_aEngine = nullptr;
 
 DSpinBox::DSpinBox( QWidget* parent )
         : QDoubleSpinBox( parent )
-{}
+{
+    if( !m_aEngine ) m_aEngine = asCreateScriptEngine();
+}
 DSpinBox::~DSpinBox(){;}
 
 

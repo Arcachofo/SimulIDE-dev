@@ -48,7 +48,7 @@ new BoolProp<ShiftReg>("Clock_Inverted", tr("Clock Inverted"),"", this, &ShiftRe
 new BoolProp<ShiftReg>("Reset_Inverted", tr("Reset Inverted"),"", this, &ShiftReg::resetInv, &ShiftReg::setResetInv ),
     }, groupNoCopy} );
     addPropGroup( { tr("Electric"), IoComponent::inputProps()+IoComponent::outputProps()+IoComponent::outputType(),0 } );
-    addPropGroup( { tr("Edges")   , IoComponent::edgeProps(),0 } );
+    addPropGroup( { tr("Timing")  , IoComponent::edgeProps(),0 } );
 }
 ShiftReg::~ShiftReg(){}
 
