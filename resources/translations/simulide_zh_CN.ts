@@ -25,7 +25,11 @@
     </message>
     <message>
         <source>Edges</source>
-        <translation>波形</translation>
+        <translation type="vanished">波形</translation>
+    </message>
+    <message>
+        <source>Timing</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -125,11 +129,15 @@
     </message>
     <message>
         <source>Edges</source>
-        <translation>波形</translation>
+        <translation type="vanished">波形</translation>
     </message>
     <message>
         <source>Invert Inputs</source>
         <translation>对输入取反</translation>
+    </message>
+    <message>
+        <source>Timing</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -436,11 +444,15 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Edges</source>
-        <translation>波形</translation>
+        <translation type="vanished">波形</translation>
     </message>
     <message>
         <source>Invert Inputs</source>
         <translation>对输入取反</translation>
+    </message>
+    <message>
+        <source>Timing</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -463,7 +475,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Edges</source>
-        <translation>波形</translation>
+        <translation type="vanished">波形</translation>
     </message>
     <message>
         <source>Decoder (4 to 10/16)</source>
@@ -476,6 +488,10 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Invert Inputs</source>
         <translation>对输入取反</translation>
+    </message>
+    <message>
+        <source>Timing</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -510,11 +526,15 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Edges</source>
-        <translation>波形</translation>
+        <translation type="vanished">波形</translation>
     </message>
     <message>
         <source>Binary Counter</source>
         <translation>二进制计数器</translation>
+    </message>
+    <message>
+        <source>Timing</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -552,11 +572,15 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Edges</source>
-        <translation>波形</translation>
+        <translation type="vanished">波形</translation>
     </message>
     <message>
         <source>Invert Inputs</source>
         <translation>对输入取反</translation>
+    </message>
+    <message>
+        <source>Timing</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -605,11 +629,15 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Auto Step</source>
-        <translation>自动步进</translation>
+        <translation type="vanished">自动步进</translation>
     </message>
     <message>
         <source>_Steps</source>
         <translation type="vanished">_Steps</translation>
+    </message>
+    <message>
+        <source>Reactive Step</source>
+        <translation type="unfinished">电抗性步数</translation>
     </message>
 </context>
 <context>
@@ -1327,11 +1355,15 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Edges</source>
-        <translation>波形</translation>
+        <translation type="vanished">波形</translation>
     </message>
     <message>
         <source>Invert Inputs</source>
         <translation>对输入取反</translation>
+    </message>
+    <message>
+        <source>Timing</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1425,7 +1457,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Edges</source>
-        <translation>波形</translation>
+        <translation type="vanished">波形</translation>
     </message>
     <message>
         <source>Encoder (10/16 to 4)</source>
@@ -1434,6 +1466,10 @@ Can&apos;t find file:
     <message>
         <source>Encoder(10/16 to 4)</source>
         <translation>编码器(10/16线到4线)</translation>
+    </message>
+    <message>
+        <source>Timing</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1460,7 +1496,11 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Edges</source>
-        <translation>波形</translation>
+        <translation type="vanished">波形</translation>
+    </message>
+    <message>
+        <source>Timing</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1534,6 +1574,10 @@ Can&apos;t find file:
     <message>
         <source>Link to Component</source>
         <translation>连接到组件</translation>
+    </message>
+    <message>
+        <source>Steps</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1641,7 +1685,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Edges</source>
-        <translation>波形</translation>
+        <translation type="vanished">波形</translation>
     </message>
     <message>
         <source>Load data</source>
@@ -1654,6 +1698,10 @@ Can&apos;t find file:
     <message>
         <source>Show Memory Table</source>
         <translation>显示内存表</translation>
+    </message>
+    <message>
+        <source>Timing</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2168,7 +2216,7 @@ Can&apos;t find file:
     <name>FixedVolt</name>
     <message>
         <source>Fixed Volt.</source>
-        <translation>稳压电源(带开关)</translation>
+        <translation type="vanished">稳压电源(带开关)</translation>
     </message>
     <message>
         <source>Main</source>
@@ -2177,6 +2225,10 @@ Can&apos;t find file:
     <message>
         <source>Voltage</source>
         <translation>电压</translation>
+    </message>
+    <message>
+        <source>Fixed Voltage</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2199,7 +2251,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Edges</source>
-        <translation>波形</translation>
+        <translation type="vanished">波形</translation>
     </message>
     <message>
         <source>Use Set/Reset Pins</source>
@@ -2208,6 +2260,10 @@ Can&apos;t find file:
     <message>
         <source>Set/Reset Inverted</source>
         <translation>对Set/Reset引脚取反</translation>
+    </message>
+    <message>
+        <source>Timing</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2273,7 +2329,11 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Edges</source>
-        <translation>波形</translation>
+        <translation type="vanished">波形</translation>
+    </message>
+    <message>
+        <source>Timing</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2304,7 +2364,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Edges</source>
-        <translation>波形</translation>
+        <translation type="vanished">波形</translation>
     </message>
     <message>
         <source>Load Functions</source>
@@ -2339,6 +2399,10 @@ Can&apos;t find file:
     <message>
         <source> Function:</source>
         <translation> 函数:</translation>
+    </message>
+    <message>
+        <source>Timing</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2513,11 +2577,15 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Auto Step</source>
-        <translation>自动步进</translation>
+        <translation type="vanished">自动步进</translation>
     </message>
     <message>
         <source>_Steps</source>
         <translation type="vanished">_Steps</translation>
+    </message>
+    <message>
+        <source>Reactive Step</source>
+        <translation type="unfinished">电抗性步数</translation>
     </message>
 </context>
 <context>
@@ -2864,11 +2932,15 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Edges</source>
-        <translation>波形</translation>
+        <translation type="vanished">波形</translation>
     </message>
     <message>
         <source>Invert Inputs</source>
         <translation>对输入取反</translation>
+    </message>
+    <message>
+        <source>Timing</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3139,6 +3211,13 @@ Can&apos;t find file:
     <name>LinkedComponent</name>
     <message>
         <source>Link to Component</source>
+        <translation type="obsolete">连接到组件</translation>
+    </message>
+</context>
+<context>
+    <name>LinkerComponent</name>
+    <message>
+        <source>Link to Component</source>
         <translation type="unfinished">连接到组件</translation>
     </message>
 </context>
@@ -3204,7 +3283,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Edges</source>
-        <translation>波形</translation>
+        <translation type="vanished">波形</translation>
     </message>
     <message>
         <source>Gate Delay </source>
@@ -3217,6 +3296,10 @@ Can&apos;t find file:
     <message>
         <source>Fall Time</source>
         <translation>下降时间</translation>
+    </message>
+    <message>
+        <source>Timing</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3516,7 +3599,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Edges</source>
-        <translation>波形</translation>
+        <translation type="vanished">波形</translation>
     </message>
     <message>
         <source>Load data</source>
@@ -3533,6 +3616,10 @@ Can&apos;t find file:
     <message>
         <source>Asynchronous</source>
         <translation>异步</translation>
+    </message>
+    <message>
+        <source>Timing</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3623,7 +3710,11 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Edges</source>
-        <translation>波形</translation>
+        <translation type="vanished">波形</translation>
+    </message>
+    <message>
+        <source>Timing</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3720,11 +3811,15 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Edges</source>
-        <translation>波形</translation>
+        <translation type="vanished">波形</translation>
     </message>
     <message>
         <source>Invert Inputs</source>
         <translation>对输入取反</translation>
+    </message>
+    <message>
+        <source>Timing</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3783,7 +3878,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Filter</source>
-        <translation>过滤器</translation>
+        <translation type="vanished">过滤器</translation>
     </message>
 </context>
 <context>
@@ -3822,6 +3917,10 @@ Can&apos;t find file:
     <message>
         <source>Samples</source>
         <translation>采样</translation>
+    </message>
+    <message>
+        <source>Admittance to ground</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4380,7 +4479,7 @@ Not valid Package file:
 
   Set auto step &gt;= 1 for this capacitor  
 </source>
-        <translation>
+        <translation type="vanished">
   警告: 电容的更新不够快  
 
   将此电容的“自动步进”参数设为大于等于1  
@@ -4442,7 +4541,7 @@ Not valid Package file:
     </message>
     <message>
         <source>Auto Step</source>
-        <translation>自动步进</translation>
+        <translation type="vanished">自动步进</translation>
     </message>
     <message>
         <source>_Poles</source>
@@ -4451,6 +4550,10 @@ Not valid Package file:
     <message>
         <source>_Steps</source>
         <translation type="vanished">_Steps</translation>
+    </message>
+    <message>
+        <source>Reactive Step</source>
+        <translation type="unfinished">电抗性步数</translation>
     </message>
 </context>
 <context>
@@ -4587,6 +4690,10 @@ Not valid Package file:
         <source>Pause</source>
         <translation type="unfinished">暂停</translation>
     </message>
+    <message>
+        <source>Resume</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SerialPort</name>
@@ -4631,6 +4738,10 @@ Not valid Package file:
     <message>
         <source>Main</source>
         <translation>主要特性</translation>
+    </message>
+    <message>
+        <source>Auto Open</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4831,11 +4942,15 @@ Not valid Package file:
     </message>
     <message>
         <source>Edges</source>
-        <translation>波形</translation>
+        <translation type="vanished">波形</translation>
     </message>
     <message>
         <source>Shift Register</source>
         <translation>移位寄存器</translation>
+    </message>
+    <message>
+        <source>Timing</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5170,6 +5285,14 @@ Do you want to save your changes?
         <source>_Lines</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Exclusive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Common Pin</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>TextComponent</name>
@@ -5479,6 +5602,10 @@ Do you want to save your changes?
         <source>Voltage Source</source>
         <translation>电压源</translation>
     </message>
+    <message>
+        <source>Min. Voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Voltimeter</name>
@@ -5541,7 +5668,7 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Wave Gen.</source>
-        <translation>波形发生器</translation>
+        <translation type="vanished">波形发生器</translation>
     </message>
     <message>
         <source>Main</source>
@@ -5611,6 +5738,10 @@ Do you want to save your changes?
         <source>Phase shift</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Wave Generator</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>XorGate</name>
@@ -5636,11 +5767,15 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Edges</source>
-        <translation>波形</translation>
+        <translation type="vanished">波形</translation>
     </message>
     <message>
         <source>Invert Inputs</source>
         <translation>对输入取反</translation>
+    </message>
+    <message>
+        <source>Timing</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -24,7 +24,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Edges</source>
+        <source>Timing</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -96,11 +96,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Edges</source>
+        <source>Invert Inputs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Invert Inputs</source>
+        <source>Timing</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -366,11 +366,11 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Edges</source>
+        <source>Invert Inputs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Invert Inputs</source>
+        <source>Timing</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -393,11 +393,11 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Edges</source>
+        <source>Invert Inputs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Invert Inputs</source>
+        <source>Timing</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -428,11 +428,11 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Edges</source>
+        <source>Binary Counter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Binary Counter</source>
+        <source>Timing</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -455,11 +455,11 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Edges</source>
+        <source>Invert Inputs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Invert Inputs</source>
+        <source>Timing</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -508,7 +508,7 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Auto Step</source>
+        <source>Reactive Step</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1064,11 +1064,11 @@ Can&apos;t find file:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Edges</source>
+        <source>Invert Inputs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Invert Inputs</source>
+        <source>Timing</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1158,7 +1158,7 @@ Can&apos;t find file:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Edges</source>
+        <source>Timing</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1181,7 +1181,7 @@ Can&apos;t find file:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Edges</source>
+        <source>Timing</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1251,6 +1251,10 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Link to Component</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Steps</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1358,10 +1362,6 @@ Can&apos;t find file:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Edges</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Load data</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1371,6 +1371,10 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Show Memory Table</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Timing</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1826,15 +1830,15 @@ Can&apos;t find file:
 <context>
     <name>FixedVolt</name>
     <message>
-        <source>Fixed Volt.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Main</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fixed Voltage</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1857,15 +1861,15 @@ Can&apos;t find file:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Edges</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Use Set/Reset Pins</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Set/Reset Inverted</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Timing</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1919,11 +1923,11 @@ Can&apos;t find file:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Edges</source>
+        <source>Full Adder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Full Adder</source>
+        <source>Timing</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1954,10 +1958,6 @@ Can&apos;t find file:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Edges</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Load Functions</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1980,6 +1980,10 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Invert Inputs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Timing</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2142,7 +2146,7 @@ Can&apos;t find file:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Auto Step</source>
+        <source>Reactive Step</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2450,11 +2454,11 @@ Can&apos;t find file:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Edges</source>
+        <source>Invert Inputs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Invert Inputs</source>
+        <source>Timing</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2715,7 +2719,7 @@ Can&apos;t find file:
     </message>
 </context>
 <context>
-    <name>LinkedComponent</name>
+    <name>LinkerComponent</name>
     <message>
         <source>Link to Component</source>
         <translation type="unfinished"></translation>
@@ -2775,10 +2779,6 @@ Can&apos;t find file:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Edges</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Gate Delay </source>
         <translation type="unfinished"></translation>
     </message>
@@ -2788,6 +2788,10 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Fall Time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Timing</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3045,10 +3049,6 @@ Can&apos;t find file:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Edges</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Load data</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3062,6 +3062,10 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Asynchronous</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Timing</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3130,7 +3134,7 @@ Can&apos;t find file:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Edges</source>
+        <source>Timing</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3207,11 +3211,11 @@ Can&apos;t find file:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Edges</source>
+        <source>Invert Inputs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Invert Inputs</source>
+        <source>Timing</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3264,10 +3268,6 @@ Can&apos;t find file:
         <source>Oscope</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Filter</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>PathVal</name>
@@ -3304,6 +3304,10 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Samples</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Admittance to ground</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3702,17 +3706,6 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>Reactive</name>
-    <message>
-        <source>
-  Warnig: Capacitor can&apos;t update fast enough  
-
-  Set auto step &gt;= 1 for this capacitor  
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>Rectangle</name>
     <message>
         <source>Rectangle</source>
@@ -3766,7 +3759,7 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Auto Step</source>
+        <source>Reactive Step</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3892,6 +3885,10 @@ p, li { white-space: pre-wrap; }
         <source>Pause</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Resume</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SerialPort</name>
@@ -3930,6 +3927,10 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Main</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto Open</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4118,11 +4119,11 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Edges</source>
+        <source>Shift Register</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Shift Register</source>
+        <source>Timing</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4397,6 +4398,14 @@ Do you want to save your changes?
     </message>
     <message>
         <source>_Lines</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Exclusive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Common Pin</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4688,6 +4697,10 @@ Do you want to save your changes?
         <source>Voltage Source</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Min. Voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Voltimeter</name>
@@ -4742,10 +4755,6 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Random</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Wave Gen.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4812,6 +4821,10 @@ Do you want to save your changes?
         <source>Phase shift</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Wave Generator</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>XorGate</name>
@@ -4824,11 +4837,11 @@ Do you want to save your changes?
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Edges</source>
+        <source>Invert Inputs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Invert Inputs</source>
+        <source>Timing</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
