@@ -7,7 +7,7 @@
 #include "mainwindow.h"
 #include "mcu.h"
 
-InfoWidget*  InfoWidget::m_pSelf = nullptr;
+InfoWidget* InfoWidget::m_pSelf = nullptr;
 
 InfoWidget::InfoWidget( QWidget* parent )
           : QWidget( parent )
@@ -40,7 +40,11 @@ void InfoWidget::setTargetSpeed( double s )
     if( s < 100 ) speed = "0"+speed;
     if( s < 10 )  speed = "0"+speed;
     targetSpeed->setText( speed );
+    updtMcu();
+}
 
+void InfoWidget::updtMcu()
+{
     if( Mcu::self() )
     {
         QString device = Mcu::self()->device();
@@ -67,12 +71,7 @@ void InfoWidget::setTargetSpeed( double s )
 
 void InfoWidget::setRate( double rate, double simLoad, double guiLoad )
 {
-    if( Mcu::self() )
-    {
-        QString device = Mcu::self()->device();
-        QString freq = QString::number( Mcu::self()->freq()*1e-6 );
-        mainMcu->setText( device+" at "+freq+" MHz" );
-    }
+    updtMcu();
     if( rate < 0 )
     {
         if( rate == -1 ) realSpeed->setText( tr("Speed: Debugger") );

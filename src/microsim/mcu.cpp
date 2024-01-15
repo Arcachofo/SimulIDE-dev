@@ -22,6 +22,7 @@
 #include "simulator.h"
 #include "itemlibrary.h"
 #include "circuitwidget.h"
+#include "infowidget.h"
 #include "mainwindow.h"
 #include "componentselector.h"
 #include "mcumonitor.h"
@@ -248,7 +249,8 @@ if( hi.propList.size() > 0 ) addPropGroup( hi );
 Mcu::~Mcu()
 {
     if( m_mcuMonitor ) delete m_mcuMonitor;
-    if( m_pSelf == this ) m_pSelf= NULL;
+    if( m_pSelf == this ) m_pSelf = NULL;
+    InfoWidget::self()->updtMcu();
 }
 
 bool Mcu::setPropStr( QString prop, QString val )
@@ -522,6 +524,7 @@ void Mcu::slotmain()
 {
     m_pSelf = this;
     m_eMcu.setMain();
+    InfoWidget::self()->updtMcu();
     Circuit::self()->update();
 }
 

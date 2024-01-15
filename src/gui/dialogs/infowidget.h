@@ -22,6 +22,7 @@ class InfoWidget : public QWidget, private Ui::infoWidget
         void setRate( double rate=0, double simLoad=0, double guiLoad=0 );
         void setCircTime( uint64_t tStep );
         void setTargetSpeed( double s );
+        void updtMcu();
 
     public slots:
 
