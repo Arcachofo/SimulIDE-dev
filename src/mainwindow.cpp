@@ -94,6 +94,7 @@ MainWindow::MainWindow()
     QDir compSetDir = m_filesDir.absoluteFilePath("data");
     if( compSetDir.exists() ) ComponentSelector::self()->LoadCompSetAt( compSetDir );
 
+    m_circuit->newCircuit();
 
     readSettings();
 

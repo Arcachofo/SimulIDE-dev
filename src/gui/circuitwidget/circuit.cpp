@@ -69,6 +69,10 @@ Circuit::Circuit( qreal x, qreal y, qreal width, qreal height, CircuitView*  par
 
     connect( &m_bckpTimer, &QTimer::timeout,
                      this,&Circuit::saveBackup, Qt::UniqueConnection );
+
+    qDebug() << endl << "-------------------------------------------------";
+    qDebug() << "                   NEW CIRCUIT                   ";
+    qDebug() << "-------------------------------------------------"<<endl;
 }
 
 Circuit::~Circuit()

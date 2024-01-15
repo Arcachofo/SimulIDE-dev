@@ -20,7 +20,7 @@
 #include "about.h"
 #include "utils.h"
 
-CircuitWidget*  CircuitWidget::m_pSelf = 0l;
+CircuitWidget* CircuitWidget::m_pSelf = 0l;
 
 CircuitWidget::CircuitWidget( QWidget *parent  )
              : QWidget( parent )
@@ -77,8 +77,7 @@ CircuitWidget::CircuitWidget( QWidget *parent  )
     
     m_lastCircDir = MainWindow::self()->settings()->value("lastCircDir").toByteArray();
     if( m_lastCircDir.isEmpty() )  m_lastCircDir = appPath + "..share/simulide/examples";
-    
-    newCircuit();
+
     m_infoWidget->setRate();
 }
 CircuitWidget::~CircuitWidget() { }
