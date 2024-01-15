@@ -60,6 +60,9 @@ void InfoWidget::setTargetSpeed( double s )
         mainMcu->setText( "---" );
         mainMcuName->setText( "---" );
     }
+    mainMcuLabel->setVisible( Mcu::self() );
+    mainMcu->setVisible( Mcu::self() );
+    mainMcuName->setVisible( Mcu::self() );
 }
 
 void InfoWidget::setRate( double rate, double simLoad, double guiLoad )
