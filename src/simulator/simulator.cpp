@@ -74,7 +74,11 @@ void Simulator::timerEvent( QTimerEvent* e )  //update at m_timerTick_ms rate (5
     e->accept();
 
     if( m_state == SIM_WAITING ) return;
+
     uint64_t currentTime = m_RefTimer.nsecsElapsed();
+    double fps = 1e9/(currentTime-m_timerTime);
+    m_realFPS = (m_realFPS*9+fps)/10;
+    m_timerTime = currentTime;
 
     if( m_error )
     {
@@ -109,18 +113,18 @@ void Simulator::timerEvent( QTimerEvent* e )  //update at m_timerTick_ms rate (5
     m_simLoad = (m_simLoad+100*simLoop/timer_ns)/2;
 
     // Get Simulation times
-    m_realPsPF = m_circTime-m_tStep;
-    m_tStep    = m_circTime;
+    m_simPsPF = m_circTime-m_tStep;
+    m_tStep   = m_circTime;
 
     if( m_state == SIM_RUNNING ) // Run Circuit in a parallel thread
         m_CircuitFuture = QtConcurrent::run( this, &Simulator::runCircuit );
 
     if( Circuit::self()->animate() ) // Moved here to be in parallel with runCircuit thread
     {
-        if( (currentTime-m_updtTime) >= 2e8 ){ // Animate at 5 FPS
+        if( (m_timerTime-m_updtTime) >= 2e8 ){ // Animate at 5 FPS
             //Circuit::self()->updateConnectors();
             for( eNode* node : m_eNodeList) node->updateConnectors();
-            m_updtTime = currentTime;
+            m_updtTime = m_timerTime;
         }
     }
     // Calculate Real Simulation Speed
@@ -132,13 +136,13 @@ void Simulator::timerEvent( QTimerEvent* e )  //update at m_timerTick_ms rate (5
         m_guiTime = 0;
 
         m_realSpeed = (m_tStep-m_lastStep)*10.0/deltaRefTime;
-        InfoWidget::self()->setRate( m_realSpeed, m_simLoad, guiLoad );
+        InfoWidget::self()->setRate( m_realSpeed, m_simLoad, guiLoad, m_realFPS+0.5 );
         m_lastStep = m_tStep;
         m_lastRefT = m_refTime;
     }
     InfoWidget::self()->setCircTime( m_tStep );
 
-    m_guiTime += m_RefTimer.nsecsElapsed()-currentTime; // Time in this function
+    m_guiTime += m_RefTimer.nsecsElapsed()-m_timerTime; // Time in this function
 }
 
 void Simulator::runCircuit()
@@ -220,7 +224,7 @@ void Simulator::resetSim()
     m_updtTime = 0;
     m_NLstep   = 0;
     ///m_pauseCirc = false;
-    m_realPsPF = 1;
+    m_simPsPF = 1;
 
     InfoWidget::self()->setCircTime( 0 );
     clearEventList();
@@ -324,6 +328,8 @@ void Simulator::startSim( bool paused )
     if( m_timerId != 0 ) this->killTimer( m_timerId );               // Stop Timer
     m_refTime  = m_RefTimer.nsecsElapsed();
     m_loopTime = m_refTime;
+    m_timerTime = m_loopTime;
+    m_realFPS = m_fps;
     m_timerId = this->startTimer( m_timerTick_ms, Qt::PreciseTimer ); // Init Timer
 }
 

@@ -121,7 +121,7 @@ void Lamp::updateBright()
     }
     updateVI();
 
-    uint64_t psPF = Simulator::self()->realPsPF();;
+    uint64_t psPF = Simulator::self()->simPsPF();;
 
     if( m_lastPeriod > psPF/2 ) // Update 2 times per frame
     {

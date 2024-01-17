@@ -29,9 +29,16 @@ InfoWidget::InfoWidget( QWidget* parent )
     simLoadVal->setFont( font );
     guiLoadLabel->setFont( font );
     guiLoadVal->setFont( font );
+    overLoadLabel->setFont( font );
+    overLoadVal->setFont( font );
+    fpsLabel->setFont( font );
+    fpsVal->setFont( font );
     mainMcuLabel->setFont( font );
     mainMcu->setFont( font );
     mainMcuName->setFont( font );
+
+    overLoadLabel->setVisible( false );
+    overLoadVal->setVisible( false );
 }
 
 void InfoWidget::setTargetSpeed( double s )
@@ -69,7 +76,7 @@ void InfoWidget::updtMcu()
     mainMcuName->setVisible( Mcu::self() );
 }
 
-void InfoWidget::setRate( double rate, double simLoad, double guiLoad )
+void InfoWidget::setRate( double rate, double simLoad, double guiLoad, int fps )
 {
     updtMcu();
     if( rate < 0 )
@@ -81,14 +88,35 @@ void InfoWidget::setRate( double rate, double simLoad, double guiLoad )
         double speed = rate/100;
         QString Srate = QString::number( speed,'f', 2 );
         while( Srate.size() < 6 ) Srate = "0"+Srate;
+
+        if( simLoad > 101 )
+        {
+            int overLoad = simLoad-100;
+            simLoad = 100;
+
+            QString Oload = QString::number( overLoad,'f', 2 );
+            while( Oload.size() < 6 ) Oload = "0"+Oload;
+
+            overLoadVal->setText( Oload+" %    ");
+            overLoadLabel->setVisible( true );
+            overLoadVal->setVisible( true );
+        }else{
+            overLoadLabel->setVisible( false );
+            overLoadVal->setVisible( false );
+        }
         QString Sload = QString::number( simLoad,'f', 2 );
         while( Sload.size() < 6 ) Sload = "0"+Sload;
+
         QString Gload = QString::number( guiLoad,'f', 2 );
         while( Gload.size() < 6 ) Gload = "0"+Gload;
+
+        QString FPS = QString::number( fps );
+        while( FPS.size() < 3 ) FPS = "0"+FPS;
 
         realSpeed->setText( Srate+" %" );
         simLoadVal->setText( Sload+" %    ");
         guiLoadVal->setText( Gload+" %    ");
+        fpsVal->setText( FPS );
 }   }
 
 void InfoWidget::setCircTime( uint64_t tStep )

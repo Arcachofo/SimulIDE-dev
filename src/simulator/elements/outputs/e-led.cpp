@@ -105,7 +105,7 @@ void eLed::updateBright()
         m_intensity  = uint32_t(bright*255);
     }
     else{
-        uint64_t psPF = Simulator::self()->realPsPF();//stepsPerFrame();
+        uint64_t psPF = Simulator::self()->simPsPF();//stepsPerFrame();
         //uint64_t sPS = Simulator::self()->stepSize();
 
         if( m_lastPeriod > psPF/2 ) // Update 2 times per frame

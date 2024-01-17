@@ -192,7 +192,7 @@
     <rect>
      <x>9</x>
      <y>45</y>
-     <width>141</width>
+     <width>127</width>
      <height>16</height>
     </rect>
    </property>
@@ -249,7 +249,7 @@
     <rect>
      <x>9</x>
      <y>63</y>
-     <width>141</width>
+     <width>127</width>
      <height>16</height>
     </rect>
    </property>
@@ -306,7 +306,7 @@
     <rect>
      <x>9</x>
      <y>90</y>
-     <width>145</width>
+     <width>127</width>
      <height>16</height>
     </rect>
    </property>
@@ -361,7 +361,7 @@
   <widget class="QLabel" name="targetSpeed">
    <property name="geometry">
     <rect>
-     <x>153</x>
+     <x>135</x>
      <y>45</y>
      <width>141</width>
      <height>16</height>
@@ -418,7 +418,7 @@
   <widget class="QLabel" name="realSpeed">
    <property name="geometry">
     <rect>
-     <x>153</x>
+     <x>135</x>
      <y>63</y>
      <width>141</width>
      <height>16</height>
@@ -475,7 +475,7 @@
   <widget class="QLabel" name="simLoadVal">
    <property name="geometry">
     <rect>
-     <x>153</x>
+     <x>135</x>
      <y>90</y>
      <width>141</width>
      <height>16</height>
@@ -533,8 +533,8 @@
    <property name="geometry">
     <rect>
      <x>9</x>
-     <y>135</y>
-     <width>141</width>
+     <y>180</y>
+     <width>127</width>
      <height>16</height>
     </rect>
    </property>
@@ -589,8 +589,8 @@
   <widget class="QLabel" name="mainMcu">
    <property name="geometry">
     <rect>
-     <x>153</x>
-     <y>153</y>
+     <x>135</x>
+     <y>198</y>
      <width>523</width>
      <height>18</height>
     </rect>
@@ -646,8 +646,8 @@
   <widget class="QLabel" name="mainMcuName">
    <property name="geometry">
     <rect>
-     <x>153</x>
-     <y>135</y>
+     <x>135</x>
+     <y>180</y>
      <width>141</width>
      <height>16</height>
     </rect>
@@ -703,7 +703,7 @@
   <widget class="QLabel" name="guiLoadVal">
    <property name="geometry">
     <rect>
-     <x>153</x>
+     <x>135</x>
      <y>108</y>
      <width>141</width>
      <height>16</height>
@@ -762,7 +762,7 @@
     <rect>
      <x>9</x>
      <y>108</y>
-     <width>145</width>
+     <width>127</width>
      <height>16</height>
     </rect>
    </property>
@@ -812,6 +812,234 @@
    </property>
    <property name="text">
     <string>Update Load:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="fpsVal">
+   <property name="geometry">
+    <rect>
+     <x>135</x>
+     <y>144</y>
+     <width>141</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="palette">
+    <palette>
+     <active>
+      <colorrole role="WindowText">
+       <brush brushstyle="SolidPattern">
+        <color alpha="255">
+         <red>0</red>
+         <green>0</green>
+         <blue>150</blue>
+        </color>
+       </brush>
+      </colorrole>
+     </active>
+     <inactive>
+      <colorrole role="WindowText">
+       <brush brushstyle="SolidPattern">
+        <color alpha="255">
+         <red>0</red>
+         <green>0</green>
+         <blue>150</blue>
+        </color>
+       </brush>
+      </colorrole>
+     </inactive>
+     <disabled>
+      <colorrole role="WindowText">
+       <brush brushstyle="SolidPattern">
+        <color alpha="255">
+         <red>144</red>
+         <green>144</green>
+         <blue>144</blue>
+        </color>
+       </brush>
+      </colorrole>
+     </disabled>
+    </palette>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string notr="true">0</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="fpsLabel">
+   <property name="geometry">
+    <rect>
+     <x>9</x>
+     <y>144</y>
+     <width>127</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="palette">
+    <palette>
+     <active>
+      <colorrole role="WindowText">
+       <brush brushstyle="SolidPattern">
+        <color alpha="255">
+         <red>0</red>
+         <green>0</green>
+         <blue>0</blue>
+        </color>
+       </brush>
+      </colorrole>
+     </active>
+     <inactive>
+      <colorrole role="WindowText">
+       <brush brushstyle="SolidPattern">
+        <color alpha="255">
+         <red>0</red>
+         <green>0</green>
+         <blue>0</blue>
+        </color>
+       </brush>
+      </colorrole>
+     </inactive>
+     <disabled>
+      <colorrole role="WindowText">
+       <brush brushstyle="SolidPattern">
+        <color alpha="255">
+         <red>144</red>
+         <green>144</green>
+         <blue>144</blue>
+        </color>
+       </brush>
+      </colorrole>
+     </disabled>
+    </palette>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string>Real FPS:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="overLoadVal">
+   <property name="geometry">
+    <rect>
+     <x>135</x>
+     <y>126</y>
+     <width>141</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="palette">
+    <palette>
+     <active>
+      <colorrole role="WindowText">
+       <brush brushstyle="SolidPattern">
+        <color alpha="255">
+         <red>255</red>
+         <green>0</green>
+         <blue>0</blue>
+        </color>
+       </brush>
+      </colorrole>
+     </active>
+     <inactive>
+      <colorrole role="WindowText">
+       <brush brushstyle="SolidPattern">
+        <color alpha="255">
+         <red>255</red>
+         <green>0</green>
+         <blue>0</blue>
+        </color>
+       </brush>
+      </colorrole>
+     </inactive>
+     <disabled>
+      <colorrole role="WindowText">
+       <brush brushstyle="SolidPattern">
+        <color alpha="255">
+         <red>144</red>
+         <green>144</green>
+         <blue>144</blue>
+        </color>
+       </brush>
+      </colorrole>
+     </disabled>
+    </palette>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string>0</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="overLoadLabel">
+   <property name="geometry">
+    <rect>
+     <x>9</x>
+     <y>126</y>
+     <width>127</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="palette">
+    <palette>
+     <active>
+      <colorrole role="WindowText">
+       <brush brushstyle="SolidPattern">
+        <color alpha="255">
+         <red>0</red>
+         <green>0</green>
+         <blue>0</blue>
+        </color>
+       </brush>
+      </colorrole>
+     </active>
+     <inactive>
+      <colorrole role="WindowText">
+       <brush brushstyle="SolidPattern">
+        <color alpha="255">
+         <red>0</red>
+         <green>0</green>
+         <blue>0</blue>
+        </color>
+       </brush>
+      </colorrole>
+     </inactive>
+     <disabled>
+      <colorrole role="WindowText">
+       <brush brushstyle="SolidPattern">
+        <color alpha="255">
+         <red>144</red>
+         <green>144</green>
+         <blue>144</blue>
+        </color>
+       </brush>
+      </colorrole>
+     </disabled>
+    </palette>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string>GUI overload:</string>
    </property>
   </widget>
  </widget>
