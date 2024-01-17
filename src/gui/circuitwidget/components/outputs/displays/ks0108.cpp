@@ -67,11 +67,7 @@ Ks0108::Ks0108( QString type, QString id )
     m_pin[11] = &m_pinEn;
     m_pin[12] = &m_pinRW;
     m_pin[13] = &m_pinDC;
-    
-    m_pdisplayImg = new QImage( 128, 64, QImage::Format_MonoLSB );
-    m_pdisplayImg->setColor( 1, qRgb(0,0,0));
-    m_pdisplayImg->setColor( 0, qRgb(200,215,180) );
-    
+
     Simulator::self()->addToUpdateList( this );
     
     setLabelPos( -32,-68, 0);
@@ -85,13 +81,11 @@ new BoolProp<Ks0108>( "CS_Active_Low", tr("CS Active Low"),"", this, &Ks0108::cs
 }
 Ks0108::~Ks0108()
 {
-    delete m_pdisplayImg;
 }
 
 void Ks0108::initialize()
 {
     clearDDRAM();
-    clearLcd();
     reset() ;
     updateStep();
 }
@@ -104,17 +98,6 @@ void Ks0108::stamp()
 
 void Ks0108::updateStep()
 {
-    if( !m_dispOn ) m_pdisplayImg->fill(0);               // Display Off
-    else{
-        for(int row=0;row<8;row++){
-            for( int col=0;col<128;col++ )
-            {
-                char abyte = m_aDispRam[row][col];
-                for( int bit=0; bit<8; bit++ )
-                {
-                    m_pdisplayImg->setPixel(col,row*8+bit,(abyte & 1) );
-                    abyte >>= 1;
-    }   }   }   }
     update();
 }
 
@@ -224,8 +207,6 @@ void Ks0108::setXaddr( int addr )
     if( m_Cs2 ) m_addrX2  = addr ;
 }
 
-void Ks0108::clearLcd() { m_pdisplayImg->fill(0); }
-
 void Ks0108::clearDDRAM() 
 {
     for(int row=0;row<8;row++) 
@@ -252,7 +233,7 @@ void Ks0108::reset()
     m_addrY2  = 0;
     m_startLin = 0;
     m_dispOn = false;
-    m_reset = true;
+    m_reset  = true;
 }
 
 void Ks0108::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
@@ -266,7 +247,32 @@ void Ks0108::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget
     p->drawRoundedRect( m_area,2,2 );
     p->setBrush( QColor(200, 220, 180) );
     p->drawRoundedRect( -70, -48, 140, 76, 8, 8 );
-    p->drawImage(-64,-42,*m_pdisplayImg );
+
+    if( !m_dispOn ) p->fillRect(-64,-42, 128, 64, QColor(200,215,180) );
+    else{
+        QImage img( 128*3, 64*3, QImage::Format_RGB32 );
+        QPainter painter;
+        painter.begin( &img );
+        painter.fillRect( 0, 0, 128*3, 64*3, QColor(200,215,180) );
+
+        for(int row=0;row<8;row++){
+            for( int col=0; col<128; col++ )
+            {
+                int x = col*3;
+                char abyte = m_aDispRam[row][col];
+
+                for( int bit=0; bit<8; bit++ )
+                {
+                    if( abyte & 1 ){
+                        int y = row*8+bit;
+                        painter.fillRect( x, y*3, 3, 3, Qt::black );
+                    }
+                    abyte >>= 1;
+        }   }   }
+
+        painter.end();
+        p->drawImage(QRectF(-64,-42, 128, 64), img );
+    }
 
     Component::paintSelected( p );
 }

@@ -41,12 +41,9 @@ class Ks0108 : public Component, public eElement
         void setYaddr( int addr );
         void setXaddr( int addr );
         void startLin( int line ) { m_startLin = line; }
-        void clearLcd();
         void clearDDRAM();
         void incrementPointer();
         void reset();
-
-        QImage *m_pdisplayImg;        //Visual representation of the LCD
 
         unsigned char m_aDispRam[8][128];                 //128x64 DDRAM
         

@@ -35,18 +35,14 @@ class Pcd8544 : public Component, public eElement
         virtual void initialize() override;
         virtual void voltChanged() override;
         virtual void updateStep() override;
-        virtual void remove() override;
         
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
 
     protected:
         void initPins();
-        void clearLcd();
         void incrementPointer();
         void reset();
         void clearDDRAM();
-        
-        QImage *m_pdisplayImg;        //Visual representation of the LCD
 
         unsigned char m_aDispRam[6][84];                   //84x48 DDRAM
 

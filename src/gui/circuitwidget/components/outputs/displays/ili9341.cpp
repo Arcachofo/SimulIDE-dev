@@ -64,8 +64,6 @@ Ili9341::Ili9341( QString type, QString id )
 
     m_clkPin = &m_pinSck;
 
-    m_pdisplayImg = new QImage( 240, 320, QImage::Format_RGB888 );
-
     Simulator::self()->addToUpdateList( this );
     
     setLabelPos(-32,-180, 0);
@@ -92,20 +90,6 @@ void Ili9341::initialize()
 
 void Ili9341::updateStep()
 {
-    if( !m_dispOn ) m_pdisplayImg->fill(0);               // Display Off
-    else{
-        for( int row=0; row<=319; row++ ){
-            for( int col=0; col<=239; col++ )
-            {
-                unsigned int pixel;
-                //if( m_dispFull ) pixel = 0xFFFF;        // Display fully On
-                //else
-                    pixel = m_aDispRam[col][row];
-
-                //if( m_dispInv ) abyte = ~abyte;         // Display Inverted
-
-                m_pdisplayImg->setPixel(col,row, QColor(pixel).rgb() );
-    }   }   }
     update();
 }
 
@@ -247,7 +231,7 @@ void Ili9341::proccessCommand()
     {
         case 0x01: //   Software Reset
         {
-            clearLcd();
+            reset();
             //Clear variables
         }break;
         /*case 0x04: m_readBytes = 4; break; // Read Display identification information
@@ -339,11 +323,6 @@ void Ili9341::proccessCommand()
     //qDebug() << "Ili9341::proccessCommand: " << command;
 }
 
-void Ili9341::clearLcd() 
-{
-    m_pdisplayImg->fill(0);
-}
-
 void Ili9341::clearDDRAM() 
 {
     for( int row=0; row<320; row++ )
@@ -416,24 +395,36 @@ void Ili9341::reset()
     m_lastCommand = 0;
 
     //m_reset = true;
-
-    clearLcd();
-}
-
-void Ili9341::remove()
-{
-    delete m_pdisplayImg;
-    Component::remove();
 }
 
 void Ili9341::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
 {
+    p->setRenderHint( QPainter::Antialiasing, true );
     QPen pen( Qt::black, 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin );
     p->setPen( pen );
     
     p->setBrush( QColor(50, 70, 100) );
     p->drawRoundedRect( m_area,2,2 );
-    p->drawImage(-120,-162,*m_pdisplayImg );
+
+    if( !m_dispOn ) p->fillRect(-120,-162, 240, 320, Qt::black ); // Display Off
+    else{
+        QImage img( 240*2, 320*2, QImage::Format_RGB32 );
+        QPainter painter;
+        painter.begin( &img );
+        painter.setRenderHint( QPainter::Antialiasing, true );
+
+        for( int row=0; row<=319; row++ )
+        {
+            int y = row*2;
+            for( int col=0; col<=239; col++ )
+            {
+                uint pixel = m_aDispRam[col][row];
+                painter.fillRect( col*2, y, 2, 2, QColor(pixel).rgb() );
+        }   }
+
+        painter.end();
+        p->drawImage(QRectF(-120,-162, 240, 320), img );
+    }
 
     Component::paintSelected( p );
 }

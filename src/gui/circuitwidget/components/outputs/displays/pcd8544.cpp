@@ -20,7 +20,6 @@
 #include "simulator.h"
 #include "pcd8544.h"
 
-
 Component* Pcd8544::construct( QString type, QString id )
 { return new Pcd8544( type, id ); }
 
@@ -59,11 +58,7 @@ Pcd8544::Pcd8544( QString type, QString id )
     m_pDc.setLabelText(  "D/C" );
     m_pSi.setLabelText(  "DIN" );
     m_pScl.setLabelText( "CLK" );
-    
-    m_pdisplayImg = new QImage( 84, 48, QImage::Format_MonoLSB );
-    m_pdisplayImg->setColor( 1, qRgb(0,0,0));
-    m_pdisplayImg->setColor( 0, qRgb(200,215,180) );
-    
+
     Simulator::self()->addToUpdateList( this );
     
     setLabelPos( -32,-66, 0);
@@ -83,30 +78,12 @@ void Pcd8544::stamp()
 void Pcd8544::initialize()
 {
     clearDDRAM();
-    clearLcd();
     reset() ;
     Pcd8544::updateStep();
 }
 
 void Pcd8544::updateStep()
 {
-    if     ( m_bPD )          m_pdisplayImg->fill(0); // Power-Down mode
-    else if( !m_bD && !m_bE ) m_pdisplayImg->fill(0); // Blank Display mode, blank the visuals
-    else if( !m_bD && m_bE )  m_pdisplayImg->fill(1); //All segments on
-    else
-    {
-        for(int row=0;row<6;row++){
-            for( int col=0; col<84; col++ )
-            {
-                char abyte = m_aDispRam[row][col];
-                for( int bit=0; bit<8; bit++ )
-                {
-                    //This takes inverse video mode into account:
-                    m_pdisplayImg->setPixel(col,row*8+bit,
-                        (abyte & 1) ^ ((m_bD && m_bE) ? 1 : 0) );
-
-                    abyte >>= 1;
-    }   }   }   }
     update();
 }
 
@@ -183,8 +160,6 @@ void Pcd8544::voltChanged()               // Called when Scl, Rst or Cs Pin chan
         m_inBit++;
 }   }
 
-void Pcd8544::clearLcd() { m_pdisplayImg->fill(0); }
-
 void Pcd8544::clearDDRAM() 
 {
     for(int row=0; row<6; row++)
@@ -218,12 +193,6 @@ void Pcd8544::reset()
     m_bD  = false;
 }
 
-void Pcd8544::remove()
-{
-    delete m_pdisplayImg;
-    Component::remove();
-}
-
 void Pcd8544::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
 {
     Component::paint( p, option, widget );
@@ -235,7 +204,35 @@ void Pcd8544::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidge
     p->drawRoundedRect( m_area,2,2 );
     p->setBrush( QColor(200, 220, 180) );
     p->drawRoundedRect( -48, -48, 96, 60, 8, 8 );
-    p->drawImage(-42,-42,*m_pdisplayImg );
+
+    if     ( m_bPD )          p->fillRect(-42,-42, 84, 48, QColor(200,215,180) ); // Power-Down mode
+    else if( !m_bD && !m_bE ) p->fillRect(-42,-42, 84, 48, QColor(200,215,180) ); // Blank Display mode, blank the visuals
+    else if( !m_bD &&  m_bE ) p->fillRect(-42,-42, 84, 48, Qt::black );           // All segments on
+    else{
+        QImage img( 84*3, 48*3, QImage::Format_RGB32 );
+        QPainter painter;
+        painter.begin( &img );
+        painter.fillRect( 0, 0, 84*3, 48*3, QColor(200,215,180) );
+
+        for(int row=0;row<6;row++){
+            for( int col=0; col<84; col++ )
+            {
+                int x = col*3;
+                char abyte = m_aDispRam[row][col];
+                if( m_bD && m_bE ) abyte = ~abyte; // Display Inverted
+
+                for( int bit=0; bit<8; bit++ )
+                {
+                    if( abyte & 1 ){
+                        int y = row*8+bit;
+                        painter.fillRect( x, y*3, 3, 3, Qt::black );
+                    }
+                    abyte >>= 1;
+        }   }   }
+
+        painter.end();
+        p->drawImage(QRectF(-42,-42, 84, 48), img );
+    }
 
     Component::paintSelected( p );
 }

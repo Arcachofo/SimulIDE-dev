@@ -25,20 +25,16 @@ class Ili9341 : public Component, public eClockedDevice
         virtual void initialize() override;
         virtual void voltChanged() override;
         virtual void updateStep() override;
-        virtual void remove() override;
         
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
 
     protected:
         void proccessCommand();
         void getParameter();
-        void clearLcd();
         void incrementPointer();
         void incrementY();
         void reset();
         void clearDDRAM();
-        
-        QImage* m_pdisplayImg;    //Visual representation of the LCD
 
         unsigned char m_rxReg;     // Received value
         unsigned int m_aDispRam[240][320]; // DDRAM
