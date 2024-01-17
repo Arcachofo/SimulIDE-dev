@@ -8,6 +8,7 @@
 #include "ssd1306.h"
 #include "itemlibrary.h"
 #include "simulator.h"
+#include "circuitview.h"
 #include "circuit.h"
 #include "iopin.h"
 
@@ -69,9 +70,6 @@ Ssd1306::Ssd1306( QString type, QString id )
     //m_pinDC.setLabelText(  "DC" );
     //m_pinCS.setLabelText(  "CS" );
 
-    m_pdisplayImg = new QImage( 128, 64, QImage::Format_MonoLSB );
-    m_pdisplayImg->setColor( 0, qRgb(0, 0, 0));
-    m_pdisplayImg->setColor( 1, qRgb(255, 255, 255) );
     m_dColor = White;
     
     Simulator::self()->addToUpdateList( this );
@@ -96,8 +94,8 @@ void Ssd1306::initialize()
     TwiModule::initialize();
 
     m_continue = false;
-    m_command = false;
-    m_data = false;
+    m_command  = false;
+    m_data     = false;
     m_addrMode = HORI_ADDR_MODE;
 
     clearDDRAM();
@@ -110,63 +108,19 @@ void Ssd1306::stamp()
     setMode( TWI_SLAVE );
 }
 
-void Ssd1306::updateStep()
-{
-    if     ( !m_dispOn )  m_pdisplayImg->fill(0);  // Display Off
-    else if( m_dispFull ) m_pdisplayImg->fill(255); // Display fully On
-    else{
-        if( m_scroll )
-        {
-            m_scrollCount--;
-            if( m_scrollCount <= 0 )
-            {
-                m_scrollCount = m_scrollInterval;
-
-                for( int row=m_scrollStartPage; row<=m_scrollEndPage; row++ )
-                {
-                    unsigned char start = m_aDispRam[0][row];
-                    unsigned char end   = m_aDispRam[127][row];
-
-                    for( int col=0; col<128; col++ )
-                    {
-                        if( m_scrollR )
-                        {
-                            int c = 127-col;
-                            if( c < 127 ) m_aDispRam[c][row] = m_aDispRam[c-1][row];
-                            if( col == 0 )  m_aDispRam[0][row]   = end;
-                        }else{
-                            if( col < 127 )  m_aDispRam[col][row] = m_aDispRam[col+1][row];
-                            if( col == 127 ) m_aDispRam[col][row] = start;
-        }   }   }   }   }
-        for( int row=0; row<8; row++ )
-        {
-            for( int col=0; col<128; col++ )
-            {
-                unsigned char abyte = m_aDispRam[col][row];
-
-                if( m_dispInv ) abyte = ~abyte;         // Display Inverted
-
-                for( int bit=0; bit<8; bit++ )
-                {
-                    m_pdisplayImg->setPixel(col,row*8+bit,(abyte & 1) );
-                    abyte >>= 1;
-    }   }   }   }
-    update();
-}
-
 void Ssd1306::reset()
 {
-    m_cdr = 1;
-    m_mr  = 63;
+    m_cdr  = 1;
+    m_mr   = 63;
     m_fosc = 370000;
-    m_frm = m_fosc/(m_cdr*54*m_mr);
+    m_frm  = m_fosc/(m_cdr*54*m_mr);
 
     m_addrX  = 0;
     m_addrY  = 0;
     m_startX = 0;
     m_endX   = 127;
     m_startY = 0;
-    m_endY   = m_rows-1;
+    m_endY   = 7; //m_rows-1;
 
     m_scrollStartPage  = 0;
     m_scrollEndPage    = 7;
@@ -179,12 +133,38 @@ void Ssd1306::reset()
     m_dispOn   = false;
     m_dispFull = false;
     m_dispInv  = false;
+    m_scanInv  = false;
+    m_scroll   = false;
+    m_scrollR  = false;
+    m_scrollV  = false;
+}
 
-    m_scroll  = false;
-    m_scrollR = false;
-    m_scrollV = false;
+void Ssd1306::updateStep()
+{
+    if( m_scroll )
+    {
+        m_scrollCount--;
+        if( m_scrollCount <= 0 )
+        {
+            m_scrollCount = m_scrollInterval;
 
-    clearLcd();
+            for( int row=m_scrollStartPage; row<=m_scrollEndPage; row++ )
+            {
+                unsigned char start = m_aDispRam[0][row];
+                unsigned char end   = m_aDispRam[127][row];
+
+                for( int col=0; col<128; col++ )
+                {
+                    if( m_scrollR ){
+                        int c = 127-col;
+                        if( c < 127  ) m_aDispRam[c][row] = m_aDispRam[c-1][row];
+                        if( col == 0 ) m_aDispRam[0][row] = end;
+                    }else{
+                        if( col < 127  ) m_aDispRam[col][row] = m_aDispRam[col+1][row];
+                        if( col == 127 ) m_aDispRam[col][row] = start;
+    }   }   }   }   }
+
+    update();
 }
 
 void Ssd1306::I2Cstop()
@@ -243,7 +223,7 @@ void Ssd1306::proccessCommand()
             if( m_readBytes == 2 ) m_startY = m_rxReg & 0x07; // 0b00000111
             else{                                             // 0b00000111
                 m_endY = m_rxReg & 0x07;
-                if( m_endY > m_rows-1 ) m_endY = m_rows-1;
+                //if( m_endY > m_rows-1 ) m_endY = m_rows-1;
             }
         }
         else if( m_lastCommand == 0x26   // 26 36 Continuous Horizontal Scroll Setup
@@ -293,6 +273,11 @@ void Ssd1306::proccessCommand()
         {
             ; /// TODO
         }
+        else if( m_lastCommand == 0xA8 ) // A8 168 Set Multiplex Ratio
+        {
+            uint8_t muxRatio  = m_rxReg & 0x3F;  // 0b00111111
+            if( muxRatio > 14 ) m_mr = muxRatio;
+        }
         m_readBytes--;
         return;
     }
@@ -337,8 +322,8 @@ void Ssd1306::proccessCommand()
     else if( m_rxReg == 0xA3 ) m_readBytes = 2;     // A3 163 Set Vertical Scroll Area
     else if( m_rxReg == 0xA4 ) m_dispFull = false;  // A4-A5 164-165 Entire Display ON
     else if( m_rxReg == 0xA5 ) m_dispFull = true;
-    else if( m_rxReg == 0xA6 ) m_dispInv = false;   // A6-A7 166-167 Set Normal/inverse Display
-    else if( m_rxReg == 0xA7 ) m_dispInv = true;
+    else if( m_rxReg == 0xA6 ) m_dispInv  = false;  // A6-A7 166-167 Set Normal/inverse Display
+    else if( m_rxReg == 0xA7 ) m_dispInv  = true;
     else if( m_rxReg == 0xA8 ) m_readBytes = 1;     // A8 168 Set Multiplex Ratio
 
     else if( m_rxReg == 0xAE ) reset();             // 174 // AE-AF Set Display ON/OFF
@@ -349,6 +334,8 @@ void Ssd1306::proccessCommand()
         m_addrY = m_rxReg & 0x07; // 0b00000111
     }
     // C0-C8 192-200 Set COM Output Scan Direction
+    else if( m_lastCommand == 0xC0 ) m_scanInv = false;
+    else if( m_lastCommand == 0xC8 ) m_scanInv = true;
 
     else if( m_rxReg == 0xD3 ) m_readBytes = 1; // D3 211 Set Display Offset
 
@@ -357,11 +344,6 @@ void Ssd1306::proccessCommand()
     else if( m_rxReg == 0xD9 ) m_readBytes = 1; // D9 217 Set Precharge
     else if( m_rxReg == 0xDA ) m_readBytes = 1; // DA 218 Set COM Pins Hardware Configuration
     else if( m_rxReg == 0xDB ) m_readBytes = 1; // DB 219 SET VCOM DETECT
-}
-
-void Ssd1306::clearLcd() 
-{
-    m_pdisplayImg->fill(0);
 }
 
 void Ssd1306::clearDDRAM() 
@@ -394,20 +376,14 @@ void Ssd1306::incrementPointer()
             if( m_addrY > m_endY ) m_addrY = m_startY;
 }   }   }
 
-void Ssd1306::remove()
-{
-    delete m_pdisplayImg;
-    Component::remove();
-}
-
 void Ssd1306::setColorStr( QString color )
 {
     int c = getEnumIndex(  color );
     m_dColor = (dispColor)c;
 
-    if( c == White )  m_pdisplayImg->setColor( 1, qRgb(245, 245, 245) );
-    if( c == Blue  )  m_pdisplayImg->setColor( 1, qRgb(200, 200, 255) );
-    if( c == Yellow ) m_pdisplayImg->setColor( 1, qRgb(245, 245, 100) );
+    if( c == White )  m_foreground = QColor(245, 245, 245);
+    if( c == Blue  )  m_foreground = QColor(200, 200, 255);
+    if( c == Yellow ) m_foreground = QColor(245, 245, 100);
 
     if( m_showVal && (m_showProperty == "Color") )
         setValLabelText( m_enumNames.at( c ) );
@@ -441,14 +417,45 @@ void Ssd1306::updateSize()
     Circuit::self()->update();
 }
 
-void Ssd1306::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
+void Ssd1306::paint( QPainter* p, const QStyleOptionGraphicsItem*, QWidget* )
 {
     QPen pen( Qt::black, 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin );
     p->setPen( pen );
     
     p->setBrush( QColor( 50, 70, 100 ) );
     p->drawRoundedRect( m_area, 2, 2 );
-    p->drawImage(-64,-m_height/2-10, *m_pdisplayImg, 0, 0, m_width, m_height );
 
+    if( m_dispFull ) p->fillRect(-64,-m_height/2-10, m_width, m_height, m_foreground );
+    else{
+        QImage img( m_width*3, m_height*3, QImage::Format_RGB32 );
+        QPainter painter;
+        painter.begin( &img );
+        painter.fillRect( 0, 0, m_width*3, m_height*3, Qt::black );
+
+        if( m_dispOn  ){
+            for( int row=0; row<8; row++ ){
+                for( int col=0; col<128; col++ )
+                {
+                    uint8_t abyte = m_aDispRam[col][row];
+                    if( m_dispInv ) abyte = ~abyte;      // Display Inverted
+
+                    int x = col*3;
+                    if( m_scanInv ) x = 127*3-x;
+
+                    for( int bit=0; bit<8; bit++ )
+                    {
+                        if( abyte & 1 ){
+                            int y = row*8+bit;
+                            if( y >= m_height ) continue;
+                            if( y > m_mr ) continue;
+                            if( m_scanInv ) y = 63-y;
+                            painter.fillRect( x, y*3, 3, 3, m_foreground );
+                       }
+                        abyte >>= 1;
+        }   }   }   }
+
+        painter.end();
+        p->drawImage(QRectF(-64,-m_height/2-10, m_width, m_height), img );
+    }
     Component::paintSelected( p );
 }
