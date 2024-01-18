@@ -39,14 +39,15 @@ class McuPin : public IoPin
         virtual void setPortState( bool state );
 
         void setDirection( bool out );
-        //void setPullupMask( bool up ) { m_puMask = up;}
+
         void setExtraSource( double vddAdmit, double gndAdmit );
-        virtual void controlPin( bool outCtrl, bool dirCtrl ) override;
         void setExtIntTrig( int i ) { m_extIntTrigger = (extIntTrig_t)i; }
 
+        virtual void controlPin( bool outCtrl, bool dirCtrl ) override;
         virtual void scheduleState( bool state, uint64_t time ) override;
         virtual void setPullup( bool up ) override;
-        virtual void setAnalog( bool an ) {;}
+
+        virtual void setAnalog( bool ) {;}
         virtual void ConfExtInt( uint8_t bits );
 
         void setExtInt( uint mode );

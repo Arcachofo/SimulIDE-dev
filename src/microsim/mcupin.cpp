@@ -151,8 +151,6 @@ void McuPin::setPullup( bool up )
         m_inpState = up;
         uint8_t val = up ? m_pinMask : 0;
         m_port->pinChanged( m_pinMask, val );
-        //if     ( m_pinMode == openCo ) setPinState( up? open_high  : open_low  ); // High : Low colors
-        //else if( m_pinMode == input  ) setPinState( up? input_high : input_low ); // High : Low colors
     }
 }
 
@@ -167,7 +165,9 @@ void McuPin::ConfExtInt( uint8_t bits )
 {
     if( !m_extInt ) return;
     m_extIntTrigger = (extIntTrig_t)getRegBitsVal( bits, m_extIntBits );
-    m_extInt->setAutoClear( m_extIntTrigger != pinLow );
+
+    m_extInt->setContinuous( m_extIntTrigger == pinLow );
+    voltChanged();
 }
 
 void McuPin::setExtInt( uint mode )

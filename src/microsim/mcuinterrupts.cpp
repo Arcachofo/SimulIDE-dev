@@ -31,6 +31,7 @@ void Interrupt::reset()
     //m_mode    = 0;
     m_enabled = 0;
     m_raised  = false;
+    m_continuous = false;
 }
 
 void Interrupt::enableFlag( uint8_t en )
@@ -68,7 +69,7 @@ void Interrupt::writeFlag( uint8_t v ) // Clear Interrupt flag by writting 1 to 
         int overrided = m_mcu->m_regOverride;
         if( overrided > 0 ) v = overrided;      // Get previous overrides
         m_mcu->m_regOverride = v & ~m_flagMask; // Clear flag
-        flagCleared();
+        if( !m_continuous ) flagCleared();      // Pin INT continuous while low level
     }
 }
 
