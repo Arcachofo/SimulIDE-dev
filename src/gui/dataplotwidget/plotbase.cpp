@@ -8,11 +8,13 @@
 #include "simulator.h"
 #include "circuit.h"
 #include "circuitwidget.h"
+#include "propdialog.h"
 #include "iopin.h"
 #include "utils.h"
 
 #include "stringprop.h"
 #include "doubleprop.h"
+#include "boolprop.h"
 #include "intprop.h"
 
 #define tr(str) simulideTr("PlotBase",str)
@@ -24,6 +26,7 @@ PlotBase::PlotBase( QString type, QString id )
     m_graphical = true;
     m_bufferSize = 600000;
 
+    m_connectGnd = true;
     m_inputAdmit = 1e-7;
 
     m_color[0] = QColor( 240, 240, 100 );
@@ -65,18 +68,19 @@ PlotBase::PlotBase( QString type, QString id )
     m_exportFile = changeExt( Circuit::self()->getFilePath(), "_"+id+".vcd" );
 
     addPropGroup( { tr("Main"), {
-new IntProp <PlotBase>("Basic_X"   ,tr("Screen Size X"),tr("_Pixels"), this, &PlotBase::baSizeX,    &PlotBase::setBaSizeX   ,0,"uint" ),
-new IntProp <PlotBase>("Basic_Y"   ,tr("Screen Size Y"),tr("_Pixels"), this, &PlotBase::baSizeY,    &PlotBase::setBaSizeY   ,0,"uint" ),
-new IntProp <PlotBase>("BufferSize",tr("Buffer Size")  ,tr("Samples"), this, &PlotBase::bufferSize, &PlotBase::setBufferSize,0,"uint" ),
-new DoubProp<PlotBase>("InputAdmit",tr("Admittance to ground"),"µ℧" , this, &PlotBase::inputAdmit, &PlotBase::setInputAdmit )
+new IntProp <PlotBase>("Basic_X"   ,tr("Screen Width") ,tr("_Px"), this, &PlotBase::baSizeX,    &PlotBase::setBaSizeX   ,0,"uint" ),
+new IntProp <PlotBase>("Basic_Y"   ,tr("Screen Height"),tr("_Px"), this, &PlotBase::baSizeY,    &PlotBase::setBaSizeY   ,0,"uint" ),
+new IntProp <PlotBase>("BufferSize",tr("Buffer Size")  ,""       , this, &PlotBase::bufferSize, &PlotBase::setBufferSize,0,"uint" ),
+new BoolProp<PlotBase>("connectGnd",tr("Connect to ground"),""   , this, &PlotBase::connectGnd, &PlotBase::setConnectGnd,0 ),
+new DoubProp<PlotBase>("InputAdmit",tr("Impedance")    ,"Ω"      , this, &PlotBase::inputImped, &PlotBase::setInputImped )
     }, groupNoCopy} );
     addPropGroup( {"Hidden", {
-new StrProp<PlotBase>( "TimDiv"  ,"","", this, &PlotBase::timDiv,  &PlotBase::setTimDiv ),
-new StrProp<PlotBase>( "TimPos"  ,"","", this, &PlotBase::timPos,  &PlotBase::setTimPos ),
-new StrProp<PlotBase>( "VolDiv" ,"", "", this, &PlotBase::volDiv,  &PlotBase::setVolDiv ),
-new StrProp<PlotBase>( "Conds"   ,"","", this, &PlotBase::conds,   &PlotBase::setConds ),
-new StrProp<PlotBase>( "Tunnels" ,"","", this, &PlotBase::tunnels, &PlotBase::setTunnels ),
-new IntProp<PlotBase>( "Trigger" ,"","", this, &PlotBase::trigger, &PlotBase::setTrigger ),
+new StrProp<PlotBase>("TimDiv" ,"","", this, &PlotBase::timDiv,  &PlotBase::setTimDiv ),
+new StrProp<PlotBase>("TimPos" ,"","", this, &PlotBase::timPos,  &PlotBase::setTimPos ),
+new StrProp<PlotBase>("VolDiv" ,"","", this, &PlotBase::volDiv,  &PlotBase::setVolDiv ),
+new StrProp<PlotBase>("Conds"  ,"","", this, &PlotBase::conds,   &PlotBase::setConds ),
+new StrProp<PlotBase>("Tunnels","","", this, &PlotBase::tunnels, &PlotBase::setTunnels ),
+new IntProp<PlotBase>("Trigger","","", this, &PlotBase::trigger, &PlotBase::setTrigger ),
     }, groupHidden } );
 }
 PlotBase::~PlotBase()
@@ -86,9 +90,9 @@ PlotBase::~PlotBase()
 
 bool PlotBase::setPropStr( QString prop, QString val )
 {
-    if     ( prop =="hTick" ) setTimeDiv( val.toLongLong()*1e3 ); // Old: TODELETE
-    else if( prop =="vTick" ) setVolDiv( val );
-    else if( prop =="TimePos" ) setTimPos( val+"000" );
+    if     ( prop =="hTick"  ) setTimeDiv( val.toLongLong()*1e3 ); // Old: TODELETE
+    else if( prop =="vTick"  ) setVolDiv( val );
+    else if( prop =="TimePos") setTimPos( val+"000" );
     else return Component::setPropStr( prop, val );
     return true;
 }
@@ -119,11 +123,20 @@ void PlotBase::setBufferSize( int bs )
     }
 }
 
-void PlotBase::setInputAdmit( double a )
+void PlotBase::setConnectGnd( bool c )
 {
-    if( m_inputAdmit == a ) return;
-    if( m_inputAdmit  < 0 ) return;
-    m_inputAdmit = a;
+    if( m_connectGnd == c ) return;
+    m_connectGnd = c;
+    updtProperties();
+    m_changed = true;
+}
+
+void PlotBase::setInputImped( double a )
+{
+    double admit = 1/a;
+    if( m_inputAdmit == admit ) return;
+    if( admit  < 0 ) return;
+    m_inputAdmit = admit;
     m_changed = true;
 }
 
@@ -215,6 +228,19 @@ void PlotBase::conditonMet( int ch, cond_t cond )
         if     ( cond == C_RISING )  m_conditions[ch] = C_HIGH;
         else if( cond == C_FALLING ) m_conditions[ch] = C_LOW;
     }*/
+}
+
+void PlotBase::slotProperties()
+{
+    Component::slotProperties();
+    updtProperties();
+}
+
+void PlotBase::updtProperties()
+{
+    if( !m_propDialog ) return;
+    m_propDialog->showProp("InputAdmit", m_connectGnd );
+    m_propDialog->adjustWidgets();
 }
 
 void PlotBase::remove()

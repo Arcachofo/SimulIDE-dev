@@ -26,9 +26,9 @@ Shape::Shape( QString type, QString id )
     setZValue( -1 );
 
     addPropGroup( { tr("Main"), {
-new IntProp <Shape>("H_size" , tr("Size X"),"_Pixels", this, &Shape::hSize,  &Shape::setHSize,0,"uint" ),
-new IntProp <Shape>("V_size" , tr("Size Y"),"_Pixels", this, &Shape::vSize,  &Shape::setVSize,0,"uint" ),
-new IntProp <Shape>("Border" , tr("Border"),"_Pixels", this, &Shape::border, &Shape::setBorder ),
+new IntProp <Shape>("H_size" , tr("Size X"),"_px", this, &Shape::hSize,  &Shape::setHSize,0,"uint" ),
+new IntProp <Shape>("V_size" , tr("Size Y"),"_px", this, &Shape::vSize,  &Shape::setVSize,0,"uint" ),
+new IntProp <Shape>("Border" , tr("Border"),"_px", this, &Shape::border, &Shape::setBorder ),
 new DoubProp<Shape>("Z_Value", tr("Z Value"),""      , this, &Shape::zVal  , &Shape::setZVal )
     },0} );
     addPropGroup( { tr("Color"), {

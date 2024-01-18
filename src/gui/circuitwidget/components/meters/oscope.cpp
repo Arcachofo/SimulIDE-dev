@@ -60,7 +60,8 @@ Oscope::Oscope( QString type, QString id )
     for( int i=0; i<4; i++ )
     {
         m_pin[i] = m_inPin[i] = new IoPin( 180, QPoint(-80-8,-48+32*i ), id+"-Pin"+QString::number(i), 0, this, undef_mode );
-        m_inPin[i]->setInputAdmit( m_inputAdmit );
+        double admit = m_connectGnd ? m_inputAdmit : 0;
+        m_inPin[i]->setInputAdmit( admit );
         m_channel[i] = new OscopeChannel( this, id+"Chan"+QString::number(i) );
         m_channel[i]->m_channel = i;
         m_channel[i]->m_ePin[0] = m_pin[i];
@@ -108,49 +109,53 @@ void Oscope::updateStep()
     uint64_t timeFrame = m_timeDiv*10;
     uint64_t simTime;
 
-    if( m_trigger < 4  ) period = m_channel[m_trigger]->m_period; // We want a trigger
-
-    if( period > 10 ) // We have a Trigger
+    if( !Simulator::self()->isPaused() )
     {
-        uint64_t risEdge = m_channel[m_trigger]->m_risEdge;
+        if( m_trigger < 4  ) period = m_channel[m_trigger]->m_period; // We want a trigger
 
-        uint64_t nCycles = timeFrame/period;
-        if( timeFrame%period ) nCycles++;
-        if( nCycles%2 )        nCycles++;
-
-        uint64_t delta = nCycles*period/2-timeFrame/2;
-        if( delta > risEdge ) delta = risEdge;
-        simTime = risEdge-delta;
-    }
-    else simTime = Simulator::self()->circTime(); // free running
-
-    m_display->setTimeEnd( simTime );
-
-    for( int i=0; i<4; i++ )
-    {
-        bool connected = m_pin[i]->connector();
-        if( !connected )
+        if( period > 10 ) // We have a Trigger
         {
-            QString chTunnel = m_channel[i]->m_chTunnel;
+            uint64_t risEdge = m_channel[m_trigger]->m_risEdge;
 
-            eNode* enode = Tunnel::getEnode( chTunnel );
-            m_pin[i]->setEnode( enode );
-            if( enode )
-            {
-                enode->voltChangedCallback( m_channel[i] );
-                connected = true;
-            }
-            display()->connectChannel( i, connected );
+            uint64_t nCycles = timeFrame/period;
+            if( timeFrame%period ) nCycles++;
+            if( nCycles%2 )        nCycles++;
+
+            uint64_t delta = nCycles*period/2-timeFrame/2;
+            if( delta > risEdge ) delta = risEdge;
+            simTime = risEdge-delta;
         }
-        m_channel[i]->m_connected = connected;
-        if( connected ) m_channel[i]->updateStep();
-        m_channel[i]->m_trigIndex = m_channel[i]->m_bufferCounter;
+        else simTime = Simulator::self()->circTime(); // free running
+
+        m_display->setTimeEnd( simTime );
+
+        for( int i=0; i<4; i++ )
+        {
+            bool connected = m_pin[i]->connector();
+            if( !connected )
+            {
+                QString chTunnel = m_channel[i]->m_chTunnel;
+
+                eNode* enode = Tunnel::getEnode( chTunnel );
+                m_pin[i]->setEnode( enode );
+                if( enode )
+                {
+                    enode->voltChangedCallback( m_channel[i] );
+                    connected = true;
+                }
+                display()->connectChannel( i, connected );
+            }
+            m_channel[i]->m_connected = connected;
+            if( connected ) m_channel[i]->updateStep();
+            m_channel[i]->m_trigIndex = m_channel[i]->m_bufferCounter;
+        }
     }
-    m_display->update(); //redrawScreen();
+    m_display->update();
 
     if( m_changed ){
         m_changed = false;
-        for( IoPin* pin : m_inPin ) pin->stampAdmitance( m_inputAdmit );
+        double admit = m_connectGnd ? m_inputAdmit : 0;
+        for( IoPin* pin : m_inPin ) pin->stampAdmitance( admit );
     }
 }
 

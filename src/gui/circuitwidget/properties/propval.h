@@ -39,7 +39,7 @@ class PropVal : public QWidget
 
         QString m_propName;
 
-        CompBase*   m_component;
+        CompBase*    m_component;
         ComProperty* m_property;
         PropDialog*  m_propDialog;
 };

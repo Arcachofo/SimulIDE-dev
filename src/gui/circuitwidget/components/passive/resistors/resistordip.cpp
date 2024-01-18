@@ -57,10 +57,10 @@ ResistorDip::ResistorDip( QString type, QString id )
     Simulator::self()->addToUpdateList( this );
 
     addPropGroup( { tr("Main"), {
-new DoubProp<ResistorDip>( "Resistance", tr("Resistance"),"Ω"       , this, &ResistorDip::getRes, &ResistorDip::setRes ),
-new IntProp <ResistorDip>( "Size"      , tr("Size")      ,"_Resist.", this, &ResistorDip::size,   &ResistorDip::setSize, propNoCopy,"uint" ),
-new BoolProp<ResistorDip>( "PullUp"    , tr("Pullup")    ,""        , this, &ResistorDip::pullUp, &ResistorDip::setPullUp ),
-new DoubProp<ResistorDip>( "PuVolt", tr("Pullup Voltage"),"V"       , this, &ResistorDip::puVolt, &ResistorDip::setPuVolt ),
+new DoubProp<ResistorDip>( "Resistance", tr("Resistance"),"Ω", this, &ResistorDip::getRes, &ResistorDip::setRes ),
+new IntProp <ResistorDip>( "Size"      , tr("Size")      ,"" , this, &ResistorDip::size,   &ResistorDip::setSize, propNoCopy,"uint" ),
+new BoolProp<ResistorDip>( "PullUp"    , tr("Pullup")    ,"" , this, &ResistorDip::pullUp, &ResistorDip::setPullUp ),
+new DoubProp<ResistorDip>( "PuVolt", tr("Pullup Voltage"),"V", this, &ResistorDip::puVolt, &ResistorDip::setPuVolt ),
     },0 } );
 
     setShowProp("Resistance");
@@ -152,7 +152,7 @@ void ResistorDip::setPullUp( bool p )
 
     if( Simulator::self()->isRunning() )  CircuitWidget::self()->powerCircOff();
 
-    if( m_propDialog ) m_propDialog->showProp("PuVolt", p );
+    updtProperties();
 
     for( int i=0; i<m_size; i++ )
     {
@@ -164,10 +164,17 @@ void ResistorDip::setPullUp( bool p )
     }
 }
 
+void ResistorDip::updtProperties()
+{
+    if( !m_propDialog ) return;
+    m_propDialog->showProp("PuVolt", m_pullUp );
+    m_propDialog->adjustWidgets();
+}
+
 void ResistorDip::slotProperties()
 {
     Component::slotProperties();
-    m_propDialog->showProp("PuVolt", m_pullUp );
+    updtProperties();
 }
 
 void ResistorDip::remove()

@@ -106,7 +106,7 @@ void Csource::updateStep()
     if( !m_changed ) return;
     m_changed = false;
 
-    udtProperties();
+    updtProperties();
 
     m_pin[0]->setEnabled( m_controlPins && !m_linked );
     m_pin[0]->setVisible( m_controlPins && !m_linked );
@@ -231,7 +231,7 @@ void Csource::setControlPins( bool set )
     if( !Simulator::self()->isRunning() ) updateStep();
 }
 
-void Csource::udtProperties()
+void Csource::updtProperties()
 {
     if( !m_propDialog ) return;
     bool controlled = m_controlPins || m_linked; // Controlled by pins or Linked
@@ -240,12 +240,14 @@ void Csource::udtProperties()
     m_propDialog->showProp("Current"    , !controlled &&  m_currSource );
     m_propDialog->showProp("CurrControl",  controlled );
     m_propDialog->showProp("Gain"       ,  controlled );
+
+    m_propDialog->adjustWidgets();
 }
 
 void Csource::slotProperties()
 {
     Component::slotProperties();
-    udtProperties();
+    updtProperties();
 }
 
 void Csource::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )

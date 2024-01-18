@@ -79,17 +79,17 @@ TextComponent::TextComponent( QString type, QString id )
     QObject::connect( m_text->document(), &QTextDocument::contentsChange, [=](int f, int cr, int ca){ updateGeometry(f,cr,ca); } );
 
     addPropGroup( { tr("Main"), {
-new IntProp <TextComponent>("Margin" , tr("Margin") ,"_Pixels"  , this, &TextComponent::margin,  &TextComponent::setMargin ),
-new IntProp <TextComponent>("Border" , tr("Border") ,"_Pixels"  , this, &TextComponent::border,  &TextComponent::setBorder,0,"uint" ),
+new IntProp <TextComponent>("Margin" , tr("Margin") ,"_px"      , this, &TextComponent::margin,  &TextComponent::setMargin ),
+new IntProp <TextComponent>("Border" , tr("Border") ,"_px"      , this, &TextComponent::border,  &TextComponent::setBorder,0,"uint" ),
 new StrProp <TextComponent>("Color"  , tr("Background Color"),"", this, &TextComponent::colorStr,&TextComponent::setColorStr ),
 new DoubProp<TextComponent>("Opacity", tr("Opacity")         ,"", this, &TextComponent::opac,    &TextComponent::setOpac )
     }, groupNoCopy} );
     addPropGroup( { tr("Text"), {
-new StrProp <TextComponent>("Font"       , tr("Font")      ,""       , this, &TextComponent::getFont  , &TextComponent::setFont ),
-new IntProp <TextComponent>("Font_Size"  , tr("Font Size") ,"_Pixels", this, &TextComponent::fontSize , &TextComponent::setFontSize ),
-new StrProp <TextComponent>("Font_Color" , tr("Font Color"),""       , this, &TextComponent::fontColor, &TextComponent::setFontColor ),
-new BoolProp<TextComponent>("Fixed_Width", tr("Fixed_Width"),""      , this, &TextComponent::fixedW   , &TextComponent::setFixedW ),
-new StrProp <TextComponent>("Text"       , tr("Text")        ,""     , this, &TextComponent::getText  , &TextComponent::setText,0,"textEdit" )
+new StrProp <TextComponent>("Font"       , tr("Font")      ,""   , this, &TextComponent::getFont  , &TextComponent::setFont ),
+new StrProp <TextComponent>("Font_Color" , tr("Font Color"),""   , this, &TextComponent::fontColor, &TextComponent::setFontColor ),
+new IntProp <TextComponent>("Font_Size"  , tr("Font Size") ,"_px", this, &TextComponent::fontSize , &TextComponent::setFontSize ),
+new BoolProp<TextComponent>("Fixed_Width", tr("Fixed_Width"),""  , this, &TextComponent::fixedW   , &TextComponent::setFixedW ),
+new StrProp <TextComponent>("Text"       , tr("Text")        ,"" , this, &TextComponent::getText  , &TextComponent::setText,0,"textEdit" )
     }, groupNoCopy} );
 }
 TextComponent::~TextComponent()

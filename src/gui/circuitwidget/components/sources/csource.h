@@ -54,7 +54,7 @@ class Csource : public Component, public eResistor
         virtual void slotProperties() override;
 
     private:
-        void udtProperties();
+        void updtProperties();
 
         double m_volt;
         double m_curr;

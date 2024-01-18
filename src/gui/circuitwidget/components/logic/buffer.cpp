@@ -42,13 +42,13 @@ Buffer::Buffer( QString type, QString id )
 new BoolProp<Buffer>("Invert_Inputs", tr("Invert Inputs"),"", this
                     , &Buffer::invertInps, &Buffer::setInvertInps, propNoCopy )
                     })
-                    +IoComponent::outputProps()+IoComponent::outputType()
+                    +Gate::outputProps()+IoComponent::outputType()
 +QList<ComProperty*>({
 new BoolProp<Buffer>("Tristate", tr("Tristate"),"", this
                      , &Buffer::tristate, &Buffer::setTristate, propNoCopy )
                     })
     ,0} );
-    addPropGroup( { tr("Timing"), Gate::edgeProps(),0 } );
+    addPropGroup( { tr("Timing"), IoComponent::edgeProps(),0 } );
 
     removeProperty("pd_n");
 }

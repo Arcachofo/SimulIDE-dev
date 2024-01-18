@@ -70,10 +70,10 @@ Memory::Memory( QString type, QString id )
     Simulator::self()->addToUpdateList( this );
 
     addPropGroup( { tr("Main"), {
-        new IntProp <Memory>("Address_Bits", tr("Address Size"),"_Bits", this
+        new IntProp <Memory>("Address_Bits", tr("Address Size"),"_bits", this
                     , &Memory::addrBits, &Memory::setAddrBits, propNoCopy,"uint" ),
 
-        new IntProp <Memory>("Data_Bits", tr("Data Size")   ,"_Bits", this
+        new IntProp <Memory>("Data_Bits", tr("Data Size")   ,"_bits", this
                     , &Memory::dataBits, &Memory::setDataBits, propNoCopy,"uint" ),
 
         new BoolProp<Memory>("Persistent", tr("Persistent"),"", this

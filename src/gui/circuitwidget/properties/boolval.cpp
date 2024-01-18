@@ -7,6 +7,7 @@
 #include "component.h"
 #include "propdialog.h"
 #include "comproperty.h"
+//#include "mainwindow.h"
 
 BoolVal::BoolVal( PropDialog* parent, CompBase* comp, ComProperty* prop )
        : PropVal( parent, comp, prop )
@@ -23,6 +24,11 @@ void BoolVal::setup( bool )
     bool checked = (m_property->getValStr() == "true");
     trueVal->setChecked( checked );
     m_blocked = false;
+
+    //float scale = MainWindow::self()->fontScale();
+    //QFont font = trueVal->font();
+    //font.setPixelSize( 11.0*scale );
+    //trueVal->setFont( font );
 
     this->adjustSize();
 }

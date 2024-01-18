@@ -60,7 +60,8 @@ LAnalizer::LAnalizer( QString type, QString id )
     for( int i=0; i<8; ++i )
     {
         m_pin[i] = m_inPin[i] = new IoPin( 180, QPoint(-80-8,-64+16*i ), id+"-Pin"+QString::number(i), 0, this, undef_mode );
-        m_inPin[i]->setInputAdmit( m_inputAdmit );
+        double admit = m_connectGnd ? m_inputAdmit : 0;
+        m_inPin[i]->setInputAdmit( admit );
         LaChannel* ch = new LaChannel( this, id+"Chan"+QString::number(i) );
 
         ch->m_channel = i;
@@ -157,11 +158,12 @@ void LAnalizer::updateStep()
         }
         m_risEdge = 0;
     }
-    m_display->update(); //redrawScreen();
+    m_display->update();
 
     if( m_changed ){
         m_changed = false;
-        for( IoPin* pin : m_inPin ) pin->stampAdmitance( m_inputAdmit );
+        double admit = m_connectGnd ? m_inputAdmit : 0;
+        for( IoPin* pin : m_inPin ) pin->stampAdmitance( admit );
     }
 }
 

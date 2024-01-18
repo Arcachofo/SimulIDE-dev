@@ -26,9 +26,9 @@ PropDialog::PropDialog( QWidget* parent, QString help )
 
     m_component = NULL;
 
-    m_scale = MainWindow::self()->fontScale();
-    m_minW  = 280*m_scale;
-    m_minH  = 100*m_scale;
+    //m_scale = MainWindow::self()->fontScale();
+    //m_minW  = 280*m_scale;
+    //m_minH  = 100*m_scale;
 
     m_helpExpanded = false;
     helpText->setVisible( false );
@@ -38,6 +38,11 @@ PropDialog::PropDialog( QWidget* parent, QString help )
 
 void PropDialog::setComponent( CompBase* comp, bool isComp )
 {
+    QFontMetrics fm( labelLabel->font() );
+    m_scale = fm.width(" ")/2.0;
+    m_minW  = 265*m_scale;
+    m_minH  = 100*m_scale;
+
     QString title = isComp ? "Uid: " : "";
     this->setWindowTitle( title+comp->getUid() );
     type->setText( "Type: "+comp->itemType() );
@@ -108,8 +113,6 @@ void PropDialog::setComponent( CompBase* comp, bool isComp )
                 if( !mp ) continue;
 
                 mp->setup( isComp );
-                //w = mp->width();
-                //mp->setMinimumWidth( w );
                 m_propList.append( mp );
                 groupWidget->layout()->addWidget( mp );
 
@@ -118,12 +121,11 @@ void PropDialog::setComponent( CompBase* comp, bool isComp )
 
                 mp->setEnabled( groupEnabled && propEnabled );
             }
-            groupWidget->setMinimumHeight( propList.size()*22*m_scale);
-            groupWidget->setMinimumWidth( 250*m_scale );
+            //groupWidget->setMinimumHeight( propList.size()*22*m_scale);
+            //groupWidget->setMinimumWidth( 250*m_scale );
             tabList->addTab( groupWidget, group.name );
     }   }
     if( tabList->count() == 0 ) tabList->setVisible( false ); // Hide tab widget if empty
-    adjustWidgets();
 }
 
 void PropDialog::showProp( QString name, bool show )
@@ -167,27 +169,32 @@ void PropDialog::on_helpButton_clicked()
 void PropDialog::adjustWidgets()
 {
     int h = 0;
-    int w = 0;
+    int w = m_minW;
     QWidget* widget = tabList->currentWidget();
-    if( widget ){
-        h = widget->minimumHeight()+100*m_scale;
-        w = widget->minimumWidth()+25*m_scale;
+    if( widget )
+    {
+        int count = 0;
+        for( int i=0; i<widget->layout()->count(); ++i )
+            if( !widget->layout()->itemAt(i)->widget()->isHidden() )
+                count++;
+
+        h = count*24*m_scale+90*m_scale;
     }
     if( h < m_minH ) h = m_minH;
-    if( w < m_minW ) w = m_minW;
 
     if( helpText->isVisible() )
     {
         helpText-> setFixedWidth( helpText->width() );
         w += helpText->width()+6;
     }
-    this->setMinimumHeight( h );
-    this->setMaximumHeight( h+100 );
+    this->setFixedHeight( h );
 
-    this->setMinimumWidth( w );
-    this->setMaximumWidth( w+150 );
+    //this->setMinimumWidth( w );
+    this->setMaximumWidth( w+100*m_scale );
 
     this->adjustSize();
+    this->setMaximumHeight( h+70*m_scale );
+
 }
 
 void PropDialog::updtValues()

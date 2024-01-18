@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>329</width>
+    <width>304</width>
     <height>25</height>
    </rect>
   </property>
@@ -47,10 +47,22 @@
    </item>
    <item>
     <widget class="QComboBox" name="valueBox">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="minimumSize">
       <size>
-       <width>206</width>
+       <width>180</width>
        <height>0</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>180</width>
+       <height>16777215</height>
       </size>
      </property>
      <property name="sizeAdjustPolicy">

@@ -7,6 +7,7 @@
 //#include "scripted.h"
 #include "comproperty.h"
 #include "propdialog.h"
+//#include "mainwindow.h"
 
 TextVal::TextVal( PropDialog* parent, CompBase* comp, ComProperty* prop )
        : PropVal( parent, comp, prop )
@@ -17,8 +18,11 @@ TextVal::~TextVal() {}
 
 void TextVal::setup( bool )
 {
-    //valLabel->setText( m_property->capt() );
-    //m_scriptComp = (Scripted*)m_component;
+    //float scale = MainWindow::self()->fontScale();
+    //QFont font = textBox->font();
+    //font.setPixelSize( 11.0*scale );
+    //textBox->setFont( font );
+
     textBox->setText( m_property->getValStr() );
     updatValue();
     this->adjustSize();

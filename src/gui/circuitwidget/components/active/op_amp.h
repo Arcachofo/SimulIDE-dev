@@ -51,7 +51,7 @@ class OpAmp : public Component, public eElement
         virtual void slotProperties() override;
 
     protected:
-        void udtProperties();
+        void updtProperties();
 
         bool m_powerPins;
         bool m_switchPins;

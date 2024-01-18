@@ -37,9 +37,9 @@ new BoolProp<AndGate>( "Invert_Inputs", tr("Invert Inputs"),"", this
 new IntProp <AndGate>( "Num_Inputs"   , tr("Input Size")   ,"_Inputs", this
                      , &AndGate::numInps, &AndGate::setNumInputs, propNoCopy,"uint" )
                     })
-+IoComponent::outputProps()+IoComponent::outputType(),0 } );
++Gate::outputProps()+IoComponent::outputType(),0 } );
 
-    addPropGroup( { tr("Timing"), Gate::edgeProps(),0 } );
+    addPropGroup( { tr("Timing"), IoComponent::edgeProps(),0 } );
 
     removeProperty("pd_n");
 }

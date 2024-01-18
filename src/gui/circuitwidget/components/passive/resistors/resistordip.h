@@ -48,6 +48,8 @@ class ResistorDip : public Component, public eElement
         virtual void slotProperties() override;
 
     private:
+        void updtProperties();
+
         double m_resist;
         int m_size;
 

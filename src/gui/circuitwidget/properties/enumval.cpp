@@ -7,6 +7,7 @@
 #include "component.h"
 #include "propdialog.h"
 #include "comproperty.h"
+#include "mainwindow.h"
 
 EnumVal::EnumVal( PropDialog* parent, CompBase* comp, ComProperty* prop )
        : PropVal( parent, comp, prop )
@@ -27,6 +28,16 @@ void EnumVal::setup( bool isComp )
 
     QString valStr = m_property->getValStr();
     valueBox->setCurrentIndex( m_enums.indexOf( valStr) );
+
+    //float scale = MainWindow::self()->fontScale();
+    QFontMetrics fm( valLabel->font() );
+    float scale = fm.width(" ")/2;
+    valueBox->setFixedWidth( 170.0*scale );
+
+    //QFont font = valueBox->font();
+    //font.setPixelSize( 11.0*scale );
+    //valueBox->setFont( font );
+    //valLabel->setFont( font );
 
     if( !isComp ) showVal->setVisible( false );
 

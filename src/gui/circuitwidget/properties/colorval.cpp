@@ -9,6 +9,7 @@
 #include "component.h"
 #include "comproperty.h"
 #include "propdialog.h"
+//#include "mainwindow.h"
 
 ColorVal::ColorVal( PropDialog* parent, Component* comp, ComProperty* prop )
         : PropVal( parent, comp, prop )
@@ -19,6 +20,13 @@ ColorVal::~ColorVal(){}
 
 void ColorVal::setup( bool )
 {
+    //float scale = MainWindow::self()->fontScale();
+    //QFont font = valLabel->font();
+    //font.setPixelSize( 11.0*scale );
+    //valLabel->setFont( font );
+    //colorW->setFont( font );
+    //valueBox->setFont( font );
+
     valLabel->setText( m_property->capt() );
 
     m_color = m_property->getValStr(); /// FIXME // comp->property( m_propName.toUtf8() ).value<QColor>();

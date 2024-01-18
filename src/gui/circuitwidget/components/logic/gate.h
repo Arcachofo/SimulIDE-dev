@@ -16,7 +16,7 @@ class Gate : public LogicComponent
         Gate( QString type, QString id, int inputs );
         ~Gate();
 
-        QList<ComProperty*> edgeProps();
+        QList<ComProperty*> outputProps();
 
         virtual void stamp() override;
         virtual void voltChanged() override;

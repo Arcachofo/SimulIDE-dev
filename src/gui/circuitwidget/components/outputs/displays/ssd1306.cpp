@@ -14,6 +14,7 @@
 
 #include "doubleprop.h"
 #include "stringprop.h"
+#include "boolprop.h"
 #include "intprop.h"
 
 #define tr(str) simulideTr("Ssd1306",str)
@@ -42,7 +43,7 @@ Ssd1306::Ssd1306( QString type, QString id )
     m_width = 128;
     m_height = 64;
     m_rows   = 8;
-    m_area = QRectF( -70, -m_height/2-16, m_width+12, m_height+24 );
+    m_area = QRectF(-70,-m_height/2-16, m_width+12, m_height+24 );
     m_address = m_cCode = 0b00111100; // 0x3A - 60
 
     m_enumUids = QStringList()
@@ -71,6 +72,7 @@ Ssd1306::Ssd1306( QString type, QString id )
     //m_pinCS.setLabelText(  "CS" );
 
     m_dColor = White;
+    m_rotate = true;
     
     Simulator::self()->addToUpdateList( this );
     
@@ -79,13 +81,18 @@ Ssd1306::Ssd1306( QString type, QString id )
     
     Ssd1306::initialize();
 
+
     addPropGroup( { tr("Main"), {
-new StrProp <Ssd1306>("Color"       ,tr("Color")        ,""           ,this,&Ssd1306::colorStr,&Ssd1306::setColorStr,0,"enum" ),
-new IntProp <Ssd1306>("Width"       ,tr("Width")        ,tr("_Pixels"),this,&Ssd1306::width,   &Ssd1306::setWidth, propNoCopy,"uint" ),
-new IntProp <Ssd1306>("Height"      ,tr("Height")       ,tr("_Pixels"),this,&Ssd1306::height,  &Ssd1306::setHeight, propNoCopy,"uint" ),
-new IntProp <Ssd1306>("Control_Code",tr("I2C Address")  ,""           ,this,&Ssd1306::cCode,   &Ssd1306::setCcode,0,"uint" ),
-new DoubProp<Ssd1306>("Frequency"   ,tr("I2C Frequency"),"_KHz"       ,this,&Ssd1306::freqKHz, &Ssd1306::setFreqKHz ),
+new StrProp <Ssd1306>("Color" ,tr("Color") ,""       ,this,&Ssd1306::colorStr,&Ssd1306::setColorStr,0,"enum" ),
+new IntProp <Ssd1306>("Width" ,tr("Width") ,tr("_Px"),this,&Ssd1306::width,   &Ssd1306::setWidth, propNoCopy,"uint" ),
+new IntProp <Ssd1306>("Height",tr("Height"),tr("_Px"),this,&Ssd1306::height,  &Ssd1306::setHeight, propNoCopy,"uint" ),
+new BoolProp<Ssd1306>("Rotate",tr("Rotate"),""       ,this,&Ssd1306::imgRotated, &Ssd1306::setImgRotated ),
     }, 0} );
+    addPropGroup( { tr("I2C"), {
+new IntProp <Ssd1306>("Control_Code",tr("I2C Address")  ,""    ,this,&Ssd1306::cCode,   &Ssd1306::setCcode,0,"uint" ),
+new DoubProp<Ssd1306>("Frequency"   ,tr("I2C Frequency"),"_KHz",this,&Ssd1306::freqKHz, &Ssd1306::setFreqKHz ),
+    }, 0} );
+
 }
 Ssd1306::~Ssd1306(){}
 
@@ -432,6 +439,8 @@ void Ssd1306::paint( QPainter* p, const QStyleOptionGraphicsItem*, QWidget* )
         painter.begin( &img );
         painter.fillRect( 0, 0, m_width*3, m_height*3, Qt::black );
 
+        bool scanInv = m_rotate ? !m_scanInv : m_scanInv;
+
         if( m_dispOn  ){
             for( int row=0; row<8; row++ ){
                 for( int col=0; col<128; col++ )
@@ -440,7 +449,7 @@ void Ssd1306::paint( QPainter* p, const QStyleOptionGraphicsItem*, QWidget* )
                     if( m_dispInv ) abyte = ~abyte;      // Display Inverted
 
                     int x = col*3;
-                    if( m_scanInv ) x = 127*3-x;
+                    if( scanInv ) x = 127*3-x;
 
                     for( int bit=0; bit<8; bit++ )
                     {
@@ -448,7 +457,7 @@ void Ssd1306::paint( QPainter* p, const QStyleOptionGraphicsItem*, QWidget* )
                             int y = row*8+bit;
                             if( y >= m_height ) continue;
                             if( y > m_mr ) continue;
-                            if( m_scanInv ) y = 63-y;
+                            if( scanInv ) y = 63-y;
                             painter.fillRect( x, y*3, 3, 3, m_foreground );
                        }
                         abyte >>= 1;

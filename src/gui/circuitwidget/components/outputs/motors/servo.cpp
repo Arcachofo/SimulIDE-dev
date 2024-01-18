@@ -59,7 +59,7 @@ Servo::Servo( QString type, QString id )
     Simulator::self()->addToUpdateList( this );
 
     addPropGroup( { tr("Main"), {
-new DoubProp<Servo>( "Speed"   , tr("Speed ")     ,tr("_sec/60º"), this, &Servo::speed,    &Servo::setSpeed ),
+new DoubProp<Servo>( "Speed"   , tr("Speed ")     ,tr("_s/60º"), this, &Servo::speed,    &Servo::setSpeed ),
 new DoubProp<Servo>( "MinPulse", tr("Min. Pulse Width"),tr("_us"), this, &Servo::minPulse, &Servo::setMinPulse ),
 new DoubProp<Servo>( "MaxPulse", tr("Max. Pulse Width"),tr("_us"), this, &Servo::maxPulse, &Servo::setMaxPulse )
     },0} );

@@ -26,13 +26,13 @@ Gate::Gate( QString type, QString id, int inputs )
 }
 Gate::~Gate(){}
 
-QList<ComProperty*> Gate::edgeProps()
+QList<ComProperty*> Gate::outputProps()
 {
-    QList<ComProperty*> edge = IoComponent::edgeProps();
-    edge.prepend(
+    QList<ComProperty*> outProps = IoComponent::outputProps();
+    outProps.append(
 new BoolProp<Gate>( "initHigh", tr("Initial High State"),"", this, &Gate::initHigh, &Gate::setInitHigh ) );
 
-    return edge;
+    return outProps;
 }
 
 void Gate::stamp()

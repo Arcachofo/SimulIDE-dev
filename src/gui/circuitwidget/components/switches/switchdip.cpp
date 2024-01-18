@@ -53,13 +53,13 @@ SwitchDip::SwitchDip( QString type, QString id )
     Simulator::self()->addToUpdateList( this );
 
     addPropGroup( { tr("Main"), {
-new IntProp <SwitchDip>("Size"     , tr("Size"),tr("_Lines"), this, &SwitchDip::size     , &SwitchDip::setSize, propNoCopy,"uint" ),
-new BoolProp<SwitchDip>("Exclusive", tr("Exclusive"),""     , this, &SwitchDip::exclusive, &SwitchDip::setExclusive ),
-new BoolProp<SwitchDip>("CommonPin", tr("Common Pin"),""    , this, &SwitchDip::commonPin, &SwitchDip::setCommonPin ),
+new IntProp <SwitchDip>("Size"     , tr("Size")      ,"", this, &SwitchDip::size     , &SwitchDip::setSize, propNoCopy,"uint" ),
+new BoolProp<SwitchDip>("Exclusive", tr("Exclusive") ,"", this, &SwitchDip::exclusive, &SwitchDip::setExclusive ),
+new BoolProp<SwitchDip>("CommonPin", tr("Common Pin"),"", this, &SwitchDip::commonPin, &SwitchDip::setCommonPin ),
     }, groupNoCopy } );
 
     addPropGroup( {"Hidden", {
-new IntProp<SwitchDip>("State", "","", this, &SwitchDip::state, &SwitchDip::setState,0,"uint" )
+new IntProp<SwitchDip>("State","","", this, &SwitchDip::state, &SwitchDip::setState,0,"uint" )
     }, groupHidden} );
 }
 SwitchDip::~SwitchDip(){}

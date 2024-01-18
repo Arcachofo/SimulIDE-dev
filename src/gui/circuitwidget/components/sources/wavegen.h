@@ -79,7 +79,7 @@ class WaveGen : public ClockBase
         void genRandom();
         void genWav();
 
-        void udtProperties();
+        void updtProperties();
 
         double normalize( double data );
         

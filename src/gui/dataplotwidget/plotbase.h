@@ -31,8 +31,11 @@ class PlotBase : public Component, public ScriptModule
         int bufferSize() { return m_bufferSize; }
         void setBufferSize( int bs );
 
-        double inputAdmit(){ return m_inputAdmit; }
-        void setInputAdmit( double a );
+        bool connectGnd() { return m_connectGnd; }
+        void setConnectGnd( bool c );
+
+        double inputImped(){ return 1/m_inputAdmit; }
+        void setInputImped( double a );
 
         QString timDiv();
         void setTimDiv( QString td );
@@ -83,6 +86,9 @@ class PlotBase : public Component, public ScriptModule
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
 
     protected:
+        virtual void slotProperties() override;
+        void updtProperties();
+
         int m_bufferSize;
         int m_trigger;
 
@@ -113,7 +119,9 @@ class PlotBase : public Component, public ScriptModule
         bool m_autoExport;
         QString m_exportFile;
 
+        bool m_connectGnd;
         double m_inputAdmit;
+
         std::vector<IoPin*> m_inPin;
 
         asIScriptFunction* m_pauseFunc;

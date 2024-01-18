@@ -53,11 +53,11 @@ Pcd8544::Pcd8544( QString type, QString id )
     m_pin[3] = &m_pSi;
     m_pin[4] = &m_pScl;
     
-    m_pRst.setLabelText( "RST" );
-    m_pCs.setLabelText(  "CS" );
-    m_pDc.setLabelText(  "D/C" );
-    m_pSi.setLabelText(  "DIN" );
-    m_pScl.setLabelText( "CLK" );
+    m_pRst.setLabelText("RST");
+    m_pCs.setLabelText( "CS" );
+    m_pDc.setLabelText( "D/C");
+    m_pSi.setLabelText( "DIN");
+    m_pScl.setLabelText("CLK");
 
     Simulator::self()->addToUpdateList( this );
     

@@ -93,7 +93,7 @@ KY040::KY040( QString type, QString id )
     QObject::connect( m_button, &QToolButton::released, [=](){ onbuttonchanged(); } );
 
     addPropGroup( { tr("Main"), {
-new IntProp<KY040>( "Steps", tr("Steps per Rotation"),tr("_Steps"), this, &KY040::steps, &KY040::setSteps,0,"uint" )
+new IntProp<KY040>( "Steps", tr("Steps per Rotation"),"", this, &KY040::steps, &KY040::setSteps,0,"uint" )
     }, groupNoCopy} );
 }
 KY040::~KY040(){}

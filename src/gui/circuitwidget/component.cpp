@@ -443,6 +443,8 @@ void Component::slotProperties()
         m_propDialog->setComponent( this );
     }
     m_propDialog->show();
+    m_propDialog->adjustWidgets();
+    m_propDialog->raise();
 }
 
 void Component::slotH_flip()

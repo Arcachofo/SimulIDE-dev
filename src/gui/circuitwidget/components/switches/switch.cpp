@@ -42,10 +42,10 @@ Switch::Switch( QString type, QString id )
     QObject::connect( m_button, &CustomButton::clicked, [=](){ onbuttonclicked(); });
 
     addPropGroup( { tr("Main"), {
-new BoolProp<Switch>("Norm_Close", tr("Normally Closed"),""      , this, &Switch::nClose, &Switch::setNClose ),
-new BoolProp<Switch>("DT"        , tr("Double Throw")   ,""      , this, &Switch::dt,     &Switch::setDt   , propNoCopy ),
-new IntProp <Switch>("Poles"     , tr("Poles")          ,"_Poles", this, &Switch::poles,  &Switch::setPoles, propNoCopy,"uint" ),
-new StrProp <Switch>("Key"       , tr("Key")            ,""      , this, &Switch::key,    &Switch::setKey ),
+new BoolProp<Switch>("Norm_Close", tr("Normally Closed"),"", this, &Switch::nClose, &Switch::setNClose ),
+new BoolProp<Switch>("DT"        , tr("Double Throw")   ,"", this, &Switch::dt,     &Switch::setDt   , propNoCopy ),
+new IntProp <Switch>("Poles"     , tr("Poles")          ,"", this, &Switch::poles,  &Switch::setPoles, propNoCopy,"uint" ),
+new StrProp <Switch>("Key"       , tr("Key")            ,"", this, &Switch::key,    &Switch::setKey ),
     },0} );
 }
 Switch::~Switch(){}

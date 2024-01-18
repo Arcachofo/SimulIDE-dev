@@ -18,7 +18,6 @@ CustomButton::CustomButton( QWidget* parent )
     setFont( f );
 
     setCursor( Qt::PointingHandCursor );
-
     setAttribute( Qt::WA_TranslucentBackground );
 }
 

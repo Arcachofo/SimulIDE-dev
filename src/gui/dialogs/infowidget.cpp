@@ -111,7 +111,6 @@ void InfoWidget::setRate( double rate, double simLoad, double guiLoad, int fps )
         while( Gload.size() < 6 ) Gload = "0"+Gload;
 
         QString FPS = QString::number( fps );
-        while( FPS.size() < 3 ) FPS = "0"+FPS;
 
         realSpeed->setText( Srate+" %" );
         simLoadVal->setText( Sload+" %    ");

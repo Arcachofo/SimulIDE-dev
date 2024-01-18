@@ -188,7 +188,7 @@ void OpAmp::setPowerPins( bool set )
         m_pin[4]->removeConnector();
     }
     m_powerPins = set;
-    udtProperties();
+    updtProperties();
 }
 
 void OpAmp::setSwitchPins( bool s )
@@ -204,18 +204,19 @@ void OpAmp::setSwitchPins( bool s )
     m_pin[4]->setY( yN );
 }
 
-void OpAmp::udtProperties()
+void OpAmp::updtProperties()
 {
     if( !m_propDialog ) return;
     m_propDialog->showProp("Volt_Pos", !m_powerPins );
     m_propDialog->showProp("Volt_Neg", !m_powerPins );
     m_propDialog->showProp("Switch_Pins", m_powerPins );
+    m_propDialog->adjustWidgets();
 }
 
 void OpAmp::slotProperties()
 {
     Component::slotProperties();
-    udtProperties();
+    updtProperties();
 }
 
 QPainterPath OpAmp::shape() const

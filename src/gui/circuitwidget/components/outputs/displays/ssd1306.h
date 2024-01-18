@@ -39,6 +39,9 @@ class Ssd1306 : public Component, public TwiModule
         int height() { return m_height; }
         void setHeight( int h );
 
+        bool imgRotated() { return m_rotate; }
+        void setImgRotated( bool r ) { m_rotate = r; }
+
         virtual void initialize() override;
         virtual void stamp() override;
         virtual void updateStep() override;
@@ -92,6 +95,7 @@ class Ssd1306 : public Component, public TwiModule
         bool m_dispFull;
         bool m_dispInv;
         bool m_scanInv;
+        bool m_rotate;
 
         //bool m_reset;
         bool m_command;

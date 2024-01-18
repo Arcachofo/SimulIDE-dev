@@ -40,7 +40,7 @@ ADC::ADC( QString type, QString id )
     m_maxVolt = 5;
 
     addPropGroup( { tr("Main"), {
-new IntProp <ADC>("Num_Bits", tr("Size"),"_Bits", this
+new IntProp <ADC>("Num_Bits", tr("Size"),"_bits", this
                  , &ADC::numOuts, &ADC::setNumOutputs, propNoCopy,"uint" ),
 
 new DoubProp<ADC>("Vref", tr("Reference Voltage"),"V", this, &ADC::maxVolt, &ADC::setMaxVolt ),

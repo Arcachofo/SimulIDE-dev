@@ -7,6 +7,7 @@
 #include "component.h"
 #include "comproperty.h"
 #include "propdialog.h"
+#include "mainwindow.h"
 #include "utils.h"
 
 PathVal::PathVal( PropDialog* parent, CompBase* comp, ComProperty* prop )
@@ -18,6 +19,13 @@ PathVal::~PathVal() {}
 
 void PathVal::setup( bool )
 {
+    //float scale = MainWindow::self()->fontScale();
+    //QFont font = valLabel->font();
+    //font.setPixelSize( 11.0*scale );
+    //valLabel->setFont( font );
+    //value->setFont( font );
+    //setPathButton->setFont( font );
+
     valLabel->setText( m_property->capt() );
     updtValues();
     this->adjustSize();

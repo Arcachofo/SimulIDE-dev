@@ -100,8 +100,8 @@ TouchPad::TouchPad( QString type, QString id )
     Simulator::self()->addToUpdateList( this );
 
     addPropGroup( { tr("Main"), {
-new IntProp <TouchPad>("Width", tr("Width")    ,"_Pixels", this, &TouchPad::width      , &TouchPad::setWidth ,0,"uint" ),
-new IntProp <TouchPad>("Height",tr("Height")   ,"_Pixels", this, &TouchPad::height     , &TouchPad::setHeight ,0,"uint" ),
+new IntProp <TouchPad>("Width", tr("Width")        ,"_px", this, &TouchPad::width      , &TouchPad::setWidth ,0,"uint" ),
+new IntProp <TouchPad>("Height",tr("Height")       ,"_px", this, &TouchPad::height     , &TouchPad::setHeight ,0,"uint" ),
 new BoolProp<TouchPad>("Transparent",tr("Transparent"),"", this, &TouchPad::transparent, &TouchPad::setTransparent )
     }, groupNoCopy} );
     addPropGroup( { tr("Electric"), {
