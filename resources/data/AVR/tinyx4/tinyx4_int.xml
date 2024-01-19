@@ -15,6 +15,7 @@
         <interrupt name="ACOMP"   enable="ACIE"   flag="ACI"   priority="5"  vector="0x00C" clear="1"/>
         <interrupt name="ADC"     enable="ADIE"   flag="ADIF"  priority="4"  vector="0x00D" clear="1"/>
         <interrupt name="EEPR"    enable="EERIE"  flag=""      priority="3"  vector="0x00E"/>
-        
+        <interrupt name="USISTA"  enable="USISIE" flag="USISIF" priority="2" vector="0x00F" clear="1" autoclear="0"/>
+        <interrupt name="USIOVF"  enable="USIOIE" flag="USIOIF" priority="1" vector="0x010" clear="1" autoclear="0"/>
     </interrupts>
 </parts>

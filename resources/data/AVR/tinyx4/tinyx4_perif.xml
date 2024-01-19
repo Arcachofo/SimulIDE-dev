@@ -54,7 +54,7 @@
                     interrupt="ACOMP"
                     pins="PORTA1,PORTA2"/>
                     
-    <usi name="USI" configregsA="USICR" configregsB="USISR"
+  <usi name="USI" configregsA="USICR" configregsB="USISR"
                   interrupt="USIOVF"
                   pins="PORTA5,PORTA6,PORTA4" /><!-- "DO,DI,USCK" -->
 </parts>
