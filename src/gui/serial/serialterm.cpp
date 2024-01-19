@@ -43,6 +43,8 @@ SerialTerm::SerialTerm( QString type, QString id )
           , UsartModule( NULL, id+"-Uart" )
           , eElement( (id+"-eElement") )
 {
+    m_graphical = true;
+
     m_area = QRect(-16,-16, 32, 32 );
     setLabelPos(-20,-32 );
 
