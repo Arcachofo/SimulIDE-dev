@@ -35,7 +35,7 @@
     <message>
         <location line="+1"/>
         <source>Timing</source>
-        <translation type="unfinished"></translation>
+        <translation>Časování</translation>
     </message>
     <message>
         <source>Edges</source>
@@ -168,7 +168,7 @@
     <message>
         <location line="+8"/>
         <source>Timing</source>
-        <translation type="unfinished"></translation>
+        <translation>Časování</translation>
     </message>
     <message>
         <source>Edges</source>
@@ -528,7 +528,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../../src/gui/editorwidget/basedebugger.cpp" line="+47"/>
         <source>FirmWare Uploaded to </source>
-        <translation>Firmware nahraný do </translation>
+        <translation>Firmware je nahraný do </translation>
     </message>
     <message>
         <location line="-7"/>
@@ -538,7 +538,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location line="+8"/>
         <source>Error uploading firmware to </source>
-        <translation>Chyba při nahrávání firmware.do </translation>
+        <translation>Chyba při nahrávání firmware do </translation>
     </message>
     <message>
         <source>Found Device definition in file: </source>
@@ -618,7 +618,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location line="+2"/>
         <source>Timing</source>
-        <translation type="unfinished"></translation>
+        <translation>Časování</translation>
     </message>
     <message>
         <source>Edges</source>
@@ -653,7 +653,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location line="+6"/>
         <source>Timing</source>
-        <translation type="unfinished"></translation>
+        <translation>Časování</translation>
     </message>
     <message>
         <source>Invert Outputs</source>
@@ -722,7 +722,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location line="+1"/>
         <source>Timing</source>
-        <translation type="unfinished"></translation>
+        <translation>Časování</translation>
     </message>
     <message>
         <source>Edges</source>
@@ -765,7 +765,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location line="+4"/>
         <source>Timing</source>
-        <translation type="unfinished"></translation>
+        <translation>Časování</translation>
     </message>
     <message>
         <source>Invert Output</source>
@@ -845,7 +845,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location line="+1"/>
         <source>Reactive Step</source>
-        <translation type="unfinished">Velikost kroku</translation>
+        <translation>Krok simulace</translation>
     </message>
     <message>
         <source>Auto Step</source>
@@ -1378,7 +1378,7 @@ Nemohu najít soubor:
     <message>
         <location line="+7"/>
         <source>Extra build arguments</source>
-        <translation type="unfinished"></translation>
+        <translation>Další parametry překladače</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -1778,7 +1778,7 @@ Nemohu najít soubor:
     <message>
         <location line="+3"/>
         <source>Timing</source>
-        <translation type="unfinished"></translation>
+        <translation>Časování</translation>
     </message>
     <message>
         <source>Edges</source>
@@ -1909,7 +1909,7 @@ Nemohu najít soubor:
     <message>
         <location line="+5"/>
         <source>Timing</source>
-        <translation type="unfinished"></translation>
+        <translation>Časování</translation>
     </message>
     <message>
         <location line="-7"/>
@@ -1945,7 +1945,7 @@ Nemohu najít soubor:
     <message>
         <location line="+5"/>
         <source>Timing</source>
-        <translation type="unfinished"></translation>
+        <translation>Časování</translation>
     </message>
     <message>
         <source>Invert Outputs</source>
@@ -2055,7 +2055,7 @@ Nemohu najít soubor:
     <message>
         <location line="+1"/>
         <source>Steps</source>
-        <translation type="unfinished"></translation>
+        <translation>Počet kroků</translation>
     </message>
     <message>
         <location line="+76"/>
@@ -2196,7 +2196,7 @@ Nemohu najít soubor:
     <message>
         <location line="+6"/>
         <source>Timing</source>
-        <translation type="unfinished"></translation>
+        <translation>Časování</translation>
     </message>
     <message>
         <source>Edges</source>
@@ -2418,7 +2418,7 @@ Chcete uložit změny?
     <message>
         <location line="+98"/>
         <source>NEW</source>
-        <translation type="unfinished"></translation>
+        <translation>Nový soubor</translation>
     </message>
     <message>
         <location line="+471"/>
@@ -2875,7 +2875,7 @@ Chcete uložit změny?
     <message>
         <location filename="../../src/gui/circuitwidget/components/sources/fixedvolt.cpp" line="+26"/>
         <source>Fixed Voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>Zdroj pevného napětí</translation>
     </message>
     <message>
         <location line="+37"/>
@@ -2923,7 +2923,7 @@ Chcete uložit změny?
     <message>
         <location line="+1"/>
         <source>Timing</source>
-        <translation type="unfinished"></translation>
+        <translation>Časování</translation>
     </message>
     <message>
         <source>Edges</source>
@@ -3018,7 +3018,7 @@ Chcete uložit změny?
     <message>
         <location line="+23"/>
         <source>Timing</source>
-        <translation type="unfinished"></translation>
+        <translation>Časování</translation>
     </message>
     <message>
         <source>Logic/Arithmetic</source>
@@ -3098,7 +3098,7 @@ Chcete uložit změny?
     <message>
         <location line="-127"/>
         <source>Timing</source>
-        <translation type="unfinished"></translation>
+        <translation>Časování</translation>
     </message>
     <message>
         <location line="+130"/>
@@ -3347,7 +3347,7 @@ Chcete uložit změny?
     <message>
         <location line="+1"/>
         <source>Reactive Step</source>
-        <translation type="unfinished">Velikost kroku</translation>
+        <translation>Krok simulace</translation>
     </message>
     <message>
         <source>Auto Step</source>
@@ -3806,7 +3806,7 @@ Chcete uložit změny?
     <message>
         <location line="+16"/>
         <source>Timing</source>
-        <translation type="unfinished"></translation>
+        <translation>Časování</translation>
     </message>
     <message>
         <source>Invert Outputs</source>
@@ -3963,7 +3963,7 @@ Chcete uložit změny?
     <message>
         <location filename="../../src/gui/circuitwidget/components/outputs/leds/ledbase.cpp" line="+40"/>
         <source>Yellow</source>
-        <translation>Žlutá</translation>
+        <translation>žlutá</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -3993,7 +3993,7 @@ Chcete uložit změny?
     <message>
         <location line="+1"/>
         <source>White</source>
-        <translation>Bílá</translation>
+        <translation>bílá</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -4188,7 +4188,7 @@ Chcete uložit změny?
     <message>
         <location filename="../../src/gui/circuitwidget/components/linkercomponent.cpp" line="+34"/>
         <source>Link to Component</source>
-        <translation type="unfinished">Propojit se součástkami</translation>
+        <translation>Propojit se součástkami</translation>
     </message>
 </context>
 <context>
@@ -4270,7 +4270,7 @@ Chcete uložit změny?
     <message>
         <location line="+2"/>
         <source>Timing</source>
-        <translation type="unfinished"></translation>
+        <translation>Časování</translation>
     </message>
     <message>
         <source>Edges</source>
@@ -4669,7 +4669,7 @@ Chcete uložit změny?
     <message>
         <location line="+13"/>
         <source>Timing</source>
-        <translation type="unfinished"></translation>
+        <translation>Časování</translation>
     </message>
     <message>
         <source>Invert Outputs</source>
@@ -4785,7 +4785,7 @@ Chcete uložit změny?
     <message>
         <location line="+5"/>
         <source>Timing</source>
-        <translation type="unfinished"></translation>
+        <translation>Časování</translation>
     </message>
     <message>
         <location line="-7"/>
@@ -4925,7 +4925,7 @@ Chcete uložit změny?
     <message>
         <location line="+8"/>
         <source>Timing</source>
-        <translation type="unfinished"></translation>
+        <translation>Časování</translation>
     </message>
     <message>
         <source>Edges</source>
@@ -5017,7 +5017,7 @@ Chcete uložit změny?
         <location line="+26"/>
         <location filename="../../src/gui/circuitwidget/properties/pathval.cpp" line="+35"/>
         <source>Select directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Vybrat složku</translation>
     </message>
 </context>
 <context>
@@ -5056,7 +5056,7 @@ Chcete uložit změny?
     <message>
         <location line="+1"/>
         <source>Admittance to ground</source>
-        <translation type="unfinished"></translation>
+        <translation>Admitance do země</translation>
     </message>
 </context>
 <context>
@@ -5558,32 +5558,32 @@ Neplatný soubor s pouzdrem
     <message>
         <location line="+3"/>
         <source>Screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Obrazovka</translation>
     </message>
     <message>
         <location filename="../../src/microsim/cores/z80/z80core.cpp" line="+115"/>
         <source>Cpu</source>
-        <translation type="unfinished"></translation>
+        <translation>Cpu</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Producer</source>
-        <translation type="unfinished"></translation>
+        <translation>Výrobce</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>CMOS</source>
-        <translation type="unfinished"></translation>
+        <translation>CMOS</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Single cycle I/O</source>
-        <translation type="unfinished"></translation>
+        <translation>Jednocyklové I/O</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Interrupt Vector 0xFF</source>
-        <translation type="unfinished"></translation>
+        <translation>Přerušovací vektor 0xFF</translation>
     </message>
 </context>
 <context>
@@ -5812,7 +5812,7 @@ Neplatný soubor s pouzdrem
     <message>
         <location line="+1"/>
         <source>Reactive Step</source>
-        <translation type="unfinished">Velikost kroku</translation>
+        <translation>Krok simulace</translation>
     </message>
     <message>
         <source>Auto Step</source>
@@ -6034,7 +6034,7 @@ Neplatný soubor s pouzdrem
         <location line="+32"/>
         <location filename="../../src/gui/serial/serialmon.cpp" line="+68"/>
         <source>Pause</source>
-        <translation type="unfinished">Pozastavení</translation>
+        <translation>Pozastavit</translation>
     </message>
     <message>
         <location line="+110"/>
@@ -6059,22 +6059,22 @@ Neplatný soubor s pouzdrem
     <message>
         <location line="+5"/>
         <source>HEX</source>
-        <translation type="unfinished"></translation>
+        <translation>HEX</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>DEC</source>
-        <translation type="unfinished"></translation>
+        <translation>DEC</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>OCT</source>
-        <translation type="unfinished"></translation>
+        <translation>OCT</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>BIN</source>
-        <translation type="unfinished"></translation>
+        <translation>BIN</translation>
     </message>
     <message>
         <source>Value</source>
@@ -6097,7 +6097,7 @@ Neplatný soubor s pouzdrem
     <message>
         <location filename="../../src/gui/serial/serialmon.cpp" line="-1"/>
         <source>Resume</source>
-        <translation type="unfinished"></translation>
+        <translation>Spustit</translation>
     </message>
 </context>
 <context>
@@ -6129,7 +6129,7 @@ Neplatný soubor s pouzdrem
     <message>
         <location line="+1"/>
         <source>Auto Open</source>
-        <translation type="unfinished"></translation>
+        <translation>Automatické otevření</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -6164,32 +6164,32 @@ Neplatný soubor s pouzdrem
     <message>
         <location filename="../../src/gui/serial/serialterm.cpp" line="+34"/>
         <source>Serial Terminal</source>
-        <translation type="unfinished"></translation>
+        <translation>Sériový terminál</translation>
     </message>
     <message>
         <location line="+35"/>
         <source>Main</source>
-        <translation type="unfinished">Základní</translation>
+        <translation>Základní</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Baudrate</source>
-        <translation type="unfinished">Přenosová rychlost</translation>
+        <translation>Přenosová rychlost</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Data Bits</source>
-        <translation type="unfinished">Počet bitů dat</translation>
+        <translation>Počet bitů dat</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Stop Bits</source>
-        <translation type="unfinished">Počet stop bitů</translation>
+        <translation>Počet stop bitů</translation>
     </message>
     <message>
         <location line="+73"/>
         <source>Open Serial Monitor.</source>
-        <translation type="unfinished">Otevřít monitor sériového portu</translation>
+        <translation>Otevřít monitor sériového portu</translation>
     </message>
 </context>
 <context>
@@ -6315,17 +6315,17 @@ Neplatný soubor s pouzdrem
     <message>
         <location line="+46"/>
         <source>Main</source>
-        <translation type="unfinished">Základní</translation>
+        <translation>Základní</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Show Point Pin</source>
-        <translation type="unfinished"></translation>
+        <translation>Zobrazit pin desetinné tečky</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Show Enable Pin</source>
-        <translation type="unfinished"></translation>
+        <translation>Zobrazit pin Enable</translation>
     </message>
     <message>
         <source>Logic/Other Logic</source>
@@ -6422,7 +6422,7 @@ Neplatný soubor s pouzdrem
     <message>
         <location line="+1"/>
         <source>Timing</source>
-        <translation type="unfinished"></translation>
+        <translation>Časování</translation>
     </message>
     <message>
         <source>Edges</source>
@@ -6475,17 +6475,17 @@ Neplatný soubor s pouzdrem
     <message>
         <location filename="../../src/gui/circuitwidget/components/outputs/displays/ssd1306.cpp" line="+53"/>
         <source>White</source>
-        <translation>Bílá</translation>
+        <translation>bílá</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Blue</source>
-        <translation>Modrá</translation>
+        <translation>modrá</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Yellow</source>
-        <translation>Žlutá</translation>
+        <translation>žlutá</translation>
     </message>
     <message>
         <location line="+29"/>
@@ -6732,7 +6732,7 @@ Chcete uložit změny?
     <message>
         <location line="-261"/>
         <source>Select Exposed Components</source>
-        <translation type="unfinished"></translation>
+        <translation>Vybrat nastavitelné komponenty</translation>
     </message>
     <message>
         <location line="+280"/>
@@ -6880,12 +6880,12 @@ Chcete uložit změny?
     <message>
         <location line="+1"/>
         <source>Exclusive</source>
-        <translation type="unfinished"></translation>
+        <translation>Sepnutý pouze jeden spínač</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Common Pin</source>
-        <translation type="unfinished"></translation>
+        <translation>Jeden společný pin</translation>
     </message>
     <message>
         <source>_Switches</source>
@@ -7239,7 +7239,7 @@ Chcete uložit změny?
     <message>
         <location line="+2"/>
         <source>Dial</source>
-        <translation type="unfinished"></translation>
+        <translation>Ovládací prvek</translation>
     </message>
 </context>
 <context>
@@ -7297,7 +7297,8 @@ Chcete uložit změny?
     <message>
         <location line="+1"/>
         <source>Min. Voltage</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Minimální napětí</translatorcomment>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -7360,7 +7361,7 @@ Chcete uložit změny?
     <message>
         <location filename="../../src/gui/circuitwidget/components/sources/wavegen.cpp" line="+35"/>
         <source>Wave Generator</source>
-        <translation type="unfinished"></translation>
+        <translation>Funkční generátor</translation>
     </message>
     <message>
         <location line="+32"/>
@@ -7406,7 +7407,7 @@ Chcete uložit změny?
     <message>
         <location line="+1"/>
         <source>Phase shift</source>
-        <translation type="unfinished"></translation>
+        <translation>Fázový posuv</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -7509,7 +7510,7 @@ Chcete uložit změny?
     <message>
         <location line="+2"/>
         <source>Timing</source>
-        <translation type="unfinished"></translation>
+        <translation>Časování</translation>
     </message>
     <message>
         <source>Edges</source>
@@ -7533,22 +7534,22 @@ Chcete uložit změny?
     <message>
         <location filename="../../src/gui/editorwidget/debuggers/asdebugger.cpp" line="+26"/>
         <source>Error uploading Script to </source>
-        <translation type="unfinished"></translation>
+        <translation>Chyba při nahrávání skriptu do </translation>
     </message>
     <message>
         <location line="+9"/>
         <source>Script Uploaded to </source>
-        <translation type="unfinished"></translation>
+        <translation>Skript je nahraný do </translation>
     </message>
     <message>
         <location line="+12"/>
         <source>Error: script file doesn&apos;t exist:</source>
-        <translation type="unfinished"></translation>
+        <translation>Chyba: Soubor se skriptem neexistuje:</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Error: No Scripted Device Found... </source>
-        <translation type="unfinished"></translation>
+        <translation>Chyba: Nenalezem mikroprocesor pro skript... </translation>
     </message>
     <message>
         <location line="+6"/>
