@@ -12,7 +12,7 @@
 
 #include "doubleprop.h"
 
-#define tr(str) simulideTr("Capacitor",str)
+#define tr(str) simulideTr("CapacitorBase",str)
 
 CapacitorBase::CapacitorBase( QString type, QString id )
              : Reactive( type, id )
