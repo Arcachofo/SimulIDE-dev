@@ -22,7 +22,10 @@ class Mosfet : public Component, public eMosfet
 
         virtual void updateStep() override;
 
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
+        virtual void setPchannel( bool p ) override;
+        virtual void setDepletion( bool d ) override;
+
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w ) override;
 };
 
 #endif

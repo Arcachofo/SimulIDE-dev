@@ -65,9 +65,22 @@ void Mosfet::updateStep()
     voltChanged();
 }
 
-void Mosfet::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
+void Mosfet::setPchannel( bool p )
 {
-    Component::paint( p, option, widget );
+    m_Pchannel = p;
+    m_changed = true;
+    update();
+}
+void Mosfet::setDepletion( bool d )
+{
+    m_depletion = d;
+    m_changed = true;
+    update();
+}
+
+void Mosfet::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w )
+{
+    Component::paint( p, o, w);
     
     if( Circuit::self()->animate() && m_gateV > 0 )  p->setBrush( Qt::yellow );
     else                                             p->setBrush( Qt::white );

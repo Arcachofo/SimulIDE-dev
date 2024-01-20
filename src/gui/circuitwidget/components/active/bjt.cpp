@@ -59,6 +59,13 @@ void BJT::updateStep()
     if( m_changed ) voltChanged(); // m_changed cleared at eDiode::voltChanged
 }
 
+void BJT::setPnp( bool pnp )
+{
+    m_PNP = pnp;
+    m_changed = true;
+    update();
+}
+
 void BJT::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
 {
     Component::paint( p, option, widget );

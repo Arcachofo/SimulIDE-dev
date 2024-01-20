@@ -18,10 +18,10 @@ class eMosfet : public eResistor
         virtual void voltChanged() override;
 
         bool pChannel() { return m_Pchannel; }
-        void setPchannel( bool p ) { m_Pchannel = p; m_changed = true; }
+        virtual void setPchannel( bool p ) { m_Pchannel = p; m_changed = true; }
 
         bool depletion() { return m_depletion; }
-        void setDepletion( bool d ) { m_depletion = d; m_changed = true; }
+        virtual void setDepletion( bool d ) { m_depletion = d; m_changed = true; }
 
         double rdson() { return m_RDSon; }
         void setRDSon( double rdson );
