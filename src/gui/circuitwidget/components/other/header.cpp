@@ -39,7 +39,8 @@ Header::Header( QString type, QString id )
     m_color = QColor( 65, 65, 65 );
 
     this->addProperty( tr("Main"),
-new BoolProp<Header>( "Down", tr("Downwards"),"", this, &Header::pointDown, &Header::setPointDown ));
+new BoolProp<Header>("Down", tr("Downwards"),""
+                    , this, &Header::pointDown, &Header::setPointDown ));
 }
 Header::~Header(){}
 

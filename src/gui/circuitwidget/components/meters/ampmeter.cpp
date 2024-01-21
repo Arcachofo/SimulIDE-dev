@@ -27,7 +27,7 @@ Amperimeter::Amperimeter( QString type, QString id )
     m_unit = "A";
     m_dispValue = 0;
     setRes( 1e-6 );
-    m_display.setText( " 0.000\n A");
+    m_display.setText(" 0.000\n A");
 }
 Amperimeter::~Amperimeter(){}
 

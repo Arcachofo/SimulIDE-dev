@@ -42,7 +42,8 @@ Image::Image( QString type, QString id )
     m_movie = NULL;
 
     addPropGroup( {"Hidden", {
-new StrProp<Image>("Image_File", tr("Image File"),"", this, &Image::background, &Image::setBackground )
+new StrProp<Image>("Image_File", tr("Image File"),""
+                  , this, &Image::background, &Image::setBackground )
     }, groupNoCopy | groupHidden} );
 }
 Image::~Image()

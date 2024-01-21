@@ -56,7 +56,8 @@ DS1307::DS1307( QString type, QString id )
     m_address = m_cCode = 0b01101000; // 0x68
 
     addPropGroup( { "Main", {
-new BoolProp<DS1307>( "Time_Updtd", tr("Set current time at start"),"", this, &DS1307::timeUpdtd, &DS1307::setTimeUpdtd ),
+new BoolProp<DS1307>("Time_Updtd", tr("Set current time at start"),""
+                    , this, &DS1307::timeUpdtd, &DS1307::setTimeUpdtd ),
         },0 } );
 }
 DS1307::~DS1307(){}

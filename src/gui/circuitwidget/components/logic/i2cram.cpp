@@ -64,21 +64,22 @@ I2CRam::I2CRam( QString type, QString id )
     Simulator::self()->addToUpdateList( this );
 
     addPropGroup( { tr("Main"), {
-new IntProp <I2CRam>("Size_bytes", tr("Size"),"_bytes", this
-                    , &I2CRam::rSize, &I2CRam::setRSize, propNoCopy,"uint" ),
+new IntProp <I2CRam>("Size_bytes", tr("Size"),"_bytes"
+                    , this, &I2CRam::rSize, &I2CRam::setRSize, propNoCopy,"uint" ),
 
-new IntProp <I2CRam>("Control_Code", tr("I2C Address"),"", this
-                    , &I2CRam::cCode, &I2CRam::setCcode,0,"uint" ),
+new IntProp <I2CRam>("Control_Code", tr("I2C Address"),""
+                    , this, &I2CRam::cCode, &I2CRam::setCcode,0,"uint" ),
 
-new DoubProp<I2CRam>("Frequency", tr("I2C Frequency"),"_KHz", this
-                    , &I2CRam::freqKHz, &I2CRam::setFreqKHz ),
+new DoubProp<I2CRam>("Frequency", tr("I2C Frequency"),"_KHz"
+                    , this, &I2CRam::freqKHz, &I2CRam::setFreqKHz ),
 
-new BoolProp<I2CRam>("Persistent", tr("Persistent"),"", this
-                    , &I2CRam::persistent, &I2CRam::setPersistent ),
+new BoolProp<I2CRam>("Persistent", tr("Persistent"),""
+                    , this, &I2CRam::persistent, &I2CRam::setPersistent ),
     }, groupNoCopy } );
 
     addPropGroup( {"Hidden", {
-new StrProp<I2CRam>("Mem","","", this, &I2CRam::getMem, &I2CRam::setMem )
+new StrProp<I2CRam>("Mem","",""
+                   , this, &I2CRam::getMem, &I2CRam::setMem )
     }, groupHidden} );
 }
 I2CRam::~I2CRam(){}

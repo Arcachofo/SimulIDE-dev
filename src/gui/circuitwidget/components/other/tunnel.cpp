@@ -55,11 +55,16 @@ Tunnel::Tunnel( QString type, QString id )
     setRotated( false );
 
     addPropGroup( { tr("Main"), {
-new StrProp <Tunnel>("Name" , tr("Id") ,"", this, &Tunnel::name,  &Tunnel::setName ),
-new BoolProp<Tunnel>("IsBus", tr("Bus"),"", this, &Tunnel::isBus, &Tunnel::setIsbus )
+new StrProp <Tunnel>("Name" , tr("Id") ,""
+                    , this, &Tunnel::name,  &Tunnel::setName ),
+
+new BoolProp<Tunnel>("IsBus", tr("Bus"),""
+                    , this, &Tunnel::isBus, &Tunnel::setIsbus )
     }, groupNoCopy} );
+
     addPropGroup( {"Hidden", {
-new StrProp<Tunnel>( "Uid","","", this, &Tunnel::tunnelUid, &Tunnel::setTunnelUid ),
+new StrProp<Tunnel>("Uid","","", this
+                   , &Tunnel::tunnelUid, &Tunnel::setTunnelUid ),
     }, groupNoCopy | groupHidden} );
 }
 Tunnel::~Tunnel() {}

@@ -64,17 +64,30 @@ Diode::Diode( QString type, QString id, bool zener )
     Simulator::self()->addToUpdateList( this );
 
     addPropGroup( { tr("Main"), {
-new StrProp<Diode>( "Model", tr("Model"),"", this, &Diode::model,  &Diode::setModel,0,"enum" ),
+new StrProp<Diode>("Model", tr("Model"),""
+                  , this, &Diode::model, &Diode::setModel, 0,"enum" ),
     },0} );
+
     addPropGroup( { tr("Electric"), {
-new DoubProp<Diode>( "Threshold" , tr("Forward Voltage"),"V", this, &Diode::threshold,  &Diode::setThreshold ),
-new DoubProp<Diode>( "MaxCurrent", tr("Max Current")    ,"A", this, &Diode::maxCurrent, &Diode::setMaxCurrent ),
-new DoubProp<Diode>( "Resistance", tr("Resistance")     ,"Ω", this, &Diode::res,        &Diode::setResSafe ),
+new DoubProp<Diode>("Threshold" , tr("Forward Voltage"),"V"
+                   , this, &Diode::threshold, &Diode::setThreshold ),
+
+new DoubProp<Diode>("MaxCurrent", tr("Max Current"),"A"
+                   , this, &Diode::maxCurrent, &Diode::setMaxCurrent ),
+
+new DoubProp<Diode>("Resistance", tr("Resistance"),"Ω"
+                   , this, &Diode::res, &Diode::setResSafe ),
     },0} );
+
     addPropGroup( { tr("Advanced"), {
-new DoubProp<Diode>( "BrkDownV"  , tr("Breakdown Voltage")   ,"V" , this, &Diode::brkDownV, &Diode::setBrkDownV ),
-new DoubProp<Diode>( "SatCurrent", tr("Saturation Current")  ,"nA", this, &Diode::satCur,   &Diode::setSatCur ),
-new DoubProp<Diode>( "EmCoef"    , tr("Emission Coefficient"),""  , this, &Diode::emCoef,   &Diode::setEmCoef ),
+new DoubProp<Diode>("BrkDownV", tr("Breakdown Voltage"),"V"
+                   , this, &Diode::brkDownV, &Diode::setBrkDownV ),
+
+new DoubProp<Diode>("SatCurrent", tr("Saturation Current"),"nA"
+                   , this, &Diode::satCur, &Diode::setSatCur ),
+
+new DoubProp<Diode>("EmCoef", tr("Emission Coefficient"),""
+                   , this, &Diode::emCoef, &Diode::setEmCoef )
     },0} );
 }
 Diode::~Diode()

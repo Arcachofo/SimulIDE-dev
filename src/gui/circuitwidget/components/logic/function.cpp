@@ -79,18 +79,24 @@ Function::Function( QString type, QString id )
     setFunctions( "i0 | i1" );
 
     addPropGroup( { tr("Main"), {
-new IntProp<Function>("Num_Inputs" , tr("Input Size") ,"_Pins", this
-                     , &Function::numInps, &Function::setNumInputs, propNoCopy ,"uint" ),
+new IntProp<Function>("Num_Inputs" , tr("Input Size") ,"_Pins"
+                     , this, &Function::numInps, &Function::setNumInputs, propNoCopy ,"uint" ),
 
-new IntProp<Function>("Num_Outputs", tr("Output Size"),"_Pins", this
-                     , &Function::numOuts, &Function::setNumOutputs, propNoCopy ,"uint" ),
+new IntProp<Function>("Num_Outputs", tr("Output Size"),"_Pins"
+                     , this, &Function::numOuts, &Function::setNumOutputs, propNoCopy ,"uint" ),
 
-new StrProp<Function>("Functions", tr("Functions"),"", this, &Function::functions, &Function::setFunctions ),
+new StrProp<Function>("Functions", tr("Functions"),""
+                     , this, &Function::functions, &Function::setFunctions ),
     }, groupNoCopy } );
 
     addPropGroup( { tr("Electric"), IoComponent::inputProps()
-+QList<ComProperty*>({new BoolProp<Function>( "Invert_Inputs", tr("Invert Inputs"),"", this, &Function::invertInps, &Function::setInvertInps, propNoCopy )})
-                    +IoComponent::outputProps()+IoComponent::outputType(),0 } );
++QList<ComProperty*>({
+new BoolProp<Function>( "Invert_Inputs", tr("Invert Inputs"),""
+                      , this, &Function::invertInps, &Function::setInvertInps, propNoCopy )})
+
+                    + IoComponent::outputProps()
+                    + IoComponent::outputType(),0 } );
+
     addPropGroup( { tr("Timing"), IoComponent::edgeProps(),0 } );
 }
 Function::~Function(){}

@@ -44,10 +44,17 @@ ShiftReg::ShiftReg( QString type, QString id )
     setResetInv( true );         // Invert Reset Pin
 
     addPropGroup( { tr("Main"), {
-new BoolProp<ShiftReg>("Clock_Inverted", tr("Clock Inverted"),"", this, &ShiftReg::clockInv, &ShiftReg::setClockInv ),
-new BoolProp<ShiftReg>("Reset_Inverted", tr("Reset Inverted"),"", this, &ShiftReg::resetInv, &ShiftReg::setResetInv ),
+new BoolProp<ShiftReg>("Clock_Inverted", tr("Clock Inverted"),""
+                      , this, &ShiftReg::clockInv, &ShiftReg::setClockInv ),
+
+new BoolProp<ShiftReg>("Reset_Inverted", tr("Reset Inverted"),""
+                      , this, &ShiftReg::resetInv, &ShiftReg::setResetInv ),
     }, groupNoCopy} );
-    addPropGroup( { tr("Electric"), IoComponent::inputProps()+IoComponent::outputProps()+IoComponent::outputType(),0 } );
+
+    addPropGroup( { tr("Electric"), IoComponent::inputProps()
+                                  + IoComponent::outputProps()
+                                  + IoComponent::outputType(),0 } );
+
     addPropGroup( { tr("Timing")  , IoComponent::edgeProps(),0 } );
 }
 ShiftReg::~ShiftReg(){}

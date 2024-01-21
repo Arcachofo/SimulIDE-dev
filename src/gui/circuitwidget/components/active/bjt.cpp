@@ -46,9 +46,14 @@ BJT::BJT( QString type, QString id )
     Simulator::self()->addToUpdateList( this );
 
     addPropGroup( { tr("Main"), {
-new BoolProp<BJT>( "PNP"  , tr("PNP")      ,"" , this, &BJT::pnp      , &BJT::setPnp ),
-new DoubProp<BJT>( "Gain" , tr("Gain")     ,"" , this, &BJT::gain     , &BJT::setGain ),
-new DoubProp<BJT>( "Vcrit", tr("Threshold"),"V", this, &BJT::threshold, &BJT::setThreshold ),
+new BoolProp<BJT>("PNP"  , tr("PNP"),""
+                 , this, &BJT::pnp , &BJT::setPnp ),
+
+new DoubProp<BJT>("Gain" , tr("Gain"),""
+                 , this, &BJT::gain, &BJT::setGain ),
+
+new DoubProp<BJT>("Vcrit", tr("Threshold"),"V"
+                 , this, &BJT::threshold, &BJT::setThreshold )
     },0} );
 }
 BJT::~BJT(){}
@@ -66,16 +71,17 @@ void BJT::setPnp( bool pnp )
     update();
 }
 
-void BJT::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
+void BJT::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w )
 {
-    Component::paint( p, option, widget );
+    Component::paint( p, o, w );
     
-    if( Circuit::self()->animate() && fabs(m_baseCurr) > 1e-4 ) p->setBrush( Qt::yellow );
-    else                                                        p->setBrush( Qt::white );
+    if( Circuit::self()->animate()
+     && fabs(m_baseCurr) > 1e-4 ) p->setBrush( Qt::yellow );
+    else                          p->setBrush( Qt::white );
 
     p->drawEllipse( m_area );
-    p->drawLine(-12, 0,-4, 0 );
-    p->drawLine( -4,-8,-4, 8 );
+    p->drawLine(-12, 0,-4,  0 );
+    p->drawLine( -4,-8,-4,  8 );
     p->drawLine( -4,-4, 8,-12 );
     p->drawLine( -4, 4, 8, 12 );
     

@@ -37,7 +37,9 @@ FullAdder::FullAdder( QString type, QString id)
             "OR03Co",
         });
 
-    addPropGroup( { tr("Electric"), IoComponent::inputProps()+IoComponent::outputProps(),0 } );
+    addPropGroup( { tr("Electric"), IoComponent::inputProps()
+                                  + IoComponent::outputProps(),0 } );
+
     addPropGroup( { tr("Timing")  , IoComponent::edgeProps(),0 } );
 }
 FullAdder::~FullAdder(){}

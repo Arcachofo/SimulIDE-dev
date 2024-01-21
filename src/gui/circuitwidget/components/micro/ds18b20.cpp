@@ -97,9 +97,14 @@ Ds18b20::Ds18b20( QString type, QString id )
     Simulator::self()->addToUpdateList( this );
 
     addPropGroup( { tr("Main"), {
-new StrProp <Ds18b20>("ROM"    ,"ROM"                 ,""  , this, &Ds18b20::getROM,  &Ds18b20::setROM, propNoCopy ),
-new DoubProp<Ds18b20>("Temp"   , tr("Temperature")    ,"°C", this, &Ds18b20::temp   , &Ds18b20::setTemp    ),
-new DoubProp<Ds18b20>("TempInc", tr("Temp. increment"),"°C", this, &Ds18b20::tempInc, &Ds18b20::setTempInc ),
+new StrProp <Ds18b20>("ROM","ROM",""
+                     , this, &Ds18b20::getROM,  &Ds18b20::setROM, propNoCopy ),
+
+new DoubProp<Ds18b20>("Temp", tr("Temperature"),"°C"
+                     , this, &Ds18b20::temp, &Ds18b20::setTemp ),
+
+new DoubProp<Ds18b20>("TempInc", tr("Temp. increment"),"°C"
+                     , this, &Ds18b20::tempInc, &Ds18b20::setTempInc ),
     },0} );
 }
 Ds18b20::~Ds18b20(){}

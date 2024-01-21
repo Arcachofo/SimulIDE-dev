@@ -49,12 +49,19 @@ BinCounter::BinCounter( QString type, QString id)
     useSetPin( false );          // Don't use Set Pin
 
     addPropGroup( { tr("Main"), {
-new BoolProp<BinCounter>("Pin_SET", tr("Use Set Pin"),"", this
-                        , &BinCounter::pinSet,&BinCounter::useSetPin, propNoCopy ),
-new BoolProp<BinCounter>("Clock_Inverted", tr("Clock Inverted")    ,"", this, &BinCounter::clockInv, &BinCounter::setClockInv ),
-new BoolProp<BinCounter>("Reset_Inverted", tr("Set/Reset Inverted"),"", this, &BinCounter::srInv,    &BinCounter::setSrInv ),
-new IntProp <BinCounter>("Max_Value",      tr("Count to")          ,"", this, &BinCounter::maxVal,   &BinCounter::setMaxVal,0,"uint" ),
+new BoolProp<BinCounter>("Pin_SET", tr("Use Set Pin"),""
+                        , this, &BinCounter::pinSet,&BinCounter::useSetPin, propNoCopy ),
+
+new BoolProp<BinCounter>("Clock_Inverted", tr("Clock Inverted"),""
+                        , this, &BinCounter::clockInv, &BinCounter::setClockInv ),
+
+new BoolProp<BinCounter>("Reset_Inverted", tr("Set/Reset Inverted"),""
+                        , this, &BinCounter::srInv, &BinCounter::setSrInv ),
+
+new IntProp <BinCounter>("Max_Value", tr("Count to"),""
+                        , this, &BinCounter::maxVal, &BinCounter::setMaxVal,0,"uint" ),
     },groupNoCopy} );
+
     addPropGroup( { tr("Electric"), IoComponent::inputProps()+IoComponent::outputProps(),0 } );
     addPropGroup( { tr("Timing")  , IoComponent::edgeProps(),0 } );
 }

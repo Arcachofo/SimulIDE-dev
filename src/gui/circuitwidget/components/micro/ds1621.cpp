@@ -105,8 +105,11 @@ DS1621::DS1621( QString type, QString id )
     m_cCode = 0b01001000; // 0x98 >> 1  : I2C Addr
 
     addPropGroup( { tr("Main"), {
-new DoubProp<DS1621>("Temp"   , tr("Temperature")    ,"°C", this, &DS1621::temp   , &DS1621::setTemp ),
-new DoubProp<DS1621>("TempInc", tr("Temp. increment"),"°C", this, &DS1621::tempInc, &DS1621::setTempInc ),
+new DoubProp<DS1621>("Temp", tr("Temperature"),"°C"
+                    , this, &DS1621::temp, &DS1621::setTemp ),
+
+new DoubProp<DS1621>("TempInc", tr("Temp. increment"),"°C"
+                    , this, &DS1621::tempInc, &DS1621::setTempInc ),
     },0} );
 }
 

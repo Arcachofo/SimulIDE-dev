@@ -70,10 +70,15 @@ SCR::SCR( QString type, QString id )
     Simulator::self()->addToUpdateList( this );
 
     addPropGroup( { tr("Main"), {
-new DoubProp<SCR>("GateRes" , tr("Gate Resistance"),"Ω", this, &SCR::gateRes , &SCR::setGateRes ),
-new DoubProp<SCR>("TrigCurr", tr("Trigger Current"),"A", this, &SCR::trigCurr, &SCR::setTrigCurr ),
-new DoubProp<SCR>("HoldCurr", tr("Holding Current"),"A", this, &SCR::holdCurr, &SCR::setHoldCurr )
-    },0} );
+new DoubProp<SCR>("GateRes", tr("Gate Resistance"),"Ω"
+                 , this, &SCR::gateRes, &SCR::setGateRes ),
+
+new DoubProp<SCR>("TrigCurr", tr("Trigger Current"),"A"
+                 , this, &SCR::trigCurr, &SCR::setTrigCurr ),
+
+new DoubProp<SCR>("HoldCurr", tr("Holding Current"),"A"
+                 , this, &SCR::holdCurr, &SCR::setHoldCurr )
+    },0 } );
 }
 SCR::~SCR()
 {

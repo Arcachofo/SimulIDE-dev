@@ -55,11 +55,14 @@ Demux::Demux( QString type, QString id )
     setAddrBits( 3 );
 
     addPropGroup( { tr("Main"), {
-        new IntProp<Demux>("Address_Bits", tr("Address Size"),"_bits", this
-                  , &Demux::addrBits, &Demux::setAddrBits, propNoCopy,"uint" )
+new IntProp<Demux>("Address_Bits", tr("Address Size"),"_bits"
+                  , this , &Demux::addrBits, &Demux::setAddrBits, propNoCopy,"uint" )
     }, groupNoCopy } );
 
-    addPropGroup( { tr("Electric"), IoComponent::inputProps()+IoComponent::outputProps()+IoComponent::outputType(),0 } );
+    addPropGroup( { tr("Electric"), IoComponent::inputProps()
+                                  + IoComponent::outputProps()
+                                  + IoComponent::outputType(),0 } );
+
     addPropGroup( { tr("Timing")  , IoComponent::edgeProps(),0 } );
 }
 Demux::~Demux(){}

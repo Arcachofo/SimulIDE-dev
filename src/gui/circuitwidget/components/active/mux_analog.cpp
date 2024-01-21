@@ -56,8 +56,11 @@ MuxAnalog::MuxAnalog( QString type, QString id )
     Simulator::self()->addToUpdateList( this );
 
     addPropGroup( { tr("Main"), {
-new IntProp <MuxAnalog>("Address_Bits", tr("Address Size"),"_Bits", this, &MuxAnalog::addrBits,  &MuxAnalog::setAddrBits, propNoCopy,"uint" ),
-new DoubProp<MuxAnalog>("Impedance"   , tr("Impedance")   ,"Ω"    , this, &MuxAnalog::impedance, &MuxAnalog::setImpedance ),
+new IntProp <MuxAnalog>("Address_Bits", tr("Address Size"),"_bits"
+                       , this, &MuxAnalog::addrBits, &MuxAnalog::setAddrBits, propNoCopy,"uint" ),
+
+new DoubProp<MuxAnalog>("Impedance"   , tr("Impedance"),"Ω"
+                        , this, &MuxAnalog::impedance, &MuxAnalog::setImpedance ),
     },0} );
 }
 MuxAnalog::~MuxAnalog(){}

@@ -93,14 +93,22 @@ LAnalizer::LAnalizer( QString type, QString id )
     setTrigger( 9 ); // Trigger = None
 
     addPropGroup( { tr("Export"), {
-new IntProp <LAnalizer>("TimeStep"  ,tr("Base Time Step") ,"_ps", this, &LAnalizer::timeStep,   &LAnalizer::setTimeStep,0,"uint" ),
-new BoolProp<LAnalizer>("AutoExport",tr("Export at pause"),""   , this, &LAnalizer::autoExport, &LAnalizer::setAutoExport ),
+new IntProp <LAnalizer>("TimeStep", tr("Base Time Step"), "_ps"
+                       , this, &LAnalizer::timeStep,   &LAnalizer::setTimeStep,0,"uint" ),
+
+new BoolProp<LAnalizer>("AutoExport", tr("Export at pause"),""
+                       , this, &LAnalizer::autoExport, &LAnalizer::setAutoExport ),
     },0} );
 
     addPropGroup( { "Hidden1", {
-new DoubProp<LAnalizer>("TresholdR","","V", this, &LAnalizer::thresholdR, &LAnalizer::setThresholdR ),
-new StrProp <LAnalizer>("Bus"      ,"", "", this, &LAnalizer::busStr,     &LAnalizer::setBusStr ),
-new DoubProp<LAnalizer>("TresholdF","","V", this, &LAnalizer::thresholdF, &LAnalizer::setThresholdF )
+new DoubProp<LAnalizer>("TresholdR", "", "V"
+                       , this, &LAnalizer::thresholdR, &LAnalizer::setThresholdR ),
+
+new StrProp <LAnalizer>("Bus", "", ""
+                       , this, &LAnalizer::busStr, &LAnalizer::setBusStr ),
+
+new DoubProp<LAnalizer>("TresholdF", "", "V"
+                       , this, &LAnalizer::thresholdF, &LAnalizer::setThresholdF )
     }, groupHidden } );
 }
 LAnalizer::~LAnalizer()

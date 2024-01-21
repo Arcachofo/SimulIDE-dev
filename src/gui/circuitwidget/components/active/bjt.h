@@ -24,7 +24,7 @@ class BJT : public Component, public eBJT
 
         virtual void setPnp( bool pnp ) override;
 
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w ) override;
 };
 
 #endif

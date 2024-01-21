@@ -50,10 +50,17 @@ Aip31068_i2c::Aip31068_i2c( QString type, QString id )
     Aip31068_i2c::initialize();
 
     addPropGroup( { tr("Main"), {
-new IntProp <Aip31068_i2c>( "Rows"        ,tr("Rows")         ,"_Rows"   ,this,&Aip31068_i2c::rows,   &Aip31068_i2c::setRows ,0,"uint" ),
-new IntProp <Aip31068_i2c>( "Cols"        ,tr("Columns")      ,"_Columns",this,&Aip31068_i2c::cols,   &Aip31068_i2c::setCols ,0,"uint" ),
-new IntProp <Aip31068_i2c>( "Control_Code",tr("I2C Address")  ,""        ,this,&Aip31068_i2c::cCode,  &Aip31068_i2c::setCcode,0,"uint" ),
-new DoubProp<Aip31068_i2c>( "Frequency"   ,tr("I2C Frequency"),"_KHz"    ,this,&Aip31068_i2c::freqKHz,&Aip31068_i2c::setFreqKHz ),
+new IntProp <Aip31068_i2c>("Rows",tr("Rows") ,"_Rows"
+                          , this, &Aip31068_i2c::rows, &Aip31068_i2c::setRows ,0,"uint" ),
+
+new IntProp <Aip31068_i2c>("Cols",tr("Columns"),"_Columns"
+                        , this, &Aip31068_i2c::cols, &Aip31068_i2c::setCols ,0,"uint" ),
+
+new IntProp <Aip31068_i2c>("Control_Code", tr("I2C Address"), ""
+                          , this, &Aip31068_i2c::cCode,  &Aip31068_i2c::setCcode,0,"uint" ),
+
+new DoubProp<Aip31068_i2c>("Frequency",tr("I2C Frequency"), "_KHz"
+                          , this, &Aip31068_i2c::freqKHz, &Aip31068_i2c::setFreqKHz ),
     }, groupNoCopy} );
 }
 Aip31068_i2c::~Aip31068_i2c(){}

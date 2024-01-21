@@ -30,7 +30,8 @@ QList<ComProperty*> Gate::outputProps()
 {
     QList<ComProperty*> outProps = IoComponent::outputProps();
     outProps.append(
-new BoolProp<Gate>( "initHigh", tr("Initial High State"),"", this, &Gate::initHigh, &Gate::setInitHigh ) );
+new BoolProp<Gate>( "initHigh", tr("Initial High State"),""
+                  , this, &Gate::initHigh, &Gate::setInitHigh ) );
 
     return outProps;
 }

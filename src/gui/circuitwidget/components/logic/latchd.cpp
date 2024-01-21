@@ -60,10 +60,11 @@ LatchD::LatchD( QString type, QString id )
     addPropGroup( { tr("Electric"),
         IoComponent::inputProps()
         +QList<ComProperty*>({
-            new BoolProp<LatchD>( "Invert_Inputs", tr("Invert Inputs"),"", this
-                    , &LatchD::invertInps, &LatchD::setInvertInps,propNoCopy )
+new BoolProp<LatchD>("Invert_Inputs", tr("Invert Inputs"),""
+                    , this, &LatchD::invertInps, &LatchD::setInvertInps,propNoCopy )
         })
-        +IoComponent::outputProps()+IoComponent::outputType()
+        + IoComponent::outputProps()
+        + IoComponent::outputType()
     ,0 } );
 
     addPropGroup( { tr("Timing"), IoComponent::edgeProps(),0 } );
