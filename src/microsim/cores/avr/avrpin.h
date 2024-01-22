@@ -21,6 +21,7 @@ class AvrPin : public McuPin
         ~AvrPin();
 
         virtual void setPortState( bool state ) override;
+        virtual void ConfExtInt( uint8_t bits ) override;
 
     protected:
 

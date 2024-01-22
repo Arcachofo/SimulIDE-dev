@@ -69,7 +69,7 @@ void Interrupt::writeFlag( uint8_t v ) // Clear Interrupt flag by writting 1 to 
         int overrided = m_mcu->m_regOverride;
         if( overrided > 0 ) v = overrided;      // Get previous overrides
         m_mcu->m_regOverride = v & ~m_flagMask; // Clear flag
-        if( !m_continuous ) flagCleared();      // Pin INT continuous while low level
+        flagCleared();      // Pin INT continuous while low level
     }
 }
 
@@ -79,8 +79,8 @@ void Interrupt::raise( uint8_t v )
         if( m_raised ) return;
         m_raised = true;
 
-        m_ram[m_flagReg] |= m_flagMask; // Set Interrupt flag
-
+        if( !m_continuous ) m_ram[m_flagReg] |= m_flagMask; // Set Interrupt flag
+                                                            // Continuous don't set the flag (AVR Pin INT)
         if( m_enabled )
         {
             m_interrupts->addToPending( this ); // Add to pending interrupts
