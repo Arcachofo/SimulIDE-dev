@@ -97,7 +97,7 @@ new StrProp <TextComponent>("Font", tr("Font"),""
                            , this, &TextComponent::getFont , &TextComponent::setFont ),
 
 new StrProp <TextComponent>("Font_Color", tr("Font Color"),""
-                           , this, &TextComponent::fontColor, &TextComponent::setFontColor ),
+                           , this, &TextComponent::fontColor, &TextComponent::setFontColor,0,"color" ),
 
 new IntProp <TextComponent>("Font_Size", tr("Font Size") ,"_px"
                            , this, &TextComponent::fontSize , &TextComponent::setFontSize ),

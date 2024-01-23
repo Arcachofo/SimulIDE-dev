@@ -26,14 +26,25 @@ Shape::Shape( QString type, QString id )
     setZValue( -1 );
 
     addPropGroup( { tr("Main"), {
-new IntProp <Shape>("H_size" , tr("Size X"),"_px", this, &Shape::hSize,  &Shape::setHSize,0,"uint" ),
-new IntProp <Shape>("V_size" , tr("Size Y"),"_px", this, &Shape::vSize,  &Shape::setVSize,0,"uint" ),
-new IntProp <Shape>("Border" , tr("Border"),"_px", this, &Shape::border, &Shape::setBorder ),
-new DoubProp<Shape>("Z_Value", tr("Z Value"),""      , this, &Shape::zVal  , &Shape::setZVal )
+new IntProp <Shape>("H_size", tr("Size X"), "_px"
+                   , this, &Shape::hSize, &Shape::setHSize,0,"uint" ),
+
+new IntProp <Shape>("V_size", tr("Size Y"), "_px"
+                   , this, &Shape::vSize, &Shape::setVSize,0,"uint" ),
+
+new IntProp <Shape>("Border", tr("Border"), "_px"
+                   , this, &Shape::border, &Shape::setBorder ),
+
+new DoubProp<Shape>("Z_Value", tr("Z Value"), ""
+                   , this, &Shape::zVal, &Shape::setZVal )
     },0} );
+
     addPropGroup( { tr("Color"), {
-new StrProp <Shape>("Color"  , tr("Color")  ,"", this, &Shape::colorStr, &Shape::setColorStr ),
-new DoubProp<Shape>("Opacity", tr("Opacity"),"", this, &Shape::opac    ,  &Shape::setOpac )
+new StrProp <Shape>("Color", tr("Color"), ""
+                   , this, &Shape::colorStr, &Shape::setColorStr,0,"color" ),
+
+new DoubProp<Shape>("Opacity", tr("Opacity"), ""
+                   , this, &Shape::opac, &Shape::setOpac )
     },0} );
 }
 Shape::~Shape(){}

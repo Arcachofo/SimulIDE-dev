@@ -11,10 +11,11 @@
 #include "propdialog.h"
 //#include "mainwindow.h"
 
-ColorVal::ColorVal( PropDialog* parent, Component* comp, ComProperty* prop )
+ColorVal::ColorVal( PropDialog* parent, CompBase* comp, ComProperty* prop )
         : PropVal( parent, comp, prop )
 {
     setupUi(this);
+    m_blocked = true;
 }
 ColorVal::~ColorVal(){}
 
@@ -26,6 +27,10 @@ void ColorVal::setup( bool )
     //valLabel->setFont( font );
     //colorW->setFont( font );
     //valueBox->setFont( font );
+
+    QFontMetrics fm( valueBox->font() );
+    float scale = fm.width(" ")/2;
+    valueBox->setFixedWidth( 170.0*scale );
 
     valLabel->setText( m_property->capt() );
 
@@ -51,10 +56,13 @@ void ColorVal::setup( bool )
     colorW->setPalette( pal );
 
     this->adjustSize();
+
+    m_blocked = false;
 }
 
-void ColorVal::on_valueBox_currentIndexChanged( int index )
+void ColorVal::on_valueBox_activated( int index )
 {
+    if( m_blocked ) return;
     if( !m_component ) return;
 
     QString value = valueBox->itemText( index );
