@@ -30,7 +30,7 @@ void EnumVal::setup( bool isComp )
     valueBox->setCurrentIndex( m_enums.indexOf( valStr) );
 
     //float scale = MainWindow::self()->fontScale();
-    QFontMetrics fm( valLabel->font() );
+    QFontMetrics fm( valueBox->font() );
     float scale = fm.width(" ")/2;
     valueBox->setFixedWidth( 170.0*scale );
 

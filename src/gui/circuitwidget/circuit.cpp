@@ -487,7 +487,7 @@ QString Circuit::circuitToString()
     QString circuit = circuitHeader();
     for( Component* comp : m_compList ) circuit += comp->toString();
     for( Node* node      : m_nodeList ) circuit += node->toString();
-    for( Connector* conn : m_connList )  circuit += conn->toString();
+    for( Connector* conn : m_connList ) circuit += conn->toString();
     circuit += "\n</circuit>";
 
     if( m_board && m_board->m_boardMode ) m_board->setBoardMode( true );
@@ -1116,7 +1116,7 @@ void Circuit::keyPressEvent( QKeyEvent* event )
         {
             for( Component* com : m_compList ) com->setSelected( true );
             for( Node*      nod : m_nodeList ) nod->setSelected( true );
-            for( Connector* con : m_connList  ) con->setSelected( true );
+            for( Connector* con : m_connList ) con->setSelected( true );
         }
         else if( key == Qt::Key_R )
         {

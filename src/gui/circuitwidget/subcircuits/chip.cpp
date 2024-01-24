@@ -64,7 +64,7 @@ Chip::Chip( QString type, QString id )
     m_label.setFont( f );
     m_label.setDefaultTextColor( QColor( 125, 125, 110 ) );
     m_label.setAcceptedMouseButtons( 0 );
-    m_label.setRotation( -90 );
+    m_label.setRotation(-90 );
     m_label.setVisible( true );
     
     setLabelPos( m_area.x(), m_area.y()-20, 0);
@@ -97,34 +97,8 @@ void Chip::initChip()
     QDomDocument domDoc = fileToDomDoc( fileNameAbs, "Chip::initChip" );
     QDomElement   root  = domDoc.documentElement();
 
-    if( root.tagName() == "packageB" )
-    {
-        if( m_pkgeFile.endsWith( "_LS.package" )) m_isLS = true;
-        else                                      m_isLS = false;
-
-        if( m_isLS ) m_color = m_lsColor;
-        else         m_color = m_icColor;
-
-        m_width   = root.attribute( "width" ).toInt();
-        m_height  = root.attribute( "height" ).toInt();
-        m_area = QRect( 0, 0, 8*m_width, 8*m_height );
-
-        for( Pin* pin : m_unusedPins ) if( pin ) deletePin( pin );
-        m_unusedPins.clear();
-        m_ePin.clear();
-        m_pin.clear();
-
-        if( root.hasAttribute("type") ) setSubcTypeStr( root.attribute("type") );
-        if( root.hasAttribute("background") ) setBackground( root.attribute("background") );
-        if( m_subcType >= Board ) setTransformOriginPoint( toGrid( boundingRect().center()) );
-        if( root.hasAttribute("name"))
-        {
-            QString name = root.attribute("name");
-            if( name.toLower() != "package" ) m_name = name;
-        }
-        initPackage( root );
-        setName( m_name );
-    }else{
+    if( root.tagName() == "packageB" ) initPackage( root );
+    else{
         qDebug() <<"Chip::initChip"<<"Error: Not valid Package file:\n"<< m_pkgeFile;
         m_error = 3;
         return;
@@ -143,6 +117,30 @@ void Chip::setName( QString name )
 
 void Chip::initPackage( QDomElement root )
 {
+    if( m_pkgeFile.endsWith( "_LS.package" )) m_isLS = true;
+    else                                      m_isLS = false;
+
+    if( m_isLS ) m_color = m_lsColor;
+    else         m_color = m_icColor;
+
+    m_width   = root.attribute( "width" ).toInt();
+    m_height  = root.attribute( "height" ).toInt();
+    m_area = QRect( 0, 0, 8*m_width, 8*m_height );
+
+    for( Pin* pin : m_unusedPins ) if( pin ) deletePin( pin );
+    m_unusedPins.clear();
+    m_ePin.clear();
+    m_pin.clear();
+
+    if( root.hasAttribute("type") ) setSubcTypeStr( root.attribute("type") );
+    if( root.hasAttribute("background") ) setBackground( root.attribute("background") );
+    if( m_subcType >= Board ) setTransformOriginPoint( toGrid( boundingRect().center()) );
+    if( root.hasAttribute("name"))
+    {
+        QString name = root.attribute("name");
+        if( name.toLower() != "package" ) m_name = name;
+    }
+
     int chipPos = 0;
     QDomNode node = root.firstChild();
     while( !node.isNull() )
@@ -165,6 +163,7 @@ void Chip::initPackage( QDomElement root )
         }
         node = node.nextSibling();
     }
+    setName( m_name );
     update();
 }
 
@@ -252,9 +251,9 @@ void Chip::findHelp()
     else                                m_help = MainWindow::self()->getHelp( m_name, false );
 }
 
-void Chip::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
+void Chip::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w )
 {
-    Component::paint( p, option, widget );
+    Component::paint( p, o, w );
 
     if( m_backPixmap ) p->drawPixmap( QRect(m_area.x(), m_area.y(), m_width*8, m_height*8), *m_backPixmap );
     else{

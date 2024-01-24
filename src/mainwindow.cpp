@@ -351,7 +351,7 @@ QString MainWindow::getDataFilePath( QString file )
         {
             QDir circuitDir = QFileInfo( circPath ).absoluteDir();
             path = circuitDir.absoluteFilePath("data/"+file );
-            if( QFileInfo::exists( path ) ) return path;          // File in Circuit data folder
+            if( QFileInfo::exists( path ) ) return path;      // File in Circuit data folder
         }
     }
     path = MainWindow::self()->getUserFilePath( file );       // File in user data folder

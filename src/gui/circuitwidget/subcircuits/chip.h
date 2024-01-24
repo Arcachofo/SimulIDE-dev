@@ -42,7 +42,7 @@ class Chip : public Component, public eElement
 
         void setBackData( std::vector<std::vector<int>>* d ) { m_backData = d; }
 
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w ) override;
 
     protected:
         virtual Pin* addPin( QString id, QString type, QString label,

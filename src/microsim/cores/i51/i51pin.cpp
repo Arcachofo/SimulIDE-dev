@@ -43,4 +43,5 @@ void I51Pin::ConfExtInt( uint8_t bits )
     bool fallEdge = getRegBitsBool( bits, m_extIntBits );
     m_extIntTrigger = fallEdge ? McuPin::pinFalling : McuPin::pinLow;
     m_extInt->setAutoClear( fallEdge );
+    voltChanged();
 }
