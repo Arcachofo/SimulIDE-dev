@@ -31,6 +31,9 @@ class DialWidget : public QWidget
         void setValue( int v );
         int value();
 
+        void setSingleStep( int s );
+        void setMaximum( int m );
+
         QAbstractSlider* dial() { return m_dial; }
 
     protected:

@@ -42,6 +42,18 @@ void DialWidget::setScale( double s )
     setSize( m_size*s );
 }
 
+void DialWidget::setSingleStep( int s )
+{
+    m_knob->setSingleStep( s );
+    if( m_slider ) m_slider->setSingleStep( s );
+}
+
+void DialWidget::setMaximum( int m )
+{
+    m_knob->setMaximum( m );
+    if( m_slider ) m_slider->setMaximum( m );
+}
+
 void DialWidget::setType( int type )
 {
     if( type == 0 ) // Knob
@@ -57,6 +69,8 @@ void DialWidget::setType( int type )
         {
             m_slider = new CustomSlider( this );
             m_slider->setFixedSize( double(m_size*2.5), 12 );
+            m_slider->setSingleStep( m_knob->singleStep() );
+            m_slider->setMaximum( m_knob->maximum() );
             m_verticalLayout->addWidget( m_slider );
         }
         m_dial = m_slider;

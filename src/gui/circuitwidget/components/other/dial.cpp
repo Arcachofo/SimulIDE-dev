@@ -112,11 +112,11 @@ void Dial::setSteps( int s )
     if( s < 2 ) s = 2;
     if( m_steps == s ) return;
     m_steps = s;
-    m_dialW.dial()->setMaximum( s-1 );
+    m_dialW.setMaximum( s-1 );
 
     int single = s/40;
     if( single < 1 ) single = 1;
-    m_dialW.dial()->setSingleStep( single );
+    m_dialW.setSingleStep( single );
 }
 
 /*void Dial::compSelected( Component* comp )
