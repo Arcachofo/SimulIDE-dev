@@ -99,6 +99,9 @@ Component* SubCircuit::construct( QString type, QString id )
     QString pkgFileLS = m_subcDir+"/"+name+"_LS.package";
     QString subcFile  = m_subcDir+"/"+name+".sim1";
 
+    // Package in sim file
+
+
     bool dip = QFile::exists( pkgeFile );
     bool ls  = QFile::exists( pkgFileLS );
 
@@ -141,7 +144,7 @@ Component* SubCircuit::construct( QString type, QString id )
     }
     if( m_error > 0 )
     {
-        Circuit::self()->compList()->remove( subcircuit );
+        Circuit::self()->compList()->removeOne( subcircuit );
         delete subcircuit;
         m_error = 0;
         return NULL;
@@ -300,7 +303,7 @@ void SubCircuit::loadSubCircuit( QString file )
                     }
                     if( comp->isMainComp() ) m_mainComponents[uid] = comp; // This component will add it's Context Menu and properties
 
-                    m_compList.insert( comp );
+                    m_compList.append( comp );
 
                     if( comp->m_linker ){
                         Linker* l = dynamic_cast<Linker*>(comp);
@@ -330,9 +333,8 @@ Pin* SubCircuit::addPin( QString id, QString type, QString label, int pos, int x
         QColor color = Qt::black;
         if( !m_isLS ) color = QColor( 250, 250, 200 );
 
-        Tunnel* tunnel = new Tunnel( "Tunnel", m_id+"-"+id );
-        Circuit::self()->compList()->remove( tunnel );
-        m_compList.insert( tunnel );
+        Tunnel* tunnel = new Tunnel("Tunnel", m_id+"-"+id );
+        m_compList.append( tunnel );
 
         QString pId = m_id+"-"+id;
         tunnel->setParentItem( this );

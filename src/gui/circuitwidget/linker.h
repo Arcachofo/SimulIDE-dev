@@ -29,7 +29,7 @@ class Linker
 
  static Linker* m_selecComp;
 
-        virtual void createLinks( QSet<Component*>* );
+        virtual void createLinks( QList<Component*>* );
         virtual void compSelected( Component* comp );
 
         void showLinked( bool show );

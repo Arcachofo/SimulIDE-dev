@@ -87,10 +87,11 @@ class Circuit : public QGraphicsScene
         Connector* getNewConnector() { return m_newConnector; }
 
         void addNode( Node* node );
+        void addComponent( Component* comp );
 
-        QSet<Component*>* compList() { return &m_compList; }
-        QSet<Connector*>* conList()  { return &m_connList; }
-        QSet<Node*>*      nodeList() { return &m_nodeList; }
+        QList<Component*>* compList() { return &m_compList; }
+        QList<Connector*>* conList()  { return &m_connList; }
+        QList<Node*>*      nodeList() { return &m_nodeList; }
         QHash<QString, CompBase*>* compMap() { return &m_compMap;}
 
         Component* getCompById( QString id );
@@ -178,9 +179,9 @@ class Circuit : public QGraphicsScene
         QPointF m_eventpoint;
         QPointF m_deltaMove;
 
-        QSet<Component*> m_compList;   // Component list
-        QSet<Connector*> m_connList;   // Connector list
-        QSet<Node*>      m_nodeList;   // Node list
+        QList<Component*> m_compList;   // Component list
+        QList<Connector*> m_connList;   // Connector list
+        QList<Node*>      m_nodeList;   // Node list
 
         SubPackage* m_board;
 
@@ -217,10 +218,10 @@ class Circuit : public QGraphicsScene
         circChange m_circChange;
         QList<circChange> m_undoStack;
 
-        QSet<CompBase*>  m_removedComps; // removed component list;
-        QSet<Connector*> m_oldConns;
-        QSet<Component*> m_oldComps;
-        QSet<Node*>      m_oldNodes;
+        QList<CompBase*>  m_removedComps; // removed component list;
+        QList<Connector*> m_oldConns;
+        QList<Component*> m_oldComps;
+        QList<Node*>      m_oldNodes;
         QMap<CompBase*, QString> m_compStrMap;
 };
 

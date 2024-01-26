@@ -352,11 +352,11 @@ void Connector::splitCon( int index, Pin* pin0, Pin* pin2 )
 
     QString id = "Connector-"+Circuit::self()->newConnectorId();
     Connector* con0 = new Connector( "Connector", id, m_startPin );
-    Circuit::self()->conList()->insert( con0 );
+    Circuit::self()->conList()->append( con0 );
 
     id = "Connector-"+Circuit::self()->newConnectorId();
     Connector* con1 = new Connector( "Connector", id, pin2 );
-    Circuit::self()->conList()->insert( con1 );
+    Circuit::self()->conList()->append( con1 );
 
     disconnectLines( index-1, index );
     Connector* con = con0;

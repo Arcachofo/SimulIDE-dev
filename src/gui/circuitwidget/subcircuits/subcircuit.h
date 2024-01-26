@@ -43,7 +43,7 @@ class SubCircuit : public Chip
         QHash<QString, Component*> m_mainComponents;
         static QString m_subcDir;      // Subcircuit Path
 
-        QSet<Component*>       m_compList;
+        QList<Component*>       m_compList;
         QList<Tunnel*>          m_subcTunnels;
         QHash<QString, Tunnel*> m_pinTunnels;
 };

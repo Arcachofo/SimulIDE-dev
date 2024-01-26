@@ -98,8 +98,7 @@ void CircuitView::dragEnterEvent( QDragEnterEvent* event )
             if( subC->subcType() < Chip::Board ) subC->setLogicSymbol( true );
         }
         m_circuit->clearSelection();
-        m_circuit->addItem( m_enterItem );
-        m_circuit->compList()->insert( m_enterItem );
+        m_circuit->addComponent( m_enterItem );
         m_circuit->saveCompChange( m_enterItem->getUid(), COMP_STATE_NEW, "" );
 
         m_enterItem->setPos( mapToScene( event->pos() ) );
