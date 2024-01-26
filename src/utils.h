@@ -7,6 +7,7 @@
 #define UTILS_H
 
 #include <QtMath>
+#include <QList>
 
 class QDomDocument;
 class QByteArray;
@@ -90,5 +91,14 @@ bool lessPinY( Pin* pinA, Pin* pinB );
 QPointF getPointF( QString p );
 QString getStrPointF( QPointF p );
 
+//---------------------------------------------------
+
+template <typename T>
+QList<T> substract( QList<T> &l0, QList<T> &l1 ) // returns l0-l1
+{
+    QList<T> list;
+    for( T el : l0 ) if( !l1.contains( el ) ) list.append( el );
+    return list;
+}
 #endif
 

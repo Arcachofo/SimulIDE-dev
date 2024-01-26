@@ -157,7 +157,8 @@ QDomDocument fileToDomDoc( const QString &fileName, const QString &caller )
     QFile file( fileName );
     if( !file.open( QFile::ReadOnly | QFile::Text) )
     {
-        MessageBoxNB( caller, "Cannot read file:\n"+fileName+"\n"+file.errorString() );
+        qDebug() << caller << "Error: Cannot read file:\n"+fileName+"\n"+file.errorString();
+        //MessageBoxNB( caller, "Cannot read file:\n"+fileName+"\n"+file.errorString() );
         return domDoc;
     }
     QString error;
@@ -165,8 +166,8 @@ QDomDocument fileToDomDoc( const QString &fileName, const QString &caller )
     int errorColumn=0;
     if( !domDoc.setContent( &file, false, &error, &errorLine, &errorColumn ) )
     {
-         MessageBoxNB( caller, "Cannot set file to DomDocument:\n\n"+fileName );
-         qDebug() << caller << "Cannot set file to DomDocument:\n"<<fileName<<"\nLine"<<errorLine<<errorColumn+"\n";
+         //MessageBoxNB( caller, "Cannot set file to DomDocument:\n\n"+fileName );
+         qDebug() << caller << "Error: Cannot set file to DomDocument:\n"<<fileName<<"\nLine"<<errorLine<<errorColumn+"\n";
          qDebug() << error;
          domDoc.clear();
     }
@@ -179,7 +180,8 @@ QString fileToString( const QString &fileName, const QString &caller )
     QFile file( fileName );
     if (!file.open( QFile::ReadOnly | QFile::Text) )
     {
-        MessageBoxNB( caller, "Cannot read file "+fileName+"\n"+file.errorString() );
+        qDebug() << caller << "Error: Cannot read file "+fileName+"\n"+file.errorString();
+        //MessageBoxNB( caller, "Cannot read file "+fileName+"\n"+file.errorString() );
         return "";
     }
     QTextStream in(&file);
