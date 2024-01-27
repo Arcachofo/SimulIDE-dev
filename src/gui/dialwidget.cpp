@@ -71,6 +71,7 @@ void DialWidget::setType( int type )
             m_slider->setFixedSize( double(m_size*2.5), 12 );
             m_slider->setSingleStep( m_knob->singleStep() );
             m_slider->setMaximum( m_knob->maximum() );
+            m_slider->setValue( m_knob->value() );
             m_verticalLayout->addWidget( m_slider );
         }
         m_dial = m_slider;

@@ -29,6 +29,9 @@ class Dial : public Dialed, public Linker
          int minVal() { return m_minVal; }
          virtual void setMinVal( int min );
 
+         int value();
+         void setValue( int v );
+
          int steps() { return m_steps; }
          void setSteps( int s );
 
