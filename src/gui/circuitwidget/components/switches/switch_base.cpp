@@ -93,7 +93,6 @@ void SwitchBase::onbuttonclicked()
 void SwitchBase::setKey( QString key )
 {
     if( key.size()>1 ) key = key.left( 1 );
-    if( key.isLower() ) key = key.toUpper();
     m_key = key;
     m_button->setText( key );
 }
