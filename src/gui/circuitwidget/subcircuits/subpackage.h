@@ -30,7 +30,12 @@ class SubPackage : public Chip, public Linker
         void setHeight( int height );
         
         QString package();
-        void setPackage( QString package );
+        void setPackage( QString pkgFile );
+
+        QString pins();
+        void setPins( QString p );
+
+        virtual QString toString() override;
 
         void setEventPin( Pin* pin ) { m_eventPin = pin; }
 
@@ -38,11 +43,11 @@ class SubPackage : public Chip, public Linker
         virtual void setSubcTypeStr( QString s ) override;
         virtual void setLogicSymbol( bool ls ) override;
 
-        virtual void remove() override;
+        //virtual void remove() override;
 
         virtual void compSelected( Component* comp ) override;  // Use link mechanism to select main components
 
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w ) override;
 
     //public slots:
         void invertPin( bool invert );

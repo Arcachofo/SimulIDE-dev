@@ -57,7 +57,7 @@ void CompBase::remPropGroup( QString name )
     {
         if( m_propGroups.at(i).name == name )
         {
-            for( ComProperty* p : m_propGroups.at(i).propList ) m_propHash.remove( p->name() );
+            for( ComProperty* p : m_propGroups.at(i).propList ) m_propHash.remove( p->name().toLower() );
             m_propGroups.removeAt(i);
             break;
 }   }   }
@@ -67,7 +67,15 @@ void CompBase::addPropGroup( propGroup pg, bool list )
     m_propGroups.append( pg );
 
     if( list )
-        for( ComProperty* p : pg.propList ) m_propHash[p->name()] = p;
+        for( ComProperty* p : pg.propList ) m_propHash[p->name().toLower()] = p;
+}
+
+void CompBase::prependPropGroup( propGroup pg, bool list )
+{
+    m_propGroups.prepend( pg );
+
+    if( list )
+        for( ComProperty* p : pg.propList ) m_propHash[p->name().toLower()] = p;
 }
 
 void CompBase::addProperty( QString group, ComProperty* p )
@@ -79,12 +87,13 @@ void CompBase::addProperty( QString group, ComProperty* p )
 
         pg.propList.append( p );
         m_propGroups.replace( i, pg );
-        m_propHash[p->name()] = p;
+        m_propHash[p->name().toLower()] = p;
         return;
 }   }
 
 void CompBase::removeProperty( QString prop )
 {
+    prop = prop.toLower();
     for( int i=0; i<m_propGroups.size(); ++i )
     {
         propGroup pg = m_propGroups.at(i);
@@ -100,7 +109,7 @@ void CompBase::removeProperty( QString prop )
 
 bool CompBase::setPropStr( QString prop, QString val )
 {
-    ComProperty* p = m_propHash.value( prop );
+    ComProperty* p = m_propHash.value( prop.toLower() );
     if( p ){
         p->setValStr( val );
         if( m_propDialog ) m_propDialog->updtValues();
@@ -110,7 +119,7 @@ bool CompBase::setPropStr( QString prop, QString val )
 }
 QString CompBase::getPropStr( QString prop )
 {
-    ComProperty* p = m_propHash.value( prop );
+    ComProperty* p = m_propHash.value( prop.toLower() );
     if( p ) return p->getValStr();
     return "";
 }

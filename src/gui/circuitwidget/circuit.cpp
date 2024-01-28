@@ -172,9 +172,12 @@ void Circuit::loadStrDoc( QString &doc )
     QList<Connector*> conList;    // Pasting Connector list
     QList<Node*> nodeList;        // Pasting node list
 
+    m_subPkg = NULL;
     m_newComp = NULL;
     Component* lastComp = NULL;
     QList<ShieldSubc*> shieldList;
+
+    QString pkg;
 
     int rev = 0;
     m_busy  = true;
@@ -232,8 +235,21 @@ void Circuit::loadStrDoc( QString &doc )
                 propName = "";
             }
         }
+        else if( line.contains("<pin") )
+        {
+            pkg.append( line.toString() );
+        }
+        else if( line.startsWith("</item") )  // End of Package item
+        {
+            if( !pkg.isEmpty() ){
+                if( m_subPkg ) m_subPkg->setPins( pkg );
+                pkg.clear();
+            }
+        }
         else if( line.startsWith("<item") )
         {
+            m_subPkg = NULL;
+
             QString uid, newUid, type, label, newNum;
 
             QStringRef name;
@@ -429,6 +445,8 @@ void Circuit::loadStrDoc( QString &doc )
                                 if( oldArduino && mcu ) mcu->setPropStr( propName, value );
                         }
                     }
+                    if( comp->itemType() == "Package" ) m_subPkg = static_cast<SubPackage*>(comp);
+
                     int number = comp->getUid().split("-").last().toInt();
                     if( number > m_seqNumber ) m_seqNumber = number;               // Adjust item counter: m_seqNumber
                     addItem( comp );
@@ -480,6 +498,7 @@ QString Circuit::circuitHeader()
     header += "animate=\""+QString::number( m_animate )+"\" >\n";
     return header;
 }
+
 QString Circuit::circuitToString()
 {
     if( m_board && m_board->m_boardMode ) m_board->setBoardMode( false );

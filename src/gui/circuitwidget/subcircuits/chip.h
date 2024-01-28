@@ -10,6 +10,7 @@
 #include "e-element.h"
 
 class QDomElement;
+class QDomNode;
 
 class Chip : public Component, public eElement
 {
@@ -28,6 +29,14 @@ class Chip : public Component, public eElement
         bool logicSymbol() { return m_isLS; }
         virtual void setLogicSymbol( bool ls );
 
+        QString pkgStr();
+        void setPkgStr( QString pkg );
+        void addPkgFile( QString pkgName, QString pkgFile );
+        void addPackage( QString pkgName, QString pkg );
+
+        virtual QStringList getEnumUids( QString="" ) override;
+        virtual QStringList getEnumNames( QString="" ) override;
+
         virtual void setBackground( QString bck ) override;
 
         QString name() { return m_name; }
@@ -45,6 +54,8 @@ class Chip : public Component, public eElement
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w ) override;
 
     protected:
+        void setPins( QDomNode &node );
+
         virtual Pin* addPin( QString id, QString type, QString label,
                              int pos, int xpos, int ypos, int angle, int length=8, int space=0 ){return NULL;}
 
@@ -54,7 +65,7 @@ class Chip : public Component, public eElement
         void addNewPin( QString id, QString type, QString label,
                         int pos, int xpos, int ypos, int angle, int length=8, int space=0 );
 
-        virtual void initChip();
+        //virtual void initChip();
         virtual void initPackage( QDomElement root );
 
         virtual void findHelp() override;
@@ -73,6 +84,10 @@ class Chip : public Component, public eElement
         QString m_name;
         QString m_pkgeFile;     // file containig package defs
         QString m_dataFile;
+
+        QMap<QString, QString> m_packages;
+        QStringList m_pkgNames;
+        QString m_package;
 
         QList<Pin*> m_unusedPins;
 
