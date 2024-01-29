@@ -75,7 +75,7 @@ Chip::~Chip()
     if( m_backPixmap ) delete m_backPixmap;
 }
 
-/*void Chip::initChip()
+void Chip::initChip()
 {
     m_error = 0;
 
@@ -97,26 +97,14 @@ Chip::~Chip()
     QDomDocument domDoc = fileToDomDoc( fileNameAbs, "Chip::initChip" );
     QDomElement   root  = domDoc.documentElement();
 
-    if( root.tagName() == "packageB" )
-    {
-        if( m_pkgeFile.endsWith( "_LS.package" ) ){
-            m_isLS = true;
-            m_package = "Logic Symbol";
-            m_color = m_lsColor;
-        }else{
-            m_isLS = false;
-            m_package = "DIP";
-            m_color = m_icColor;
-        }
-        initPackage( root );
-    }
+    if( root.tagName() == "packageB" ) initPackage( root );
     else{
         qDebug() <<"Chip::initChip"<<"Error: Not valid Package file:\n"<< m_pkgeFile;
         m_error = 3;
         return;
     }
     m_initialized = true;
-}*/
+}
 
 void Chip::setName( QString name )
 {
@@ -127,64 +115,16 @@ void Chip::setName( QString name )
     m_label.setX( ( m_area.width()/2-m_label.boundingRect().height()/2 ) );
 }
 
-void Chip::setLogicSymbol( bool ls )
-{
-    if( m_initialized && (m_isLS == ls) ) return;
-    m_isLS = ls;
-
-    if( ls ) m_color = m_lsColor;
-    else m_color = m_icColor;
-
-    Circuit::self()->update();
-}
-
-QString Chip::pkgStr()
-{
-    return m_package;
-}
-
-void Chip::setPkgStr( QString pkg )
-{
-    if( m_package == pkg ) return;
-    m_package = pkg;
-    m_isLS = (pkg == "Logic Symbol");
-    m_color = m_isLS ? m_lsColor : m_icColor;
-
-    QString package = m_packages.value( pkg );
-    QDomDocument domDoc = stringToDomDoc( package,"Chip::setPkgStr" );
-    QDomElement   root  = domDoc.documentElement();
-    Chip::initPackage( root );
-    Circuit::self()->update();
-}
-
-void Chip::addPkgFile( QString pkgName , QString pkgFile )
-{
-    QString pkg = fileToString( pkgFile, "Chip::addPackage" );
-    addPackage( pkgName , pkg );
-}
-
-void Chip::addPackage( QString pkgName, QString pkg )
-{
-    m_packages.insert( pkgName, pkg );
-    m_pkgNames.append( pkgName );
-}
-
-QStringList Chip::getEnumUids( QString prop )
-{
-    if( prop == "Package" ) return m_pkgNames;
-    return CompBase::getEnumUids( prop );
-}
-
-QStringList Chip::getEnumNames( QString prop )
-{
-    if( prop == "Package" ) return m_pkgNames;
-    return CompBase::getEnumUids( prop );
-}
-
 void Chip::initPackage( QDomElement root )
 {
-    m_width   = root.attribute("width").remove(" _Cells").toInt();
-    m_height  = root.attribute("height").remove(" _Cells").toInt();
+    if( m_pkgeFile.endsWith( "_LS.package" )) m_isLS = true;
+    else                                      m_isLS = false;
+
+    if( m_isLS ) m_color = m_lsColor;
+    else         m_color = m_icColor;
+
+    m_width   = root.attribute( "width" ).toInt();
+    m_height  = root.attribute( "height" ).toInt();
     m_area = QRect( 0, 0, 8*m_width, 8*m_height );
 
     for( Pin* pin : m_unusedPins ) if( pin ) deletePin( pin );
@@ -192,27 +132,17 @@ void Chip::initPackage( QDomElement root )
     m_ePin.clear();
     m_pin.clear();
 
-    if( root.hasAttribute("logic_symbol") ) setLogicSymbol( root.attribute("logic_symbol") == "true" );
-    if( root.hasAttribute("subctype")     ) setSubcTypeStr( root.attribute("subctype") );
-    else if( root.hasAttribute("type")    ) setSubcTypeStr( root.attribute("type") );
-    if( root.hasAttribute("background")   ) setBackground( root.attribute("background") );
+    if( root.hasAttribute("type") ) setSubcTypeStr( root.attribute("type") );
+    if( root.hasAttribute("background") ) setBackground( root.attribute("background") );
     if( m_subcType >= Board ) setTransformOriginPoint( toGrid( boundingRect().center()) );
-    if( root.hasAttribute("name") )
+    if( root.hasAttribute("name"))
     {
         QString name = root.attribute("name");
         if( name.toLower() != "package" ) m_name = name;
     }
 
-    QDomNode node = root.firstChild();
-    setPins( node );
-    setName( m_name );
-    update();
-    m_initialized = true;
-}
-
-void Chip::setPins( QDomNode &node )
-{
     int chipPos = 0;
+    QDomNode node = root.firstChild();
     while( !node.isNull() )
     {
         QDomElement element = node.toElement();
@@ -233,6 +163,8 @@ void Chip::setPins( QDomNode &node )
         }
         node = node.nextSibling();
     }
+    setName( m_name );
+    update();
 }
 
 void Chip::addNewPin( QString id, QString type, QString label, int pos, int xpos, int ypos, int angle, int length, int space )
@@ -260,6 +192,25 @@ void Chip::addNewPin( QString id, QString type, QString label, int pos, int xpos
         m_ePin.emplace_back( pin );
         m_pin.emplace_back( pin );
     }
+}
+
+void Chip::setLogicSymbol( bool ls )
+{
+    if( m_initialized && (m_isLS == ls) ) return;
+
+    if( Simulator::self()->isRunning() ) CircuitWidget::self()->powerCircOff();
+
+    /// Undo/Redo stack for Properties ??
+    /// Circuit::self()->addCompState( this, "Logic_Symbol" );
+    
+    if(  ls && m_pkgeFile.endsWith(".package"))    m_pkgeFile.replace( ".package", "_LS.package" );
+    if( !ls && m_pkgeFile.endsWith("_LS.package")) m_pkgeFile.replace( "_LS.package", ".package" );
+
+    m_error = 0;
+    Chip::initChip();
+    
+    if( m_error == 0 ) Circuit::self()->update();
+    /// else               Circuit::self()->unSaveState();
 }
 
 void Chip::setBackground( QString bck )

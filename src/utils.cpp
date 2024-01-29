@@ -150,21 +150,7 @@ QString findFile( QString dir, QString fileName )
 
 //---------------------------------------------------
 
-QDomDocument stringToDomDoc( QString content, QString caller )
-{
-    QDomDocument domDoc;
-    QString error;
-    if( !domDoc.setContent( content, false, &error ) )
-    {
-         //MessageBoxNB( caller, "Cannot set file to DomDocument:\n\n"+fileName );
-         qDebug() << caller << "Error: Cannot set string to DomDocument";
-         qDebug() << error;
-         domDoc.clear();
-    }
-    return domDoc;
-}
-
-QDomDocument fileToDomDoc( QString fileName, QString caller )
+QDomDocument fileToDomDoc( const QString &fileName, const QString &caller )
 {
     QDomDocument domDoc;
 
@@ -189,7 +175,7 @@ QDomDocument fileToDomDoc( QString fileName, QString caller )
     return domDoc;
 }
 
-QString fileToString( QString fileName, QString caller )
+QString fileToString( const QString &fileName, const QString &caller )
 {
     QFile file( fileName );
     if (!file.open( QFile::ReadOnly | QFile::Text) )
@@ -206,12 +192,12 @@ QString fileToString( QString fileName, QString caller )
     return text;
 }
 
-QStringList fileToStringList( QString fileName, QString caller )
+QStringList fileToStringList( const QString &fileName, const QString &caller )
 {
     return fileToString( fileName, caller ).split('\n');
 }
 
-QByteArray fileToByteArray( QString fileName, QString caller )
+QByteArray fileToByteArray( const QString &fileName, const QString &caller )
 {
     QByteArray ba;
 

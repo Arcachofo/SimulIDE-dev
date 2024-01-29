@@ -37,15 +37,14 @@ class CompBase
         virtual ~CompBase();
 
         void addPropGroup( propGroup pg, bool list=true );
-        void prependPropGroup( propGroup pg, bool list=true );
         void remPropGroup( QString name );
         void addProperty( QString group, ComProperty* p );
         void removeProperty( QString prop );
         void loadProperties( QDomElement* el );
         QList<propGroup>* properties() { return &m_propGroups; } // Circuit needs pointer bcos properties can change (ex: loadHex changes Config)
 
-        virtual QStringList getEnumUids( QString="" )  { return m_enumUids; }
-        virtual QStringList getEnumNames( QString="" ) { return m_enumNames; }
+        virtual QStringList getEnumUids( QString )  { return m_enumUids; }
+        virtual QStringList getEnumNames( QString ) { return m_enumNames; }
         int getEnumIndex( QString prop );
 
         virtual bool    setPropStr( QString prop, QString val );
@@ -56,10 +55,10 @@ class CompBase
         QString getUid() { return m_id; }
         void setUid( QString uid ) { m_id = uid; }
 
-        QString itemType() { return m_type; }
+        QString itemType()  { return m_type; }
         void setItemType( QString ) {;}
 
-        virtual bool isHidden() { return false; }
+        virtual bool isHidden() { return false;}
 
     protected:
         QString m_id;

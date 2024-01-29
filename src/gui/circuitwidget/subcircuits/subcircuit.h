@@ -20,8 +20,6 @@ class SubCircuit : public Chip
  static Component* construct( QString type, QString id );
  static LibraryItem* libraryItem();
 
-        virtual bool setPropStr( QString prop, QString val ) override;
-
         virtual void remove() override;
 
         virtual void setLogicSymbol( bool ls ) override;
@@ -48,7 +46,6 @@ class SubCircuit : public Chip
         QList<Component*>       m_compList;
         QList<Tunnel*>          m_subcTunnels;
         QHash<QString, Tunnel*> m_pinTunnels;
-
 };
 #endif
 

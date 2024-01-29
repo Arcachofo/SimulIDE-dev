@@ -25,7 +25,6 @@
 #include "module.h"
 
 #include "boolprop.h"
-#include "stringprop.h"
 
 #define tr(str) simulideTr("SubCircuit",str)
 
@@ -61,7 +60,7 @@ Component* SubCircuit::construct( QString type, QString id )
     }
     else{
         QDomDocument domDoc = fileToDomDoc( dataFile, "SubCircuit::construct");
-        if( domDoc.isNull() ) return NULL;
+        if( domDoc.isNull() ) return NULL; // m_error = 1;
 
         QDomElement root  = domDoc.documentElement();
         QDomNode    rNode = root.firstChild();
@@ -100,6 +99,9 @@ Component* SubCircuit::construct( QString type, QString id )
     QString pkgFileLS = m_subcDir+"/"+name+"_LS.package";
     QString subcFile  = m_subcDir+"/"+name+".sim1";
 
+    // Package in sim file
+
+
     bool dip = QFile::exists( pkgeFile );
     bool ls  = QFile::exists( pkgFileLS );
 
@@ -130,34 +132,14 @@ Component* SubCircuit::construct( QString type, QString id )
         return NULL;
     }else{
         Circuit::self()->m_createSubc = true;
-        subcircuit->loadSubCircuit( subcFile );
-        QStringList pkgList = subcircuit->getEnumUids("Package");
+        subcircuit->m_pkgeFile = pkgeFile;
+        subcircuit->initChip();
+        if( m_error == 0 ) subcircuit->loadSubCircuit( subcFile );
 
-        if( pkgList.isEmpty() ) // Packages in package files
-        {
-            if( dip ) subcircuit->addPkgFile("DIP", pkgeFile );
-            if( ls  ) subcircuit->addPkgFile("Logic Symbol", pkgFileLS );
-
-            pkgList = subcircuit->getEnumUids("Package");
-
-            if     ( ls  ) subcircuit->setPkgStr("Logic Symbol");
-            else if( dip ) subcircuit->setPkgStr("DIP");
-        }
-        else  // Packages listed in sim file
-        {
-            QStringList pkges = subcircuit->getEnumUids("Package");
-            if( pkges.contains("Logic Symbol") ) subcircuit->setPkgStr("Logic Symbol");
-            else                                 subcircuit->setPkgStr( pkges.at(0) );
-        }
-
-        if( pkgList.size() > 1 ) // there are more than 1 package, add "Package" property to choose
-        {
-            subcircuit->prependPropGroup( { tr("Main"), {
-            new StrProp <SubCircuit>("Package" ,tr("Package"), ""
-                                    , subcircuit, &SubCircuit::pkgStr, &SubCircuit::setPkgStr,propNoCopy,"enum" )
-            },groupNoCopy} );
-        }
-
+        if( dip && ls ) // If no both files exist, this prop. is not needed
+        subcircuit->addPropGroup( { tr("Main"), {
+        new BoolProp<SubCircuit>( "Logic_Symbol", tr("Logic Symbol"),"", subcircuit, &SubCircuit::logicSymbol, &SubCircuit::setLogicSymbol ),
+        },groupNoCopy} );
         Circuit::self()->m_createSubc = false;
     }
     if( m_error > 0 )
@@ -183,21 +165,10 @@ LibraryItem* SubCircuit::libraryItem()
 SubCircuit::SubCircuit( QString type, QString id )
           : Chip( type, id )
 {
-    m_package = "";
     m_lsColor = QColor( 235, 240, 255 );
     m_icColor = QColor( 20, 30, 60 );
 }
 SubCircuit::~SubCircuit(){}
-
-bool SubCircuit::setPropStr( QString prop, QString val )
-{
-    if( prop == "Logic_Symbol" ){
-        if( val == "true" ) setPkgStr("Logic Symbol");
-        else                setPkgStr("DIP");
-    }
-    else return CompBase::setPropStr( prop, val );
-    return true;
-}
 
 void SubCircuit::loadSubCircuit( QString file )
 {
@@ -220,8 +191,6 @@ void SubCircuit::loadSubCircuit( QString file )
     Circuit* circ = Circuit::self();
 
     QList<Linker*> linkList;   // Linked  Component list
-    QString pkg;               // Package inside sim file
-    QString pkgName;
 
     QVector<QStringRef> docLines = doc.splitRef("\n");
     for( QStringRef line : docLines )
@@ -284,11 +253,7 @@ void SubCircuit::loadSubCircuit( QString file )
                     if( !startPin ) qDebug()<<"\n   ERROR!!  SubCircuit::loadSubCircuit: "<<m_name<<m_id+" null startPin in "<<type<<uid<<startPinId;
                     if( !endPin )   qDebug()<<"\n   ERROR!!  SubCircuit::loadSubCircuit: "<<m_name<<m_id+" null endPin in "  <<type<<uid<<endPinId;
             }   }
-            else if( type == "Package" )
-            {
-                pkgName = label;
-                pkg.append( line.toString() );
-            }
+            else if( type == "Package" ) { ; }
             else{
                 Component* comp = NULL;
 
@@ -353,21 +318,7 @@ void SubCircuit::loadSubCircuit( QString file )
                         m_subcTunnels.append( tunnel );
                 }   }
                 else qDebug() << "SubCircuit:"<<m_name<<m_id<< "ERROR Creating Component: "<<type<<uid<<label;
-            }
-        }
-        else if( line.contains("<pin") )
-        {
-            if( !pkg.isEmpty() ) pkg.append( line.toString() );
-        }
-        else if( line.startsWith("</item") )  // End of Package item
-        {
-            if( !pkg.isEmpty() ){
-                pkg.append( line.toString() );
-                addPackage( pkgName, pkg );
-                pkg.clear();
-            }
-        }
-    }
+    }   }   }
     for( Linker* l : linkList ) l->createLinks( &m_compList );
 
     Circuit::self()->setFilePath( oldFilePath ); // Restore original filePath
@@ -458,8 +409,21 @@ Pin* SubCircuit::updatePin( QString id, QString type, QString label, int xpos, i
 
 void SubCircuit::setLogicSymbol( bool ls )
 {
-    Chip::setLogicSymbol( ls );
+    if( !m_initialized ) return;
+    if( m_isLS == ls ) return;
 
+    Chip::setLogicSymbol( ls );
+    if( m_isLS != ls ) return; // Change not done
+
+    if( m_isLS )               // Don't show unused Pins in LS
+    {
+        for( QString tNam : m_pinTunnels.keys() )
+        {
+            Tunnel* tunnel = m_pinTunnels.value( tNam );
+            Pin* pin = tunnel->getPin();
+            if( pin->unused() ) { pin->setVisible( false ); pin->setLabelText( "" ); }
+        }
+    }
     if( m_subcType >= Board ) // Don't show graphical components in LS if Board
     {
         for( Component* c : m_compList )

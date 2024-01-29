@@ -184,7 +184,6 @@ class Circuit : public QGraphicsScene
         QList<Node*>      m_nodeList;   // Node list
 
         SubPackage* m_board;
-        SubPackage* m_subPkg;
 
         QHash<QString, Pin*>      m_pinMap;   // Pin Id to Pin*
         QHash<QString, Pin*>      m_LdPinMap; // Pin Id to Pin* while loading/pasting/importing
