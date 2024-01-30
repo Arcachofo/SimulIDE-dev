@@ -21,12 +21,12 @@ void BoardSubc::attachShield( ShieldSubc* shield )
     if( !m_shields.contains( shield ) ) m_shields.append( shield );
 }
 
-void BoardSubc::remove()
+/*void BoardSubc::remove()
 {
     for( ShieldSubc* shield : m_shields ) // there is a shield attached to this
     {
         shield->setBoard( NULL );
-        Circuit::self()->removeComp( shield );
+        //Circuit::self()->removeComp( shield );
     }
     SubCircuit::remove();
-}
+}*/

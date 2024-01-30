@@ -19,7 +19,7 @@ class BoardSubc : public SubCircuit
         void attachShield( ShieldSubc* shield );
         void detachShield( ShieldSubc* shield ) { m_shields.removeAll( shield); }
 
-        virtual void remove() override;
+        //virtual void remove() override;
 
     protected:
         QList<ShieldSubc*> m_shields; // A shield attached to this

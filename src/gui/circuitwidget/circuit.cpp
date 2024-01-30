@@ -607,7 +607,7 @@ void Circuit::removeItems()                     // Remove Selected items
 
 void Circuit::removeComp( Component* comp )
 {
-    if( comp->parentItem() ) return; // subcircuit
+    //if( comp->parentItem() ) return; // subcircuit
     m_compRemoved = false;
     comp->remove();
     if( !m_compRemoved ) return;

@@ -28,14 +28,14 @@ ShieldSubc::ShieldSubc( QString type, QString id )
     setZValue( 1 );
 
     addPropGroup( {"Hidden", {
-new StrProp<ShieldSubc>( "BoardId" , "","", this, &ShieldSubc::boardId, &ShieldSubc::setBoardId )
+new StrProp<ShieldSubc>( "BoardId", "","", this, &ShieldSubc::boardId, &ShieldSubc::setBoardId )
     }, groupHidden} );
 }
 ShieldSubc::~ShieldSubc(){}
 
 void ShieldSubc::remove()
 {
-    if( m_board ) return;
+    //if( m_board ) return;
     SubCircuit::remove();
 }
 
@@ -68,7 +68,6 @@ void ShieldSubc::connectBoard()
     Component* comp = Circuit::self()->getCompById( m_boardId );
     if( comp && comp->itemType() == "Subcircuit" )
     {
-        //Circuit::self()->compList()->removeOne( this );
         m_board = static_cast<BoardSubc*>(comp);
         attachToBoard();
         setBoard( m_board );
@@ -76,40 +75,45 @@ void ShieldSubc::connectBoard()
 
 void ShieldSubc::slotAttach()
 {
+    double myZ = this->zValue();
+
     QList<QGraphicsItem*> list = this->collidingItems();
     QList<BoardSubc*> boardList;
     for( QGraphicsItem* it : list )
     {
-        if( it->type() != UserType+1 ) continue;    // not a Component
+        if( it->type() != UserType+1 ) continue;             // Not a Component
 
         Component* comp = qgraphicsitem_cast<Component*>( it );
-        if( !(comp->itemType() == "Subcircuit") ) continue;
+        if( !(comp->itemType() == "Subcircuit") ) continue;  // Not a Subcircuit
 
-        BoardSubc* board =  (BoardSubc*)comp;
-        if( board->subcType() < Board     ) continue;
-        if( it->zValue() > this->zValue() ) continue;
+        BoardSubc* board = (BoardSubc*)comp;
+        if( board->subcType() < Board ) continue;            // Not a Board
 
-        if( board->subcType() > Board )
-        {
+        if( board->subcType() > Board ){
             ShieldSubc* shield = static_cast<ShieldSubc*>(board);
-            if( m_shields.contains( shield ) ) continue;
+            if( m_shields.contains( shield ) ) continue;     // Is my child
         }
-        boardList.append( board );
+        double itZ = it->zValue();
+        if( itZ == myZ ){
+            int i=0;
+            for( Component* comp : *Circuit::self()->compList() ){
+                if     ( comp == this  ) myZ = i;
+                else if( comp == board ) itZ = i;
+                i++;
+            }
+        }
+        if( itZ > myZ ) continue;                            // Is above me
+
+        if( Simulator::self()->isRunning() ) CircuitWidget::self()->powerCircOff();
+        /// FIXME UNDOREDO: Circuit::self()->saveState();
+
+        m_circPos = this->pos();
+        m_board = board;           // The one with highest z value that is behind me
+        attachToBoard();
+        setBoard( board );
+        this->moveTo( m_boardPos );
+        break;
     }
-    if( boardList.isEmpty() ) return;
-
-    BoardSubc* myBoard = boardList.first();
-    for( BoardSubc* board : boardList )
-        if( board->zValue() > myBoard->zValue() ) myBoard = board;
-
-    if( Simulator::self()->isRunning() ) CircuitWidget::self()->powerCircOff();
-    /// FIXME UNDOREDO: Circuit::self()->saveState();
-
-    m_circPos = this->pos();
-    m_board = myBoard;
-    attachToBoard();
-    setBoard( myBoard );
-    this->moveTo( m_boardPos );
 }
 
 void ShieldSubc::attachToBoard()
