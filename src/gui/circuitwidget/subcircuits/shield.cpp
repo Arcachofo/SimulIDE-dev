@@ -45,14 +45,14 @@ void ShieldSubc::setBoard( BoardSubc* board )
     {
         m_boardId = board->getUid();
         board->attachShield( this );
-        //Circuit::self()->compList()->remove( this );
+        Circuit::self()->compList()->removeOne( this );
     }else{
         m_boardId = "";
         m_board->detachShield( this );
-        //Circuit::self()->compList()->insert( this );
+        Circuit::self()->compList()->append( this );
     }
     setParentItem( board );
-    m_attached = board  ? true : false;
+    m_attached = board ? true : false;
     m_board = board;
 }
 
@@ -77,28 +77,40 @@ void ShieldSubc::connectBoard()
 void ShieldSubc::slotAttach()
 {
     QList<QGraphicsItem*> list = this->collidingItems();
+    QList<BoardSubc*> boardList;
     for( QGraphicsItem* it : list )
     {
-        if( it->parentItem() ) continue;
         if( it->type() != UserType+1 ) continue;    // not a Component
 
-        Component* comp =  qgraphicsitem_cast<Component*>( it );
+        Component* comp = qgraphicsitem_cast<Component*>( it );
+        if( !(comp->itemType() == "Subcircuit") ) continue;
 
-        if( comp->itemType() == "Subcircuit" )
+        BoardSubc* board =  (BoardSubc*)comp;
+        if( board->subcType() < Board     ) continue;
+        if( it->zValue() > this->zValue() ) continue;
+
+        if( board->subcType() > Board )
         {
-            BoardSubc* board =  (BoardSubc*)comp;
-            if( board->subcType() < Board ) continue;
+            ShieldSubc* shield = static_cast<ShieldSubc*>(board);
+            if( m_shields.contains( shield ) ) continue;
+        }
+        boardList.append( board );
+    }
+    if( boardList.isEmpty() ) return;
 
-            if( Simulator::self()->isRunning() ) CircuitWidget::self()->powerCircOff();
-            /// FIXME UNDOREDO: Circuit::self()->saveState();
+    BoardSubc* myBoard = boardList.first();
+    for( BoardSubc* board : boardList )
+        if( board->zValue() > myBoard->zValue() ) myBoard = board;
 
-            m_circPos = this->pos();
-            m_board = board;
-            attachToBoard();
-            setBoard( board );
-            this->moveTo( m_boardPos );
-            break;
-}   }   }
+    if( Simulator::self()->isRunning() ) CircuitWidget::self()->powerCircOff();
+    /// FIXME UNDOREDO: Circuit::self()->saveState();
+
+    m_circPos = this->pos();
+    m_board = myBoard;
+    attachToBoard();
+    setBoard( myBoard );
+    this->moveTo( m_boardPos );
+}
 
 void ShieldSubc::attachToBoard()
 {

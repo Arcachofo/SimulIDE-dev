@@ -34,7 +34,15 @@ void ModuleSubc::setZVal( double v )
 
 void ModuleSubc::attachToBoard()
 {
-    m_boardPos = m_circPos - m_board->pos();
+    BoardSubc* board = m_board;
+    if( board->subcType() > Board )
+    {
+        ShieldSubc* shield = static_cast<ShieldSubc*>(board);
+        BoardSubc* parentBoard = shield->parentBoard();
+        if( parentBoard ) board = parentBoard;
+    }
+    m_boardPos = m_circPos - board->pos();
+    if( board != m_board ) m_boardPos -= m_board->pos();
 }
 
 void ModuleSubc::renameTunnels()

@@ -16,7 +16,9 @@ class ShieldSubc : public BoardSubc
 
         QString boardId() { return m_boardId; }
         void setBoardId( QString id ) { m_boardId = id; }
+
         void setBoard( BoardSubc* board );
+        BoardSubc* parentBoard() { return m_board; }
 
         void connectBoard();
 
