@@ -54,7 +54,8 @@ class SubPackage : public Chip, public Linker
         void setBoardMode( bool mode );
         void mainComp() { Linker::startLinking(); }
         void unusePin( bool unuse );
-        void pointPin( bool point );
+        void setPointPin( bool point );
+        void setBusPin( bool bus );
         void editPin();
         void deleteEventPin();
     
@@ -107,10 +108,10 @@ class EditDialog : public QDialog
     public:
         EditDialog( SubPackage* pack, Pin* eventPin, QWidget* parent = 0 );
 
-    private slots:
-        void invertPin( bool invert );
-
     private:
+        void setPointPin( bool p );
+        void setBusPin( bool b );
+
         SubPackage* m_package;
 
         QLabel*    m_nameLabel;
@@ -128,6 +129,7 @@ class EditDialog : public QDialog
         QCheckBox* m_invertCheckBox;
         QCheckBox* m_unuseCheckBox;
         QCheckBox* m_pointCheckBox;
+        QCheckBox* m_busCheckBox;
 };
 
 #endif

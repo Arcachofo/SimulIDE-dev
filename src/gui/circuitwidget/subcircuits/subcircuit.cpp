@@ -344,6 +344,7 @@ Pin* SubCircuit::addPin( QString id, QString type, QString label, int pos, int x
         tunnel->setName( pId ); // Make tunel name unique for this component
         tunnel->setPos( xpos, ypos );
         tunnel->setPacked( true );
+        if( type == "bus" ) tunnel->setIsbus( true );
         m_pinTunnels.insert( pId, tunnel );
 
         Pin* pin = tunnel->getPin();
@@ -369,13 +370,14 @@ Pin* SubCircuit::updatePin( QString id, QString type, QString label, int xpos, i
 {
     Pin* pin = NULL;
     Tunnel* tunnel = m_pinTunnels.value( m_id+"-"+id );
-    if( !tunnel )
-    {
+    if( !tunnel ){
         qDebug() <<"SubCircuit::updatePin Pin Not Found:"<<id<<type<<label;
         return NULL;
     }
     tunnel->setPos( xpos, ypos );
     tunnel->setRotated( angle >= 180 );      // Our Pins at left side
+
+    tunnel->setIsbus( type == "bus" );
 
     if     ( angle == 180) tunnel->setRotation( 0 );
     else if( angle == 90 ) tunnel->setRotation( -90 ); // QGraphicsItem 0º i at right side
@@ -390,8 +392,7 @@ Pin* SubCircuit::updatePin( QString id, QString type, QString label, int xpos, i
     if( type == "unused" || type == "nc" )
     {
         pin->setUnused( true );
-        if( m_isLS )
-        {
+        if( m_isLS ){
             pin->setVisible( false );
             pin->setLabelText( "" );
         }
