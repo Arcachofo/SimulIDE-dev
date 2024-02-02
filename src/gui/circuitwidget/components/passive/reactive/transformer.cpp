@@ -375,7 +375,7 @@ void Transformer::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QW
     Component::paint( p, option, widget );
 
     QPen pen = p->pen();
-    pen.setWidth(2.8);
+    pen.setWidthF( 2 );
     p->setPen(pen);
 
     for( int i=0; i<2; ++i )
@@ -404,6 +404,11 @@ void Transformer::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QW
     }
     p->drawLine(-2, 0,-2, 8*m_lenght );
     p->drawLine( 2, 0, 2, 8*m_lenght );
+
+    pen.setBrush( Qt::red );
+    pen.setWidthF( 2.8 );
+    p->setPen( pen );
+    p->drawLine( QPointF(-2, 0 ), QPointF(-2, 0.1) );
 
     Component::paintSelected( p );
 }
