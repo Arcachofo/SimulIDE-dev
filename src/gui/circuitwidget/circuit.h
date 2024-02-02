@@ -36,9 +36,6 @@ class Circuit : public QGraphicsScene
         bool drawGrid() { return !m_hideGrid; }
         void setDrawGrid( bool draw );
 
-        bool showScroll() { return m_showScroll; }
-        void setShowScroll( bool show );
-
         bool animate() { return m_animate; }
         void setAnimate( bool an );
 
@@ -165,7 +162,7 @@ class Circuit : public QGraphicsScene
         bool m_loading;
         bool m_conStarted;
         bool m_hideGrid;
-        bool m_showScroll;
+
         bool m_compRemoved;
         bool m_animate;
         bool m_changed;

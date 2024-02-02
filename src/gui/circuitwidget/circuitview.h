@@ -22,6 +22,9 @@ class CircuitView : public QGraphicsView
  static CircuitView* self() { return m_pSelf; }
  
         void clear();
+
+        bool showScroll() { return m_showScroll; }
+        void setShowScroll( bool show );
         
         void wheelEvent( QWheelEvent* event );
         void dragMoveEvent( QDragMoveEvent* event );
@@ -49,6 +52,8 @@ class CircuitView : public QGraphicsView
 
     private:
  static CircuitView*  m_pSelf;
+
+        bool m_showScroll;
 
         qreal m_scale;
         QString m_help;

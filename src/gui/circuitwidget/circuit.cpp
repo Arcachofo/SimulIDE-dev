@@ -64,7 +64,6 @@ Circuit::Circuit( qreal x, qreal y, qreal width, qreal height, CircuitView*  par
 
     m_backupPath = MainWindow::self()->getConfigPath("backup.sim1");
     m_hideGrid   = MainWindow::self()->settings()->value( "Circuit/hideGrid" ).toBool();
-    m_showScroll = MainWindow::self()->settings()->value( "Circuit/showScroll" ).toBool();
     m_filePath   = "";//qApp->applicationDirPath()+"/new.simu"; // AppImage tries to write in read olny filesystem
 
     connect( &m_bckpTimer, &QTimer::timeout,
@@ -1251,19 +1250,6 @@ void Circuit::setDrawGrid( bool draw )
     else             MainWindow::self()->settings()->setValue( "Circuit/hideGrid", "false" );
     update();
 }
-
-void Circuit::setShowScroll( bool show )
-{
-    m_showScroll = show;
-    if( show ){
-        m_graphicView->setHorizontalScrollBarPolicy( Qt::ScrollBarAlwaysOn );
-        m_graphicView->setVerticalScrollBarPolicy( Qt::ScrollBarAlwaysOn );
-        MainWindow::self()->settings()->setValue( "Circuit/showScroll", "true" );
-    }else{
-        m_graphicView->setHorizontalScrollBarPolicy( Qt::ScrollBarAlwaysOff );
-        m_graphicView->setVerticalScrollBarPolicy( Qt::ScrollBarAlwaysOff );
-        MainWindow::self()->settings()->setValue( "Circuit/showScroll", "false" );
-}   }
 
 void Circuit::setAnimate( bool an )
 {

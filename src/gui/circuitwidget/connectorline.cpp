@@ -117,12 +117,7 @@ bool ConnectorLine::isDiagonal() { return ( fabs(m_p2X - m_p1X)>0 && fabs(m_p2Y 
 
 void ConnectorLine::move( QPointF delta )
 {
-    // If contiguous lines are also selected, just move line.
-    bool moveSimple = false;
-    /* !( ( m_prevLine && !(m_prevLine->isSelected()) )
-                       ||( m_nextLine && !(m_nextLine->isSelected()) ));*/
-                       
-    if( Circuit::self()->pasting() || moveSimple )
+    if( Circuit::self()->pasting() )
     {
         prepareGeometryChange();
         m_p1Y = m_p1Y + delta.y();
@@ -147,13 +142,11 @@ void ConnectorLine::moveLine( QPoint delta )
 {
     prepareGeometryChange();
 
-    if( dx() != 0 )
-    {
+    if( dx() != 0 ){
        m_p1Y = m_p1Y + delta.y();
        m_p2Y = m_p2Y + delta.y();
     }
-    if( dy() != 0 )
-    {
+    if( dy() != 0 ){
        m_p1X = m_p1X + delta.x();
        m_p2X = m_p2X + delta.x();
     }
@@ -161,8 +154,7 @@ void ConnectorLine::moveLine( QPoint delta )
 
 void ConnectorLine::updateNext()
 {
-    if( m_nextLine ) 
-    {
+    if( m_nextLine ){
         m_nextLine->sSetP1( QPoint( m_p2X, m_p2Y) );
         m_nextLine->updatePos();
     }
@@ -170,8 +162,7 @@ void ConnectorLine::updateNext()
 
 void ConnectorLine::remove() 
 { 
-    if( !isSelected() )
-    {
+    if( !isSelected() ){
         Circuit::self()->clearSelection();
         setSelected( true );
     }
@@ -221,9 +212,9 @@ bool ConnectorLine::connectToWire( QPoint point1 )
      || ( dx() == 0 && fabs( point1.y()-m_p2Y ) < 8 ) )
      && ( myindex != m_pConnector->lineList()->size()-1 ) )
     {
-    if( myindex == m_pConnector->lineList()->size()-1 ) return false;
-    point1 = p2();
-    index = myindex+1;
+        if( myindex == m_pConnector->lineList()->size()-1 ) return false;
+        point1 = p2();
+        index = myindex+1;
     }
     else if((( dy() == 0 && fabs( point1.x()-m_p1X ) < 8 ) // point near the p1 corner
           || ( dx() == 0 && fabs( point1.y()-m_p1Y ) < 8 ) )
@@ -367,16 +358,6 @@ void ConnectorLine::paint( QPainter* p, const QStyleOptionGraphicsItem* option, 
     {
         if( m_pConnector->getVoltage() > 2.5 ) color = QColor( 200, 50, 50  );
         else                                   color = QColor( 50,  50, 200 );
-        //int volt = 50*int( m_pConnector->getVoltage() );
-        //if( volt > 250 )volt = 250;
-        //if( volt < 0 ) volt = 0;
-
-        /*if( m_pConnector->endPin()
-        && (m_pConnector->startPin()->changed()
-        ||  m_pConnector->endPin()->changed()) )
-        { pen.setWidth(3); }*/
-
-        //color = QColor( volt, 50, 250-volt);
     }
     else color = QColor( 40, 40, 60 /*Qt::black*/ );
 

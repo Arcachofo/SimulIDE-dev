@@ -38,13 +38,8 @@ CircuitView::CircuitView( QWidget *parent )
 
     //viewport()->setFixedSize( 3200, 2400 );
     bool scrollBars = MainWindow::self()->settings()->value( "Circuit/showScroll" ).toBool();
-    if( scrollBars ){
-        setHorizontalScrollBarPolicy( Qt::ScrollBarAlwaysOn );
-        setVerticalScrollBarPolicy(   Qt::ScrollBarAlwaysOn );
-    }else{
-        setHorizontalScrollBarPolicy( Qt::ScrollBarAlwaysOff );
-        setVerticalScrollBarPolicy(   Qt::ScrollBarAlwaysOff );
-    }
+    setShowScroll( scrollBars );
+
     //setViewportUpdateMode( QGraphicsView::FullViewportUpdate );
     //setCacheMode( CacheBackground );
     //setRenderHint( QPainter::Antialiasing );
@@ -59,8 +54,7 @@ CircuitView::~CircuitView() { }
 
 void CircuitView::clear()
 {
-    if( m_circuit ) 
-    {
+    if( m_circuit ){
         m_circuit->clearCircuit();
         m_circuit->deleteLater();
     }
@@ -71,6 +65,19 @@ void CircuitView::clear()
     m_enterItem = NULL;
     centerOn( 0, 0 );
 }
+
+void CircuitView::setShowScroll( bool show )
+{
+    m_showScroll = show;
+    if( show ){
+        setHorizontalScrollBarPolicy( Qt::ScrollBarAlwaysOn );
+        setVerticalScrollBarPolicy( Qt::ScrollBarAlwaysOn );
+        MainWindow::self()->settings()->setValue( "Circuit/showScroll", "true" );
+    }else{
+        setHorizontalScrollBarPolicy( Qt::ScrollBarAlwaysOff );
+        setVerticalScrollBarPolicy( Qt::ScrollBarAlwaysOff );
+        MainWindow::self()->settings()->setValue( "Circuit/showScroll", "false" );
+}   }
 
 void CircuitView::wheelEvent( QWheelEvent* event )
 {
