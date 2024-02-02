@@ -25,6 +25,8 @@ AvrCore::AvrCore( eMcu* mcu )
         m_rampzAddr = m_mcu->getRegAddress( "RAMPZ" );
     }
     else RAMPZ = NULL;
+
+    m_retCycles = 4; // In AVR only used for Jump to ISR
 }
 AvrCore::~AvrCore() {}
 
