@@ -521,6 +521,11 @@ void CodeEditor::loadConfig()
                 delete m_compiler;
             }
             m_compiler = EditorWindow::self()->createDebugger( compiler, this );
+
+            if( m_compiler ){
+                m_compiler->setFamily( BaseDebugger::getValue( line, "family" ) );
+                m_compiler->setDevice( BaseDebugger::getValue( line, "device" ) );
+            }
         }
         return;
     }//---------------------------------------------------------------------------
