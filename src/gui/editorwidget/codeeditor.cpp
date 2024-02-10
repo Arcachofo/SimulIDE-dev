@@ -78,25 +78,42 @@ CodeEditor::CodeEditor( QWidget* parent, OutPanelText* outPane )
     highlightCurrentLine();
 
     addPropGroup( { "type", {
-new StrProp <CodeEditor>("itemtype" ,"","", this, &CodeEditor::itemType, &CodeEditor::setItemType ),
-    }, groupHidden} );
+        new StrProp <CodeEditor>("itemtype" ,"",""
+                                , this, &CodeEditor::itemType, &CodeEditor::setItemType ),
+            }, groupHidden} );
 
-    addPropGroup( { tr("File Settings"), {
-new StrProp <CodeEditor>("Compiler"    , tr("Compiler")     ,"", this, &CodeEditor::compName,    &CodeEditor::setCompName, 0, "enum"),
-new BoolProp<CodeEditor>("SaveAtClose", tr("Save Settings at file close"),"", this
-                        , &CodeEditor::saveAtClose, &CodeEditor::setSaveAtClose ),
-new ComProperty("", "separator","","",0),
-new ComProperty("", tr("Actions after opening this file:"),"","",0),
-new BoolProp<CodeEditor>("LoadCompiler", tr("Load Compiler")   ,"", this, &CodeEditor::loadCompiler, &CodeEditor::setLoadCompiler ),
-new BoolProp<CodeEditor>("LoadBreakp"  , tr("Load Breakpoints"),"", this, &CodeEditor::loadBreakp,   &CodeEditor::setLoadBreakp ),
-new BoolProp<CodeEditor>("OpenFiles"   , tr("Restore files")   ,"", this, &CodeEditor::openFiles,    &CodeEditor::setOpenFiles ),
+            addPropGroup( { tr("File Settings"), {
+        new StrProp <CodeEditor>("Compiler", tr("Compiler"),""
+                                , this, &CodeEditor::compName,    &CodeEditor::setCompName, 0, "enum"),
+
+        new BoolProp<CodeEditor>("SaveAtClose", tr("Save Settings at file close"),"", this
+                                , &CodeEditor::saveAtClose, &CodeEditor::setSaveAtClose ),
+
+        new ComProperty("", "separator","","",0),
+        new ComProperty("", tr("Actions after opening this file:"),"","",0),
+
+        new BoolProp<CodeEditor>("LoadCompiler", tr("Load Compiler")   ,""
+                                , this, &CodeEditor::loadCompiler, &CodeEditor::setLoadCompiler ),
+
+        new BoolProp<CodeEditor>("LoadBreakp"  , tr("Load Breakpoints"),""
+                                , this, &CodeEditor::loadBreakp,   &CodeEditor::setLoadBreakp ),
+
+        new BoolProp<CodeEditor>("OpenFiles"   , tr("Restore files")   ,""
+                                , this, &CodeEditor::openFiles,    &CodeEditor::setOpenFiles ),
     }, 0} );
 
     addPropGroup( { "Hidden", {
-new StrProp <CodeEditor>("File"     , "File"         ,"", this, &CodeEditor::getFile,     &CodeEditor::dummySetter, 0 ),
-new StrProp <CodeEditor>("Circuit"  , "Circuit"      ,"", this, &CodeEditor::circuit,     &CodeEditor::setCircuit, 0 ),
-new StrProp <CodeEditor>("FileList" , "FileList"     ,"", this, &CodeEditor::fileList,    &CodeEditor::setFileList, 0 ),
-new StrProp <CodeEditor>("Breakpoints", "Breakpoints","", this, &CodeEditor::breakpoints, &CodeEditor::setBreakpoints, 0 ),
+//new StrProp <CodeEditor>("File", "File",""
+//                        , this, &CodeEditor::getFile, &CodeEditor::dummySetter, 0 ),
+
+new StrProp <CodeEditor>("Circuit", "Circuit",""
+                        , this, &CodeEditor::circuit, &CodeEditor::setCircuit, 0 ),
+
+new StrProp <CodeEditor>("FileList", "FileList",""
+                        , this, &CodeEditor::fileList, &CodeEditor::setFileList, 0 ),
+
+new StrProp <CodeEditor>("Breakpoints", "Breakpoints",""
+                        , this, &CodeEditor::breakpoints, &CodeEditor::setBreakpoints, 0 ),
     }, groupHidden} );
 }
 CodeEditor::~CodeEditor()
@@ -141,10 +158,18 @@ void CodeEditor::setCompName( QString name )
 QString CodeEditor::circuit()
 {
     if( !m_openFiles ) return "";
-    return Circuit::self()->getFilePath();
+    QString file = Circuit::self()->getFilePath();
+    QDir fileDir = QFileInfo( m_file ).absoluteDir();
+    file = fileDir.relativeFilePath( file );
+    return file;
 }
 void CodeEditor::setCircuit( QString c )
-{ if( m_openFiles ) Circuit::self()->loadCircuit( c ); }
+{
+    if( !m_openFiles ) return;
+    QDir fileDir = QFileInfo( m_file ).absoluteDir();
+    c = fileDir.absoluteFilePath( c );
+    Circuit::self()->loadCircuit( c );
+}
 
 QString CodeEditor::breakpoints()
 {
@@ -165,9 +190,17 @@ void CodeEditor::setBreakpoints( QString bp )
 QString CodeEditor::fileList()
 {
     if( !m_openFiles ) return "";
-    QStringList fileList = EditorWindow::self()->getFiles();
-    fileList.removeAll( m_file );
-    return fileList.join(",");
+    QStringList list = EditorWindow::self()->getFiles();
+
+    QString files;
+    QDir fileDir = QFileInfo( m_file ).absoluteDir();
+    for( QString file : list )
+    {
+        if( file == m_file ) continue;
+        file = fileDir.relativeFilePath( file );
+        files.append( file+",");
+    }
+    return files;
 }
 
 void CodeEditor::setFileList( QString fl )
@@ -175,7 +208,13 @@ void CodeEditor::setFileList( QString fl )
     if( !m_openFiles ) return;
     QStringList fileList = fl.split(",");
     fileList.removeOne("");
-    for( QString file : fileList ) EditorWindow::self()->restoreFile( file );
+
+    QDir fileDir = QFileInfo( m_file ).absoluteDir();
+    for( QString file : fileList )
+    {
+        file = fileDir.absoluteFilePath( file );
+        EditorWindow::self()->restoreFile( file );
+    }
 }
 
 void CodeEditor::setFile( QString filePath )

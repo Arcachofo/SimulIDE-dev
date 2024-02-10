@@ -72,12 +72,13 @@ CircuitWidget::CircuitWidget( QWidget *parent  )
     createActions();
     updateRecentFileActions();
     createToolBars();
-    
-    QString appPath = QCoreApplication::applicationDirPath();
-    
-    m_lastCircDir = MainWindow::self()->settings()->value("lastCircDir").toByteArray();
-    if( m_lastCircDir.isEmpty() )  m_lastCircDir = appPath + "..share/simulide/examples";
 
+    m_lastCircDir = MainWindow::self()->settings()->value("lastCircDir").toByteArray();
+    if( m_lastCircDir.isEmpty() )
+    {
+        QString appPath = QCoreApplication::applicationDirPath();
+        m_lastCircDir = appPath + "./data/examples";
+    }
     m_infoWidget->setRate();
 }
 CircuitWidget::~CircuitWidget() { }
