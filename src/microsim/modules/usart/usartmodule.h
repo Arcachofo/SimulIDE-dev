@@ -57,7 +57,7 @@ class UsartModule
         virtual void setRxFlags( uint16_t frame ){;}
 
         void openMonitor( QString id, int num=0, bool send=false );
-        void monitorClosed();
+        virtual void monitorClosed();
 
         uint8_t m_mode;
         uint8_t m_stopBits;

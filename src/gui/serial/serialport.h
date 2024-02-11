@@ -54,7 +54,7 @@ class SerialPort : public Component, public UsartModule, public eElement
 
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
 
-    public slots:
+    //public slots:
         void onbuttonclicked();
         void slotClose();
         void slotOpenTerm();

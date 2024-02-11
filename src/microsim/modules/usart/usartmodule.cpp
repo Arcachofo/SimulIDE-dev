@@ -69,7 +69,7 @@ void UsartModule::byteReceived( uint8_t data )
     if( m_monitor ) m_monitor->printIn( data );
 }
 
-void UsartModule::openMonitor(QString id, int num, bool send )
+void UsartModule::openMonitor( QString id, int num, bool send )
 {
     if( !m_monitor )
         m_monitor = new SerialMonitor( CircuitWidget::self(), this, send );

@@ -45,7 +45,7 @@ SerialTerm::SerialTerm( QString type, QString id )
 {
     m_graphical = true;
 
-    m_area = QRect(-16,-16, 32, 32 );
+    m_area = QRect(-16,-16, 64, 32 );
     setLabelPos(-20,-32 );
 
     m_pin.resize(2);
@@ -60,6 +60,22 @@ SerialTerm::SerialTerm( QString type, QString id )
     pinRx->setLabelText( "Rx" );
     m_pin[1] = pinRx;
     m_receiver->setPins( {pinRx} );
+
+    m_button = new CustomButton( );
+    m_button->setMaximumSize( 36, 20 );
+    m_button->setGeometry(-36,-20, 36, 20 );
+    m_button->setCheckable( true );
+    m_button->setText( "Open" );
+
+    QFont font = m_button->font();
+    font.setFamily( MainWindow::self()->defaultFontName() );
+    font.setPixelSize(12);
+    m_button->setFont( font );
+    QObject::connect( m_button, &CustomButton::clicked  , [=](){ onbuttonclicked(); });
+
+    m_proxy = Circuit::self()->addWidget( m_button );
+    m_proxy->setParentItem( this );
+    m_proxy->setPos( QPoint( 8,-10) );
 
     m_sending   = false;
     m_receiving = false;
@@ -135,6 +151,12 @@ void SerialTerm::frameSent( uint8_t data )
     else m_sending = false;
 }
 
+void SerialTerm::onbuttonclicked()
+{
+    if( m_button->isChecked() ) slotOpenTerm();
+    else                        m_monitor->close();
+}
+
 void SerialTerm::slotOpenTerm()
 {
     openMonitor( m_id, 0, /*send=*/true );
@@ -144,6 +166,12 @@ void SerialTerm::slotOpenTerm()
 void SerialTerm::setSerialMon( bool s )
 {
     if( s ) slotOpenTerm();
+}
+
+void SerialTerm::monitorClosed()
+{
+    UsartModule::monitorClosed();
+    m_button->setChecked( false );
 }
 
 void SerialTerm::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
