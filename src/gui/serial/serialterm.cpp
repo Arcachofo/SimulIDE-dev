@@ -77,9 +77,6 @@ SerialTerm::SerialTerm( QString type, QString id )
     m_proxy->setParentItem( this );
     m_proxy->setPos( QPoint( 8,-10) );
 
-    m_sending   = false;
-    m_receiving = false;
-
     setBaudRate( 9600 );
 
     Simulator::self()->addToUpdateList( this );
@@ -174,6 +171,13 @@ void SerialTerm::monitorClosed()
     m_button->setChecked( false );
 }
 
+void SerialTerm::setflip()
+{
+    Component::setflip();
+    m_proxy->setPos( QPoint( 8 + ( m_Hflip>0 ? 0 : m_button->width() ),-10 + ( m_Vflip>0 ? 0 : m_button->height() ) ) );
+    m_proxy->setTransform( QTransform::fromScale( m_Hflip, m_Vflip ) );
+}
+
 void SerialTerm::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
 {
     QAction* openSerMon = menu->addAction( QIcon(":/terminal.svg"),tr("Open Serial Monitor.") );
@@ -183,9 +187,9 @@ void SerialTerm::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu
     Component::contextMenu( event, menu );
 }
 
-void SerialTerm::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
+void SerialTerm::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w )
 {
-    Component::paint( p, option, widget );
+    Component::paint( p, o, w );
     
     p->setBrush( Qt::darkBlue );
     p->drawRoundedRect( m_area, 4, 4 );

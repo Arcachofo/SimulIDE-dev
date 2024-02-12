@@ -45,13 +45,14 @@ class SerialTerm : public Component, public UsartModule, public eElement
 
         virtual void monitorClosed() override;
 
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w ) override;
 
     //public slots:
         void onbuttonclicked();
         void slotOpenTerm();
 
     protected:
+        virtual void setflip() override;
         virtual void contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu ) override;
 
     private:
