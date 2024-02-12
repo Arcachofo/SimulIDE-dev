@@ -40,7 +40,7 @@ InoDebugger::InoDebugger( CodeEditor* parent, OutPanelText* outPane )
             << tr("custom");
 
     addProperty( tr("Compiler Settings"),
-    new StrProp<Compiler>("InclPath", tr("Libraries Path"),"", this
+    new StrProp<Compiler>("InclPath", tr("Custom Library Path"),"", this
                            , &Compiler::includePath, &Compiler::setIncludePath, 0,"path") );
 
     addFilePropHead();
