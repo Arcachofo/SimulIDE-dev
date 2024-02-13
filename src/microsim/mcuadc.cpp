@@ -50,7 +50,10 @@ void McuAdc::startConversion()
 
     updtVref();
 
-    double volt = m_adcPin[m_channel+m_chOffset]->getVoltage() - m_vRefN;
+    double volt = 0;
+    if( m_channel < m_adcPin.size() )
+        volt = m_adcPin[m_channel+m_chOffset]->getVoltage() - m_vRefN;
+
     if( volt < 0       ) volt = 0;
     if( volt > m_vRefP ) volt = m_vRefP;
 
