@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>305</width>
-    <height>25</height>
+    <height>29</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -18,6 +18,9 @@
   </property>
   <property name="windowTitle">
    <string notr="true">Form</string>
+  </property>
+  <property name="autoFillBackground">
+   <bool>false</bool>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
    <property name="leftMargin">
@@ -46,24 +49,7 @@
     </widget>
    </item>
    <item>
-    <widget class="QLineEdit" name="colorW">
-     <property name="mouseTracking">
-      <bool>false</bool>
-     </property>
-     <property name="acceptDrops">
-      <bool>false</bool>
-     </property>
-     <property name="readOnly">
-      <bool>true</bool>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QComboBox" name="valueBox">
-     <property name="sizeAdjustPolicy">
-      <enum>QComboBox::AdjustToContents</enum>
-     </property>
-    </widget>
+    <widget class="QLineEdit" name="colorW"/>
    </item>
    <item>
     <widget class="QRadioButton" name="showVal">

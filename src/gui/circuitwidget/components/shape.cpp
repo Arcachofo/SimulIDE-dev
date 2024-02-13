@@ -40,8 +40,8 @@ new DoubProp<Shape>("Z_Value", tr("Z Value"), ""
     },0} );
 
     addPropGroup( { tr("Color"), {
-new StrProp <Shape>("Color", tr("Color"), ""
-                   , this, &Shape::colorStr, &Shape::setColorStr,0,"color" ),
+new StrProp<Shape>("Color", tr("Color"), ""
+                  , this, &Shape::colorStr, &Shape::setColorStr,0,"color" ),
 
 new DoubProp<Shape>("Opacity", tr("Opacity"), ""
                    , this, &Shape::opac, &Shape::setOpac )

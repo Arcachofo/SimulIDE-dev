@@ -86,7 +86,7 @@ new IntProp <TextComponent>("Border", tr("Border"),"_px"
                            , this, &TextComponent::border, &TextComponent::setBorder,0,"uint" ),
 
 new StrProp <TextComponent>("Color", tr("Background Color"),""
-                           , this, &TextComponent::colorStr,&TextComponent::setColorStr ),
+                           , this, &TextComponent::colorStr,&TextComponent::setColorStr,0,"color" ),
 
 new DoubProp<TextComponent>("Opacity", tr("Opacity"),""
                            , this, &TextComponent::opac, &TextComponent::setOpac )

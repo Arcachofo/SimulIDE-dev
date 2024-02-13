@@ -23,10 +23,14 @@ class ColorVal : public PropVal, private Ui::ColorVal
         virtual void setup( bool ) override;
         virtual void updtValues() override;
 
-    public slots:
-        void on_valueBox_activated( int index );
+        bool eventFilter( QObject* object, QEvent* event) override;
+
+    //public slots:
+
 
     private:
+        void changeColor();
+
         QColor m_color;
 
         bool m_blocked;
