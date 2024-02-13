@@ -279,7 +279,9 @@ void Mcu::stamp()
             m_portRstPin->controlPin( true, true );
             m_portRstPin->setPinMode( input );
         }
-        m_resetPin->warning( !m_resetPin->connector() );
+        bool resetWarning = !m_resetPin->connector();
+        m_resetPin->warning( resetWarning );
+        if( resetWarning ) qDebug() << "    Warning!!"<<idLabel()<<"Reset pin not connected:\n";
     }
     else m_eMcu.start();
 

@@ -268,7 +268,7 @@ void Simulator::createNodes()
             if( !pinList.contains(pinId) ) pinList.append( pinId );
         }
     }
-    qDebug() <<"  Created      "<< i << "\teNodes"<<pinList.size()<<"Pins";
+    /// qDebug() <<"  Created      "<< i << "\teNodes"<<pinList.size()<<"Pins";
 }
 
 void Simulator::startSim( bool paused )
@@ -284,7 +284,7 @@ void Simulator::startSim( bool paused )
 
     createNodes();
 
-    qDebug() <<"  Initializing "<< m_elementList.size() << "\teElements";
+    /// qDebug() <<"  Initializing "<< m_elementList.size() << "\teElements";
     for( eElement* el : m_elementList )    // Initialize all Elements
     {                                      // This can create new eNodes
         //qDebug() << "initializing  "<< el->getId();
@@ -293,7 +293,7 @@ void Simulator::startSim( bool paused )
         el->added = false;
     }
 
-    qDebug() <<"  Initializing "<< m_eNodeList.size()<< "\teNodes";
+    /// qDebug() <<"  Initializing "<< m_eNodeList.size()<< "\teNodes";
     for( int i=0; i<m_eNodeList.size(); i++ )         // Initialize eNodes
     {
         eNode* enode = m_eNodeList.at(i);
@@ -305,18 +305,18 @@ void Simulator::startSim( bool paused )
 
     m_matrix->createMatrix( m_eNodeList );
 
-    qDebug() << "\nCircuit Matrix looks good";
+    /// qDebug() << "\nCircuit Matrix looks good";
 
-    double sps100 = 100*(double)m_psPerSec/1e12; // Speed %
+    /*double sps100 = 100*(double)m_psPerSec/1e12; // Speed %
 
     qDebug()  << "\nSpeed:" <<         sps100      << "%"
               << "\nSpeed:" << (double)m_psPerSec  << "\tps per Sec"
               << "\nFPS:  " <<         m_fps       << "\tFrames per Sec"
               << "\nFrame:" << (double)m_psPF      << "\tps per Frame"
               << "\nNonLi:" << (double)m_maxNlstp  << "\tMax Iterations"
-              << "\nReact:" << (double)m_reactStep << "\tps Reactive step";
+              << "\nReact:" << (double)m_reactStep << "\tps Reactive step";*/
 
-    qDebug() << "\n    Simulation Running... \n";
+    qDebug() << "    Simulation Running... \n";
 
     if( paused ) // We are debugging
     {
@@ -343,6 +343,7 @@ void Simulator::stopSim()
     if( !m_CircuitFuture.isFinished() ) m_CircuitFuture.waitForFinished();
 
     qDebug() << "\n    Simulation Stopped ";
+    qDebug() << "\n-------------------------------------------------\n ";
 
     for( eNode* node  : m_eNodeList  )  node->setVolt( 0 );
     for( eElement* el : m_elementList ) el->initialize();

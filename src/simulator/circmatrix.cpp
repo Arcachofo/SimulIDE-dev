@@ -30,10 +30,7 @@ void CircMatrix::createMatrix( QList<eNode*> &eNodeList )
     m_circMatrix.resize( m_numEnodes , d_vector_t( m_numEnodes , 0 ) );
     m_coefVect.resize( m_numEnodes , 0 );
 
-    //m_admitChanged = false;
-    //m_currChanged  = false;
-
-    qDebug() <<"\n  Initializing Matrix: "<< m_numEnodes << " eNodes";
+    /// qDebug() <<"\n  Initializing Matrix: "<< m_numEnodes << " eNodes";
     analyze();
 }
 
@@ -114,8 +111,8 @@ void CircMatrix::analyze()
     m_admitChanged.resize( group, true );
     m_currChanged.resize(  group, true );
 
-    qDebug() <<"CircMatrix::solveMatrix"<<group<<"Circuits";
-    qDebug() <<"CircMatrix::solveMatrix"<<singleNode<<"Single Nodes\n";
+    /// qDebug() <<"CircMatrix::solveMatrix"<<group<<"Circuits";
+    /// qDebug() <<"CircMatrix::solveMatrix"<<singleNode<<"Single Nodes\n";
 }
 
 bool CircMatrix::solveMatrix()
