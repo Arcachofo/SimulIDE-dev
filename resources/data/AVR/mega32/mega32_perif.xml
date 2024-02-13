@@ -79,7 +79,6 @@
                    pins="PORTB5,PORTB6,PORTB7,PORTB4" /><!-- "MOSI,MISO,SCK,SS" -->
 
   <wdt  name="WDT00" configregsA="WDTCR" 
-                     interrupt="WDT"
                      prescalers="512,256,128,64,32,16,8,4,2,1,1,1,1,1,1,1"/>
 
   <rom  name="ROM"  configregsA="EECR"
