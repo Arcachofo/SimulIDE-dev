@@ -279,7 +279,7 @@ void Mcu::stamp()
             m_portRstPin->controlPin( true, true );
             m_portRstPin->setPinMode( input );
         }
-        bool resetWarning = !m_resetPin->connector();
+        bool resetWarning = !m_resetPin->isConnected();
         m_resetPin->warning( resetWarning );
         if( resetWarning ) qDebug() << "    Warning!!"<<idLabel()<<"Reset pin not connected:\n";
     }
