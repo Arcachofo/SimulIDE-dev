@@ -132,13 +132,12 @@ void EditorWindow:: pause()
 
 void EditorWindow::reset()
 {
+    m_lastCycle = 0;
+    m_state = DBG_PAUSED;
     CircuitWidget::self()->powerCircDebug();
 
     m_debugDoc->setDebugLine( 1 );
     m_debugDoc->updateScreen();
-
-    m_lastCycle = 0;
-    m_state = DBG_PAUSED;
 }
 
 void EditorWindow::stop()
