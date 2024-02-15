@@ -39,7 +39,8 @@ Component* SubCircuit::construct( QString type, QString id )
     QStringList list = id.split("-");
     if( list.size() > 1 ) name = list.at( list.size()-2 ); // for example: "atmega328-1" to: "atmega328"
 
-    list = name.split("_");
+    if     ( name.contains("@") ) list = name.split("@");
+    else if( name.contains("_") ) list = name.split("_");
     if( list.size() > 1 )  // Subcircuit inside Subcircuit: 1_74HC00 to 74HC00
     {
         QString n = list.first();
@@ -212,14 +213,14 @@ void SubCircuit::loadSubCircuit( QString file )
                 }
                 else if( prop.endsWith("/>") ) continue;
                 else{
-                    if     ( name == "itemtype"   ) type  = prop.toString();
-                    else if( name == "CircId"     ) uid   = prop.toString();
-                    else if( name == "objectName" ) uid   = prop.toString();
-                    else if( name == "label"      ) label = prop.toString();
-                    else if( name == "id"         ) label = prop.toString();
+                    if     ( name == "itemtype"  ) type  = prop.toString();
+                    else if( name == "CircId"    ) uid   = prop.toString();
+                    else if( name == "objectName") uid   = prop.toString();
+                    else if( name == "label"     ) label = prop.toString();
+                    else if( name == "id"        ) label = prop.toString();
                     else properties << name << prop ;
             }   }
-            newUid = numId+"_"+uid;
+            newUid = numId+"@"+uid;
 
             if( type == "Connector" )
             {
@@ -231,8 +232,8 @@ void SubCircuit::loadSubCircuit( QString file )
                 {
                     if( name.isEmpty() ) { name = prop.toString(); continue; }
 
-                    if     ( name == "startpinid") startPinId = numId+"_"+prop.toString();
-                    else if( name == "endpinid"  ) endPinId   = numId+"_"+prop.toString();
+                    if     ( name == "startpinid") startPinId = numId+"@"+prop.toString();
+                    else if( name == "endpinid"  ) endPinId   = numId+"@"+prop.toString();
                     else if( name == "enodeid"   ) enodeId    = prop.toString();
                     else if( name == "pointList" ) pointList  = prop.toString().split(",");
                     name = "";
