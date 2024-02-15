@@ -107,7 +107,7 @@ void VarSource::setMinValue( double v )
 {
     if( v > m_maxValue ) v = m_maxValue-1e-3;
     m_minValue = v;
-    if( m_outValue > v ) m_outValue = v;
+    if( m_outValue < v ) m_outValue = v;
     m_voltw.setValue( m_outValue*1000/(m_maxValue-m_minValue) );
     m_changed = true;
 }
