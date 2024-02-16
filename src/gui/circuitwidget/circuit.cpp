@@ -585,12 +585,12 @@ void Circuit::removeItems()                     // Remove Selected items
         {
             ConnectorLine* line = qgraphicsitem_cast<ConnectorLine*>( item );
             Connector* con = line->connector();
-            if( !conns.contains( con ) ) conns.append( con );
+            if( !conns.contains( con ) && m_oldConns.contains( con ) ) conns.append( con );
         }
         else if( item->type() == QGraphicsItem::UserType+1 ) // Component: add Component to list
         {
             Component* comp = qgraphicsitem_cast<Component*>( item );
-            comps.append( comp );
+            if( m_oldComps.contains( comp ) ) comps.append( comp );
         }
     }
     for( Connector* conn : conns ) removeConnector( conn );         // Remove Connectors (does not delete)
