@@ -146,8 +146,9 @@ void PicTwi::writeTwiReg( uint8_t newSSPBUF ) // SSPBUF is being written
     if( isAddr )
     {
         write = ((newSSPBUF & 1) == 0); // Sendind address for Read or Write?
-        writeRegBits( m_RW, !write );
+        //writeRegBits( m_RW, !write );
     }
+    setRegBits( m_RW );
     setRegBits( m_BF );
 
     masterWrite( newSSPBUF, isAddr, write );       /// Write data or address to Slave
@@ -175,6 +176,7 @@ void PicTwi::setTwiState( twiState_t state )  // Set new Status value
           || state == TWI_MRX_ADR_ACK    // ACK Master Addr transmitted for Read
           || state == TWI_MTX_DATA_ACK ) // ACK Master Data transmitted
     {
+        if( m_mode == TWI_MASTER ) clearRegBits( m_RW );
         clearRegBits( m_ACKSTAT );
         m_interrupt->raise();
     }
@@ -182,6 +184,7 @@ void PicTwi::setTwiState( twiState_t state )  // Set new Status value
           || state == TWI_MRX_ADR_NACK    // NACK Master Addr transmitted for Read
           || state == TWI_MTX_DATA_NACK ) // NACK Master Data transmitted
     {
+        if( m_mode == TWI_MASTER ) clearRegBits( m_RW );
         setRegBits( m_ACKSTAT );
         m_interrupt->raise();
     }
