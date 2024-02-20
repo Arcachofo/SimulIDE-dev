@@ -22,6 +22,8 @@ class ResistorDip : public Component, public eElement
  static Component* construct( QString type, QString id );
  static LibraryItem *libraryItem();
 
+        void setValPos( QPointF ) override {;}
+
         virtual void stamp() override;
         virtual void updateStep() override;
 
@@ -35,14 +37,14 @@ class ResistorDip : public Component, public eElement
         void setPullUp( bool p );
 
         double puVolt() { return m_puVolt; }
-        void setPuVolt( double pv ) { m_puVolt = pv; }
+        void setPuVolt( double pv ) { m_puVolt = pv; update(); }
 
         void createResistors( int c );
         void deleteResistors( int d );
 
         virtual void remove() override;
         
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w ) override;
 
     protected slots:
         virtual void slotProperties() override;

@@ -47,7 +47,7 @@ ResistorDip::ResistorDip( QString type, QString id )
     setSize( 8 );
 
     setLabelPos(-24,-40, 0);
-    setValLabelPos( 5,-26, 90 );
+    setValLabelPos( 4,-26, 90 );
     m_valLabel->setAcceptedMouseButtons( 0 );
 
     QFont font = m_valLabel->font();
@@ -162,6 +162,7 @@ void ResistorDip::setPullUp( bool p )
         if( p ) m_pin[index]->removeConnector();
         else    m_pin[index]->setEnode( NULL );
     }
+    update();
 }
 
 void ResistorDip::updtProperties()
@@ -183,10 +184,24 @@ void ResistorDip::remove()
     Component::remove();
 }
 
-void ResistorDip::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
+void ResistorDip::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w )
 {
-    Component::paint( p, option, widget );
-    p->drawRoundRect( QRect( -9, -28, 18, m_size*8 ), 2, 2 );
+    Component::paint( p, o, w );
+    p->drawRoundRect( QRect(-9,-28, 18, m_size*8 ), 2, 2 );
+
+    if( m_pullUp )
+    {
+        p->setRenderHint( QPainter::Antialiasing, true );
+        QPen pen( Qt::black, 0.1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
+        p->setPen( pen );
+        if( m_puVolt > 2.5 ){
+            p->setBrush( QColor( 200, 50, 50 ) );
+            p->drawRoundedRect( 3,-26, 4, 4, 2, 2 );
+        }else{
+            p->setBrush( QColor( 50,  50, 200 ) );
+            p->drawRoundedRect(-7,-26, 4, 4, 2, 2 );
+        }
+    }
 
     Component::paintSelected( p );
 }

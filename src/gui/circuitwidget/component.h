@@ -60,7 +60,7 @@ class Component : public CompBase, public QGraphicsItem, public Updatable
         void setShowVal( bool show );
 
         QPointF getValPos();
-        void    setValPos( QPointF p );
+        virtual void setValPos( QPointF p );
 
         int  getValRot();
         void setValRot( int r );
