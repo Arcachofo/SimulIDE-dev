@@ -79,6 +79,7 @@ CircuitWidget::CircuitWidget( QWidget *parent  )
         QString appPath = QCoreApplication::applicationDirPath();
         m_lastCircDir = appPath + "./data/examples";
     }
+    newCircuit();
     m_infoWidget->setRate();
 }
 CircuitWidget::~CircuitWidget() { }
@@ -271,28 +272,26 @@ bool CircuitWidget::newCircuit()
 void CircuitWidget::openRecentFile()
 {
     QAction* action = qobject_cast<QAction*>( sender() );
-    if( action )
-    {
-        QString file = action->data().toString();
-        QFile pfile( file );
-        if( pfile.exists() ) loadCirc( file );
-        else{
-            const QMessageBox::StandardButton ret
-            = QMessageBox::warning( this, "CircuitWidget::openRecentFile",
-                                   tr("\nCan't find file:\n")+
-                                   file+"\n\n"+
-                                   tr("Do you want to remove it from Recent Circuits?\n"),
-              QMessageBox::Yes | QMessageBox::No );
+    if( !action ) return;
 
-            if( ret == QMessageBox::Yes )
-            {
-                QSettings* settings = MainWindow::self()->settings();
-                QStringList files = settings->value("recentCircList").toStringList();
-                files.removeAll( file );
-                settings->setValue("recentCircList", files );
-                updateRecentFileActions();
-            }
-        }
+    QString file = action->data().toString();
+    QFile pfile( file );
+    if( pfile.exists() ) loadCirc( file );
+    else{
+        const QMessageBox::StandardButton ret
+        = QMessageBox::warning( this, "CircuitWidget::openRecentFile",
+                               tr("\nCan't find file:\n")+
+                               file+"\n\n"+
+                               tr("Do you want to remove it from Recent Circuits?\n"),
+          QMessageBox::Yes | QMessageBox::No );
+
+        if( ret != QMessageBox::Yes ) return;
+
+        QSettings* settings = MainWindow::self()->settings();
+        QStringList files = settings->value("recentCircList").toStringList();
+        files.removeAll( file );
+        settings->setValue("recentCircList", files );
+        updateRecentFileActions();
     }
 }
 

@@ -94,8 +94,6 @@ MainWindow::MainWindow()
     QDir compSetDir = m_filesDir.absoluteFilePath("data");
     if( compSetDir.exists() ) ComponentSelector::self()->LoadCompSetAt( compSetDir );
 
-    m_circuit->newCircuit();
-
     readSettings();
 
 
@@ -106,7 +104,7 @@ MainWindow::MainWindow()
         msgBox.setText( tr("Looks like SimulIDE crashed...")+"\n\n"
                        +tr("There is an auto-saved copy of the Circuit\n")
                        +tr("You must save it with any other name if you want to keep it")+"\n\n"
-                       +tr("This file will be auto-deleted!!" )+"\n");
+                       +tr("This file will be auto-deleted!!")+"\n");
         msgBox.setInformativeText(tr("Do you want to open the auto-saved copy of the Circuit?"));
         msgBox.setStandardButtons( QMessageBox::Open | QMessageBox::Discard );
         msgBox.setDefaultButton( QMessageBox::Open );

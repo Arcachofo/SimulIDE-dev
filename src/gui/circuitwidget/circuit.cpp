@@ -70,8 +70,7 @@ Circuit::Circuit( qreal x, qreal y, qreal width, qreal height, CircuitView*  par
                      this,&Circuit::saveBackup, Qt::UniqueConnection );
 
     qDebug() << endl << "-------------------------------------------------";
-    qDebug() << "                   NEW CIRCUIT                   ";
-    qDebug() << "-------------------------------------------------"<<endl;
+    qDebug() << "                   NEW CIRCUIT                   "<<endl;
 }
 
 Circuit::~Circuit()

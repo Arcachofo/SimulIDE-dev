@@ -6,4 +6,4 @@ Exec=simulide
 Icon=simulide.png
 Terminal=false
 Type=Application
-Categories=Electronics;EDA;
+Categories=Education;Electronics;

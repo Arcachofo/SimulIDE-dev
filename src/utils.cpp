@@ -180,7 +180,7 @@ QString fileToString( const QString &fileName, const QString &caller )
     QFile file( fileName );
     if (!file.open( QFile::ReadOnly | QFile::Text) )
     {
-        qDebug() << caller << "Error: Cannot read file "+fileName+"\n"+file.errorString();
+        qDebug() << caller << "Error: Cannot read file"<<endl<<fileName<<endl<<file.errorString();
         //MessageBoxNB( caller, "Cannot read file "+fileName+"\n"+file.errorString() );
         return "";
     }
