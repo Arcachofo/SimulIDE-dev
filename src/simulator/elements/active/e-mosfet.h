@@ -14,6 +14,7 @@ class eMosfet : public eResistor
         eMosfet( QString id );
         ~eMosfet();
 
+        virtual void initialize() override;
         virtual void stamp() override;
         virtual void voltChanged() override;
 

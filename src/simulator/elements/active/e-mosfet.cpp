@@ -25,13 +25,16 @@ eMosfet::eMosfet( QString id )
 }
 eMosfet::~eMosfet(){}
 
-void eMosfet::stamp()
+void eMosfet::initialize()
 {
-    m_admit = 1/m_RDSon;
-
     m_step = 0;
     m_gateV = 0;
     m_lastCurrent = 0;
+}
+
+void eMosfet::stamp()
+{
+    m_admit = 1/m_RDSon;
 
     updateValues();
     m_accuracy = 5e-6;
