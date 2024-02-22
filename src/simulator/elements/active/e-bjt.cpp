@@ -23,6 +23,7 @@ eBJT::eBJT( QString id )
     m_ePin.resize(3);
 
     m_PNP = false;
+    m_baseCurr = 0;
 
     m_gain = 100;
     m_rgain = .5;
@@ -43,14 +44,17 @@ eBJT::eBJT( QString id )
 }
 eBJT::~eBJT(){}
 
-void eBJT::stamp()
+void eBJT::initialize()
 {
     m_changed = true;
     m_step = 0;
     m_voltBE = 0;
     m_voltBC = 0;
     m_baseCurr = 0;
+}
 
+void eBJT::stamp()
+{
     m_EC = EMIT;
     m_CE = COLL;
 

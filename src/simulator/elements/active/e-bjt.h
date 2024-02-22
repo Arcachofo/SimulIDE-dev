@@ -15,6 +15,7 @@ class eBJT : public eElement
         eBJT( QString id );
         virtual ~eBJT();
 
+        virtual void initialize() override;
         virtual void stamp() override;
         virtual void voltChanged() override;
 
