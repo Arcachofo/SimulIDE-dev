@@ -46,8 +46,8 @@ class Ssd1306 : public Component, public TwiModule
         virtual void stamp() override;
         virtual void updateStep() override;
 
+        virtual void startWrite() override;
         virtual void readByte() override;
-        virtual void I2Cstop() override;
         
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
 

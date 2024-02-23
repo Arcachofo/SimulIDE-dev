@@ -184,10 +184,8 @@ void Ssd1306::updateStep()
     update();
 }
 
-void Ssd1306::I2Cstop()
+void Ssd1306::startWrite()
 {
-    TwiModule::I2Cstop();
-
     m_command = false;
     m_data    = false;
     m_continue = false;
@@ -206,15 +204,14 @@ void Ssd1306::readByte()
             else          m_continue = false;
 
             int cd = m_rxReg & 0b01111111;
-            if( cd == 0 ) m_command = true;// 0 Command Byte
-            else          m_data    = true;// 64 Data Byte
+            if( cd == 0 ) m_command = true; // 0 Command Byte
+            else          m_data    = true; // 64 Data Byte
     }   }
     else{                               // Data Byte
         if     ( m_command ) proccessCommand();
         else if( m_data )    writeData();
 
-        if( !m_continue )
-        {
+        if( !m_continue ){
             m_command = false;
             m_data    = false;
 }   }   }
