@@ -60,6 +60,12 @@
 
 <item itemtype="Node" CircId="Node-339" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" boardHflip="1" boardVflip="1" Pos="-652,68" />
 
+<item itemtype="Node" CircId="Node-400" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" boardHflip="1" boardVflip="1" Pos="-272,-32" />
+
+<item itemtype="Node" CircId="Node-401" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" boardHflip="1" boardVflip="1" Pos="-272,36" />
+
+<item itemtype="Node" CircId="Node-403" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" boardHflip="1" boardVflip="1" Pos="-272,104" />
+
 <item itemtype="Connector" uid="Connector-156" startpinid="Tunnel-1-pin" endpinid="LatchD-39-Pin_clock" pointList="-672,148,-588,148,-588,132" />
 
 <item itemtype="Connector" uid="Connector-160" startpinid="ShiftReg-159-out0" endpinid="LatchD-39-in0" pointList="-596,68,-588,68" />
@@ -93,8 +99,6 @@
 <item itemtype="Connector" uid="Connector-284" startpinid="LatchD-39-out2" endpinid="Memory-275-in1" pointList="-540,84,-524,84,-524,52,-492,52" />
 
 <item itemtype="Connector" uid="Connector-285" startpinid="LatchD-39-out3" endpinid="Memory-275-in0" pointList="-540,92,-532,92,-532,44,-492,44" />
-
-<item itemtype="Connector" uid="Connector-295" startpinid="Tunnel-294-pin" endpinid="Seven Segment-286-pin_dot" pointList="-672,172,-324,172,-324,100" />
 
 <item itemtype="Connector" uid="Connector-338" startpinid="Resistor-337-lPin" endpinid="Node-339-1" pointList="-652,60,-652,68" />
 
@@ -224,9 +228,9 @@
 
 <item itemtype="Connector" uid="Connector-479" startpinid="LatchD-383-out1" endpinid="Seven Segment-392-pin_commona" pointList="-444,140,-284,140,-284,32,-308,32" />
 
-<item itemtype="Connector" uid="Connector-480" startpinid="LatchD-383-out2" endpinid="Seven Segment-394-pin_commona" pointList="-444,148,-276,148,-276,-36,-308,-36" />
+<item itemtype="Connector" uid="Connector-480" startpinid="LatchD-383-out2" endpinid="Seven Segment-394-pin_commona" pointList="-444,148,-280,148,-280,-36,-308,-36" />
 
-<item itemtype="Connector" uid="Connector-481" startpinid="LatchD-383-out3" endpinid="Seven Segment-396-pin_commona" pointList="-444,156,-268,156,-268,-104,-308,-104" />
+<item itemtype="Connector" uid="Connector-481" startpinid="LatchD-383-out3" endpinid="Seven Segment-396-pin_commona" pointList="-444,156,-276,156,-276,-104,-308,-104" />
 
 <item itemtype="Connector" uid="Connector-482" startpinid="Seven Segment-396-pin_c" endpinid="LatchD-397-out2" pointList="-340,-144,-348,-144" />
 
@@ -257,5 +261,19 @@
 <item itemtype="Connector" uid="Connector-495" startpinid="Seven Segment-392-pin_f" endpinid="LatchD-391-out5" pointList="-340,16,-348,16" />
 
 <item itemtype="Connector" uid="Connector-496" startpinid="Seven Segment-392-pin_g" endpinid="LatchD-391-out6" pointList="-340,24,-348,24" />
+
+<item itemtype="Connector" uid="Connector-500" startpinid="Seven Segment-394-pin_dot" endpinid="Node-400-1" pointList="-324,-36,-324,-32,-272,-32" />
+
+<item itemtype="Connector" uid="Connector-501" startpinid="Seven Segment-396-pin_dot" endpinid="Node-400-0" pointList="-324,-104,-324,-100,-272,-100,-272,-32" />
+
+<item itemtype="Connector" uid="Connector-503" startpinid="Seven Segment-392-pin_dot" endpinid="Node-401-1" pointList="-324,32,-324,36,-272,36" />
+
+<item itemtype="Connector" uid="Connector-504" startpinid="Node-400-2" endpinid="Node-401-0" pointList="-272,-32,-272,36" />
+
+<item itemtype="Connector" uid="Connector-509" startpinid="Node-401-2" endpinid="Node-403-0" pointList="-272,36,-272,104" />
+
+<item itemtype="Connector" uid="Connector-511" startpinid="Tunnel-294-pin" endpinid="Node-403-2" pointList="-672,172,-272,172,-272,104" />
+
+<item itemtype="Connector" uid="Connector-512" startpinid="Node-403-1" endpinid="Seven Segment-286-pin_dot" pointList="-272,104,-324,104,-324,100" />
 
 </circuit>
