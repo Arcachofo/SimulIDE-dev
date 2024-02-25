@@ -19,7 +19,7 @@ class eBJT : public eElement
         virtual void stamp() override;
         virtual void voltChanged() override;
 
-        double gain()              { return m_gain; }
+        double gain() { return m_gain; }
         void setGain( double gain );
 
         virtual bool pnp()              { return m_PNP; }

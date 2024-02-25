@@ -49,7 +49,7 @@ class Ssd1306 : public Component, public TwiModule
         virtual void startWrite() override;
         virtual void readByte() override;
         
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w ) override;
 
     protected:
         void writeData();

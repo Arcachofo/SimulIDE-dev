@@ -467,7 +467,7 @@ void Ssd1306::paint( QPainter* p, const QStyleOptionGraphicsItem*, QWidget* )
                             if( scanInv ) y = 63-y;
                             painter.fillRect( x, y*3, 3, 3, m_foreground );
                        }
-                        abyte >>= 1;
+                       abyte >>= 1;
         }   }   }   }
 
         painter.end();
