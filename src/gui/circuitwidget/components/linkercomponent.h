@@ -18,7 +18,8 @@ class LinkerComponent : public Component, public Linker
         void slotLinkComp() { Linker::startLinking(); }
 
     protected:
-        virtual void contextMenuEvent( QGraphicsSceneContextMenuEvent* event ) override;
+        virtual void contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu ) override;
+        //virtual void contextMenuEvent( QGraphicsSceneContextMenuEvent* event ) override;
 };
 
 #endif

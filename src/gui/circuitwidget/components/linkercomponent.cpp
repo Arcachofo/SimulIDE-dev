@@ -22,20 +22,12 @@ new StrProp<LinkerComponent>("Links", "Links","", this, &LinkerComponent::getLin
 }
 LinkerComponent::~LinkerComponent(){}
 
-void LinkerComponent::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
+void LinkerComponent::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
 {
-    if( !acceptedMouseButtons() ) { event->ignore(); return; }
+    QAction* linkCompAction = menu->addAction( QIcon(":/subcl.png"),tr("Link to Component") );
+    QObject::connect( linkCompAction, &QAction::triggered, [=](){ slotLinkComp(); } );
 
-    event->accept();
-    QMenu* menu = new QMenu();
+    menu->addSeparator();
 
-    if( !parentItem() )
-    {
-        QAction* linkCompAction = menu->addAction( QIcon(":/subcl.png"),tr("Link to Component") );
-        QObject::connect( linkCompAction, &QAction::triggered, [=](){ slotLinkComp(); } );
-
-        menu->addSeparator();
-    }
     Component::contextMenu( event, menu );
-    menu->deleteLater();
 }
