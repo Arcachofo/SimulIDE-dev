@@ -1,6 +1,6 @@
-<circuit type="simulide_1.0" stepSize="50000000" stepsPS="20000" NLsteps="100000" animate="0" >
+<circuit version="" rev="2208" stepSize="50000000" stepsPS="20000" NLsteps="100000" reaStep="1000000" animate="0" >
 
-<item itemtype="Capacitor" CircId="Capacitor-164" mainComp="false" ShowProp="Capacitance" Show_id="false" Show_Val="true" Pos="-316,-356" rotation="0" hflip="1" vflip="1" label="Capacitor-144" idLabPos="-16,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Capacitance="5 µF" />
+<item itemtype="Capacitor" CircId="Capacitor-164" mainComp="false" ShowProp="Capacitance" Show_id="false" Show_Val="true" Pos="-316,-356" rotation="0" hflip="1" vflip="1" label="Capacitor-144" idLabPos="-16,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Capacitance="5 µF" Resistance="1e-06 Ω" InitVolt="0 V" ReaStep="0 ns" />
 
 <item itemtype="Resistor" CircId="Resistor-163" mainComp="false" ShowProp="Resistance" Show_id="false" Show_Val="true" Pos="-284,-276" rotation="90" hflip="1" vflip="1" label="Resistor-75" idLabPos="-12,-20" labelrot="0" valLabPos="-16,6" valLabRot="0" Resistance="1 MΩ" />
 
@@ -8,19 +8,19 @@
 
 <item itemtype="Resistor" CircId="Resistor-153" mainComp="false" ShowProp="Resistance" Show_id="false" Show_Val="true" Pos="-396,-276" rotation="90" hflip="1" vflip="1" label="Resistor-75" idLabPos="-12,-20" labelrot="0" valLabPos="-16,6" valLabRot="0" Resistance="10 kΩ" />
 
-<item itemtype="Capacitor" CircId="Capacitor-144" mainComp="false" ShowProp="Capacitance" Show_id="false" Show_Val="true" Pos="-428,-324" rotation="0" hflip="1" vflip="1" label="Capacitor-144" idLabPos="-16,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Capacitance="5 µF" />
+<item itemtype="Capacitor" CircId="Capacitor-144" mainComp="false" ShowProp="Capacitance" Show_id="false" Show_Val="true" Pos="-428,-324" rotation="0" hflip="1" vflip="1" label="Capacitor-144" idLabPos="-16,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Capacitance="5 µF" Resistance="1e-06 Ω" InitVolt="0 V" ReaStep="0 ns" />
 
 <item itemtype="Resistor" CircId="Resistor-75" mainComp="false" ShowProp="Resistance" Show_id="false" Show_Val="true" Pos="-396,-388" rotation="90" hflip="1" vflip="1" label="Resistor-75" idLabPos="-12,-20" labelrot="0" valLabPos="-16,6" valLabRot="0" Resistance="110 kΩ" />
 
-<item itemtype="Oscope" CircId="Oscope-8" mainComp="false" Show_id="false" Show_Val="false" Pos="-168,-356" rotation="0" hflip="1" vflip="1" label="Oscope-19" idLabPos="-80,-130" labelrot="0" valLabPos="0,0" valLabRot="0" Basic_X="135 _Pixels" Basic_Y="135 _Pixels" TimDiv="2000000000" TimPos="0,0,0,0," VolDiv="1,1,1,1," Tunnels=",,,," Trigger="1" Filter="0.1 V" Trigger="1" AutoSC="4" Tracks="1" HideCh="false,false,false,false," VolPos="0,0,0,0," />
+<item itemtype="Oscope" CircId="Oscope-8" mainComp="false" Show_id="false" Show_Val="false" Pos="-168,-356" rotation="0" hflip="1" vflip="1" label="Oscope-19" idLabPos="-80,-130" labelrot="0" valLabPos="0,0" valLabRot="0" Basic_X="135 _Px" Basic_Y="135 _Px" BufferSize="600000" connectGnd="true" InputImped="1e+07 Ω" TimDiv="2000000000" TimPos="0,0,0,0," VolDiv="1,1,1,1," Tunnels=",,,," Trigger="1" Filter="0.1 V" Trigger="1" AutoSC="4" Tracks="1" HideCh="false,false,false,false," VolPos="0,0,0,0," />
 
-<item itemtype="BJT" CircId="BJT-7" mainComp="false" Show_id="false" Show_Val="false" Pos="-356,-324" rotation="0" hflip="1" vflip="1" label="BJT-1" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" PNP="false" Gain="100" />
+<item itemtype="BJT" CircId="BJT-7" mainComp="false" Show_id="false" Show_Val="false" Pos="-356,-324" rotation="0" hflip="1" vflip="1" label="BJT-1" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" PNP="false" Gain="100" Vcrit="0.670736 V" />
 
-<item itemtype="Rail" CircId="Rail-6" mainComp="false" ShowProp="Voltage" Show_id="false" Show_Val="true" Pos="-476,-428" rotation="0" hflip="1" vflip="1" label="Rail-2" idLabPos="-64,-24" labelrot="0" valLabPos="-40,0" valLabRot="0" Voltage="20 V" />
+<item itemtype="Rail" CircId="Rail-6" mainComp="false" ShowProp="Voltage" Show_id="false" Show_Val="true" Pos="-396,-452" rotation="90" hflip="1" vflip="1" label="Rail-2" idLabPos="-64,-24" labelrot="0" valLabPos="-15.0971,6.64078" valLabRot="-90" Voltage="20 V" />
 
 <item itemtype="Ground" CircId="Ground-4" mainComp="false" Show_id="false" Show_Val="false" Pos="-348,-208" rotation="0" hflip="1" vflip="1" label="Ground-4" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" />
 
-<item itemtype="WaveGen" CircId="WaveGen-3" mainComp="false" Show_id="false" Show_Val="true" Pos="-476,-324" rotation="0" hflip="1" vflip="1" label="WaveGen-5" idLabPos="-64,-24" labelrot="0" valLabPos="-25,12" valLabRot="0" Out="true" Running="true" Wave_Type="Sine" Freq="80 Hz" Steps="200 Steps" Duty="50 _%" Always_On="false" Semi_Ampli="0.5 V" Mid_Volt="0 V" />
+<item itemtype="WaveGen" CircId="WaveGen-3" mainComp="false" ShowProp="Freq" Show_id="false" Show_Val="true" Pos="-476,-324" rotation="0" hflip="1" vflip="1" label="WaveGen-5" idLabPos="-64,-24" labelrot="0" valLabPos="-13.932,10.8932" valLabRot="0" Out="true" Running="true" Wave_Type="Sine" Freq="80 Hz" Phase="0 _º" Steps="200 Steps" Duty="50 _%" Always_On="false" Bipolar="false" Floating="false" Semi_Ampli="0.5 V" Mid_Volt="0 V" />
 
 <item itemtype="Resistor" CircId="Resistor-125" mainComp="false" ShowProp="Resistance" Show_id="false" Show_Val="true" Pos="-348,-388" rotation="90" hflip="1" vflip="1" label="Resistor-125" idLabPos="-12,-20" labelrot="0" valLabPos="-16,6" valLabRot="0" Resistance="10 kΩ" />
 
@@ -44,7 +44,7 @@
 
 <item itemtype="Connector" uid="Connector-145" startpinid="Capacitor-144-lPin" endpinid="Node-176-0" pointList="-444,-324,-452,-324" />
 
-<item itemtype="Connector" uid="Connector-146" startpinid="Rail-6-outnod" endpinid="Node-148-0" pointList="-460,-428,-396,-428" />
+<item itemtype="Connector" uid="Connector-146" startpinid="Rail-6-outnod" endpinid="Node-148-0" pointList="-396,-436,-396,-428" />
 
 <item itemtype="Connector" uid="Connector-147" startpinid="Resistor-75-lPin" endpinid="Node-148-1" pointList="-396,-404,-396,-428" />
 
