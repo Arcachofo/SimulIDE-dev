@@ -300,11 +300,16 @@ void Tunnel::paint( QPainter* p, const QStyleOptionGraphicsItem *option, QWidget
     Component::paintSelected( p );
 }
 
-eNode* Tunnel::getEnode( QString n )
+eNode* Tunnel::getEnode( QString n ) // Static
 {
     QList<Tunnel*>* list = m_tunnels.value( n );
     if( !list ) return NULL;
     Tunnel* tunnel= list->first();
     if( tunnel ) return tunnel->getPin()->getEnode();
     return NULL;
+}
+
+void Tunnel::clearTunnels() // Static
+{
+    m_tunnels.clear();
 }

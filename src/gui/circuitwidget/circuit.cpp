@@ -26,6 +26,7 @@
 #include "e-node.h"
 #include "shield.h"
 #include "linker.h"
+#include "tunnel.h"
 
 Circuit* Circuit::m_pSelf = NULL;
 
@@ -33,6 +34,7 @@ Circuit::Circuit( qreal x, qreal y, qreal width, qreal height, CircuitView*  par
        : QGraphicsScene( x, y, width, height, parent )
 {
     m_simulator = new Simulator();
+    Tunnel::clearTunnels();
 
     setObjectName( "Circuit" );
     setParent( parent );

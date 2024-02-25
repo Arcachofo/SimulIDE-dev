@@ -48,6 +48,8 @@ class Tunnel : public Component
         Pin* getPin() { return m_pin[0]; }
  static eNode* getEnode( QString n );
 
+ static void clearTunnels();
+
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
 
     public slots:
