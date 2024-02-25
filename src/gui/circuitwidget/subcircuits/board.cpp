@@ -12,7 +12,7 @@ BoardSubc::BoardSubc( QString type, QString id )
 {
     m_graphical = true;
     m_subcType = Chip::Board;
-    //m_shield = NULL;
+    m_parentBoard = NULL;
 }
 BoardSubc::~BoardSubc(){}
 
@@ -21,12 +21,14 @@ void BoardSubc::attachShield( ShieldSubc* shield )
     if( !m_shields.contains( shield ) ) m_shields.append( shield );
 }
 
-/*void BoardSubc::remove()
+QString BoardSubc::toString()
 {
-    for( ShieldSubc* shield : m_shields ) // there is a shield attached to this
+    QString toStr;
+    for( ShieldSubc* shield : m_shields )
     {
-        shield->setBoard( NULL );
-        //Circuit::self()->removeComp( shield );
+        toStr += shield->toString();
     }
-    SubCircuit::remove();
-}*/
+    toStr += SubCircuit::toString();
+    return toStr;
+}
+

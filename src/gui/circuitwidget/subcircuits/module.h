@@ -17,8 +17,9 @@ class ModuleSubc : public ShieldSubc
         double zVal() { return zValue(); }
         void setZVal( double v);
 
+        virtual void slotAttach() override;
+
     protected:
-        virtual void attachToBoard() override;
         virtual void renameTunnels() override;
 };
 #endif

@@ -18,16 +18,13 @@ class ShieldSubc : public BoardSubc
         void setBoardId( QString id ) { m_boardId = id; }
 
         void setBoard( BoardSubc* board );
-        BoardSubc* parentBoard() { return m_board; }
 
         void connectBoard();
-
-        virtual void remove() override;
 
         virtual void contextMenuEvent( QGraphicsSceneContextMenuEvent* event ) override;
         virtual void contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu ) override;
 
-    public slots:
+    //public slots:
         virtual void slotAttach();
         virtual void slotDetach();
 
@@ -35,9 +32,6 @@ class ShieldSubc : public BoardSubc
         virtual void attachToBoard();
         virtual void renameTunnels();
 
-        bool m_attached; // This is a shield which is attached to a board
-
-        BoardSubc* m_board;  // A board this is attached to (this is a shield)
         QString m_boardId;
         QPointF m_boardPos;
 };

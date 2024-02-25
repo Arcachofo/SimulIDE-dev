@@ -32,21 +32,48 @@ void ModuleSubc::setZVal( double v )
     setZValue( v );
 }
 
-void ModuleSubc::attachToBoard()
+void ModuleSubc::slotAttach()
 {
-    BoardSubc* board = m_board;
-    if( board->subcType() > Board )
+    double myZ = this->zValue();
+
+    QList<QGraphicsItem*> list = this->collidingItems();
+    QList<BoardSubc*> boardList;
+    for( QGraphicsItem* it : list )
     {
-        ShieldSubc* shield = static_cast<ShieldSubc*>(board);
-        BoardSubc* parentBoard = shield->parentBoard();
-        if( parentBoard ) board = parentBoard;
+        if( it->type() != UserType+1 ) continue;             // Not a Component
+
+        Component* comp = qgraphicsitem_cast<Component*>( it );
+        if( !(comp->itemType() == "Subcircuit") ) continue;  // Not a Subcircuit
+
+        BoardSubc* board = (BoardSubc*)comp;
+        if( board->subcType() < Board ) continue;            // Not a Board
+
+        if( board->subcType() > Board ){
+            ShieldSubc* shield = static_cast<ShieldSubc*>(board);
+            if( m_shields.contains( shield ) ) continue;     // Is my child
+        }
+        boardList.append( board );
     }
-    m_boardPos = m_circPos - board->pos();
-    if( board != m_board ) m_boardPos -= m_board->pos();
+    for( BoardSubc* board : boardList )
+    {
+        if( board->zValue() > myZ ) continue;                            // Is above me
+
+        if( Simulator::self()->isRunning() ) CircuitWidget::self()->powerCircOff();
+        /// FIXME UNDOREDO: Circuit::self()->saveState();
+
+        setBoard( board );
+        m_boardPos = pos() - board->pos();
+        while( board->parentBoard() ){
+            board = board->parentBoard();
+            m_boardPos -= board->pos();
+        }
+        this->moveTo( m_boardPos );
+        break;
+    }
 }
 
 void ModuleSubc::renameTunnels()
 {
     for( Tunnel* tunnel : getPinTunnels() ) tunnel->setName( m_id+"-"+tunnel->tunnelUid() );
-    for( Tunnel* tunnel : m_subcTunnels ) tunnel->setName( m_id+"-"+tunnel->tunnelUid() );
+    for( Tunnel* tunnel : m_subcTunnels   ) tunnel->setName( m_id+"-"+tunnel->tunnelUid() );
 }
