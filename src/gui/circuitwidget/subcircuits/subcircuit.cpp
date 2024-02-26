@@ -37,7 +37,10 @@ Component* SubCircuit::construct( QString type, QString id )
 
     QString name;
     QStringList list = id.split("-");
-    if( list.size() > 1 ) name = list.at( list.size()-2 ); // for example: "atmega328-1" to: "atmega328"
+    if( list.size() > 1 ){
+        name = list.at( list.size()-2 ); // for example: "atmega328-1" to: "atmega328"
+        list.takeLast();
+    }
 
     if     ( name.contains("@") ) list = name.split("@");
     else if( name.contains("_") ) list = name.split("_");
