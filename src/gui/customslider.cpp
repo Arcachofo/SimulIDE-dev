@@ -65,7 +65,7 @@ void CustomSlider::paintEvent( QPaintEvent* )
     painter.fillRect( QRectF( pos, h/2-1, w-6-pos, 2), QColor( 140, 140, 140 ) );
 
     // Notches
-    if( this->singleStep() > 40 ){
+    if( this->singleStep() > 1 ){
         painter.drawLine( QPointF( 6           , h/2-2   ), QPointF( 6           , h/2+2  ) );
         painter.drawLine( QPointF( (w-12)/4+6  , h/2-1.5 ), QPointF( (w-12)/4+6  , h/2+1.5) );
         painter.drawLine( QPointF( w/2         , h/2-2   ), QPointF( w/2         , h/2+2  ) );
