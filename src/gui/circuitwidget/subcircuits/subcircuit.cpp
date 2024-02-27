@@ -314,7 +314,7 @@ void SubCircuit::loadSubCircuit( QString file )
                         if( l->hasLinks() ) linkList.append( l );
                     }
 
-                    if( type == "Tunnel" ) // Make Tunnel names unique for this subcircuit
+                    if( type == "Tunnel" ) // Make Circuit Tunnel names unique for this subcircuit
                     {
                         Tunnel* tunnel = static_cast<Tunnel*>( comp );
                         tunnel->setTunnelUid( tunnel->name() );
@@ -345,7 +345,7 @@ Pin* SubCircuit::addPin( QString id, QString type, QString label, int pos, int x
         tunnel->setAcceptedMouseButtons( Qt::NoButton );
         tunnel->setShowId( false );
         tunnel->setTunnelUid( id );
-        tunnel->setName( pId ); // Make tunel name unique for this component
+        tunnel->setName( pId );           // Make Pin Tunel names unique for this component
         tunnel->setPos( xpos, ypos );
         tunnel->setPacked( true );
         if( type == "bus" ) tunnel->setIsbus( true );
@@ -384,7 +384,7 @@ Pin* SubCircuit::updatePin( QString id, QString type, QString label, int xpos, i
     tunnel->setIsbus( type == "bus" );
 
     if     ( angle == 180) tunnel->setRotation( 0 );
-    else if( angle == 90 ) tunnel->setRotation( -90 ); // QGraphicsItem 0º i at right side
+    else if( angle == 90 ) tunnel->setRotation(-90 ); // QGraphicsItem 0º i at right side
     else                   tunnel->setRotation( angle );
 
     pin  = tunnel->getPin();
@@ -455,12 +455,15 @@ void SubCircuit::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu
 
     for( Component* mainComp : m_mainComponents.values() )
     {
-        QString compType = mainComp->getUid();
-        int pos  = compType.indexOf("_")+1;
-        int len  = compType.lastIndexOf("-")-pos;
-        compType = compType.mid( pos, len );
+        QString name = mainComp->idLabel();
+        int pos = 0;
+        if     ( name.contains("@") ) pos = name.lastIndexOf("@")+1;
+        else if( name.contains("_") ) pos = name.lastIndexOf("_")+1;
 
-        QMenu* submenu = menu->addMenu( QIcon(":/subc.png"), compType );
+        int len  = name.length()-pos;
+        name = name.mid( pos, len );
+
+        QMenu* submenu = menu->addMenu( QIcon(":/subc.png"), name );
 
         mainComp->contextMenu( NULL, submenu );
     }
