@@ -34,6 +34,7 @@ MainWindow::MainWindow()
     m_circuit = NULL;
     m_autoBck = 15;
     m_state = "■";
+    m_revision = QString( REVNO ).remove("R").toInt();
     m_version = "SimulIDE-"+QString( APP_VERSION )+" R"+QString( REVNO );
 
     this->setWindowTitle( m_version );

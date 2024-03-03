@@ -67,6 +67,8 @@ class MainWindow : public QMainWindow
         int autoBck() { return m_autoBck; }
         void setAutoBck( int secs ) { m_autoBck = secs; }
 
+        int revision() { return m_revision; }
+
         QString getHelp( QString name, bool save=true );
 
         QString getFilePath( QString file );              // Get file path in SimulIDE folders
@@ -107,6 +109,7 @@ class MainWindow : public QMainWindow
         QSettings* m_settings;
         QSettings* m_compSettings;
         
+        int m_revision;
         QString m_version;
         QString m_styleSheet;
         QString m_state;
