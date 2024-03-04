@@ -78,7 +78,7 @@ new BoolProp<SevenSegmentBCD>("Show_Enable_Pin", tr("Show Enable Pin"),"", this
 
     Simulator::self()->addToUpdateList( this );
 
-    initialize();
+    m_digit = 0;
 }
 SevenSegmentBCD::~SevenSegmentBCD(){}
 
@@ -87,14 +87,14 @@ void SevenSegmentBCD::updateStep()
     if( !m_changed ) return;
     m_changed = false;
 
-    if( !m_linked ){
+    if( !Simulator::self()->isRunning() ) m_digit = 0;
+    else if( !m_linked ){
         if( m_enablePin->getInpState() ){
             BcdBase::voltChanged();
             if( m_dotPin->getInpState() ) m_digit |= 0x80;
         }
         else m_digit = 0;
     }
-
     update();
 }
 
