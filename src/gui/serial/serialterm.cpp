@@ -55,11 +55,13 @@ SerialTerm::SerialTerm( QString type, QString id )
     pinTx->setOutHighV( 5 );
     m_pin[0] = pinTx;
     m_sender->setPins( {pinTx} );
+    m_sending = false;
 
     IoPin* pinRx = new IoPin( 180, QPoint(-24, 8), id+"-pin1", 0, this, input );
     pinRx->setLabelText( "Rx" );
     m_pin[1] = pinRx;
     m_receiver->setPins( {pinRx} );
+    m_receiving = false;
 
     m_button = new CustomButton( );
     m_button->setMaximumSize( 36, 20 );
