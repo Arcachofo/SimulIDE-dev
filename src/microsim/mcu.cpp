@@ -99,6 +99,8 @@ Mcu::Mcu( QString type, QString id )
     m_resetPol = false;
     m_linker   = true;
 
+    m_extFreq = 0;
+
     m_serialMon = -1;
 
     m_icColor = QColor( 20, 30, 60 );

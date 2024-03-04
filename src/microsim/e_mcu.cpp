@@ -194,6 +194,9 @@ void eMcu::sleep( bool s )
 
 void eMcu::setFreq( double freq )
 {
+    double extFreq = m_component->extFreq(); // Mcu freq Property
+    freq = extFreq ? extFreq : freq;         // Use property if Mcu freq Property is set
+
     if     ( freq < 0       ) freq = 0;
     else if( freq > 100*1e6 ) freq = 100*1e6;
 
