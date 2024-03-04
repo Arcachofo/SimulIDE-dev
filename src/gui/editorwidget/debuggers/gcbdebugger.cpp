@@ -248,6 +248,9 @@ bool GcbDebugger::mapFlashToSource()  // Map asm_source_line <=> gcb_source_line
             }
         }
     }
+    m_outPane->appendLine( QString::number( varList.size() )+" variables found" );
+    //m_outPane->appendLine( QString::number( m_functions.size() )+" functions found" ); /// FIXME: not working?
+    m_outPane->appendLine( QString::number( m_flashToSource.size() )+" lines mapped" );
     eMcu::self()->getRamTable()->setVariables( varList );
 
     return !m_flashToSource.isEmpty();
