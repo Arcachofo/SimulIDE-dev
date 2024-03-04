@@ -6,16 +6,20 @@
 #ifndef DOUBPROP_H
 #define DOUBPROP_H
 
-#include "numprop.h"
+#include "comproperty.h"
+#include "utils.h"
+#include "compbase.h"
+
+class CompBase;
 
 template <class Comp>
-class DoubProp : public NumProp
+class DoubProp : public ComProperty
 {
     public:
         DoubProp( QString name, QString caption, QString unit, Comp* comp
                 , double (Comp::*getter)(), void (Comp::*setter)(double)
                 , uint8_t flags=0, QString type="double" )
-        : NumProp( name, caption, unit, type, flags )
+        : ComProperty( name, caption, unit, type, flags )
         {
             m_comp = comp;
             m_getter = getter;
@@ -36,6 +40,29 @@ class DoubProp : public NumProp
         Comp* m_comp;
         double (Comp::*m_getter)();
         void   (Comp::*m_setter)(double);
+
+        double getVal( const QString &val, CompBase* comp )
+        {
+            QStringList l = val.split(" ");
+            double  v = l.first().toDouble();
+
+            if( l.size() > 1 )
+            {
+                QString unit = l.last();
+                if( !unit.startsWith("_") ) m_unit = unit;
+            }
+            if( comp->getPropStr("ShowProp") == m_name ) comp->setPropStr("ValLabelText", QString::number( v )+" "+m_unit );
+
+            return  v*getMultiplier( m_unit );
+        }
+
+        QString getStr( double val )
+        {
+            double multiplier = getMultiplier( m_unit );
+            QString  valStr = QString::number( val/multiplier );
+            if( !m_unit.isEmpty() ) valStr.append(" "+m_unit );
+            return valStr;
+        }
 };
 
 #endif

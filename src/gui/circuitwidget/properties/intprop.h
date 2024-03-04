@@ -6,16 +6,20 @@
 #ifndef INTPROP_H
 #define INTPROP_H
 
-#include "numprop.h"
+#include "comproperty.h"
+#include "utils.h"
+#include "compbase.h"
+
+class CompBase;
 
 template <class Comp>
-class IntProp : public NumProp
+class IntProp : public ComProperty
 {
     public:
         IntProp( QString name, QString caption, QString unit, Comp* comp
                , int (Comp::*getter)(), void (Comp::*setter)(int)
                , uint8_t flags=0, QString type="int" )
-        : NumProp( name, caption, unit, type, flags )
+        : ComProperty( name, caption, unit, type, flags )
         {
             m_comp = comp;
             m_getter = getter;
@@ -36,6 +40,28 @@ class IntProp : public NumProp
         Comp* m_comp;
         int  (Comp::*m_getter)();
         void (Comp::*m_setter)(int);
+
+        int getVal( const QString &val, CompBase* comp )
+        {
+            QStringList l = val.split(" ");
+            int v = l.first().toInt();
+
+            if( l.size() > 1 )
+            {
+                QString unit = l.last();
+                if( !unit.startsWith("_") ) m_unit = unit;
+            }
+            if( comp->getPropStr("ShowProp") == m_name ) comp->setPropStr("ValLabelText", QString::number( v )+" "+m_unit );
+
+            return  v*getMultiplier( m_unit );
+        }
+        QString getStr( int val )
+        {
+            int multiplier = getMultiplier( m_unit );
+            QString valStr = QString::number( val/multiplier );
+            if( !m_unit.isEmpty() ) valStr.append(" "+m_unit );
+            return valStr;
+        }
 };
 
 #endif
