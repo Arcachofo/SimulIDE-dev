@@ -1754,7 +1754,11 @@ Nemožno nájsť súbor:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Space to Pin:</source>
+        <source>Space to Label:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bus Pin</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2488,7 +2492,7 @@ Súbor nemožno nájsť:
     </message>
     <message>
         <source>Control_Code</source>
-        <translation>Riadiace slovo</translation>
+        <translation type="vanished">Riadiace slovo</translation>
     </message>
     <message>
         <source>I2C Frequency</source>
@@ -2510,6 +2514,10 @@ Súbor nemožno nájsť:
         <source>Show Memory Table</source>
         <translation>Zobraziť tabuľku pamäti</translation>
     </message>
+    <message>
+        <source>I2C Address</source>
+        <translation type="unfinished">I2C Adresa</translation>
+    </message>
 </context>
 <context>
     <name>I2CToParallel</name>
@@ -2523,11 +2531,15 @@ Súbor nemožno nájsť:
     </message>
     <message>
         <source>Control_Code</source>
-        <translation>Riadiace slovo</translation>
+        <translation type="vanished">Riadiace slovo</translation>
     </message>
     <message>
         <source>I2C Frequency</source>
         <translation>I2C Frekvencia</translation>
+    </message>
+    <message>
+        <source>I2C Address</source>
+        <translation type="unfinished">I2C Adresa</translation>
     </message>
 </context>
 <context>
@@ -2611,7 +2623,7 @@ Súbor nemožno nájsť:
     </message>
     <message>
         <source>Libraries Path</source>
-        <translation type="unfinished">Cesta ku knižniciam</translation>
+        <translation type="obsolete">Cesta ku knižniciam</translation>
     </message>
     <message>
         <source>Board</source>
@@ -2620,6 +2632,10 @@ Súbor nemožno nájsť:
     <message>
         <source>Custom Board</source>
         <translation type="unfinished">Vlastná doska</translation>
+    </message>
+    <message>
+        <source>Custom Library Path</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2712,7 +2728,7 @@ Súbor nemožno nájsť:
     </message>
     <message>
         <source>_Steps</source>
-        <translation>_krokov</translation>
+        <translation type="vanished">_krokov</translation>
     </message>
 </context>
 <context>
@@ -2739,7 +2755,7 @@ Súbor nemožno nájsť:
     </message>
     <message>
         <source>_Buttons</source>
-        <translation>_tlačidiel</translation>
+        <translation type="vanished">_tlačidiel</translation>
     </message>
 </context>
 <context>
@@ -3882,15 +3898,15 @@ Súbor nemožno nájsť:
     </message>
     <message>
         <source>Screen Size X</source>
-        <translation>Šírka obrazovky X</translation>
+        <translation type="vanished">Šírka obrazovky X</translation>
     </message>
     <message>
         <source>Screen Size Y</source>
-        <translation>Výška obrazovky Y</translation>
+        <translation type="vanished">Výška obrazovky Y</translation>
     </message>
     <message>
         <source>_Pixels</source>
-        <translation>_bodov</translation>
+        <translation type="vanished">_bodov</translation>
     </message>
     <message>
         <source>Buffer Size</source>
@@ -3898,11 +3914,27 @@ Súbor nemožno nájsť:
     </message>
     <message>
         <source>Samples</source>
-        <translation>Vzorky</translation>
+        <translation type="vanished">Vzorky</translation>
     </message>
     <message>
-        <source>Admittance to ground</source>
+        <source>Screen Width</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>_Px</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Screen Height</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Connect to ground</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Impedance</source>
+        <translation type="unfinished">Impedancia</translation>
     </message>
 </context>
 <context>
@@ -4761,7 +4793,7 @@ Neplatný súbor balíka:
     </message>
     <message>
         <source>_sec/60º</source>
-        <translation>_sek/60º</translation>
+        <translation type="vanished">_sek/60º</translation>
     </message>
     <message>
         <source>Min. Pulse Width</source>
@@ -4777,6 +4809,10 @@ Neplatný súbor balíka:
     </message>
     <message>
         <source>Servo Motor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>_s/60º</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4985,11 +5021,23 @@ Neplatný súbor balíka:
     </message>
     <message>
         <source>_Pixels</source>
-        <translation type="unfinished">_bodov</translation>
+        <translation type="obsolete">_bodov</translation>
     </message>
     <message>
         <source>Height</source>
         <translation type="unfinished">Výška</translation>
+    </message>
+    <message>
+        <source>_Px</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rotate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>I2C</source>
+        <translation type="unfinished">I2C</translation>
     </message>
 </context>
 <context>
@@ -5016,7 +5064,7 @@ Neplatný súbor balíka:
     </message>
     <message>
         <source>_Teeth</source>
-        <translation>_zubov</translation>
+        <translation type="vanished">_zubov</translation>
     </message>
 </context>
 <context>
@@ -5235,10 +5283,6 @@ Chcete uložiť zmeny?
     <message>
         <source>_Switches</source>
         <translation type="vanished">_spínačov</translation>
-    </message>
-    <message>
-        <source>_Lines</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Exclusive</source>
@@ -5794,6 +5838,18 @@ Chcete uložiť zmeny?
     </message>
     <message>
         <source>Update Load:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Real FPS:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>0</source>
+        <translation type="unfinished">100% {0?}</translation>
+    </message>
+    <message>
+        <source>GUI overload:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

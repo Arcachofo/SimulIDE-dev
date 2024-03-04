@@ -1759,7 +1759,11 @@ Can&apos;t find file:
         <translation>下</translation>
     </message>
     <message>
-        <source>Space to Pin:</source>
+        <source>Space to Label:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bus Pin</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2492,7 +2496,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Control_Code</source>
-        <translation>控制码</translation>
+        <translation type="vanished">控制码</translation>
     </message>
     <message>
         <source>I2C Frequency</source>
@@ -2514,6 +2518,10 @@ Can&apos;t find file:
         <source>Show Memory Table</source>
         <translation>显示内存表</translation>
     </message>
+    <message>
+        <source>I2C Address</source>
+        <translation type="unfinished">I2C地址</translation>
+    </message>
 </context>
 <context>
     <name>I2CToParallel</name>
@@ -2527,11 +2535,15 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Control_Code</source>
-        <translation>控制码</translation>
+        <translation type="vanished">控制码</translation>
     </message>
     <message>
         <source>I2C Frequency</source>
         <translation>I2C频率</translation>
+    </message>
+    <message>
+        <source>I2C Address</source>
+        <translation type="unfinished">I2C地址</translation>
     </message>
 </context>
 <context>
@@ -2615,7 +2627,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Libraries Path</source>
-        <translation>库文件夹路径</translation>
+        <translation type="vanished">库文件夹路径</translation>
     </message>
     <message>
         <source>Board</source>
@@ -2624,6 +2636,10 @@ Can&apos;t find file:
     <message>
         <source>Custom Board</source>
         <translation>自定义板</translation>
+    </message>
+    <message>
+        <source>Custom Library Path</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2716,7 +2732,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>_Steps</source>
-        <translation>_Steps</translation>
+        <translation type="vanished">_Steps</translation>
     </message>
 </context>
 <context>
@@ -2743,7 +2759,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>_Buttons</source>
-        <translation>_Buttons</translation>
+        <translation type="vanished">_Buttons</translation>
     </message>
 </context>
 <context>
@@ -3900,15 +3916,15 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Screen Size X</source>
-        <translation>屏幕尺寸X</translation>
+        <translation type="vanished">屏幕尺寸X</translation>
     </message>
     <message>
         <source>Screen Size Y</source>
-        <translation>屏幕尺寸Y</translation>
+        <translation type="vanished">屏幕尺寸Y</translation>
     </message>
     <message>
         <source>_Pixels</source>
-        <translation>_Pixels</translation>
+        <translation type="vanished">_Pixels</translation>
     </message>
     <message>
         <source>Buffer Size</source>
@@ -3916,11 +3932,27 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Samples</source>
-        <translation>采样</translation>
+        <translation type="vanished">采样</translation>
     </message>
     <message>
-        <source>Admittance to ground</source>
+        <source>Screen Width</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>_Px</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Screen Height</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Connect to ground</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Impedance</source>
+        <translation type="unfinished">阻抗</translation>
     </message>
 </context>
 <context>
@@ -4791,7 +4823,7 @@ Not valid Package file:
     </message>
     <message>
         <source>_sec/60º</source>
-        <translation>_sec/60º</translation>
+        <translation type="vanished">_sec/60º</translation>
     </message>
     <message>
         <source>Min. Pulse Width</source>
@@ -4808,6 +4840,10 @@ Not valid Package file:
     <message>
         <source>Servo Motor</source>
         <translation>伺服电机</translation>
+    </message>
+    <message>
+        <source>_s/60º</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5019,11 +5055,23 @@ Not valid Package file:
     </message>
     <message>
         <source>_Pixels</source>
-        <translation>_Pixels</translation>
+        <translation type="vanished">_Pixels</translation>
     </message>
     <message>
         <source>Height</source>
         <translation>高度</translation>
+    </message>
+    <message>
+        <source>_Px</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rotate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>I2C</source>
+        <translation type="unfinished">I2C</translation>
     </message>
 </context>
 <context>
@@ -5050,7 +5098,7 @@ Not valid Package file:
     </message>
     <message>
         <source>_Teeth</source>
-        <translation>_Teeth</translation>
+        <translation type="vanished">_Teeth</translation>
     </message>
 </context>
 <context>
@@ -5280,10 +5328,6 @@ Do you want to save your changes?
     <message>
         <source>_Switches</source>
         <translation type="vanished">_Switches</translation>
-    </message>
-    <message>
-        <source>_Lines</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Exclusive</source>
@@ -5847,6 +5891,18 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Update Load:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Real FPS:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>0</source>
+        <translation type="unfinished">100% {0?}</translation>
+    </message>
+    <message>
+        <source>GUI overload:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

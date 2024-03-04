@@ -2112,7 +2112,11 @@ Can&apos;t find file:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Space to Pin:</source>
+        <source>Space to Label:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bus Pin</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2913,7 +2917,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Control_Code</source>
-        <translation>Basisadresse</translation>
+        <translation type="vanished">Basisadresse</translation>
     </message>
     <message>
         <source>I2C Frequency</source>
@@ -2939,6 +2943,10 @@ Can&apos;t find file:
         <source>Memory</source>
         <translation type="obsolete">Speicher</translation>
     </message>
+    <message>
+        <source>I2C Address</source>
+        <translation type="unfinished">I2C Adresse</translation>
+    </message>
 </context>
 <context>
     <name>I2CToParallel</name>
@@ -2956,7 +2964,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Control_Code</source>
-        <translation>Basisadresse</translation>
+        <translation type="vanished">Basisadresse</translation>
     </message>
     <message>
         <source>I2C Frequency</source>
@@ -2965,6 +2973,10 @@ Can&apos;t find file:
     <message>
         <source>Converters</source>
         <translation type="obsolete">Wandler</translation>
+    </message>
+    <message>
+        <source>I2C Address</source>
+        <translation type="unfinished">I2C Adresse</translation>
     </message>
 </context>
 <context>
@@ -3047,16 +3059,16 @@ Can&apos;t find file:
         <translation type="unfinished">Kompiler Einstellungen</translation>
     </message>
     <message>
-        <source>Libraries Path</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Board</source>
         <translation type="unfinished">Platine</translation>
     </message>
     <message>
         <source>Custom Board</source>
         <translation type="unfinished">benutzerdef. Platine</translation>
+    </message>
+    <message>
+        <source>Custom Library Path</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3151,10 +3163,6 @@ Can&apos;t find file:
         <source>Steps per Rotation</source>
         <translation type="unfinished">Schritte pro Umdrehung</translation>
     </message>
-    <message>
-        <source>_Steps</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>KeyPad</name>
@@ -3181,10 +3189,6 @@ Can&apos;t find file:
     <message>
         <source>Key Labels</source>
         <translation>Tastenbezeichnung</translation>
-    </message>
-    <message>
-        <source>_Buttons</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4414,27 +4418,35 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Screen Size X</source>
-        <translation>Displaygröße X</translation>
+        <translation type="vanished">Displaygröße X</translation>
     </message>
     <message>
         <source>Screen Size Y</source>
-        <translation>Displaygröße Y</translation>
-    </message>
-    <message>
-        <source>_Pixels</source>
-        <translation type="unfinished"></translation>
+        <translation type="vanished">Displaygröße Y</translation>
     </message>
     <message>
         <source>Buffer Size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Samples</source>
+        <source>Screen Width</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Admittance to ground</source>
+        <source>_Px</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Screen Height</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Connect to ground</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Impedance</source>
+        <translation type="unfinished">Impedanz</translation>
     </message>
 </context>
 <context>
@@ -5349,10 +5361,6 @@ Keine valide Package Datei:
         <translation type="vanished">Flankenparameter</translation>
     </message>
     <message>
-        <source>_sec/60º</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Min. Pulse Width</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5366,6 +5374,10 @@ Keine valide Package Datei:
     </message>
     <message>
         <source>Servo Motor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>_s/60º</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5670,12 +5682,20 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Breite</translation>
     </message>
     <message>
-        <source>_Pixels</source>
+        <source>Height</source>
+        <translation type="unfinished">Höhe</translation>
+    </message>
+    <message>
+        <source>_Px</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Height</source>
-        <translation type="unfinished">Höhe</translation>
+        <source>Rotate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>I2C</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5703,10 +5723,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Resistance</source>
         <translation>Widerstand</translation>
-    </message>
-    <message>
-        <source>_Teeth</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5937,10 +5953,6 @@ Sollen die Änderungen gespeichert werden?
     <message>
         <source>Size</source>
         <translation>Größe</translation>
-    </message>
-    <message>
-        <source>_Lines</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Exclusive</source>
@@ -6566,6 +6578,18 @@ Sollen die Änderungen gespeichert werden?
     </message>
     <message>
         <source>Update Load:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Real FPS:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>0</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>GUI overload:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -1886,7 +1886,11 @@ Can&apos;t find file:
         <translation type="vanished">Пространство имен:</translation>
     </message>
     <message>
-        <source>Space to Pin:</source>
+        <source>Space to Label:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bus Pin</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2712,7 +2716,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Control_Code</source>
-        <translation>Контрольный код</translation>
+        <translation type="vanished">Контрольный код</translation>
     </message>
     <message>
         <source>I2C Frequency</source>
@@ -2738,6 +2742,10 @@ Can&apos;t find file:
         <source>Memory</source>
         <translation type="vanished">Память</translation>
     </message>
+    <message>
+        <source>I2C Address</source>
+        <translation type="unfinished">I2C адрес</translation>
+    </message>
 </context>
 <context>
     <name>I2CToParallel</name>
@@ -2755,7 +2763,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Control_Code</source>
-        <translation>Контрольный код</translation>
+        <translation type="vanished">Контрольный код</translation>
     </message>
     <message>
         <source>I2C Frequency</source>
@@ -2764,6 +2772,10 @@ Can&apos;t find file:
     <message>
         <source>Converters</source>
         <translation type="vanished">Конвертеры</translation>
+    </message>
+    <message>
+        <source>I2C Address</source>
+        <translation type="unfinished">I2C адрес</translation>
     </message>
 </context>
 <context>
@@ -2851,7 +2863,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Libraries Path</source>
-        <translation>Путь к библиотекам</translation>
+        <translation type="vanished">Путь к библиотекам</translation>
     </message>
     <message>
         <source>Board</source>
@@ -2860,6 +2872,10 @@ Can&apos;t find file:
     <message>
         <source>Custom Board</source>
         <translation>Заказная плата</translation>
+    </message>
+    <message>
+        <source>Custom Library Path</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2956,7 +2972,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>_Steps</source>
-        <translation>Шаг(ов)</translation>
+        <translation type="vanished">Шаг(ов)</translation>
     </message>
 </context>
 <context>
@@ -2987,7 +3003,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>_Buttons</source>
-        <translation>_Кнопок</translation>
+        <translation type="vanished">_Кнопок</translation>
     </message>
 </context>
 <context>
@@ -4233,15 +4249,15 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Screen Size X</source>
-        <translation>Размер окна по X</translation>
+        <translation type="vanished">Размер окна по X</translation>
     </message>
     <message>
         <source>Screen Size Y</source>
-        <translation>Размер окна по Y</translation>
+        <translation type="vanished">Размер окна по Y</translation>
     </message>
     <message>
         <source>_Pixels</source>
-        <translation>_Пиксел.</translation>
+        <translation type="vanished">_Пиксел.</translation>
     </message>
     <message>
         <source>Buffer Size</source>
@@ -4249,11 +4265,27 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Samples</source>
-        <translation>Образцы</translation>
+        <translation type="vanished">Образцы</translation>
     </message>
     <message>
-        <source>Admittance to ground</source>
+        <source>Screen Width</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>_Px</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Screen Height</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Connect to ground</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Impedance</source>
+        <translation type="unfinished">Импеданс</translation>
     </message>
 </context>
 <context>
@@ -5222,7 +5254,7 @@ Not valid Package file:
     </message>
     <message>
         <source>_sec/60º</source>
-        <translation>_сек/60º</translation>
+        <translation type="vanished">_сек/60º</translation>
     </message>
     <message>
         <source>Min. Pulse Width</source>
@@ -5239,6 +5271,10 @@ Not valid Package file:
     <message>
         <source>Servo Motor</source>
         <translation>Сервопривод</translation>
+    </message>
+    <message>
+        <source>_s/60º</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5470,11 +5506,23 @@ Not valid Package file:
     </message>
     <message>
         <source>_Pixels</source>
-        <translation>_Пикс.</translation>
+        <translation type="vanished">_Пикс.</translation>
     </message>
     <message>
         <source>Height</source>
         <translation>Высота</translation>
+    </message>
+    <message>
+        <source>_Px</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rotate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>I2C</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5505,7 +5553,7 @@ Not valid Package file:
     </message>
     <message>
         <source>_Teeth</source>
-        <translation>_Шагов</translation>
+        <translation type="vanished">_Шагов</translation>
     </message>
 </context>
 <context>
@@ -5787,10 +5835,6 @@ Do you want to save your changes?
     <message>
         <source>_Switches</source>
         <translation type="vanished">_Перекл.</translation>
-    </message>
-    <message>
-        <source>_Lines</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Exclusive</source>
@@ -6422,6 +6466,18 @@ Do you want to save your changes?
     <message>
         <source>Update Load:</source>
         <translation type="unfinished">Загрузка обновления:</translation>
+    </message>
+    <message>
+        <source>Real FPS:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>0</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>GUI overload:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

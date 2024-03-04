@@ -1425,7 +1425,11 @@ Can&apos;t find file:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Space to Pin:</source>
+        <source>Space to Label:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bus Pin</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2059,10 +2063,6 @@ Do you want to save your changes?
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Control_Code</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>I2C Frequency</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2082,6 +2082,10 @@ Do you want to save your changes?
         <source>Show Memory Table</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>I2C Address</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>I2CToParallel</name>
@@ -2094,11 +2098,11 @@ Do you want to save your changes?
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Control_Code</source>
+        <source>I2C Frequency</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>I2C Frequency</source>
+        <source>I2C Address</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2170,15 +2174,15 @@ Do you want to save your changes?
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Libraries Path</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Board</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Custom Board</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Custom Library Path</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2262,10 +2266,6 @@ Do you want to save your changes?
         <source>Steps per Rotation</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>_Steps</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>KeyPad</name>
@@ -2279,10 +2279,6 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Rows</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>_Buttons</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3285,27 +3281,27 @@ Do you want to save your changes?
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Screen Size X</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>_Pixels</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Screen Size Y</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Buffer Size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Samples</source>
+        <source>Screen Width</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Admittance to ground</source>
+        <source>_Px</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Screen Height</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Connect to ground</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Impedance</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3970,10 +3966,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>_sec/60º</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Min. Pulse Width</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3987,6 +3979,10 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Electric</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>_s/60º</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4166,10 +4162,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>_Pixels</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Height</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4179,6 +4171,18 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>I2C Frequency</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>_Px</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rotate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>I2C</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4198,10 +4202,6 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Steps per Rotation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>_Teeth</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4388,10 +4388,6 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Size</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>_Lines</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4904,6 +4900,18 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Update Load:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Real FPS:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>0</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>GUI overload:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

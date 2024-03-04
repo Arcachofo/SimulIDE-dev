@@ -1855,7 +1855,11 @@ No se pudo encontrar el archivo:
         <translation>Abajo</translation>
     </message>
     <message>
-        <source>Space to Pin:</source>
+        <source>Space to Label:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bus Pin</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2661,7 +2665,7 @@ No se pudo encontrar el archivo:
     </message>
     <message>
         <source>Control_Code</source>
-        <translation>Código de Control</translation>
+        <translation type="vanished">Código de Control</translation>
     </message>
     <message>
         <source>I2C Frequency</source>
@@ -2687,6 +2691,10 @@ No se pudo encontrar el archivo:
         <source>Memory</source>
         <translation type="obsolete">Memoria</translation>
     </message>
+    <message>
+        <source>I2C Address</source>
+        <translation type="unfinished">Dirección I2C</translation>
+    </message>
 </context>
 <context>
     <name>I2CToParallel</name>
@@ -2704,7 +2712,7 @@ No se pudo encontrar el archivo:
     </message>
     <message>
         <source>Control_Code</source>
-        <translation>Código de Control</translation>
+        <translation type="vanished">Código de Control</translation>
     </message>
     <message>
         <source>I2C Frequency</source>
@@ -2713,6 +2721,10 @@ No se pudo encontrar el archivo:
     <message>
         <source>Converters</source>
         <translation type="obsolete">Conversores</translation>
+    </message>
+    <message>
+        <source>I2C Address</source>
+        <translation type="unfinished">Dirección I2C</translation>
     </message>
 </context>
 <context>
@@ -2799,15 +2811,15 @@ No se pudo encontrar el archivo:
         <translation type="unfinished">Configuración de Compilador</translation>
     </message>
     <message>
-        <source>Libraries Path</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Board</source>
         <translation type="unfinished">Placa</translation>
     </message>
     <message>
         <source>Custom Board</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Custom Library Path</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2905,7 +2917,7 @@ No se pudo encontrar el archivo:
     </message>
     <message>
         <source>_Steps</source>
-        <translation>_Pasos</translation>
+        <translation type="vanished">_Pasos</translation>
     </message>
 </context>
 <context>
@@ -2936,7 +2948,7 @@ No se pudo encontrar el archivo:
     </message>
     <message>
         <source>_Buttons</source>
-        <translation>_Botones</translation>
+        <translation type="vanished">_Botones</translation>
     </message>
 </context>
 <context>
@@ -4138,27 +4150,35 @@ No se pudo encontrar el archivo:
     </message>
     <message>
         <source>Screen Size X</source>
-        <translation>Tamaño X</translation>
+        <translation type="vanished">Tamaño X</translation>
     </message>
     <message>
         <source>Screen Size Y</source>
-        <translation>Tamaño Y</translation>
-    </message>
-    <message>
-        <source>_Pixels</source>
-        <translation type="unfinished"></translation>
+        <translation type="vanished">Tamaño Y</translation>
     </message>
     <message>
         <source>Buffer Size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Samples</source>
+        <source>Screen Width</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Admittance to ground</source>
+        <source>_Px</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Screen Height</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Connect to ground</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Impedance</source>
+        <translation type="unfinished">Impedancia</translation>
     </message>
 </context>
 <context>
@@ -5053,7 +5073,7 @@ Archivo packae no valido:</translation>
     </message>
     <message>
         <source>_sec/60º</source>
-        <translation>_seg/60º</translation>
+        <translation type="vanished">_seg/60º</translation>
     </message>
     <message>
         <source>Min. Pulse Width</source>
@@ -5069,6 +5089,10 @@ Archivo packae no valido:</translation>
     </message>
     <message>
         <source>Servo Motor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>_s/60º</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5296,12 +5320,20 @@ Archivo packae no valido:</translation>
         <translation type="unfinished">Ancho</translation>
     </message>
     <message>
-        <source>_Pixels</source>
+        <source>Height</source>
+        <translation type="unfinished">Alto</translation>
+    </message>
+    <message>
+        <source>_Px</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Height</source>
-        <translation type="unfinished">Alto</translation>
+        <source>Rotate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>I2C</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5332,7 +5364,7 @@ Archivo packae no valido:</translation>
     </message>
     <message>
         <source>_Teeth</source>
-        <translation>_Dientes</translation>
+        <translation type="vanished">_Dientes</translation>
     </message>
 </context>
 <context>
@@ -5603,10 +5635,6 @@ Quiere guardar los cambios?
     <message>
         <source>_Switches</source>
         <translation type="vanished">_Interruptores</translation>
-    </message>
-    <message>
-        <source>_Lines</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Exclusive</source>
@@ -6216,6 +6244,18 @@ Quiere guardar los cambios?
     </message>
     <message>
         <source>Update Load:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Real FPS:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>0</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>GUI overload:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
