@@ -97,8 +97,7 @@ void SwitchDip::updateStep()
         bool   state = m_state & 1<<i;
         double admit = 0;
 
-        if( state  )
-        {
+        if( state  ){
             button->setIcon( QIcon(":/switchbut.png") );
             admit = 1e3;
         }else{
@@ -110,7 +109,7 @@ void SwitchDip::updateStep()
         m_pin[pin]->stampAdmitance( admit );
         m_pin[pin+1]->stampAdmitance( admit );
 
-       i++;
+        i++;
     }
 }
 

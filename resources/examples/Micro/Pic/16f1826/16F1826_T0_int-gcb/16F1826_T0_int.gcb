@@ -1,0 +1,44 @@
+
+'Select chip 16 MHz
+#CHIP  16f1826, 16
+#OPTION Explicit
+#config OSC = INTOSC, WDT = OFF, MCLRE=OFF
+
+'Define the USART port
+#define USART_BAUD_RATE 9600
+#define USART_BLOCKING
+#define USART_DELAY off
+#define SerInPort RB1
+#define SerOutPort RB2
+
+'Set Port Directions
+  Dir SerInPort IN
+  Dir SerOutPort OUT
+
+  TMR0CS = 0    'TIMER 0 on Internal instruction cycle clock (F OSC /4)
+  PSA = 0       'Prescaler is assigned to the Timer0 module
+  PS0 = 0       'Prescaler Rate Select bits  Timer0 Rate 1 : 2
+  PS1 = 0       '
+  PS2 = 0       '
+  TMR0IE = 1    'TIMER 0 Interupt enabled
+  TMR0IF = 0    'Make sure that Interupt Flag is cleared
+
+  IntOn
+  On Interrupt Timer0Overflow Call readTMR0
+
+  HSerPrint "Test 16F1826 USART Communication"
+  HSerPrintCRLF
+
+Do
+   Wait 50 ms
+Loop
+
+Sub readTMR0
+   RB5 = 1
+   TMR0IF = 0
+   HSerPrint "TMR0 Interupt"
+   HSerPrintCRLF
+   RB5 = 0
+End Sub
+
+end

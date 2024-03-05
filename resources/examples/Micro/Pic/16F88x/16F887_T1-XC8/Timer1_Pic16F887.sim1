@@ -1,0 +1,33 @@
+<circuit type="simulide_1.0" stepSize="1000000" stepsPS="1000000" NLsteps="100000" animate="0" >
+
+<item itemtype="PIC" CircId="pic16f887-1" mainComp="false" Show_id="true" Show_Val="false" Pos="-436,-380" rotation="0" hflip="1" vflip="1" label="pic16f887-1" idLabPos="0,-20" labelrot="0" valLabPos="-16,20" valLabRot="0" Logic_Symbol="false" eeprom="0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0," Frequency="20 MHz" Program="build/Timer1_Pic16F887.hex" Auto_Load="false" />
+
+<item itemtype="LedBar" CircId="LedBar-10" mainComp="false" Show_id="false" Show_Val="false" Pos="-484,-260" rotation="-180" hflip="1" vflip="1" label="LedBar-10" idLabPos="-16,-44" labelrot="0" valLabPos="-16,-56" valLabRot="0" Size="4 Leds" Color="Yellow" Grounded="true" Threshold="2.4 V" MaxCurrent="0.03 A" Resistance="100 Ω" />
+
+<item itemtype="LedBar" CircId="LedBar-15" mainComp="false" Show_id="false" Show_Val="false" Pos="-348,-348" rotation="0" hflip="1" vflip="1" label="LedBar-15" idLabPos="-16,-44" labelrot="0" valLabPos="-16,-56" valLabRot="0" Size="8 _Leds" Color="Yellow" Grounded="true" Threshold="2.4 V" MaxCurrent="0.03 A" Resistance="100 Ω" />
+
+<item itemtype="Connector" startpinid="LedBar-10-led0-pinP" endpinid="pic16f887-1-RC3" enodeid="Circ_eNode-16" pointList="-468,-236,-444,-236" />
+
+<item itemtype="Connector" startpinid="LedBar-10-led1-pinP" endpinid="pic16f887-1-RC2" enodeid="Circ_eNode-17" pointList="-468,-244,-444,-244" />
+
+<item itemtype="Connector" startpinid="LedBar-10-led2-pinP" endpinid="pic16f887-1-RC1" enodeid="Circ_eNode-18" pointList="-468,-252,-444,-252" />
+
+<item itemtype="Connector" startpinid="LedBar-10-led3-pinP" endpinid="pic16f887-1-RC0" enodeid="Circ_eNode-19" pointList="-468,-260,-444,-260" />
+
+<item itemtype="Connector" startpinid="LedBar-15-led0-pinP" endpinid="pic16f887-1-RB7" enodeid="Circ_eNode-20" pointList="-364,-372,-380,-372" />
+
+<item itemtype="Connector" startpinid="LedBar-15-led1-pinP" endpinid="pic16f887-1-RB6" enodeid="Circ_eNode-21" pointList="-364,-364,-380,-364" />
+
+<item itemtype="Connector" startpinid="LedBar-15-led2-pinP" endpinid="pic16f887-1-RB5" enodeid="Circ_eNode-22" pointList="-364,-356,-380,-356" />
+
+<item itemtype="Connector" startpinid="LedBar-15-led3-pinP" endpinid="pic16f887-1-RB4" enodeid="Circ_eNode-23" pointList="-364,-348,-380,-348" />
+
+<item itemtype="Connector" startpinid="LedBar-15-led4-pinP" endpinid="pic16f887-1-RB3" enodeid="Circ_eNode-24" pointList="-364,-340,-380,-340" />
+
+<item itemtype="Connector" startpinid="LedBar-15-led5-pinP" endpinid="pic16f887-1-RB2" enodeid="Circ_eNode-25" pointList="-364,-332,-380,-332" />
+
+<item itemtype="Connector" startpinid="LedBar-15-led6-pinP" endpinid="pic16f887-1-RB1" enodeid="Circ_eNode-26" pointList="-364,-324,-380,-324" />
+
+<item itemtype="Connector" startpinid="LedBar-15-led7-pinP" endpinid="pic16f887-1-RB0" enodeid="Circ_eNode-27" pointList="-364,-316,-380,-316" />
+
+</circuit>

@@ -1,0 +1,17 @@
+<circuit version="" rev="2224" stepSize="1000000" stepsPS="1000000" NLsteps="100000" reaStep="1000000" animate="1" >
+
+<item itemtype="MCU" CircId="p12F675-162" mainComp="false" Show_id="true" Show_Val="false" Pos="-228,-364" rotation="0" hflip="1" vflip="1" label="p12F675" idLabPos="-1,-15" labelrot="0" valLabPos="-16,20" valLabRot="0" Frequency="20 MHz" Program="build/12F675_T0-XC8.hex" Auto_Load="false" saveEepr="true" Rst_enabled="false" Ext_Osc="false" Wdt_enabled="false" Clk_Out="false" varList=",,,,WPU,,,GPIO,TRISIO,,CMCON,,PIR1,PIE1" />
+
+<item itemtype="FreqMeter" CircId="FreqMeter-186" mainComp="false" Show_id="true" Show_Val="false" Pos="-140,-308" rotation="0" hflip="1" vflip="1" label="T0 OVF" idLabPos="8,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" Filter="0.1 V" />
+
+<item itemtype="Clock" CircId="Clock-207" mainComp="false" ShowProp="Freq" Show_id="true" Show_Val="true" Pos="-208,-416" rotation="0" hflip="1" vflip="1" label="Ext. Clock" idLabPos="-33.6375,-22.3439" labelrot="0" valLabPos="-16,10.7602" valLabRot="0" Out="false" Running="false" Voltage="5 V" Freq="100 kHz" Always_On="false" />
+
+<item itemtype="Probe" CircId="Probe-209" mainComp="false" Show_id="false" Show_Val="true" Pos="-268,-364" rotation="-135" hflip="1" vflip="1" label="Probe-209" idLabPos="16,-16" labelrot="45" valLabPos="25.7589,-4.2939" valLabRot="135" ShowVolt="true" Threshold="2.5 V" />
+
+<item itemtype="Connector" uid="Connector-205" startpinid="FreqMeter-186-lPin" endpinid="p12F675-162-PORTP4" pointList="-180,-308,-252,-308,-252,-340,-236,-340" />
+
+<item itemtype="Connector" uid="Connector-208" startpinid="Clock-207-outnod" endpinid="p12F675-162-PORTP2" pointList="-192,-416,-156,-416,-156,-332,-188,-332" />
+
+<item itemtype="Connector" uid="Connector-210" startpinid="Probe-209-inpin" endpinid="p12F675-162-PORTP5" pointList="-252,-348,-236,-348" />
+
+</circuit>

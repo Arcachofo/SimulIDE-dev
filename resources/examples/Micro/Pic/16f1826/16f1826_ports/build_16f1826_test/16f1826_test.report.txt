@@ -1,0 +1,41 @@
+Compilation Report
+
+Compiler Version (YYYY-MM-DD): 0.98.<<>> 2021-<<>>-24 (Linux 64 bit) : Build 1005
+
+;********************************************************************************
+
+Compilation time:
+ (Compile time: 0 seconds)
+ (Assembly time: 0 seconds)
+ (Download time: 0 seconds)
+ (Total time: 0 seconds)
+
+;********************************************************************************
+
+Chip resource usage:
+Chip Model: 16F1826
+Program Memory: 79/2048 words (3.86%)
+RAM: 0/256 bytes (0.%)
+HS (Clock source is not a primary internal oscillator. Ensure the clock source is correctly setup)
+
+;********************************************************************************
+
+RAM Allocation
+;********************************************************************************
+
+Subroutines
+Main
+Code Size (lines): 17
+Compiled Size (words): 52
+Outgoing calls: Delay_MS(6), INITSYS(3)
+
+INITSYS
+Code Size (lines): 837
+Compiled Size (words): 13
+
+Delay_MS
+Code Size (lines): 0
+Compiled Size (words): 14
+
+;********************************************************************************
+

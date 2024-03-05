@@ -1,24 +1,24 @@
-<circuit version="1.0.0-SR0" rev="1260" stepSize="1000000" stepsPS="1000000" NLsteps="100000" reaStep="1000000" animate="0" >
+<circuit version="" rev="2221" stepSize="1000000" stepsPS="1000000" NLsteps="100000" reaStep="1000000" animate="0" >
 
-<item itemtype="TextComponent" CircId="Text-1" mainComp="false" Show_id="false" Show_Val="false" Pos="-404,-416" rotation="0" hflip="1" vflip="1" label="Text-18" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Margin="5 _Pixels" Border="1 _Pixels" Opacity="1" Font="Helvetica [Cronyx]" Font_Size="10 _Pixels" Fixed_Width="true" Text="F-0 Hexadecimal Counter Back.&#xa;&#xa;Turn On Clock to start Counter.&#xa;&#xa;Reset:&#xa;Resets Counter to 0." />
+<item itemtype="TextComponent" CircId="Text-1" mainComp="false" Show_id="false" Show_Val="false" Pos="-208,-252" rotation="0" hflip="1" vflip="1" label="Text-18" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Margin="5 _px" Border="1 _px" Color="#ffffdc" Opacity="1" Font="Helvetica [Cronyx]" Font_Color="#000080" Font_Size="10 _px" Fixed_Width="true" Text="F-0 Hexadecimal Counter Back.&#xa;&#xa;Turn On Clock to start Counter.&#xa;&#xa;Reset:&#xa;Resets Counter to 0." />
 
-<item itemtype="7-Seg BCD" CircId="7-5" mainComp="false" Show_id="false" Show_Val="false" Pos="-240,-292" rotation="0" hflip="1" vflip="1" label="7-14" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" />
+<item itemtype="7-Seg BCD" CircId="7-5" mainComp="false" Show_id="false" Show_Val="false" Pos="-240,-292" rotation="0" hflip="1" vflip="1" label="7-14" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Show_Point_Pin="false" Show_Enable_Pin="false" />
 
-<item itemtype="Clock" CircId="Clock-8" mainComp="false" Show_id="true" Show_Val="false" Pos="-364,-132" rotation="0" hflip="1" vflip="1" label="Clock" idLabPos="-30,-25" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="true" Running="true" Voltage="5 V" Freq="2 Hz" Always_On="false" />
+<item itemtype="Clock" CircId="Clock-8" mainComp="false" Show_id="true" Show_Val="false" Pos="-364,-132" rotation="0" hflip="1" vflip="1" label="Clock" idLabPos="-60.7133,-6.13324" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="true" Running="true" Voltage="5 V" Freq="2 Hz" Always_On="false" />
 
-<item itemtype="Counter" CircId="Counter-9" mainComp="false" Show_id="false" Show_Val="false" Pos="-284,-132" rotation="0" hflip="1" vflip="1" label="Counter-10" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Pin_SET="false" Clock_Inverted="false" Reset_Inverted="true" Max_Value="1" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
+<item itemtype="Counter" CircId="Counter-9" mainComp="false" Show_id="false" Show_Val="false" Pos="-284,-132" rotation="0" hflip="1" vflip="1" label="Counter-10" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Pin_SET="false" Clock_Inverted="false" Reset_Inverted="true" Max_Value="1" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" pd_n="1 _Gates" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
 
-<item itemtype="Counter" CircId="Counter-10" mainComp="false" Show_id="false" Show_Val="false" Pos="-284,-172" rotation="0" hflip="1" vflip="1" label="Counter-9" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Pin_SET="false" Clock_Inverted="false" Reset_Inverted="true" Max_Value="1" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
+<item itemtype="Counter" CircId="Counter-10" mainComp="false" Show_id="false" Show_Val="false" Pos="-284,-172" rotation="0" hflip="1" vflip="1" label="Counter-9" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Pin_SET="false" Clock_Inverted="false" Reset_Inverted="true" Max_Value="1" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" pd_n="1 _Gates" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
 
-<item itemtype="Counter" CircId="Counter-11" mainComp="false" Show_id="false" Show_Val="false" Pos="-284,-212" rotation="0" hflip="1" vflip="1" label="Counter-8" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Pin_SET="false" Clock_Inverted="false" Reset_Inverted="true" Max_Value="1" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
+<item itemtype="Counter" CircId="Counter-11" mainComp="false" Show_id="false" Show_Val="false" Pos="-284,-212" rotation="0" hflip="1" vflip="1" label="Counter-8" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Pin_SET="false" Clock_Inverted="false" Reset_Inverted="true" Max_Value="1" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" pd_n="1 _Gates" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
 
-<item itemtype="Counter" CircId="Counter-12" mainComp="false" Show_id="false" Show_Val="false" Pos="-284,-252" rotation="0" hflip="1" vflip="1" label="Counter-7" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Pin_SET="false" Clock_Inverted="false" Reset_Inverted="true" Max_Value="1" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
+<item itemtype="Counter" CircId="Counter-12" mainComp="false" Show_id="false" Show_Val="false" Pos="-284,-252" rotation="0" hflip="1" vflip="1" label="Counter-7" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Pin_SET="false" Clock_Inverted="false" Reset_Inverted="true" Max_Value="1" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" pd_n="1 _Gates" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
 
-<item itemtype="Rail" CircId="Rail.-13" mainComp="false" ShowProp="Voltage" Show_id="false" Show_Val="true" Pos="-372,-308" rotation="0" hflip="1" vflip="1" label="Rail.-6" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Voltage="5 V" />
+<item itemtype="Rail" CircId="Rail.-13" mainComp="false" ShowProp="Voltage" Show_id="false" Show_Val="true" Pos="-332,-324" rotation="90" hflip="1" vflip="1" label="Rail.-6" idLabPos="-64,-24" labelrot="0" valLabPos="-13.8062,5.36743" valLabRot="-90" Voltage="5 V" />
 
-<item itemtype="Push" CircId="Push-14" mainComp="false" Show_id="true" Show_Val="false" Pos="-364,-228" rotation="-180" hflip="1" vflip="1" label="Reset" idLabPos="16,34" labelrot="-180" valLabPos="0,0" valLabRot="0" Norm_Close="false" Poles="1 _Poles" />
+<item itemtype="Push" CircId="Push-14" mainComp="false" Show_id="true" Show_Val="false" Pos="-364,-228" rotation="-180" hflip="1" vflip="1" label="Reset" idLabPos="16,34" labelrot="-180" valLabPos="0,0" valLabRot="0" Norm_Close="false" Poles="1" />
 
-<item itemtype="Resistor" CircId="Resistor-15" mainComp="false" ShowProp="Resistance" Show_id="false" Show_Val="true" Pos="-332,-284" rotation="90" hflip="1" vflip="1" label="Resistor-4" idLabPos="-12,-24" labelrot="0" valLabPos="-16,-21" valLabRot="0" Resistance="5 kΩ" />
+<item itemtype="Resistor" CircId="Resistor-15" mainComp="false" ShowProp="Resistance" Show_id="false" Show_Val="true" Pos="-332,-284" rotation="90" hflip="1" vflip="1" label="Resistor-4" idLabPos="-12,-24" labelrot="0" valLabPos="-8.10229,-16.1736" valLabRot="0" Resistance="5 kΩ" />
 
 <item itemtype="Ground" CircId="Ground (0 V)-17" mainComp="false" Show_id="false" Show_Val="false" Pos="-388,-188" rotation="0" hflip="1" vflip="1" label="Ground (0 V)-2" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" />
 
@@ -66,7 +66,7 @@
 
 <item itemtype="Connector" uid="connector-33" startpinid="Node-6-0" endpinid="Node-18-0" pointList="-332,-204,-332,-228" />
 
-<item itemtype="Connector" uid="connector-34" startpinid="Rail.-13-outnod" endpinid="Resistor-15-lPin" pointList="-356,-308,-332,-308,-332,-300" />
+<item itemtype="Connector" uid="connector-34" startpinid="Rail.-13-outnod" endpinid="Resistor-15-lPin" pointList="-332,-308,-332,-300" />
 
 <item itemtype="Connector" uid="connector-35" startpinid="Resistor-15-rPin" endpinid="Node-16-1" pointList="-332,-268,-332,-244" />
 

@@ -1,334 +1,334 @@
-<circuit version="1.0.0" rev="1220" stepSize="1000000" stepsPS="1000000" NLsteps="100000" reaStep="1000000" animate="1" >
+<circuit version="" rev="2224" stepSize="1000000" stepsPS="1000000" NLsteps="100000" reaStep="1000000" animate="1" >
 
-<item itemtype="Bus" CircId="Bus-609" mainComp="false" Show_id="false" Show_Val="false" Pos="-1204,-180" rotation="-90" hflip="-1" vflip="1" label="Bus-2015" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Num_Bits="8 _Bits" Start_Bit="0" />
+<item itemtype="Bus" CircId="Bus-609" mainComp="false" Show_id="false" Show_Val="false" Pos="-1204,-180" rotation="-90" hflip="-1" vflip="1" label="Bus-2015" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Num_Bits="8 _bits" Start_Bit="0" />
 
-<item itemtype="LedBar" CircId="LedBar-608" mainComp="false" Show_id="false" Show_Val="false" Pos="-1172,-156" rotation="-270" hflip="1" vflip="1" label="LedBar-2014" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Size="8 _Leds" Color="Amarillo" Grounded="true" Threshold="2.4 V" MaxCurrent="0.005 A" Resistance="500 Ω" />
+<item itemtype="LedBar" CircId="LedBar-608" mainComp="false" Show_id="false" Show_Val="false" Pos="-1172,-156" rotation="-270" hflip="1" vflip="1" label="LedBar-2014" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Color="Yellow" Size="8 _Leds" Grounded="true" Threshold="2.4 V" MaxCurrent="0.005 A" Resistance="500 Ω" />
 
-<item itemtype="Bus" CircId="Bus-607" mainComp="false" Show_id="false" Show_Val="false" Pos="-1116,-180" rotation="-90" hflip="-1" vflip="1" label="Bus-2003" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Num_Bits="8 _Bits" Start_Bit="0" />
+<item itemtype="Bus" CircId="Bus-607" mainComp="false" Show_id="false" Show_Val="false" Pos="-1116,-180" rotation="-90" hflip="-1" vflip="1" label="Bus-2003" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Num_Bits="8 _bits" Start_Bit="0" />
 
-<item itemtype="LedBar" CircId="LedBar-606" mainComp="false" Show_id="false" Show_Val="false" Pos="-1084,-156" rotation="-270" hflip="1" vflip="1" label="LedBar-2002" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Size="8 _Leds" Color="Amarillo" Grounded="true" Threshold="2.4 V" MaxCurrent="0.005 A" Resistance="500 Ω" />
+<item itemtype="LedBar" CircId="LedBar-606" mainComp="false" Show_id="false" Show_Val="false" Pos="-1084,-156" rotation="-270" hflip="1" vflip="1" label="LedBar-2002" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Color="Yellow" Size="8 _Leds" Grounded="true" Threshold="2.4 V" MaxCurrent="0.005 A" Resistance="500 Ω" />
 
-<item itemtype="Bus" CircId="Bus-605" mainComp="false" Show_id="false" Show_Val="false" Pos="-1116,-356" rotation="-90" hflip="-1" vflip="1" label="Bus-1991" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Num_Bits="8 _Bits" Start_Bit="0" />
+<item itemtype="Bus" CircId="Bus-605" mainComp="false" Show_id="false" Show_Val="false" Pos="-1116,-356" rotation="-90" hflip="-1" vflip="1" label="Bus-1991" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Num_Bits="8 _bits" Start_Bit="0" />
 
-<item itemtype="LedBar" CircId="LedBar-604" mainComp="false" Show_id="false" Show_Val="false" Pos="-1084,-332" rotation="-270" hflip="1" vflip="1" label="LedBar-1990" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Size="8 _Leds" Color="Amarillo" Grounded="true" Threshold="2.4 V" MaxCurrent="0.005 A" Resistance="1000 Ω" />
+<item itemtype="LedBar" CircId="LedBar-604" mainComp="false" Show_id="false" Show_Val="false" Pos="-1084,-332" rotation="-270" hflip="1" vflip="1" label="LedBar-1990" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Color="Yellow" Size="8 _Leds" Grounded="true" Threshold="2.4 V" MaxCurrent="0.005 A" Resistance="1000 Ω" />
 
-<item itemtype="Bus" CircId="Bus-602" mainComp="false" Show_id="false" Show_Val="false" Pos="-1204,-356" rotation="-90" hflip="-1" vflip="1" label="Bus-1978" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Num_Bits="8 _Bits" Start_Bit="0" />
+<item itemtype="Bus" CircId="Bus-602" mainComp="false" Show_id="false" Show_Val="false" Pos="-1204,-356" rotation="-90" hflip="-1" vflip="1" label="Bus-1978" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Num_Bits="8 _bits" Start_Bit="0" />
 
-<item itemtype="LedBar" CircId="LedBar-601" mainComp="false" Show_id="false" Show_Val="false" Pos="-1172,-332" rotation="-270" hflip="1" vflip="1" label="LedBar-1977" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Size="8 _Leds" Color="Amarillo" Grounded="true" Threshold="2.4 V" MaxCurrent="0.005 A" Resistance="500 Ω" />
+<item itemtype="LedBar" CircId="LedBar-601" mainComp="false" Show_id="false" Show_Val="false" Pos="-1172,-332" rotation="-270" hflip="1" vflip="1" label="LedBar-1977" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Color="Yellow" Size="8 _Leds" Grounded="true" Threshold="2.4 V" MaxCurrent="0.005 A" Resistance="500 Ω" />
 
-<item itemtype="Bus" CircId="Bus-600" mainComp="false" Show_id="false" Show_Val="false" Pos="-44,-388" rotation="0" hflip="1" vflip="-1" label="Bus-1951" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Num_Bits="8 _Bits" Start_Bit="0" />
+<item itemtype="Bus" CircId="Bus-600" mainComp="false" Show_id="false" Show_Val="false" Pos="-44,-388" rotation="0" hflip="1" vflip="-1" label="Bus-1951" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Num_Bits="8 _bits" Start_Bit="0" />
 
-<item itemtype="7-Seg BCD" CircId="7-599" mainComp="false" Show_id="false" Show_Val="false" Pos="-1164,-412" rotation="0" hflip="1" vflip="1" label="7-1933" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" />
+<item itemtype="7-Seg BCD" CircId="7-599" mainComp="false" Show_id="false" Show_Val="false" Pos="-1160,-412" rotation="0" hflip="1" vflip="1" label="7-1933" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Show_Point_Pin="false" Show_Enable_Pin="false" />
 
-<item itemtype="7-Seg BCD" CircId="7-598" mainComp="false" Show_id="false" Show_Val="false" Pos="-1196,-412" rotation="0" hflip="1" vflip="1" label="7-1932" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" />
+<item itemtype="7-Seg BCD" CircId="7-598" mainComp="false" Show_id="false" Show_Val="false" Pos="-1192,-412" rotation="0" hflip="1" vflip="1" label="7-1932" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Show_Point_Pin="false" Show_Enable_Pin="false" />
 
-<item itemtype="Bus" CircId="Bus-597" mainComp="false" Show_id="false" Show_Val="false" Pos="-1204,-372" rotation="90" hflip="1" vflip="1" label="Bus-1931" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Num_Bits="8 _Bits" Start_Bit="0" />
+<item itemtype="Bus" CircId="Bus-597" mainComp="false" Show_id="false" Show_Val="false" Pos="-1204,-372" rotation="90" hflip="1" vflip="1" label="Bus-1931" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Num_Bits="8 _bits" Start_Bit="0" />
 
-<item itemtype="TextComponent" CircId="TextComponent-596" mainComp="false" Show_id="false" Show_Val="false" Pos="-1212,-468" rotation="0" hflip="1" vflip="1" label="TextComponent-1930" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Margin="5 _Pixels" Border="1 _Pixels" Opacity="1" Font="Helvetica [Cronyx]" Font_Size="10 _Pixels" Fixed_Width="false" Text="DATA BUS" />
+<item itemtype="TextComponent" CircId="TextComponent-596" mainComp="false" Show_id="false" Show_Val="false" Pos="-1204,-468" rotation="0" hflip="1" vflip="1" label="TextComponent-1930" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Margin="5 _px" Border="1 _px" Color="#ffffdc" Opacity="1" Font="Helvetica [Cronyx]" Font_Color="#000080" Font_Size="10 _px" Fixed_Width="false" Text="DATA BUS" />
 
-<item itemtype="Bus" CircId="Bus-587" mainComp="false" Show_id="false" Show_Val="false" Pos="-204,-660" rotation="-90" hflip="1" vflip="1" label="Bus-1904" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Num_Bits="8 _Bits" Start_Bit="0" />
+<item itemtype="Bus" CircId="Bus-587" mainComp="false" Show_id="false" Show_Val="false" Pos="-204,-660" rotation="-90" hflip="1" vflip="1" label="Bus-1904" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Num_Bits="8 _bits" Start_Bit="0" />
 
-<item itemtype="7-Seg BCD" CircId="7-586" mainComp="false" Show_id="false" Show_Val="false" Pos="-1108,-412" rotation="0" hflip="1" vflip="1" label="7-1890" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" />
+<item itemtype="7-Seg BCD" CircId="7-586" mainComp="false" Show_id="false" Show_Val="false" Pos="-1104,-412" rotation="0" hflip="1" vflip="1" label="7-1890" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Show_Point_Pin="false" Show_Enable_Pin="false" />
 
-<item itemtype="TextComponent" CircId="TextComponent-585" mainComp="false" Show_id="false" Show_Val="false" Pos="-1100,-468" rotation="0" hflip="1" vflip="1" label="TextComponent-1889" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Margin="5 _Pixels" Border="1 _Pixels" Opacity="1" Font="Helvetica [Cronyx]" Font_Size="10 _Pixels" Fixed_Width="false" Text="C" />
+<item itemtype="TextComponent" CircId="TextComponent-585" mainComp="false" Show_id="false" Show_Val="false" Pos="-1096,-468" rotation="0" hflip="1" vflip="1" label="TextComponent-1889" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Margin="5 _px" Border="1 _px" Color="#ffffdc" Opacity="1" Font="Helvetica [Cronyx]" Font_Color="#000080" Font_Size="10 _px" Fixed_Width="false" Text="C" />
 
-<item itemtype="Bus" CircId="Bus-584" mainComp="false" Show_id="false" Show_Val="false" Pos="-1116,-372" rotation="90" hflip="1" vflip="1" label="Bus-1888" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Num_Bits="8 _Bits" Start_Bit="0" />
+<item itemtype="Bus" CircId="Bus-584" mainComp="false" Show_id="false" Show_Val="false" Pos="-1116,-372" rotation="90" hflip="1" vflip="1" label="Bus-1888" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Num_Bits="8 _bits" Start_Bit="0" />
 
-<item itemtype="7-Seg BCD" CircId="7-583" mainComp="false" Show_id="false" Show_Val="false" Pos="-1076,-412" rotation="0" hflip="1" vflip="1" label="7-1887" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" />
+<item itemtype="7-Seg BCD" CircId="7-583" mainComp="false" Show_id="false" Show_Val="false" Pos="-1072,-412" rotation="0" hflip="1" vflip="1" label="7-1887" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Show_Point_Pin="false" Show_Enable_Pin="false" />
 
-<item itemtype="Bus" CircId="Bus-574" mainComp="false" Show_id="false" Show_Val="false" Pos="-28,788" rotation="90" hflip="-1" vflip="1" label="Bus-1861" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Num_Bits="8 _Bits" Start_Bit="0" />
+<item itemtype="Bus" CircId="Bus-574" mainComp="false" Show_id="false" Show_Val="false" Pos="-28,788" rotation="90" hflip="-1" vflip="1" label="Bus-1861" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Num_Bits="8 _bits" Start_Bit="0" />
 
-<item itemtype="Bus" CircId="Bus-565" mainComp="false" Show_id="false" Show_Val="false" Pos="-188,788" rotation="90" hflip="-1" vflip="1" label="Bus-1835" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Num_Bits="8 _Bits" Start_Bit="0" />
+<item itemtype="Bus" CircId="Bus-565" mainComp="false" Show_id="false" Show_Val="false" Pos="-188,788" rotation="90" hflip="-1" vflip="1" label="Bus-1835" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Num_Bits="8 _bits" Start_Bit="0" />
 
-<item itemtype="7-Seg BCD" CircId="7-564" mainComp="false" Show_id="false" Show_Val="false" Pos="-1076,-244" rotation="0" hflip="1" vflip="1" label="7-1818" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" />
+<item itemtype="7-Seg BCD" CircId="7-564" mainComp="false" Show_id="false" Show_Val="false" Pos="-1072,-236" rotation="0" hflip="1" vflip="1" label="7-1818" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Show_Point_Pin="false" Show_Enable_Pin="false" />
 
-<item itemtype="Bus" CircId="Bus-563" mainComp="false" Show_id="false" Show_Val="false" Pos="-1116,-196" rotation="90" hflip="1" vflip="1" label="Bus-1817" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Num_Bits="8 _Bits" Start_Bit="0" />
+<item itemtype="Bus" CircId="Bus-563" mainComp="false" Show_id="false" Show_Val="false" Pos="-1116,-196" rotation="90" hflip="1" vflip="1" label="Bus-1817" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Num_Bits="8 _bits" Start_Bit="0" />
 
-<item itemtype="7-Seg BCD" CircId="7-562" mainComp="false" Show_id="false" Show_Val="false" Pos="-1108,-244" rotation="0" hflip="1" vflip="1" label="7-1816" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" />
+<item itemtype="7-Seg BCD" CircId="7-562" mainComp="false" Show_id="false" Show_Val="false" Pos="-1104,-236" rotation="0" hflip="1" vflip="1" label="7-1816" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Show_Point_Pin="false" Show_Enable_Pin="false" />
 
-<item itemtype="TextComponent" CircId="TextComponent-561" mainComp="false" Show_id="false" Show_Val="false" Pos="-1100,-300" rotation="0" hflip="1" vflip="1" label="TextComponent-1815" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Margin="5 _Pixels" Border="1 _Pixels" Opacity="1" Font="Helvetica [Cronyx]" Font_Size="10 _Pixels" Fixed_Width="false" Text="B" />
+<item itemtype="TextComponent" CircId="TextComponent-561" mainComp="false" Show_id="false" Show_Val="false" Pos="-1096,-292" rotation="0" hflip="1" vflip="1" label="TextComponent-1815" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Margin="5 _px" Border="1 _px" Color="#ffffdc" Opacity="1" Font="Helvetica [Cronyx]" Font_Color="#000080" Font_Size="10 _px" Fixed_Width="false" Text="B" />
 
-<item itemtype="TextComponent" CircId="TextComponent-560" mainComp="false" Show_id="false" Show_Val="false" Pos="-1188,-300" rotation="0" hflip="1" vflip="1" label="TextComponent-1814" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Margin="5 _Pixels" Border="1 _Pixels" Opacity="1" Font="Helvetica [Cronyx]" Font_Size="10 _Pixels" Fixed_Width="false" Text="A" />
+<item itemtype="TextComponent" CircId="TextComponent-560" mainComp="false" Show_id="false" Show_Val="false" Pos="-1184,-292" rotation="0" hflip="1" vflip="1" label="TextComponent-1814" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Margin="5 _px" Border="1 _px" Color="#ffffdc" Opacity="1" Font="Helvetica [Cronyx]" Font_Color="#000080" Font_Size="10 _px" Fixed_Width="false" Text="A" />
 
-<item itemtype="Bus" CircId="Bus-559" mainComp="false" Show_id="false" Show_Val="false" Pos="-1204,-196" rotation="90" hflip="1" vflip="1" label="Bus-1805" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Num_Bits="8 _Bits" Start_Bit="0" />
+<item itemtype="Bus" CircId="Bus-559" mainComp="false" Show_id="false" Show_Val="false" Pos="-1204,-196" rotation="90" hflip="1" vflip="1" label="Bus-1805" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Num_Bits="8 _bits" Start_Bit="0" />
 
-<item itemtype="7-Seg BCD" CircId="7-558" mainComp="false" Show_id="false" Show_Val="false" Pos="-1164,-244" rotation="0" hflip="1" vflip="1" label="7-Seg BCD-1804" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" />
+<item itemtype="7-Seg BCD" CircId="7-558" mainComp="false" Show_id="false" Show_Val="false" Pos="-1160,-236" rotation="0" hflip="1" vflip="1" label="7-Seg BCD-1804" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Show_Point_Pin="false" Show_Enable_Pin="false" />
 
-<item itemtype="7-Seg BCD" CircId="7-557" mainComp="false" Show_id="false" Show_Val="false" Pos="-1196,-244" rotation="0" hflip="1" vflip="1" label="7-Seg BCD-1803" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" />
+<item itemtype="7-Seg BCD" CircId="7-557" mainComp="false" Show_id="false" Show_Val="false" Pos="-1192,-236" rotation="0" hflip="1" vflip="1" label="7-Seg BCD-1803" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Show_Point_Pin="false" Show_Enable_Pin="false" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-507" mainComp="false" Show_id="false" Show_Val="false" Pos="300,476" rotation="90" hflip="-1" vflip="1" label="Relay (all)-511" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-507" mainComp="false" Show_id="false" Show_Val="false" Pos="300,476" rotation="90" hflip="-1" vflip="1" label="Relay (all)-511" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-506" mainComp="false" Show_id="false" Show_Val="false" Pos="220,476" rotation="90" hflip="-1" vflip="1" label="Relay (all)-510" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-506" mainComp="false" Show_id="false" Show_Val="false" Pos="220,476" rotation="90" hflip="-1" vflip="1" label="Relay (all)-510" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-505" mainComp="false" Show_id="false" Show_Val="false" Pos="140,476" rotation="90" hflip="-1" vflip="1" label="Relay (all)-509" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-505" mainComp="false" Show_id="false" Show_Val="false" Pos="140,476" rotation="90" hflip="-1" vflip="1" label="Relay (all)-509" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-504" mainComp="false" Show_id="false" Show_Val="false" Pos="180,476" rotation="90" hflip="-1" vflip="1" label="Relay (all)-508" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-504" mainComp="false" Show_id="false" Show_Val="false" Pos="180,476" rotation="90" hflip="-1" vflip="1" label="Relay (all)-508" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-503" mainComp="false" Show_id="false" Show_Val="false" Pos="420,476" rotation="90" hflip="-1" vflip="1" label="Relay (all)-507" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-503" mainComp="false" Show_id="false" Show_Val="false" Pos="420,476" rotation="90" hflip="-1" vflip="1" label="Relay (all)-507" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-502" mainComp="false" Show_id="false" Show_Val="false" Pos="340,476" rotation="90" hflip="-1" vflip="1" label="Relay (all)-506" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-502" mainComp="false" Show_id="false" Show_Val="false" Pos="340,476" rotation="90" hflip="-1" vflip="1" label="Relay (all)-506" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-501" mainComp="false" Show_id="false" Show_Val="false" Pos="260,476" rotation="90" hflip="-1" vflip="1" label="Relay (all)-505" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-501" mainComp="false" Show_id="false" Show_Val="false" Pos="260,476" rotation="90" hflip="-1" vflip="1" label="Relay (all)-505" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-500" mainComp="false" Show_id="false" Show_Val="false" Pos="380,476" rotation="90" hflip="-1" vflip="1" label="Relay (all)-504" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-500" mainComp="false" Show_id="false" Show_Val="false" Pos="380,476" rotation="90" hflip="-1" vflip="1" label="Relay (all)-504" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
 <item itemtype="Rail" CircId="Rail.-491" mainComp="false" ShowProp="Voltage" Show_id="false" Show_Val="true" Pos="452,252" rotation="0" hflip="-1" vflip="1" label="Rail.-495" idLabPos="-64,-24" labelrot="0" valLabPos="6,13" valLabRot="0" Voltage="5 V" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-482" mainComp="false" Show_id="false" Show_Val="false" Pos="380,268" rotation="90" hflip="-1" vflip="1" label="Relay (all)-486" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-482" mainComp="false" Show_id="false" Show_Val="false" Pos="380,268" rotation="90" hflip="-1" vflip="1" label="Relay (all)-486" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-481" mainComp="false" Show_id="false" Show_Val="false" Pos="340,268" rotation="90" hflip="-1" vflip="1" label="Relay (all)-485" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-481" mainComp="false" Show_id="false" Show_Val="false" Pos="340,268" rotation="90" hflip="-1" vflip="1" label="Relay (all)-485" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-480" mainComp="false" Show_id="false" Show_Val="false" Pos="140,268" rotation="90" hflip="-1" vflip="1" label="Relay (all)-484" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-480" mainComp="false" Show_id="false" Show_Val="false" Pos="140,268" rotation="90" hflip="-1" vflip="1" label="Relay (all)-484" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-479" mainComp="false" Show_id="false" Show_Val="false" Pos="300,268" rotation="90" hflip="-1" vflip="1" label="Relay (all)-483" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-479" mainComp="false" Show_id="false" Show_Val="false" Pos="300,268" rotation="90" hflip="-1" vflip="1" label="Relay (all)-483" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-478" mainComp="false" Show_id="false" Show_Val="false" Pos="180,268" rotation="90" hflip="-1" vflip="1" label="Relay (all)-482" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-478" mainComp="false" Show_id="false" Show_Val="false" Pos="180,268" rotation="90" hflip="-1" vflip="1" label="Relay (all)-482" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-477" mainComp="false" Show_id="false" Show_Val="false" Pos="420,268" rotation="90" hflip="-1" vflip="1" label="Relay (all)-481" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-477" mainComp="false" Show_id="false" Show_Val="false" Pos="420,268" rotation="90" hflip="-1" vflip="1" label="Relay (all)-481" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-476" mainComp="false" Show_id="false" Show_Val="false" Pos="220,268" rotation="90" hflip="-1" vflip="1" label="Relay (all)-480" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-476" mainComp="false" Show_id="false" Show_Val="false" Pos="220,268" rotation="90" hflip="-1" vflip="1" label="Relay (all)-480" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-475" mainComp="false" Show_id="false" Show_Val="false" Pos="260,268" rotation="90" hflip="-1" vflip="1" label="Relay (all)-479" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-475" mainComp="false" Show_id="false" Show_Val="false" Pos="260,268" rotation="90" hflip="-1" vflip="1" label="Relay (all)-479" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-474" mainComp="false" Show_id="false" Show_Val="false" Pos="452,436" rotation="0" hflip="1" vflip="1" label="Relay (all)-478" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="8 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-474" mainComp="false" Show_id="false" Show_Val="false" Pos="452,436" rotation="0" hflip="1" vflip="1" label="Relay (all)-478" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="8" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
-<item itemtype="Fixed Voltage" CircId="Fixed Volt.-473" mainComp="false" Show_id="true" Show_Val="false" Pos="-940,-212" rotation="0" hflip="1" vflip="1" label="OR" idLabPos="-60,-8" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
+<item itemtype="Fixed Voltage" CircId="Fixed Volt.-473" mainComp="false" Show_id="true" Show_Val="false" Pos="-940,-212" rotation="0" hflip="1" vflip="1" label="OR" idLabPos="-60,-8" labelrot="0" valLabPos="-16,8" valLabRot="0" Voltage="5 V" Out="false" />
 
-<item itemtype="Fixed Voltage" CircId="Fixed Volt.-464" mainComp="false" Show_id="true" Show_Val="false" Pos="-940,-228" rotation="0" hflip="1" vflip="1" label="XOR" idLabPos="-60,-8" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
+<item itemtype="Fixed Voltage" CircId="Fixed Volt.-464" mainComp="false" Show_id="true" Show_Val="false" Pos="-940,-228" rotation="0" hflip="1" vflip="1" label="XOR" idLabPos="-60,-8" labelrot="0" valLabPos="-16,8" valLabRot="0" Voltage="5 V" Out="false" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-439" mainComp="false" Show_id="false" Show_Val="false" Pos="452,228" rotation="0" hflip="1" vflip="1" label="Relay (all)-443" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="8 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-439" mainComp="false" Show_id="false" Show_Val="false" Pos="452,228" rotation="0" hflip="1" vflip="1" label="Relay (all)-443" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="8" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-434" mainComp="false" Show_id="false" Show_Val="false" Pos="140,76" rotation="90" hflip="-1" vflip="1" label="Relay (all)-438" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-434" mainComp="false" Show_id="false" Show_Val="false" Pos="140,76" rotation="90" hflip="-1" vflip="1" label="Relay (all)-438" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-433" mainComp="false" Show_id="false" Show_Val="false" Pos="340,76" rotation="90" hflip="-1" vflip="1" label="Relay (all)-437" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-433" mainComp="false" Show_id="false" Show_Val="false" Pos="340,76" rotation="90" hflip="-1" vflip="1" label="Relay (all)-437" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-432" mainComp="false" Show_id="false" Show_Val="false" Pos="300,76" rotation="90" hflip="-1" vflip="1" label="Relay (all)-436" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-432" mainComp="false" Show_id="false" Show_Val="false" Pos="300,76" rotation="90" hflip="-1" vflip="1" label="Relay (all)-436" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-431" mainComp="false" Show_id="false" Show_Val="false" Pos="380,76" rotation="90" hflip="-1" vflip="1" label="Relay (all)-435" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-431" mainComp="false" Show_id="false" Show_Val="false" Pos="380,76" rotation="90" hflip="-1" vflip="1" label="Relay (all)-435" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-430" mainComp="false" Show_id="false" Show_Val="false" Pos="420,76" rotation="90" hflip="-1" vflip="1" label="Relay (all)-434" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-430" mainComp="false" Show_id="false" Show_Val="false" Pos="420,76" rotation="90" hflip="-1" vflip="1" label="Relay (all)-434" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-429" mainComp="false" Show_id="false" Show_Val="false" Pos="180,76" rotation="90" hflip="-1" vflip="1" label="Relay (all)-433" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-429" mainComp="false" Show_id="false" Show_Val="false" Pos="180,76" rotation="90" hflip="-1" vflip="1" label="Relay (all)-433" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-428" mainComp="false" Show_id="false" Show_Val="false" Pos="260,76" rotation="90" hflip="-1" vflip="1" label="Relay (all)-432" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-428" mainComp="false" Show_id="false" Show_Val="false" Pos="260,76" rotation="90" hflip="-1" vflip="1" label="Relay (all)-432" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-427" mainComp="false" Show_id="false" Show_Val="false" Pos="220,76" rotation="90" hflip="-1" vflip="1" label="Relay (all)-431" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-427" mainComp="false" Show_id="false" Show_Val="false" Pos="220,76" rotation="90" hflip="-1" vflip="1" label="Relay (all)-431" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-406" mainComp="false" Show_id="false" Show_Val="false" Pos="-732,36" rotation="0" hflip="1" vflip="-1" label="Relay (all)-410" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="8 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-406" mainComp="false" Show_id="false" Show_Val="false" Pos="-732,36" rotation="0" hflip="1" vflip="-1" label="Relay (all)-410" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="8" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-405" mainComp="false" Show_id="false" Show_Val="false" Pos="-340,20" rotation="90" hflip="-1" vflip="1" label="Relay (all)-409" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="true" Poles="1 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-405" mainComp="false" Show_id="false" Show_Val="false" Pos="-340,20" rotation="90" hflip="-1" vflip="1" label="Relay (all)-409" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="true" Poles="1" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-404" mainComp="false" Show_id="false" Show_Val="false" Pos="-380,20" rotation="90" hflip="-1" vflip="1" label="Relay (all)-408" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="true" Poles="1 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-404" mainComp="false" Show_id="false" Show_Val="false" Pos="-380,20" rotation="90" hflip="-1" vflip="1" label="Relay (all)-408" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="true" Poles="1" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-403" mainComp="false" Show_id="false" Show_Val="false" Pos="-420,20" rotation="90" hflip="-1" vflip="1" label="Relay (all)-407" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="true" Poles="1 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-403" mainComp="false" Show_id="false" Show_Val="false" Pos="-420,20" rotation="90" hflip="-1" vflip="1" label="Relay (all)-407" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="true" Poles="1" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-402" mainComp="false" Show_id="false" Show_Val="false" Pos="-460,20" rotation="90" hflip="-1" vflip="1" label="Relay (all)-406" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="true" Poles="1 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-402" mainComp="false" Show_id="false" Show_Val="false" Pos="-460,20" rotation="90" hflip="-1" vflip="1" label="Relay (all)-406" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="true" Poles="1" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-401" mainComp="false" Show_id="false" Show_Val="false" Pos="-500,20" rotation="90" hflip="-1" vflip="1" label="Relay (all)-405" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="true" Poles="1 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-401" mainComp="false" Show_id="false" Show_Val="false" Pos="-500,20" rotation="90" hflip="-1" vflip="1" label="Relay (all)-405" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="true" Poles="1" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-400" mainComp="false" Show_id="false" Show_Val="false" Pos="-540,20" rotation="90" hflip="-1" vflip="1" label="Relay (all)-404" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="true" Poles="1 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-400" mainComp="false" Show_id="false" Show_Val="false" Pos="-540,20" rotation="90" hflip="-1" vflip="1" label="Relay (all)-404" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="true" Poles="1" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-399" mainComp="false" Show_id="false" Show_Val="false" Pos="-580,20" rotation="90" hflip="-1" vflip="1" label="Relay (all)-403" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="true" Poles="1 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-399" mainComp="false" Show_id="false" Show_Val="false" Pos="-580,20" rotation="90" hflip="-1" vflip="1" label="Relay (all)-403" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="true" Poles="1" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-398" mainComp="false" Show_id="false" Show_Val="false" Pos="-620,20" rotation="90" hflip="-1" vflip="1" label="Relay (all)-402" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="true" Poles="1 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-398" mainComp="false" Show_id="false" Show_Val="false" Pos="-620,20" rotation="90" hflip="-1" vflip="1" label="Relay (all)-402" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="true" Poles="1" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
-<item itemtype="Fixed Voltage" CircId="Fixed Volt.-393" mainComp="false" Show_id="true" Show_Val="false" Pos="-940,-460" rotation="0" hflip="1" vflip="1" label="IE" idLabPos="-44,-6" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
+<item itemtype="Fixed Voltage" CircId="Fixed Volt.-393" mainComp="false" Show_id="true" Show_Val="false" Pos="-940,-460" rotation="0" hflip="1" vflip="1" label="IE" idLabPos="-44,-6" labelrot="0" valLabPos="-16,8" valLabRot="0" Voltage="5 V" Out="false" />
 
-<item itemtype="Fixed Voltage" CircId="Fixed Volt.-385" mainComp="false" Show_id="true" Show_Val="false" Pos="-940,-268" rotation="0" hflip="1" vflip="1" label="INC. A" idLabPos="-66,-3" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
+<item itemtype="Fixed Voltage" CircId="Fixed Volt.-385" mainComp="false" Show_id="true" Show_Val="false" Pos="-940,-268" rotation="0" hflip="1" vflip="1" label="INC. A" idLabPos="-66,-3" labelrot="0" valLabPos="-16,8" valLabRot="0" Voltage="5 V" Out="false" />
 
-<item itemtype="Fixed Voltage" CircId="Fixed Volt.-384" mainComp="false" Show_id="true" Show_Val="false" Pos="-940,-324" rotation="0" hflip="1" vflip="1" label="In 0" idLabPos="-53,-4" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
+<item itemtype="Fixed Voltage" CircId="Fixed Volt.-384" mainComp="false" Show_id="true" Show_Val="false" Pos="-940,-324" rotation="0" hflip="1" vflip="1" label="In 0" idLabPos="-53,-4" labelrot="0" valLabPos="-16,8" valLabRot="0" Voltage="5 V" Out="false" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-359" mainComp="false" Show_id="false" Show_Val="false" Pos="-860,-452" rotation="180" hflip="1" vflip="1" label="Relay (all)-362" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="8 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-359" mainComp="false" Show_id="false" Show_Val="false" Pos="-860,-452" rotation="180" hflip="1" vflip="1" label="Relay (all)-362" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="8" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
 <item itemtype="Ground" CircId="Ground (0 V)-349" mainComp="false" Show_id="false" Show_Val="false" Pos="-252,-292" rotation="90" hflip="1" vflip="1" label="Ground (0 V)-349" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" />
 
 <item itemtype="Rail" CircId="Rail.-337" mainComp="false" ShowProp="Voltage" Show_id="false" Show_Val="true" Pos="-724,-124" rotation="0" hflip="1" vflip="1" label="Rail.-337" idLabPos="-64,-24" labelrot="0" valLabPos="-10,8" valLabRot="0" Voltage="5 V" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-336" mainComp="false" Show_id="false" Show_Val="false" Pos="-708,-60" rotation="-270" hflip="1" vflip="-1" label="Relay (all)-336" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="true" Poles="2 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-336" mainComp="false" Show_id="false" Show_Val="false" Pos="-708,-60" rotation="-270" hflip="1" vflip="-1" label="Relay (all)-336" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="true" Poles="2" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-335" mainComp="false" Show_id="false" Show_Val="false" Pos="-44,-28" rotation="90" hflip="1" vflip="1" label="Relay (all)-335" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="8 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-335" mainComp="false" Show_id="false" Show_Val="false" Pos="-44,-28" rotation="90" hflip="1" vflip="1" label="Relay (all)-335" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="8" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-317" mainComp="false" Show_id="false" Show_Val="false" Pos="-20,-148" rotation="0" hflip="-1" vflip="1" label="Relay (all)-317" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="true" DT="true" Poles="4 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-317" mainComp="false" Show_id="false" Show_Val="false" Pos="-20,-148" rotation="0" hflip="-1" vflip="1" label="Relay (all)-317" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="true" DT="true" Poles="4" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-312" mainComp="false" Show_id="false" Show_Val="false" Pos="268,-148" rotation="0" hflip="-1" vflip="1" label="Relay (all)-312" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="true" DT="true" Poles="4 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-312" mainComp="false" Show_id="false" Show_Val="false" Pos="268,-148" rotation="0" hflip="-1" vflip="1" label="Relay (all)-312" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="true" DT="true" Poles="4" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
 <item itemtype="Ground" CircId="Ground (0 V)-310" mainComp="false" Show_id="false" Show_Val="false" Pos="380,-108" rotation="0" hflip="1" vflip="1" label="Ground (0 V)-310" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-306" mainComp="false" Show_id="false" Show_Val="false" Pos="348,-148" rotation="0" hflip="1" vflip="1" label="Relay (all)-306" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="true" Poles="4 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-306" mainComp="false" Show_id="false" Show_Val="false" Pos="348,-148" rotation="0" hflip="1" vflip="1" label="Relay (all)-306" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="true" Poles="4" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-305" mainComp="false" Show_id="false" Show_Val="false" Pos="412,-148" rotation="0" hflip="-1" vflip="1" label="Relay (all)-305" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="true" DT="true" Poles="4 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-305" mainComp="false" Show_id="false" Show_Val="false" Pos="412,-148" rotation="0" hflip="-1" vflip="1" label="Relay (all)-305" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="true" DT="true" Poles="4" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-299" mainComp="false" Show_id="false" Show_Val="false" Pos="124,-148" rotation="0" hflip="-1" vflip="1" label="Relay (all)-299" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="true" DT="true" Poles="4 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-299" mainComp="false" Show_id="false" Show_Val="false" Pos="124,-148" rotation="0" hflip="-1" vflip="1" label="Relay (all)-299" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="true" DT="true" Poles="4" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-295" mainComp="false" Show_id="false" Show_Val="false" Pos="204,-148" rotation="0" hflip="1" vflip="1" label="Relay (all)-295" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="true" Poles="4 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-295" mainComp="false" Show_id="false" Show_Val="false" Pos="204,-148" rotation="0" hflip="1" vflip="1" label="Relay (all)-295" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="true" Poles="4" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-294" mainComp="false" Show_id="false" Show_Val="false" Pos="60,-148" rotation="0" hflip="1" vflip="1" label="Relay (all)-294" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="true" Poles="4 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-294" mainComp="false" Show_id="false" Show_Val="false" Pos="60,-148" rotation="0" hflip="1" vflip="1" label="Relay (all)-294" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="true" Poles="4" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-291" mainComp="false" Show_id="false" Show_Val="false" Pos="-84,-148" rotation="0" hflip="1" vflip="1" label="Relay (all)-291" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="true" Poles="4 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-291" mainComp="false" Show_id="false" Show_Val="false" Pos="-84,-148" rotation="0" hflip="1" vflip="1" label="Relay (all)-291" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="true" Poles="4" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-287" mainComp="false" Show_id="false" Show_Val="false" Pos="-164,-148" rotation="0" hflip="-1" vflip="1" label="Relay (all)-287" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="true" DT="true" Poles="4 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-287" mainComp="false" Show_id="false" Show_Val="false" Pos="-164,-148" rotation="0" hflip="-1" vflip="1" label="Relay (all)-287" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="true" DT="true" Poles="4" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-286" mainComp="false" Show_id="false" Show_Val="false" Pos="-228,-148" rotation="0" hflip="1" vflip="1" label="Relay (all)-286" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="true" Poles="4 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-286" mainComp="false" Show_id="false" Show_Val="false" Pos="-228,-148" rotation="0" hflip="1" vflip="1" label="Relay (all)-286" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="true" Poles="4" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-284" mainComp="false" Show_id="false" Show_Val="false" Pos="-204,-300" rotation="90" hflip="1" vflip="1" label="Relay (all)-284" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="8 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-284" mainComp="false" Show_id="false" Show_Val="false" Pos="-204,-300" rotation="90" hflip="1" vflip="1" label="Relay (all)-284" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="8" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-278" mainComp="false" Show_id="false" Show_Val="false" Pos="-308,-148" rotation="0" hflip="-1" vflip="1" label="Relay (all)-278" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="true" DT="true" Poles="4 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-278" mainComp="false" Show_id="false" Show_Val="false" Pos="-308,-148" rotation="0" hflip="-1" vflip="1" label="Relay (all)-278" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="true" DT="true" Poles="4" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-277" mainComp="false" Show_id="false" Show_Val="false" Pos="-372,-148" rotation="0" hflip="1" vflip="1" label="Relay (all)-277" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="true" Poles="4 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-277" mainComp="false" Show_id="false" Show_Val="false" Pos="-372,-148" rotation="0" hflip="1" vflip="1" label="Relay (all)-277" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="true" Poles="4" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-270" mainComp="false" Show_id="false" Show_Val="false" Pos="-452,-148" rotation="0" hflip="-1" vflip="1" label="Relay (all)-270" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="true" DT="true" Poles="4 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-270" mainComp="false" Show_id="false" Show_Val="false" Pos="-452,-148" rotation="0" hflip="-1" vflip="1" label="Relay (all)-270" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="true" DT="true" Poles="4" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-269" mainComp="false" Show_id="false" Show_Val="false" Pos="-516,-148" rotation="0" hflip="1" vflip="1" label="Relay (all)-269" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="true" Poles="4 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-269" mainComp="false" Show_id="false" Show_Val="false" Pos="-516,-148" rotation="0" hflip="1" vflip="1" label="Relay (all)-269" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="true" Poles="4" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-263" mainComp="false" Show_id="false" Show_Val="false" Pos="-596,-148" rotation="0" hflip="-1" vflip="1" label="Relay (all)-263" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="true" DT="true" Poles="4 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-263" mainComp="false" Show_id="false" Show_Val="false" Pos="-596,-148" rotation="0" hflip="-1" vflip="1" label="Relay (all)-263" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="true" DT="true" Poles="4" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-262" mainComp="false" Show_id="false" Show_Val="false" Pos="-660,-148" rotation="0" hflip="1" vflip="1" label="Relay (all)-262" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="true" Poles="4 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-262" mainComp="false" Show_id="false" Show_Val="false" Pos="-660,-148" rotation="0" hflip="1" vflip="1" label="Relay (all)-262" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="true" Poles="4" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
-<item itemtype="Fixed Voltage" CircId="Fixed Volt.-259" mainComp="false" Show_id="true" Show_Val="false" Pos="-940,-508" rotation="0" hflip="1" vflip="1" label="Load C" idLabPos="-76,-3" labelrot="0" valLabPos="-26,16" valLabRot="0" Out="false" Voltage="5 V" />
+<item itemtype="Fixed Voltage" CircId="Fixed Volt.-259" mainComp="false" Show_id="true" Show_Val="false" Pos="-940,-508" rotation="0" hflip="1" vflip="1" label="Load C" idLabPos="-76,-3" labelrot="0" valLabPos="-26,16" valLabRot="0" Voltage="5 V" Out="false" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-258" mainComp="false" Show_id="false" Show_Val="false" Pos="-332,-564" rotation="0" hflip="1" vflip="1" label="Relay (all)-258" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="true" Poles="1 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-258" mainComp="false" Show_id="false" Show_Val="false" Pos="-332,-564" rotation="0" hflip="1" vflip="1" label="Relay (all)-258" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="true" Poles="1" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-257" mainComp="false" Show_id="false" Show_Val="false" Pos="-204,-468" rotation="90" hflip="1" vflip="1" label="Relay (all)-257" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="8 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-257" mainComp="false" Show_id="false" Show_Val="false" Pos="-204,-468" rotation="90" hflip="1" vflip="1" label="Relay (all)-257" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="8" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
 <item itemtype="Ground" CircId="Ground (0 V)-256" mainComp="false" Show_id="false" Show_Val="false" Pos="52,-484" rotation="0" hflip="1" vflip="1" label="Ground (0 V)-256" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-255" mainComp="false" Show_id="false" Show_Val="false" Pos="36,-540" rotation="0" hflip="1" vflip="1" label="Relay (all)-255" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-255" mainComp="false" Show_id="false" Show_Val="false" Pos="36,-540" rotation="0" hflip="1" vflip="1" label="Relay (all)-255" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-254" mainComp="false" Show_id="false" Show_Val="false" Pos="-4,-540" rotation="0" hflip="1" vflip="1" label="Relay (all)-254" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-254" mainComp="false" Show_id="false" Show_Val="false" Pos="-4,-540" rotation="0" hflip="1" vflip="1" label="Relay (all)-254" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-253" mainComp="false" Show_id="false" Show_Val="false" Pos="-44,-540" rotation="0" hflip="1" vflip="1" label="Relay (all)-253" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-253" mainComp="false" Show_id="false" Show_Val="false" Pos="-44,-540" rotation="0" hflip="1" vflip="1" label="Relay (all)-253" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-252" mainComp="false" Show_id="false" Show_Val="false" Pos="-84,-540" rotation="0" hflip="1" vflip="1" label="Relay (all)-252" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-252" mainComp="false" Show_id="false" Show_Val="false" Pos="-84,-540" rotation="0" hflip="1" vflip="1" label="Relay (all)-252" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-251" mainComp="false" Show_id="false" Show_Val="false" Pos="-124,-540" rotation="0" hflip="1" vflip="1" label="Relay (all)-251" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-251" mainComp="false" Show_id="false" Show_Val="false" Pos="-124,-540" rotation="0" hflip="1" vflip="1" label="Relay (all)-251" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-250" mainComp="false" Show_id="false" Show_Val="false" Pos="-164,-540" rotation="0" hflip="1" vflip="1" label="Relay (all)-250" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-250" mainComp="false" Show_id="false" Show_Val="false" Pos="-164,-540" rotation="0" hflip="1" vflip="1" label="Relay (all)-250" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-249" mainComp="false" Show_id="false" Show_Val="false" Pos="-204,-540" rotation="0" hflip="1" vflip="1" label="Relay (all)-249" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-249" mainComp="false" Show_id="false" Show_Val="false" Pos="-204,-540" rotation="0" hflip="1" vflip="1" label="Relay (all)-249" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-248" mainComp="false" Show_id="false" Show_Val="false" Pos="-244,-540" rotation="0" hflip="1" vflip="1" label="Relay (all)-248" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-248" mainComp="false" Show_id="false" Show_Val="false" Pos="-244,-540" rotation="0" hflip="1" vflip="1" label="Relay (all)-248" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
-<item itemtype="Capacitor" CircId="Capacitor-232" mainComp="false" ShowProp="Capacitance" Show_id="false" Show_Val="true" Pos="-284,-556" rotation="90" hflip="1" vflip="1" label="Capacitor-232" idLabPos="-16,-24" labelrot="0" valLabPos="-16,3" valLabRot="0" Capacitance="10 µF" Resistance="1e-06 Ω" InitVolt="0 V" AutoStep="0 _Steps" />
+<item itemtype="Capacitor" CircId="Capacitor-232" mainComp="false" ShowProp="Capacitance" Show_id="false" Show_Val="true" Pos="-284,-556" rotation="90" hflip="1" vflip="1" label="Capacitor-232" idLabPos="-16,-24" labelrot="0" valLabPos="-10.3374,-16.2529" valLabRot="0" Capacitance="10 µF" Resistance="1e-06 Ω" InitVolt="0 V" ReaStep="0 ns" />
 
-<item itemtype="Rail" CircId="Rail.-231" mainComp="false" Show_id="false" Show_Val="false" Pos="-396,-580" rotation="0" hflip="1" vflip="1" label="Rail.-231" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Voltage="5 V" />
+<item itemtype="Rail" CircId="Rail.-231" mainComp="false" ShowProp="Voltage" Show_id="false" Show_Val="true" Pos="-364,-612" rotation="90" hflip="1" vflip="1" label="Rail.-231" idLabPos="-64,-24" labelrot="0" valLabPos="-12.9799,5.35745" valLabRot="-90" Voltage="5 V" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-221" mainComp="false" Show_id="false" Show_Val="false" Pos="172,772" rotation="90" hflip="1" vflip="1" label="Relay (all)-221" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="8 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-221" mainComp="false" Show_id="false" Show_Val="false" Pos="172,772" rotation="90" hflip="1" vflip="1" label="Relay (all)-221" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="8" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
-<item itemtype="Fixed Voltage" CircId="Fixed Volt.-218" mainComp="false" Show_id="true" Show_Val="false" Pos="-940,-84" rotation="0" hflip="1" vflip="1" label="Load B" idLabPos="-71,-4" labelrot="0" valLabPos="-48,5" valLabRot="0" Out="false" Voltage="5 V" />
+<item itemtype="Fixed Voltage" CircId="Fixed Volt.-218" mainComp="false" Show_id="true" Show_Val="false" Pos="-940,-84" rotation="0" hflip="1" vflip="1" label="Load B" idLabPos="-71,-4" labelrot="0" valLabPos="-48,5" valLabRot="0" Voltage="5 V" Out="false" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-216" mainComp="false" Show_id="false" Show_Val="false" Pos="132,660" rotation="0" hflip="1" vflip="1" label="Relay (all)-216" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-216" mainComp="false" Show_id="false" Show_Val="false" Pos="132,660" rotation="0" hflip="1" vflip="1" label="Relay (all)-216" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-213" mainComp="false" Show_id="false" Show_Val="false" Pos="212,660" rotation="0" hflip="1" vflip="1" label="Relay (all)-213" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-213" mainComp="false" Show_id="false" Show_Val="false" Pos="212,660" rotation="0" hflip="1" vflip="1" label="Relay (all)-213" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-211" mainComp="false" Show_id="false" Show_Val="false" Pos="252,660" rotation="0" hflip="1" vflip="1" label="Relay (all)-211" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-211" mainComp="false" Show_id="false" Show_Val="false" Pos="252,660" rotation="0" hflip="1" vflip="1" label="Relay (all)-211" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-203" mainComp="false" Show_id="false" Show_Val="false" Pos="172,660" rotation="0" hflip="1" vflip="1" label="Relay (all)-203" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-203" mainComp="false" Show_id="false" Show_Val="false" Pos="172,660" rotation="0" hflip="1" vflip="1" label="Relay (all)-203" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
-<item itemtype="Capacitor" CircId="Capacitor-201" mainComp="false" ShowProp="Capacitance" Show_id="false" Show_Val="true" Pos="108,788" rotation="90" hflip="1" vflip="1" label="Capacitor-201" idLabPos="-16,-24" labelrot="0" valLabPos="-9,5" valLabRot="0" Capacitance="10 µF" Resistance="1e-06 Ω" InitVolt="0 V" AutoStep="0 _Steps" />
+<item itemtype="Capacitor" CircId="Capacitor-201" mainComp="false" ShowProp="Capacitance" Show_id="false" Show_Val="true" Pos="108,788" rotation="90" hflip="1" vflip="1" label="Capacitor-201" idLabPos="-16,-24" labelrot="0" valLabPos="-9,5" valLabRot="0" Capacitance="10 µF" Resistance="1e-06 Ω" InitVolt="0 V" ReaStep="0 ns" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-195" mainComp="false" Show_id="false" Show_Val="false" Pos="292,660" rotation="0" hflip="1" vflip="1" label="Relay (all)-195" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-195" mainComp="false" Show_id="false" Show_Val="false" Pos="292,660" rotation="0" hflip="1" vflip="1" label="Relay (all)-195" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-190" mainComp="false" Show_id="false" Show_Val="false" Pos="332,660" rotation="0" hflip="1" vflip="1" label="Relay (all)-190" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-190" mainComp="false" Show_id="false" Show_Val="false" Pos="332,660" rotation="0" hflip="1" vflip="1" label="Relay (all)-190" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-189" mainComp="false" Show_id="false" Show_Val="false" Pos="372,660" rotation="0" hflip="1" vflip="1" label="Relay (all)-189" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-189" mainComp="false" Show_id="false" Show_Val="false" Pos="372,660" rotation="0" hflip="1" vflip="1" label="Relay (all)-189" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-188" mainComp="false" Show_id="false" Show_Val="false" Pos="412,660" rotation="0" hflip="1" vflip="1" label="Relay (all)-188" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-188" mainComp="false" Show_id="false" Show_Val="false" Pos="412,660" rotation="0" hflip="1" vflip="1" label="Relay (all)-188" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-186" mainComp="false" Show_id="false" Show_Val="false" Pos="60,788" rotation="0" hflip="1" vflip="1" label="Relay (all)-186" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="true" Poles="1 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-186" mainComp="false" Show_id="false" Show_Val="false" Pos="60,788" rotation="0" hflip="1" vflip="1" label="Relay (all)-186" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="true" Poles="1" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-182" mainComp="false" Show_id="false" Show_Val="false" Pos="-636,780" rotation="0" hflip="1" vflip="1" label="Relay (all)-182" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="true" Poles="1 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-182" mainComp="false" Show_id="false" Show_Val="false" Pos="-636,780" rotation="0" hflip="1" vflip="1" label="Relay (all)-182" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="true" Poles="1" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
-<item itemtype="Fixed Voltage" CircId="Fixed Volt.-178" mainComp="false" Show_id="true" Show_Val="false" Pos="-940,-100" rotation="0" hflip="1" vflip="1" label="Load A" idLabPos="-71,-4" labelrot="0" valLabPos="-48,-8" valLabRot="0" Out="false" Voltage="5 V" />
+<item itemtype="Fixed Voltage" CircId="Fixed Volt.-178" mainComp="false" Show_id="true" Show_Val="false" Pos="-940,-100" rotation="0" hflip="1" vflip="1" label="Load A" idLabPos="-71,-4" labelrot="0" valLabPos="-48,-8" valLabRot="0" Voltage="5 V" Out="false" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-177" mainComp="false" Show_id="false" Show_Val="false" Pos="-380,660" rotation="0" hflip="1" vflip="1" label="Relay (all)-177" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-177" mainComp="false" Show_id="false" Show_Val="false" Pos="-380,660" rotation="0" hflip="1" vflip="1" label="Relay (all)-177" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-174" mainComp="false" Show_id="false" Show_Val="false" Pos="-300,660" rotation="0" hflip="1" vflip="1" label="Relay (all)-174" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-174" mainComp="false" Show_id="false" Show_Val="false" Pos="-300,660" rotation="0" hflip="1" vflip="1" label="Relay (all)-174" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-172" mainComp="false" Show_id="false" Show_Val="false" Pos="-580,660" rotation="0" hflip="1" vflip="1" label="Relay (all)-172" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-172" mainComp="false" Show_id="false" Show_Val="false" Pos="-580,660" rotation="0" hflip="1" vflip="1" label="Relay (all)-172" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-170" mainComp="false" Show_id="false" Show_Val="false" Pos="-340,660" rotation="0" hflip="1" vflip="1" label="Relay (all)-170" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-170" mainComp="false" Show_id="false" Show_Val="false" Pos="-340,660" rotation="0" hflip="1" vflip="1" label="Relay (all)-170" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-169" mainComp="false" Show_id="false" Show_Val="false" Pos="-420,660" rotation="0" hflip="1" vflip="1" label="Relay (all)-169" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-169" mainComp="false" Show_id="false" Show_Val="false" Pos="-420,660" rotation="0" hflip="1" vflip="1" label="Relay (all)-169" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-167" mainComp="false" Show_id="false" Show_Val="false" Pos="-540,764" rotation="90" hflip="1" vflip="1" label="Relay (all)-167" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="8 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-167" mainComp="false" Show_id="false" Show_Val="false" Pos="-540,764" rotation="90" hflip="1" vflip="1" label="Relay (all)-167" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="8" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-165" mainComp="false" Show_id="false" Show_Val="false" Pos="-460,660" rotation="0" hflip="1" vflip="1" label="Relay (all)-165" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-165" mainComp="false" Show_id="false" Show_Val="false" Pos="-460,660" rotation="0" hflip="1" vflip="1" label="Relay (all)-165" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-159" mainComp="false" Show_id="false" Show_Val="false" Pos="-540,660" rotation="0" hflip="1" vflip="1" label="Relay (all)-159" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-159" mainComp="false" Show_id="false" Show_Val="false" Pos="-540,660" rotation="0" hflip="1" vflip="1" label="Relay (all)-159" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
-<item itemtype="Capacitor" CircId="Capacitor-156" mainComp="false" ShowProp="Capacitance" Show_id="false" Show_Val="true" Pos="-588,780" rotation="90" hflip="1" vflip="1" label="Capacitor-156" idLabPos="-16,-24" labelrot="0" valLabPos="-13,4" valLabRot="0" Capacitance="10 µF" Resistance="1e-06 Ω" InitVolt="0 V" AutoStep="0 _Steps" />
+<item itemtype="Capacitor" CircId="Capacitor-156" mainComp="false" ShowProp="Capacitance" Show_id="false" Show_Val="true" Pos="-588,780" rotation="90" hflip="1" vflip="1" label="Capacitor-156" idLabPos="-16,-24" labelrot="0" valLabPos="-13,4" valLabRot="0" Capacitance="10 µF" Resistance="1e-06 Ω" InitVolt="0 V" ReaStep="0 ns" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-151" mainComp="false" Show_id="false" Show_Val="false" Pos="-500,660" rotation="0" hflip="1" vflip="1" label="Relay (all)-151" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-151" mainComp="false" Show_id="false" Show_Val="false" Pos="-500,660" rotation="0" hflip="1" vflip="1" label="Relay (all)-151" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
-<item itemtype="Fixed Voltage" CircId="Fixed Volt.-148" mainComp="false" Show_id="true" Show_Val="false" Pos="-940,-284" rotation="0" hflip="1" vflip="1" label="ADD" idLabPos="-61,-2" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
+<item itemtype="Fixed Voltage" CircId="Fixed Volt.-148" mainComp="false" Show_id="true" Show_Val="false" Pos="-940,-284" rotation="0" hflip="1" vflip="1" label="ADD" idLabPos="-61,-2" labelrot="0" valLabPos="-16,8" valLabRot="0" Voltage="5 V" Out="false" />
 
-<item itemtype="Fixed Voltage" CircId="Fixed Volt.-137" mainComp="false" Show_id="false" Show_Val="false" Pos="-940,-340" rotation="0" hflip="1" vflip="1" label="Fixed Volt.-137" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
+<item itemtype="Fixed Voltage" CircId="Fixed Volt.-137" mainComp="false" Show_id="false" Show_Val="false" Pos="-940,-340" rotation="0" hflip="1" vflip="1" label="Fixed Volt.-137" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Voltage="5 V" Out="false" />
 
-<item itemtype="Fixed Voltage" CircId="Fixed Volt.-136" mainComp="false" Show_id="false" Show_Val="false" Pos="-940,-356" rotation="0" hflip="1" vflip="1" label="Fixed Volt.-136" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
+<item itemtype="Fixed Voltage" CircId="Fixed Volt.-136" mainComp="false" Show_id="false" Show_Val="false" Pos="-940,-356" rotation="0" hflip="1" vflip="1" label="Fixed Volt.-136" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Voltage="5 V" Out="false" />
 
-<item itemtype="Fixed Voltage" CircId="Fixed Volt.-135" mainComp="false" Show_id="false" Show_Val="false" Pos="-940,-372" rotation="0" hflip="1" vflip="1" label="Fixed Volt.-135" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
+<item itemtype="Fixed Voltage" CircId="Fixed Volt.-135" mainComp="false" Show_id="false" Show_Val="false" Pos="-940,-372" rotation="0" hflip="1" vflip="1" label="Fixed Volt.-135" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Voltage="5 V" Out="false" />
 
-<item itemtype="Fixed Voltage" CircId="Fixed Volt.-134" mainComp="false" Show_id="false" Show_Val="false" Pos="-940,-388" rotation="0" hflip="1" vflip="1" label="Fixed Volt.-134" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
+<item itemtype="Fixed Voltage" CircId="Fixed Volt.-134" mainComp="false" Show_id="false" Show_Val="false" Pos="-940,-388" rotation="0" hflip="1" vflip="1" label="Fixed Volt.-134" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Voltage="5 V" Out="false" />
 
-<item itemtype="Fixed Voltage" CircId="Fixed Volt.-133" mainComp="false" Show_id="false" Show_Val="false" Pos="-940,-404" rotation="0" hflip="1" vflip="1" label="Fixed Volt.-133" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
+<item itemtype="Fixed Voltage" CircId="Fixed Volt.-133" mainComp="false" Show_id="false" Show_Val="false" Pos="-940,-404" rotation="0" hflip="1" vflip="1" label="Fixed Volt.-133" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Voltage="5 V" Out="false" />
 
-<item itemtype="Fixed Voltage" CircId="Fixed Volt.-132" mainComp="false" Show_id="false" Show_Val="false" Pos="-940,-420" rotation="0" hflip="1" vflip="1" label="Fixed Volt.-132" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
+<item itemtype="Fixed Voltage" CircId="Fixed Volt.-132" mainComp="false" Show_id="false" Show_Val="false" Pos="-940,-420" rotation="0" hflip="1" vflip="1" label="Fixed Volt.-132" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Voltage="5 V" Out="false" />
 
-<item itemtype="Fixed Voltage" CircId="Fixed Volt.-131" mainComp="false" Show_id="true" Show_Val="false" Pos="-940,-436" rotation="0" hflip="1" vflip="1" label="In 7" idLabPos="-54,-5" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
+<item itemtype="Fixed Voltage" CircId="Fixed Volt.-131" mainComp="false" Show_id="true" Show_Val="false" Pos="-940,-436" rotation="0" hflip="1" vflip="1" label="In 7" idLabPos="-54,-5" labelrot="0" valLabPos="-16,8" valLabRot="0" Voltage="5 V" Out="false" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-130" mainComp="false" Show_id="false" Show_Val="false" Pos="-284,-28" rotation="90" hflip="1" vflip="1" label="Relay (all)-130" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="8 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-130" mainComp="false" Show_id="false" Show_Val="false" Pos="-284,-28" rotation="90" hflip="1" vflip="1" label="Relay (all)-130" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="8" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
-<item itemtype="Rail" CircId="Rail.-118" mainComp="false" ShowProp="Voltage" Show_id="false" Show_Val="true" Pos="-676,764" rotation="0" hflip="1" vflip="1" label="Rail.-118" idLabPos="-64,-24" labelrot="0" valLabPos="-30,-6" valLabRot="0" Voltage="5 V" />
+<item itemtype="Rail" CircId="Rail.-118" mainComp="false" ShowProp="Voltage" Show_id="false" Show_Val="true" Pos="-676,764" rotation="0" hflip="1" vflip="1" label="Rail.-118" idLabPos="-64,-24" labelrot="0" valLabPos="-17.0729,-6" valLabRot="0" Voltage="5 V" />
 
-<item itemtype="Rail" CircId="Rail.-117" mainComp="false" ShowProp="Voltage" Show_id="false" Show_Val="true" Pos="20,772" rotation="0" hflip="1" vflip="1" label="Rail.-117" idLabPos="-64,-24" labelrot="0" valLabPos="-27,-3" valLabRot="0" Voltage="5 V" />
+<item itemtype="Rail" CircId="Rail.-117" mainComp="false" ShowProp="Voltage" Show_id="false" Show_Val="true" Pos="20,772" rotation="0" hflip="1" vflip="1" label="Rail.-117" idLabPos="-64,-24" labelrot="0" valLabPos="-16.204,-5.11226" valLabRot="0" Voltage="5 V" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-116" mainComp="false" Show_id="false" Show_Val="false" Pos="-732,564" rotation="0" hflip="1" vflip="1" label="Relay (all)-116" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="8 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-116" mainComp="false" Show_id="false" Show_Val="false" Pos="-732,564" rotation="0" hflip="1" vflip="1" label="Relay (all)-116" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="8" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-100" mainComp="false" Show_id="false" Show_Val="false" Pos="-684,420" rotation="-180" hflip="1" vflip="1" label="Relay (all)-100" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-100" mainComp="false" Show_id="false" Show_Val="false" Pos="-684,420" rotation="-180" hflip="1" vflip="1" label="Relay (all)-100" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
-<item itemtype="Fixed Voltage" CircId="Fixed Volt.-99" mainComp="false" Show_id="true" Show_Val="false" Pos="-940,-156" rotation="0" hflip="1" vflip="1" label="SR_A" idLabPos="-62,-5" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
+<item itemtype="Fixed Voltage" CircId="Fixed Volt.-99" mainComp="false" Show_id="true" Show_Val="false" Pos="-940,-156" rotation="0" hflip="1" vflip="1" label="SR_A" idLabPos="-62,-5" labelrot="0" valLabPos="-16,8" valLabRot="0" Voltage="5 V" Out="false" />
 
-<item itemtype="Fixed Voltage" CircId="Fixed Volt.-98" mainComp="false" Show_id="true" Show_Val="false" Pos="-940,-172" rotation="0" hflip="1" vflip="1" label="S_Circ" idLabPos="-66,-5" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
+<item itemtype="Fixed Voltage" CircId="Fixed Volt.-98" mainComp="false" Show_id="true" Show_Val="false" Pos="-940,-172" rotation="0" hflip="1" vflip="1" label="S_Circ" idLabPos="-66,-5" labelrot="0" valLabPos="-16,8" valLabRot="0" Voltage="5 V" Out="false" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-97" mainComp="false" Show_id="false" Show_Val="false" Pos="-732,724" rotation="0" hflip="1" vflip="1" label="Relay (all)-97" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="8 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-97" mainComp="false" Show_id="false" Show_Val="false" Pos="-732,724" rotation="0" hflip="1" vflip="1" label="Relay (all)-97" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="8" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
-<item itemtype="Fixed Voltage" CircId="Fixed Volt.-95" mainComp="false" Show_id="true" Show_Val="false" Pos="-940,-124" rotation="0" hflip="1" vflip="1" label="SL_A" idLabPos="-62,-5" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
+<item itemtype="Fixed Voltage" CircId="Fixed Volt.-95" mainComp="false" Show_id="true" Show_Val="false" Pos="-940,-124" rotation="0" hflip="1" vflip="1" label="SL_A" idLabPos="-62,-5" labelrot="0" valLabPos="-16,8" valLabRot="0" Voltage="5 V" Out="false" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-86" mainComp="false" Show_id="false" Show_Val="false" Pos="-676,724" rotation="0" hflip="1" vflip="1" label="Relay (all)-86" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-86" mainComp="false" Show_id="false" Show_Val="false" Pos="-676,724" rotation="0" hflip="1" vflip="1" label="Relay (all)-86" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
-<item itemtype="Fixed Voltage" CircId="Fixed Volt.-76" mainComp="false" Show_id="true" Show_Val="false" Pos="-940,-492" rotation="0" hflip="1" vflip="1" label="Out C" idLabPos="-69,-3" labelrot="0" valLabPos="-26,16" valLabRot="0" Out="false" Voltage="5 V" />
+<item itemtype="Fixed Voltage" CircId="Fixed Volt.-76" mainComp="false" Show_id="true" Show_Val="false" Pos="-940,-492" rotation="0" hflip="1" vflip="1" label="Out C" idLabPos="-69,-3" labelrot="0" valLabPos="-26,16" valLabRot="0" Voltage="5 V" Out="false" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-75" mainComp="false" Show_id="false" Show_Val="false" Pos="-332,-492" rotation="0" hflip="1" vflip="1" label="Relay (all)-75" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-75" mainComp="false" Show_id="false" Show_Val="false" Pos="-332,-492" rotation="0" hflip="1" vflip="1" label="Relay (all)-75" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-71" mainComp="false" Show_id="false" Show_Val="false" Pos="-60,580" rotation="0" hflip="1" vflip="1" label="Relay (all)-71" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="8 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-71" mainComp="false" Show_id="false" Show_Val="false" Pos="-60,580" rotation="0" hflip="1" vflip="1" label="Relay (all)-71" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="8" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
-<item itemtype="Fixed Voltage" CircId="Fixed Volt.-69" mainComp="false" Show_id="true" Show_Val="false" Pos="-940,-140" rotation="0" hflip="1" vflip="1" label="SL_B" idLabPos="-62,-5" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
+<item itemtype="Fixed Voltage" CircId="Fixed Volt.-69" mainComp="false" Show_id="true" Show_Val="false" Pos="-940,-140" rotation="0" hflip="1" vflip="1" label="SL_B" idLabPos="-62,-5" labelrot="0" valLabPos="-16,8" valLabRot="0" Voltage="5 V" Out="false" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-61" mainComp="false" Show_id="false" Show_Val="false" Pos="-68,620" rotation="90" hflip="1" vflip="1" label="Relay (all)-61" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-61" mainComp="false" Show_id="false" Show_Val="false" Pos="-68,620" rotation="90" hflip="1" vflip="1" label="Relay (all)-61" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-47" mainComp="false" Show_id="false" Show_Val="false" Pos="-732,252" rotation="0" hflip="1" vflip="-1" label="Relay (all)-47" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="8 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-47" mainComp="false" Show_id="false" Show_Val="false" Pos="-732,252" rotation="0" hflip="1" vflip="-1" label="Relay (all)-47" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="8" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
 <item itemtype="Ground" CircId="Ground (0 V)-46" mainComp="false" Show_id="false" Show_Val="false" Pos="420,708" rotation="0" hflip="1" vflip="1" label="Ground (0 V)-46" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" />
 
-<item itemtype="Fixed Voltage" CircId="Fixed Volt.-44" mainComp="false" Show_id="true" Show_Val="false" Pos="-940,-196" rotation="0" hflip="1" vflip="1" label="AND" idLabPos="-60,-8" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
+<item itemtype="Fixed Voltage" CircId="Fixed Volt.-44" mainComp="false" Show_id="true" Show_Val="false" Pos="-940,-196" rotation="0" hflip="1" vflip="1" label="AND" idLabPos="-60,-8" labelrot="0" valLabPos="-16,8" valLabRot="0" Voltage="5 V" Out="false" />
 
-<item itemtype="Fixed Voltage" CircId="Fixed Volt.-43" mainComp="false" Show_id="true" Show_Val="false" Pos="-940,-244" rotation="0" hflip="1" vflip="1" label="NOT A" idLabPos="-69,-7" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
+<item itemtype="Fixed Voltage" CircId="Fixed Volt.-43" mainComp="false" Show_id="true" Show_Val="false" Pos="-940,-244" rotation="0" hflip="1" vflip="1" label="NOT A" idLabPos="-69,-7" labelrot="0" valLabPos="-16,8" valLabRot="0" Voltage="5 V" Out="false" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-33" mainComp="false" Show_id="false" Show_Val="false" Pos="-620,236" rotation="90" hflip="-1" vflip="1" label="Relay (all)-33" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-33" mainComp="false" Show_id="false" Show_Val="false" Pos="-620,236" rotation="90" hflip="-1" vflip="1" label="Relay (all)-33" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-32" mainComp="false" Show_id="false" Show_Val="false" Pos="-580,236" rotation="90" hflip="-1" vflip="1" label="Relay (all)-32" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-32" mainComp="false" Show_id="false" Show_Val="false" Pos="-580,236" rotation="90" hflip="-1" vflip="1" label="Relay (all)-32" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-31" mainComp="false" Show_id="false" Show_Val="false" Pos="-540,236" rotation="90" hflip="-1" vflip="1" label="Relay (all)-31" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-31" mainComp="false" Show_id="false" Show_Val="false" Pos="-540,236" rotation="90" hflip="-1" vflip="1" label="Relay (all)-31" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-30" mainComp="false" Show_id="false" Show_Val="false" Pos="-500,236" rotation="90" hflip="-1" vflip="1" label="Relay (all)-30" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-30" mainComp="false" Show_id="false" Show_Val="false" Pos="-500,236" rotation="90" hflip="-1" vflip="1" label="Relay (all)-30" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-29" mainComp="false" Show_id="false" Show_Val="false" Pos="-460,236" rotation="90" hflip="-1" vflip="1" label="Relay (all)-29" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-29" mainComp="false" Show_id="false" Show_Val="false" Pos="-460,236" rotation="90" hflip="-1" vflip="1" label="Relay (all)-29" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-28" mainComp="false" Show_id="false" Show_Val="false" Pos="-420,236" rotation="90" hflip="-1" vflip="1" label="Relay (all)-28" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-28" mainComp="false" Show_id="false" Show_Val="false" Pos="-420,236" rotation="90" hflip="-1" vflip="1" label="Relay (all)-28" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-27" mainComp="false" Show_id="false" Show_Val="false" Pos="-380,236" rotation="90" hflip="-1" vflip="1" label="Relay (all)-27" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-27" mainComp="false" Show_id="false" Show_Val="false" Pos="-380,236" rotation="90" hflip="-1" vflip="1" label="Relay (all)-27" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
-<item itemtype="RelaySPST" CircId="Relay (all)-26" mainComp="false" Show_id="false" Show_Val="false" Pos="-340,236" rotation="90" hflip="-1" vflip="1" label="Relay (all)-26" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay (all)-26" mainComp="false" Show_id="false" Show_Val="false" Pos="-340,236" rotation="90" hflip="-1" vflip="1" label="Relay (all)-26" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
 
 <item itemtype="Node" CircId="Node-612" mainComp="false" Pos="-1116,-188" />
 
@@ -2156,7 +2156,7 @@
 
 <item itemtype="Connector" uid="Connector-1211" startpinid="Node-392-2" endpinid="Relay (all)-258-inductor-rPin" pointList="-300,-524,-300,-564,-316,-564" />
 
-<item itemtype="Connector" uid="Connector-1212" startpinid="Rail.-231-outnod" endpinid="Node-74-0" pointList="-380,-580,-364,-580" />
+<item itemtype="Connector" uid="Connector-1212" startpinid="Rail.-231-outnod" endpinid="Node-74-0" pointList="-364,-596,-364,-580" />
 
 <item itemtype="Connector" uid="Connector-1214" startpinid="Node-230-2" endpinid="Ground (0 V)-256-Gnd" pointList="52,-524,52,-500" />
 
@@ -3288,37 +3288,37 @@
 
 <item itemtype="Connector" uid="Connector-1845" startpinid="Fixed Volt.-473-outnod" endpinid="Relay (all)-474-inductor-lPin" pointList="-924,-212,-868,-212,-868,196,-324,196,-324,420,108,420,108,436,436,436" />
 
-<item itemtype="Connector" uid="Connector-1847" startpinid="Bus-559-ePin1" endpinid="7-558-in0" pointList="-1148,-204,-1148,-212,-1152,-212" />
+<item itemtype="Connector" uid="Connector-1847" startpinid="Bus-559-ePin1" endpinid="7-558-in0" pointList="-1148,-204,-1148,-204" />
 
-<item itemtype="Connector" uid="Connector-1848" startpinid="Bus-559-ePin2" endpinid="7-558-in1" pointList="-1156,-204,-1156,-212,-1160,-212" />
+<item itemtype="Connector" uid="Connector-1848" startpinid="Bus-559-ePin2" endpinid="7-558-in1" pointList="-1156,-204,-1156,-204" />
 
-<item itemtype="Connector" uid="Connector-1849" startpinid="Bus-559-ePin3" endpinid="7-558-in2" pointList="-1164,-204,-1164,-212,-1168,-212" />
+<item itemtype="Connector" uid="Connector-1849" startpinid="Bus-559-ePin3" endpinid="7-558-in2" pointList="-1164,-204,-1164,-204" />
 
-<item itemtype="Connector" uid="Connector-1850" startpinid="Bus-559-ePin4" endpinid="7-558-in3" pointList="-1172,-204,-1172,-212,-1176,-212" />
+<item itemtype="Connector" uid="Connector-1850" startpinid="Bus-559-ePin4" endpinid="7-558-in3" pointList="-1172,-204,-1172,-204" />
 
-<item itemtype="Connector" uid="Connector-1851" startpinid="Bus-559-ePin5" endpinid="7-557-in0" pointList="-1180,-204,-1180,-212,-1184,-212" />
+<item itemtype="Connector" uid="Connector-1851" startpinid="Bus-559-ePin5" endpinid="7-557-in0" pointList="-1180,-204,-1180,-204" />
 
-<item itemtype="Connector" uid="Connector-1852" startpinid="Bus-559-ePin6" endpinid="7-557-in1" pointList="-1188,-204,-1188,-212,-1192,-212" />
+<item itemtype="Connector" uid="Connector-1852" startpinid="Bus-559-ePin6" endpinid="7-557-in1" pointList="-1188,-204,-1188,-204" />
 
-<item itemtype="Connector" uid="Connector-1853" startpinid="Bus-559-ePin7" endpinid="7-557-in2" pointList="-1196,-204,-1196,-212,-1200,-212" />
+<item itemtype="Connector" uid="Connector-1853" startpinid="Bus-559-ePin7" endpinid="7-557-in2" pointList="-1196,-204,-1196,-204" />
 
-<item itemtype="Connector" uid="Connector-1854" startpinid="Bus-559-ePin8" endpinid="7-557-in3" pointList="-1204,-204,-1204,-212,-1208,-212" />
+<item itemtype="Connector" uid="Connector-1854" startpinid="Bus-559-ePin8" endpinid="7-557-in3" pointList="-1204,-204,-1204,-204" />
 
-<item itemtype="Connector" uid="Connector-1855" startpinid="Bus-563-ePin1" endpinid="7-564-in0" pointList="-1060,-204,-1060,-212,-1064,-212" />
+<item itemtype="Connector" uid="Connector-1855" startpinid="Bus-563-ePin1" endpinid="7-564-in0" pointList="-1060,-204,-1060,-204" />
 
-<item itemtype="Connector" uid="Connector-1856" startpinid="Bus-563-ePin2" endpinid="7-564-in1" pointList="-1068,-204,-1068,-212,-1072,-212" />
+<item itemtype="Connector" uid="Connector-1856" startpinid="Bus-563-ePin2" endpinid="7-564-in1" pointList="-1068,-204,-1068,-204" />
 
-<item itemtype="Connector" uid="Connector-1857" startpinid="Bus-563-ePin3" endpinid="7-564-in2" pointList="-1076,-204,-1076,-212,-1080,-212" />
+<item itemtype="Connector" uid="Connector-1857" startpinid="Bus-563-ePin3" endpinid="7-564-in2" pointList="-1076,-204,-1076,-204" />
 
-<item itemtype="Connector" uid="Connector-1858" startpinid="Bus-563-ePin4" endpinid="7-564-in3" pointList="-1084,-204,-1084,-212,-1088,-212" />
+<item itemtype="Connector" uid="Connector-1858" startpinid="Bus-563-ePin4" endpinid="7-564-in3" pointList="-1084,-204,-1084,-204" />
 
-<item itemtype="Connector" uid="Connector-1859" startpinid="Bus-563-ePin5" endpinid="7-562-in0" pointList="-1092,-204,-1092,-212,-1096,-212" />
+<item itemtype="Connector" uid="Connector-1859" startpinid="Bus-563-ePin5" endpinid="7-562-in0" pointList="-1092,-204,-1092,-204" />
 
-<item itemtype="Connector" uid="Connector-1860" startpinid="Bus-563-ePin6" endpinid="7-562-in1" pointList="-1100,-204,-1100,-212,-1104,-212" />
+<item itemtype="Connector" uid="Connector-1860" startpinid="Bus-563-ePin6" endpinid="7-562-in1" pointList="-1100,-204,-1100,-204" />
 
-<item itemtype="Connector" uid="Connector-1861" startpinid="Bus-563-ePin7" endpinid="7-562-in2" pointList="-1108,-204,-1108,-212,-1112,-212" />
+<item itemtype="Connector" uid="Connector-1861" startpinid="Bus-563-ePin7" endpinid="7-562-in2" pointList="-1108,-204,-1108,-204" />
 
-<item itemtype="Connector" uid="Connector-1862" startpinid="Bus-563-ePin8" endpinid="7-562-in3" pointList="-1116,-204,-1116,-212,-1120,-212" />
+<item itemtype="Connector" uid="Connector-1862" startpinid="Bus-563-ePin8" endpinid="7-562-in3" pointList="-1116,-204,-1116,-204" />
 
 <item itemtype="Connector" uid="Connector-1863" startpinid="Node-566-2" endpinid="Node-96-0" pointList="-268,684,-268,436" />
 
@@ -3388,21 +3388,21 @@
 
 <item itemtype="Connector" uid="Connector-1897" startpinid="Bus-563-ePin0" endpinid="Node-612-0" pointList="-1116,-196,-1116,-188" />
 
-<item itemtype="Connector" uid="Connector-1899" startpinid="Bus-584-ePin3" endpinid="7-583-in2" pointList="-1076,-380,-1080,-380" />
+<item itemtype="Connector" uid="Connector-1899" startpinid="Bus-584-ePin3" endpinid="7-583-in2" pointList="-1076,-380,-1076,-380" />
 
-<item itemtype="Connector" uid="Connector-1900" startpinid="Bus-584-ePin5" endpinid="7-586-in0" pointList="-1092,-380,-1096,-380" />
+<item itemtype="Connector" uid="Connector-1900" startpinid="Bus-584-ePin5" endpinid="7-586-in0" pointList="-1092,-380,-1092,-380" />
 
-<item itemtype="Connector" uid="Connector-1901" startpinid="Bus-584-ePin2" endpinid="7-583-in1" pointList="-1068,-380,-1072,-380" />
+<item itemtype="Connector" uid="Connector-1901" startpinid="Bus-584-ePin2" endpinid="7-583-in1" pointList="-1068,-380,-1068,-380" />
 
-<item itemtype="Connector" uid="Connector-1902" startpinid="Bus-584-ePin1" endpinid="7-583-in0" pointList="-1060,-380,-1064,-380" />
+<item itemtype="Connector" uid="Connector-1902" startpinid="Bus-584-ePin1" endpinid="7-583-in0" pointList="-1060,-380,-1060,-380" />
 
-<item itemtype="Connector" uid="Connector-1903" startpinid="Bus-584-ePin4" endpinid="7-583-in3" pointList="-1084,-380,-1088,-380" />
+<item itemtype="Connector" uid="Connector-1903" startpinid="Bus-584-ePin4" endpinid="7-583-in3" pointList="-1084,-380,-1084,-380" />
 
-<item itemtype="Connector" uid="Connector-1904" startpinid="Bus-584-ePin6" endpinid="7-586-in1" pointList="-1100,-380,-1104,-380" />
+<item itemtype="Connector" uid="Connector-1904" startpinid="Bus-584-ePin6" endpinid="7-586-in1" pointList="-1100,-380,-1100,-380" />
 
-<item itemtype="Connector" uid="Connector-1905" startpinid="Bus-584-ePin7" endpinid="7-586-in2" pointList="-1108,-380,-1112,-380" />
+<item itemtype="Connector" uid="Connector-1905" startpinid="Bus-584-ePin7" endpinid="7-586-in2" pointList="-1108,-380,-1108,-380" />
 
-<item itemtype="Connector" uid="Connector-1906" startpinid="Bus-584-ePin8" endpinid="7-586-in3" pointList="-1116,-380,-1120,-380" />
+<item itemtype="Connector" uid="Connector-1906" startpinid="Bus-584-ePin8" endpinid="7-586-in3" pointList="-1116,-380,-1116,-380" />
 
 <item itemtype="Connector" uid="Connector-1907" startpinid="Node-588-2" endpinid="Node-240-0" pointList="-260,-556,-260,-540" />
 
@@ -3438,21 +3438,21 @@
 
 <item itemtype="Connector" uid="Connector-1923" startpinid="Bus-584-ePin0" endpinid="Node-610-0" pointList="-1116,-372,-1116,-364" />
 
-<item itemtype="Connector" uid="Connector-1925" startpinid="Bus-597-ePin7" endpinid="7-598-in2" pointList="-1196,-380,-1200,-380" />
+<item itemtype="Connector" uid="Connector-1925" startpinid="Bus-597-ePin7" endpinid="7-598-in2" pointList="-1196,-380,-1196,-380" />
 
-<item itemtype="Connector" uid="Connector-1926" startpinid="Bus-597-ePin8" endpinid="7-598-in3" pointList="-1204,-380,-1208,-380" />
+<item itemtype="Connector" uid="Connector-1926" startpinid="Bus-597-ePin8" endpinid="7-598-in3" pointList="-1204,-380,-1204,-380" />
 
-<item itemtype="Connector" uid="Connector-1927" startpinid="Bus-597-ePin6" endpinid="7-598-in1" pointList="-1188,-380,-1192,-380" />
+<item itemtype="Connector" uid="Connector-1927" startpinid="Bus-597-ePin6" endpinid="7-598-in1" pointList="-1188,-380,-1188,-380" />
 
-<item itemtype="Connector" uid="Connector-1928" startpinid="Bus-597-ePin1" endpinid="7-599-in0" pointList="-1148,-380,-1152,-380" />
+<item itemtype="Connector" uid="Connector-1928" startpinid="Bus-597-ePin1" endpinid="7-599-in0" pointList="-1148,-380,-1148,-380" />
 
-<item itemtype="Connector" uid="Connector-1929" startpinid="Bus-597-ePin2" endpinid="7-599-in1" pointList="-1156,-380,-1160,-380" />
+<item itemtype="Connector" uid="Connector-1929" startpinid="Bus-597-ePin2" endpinid="7-599-in1" pointList="-1156,-380,-1156,-380" />
 
-<item itemtype="Connector" uid="Connector-1930" startpinid="Bus-597-ePin3" endpinid="7-599-in2" pointList="-1164,-380,-1168,-380" />
+<item itemtype="Connector" uid="Connector-1930" startpinid="Bus-597-ePin3" endpinid="7-599-in2" pointList="-1164,-380,-1164,-380" />
 
-<item itemtype="Connector" uid="Connector-1931" startpinid="Bus-597-ePin4" endpinid="7-599-in3" pointList="-1172,-380,-1176,-380" />
+<item itemtype="Connector" uid="Connector-1931" startpinid="Bus-597-ePin4" endpinid="7-599-in3" pointList="-1172,-380,-1172,-380" />
 
-<item itemtype="Connector" uid="Connector-1932" startpinid="Bus-597-ePin5" endpinid="7-598-in0" pointList="-1180,-380,-1184,-380" />
+<item itemtype="Connector" uid="Connector-1932" startpinid="Bus-597-ePin5" endpinid="7-598-in0" pointList="-1180,-380,-1180,-380" />
 
 <item itemtype="Connector" uid="Connector-1933" startpinid="Bus-597-ePin0" endpinid="Node-603-0" pointList="-1204,-372,-1204,-364" />
 

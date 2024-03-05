@@ -1,16 +1,16 @@
-<circuit version="1.0.0" rev="1220" stepSize="1000000" stepsPS="1000000" NLsteps="100000" reaStep="1000000" animate="1" >
+<circuit version="" rev="2224" stepSize="1000000" stepsPS="1000000" NLsteps="100000" reaStep="1000000" animate="1" >
 
 <item itemtype="Diode" CircId="Diode-8" mainComp="false" Show_id="false" Show_Val="false" Pos="-164,-108" rotation="-180" hflip="1" vflip="1" label="Diode-17" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Model="Diode Default" Threshold="0.7 V" MaxCurrent="1 A" Resistance="0.05 Ω" BrkDownV="0 V" SatCurrent="48.5782 nA" EmCoef="2" />
 
-<item itemtype="Resistor" CircId="Resistor-6" mainComp="false" ShowProp="Resistance" Show_id="false" Show_Val="true" Pos="-92,-132" rotation="-90" hflip="1" vflip="1" label="Resistor-12" idLabPos="-12,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Resistance="100 Ω" />
+<item itemtype="Resistor" CircId="Resistor-6" mainComp="false" ShowProp="Resistance" Show_id="false" Show_Val="true" Pos="-92,-132" rotation="-90" hflip="1" vflip="1" label="Resistor-12" idLabPos="-12,-24" labelrot="0" valLabPos="-11.6386,-14.8379" valLabRot="0" Resistance="100 Ω" />
 
-<item itemtype="Led" CircId="Led-5" mainComp="false" Show_id="false" Show_Val="false" Pos="-124,-156" rotation="0" hflip="1" vflip="1" label="Led-10" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Color="Amarillo" Grounded="false" Threshold="2.4 V" MaxCurrent="0.03 A" Resistance="0.6 Ω" />
+<item itemtype="Led" CircId="Led-5" mainComp="false" Show_id="false" Show_Val="false" Pos="-124,-156" rotation="0" hflip="1" vflip="1" label="Led-10" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Color="Yellow" Grounded="false" Threshold="2.4 V" MaxCurrent="0.03 A" Resistance="0.6 Ω" />
 
 <item itemtype="Ground" CircId="Ground (0 V)-4" mainComp="false" Show_id="false" Show_Val="false" Pos="-92,-76" rotation="0" hflip="1" vflip="1" label="Ground (0 V)-7" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" />
 
-<item itemtype="Fixed Voltage" CircId="Fixed Volt.-2" mainComp="false" Show_id="false" Show_Val="true" Pos="-228,-156" rotation="0" hflip="1" vflip="1" label="Fixed Volt.-2" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
+<item itemtype="Fixed Voltage" CircId="Fixed Volt.-2" mainComp="false" Show_id="false" Show_Val="true" Pos="-228,-156" rotation="0" hflip="1" vflip="1" label="Fixed Volt.-2" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Voltage="5 V" Out="false" />
 
-<item itemtype="RelaySPST" CircId="Relay SPST-1" mainComp="false" Show_id="false" Show_Val="false" Pos="-164,-140" rotation="0" hflip="1" vflip="1" label="Relay SPST-1" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1 _Polos" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="50 Ω" AutoStep="0 _Pasos" />
+<item itemtype="RelaySPST" CircId="Relay SPST-1" mainComp="false" Show_id="false" Show_Val="false" Pos="-164,-140" rotation="0" hflip="1" vflip="1" label="Relay SPST-1" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="50 Ω" ReaStep="0 ns" />
 
 <item itemtype="Node" CircId="Node-10" mainComp="false" Pos="-188,-140" />
 

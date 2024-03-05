@@ -1,0 +1,25 @@
+<circuit version="" rev="2224" stepSize="1000000" stepsPS="1000000" NLsteps="100000" reaStep="1000000" animate="1" >
+
+<item itemtype="MCU" CircId="p12F675-162" mainComp="false" Show_id="true" Show_Val="false" Pos="-228,-364" rotation="0" hflip="1" vflip="1" label="p12F675" idLabPos="-1,-15" labelrot="0" valLabPos="-16,20" valLabRot="0" Frequency="20 MHz" Program="build/12F675_PORTs-XC8.hex" Auto_Load="false" saveEepr="true" Rst_enabled="false" Ext_Osc="false" Wdt_enabled="false" Clk_Out="false" varList=",,,,WPU,,,GPIO,TRISIO,,CMCON,,PIR1,PIE1" />
+
+<item itemtype="FreqMeter" CircId="FreqMeter-166" mainComp="false" Show_id="true" Show_Val="false" Pos="-124,-300" rotation="0" hflip="1" vflip="1" label="GPIO" idLabPos="8.478,-22.8806" labelrot="0" valLabPos="-16,20" valLabRot="0" Filter="0.1 V" />
+
+<item itemtype="FreqMeter" CircId="FreqMeter-186" mainComp="false" Show_id="true" Show_Val="false" Pos="-124,-340" rotation="0" hflip="1" vflip="1" label="WPU" idLabPos="8.60113,-24.2489" labelrot="0" valLabPos="-16,20" valLabRot="0" Filter="0.1 V" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-190" mainComp="false" Show_id="true" Show_Val="false" Pos="-148,-380" rotation="-180" hflip="1" vflip="1" label="IOC" idLabPos="-36.1893,7.17568" labelrot="-180" valLabPos="-16,8" valLabRot="0" Voltage="5 V" Out="false" />
+
+<item itemtype="Probe" CircId="Probe-194" mainComp="false" Show_id="true" Show_Val="true" Pos="-276,-356" rotation="-135" hflip="1" vflip="1" label="IOC" idLabPos="20.8357,9.05759" labelrot="135" valLabPos="21.1643,-12.3525" valLabRot="135" ShowVolt="true" Threshold="2.5 V" />
+
+<item itemtype="Probe" CircId="Probe-199" mainComp="false" Show_id="true" Show_Val="true" Pos="-276,-308" rotation="-135" hflip="1" vflip="1" label="Only Input" idLabPos="36.2655,-5.50703" labelrot="135" valLabPos="21,-12" valLabRot="135" ShowVolt="true" Threshold="2.5 V" />
+
+<item itemtype="Connector" uid="connector174" startpinid="p12F675-162-PORTP2" endpinid="FreqMeter-166-lPin" pointList="-188,-332,-180,-332,-180,-300,-164,-300" />
+
+<item itemtype="Connector" uid="Connector-192" startpinid="Fixed Voltage-190-outnod" endpinid="p12F675-162-PORTP0" pointList="-164,-380,-180,-380,-180,-348,-188,-348" />
+
+<item itemtype="Connector" uid="Connector-193" startpinid="p12F675-162-PORTP1" endpinid="FreqMeter-186-lPin" pointList="-188,-340,-164,-340" />
+
+<item itemtype="Connector" uid="Connector-200" startpinid="Probe-194-inpin" endpinid="p12F675-162-PORTP4" pointList="-260,-340,-236,-340" />
+
+<item itemtype="Connector" uid="Connector-200" startpinid="Probe-199-inpin" endpinid="p12F675-162-PORTP3" pointList="-260,-292,-244,-292,-244,-332,-236,-332" />
+
+</circuit>

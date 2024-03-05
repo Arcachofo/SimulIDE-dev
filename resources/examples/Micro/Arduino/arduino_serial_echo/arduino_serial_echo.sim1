@@ -1,4 +1,4 @@
-<circuit version="1.1.0" rev="2060" stepSize="1000000" stepsPS="1000000" NLsteps="100000" reaStep="1000000" animate="0" >
+<circuit version="" rev="2224" stepSize="1000000" stepsPS="1000000" NLsteps="100000" reaStep="1000000" animate="0" >
 
 <item itemtype="SerialTerm" CircId="SerialTerm-2" mainComp="false" Show_id="false" Show_Val="false" Pos="-1044,-724" rotation="0" hflip="-1" vflip="1" label="SerialTerm-2" idLabPos="-20,-32" labelrot="0" valLabPos="-16,20" valLabRot="0" Baudrate="9600 _Bauds" DataBits="8 _Bits" StopBits="1 _Bits" SerialMon="true" />
 

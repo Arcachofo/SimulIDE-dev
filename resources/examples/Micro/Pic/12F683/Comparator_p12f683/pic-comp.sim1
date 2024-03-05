@@ -1,0 +1,13 @@
+<circuit version="" rev="2224" stepSize="1000000" stepsPS="1000000" NLsteps="100000" reaStep="1000000" animate="0" >
+
+<item itemtype="Probe" CircId="Sonda Voltaje.-3" mainComp="false" Show_id="false" Show_Val="true" Pos="-444,-292" rotation="-45" hflip="1" vflip="1" label="Sonda Voltaje.-1" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
+
+<item itemtype="Voltage Source" CircId="Fuente Voltaje-2" mainComp="false" ShowProp="MaxValue" Show_id="false" Show_Val="true" Pos="-520,-364" rotation="0" hflip="1" vflip="1" label="Fuente Voltaje-2" idLabPos="-16,-24" labelrot="0" valLabPos="-1.27213,-40.1426" valLabRot="0" Running="true" Value_Volt="2.085 V" MaxValue="5 V" MinValue="0 V" />
+
+<item itemtype="MCU" CircId="p12f683-1" mainComp="false" Show_id="true" Show_Val="false" Pos="-540,-308" rotation="0" hflip="1" vflip="1" label="pic12f683" idLabPos="-6.25246,-14.3131" labelrot="0" valLabPos="0,0" valLabRot="0" Frequency="20 MHz" Program="build_pic-comp/pic-comp.hex" Auto_Load="false" saveEepr="false" Rst_enabled="false" Ext_Osc="false" Wdt_enabled="false" Clk_Out="false" />
+
+<item itemtype="Connector" uid="Connector-4" startpinid="p12f683-1-PORTP2" endpinid="Sonda Voltaje.-3-inpin" pointList="-500,-276,-460,-276" />
+
+<item itemtype="Connector" uid="Connector-6" startpinid="p12f683-1-PORTP1" endpinid="Fuente Voltaje-2-outPin" pointList="-500,-284,-484,-284,-484,-348,-492,-348" />
+
+</circuit>

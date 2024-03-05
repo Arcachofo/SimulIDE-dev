@@ -3,7 +3,6 @@
                      configregsA="ANSELA" 
                      inpmask="11011111" 
                      pullups="WPUA"
-                     clockpins="PORTA6,PORTA7" 
                      resetpin="PORTA5">
   </port>
 
@@ -16,7 +15,7 @@
   </port>
   
   <intosc name="intosc" type="02" configregsA="OSCCON" 
-                        clockpins="PORTA5,PORTA4" />
+                        clockpins="PORTA6,PORTA7" />
 
   <timer name="TIMER0" type="800" configregsA="OPTION" 
                        counter="TMR0"

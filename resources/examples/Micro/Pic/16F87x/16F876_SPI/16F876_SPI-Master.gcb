@@ -1,0 +1,40 @@
+
+  #chip 16F876a, 16
+  #config HS_OSC, WDT_OFF, LVP_OFF
+
+; 7 segment Display:
+  #define DISP_COUNT 1
+  #define DISP_SEG_A PORTB.7
+  #define DISP_SEG_B PORTB.6
+  #define DISP_SEG_C PORTB.5
+  #define DISP_SEG_D PORTB.4
+  #define DISP_SEG_E PORTB.3
+  #define DISP_SEG_F PORTB.2
+  #define DISP_SEG_G PORTB.1
+  #define DISP_SEG_DOT PORTB.0
+  #define DISP_SEL_1 PORTC.7
+
+  Dim counter as byte;
+  
+  DIR PORTC.5 Out ; SDO
+  DIR PORTC.3 Out ; SCK
+
+  SSPCON = 0b00100010 ;SPI Master, FOSC/64
+
+  counter = 0x0F
+
+  Main:
+    DisplayValue( 1, counter )
+    SSPBUF = counter
+    
+    counter -= 1
+    if counter > 0x0F then counter = 0x0F
+    
+    wait 500 ms
+  goto Main
+
+
+
+
+
+

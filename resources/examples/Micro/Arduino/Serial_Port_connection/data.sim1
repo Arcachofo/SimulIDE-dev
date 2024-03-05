@@ -1,0 +1,31 @@
+<circuit version="" rev="2224" stepSize="1000000" stepsPS="1000000" NLsteps="100000" reaStep="1000000" animate="0" >
+
+<item itemtype="Subcircuit" CircId="Uno-7" mainComp="false" Show_id="true" Show_Val="false" Pos="-324,-284" rotation="0" hflip="1" vflip="1" label="Arduino Uno-7" idLabPos="0,-20" labelrot="0" valLabPos="0,0" valLabRot="0" Logic_Symbol="false">
+<mainCompProps MainCompId="mega328-109" Frequency="16 MHz" Auto_Load="false" saveEepr="true" eeprom="0," SerialMon="-1" />
+</item>
+
+<item itemtype="Fixed Voltage" CircId="Fixed Volt.-6" mainComp="false" Show_id="false" Show_Val="true" Pos="-356,-268" rotation="0" hflip="1" vflip="1" label="Fixed Volt.-6" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Voltage="5 V" Out="false" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Volt.-5" mainComp="false" Show_id="false" Show_Val="true" Pos="-356,-244" rotation="0" hflip="1" vflip="1" label="Fixed Volt.-5" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Voltage="5 V" Out="false" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Volt.-4" mainComp="false" Show_id="false" Show_Val="true" Pos="-356,-220" rotation="0" hflip="1" vflip="1" label="Fixed Volt.-4" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Voltage="5 V" Out="false" />
+
+<item itemtype="Voltage Source" CircId="Volt. Source-3" mainComp="false" ShowProp="MaxValue" Show_id="false" Show_Val="true" Pos="-152,-324" rotation="0" hflip="1" vflip="1" label="Volt. Source-3" idLabPos="-16,-24" labelrot="0" valLabPos="-6.83798,-41.1479" valLabRot="0" Running="false" Value_Volt="0 V" MaxValue="5 V" MinValue="0 V" />
+
+<item itemtype="Voltage Source" CircId="Volt. Source-2" mainComp="false" ShowProp="MaxValue" Show_id="false" Show_Val="true" Pos="-96,-324" rotation="0" hflip="1" vflip="1" label="Volt. Source-2" idLabPos="-16,-24" labelrot="0" valLabPos="-6.29494,-40.5258" valLabRot="0" Running="false" Value_Volt="0 V" MaxValue="5 V" MinValue="0 V" />
+
+<item itemtype="Voltage Source" CircId="Volt. Source-1" mainComp="false" ShowProp="MaxValue" Show_id="false" Show_Val="true" Pos="-40,-324" rotation="0" hflip="1" vflip="1" label="Volt. Source-1" idLabPos="-16,-24" labelrot="0" valLabPos="-6.8002,-41.0311" valLabRot="0" Running="false" Value_Volt="0 V" MaxValue="5 V" MinValue="0 V" />
+
+<item itemtype="Connector" uid="Connector-8" startpinid="Fixed Volt.-6-outnod" endpinid="Uno-7-0" pointList="-340,-268,-316,-268" />
+
+<item itemtype="Connector" uid="Connector-10" startpinid="Fixed Volt.-5-outnod" endpinid="Uno-7-3" pointList="-340,-244,-316,-244" />
+
+<item itemtype="Connector" uid="Connector-12" startpinid="Fixed Volt.-4-outnod" endpinid="Uno-7-6" pointList="-340,-220,-316,-220" />
+
+<item itemtype="Connector" uid="Connector-14" startpinid="Volt. Source-3-outPin" endpinid="Uno-7-A3" pointList="-124,-308,-124,-252,-172,-252" />
+
+<item itemtype="Connector" uid="Connector-16" startpinid="Volt. Source-2-outPin" endpinid="Uno-7-A2" pointList="-68,-308,-68,-244,-172,-244" />
+
+<item itemtype="Connector" uid="Connector-18" startpinid="Volt. Source-1-outPin" endpinid="Uno-7-A0" pointList="-12,-308,-12,-228,-172,-228" />
+
+</circuit>

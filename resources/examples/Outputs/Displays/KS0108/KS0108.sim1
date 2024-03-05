@@ -1,14 +1,14 @@
-<circuit version="" rev="1358" stepSize="1000000" stepsPS="1000000" NLsteps="100000" reaStep="1000000" animate="1" >
+<circuit version="" rev="2229" stepSize="1000000" stepsPS="1000000" NLsteps="100000" reaStep="1000000" animate="1" >
 
 <item itemtype="Ks0108" CircId="Ks0108-1" mainComp="false" Show_id="true" Show_Val="false" Pos="-348,-332" rotation="0" hflip="1" vflip="1" label="KS0108" idLabPos="-18.3741,-66.4813" labelrot="0" valLabPos="0,0" valLabRot="0" CS_Active_Low="false" />
 
-<item itemtype="Subcircuit" CircId="Nano-388" mainComp="false" Show_id="true" Show_Val="false" Pos="-400,-256" rotation="90" hflip="1" vflip="1" label="Nano" idLabPos="-12.9152,43.1945" labelrot="-90" valLabPos="-16,20" valLabRot="0" Logic_Symbol="false">
-<mainCompProps itemtype="MCU" CircId="388_m328 TQFP-269" mainComp="true" Show_id="false" Show_Val="false" Pos="20,20" rotation="0" hflip="1" vflip="1" label="388_m328 TQFP-269" idLabPos="0,-20" labelrot="0" valLabPos="-16,20" valLabRot="0" Frequency="16 MHz" Program="Demo_curves.hex" Auto_Load="false" Rst_enabled="true" Ext_Osc="true" Wdt_enabled="false" SerialMon="-1" />
+<item itemtype="Subcircuit" CircId="Nano-388" mainComp="false" Show_id="true" Show_Val="false" Pos="-400,-256" rotation="90" hflip="1" vflip="1" label="Nano" idLabPos="-12.9152,43.1945" labelrot="-90" valLabPos="-16,20" valLabRot="0">
+<mainCompProps MainCompId="m328 TQFP-269" Frequency="16 MHz" Program="Demo_curves.hex" Auto_Load="false" saveEepr="true" SerialMon="-1" />
 </item>
 
-<item itemtype="Rail" CircId="Rail-403" mainComp="false" ShowProp="Voltage" Show_id="false" Show_Val="true" Pos="-436,-268" rotation="0" hflip="1" vflip="1" label="Rail-403" idLabPos="-16,-24" labelrot="0" valLabPos="-7.04239,8.85037" valLabRot="0" Voltage="5 V" />
+<item itemtype="Rail" CircId="Rail-403" mainComp="false" ShowProp="Voltage" Show_id="false" Show_Val="true" Pos="-436,-284" rotation="90" hflip="1" vflip="1" label="Rail-403" idLabPos="-16,-24" labelrot="0" valLabPos="-15.5045,8.00416" valLabRot="-90" Voltage="5 V" />
 
-<item itemtype="Connector" uid="connector-404" startpinid="Rail-403-outnod" endpinid="Ks0108-1-PinRst" pointList="-420,-268,-404,-268,-404,-276" />
+<item itemtype="Connector" uid="connector-404" startpinid="Rail-403-outnod" endpinid="Ks0108-1-PinRst" pointList="-436,-268,-436,-260,-404,-260,-404,-276" />
 
 <item itemtype="Connector" uid="connector-405" startpinid="Ks0108-1-PinDC" endpinid="Nano-388-A3" pointList="-300,-276,-300,-244,-276,-244,-276,-124,-372,-124,-372,-156" />
 

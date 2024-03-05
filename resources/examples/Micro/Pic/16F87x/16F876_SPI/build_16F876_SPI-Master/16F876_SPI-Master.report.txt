@@ -1,0 +1,59 @@
+Compilation Report
+
+Compiler Version (YYYY-MM-DD): 1.00.00 2022-12-01 (Linux 64 bit) : Build 1199
+
+;********************************************************************************
+
+Compilation time:
+ (Compile time: 0 seconds)
+ (Assembly time: 0 seconds)
+ (Download time: 0 seconds)
+ (Total time: 0 seconds)
+
+;********************************************************************************
+
+Chip resource usage:
+Chip Model: 16F876A
+Program Memory: 150/8192 words (1.83%)
+RAM: 5/368 bytes (1.36%)
+HS (Clock source is not a primary internal oscillator. Ensure the clock source is correctly setup)
+
+;********************************************************************************
+
+RAM Allocation
+;********************************************************************************
+
+Subroutines
+Main
+Code Size (lines): 25
+Compiled Size (words): 35
+Page: 1
+Outgoing calls: Delay_MS(1), DISPLAYVALUE(1), INITSYS(4)
+
+INITSEVENSEG
+Code Size (lines): 49
+Compiled Size (words): 14
+Page: 1
+
+DISPLAYVALUE
+Code Size (lines): 5
+Compiled Size (words): 37
+Page: 1
+
+INITSYS
+Code Size (lines): 895
+Compiled Size (words): 20
+Page: 1
+
+Delay_MS
+Code Size (lines): 0
+Compiled Size (words): 14
+Page: 1
+
+SEVENSEGDISPDIGIT
+Code Size (lines): 0
+Compiled Size (words): 30
+Page: 1
+
+;********************************************************************************
+

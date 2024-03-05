@@ -1,0 +1,41 @@
+#chip 16f887, 4
+#config MCLRE=off, WDT=off
+
+dim count as byte
+count = 0
+
+dir portb out
+
+On Interrupt Timer1Overflow Call IncCounter
+
+InitTimer1 Osc, PS1_1
+ClearTimer 1
+
+    TMR1H = 60
+    TMR1L = 199
+StartTimer 1
+
+Do  
+    PORTB.5 = 0
+    wait 500 ms
+    PORTB.5 = 1
+    wait 500 ms
+Loop
+
+
+Sub IncCounter
+    'TMR1H = 0x3C
+    'TMR1L = 0xB0;
+    TMR1H = 60
+    TMR1L = 199 '177-19
+    count += 1
+    
+    if count = 10 then
+        count = 0
+        if portb.4 = 0 then 
+            portb.4 = 1
+        else 
+            portb.4 = 0
+        end if
+    end if
+End sub

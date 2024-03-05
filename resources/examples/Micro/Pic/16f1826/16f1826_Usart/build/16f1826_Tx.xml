@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+  <executable name="build/16f1826_Tx.hex">
+    <memory name="program">
+      <units>words</units>
+      <length>2048</length>
+      <used>92</used>
+      <free>1956</free>
+    </memory>
+    <memory name="data">
+      <units>bytes</units>
+      <length>256</length>
+      <used>6</used>
+      <free>250</free>
+    </memory>
+  </executable>
+</project>

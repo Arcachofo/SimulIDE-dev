@@ -1,0 +1,617 @@
+
+
+Microchip MPLAB XC8 Assembler V2.32 build 20210201212658 
+                                                                                               Mon Dec 20 19:25:04 2021
+
+Microchip MPLAB XC8 C Compiler v2.32 (Free license) build 20210201212658 Og1 
+     1                           	processor	16F887
+     2                           	pagewidth 120
+     3                           	opt	flic
+     4                           	psect	cinit,global,class=CODE,merge=1,delta=2
+     5                           	psect	cstackCOMMON,global,class=COMMON,space=1,delta=1,noexec
+     6                           	psect	maintext,global,class=CODE,split=1,delta=2
+     7                           	psect	text1,local,class=CODE,merge=1,delta=2
+     8                           	psect	intentry,global,class=CODE,delta=2
+     9                           	psect	config,global,abs,ovrld,class=CONFIG,space=4,delta=2,noexec
+    10                           	dabs	1,0x7E,2
+    11  0000                     
+    12                           ; Version 2.20
+    13                           ; Generated 12/02/2020 GMT
+    14                           ; 
+    15                           ; Copyright © 2020, Microchip Technology Inc. and its subsidiaries ("Microchip")
+    16                           ; All rights reserved.
+    17                           ; 
+    18                           ; This software is developed by Microchip Technology Inc. and its subsidiaries ("Microch
+      +                          ip").
+    19                           ; 
+    20                           ; Redistribution and use in source and binary forms, with or without modification, are
+    21                           ; permitted provided that the following conditions are met:
+    22                           ; 
+    23                           ;     1. Redistributions of source code must retain the above copyright notice, this lis
+      +                          t of
+    24                           ;        conditions and the following disclaimer.
+    25                           ; 
+    26                           ;     2. Redistributions in binary form must reproduce the above copyright notice, this 
+      +                          list
+    27                           ;        of conditions and the following disclaimer in the documentation and/or other
+    28                           ;        materials provided with the distribution.
+    29                           ; 
+    30                           ;     3. Microchip's name may not be used to endorse or promote products derived from th
+      +                          is
+    31                           ;        software without specific prior written permission.
+    32                           ; 
+    33                           ; THIS SOFTWARE IS PROVIDED BY MICROCHIP "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
+    34                           ; INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS F
+      +                          OR
+    35                           ; PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL MICROCHIP BE LIABLE FOR ANY DIRECT, INDIREC
+      +                          T,
+    36                           ; INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING BUT NOT LIMITED TO
+    37                           ; PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA OR PROFITS; OR BUSINESS
+    38                           ; INTERRUPTION) HOWSOEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, ST
+      +                          RICT
+    39                           ; LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE U
+      +                          SE OF
+    40                           ; THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+    41                           ; 
+    42                           ; 
+    43                           ; Code-generator required, PIC16F887 Definitions
+    44                           ; 
+    45                           ; SFR Addresses
+    46  0000                     	;# 
+    47  0001                     	;# 
+    48  0002                     	;# 
+    49  0003                     	;# 
+    50  0004                     	;# 
+    51  0005                     	;# 
+    52  0006                     	;# 
+    53  0007                     	;# 
+    54  0008                     	;# 
+    55  0009                     	;# 
+    56  000A                     	;# 
+    57  000B                     	;# 
+    58  000C                     	;# 
+    59  000D                     	;# 
+    60  000E                     	;# 
+    61  000E                     	;# 
+    62  000F                     	;# 
+    63  0010                     	;# 
+    64  0011                     	;# 
+    65  0012                     	;# 
+    66  0013                     	;# 
+    67  0014                     	;# 
+    68  0015                     	;# 
+    69  0015                     	;# 
+    70  0016                     	;# 
+    71  0017                     	;# 
+    72  0018                     	;# 
+    73  0019                     	;# 
+    74  001A                     	;# 
+    75  001B                     	;# 
+    76  001B                     	;# 
+    77  001C                     	;# 
+    78  001D                     	;# 
+    79  001E                     	;# 
+    80  001F                     	;# 
+    81  0081                     	;# 
+    82  0085                     	;# 
+    83  0086                     	;# 
+    84  0087                     	;# 
+    85  0088                     	;# 
+    86  0089                     	;# 
+    87  008C                     	;# 
+    88  008D                     	;# 
+    89  008E                     	;# 
+    90  008F                     	;# 
+    91  0090                     	;# 
+    92  0091                     	;# 
+    93  0092                     	;# 
+    94  0093                     	;# 
+    95  0093                     	;# 
+    96  0093                     	;# 
+    97  0094                     	;# 
+    98  0095                     	;# 
+    99  0096                     	;# 
+   100  0097                     	;# 
+   101  0098                     	;# 
+   102  0099                     	;# 
+   103  009A                     	;# 
+   104  009B                     	;# 
+   105  009C                     	;# 
+   106  009D                     	;# 
+   107  009E                     	;# 
+   108  009F                     	;# 
+   109  0105                     	;# 
+   110  0107                     	;# 
+   111  0108                     	;# 
+   112  0109                     	;# 
+   113  010C                     	;# 
+   114  010C                     	;# 
+   115  010D                     	;# 
+   116  010E                     	;# 
+   117  010F                     	;# 
+   118  0185                     	;# 
+   119  0187                     	;# 
+   120  0188                     	;# 
+   121  0189                     	;# 
+   122  018C                     	;# 
+   123  018D                     	;# 
+   124  0000                     	;# 
+   125  0001                     	;# 
+   126  0002                     	;# 
+   127  0003                     	;# 
+   128  0004                     	;# 
+   129  0005                     	;# 
+   130  0006                     	;# 
+   131  0007                     	;# 
+   132  0008                     	;# 
+   133  0009                     	;# 
+   134  000A                     	;# 
+   135  000B                     	;# 
+   136  000C                     	;# 
+   137  000D                     	;# 
+   138  000E                     	;# 
+   139  000E                     	;# 
+   140  000F                     	;# 
+   141  0010                     	;# 
+   142  0011                     	;# 
+   143  0012                     	;# 
+   144  0013                     	;# 
+   145  0014                     	;# 
+   146  0015                     	;# 
+   147  0015                     	;# 
+   148  0016                     	;# 
+   149  0017                     	;# 
+   150  0018                     	;# 
+   151  0019                     	;# 
+   152  001A                     	;# 
+   153  001B                     	;# 
+   154  001B                     	;# 
+   155  001C                     	;# 
+   156  001D                     	;# 
+   157  001E                     	;# 
+   158  001F                     	;# 
+   159  0081                     	;# 
+   160  0085                     	;# 
+   161  0086                     	;# 
+   162  0087                     	;# 
+   163  0088                     	;# 
+   164  0089                     	;# 
+   165  008C                     	;# 
+   166  008D                     	;# 
+   167  008E                     	;# 
+   168  008F                     	;# 
+   169  0090                     	;# 
+   170  0091                     	;# 
+   171  0092                     	;# 
+   172  0093                     	;# 
+   173  0093                     	;# 
+   174  0093                     	;# 
+   175  0094                     	;# 
+   176  0095                     	;# 
+   177  0096                     	;# 
+   178  0097                     	;# 
+   179  0098                     	;# 
+   180  0099                     	;# 
+   181  009A                     	;# 
+   182  009B                     	;# 
+   183  009C                     	;# 
+   184  009D                     	;# 
+   185  009E                     	;# 
+   186  009F                     	;# 
+   187  0105                     	;# 
+   188  0107                     	;# 
+   189  0108                     	;# 
+   190  0109                     	;# 
+   191  010C                     	;# 
+   192  010C                     	;# 
+   193  010D                     	;# 
+   194  010E                     	;# 
+   195  010F                     	;# 
+   196  0185                     	;# 
+   197  0187                     	;# 
+   198  0188                     	;# 
+   199  0189                     	;# 
+   200  018C                     	;# 
+   201  018D                     	;# 
+   202  0009                     _PORTE	set	9
+   203  0008                     _PORTD	set	8
+   204  0007                     _PORTC	set	7
+   205  0006                     _PORTB	set	6
+   206  0005                     _PORTA	set	5
+   207  0089                     _TRISE	set	137
+   208  0088                     _TRISD	set	136
+   209  0087                     _TRISC	set	135
+   210  0086                     _TRISB	set	134
+   211  0085                     _TRISA	set	133
+   212  0847                     _C2ON	set	2119
+   213  083F                     _C1ON	set	2111
+   214  0189                     _ANSELH	set	393
+   215  0188                     _ANSEL	set	392
+   216                           
+   217                           	psect	cinit
+   218  000F                     start_initialization:	
+   219                           ; #config settings
+   220                           
+   221  000F                     __initialization:
+   222  000F                     end_of_initialization:	
+   223                           ;End of C runtime variable initialization code
+   224                           
+   225  000F                     __end_of__initialization:
+   226  000F  0183               	clrf	3
+   227  0010  120A  118A  2813   	ljmp	_main	;jump to C main() function
+   228                           
+   229                           	psect	cstackCOMMON
+   230  0070                     __pcstackCOMMON:
+   231  0070                     ?_myisr:
+   232  0070                     ??_myisr:	
+   233                           ; 1 bytes @ 0x0
+   234                           
+   235  0070                     ?_main:	
+   236                           ; 1 bytes @ 0x0
+   237                           
+   238                           
+   239                           ; 1 bytes @ 0x0
+   240  0070                     	ds	2
+   241  0072                     ??_main:
+   242                           
+   243                           	psect	maintext
+   244  0013                     __pmaintext:	
+   245                           ; 1 bytes @ 0x2
+   246 ;;
+   247 ;;Main: autosize = 0, tempsize = 0, incstack = 0, save=0
+   248 ;;
+   249 ;; *************** function _main *****************
+   250 ;; Defined at:
+   251 ;;		line 47 in file "/media/user/software/simulide/simulide_lauchpad/1.0.0/resources/examples/Micro/Pic/Test/16F88x/16F8
+      +87_ports/16F887_ports.c"
+   252 ;; Parameters:    Size  Location     Type
+   253 ;;		None
+   254 ;; Auto vars:     Size  Location     Type
+   255 ;;		None
+   256 ;; Return value:  Size  Location     Type
+   257 ;;                  1    wreg      void 
+   258 ;; Registers used:
+   259 ;;		wreg, status,2
+   260 ;; Tracked objects:
+   261 ;;		On entry : B00/0
+   262 ;;		On exit  : 0/0
+   263 ;;		Unchanged: 0/0
+   264 ;; Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+   265 ;;      Params:         0       0       0       0       0
+   266 ;;      Locals:         0       0       0       0       0
+   267 ;;      Temps:          0       0       0       0       0
+   268 ;;      Totals:         0       0       0       0       0
+   269 ;;Total ram usage:        0 bytes
+   270 ;; Hardware stack levels required when called: 1
+   271 ;; This function calls:
+   272 ;;		Nothing
+   273 ;; This function is called by:
+   274 ;;		Startup code after reset
+   275 ;; This function uses a non-reentrant model
+   276 ;;
+   277                           
+   278                           
+   279                           ;psect for function _main
+   280  0013                     _main:
+   281  0013                     l633:	
+   282                           ;incstack = 0
+   283                           ; Regs used in _main: [wreg+status,2]
+   284                           
+   285                           
+   286                           ;/media/user/software/simulide/simulide_lauchpad/1.0.0/resources/examples/Micro/Pic/Test
+      +                          /16F88x/16F887_ports/16F887_ports.c: 53:     ANSEL = 0x00;
+   287  0013  1683               	bsf	3,5	;RP0=1, select bank3
+   288  0014  1703               	bsf	3,6	;RP1=1, select bank3
+   289  0015  0188               	clrf	8	;volatile
+   290                           
+   291                           ;/media/user/software/simulide/simulide_lauchpad/1.0.0/resources/examples/Micro/Pic/Test
+      +                          /16F88x/16F887_ports/16F887_ports.c: 54:     ANSELH = 0x00;
+   292  0016  0189               	clrf	9	;volatile
+   293  0017                     l635:
+   294                           
+   295                           ;/media/user/software/simulide/simulide_lauchpad/1.0.0/resources/examples/Micro/Pic/Test
+      +                          /16F88x/16F887_ports/16F887_ports.c: 55:     C1ON = 0;
+   296  0017  1283               	bcf	3,5	;RP0=0, select bank2
+   297  0018  1703               	bsf	3,6	;RP1=1, select bank2
+   298  0019  1387               	bcf	7,7	;volatile
+   299  001A                     l637:
+   300                           
+   301                           ;/media/user/software/simulide/simulide_lauchpad/1.0.0/resources/examples/Micro/Pic/Test
+      +                          /16F88x/16F887_ports/16F887_ports.c: 56:     C2ON = 0;
+   302  001A  1388               	bcf	8,7	;volatile
+   303                           
+   304                           ;/media/user/software/simulide/simulide_lauchpad/1.0.0/resources/examples/Micro/Pic/Test
+      +                          /16F88x/16F887_ports/16F887_ports.c: 57:     TRISA = 0x00;
+   305  001B  1683               	bsf	3,5	;RP0=1, select bank1
+   306  001C  1303               	bcf	3,6	;RP1=0, select bank1
+   307  001D  0185               	clrf	5	;volatile
+   308                           
+   309                           ;/media/user/software/simulide/simulide_lauchpad/1.0.0/resources/examples/Micro/Pic/Test
+      +                          /16F88x/16F887_ports/16F887_ports.c: 58:     TRISB = 0x00;
+   310  001E  0186               	clrf	6	;volatile
+   311                           
+   312                           ;/media/user/software/simulide/simulide_lauchpad/1.0.0/resources/examples/Micro/Pic/Test
+      +                          /16F88x/16F887_ports/16F887_ports.c: 59:     TRISC = 0x00;
+   313  001F  0187               	clrf	7	;volatile
+   314                           
+   315                           ;/media/user/software/simulide/simulide_lauchpad/1.0.0/resources/examples/Micro/Pic/Test
+      +                          /16F88x/16F887_ports/16F887_ports.c: 60:     TRISD = 0x00;
+   316  0020  0188               	clrf	8	;volatile
+   317                           
+   318                           ;/media/user/software/simulide/simulide_lauchpad/1.0.0/resources/examples/Micro/Pic/Test
+      +                          /16F88x/16F887_ports/16F887_ports.c: 61:     TRISE = 0x00;
+   319  0021  0189               	clrf	9	;volatile
+   320  0022                     l639:
+   321                           
+   322                           ;/media/user/software/simulide/simulide_lauchpad/1.0.0/resources/examples/Micro/Pic/Test
+      +                          /16F88x/16F887_ports/16F887_ports.c: 62:     PORTA = 0xFF;
+   323  0022  30FF               	movlw	255
+   324  0023  1283               	bcf	3,5	;RP0=0, select bank0
+   325  0024  1303               	bcf	3,6	;RP1=0, select bank0
+   326  0025  0085               	movwf	5	;volatile
+   327  0026                     l641:
+   328                           
+   329                           ;/media/user/software/simulide/simulide_lauchpad/1.0.0/resources/examples/Micro/Pic/Test
+      +                          /16F88x/16F887_ports/16F887_ports.c: 63:     PORTB = 0xFF;
+   330  0026  30FF               	movlw	255
+   331  0027  0086               	movwf	6	;volatile
+   332  0028                     l643:
+   333                           
+   334                           ;/media/user/software/simulide/simulide_lauchpad/1.0.0/resources/examples/Micro/Pic/Test
+      +                          /16F88x/16F887_ports/16F887_ports.c: 64:     PORTC = 0xFF;
+   335  0028  30FF               	movlw	255
+   336  0029  0087               	movwf	7	;volatile
+   337  002A                     l645:
+   338                           
+   339                           ;/media/user/software/simulide/simulide_lauchpad/1.0.0/resources/examples/Micro/Pic/Test
+      +                          /16F88x/16F887_ports/16F887_ports.c: 65:     PORTD = 0xFF;
+   340  002A  30FF               	movlw	255
+   341  002B  0088               	movwf	8	;volatile
+   342  002C                     l647:
+   343                           
+   344                           ;/media/user/software/simulide/simulide_lauchpad/1.0.0/resources/examples/Micro/Pic/Test
+      +                          /16F88x/16F887_ports/16F887_ports.c: 66:     PORTE = 0x0F;
+   345  002C  300F               	movlw	15
+   346  002D  0089               	movwf	9	;volatile
+   347  002E                     l38:	
+   348                           ;/media/user/software/simulide/simulide_lauchpad/1.0.0/resources/examples/Micro/Pic/Test
+      +                          /16F88x/16F887_ports/16F887_ports.c: 82:     while (1){
+   349                           
+   350  002E                     l39:	
+   351                           ;/media/user/software/simulide/simulide_lauchpad/1.0.0/resources/examples/Micro/Pic/Test
+      +                          /16F88x/16F887_ports/16F887_ports.c: 91:     }
+   352                           
+   353  002E  282E               	goto	l38
+   354  002F  120A  118A  280C   	ljmp	start
+   355  0032                     __end_of_main:
+   356                           
+   357                           	psect	text1
+   358  0032                     __ptext1:	
+   359 ;; *************** function _myisr *****************
+   360 ;; Defined at:
+   361 ;;		line 42 in file "/media/user/software/simulide/simulide_lauchpad/1.0.0/resources/examples/Micro/Pic/Test/16F88x/16F8
+      +87_ports/16F887_ports.c"
+   362 ;; Parameters:    Size  Location     Type
+   363 ;;		None
+   364 ;; Auto vars:     Size  Location     Type
+   365 ;;		None
+   366 ;; Return value:  Size  Location     Type
+   367 ;;                  1    wreg      void 
+   368 ;; Registers used:
+   369 ;;		None
+   370 ;; Tracked objects:
+   371 ;;		On entry : 0/0
+   372 ;;		On exit  : 0/0
+   373 ;;		Unchanged: 0/0
+   374 ;; Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+   375 ;;      Params:         0       0       0       0       0
+   376 ;;      Locals:         0       0       0       0       0
+   377 ;;      Temps:          2       0       0       0       0
+   378 ;;      Totals:         2       0       0       0       0
+   379 ;;Total ram usage:        2 bytes
+   380 ;; Hardware stack levels used: 1
+   381 ;; This function calls:
+   382 ;;		Nothing
+   383 ;; This function is called by:
+   384 ;;		Interrupt level 1
+   385 ;; This function uses a non-reentrant model
+   386 ;;
+   387                           
+   388                           
+   389                           ;psect for function _myisr
+   390  0032                     _myisr:
+   391  0032                     i1l33:
+   392  0032  0871               	movf	??_myisr+1,w
+   393  0033  008A               	movwf	10
+   394  0034  0E70               	swapf	??_myisr,w
+   395  0035  0083               	movwf	3
+   396  0036  0EFE               	swapf	btemp,f
+   397  0037  0E7E               	swapf	btemp,w
+   398  0038  0009               	retfie
+   399  0039                     __end_of_myisr:
+   400  007E                     btemp	set	126	;btemp
+   401  007E                     wtemp0	set	126
+   402                           
+   403                           	psect	intentry
+   404  0004                     __pintentry:	
+   405                           ;incstack = 0
+   406                           ; Regs used in _myisr: []
+   407                           
+   408  0004                     interrupt_function:
+   409  007E                     saved_w	set	btemp
+   410  0004  00FE               	movwf	btemp
+   411  0005  0E03               	swapf	3,w
+   412  0006  00F0               	movwf	??_myisr
+   413  0007  080A               	movf	10,w
+   414  0008  00F1               	movwf	??_myisr+1
+   415  0009  120A  118A  2832   	ljmp	_myisr
+   416                           
+   417                           	psect	config
+   418                           
+   419                           ;Config register CONFIG1 @ 0x2007
+   420                           ;	Oscillator Selection bits
+   421                           ;	FOSC = HS, HS oscillator: High-speed crystal/resonator on RA6/OSC2/CLKOUT and RA7/OSC1
+      +                          /CLKIN
+   422                           ;	Watchdog Timer Enable bit
+   423                           ;	WDTE = OFF, WDT disabled and can be enabled by SWDTEN bit of the WDTCON register
+   424                           ;	Power-up Timer Enable bit
+   425                           ;	PWRTE = OFF, PWRT disabled
+   426                           ;	RE3/MCLR pin function select bit
+   427                           ;	MCLRE = OFF, RE3/MCLR pin function is digital input, MCLR internally tied to VDD
+   428                           ;	Code Protection bit
+   429                           ;	CP = OFF, Program memory code protection is disabled
+   430                           ;	Data Code Protection bit
+   431                           ;	CPD = OFF, Data memory code protection is disabled
+   432                           ;	Brown Out Reset Selection bits
+   433                           ;	BOREN = ON, BOR enabled
+   434                           ;	Internal External Switchover bit
+   435                           ;	IESO = ON, Internal/External Switchover mode is enabled
+   436                           ;	Fail-Safe Clock Monitor Enabled bit
+   437                           ;	FCMEN = ON, Fail-Safe Clock Monitor is enabled
+   438                           ;	Low Voltage Programming Enable bit
+   439                           ;	LVP = OFF, RB3 pin has digital I/O, HV on MCLR must be used for programming
+   440                           ;	In-Circuit Debugger Mode bit
+   441                           ;	DEBUG = 0x1, unprogrammed default
+   442  2007                     	org	8199
+   443  2007  2FD2               	dw	12242
+   444                           
+   445                           ;Config register CONFIG2 @ 0x2008
+   446                           ;	Brown-out Reset Selection bit
+   447                           ;	BOR4V = BOR40V, Brown-out Reset set to 4.0V
+   448                           ;	Flash Program Memory Self Write Enable bits
+   449                           ;	WRT = OFF, Write protection off
+   450  2008                     	org	8200
+   451  2008  3FFF               	dw	16383
+
+Data Sizes:
+    Strings     0
+    Constant    0
+    Data        0
+    BSS         0
+    Persistent  0
+    Stack       0
+
+Auto Spaces:
+    Space          Size  Autos    Used
+    COMMON           14      2       2
+    BANK0            80      0       0
+    BANK1            80      0       0
+    BANK3            96      0       0
+    BANK2            96      0       0
+
+Pointer List with Targets:
+
+    None.
+
+Critical Paths under _main in COMMON
+
+    None.
+
+Critical Paths under _myisr in COMMON
+
+    None.
+
+Critical Paths under _main in BANK0
+
+    None.
+
+Critical Paths under _myisr in BANK0
+
+    None.
+
+Critical Paths under _main in BANK1
+
+    None.
+
+Critical Paths under _myisr in BANK1
+
+    None.
+
+Critical Paths under _main in BANK3
+
+    None.
+
+Critical Paths under _myisr in BANK3
+
+    None.
+
+Critical Paths under _main in BANK2
+
+    None.
+
+Critical Paths under _myisr in BANK2
+
+    None.
+
+Call Graph Tables:
+
+ ---------------------------------------------------------------------------------
+ (Depth) Function   	        Calls       Base Space   Used Autos Params    Refs
+ ---------------------------------------------------------------------------------
+ (0) _main                                                 0     0      0       0
+ ---------------------------------------------------------------------------------
+ Estimated maximum stack depth 0
+ ---------------------------------------------------------------------------------
+ (Depth) Function   	        Calls       Base Space   Used Autos Params    Refs
+ ---------------------------------------------------------------------------------
+ (1) _myisr                                                2     2      0       0
+                                              0 COMMON     2     2      0
+ ---------------------------------------------------------------------------------
+ Estimated maximum stack depth 1
+ ---------------------------------------------------------------------------------
+
+ Call Graph Graphs:
+
+ _main (ROOT)
+
+ _myisr (ROOT)
+
+ Address spaces:
+Name               Size   Autos  Total    Cost      Usage
+BITCOMMON            E      0       0       0        0.0%
+EEDATA             100      0       0       0        0.0%
+NULL                 0      0       0       0        0.0%
+CODE                 0      0       0       0        0.0%
+COMMON               E      2       2       1       14.3%
+BITSFR0              0      0       0       1        0.0%
+SFR0                 0      0       0       1        0.0%
+BITSFR1              0      0       0       2        0.0%
+SFR1                 0      0       0       2        0.0%
+STACK                0      0       0       2        0.0%
+ABS                  0      0       0       3        0.0%
+BITBANK0            50      0       0       4        0.0%
+BITSFR3              0      0       0       4        0.0%
+SFR3                 0      0       0       4        0.0%
+BANK0               50      0       0       5        0.0%
+BITSFR2              0      0       0       5        0.0%
+SFR2                 0      0       0       5        0.0%
+BITBANK1            50      0       0       6        0.0%
+BANK1               50      0       0       7        0.0%
+BITBANK3            60      0       0       8        0.0%
+BANK3               60      0       0       9        0.0%
+BITBANK2            60      0       0      10        0.0%
+BANK2               60      0       0      11        0.0%
+DATA                 0      0       0      12        0.0%
+
+
+Microchip Technology PIC Macro Assembler V2.32 build 20210201212658 
+Symbol Table                                                                                   Mon Dec 20 19:25:04 2021
+
+                     l38 002E                       l39 002E                      l641 0026  
+                    l633 0013                      l643 0028                      l635 0017  
+                    l645 002A                      l637 001A                      l647 002C  
+                    l639 0022                     _C1ON 083F                     _C2ON 0847  
+                   i1l33 0032                     _main 0013                     btemp 007E  
+                   start 000C                    ?_main 0070                    _ANSEL 0188  
+                  _PORTA 0005                    _PORTB 0006                    _PORTC 0007  
+                  _PORTD 0008                    _PORTE 0009                    _TRISA 0085  
+                  _TRISB 0086                    _TRISC 0087                    _TRISD 0088  
+                  _TRISE 0089                    _myisr 0032                    pclath 000A  
+                  status 0003                    wtemp0 007E          __initialization 000F  
+           __end_of_main 0032                   ??_main 0072                   ?_myisr 0070  
+                 _ANSELH 0189                   saved_w 007E  __end_of__initialization 000F  
+         __pcstackCOMMON 0070            __end_of_myisr 0039                  ??_myisr 0070  
+             __pmaintext 0013               __pintentry 0004                  __ptext1 0032  
+   end_of_initialization 000F      start_initialization 000F                ___latbits 0002  
+         __size_of_myisr 0007        interrupt_function 0004            __size_of_main 001F  
+               intlevel1 0000  

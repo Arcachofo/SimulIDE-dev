@@ -1,0 +1,756 @@
+
+
+Microchip MPLAB XC8 Assembler V2.32 build 20210201212658 
+                                                                                               Sun Jan 16 18:35:13 2022
+
+Microchip MPLAB XC8 C Compiler v2.32 (Free license) build 20210201212658 Og1 
+     1                           	processor	16F1826
+     2                           	pagewidth 120
+     3                           	opt	flic
+     4                           	psect	cinit,global,class=CODE,merge=1,delta=2
+     5                           	psect	cstackCOMMON,global,class=COMMON,space=1,delta=1,noexec
+     6                           	psect	maintext,global,class=CODE,merge=1,split=1,delta=2
+     7                           	psect	intentry,global,class=CODE,delta=2
+     8                           	dabs	1,0x7E,2
+     9  0000                     
+    10                           ; Version 2.20
+    11                           ; Generated 12/02/2020 GMT
+    12                           ; 
+    13                           ; Copyright © 2020, Microchip Technology Inc. and its subsidiaries ("Microchip")
+    14                           ; All rights reserved.
+    15                           ; 
+    16                           ; This software is developed by Microchip Technology Inc. and its subsidiaries ("Microch
+      +                          ip").
+    17                           ; 
+    18                           ; Redistribution and use in source and binary forms, with or without modification, are
+    19                           ; permitted provided that the following conditions are met:
+    20                           ; 
+    21                           ;     1. Redistributions of source code must retain the above copyright notice, this lis
+      +                          t of
+    22                           ;        conditions and the following disclaimer.
+    23                           ; 
+    24                           ;     2. Redistributions in binary form must reproduce the above copyright notice, this 
+      +                          list
+    25                           ;        of conditions and the following disclaimer in the documentation and/or other
+    26                           ;        materials provided with the distribution.
+    27                           ; 
+    28                           ;     3. Microchip's name may not be used to endorse or promote products derived from th
+      +                          is
+    29                           ;        software without specific prior written permission.
+    30                           ; 
+    31                           ; THIS SOFTWARE IS PROVIDED BY MICROCHIP "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
+    32                           ; INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS F
+      +                          OR
+    33                           ; PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL MICROCHIP BE LIABLE FOR ANY DIRECT, INDIREC
+      +                          T,
+    34                           ; INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING BUT NOT LIMITED TO
+    35                           ; PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA OR PROFITS; OR BUSINESS
+    36                           ; INTERRUPTION) HOWSOEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, ST
+      +                          RICT
+    37                           ; LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE U
+      +                          SE OF
+    38                           ; THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+    39                           ; 
+    40                           ; 
+    41                           ; Code-generator required, PIC16F1826 Definitions
+    42                           ; 
+    43                           ; SFR Addresses
+    44  0000                     	;# 
+    45  0001                     	;# 
+    46  0002                     	;# 
+    47  0003                     	;# 
+    48  0004                     	;# 
+    49  0005                     	;# 
+    50  0006                     	;# 
+    51  0007                     	;# 
+    52  0008                     	;# 
+    53  0009                     	;# 
+    54  000A                     	;# 
+    55  000B                     	;# 
+    56  000C                     	;# 
+    57  000D                     	;# 
+    58  0011                     	;# 
+    59  0012                     	;# 
+    60  0015                     	;# 
+    61  0016                     	;# 
+    62  0016                     	;# 
+    63  0017                     	;# 
+    64  0018                     	;# 
+    65  0019                     	;# 
+    66  001A                     	;# 
+    67  001B                     	;# 
+    68  001C                     	;# 
+    69  001E                     	;# 
+    70  001F                     	;# 
+    71  008C                     	;# 
+    72  008D                     	;# 
+    73  0091                     	;# 
+    74  0092                     	;# 
+    75  0095                     	;# 
+    76  0096                     	;# 
+    77  0097                     	;# 
+    78  0098                     	;# 
+    79  0099                     	;# 
+    80  009A                     	;# 
+    81  009B                     	;# 
+    82  009B                     	;# 
+    83  009C                     	;# 
+    84  009D                     	;# 
+    85  009E                     	;# 
+    86  010C                     	;# 
+    87  010D                     	;# 
+    88  0111                     	;# 
+    89  0112                     	;# 
+    90  0113                     	;# 
+    91  0114                     	;# 
+    92  0115                     	;# 
+    93  0116                     	;# 
+    94  0117                     	;# 
+    95  0118                     	;# 
+    96  0119                     	;# 
+    97  011A                     	;# 
+    98  011B                     	;# 
+    99  011D                     	;# 
+   100  011E                     	;# 
+   101  018C                     	;# 
+   102  018D                     	;# 
+   103  0191                     	;# 
+   104  0191                     	;# 
+   105  0192                     	;# 
+   106  0193                     	;# 
+   107  0193                     	;# 
+   108  0193                     	;# 
+   109  0194                     	;# 
+   110  0195                     	;# 
+   111  0196                     	;# 
+   112  0199                     	;# 
+   113  019A                     	;# 
+   114  019B                     	;# 
+   115  019B                     	;# 
+   116  019B                     	;# 
+   117  019B                     	;# 
+   118  019C                     	;# 
+   119  019C                     	;# 
+   120  019D                     	;# 
+   121  019E                     	;# 
+   122  019F                     	;# 
+   123  020C                     	;# 
+   124  020D                     	;# 
+   125  0211                     	;# 
+   126  0211                     	;# 
+   127  0212                     	;# 
+   128  0212                     	;# 
+   129  0213                     	;# 
+   130  0213                     	;# 
+   131  0214                     	;# 
+   132  0214                     	;# 
+   133  0215                     	;# 
+   134  0215                     	;# 
+   135  0215                     	;# 
+   136  0216                     	;# 
+   137  0216                     	;# 
+   138  0217                     	;# 
+   139  0217                     	;# 
+   140  0291                     	;# 
+   141  0291                     	;# 
+   142  0292                     	;# 
+   143  0293                     	;# 
+   144  0294                     	;# 
+   145  0295                     	;# 
+   146  0295                     	;# 
+   147  0296                     	;# 
+   148  0394                     	;# 
+   149  0395                     	;# 
+   150  0396                     	;# 
+   151  039A                     	;# 
+   152  039C                     	;# 
+   153  039D                     	;# 
+   154  039E                     	;# 
+   155  039F                     	;# 
+   156  0FE4                     	;# 
+   157  0FE5                     	;# 
+   158  0FE6                     	;# 
+   159  0FE7                     	;# 
+   160  0FE8                     	;# 
+   161  0FE9                     	;# 
+   162  0FEA                     	;# 
+   163  0FEB                     	;# 
+   164  0FED                     	;# 
+   165  0FEE                     	;# 
+   166  0FEF                     	;# 
+   167  0000                     	;# 
+   168  0001                     	;# 
+   169  0002                     	;# 
+   170  0003                     	;# 
+   171  0004                     	;# 
+   172  0005                     	;# 
+   173  0006                     	;# 
+   174  0007                     	;# 
+   175  0008                     	;# 
+   176  0009                     	;# 
+   177  000A                     	;# 
+   178  000B                     	;# 
+   179  000C                     	;# 
+   180  000D                     	;# 
+   181  0011                     	;# 
+   182  0012                     	;# 
+   183  0015                     	;# 
+   184  0016                     	;# 
+   185  0016                     	;# 
+   186  0017                     	;# 
+   187  0018                     	;# 
+   188  0019                     	;# 
+   189  001A                     	;# 
+   190  001B                     	;# 
+   191  001C                     	;# 
+   192  001E                     	;# 
+   193  001F                     	;# 
+   194  008C                     	;# 
+   195  008D                     	;# 
+   196  0091                     	;# 
+   197  0092                     	;# 
+   198  0095                     	;# 
+   199  0096                     	;# 
+   200  0097                     	;# 
+   201  0098                     	;# 
+   202  0099                     	;# 
+   203  009A                     	;# 
+   204  009B                     	;# 
+   205  009B                     	;# 
+   206  009C                     	;# 
+   207  009D                     	;# 
+   208  009E                     	;# 
+   209  010C                     	;# 
+   210  010D                     	;# 
+   211  0111                     	;# 
+   212  0112                     	;# 
+   213  0113                     	;# 
+   214  0114                     	;# 
+   215  0115                     	;# 
+   216  0116                     	;# 
+   217  0117                     	;# 
+   218  0118                     	;# 
+   219  0119                     	;# 
+   220  011A                     	;# 
+   221  011B                     	;# 
+   222  011D                     	;# 
+   223  011E                     	;# 
+   224  018C                     	;# 
+   225  018D                     	;# 
+   226  0191                     	;# 
+   227  0191                     	;# 
+   228  0192                     	;# 
+   229  0193                     	;# 
+   230  0193                     	;# 
+   231  0193                     	;# 
+   232  0194                     	;# 
+   233  0195                     	;# 
+   234  0196                     	;# 
+   235  0199                     	;# 
+   236  019A                     	;# 
+   237  019B                     	;# 
+   238  019B                     	;# 
+   239  019B                     	;# 
+   240  019B                     	;# 
+   241  019C                     	;# 
+   242  019C                     	;# 
+   243  019D                     	;# 
+   244  019E                     	;# 
+   245  019F                     	;# 
+   246  020C                     	;# 
+   247  020D                     	;# 
+   248  0211                     	;# 
+   249  0211                     	;# 
+   250  0212                     	;# 
+   251  0212                     	;# 
+   252  0213                     	;# 
+   253  0213                     	;# 
+   254  0214                     	;# 
+   255  0214                     	;# 
+   256  0215                     	;# 
+   257  0215                     	;# 
+   258  0215                     	;# 
+   259  0216                     	;# 
+   260  0216                     	;# 
+   261  0217                     	;# 
+   262  0217                     	;# 
+   263  0291                     	;# 
+   264  0291                     	;# 
+   265  0292                     	;# 
+   266  0293                     	;# 
+   267  0294                     	;# 
+   268  0295                     	;# 
+   269  0295                     	;# 
+   270  0296                     	;# 
+   271  0394                     	;# 
+   272  0395                     	;# 
+   273  0396                     	;# 
+   274  039A                     	;# 
+   275  039C                     	;# 
+   276  039D                     	;# 
+   277  039E                     	;# 
+   278  039F                     	;# 
+   279  0FE4                     	;# 
+   280  0FE5                     	;# 
+   281  0FE6                     	;# 
+   282  0FE7                     	;# 
+   283  0FE8                     	;# 
+   284  0FE9                     	;# 
+   285  0FEA                     	;# 
+   286  0FEB                     	;# 
+   287  0FED                     	;# 
+   288  0FEE                     	;# 
+   289  0FEF                     	;# 
+   290  000D                     _PORTB	set	13
+   291  00C0                     _TMR1ON	set	192
+   292  005F                     _GIE	set	95
+   293  005E                     _PEIE	set	94
+   294  00C5                     _T1CKPS1	set	197
+   295  00C4                     _T1CKPS0	set	196
+   296  00C7                     _TMR1CS1	set	199
+   297  00C6                     _TMR1CS0	set	198
+   298  0088                     _TMR1IF	set	136
+   299  008D                     _TRISB	set	141
+   300  0488                     _TMR1IE	set	1160
+   301  018D                     _ANSELB	set	397
+   302  018C                     _ANSELA	set	396
+   303                           
+   304                           	psect	cinit
+   305  0013                     start_initialization:	
+   306                           ; #config settings
+   307                           
+   308  0013                     __initialization:
+   309  0013                     end_of_initialization:	
+   310                           ;End of C runtime variable initialization code
+   311                           
+   312  0013                     __end_of__initialization:
+   313  0013  107E               	bcf	int$flags,0	;clear compiler interrupt flag (level 1)
+   314  0014  0020               	movlb	0
+   315  0015  2816               	ljmp	_main	;jump to C main() function
+   316                           
+   317                           	psect	cstackCOMMON
+   318  0070                     __pcstackCOMMON:
+   319  0070                     ?_myisr:
+   320  0070                     ??_myisr:	
+   321                           ; 1 bytes @ 0x0
+   322                           
+   323  0070                     ?_main:	
+   324                           ; 1 bytes @ 0x0
+   325                           
+   326                           
+   327                           ; 1 bytes @ 0x0
+   328  0070                     	ds	1
+   329  0071                     ??_main:
+   330                           
+   331                           ; 1 bytes @ 0x1
+   332  0071                     	ds	2
+   333                           
+   334                           	psect	maintext
+   335  0016                     __pmaintext:	
+   336 ;;
+   337 ;;Main: autosize = 0, tempsize = 2, incstack = 0, save=0
+   338 ;;
+   339 ;; *************** function _main *****************
+   340 ;; Defined at:
+   341 ;;		line 16 in file "/media/user/software/simulide/tests/MCU/pic/0_Test/16f1826/16f1826_T1-XC8/16f1826_T1-XC8.c"
+   342 ;; Parameters:    Size  Location     Type
+   343 ;;		None
+   344 ;; Auto vars:     Size  Location     Type
+   345 ;;		None
+   346 ;; Return value:  Size  Location     Type
+   347 ;;                  1    wreg      void 
+   348 ;; Registers used:
+   349 ;;		wreg, status,2, status,0
+   350 ;; Tracked objects:
+   351 ;;		On entry : B1F/0
+   352 ;;		On exit  : 0/0
+   353 ;;		Unchanged: 0/0
+   354 ;; Data sizes:     COMMON   BANK0   BANK1   BANK2
+   355 ;;      Params:         0       0       0       0
+   356 ;;      Locals:         0       0       0       0
+   357 ;;      Temps:          2       0       0       0
+   358 ;;      Totals:         2       0       0       0
+   359 ;;Total ram usage:        2 bytes
+   360 ;; Hardware stack levels required when called: 1
+   361 ;; This function calls:
+   362 ;;		Nothing
+   363 ;; This function is called by:
+   364 ;;		Startup code after reset
+   365 ;; This function uses a non-reentrant model
+   366 ;;
+   367                           
+   368                           
+   369                           ;psect for function _main
+   370  0016                     _main:
+   371  0016                     l656:	
+   372                           ;incstack = 0
+   373                           ; Regs used in _main: [wreg+status,2+status,0]
+   374                           
+   375                           
+   376                           ;/media/user/software/simulide/tests/MCU/pic/0_Test/16f1826/16f1826_T1-XC8/16f1826_T1-XC
+      +                          8.c: 18:     ANSELA = 0x00;
+   377  0016  0023               	movlb	3	; select bank3
+   378  0017  018C               	clrf	12	;volatile
+   379                           
+   380                           ;/media/user/software/simulide/tests/MCU/pic/0_Test/16f1826/16f1826_T1-XC8/16f1826_T1-XC
+      +                          8.c: 19:     ANSELB = 0x00;
+   381  0018  018D               	clrf	13	;volatile
+   382                           
+   383                           ;/media/user/software/simulide/tests/MCU/pic/0_Test/16f1826/16f1826_T1-XC8/16f1826_T1-XC
+      +                          8.c: 21:     PORTB = 0;
+   384  0019  0020               	movlb	0	; select bank0
+   385  001A  018D               	clrf	13	;volatile
+   386  001B                     l658:
+   387                           
+   388                           ;/media/user/software/simulide/tests/MCU/pic/0_Test/16f1826/16f1826_T1-XC8/16f1826_T1-XC
+      +                          8.c: 22:     TRISB = 0b01000000;
+   389  001B  3040               	movlw	64
+   390  001C  0021               	movlb	1	; select bank1
+   391  001D  008D               	movwf	13	;volatile
+   392  001E                     l660:
+   393                           
+   394                           ;/media/user/software/simulide/tests/MCU/pic/0_Test/16f1826/16f1826_T1-XC8/16f1826_T1-XC
+      +                          8.c: 24:     TMR1CS0 = 0;
+   395  001E  0020               	movlb	0	; select bank0
+   396  001F  1318               	bcf	24,6	;volatile
+   397  0020                     l662:
+   398                           
+   399                           ;/media/user/software/simulide/tests/MCU/pic/0_Test/16f1826/16f1826_T1-XC8/16f1826_T1-XC
+      +                          8.c: 25:     TMR1CS1 = 0;
+   400  0020  1398               	bcf	24,7	;volatile
+   401  0021                     l664:
+   402                           
+   403                           ;/media/user/software/simulide/tests/MCU/pic/0_Test/16f1826/16f1826_T1-XC8/16f1826_T1-XC
+      +                          8.c: 26:     T1CKPS0 = 1;
+   404  0021  1618               	bsf	24,4	;volatile
+   405  0022                     l666:
+   406                           
+   407                           ;/media/user/software/simulide/tests/MCU/pic/0_Test/16f1826/16f1826_T1-XC8/16f1826_T1-XC
+      +                          8.c: 27:     T1CKPS1 = 1;
+   408  0022  1698               	bsf	24,5	;volatile
+   409  0023                     l668:
+   410                           
+   411                           ;/media/user/software/simulide/tests/MCU/pic/0_Test/16f1826/16f1826_T1-XC8/16f1826_T1-XC
+      +                          8.c: 29:     TMR1IE = 1;
+   412  0023  0021               	movlb	1	; select bank1
+   413  0024  1411               	bsf	17,0	;volatile
+   414  0025                     l670:
+   415                           
+   416                           ;/media/user/software/simulide/tests/MCU/pic/0_Test/16f1826/16f1826_T1-XC8/16f1826_T1-XC
+      +                          8.c: 30:     PEIE = 1;
+   417  0025  170B               	bsf	11,6	;volatile
+   418  0026                     l672:
+   419                           
+   420                           ;/media/user/software/simulide/tests/MCU/pic/0_Test/16f1826/16f1826_T1-XC8/16f1826_T1-XC
+      +                          8.c: 31:     GIE = 1;
+   421  0026  178B               	bsf	11,7	;volatile
+   422  0027                     l674:
+   423                           
+   424                           ;/media/user/software/simulide/tests/MCU/pic/0_Test/16f1826/16f1826_T1-XC8/16f1826_T1-XC
+      +                          8.c: 33:     TMR1ON = 1;
+   425  0027  0020               	movlb	0	; select bank0
+   426  0028  1418               	bsf	24,0	;volatile
+   427  0029                     l676:
+   428                           
+   429                           ;/media/user/software/simulide/tests/MCU/pic/0_Test/16f1826/16f1826_T1-XC8/16f1826_T1-XC
+      +                          8.c: 35:     _delay((unsigned long)((2000)*(20000000UL/4000.0)));
+   430  0029  3033               	movlw	51
+   431  002A  00F2               	movwf	??_main+1
+   432  002B  30BB               	movlw	187
+   433  002C  00F1               	movwf	??_main
+   434  002D  30E0               	movlw	224
+   435  002E                     u27:
+   436  002E  0B89               	decfsz	9,f
+   437  002F  282E               	goto	u27
+   438  0030  0BF1               	decfsz	??_main,f
+   439  0031  282E               	goto	u27
+   440  0032  0BF2               	decfsz	??_main+1,f
+   441  0033  282E               	goto	u27
+   442  0034                     l678:
+   443                           
+   444                           ;/media/user/software/simulide/tests/MCU/pic/0_Test/16f1826/16f1826_T1-XC8/16f1826_T1-XC
+      +                          8.c: 37:     TMR1CS1 = 1;
+   445  0034  0020               	movlb	0	; select bank0
+   446  0035  1798               	bsf	24,7	;volatile
+   447  0036                     l680:
+   448                           
+   449                           ;/media/user/software/simulide/tests/MCU/pic/0_Test/16f1826/16f1826_T1-XC8/16f1826_T1-XC
+      +                          8.c: 40:     {;/media/user/software/simulide/tests/MCU/pic/0_Test/16f1826/16f1826_T1-XC8
+      +                          /16f1826_T1-XC8.c: 41:         _delay((unsigned long)((500)*(20000000UL/4000.0)));
+   450  0036  300D               	movlw	13
+   451  0037  00F2               	movwf	??_main+1
+   452  0038  30AF               	movlw	175
+   453  0039  00F1               	movwf	??_main
+   454  003A  30B6               	movlw	182
+   455  003B                     u37:
+   456  003B  0B89               	decfsz	9,f
+   457  003C  283B               	goto	u37
+   458  003D  0BF1               	decfsz	??_main,f
+   459  003E  283B               	goto	u37
+   460  003F  0BF2               	decfsz	??_main+1,f
+   461  0040  283B               	goto	u37
+   462  0041  3200               	nop2
+   463  0042                     l682:
+   464                           
+   465                           ;/media/user/software/simulide/tests/MCU/pic/0_Test/16f1826/16f1826_T1-XC8/16f1826_T1-XC
+      +                          8.c: 42:         PORTB ^= 1<<5;
+   466  0042  3020               	movlw	32
+   467  0043  00F1               	movwf	??_main
+   468  0044  0871               	movf	??_main,w
+   469  0045  0020               	movlb	0	; select bank0
+   470  0046  068D               	xorwf	13,f	;volatile
+   471  0047  2836               	goto	l680
+   472  0048  2812               	ljmp	start
+   473  0049                     __end_of_main:
+   474                           
+   475                           	psect	intentry
+   476  0004                     __pintentry:	
+   477 ;; *************** function _myisr *****************
+   478 ;; Defined at:
+   479 ;;		line 8 in file "/media/user/software/simulide/tests/MCU/pic/0_Test/16f1826/16f1826_T1-XC8/16f1826_T1-XC8.c"
+   480 ;; Parameters:    Size  Location     Type
+   481 ;;		None
+   482 ;; Auto vars:     Size  Location     Type
+   483 ;;		None
+   484 ;; Return value:  Size  Location     Type
+   485 ;;                  1    wreg      void 
+   486 ;; Registers used:
+   487 ;;		wreg, status,2, status,0
+   488 ;; Tracked objects:
+   489 ;;		On entry : 0/0
+   490 ;;		On exit  : 0/0
+   491 ;;		Unchanged: 0/0
+   492 ;; Data sizes:     COMMON   BANK0   BANK1   BANK2
+   493 ;;      Params:         0       0       0       0
+   494 ;;      Locals:         0       0       0       0
+   495 ;;      Temps:          1       0       0       0
+   496 ;;      Totals:         1       0       0       0
+   497 ;;Total ram usage:        1 bytes
+   498 ;; Hardware stack levels used: 1
+   499 ;; This function calls:
+   500 ;;		Nothing
+   501 ;; This function is called by:
+   502 ;;		Interrupt level 1
+   503 ;; This function uses a non-reentrant model
+   504 ;;
+   505                           
+   506  0004                     _myisr:
+   507                           
+   508                           ;incstack = 0
+   509  0004  147E               	bsf	int$flags,0	;set compiler interrupt flag (level 1)
+   510                           
+   511                           ; Regs used in _myisr: [wreg+status,2+status,0]
+   512  0005  3180               	pagesel	$
+   513  0006                     i1l650:
+   514                           
+   515                           ;/media/user/software/simulide/tests/MCU/pic/0_Test/16f1826/16f1826_T1-XC8/16f1826_T1-XC
+      +                          8.c: 10:     if( TMR1IF ){
+   516  0006  0020               	movlb	0	; select bank0
+   517  0007  1C11               	btfss	17,0	;volatile
+   518  0008  280A               	goto	u1_21
+   519  0009  280B               	goto	u1_20
+   520  000A                     u1_21:
+   521  000A  2810               	goto	i1l34
+   522  000B                     u1_20:
+   523  000B                     i1l652:
+   524                           
+   525                           ;/media/user/software/simulide/tests/MCU/pic/0_Test/16f1826/16f1826_T1-XC8/16f1826_T1-XC
+      +                          8.c: 11:         TMR1IF = 0;
+   526  000B  1011               	bcf	17,0	;volatile
+   527  000C                     i1l654:
+   528                           
+   529                           ;/media/user/software/simulide/tests/MCU/pic/0_Test/16f1826/16f1826_T1-XC8/16f1826_T1-XC
+      +                          8.c: 12:         PORTB ^= 1<<4;
+   530  000C  3010               	movlw	16
+   531  000D  00F0               	movwf	??_myisr
+   532  000E  0870               	movf	??_myisr,w
+   533  000F  068D               	xorwf	13,f	;volatile
+   534  0010                     i1l34:
+   535  0010  107E               	bcf	int$flags,0	;clear compiler interrupt flag (level 1)
+   536  0011  0009               	retfie
+   537  0012                     __end_of_myisr:
+   538  007E                     btemp	set	126	;btemp
+   539  007E                     int$flags	set	126
+   540  007E                     wtemp0	set	126
+
+Data Sizes:
+    Strings     0
+    Constant    0
+    Data        0
+    BSS         0
+    Persistent  32
+    Stack       0
+
+Auto Spaces:
+    Space          Size  Autos    Used
+    COMMON           14      3       3
+    BANK0            80      0       0
+    BANK1            80      0       0
+    BANK2            80      0       0
+
+Pointer List with Targets:
+
+    None.
+
+Critical Paths under _main in COMMON
+
+    None.
+
+Critical Paths under _myisr in COMMON
+
+    None.
+
+Critical Paths under _main in BANK0
+
+    None.
+
+Critical Paths under _myisr in BANK0
+
+    None.
+
+Critical Paths under _main in BANK1
+
+    None.
+
+Critical Paths under _myisr in BANK1
+
+    None.
+
+Critical Paths under _main in BANK2
+
+    None.
+
+Critical Paths under _myisr in BANK2
+
+    None.
+
+Call Graph Tables:
+
+ ---------------------------------------------------------------------------------
+ (Depth) Function   	        Calls       Base Space   Used Autos Params    Refs
+ ---------------------------------------------------------------------------------
+ (0) _main                                                 2     2      0       0
+                                              1 COMMON     2     2      0
+ ---------------------------------------------------------------------------------
+ Estimated maximum stack depth 0
+ ---------------------------------------------------------------------------------
+ (Depth) Function   	        Calls       Base Space   Used Autos Params    Refs
+ ---------------------------------------------------------------------------------
+ (1) _myisr                                                1     1      0       0
+                                              0 COMMON     1     1      0
+ ---------------------------------------------------------------------------------
+ Estimated maximum stack depth 1
+ ---------------------------------------------------------------------------------
+
+ Call Graph Graphs:
+
+ _main (ROOT)
+
+ _myisr (ROOT)
+
+ Address spaces:
+Name               Size   Autos  Total    Cost      Usage
+BIGRAM              F0      0       0       0        0.0%
+EEDATA             100      0       0       0        0.0%
+NULL                 0      0       0       0        0.0%
+CODE                 0      0       0       0        0.0%
+BITCOMMON            E      0       0       1        0.0%
+BITSFR0              0      0       0       1        0.0%
+SFR0                 0      0       0       1        0.0%
+COMMON               E      3       3       2       21.4%
+BITSFR1              0      0       0       2        0.0%
+SFR1                 0      0       0       2        0.0%
+BITSFR2              0      0       0       3        0.0%
+SFR2                 0      0       0       3        0.0%
+STACK                0      0       0       3        0.0%
+BITSFR3              0      0       0       4        0.0%
+SFR3                 0      0       0       4        0.0%
+ABS                  0      0       0       4        0.0%
+BITBANK0            50      0       0       5        0.0%
+BITSFR4              0      0       0       5        0.0%
+SFR4                 0      0       0       5        0.0%
+BANK0               50      0       0       6        0.0%
+BITSFR5              0      0       0       6        0.0%
+SFR5                 0      0       0       6        0.0%
+BITBANK1            50      0       0       7        0.0%
+BITSFR6              0      0       0       7        0.0%
+SFR6                 0      0       0       7        0.0%
+BANK1               50      0       0       8        0.0%
+BITSFR7              0      0       0       8        0.0%
+SFR7                 0      0       0       8        0.0%
+BITBANK2            50      0       0       9        0.0%
+BITSFR8              0      0       0       9        0.0%
+SFR8                 0      0       0       9        0.0%
+BANK2               50      0       0      10        0.0%
+BITSFR9              0      0       0      10        0.0%
+SFR9                 0      0       0      10        0.0%
+BITSFR10             0      0       0      11        0.0%
+SFR10                0      0       0      11        0.0%
+DATA                 0      0       0      11        0.0%
+BITSFR11             0      0       0      12        0.0%
+SFR11                0      0       0      12        0.0%
+BITSFR12             0      0       0      13        0.0%
+SFR12                0      0       0      13        0.0%
+BITSFR13             0      0       0      14        0.0%
+SFR13                0      0       0      14        0.0%
+BITSFR14             0      0       0      15        0.0%
+SFR14                0      0       0      15        0.0%
+BITSFR15             0      0       0      16        0.0%
+SFR15                0      0       0      16        0.0%
+BITSFR16             0      0       0      17        0.0%
+SFR16                0      0       0      17        0.0%
+BITSFR17             0      0       0      18        0.0%
+SFR17                0      0       0      18        0.0%
+BITSFR18             0      0       0      19        0.0%
+SFR18                0      0       0      19        0.0%
+BITSFR19             0      0       0      20        0.0%
+SFR19                0      0       0      20        0.0%
+BITSFR20             0      0       0      21        0.0%
+SFR20                0      0       0      21        0.0%
+BITSFR21             0      0       0      22        0.0%
+SFR21                0      0       0      22        0.0%
+BITSFR22             0      0       0      23        0.0%
+SFR22                0      0       0      23        0.0%
+BITSFR23             0      0       0      24        0.0%
+SFR23                0      0       0      24        0.0%
+BITSFR24             0      0       0      25        0.0%
+SFR24                0      0       0      25        0.0%
+BITSFR25             0      0       0      26        0.0%
+SFR25                0      0       0      26        0.0%
+BITSFR26             0      0       0      27        0.0%
+SFR26                0      0       0      27        0.0%
+BITSFR27             0      0       0      28        0.0%
+SFR27                0      0       0      28        0.0%
+BITSFR28             0      0       0      29        0.0%
+SFR28                0      0       0      29        0.0%
+BITSFR29             0      0       0      30        0.0%
+SFR29                0      0       0      30        0.0%
+BITSFR30             0      0       0      31        0.0%
+SFR30                0      0       0      31        0.0%
+BITSFR31             0      0       0      32        0.0%
+SFR31                0      0       0      32        0.0%
+
+
+Microchip Technology PIC Macro Assembler V2.32 build 20210201212658 
+Symbol Table                                                                                   Sun Jan 16 18:35:13 2022
+
+                     u27 002E                       u37 003B                      l660 001E  
+                    l670 0025                      l662 0020                      l680 0036  
+                    l672 0026                      l664 0021                      l656 0016  
+                    l682 0042                      l674 0027                      l666 0022  
+                    l658 001B                      l676 0029                      l668 0023  
+                    l678 0034                      _GIE 005F                      wreg 0009  
+                   _PEIE 005E                     i1l34 0010                     u1_20 000B  
+                   u1_21 000A                     _main 0016                     btemp 007E  
+                   start 0012                    ?_main 0070                    i1l650 0006  
+                  i1l652 000B                    i1l654 000C                    _PORTB 000D  
+                  _TRISB 008D                    _myisr 0004                    wtemp0 007E  
+        __initialization 0013             __end_of_main 0049                   ??_main 0071  
+                 ?_myisr 0070                   _ANSELA 018C                   _ANSELB 018D  
+                 _TMR1IE 0488                   _TMR1IF 0088                   _TMR1ON 00C0  
+__end_of__initialization 0013           __pcstackCOMMON 0070            __end_of_myisr 0012  
+                ??_myisr 0070               __pmaintext 0016               __pintentry 0004  
+                _T1CKPS0 00C4                  _T1CKPS1 00C5                  _TMR1CS0 00C6  
+                _TMR1CS1 00C7     end_of_initialization 0013      start_initialization 0013  
+              ___latbits 0000           __size_of_myisr 000E            __size_of_main 0033  
+               int$flags 007E                 intlevel1 0000  

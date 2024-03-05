@@ -1,0 +1,62 @@
+Compilation Report
+
+Compiler Version (YYYY-MM-DD): 1.00.00 2022-12-01 (Linux 64 bit) : Build 1199
+
+;********************************************************************************
+
+Compilation time:
+ (Compile time: 0 seconds)
+ (Assembly time: 0 seconds)
+ (Download time: 0 seconds)
+ (Total time: 0 seconds)
+
+;********************************************************************************
+
+Chip resource usage:
+Chip Model: 16F876
+Program Memory: 77/8192 words (.94%)
+RAM: 3/368 bytes (.82%)
+HS (Clock source is not a primary internal oscillator. Ensure the clock source is correctly setup)
+
+;********************************************************************************
+
+RAM Allocation
+;********************************************************************************
+
+Subroutines
+Main
+Code Size (lines): 21
+Compiled Size (words): 35
+Page: 1
+Outgoing calls: I2C_END(1), I2C_WRITE(4), I2C_BEGIN(1), INITSYS(3)
+
+I2C_HOLD
+Code Size (lines): 1
+Compiled Size (words): 6
+Page: 1
+
+I2C_BEGIN
+Code Size (lines): 2
+Compiled Size (words): 7
+Page: 1
+Outgoing calls: I2C_HOLD(1)
+
+I2C_END
+Code Size (lines): 2
+Compiled Size (words): 7
+Page: 1
+Outgoing calls: I2C_HOLD(1)
+
+I2C_WRITE
+Code Size (lines): 2
+Compiled Size (words): 4
+Page: 1
+Outgoing calls: I2C_HOLD(1)
+
+INITSYS
+Code Size (lines): 895
+Compiled Size (words): 18
+Page: 1
+
+;********************************************************************************
+

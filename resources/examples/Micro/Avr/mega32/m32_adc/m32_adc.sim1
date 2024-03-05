@@ -1,0 +1,65 @@
+<circuit version="" rev="2224" stepSize="1000000" stepsPS="1000000" NLsteps="100000" reaStep="1000000" animate="0" >
+
+<item itemtype="7-Seg BCD" CircId="7-Seg BCD-28" mainComp="false" Show_id="false" Show_Val="false" Pos="-648,-324" rotation="0" hflip="1" vflip="1" label="7-Seg BCD-28" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Show_Point_Pin="false" Show_Enable_Pin="false" />
+
+<item itemtype="MCU" CircId="mega32-1" mainComp="false" Show_id="true" Show_Val="false" Pos="-556,-276" rotation="0" hflip="1" vflip="1" label="Atmega32" idLabPos="-1.27202,170.402" labelrot="0" valLabPos="0,0" valLabRot="0" Frequency="16 MHz" Program="build_m32_adc/m32_adc.hex" Auto_Load="false" saveEepr="false" Logic_Symbol="false" Wdt_enabled="false" varList=",ADCL,ADCH" SerialMon="-1" />
+
+<item itemtype="Voltage Source" CircId="Voltage Source-2" mainComp="false" ShowProp="MaxValue" Show_id="false" Show_Val="true" Pos="-520,-324" rotation="0" hflip="1" vflip="1" label="Voltage Source-2" idLabPos="-40,-80" labelrot="0" valLabPos="-8.41584,-40.4079" valLabRot="0" Running="true" Value_Volt="0.765 V" MaxValue="5 V" MinValue="0 V" />
+
+<item itemtype="7-Seg BCD" CircId="7-Seg BCD-4" mainComp="false" Show_id="false" Show_Val="false" Pos="-584,-324" rotation="0" hflip="1" vflip="1" label="7-Seg BCD-4" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Show_Point_Pin="false" Show_Enable_Pin="false" />
+
+<item itemtype="7-Seg BCD" CircId="7-Seg BCD-5" mainComp="false" Show_id="false" Show_Val="false" Pos="-616,-324" rotation="0" hflip="1" vflip="1" label="7-Seg BCD-5" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Show_Point_Pin="false" Show_Enable_Pin="false" />
+
+<item itemtype="Rail" CircId="Rail-14" mainComp="false" ShowProp="Voltage" Show_id="false" Show_Val="true" Pos="-476,-228" rotation="90" hflip="1" vflip="1" label="Rail-14" idLabPos="-16,-24" labelrot="0" valLabPos="-11.8546,6.34186" valLabRot="-90" Voltage="5 V" />
+
+<item itemtype="Rail" CircId="Rail-29" mainComp="false" ShowProp="Voltage" Show_id="false" Show_Val="true" Pos="-660,-268" rotation="90" hflip="1" vflip="1" label="Rail-29" idLabPos="-5,-10" labelrot="-90" valLabPos="-12,6" valLabRot="-90" Voltage="5 V" />
+
+<item itemtype="Ground" CircId="Ground-30" mainComp="false" Show_id="false" Show_Val="false" Pos="-660,-124" rotation="0" hflip="1" vflip="1" label="Ground-30" idLabPos="-16,8" labelrot="0" valLabPos="-16,20" valLabRot="0" />
+
+<item itemtype="Push" CircId="Push-31" mainComp="false" Show_id="true" Show_Val="false" Pos="-660,-172" rotation="90" hflip="1" vflip="1" label="Reset" idLabPos="-8.53836,47.7147" labelrot="-90" valLabPos="-16,20" valLabRot="0" Norm_Close="false" Poles="1" />
+
+<item itemtype="Resistor" CircId="Resistor-32" mainComp="false" ShowProp="Resistance" Show_id="false" Show_Val="true" Pos="-660,-228" rotation="90" hflip="1" vflip="1" label="Resistor-32" idLabPos="-16,-24" labelrot="0" valLabPos="8.04307,16.3634" valLabRot="180" Resistance="5 kΩ" />
+
+<item itemtype="Node" CircId="Node-17" mainComp="false" Pos="-476,-204" />
+
+<item itemtype="Node" CircId="Node-35" mainComp="false" Pos="-660,-204" />
+
+<item itemtype="Connector" uid="Connector-3" startpinid="Voltage Source-2-outPin" endpinid="mega32-1-PORTA0" pointList="-492,-308,-476,-308,-476,-268,-500,-268" />
+
+<item itemtype="Connector" uid="Connector-6" startpinid="7-Seg BCD-4-in0" endpinid="mega32-1-PORTB0" pointList="-572,-292,-572,-268,-564,-268" />
+
+<item itemtype="Connector" uid="Connector-7" startpinid="7-Seg BCD-4-in1" endpinid="mega32-1-PORTB1" pointList="-580,-292,-580,-260,-564,-260" />
+
+<item itemtype="Connector" uid="Connector-8" startpinid="7-Seg BCD-4-in2" endpinid="mega32-1-PORTB2" pointList="-588,-292,-588,-252,-564,-252" />
+
+<item itemtype="Connector" uid="Connector-9" startpinid="7-Seg BCD-4-in3" endpinid="mega32-1-PORTB3" pointList="-596,-292,-596,-244,-564,-244" />
+
+<item itemtype="Connector" uid="Connector-10" startpinid="7-Seg BCD-5-in0" endpinid="mega32-1-PORTB4" pointList="-604,-292,-604,-236,-564,-236" />
+
+<item itemtype="Connector" uid="Connector-11" startpinid="7-Seg BCD-5-in1" endpinid="mega32-1-PORTB5" pointList="-612,-292,-612,-228,-564,-228" />
+
+<item itemtype="Connector" uid="Connector-12" startpinid="7-Seg BCD-5-in2" endpinid="mega32-1-PORTB6" pointList="-620,-292,-620,-220,-564,-220" />
+
+<item itemtype="Connector" uid="Connector-13" startpinid="7-Seg BCD-5-in3" endpinid="mega32-1-PORTB7" pointList="-628,-292,-628,-212,-564,-212" />
+
+<item itemtype="Connector" uid="Connector-15" startpinid="Rail-14-outnod" endpinid="Node-17-0" pointList="-476,-212,-476,-204" />
+
+<item itemtype="Connector" uid="Connector-16" startpinid="mega32-1-PORTV0" endpinid="Node-17-1" pointList="-500,-188,-476,-188,-476,-204" />
+
+<item itemtype="Connector" uid="Connector-18" startpinid="Node-17-2" endpinid="mega32-1-PORTV1" pointList="-476,-204,-500,-204" />
+
+<item itemtype="Connector" uid="Connector-29" startpinid="7-Seg BCD-28-in0" endpinid="mega32-1-PORTD0" pointList="-636,-292,-636,-164,-564,-164" />
+
+<item itemtype="Connector" uid="Connector-32" startpinid="Push-31-switch0pinN" endpinid="Ground-30-Gnd" pointList="-660,-156,-660,-140" />
+
+<item itemtype="Connector" uid="Connector-39" startpinid="Rail-29-outnod" endpinid="Resistor-32-lPin" pointList="-660,-252,-660,-244" />
+
+<item itemtype="Connector" uid="Connector-41" startpinid="Push-31-pinP0" endpinid="Node-35-1" pointList="-660,-188,-660,-204" />
+
+<item itemtype="Connector" uid="Connector-42" startpinid="Resistor-32-rPin" endpinid="Node-35-0" pointList="-660,-212,-660,-204" />
+
+<item itemtype="Connector" uid="Connector-43" startpinid="Node-35-2" endpinid="mega32-1-RST" pointList="-660,-204,-564,-204" />
+
+<item itemtype="Connector" uid="Connector-30" startpinid="7-Seg BCD-28-in1" endpinid="mega32-1-PORTD1" pointList="-644,-292,-644,-156,-564,-156" />
+
+</circuit>

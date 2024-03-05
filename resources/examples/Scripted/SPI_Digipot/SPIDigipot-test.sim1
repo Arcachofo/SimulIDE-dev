@@ -1,4 +1,4 @@
-<circuit version="1.1.0" rev="2011" stepSize="1000000" stepsPS="1000000" NLsteps="100000" reaStep="1000000" animate="0" >
+<circuit version="" rev="2224" stepSize="1000000" stepsPS="1000000" NLsteps="100000" reaStep="1000000" animate="0" >
 
 <item itemtype="Rail" CircId="Rail-12" mainComp="false" ShowProp="Voltage" Show_id="false" Show_Val="true" Pos="-172,-340" rotation="90" hflip="1" vflip="1" label="Rail-12" idLabPos="-5,-10" labelrot="-90" valLabPos="-12,6" valLabRot="-90" Voltage="5 V" />
 
@@ -8,11 +8,11 @@
 <mainCompProps MainCompId="mega328-109" Frequency="16 MHz" Program="SPIDigipot-ino.hex" Auto_Load="false" saveEepr="true" SerialMon="-1" />
 </item>
 
-<item itemtype="Subcircuit" CircId="SPI_Digipot-7" mainComp="false" Show_id="true" Show_Val="false" Pos="-220,-316" rotation="0" hflip="1" vflip="1" label="SPI_Digipot" idLabPos="-8.92264,-14.981" labelrot="0" valLabPos="-16,20" valLabRot="0" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+09 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps">
-<mainCompProps MainCompId="ScriptSPI-3" Steps="256" Resistance="100000" Links="7_Potentiometer-9," />
+<item itemtype="Subcircuit" CircId="SPI_Digipot-7" mainComp="false" Show_id="true" Show_Val="false" Pos="-220,-316" rotation="0" hflip="1" vflip="1" label="SPI_Digipot" idLabPos="-8.92264,-14.981" labelrot="0" valLabPos="-16,20" valLabRot="0">
+<mainCompProps MainCompId="ScriptSPI-3" Steps="256" Resistance="100000" Links="7@Potentiometer-9," />
 </item>
 
-<item itemtype="Oscope" CircId="Oscope-11" mainComp="false" Show_id="false" Show_Val="false" Pos="-28,-252" rotation="0" hflip="1" vflip="1" label="Oscope-11" idLabPos="-90,-100" labelrot="0" valLabPos="-16,20" valLabRot="0" Basic_X="135 _Pixels" Basic_Y="135 _Pixels" BufferSize="600000 Samples" TimDiv="300000000000" TimPos="0,0,0,0," VolDiv="1,1,1,1," Tunnels=",,,," Trigger="4" Filter="0.1 V" Trigger="4" AutoSC="4" Tracks="1" HideCh="false,false,false,false," VolPos="0,0,0,0," />
+<item itemtype="Oscope" CircId="Oscope-11" mainComp="false" Show_id="false" Show_Val="false" Pos="-28,-252" rotation="0" hflip="1" vflip="1" label="Oscope-11" idLabPos="-90,-100" labelrot="0" valLabPos="-16,20" valLabRot="0" Basic_X="135 _Px" Basic_Y="135 _Px" BufferSize="600000 Samples" connectGnd="true" InputImped="1e+07 Ω" TimDiv="300000000000" TimPos="0,0,0,0," VolDiv="1,1,1,1," Tunnels=",,,," Trigger="4" Filter="0.1 V" Trigger="4" AutoSC="4" Tracks="1" HideCh="false,false,false,false," VolPos="0,0,0,0," />
 
 <item itemtype="Connector" uid="Connector-42" startpinid="SPI_Digipot-7-!CS" endpinid="Uno-1-10" pointList="-228,-292,-292,-292,-292,-140,-276,-140" />
 

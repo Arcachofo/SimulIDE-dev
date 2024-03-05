@@ -1,0 +1,278 @@
+%CMF
+# %PSECTS Section
+# For each object file, details of its psects are enumerated here.
+# The begining of the section is indicated by %PSECTS.  The first
+# line indicates the name of the first object file, e.g.
+#    $foo.obj
+# Each line that follows describes a psect in that object file, until
+# the next object file.  The lines that describe a psect have the
+# format:
+#    <psect name> <class name> <space> <link address> <load addresses> <length> <delta>
+# All addresses and the length are given in unqualified hexadecimal
+# in delta units.  Any other numeric values are decimal.
+%PSECTS
+$build/adc_int_example1.o
+cinit CODE 0 F F 6 2
+text1 CODE 0 57 57 1B 2
+maintext CODE 0 15 15 42 2
+cstackCOMMON COMMON 1 70 70 3 1
+intentry CODE 0 4 4 8 2
+bssCOMMON COMMON 1 73 73 2 1
+config CONFIG 4 2007 2007 2 2
+$/tmp/xcXGFlLnf.o
+reset_vec CODE 0 0 0 3 2
+end_init CODE 0 C C 3 2
+config CONFIG 4 2007 2007 2 2
+# %UNUSED Section
+# This section enumerates the unused ranges of each CLASS. Each entry
+# is described on a single line as follows:
+#    <class name> <range> <delta>
+# Addresses given in the range are in hexadecimal and units of delta.
+%UNUSED
+RAM 20-6F 1
+RAM A0-EF 1
+RAM 110-16F 1
+RAM 190-1EF 1
+BANK0 20-6F 1
+BANK1 A0-EF 1
+BANK2 110-16F 1
+BANK3 190-1EF 1
+CONST 3-3 2
+CONST 72-1FFF 2
+ENTRY 3-3 2
+ENTRY 72-1FFF 2
+IDLOC 2000-2003 2
+STACK 110-16F 1
+CODE 3-3 2
+CODE 72-1FFF 2
+SFR0 0-1F 1
+SFR1 80-9F 1
+SFR2 100-10F 1
+SFR3 180-18F 1
+COMMON 75-7D 1
+EEDATA 2100-21FF 2
+STRCODE 3-3 2
+STRCODE 72-1FFF 2
+STRING 3-3 2
+STRING 72-1FFF 2
+# %LINETAB Section
+# This section enumerates the file/line to address mappings.
+# The beginning of the section is indicated by %LINETAB.
+# The first line indicates the name of the first object file, e.g.
+#   $foo.obj
+# Each line that follows describes a single mapping until the next
+# object file.  Mappings have the following format:
+#    <address> <psect name> <class name> ><line number>:<file name>
+# The address is absolute and given given in unqualified hex 
+# in delta units of the psect. All mappings within an object file
+# are in ascending order of addresses.
+# All other numeric values are in decimal.
+%LINETAB
+$build/adc_int_example1.o
+F cinit CODE >460:/tmp/xcXaABjjI.s
+F cinit CODE >463:/tmp/xcXaABjjI.s
+F cinit CODE >474:/tmp/xcXaABjjI.s
+10 cinit CODE >475:/tmp/xcXaABjjI.s
+11 cinit CODE >481:/tmp/xcXaABjjI.s
+11 cinit CODE >483:/tmp/xcXaABjjI.s
+12 cinit CODE >484:/tmp/xcXaABjjI.s
+4 intentry CODE >45:/media/user/software/simulide/tests/MCU/pic/0_Test/16F88x/16f887_ADC_INT-XC8/adc_int_example1.c
+57 text1 CODE >45:/media/user/software/simulide/tests/MCU/pic/0_Test/16F88x/16f887_ADC_INT-XC8/adc_int_example1.c
+57 text1 CODE >46:/media/user/software/simulide/tests/MCU/pic/0_Test/16F88x/16f887_ADC_INT-XC8/adc_int_example1.c
+5D text1 CODE >47:/media/user/software/simulide/tests/MCU/pic/0_Test/16F88x/16f887_ADC_INT-XC8/adc_int_example1.c
+5E text1 CODE >48:/media/user/software/simulide/tests/MCU/pic/0_Test/16F88x/16f887_ADC_INT-XC8/adc_int_example1.c
+64 text1 CODE >49:/media/user/software/simulide/tests/MCU/pic/0_Test/16F88x/16f887_ADC_INT-XC8/adc_int_example1.c
+68 text1 CODE >50:/media/user/software/simulide/tests/MCU/pic/0_Test/16F88x/16f887_ADC_INT-XC8/adc_int_example1.c
+6B text1 CODE >52:/media/user/software/simulide/tests/MCU/pic/0_Test/16F88x/16f887_ADC_INT-XC8/adc_int_example1.c
+15 maintext CODE >55:/media/user/software/simulide/tests/MCU/pic/0_Test/16F88x/16f887_ADC_INT-XC8/adc_int_example1.c
+15 maintext CODE >59:/media/user/software/simulide/tests/MCU/pic/0_Test/16F88x/16f887_ADC_INT-XC8/adc_int_example1.c
+17 maintext CODE >62:/media/user/software/simulide/tests/MCU/pic/0_Test/16F88x/16f887_ADC_INT-XC8/adc_int_example1.c
+1B maintext CODE >63:/media/user/software/simulide/tests/MCU/pic/0_Test/16F88x/16f887_ADC_INT-XC8/adc_int_example1.c
+1C maintext CODE >64:/media/user/software/simulide/tests/MCU/pic/0_Test/16F88x/16f887_ADC_INT-XC8/adc_int_example1.c
+1F maintext CODE >65:/media/user/software/simulide/tests/MCU/pic/0_Test/16F88x/16f887_ADC_INT-XC8/adc_int_example1.c
+20 maintext CODE >66:/media/user/software/simulide/tests/MCU/pic/0_Test/16F88x/16f887_ADC_INT-XC8/adc_int_example1.c
+24 maintext CODE >67:/media/user/software/simulide/tests/MCU/pic/0_Test/16F88x/16f887_ADC_INT-XC8/adc_int_example1.c
+25 maintext CODE >68:/media/user/software/simulide/tests/MCU/pic/0_Test/16F88x/16f887_ADC_INT-XC8/adc_int_example1.c
+27 maintext CODE >69:/media/user/software/simulide/tests/MCU/pic/0_Test/16F88x/16f887_ADC_INT-XC8/adc_int_example1.c
+2A maintext CODE >70:/media/user/software/simulide/tests/MCU/pic/0_Test/16F88x/16f887_ADC_INT-XC8/adc_int_example1.c
+2C maintext CODE >73:/media/user/software/simulide/tests/MCU/pic/0_Test/16F88x/16f887_ADC_INT-XC8/adc_int_example1.c
+2E maintext CODE >74:/media/user/software/simulide/tests/MCU/pic/0_Test/16F88x/16f887_ADC_INT-XC8/adc_int_example1.c
+31 maintext CODE >75:/media/user/software/simulide/tests/MCU/pic/0_Test/16F88x/16f887_ADC_INT-XC8/adc_int_example1.c
+32 maintext CODE >76:/media/user/software/simulide/tests/MCU/pic/0_Test/16F88x/16f887_ADC_INT-XC8/adc_int_example1.c
+38 maintext CODE >77:/media/user/software/simulide/tests/MCU/pic/0_Test/16F88x/16f887_ADC_INT-XC8/adc_int_example1.c
+3B maintext CODE >78:/media/user/software/simulide/tests/MCU/pic/0_Test/16F88x/16f887_ADC_INT-XC8/adc_int_example1.c
+3E maintext CODE >81:/media/user/software/simulide/tests/MCU/pic/0_Test/16F88x/16f887_ADC_INT-XC8/adc_int_example1.c
+3F maintext CODE >82:/media/user/software/simulide/tests/MCU/pic/0_Test/16F88x/16f887_ADC_INT-XC8/adc_int_example1.c
+40 maintext CODE >83:/media/user/software/simulide/tests/MCU/pic/0_Test/16F88x/16f887_ADC_INT-XC8/adc_int_example1.c
+41 maintext CODE >84:/media/user/software/simulide/tests/MCU/pic/0_Test/16F88x/16f887_ADC_INT-XC8/adc_int_example1.c
+44 maintext CODE >88:/media/user/software/simulide/tests/MCU/pic/0_Test/16F88x/16f887_ADC_INT-XC8/adc_int_example1.c
+48 maintext CODE >89:/media/user/software/simulide/tests/MCU/pic/0_Test/16F88x/16f887_ADC_INT-XC8/adc_int_example1.c
+4B maintext CODE >90:/media/user/software/simulide/tests/MCU/pic/0_Test/16F88x/16f887_ADC_INT-XC8/adc_int_example1.c
+4F maintext CODE >91:/media/user/software/simulide/tests/MCU/pic/0_Test/16F88x/16f887_ADC_INT-XC8/adc_int_example1.c
+# %SYMTAB Section
+# An enumeration of all symbols in the program.
+# The beginning of the section is indicated by %SYMTAB.
+# Each line describes a single symbol as follows:
+#    <label> <value> [-]<load-adj> <class> <space> <psect> <file-name>
+# The value and load-adj are both in unqualified hexadecimal.
+# All other numeric values are in decimal.  The load-adj is the
+# quantity one needs to add to the symbol value in order to obtain the load
+# address of the symbol.  This value may be signed. If the symbol
+# was defined in a psect then <psect> will be "-". File-name
+# is the name of the object file in which the symbol was defined.
+%SYMTAB
+___latbits 2 0 ABS 0 - build/adc_int_example1.o
+__Hspace_0 72 0 ABS 0 - -
+__Hspace_1 75 0 ABS 0 - -
+__Hspace_2 0 0 ABS 0 - -
+__Hspace_3 0 0 ABS 0 - -
+__Hspace_4 4010 0 ABS 0 - -
+__Heeprom_data 0 0 EEDATA 3 eeprom_data -
+__Hstrings 0 0 ABS 0 strings -
+_C1ON 83F 0 ABS 0 - build/adc_int_example1.o
+_C2ON 847 0 ABS 0 - build/adc_int_example1.o
+___sp 0 0 STACK 2 stack /tmp/xcXGFlLnf.o
+_main 2A 0 CODE 0 maintext build/adc_int_example1.o
+btemp 7E 0 ABS 0 - build/adc_int_example1.o
+start 18 0 CODE 0 init /tmp/xcXGFlLnf.o
+__size_of_main 0 0 ABS 0 - build/adc_int_example1.o
+__HbssCOMMON 0 0 ABS 0 bssCOMMON -
+__Hpowerup 0 0 CODE 0 powerup -
+intlevel0 0 0 ENTRY 0 functab /tmp/xcXGFlLnf.o
+intlevel1 0 0 ENTRY 0 functab /tmp/xcXGFlLnf.o
+intlevel2 0 0 ENTRY 0 functab /tmp/xcXGFlLnf.o
+intlevel3 0 0 ENTRY 0 functab /tmp/xcXGFlLnf.o
+intlevel4 0 0 ENTRY 0 functab /tmp/xcXGFlLnf.o
+intlevel5 0 0 ENTRY 0 functab /tmp/xcXGFlLnf.o
+__LbssCOMMON 0 0 ABS 0 bssCOMMON -
+wtemp0 7E 0 ABS 0 - build/adc_int_example1.o
+__Hfunctab 0 0 ENTRY 0 functab -
+__Hclrtext 0 0 ABS 0 clrtext -
+_ADRESH 1E 0 ABS 0 - build/adc_int_example1.o
+_ADRESL 9E 0 ABS 0 - build/adc_int_example1.o
+_ANSELH 189 0 ABS 0 - build/adc_int_example1.o
+__Lmaintext 0 0 ABS 0 maintext -
+___stackhi 0 0 ABS 0 - /tmp/xcXGFlLnf.o
+___stacklo 0 0 ABS 0 - /tmp/xcXGFlLnf.o
+__size_of_myisr 0 0 ABS 0 - build/adc_int_example1.o
+start_initialization 1E 0 CODE 0 cinit build/adc_int_example1.o
+_num_adc 73 0 COMMON 1 bssCOMMON build/adc_int_example1.o
+___int_sp 0 0 STACK 2 stack /tmp/xcXGFlLnf.o
+__Hbank0 0 0 ABS 0 bank0 -
+__Hbank1 0 0 ABS 0 bank1 -
+__Hbank2 0 0 ABS 0 bank2 -
+__Hbank3 0 0 ABS 0 bank3 -
+__Hcinit 2A 0 CODE 0 cinit -
+__Hstack 0 0 STACK 2 stack -
+__Hmaintext 0 0 ABS 0 maintext -
+__Hcommon 0 0 ABS 0 common -
+__Hconfig 4012 0 CONFIG 4 config -
+__Lbank0 0 0 ABS 0 bank0 -
+__Lbank1 0 0 ABS 0 bank1 -
+__Lbank2 0 0 ABS 0 bank2 -
+__Lbank3 0 0 ABS 0 bank3 -
+__Lcinit 1E 0 CODE 0 cinit -
+__Lstack 0 0 STACK 2 stack -
+_INTCONbits B 0 ABS 0 - build/adc_int_example1.o
+__Habs1 0 0 ABS 0 abs1 -
+__Hcode 0 0 ABS 0 code -
+__Hinit 18 0 CODE 0 init -
+__Hsfr0 0 0 ABS 0 sfr0 -
+__Hsfr1 0 0 ABS 0 sfr1 -
+__Hsfr2 0 0 ABS 0 sfr2 -
+__Hsfr3 0 0 ABS 0 sfr3 -
+__Htext 0 0 ABS 0 text -
+__Labs1 0 0 ABS 0 abs1 -
+__Lcode 0 0 ABS 0 code -
+__Linit 18 0 CODE 0 init -
+__Lsfr0 0 0 ABS 0 sfr0 -
+__Lsfr1 0 0 ABS 0 sfr1 -
+__Lsfr2 0 0 ABS 0 sfr2 -
+__Lsfr3 0 0 ABS 0 sfr3 -
+__Ltext 0 0 ABS 0 text -
+__HcstackCOMMON 0 0 ABS 0 cstackCOMMON -
+__S0 72 0 ABS 0 - -
+__S1 75 0 ABS 0 - -
+__S2 0 0 ABS 0 - -
+__S3 0 0 ABS 0 - -
+saved_w 7E 0 ABS 0 - build/adc_int_example1.o
+__Lintentry 8 0 CODE 0 intentry -
+reset_vec 0 0 CODE 0 reset_vec /tmp/xcXGFlLnf.o
+_PIE1bits 8C 0 ABS 0 - build/adc_int_example1.o
+__pmaintext 2A 0 CODE 0 maintext build/adc_int_example1.o
+__Lcommon 0 0 ABS 0 common -
+__Lconfig 0 0 CONFIG 4 config -
+_ADCON0bits 1F 0 ABS 0 - build/adc_int_example1.o
+_ADCON1bits 9F 0 ABS 0 - build/adc_int_example1.o
+__Lspace_0 0 0 ABS 0 - -
+__Lspace_1 0 0 ABS 0 - -
+__Lspace_2 0 0 ABS 0 - -
+__Lspace_3 0 0 ABS 0 - -
+__Lspace_4 0 0 ABS 0 - -
+__pbssCOMMON 73 0 COMMON 1 bssCOMMON build/adc_int_example1.o
+_PIR1bits C 0 ABS 0 - build/adc_int_example1.o
+__Lend_init 18 0 CODE 0 end_init -
+__LcstackCOMMON 0 0 ABS 0 cstackCOMMON -
+end_of_initialization 22 0 CODE 0 cinit build/adc_int_example1.o
+__Hintentry 18 0 CODE 0 intentry -
+__Lstrings 0 0 ABS 0 strings -
+__Hreset_vec 6 0 CODE 0 reset_vec -
+__ptext1 AE 0 CODE 0 text1 build/adc_int_example1.o
+__Lpowerup 0 0 CODE 0 powerup -
+__Leeprom_data 0 0 EEDATA 3 eeprom_data -
+__Lreset_vec 0 0 CODE 0 reset_vec -
+__end_of__initialization 22 0 CODE 0 cinit build/adc_int_example1.o
+__Lfunctab 0 0 ENTRY 0 functab -
+__Lclrtext 0 0 ABS 0 clrtext -
+__pcstackCOMMON 70 0 COMMON 1 cstackCOMMON build/adc_int_example1.o
+__Hend_init 1E 0 CODE 0 end_init -
+__end_of_main AE 0 CODE 0 maintext build/adc_int_example1.o
+_ANSEL 188 0 ABS 0 - build/adc_int_example1.o
+_PORTB 6 0 ABS 0 - build/adc_int_example1.o
+_PORTD 8 0 ABS 0 - build/adc_int_example1.o
+__end_of_myisr E4 0 CODE 0 text1 build/adc_int_example1.o
+_TRISA 85 0 ABS 0 - build/adc_int_example1.o
+_TRISB 86 0 ABS 0 - build/adc_int_example1.o
+_TRISD 88 0 ABS 0 - build/adc_int_example1.o
+__Hram 0 0 ABS 0 ram -
+__Lram 0 0 ABS 0 ram -
+interrupt_function 8 0 CODE 0 intentry build/adc_int_example1.o
+_myisr AE 0 CODE 0 text1 build/adc_int_example1.o
+__pintentry 8 0 CODE 0 intentry build/adc_int_example1.o
+__initialization 1E 0 CODE 0 cinit build/adc_int_example1.o
+# %SPLITSTAB Section
+# This section enumerates all the psect splits performed by the assembler.
+# The beginning of the section is indicated by %SPLITSTAB.
+# Each line is a record a particular split, where the parent psect is on
+# the left and the child on the right.  Note that a child psect is always
+# split form the top of the parent psect. All splits from a given parent
+# are listed in the order in which they occurred.
+%SPLITSTAB
+# %DABS Section
+# This section contains a table of all usuage of the assember
+# directive DABS in the program. Each line has the following format:
+#   <name> <space> <address> <size>
+# If the DABS was originally labelled then that shall be <name>,
+# otherwise name will be "-".  The <space> number is in decimal.
+# <address> and <size> are in byte units as unqaulified hexadecimal
+%DABS
+- 1 7E 2
+# %SEGMENTS Section
+# This sections enumerates the segments of the program.  Each segment
+# is described on a single line as follows:
+#    <name> <space> <link address> <file address> <size> <delta>
+# Addresses and size are in unqualified hexadecimal.  The link address
+# and size are in units of delta. The file address is in units of bytes.
+# All other numeric quantities are in decimal.
+%SEGMENTS
+cstackCOMMON 1 70 70 5 1
+intentry 0 4 8 6E 2
+reset_vec 0 0 0 3 2
+# %NOTES Section
+# This section contains data of all the note-psects.  The beginning of the section
+# is indicated by %NOTES. The first line indicates the name and decimal
+# byte-length of the first note-psect, e.g.
+#   $codecov_info_hdr 16
+# Each line that follows contains the byte-data of the psect in hexadecimal as a
+# space-separated list. These lines are limited to 16 bytes of data.
+%NOTES

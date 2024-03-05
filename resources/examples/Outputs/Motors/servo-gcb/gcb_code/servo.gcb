@@ -1,9 +1,0 @@
-
-#chip mega328p, 16
-
-Do
-    count = ReadAD(AN0)/2
-    count += 89
-    pulseout PORTB.0 ,count 10us
-    wait 20 ms
-Loop

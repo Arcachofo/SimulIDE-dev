@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+  <executable name="build/16F887_ports.hex">
+    <memory name="program">
+      <units>words</units>
+      <length>8192</length>
+      <used>56</used>
+      <free>8136</free>
+    </memory>
+    <memory name="data">
+      <units>bytes</units>
+      <length>368</length>
+      <used>4</used>
+      <free>364</free>
+    </memory>
+  </executable>
+</project>

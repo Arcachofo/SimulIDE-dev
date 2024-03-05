@@ -1,0 +1,110 @@
+Compilation Report
+
+Compiler Version (YYYY-MM-DD): 1.00.00 2022-12-01 (Linux 64 bit) : Build 1199
+
+;********************************************************************************
+
+Compilation time:
+ (Compile time: 0 seconds)
+ (Assembly time: 0 seconds)
+ (Download time: 0 seconds)
+ (Total time: 0 seconds)
+
+;********************************************************************************
+
+Chip resource usage:
+Chip Model: 16F690
+Program Memory: 876/4096 words (21.39%)
+RAM: 32/256 bytes (12.5%)
+HS (Clock source is not a primary internal oscillator. Ensure the clock source is correctly setup)
+
+;********************************************************************************
+
+RAM Allocation
+;********************************************************************************
+
+Subroutines
+Main
+Code Size (lines): 77
+Compiled Size (words): 347
+Page: 1
+Outgoing calls: SYSREADSTRING(13), Delay_MS(3), Delay_S(11), LCDCURSOR(13), INITLCD(38), LOCATE(17), PRINT(13), CLS(8), INITSYS(32)
+
+LOCATE
+Code Size (lines): 7
+Compiled Size (words): 24
+Page: 1
+Outgoing calls: SYSMULTSUB(1), Delay_10US(1), LCDNORMALWRITEBYTE(1)
+
+CLS
+Code Size (lines): 5
+Compiled Size (words): 16
+Page: 1
+Outgoing calls: Delay_MS(1), LCDNORMALWRITEBYTE(2)
+
+INITLCD
+Code Size (lines): 241
+Compiled Size (words): 80
+Page: 1
+Outgoing calls: Delay_MS(3), CLS(1), LCDNORMALWRITEBYTE(3)
+
+PRINT
+Code Size (lines): 8
+Compiled Size (words): 34
+Page: 1
+Outgoing calls: SYSCOMPEQUAL(1), LCDNORMALWRITEBYTE(1)
+
+LCDNORMALWRITEBYTE
+Code Size (lines): 223
+Compiled Size (words): 67
+Page: 1
+
+LCDCURSOR
+Code Size (lines): 30
+Compiled Size (words): 68
+Page: 1
+Outgoing calls: LCDNORMALWRITEBYTE(1)
+
+INITSYS
+Code Size (lines): 895
+Compiled Size (words): 14
+Page: 1
+
+SYSREADSTRING
+Code Size (lines): 114
+Compiled Size (words): 28
+Page: 1
+
+SYSMULTSUB
+Code Size (lines): 39
+Compiled Size (words): 12
+Page: 1
+
+SYSCOMPEQUAL
+Code Size (lines): 20
+Compiled Size (words): 6
+Page: 1
+
+Delay_10US
+Code Size (lines): 0
+Compiled Size (words): 8
+Page: 1
+
+Delay_MS
+Code Size (lines): 0
+Compiled Size (words): 14
+Page: 1
+
+Delay_S
+Code Size (lines): 0
+Compiled Size (words): 8
+Page: 1
+Outgoing calls: Delay_MS(1)
+
+SysStringTables
+Code Size (lines): 0
+Compiled Size (words): 150
+Page: 1
+
+;********************************************************************************
+

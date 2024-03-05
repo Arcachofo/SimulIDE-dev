@@ -1,0 +1,134 @@
+#######################################
+# Syntax Coloring Map
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+SSD1306Device	KEYWORD1
+DCfont	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+begin	KEYWORD2
+switchRenderFrame	KEYWORD2
+switchDisplayFrame	KEYWORD2
+switchFrame	KEYWORD2
+currentRenderFrame	KEYWORD2
+currentDisplayFrame	KEYWORD2
+setFont	KEYWORD2
+setFontX2	KEYWORD2
+setFontX2Smooth	KEYWORD2
+setUnicodeFont	KEYWORD2
+setUnicodeFontX2	KEYWORD2
+setUnicodeFontX2Smooth	KEYWORD2
+setFontOnly	KEYWORD2
+setSpacing	KEYWORD2
+setCombineFunction	KEYWORD2
+getExpectedUtf8Bytes	KEYWORD2
+getCharacterDataOffset	KEYWORD2
+getCharacterWidth	KEYWORD2
+getTextWidth	KEYWORD2
+setCursor	KEYWORD2
+getCursorX	KEYWORD2
+getCursorY	KEYWORD2
+newLine	KEYWORD2
+fill	KEYWORD2
+fillToEOL	KEYWORD2
+fillToEOP	KEYWORD2
+fillLength	KEYWORD2
+clear	KEYWORD2
+clearToEOL	KEYWORD2
+clearToEOP	KEYWORD2
+bitmap	KEYWORD2
+startData	KEYWORD2
+sendData	KEYWORD2
+repeatData	KEYWORD2
+clearData	KEYWORD2
+endData	KEYWORD2
+setPages	KEYWORD2
+setWidth	KEYWORD2
+setHeight	KEYWORD2
+setOffset	KEYWORD2
+setRotation	KEYWORD2
+clipText	KEYWORD2
+clipTextP	KEYWORD2
+invertOutput	KEYWORD2
+#######################################
+# SSD1306 1. Fundamental Command Table (KEYWORD2)
+#######################################
+setContrast	KEYWORD2
+setEntireDisplayOn	KEYWORD2
+setInverse	KEYWORD2
+setExternalIref KEYWORD2
+setInternalIref KEYWORD2
+off	KEYWORD2
+on	KEYWORD2
+#######################################
+# SSD1306 2. Scrolling Command Table (KEYWORD2)
+#######################################
+scrollRight	KEYWORD2
+scrollLeft	KEYWORD2
+scrollRightOffset	KEYWORD2
+scrollLeftOffset	KEYWORD2
+scrollContentRight	KEYWORD2
+scrollContentLeft	KEYWORD2
+deactivateScroll	KEYWORD2
+activateScroll	KEYWORD2
+setVerticalScrollArea	KEYWORD2
+#######################################
+# SSD1306 3. Addressing Setting Command Table (KEYWORD2)
+#######################################
+setColumnStartAddress	KEYWORD2
+setMemoryAddressingMode	KEYWORD2
+setColumnAddress	KEYWORD2
+setPageAddress	KEYWORD2
+setPageStartAddress	KEYWORD2
+#######################################
+# SSD1306 4. Hardware Configuration (Panel resolution and layout related) Command Table (KEYWORD2)
+#######################################
+setDisplayStartLine	KEYWORD2
+setSegmentRemap	KEYWORD2
+setMultiplexRatio	KEYWORD2
+setComOutputDirection	KEYWORD2
+setDisplayOffset	KEYWORD2
+setComPinsHardwareConfiguration	KEYWORD2
+#######################################
+# SSD1306 5. Timing and Driving Scheme Setting Command Table (KEYWORD2)
+#######################################
+setDisplayClock	KEYWORD2
+setPrechargePeriod	KEYWORD2
+setVcomhDeselectLevel	KEYWORD2
+nop	KEYWORD2
+#######################################
+# SSD1306 6. Advance Graphic Command Table (KEYWORD2)
+#######################################
+fadeOut	KEYWORD2
+blink	KEYWORD2
+disableFadeOutAndBlinking	KEYWORD2
+enableZoomIn	KEYWORD2
+disableZoomIn	KEYWORD2
+#######################################
+# SSD1306 Charge Pump Settings (KEYWORD2)
+#######################################
+enableChargePump	KEYWORD2
+disableChargePump	KEYWORD2
+#######################################
+# Instances (KEYWORD2)
+#######################################
+oled	KEYWORD2
+#######################################
+# Constants (LITERAL1)
+#######################################
+FONT6X8	LITERAL1
+FONT8X16	LITERAL1
+FONT8X16DIGITS	LITERAL1
+FONT6X8P	LITERAL1
+FONT8X16P	LITERAL1
+FONT8X16CAPS	LITERAL1
+FONT8X16CAPSP	LITERAL1
+SSD1306_VOLTAGE_6_0	LITERAL1
+SSD1306_VOLTAGE_7_5	LITERAL1
+SSD1306_VOLTAGE_8_5	LITERAL1
+SSD1306_VOLTAGE_9_0	LITERAL1

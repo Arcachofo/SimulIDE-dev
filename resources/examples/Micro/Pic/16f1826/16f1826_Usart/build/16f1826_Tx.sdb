@@ -1,0 +1,57 @@
+[p GLOBOPT AUTOSTATIC IEEE_DBL IEEE_FLT PIC14 PIC14E ]
+[d version 1.1 ]
+[d edition pro ]
+[d chip 16F1826 ]
+[d frameptr 6 ]
+"11 /media/user/software/simulide/tests/MCU/pic/0_Test/16f1826/16f1826_Usart/16f1826_Tx.c
+[v _myisr myisr `II(v  1 e 1 0 ]
+"20
+[v _main main `(v  1 e 1 0 ]
+"10 /opt/microchip/xc8/v2.32/pic/sources/c99/common/sprcadd.c
+[v ___fladd __fladd `(d  1 e 4 0 ]
+"4 /opt/microchip/xc8/v2.32/pic/sources/c99/common/Umul8_16.c
+[v __Umul8_16 _Umul8_16 `(ui  1 e 2 0 ]
+"6 /opt/microchip/xc8/v2.32/pic/sources/c99/pic/__eeprom.c
+[v ___eecpymem __eecpymem `(v  1 e 1 0 ]
+"39
+[v ___memcpyee __memcpyee `(v  1 e 1 0 ]
+"9 /media/user/software/simulide/tests/MCU/pic/0_Test/16f1826/16f1826_Usart/16f1826_Tx.c
+[v _data data `uc  1 e 1 0 ]
+"429 /opt/microchip/mplabx/v5.50/packs/Microchip/PIC12-16F1xxx_DFP/1.2.63/xc8/pic/include/proc/pic16f1826.h
+[v _PORTA PORTA `VEuc  1 e 1 @12 ]
+"491
+[v _PORTB PORTB `VEuc  1 e 1 @13 ]
+"1080
+[v _TRISA TRISA `VEuc  1 e 1 @140 ]
+"1142
+[v _TRISB TRISB `VEuc  1 e 1 @141 ]
+"2706
+[v _ANSELA ANSELA `VEuc  1 e 1 @396 ]
+"2758
+[v _ANSELB ANSELB `VEuc  1 e 1 @397 ]
+"3037
+[v _TXREG TXREG `VEuc  1 e 1 @410 ]
+"3069
+[v _SPBRG SPBRG `VEuc  1 e 1 @411 ]
+"5701
+[v _GIE GIE `VEb  1 e 0 @95 ]
+"6004
+[v _PEIE PEIE `VEb  1 e 0 @94 ]
+"6148
+[v _SPEN SPEN `VEb  1 e 0 @3311 ]
+"6454
+[v _TXEN TXEN `VEb  1 e 0 @3317 ]
+"6457
+[v _TXIE TXIE `VEb  1 e 0 @1164 ]
+"6460
+[v _TXIF TXIF `VEb  1 e 0 @140 ]
+"20 /media/user/software/simulide/tests/MCU/pic/0_Test/16f1826/16f1826_Usart/16f1826_Tx.c
+[v _main main `(v  1 e 1 0 ]
+{
+"52
+} 0
+"11
+[v _myisr myisr `II(v  1 e 1 0 ]
+{
+"18
+} 0

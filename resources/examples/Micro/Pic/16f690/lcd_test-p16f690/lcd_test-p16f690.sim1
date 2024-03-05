@@ -1,0 +1,19 @@
+<circuit version="" rev="2224" stepSize="1000000" stepsPS="1000000" NLsteps="100000" reaStep="1000000" animate="0" >
+
+<item itemtype="MCU" CircId="p16f690-2" mainComp="false" Show_id="true" Show_Val="false" Pos="-180,-140" rotation="0" hflip="1" vflip="1" label="pic16f690" idLabPos="-6.86272,-13.1696" labelrot="0" valLabPos="0,0" valLabRot="0" Frequency="20 MHz" Program="build_lcd_test-p16f690/lcd_test-p16f690.hex" Auto_Load="false" saveEepr="true" Rst_enabled="false" Ext_Osc="true" Wdt_enabled="false" Clk_Out="false" eeprom="0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0," SerialMon="-1" />
+
+<item itemtype="Hd44780" CircId="Hd44780-1" mainComp="false" Show_id="true" Show_Val="false" Pos="-308,-196" rotation="0" hflip="1" vflip="1" label="Hd44780" idLabPos="70,-82" labelrot="0" valLabPos="0,0" valLabRot="0" Rows="2" Cols="16" />
+
+<item itemtype="Connector" uid="Connector-3" startpinid="Hd44780-1-PinRS" endpinid="p16f690-2-PORTB7" pointList="-292,-188,-292,-60,-188,-60" />
+
+<item itemtype="Connector" uid="Connector-5" startpinid="Hd44780-1-PinEn" endpinid="p16f690-2-PORTC7" pointList="-276,-188,-276,-68,-188,-68" />
+
+<item itemtype="Connector" uid="Connector-7" startpinid="Hd44780-1-dataPin4" endpinid="p16f690-2-PORTC6" pointList="-236,-188,-236,-76,-188,-76" />
+
+<item itemtype="Connector" uid="Connector-9" startpinid="p16f690-2-PORTC3" endpinid="Hd44780-1-dataPin5" pointList="-188,-84,-228,-84,-228,-188" />
+
+<item itemtype="Connector" uid="Connector-11" startpinid="p16f690-2-PORTC4" endpinid="Hd44780-1-dataPin6" pointList="-188,-92,-220,-92,-220,-188" />
+
+<item itemtype="Connector" uid="Connector-13" startpinid="p16f690-2-PORTC5" endpinid="Hd44780-1-dataPin7" pointList="-188,-100,-212,-100,-212,-188" />
+
+</circuit>
