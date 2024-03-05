@@ -21,6 +21,8 @@ class DataLaWidget : public QWidget, private Ui::DataLaWidget
         void setColor( int ch, QColor c );
         void setTunnel( int ch, QString name );
 
+        bool eventFilter( QObject* object, QEvent* event) override;
+
         QHBoxLayout* getLayout() { return mainLayout; }
 
     public slots:

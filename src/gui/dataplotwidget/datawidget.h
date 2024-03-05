@@ -22,6 +22,8 @@ class DataWidget : public QWidget, private Ui::DataWidget
         void setData( int ch, QString freq );
         void setTunnel( int ch, QString name );
 
+        bool eventFilter( QObject* object, QEvent* event) override;
+
         QHBoxLayout* getLayout() { return mainLayout; }
 
     public slots:

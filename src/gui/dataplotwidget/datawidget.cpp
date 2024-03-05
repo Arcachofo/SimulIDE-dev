@@ -32,10 +32,19 @@ DataWidget::DataWidget( QWidget* parent, Oscope* oscope )
     for( int i=0; i<4; ++i )
     {
         m_chNames.at( i )->setFont( font );
+        m_chNames.at( i )->installEventFilter(this);
         setData( i, "0 Hz" );
     }
 
     this->adjustSize();
+}
+
+bool DataWidget::eventFilter( QObject*, QEvent* event)
+{
+    if( event->type() == QEvent::FocusIn ) {
+        m_oscope->setSelected( false );
+    }
+    return false;
 }
 
 void DataWidget::on_expandButton_clicked()

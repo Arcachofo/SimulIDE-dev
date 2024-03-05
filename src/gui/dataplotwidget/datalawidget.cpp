@@ -28,9 +28,22 @@ DataLaWidget::DataLaWidget( QWidget* parent, PlotBase* pb )
     font.setPixelSize( 9 );
     font.setBold( true );
     expandButton->setFont( font );
-    for( int i=0; i<8; ++i ) m_chNames.at( i )->setFont( font );
+
+    for( QLineEdit* ch : m_chNames )
+    {
+        ch->setFont( font );
+        ch->installEventFilter(this);
+    }
 
     this->adjustSize();
+}
+
+bool DataLaWidget::eventFilter( QObject*, QEvent* event)
+{
+    if( event->type() == QEvent::FocusIn ) {
+        m_plotBase->setSelected( false );
+    }
+    return false;
 }
 
 void DataLaWidget::on_expandButton_clicked()
