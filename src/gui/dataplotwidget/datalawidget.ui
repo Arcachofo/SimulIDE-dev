@@ -74,8 +74,17 @@
          <bold>true</bold>
         </font>
        </property>
+       <property name="contextMenuPolicy">
+        <enum>Qt::NoContextMenu</enum>
+       </property>
+       <property name="acceptDrops">
+        <bool>false</bool>
+       </property>
        <property name="styleSheet">
         <string notr="true"/>
+       </property>
+       <property name="locale">
+        <locale language="C" country="AnyCountry"/>
        </property>
       </widget>
      </item>
@@ -106,8 +115,17 @@
          <bold>true</bold>
         </font>
        </property>
+       <property name="contextMenuPolicy">
+        <enum>Qt::NoContextMenu</enum>
+       </property>
+       <property name="acceptDrops">
+        <bool>false</bool>
+       </property>
        <property name="styleSheet">
         <string notr="true"/>
+       </property>
+       <property name="locale">
+        <locale language="C" country="AnyCountry"/>
        </property>
       </widget>
      </item>
@@ -138,8 +156,17 @@
          <bold>true</bold>
         </font>
        </property>
+       <property name="contextMenuPolicy">
+        <enum>Qt::NoContextMenu</enum>
+       </property>
+       <property name="acceptDrops">
+        <bool>false</bool>
+       </property>
        <property name="styleSheet">
         <string notr="true"/>
+       </property>
+       <property name="locale">
+        <locale language="C" country="AnyCountry"/>
        </property>
       </widget>
      </item>
@@ -170,8 +197,17 @@
          <bold>true</bold>
         </font>
        </property>
+       <property name="contextMenuPolicy">
+        <enum>Qt::NoContextMenu</enum>
+       </property>
+       <property name="acceptDrops">
+        <bool>false</bool>
+       </property>
        <property name="styleSheet">
         <string notr="true"/>
+       </property>
+       <property name="locale">
+        <locale language="C" country="AnyCountry"/>
        </property>
       </widget>
      </item>
@@ -202,8 +238,17 @@
          <bold>true</bold>
         </font>
        </property>
+       <property name="contextMenuPolicy">
+        <enum>Qt::NoContextMenu</enum>
+       </property>
+       <property name="acceptDrops">
+        <bool>false</bool>
+       </property>
        <property name="styleSheet">
         <string notr="true"/>
+       </property>
+       <property name="locale">
+        <locale language="C" country="AnyCountry"/>
        </property>
       </widget>
      </item>
@@ -234,8 +279,17 @@
          <bold>true</bold>
         </font>
        </property>
+       <property name="contextMenuPolicy">
+        <enum>Qt::NoContextMenu</enum>
+       </property>
+       <property name="acceptDrops">
+        <bool>false</bool>
+       </property>
        <property name="styleSheet">
         <string notr="true"/>
+       </property>
+       <property name="locale">
+        <locale language="C" country="AnyCountry"/>
        </property>
       </widget>
      </item>
@@ -266,8 +320,17 @@
          <bold>true</bold>
         </font>
        </property>
+       <property name="contextMenuPolicy">
+        <enum>Qt::NoContextMenu</enum>
+       </property>
+       <property name="acceptDrops">
+        <bool>false</bool>
+       </property>
        <property name="styleSheet">
         <string notr="true"/>
+       </property>
+       <property name="locale">
+        <locale language="Burmese" country="Myanmar"/>
        </property>
       </widget>
      </item>
@@ -298,8 +361,17 @@
          <bold>true</bold>
         </font>
        </property>
+       <property name="contextMenuPolicy">
+        <enum>Qt::NoContextMenu</enum>
+       </property>
+       <property name="acceptDrops">
+        <bool>false</bool>
+       </property>
        <property name="styleSheet">
         <string notr="true"/>
+       </property>
+       <property name="locale">
+        <locale language="C" country="AnyCountry"/>
        </property>
       </widget>
      </item>
