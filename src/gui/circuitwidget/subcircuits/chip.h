@@ -42,6 +42,8 @@ class Chip : public Component, public eElement
 
         void setBackData( std::vector<std::vector<int>>* d ) { m_backData = d; }
 
+        virtual void setflip() override;
+
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w ) override;
 
     protected:

@@ -113,6 +113,7 @@ void Chip::setName( QString name )
     m_label.adjustSize();
     m_label.setY( m_area.height()/2+m_label.textWidth()/2 );
     m_label.setX( ( m_area.width()/2-m_label.boundingRect().height()/2 ) );
+    setflip();
 }
 
 void Chip::initPackage( QDomElement root )
@@ -242,6 +243,17 @@ void Chip::setBackground( QString bck )
         if( QFile::exists( pixmapPath ) ) m_backPixmap = new QPixmap( pixmapPath );
     }
     update();
+}
+
+
+void Chip::setflip()
+{
+    Component::setflip();
+    m_label.setTransform( QTransform::fromScale( m_Hflip, m_Vflip ) );
+    int xDelta = m_Hflip*m_label.boundingRect().height()/2;
+    int yDelta = m_Vflip*m_label.textWidth()/2;
+    m_label.setY( m_area.height()/2+yDelta );
+    m_label.setX( ( m_area.width()/2-xDelta ) );
 }
 
 void Chip::findHelp()
