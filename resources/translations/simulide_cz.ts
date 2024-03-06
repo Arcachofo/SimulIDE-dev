@@ -2241,7 +2241,7 @@ Nemohu najít soubor:
     <message>
         <location line="+8"/>
         <source>Space to Label:</source>
-        <translation type="unfinished"></translation>
+        <translation>Vzdálenost názvu:</translation>
     </message>
     <message>
         <location line="+12"/>
@@ -2281,7 +2281,7 @@ Nemohu najít soubor:
     <message>
         <location line="+6"/>
         <source>Bus Pin</source>
-        <translation type="unfinished"></translation>
+        <translation>Sběrnice</translation>
     </message>
     <message>
         <location line="+27"/>
@@ -2690,7 +2690,7 @@ Chcete uložit změny?
     <message>
         <location line="+224"/>
         <source>    Loading Compilers at:</source>
-        <translation>    Nahrávám překladač na:</translation>
+        <translation>    Nahrávám překladače z:</translation>
     </message>
     <message>
         <location line="+23"/>
@@ -3229,7 +3229,7 @@ Chcete uložit změny?
     <message>
         <location line="+42"/>
         <source>I2C Address</source>
-        <translation type="unfinished">Adresa I2C</translation>
+        <translation>Adresa I2C</translation>
     </message>
     <message>
         <location line="+116"/>
@@ -3281,7 +3281,7 @@ Chcete uložit změny?
     <message>
         <location line="+42"/>
         <source>I2C Address</source>
-        <translation type="unfinished">Adresa I2C</translation>
+        <translation>Adresa I2C</translation>
     </message>
     <message>
         <source>Logic/Converters</source>
@@ -3411,7 +3411,7 @@ Chcete uložit změny?
     <message>
         <location line="+1"/>
         <source>Custom Library Path</source>
-        <translation type="unfinished"></translation>
+        <translation>Cesta k vlastním knihovnám</translation>
     </message>
     <message>
         <source>Libraries Path</source>
@@ -5048,28 +5048,28 @@ Chcete uložit změny?
     <message>
         <location line="+1"/>
         <source>Screen Width</source>
-        <translation type="unfinished"></translation>
+        <translation>Šířka obrazovky</translation>
     </message>
     <message>
         <location line="+0"/>
         <location line="+3"/>
         <source>_Px</source>
-        <translation type="unfinished"></translation>
+        <translation>_bodů</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Screen Height</source>
-        <translation type="unfinished"></translation>
+        <translation>Výška obrazovky</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Connect to ground</source>
-        <translation type="unfinished"></translation>
+        <translation>Připojený k zemi</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Impedance</source>
-        <translation type="unfinished">Impedance</translation>
+        <translation>Vstupní odpor</translation>
     </message>
     <message>
         <source>Screen Size X</source>
@@ -6262,7 +6262,7 @@ Neplatný soubor s pouzdrem
     <message>
         <location line="+0"/>
         <source>_s/60º</source>
-        <translation type="unfinished"></translation>
+        <translation>_s/60º</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -6548,7 +6548,7 @@ Neplatný soubor s pouzdrem
         <location line="+0"/>
         <location line="+3"/>
         <source>_Px</source>
-        <translation type="unfinished"></translation>
+        <translation>_bodů</translation>
     </message>
     <message>
         <source>_Pixels</source>
@@ -6562,12 +6562,12 @@ Neplatný soubor s pouzdrem
     <message>
         <location line="+3"/>
         <source>Rotate</source>
-        <translation type="unfinished"></translation>
+        <translation>Otočit</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>I2C</source>
-        <translation type="unfinished">I2C</translation>
+        <translation>I2C</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -7659,17 +7659,17 @@ Chcete uložit změny?
     <message>
         <location line="+114"/>
         <source>Real FPS:</source>
-        <translation type="unfinished"></translation>
+        <translation>Skutečné FPS:</translation>
     </message>
     <message>
         <location line="+57"/>
         <source>0</source>
-        <translation type="unfinished">100% {0?}</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+57"/>
         <source>GUI overload:</source>
-        <translation type="unfinished"></translation>
+        <translation>#Přetížené GUI:</translation>
     </message>
 </context>
 <context>
