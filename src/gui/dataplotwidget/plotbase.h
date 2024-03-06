@@ -35,7 +35,7 @@ class PlotBase : public Component, public ScriptModule
         void setConnectGnd( bool c );
 
         double inputImped(){ return 1/m_inputAdmit; }
-        void setInputImped( double a );
+        void setInputImped( double i );
 
         QString timDiv();
         void setTimDiv( QString td );

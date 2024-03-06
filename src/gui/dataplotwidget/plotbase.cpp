@@ -103,6 +103,8 @@ PlotBase::PlotBase( QString type, QString id )
         new IntProp<PlotBase>("Trigger","",""
                                , this, &PlotBase::trigger, &PlotBase::setTrigger ),
     }, groupHidden } );
+
+    setPropStr("InputImped", "10 MΩ");
 }
 PlotBase::~PlotBase()
 {
@@ -152,13 +154,14 @@ void PlotBase::setConnectGnd( bool c )
     m_changed = true;
 }
 
-void PlotBase::setInputImped( double a )
+void PlotBase::setInputImped( double i )
 {
-    double admit = 1/a;
+    double admit = 1/i;
     if( m_inputAdmit == admit ) return;
     if( admit  < 0 ) return;
     m_inputAdmit = admit;
     m_changed = true;
+    if( !Simulator::self()->isRunning() ) updateStep();
 }
 
 QString PlotBase::timDiv()
@@ -260,7 +263,7 @@ void PlotBase::slotProperties()
 void PlotBase::updtProperties()
 {
     if( !m_propDialog ) return;
-    m_propDialog->showProp("InputAdmit", m_connectGnd );
+    m_propDialog->showProp("InputImped", m_connectGnd );
     m_propDialog->adjustWidgets();
 }
 

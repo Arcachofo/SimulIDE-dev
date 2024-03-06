@@ -171,7 +171,10 @@ void LAnalizer::updateStep()
     if( m_changed ){
         m_changed = false;
         double admit = m_connectGnd ? m_inputAdmit : 0;
-        for( IoPin* pin : m_inPin ) pin->stampAdmitance( admit );
+        for( IoPin* pin : m_inPin ){
+            pin->setInputAdmit( admit );
+            pin->stampAdmitance( admit );
+        }
     }
 }
 
