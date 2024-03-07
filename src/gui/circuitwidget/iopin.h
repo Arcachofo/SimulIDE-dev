@@ -38,7 +38,7 @@ class IoPin : public Pin, public eElement
         virtual void scheduleState( bool state, uint64_t time );
 
         //pinMode_t pinMode() { return m_pinMode; }
-        void setPinMode( pinMode_t mode );
+        void setPinMode( pinMode_t mode, bool init=false );
         void setPinMode( uint mode ) { setPinMode( (pinMode_t) mode ); }
 
         void setInputHighV( double volt ) { m_inpHighV = volt; }
