@@ -16,6 +16,12 @@ BoardSubc::BoardSubc( QString type, QString id )
 }
 BoardSubc::~BoardSubc(){}
 
+void BoardSubc::setLogicSymbol( bool ls )
+{
+    if( m_shields.size() ) return;
+    Chip::setLogicSymbol( ls );
+}
+
 void BoardSubc::attachShield( ShieldSubc* shield )
 {
     if( !m_shields.contains( shield ) ) m_shields.append( shield );

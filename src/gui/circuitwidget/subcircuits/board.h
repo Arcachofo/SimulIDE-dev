@@ -16,6 +16,8 @@ class BoardSubc : public SubCircuit
         BoardSubc( QString type, QString id );
         ~BoardSubc();
 
+        virtual void setLogicSymbol( bool ls ) override;
+
         void attachShield( ShieldSubc* shield );
         void detachShield( ShieldSubc* shield ) { m_shields.removeAll( shield); }
 

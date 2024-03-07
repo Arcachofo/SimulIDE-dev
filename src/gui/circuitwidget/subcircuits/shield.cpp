@@ -69,6 +69,8 @@ void ShieldSubc::slotAttach()
         BoardSubc* board = (BoardSubc*)comp;
         if( board->subcType() != Board ) continue;           // Not a Board
 
+        if( board->logicSymbol() ) continue;                 // Don't attach to logic symbol
+
         if( Simulator::self()->isRunning() ) CircuitWidget::self()->powerCircOff();
         /// FIXME UNDOREDO: Circuit::self()->saveState();
 
