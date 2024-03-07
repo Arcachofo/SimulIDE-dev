@@ -106,19 +106,19 @@ void Lm555::initialize()
     m_voltPos = 0;
 
     if( !Simulator::self()->isRunning() ) return;
-    m_thrEnode = m_cv->getEnode();   // Control Voltage Pin
-    if( !m_thrEnode )                // Not connected: Create threshold eNode
+    m_thrEnode = m_cv->getEnode();               // Control Voltage Pin
+    if( !m_thrEnode )                            // Not connected: Create threshold eNode
         m_thrEnode = new eNode( m_id+"-threNode" );
 }
 
 void Lm555::stamp()
 {
     m_cv->setEnode( m_thrEnode );
-    m_ePinA.setEnode( m_thrEnode );  // Set eNode to internal eResistors ePins
+    m_ePinA.setEnode( m_thrEnode );   // Set eNode to internal eResistors ePins
     m_ePinB.setEnode( m_thrEnode );
 
-    eNode* enod = m_Gnd->getEnode();       // Gnd Pin
-    m_ePinC.setEnode( enod );  // Set eNode to internal eResistors ePins
+    eNode* enod = m_Gnd->getEnode();  // Gnd Pin
+    m_ePinC.setEnode( enod );         // Set eNode to internal eResistors ePins
     m_ePinD.setEnode( enod );
 
     m_resA.setRes( 5000 );
@@ -156,17 +156,23 @@ void Lm555::voltChanged()
         changed = true;
     }
 
-    double refThre = m_thrEnode->getVolt()-m_voltNeg; // Voltage at threshold node.
-    double refTrig = refThre/2;
+    double resetVolt = m_Reset->getVoltage() - m_voltNeg;  // Reset Voltage
+    double refThre   = m_thrEnode->getVolt();              // Voltage at Threshold Ref node.
+    double refTrig   = m_voltNeg + (refThre-m_voltNeg)/2;  // Voltage at Trigger Ref node.
 
     bool outState = m_outState;
 
-    if     ( m_Reset->getVoltage() < (m_voltNeg+0.7) ) outState = false; // Reset
-    else if( m_threshold->getVoltage() > refThre )     outState = false; // Threshold
-    else if( refTrig > m_trigger->getVoltage() )       outState = true;  // Trigger
+    if( resetVolt < 0.7 ) outState = false;                   // Reset
+    else{
+        bool TrigComp = refTrig > m_trigger->getVoltage();
+        if( TrigComp ) outState = true;                       // Trigger
+        else{
+            bool ThrComp = refThre < m_threshold->getVoltage();
+            if( ThrComp ) outState = TrigComp;                // Threshold
+        }
+    }
 
-    if( outState != m_outState)
-    {
+    if( outState != m_outState){
         m_outState = outState;
         changed = true;
     }
@@ -179,9 +185,9 @@ void Lm555::runEvent()
     m_resD.setRes( m_outState ? high_imp : 1 );
 }
 
-void Lm555::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
+void Lm555::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w )
 {
-    Component::paint( p, option, widget );
+    Component::paint( p, o, w );
 
     p->drawRoundedRect( m_area, 1, 1);
     
