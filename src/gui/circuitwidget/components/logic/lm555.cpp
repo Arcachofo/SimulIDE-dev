@@ -54,7 +54,7 @@ Lm555::Lm555( QString type, QString id )
     m_output = new IoPin( 180, QPoint(-8, 8*3), id+"-ePin2", 2, this, output );
     m_output->setLabelColor( QColor( 0, 0, 0 ) );
     m_output->setLabelText( "Out" );
-    m_output->setOutputImp( 10 );
+    m_output->setOutputImp( 3.5 );
     m_output->setOutLowV( 0 );
     m_output->setOutHighV( 5-1.3 );
     m_output->setOutState( true );
