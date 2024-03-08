@@ -32,9 +32,10 @@ PropDialog::PropDialog( QWidget* parent, QString help )
     //m_minH  = 100*m_scale;
 
     m_helpExpanded = false;
-    helpText->setVisible( false );
     mainLayout->removeWidget( helpText );
     helpText->setText( help );
+    helpText->adjustSize();
+    helpText->setVisible( false );
 }
 
 void PropDialog::setComponent( CompBase* comp, bool isComp )
@@ -172,6 +173,8 @@ void PropDialog::adjustWidgets()
 {
     int h = 0;
     int w = m_minW;
+    if( helpText->isVisible() ) w += helpText->width()+6;
+
     QWidget* widget = tabList->currentWidget();
     if( widget )
     {
@@ -184,19 +187,10 @@ void PropDialog::adjustWidgets()
     }
     if( h < m_minH ) h = m_minH;
 
-    if( helpText->isVisible() )
-    {
-        helpText-> setFixedWidth( helpText->width() );
-        w += helpText->width()+6;
-    }
     this->setFixedHeight( h );
-
-    //this->setMinimumWidth( w );
     this->setMaximumWidth( w+100*m_scale );
-
     this->adjustSize();
     this->setMaximumHeight( h+70*m_scale );
-
 }
 
 void PropDialog::updtValues()
