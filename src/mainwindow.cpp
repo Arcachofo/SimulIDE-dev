@@ -272,9 +272,7 @@ void MainWindow::createWidgets()
 
     baseWidgetLayout->addWidget( m_Centralsplitter, 0, 0 );
 
-    QList<int> sizes;
-    sizes << 150 << 350 << 500;
-    m_Centralsplitter->setSizes( sizes );
+    m_Centralsplitter->setSizes( {150, 350, 500} );
 
     this->showMaximized();
 }
@@ -299,7 +297,7 @@ QString MainWindow::getHelp( QString name, bool save )
     }
     else locale = "";
 
-    name= name.toLower().replace( " ", "" );
+    name = name.toLower().replace( " ", "" );
     QString dfPath = getDataFilePath("help/"+localeFolder+name+locale+".txt");
 
     if( !QFileInfo::exists( dfPath ) ) dfPath = getDataFilePath( "help/"+name+".txt" );

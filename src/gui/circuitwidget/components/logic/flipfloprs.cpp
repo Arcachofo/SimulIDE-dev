@@ -42,8 +42,8 @@ FlipFlopRS::FlipFlopRS( QString type, QString id )
     m_resetPin = m_inPin[1];
     m_clkPin   = m_inPin[2];
 
-    setSrInv( true );                           // Inver Set & Reset pins
-    setClockInv( false );                        //Don't Invert Clock pin
+    setSrInv( true );       // Inver Set & Reset pins
+    setClockInv( false );   // Don't Invert Clock pin
     setTrigger( Clock );
 
     removeProperty("UseRS");

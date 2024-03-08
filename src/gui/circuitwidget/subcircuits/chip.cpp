@@ -187,8 +187,7 @@ void Chip::addNewPin( QString id, QString type, QString label, int pos, int xpos
         pin->setFlag( QGraphicsItem::ItemStacksBehindParent, false );
 
         m_unusedPins.append( pin );
-    }
-    else{
+    }else{
         Pin* pin = addPin( id, type, label, pos, xpos, ypos, angle, length, space );
         m_ePin.emplace_back( pin );
         m_pin.emplace_back( pin );
@@ -201,17 +200,13 @@ void Chip::setLogicSymbol( bool ls )
 
     if( Simulator::self()->isRunning() ) CircuitWidget::self()->powerCircOff();
 
-    /// Undo/Redo stack for Properties ??
-    /// Circuit::self()->addCompState( this, "Logic_Symbol" );
-    
-    if(  ls && m_pkgeFile.endsWith(".package"))    m_pkgeFile.replace( ".package", "_LS.package" );
-    if( !ls && m_pkgeFile.endsWith("_LS.package")) m_pkgeFile.replace( "_LS.package", ".package" );
+    if(  ls && m_pkgeFile.endsWith(".package"))    m_pkgeFile.replace(".package", "_LS.package" );
+    if( !ls && m_pkgeFile.endsWith("_LS.package")) m_pkgeFile.replace("_LS.package", ".package" );
 
     m_error = 0;
     Chip::initChip();
     
     if( m_error == 0 ) Circuit::self()->update();
-    /// else               Circuit::self()->unSaveState();
 }
 
 void Chip::setBackground( QString bck )
