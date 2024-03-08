@@ -1,7 +1,13 @@
-Potentiometer:
+Interactive potentiometer.
 
-Adjust the dial to set middle position.
+Use the dial to adjust the value.
 
-Use "Value Ohm" property to set precise middle position.
+Property: (default value)
 
-Use "Resistance" property to set total resistance.
+Main:
+- Resistance: (100 Ω)
+
+- Current Value: (0 Ω)
+   Value determined by dial position.
+
+#include dialed

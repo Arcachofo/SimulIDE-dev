@@ -1,0 +1,13 @@
+Converts from binary to 7 segment display.
+
+Property: (default value)
+
+Main:
+- Invert Outputs: (no)
+   Invert output pins.
+
+
+Electric:
+#include logicinputs
+#include logicoutputs
+#include logicedges

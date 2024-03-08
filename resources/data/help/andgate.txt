@@ -1,0 +1,11 @@
+Property: (default value)
+
+Main:
+- Input Size: (2)
+   Number of input pins.
+
+#include gateinputs
+Electric:
+#include logicinputs
+#include logicoutputs
+#include logicedges

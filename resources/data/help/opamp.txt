@@ -1,8 +1,21 @@
-Operational Amplifier:
+Configurable differential  amplifier.
 
-By default it does not show power pins and will use 0V-5V.
+Property: (default value)
 
-To use any other values, set "Power Pins" property to true and power pins will be shown.
-Connect these pins to any voltage sources you need.
+Main:
+- Gain: (100)
+   Voltage gain.
 
-Use "Gain" property to set voltage gain.
+- Output Impedance: (0 Ω)
+   Impedance of the output stage.
+
+Supply:
+- V+ (5 V)
+   Positive supply voltage if supply pins not used.
+
+- V- (0 V)
+   Negative supply voltage if supply pins not used.
+
+- Use Supply Pins: (no)
+   Use supply pins instead of values above.
+

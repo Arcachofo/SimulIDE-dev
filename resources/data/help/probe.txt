@@ -1,10 +1,14 @@
-Voltage Probe:
+Logic and voltage probe.
+Hover or connect to Wires or Pins to get voltage.
 
-- Hover at Wires or Pins to get voltage.
+As logic probe:
+- Orange = High State.
+- Blue = Low State
 
-- As digital probe: Orange = High State
+Property: (default value)
 
-- Right-Click and add to Plotter channel.
+- Show Voltage: (yes)
+   Show voltage label.
 
-More Info: 
- http://simulide.blogspot.com/p/probe.html
+- Threshold: (2.5 V)
+   Digital threshold to determine High/Low states. 

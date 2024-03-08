@@ -1,9 +1,15 @@
-Clock:
+Simple Clock source.
 
-This is a simple Clock source.
+Turn On/Off with the letf button.
 
-It can be turned On/Off with the buttton on the left side.
 
-Change Frequency in "Frequency" property above.
+Property: (default value)
 
-It is also possible to change voltage in "Voltage" property above.
+- Voltage: (5 V)
+   Set output voltage.
+
+- Frequency:  (1000 Hz)
+   Set output frequency.
+
+- Always On: (yes)
+   Removes the button and keeps always active.

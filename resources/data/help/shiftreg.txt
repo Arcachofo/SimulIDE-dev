@@ -1,0 +1,14 @@
+Property: (default value)
+
+Main:
+- Clock Inverted: (no)
+   Invert Clock pin.
+
+- Reset Inverted: (yes)
+   Invert Reset pin.
+
+
+Electric:
+#include logicinputs
+#include logicoutputs
+#include logicedges

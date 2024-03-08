@@ -1,6 +1,18 @@
-Mosfet:
+Metal-Oxide-Semiconductor Field-effect Transistor.
 
-RDSon represents DS Resistance in the lower part of the linear region when conducing:
+Property: (default value)
+
+Main:
+- P Channel: (no)
+   P channel or N channel.
+   
+- Depletion: (no)
+   Depletion mode or enhancement mode.
+   
+Electric:
+- RDSon: (1 Ω)
+   DS Resistance in the lower part of the linear region when conducing:
     VGS > Vth and VDS < ( VGS – Vth )
 
-It is posible to configure it as P or N channel as well as a depletion mosfet.
+- Threshold: (3 V)
+   Gate-Source Voltage to start conducing.

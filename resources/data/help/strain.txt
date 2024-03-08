@@ -1,0 +1,29 @@
+Force Sensor.
+
+Use the dial to adjust force.
+
+Property: (default value)
+
+Main:
+- Minimum Value: (0 N)
+   Force in Newtons with dial at the left end.
+
+- Maximum Value: (1000 N)
+   Force in Newtons with dial at the right end.
+
+- Current Value: (0 N)
+   Value determined by dial position.
+
+- Dial Step: (0 N)
+   Minimum step when rotating the dial.
+   0 to use default.
+
+
+Parameters:
+- Ref. Temperature: (20 ºC)
+   Reference Temperature.
+
+- Temperature: (20 ºC)
+   Current Temperature.
+
+#include dialed

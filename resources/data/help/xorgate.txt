@@ -1,0 +1,8 @@
+Property: (default value)
+
+Main:
+#include gateinputs
+Electric:
+#include logicinputs
+#include logicoutputs
+#include logicedges

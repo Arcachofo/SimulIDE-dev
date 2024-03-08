@@ -1,0 +1,3 @@
+240x320 color liquid crystal display based on ILI9341 TFT LCD controller with SPI interface.
+
+

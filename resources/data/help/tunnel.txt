@@ -1,0 +1,9 @@
+Property: (default value)
+
+- Id: ()
+   Identifier, all Tunnels with this Id will be connected togeter.
+
+- Rotated: (no)
+   Yes: pin to the right.
+   No: pin to the left.
+

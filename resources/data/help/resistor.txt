@@ -1,1 +1,6 @@
-Resistor:
+Simple resistance.
+
+Property: (default value)
+
+- Resistance: (100 Ω)
+

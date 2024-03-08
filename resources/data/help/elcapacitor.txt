@@ -1,3 +1,16 @@
-Electrolytic Capacitor:
+Simple polarized capacitor.
+Blinks if polarity is wrong.
 
-This Capacitor will blink if polarity is wrong.
+Property: (default value)
+
+- Capacitance: (10 uF)
+
+- Resistance: (1e-6 Ω)
+
+- Initial Voltage: (0 V)
+   Voltage at simulation start (initial charge).
+
+- Reactive Step: (0 s)
+   Set custom Reactive step for this component.
+   This value overrides general Simulation Settings.
+   0 to use value set in Simulation Settings.

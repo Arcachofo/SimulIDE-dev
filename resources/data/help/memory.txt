@@ -1,14 +1,34 @@
-Ram/Rom:
-
-This component can be configured as Ram or Rom, just adding persistance the data will be saved to circuit file acting as a EEPROM.
+This component can be configured as Ram or Rom.
 You must save the circuit to get data persistance.
 
-It is possible to save memory data to a file and load from file.
+You can watch Memory content:
+Right-Click and select "Show Memory Table".
 
-It is also configurable in size:
+You can save memory data to a file and load from file.
 
-- Address Bits: size in words = 2^Address_Bits.
+Property: (default value)
 
-- Data Bits: size of word in bits.
+Main:
+- Address Size: (8 Bits)
+   Number of bits of address bus.
+   This determines the capacity (words = 2^Address_Size)
 
-By default it is a 256 bytes Ram ( 8 address bits, 8 data bits, no persistance ).
+- Data size:: (8)
+   Number of bits of data bus.
+   This determines the lenght of a memory word.
+
+- Persistent: (no)
+   Save data to circuit file.
+   If yes it acts as a ROM.
+
+- Invert Outputs: (no)
+   Invert output pins.
+
+- Asynchronous: (no)
+   If yes it will be active while selected.
+   If no only active in CS pin active edge.
+
+Electric:
+#include logicinputs
+#include logicoutputs
+#include logicedges

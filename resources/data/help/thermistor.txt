@@ -1,0 +1,29 @@
+NTC thermistor.
+
+Use the dial to adjust temperature.
+
+Property: (default value)
+
+Main:
+- Minimum Value: (0 ºC)
+   Temperature with dial at the left end.
+
+- Maximum Value: (200 ºC)
+   Temperature with dial at the right end.
+
+- Current Value: (25 ºC)
+   Value determined by dial position.
+
+- Dial Step: (0 ºC)
+   Minimum step when rotating the dial.
+   0 to use default.
+
+
+Parameters:
+- B: (3455)
+   β parameter.
+
+- R25: (10000 Ω)
+   Resistance at 25 ºC.
+
+#include dialed

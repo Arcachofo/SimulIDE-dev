@@ -1,7 +1,8 @@
-Fixed Voltage:
+Simple voltage source.
 
-This is a simple voltage source.
+Turn On/Off with the letf button.
 
-It can be turned On/Off with the buttton on the left side.
+Property: (default value)
 
-It is also possible to change voltage in "Voltage" property above.
+- Voltage: (5 V)
+   Output voltage.

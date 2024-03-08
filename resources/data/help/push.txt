@@ -1,5 +1,13 @@
-Push Button:
+Configurable push button switch.
 
-This is a non latching switch.
+Property: (default value)
 
-It can be configured as normally closed or normally opened using the "Norm Close" property.
+- Normally Closed: (no)
+   Push to open (yes) or push to close (no).
+
+- Poles: (1)
+   Number of poles controlled by this push button.
+
+- Key: ()
+   Character shown in the button.
+   Can be activated by keyboard in your PC.

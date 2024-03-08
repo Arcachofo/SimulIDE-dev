@@ -1,7 +1,7 @@
-Rail:
-
+Connection to voltage rail.
 This is a simple voltage source.
 
-It is always ON.
+Property: (default value)
 
-It is possible to change voltage in "Voltage" property above.
+- Voltage: (5 V)
+   Rail voltage.

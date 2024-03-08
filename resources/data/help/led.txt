@@ -1,10 +1,24 @@
-Led:
+Simple configurable light emitting diode.
 
-To simplify the circuit you can set "Gronded" property to true.
-This creates a virtual connection from diode cathode to ground.
-Cathode pin will dissapear deleting any wire connected to it.
+Blinks if maximum current is exceeded.
 
-Led will blink white when the maximun current is exedeed by aprox 40%.
+Property: (default value)
 
-More Info:
- http://simulide.blogspot.com/p/leds.html
+Main:
+- Color: (Yellow)
+   Led color.
+
+- Grounded (no)
+   If yes, connect cathode to ground internally and hide cathode pin.
+   Any wire already connected to cathode will be deleted.
+
+Electric:
+- Fordward Voltage: (2.4 V)
+   Voltage drop when fordward biased.
+
+- Max Current: (0.03 A)
+   Maximum current (it will blink if exeeded).
+   Maximum brightness is reached at this current.
+
+- Resistance: (0.6 Ω)
+   Series resistance.

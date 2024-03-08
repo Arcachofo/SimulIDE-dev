@@ -1,1 +1,15 @@
-Inductor:
+Simple inductor. 
+
+Property: (default value)
+
+- Inductance: (1 H)
+
+- Resistance: (1e-6 Ω)
+
+- Initial Current: (0 A)
+   Current at simulation start (initial charge).
+
+- Reactive Step: (0 s)
+   Set custom Reactive step for this component.
+   This value overrides general Simulation Settings.
+   0 to use value set in Simulation Settings.

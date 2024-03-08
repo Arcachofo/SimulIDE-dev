@@ -1,12 +1,17 @@
-Switch:
+Configurable 2 position switch.
 
-This is a latching switch.
+Property: (default value)
 
-It can be configured as normally closed or normally opened using the "Norm Close" property.
+- Normally Closed: (no)
+   State with button not pushed.
 
-To adjust number of poles use "Poles" property.
+- Double Throw: (no)
+   Yes: 2 throws per pole.
+   No: 1 throw per pole.
 
-It can be configured as Double or Sigle Throw using "DT" property:
+- Poles: (1)
+   Number of poles controlled by this switch.
 
-DT = true  : Double Throw.
-DT = false : Sigle  Throw.
+- Key: ()
+   Character shown in the button.
+   Can be activated by keyboard in your PC.

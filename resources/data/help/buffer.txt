@@ -1,0 +1,12 @@
+Property: (default value)
+
+Main:
+- Tristate: (no)
+   If yes, creates an enable pin (active Low).
+   When disabled, output is high impedance.
+
+#include gateinputs
+Electric:
+#include logicinputs
+#include logicoutputs
+#include logicedges

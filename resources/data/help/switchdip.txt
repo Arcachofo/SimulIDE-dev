@@ -1,10 +1,14 @@
-Switch Dip:
-
-Resizable set of switches in a DIP configuration.
-
-Use "Size" property to set number of switches
-
+Resizable set of switches.
 Click on individual "buttons" to turn ON/OFF:
- - Green = On
- - Gray  = Off
- 
+
+
+Property: (default value)
+
+- Size: (8)
+   Number of switches.
+
+- Exclusive: (false)
+   Only onew Switch can be closed at a time.
+
+- Common Pin: (false)
+   Connect all Switches to a common Pin.

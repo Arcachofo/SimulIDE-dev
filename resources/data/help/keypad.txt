@@ -1,7 +1,13 @@
-KeyPad:
+Configurable keypad.
 
-It is customizable in size ( rows and columns ) and key labels.
-By default it is an standard 12 keys; 4 rows, 3 Cols.
+Property: (default value)
 
-More Info:
- http://simulide.blogspot.com/p/blog-page_22.html
+- Rows: (4)
+   Number of key rows.
+
+- Columns: (3)
+   Number of key columns.
+
+- Key Labels: (123456789*0#)
+   List of characters corresponding to each key.
+   Left to right and top to bottom.

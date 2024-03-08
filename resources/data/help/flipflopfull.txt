@@ -1,0 +1,7 @@
+Property: (default value)
+
+Main:
+- Use Set/Reset Pin (no)
+   Shows/hides Set and Reset pins.
+
+#include flipflop
