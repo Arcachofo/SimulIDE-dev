@@ -48,7 +48,7 @@ class Csource : public Component, public eResistor
         virtual void setLinkedValue( double v, int i=0 ) override;
 
         //virtual QPainterPath shape() const;
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w ) override;
 
     protected slots:
         virtual void slotProperties() override;

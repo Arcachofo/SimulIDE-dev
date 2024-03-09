@@ -44,26 +44,28 @@ LedBar::LedBar( QString type, QString id )
     setValLabelPos(-16,-44-12, 0);
 
     addPropGroup( { tr("Main"), {
-        new StrProp <LedBar>("Color", tr("Color"),"" , this
-                        , &LedBar::colorStr, &LedBar::setColorStr,0,"enum" ),
+        new StrProp<LedBar>("Color", tr("Color"), ""
+                           , this, &LedBar::colorStr, &LedBar::setColorStr,0,"enum" ),
 
-        new IntProp <LedBar>("Size" , tr("Size"),"_Leds", this
-                    , &LedBar::size, &LedBar::setSize, propNoCopy ),
+        new IntProp<LedBar>("Size" , tr("Size"), "_Leds"
+                           , this, &LedBar::size, &LedBar::setSize, propNoCopy ),
 
-        new BoolProp<LedBar>("Grounded", tr("Grounded"),"" , this
-                    , &LedBar::grounded, &LedBar::setGrounded, propNoCopy ),
+        new BoolProp<LedBar>("Grounded", tr("Grounded"), ""
+                            , this, &LedBar::grounded, &LedBar::setGrounded, propNoCopy ),
     }, 0} );
 
     addPropGroup( { tr("Electric"), {
-        new DoubProp<LedBar>("Threshold" , tr("Forward Voltage"),"V", this
-                        , &LedBar::threshold,  &LedBar::setThreshold ),
+        new DoubProp<LedBar>("Threshold" , tr("Forward Voltage"), "V"
+                            , this, &LedBar::threshold,  &LedBar::setThreshold ),
 
-        new DoubProp<LedBar>("MaxCurrent", tr("Max Current")    ,"A", this
-                        , &LedBar::maxCurrent, &LedBar::setMaxCurrent ),
+        new DoubProp<LedBar>("MaxCurrent", tr("Max Current"),"A"
+                            , this, &LedBar::maxCurrent, &LedBar::setMaxCurrent ),
 
-        new DoubProp<LedBar>("Resistance", tr("Resistance")     ,"Ω", this
-                        , &LedBar::res,        &LedBar::setRes ),
+        new DoubProp<LedBar>("Resistance", tr("Resistance"),"Ω"
+                            , this, &LedBar::res,        &LedBar::setRes ),
     }, 0} );
+
+    setPropStr("MaxCurrent", "30 mA");
 }
 LedBar::~LedBar(){}
 

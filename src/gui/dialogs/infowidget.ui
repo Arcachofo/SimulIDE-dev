@@ -24,7 +24,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>226</width>
+     <width>676</width>
      <height>244</height>
     </rect>
    </property>
@@ -158,7 +158,7 @@
     <item>
      <widget class="QLabel" name="simTime">
       <property name="sizePolicy">
-       <sizepolicy hsizetype="Ignored" vsizetype="Preferred">
+       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
         <horstretch>0</horstretch>
         <verstretch>0</verstretch>
        </sizepolicy>

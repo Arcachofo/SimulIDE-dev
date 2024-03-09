@@ -40,6 +40,7 @@ new DoubProp<CapacitorBase>("ReaStep", tr("Reactive Step"), "ns"
 
     setShowProp("Capacitance");
     setPropStr( "Capacitance", "10 µF" );
+    setPropStr( "Resistance", "1 µΩ" );
 }
 CapacitorBase::~CapacitorBase(){}
 

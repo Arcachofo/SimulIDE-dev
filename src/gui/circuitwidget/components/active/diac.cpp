@@ -69,18 +69,21 @@ Diac::Diac( QString type, QString id )
     Simulator::self()->addToUpdateList( this );
 
     addPropGroup( { tr("Main"), {
-new DoubProp<Diac>("ResOn", tr("On Resistance"),"Ω"
-                  , this, &Diac::resOn , &Diac::setResOn ),
+        new DoubProp<Diac>("ResOn", tr("On Resistance"), "Ω"
+                          , this, &Diac::resOn, &Diac::setResOn ),
 
-new DoubProp<Diac>("ResOff", tr("Off Resistance"),"Ω"
-                  , this, &Diac::resOff,   &Diac::setResOff ),
+        new DoubProp<Diac>("ResOff", tr("Off Resistance"), "Ω"
+                          , this, &Diac::resOff,   &Diac::setResOff ),
 
-new DoubProp<Diac>("BrkVolt" , tr("Breakdown Voltage"),"V"
-                  , this, &Diac::brkVolt,  &Diac::setBrkVolt ),
+        new DoubProp<Diac>("BrkVolt" , tr("Breakdown Voltage"), "V"
+                          , this, &Diac::brkVolt,  &Diac::setBrkVolt ),
 
-new DoubProp<Diac>("HoldCurr", tr("Hold Current"),"A"
-                  , this, &Diac::holdCurr, &Diac::setHoldCurr )
+        new DoubProp<Diac>("HoldCurr", tr("Hold Current"), "A"
+                          , this, &Diac::holdCurr, &Diac::setHoldCurr )
     },0} );
+
+    setPropStr("ResOff", "100 MΩ");
+    setPropStr("HoldCurr", "10 mA");
 }
 Diac::~Diac()
 {
@@ -143,9 +146,9 @@ void Diac::voltChanged()
     m_resistor->setRes( res );
 }
 
-void Diac::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
+void Diac::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w )
 {
-    Component::paint( p, option, widget );
+    Component::paint( p, o, w );
 
     p->setBrush( Qt::black );
 

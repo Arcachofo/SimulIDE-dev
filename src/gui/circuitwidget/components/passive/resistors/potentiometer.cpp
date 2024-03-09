@@ -69,14 +69,18 @@ Potentiometer::Potentiometer( QString type, QString id )
     Potentiometer::updateProxy();
 
     addPropGroup( { tr("Main"), {
-new DoubProp<Potentiometer>( "Resistance", tr("Resistance")   ,"Ω", this, &Potentiometer::getRes, &Potentiometer::setRes ),
-new DoubProp<Potentiometer>( "Value_Ohm" , tr("Current Value"),"Ω", this, &Potentiometer::getVal, &Potentiometer::setVal ),
+        new DoubProp<Potentiometer>("Resistance", tr("Resistance"),"Ω"
+                                   , this, &Potentiometer::getRes, &Potentiometer::setRes ),
+
+        new DoubProp<Potentiometer>("Value_Ohm", tr("Current Value"),"Ω"
+                                   , this, &Potentiometer::getVal, &Potentiometer::setVal ),
     },0 } );
+
     addPropGroup( { tr("Dial"), Dialed::dialProps(), groupNoCopy } );
 
     m_res1 = 0;
     setShowProp("Resistance");
-    setPropStr( "Resistance", "1000 Ω" );
+    setPropStr("Resistance", "1 kΩ");
     dialChanged( 500 );
 }
 Potentiometer::~Potentiometer() {}
@@ -146,11 +150,12 @@ void Potentiometer::updateProxy()
     m_proxy->setPos( QPoint(-m_dialW.width()/2,-m_dialW.height()-5) );
 }
 
-void Potentiometer::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
+void Potentiometer::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w )
 {
     if( m_hidden ) return;
 
-    Component::paint( p, option, widget );
+    Component::paint( p, o, w );
+
     p->drawRect( QRectF(-11,-4.5, 22, 9 ));
     QPen pen = p->pen();
     pen.setWidth(3);

@@ -50,7 +50,7 @@ class LedMatrix : public Component, public eElement
         virtual QStringList getEnumUids( QString ) override;
         virtual QStringList getEnumNames( QString ) override;
         
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w ) override;
 
     private:
         void setupMatrix( int rows, int cols );

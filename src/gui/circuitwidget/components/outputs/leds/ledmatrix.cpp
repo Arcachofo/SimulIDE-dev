@@ -48,29 +48,31 @@ LedMatrix::LedMatrix( QString type, QString id )
     createMatrix();
 
     addPropGroup( { tr("Main"), {
-        new StrProp <LedMatrix>("Color", tr("Color"),"", this
-                  , &LedMatrix::colorStr, &LedMatrix::setColorStr,0,"enum" ),
+        new StrProp <LedMatrix>("Color", tr("Color"), ""
+                               , this, &LedMatrix::colorStr, &LedMatrix::setColorStr,0,"enum" ),
 
-        new IntProp <LedMatrix>("Rows", tr("Rows"),"_Leds", this
-                  , &LedMatrix::rows, &LedMatrix::setRows, propNoCopy,"uint" ),
+        new IntProp <LedMatrix>("Rows", tr("Rows"), "_Leds"
+                               , this, &LedMatrix::rows, &LedMatrix::setRows, propNoCopy,"uint" ),
 
-        new IntProp <LedMatrix>("Cols", tr("Columns"),"_Leds", this
-                  , &LedMatrix::cols, &LedMatrix::setCols, propNoCopy,"uint" ),
+        new IntProp <LedMatrix>("Cols", tr("Columns"), "_Leds"
+                               , this, &LedMatrix::cols, &LedMatrix::setCols, propNoCopy,"uint" ),
 
-        new BoolProp<LedMatrix>("Vertical_Pins", tr("Vertical Pins"),"", this
-                  , &LedMatrix::verticalPins, &LedMatrix::setVerticalPins, propNoCopy ),
+        new BoolProp<LedMatrix>("Vertical_Pins", tr("Vertical Pins"),""
+                               , this, &LedMatrix::verticalPins, &LedMatrix::setVerticalPins, propNoCopy ),
     }, 0} );
 
     addPropGroup( { tr("Electric"), {
-        new DoubProp<LedMatrix>("Threshold", tr("Forward Voltage"),"V", this
-                  , &LedMatrix::threshold, &LedMatrix::setThreshold ),
+        new DoubProp<LedMatrix>("Threshold", tr("Forward Voltage") ,"V"
+                               , this, &LedMatrix::threshold, &LedMatrix::setThreshold ),
 
-        new DoubProp<LedMatrix>("MaxCurrent", tr("Max Current"),"A", this
-                  , &LedMatrix::maxCurrent, &LedMatrix::setMaxCurrent ),
+        new DoubProp<LedMatrix>("MaxCurrent", tr("Max Current"), "A"
+                               , this, &LedMatrix::maxCurrent, &LedMatrix::setMaxCurrent ),
 
-        new DoubProp<LedMatrix>("Resistance", tr("Resistance"),"Ω", this
-                  , &LedMatrix::res, &LedMatrix::setRes ),
+        new DoubProp<LedMatrix>("Resistance", tr("Resistance"), "Ω"
+                               , this, &LedMatrix::res, &LedMatrix::setRes ),
     }, 0} );
+
+    setPropStr("MaxCurrent", "20 mA");
 }
 LedMatrix::~LedMatrix(){}
 
@@ -269,9 +271,9 @@ void LedMatrix::remove()
     Component::remove();
 }
 
-void LedMatrix::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget )
+void LedMatrix::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w )
 {
-    Component::paint( p, option, widget );
+    Component::paint( p, o, w );
     p->drawRoundRect( m_area, 4, 4 );
 
     Component::paintSelected( p );

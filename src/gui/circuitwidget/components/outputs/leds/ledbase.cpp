@@ -51,15 +51,25 @@ LedBase::LedBase( QString type, QString id )
     Simulator::self()->addToUpdateList( this );
 
     addPropGroup( { tr("Main"), {
-new StrProp <LedBase>("Color"   , tr("Color")   ,"", this, &LedBase::colorStr, &LedBase::setColorStr,0,"enum" ),
-new BoolProp<LedBase>("Grounded", tr("Grounded"),"", this, &LedBase::grounded, &LedBase::setGrounded, propNoCopy ),
+        new StrProp <LedBase>("Color", tr("Color"), ""
+                             , this, &LedBase::colorStr, &LedBase::setColorStr,0,"enum" ),
+
+        new BoolProp<LedBase>("Grounded", tr("Grounded"), ""
+                             , this, &LedBase::grounded, &LedBase::setGrounded, propNoCopy ),
     }, 0} );
 
     addPropGroup( { tr("Electric"), {
-new DoubProp<LedBase>("Threshold" , tr("Forward Voltage"),"V", this, &LedBase::threshold,  &LedBase::setThreshold ),
-new DoubProp<LedBase>("MaxCurrent", tr("Max Current")    ,"A", this, &LedBase::maxCurrent, &LedBase::setMaxCurrent ),
-new DoubProp<LedBase>("Resistance", tr("Resistance")     ,"Ω", this, &LedBase::res,        &LedBase::setRes ),
+        new DoubProp<LedBase>("Threshold", tr("Forward Voltage"), "V"
+                             , this, &LedBase::threshold, &LedBase::setThreshold ),
+
+        new DoubProp<LedBase>("MaxCurrent", tr("Max Current"), "A"
+                             , this, &LedBase::maxCurrent, &LedBase::setMaxCurrent ),
+
+        new DoubProp<LedBase>("Resistance", tr("Resistance"), "Ω"
+                             , this, &LedBase::res, &LedBase::setRes ),
     }, 0} );
+
+    setPropStr("MaxCurrent", "30 mA");
 }
 LedBase::~LedBase(){}
 
@@ -157,9 +167,9 @@ QColor LedBase::getColor(LedColor c, int bright )
     }
     return foreColor;
 }
-void LedBase::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
+void LedBase::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w )
 {
-    Component::paint( p, option, widget );
+    Component::paint( p, o, w );
 
     QPen pen( Qt::black, 4, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin );
     QColor foreColor;

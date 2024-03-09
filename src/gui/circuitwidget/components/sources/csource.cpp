@@ -69,12 +69,23 @@ Csource::Csource( QString type, QString id )
     Simulator::self()->addToUpdateList( this );
 
     addPropGroup( { tr("Main"), {
-new BoolProp<Csource>( "CurrSource"  , tr("Current Source")    ,"" , this, &Csource::currSource , &Csource::setCurrSource ),
-new BoolProp<Csource>( "CurrControl" , tr("Current Controlled"),"" , this, &Csource::currControl, &Csource::setCurrControl, propNoCopy ),
-new BoolProp<Csource>( "Control_Pins", tr("Use Control Pins")  ,"" , this, &Csource::controlPins, &Csource::setControlPins, propNoCopy ),
-new DoubProp<Csource>( "Gain"        , tr("Gain")              ,"" , this, &Csource::gain       , &Csource::setGain ),
-new DoubProp<Csource>( "Voltage"     , tr("Voltage")           ,"V", this, &Csource::volt       , &Csource::setVolt ),
-new DoubProp<Csource>( "Current"     , tr("Current")           ,"A", this, &Csource::outCurrent , &Csource::setOutCurrent )
+        new BoolProp<Csource>("Control_Pins", tr("Use Control Pins"), ""
+                             , this, &Csource::controlPins, &Csource::setControlPins, propNoCopy ),
+
+        new BoolProp<Csource>("CurrSource", tr("Current Source"),""
+                             , this, &Csource::currSource , &Csource::setCurrSource ),
+
+        new BoolProp<Csource>("CurrControl", tr("Current Controlled"), ""
+                             , this, &Csource::currControl, &Csource::setCurrControl, propNoCopy ),
+
+        new DoubProp<Csource>("Gain", tr("Gain"), ""
+                             , this, &Csource::gain, &Csource::setGain ),
+
+        new DoubProp<Csource>("Voltage", tr("Voltage"), "V"
+                             , this, &Csource::volt, &Csource::setVolt ),
+
+        new DoubProp<Csource>("Current", tr("Current"), "A"
+                             , this, &Csource::outCurrent , &Csource::setOutCurrent )
     }, 0 } );
 }
 Csource::~Csource() {}
@@ -250,9 +261,9 @@ void Csource::slotProperties()
     updtProperties();
 }
 
-void Csource::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
+void Csource::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w )
 {
-    Component::paint( p, option, widget );
+    Component::paint( p, o, w);
 
     QPen pen = p->pen();
 

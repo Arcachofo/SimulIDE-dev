@@ -62,20 +62,46 @@ LedRgb::LedRgb( QString type, QString id )
     Simulator::self()->addToUpdateList( this );
 
     addPropGroup( { tr("Electric"), {
-new BoolProp<LedRgb>( "CommonCathode", tr("Common Cathode"),"",  this, &LedRgb::isComCathode, &LedRgb::setComCathode, propNoCopy),
-new ComProperty( "", tr("Red:"),"","",0),
-new DoubProp<LedRgb>( "Threshold_R" , tr("Forward Voltage"),"V", this, &LedRgb::threshold_R,  &LedRgb::setThreshold_R ),
-new DoubProp<LedRgb>( "MaxCurrent_R", tr("Max Current")    ,"A", this, &LedRgb::maxCurrent_R, &LedRgb::setMaxCurrent_R ),
-new DoubProp<LedRgb>( "Resistance_R", tr("Resistance")     ,"Ω", this, &LedRgb::res_R,        &LedRgb::setRes_R ),
-new ComProperty( "", tr("Green:"),"","",0),
-new DoubProp<LedRgb>( "Threshold_G" , tr("Forward Voltage"),"V", this, &LedRgb::threshold_G,  &LedRgb::setThreshold_G ),
-new DoubProp<LedRgb>( "MaxCurrent_G", tr("Max Current")    ,"A", this, &LedRgb::maxCurrent_G, &LedRgb::setMaxCurrent_G ),
-new DoubProp<LedRgb>( "Resistance_G", tr("Resistance")     ,"Ω", this, &LedRgb::res_G,        &LedRgb::setRes_G ),
-new ComProperty( "", tr("Blue:"),"","",0),
-new DoubProp<LedRgb>( "Threshold_B" , tr("Forward Voltage"),"V", this, &LedRgb::threshold_B,  &LedRgb::setThreshold_B ),
-new DoubProp<LedRgb>( "MaxCurrent_B", tr("Max Current")    ,"A", this, &LedRgb::maxCurrent_B, &LedRgb::setMaxCurrent_B ),
-new DoubProp<LedRgb>( "Resistance_B", tr("Resistance")     ,"Ω", this, &LedRgb::res_B,        &LedRgb::setRes_B )
+        new BoolProp<LedRgb>("CommonCathode", tr("Common Cathode"), ""
+                            , this, &LedRgb::isComCathode, &LedRgb::setComCathode, propNoCopy),
+
+        new ComProperty("", tr("Red:"),"","",0),
+
+        new DoubProp<LedRgb>("Threshold_R" , tr("Forward Voltage"), "V"
+                            , this, &LedRgb::threshold_R, &LedRgb::setThreshold_R ),
+
+        new DoubProp<LedRgb>("MaxCurrent_R", tr("Max Current"), "A"
+                                , this, &LedRgb::maxCurrent_R, &LedRgb::setMaxCurrent_R ),
+
+        new DoubProp<LedRgb>("Resistance_R", tr("Resistance"), "Ω"
+                            , this, &LedRgb::res_R, &LedRgb::setRes_R ),
+
+        new ComProperty("", tr("Green:"),"","",0),
+
+        new DoubProp<LedRgb>("Threshold_G" , tr("Forward Voltage"), "V"
+                            , this, &LedRgb::threshold_G, &LedRgb::setThreshold_G ),
+
+        new DoubProp<LedRgb>("MaxCurrent_G", tr("Max Current"), "A"
+                                , this, &LedRgb::maxCurrent_G, &LedRgb::setMaxCurrent_G ),
+
+        new DoubProp<LedRgb>("Resistance_G", tr("Resistance"), "Ω"
+                            , this, &LedRgb::res_G, &LedRgb::setRes_G ),
+
+        new ComProperty("", tr("Blue:"),"","",0),
+
+        new DoubProp<LedRgb>("Threshold_B" , tr("Forward Voltage"),"V"
+                            , this, &LedRgb::threshold_B, &LedRgb::setThreshold_B ),
+
+        new DoubProp<LedRgb>("MaxCurrent_B", tr("Max Current"),"A"
+                            , this, &LedRgb::maxCurrent_B, &LedRgb::setMaxCurrent_B ),
+
+        new DoubProp<LedRgb>("Resistance_B", tr("Resistance"),"Ω"
+                            , this, &LedRgb::res_B, &LedRgb::setRes_B )
     }, 0} );
+
+    setPropStr("MaxCurrent_R", "30 mA");
+    setPropStr("MaxCurrent_G", "30 mA");
+    setPropStr("MaxCurrent_B", "30 mA");
 }
 LedRgb::~LedRgb(){}
 
@@ -188,9 +214,9 @@ void LedRgb::setHidden( bool hid, bool hidArea, bool hidLabel )
     }
 }
 
-void LedRgb::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
+void LedRgb::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w )
 {
-    Component::paint( p, option, widget );
+    Component::paint( p, o, w );
 
     QPen pen(Qt::black, 4, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
     QColor color;

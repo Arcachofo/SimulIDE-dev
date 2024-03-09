@@ -60,18 +60,33 @@ Relay::Relay( QString type, QString id )
     SetupSwitches( 1, 1 );
 
     addPropGroup( { tr("Main"), {
-new BoolProp<Relay>( "Norm_Close", tr("Normally Closed"),"", this, &Relay::nClose, &Relay::setNClose ),
-new BoolProp<Relay>( "DT"        , tr("Double Throw")   ,"", this, &Relay::dt,     &Relay::setDt, propNoCopy ),
-new IntProp <Relay>( "Poles"     , tr("Poles")          ,"", this, &Relay::poles,  &Relay::setPoles, propNoCopy,"uint" ),
+        new BoolProp<Relay>("Norm_Close", tr("Normally Closed"),""
+                           , this, &Relay::nClose, &Relay::setNClose ),
+
+        new BoolProp<Relay>("DT", tr("Double Throw"),""
+                           , this, &Relay::dt, &Relay::setDt, propNoCopy ),
+
+        new IntProp <Relay>("Poles", tr("Poles"),""
+                           , this, &Relay::poles, &Relay::setPoles, propNoCopy,"uint" ),
     }, 0} );
+
     addPropGroup( { tr("Electric"), {
-new DoubProp<Relay>( "IOn" , tr("IOn") ,"A", this, &Relay::iTrig, &Relay::setITrig),
-new DoubProp<Relay>( "IOff", tr("IOff"),"A", this, &Relay::iRel,  &Relay::setIRel )
+        new DoubProp<Relay>("IOn" , tr("IOn"),"A"
+                           , this, &Relay::iTrig, &Relay::setITrig),
+
+        new DoubProp<Relay>("IOff", tr("IOff"),"A"
+                           , this, &Relay::iRel, &Relay::setIRel )
     }, 0} );
+
     addPropGroup( { tr("Coil"), {
-new DoubProp<Inductor>("Inductance", tr("Inductance"),"H", m_inductor, &Inductor::value , &Inductor::setValue ),
-new DoubProp<Inductor>("Rcoil"     , tr("Resistance"),"Ω", m_inductor, &Inductor::resist, &Inductor::setResist),
-new DoubProp<Inductor>("ReaStep", tr("Reactive Step"),"ns",m_inductor, &Inductor::reaStep, &Inductor::setReaStep,0,"uint" )
+        new DoubProp<Inductor>("Inductance", tr("Inductance"),"H"
+                              , m_inductor, &Inductor::value , &Inductor::setValue ),
+
+        new DoubProp<Inductor>("Rcoil", tr("Resistance"),"Ω"
+                              , m_inductor, &Inductor::resist, &Inductor::setResist),
+
+        new DoubProp<Inductor>("ReaStep", tr("Reactive Step"),"ns"
+                              ,m_inductor, &Inductor::reaStep, &Inductor::setReaStep,0,"uint" )
     }, 0} );
 }
 Relay::~Relay(){}

@@ -39,7 +39,7 @@ class Diac : public Component, public eElement
         double holdCurr() { return m_holdCurr; }
         void setHoldCurr( double v ) { m_holdCurr = v; m_changed = true; }
 
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w ) override;
 
     private:
 

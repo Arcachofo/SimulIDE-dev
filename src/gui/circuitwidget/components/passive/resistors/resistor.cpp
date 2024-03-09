@@ -37,17 +37,18 @@ Resistor::Resistor( QString type, QString id )
     m_pin[1]->setLength( 5 );
 
     addPropGroup( { tr("Main"), {
-new DoubProp<Resistor>( "Resistance", tr("Resistance"), "Ω", this, &Resistor::getRes, &Resistor::setResSafe )
+        new DoubProp<Resistor>("Resistance", tr("Resistance"), "Ω"
+                              , this, &Resistor::getRes, &Resistor::setResSafe )
     }, 0 } );
 
     setShowProp("Resistance");
-    setPropStr( "Resistance", "100" );
+    setPropStr("Resistance", "100");
 }
 Resistor::~Resistor(){}
 
-void Resistor::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
+void Resistor::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w )
 {
-    Component::paint( p, option, widget );
+    Component::paint( p, o, w );
     p->drawRect( m_area );
 
     Component::paintSelected( p );

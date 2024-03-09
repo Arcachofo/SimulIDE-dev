@@ -17,6 +17,9 @@ class Lamp : public Comp2Pin, public eResistor
         Lamp( QString type, QString id );
         ~Lamp();
 
+ static Component* construct( QString type, QString id );
+ static LibraryItem* libraryItem();
+
         virtual void initialize() override;
         virtual void stamp() override;
         virtual void updateStep() override;
@@ -25,10 +28,7 @@ class Lamp : public Comp2Pin, public eResistor
         double maxCurrent()             { return m_maxCurrent; }
         void  setMaxCurrent( double c ) { m_maxCurrent = c; }
 
- static Component* construct( QString type, QString id );
- static LibraryItem* libraryItem();
-
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w ) override;
 
     private:
         virtual void updateVI() override;
@@ -47,4 +47,3 @@ class Lamp : public Comp2Pin, public eResistor
 };
 
 #endif
-

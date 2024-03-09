@@ -32,11 +32,19 @@ Clock::Clock( QString type, QString id )
      : ClockBase( type, id )
 {
     remPropGroup( tr("Main") );
+
     addPropGroup( { tr("Main"), {
-new DoubProp<Clock>( "Voltage"  , tr("Voltage")  ,"V" , this, &Clock::volt,     &Clock::setVolt ),
-new DoubProp<Clock>( "Freq"     , tr("Frequency"),"Hz", this, &Clock::freq,     &Clock::setFreq ),
-new BoolProp<Clock>( "Always_On", tr("Always On"),""  , this, &Clock::alwaysOn, &Clock::setAlwaysOn ),
+        new DoubProp<Clock>("Voltage", tr("Voltage"), "V"
+                           , this, &Clock::volt, &Clock::setVolt ),
+
+        new DoubProp<Clock>("Freq", tr("Frequency"),"Hz"
+                           , this, &Clock::freq, &Clock::setFreq ),
+
+        new BoolProp<Clock>("Always_On", tr("Always On"), ""
+                           , this, &Clock::alwaysOn, &Clock::setAlwaysOn ),
     }, 0} );
+
+    setPropStr("Freq", "1 kHz");
 }
 Clock::~Clock(){}
 

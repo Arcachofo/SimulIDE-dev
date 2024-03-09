@@ -76,15 +76,18 @@ Triac::Triac( QString type, QString id )
     Simulator::self()->addToUpdateList( this );
 
     addPropGroup( { tr("Main"), {
-new DoubProp<Triac>("GateRes", tr("Gate Resistance"),"Ω"
-                   , this, &Triac::gateRes, &Triac::setGateRes ),
+        new DoubProp<Triac>("GateRes", tr("Gate Resistance"), "Ω"
+                           , this, &Triac::gateRes, &Triac::setGateRes ),
 
-new DoubProp<Triac>("TrigCurr", tr("Trigger Current"),"A"
-                   , this, &Triac::trigCurr, &Triac::setTrigCurr ),
+        new DoubProp<Triac>("TrigCurr", tr("Trigger Current"), "A"
+                           , this, &Triac::trigCurr, &Triac::setTrigCurr ),
 
-new DoubProp<Triac>("HoldCurr", tr("Holding Current"),"A"
-                   , this, &Triac::holdCurr, &Triac::setHoldCurr )
+        new DoubProp<Triac>("HoldCurr", tr("Holding Current"), "A"
+                           , this, &Triac::holdCurr, &Triac::setHoldCurr )
     },0 } );
+
+    setPropStr("TrigCurr", "10 mA");
+    setPropStr("HoldCurr", "8.2 mA");
 }
 Triac::~Triac()
 {
@@ -150,9 +153,9 @@ void Triac::voltChanged()
     }
 }
 
-void Triac::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
+void Triac::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w )
 {
-    Component::paint( p, option, widget );
+    Component::paint( p, o, w );
 
     p->setBrush( Qt::black );
 

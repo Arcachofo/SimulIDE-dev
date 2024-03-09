@@ -39,7 +39,7 @@ class LedBase : public Component, public eLed
 
  static QColor getColor( LedColor c, int bright );
 
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w ) override;
 
     protected:
         virtual void drawBackground( QPainter* p )=0;

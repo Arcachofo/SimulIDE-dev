@@ -32,7 +32,7 @@ class Potentiometer : public Dialed, public eElement
 
         virtual void setLinkedValue( double v, int i=0 ) override;
 
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w ) override;
 
     protected:
         virtual void updateProxy() override;

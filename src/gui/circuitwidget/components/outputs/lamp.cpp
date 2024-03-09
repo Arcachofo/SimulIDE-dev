@@ -45,8 +45,11 @@ Lamp::Lamp( QString type, QString id )
     Lamp::initialize();
 
     addPropGroup( { tr("Main"), {
-new DoubProp<Lamp>( "Resistance", tr("Resistance"), "Ω", this, &Lamp::getRes, &Lamp::setResSafe ),
-new DoubProp<Lamp>( "MaxCurrent", tr("Max Current"),"A", this, &Lamp::maxCurrent, &Lamp::setMaxCurrent ),
+        new DoubProp<Lamp>("Resistance", tr("Resistance"), "Ω"
+                          , this, &Lamp::getRes, &Lamp::setResSafe ),
+
+        new DoubProp<Lamp>("MaxCurrent", tr("Max Current"),"A"
+                          , this, &Lamp::maxCurrent, &Lamp::setMaxCurrent ),
     },0 } );
 }
 Lamp::~Lamp(){}
@@ -133,9 +136,9 @@ void Lamp::updateBright()
         m_intensity  = uint32_t(m_brightness*255)+25;
 }   }
 
-void Lamp::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
+void Lamp::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w )
 {
-    Component::paint( p, option, widget );
+    Component::paint( p, o, w );
 
     QColor color;
 

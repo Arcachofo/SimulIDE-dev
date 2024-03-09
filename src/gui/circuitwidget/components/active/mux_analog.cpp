@@ -56,12 +56,14 @@ MuxAnalog::MuxAnalog( QString type, QString id )
     Simulator::self()->addToUpdateList( this );
 
     addPropGroup( { tr("Main"), {
-new IntProp <MuxAnalog>("Address_Bits", tr("Address Size"),"_bits"
-                       , this, &MuxAnalog::addrBits, &MuxAnalog::setAddrBits, propNoCopy,"uint" ),
+        new IntProp <MuxAnalog>("Address_Bits", tr("Address Size"), "_bits"
+                               , this, &MuxAnalog::addrBits, &MuxAnalog::setAddrBits, propNoCopy,"uint" ),
 
-new DoubProp<MuxAnalog>("Impedance", tr("Impedance"),"Ω"
-                        , this, &MuxAnalog::impedance, &MuxAnalog::setImpedance ),
+        new DoubProp<MuxAnalog>("Impedance", tr("Impedance"), "Ω"
+                               , this, &MuxAnalog::impedance, &MuxAnalog::setImpedance ),
     },0} );
+
+    setPropStr("Impedance", "1 mΩ");
 }
 MuxAnalog::~MuxAnalog(){}
 
@@ -220,9 +222,9 @@ void MuxAnalog::remove()
     Component::remove();
 }
 
-void MuxAnalog::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
+void MuxAnalog::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w )
 {
-    Component::paint( p, option, widget );
+    Component::paint( p, o, w );
     p->drawRoundRect( m_area, 4, 4 );
 
     Component::paintSelected( p );

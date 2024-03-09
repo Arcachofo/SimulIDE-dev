@@ -26,7 +26,7 @@ class VarResBase : public Dialed, public eResistor
         void setVal( double val );
 
         double getStep() { return m_step; }
-        void setStep( double step ) { if( step<0 ) step=0;m_step = step ; }
+        void setStep( double step ) { if( step<0 ) step=0; m_step = step ; }
 
         virtual void setLinkedValue( double v, int i=0 ) override;
 
