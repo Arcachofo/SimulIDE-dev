@@ -8,7 +8,7 @@ Property: (default value)
 - Voltage: (5 V)
    Set output voltage.
 
-- Frequency:  (1000 Hz)
+- Frequency:  (1 kHz)
    Set output frequency.
 
 - Always On: (yes)

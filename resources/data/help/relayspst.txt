@@ -15,14 +15,14 @@ Main:
 
 
 Electric:
-- IOn: (0.02 A)
+- IOn: (20 mA)
    Minimun current that activates the relay.
 
-- IOff: (0.01 A)
+- IOff: (10 mA)
    Minimun current that holds the relay active.
 
 Coil:
-- Inductance: (0.1 H)
+- Inductance: (100 mH)
    Coil inductance.
 
 - Resistance: (100 Ω)

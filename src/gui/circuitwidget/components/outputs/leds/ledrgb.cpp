@@ -70,7 +70,7 @@ LedRgb::LedRgb( QString type, QString id )
         new DoubProp<LedRgb>("Threshold_R" , tr("Forward Voltage"), "V"
                             , this, &LedRgb::threshold_R, &LedRgb::setThreshold_R ),
 
-        new DoubProp<LedRgb>("MaxCurrent_R", tr("Max Current"), "A"
+        new DoubProp<LedRgb>("MaxCurrent_R", tr("Max Current"), "mA"
                                 , this, &LedRgb::maxCurrent_R, &LedRgb::setMaxCurrent_R ),
 
         new DoubProp<LedRgb>("Resistance_R", tr("Resistance"), "Ω"
@@ -81,7 +81,7 @@ LedRgb::LedRgb( QString type, QString id )
         new DoubProp<LedRgb>("Threshold_G" , tr("Forward Voltage"), "V"
                             , this, &LedRgb::threshold_G, &LedRgb::setThreshold_G ),
 
-        new DoubProp<LedRgb>("MaxCurrent_G", tr("Max Current"), "A"
+        new DoubProp<LedRgb>("MaxCurrent_G", tr("Max Current"), "mA"
                                 , this, &LedRgb::maxCurrent_G, &LedRgb::setMaxCurrent_G ),
 
         new DoubProp<LedRgb>("Resistance_G", tr("Resistance"), "Ω"
@@ -92,16 +92,12 @@ LedRgb::LedRgb( QString type, QString id )
         new DoubProp<LedRgb>("Threshold_B" , tr("Forward Voltage"),"V"
                             , this, &LedRgb::threshold_B, &LedRgb::setThreshold_B ),
 
-        new DoubProp<LedRgb>("MaxCurrent_B", tr("Max Current"),"A"
+        new DoubProp<LedRgb>("MaxCurrent_B", tr("Max Current"),"mA"
                             , this, &LedRgb::maxCurrent_B, &LedRgb::setMaxCurrent_B ),
 
         new DoubProp<LedRgb>("Resistance_B", tr("Resistance"),"Ω"
                             , this, &LedRgb::res_B, &LedRgb::setRes_B )
     }, 0} );
-
-    setPropStr("MaxCurrent_R", "30 mA");
-    setPropStr("MaxCurrent_G", "30 mA");
-    setPropStr("MaxCurrent_B", "30 mA");
 }
 LedRgb::~LedRgb(){}
 

@@ -1,6 +1,5 @@
-- Invert Output: (no)
-   Invert output pin.
-
-- Open Drain: (no)
-   If yes, output act as an open drain:
-   It can sink but not source current.
+- Input Size: (2)
+   Number of input pins.
+   
+- Invert Inputs: (no)
+   Invert input pins.

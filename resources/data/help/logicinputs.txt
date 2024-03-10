@@ -5,5 +5,5 @@ Inputs:
 - High to Low Threshold: (2.5 V)
    Voltage to change from High to Low logic state.
 
-- Input Impedance: (1e+9 Ω)
+- Input Impedance: (100 MΩ)
    Impedance of digital input.

@@ -5,13 +5,13 @@ Property: (default value)
 - On Resistance: (500 Ω)
    Resistance when conducing.
 
-- Off Resistance: (1e+08 Ω)
+- Off Resistance: (100 MΩ)
    Resistance when not conducing.
 
 - Breakdwn Voltage (30 V)
     Voltage to start conducing.
 
-- Holding Current: (0.01 A)
+- Holding Current: (10 mA)
    Minimum current to keep conducing.
 
 

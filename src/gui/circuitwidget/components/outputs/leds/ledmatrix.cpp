@@ -65,14 +65,12 @@ LedMatrix::LedMatrix( QString type, QString id )
         new DoubProp<LedMatrix>("Threshold", tr("Forward Voltage") ,"V"
                                , this, &LedMatrix::threshold, &LedMatrix::setThreshold ),
 
-        new DoubProp<LedMatrix>("MaxCurrent", tr("Max Current"), "A"
+        new DoubProp<LedMatrix>("MaxCurrent", tr("Max Current"), "mA"
                                , this, &LedMatrix::maxCurrent, &LedMatrix::setMaxCurrent ),
 
         new DoubProp<LedMatrix>("Resistance", tr("Resistance"), "Ω"
                                , this, &LedMatrix::res, &LedMatrix::setRes ),
     }, 0} );
-
-    setPropStr("MaxCurrent", "20 mA");
 }
 LedMatrix::~LedMatrix(){}
 

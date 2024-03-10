@@ -73,15 +73,12 @@ SCR::SCR( QString type, QString id )
         new DoubProp<SCR>("GateRes", tr("Gate Resistance"), "Ω"
                          , this, &SCR::gateRes, &SCR::setGateRes ),
 
-        new DoubProp<SCR>("TrigCurr", tr("Trigger Current"), "A"
+        new DoubProp<SCR>("TrigCurr", tr("Trigger Current"), "mA"
                          , this, &SCR::trigCurr, &SCR::setTrigCurr ),
 
-        new DoubProp<SCR>("HoldCurr", tr("Holding Current"), "A"
+        new DoubProp<SCR>("HoldCurr", tr("Holding Current"), "mA"
                          , this, &SCR::holdCurr, &SCR::setHoldCurr )
     },0 } );
-
-    setPropStr("TrigCurr", "10 mA");
-    setPropStr("HoldCurr", "8.2 mA");
 }
 SCR::~SCR()
 {

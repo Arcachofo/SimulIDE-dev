@@ -68,43 +68,41 @@ PlotBase::PlotBase( QString type, QString id )
     m_exportFile = changeExt( Circuit::self()->getFilePath(), "_"+id+".vcd" );
 
     addPropGroup( { tr("Main"), {
-        new IntProp <PlotBase>("Basic_X",tr("Screen Width") ,tr("_Px")
-                                , this, &PlotBase::baSizeX,    &PlotBase::setBaSizeX   ,0,"uint" ),
+        new IntProp <PlotBase>("Basic_X",tr("Screen Width"), tr("_Px")
+                              , this, &PlotBase::baSizeX, &PlotBase::setBaSizeX,0,"uint" ),
 
         new IntProp <PlotBase>("Basic_Y",tr("Screen Height"),tr("_Px")
-                                , this, &PlotBase::baSizeY,    &PlotBase::setBaSizeY   ,0,"uint" ),
+                              , this, &PlotBase::baSizeY, &PlotBase::setBaSizeY,0,"uint" ),
 
         new IntProp <PlotBase>("BufferSize",tr("Buffer Size"),""
-                                , this, &PlotBase::bufferSize, &PlotBase::setBufferSize,0,"uint" ),
+                              , this, &PlotBase::bufferSize, &PlotBase::setBufferSize,0,"uint" ),
 
         new BoolProp<PlotBase>("connectGnd",tr("Connect to ground"),""
-                                , this, &PlotBase::connectGnd, &PlotBase::setConnectGnd,0 ),
+                              , this, &PlotBase::connectGnd, &PlotBase::setConnectGnd,0 ),
 
-        new DoubProp<PlotBase>("InputImped",tr("Impedance"),"Ω"
-                                , this, &PlotBase::inputImped, &PlotBase::setInputImped )
+        new DoubProp<PlotBase>("InputImped",tr("Impedance"),"MΩ"
+                              , this, &PlotBase::inputImped, &PlotBase::setInputImped )
     }, groupNoCopy} );
 
     addPropGroup( {"Hidden", {
         new StrProp<PlotBase>("TimDiv" ,"",""
-                               , this, &PlotBase::timDiv,  &PlotBase::setTimDiv ),
+                             , this, &PlotBase::timDiv, &PlotBase::setTimDiv ),
 
         new StrProp<PlotBase>("TimPos","",""
-                               , this, &PlotBase::timPos,  &PlotBase::setTimPos ),
+                             , this, &PlotBase::timPos, &PlotBase::setTimPos ),
 
         new StrProp<PlotBase>("VolDiv","",""
-                               , this, &PlotBase::volDiv,  &PlotBase::setVolDiv ),
+                             , this, &PlotBase::volDiv, &PlotBase::setVolDiv ),
 
         new StrProp<PlotBase>("Conds","",""
-                               , this, &PlotBase::conds,   &PlotBase::setConds ),
+                             , this, &PlotBase::conds, &PlotBase::setConds ),
 
         new StrProp<PlotBase>("Tunnels","",""
-                               , this, &PlotBase::tunnels, &PlotBase::setTunnels ),
+                             , this, &PlotBase::tunnels, &PlotBase::setTunnels ),
 
         new IntProp<PlotBase>("Trigger","",""
-                               , this, &PlotBase::trigger, &PlotBase::setTrigger ),
+                             , this, &PlotBase::trigger, &PlotBase::setTrigger ),
     }, groupHidden } );
-
-    setPropStr("InputImped", "10 MΩ");
 }
 PlotBase::~PlotBase()
 {

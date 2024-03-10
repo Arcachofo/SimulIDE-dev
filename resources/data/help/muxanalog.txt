@@ -6,6 +6,6 @@ Property: (default value)
    Determines number of channels:
    n = 2^Address_Size
 
-- Impedance: (0.001 Ω)
+- Impedance: (1 mΩ)
 
 

@@ -82,7 +82,7 @@ WaveGen::WaveGen( QString type, QString id )
 new StrProp <WaveGen>("Wave_Type", tr("Wave Type"),""
                      , this, &WaveGen::waveType, &WaveGen::setWaveType,0,"enum" ),
 
-new DoubProp<WaveGen>("Freq", tr("Frequency"),"Hz"
+new DoubProp<WaveGen>("Freq", tr("Frequency"),"kHz"
                      , this, &WaveGen::freq, &WaveGen::setFreq ),
 
 new DoubProp<WaveGen>("Phase", tr("Phase shift"),"_º"
@@ -116,7 +116,6 @@ new DoubProp<WaveGen>("Mid_Volt", tr("Middle Voltage"),"V"
     },0} );
 
     setWaveType("Sine");
-    setPropStr("Freq", "1 kHz");
 }
 WaveGen::~WaveGen()
 {

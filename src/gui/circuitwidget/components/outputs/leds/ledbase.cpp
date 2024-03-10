@@ -62,14 +62,12 @@ LedBase::LedBase( QString type, QString id )
         new DoubProp<LedBase>("Threshold", tr("Forward Voltage"), "V"
                              , this, &LedBase::threshold, &LedBase::setThreshold ),
 
-        new DoubProp<LedBase>("MaxCurrent", tr("Max Current"), "A"
+        new DoubProp<LedBase>("MaxCurrent", tr("Max Current"), "mA"
                              , this, &LedBase::maxCurrent, &LedBase::setMaxCurrent ),
 
         new DoubProp<LedBase>("Resistance", tr("Resistance"), "Ω"
                              , this, &LedBase::res, &LedBase::setRes ),
     }, 0} );
-
-    setPropStr("MaxCurrent", "30 mA");
 }
 LedBase::~LedBase(){}
 

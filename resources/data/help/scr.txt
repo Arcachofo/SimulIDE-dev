@@ -2,13 +2,13 @@ Silicon controlled rectifier.
 
 Property: (default value)
 
-- Gate Resistance: (500 Ω)
+- Gate Resistance: (100 Ω)
    Gate to to Cathode Resistance.
 
-- Holding Current: (0.01 A)
+- Holding Current: (10 mA)
    Minimum current to start conducing.
 
-- Holding Current: (0.0082 A)
+- Holding Current: (8.2 mA)
    Minimum current to keep conducing.
 
 

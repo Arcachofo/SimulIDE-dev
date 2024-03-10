@@ -12,7 +12,7 @@ Red:
 - Fordward Voltage: (2.4 V)
    Voltage drop for red channel when fordward biased.
 
-- Max Current: (0.03 A)
+- Max Current: (30 mA)
    Maximum current for red channel (it will blink if exeeded).
    Maximum brightness is reached at this current.
 
@@ -23,7 +23,7 @@ Green:
 - Fordward Voltage: (3.5 V)
    Voltage drop for green channel when fordward biased.
 
-- Max Current: (0.03 A)
+- Max Current: (30 mA)
    Maximum current for green channel (it will blink if exeeded).
    Maximum brightness is reached at this current.
 
@@ -34,7 +34,7 @@ Blue:
 - Fordward Voltage: (3.5 V)
    Voltage drop for blue channel when fordward biased.
 
-- Max Current: (0.03 A)
+- Max Current: (30 mA)
    Maximum current for blue channel (it will blink if exeeded).
    Maximum brightness is reached at this current.
 

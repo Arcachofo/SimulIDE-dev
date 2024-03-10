@@ -1,3 +1,5 @@
+Configurable full adder.
+
 Property: (default value)
 
 Electric:

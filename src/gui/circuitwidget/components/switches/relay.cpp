@@ -71,15 +71,15 @@ Relay::Relay( QString type, QString id )
     }, 0} );
 
     addPropGroup( { tr("Electric"), {
-        new DoubProp<Relay>("IOn" , tr("IOn"),"A"
+        new DoubProp<Relay>("IOn" , tr("IOn"),"mA"
                            , this, &Relay::iTrig, &Relay::setITrig),
 
-        new DoubProp<Relay>("IOff", tr("IOff"),"A"
+        new DoubProp<Relay>("IOff", tr("IOff"),"mA"
                            , this, &Relay::iRel, &Relay::setIRel )
     }, 0} );
 
     addPropGroup( { tr("Coil"), {
-        new DoubProp<Inductor>("Inductance", tr("Inductance"),"H"
+        new DoubProp<Inductor>("Inductance", tr("Inductance"),"mH"
                               , m_inductor, &Inductor::value , &Inductor::setValue ),
 
         new DoubProp<Inductor>("Rcoil", tr("Resistance"),"Ω"

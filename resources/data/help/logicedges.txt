@@ -1,9 +1,6 @@
-Edges:
-- Initial High State: (no)
-   Start simulation with High state output.
-
-- Propagation Delay: ( 10 ns)
-   Time from input change to output change.
+Timing:
+- Gate Delay: (10 ns)
+   Time from input change to output change (1 gate).
 
 - Rise Time: (3 ns)
    Time from 0 V to output high V.

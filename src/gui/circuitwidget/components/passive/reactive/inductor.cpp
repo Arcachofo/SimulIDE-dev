@@ -41,7 +41,7 @@ Inductor::Inductor( QString type, QString id )
         new DoubProp<Inductor>("Inductance", tr("Inductance"), "H"
                               , this, &Inductor::value, &Inductor::setValue ),
 
-        new DoubProp<Inductor>("Resistance", tr("Resistance"), "Ω"
+        new DoubProp<Inductor>("Resistance", tr("Resistance"), "µΩ"
                               , this, &Inductor::resist , &Inductor::setResist ),
 
         new DoubProp<Inductor>("InitVolt", tr("Initial Current"), "A"
@@ -53,7 +53,6 @@ Inductor::Inductor( QString type, QString id )
 
     setShowProp("Inductance");
     setPropStr( "Inductance", "1" );
-    setPropStr( "Resistance", "1 µΩ" );
 }
 Inductor::~Inductor(){}
 

@@ -87,14 +87,12 @@ SevenSegment::SevenSegment( QString type, QString id )
         new DoubProp<SevenSegment>("Threshold" , tr("Forward Voltage"),"V"
                                   , this, &SevenSegment::threshold, &SevenSegment::setThreshold ),
 
-        new DoubProp<SevenSegment>("MaxCurrent", tr("Max Current"),"A"
+        new DoubProp<SevenSegment>("MaxCurrent", tr("Max Current"),"mA"
                                   , this, &SevenSegment::maxCurrent, &SevenSegment::setMaxCurrent ),
 
         new DoubProp<SevenSegment>("Resistance", tr("Resistance"),"Ω"
                                   , this, &SevenSegment::resistance, &SevenSegment::setResistance ),
     },0} );
-
-    setPropStr("MaxCurrent", "20 mA");
 }
 SevenSegment::~SevenSegment() { }
 

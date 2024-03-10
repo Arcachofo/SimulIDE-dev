@@ -8,7 +8,7 @@ Main:
 - Minimum Resistance: (0 Ω)
    Resistance with dial at the left end.
 
-- Maximum Resistance: (1000 Ω)
+- Maximum Resistance: (1 kΩ)
    Resistance with dial at the right end.
 
 - Current Value: (0 Ω)

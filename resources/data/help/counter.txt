@@ -1,3 +1,6 @@
+Binary counter.
+Sets the output High after a number of clock pulses.
+
 Property: (default value)
 
 Main:
@@ -12,7 +15,6 @@ Main:
 
 - Count to: (1)
    Number of Clock pulses to set output High.
-
 
 Electric:
 #include logicinputs

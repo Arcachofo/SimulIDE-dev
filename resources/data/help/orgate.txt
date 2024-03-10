@@ -1,11 +1,11 @@
+Configurable OR Gate
+
 Property: (default value)
 
-Main:
-- Input Size: (2)
-   Number of input pins.
-
-#include gateinputs
 Electric:
+
 #include logicinputs
+#include gateinputs
 #include logicoutputs
+#include gateoutputs
 #include logicedges

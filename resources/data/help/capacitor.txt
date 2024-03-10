@@ -2,14 +2,14 @@ Simple capacitor.
 
 Property: (default value)
 
-- Capacitance: (10 uF)
+- Capacitance: (10 µF)
 
-- Resistance: (1e-6 Ω)
+- Resistance: (1 µΩ)
 
 - Initial Voltage: (0 V)
    Voltage at simulation start (initial charge).
 
-- Reactive Step: (0 s)
+- Reactive Step: (0 µs)
    Set custom Reactive step for this component.
    This value overrides general Simulation Settings.
    0 to use value set in Simulation Settings.

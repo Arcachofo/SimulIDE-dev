@@ -1,12 +1,17 @@
+Configurable Buffer.
+
 Property: (default value)
 
-Main:
+Electric:
+
+#include logicinputs
+- Invert Inputs: (no)
+   Invert input pins.
+   
+#include logicoutputs
+#include gateoutputs
 - Tristate: (no)
    If yes, creates an enable pin (active Low).
    When disabled, output is high impedance.
 
-#include gateinputs
-Electric:
-#include logicinputs
-#include logicoutputs
 #include logicedges

@@ -58,14 +58,12 @@ LedBar::LedBar( QString type, QString id )
         new DoubProp<LedBar>("Threshold" , tr("Forward Voltage"), "V"
                             , this, &LedBar::threshold,  &LedBar::setThreshold ),
 
-        new DoubProp<LedBar>("MaxCurrent", tr("Max Current"),"A"
+        new DoubProp<LedBar>("MaxCurrent", tr("Max Current"),"mA"
                             , this, &LedBar::maxCurrent, &LedBar::setMaxCurrent ),
 
         new DoubProp<LedBar>("Resistance", tr("Resistance"),"Ω"
                             , this, &LedBar::res,        &LedBar::setRes ),
     }, 0} );
-
-    setPropStr("MaxCurrent", "30 mA");
 }
 LedBar::~LedBar(){}
 

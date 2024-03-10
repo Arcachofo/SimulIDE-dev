@@ -79,15 +79,12 @@ Triac::Triac( QString type, QString id )
         new DoubProp<Triac>("GateRes", tr("Gate Resistance"), "Ω"
                            , this, &Triac::gateRes, &Triac::setGateRes ),
 
-        new DoubProp<Triac>("TrigCurr", tr("Trigger Current"), "A"
+        new DoubProp<Triac>("TrigCurr", tr("Trigger Current"), "mA"
                            , this, &Triac::trigCurr, &Triac::setTrigCurr ),
 
-        new DoubProp<Triac>("HoldCurr", tr("Holding Current"), "A"
+        new DoubProp<Triac>("HoldCurr", tr("Holding Current"), "mA"
                            , this, &Triac::holdCurr, &Triac::setHoldCurr )
     },0 } );
-
-    setPropStr("TrigCurr", "10 mA");
-    setPropStr("HoldCurr", "8.2 mA");
 }
 Triac::~Triac()
 {

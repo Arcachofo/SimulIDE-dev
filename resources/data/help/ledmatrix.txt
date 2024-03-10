@@ -21,7 +21,7 @@ Electric:
 - Fordward Voltage: (2.4 V)
    Voltage drop when fordward biased.
 
-- Max Current: (0.02 A)
+- Max Current: (20 mA)
    Maximum current (it will blink if exeeded).
    Maximum brightness is reached at this current.
 

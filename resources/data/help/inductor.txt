@@ -4,12 +4,12 @@ Property: (default value)
 
 - Inductance: (1 H)
 
-- Resistance: (1e-6 Ω)
+- Resistance: (1 µΩ)
 
 - Initial Current: (0 A)
    Current at simulation start (initial charge).
 
-- Reactive Step: (0 s)
+- Reactive Step: (0 ns)
    Set custom Reactive step for this component.
    This value overrides general Simulation Settings.
    0 to use value set in Simulation Settings.

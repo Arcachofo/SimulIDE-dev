@@ -5,5 +5,5 @@ Property: (default value)
 - Voltage: (5 V)
    Battery voltage.
 
-- Resistance: (0.001 Ω)
+- Resistance: (1 mΩ)
    Internal resistance.

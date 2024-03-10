@@ -59,11 +59,9 @@ MuxAnalog::MuxAnalog( QString type, QString id )
         new IntProp <MuxAnalog>("Address_Bits", tr("Address Size"), "_bits"
                                , this, &MuxAnalog::addrBits, &MuxAnalog::setAddrBits, propNoCopy,"uint" ),
 
-        new DoubProp<MuxAnalog>("Impedance", tr("Impedance"), "Ω"
+        new DoubProp<MuxAnalog>("Impedance", tr("Impedance"), "mΩ"
                                , this, &MuxAnalog::impedance, &MuxAnalog::setImpedance ),
     },0} );
-
-    setPropStr("Impedance", "1 mΩ");
 }
 MuxAnalog::~MuxAnalog(){}
 

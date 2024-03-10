@@ -17,7 +17,7 @@ Main:
 - Wave type: (Sine)
    Set output wave type.
 
-- Frequency:  (1000 Hz)
+- Frequency:  (1 kHz)
    Set output frequency.
 
 - Phase shift: (0 º)

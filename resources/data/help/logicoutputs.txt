@@ -5,5 +5,5 @@ Outputs:
 - Output Low Voltage: (0 V)
    Voltage of output Low state.
 
-- Output Impedance: (1e+9 Ω)
+- Output Impedance: (40 Ω)
    Impedance of digital output.

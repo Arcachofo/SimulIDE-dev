@@ -25,10 +25,10 @@ CapacitorBase::CapacitorBase( QString type, QString id )
     m_value = m_capacitance = 0.00001; // Farads
 
     addPropGroup( { tr("Main"), {
-new DoubProp<CapacitorBase>("Capacitance", tr("Capacitance"), "F"
+new DoubProp<CapacitorBase>("Capacitance", tr("Capacitance"), "µF"
                            , this, &CapacitorBase::value, &CapacitorBase::setValue ),
 
-new DoubProp<CapacitorBase>("Resistance" , tr("Resistance"), "Ω"
+new DoubProp<CapacitorBase>("Resistance" , tr("Resistance"), "µΩ"
                            , this, &CapacitorBase::resist , &CapacitorBase::setResist ),
 
 new DoubProp<CapacitorBase>("InitVolt"   , tr("Initial Voltage"), "V"
@@ -40,7 +40,6 @@ new DoubProp<CapacitorBase>("ReaStep", tr("Reactive Step"), "ns"
 
     setShowProp("Capacitance");
     setPropStr( "Capacitance", "10 µF" );
-    setPropStr( "Resistance", "1 µΩ" );
 }
 CapacitorBase::~CapacitorBase(){}
 

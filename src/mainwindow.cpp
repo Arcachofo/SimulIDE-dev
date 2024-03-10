@@ -311,8 +311,9 @@ QString MainWindow::getHelp( QString name, bool save )
             {
                 QString file = line.remove("#include ");
                 line = getHelp( file );
+                help.append( line );
             }
-            help.append( line+"\n" );
+            else help.append( line+"\n" );
         }
     }
     if( save ) m_help[name] = help;

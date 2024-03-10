@@ -4,6 +4,10 @@ Feasible to make: VCVS, CCVS, VCCS, CCCS.
 
 Property: (default value)
 
+- Use Control Pins: (true)
+   true: Variable Source controlled by Pins.
+   false: Fixed value Source or controlled by linker.
+
 - Current Source: (true)
    true: Current source.
    false: Voltage source.
@@ -12,10 +16,6 @@ Property: (default value)
    true: Current controlled.
    false: Voltage controlled.
    Only active when controlled by Pins.
-
-- Use Control Pins: (true)
-   true: Variable Source controlled by Pins.
-   false: Fixed value Source or controlled by linker.
 
 - Gain: (1)
    Gain respect to controlling value( current or voltage).

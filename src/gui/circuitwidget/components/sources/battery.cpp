@@ -49,11 +49,9 @@ Battery::Battery( QString type, QString id )
         new DoubProp<Battery>("Voltage", tr("Voltage"),"V"
                              , this, &Battery::volt, &Battery::setVolt ),
 
-        new DoubProp<Battery>("Resistance", tr("Resistance"),"Ω"
+        new DoubProp<Battery>("Resistance", tr("Resistance"),"mΩ"
                              , this, &Battery::res,  &Battery::setRes ),
     },0 } );
-
-    setPropStr( "Resistance", "1 mΩ" );
 }
 Battery::~Battery() {}
 
