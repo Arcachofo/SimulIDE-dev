@@ -41,7 +41,8 @@ class Interrupt
         void setPriority( uint8_t p ) { m_priority = p; }
 
         void setAutoClear( bool a ) { m_autoClear = a; }
-        void setContinuous( bool c ) { m_continuous = c; m_autoClear = !c; } // Pin INT
+        void setContinuous( bool c ); // Pin INT
+        bool isContinuous() { return m_continuous; }
 
         void callBack( McuModule* mod, bool call );
         void exitCallBack( McuModule* mod, bool call );

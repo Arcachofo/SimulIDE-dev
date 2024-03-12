@@ -41,7 +41,8 @@ class McuPin : public IoPin
         void setDirection( bool out );
 
         void setExtraSource( double vddAdmit, double gndAdmit );
-        void setExtIntTrig( int i ) { m_extIntTrigger = (extIntTrig_t)i; }
+        void setExtIntTrig( int i ) {
+            m_extIntTrigger = (extIntTrig_t)i; }
 
         virtual void controlPin( bool outCtrl, bool dirCtrl ) override;
         virtual void scheduleState( bool state, uint64_t time ) override;

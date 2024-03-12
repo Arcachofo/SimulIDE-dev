@@ -68,14 +68,16 @@ void McuPin::voltChanged()
     {
         bool raise = true;
         bool trigger = false;
-        switch( m_extIntTrigger ) { // Trigger pinLow without pin change at simulation start
-            case pinLow:     trigger = (Simulator::self()->circTime() == 0); raise = !newState;
+        switch( m_extIntTrigger ) {
+            case pinLow:     trigger = (Simulator::self()->circTime() == 1);// Trigger Low level without pin change at simulation start
+                             raise = !newState;                 // Fallthrough: Trigger Low level at pin change
             case pinChange:  trigger |= (oldState != newState); break;
             case pinFalling: trigger = (oldState && !newState); break;
             case pinRising:  trigger = (!oldState && newState); break;
             case pinDisabled:                                   break;
         }
-        if( trigger ) m_extInt->raise( raise );
+        if( trigger )
+            m_extInt->raise( raise );
     }
     if( oldState != newState )
     {

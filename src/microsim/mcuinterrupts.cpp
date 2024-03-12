@@ -73,14 +73,25 @@ void Interrupt::writeFlag( uint8_t v ) // Clear Interrupt flag by writting 1 to 
     }
 }
 
+void Interrupt::setContinuous( bool c ) // Pin INT
+{
+    if( m_continuous == c ) return;
+    m_continuous = c;
+    m_autoClear = !c;
+    clearFlag();
+}
+
 void Interrupt::raise( uint8_t v )
 {
     if( v ){
         if( m_raised ) return;
         m_raised = true;
 
-        if( !m_continuous ) m_ram[m_flagReg] |= m_flagMask; // Set Interrupt flag
-                                                            // Continuous don't set the flag (AVR Pin INT)
+        if( !m_continuous )                  // Set Interrupt flag
+        {                                    // If Continuous don't set the flag (AVR Pin INT)
+             m_ram[m_flagReg] |= m_flagMask;
+        }
+
         if( m_enabled )
         {
             m_interrupts->addToPending( this ); // Add to pending interrupts
@@ -92,7 +103,7 @@ void Interrupt::raise( uint8_t v )
         }
         if( !m_callBacks.isEmpty() ) { for( McuModule* mod : m_callBacks ) mod->callBack(); }
     }
-    else if( m_autoClear ) clearFlag();
+    else if( m_autoClear || m_continuous ) clearFlag();
 }
 
 void Interrupt::execute()
@@ -156,7 +167,10 @@ void Interrupts::runInterrupts()
             m_active  = m_running;
             m_running = m_running->m_nextInt;   // Remove from running list
         }
-        else m_active = NULL;
+        else{
+            if( m_active->isContinuous() && m_active->raised() ) addToPending( m_active );
+            m_active = NULL;
+        }
         writeGlobalFlag( 1 );                   // Enable Global Interrupts
         return;
     }
