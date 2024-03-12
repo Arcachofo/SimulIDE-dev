@@ -3,9 +3,6 @@
  *                                                                         *
  ***( see copyright.txt file at root folder )*******************************/
 
-// Capacitor model using backward euler approximation
-// consists of a current source in parallel with a resistor.
-
 #include "capacitorbase.h"
 #include "simulator.h"
 #include "pin.h"
@@ -25,17 +22,17 @@ CapacitorBase::CapacitorBase( QString type, QString id )
     m_value = m_capacitance = 0.00001; // Farads
 
     addPropGroup( { tr("Main"), {
-new DoubProp<CapacitorBase>("Capacitance", tr("Capacitance"), "µF"
-                           , this, &CapacitorBase::value, &CapacitorBase::setValue ),
+        new DoubProp<CapacitorBase>("Capacitance", tr("Capacitance"), "µF"
+                                   , this, &CapacitorBase::value, &CapacitorBase::setValue ),
 
-new DoubProp<CapacitorBase>("Resistance" , tr("Resistance"), "µΩ"
-                           , this, &CapacitorBase::resist , &CapacitorBase::setResist ),
+        new DoubProp<CapacitorBase>("Resistance" , tr("Resistance"), "µΩ"
+                                   , this, &CapacitorBase::resist , &CapacitorBase::setResist ),
 
-new DoubProp<CapacitorBase>("InitVolt"   , tr("Initial Voltage"), "V"
-                           , this, &CapacitorBase::initVolt, &CapacitorBase::setInitVolt ),
+        new DoubProp<CapacitorBase>("InitVolt"   , tr("Initial Voltage"), "V"
+                                   , this, &CapacitorBase::initVolt, &CapacitorBase::setInitVolt ),
 
-new DoubProp<CapacitorBase>("ReaStep", tr("Reactive Step"), "ns"
-                           , this, &CapacitorBase::reaStep , &CapacitorBase::setReaStep,0 )
+        new DoubProp<CapacitorBase>("ReaStep", tr("Reactive Step"), "ns"
+                                   , this, &CapacitorBase::reaStep , &CapacitorBase::setReaStep,0 )
     },0 } );
 
     setShowProp("Capacitance");

@@ -28,9 +28,9 @@ Capacitor::Capacitor( QString type, QString id )
 {}
 Capacitor::~Capacitor(){}
 
-void Capacitor::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
+void Capacitor::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w )
 {
-    Component::paint( p, option, widget );
+    Component::paint( p, o, w );
 
     QPen pen = p->pen();
     pen.setWidth(3);

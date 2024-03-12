@@ -25,7 +25,7 @@ class Inductor : public Reactive
 
         Pin* getPin( int n ) { return m_pin[n]; }
         
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w ) override;
 
     protected:
         virtual double updtRes()  override { return m_inductance/m_tStep; }

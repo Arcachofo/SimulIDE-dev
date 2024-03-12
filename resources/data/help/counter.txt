@@ -19,4 +19,5 @@ Main:
 Electric:
 #include logicinputs
 #include logicoutputs
+#include propdelay
 #include logicedges

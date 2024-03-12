@@ -1,3 +1,5 @@
+8 bit shift register.
+
 Property: (default value)
 
 Main:

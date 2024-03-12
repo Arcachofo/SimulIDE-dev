@@ -8,4 +8,4 @@ Configurable Buffer Gate
 #include gateinputs
 #include logicoutputs
 #include gateoutputs
-#include logicedges
+#include gatedelay

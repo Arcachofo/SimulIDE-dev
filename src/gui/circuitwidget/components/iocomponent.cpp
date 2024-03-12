@@ -69,26 +69,26 @@ QList<ComProperty*> IoComponent::outputProps()
 QList<ComProperty*> IoComponent::outputType()
 {
     return {
-        new BoolProp<IoComponent>("Inverted", tr("Invert Outputs"),""
+        new BoolProp<IoComponent>("Inverted", tr("Invert Outputs"), ""
                                  , this, &IoComponent::invertOuts, &IoComponent::setInvertOuts, propNoCopy ),
 
-        new BoolProp<IoComponent>("Open_Collector", tr("Open Drain"),""
+        new BoolProp<IoComponent>("Open_Collector", tr("Open Drain"), ""
                                  , this, &IoComponent::openCol, &IoComponent::setOpenCol   , propNoCopy )};
 }
 
 QList<ComProperty*> IoComponent::edgeProps()
 {
     return {
-        new DoubProp<IoComponent>("pd_n"  , tr("Propagation delay"),"_Gates"
+        new DoubProp<IoComponent>("pd_n"  , tr("Propagation delay"), "_Gates"
                                  , this, &IoComponent::propSize, &IoComponent::setPropSize ),
 
-        new DoubProp<IoComponent>("Tpd_ps", tr("Gate Delay"),"ns"
+        new DoubProp<IoComponent>("Tpd_ps", tr("Gate Delay"), "ns"
                                  , this, &IoComponent::propDelay, &IoComponent::setPropDelay ),
 
-        new DoubProp<IoComponent>("Tr_ps" , tr("Rise Time") ,"ns"
+        new DoubProp<IoComponent>("Tr_ps" , tr("Rise Time"), "ns"
                                  , this, &IoComponent::riseTime,  &IoComponent::setRiseTime ),
 
-        new DoubProp<IoComponent>("Tf_ps" , tr("Fall Time") ,"ns"
+        new DoubProp<IoComponent>("Tf_ps" , tr("Fall Time"), "ns"
                                  , this, &IoComponent::fallTime,  &IoComponent::setFallTime ) };
 }
 
@@ -454,9 +454,9 @@ void IoComponent::setHidden( bool hid, bool hidArea, bool hidLabel )
     Component::setHidden( hid, hidArea, hidLabel );
 }
 
-void IoComponent::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
+void IoComponent::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w )
 {
-    Component::paint( p, option, widget );
+    Component::paint( p, o, w );
     p->drawRect( m_area );
 
     Component::paintSelected( p );

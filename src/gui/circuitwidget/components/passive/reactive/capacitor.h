@@ -19,7 +19,7 @@ class Capacitor : public CapacitorBase
  static Component* construct( QString type, QString id );
  static LibraryItem* libraryItem();
 
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w ) override;
 };
 
 #endif

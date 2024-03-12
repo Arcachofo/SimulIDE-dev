@@ -52,7 +52,7 @@ Inductor::Inductor( QString type, QString id )
     },0 } );
 
     setShowProp("Inductance");
-    setPropStr( "Inductance", "1" );
+    setPropStr("Inductance", "1");
 }
 Inductor::~Inductor(){}
 
@@ -62,9 +62,9 @@ void Inductor::setCurrentValue( double c )
     m_changed = true;
 }
 
-void Inductor::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
+void Inductor::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w )
 {
-    Component::paint( p, option, widget );
+    Component::paint( p, o, w );
 
     QPen pen = p->pen();
     pen.setWidth( 2 );

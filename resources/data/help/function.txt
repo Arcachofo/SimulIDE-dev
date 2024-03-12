@@ -27,3 +27,7 @@ Electric:
    It can sink but not source current.
 
 #include logicedges
+
+
+Full tutorial:
+https://simulide.com/p/function

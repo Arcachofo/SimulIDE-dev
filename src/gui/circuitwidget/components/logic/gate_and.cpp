@@ -30,14 +30,14 @@ AndGate::AndGate( QString type, QString id )
        : Gate( type, id, 2 )
 {
     addPropGroup( { tr("Electric"), IoComponent::inputProps()
-+QList<ComProperty*>({
+    +QList<ComProperty*>({
     new IntProp <AndGate>("Num_Inputs", tr("Input Size"),"_Inputs"
                          , this, &AndGate::numInps, &AndGate::setNumInputs, propNoCopy,"uint" ),
 
     new BoolProp<AndGate>("Invert_Inputs", tr("Invert Inputs"),""
                          , this, &AndGate::invertInps, &AndGate::setInvertInps, propNoCopy )
                     })
-+Gate::outputProps()+IoComponent::outputType(),0 } );
+    +Gate::outputProps()+IoComponent::outputType(),0 } );
 
     addPropGroup( { tr("Timing"), IoComponent::edgeProps(),0 } );
 
@@ -62,9 +62,9 @@ QPainterPath AndGate::shape() const
     return path;
 }
 
-void AndGate::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
+void AndGate::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w )
 {
-    Component::paint( p, option, widget );
+    Component::paint( p, o, w );
     p->drawChord( -27, m_area.y(), 36, m_area.height(), -1440/*-16*90*/, 2880/*16*180*/ );
 
     Component::paintSelected( p );

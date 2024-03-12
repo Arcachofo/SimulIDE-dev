@@ -8,7 +8,6 @@
 
 #include "mech_contact.h"
 #include "inductor.h"
-//#include "e-resistor.h"
 
 class LibraryItem;
 class eNode;
@@ -32,7 +31,7 @@ class Relay : public MechContact
         virtual void stamp() override;
         virtual void voltChanged() override;
 
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w ) override;
 
     protected:
         Inductor* m_inductor;

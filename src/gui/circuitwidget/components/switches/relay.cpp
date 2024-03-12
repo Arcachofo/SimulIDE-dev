@@ -120,11 +120,11 @@ void Relay::voltChanged()
     if( relayOn != m_closed ) setSwitch( relayOn );
 }
 
-void Relay::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
+void Relay::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w )
 {
-    Component::paint( p, option, widget );
+    Component::paint( p, o, w );
 
     p->drawRect( m_area );
 
-    MechContact::paint( p, option, widget );
+    MechContact::paint( p, o, w );
 }
