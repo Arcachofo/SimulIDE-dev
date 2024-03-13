@@ -3,12 +3,12 @@
  *                                                                         *
  ***( see copyright.txt file at root folder )*******************************/
 
+#ifndef PROPDIALOG_H
+#define PROPDIALOG_H
+
 #include <QDialog>
 
 #include "ui_propdialog.h"
-
-#ifndef PROPDIALOG_H
-#define PROPDIALOG_H
 
 class CompBase;
 class PropVal;
@@ -46,6 +46,5 @@ class PropDialog : public QDialog, private Ui::PropDialog
 
         QList<PropVal*> m_propList;
 };
-
 
 #endif

@@ -48,7 +48,7 @@ class FileWidget : public QSplitter
         
         FileBrowser* m_fileBrowser;
         QListWidget* m_bookmarks;
-        QLineEdit*   m_searchFiles;
+        //QLineEdit*   m_searchFiles;
         QPushButton* m_cdUpButton;
         QLineEdit*   m_path;
 

@@ -39,10 +39,10 @@ FileWidget::FileWidget( QWidget* parent )
     pathWidget->setFixedHeight( 24 );
     this->addWidget( pathWidget );
 
-    m_searchFiles = new QLineEdit( this );
+    /*m_searchFiles = new QLineEdit( this );
     m_searchFiles->setPlaceholderText( tr( "Search Files (Doesn't work)" ));
     m_searchFiles->setFixedHeight( 24 );
-    this->addWidget( m_searchFiles );
+    this->addWidget( m_searchFiles );*/
     
     m_fileBrowser = new FileBrowser( this );
     m_fileBrowser->setPath( QDir::rootPath() );
@@ -64,8 +64,8 @@ FileWidget::FileWidget( QWidget* parent )
     connect( m_bookmarks, SIGNAL( itemClicked( QListWidgetItem* )), 
              this,        SLOT(   itemClicked( QListWidgetItem* )), Qt::UniqueConnection);
              
-    connect( m_searchFiles, SIGNAL( editingFinished() ),
-             this,          SLOT( searchChanged() ), Qt::UniqueConnection);
+    //connect( m_searchFiles, SIGNAL( editingFinished() ),
+    //         this,          SLOT( searchChanged() ), Qt::UniqueConnection);
 
     connect( m_cdUpButton,  SIGNAL(released()),
              m_fileBrowser, SLOT(  cdUp()), Qt::UniqueConnection);
@@ -138,8 +138,8 @@ void FileWidget::itemClicked( QListWidgetItem* item  )
 
 void FileWidget::searchChanged()
 {
-    QString filter = m_searchFiles->text();
-    m_fileBrowser->searchFiles( filter );
+    //QString filter = m_searchFiles->text();
+    //m_fileBrowser->searchFiles( filter );
 }
 
 void FileWidget::setPath( QString path )

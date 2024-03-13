@@ -27,10 +27,6 @@ PropDialog::PropDialog( QWidget* parent, QString help )
 
     m_component = NULL;
 
-    //m_scale = MainWindow::self()->fontScale();
-    //m_minW  = 280*m_scale;
-    //m_minH  = 100*m_scale;
-
     m_helpExpanded = false;
     mainLayout->removeWidget( helpText );
     helpText->setText( help );
@@ -124,8 +120,6 @@ void PropDialog::setComponent( CompBase* comp, bool isComp )
 
                 mp->setEnabled( groupEnabled && propEnabled );
             }
-            //groupWidget->setMinimumHeight( propList.size()*22*m_scale);
-            //groupWidget->setMinimumWidth( 250*m_scale );
             tabList->addTab( groupWidget, group.name );
     }   }
     if( tabList->count() == 0 ) tabList->setVisible( false ); // Hide tab widget if empty
