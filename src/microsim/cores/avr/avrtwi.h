@@ -29,6 +29,8 @@ class AvrTwi : public McuTwi
 
         virtual void writeByte() override;
 
+        virtual void I2Cstop() override;
+
     protected:
         virtual void setTwiState( twiState_t state ) override;
         uint8_t getStaus() { return *m_statReg &= 0b11111000; }

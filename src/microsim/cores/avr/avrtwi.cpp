@@ -181,3 +181,10 @@ void AvrTwi::writeByte() // Read from Data Register
     if( m_mode == TWI_SLAVE ) m_txReg = *m_dataReg;
     TwiModule::writeByte();
 }
+
+void AvrTwi::I2Cstop()
+{
+    TwiModule::I2Cstop();
+    if( m_mode != TWI_SLAVE ) return;
+    setTwiState( TWI_SRX_STOP_RESTART );
+}
