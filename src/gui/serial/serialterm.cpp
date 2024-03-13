@@ -67,7 +67,7 @@ SerialTerm::SerialTerm( QString type, QString id )
     m_button->setMaximumSize( 36, 20 );
     m_button->setGeometry(-36,-20, 36, 20 );
     m_button->setCheckable( true );
-    m_button->setText( "Open" );
+    m_button->setText( tr("Open") );
 
     QFont font = m_button->font();
     font.setFamily( MainWindow::self()->defaultFontName() );

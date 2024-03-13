@@ -20,7 +20,7 @@
 #include "doubleprop.h"
 #include "stringprop.h"
 
-#define tr(str) simulideTr("Ds18B20",str)
+#define tr(str) simulideTr("Ds18b20",str)
 
 Component* Ds18b20::construct( QString type, QString id )
 { return new Ds18b20( type, id ); }

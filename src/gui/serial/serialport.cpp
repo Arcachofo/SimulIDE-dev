@@ -71,7 +71,7 @@ SerialPort::SerialPort( QString type, QString id )
     m_button->setMaximumSize( 36, 20 );
     m_button->setGeometry(-36,-20, 36, 20 );
     m_button->setCheckable( true );
-    m_button->setText( "Open" );
+    m_button->setText( tr("Open") );
 
     QFont font = m_button->font();
     font.setFamily( MainWindow::self()->defaultFontName() );
@@ -151,7 +151,7 @@ void SerialPort::open()
     if( m_serial->open( QIODevice::ReadWrite ) )
     {
         qDebug()<<"Connected to" << m_portName;
-        m_button->setText( "Close" );
+        m_button->setText( tr("Close") );
     }else{
         m_button->setChecked( false );
         MessageBoxNB( "Error", tr("Cannot Open Port %1:\n%2.").arg(m_portName).arg(m_serial->errorString()) );

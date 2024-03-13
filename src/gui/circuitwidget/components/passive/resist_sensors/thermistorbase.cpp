@@ -7,7 +7,7 @@
 
 #include "doubleprop.h"
 
-#define tr(str) simulideTr("Thermistor",str)
+#define tr(str) simulideTr("ThermistorBase",str)
 
 ThermistorBase::ThermistorBase( QString type, QString id )
               : VarResBase( type, id  )
