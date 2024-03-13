@@ -45,7 +45,8 @@ Rail::Rail( QString type, QString id )
     setLabelPos(-5,-10,-90);
 
     addPropGroup( { tr("Main"), {
-new DoubProp<Rail>( "Voltage", tr("Voltage"),"V", this, &Rail::volt, &Rail::setVolt )
+        new DoubProp<Rail>("Voltage", tr("Voltage"), "V"
+                          , this, &Rail::volt, &Rail::setVolt )
     }, 0} );
 
     setShowProp("Voltage");

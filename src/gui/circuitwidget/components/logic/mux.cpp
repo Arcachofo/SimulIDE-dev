@@ -58,14 +58,14 @@ Mux::Mux( QString type, QString id )
     setAddrBits( 3 );
 
     addPropGroup( { tr("Main"), {
-new IntProp<Mux>("Address_Bits" , tr("Address Size") ,"_bits"
-                , this, &Mux::addrBits, &Mux::setAddrBits, propNoCopy )
-    }, groupNoCopy } );
+        new IntProp<Mux>("Address_Bits" , tr("Address Size") ,"_bits"
+                        , this, &Mux::addrBits, &Mux::setAddrBits, propNoCopy )
+            }, groupNoCopy } );
 
-    addPropGroup( { tr("Electric"), IoComponent::inputProps()
-        +QList<ComProperty*>({
-new BoolProp<Mux>( "Invert_Inputs", tr("Invert Inputs"),""
-                 , this, &Mux::invertInps, &Mux::setInvertInps, propNoCopy )
+            addPropGroup( { tr("Electric"), IoComponent::inputProps()
+                +QList<ComProperty*>({
+        new BoolProp<Mux>( "Invert_Inputs", tr("Invert Inputs"),""
+                         , this, &Mux::invertInps, &Mux::setInvertInps, propNoCopy )
                     })
         + IoComponent::outputProps()
     ,0 } );

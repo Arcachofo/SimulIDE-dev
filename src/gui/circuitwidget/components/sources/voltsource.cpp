@@ -38,9 +38,14 @@ VoltSource::VoltSource( QString type, QString id )
 
     m_unit = "V";
     addPropGroup( { tr("Main"), {
-new DoubProp<VoltSource>("Value_Volt", tr("Current Value"),"V", this, &VoltSource::getVal,   &VoltSource::setVal ),
-new DoubProp<VoltSource>("MaxValue"  , tr("Max. Voltage") ,"V", this, &VoltSource::maxValue, &VoltSource::setMaxValue ),
-new DoubProp<VoltSource>("MinValue"  , tr("Min. Voltage") ,"V", this, &VoltSource::minValue, &VoltSource::setMinValue )
+        new DoubProp<VoltSource>("Value_Volt", tr("Current Value"), "V"
+                                , this, &VoltSource::getVal, &VoltSource::setVal ),
+
+        new DoubProp<VoltSource>("MaxValue", tr("Max. Voltage"), "V"
+                                , this, &VoltSource::maxValue, &VoltSource::setMaxValue ),
+
+        new DoubProp<VoltSource>("MinValue", tr("Min. Voltage"), "V"
+                                , this, &VoltSource::minValue, &VoltSource::setMinValue )
     }, 0} );
 
     setShowProp("MaxValue");

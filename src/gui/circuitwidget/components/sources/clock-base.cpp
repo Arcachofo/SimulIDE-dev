@@ -25,7 +25,8 @@ ClockBase::ClockBase( QString type, QString id )
     Simulator::self()->addToUpdateList( this );
 
     addPropGroup( { "Hidden1", {
-new BoolProp<ClockBase>( "Running", "","", this, &ClockBase::running, &ClockBase::setRunning ),
+        new BoolProp<ClockBase>("Running", "",""
+                               , this, &ClockBase::running, &ClockBase::setRunning ),
     }, groupHidden} );
 }
 ClockBase::~ClockBase(){}

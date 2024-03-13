@@ -59,8 +59,8 @@ VoltReg::VoltReg( QString type, QString id )
     Simulator::self()->addToUpdateList( this );
 
     addPropGroup( { tr("Main"), {
-new DoubProp<VoltReg>("Voltage", tr("Output Voltage"),"V"
-                     , this, &VoltReg::outVolt, &VoltReg::setOutVolt )
+        new DoubProp<VoltReg>("Voltage", tr("Output Voltage"),"V"
+                             , this, &VoltReg::outVolt, &VoltReg::setOutVolt )
     },0 } );
 
     setShowProp("Voltage");

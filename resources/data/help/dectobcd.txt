@@ -6,11 +6,10 @@ Main:
 - 16 Bits: (no)
    8 or 16 inputs.
 
+Electric:
+#include logicinputs
 - Invert Inputs: (no)
    Invert input pins.
 
-
-Electric:
-#include logicinputs
 #include logicoutputs
 #include logicedges

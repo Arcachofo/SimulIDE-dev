@@ -49,12 +49,12 @@ Bus::Bus( QString type, QString id )
     m_busPin0->setIsBus( true );
 
     addPropGroup( { tr("Main"), {
-new IntProp<Bus>("Num_Bits" , tr("Size"),"_bits"
-                , this, &Bus::numLines, &Bus::setNumLines, propNoCopy,"uint" ),
+        new IntProp<Bus>("Num_Bits" , tr("Size"),"_bits"
+                        , this, &Bus::numLines, &Bus::setNumLines, propNoCopy,"uint" ),
 
-new IntProp<Bus>("Start_Bit", tr("Start Bit"),""
-                , this, &Bus::startBit, &Bus::setStartBit,0,"uint" )
-    }, groupNoCopy } );
+        new IntProp<Bus>("Start_Bit", tr("Start Bit"),""
+                        , this, &Bus::startBit, &Bus::setStartBit,0,"uint" )
+            }, groupNoCopy } );
 }
 Bus::~Bus(){}
 

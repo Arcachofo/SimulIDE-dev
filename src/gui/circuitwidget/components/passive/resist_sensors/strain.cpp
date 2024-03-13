@@ -42,14 +42,24 @@ Strain::Strain( QString type, QString id )
     setVal( 0 );  // start at 0 °C
 
     addPropGroup( { tr("Main"), {
-new DoubProp<Strain>( "Force_N"    , tr("Current Value"),"N", this, &Strain::getVal,  &Strain::setVal ),
-new DoubProp<Strain>( "Min_Force_N", tr("Minimum Value"),"N", this, &Strain::minVal,  &Strain::setMinVal ),
-new DoubProp<Strain>( "Max_Force_N", tr("Maximum Value"),"N", this, &Strain::maxVal,  &Strain::setMaxVal ),
-new DoubProp<Strain>( "Dial_Step"  , tr("Dial Step")    ,"N", this, &Strain::getStep, &Strain::setStep )
+        new DoubProp<Strain>("Force_N", tr("Current Value"), "N"
+                            , this, &Strain::getVal, &Strain::setVal ),
+
+        new DoubProp<Strain>("Min_Force_N", tr("Minimum Value"), "N"
+                            , this, &Strain::minVal,  &Strain::setMinVal ),
+
+        new DoubProp<Strain>("Max_Force_N", tr("Maximum Value"), "N"
+                            , this, &Strain::maxVal, &Strain::setMaxVal ),
+
+        new DoubProp<Strain>("Dial_Step", tr("Dial Step"), "N"
+                            , this, &Strain::getStep, &Strain::setStep )
     }, 0} );
     addPropGroup( { tr("Parameters"), {
-new DoubProp<Strain>( "Ref_Temp", tr("Ref. Temperature"),"ºC", this, &Strain::refTemp, &Strain::setRefTemp ),
-new DoubProp<Strain>( "Temp"    , tr("Temperature")     ,"ºC", this, &Strain::getTemp, &Strain::setTemp )
+        new DoubProp<Strain>("Ref_Temp", tr("Ref. Temperature"), "ºC"
+                            , this, &Strain::refTemp, &Strain::setRefTemp ),
+
+        new DoubProp<Strain>("Temp", tr("Temperature"), "ºC"
+                            , this, &Strain::getTemp, &Strain::setTemp )
     }, 0} );
     addPropGroup( { tr("Dial"), Dialed::dialProps(), groupNoCopy } );
 }

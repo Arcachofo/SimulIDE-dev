@@ -38,15 +38,15 @@ Buffer::Buffer( QString type, QString id )
 
     },0} );
     addPropGroup( { tr("Electric"), IoComponent::inputProps()
-+QList<ComProperty*>({
-new BoolProp<Buffer>("Invert_Inputs", tr("Invert Inputs"),""
-                    , this, &Buffer::invertInps, &Buffer::setInvertInps, propNoCopy )
-                    })
-                    +Gate::outputProps()+IoComponent::outputType()
-+QList<ComProperty*>({
-new BoolProp<Buffer>("Tristate", tr("Tristate"),""
-                    , this, &Buffer::tristate, &Buffer::setTristate, propNoCopy )
-                    })
+        +QList<ComProperty*>({
+        new BoolProp<Buffer>("Invert_Inputs", tr("Invert Inputs"),""
+                            , this, &Buffer::invertInps, &Buffer::setInvertInps, propNoCopy )
+                            })
+                            +Gate::outputProps()+IoComponent::outputType()
+        +QList<ComProperty*>({
+        new BoolProp<Buffer>("Tristate", tr("Tristate"),""
+                            , this, &Buffer::tristate, &Buffer::setTristate, propNoCopy )
+                            })
     ,0} );
 
     addPropGroup( { tr("Timing"), IoComponent::edgeProps(),0 } );

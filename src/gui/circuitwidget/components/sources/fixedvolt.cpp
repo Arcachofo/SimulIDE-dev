@@ -61,7 +61,8 @@ FixedVolt::FixedVolt( QString type, QString id )
     QObject::connect( m_button, &CustomButton::clicked, [=](){ onbuttonclicked(); } );
 
     addPropGroup( { tr("Main"), {
-new DoubProp<FixedVolt>( "Voltage", tr("Voltage"),"V", this, &FixedVolt::volt, &FixedVolt::setVolt )
+        new DoubProp<FixedVolt>("Voltage", tr("Voltage"), "V"
+                               , this, &FixedVolt::volt, &FixedVolt::setVolt )
     }, 0} );
 
     addPropGroup( { "Hidden", {

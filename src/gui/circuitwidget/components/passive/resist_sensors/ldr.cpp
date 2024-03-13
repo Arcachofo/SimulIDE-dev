@@ -37,14 +37,24 @@ Ldr::Ldr( QString type, QString id )
     setVal( 1 );
 
     addPropGroup( { tr("Main"), {
-new DoubProp<Ldr>( "Lux"      , tr("Current Value"),"Lux", this, &Ldr::getVal,  &Ldr::setVal ),
-new DoubProp<Ldr>( "Min_Lux"  , tr("Minimum Value"),"Lux", this, &Ldr::minVal,  &Ldr::setMinVal ),
-new DoubProp<Ldr>( "Max_Lux"  , tr("Maximum Value"),"Lux", this, &Ldr::maxVal,  &Ldr::setMaxVal ),
-new DoubProp<Ldr>( "Dial_Step", tr("Dial Step")    ,"Lux", this, &Ldr::getStep, &Ldr::setStep )
+        new DoubProp<Ldr>("Lux", tr("Current Value"), "Lux"
+                         , this, &Ldr::getVal, &Ldr::setVal ),
+
+        new DoubProp<Ldr>("Min_Lux", tr("Minimum Value"), "Lux"
+                         , this, &Ldr::minVal, &Ldr::setMinVal ),
+
+        new DoubProp<Ldr>("Max_Lux", tr("Maximum Value"), "Lux"
+                         , this, &Ldr::maxVal, &Ldr::setMaxVal ),
+
+        new DoubProp<Ldr>("Dial_Step", tr("Dial Step"), "Lux"
+                         , this, &Ldr::getStep, &Ldr::setStep )
     },0} );
     addPropGroup( { tr("Parameters"), {
-new DoubProp<Ldr>( "Gamma", tr("Gamma"),"" , this, &Ldr::gamma, &Ldr::setGamma ),
-new IntProp <Ldr>( "R1"   , tr("R1")   ,"Ω", this, &Ldr::r1,    &Ldr::setR1,0,"uint" )
+        new DoubProp<Ldr>("Gamma", tr("Gamma"), ""
+                         , this, &Ldr::gamma, &Ldr::setGamma ),
+
+        new IntProp <Ldr>("R1", tr("R1"), "Ω"
+                         , this, &Ldr::r1, &Ldr::setR1,0,"uint" )
     },0} );
     addPropGroup( { tr("Dial"), Dialed::dialProps(), 0} );
 }

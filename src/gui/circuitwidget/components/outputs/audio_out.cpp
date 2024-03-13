@@ -96,8 +96,11 @@ AudioOut::AudioOut( QString type, QString id )
     m_audioOutput = new QAudioOutput( m_deviceinfo, m_format );
 
     addPropGroup( { tr("Main"), {
-new BoolProp<AudioOut>( "Buzzer"   , tr("Buzzer")   ,"" , this, &AudioOut::buzzer, &AudioOut::setBuzzer ),
-new DoubProp<AudioOut>( "Impedance", tr("Impedance"),"Ω", this, &AudioOut::res,    &AudioOut::setResSafe )
+        new BoolProp<AudioOut>("Buzzer", tr("Buzzer"), ""
+                              , this, &AudioOut::buzzer, &AudioOut::setBuzzer ),
+
+        new DoubProp<AudioOut>("Impedance", tr("Impedance"), "Ω"
+                              , this, &AudioOut::res, &AudioOut::setResSafe )
     },0} );
 }
 AudioOut::~AudioOut()

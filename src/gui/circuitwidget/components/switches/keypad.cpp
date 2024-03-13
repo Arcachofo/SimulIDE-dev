@@ -40,9 +40,14 @@ KeyPad::KeyPad( QString type, QString id )
     setLabelPos(-8,-16, 0);
 
     addPropGroup( { tr("Main"), {
-new IntProp<KeyPad>("Rows"      , tr("Rows")      ,"", this, &KeyPad::rows,      &KeyPad::setRows , propNoCopy,"uint" ),
-new IntProp<KeyPad>("Cols"      , tr("Columns")   ,"", this, &KeyPad::cols,      &KeyPad::setCols , propNoCopy,"uint" ),
-new StrProp<KeyPad>("Key_Labels", tr("Key Labels"),"", this, &KeyPad::keyLabels, &KeyPad::setKeyLabels )
+        new IntProp<KeyPad>("Rows", tr("Rows"), ""
+                           , this, &KeyPad::rows, &KeyPad::setRows, propNoCopy,"uint" ),
+
+        new IntProp<KeyPad>("Cols", tr("Columns"), ""
+                           , this, &KeyPad::cols, &KeyPad::setCols, propNoCopy,"uint" ),
+
+        new StrProp<KeyPad>("Key_Labels", tr("Key Labels"), ""
+                           , this, &KeyPad::keyLabels, &KeyPad::setKeyLabels )
     },0} );
 }
 KeyPad::~KeyPad(){}

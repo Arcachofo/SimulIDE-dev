@@ -1,3 +1,5 @@
+Digital Multiplexer.
+
 Property: (default value)
 
 Main:
@@ -5,11 +7,10 @@ Main:
    Number of select pins.
    Determines number of channels: n = 2^Address_Size
 
+Electric:
+#include logicinputs
 - Invert Inputs: (no)
    Invert input pins.
 
-
-Electric:
-#include logicinputs
 #include logicoutputs
 #include logicedges

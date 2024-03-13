@@ -36,14 +36,14 @@ VarResistor::VarResistor( QString type, QString id )
         new DoubProp<VarResistor>("Min_Resistance", tr("Minimum Resistance"), "Ω"
                                  , this, &VarResistor::minVal, &VarResistor::setMinVal ),
 
-        new DoubProp<VarResistor>("Max_Resistance", tr("Maximum Resistance"), "kΩ", this
-                                 , &VarResistor::maxVal, &VarResistor::setMaxVal ),
+        new DoubProp<VarResistor>("Max_Resistance", tr("Maximum Resistance"), "kΩ"
+                                 , this, &VarResistor::maxVal, &VarResistor::setMaxVal ),
 
-        new DoubProp<VarResistor>("Value_Ohm", tr("Current Value"), "Ω", this
-                                 , &VarResistor::getVal, &VarResistor::setVal ),
+        new DoubProp<VarResistor>("Value_Ohm", tr("Current Value"), "Ω"
+                                 , this, &VarResistor::getVal, &VarResistor::setVal ),
 
-        new DoubProp<VarResistor>("Dial_Step", tr("Dial Step"), "Ω", this
-                                 , &VarResistor::getStep,&VarResistor::setStep ),
+        new DoubProp<VarResistor>("Dial_Step", tr("Dial Step"), "Ω"
+                                 , this, &VarResistor::getStep,&VarResistor::setStep ),
     },0 } );
 
     addPropGroup( { tr("Dial"), Dialed::dialProps(), groupNoCopy } );

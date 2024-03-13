@@ -29,12 +29,12 @@ XorGate::XorGate( QString type, QString id )
        : Gate( type, id, 2 )
 {
     addPropGroup( { tr("Electric"), IoComponent::inputProps()
-+QList<ComProperty*>({
-new BoolProp<XorGate>("Invert_Inputs", tr("Invert Inputs"),""
-                     , this, &XorGate::invertInps, &XorGate::setInvertInps,propNoCopy )
-                    })
-                    + Gate::outputProps()
-                    + IoComponent::outputType(),0 } );
+        +QList<ComProperty*>({
+        new BoolProp<XorGate>("Invert_Inputs", tr("Invert Inputs"),""
+                             , this, &XorGate::invertInps, &XorGate::setInvertInps,propNoCopy )
+                            })
+                            + Gate::outputProps()
+                            + IoComponent::outputType(),0 } );
 
     addPropGroup( { tr("Timing"), IoComponent::edgeProps(),0 } );
 

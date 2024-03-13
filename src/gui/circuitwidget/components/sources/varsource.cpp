@@ -50,7 +50,8 @@ VarSource::VarSource( QString type, QString id )
     QObject::connect( m_voltw.dial(), &QDial::valueChanged, [=](int v){ dialChanged(v); } );
 
     addPropGroup( { "Hidden1", {
-new BoolProp<VarSource>( "Running","","", this, &VarSource::running, &VarSource::setRunning ),
+        new BoolProp<VarSource>("Running","",""
+                               , this, &VarSource::running, &VarSource::setRunning ),
     }, groupHidden} );
 }
 VarSource::~VarSource() { }

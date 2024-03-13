@@ -41,18 +41,19 @@ DAC::DAC( QString type, QString id )
     m_maxVolt = 5;
 
     addPropGroup( { tr("Main"), {
-new IntProp <DAC>("Num_Bits", tr("Size"),"_bits", this
-                 , &DAC::numInps, &DAC::setNumInps, propNoCopy,"uint" ),
+        new IntProp <DAC>("Num_Bits", tr("Size"),"_bits"
+                         , this, &DAC::numInps, &DAC::setNumInps, propNoCopy,"uint" ),
 
-new DoubProp<DAC>("Vref", tr("Reference Voltage"),"V"
-                 , this, &DAC::maxVolt, &DAC::setMaxVolt )
+        new DoubProp<DAC>("Vref", tr("Reference Voltage"),"V"
+                         , this, &DAC::maxVolt, &DAC::setMaxVolt )
     }, groupNoCopy } );
 
-    addPropGroup( { tr("Electric"), IoComponent::inputProps()
-+QList<ComProperty*>({
-new BoolProp<IoComponent>("Invert_Inputs", tr("Invert Inputs"),""
-                         , this, &IoComponent::invertInps, &IoComponent::setInvertInps, propNoCopy )})
-                  ,0} );
+    addPropGroup( { tr("Electric"),
+        IoComponent::inputProps()
+        +QList<ComProperty*>({
+        new BoolProp<IoComponent>("Invert_Inputs", tr("Invert Inputs"),""
+                                 , this, &IoComponent::invertInps, &IoComponent::setInvertInps, propNoCopy )})
+                          ,0} );
 
     addPropGroup( { tr("Timing"), IoComponent::edgeProps(),0 } );
 }

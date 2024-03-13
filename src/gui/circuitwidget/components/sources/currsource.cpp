@@ -36,8 +36,11 @@ CurrSource::CurrSource( QString type, QString id )
     m_unit = "A";
 
     addPropGroup( { tr("Main"), {
-new DoubProp<CurrSource>("Value_Amp",tr("Current Value"),"A", this, &CurrSource::getVal,   &CurrSource::setVal ),
-new DoubProp<CurrSource>("MaxValue" ,tr("Max. Current") ,"A", this, &CurrSource::maxValue, &CurrSource::setMaxValue )
+        new DoubProp<CurrSource>("Value_Amp", tr("Current Value"), "A"
+                                , this, &CurrSource::getVal, &CurrSource::setVal ),
+
+        new DoubProp<CurrSource>("MaxValue", tr("Max. Current"), "A"
+                                , this, &CurrSource::maxValue, &CurrSource::setMaxValue )
     }, 0} );
 
     setShowProp("MaxValue");

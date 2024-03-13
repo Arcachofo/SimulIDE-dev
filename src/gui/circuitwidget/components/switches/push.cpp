@@ -38,9 +38,14 @@ Push::Push( QString type, QString id )
     SetupSwitches( 1, 1 );
 
     addPropGroup( { tr("Main"), {
-new BoolProp<Push>("Norm_Close", tr("Normally Closed"),"", this, &Push::nClose, &Push::setNClose ),
-new IntProp <Push>("Poles"     , tr("Poles")          ,"", this, &Push::poles,  &Push::setPoles, propNoCopy,"uint" ),
-new StrProp <Push>("Key"       , tr("Key")            ,"", this, &Push::key,    &Push::setKey ),
+        new BoolProp<Push>("Norm_Close", tr("Normally Closed"), ""
+                          , this, &Push::nClose, &Push::setNClose ),
+
+        new IntProp <Push>("Poles", tr("Poles"), ""
+                          , this, &Push::poles, &Push::setPoles, propNoCopy,"uint" ),
+
+        new StrProp <Push>("Key", tr("Key"), ""
+                          , this, &Push::key, &Push::setKey ),
     }, 0} );
 }
 Push::~Push(){}

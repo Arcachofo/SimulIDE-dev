@@ -30,14 +30,14 @@ AndGate::AndGate( QString type, QString id )
        : Gate( type, id, 2 )
 {
     addPropGroup( { tr("Electric"), IoComponent::inputProps()
-    +QList<ComProperty*>({
-    new IntProp <AndGate>("Num_Inputs", tr("Input Size"),"_Inputs"
-                         , this, &AndGate::numInps, &AndGate::setNumInputs, propNoCopy,"uint" ),
+        +QList<ComProperty*>({
+        new IntProp <AndGate>("Num_Inputs", tr("Input Size"),"_Inputs"
+                             , this, &AndGate::numInps, &AndGate::setNumInputs, propNoCopy,"uint" ),
 
-    new BoolProp<AndGate>("Invert_Inputs", tr("Invert Inputs"),""
-                         , this, &AndGate::invertInps, &AndGate::setInvertInps, propNoCopy )
-                    })
-    +Gate::outputProps()+IoComponent::outputType(),0 } );
+        new BoolProp<AndGate>("Invert_Inputs", tr("Invert Inputs"),""
+                             , this, &AndGate::invertInps, &AndGate::setInvertInps, propNoCopy )
+                        })
+        +Gate::outputProps()+IoComponent::outputType(),0 } );
 
     addPropGroup( { tr("Timing"), IoComponent::edgeProps(),0 } );
 

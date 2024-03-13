@@ -1,3 +1,5 @@
+Flipflop "RS" type.
+
 Property: (default value)
 
 Main:

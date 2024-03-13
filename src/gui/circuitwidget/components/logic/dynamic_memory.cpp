@@ -80,17 +80,17 @@ DynamicMemory::DynamicMemory( QString type, QString id )
     Simulator::self()->addToUpdateList( this );
 
     addPropGroup( { tr("Main"), {
-new IntProp <DynamicMemory>("Row_Bits", tr("Row Address Size"),"_bits", this
-        , &DynamicMemory::rowAddrBits, &DynamicMemory::setRowAddrBits, propNoCopy,"uint" ),
+        new IntProp <DynamicMemory>("Row_Bits", tr("Row Address Size"),"_bits", this
+                , &DynamicMemory::rowAddrBits, &DynamicMemory::setRowAddrBits, propNoCopy,"uint" ),
 
-new IntProp <DynamicMemory>("Column_Bits", tr("Column Address Size"),"_bits", this
-        , &DynamicMemory::colAddrBits, &DynamicMemory::setColAddrBits, propNoCopy,"uint" ),
+        new IntProp <DynamicMemory>("Column_Bits", tr("Column Address Size"),"_bits", this
+                , &DynamicMemory::colAddrBits, &DynamicMemory::setColAddrBits, propNoCopy,"uint" ),
 
-new IntProp <DynamicMemory>("Data_Bits", tr("Data Size"),"_bits", this
-        , &DynamicMemory::dataBits, &DynamicMemory::setDataBits, propNoCopy,"uint" ),
+        new IntProp <DynamicMemory>("Data_Bits", tr("Data Size"),"_bits", this
+                , &DynamicMemory::dataBits, &DynamicMemory::setDataBits, propNoCopy,"uint" ),
 
-new DoubProp<DynamicMemory>("Refresh", tr("Refresh period"),"ps", this
-        , &DynamicMemory::refreshPeriod, &DynamicMemory::setRefreshPeriod )
+        new DoubProp<DynamicMemory>("Refresh", tr("Refresh period"),"ps", this
+                , &DynamicMemory::refreshPeriod, &DynamicMemory::setRefreshPeriod )
     }, groupNoCopy } );
 
     addPropGroup( { tr("Electric")

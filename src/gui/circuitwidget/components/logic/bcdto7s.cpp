@@ -48,11 +48,11 @@ BcdTo7S::BcdTo7S( QString type, QString id )
     createOePin( "IU01OE ", id+"-in4");
 
     addPropGroup( { tr("Electric"), IoComponent::inputProps()
-+QList<ComProperty*>({
-new BoolProp<BcdTo7S>("Invert_Inputs", tr("Invert Inputs"),""
-                     , this, &BcdTo7S::invertInps, &BcdTo7S::setInvertInps, propNoCopy )})
+        +QList<ComProperty*>({
+        new BoolProp<BcdTo7S>("Invert_Inputs", tr("Invert Inputs"),""
+                             , this, &BcdTo7S::invertInps, &BcdTo7S::setInvertInps, propNoCopy )})
 
-                    +IoComponent::outputProps()+IoComponent::outputType(),0 } );
+        +IoComponent::outputProps()+IoComponent::outputType(),0 } );
 
     addPropGroup( { tr("Timing"), IoComponent::edgeProps(),0 } );
 }

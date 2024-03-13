@@ -1,3 +1,5 @@
+Digital Demultiplexer.
+
 Property: (default value)
 
 Main:
@@ -5,11 +7,10 @@ Main:
    Number of select pins.
    Determines number of channels: n = 2^Address_Size
 
-- Invert Outputs: (no)
-   Invert output pins.
-
-
 Electric:
 #include logicinputs
 #include logicoutputs
+- Invert Outputs: (no)
+   Invert output pins.
+
 #include logicedges

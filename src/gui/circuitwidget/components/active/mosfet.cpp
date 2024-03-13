@@ -44,19 +44,19 @@ Mosfet::Mosfet( QString type, QString id )
     Simulator::self()->addToUpdateList( this );
 
     addPropGroup( { tr("Main"), {
-new BoolProp<Mosfet>("P_Channel", tr("P Channel"),""
-                        , this, &Mosfet::pChannel, &Mosfet::setPchannel ),
+        new BoolProp<Mosfet>("P_Channel", tr("P Channel"),""
+                                , this, &Mosfet::pChannel, &Mosfet::setPchannel ),
 
-new BoolProp<Mosfet>("Depletion", tr("Depletion"),""
-                    , this, &Mosfet::depletion, &Mosfet::setDepletion ),
-    },0} );
+        new BoolProp<Mosfet>("Depletion", tr("Depletion"),""
+                            , this, &Mosfet::depletion, &Mosfet::setDepletion ),
+            },0} );
 
-    addPropGroup( { tr("Electric"), {
-new DoubProp<Mosfet>("RDSon"    , tr("RDSon"),"Ω"
-                    , this, &Mosfet::rdson, &Mosfet::setRDSon),
+            addPropGroup( { tr("Electric"), {
+        new DoubProp<Mosfet>("RDSon"    , tr("RDSon"),"Ω"
+                            , this, &Mosfet::rdson, &Mosfet::setRDSon),
 
-new DoubProp<Mosfet>("Threshold", tr("Threshold"),"V"
-                    , this, &Mosfet::threshold, &Mosfet::setThreshold )
+        new DoubProp<Mosfet>("Threshold", tr("Threshold"),"V"
+                            , this, &Mosfet::threshold, &Mosfet::setThreshold )
     },0} );
 }
 Mosfet::~Mosfet(){}
