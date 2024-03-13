@@ -137,6 +137,7 @@ void PropDialog::showProp( QString name, bool show )
     {
         if( prop->propName() != name ) continue;
         prop->setHidden( !show );
+        if( show ) this->adjustSize();
         break;
     }
 }
