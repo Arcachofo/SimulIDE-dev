@@ -66,6 +66,7 @@ class AppDialog : public QDialog, private Ui::AppDialog
         bool m_showHelp;
 
         double m_speedP;
+        double m_scale;
 
         int      m_stepUnit;
         uint64_t m_stepsPS;

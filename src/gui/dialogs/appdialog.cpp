@@ -18,13 +18,13 @@ AppDialog::AppDialog( QWidget* parent )
     //this->setWindowFlags( Qt::Dialog | Qt::WindowTitleHint );
 
     // App Settings
-    double scale = MainWindow::self()->fontScale();
+    m_scale = MainWindow::self()->fontScale();
     language->setCurrentIndex( (int)MainWindow::self()->lang() );
-    language->setMaximumWidth( 100*scale );
+    language->setFixedWidth( 75*m_scale );
     fontName->setCurrentText( MainWindow::self()->defaultFontName() );
-    fontName->setMaximumWidth( 100*scale );
-    fontScale->setValue( scale );
-    fontScale->setMaximumWidth( 100*scale );
+    fontName->setFixedWidth( 75*m_scale );
+    fontScale->setValue( m_scale );
+    fontScale->setFixedWidth( 75*m_scale );
     userPath->setText( MainWindow::self()->userPath() );
 
     // Circuit Settings
@@ -66,37 +66,37 @@ AppDialog::AppDialog( QWidget* parent )
     helpText->setVisible( false );
     mainLayout->removeWidget( helpText );
     //helpText->setText( help );
+
     this->adjustSize();
 }
 
-void AppDialog::on_tabList_currentChanged( int )
+void AppDialog::on_tabList_currentChanged( int tab )
 {
-    if( !helpText->isVisible() )
-    {
-        QWidget* widget = tabList->currentWidget();
-        this->setMaximumHeight( widget->minimumSizeHint().height()+150 );
+    if( helpText->isVisible() ) updtHelp();
+
+    switch( tab ) {
+        case 0: setMinimumHeight( 250*m_scale ); setMaximumHeight( 350*m_scale ); break;
+        case 1: setMinimumHeight( 300*m_scale ); setMaximumHeight( 400*m_scale ); break;
+        case 2: setMinimumHeight( 350*m_scale ); setMaximumHeight( 450*m_scale ); break;
     }
-    else updtHelp();
     adjustSize();
-    setMaximumHeight( 800 );
 }
 void AppDialog::updtHelp()
 {
     if( m_showHelp ){
         if( !helpText->isVisible() ) mainLayout->addWidget( helpText );
+
+        QString tabStr;
+        switch( tabList->currentIndex() ) {
+            case 0: tabStr = "app";        break;
+            case 1: tabStr = "circuit";    break;
+            case 2: tabStr = "simulation"; break;
+        }
+        helpText->setText( MainWindow::self()->getHelp( tabStr) );
     }
     else mainLayout->removeWidget( helpText );
 
     helpText->setVisible( m_showHelp );
-
-    QString tabStr;
-    int tab = tabList->currentIndex();
-    if      ( tab == 0 ) tabStr = "app";
-    else if ( tab == 1 ) tabStr = "circuit";
-    else if ( tab == 2 ) tabStr = "simulation";
-
-    helpText->setText( MainWindow::self()->getHelp( tabStr) );
-
     adjustSize();
 }
 
