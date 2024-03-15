@@ -4527,7 +4527,7 @@ Archivo packae no valido:</translation>
     </message>
     <message>
         <source>Producer</source>
-        <translation type="unfinished">Fabricante</translation>
+        <translation>Fabricante</translation>
     </message>
     <message>
         <source>CMOS</source>
@@ -4539,7 +4539,7 @@ Archivo packae no valido:</translation>
     </message>
     <message>
         <source>Interrupt Vector 0xFF</source>
-        <translation type="unfinished">Vector de Interrupción 0xFF</translation>
+        <translation>Vector de Interrupción 0xFF</translation>
     </message>
     <message>
         <source>Switches</source>
