@@ -1,0 +1,9 @@
+Configurable header connector.
+
+Property: (default value)
+
+- Size: (8 Bits)
+   Number of pins.
+
+- Downwards: (false)<br>
+   Pins are pointing downwards to connect to boards behind.

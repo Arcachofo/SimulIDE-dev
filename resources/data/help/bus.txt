@@ -1,3 +1,5 @@
+Configurable Bus connector.
+
 Property: (default value)
 
 - Size: (8 Bits)

@@ -23,3 +23,8 @@ Property: (default value)
 - Logic Symbol (yes)
    If yes, use A logic symbol representation.
    If no, use a "Chip" representation.
+
+---
+
+Full tutorial:
+https://simulide.com/p/package/

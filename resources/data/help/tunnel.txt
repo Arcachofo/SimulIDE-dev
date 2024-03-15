@@ -1,9 +1,10 @@
+Hidden connection.
+
 Property: (default value)
 
 - Id: ()
    Identifier, all Tunnels with this Id will be connected togeter.
 
-- Rotated: (no)
-   Yes: pin to the right.
-   No: pin to the left.
+- Bus: (no)
+   Whether this tunnel connects to a Bus or not.
 

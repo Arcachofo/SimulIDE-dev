@@ -28,6 +28,8 @@ Export:
 - Export at pause: (false)
    Export to VCD file at Simulation pause.
 
+---
+
 Expanded mode:
 Click in "Expand" button to get a window with a more detailed view and all the controls.
 This floating window is resizable and you can close it like any other window.
