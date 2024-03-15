@@ -3,6 +3,9 @@
  *                                                                         *
  ***( see copyright.txt file at root folder )*******************************/
 
+#include <QDesktopServices>
+#include <QTabBar>
+
 #include "about.h"
 
 AboutDialog::AboutDialog( QWidget* parent )
