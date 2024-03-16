@@ -19,6 +19,7 @@ Property: (default value)
 - Secondary: (1)
    Description of coils at the right side (refer to the coil descriptions below).
 
+---
 
 Full tutorial:
 https://simulide.com/p/component-list/#reactive

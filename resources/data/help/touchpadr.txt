@@ -1,3 +1,5 @@
+Resistive touchpad.
+
 Property: (default value)
 
 Main:

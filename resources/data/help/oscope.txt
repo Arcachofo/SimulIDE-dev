@@ -21,6 +21,8 @@ Property: (default value)
 - Impedance: (10 MΩ)
    Value of impedance to ground If connected).
 
+---
+
 Expanded mode:
 Click in "Expand" button to get a window with a more detailed view and all the controls.
 This floating window is resizable and you can close it like any other window.

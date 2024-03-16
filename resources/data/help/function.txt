@@ -28,6 +28,7 @@ Electric:
 
 #include logicedges
 
+---
 
 Full tutorial:
 https://simulide.com/p/function

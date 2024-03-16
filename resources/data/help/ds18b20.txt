@@ -1,0 +1,16 @@
+Temperature sensor with One Wire interface.
+
+To change temperature use "+" and "-" buttons.
+
+Property: (default value)
+
+- ROM: (random)
+   ROM address.
+
+- Temperature: (22 ºC)
+   Current temperature.
+
+- Temp. increment: (0.5 ºC)
+   Temperature will increment by this value when + or - buttons are pushed.
+
+
