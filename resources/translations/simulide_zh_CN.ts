@@ -4959,6 +4959,10 @@ Not valid Package file:
         <source>Close</source>
         <translation type="unfinished">关闭</translation>
     </message>
+    <message>
+        <source>Config</source>
+        <translation type="unfinished">配置</translation>
+    </message>
 </context>
 <context>
     <name>SerialTerm</name>
@@ -4989,6 +4993,10 @@ Not valid Package file:
     <message>
         <source>Open</source>
         <translation type="unfinished">打开</translation>
+    </message>
+    <message>
+        <source>Config</source>
+        <translation type="unfinished">配置</translation>
     </message>
 </context>
 <context>
@@ -5246,16 +5254,16 @@ Not valid Package file:
         <translation>高度</translation>
     </message>
     <message>
-        <source>_Px</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Rotate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>I2C</source>
         <translation type="unfinished">I2C</translation>
+    </message>
+    <message>
+        <source>_px</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

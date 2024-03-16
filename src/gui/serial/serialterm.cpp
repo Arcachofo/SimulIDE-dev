@@ -87,7 +87,7 @@ SerialTerm::SerialTerm( QString type, QString id )
 //new BoolProp  <Chip>( "Logic_Symbol","","", this, &Chip::logicSymbol, &Chip::setLogicSymbol ),
     }, 0 } );
 
-    addPropGroup( { "Config", {
+    addPropGroup( { tr("Config"), {
         new IntProp<SerialTerm>("Baudrate", tr("Baudrate"),"_Bd"
                                , this, &SerialTerm::baudRate, &SerialTerm::setBaudRate,0,"uint" ),
 

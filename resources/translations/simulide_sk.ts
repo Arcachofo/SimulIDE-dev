@@ -4925,6 +4925,10 @@ Neplatný súbor balíka:
         <source>Close</source>
         <translation type="unfinished">Zavrieť</translation>
     </message>
+    <message>
+        <source>Config</source>
+        <translation type="unfinished">Konfigurácia</translation>
+    </message>
 </context>
 <context>
     <name>SerialTerm</name>
@@ -4955,6 +4959,10 @@ Neplatný súbor balíka:
     <message>
         <source>Open</source>
         <translation type="unfinished">Otvoriť</translation>
+    </message>
+    <message>
+        <source>Config</source>
+        <translation type="unfinished">Konfigurácia</translation>
     </message>
 </context>
 <context>
@@ -5204,16 +5212,16 @@ Neplatný súbor balíka:
         <translation type="unfinished">Výška</translation>
     </message>
     <message>
-        <source>_Px</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Rotate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>I2C</source>
         <translation type="unfinished">I2C</translation>
+    </message>
+    <message>
+        <source>_px</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

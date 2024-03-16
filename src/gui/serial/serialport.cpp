@@ -95,7 +95,7 @@ SerialPort::SerialPort( QString type, QString id )
                                 , this, &SerialPort::port, &SerialPort::setPort ),
     }, 0 } );
 
-    addPropGroup( { "Config", {
+    addPropGroup( { tr("Config"), {
         new IntProp<SerialPort>("Baudrate", tr("Baudrate"),"_Bd"
                                , this, &SerialPort::baudRate, &SerialPort::setBaudRate,0,"uint" ),
 

@@ -5206,6 +5206,10 @@ Archivo packae no valido:</translation>
         <source>Close</source>
         <translation type="unfinished">Cerrar</translation>
     </message>
+    <message>
+        <source>Config</source>
+        <translation type="unfinished">Configuracion</translation>
+    </message>
 </context>
 <context>
     <name>SerialTerm</name>
@@ -5236,6 +5240,10 @@ Archivo packae no valido:</translation>
     <message>
         <source>Open</source>
         <translation type="unfinished">Abrir</translation>
+    </message>
+    <message>
+        <source>Config</source>
+        <translation type="unfinished">Configuracion</translation>
     </message>
 </context>
 <context>
@@ -5501,15 +5509,15 @@ Archivo packae no valido:</translation>
         <translation>Alto</translation>
     </message>
     <message>
-        <source>_Px</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Rotate</source>
         <translation>Rotar</translation>
     </message>
     <message>
         <source>I2C</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>_px</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -4650,6 +4650,10 @@ p, li { white-space: pre-wrap; }
         <source>Close</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Config</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SerialTerm</name>
@@ -4679,6 +4683,10 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Open</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Config</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4925,15 +4933,15 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>_Px</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Rotate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>I2C</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>_px</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

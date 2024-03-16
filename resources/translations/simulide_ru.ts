@@ -5398,6 +5398,10 @@ Not valid Package file:
         <source>Close</source>
         <translation type="unfinished">Закрыть</translation>
     </message>
+    <message>
+        <source>Config</source>
+        <translation type="unfinished">Конфигурация</translation>
+    </message>
 </context>
 <context>
     <name>SerialTerm</name>
@@ -5428,6 +5432,10 @@ Not valid Package file:
     <message>
         <source>Open</source>
         <translation type="unfinished">Открыть</translation>
+    </message>
+    <message>
+        <source>Config</source>
+        <translation type="unfinished">Конфигурация</translation>
     </message>
 </context>
 <context>
@@ -5709,15 +5717,15 @@ Not valid Package file:
         <translation>Высота</translation>
     </message>
     <message>
-        <source>_Px</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Rotate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>I2C</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>_px</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -1454,7 +1454,7 @@ Nemohu najít soubor:
 <context>
     <name>CodeEditor</name>
     <message>
-        <location filename="../../src/gui/editorwidget/codeeditor.cpp" line="+233"/>
+        <location filename="../../src/gui/editorwidget/codeeditor.cpp" line="+234"/>
         <source> File: </source>
         <translation> Soubor: </translation>
     </message>
@@ -1477,7 +1477,7 @@ Nemohu najít soubor:
         <translation type="vanished">Chyba: Soubor není uložen</translation>
     </message>
     <message>
-        <location line="-500"/>
+        <location line="-501"/>
         <source>None</source>
         <translation>Žádný</translation>
     </message>
@@ -1497,7 +1497,7 @@ Nemohu najít soubor:
         <translation>Uložit nastavení při uzavření souboru</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+5"/>
         <source>Actions after opening this file:</source>
         <translation>Činnosti po otevření souboru:</translation>
     </message>
@@ -1565,8 +1565,8 @@ Nemohu najít soubor:
 <context>
     <name>Compiler</name>
     <message>
-        <location filename="../../src/gui/editorwidget/compiler.cpp" line="+46"/>
-        <location line="+84"/>
+        <location filename="../../src/gui/editorwidget/compiler.cpp" line="+48"/>
+        <location line="+85"/>
         <location line="+7"/>
         <location line="+7"/>
         <location line="+7"/>
@@ -1574,12 +1574,12 @@ Nemohu najít soubor:
         <translation>Nastavení překladače</translation>
     </message>
     <message>
-        <location line="-104"/>
+        <location line="-105"/>
         <source>For this compiler type:</source>
         <translation>Pro tento typ překladače:</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+2"/>
         <source>Tool Path</source>
         <translation>Cesta k překladači</translation>
     </message>
@@ -2439,7 +2439,7 @@ Nemohu najít soubor:
 <context>
     <name>EditDialog</name>
     <message>
-        <location filename="../../src/gui/circuitwidget/subcircuits/subpackage.cpp" line="+625"/>
+        <location filename="../../src/gui/circuitwidget/subcircuits/subpackage.cpp" line="+638"/>
         <source>Pin Name:</source>
         <translation>Název pinu:</translation>
     </message>
@@ -2554,7 +2554,7 @@ Nemohu najít soubor:
 <context>
     <name>EditorWidget</name>
     <message>
-        <location filename="../../src/gui/editorwidget/editorwidget.cpp" line="+181"/>
+        <location filename="../../src/gui/editorwidget/editorwidget.cpp" line="+184"/>
         <source>Load File</source>
         <translation>Otevřít soubor</translation>
     </message>
@@ -2616,29 +2616,29 @@ Chcete uložit změny?
         <translation>&amp;%1 %2</translation>
     </message>
     <message>
-        <location line="-428"/>
-        <location line="+572"/>
+        <location line="-431"/>
+        <location line="+575"/>
         <location line="+1"/>
         <source>Editor Settings</source>
         <translation>Nastavení editoru</translation>
     </message>
     <message>
-        <location line="-572"/>
+        <location line="-575"/>
         <source>Font Size</source>
         <translation>Velikost písma</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+3"/>
         <source>Tab Size</source>
         <translation>Šířka tabulátoru</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+3"/>
         <source>Tabs as spaces</source>
         <translation>Tabulátory jako mezery</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+3"/>
         <source>Show Spaces and Tabs</source>
         <translation>Zobrazit mezery a tabulátory</translation>
     </message>
@@ -4137,7 +4137,7 @@ Chcete uložit změny?
         <translation>LED</translation>
     </message>
     <message>
-        <location line="+45"/>
+        <location line="+46"/>
         <source>Link to Component</source>
         <translation>Propojit se součástkami</translation>
     </message>
@@ -4658,7 +4658,7 @@ Chcete uložit změny?
         <translation>Barva</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+2"/>
         <source>Size</source>
         <translation>Velikost</translation>
     </message>
@@ -6393,7 +6393,12 @@ Neplatný soubor s pouzdrem
         <translation>Automatické otevření</translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+7"/>
+        <source>Config</source>
+        <translation type="unfinished">Konfigurace</translation>
+    </message>
+    <message>
+        <location line="+1"/>
         <source>Baudrate</source>
         <translation>Přenosová rychlost</translation>
     </message>
@@ -6443,7 +6448,12 @@ Neplatný soubor s pouzdrem
         <translation>Základní</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+4"/>
+        <source>Config</source>
+        <translation type="unfinished">Konfigurace</translation>
+    </message>
+    <message>
+        <location line="+1"/>
         <source>Baudrate</source>
         <translation>Přenosová rychlost</translation>
     </message>
@@ -6777,8 +6787,12 @@ Neplatný soubor s pouzdrem
     <message>
         <location line="+0"/>
         <location line="+3"/>
+        <source>_px</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>_Px</source>
-        <translation>_bodů</translation>
+        <translation type="vanished">_bodů</translation>
     </message>
     <message>
         <source>_Pixels</source>
@@ -6980,12 +6994,12 @@ Neplatný soubor s pouzdrem
 <context>
     <name>SubPackage</name>
     <message>
-        <location filename="../../src/gui/circuitwidget/subcircuits/subpackage.cpp" line="-623"/>
+        <location filename="../../src/gui/circuitwidget/subcircuits/subpackage.cpp" line="-636"/>
         <source>Package</source>
         <translation>Pouzdro</translation>
     </message>
     <message>
-        <location line="+246"/>
+        <location line="+259"/>
         <source>
 Package has been modified.
 Do you want to save your changes?
@@ -7050,7 +7064,7 @@ Chcete uložit změny?
         <translation type="vanished">Vybrat hlavní komponentu</translation>
     </message>
     <message>
-        <location line="-460"/>
+        <location line="-473"/>
         <source>Board Mode</source>
         <translation>Režim desky</translation>
     </message>
@@ -7065,32 +7079,32 @@ Chcete uložit změny?
         <translation>Typ</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+3"/>
         <source>Width</source>
         <translation>Šířka</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+3"/>
         <source>Height</source>
         <translation>Výška</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+3"/>
         <source>Name</source>
         <translation>Název</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+3"/>
         <source>Package File</source>
         <translation>Soubor s pouzdrem</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+3"/>
         <source>Background</source>
         <translation>Pozadí</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+3"/>
         <source>Logic Symbol</source>
         <translation>Logický symbol</translation>
     </message>
@@ -7619,7 +7633,7 @@ Chcete uložit změny?
         <translation type="vanished">_ledek</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+3"/>
         <source>Columns</source>
         <translation>Počet sloupců</translation>
     </message>
