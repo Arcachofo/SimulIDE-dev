@@ -145,7 +145,7 @@ Component* SubCircuit::construct( QString type, QString id )
         if( dip && ls ) // If no both files exist, this prop. is not needed
         subcircuit->addPropGroup( { tr("Main"), {
         new BoolProp<SubCircuit>("Logic_Symbol", tr("Logic Symbol"),"",
-                                  subcircuit, &SubCircuit::logicSymbol, &SubCircuit::setLogicSymbol, propNoCopy ),
+                                subcircuit, &SubCircuit::logicSymbol, &SubCircuit::setLogicSymbol, propNoCopy ),
         },groupNoCopy} );
 
         Circuit::self()->m_createSubc = false;

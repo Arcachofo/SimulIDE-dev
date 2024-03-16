@@ -65,7 +65,7 @@ I2CToParallel::I2CToParallel( QString type, QString id )
         new IntProp<I2CToParallel>("Control_Code", tr("I2C Address"),""
                                    , this, &I2CToParallel::cCode,   &I2CToParallel::setCcode,0,"uint" ),
 
-        new DoubProp<I2CToParallel>("Frequency", tr("I2C Frequency"),"_KHz"
+        new DoubProp<I2CToParallel>("Frequency", tr("I2C Frequency"),"_kHz"
                                    , this, &I2CToParallel::freqKHz, &I2CToParallel::setFreqKHz )
     }, 0} );
 }

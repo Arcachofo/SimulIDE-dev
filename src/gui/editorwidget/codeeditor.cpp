@@ -82,38 +82,39 @@ CodeEditor::CodeEditor( QWidget* parent, OutPanelText* outPane )
                                 , this, &CodeEditor::itemType, &CodeEditor::setItemType ),
             }, groupHidden} );
 
-            addPropGroup( { tr("File Settings"), {
+    addPropGroup( { tr("File Settings"), {
         new StrProp <CodeEditor>("Compiler", tr("Compiler"),""
-                                , this, &CodeEditor::compName,    &CodeEditor::setCompName, 0, "enum"),
+                                , this, &CodeEditor::compName, &CodeEditor::setCompName, 0, "enum"),
 
-        new BoolProp<CodeEditor>("SaveAtClose", tr("Save Settings at file close"),"", this
-                                , &CodeEditor::saveAtClose, &CodeEditor::setSaveAtClose ),
+        new BoolProp<CodeEditor>("SaveAtClose", tr("Save Settings at file close"),""
+                                , this, &CodeEditor::saveAtClose, &CodeEditor::setSaveAtClose ),
 
         new ComProperty("", "separator","","",0),
+
         new ComProperty("", tr("Actions after opening this file:"),"","",0),
 
-        new BoolProp<CodeEditor>("LoadCompiler", tr("Load Compiler")   ,""
+        new BoolProp<CodeEditor>("LoadCompiler", tr("Load Compiler"),""
                                 , this, &CodeEditor::loadCompiler, &CodeEditor::setLoadCompiler ),
 
-        new BoolProp<CodeEditor>("LoadBreakp"  , tr("Load Breakpoints"),""
-                                , this, &CodeEditor::loadBreakp,   &CodeEditor::setLoadBreakp ),
+        new BoolProp<CodeEditor>("LoadBreakp", tr("Load Breakpoints"),""
+                                , this, &CodeEditor::loadBreakp, &CodeEditor::setLoadBreakp ),
 
-        new BoolProp<CodeEditor>("OpenFiles"   , tr("Restore files")   ,""
-                                , this, &CodeEditor::openFiles,    &CodeEditor::setOpenFiles ),
+        new BoolProp<CodeEditor>("OpenFiles", tr("Restore files"),""
+                                , this, &CodeEditor::openFiles, &CodeEditor::setOpenFiles ),
     }, 0} );
 
     addPropGroup( { "Hidden", {
-//new StrProp <CodeEditor>("File", "File",""
-//                        , this, &CodeEditor::getFile, &CodeEditor::dummySetter, 0 ),
+        //new StrProp <CodeEditor>("File", "File",""
+        //                        , this, &CodeEditor::getFile, &CodeEditor::dummySetter, 0 ),
 
-new StrProp <CodeEditor>("Circuit", "Circuit",""
-                        , this, &CodeEditor::circuit, &CodeEditor::setCircuit, 0 ),
+        new StrProp <CodeEditor>("Circuit", "Circuit",""
+                                , this, &CodeEditor::circuit, &CodeEditor::setCircuit, 0 ),
 
-new StrProp <CodeEditor>("FileList", "FileList",""
-                        , this, &CodeEditor::fileList, &CodeEditor::setFileList, 0 ),
+        new StrProp <CodeEditor>("FileList", "FileList",""
+                                , this, &CodeEditor::fileList, &CodeEditor::setFileList, 0 ),
 
-new StrProp <CodeEditor>("Breakpoints", "Breakpoints",""
-                        , this, &CodeEditor::breakpoints, &CodeEditor::setBreakpoints, 0 ),
+        new StrProp <CodeEditor>("Breakpoints", "Breakpoints",""
+                                , this, &CodeEditor::breakpoints, &CodeEditor::setBreakpoints, 0 ),
     }, groupHidden} );
 }
 CodeEditor::~CodeEditor()

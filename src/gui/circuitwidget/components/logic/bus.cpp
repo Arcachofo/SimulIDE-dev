@@ -54,7 +54,7 @@ Bus::Bus( QString type, QString id )
 
         new IntProp<Bus>("Start_Bit", tr("Start Bit"),""
                         , this, &Bus::startBit, &Bus::setStartBit,0,"uint" )
-            }, groupNoCopy } );
+    }, groupNoCopy } );
 }
 Bus::~Bus(){}
 

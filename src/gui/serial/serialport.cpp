@@ -43,7 +43,7 @@ SerialPort::SerialPort( QString type, QString id )
           , UsartModule( NULL, id+"-Uart" )
           , eElement( (id+"-eElement") )
 {
-    m_area = QRect(-34, -16, 160, 32 );
+    m_area = QRect(-32,-16, 160, 32 );
     m_graphical = true;
     setLabelPos(-20,-32 );
 
@@ -68,8 +68,8 @@ SerialPort::SerialPort( QString type, QString id )
     setBaudRate( 9600 );
 
     m_button = new CustomButton( );
-    m_button->setMaximumSize( 36, 20 );
-    m_button->setGeometry(-36,-20, 36, 20 );
+    m_button->setMaximumSize( 44, 20 );
+    m_button->setGeometry(-44,-20, 44, 20 );
     m_button->setCheckable( true );
     m_button->setText( tr("Open") );
 
@@ -80,26 +80,36 @@ SerialPort::SerialPort( QString type, QString id )
 
     m_proxy = Circuit::self()->addWidget( m_button );
     m_proxy->setParentItem( this );
-    m_proxy->setPos( QPoint(-4,-10) );
+    m_proxy->setPos( QPoint(-8,-10) );
 
-    QObject::connect( m_button, &CustomButton::clicked  , [=](){ onbuttonclicked(); });
+    QObject::connect( m_button, &CustomButton::clicked , [=](){ onbuttonclicked(); });
     QObject::connect( m_serial, &QSerialPort::readyRead, [=](){ readData(); } );
 
     Simulator::self()->addToUpdateList( this );
 
     addPropGroup( { tr("Main"), {
-new BoolProp<SerialPort>( "Auto", tr("Auto Open"),"", this, &SerialPort::autoOpen, &SerialPort::setAutoOpen ),
-new StrProp <SerialPort>( "Port", tr("Port Name"),"", this, &SerialPort::port    , &SerialPort::setPort ),
+        new BoolProp<SerialPort>("Auto", tr("Auto Open"), ""
+                                , this, &SerialPort::autoOpen, &SerialPort::setAutoOpen ),
+
+        new StrProp <SerialPort>("Port", tr("Port Name"), ""
+                                , this, &SerialPort::port, &SerialPort::setPort ),
     }, 0 } );
 
     addPropGroup( { "Config", {
-new IntProp<SerialPort>("Baudrate", tr("Baudrate"),"_Bauds", this, &SerialPort::baudRate, &SerialPort::setBaudRate,0,"uint" ),
-new IntProp<SerialPort>("DataBits", tr("Data Bits"),"_Bits", this, &SerialPort::dataBits, &SerialPort::setDataBits,0,"uint" ),
-new IntProp<SerialPort>("StopBits", tr("Stop Bits"),"_Bits", this, &SerialPort::stopBits, &SerialPort::setStopBits,0,"uint" ),
+        new IntProp<SerialPort>("Baudrate", tr("Baudrate"),"_Bd"
+                               , this, &SerialPort::baudRate, &SerialPort::setBaudRate,0,"uint" ),
+
+        new IntProp<SerialPort>("DataBits", tr("Data Bits"),"_bits"
+                               , this, &SerialPort::dataBits, &SerialPort::setDataBits,0,"uint" ),
+
+        new IntProp<SerialPort>("StopBits", tr("Stop Bits"),"_bits"
+                               , this, &SerialPort::stopBits, &SerialPort::setStopBits,0,"uint" ),
     }, 0 } );
+
     addPropGroup( {"Hidden", {
-new BoolProp<SerialPort>("SerialMon","","", this, &SerialPort::serialMon, &SerialPort::setSerialMon ),
-}, groupHidden} );
+        new BoolProp<SerialPort>("SerialMon","",""
+                                , this, &SerialPort::serialMon, &SerialPort::setSerialMon ),
+    }, groupHidden} );
 }
 SerialPort::~SerialPort(){}
 

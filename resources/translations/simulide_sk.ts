@@ -44,14 +44,186 @@
     </message>
     <message>
         <source>About SimulIDE</source>
-        <translation type="vanished">O aplikácii SimulIDE</translation>
+        <translation>O aplikácii SimulIDE</translation>
     </message>
     <message>
         <source>Dialog</source>
-        <translation type="unfinished">Dialóg</translation>
+        <translation type="obsolete">Dialóg</translation>
     </message>
     <message>
         <source>TextLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;a href=&quot;https://www.patreon.com/simulide/&quot;&gt;https://www.patreon.com/simulide&lt;/a&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Website:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Patreon:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Author:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Santiago González</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Contributors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>       Jarda Vrana</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Feri</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>       kellneka.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sergey Roenko.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>       Benoit ZERR.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>       Tim Fischer.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>n3645.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Roy Qu</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>       Alex Salishchev.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Jan K. S.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>acebrian.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>       bjacquot.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>       P. de Francisco</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>tfrei.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Translations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Maico Smaniotto.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pt. Brasil:       </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>@rkanoid.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Doğu Kocatepe.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Turkish:       </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Italian:       </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dutch       </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Santiago Gonzalez.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>French:       </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Spanish:       </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tim Fischer.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Chinese:       </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Czech:       </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Russian:       </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>labf2121</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Jarda Vrana</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>German:       </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>mvandorp</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Slovak:       </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Portuguese:       </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pascal Cotret.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>tomas714</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1375,6 +1547,10 @@ Nemožno nájsť súbor:
         <source>Set current time at start</source>
         <translation>Nastaviť aktuálny čas pri štarte</translation>
     </message>
+    <message>
+        <source>Main</source>
+        <translation type="unfinished">Základné</translation>
+    </message>
 </context>
 <context>
     <name>DS1621</name>
@@ -2114,6 +2290,10 @@ Súbor nemožno nájsť:
         <source>Open Serial Monitor.</source>
         <translation>Otvoriť monitor sériového portu</translation>
     </message>
+    <message>
+        <source>Main</source>
+        <translation type="unfinished">Základné</translation>
+    </message>
 </context>
 <context>
     <name>FileBrowser</name>
@@ -2139,10 +2319,6 @@ Súbor nemožno nájsť:
     <message>
         <source>Remove Bookmark</source>
         <translation>Odstrániť záložku</translation>
-    </message>
-    <message>
-        <source>Search Files (Doesn&apos;t work)</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4745,6 +4921,10 @@ Neplatný súbor balíka:
         <source>Auto Open</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished">Zavrieť</translation>
+    </message>
 </context>
 <context>
     <name>SerialTerm</name>
@@ -4771,6 +4951,10 @@ Neplatný súbor balíka:
     <message>
         <source>Open Serial Monitor.</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open</source>
+        <translation type="unfinished">Otvoriť</translation>
     </message>
 </context>
 <context>
@@ -4800,19 +4984,11 @@ Neplatný súbor balíka:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>_us</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Max. Pulse Width</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Servo Motor</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>_s/60º</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5825,10 +6001,6 @@ Chcete uložiť zmeny?
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Real Speed: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Main MCU:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5850,6 +6022,10 @@ Chcete uložiť zmeny?
     </message>
     <message>
         <source>GUI overload:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Real Speed:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

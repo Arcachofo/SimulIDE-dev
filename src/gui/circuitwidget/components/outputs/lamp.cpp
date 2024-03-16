@@ -48,7 +48,7 @@ Lamp::Lamp( QString type, QString id )
         new DoubProp<Lamp>("Resistance", tr("Resistance"), "Ω"
                           , this, &Lamp::getRes, &Lamp::setResSafe ),
 
-        new DoubProp<Lamp>("MaxCurrent", tr("Max Current"),"A"
+        new DoubProp<Lamp>("MaxCurrent", tr("Max Current"), "A"
                           , this, &Lamp::maxCurrent, &Lamp::setMaxCurrent ),
     },0 } );
 }

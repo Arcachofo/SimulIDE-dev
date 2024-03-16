@@ -83,25 +83,25 @@ Ssd1306::Ssd1306( QString type, QString id )
 
 
     addPropGroup( { tr("Main"), {
-new StrProp <Ssd1306>("Color" ,tr("Color"), ""
-                     ,this, &Ssd1306::colorStr, &Ssd1306::setColorStr,0,"enum" ),
+        new StrProp <Ssd1306>("Color",tr("Color"), ""
+                             ,this, &Ssd1306::colorStr, &Ssd1306::setColorStr,0,"enum" ),
 
-new IntProp <Ssd1306>("Width", tr("Width"), tr("_Px")
-                     , this, &Ssd1306::width, &Ssd1306::setWidth, propNoCopy,"uint" ),
+        new IntProp <Ssd1306>("Width", tr("Width"), tr("_px")
+                             , this, &Ssd1306::width, &Ssd1306::setWidth, propNoCopy,"uint" ),
 
-new IntProp <Ssd1306>("Height", tr("Height"), tr("_Px")
-                        ,this,&Ssd1306::height, &Ssd1306::setHeight, propNoCopy,"uint" ),
+        new IntProp <Ssd1306>("Height", tr("Height"), tr("_px")
+                                ,this,&Ssd1306::height, &Ssd1306::setHeight, propNoCopy,"uint" ),
 
-new BoolProp<Ssd1306>("Rotate", tr("Rotate"), ""
-                     , this, &Ssd1306::imgRotated, &Ssd1306::setImgRotated ),
+        new BoolProp<Ssd1306>("Rotate", tr("Rotate"), ""
+                             , this, &Ssd1306::imgRotated, &Ssd1306::setImgRotated ),
     }, 0} );
 
     addPropGroup( { tr("I2C"), {
-new IntProp <Ssd1306>("Control_Code", tr("I2C Address"), ""
-                     , this, &Ssd1306::cCode, &Ssd1306::setCcode,0,"uint" ),
+        new IntProp <Ssd1306>("Control_Code", tr("I2C Address"), ""
+                             , this, &Ssd1306::cCode, &Ssd1306::setCcode,0,"uint" ),
 
-new DoubProp<Ssd1306>("Frequency",tr("I2C Frequency"), "_KHz"
-                     , this, &Ssd1306::freqKHz, &Ssd1306::setFreqKHz ),
+        new DoubProp<Ssd1306>("Frequency",tr("I2C Frequency"), "_kHz"
+                             , this, &Ssd1306::freqKHz, &Ssd1306::setFreqKHz ),
     }, 0} );
 }
 Ssd1306::~Ssd1306(){}

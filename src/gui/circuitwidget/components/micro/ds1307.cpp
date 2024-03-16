@@ -39,15 +39,15 @@ DS1307::DS1307( QString type, QString id )
 
     m_pin.resize( 3 );
     m_pin[0] = m_pinSda = new IoPin( 180, QPoint(-36,-12), id+"-PinSDA", 0, this, openCo );
-    m_pinSda->setLabelText( "SDA" );
+    m_pinSda->setLabelText("SDA");
     TwiModule::setSdaPin( m_pinSda );
 
     m_pin[1] = m_clkPin = new IoPin( 180, QPoint(-36, -4), id+"-PinSCL", 0, this, openCo );
-    m_clkPin->setLabelText( "SCL" );
+    m_clkPin->setLabelText("SCL");
     TwiModule::setSclPin( m_clkPin );
 
     m_pin[2] = m_outpin = new IoPin( 180, QPoint(-36, 12), id+"-PinSQW", 0, this, output );
-    m_outpin->setLabelText( "SQW" );
+    m_outpin->setLabelText("SQW");
     m_outpin->setOutHighV( 5 );
     m_clock.setPin( m_outpin );
 
@@ -55,9 +55,9 @@ DS1307::DS1307( QString type, QString id )
 
     m_address = m_cCode = 0b01101000; // 0x68
 
-    addPropGroup( { "Main", {
-new BoolProp<DS1307>("Time_Updtd", tr("Set current time at start"),""
-                    , this, &DS1307::timeUpdtd, &DS1307::setTimeUpdtd ),
+    addPropGroup( { tr("Main"), {
+        new BoolProp<DS1307>("Time_Updtd", tr("Set current time at start"),""
+                            , this, &DS1307::timeUpdtd, &DS1307::setTimeUpdtd ),
         },0 } );
 }
 DS1307::~DS1307(){}

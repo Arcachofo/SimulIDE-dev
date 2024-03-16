@@ -76,8 +76,8 @@ Ks0108::Ks0108( QString type, QString id )
     Ks0108::initialize();
 
     addPropGroup( { tr("Main"), {
-new BoolProp<Ks0108>("CS_Active_Low", tr("CS Active Low"), ""
-                    , this, &Ks0108::csActLow, &Ks0108::setCsActLow )
+        new BoolProp<Ks0108>("CS_Active_Low", tr("CS Active Low"), ""
+                            , this, &Ks0108::csActLow, &Ks0108::setCsActLow )
     }, groupNoCopy} );
 }
 Ks0108::~Ks0108()

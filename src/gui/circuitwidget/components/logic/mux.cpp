@@ -62,8 +62,8 @@ Mux::Mux( QString type, QString id )
                         , this, &Mux::addrBits, &Mux::setAddrBits, propNoCopy )
             }, groupNoCopy } );
 
-            addPropGroup( { tr("Electric"), IoComponent::inputProps()
-                +QList<ComProperty*>({
+    addPropGroup( { tr("Electric"), IoComponent::inputProps()
+        +QList<ComProperty*>({
         new BoolProp<Mux>( "Invert_Inputs", tr("Invert Inputs"),""
                          , this, &Mux::invertInps, &Mux::setInvertInps, propNoCopy )
                     })

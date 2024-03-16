@@ -47,7 +47,7 @@ Esp01::Esp01( QString type, QString id )
 
     m_serialMon = false;
     m_debug = true;
-    m_OK = "\r\nOK\r\n";
+    m_OK    = "\r\nOK\r\n";
     m_ERROR = "\r\nERROR\r\n"; // Default reply: Error //+CWJAP:<5>
 
     m_pin.resize(2);
@@ -79,22 +79,23 @@ Esp01::Esp01( QString type, QString id )
 
     Simulator::self()->addToUpdateList( this );
 
-    addPropGroup( { "Main", {
-new IntProp<Esp01>("Baudrate", tr("Baudrate"),"_Bauds"
-                  , this, &Esp01::baudRate, &Esp01::setBaudRate,0,"uint" ),
+    addPropGroup( { tr("Main"), {
+        new IntProp<Esp01>("Baudrate", tr("Baudrate"),"_Bd"
+                          , this, &Esp01::baudRate, &Esp01::setBaudRate,0,"uint" ),
 
-//new IntProp<Esp01>("DataBits", tr("Data Bits"),"_Bits"
-//                  , this, &Esp01::dataBits, &Esp01::setDataBits, "uint" ),
+        //new IntProp<Esp01>("DataBits", tr("Data Bits"),"_bits"
+        //                  , this, &Esp01::dataBits, &Esp01::setDataBits, "uint" ),
 
-//new IntProp<Esp01>("StopBits", tr("Stop Bits"),"_Bits"
-//                  , this, &Esp01::stopBits, &Esp01::setStopBits, "uint" ),
+        //new IntProp<Esp01>("StopBits", tr("Stop Bits"),"_bits"
+        //                  , this, &Esp01::stopBits, &Esp01::setStopBits, "uint" ),
 
-new BoolProp<Esp01>("Debug", tr("Show Debug messages"),""
-                   , this, &Esp01::debug, &Esp01::setDebug ),
+        new BoolProp<Esp01>("Debug", tr("Show Debug messages"),""
+                           , this, &Esp01::debug, &Esp01::setDebug ),
         },0 } );
+
     addPropGroup( {"Hidden", {
-new BoolProp<Esp01>("SerialMon","",""
-                   , this, &Esp01::serialMon, &Esp01::setSerialMon ),
+        new BoolProp<Esp01>("SerialMon","",""
+                           , this, &Esp01::serialMon, &Esp01::setSerialMon ),
     }, groupHidden} );
 }
 Esp01::~Esp01(){}

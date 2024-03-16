@@ -20,11 +20,11 @@ AppDialog::AppDialog( QWidget* parent )
     // App Settings
     m_scale = MainWindow::self()->fontScale();
     language->setCurrentIndex( (int)MainWindow::self()->lang() );
-    language->setFixedWidth( 75*m_scale );
+    language->setFixedWidth( 80*m_scale );
     fontName->setCurrentText( MainWindow::self()->defaultFontName() );
-    fontName->setFixedWidth( 75*m_scale );
+    fontName->setFixedWidth( 80*m_scale );
     fontScale->setValue( m_scale );
-    fontScale->setFixedWidth( 75*m_scale );
+    fontScale->setFixedWidth( 80*m_scale );
     userPath->setText( MainWindow::self()->userPath() );
 
     // Circuit Settings

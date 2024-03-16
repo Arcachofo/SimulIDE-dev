@@ -51,10 +51,10 @@ LedMatrix::LedMatrix( QString type, QString id )
         new StrProp <LedMatrix>("Color", tr("Color"), ""
                                , this, &LedMatrix::colorStr, &LedMatrix::setColorStr,0,"enum" ),
 
-        new IntProp <LedMatrix>("Rows", tr("Rows"), "_Leds"
+        new IntProp <LedMatrix>("Rows", tr("Rows"), ""
                                , this, &LedMatrix::rows, &LedMatrix::setRows, propNoCopy,"uint" ),
 
-        new IntProp <LedMatrix>("Cols", tr("Columns"), "_Leds"
+        new IntProp <LedMatrix>("Cols", tr("Columns"), ""
                                , this, &LedMatrix::cols, &LedMatrix::setCols, propNoCopy,"uint" ),
 
         new BoolProp<LedMatrix>("Vertical_Pins", tr("Vertical Pins"),""

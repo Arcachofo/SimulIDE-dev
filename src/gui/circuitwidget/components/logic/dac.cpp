@@ -53,7 +53,7 @@ DAC::DAC( QString type, QString id )
         +QList<ComProperty*>({
         new BoolProp<IoComponent>("Invert_Inputs", tr("Invert Inputs"),""
                                  , this, &IoComponent::invertInps, &IoComponent::setInvertInps, propNoCopy )})
-                          ,0} );
+    ,0} );
 
     addPropGroup( { tr("Timing"), IoComponent::edgeProps(),0 } );
 }

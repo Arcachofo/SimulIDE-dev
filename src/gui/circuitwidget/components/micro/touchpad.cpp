@@ -100,28 +100,28 @@ TouchPad::TouchPad( QString type, QString id )
     Simulator::self()->addToUpdateList( this );
 
     addPropGroup( { tr("Main"), {
-new IntProp <TouchPad>("Width", tr("Width"),"_px"
-                      , this, &TouchPad::width, &TouchPad::setWidth ,0,"uint" ),
+        new IntProp <TouchPad>("Width", tr("Width"),"_px"
+                              , this, &TouchPad::width, &TouchPad::setWidth ,0,"uint" ),
 
-new IntProp <TouchPad>("Height",tr("Height"),"_px"
-                        , this, &TouchPad::height, &TouchPad::setHeight ,0,"uint" ),
+        new IntProp <TouchPad>("Height",tr("Height"),"_px"
+                              , this, &TouchPad::height, &TouchPad::setHeight ,0,"uint" ),
 
-new BoolProp<TouchPad>("Transparent",tr("Transparent"),""
-                        , this, &TouchPad::transparent, &TouchPad::setTransparent )
+        new BoolProp<TouchPad>("Transparent",tr("Transparent"),""
+                              , this, &TouchPad::transparent, &TouchPad::setTransparent )
     }, groupNoCopy} );
 
     addPropGroup( { tr("Electric"), {
-new DoubProp<TouchPad>("RxMin", tr("RxMin"),"Ω"
-                      , this, &TouchPad::RxMin, &TouchPad::setRxMin,0,"uint" ),
+        new DoubProp<TouchPad>("RxMin", tr("RxMin"),"Ω"
+                              , this, &TouchPad::RxMin, &TouchPad::setRxMin,0,"uint" ),
 
-new DoubProp<TouchPad>("RxMax", tr("RxMax"),"Ω"
-                      , this, &TouchPad::RxMax, &TouchPad::setRxMax,0,"uint" ),
+        new DoubProp<TouchPad>("RxMax", tr("RxMax"),"Ω"
+                              , this, &TouchPad::RxMax, &TouchPad::setRxMax,0,"uint" ),
 
-new DoubProp<TouchPad>("RyMin", tr("RyMin"),"Ω"
-                      , this, &TouchPad::RyMin, &TouchPad::setRyMin,0,"uint" ),
+        new DoubProp<TouchPad>("RyMin", tr("RyMin"),"Ω"
+                              , this, &TouchPad::RyMin, &TouchPad::setRyMin,0,"uint" ),
 
-new DoubProp<TouchPad>("RyMax", tr("RyMax"),"Ω"
-                      , this, &TouchPad::RyMax, &TouchPad::setRyMax,0,"uint" ),
+        new DoubProp<TouchPad>("RyMax", tr("RyMax"),"Ω"
+                              , this, &TouchPad::RyMax, &TouchPad::setRyMax,0,"uint" ),
     }, groupNoCopy} );
 }
 TouchPad::~TouchPad(){}

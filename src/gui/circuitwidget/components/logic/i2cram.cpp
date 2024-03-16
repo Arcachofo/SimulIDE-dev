@@ -70,7 +70,7 @@ I2CRam::I2CRam( QString type, QString id )
         new IntProp <I2CRam>("Control_Code", tr("I2C Address"),""
                             , this, &I2CRam::cCode, &I2CRam::setCcode,0,"uint" ),
 
-        new DoubProp<I2CRam>("Frequency", tr("I2C Frequency"),"_KHz"
+        new DoubProp<I2CRam>("Frequency", tr("I2C Frequency"),"_kHz"
                             , this, &I2CRam::freqKHz, &I2CRam::setFreqKHz ),
 
         new BoolProp<I2CRam>("Persistent", tr("Persistent"),""
@@ -78,8 +78,8 @@ I2CRam::I2CRam( QString type, QString id )
     }, groupNoCopy } );
 
     addPropGroup( {"Hidden", {
-new StrProp<I2CRam>("Mem","",""
-                   , this, &I2CRam::getMem, &I2CRam::setMem )
+        new StrProp<I2CRam>("Mem","",""
+                           , this, &I2CRam::getMem, &I2CRam::setMem )
     }, groupHidden} );
 }
 I2CRam::~I2CRam(){}

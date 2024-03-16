@@ -25,8 +25,8 @@ ConnBase::ConnBase( QString type, QString id )
     setLabelPos(-16,-44, 0);
 
     addPropGroup( { tr("Main"), {
-new IntProp<ConnBase>("Size", tr("Size"),"_Pins"
-                     , this, &ConnBase::size, &ConnBase::setSize, propNoCopy,"uint" )
+        new IntProp<ConnBase>("Size", tr("Size"),"_Pins"
+                             , this, &ConnBase::size, &ConnBase::setSize, propNoCopy,"uint" )
     }, groupNoCopy } );
 }
 ConnBase::~ConnBase()

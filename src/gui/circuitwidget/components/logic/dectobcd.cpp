@@ -59,7 +59,7 @@ DecToBcd::DecToBcd( QString type, QString id )
         new BoolProp<DecToBcd>("Invert_Inputs", tr("Invert Inputs"),""
                               , this, &DecToBcd::invertInps, &DecToBcd::setInvertInps, propNoCopy )})
 
-+IoComponent::outputProps()+IoComponent::outputType(),0 } );
+    +IoComponent::outputProps()+IoComponent::outputType(),0 } );
 
     addPropGroup( { tr("Timing"), IoComponent::edgeProps(),0 } );
 }

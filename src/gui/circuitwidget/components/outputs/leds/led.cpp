@@ -43,7 +43,8 @@ Led::Led( QString type, QString id )
     setEpin( 1, m_pin[1] );
 
     addPropGroup( { "Hidden", {
-new StrProp<Led>("Links", "Links","", this, &Led::getLinks , &Led::setLinks )
+        new StrProp<Led>("Links", "Links",""
+                        , this, &Led::getLinks , &Led::setLinks )
     }, groupHidden} );
 }
 Led::~Led(){}

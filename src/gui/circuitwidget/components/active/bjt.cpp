@@ -46,14 +46,14 @@ BJT::BJT( QString type, QString id )
     Simulator::self()->addToUpdateList( this );
 
     addPropGroup( { tr("Main"), {
-new BoolProp<BJT>("PNP"  , tr("PNP"),""
-                 , this, &BJT::pnp , &BJT::setPnp ),
+        new BoolProp<BJT>("PNP"  , tr("PNP"),""
+                         , this, &BJT::pnp , &BJT::setPnp ),
 
-new DoubProp<BJT>("Gain" , tr("Gain"),""
-                 , this, &BJT::gain, &BJT::setGain ),
+        new DoubProp<BJT>("Gain" , tr("Gain"),""
+                         , this, &BJT::gain, &BJT::setGain ),
 
-new DoubProp<BJT>("Vcrit", tr("Threshold"),"V"
-                 , this, &BJT::threshold, &BJT::setThreshold )
+        new DoubProp<BJT>("Vcrit", tr("Threshold"),"V"
+                         , this, &BJT::threshold, &BJT::setThreshold )
     },0} );
 }
 BJT::~BJT(){}

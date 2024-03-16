@@ -18,7 +18,6 @@
 #include "utils.h"
 
 #include "stringprop.h"
-//#include "boolprop.h"
 
 Compiler::Compiler( CodeEditor* editor, OutPanelText* outPane )
         : QObject( editor )
@@ -39,14 +38,18 @@ Compiler::Compiler( CodeEditor* editor, OutPanelText* outPane )
     clearCompiler();
 
     addPropGroup( { "Hidden", {
-new StrProp<Compiler>("itemtype"     ,"" ,"", this, &Compiler::itemType, &Compiler::setItemType ),
-new StrProp<Compiler>("compilertype" ,"" ,"", this, &Compiler::compName, &Compiler::setCompName ),
+        new StrProp<Compiler>("itemtype","" ,""
+                             , this, &Compiler::itemType, &Compiler::setItemType ),
+
+        new StrProp<Compiler>("compilertype","" ,""
+                             , this, &Compiler::compName, &Compiler::setCompName ),
     }, groupHidden} );
 
     addPropGroup( { tr("Compiler Settings"), {
-new ComProperty("", tr("For this compiler type:"),"","",0),
-new StrProp<Compiler> ("ToolPath", tr("Tool Path"),"", this
-                      , &Compiler::toolPath, &Compiler::setToolPath, 0,"path"),
+        new ComProperty("", tr("For this compiler type:"),"","",0),
+
+        new StrProp<Compiler>("ToolPath", tr("Tool Path"),""
+                             , this, &Compiler::toolPath, &Compiler::setToolPath, 0,"path"),
     }, 0} );
 }
 Compiler::~Compiler(){}

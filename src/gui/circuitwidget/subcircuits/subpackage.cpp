@@ -79,13 +79,26 @@ SubPackage::SubPackage( QString type, QString id )
     m_pkgeFile = "";
 
     addPropGroup( { tr("Main"), {
-new StrProp <SubPackage>("SubcType"    ,tr("Type")  ,""      , this, &SubPackage::subcTypeStr,&SubPackage::setSubcTypeStr,0,"enum" ),
-new IntProp <SubPackage>("Width"       ,tr("Width") ,"_Cells", this, &SubPackage::width,      &SubPackage::setWidth ,0,"uint" ),
-new IntProp <SubPackage>("Height"      ,tr("Height"),"_Cells", this, &SubPackage::height,     &SubPackage::setHeight,0,"uint"  ),
-new StrProp <SubPackage>("Name"        ,tr("Name")        ,"", this, &SubPackage::name,       &SubPackage::setName ),
-new StrProp <SubPackage>("Package_File",tr("Package File"),"", this, &SubPackage::package,    &SubPackage::setPackage),
-new StrProp <SubPackage>("Background"  ,tr("Background")  ,"", this, &SubPackage::background, &SubPackage::setBackground ),
-new BoolProp<SubPackage>("Logic_Symbol",tr("Logic Symbol"),"", this, &SubPackage::logicSymbol,&SubPackage::setLogicSymbol ),
+        new StrProp <SubPackage>("SubcType", tr("Type"),""
+                                , this, &SubPackage::subcTypeStr, &SubPackage::setSubcTypeStr,0,"enum" ),
+
+        new IntProp <SubPackage>("Width", tr("Width"),""
+                                , this, &SubPackage::width, &SubPackage::setWidth ,0,"uint" ),
+
+        new IntProp <SubPackage>("Height", tr("Height"),""
+                                , this, &SubPackage::height, &SubPackage::setHeight,0,"uint" ),
+
+        new StrProp <SubPackage>("Name",tr("Name"),""
+                                , this, &SubPackage::name, &SubPackage::setName ),
+
+        new StrProp <SubPackage>("Package_File", tr("Package File"),""
+                                , this, &SubPackage::package, &SubPackage::setPackage),
+
+        new StrProp <SubPackage>("Background", tr("Background")  ,""
+                                , this, &SubPackage::background, &SubPackage::setBackground ),
+
+        new BoolProp<SubPackage>("Logic_Symbol", tr("Logic Symbol"),""
+                                , this, &SubPackage::logicSymbol, &SubPackage::setLogicSymbol ),
     }, 0} );
 }
 SubPackage::~SubPackage()

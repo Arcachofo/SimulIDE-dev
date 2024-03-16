@@ -47,15 +47,187 @@
         <translation type="unfinished"> Compilado:</translation>
     </message>
     <message>
-        <source>Dialog</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source> Version:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>TextLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>About SimulIDE</source>
+        <translation type="unfinished">Sobre SimulIDE</translation>
+    </message>
+    <message>
+        <source>&lt;a href=&quot;https://www.patreon.com/simulide/&quot;&gt;https://www.patreon.com/simulide&lt;/a&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Website:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Patreon:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Author:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Santiago González</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Contributors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>       Jarda Vrana</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Feri</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>       kellneka.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sergey Roenko.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>       Benoit ZERR.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>       Tim Fischer.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>n3645.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Roy Qu</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>       Alex Salishchev.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Jan K. S.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>acebrian.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>       bjacquot.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>       P. de Francisco</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>tfrei.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Translations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Maico Smaniotto.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pt. Brasil:       </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>@rkanoid.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Doğu Kocatepe.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Turkish:       </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Italian:       </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dutch       </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Santiago Gonzalez.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>French:       </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Spanish:       </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tim Fischer.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Chinese:       </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Czech:       </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Russian:       </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>labf2121</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Jarda Vrana</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>German:       </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>mvandorp</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Slovak:       </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Portuguese:       </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pascal Cotret.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>tomas714</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1452,6 +1624,10 @@ No se pudo encontrar el archivo:
         <source>Set current time at start</source>
         <translation>Tiempo actual al iniciar</translation>
     </message>
+    <message>
+        <source>Main</source>
+        <translation>Basico</translation>
+    </message>
 </context>
 <context>
     <name>DS1621</name>
@@ -2214,6 +2390,10 @@ No se pudo encontrar el archivo:
         <source>Open Serial Monitor.</source>
         <translation>Abrir Monitor Serial.</translation>
     </message>
+    <message>
+        <source>Main</source>
+        <translation>Basico</translation>
+    </message>
 </context>
 <context>
     <name>FileBrowser</name>
@@ -2235,10 +2415,6 @@ No se pudo encontrar el archivo:
     <message>
         <source>cd Up</source>
         <translation>Subir</translation>
-    </message>
-    <message>
-        <source>Search Files (Doesn&apos;t work)</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Remove Bookmark</source>
@@ -5026,6 +5202,10 @@ Archivo packae no valido:</translation>
         <source>Auto Open</source>
         <translation type="unfinished">Auto Abrir</translation>
     </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished">Cerrar</translation>
+    </message>
 </context>
 <context>
     <name>SerialTerm</name>
@@ -5052,6 +5232,10 @@ Archivo packae no valido:</translation>
     <message>
         <source>Open Serial Monitor.</source>
         <translation>Abrir Monitor Serie.</translation>
+    </message>
+    <message>
+        <source>Open</source>
+        <translation type="unfinished">Abrir</translation>
     </message>
 </context>
 <context>
@@ -5081,19 +5265,11 @@ Archivo packae no valido:</translation>
         <translation>Ancho de Pulso Mínimo</translation>
     </message>
     <message>
-        <source>_us</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Max. Pulse Width</source>
         <translation type="unfinished">Ancho de Pulso Máximo</translation>
     </message>
     <message>
         <source>Servo Motor</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>_s/60º</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6233,7 +6409,7 @@ Quiere guardar los cambios?
     </message>
     <message>
         <source>Real Speed: </source>
-        <translation>Velocidad Real:</translation>
+        <translation type="vanished">Velocidad Real:</translation>
     </message>
     <message>
         <source>Main MCU:</source>
@@ -6258,6 +6434,10 @@ Quiere guardar los cambios?
     <message>
         <source>GUI overload:</source>
         <translation type="unfinished">Sobrecarga GUI:</translation>
+    </message>
+    <message>
+        <source>Real Speed:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -43,14 +43,17 @@ EditorWidget::EditorWidget( QWidget* parent )
     readSettings();
 
     addPropGroup( { tr("Editor Settings"), {
-new IntProp <EditorWidget>("FontSize" , tr("Font Size"),"_Pixels", this,
-                        &EditorWidget::fontSize,    &EditorWidget::setFontSize, 0 ),
-new IntProp <EditorWidget>("TabSize"  , tr("Tab Size"),"_Spaces", this,
-                        &EditorWidget::tabSize,    &EditorWidget::setTabSize, 0 ),
-new BoolProp<EditorWidget>("SpaceTabs", tr("Tabs as spaces"),"", this
-                        , &EditorWidget::spaceTabs, &EditorWidget::setSpaceTabs ),
-new BoolProp<EditorWidget>("ShowSpaces", tr("Show Spaces and Tabs"),"", this
-                        , &EditorWidget::showSpaces, &EditorWidget::setShowSpaces ),
+        new IntProp <EditorWidget>("FontSize", tr("Font Size"),"_px"
+                                  , this,&EditorWidget::fontSize, &EditorWidget::setFontSize, 0 ),
+
+        new IntProp <EditorWidget>("TabSize", tr("Tab Size"),""
+                                  , this, &EditorWidget::tabSize, &EditorWidget::setTabSize, 0 ),
+
+        new BoolProp<EditorWidget>("SpaceTabs", tr("Tabs as spaces"),""
+                                  , this, &EditorWidget::spaceTabs, &EditorWidget::setSpaceTabs ),
+
+        new BoolProp<EditorWidget>("ShowSpaces", tr("Show Spaces and Tabs"),""
+                                  , this, &EditorWidget::showSpaces, &EditorWidget::setShowSpaces ),
     }, 0} );
 }
 EditorWidget::~EditorWidget(){}

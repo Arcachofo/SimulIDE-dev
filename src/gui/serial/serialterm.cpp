@@ -45,7 +45,7 @@ SerialTerm::SerialTerm( QString type, QString id )
 {
     m_graphical = true;
 
-    m_area = QRect(-16,-16, 64, 32 );
+    m_area = QRect(-16,-16, 72, 32 );
     setLabelPos(-20,-32 );
 
     m_pin.resize(2);
@@ -64,8 +64,8 @@ SerialTerm::SerialTerm( QString type, QString id )
     m_receiving = false;
 
     m_button = new CustomButton( );
-    m_button->setMaximumSize( 36, 20 );
-    m_button->setGeometry(-36,-20, 36, 20 );
+    m_button->setMaximumSize( 44, 20 );
+    m_button->setGeometry(-44,-20, 44, 20 );
     m_button->setCheckable( true );
     m_button->setText( tr("Open") );
 
@@ -88,13 +88,20 @@ SerialTerm::SerialTerm( QString type, QString id )
     }, 0 } );
 
     addPropGroup( { "Config", {
-new IntProp<SerialTerm>("Baudrate", tr("Baudrate"),"_Bauds", this, &SerialTerm::baudRate, &SerialTerm::setBaudRate,0,"uint" ),
-new IntProp<SerialTerm>("DataBits", tr("Data Bits"),"_Bits", this, &SerialTerm::dataBits, &SerialTerm::setDataBits,0,"uint" ),
-new IntProp<SerialTerm>("StopBits", tr("Stop Bits"),"_Bits", this, &SerialTerm::stopBits, &SerialTerm::setStopBits,0,"uint" ),
+        new IntProp<SerialTerm>("Baudrate", tr("Baudrate"),"_Bd"
+                               , this, &SerialTerm::baudRate, &SerialTerm::setBaudRate,0,"uint" ),
+
+        new IntProp<SerialTerm>("DataBits", tr("Data Bits"),"_bits"
+                               , this, &SerialTerm::dataBits, &SerialTerm::setDataBits,0,"uint" ),
+
+        new IntProp<SerialTerm>("StopBits", tr("Stop Bits"),"_bits"
+                               , this, &SerialTerm::stopBits, &SerialTerm::setStopBits,0,"uint" ),
     }, 0 } );
+
     addPropGroup( {"Hidden", {
-new BoolProp<SerialTerm>("SerialMon","","", this, &SerialTerm::serialMon, &SerialTerm::setSerialMon ),
-}, groupHidden} );
+        new BoolProp<SerialTerm>("SerialMon","",""
+                                , this, &SerialTerm::serialMon, &SerialTerm::setSerialMon ),
+    }, groupHidden} );
 }
 SerialTerm::~SerialTerm(){}
 

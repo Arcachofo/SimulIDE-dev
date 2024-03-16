@@ -47,14 +47,14 @@ LatchD::LatchD( QString type, QString id )
     setChannels( 8 );
 
     addPropGroup( { tr("Main"), {
-        new IntProp <LatchD>("Channels", tr("Size"),"_Channels", this
-                    , &LatchD::channels, &LatchD::setChannels, propNoCopy,"uint" ),
+        new IntProp <LatchD>("Channels", tr("Size"),"_Channels"
+                            , this, &LatchD::channels, &LatchD::setChannels, propNoCopy,"uint" ),
 
-        new StrProp <LatchD>("Trigger", tr("Trigger Type"),"", this
-                    , &LatchD::triggerStr, &LatchD::setTriggerStr, propNoCopy,"enum" ),
+        new StrProp <LatchD>("Trigger", tr("Trigger Type"),""
+                            , this, &LatchD::triggerStr, &LatchD::setTriggerStr, propNoCopy,"enum" ),
 
-        new BoolProp<LatchD>("Tristate", tr("Tristate"),"", this
-                    , &LatchD::tristate, &LatchD::setTristate ),
+        new BoolProp<LatchD>("Tristate", tr("Tristate"),""
+                            , this, &LatchD::tristate, &LatchD::setTristate ),
     }, groupNoCopy } );
 
     addPropGroup( { tr("Electric"),

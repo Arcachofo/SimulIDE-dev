@@ -117,7 +117,7 @@ void FreqMeter::updateStep()
 
         if( freq > 999 )
         {
-            freq /= 1e3; unit = " KHz";
+            freq /= 1e3; unit = " kHz";
             if( freq > 999 ) {
                 freq /= 1e3; unit = " MHz";
                 if( freq > 999 ) {

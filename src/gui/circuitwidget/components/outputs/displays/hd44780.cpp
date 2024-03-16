@@ -14,7 +14,7 @@
 
 #include "intprop.h"
 
-#define tr(str) simulideTr("HD44780",str)
+#define tr(str) simulideTr("Hd44780",str)
 
 Component* Hd44780::construct( QString type, QString id )
 { return new Hd44780( type, id ); }
@@ -57,11 +57,11 @@ Hd44780::Hd44780( QString type, QString id )
     Hd44780::initialize();
 
     addPropGroup( { tr("Main"), {
-new IntProp <Hd44780>("Rows", tr("Rows"), ""
-                     , this, &Hd44780::rows, &Hd44780::setRows ,0,"uint" ),
+        new IntProp <Hd44780>("Rows", tr("Rows"), ""
+                             , this, &Hd44780::rows, &Hd44780::setRows ,0,"uint" ),
 
-new IntProp <Hd44780>("Cols", tr("Columns"), ""
-                     , this, &Hd44780::cols, &Hd44780::setCols ,0,"uint"  ),
+        new IntProp <Hd44780>("Cols", tr("Columns"), ""
+                             , this, &Hd44780::cols, &Hd44780::setCols ,0,"uint"  ),
     }, groupNoCopy} );
 }
 Hd44780::~Hd44780(){}

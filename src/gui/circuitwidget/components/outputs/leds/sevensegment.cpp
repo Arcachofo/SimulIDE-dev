@@ -73,7 +73,7 @@ SevenSegment::SevenSegment( QString type, QString id )
         new StrProp <SevenSegment>("Color", tr("Color"), ""
                                   , this, &SevenSegment::colorStr, &SevenSegment::setColorStr,0,"enum" ),
 
-        new IntProp <SevenSegment>("NumDisplays"  , tr("Size"),"_7seg"
+        new IntProp <SevenSegment>("NumDisplays"  , tr("Size"), ""
                                   , this, &SevenSegment::numDisplays, &SevenSegment::setNumDisplays, propNoCopy ),
 
         new BoolProp<SevenSegment>("Vertical_Pins", tr("Vertical Pins"), ""
