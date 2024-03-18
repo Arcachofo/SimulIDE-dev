@@ -1,4 +1,0 @@
-Arduino UNO
-
-Propiedades:
-- Mhz: 16

@@ -1,5 +1,0 @@
-Tierra:
-
-Esta es una fuente de voltaje de 0V.
-
-Siempre está encendido.

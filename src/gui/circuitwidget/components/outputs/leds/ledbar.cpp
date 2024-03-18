@@ -55,14 +55,14 @@ LedBar::LedBar( QString type, QString id )
     }, 0} );
 
     addPropGroup( { tr("Electric"), {
-        new DoubProp<LedBar>("Threshold" , tr("Forward Voltage"), "V"
-                            , this, &LedBar::threshold,  &LedBar::setThreshold ),
+        new DoubProp<LedBar>("Threshold", tr("Forward Voltage"), "V"
+                            , this, &LedBar::threshold, &LedBar::setThreshold ),
 
-        new DoubProp<LedBar>("MaxCurrent", tr("Max Current"),"mA"
+        new DoubProp<LedBar>("MaxCurrent", tr("Max Current"), "mA"
                             , this, &LedBar::maxCurrent, &LedBar::setMaxCurrent ),
 
-        new DoubProp<LedBar>("Resistance", tr("Resistance"),"Ω"
-                            , this, &LedBar::res,        &LedBar::setRes ),
+        new DoubProp<LedBar>("Resistance", tr("Resistance"), "Ω"
+                            , this, &LedBar::res, &LedBar::setRes ),
     }, 0} );
 }
 LedBar::~LedBar(){}

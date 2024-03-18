@@ -86,10 +86,10 @@ Ssd1306::Ssd1306( QString type, QString id )
         new StrProp <Ssd1306>("Color",tr("Color"), ""
                              ,this, &Ssd1306::colorStr, &Ssd1306::setColorStr,0,"enum" ),
 
-        new IntProp <Ssd1306>("Width", tr("Width"), tr("_px")
+        new IntProp <Ssd1306>("Width", tr("Width"), "_px"
                              , this, &Ssd1306::width, &Ssd1306::setWidth, propNoCopy,"uint" ),
 
-        new IntProp <Ssd1306>("Height", tr("Height"), tr("_px")
+        new IntProp <Ssd1306>("Height", tr("Height"), "_px"
                                 ,this,&Ssd1306::height, &Ssd1306::setHeight, propNoCopy,"uint" ),
 
         new BoolProp<Ssd1306>("Rotate", tr("Rotate"), ""

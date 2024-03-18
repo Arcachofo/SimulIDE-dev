@@ -176,8 +176,7 @@ Mcu::Mcu( QString type, QString id )
         }
         if( !dataFile.exists() || !pkgeFile.exists() )
         {
-            MessageBoxNB( "Mcu::Mcu", "                               \n"+
-                      tr("Files not found for: %1").arg( m_device ) );
+            qDebug() << "Mcu::Mcu Files not found for:" << m_device;
             m_error = 1;
             return;
         }

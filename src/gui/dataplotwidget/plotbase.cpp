@@ -68,10 +68,10 @@ PlotBase::PlotBase( QString type, QString id )
     m_exportFile = changeExt( Circuit::self()->getFilePath(), "_"+id+".vcd" );
 
     addPropGroup( { tr("Main"), {
-        new IntProp <PlotBase>("Basic_X",tr("Screen Width"), tr("_Px")
+        new IntProp <PlotBase>("Basic_X",tr("Screen Width"), "_px"
                               , this, &PlotBase::baSizeX, &PlotBase::setBaSizeX,0,"uint" ),
 
-        new IntProp <PlotBase>("Basic_Y",tr("Screen Height"),tr("_Px")
+        new IntProp <PlotBase>("Basic_Y",tr("Screen Height"),"_px"
                               , this, &PlotBase::baSizeY, &PlotBase::setBaSizeY,0,"uint" ),
 
         new IntProp <PlotBase>("BufferSize",tr("Buffer Size"),""

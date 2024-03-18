@@ -47,7 +47,7 @@ LatchD::LatchD( QString type, QString id )
     setChannels( 8 );
 
     addPropGroup( { tr("Main"), {
-        new IntProp <LatchD>("Channels", tr("Size"),"_Channels"
+        new IntProp <LatchD>("Channels", tr("Size"),"_bits"
                             , this, &LatchD::channels, &LatchD::setChannels, propNoCopy,"uint" ),
 
         new StrProp <LatchD>("Trigger", tr("Trigger Type"),""

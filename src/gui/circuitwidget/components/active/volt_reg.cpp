@@ -53,7 +53,7 @@ VoltReg::VoltReg( QString type, QString id )
 
     m_ePin[2] = m_pin[2] = new Pin( 270, QPoint( 0, 16 ), id+"-ref", 2, this );
     m_pin[2]->setLength(5);
-    m_pin[2]->setLabelText( "R" );
+    m_pin[2]->setLabelText("R");
     m_pin[2]->setLabelColor( QColor( 0, 0, 0 ) );
 
     Simulator::self()->addToUpdateList( this );

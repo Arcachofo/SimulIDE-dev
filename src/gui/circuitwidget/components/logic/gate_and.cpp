@@ -31,7 +31,7 @@ AndGate::AndGate( QString type, QString id )
 {
     addPropGroup( { tr("Electric"), IoComponent::inputProps()
         +QList<ComProperty*>({
-        new IntProp <AndGate>("Num_Inputs", tr("Input Size"),"_Inputs"
+        new IntProp <AndGate>("Num_Inputs", tr("Input Size"),""
                              , this, &AndGate::numInps, &AndGate::setNumInputs, propNoCopy,"uint" ),
 
         new BoolProp<AndGate>("Invert_Inputs", tr("Invert Inputs"),""

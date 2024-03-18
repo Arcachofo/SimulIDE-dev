@@ -98,7 +98,7 @@ Ds18b20::Ds18b20( QString type, QString id )
 
     addPropGroup( { tr("Main"), {
         new StrProp <Ds18b20>("ROM","ROM", ""
-                             , this, &Ds18b20::getROM,  &Ds18b20::setROM, propNoCopy ),
+                             , this, &Ds18b20::getROM, &Ds18b20::setROM, propNoCopy ),
 
         new DoubProp<Ds18b20>("Temp", tr("Temperature"), "°C"
                              , this, &Ds18b20::temp, &Ds18b20::setTemp ),
