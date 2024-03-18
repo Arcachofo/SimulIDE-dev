@@ -87,11 +87,12 @@ void CustomDial::paintEvent( QPaintEvent* e )
            if (i==0) {
                pen.setColor( QColor( "red" ) );
                painter.setPen( pen) ;
+               painter.drawLine( QPointF(width/2-3, 0), QPointF(width/2+1, 0) );
            } else {
                pen.setColor( QColor(110,110,110) );
                painter.setPen( pen) ;
+               painter.drawLine( QPointF(width/2-3, 0), QPointF(width/2, 0) );
            }
-           painter.drawLine( QPointF(width/2-3, 0), QPointF(width/2, 0) );
            painter.rotate( angleStep );
        }
        painter.translate(-width/2, -height/2 );

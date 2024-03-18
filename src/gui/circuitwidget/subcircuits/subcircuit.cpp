@@ -341,10 +341,10 @@ Pin* SubCircuit::addPin( QString id, QString type, QString label, int pos, int x
         QColor color = Qt::black;
         if( !m_isLS ) color = QColor( 250, 250, 200 );
 
-        Tunnel* tunnel = new Tunnel("Tunnel", m_id+"-"+id );
+        QString pId = m_id+"-"+id;
+        Tunnel* tunnel = new Tunnel("Tunnel", pId );
         m_compList.append( tunnel );
 
-        QString pId = m_id+"-"+id;
         tunnel->setParentItem( this );
         tunnel->setAcceptedMouseButtons( Qt::NoButton );
         tunnel->setShowId( false );

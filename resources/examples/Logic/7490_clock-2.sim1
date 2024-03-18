@@ -1,8 +1,8 @@
-<circuit version="" rev="2221" stepSize="1000000" stepsPS="1000000" NLsteps="100000" reaStep="1000000" animate="0" >
+<circuit version="" rev="2263" stepSize="1000000" stepsPS="1000000" NLsteps="100000" reaStep="1000000" animate="0" >
 
 <item itemtype="TextComponent" CircId="Text-41" mainComp="false" Show_id="false" Show_Val="false" Pos="-664,-160" rotation="0" hflip="1" vflip="1" label="Text-41" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Margin="5 _px" Border="1 _px" Color="#ffffdc" Opacity="1" Font="Helvetica [Cronyx]" Font_Color="#000080" Font_Size="10 _px" Fixed_Width="false" Text="HH:MM:SS Clock.&#xa;&#xa;Turn On Clock to Start.&#xa;&#xa;Min. Set:&#xa;Advance Minutes.&#xa;&#xa;Hour Set:&#xa;Advance Hours." />
 
-<item itemtype="Rail" CircId="Rail.-35" mainComp="false" ShowProp="Voltage" Show_id="false" Show_Val="true" Pos="-588,-284" rotation="-270" hflip="1" vflip="1" label="Rail.-35" idLabPos="-64,-24" labelrot="0" valLabPos="5,11" valLabRot="90" Voltage="5 V" />
+<item itemtype="Rail" CircId="Rail.-35" mainComp="false" ShowProp="Voltage" Show_id="false" Show_Val="true" Pos="-588,-284" rotation="-270" hflip="1" vflip="1" label="Rail.-35" idLabPos="-64,-24" labelrot="0" valLabPos="-12.7078,6.11509" valLabRot="270" Voltage="5 V" />
 
 <item itemtype="Push" CircId="Push-34" mainComp="false" Show_id="true" Show_Val="false" Pos="-540,-196" rotation="180" hflip="1" vflip="1" label="Hour Set" idLabPos="17.9647,32.8049" labelrot="-180" valLabPos="0,0" valLabRot="0" Norm_Close="false" Poles="1" />
 

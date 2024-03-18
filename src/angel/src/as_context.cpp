@@ -239,12 +239,7 @@ int asCContext::AddRef() const
 int asCContext::Release() const
 {
 	int r = m_refCount.atomicDec();
-
-	if( r == 0 )
-	{
-		asDELETE(const_cast<asCContext*>(this),asCContext);
-		return 0;
-	}
+    if( r == 0 ) asDELETE(const_cast<asCContext*>(this),asCContext);
 	return r;
 }
 

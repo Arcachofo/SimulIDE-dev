@@ -83,7 +83,7 @@ class PlotBase : public Component, public ScriptModule
 
         virtual void remove() override;
 
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w ) override;
 
     protected:
         virtual void slotProperties() override;

@@ -205,7 +205,7 @@ void PlotBase::updateConds( QString conds )
     }
     m_script = "void pause() { pb.m_pause = "+conds+";}";
     /// qDebug() << m_script <<endl;
-    int r = compileScript();
+    int r = ScriptModule::compileScript();
     if( r < 0 ) { qDebug() << "PlotBase::updateConds Failed to compile expression:"<<conds; return; }
 
     m_pauseFunc = m_aEngine->GetModule(0)->GetFunctionByDecl("void pause()");
@@ -271,9 +271,9 @@ void PlotBase::remove()
     Component::remove();
 }
 
-void PlotBase::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
+void PlotBase::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w )
 {
-    Component::paint( p, option, widget );
+    Component::paint( p, o, w );
     
     //p->setBrush( Qt::darkGray );
     p->setBrush(QColor( 230, 230, 230 ));

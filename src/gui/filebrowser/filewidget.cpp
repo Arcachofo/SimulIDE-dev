@@ -48,8 +48,6 @@ FileWidget::FileWidget( QWidget* parent )
     m_fileBrowser->setPath( QDir::rootPath() );
     this->addWidget( m_fileBrowser );
 
-    this->setSizes( {200, 24, 24, 300} );
-    
     QSettings* settings = MainWindow::self()->settings();
     QDir setDir( settings->fileName() );
     setDir.cdUp( );
@@ -81,6 +79,8 @@ FileWidget::FileWidget( QWidget* parent )
         addBookMark( settings->value("path").toString() );
     }
     settings->endArray();
+
+    this->setSizes( {100, 10, 300} );
 }
 FileWidget::~FileWidget(){}
 
