@@ -126,6 +126,12 @@ int ScriptModule::compileScript()
     return 0;
 }*/
 
+int ScriptModule::callFunction0( asIScriptFunction* func, asIScriptContext* context )
+{
+    context->Prepare( func );
+    return context->Execute();
+}
+
 void ScriptModule::callFunction( asIScriptFunction* func )
 {
     prepare( func );

@@ -250,15 +250,22 @@ void ScriptCpu::voltChanged()
 {
     if( !m_voltChanged ) return;
 
+#ifndef SIMULIDE_W32 // Defined in .pro file for win32
     m_status = m_vChangedCtx->executeJit0( m_voltChanged );
+#else
+    m_status = callFunction0( m_voltChanged, m_vChangedCtx );
+#endif
     if( m_status != asEXECUTION_FINISHED ) printError( m_vChangedCtx );
 }
 
 void ScriptCpu::runEvent()
 {
     if( !m_runEvent ) return;
-
+#ifndef SIMULIDE_W32 // Defined in .pro file for win32
     m_status = m_runEventCtx->executeJit0( m_runEvent );
+#else
+    m_status = callFunction0( m_runEvent, m_runEventCtx );
+#endif
     if( m_status != asEXECUTION_FINISHED ) printError( m_runEventCtx );
 }
 
@@ -274,7 +281,11 @@ void ScriptCpu::runStep()
 {
     if( !m_runStep ) return;
     m_mcu->cyclesDone = 1;
+#ifndef SIMULIDE_W32 // Defined in .pro file for win32
     m_status = m_runStepCtx->executeJit0( m_runStep );
+#else
+    m_status = callFunction0( m_runStep, m_runStepCtx );
+#endif
     if( m_status != asEXECUTION_FINISHED ) printError( m_runStepCtx );
 }
 
@@ -282,7 +293,11 @@ void ScriptCpu::extClock( bool clkState )
 {
     if( m_extClockF )
     {
+#ifndef SIMULIDE_W32 // Defined in .pro file for win32
         m_status = m_extClockCtx->executeJit0( m_extClockF );
+#else
+        m_status = callFunction0( m_extClockF , m_extClockCtx );
+#endif
         if( m_status != asEXECUTION_FINISHED ) printError( m_extClockCtx );
     }
     if( !m_extClock ) return;

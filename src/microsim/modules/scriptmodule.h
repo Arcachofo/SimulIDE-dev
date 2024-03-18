@@ -28,6 +28,7 @@ class ScriptModule : public eElement
         asIScriptContext* context() { return m_context; }
 
         void callFunction( asIScriptFunction* func );
+        int callFunction0( asIScriptFunction* func, asIScriptContext* context );
         inline void prepare( asIScriptFunction* func ) { m_context->Prepare( func ); }
         void execute();
 
