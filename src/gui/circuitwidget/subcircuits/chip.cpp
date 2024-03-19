@@ -267,21 +267,22 @@ void Chip::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w )
         p->drawRoundedRect( m_area, 1, 1);
         if( m_backData  )
         {
-            /*int w = m_backImage->width();
-            int h = m_backImage->height();
-            int mW = m_area.x()+(m_width*8 - w)/2;
-            int mH = m_area.y()+(m_height*8 - h)/2;
-            p->drawRoundedRect( mW, mH, w, h, 1, 1);
-            p->drawImage( mW, +mH, *m_backImage ); // Image centered*/
+            double w = m_backData->size();
+            double h = m_backData->at(0).size();
 
-            int w = m_backData->size();
-            int h = m_backData->at(0).size();
-            int mW = m_area.x()+(m_width*8 - w)/2;
-            int mH = m_area.y()+(m_height*8 - h)/2;
+            QImage img( w*3, h*3, QImage::Format_RGB32 );
+            QPainter painter;
+            painter.begin( &img );
 
-            for( int x=0; x<w; x++ )
+            for( int col=0; col<w; col++ )
+            {
+                int x = col*3;
+
                 for( int y=0; y<h; y++ )
-                    p->fillRect( QRectF( mW+x, mH+y, 1, 1), QColor(m_backData->at(x).at(y) ) );
+                    painter.fillRect( QRectF( x, y*3, 3, 3 ), QColor(m_backData->at(col).at(y) ) );
+            }
+            painter.end();
+            p->drawImage( m_area, img );
         }
         else if( !m_isLS && m_background.isEmpty() )
         {
