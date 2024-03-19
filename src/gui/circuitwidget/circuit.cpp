@@ -437,7 +437,7 @@ void Circuit::loadStrDoc( QString &doc )
                     comp->updtValLabelPos();
                     if( type == "Package" ) compList.prepend( comp );
                     else                    compList.append( comp );
-                    if( comp->m_linker ){
+                    if( comp->m_isLinker ){
                         Linker* l = dynamic_cast<Linker*>(comp);
                         if( l->hasLinks() ) linkList.append( l );
                     }

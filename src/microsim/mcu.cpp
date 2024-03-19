@@ -97,7 +97,7 @@ Mcu::Mcu( QString type, QString id )
     m_autoLoad = false;
     m_scripted = false;
     m_resetPol = false;
-    m_linker   = true;
+    m_isLinker = true;
 
     m_extFreq = 0;
 

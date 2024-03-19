@@ -14,10 +14,11 @@
 LinkerComponent::LinkerComponent( QString type, QString id )
                : Component( type, id )
 {
-    m_linker = true;
+    m_isLinker = true;
 
     addPropGroup( { "Hidden", {
-new StrProp<LinkerComponent>("Links", "Links","", this, &LinkerComponent::getLinks , &LinkerComponent::setLinks )
+        new StrProp<LinkerComponent>("Links", "Links",""
+                                    , this, &LinkerComponent::getLinks , &LinkerComponent::setLinks )
     }, groupHidden} );
 }
 LinkerComponent::~LinkerComponent(){}

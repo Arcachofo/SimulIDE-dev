@@ -313,7 +313,7 @@ void SubCircuit::loadSubCircuit( QString file )
 
                     m_compList.append( comp );
 
-                    if( comp->m_linker ){
+                    if( comp->m_isLinker ){
                         Linker* l = dynamic_cast<Linker*>(comp);
                         if( l->hasLinks() ) linkList.append( l );
                     }

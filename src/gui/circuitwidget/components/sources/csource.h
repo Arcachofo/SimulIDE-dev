@@ -44,7 +44,7 @@ class Csource : public Component, public eResistor
 
         void setVoltage( double v );
 
-        virtual void setLinked( bool l ) override;
+        virtual bool setLinkedTo( Linker* li ) override;
         virtual void setLinkedValue( double v, int i=0 ) override;
 
         //virtual QPainterPath shape() const;

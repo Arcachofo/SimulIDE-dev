@@ -47,8 +47,8 @@ Component::Component( QString type, QString id )
     m_crashed    = false;
     m_warning    = false;
     m_graphical  = false;
-    m_linker     = false;
-    m_linked     = false;
+    m_isLinker   = false;
+    m_linkedTo   = nullptr;
     m_background = "";
     m_showProperty = "";
     m_linkNumber = -1;
@@ -173,7 +173,7 @@ void Component::substitution( QString &propName ) // static, Old: TODELETE
 
 QVariant Component::itemChange( GraphicsItemChange change, const QVariant &value )
 {
-    if( m_linker && change == QGraphicsItem::ItemSelectedChange && value == false ) // Hide linked Components
+    if( m_isLinker && change == QGraphicsItem::ItemSelectedChange && value == false ) // Hide linked Components
     {
         Linker* linker = dynamic_cast<Linker*>(this);
         linker->showLinked( false );
@@ -205,7 +205,7 @@ void Component::mousePressEvent( QGraphicsSceneMouseEvent* event )
             {
                 for( QGraphicsItem* item : itemlist ) item->setSelected( false );
                 setSelected( true );
-                if( m_linker && isSelected() ) // Show/Hide linked Components (we are not linking right now)
+                if( m_isLinker && isSelected() ) // Show/Hide linked Components (we are not linking right now)
                 {
                     Linker* linker = dynamic_cast<Linker*>(this);
                     linker->showLinked( true );
@@ -418,6 +418,8 @@ void Component::remove()
     for( uint i=0; i<m_pin.size(); i++ )
         if( m_pin[i] ) m_pin[i]->removeConnector();
 
+    if( m_linkedTo ) m_linkedTo->removeLinked( this );
+
     Circuit::self()->compRemoved( true );
 }
 
@@ -563,6 +565,15 @@ void Component::addSignalPin( Pin* pin )
 void Component::remSignalPin( Pin* pin )
 {
     m_signalPin.removeAll( pin );
+}
+
+bool Component::setLinkedTo( Linker* li )
+{
+    if( li && m_linkedTo ) return false;
+    if( !li ) m_linkNumber = -1;
+    m_linkedTo = li;
+    update();
+    return true;
 }
 
 void Component::setHidden( bool hid, bool hidArea, bool hidLabel )

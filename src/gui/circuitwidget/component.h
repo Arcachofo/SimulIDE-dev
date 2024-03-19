@@ -144,9 +144,10 @@ class Component : public CompBase, public QGraphicsItem, public Updatable
         // Link components
         virtual void setLinkedValue( double v, int i=0 ){;}
         virtual void setLinkedString( QString str, int i=0 ){;}
-        virtual void setLinked( bool l ){ m_linked = l;}
+        virtual bool setLinkedTo( Linker* li );
+        bool isLinked() { return m_linkedTo != nullptr; }
 
-        bool m_linker;
+        bool m_isLinker;
         int m_linkNumber;
 
  static bool m_boardMode;
@@ -185,7 +186,6 @@ class Component : public CompBase, public QGraphicsItem, public Updatable
         bool m_warning;
         bool m_crashed;
         bool m_hidden;
-        bool m_linked;
 
         QPointF m_boardPos;
         QPointF m_circPos;
@@ -204,6 +204,8 @@ class Component : public CompBase, public QGraphicsItem, public Updatable
         int m_Vflip;
 
  static int m_error;
+
+        Linker* m_linkedTo;
 
         QString m_background;   // BackGround Image path
         QPixmap* m_backPixmap;  // Background Pixmap

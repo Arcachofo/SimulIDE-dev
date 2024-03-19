@@ -20,6 +20,8 @@ class Linker
         QString getLinks();
         void setLinks( QString links );
 
+        void removeLinked( Component* comp ) { m_linkedComp.removeOne( comp ); }
+
         Component* getLinkedComp( int i ) { return m_linkedComp.value( i ); }
 
         bool hasLinks() { return !m_linkedStr.isEmpty(); }

@@ -88,7 +88,7 @@ void SevenSegmentBCD::updateStep()
     m_changed = false;
 
     if( !Simulator::self()->isRunning() ) m_digit = 0;
-    else if( !m_linked ){
+    else if( !m_linkedTo ){
         if( m_enablePin->getInpState() ){
             BcdBase::voltChanged();
             if( m_dotPin->getInpState() ) m_digit |= 0x80;
@@ -118,13 +118,15 @@ void SevenSegmentBCD::setShowDotPin( bool show )
     m_dotPin->setVisible( show );
 }
 
-void SevenSegmentBCD::setLinked( bool l )
+bool SevenSegmentBCD::setLinkedTo( Linker* li )
 {
-    Component::setLinked( l );
-    if( l )
+    bool linked = Component::setLinkedTo( li );
+    if( li && linked )
         for( uint i=0; i<m_inPin.size(); ++i ) m_inPin[i]->removeConnector();
 
-    setHidden( l, false, false );
+    setHidden( (li && linked), false, false );
+
+    return linked;
 }
 
 void SevenSegmentBCD::setLinkedValue( double v, int i )
@@ -136,9 +138,9 @@ void SevenSegmentBCD::setLinkedValue( double v, int i )
     m_changed = true;
 }
 
-void SevenSegmentBCD::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
+void SevenSegmentBCD::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w )
 {
-    Component::paint( p, option, widget );
+    Component::paint( p, o, w );
     p->drawRect( m_area );
 
     const int mg =  6; // Margin around number

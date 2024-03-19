@@ -42,7 +42,7 @@ Dial::Dial( QString type, QString id )
     m_area     = m_areaComp;
 
     m_graphical = true;
-    m_linker    = true;
+    m_isLinker = true;
 
     m_minVal = 0;
     m_maxVal = 1000;

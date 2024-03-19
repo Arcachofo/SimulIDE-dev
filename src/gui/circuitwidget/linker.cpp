@@ -18,17 +18,15 @@ Linker::Linker()
 Linker::~Linker()
 {
     if( m_selecComp == this ) Linker::compSelected( NULL ); // Cancel link to components
+    for( Component* comp : m_linkedComp ) comp->setLinkedTo( nullptr );
 }
 
 QString Linker::getLinks()
 {
     QString links;
 
-    for( int i=0; i<m_linkedComp.size(); ++i )
-    {
-        Component* comp = m_linkedComp.at( i );
-        links.append( comp->getUid()+"," );
-    }
+    for( Component* comp : m_linkedComp ) links.append( comp->getUid()+"," );
+
     return links;
 }
 
@@ -47,9 +45,7 @@ void Linker::createLinks( QList<Component*>* compList )
         for( Component* comp : *compList )
             if( comp->getUid().contains( uid ) )
             {
-                //qDebug() << "TextComponent::createLinks"<<uid;
-                m_linkedComp.append( comp );
-                comp->setLinked( true );
+                if( comp->setLinkedTo( this ) ) m_linkedComp.append( comp );
                 break;
             }
     }
@@ -78,15 +74,15 @@ void Linker::compSelected( Component* comp )
     if( comp )  // One Component was selected to link
     {
         bool linked = m_linkedComp.contains( comp );
-        comp->setLinked( !linked );
 
         if( linked )
         {
+            comp->setLinkedTo( nullptr );
             comp->m_linkNumber = -1;
             m_linkedComp.removeAll( comp );
+        }else{
+            if( comp->setLinkedTo( this ) ) m_linkedComp.append( comp );
         }
-        else m_linkedComp.append( comp );
-
         showLinked( true );
     }
     else       // End of linking Components

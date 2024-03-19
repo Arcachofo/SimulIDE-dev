@@ -536,7 +536,7 @@ void ScriptCpu::setLinkedVal( double v, int i )
 {
     if( !m_setLinkedVal ) return;
 
-    prepare( m_setLinkedVal);
+    prepare( m_setLinkedVal );
     m_context->SetArgDouble( 0, v );
     m_context->SetArgDWord( 1, i );
     execute();
