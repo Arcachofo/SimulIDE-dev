@@ -63,7 +63,7 @@ Dial::Dial( QString type, QString id )
         new IntProp<Dial>("Max_Val", tr("Maximum Value"), ""
                          , this, &Dial::maxVal, &Dial::setMaxVal ),
 
-        new IntProp<Dial>( "Steps", tr("Steps"), ""
+        new IntProp<Dial>("Steps", tr("Steps"), ""
                          , this, &Dial::steps, &Dial::setSteps )
     },0 } );
 

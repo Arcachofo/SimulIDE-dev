@@ -401,7 +401,7 @@
             </sizepolicy>
            </property>
            <property name="text">
-            <string>       bjacquot.</string>
+            <string>       Bastien Jacquot.</string>
            </property>
           </widget>
          </item>
@@ -479,7 +479,7 @@
             </sizepolicy>
            </property>
            <property name="text">
-            <string>Feri</string>
+            <string>Giordano.</string>
            </property>
           </widget>
          </item>
@@ -492,7 +492,7 @@
             </sizepolicy>
            </property>
            <property name="text">
-            <string>       kellneka.</string>
+            <string>       K. Kellner.</string>
            </property>
           </widget>
          </item>
@@ -531,7 +531,7 @@
             </sizepolicy>
            </property>
            <property name="text">
-            <string>acebrian.</string>
+            <string>A. Cebrian.</string>
            </property>
           </widget>
          </item>

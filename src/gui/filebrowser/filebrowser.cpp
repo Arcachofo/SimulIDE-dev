@@ -1,19 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2018 by Pavel Lamonov                                   *
- *   leamonpaul@yandex.ru                                                  *
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 3 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- *   This program is distributed in the hope that it will be useful,       *
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
- *   GNU General Public License for more details.                          *
- *                                                                         *
- *   You should have received a copy of the GNU General Public License     *
- *   along with this program; if not, see <http://www.gnu.org/licenses/>.  *
+ *   Copyright (C) 2018 by Santiago González                               *
  *                                                                         *
  ***( see copyright.txt file at root folder )*******************************/
 
@@ -26,7 +12,7 @@
 #include "filewidget.h"
 #include "editorwindow.h"
 
-FileBrowser*  FileBrowser::m_pSelf = NULL;
+FileBrowser* FileBrowser::m_pSelf = NULL;
 
 FileBrowser::FileBrowser( QWidget *parent ) 
            : QTreeView( parent )
@@ -35,7 +21,7 @@ FileBrowser::FileBrowser( QWidget *parent )
     m_showHidden = false;
     
     m_fileSystemModel = new QFileSystemModel(this);
-     m_fileSystemModel->setNameFilterDisables( false );
+    m_fileSystemModel->setNameFilterDisables( false );
     m_fileSystemModel->setRootPath( QDir::rootPath() );
     
     m_currentPath = QDir::rootPath();

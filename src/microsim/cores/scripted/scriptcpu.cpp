@@ -535,6 +535,7 @@ void ScriptCpu::setLinkedString( int index, string str, int i )
 void ScriptCpu::setLinkedVal( double v, int i )
 {
     if( !m_setLinkedVal ) return;
+    if( !Simulator::self()->isRunning() ) return;
 
     prepare( m_setLinkedVal );
     m_context->SetArgDouble( 0, v );
@@ -545,6 +546,7 @@ void ScriptCpu::setLinkedVal( double v, int i )
 void ScriptCpu::setLinkedStr( QString s, int i )
 {
     if( !m_setLinkedStr ) return;
+    if( !Simulator::self()->isRunning() ) return;
 
     prepare( m_setLinkedStr);
     std::string str = s.toStdString();
