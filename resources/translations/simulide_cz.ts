@@ -83,7 +83,7 @@
     <message>
         <location line="+45"/>
         <source>Author:</source>
-        <translation type="unfinished"></translation>
+        <translation>Autor:</translation>
     </message>
     <message>
         <location line="+22"/>
@@ -93,12 +93,12 @@
     <message>
         <location line="+35"/>
         <source>Contributors</source>
-        <translation type="unfinished"></translation>
+        <translation>Přispěvatelé</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>       Jarda Vrana</source>
-        <translation type="unfinished"></translation>
+        <translation>       Jarda Vrána</translation>
     </message>
     <message>
         <location line="+13"/>
@@ -170,7 +170,7 @@
     <message>
         <location line="+10"/>
         <source>Translations</source>
-        <translation type="unfinished"></translation>
+        <translation>Překlady</translation>
     </message>
     <message>
         <location line="+14"/>
@@ -180,7 +180,7 @@
     <message>
         <location line="+13"/>
         <source>Pt. Brasil:       </source>
-        <translation type="unfinished"></translation>
+        <translation>Brazilská port.:       </translation>
     </message>
     <message>
         <location line="+16"/>
@@ -195,17 +195,17 @@
     <message>
         <location line="+13"/>
         <source>Turkish:       </source>
-        <translation type="unfinished"></translation>
+        <translation>Turečtina:       </translation>
     </message>
     <message>
         <location line="+16"/>
         <source>Italian:       </source>
-        <translation type="unfinished"></translation>
+        <translation>Italština:       </translation>
     </message>
     <message>
         <location line="+16"/>
         <source>Dutch       </source>
-        <translation type="unfinished"></translation>
+        <translation>Holandština:       </translation>
     </message>
     <message>
         <location line="+16"/>
@@ -215,12 +215,12 @@
     <message>
         <location line="+13"/>
         <source>French:       </source>
-        <translation type="unfinished"></translation>
+        <translation>Francouzština:       </translation>
     </message>
     <message>
         <location line="+29"/>
         <source>Spanish:       </source>
-        <translation type="unfinished"></translation>
+        <translation>Španělština:       </translation>
     </message>
     <message>
         <location line="+16"/>
@@ -230,17 +230,17 @@
     <message>
         <location line="+13"/>
         <source>Chinese:       </source>
-        <translation type="unfinished"></translation>
+        <translation>Čínština:       </translation>
     </message>
     <message>
         <location line="+16"/>
         <source>Czech:       </source>
-        <translation type="unfinished"></translation>
+        <translation>Čeština:       </translation>
     </message>
     <message>
         <location line="+16"/>
         <source>Russian:       </source>
-        <translation type="unfinished"></translation>
+        <translation>Ruština:       </translation>
     </message>
     <message>
         <location line="+16"/>
@@ -250,12 +250,12 @@
     <message>
         <location line="+13"/>
         <source>Jarda Vrana</source>
-        <translation type="unfinished"></translation>
+        <translation>Jarda Vrána</translation>
     </message>
     <message>
         <location line="+13"/>
         <source>German:       </source>
-        <translation type="unfinished"></translation>
+        <translation>Němčina:       </translation>
     </message>
     <message>
         <location line="+16"/>
@@ -265,12 +265,12 @@
     <message>
         <location line="+13"/>
         <source>Slovak:       </source>
-        <translation type="unfinished"></translation>
+        <translation>Slovenština:       </translation>
     </message>
     <message>
         <location line="+16"/>
         <source>Portuguese:       </source>
-        <translation type="unfinished"></translation>
+        <translation>Portugalština:       </translation>
     </message>
     <message>
         <location line="+16"/>
@@ -2011,7 +2011,7 @@ Nemohu najít soubor:
     <message>
         <location filename="../../src/gui/circuitwidget/components/micro/ds1307.cpp" line="+58"/>
         <source>Main</source>
-        <translation type="unfinished">Základní</translation>
+        <translation>Základní</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -2938,7 +2938,7 @@ Chcete uložit změny?
     <message>
         <location filename="../../src/gui/circuitwidget/components/micro/esp01.cpp" line="+82"/>
         <source>Main</source>
-        <translation type="unfinished">Základní</translation>
+        <translation>Základní</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -4717,7 +4717,7 @@ Chcete uložit změny?
     <message>
         <location line="+0"/>
         <source>Changes applied after Simulation Restart</source>
-        <translation>Prováděné změna po restartu simulace</translation>
+        <translation>Změny budou provedeny po restartu simulace</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -6395,7 +6395,7 @@ Neplatný soubor s pouzdrem
     <message>
         <location line="+7"/>
         <source>Config</source>
-        <translation type="unfinished">Konfigurace</translation>
+        <translation>Konfigurace</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -6415,7 +6415,7 @@ Neplatný soubor s pouzdrem
     <message>
         <location line="+59"/>
         <source>Close</source>
-        <translation type="unfinished">Zavřít</translation>
+        <translation>Zavřít</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -6440,7 +6440,7 @@ Neplatný soubor s pouzdrem
     <message>
         <location line="+36"/>
         <source>Open</source>
-        <translation type="unfinished">Otevřít</translation>
+        <translation>Otevřít</translation>
     </message>
     <message>
         <location line="+16"/>
@@ -6450,7 +6450,7 @@ Neplatný soubor s pouzdrem
     <message>
         <location line="+4"/>
         <source>Config</source>
-        <translation type="unfinished">Konfigurace</translation>
+        <translation>Konfigurace</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -7596,7 +7596,7 @@ Chcete uložit změny?
         <location line="+3"/>
         <source>Min. Voltage</source>
         <translatorcomment>Minimální napětí</translatorcomment>
-        <translation></translation>
+        <translation>Minimální napětí</translation>
     </message>
 </context>
 <context>
@@ -7907,7 +7907,7 @@ Chcete uložit změny?
     <message>
         <location line="-387"/>
         <source>0</source>
-        <translation type="unfinished">100% {0?}</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+108"/>
@@ -7917,7 +7917,7 @@ Chcete uložit změny?
     <message>
         <location line="+406"/>
         <source>Real Speed:</source>
-        <translation type="unfinished"></translation>
+        <translation>Skutečná rychlost:</translation>
     </message>
 </context>
 <context>
