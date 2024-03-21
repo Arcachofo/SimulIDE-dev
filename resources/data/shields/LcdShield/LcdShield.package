@@ -4,5 +4,4 @@
 
 <packageB name="LcdShield" pins="0" width="17" height="26" background="shield_uno.png" type="Shield" >
 
-    
 </packageB>

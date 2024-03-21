@@ -1,4 +1,4 @@
-<iou name="ScriptSPI" core="scripted" script="ScriptSPI.as" linkable="true">
+<iou name="ScriptSPI" core="scripted" script="ScriptSPI.as" linker="true">
 
   <propertygroup name="Main">
     <property name="Steps"        type="uint" />

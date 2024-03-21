@@ -1,4 +1,4 @@
-<iou name="TWI" core="scripted" script="scriptTWI.as" linkable="true">
+<iou name="TWI" core="scripted" script="scriptTWI.as" linker="true">
 
   <propertygroup name="Main">
     <property name="Control_Code" type="uint" />
