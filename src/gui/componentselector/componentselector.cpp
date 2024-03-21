@@ -72,6 +72,8 @@ void ComponentSelector::LoadLibraryItems()
 
 void ComponentSelector::LoadCompSetAt( QDir compSetDir )
 {
+    m_compSetDir = compSetDir;
+
     compSetDir.setNameFilters( QStringList( "*.xml" ) );
 
     QStringList xmlList = compSetDir.entryList( QDir::Files );
@@ -95,14 +97,23 @@ void ComponentSelector::LoadCompSetAt( QDir compSetDir )
 
             for( QString compName : dirList )
             {
-                QString ico;
                 QString path = compName+"/"+compName;
+                QString icon = getIcon( "test", compName );
                 QString type;
-                if     ( compSetDir.exists( path+".sim1") ) { ico = ":/subc.png"; type = "Subcircuit";}
-                else if( compSetDir.exists( path+".mcu")  ) { ico = ":/ic2.png"; type = "MCU";}
+
+                if( compSetDir.exists( path+".sim1") )
+                {
+                    if( icon.isEmpty() ) icon = ":/subc.png";
+                    type = "Subcircuit";
+                }
+                else if( compSetDir.exists( path+".mcu") )
+                {
+                    if( icon.isEmpty() ) icon = ":/ic2.png";
+                    type = "MCU";
+                }
                 if( !type.isEmpty() )
                 {
-                    addItem( compName, catItem, ico, type );
+                    addItem( compName, catItem, icon, type );
                     m_dirFileList[ compName ] = compSetDir.absoluteFilePath( compName );
                 }
             }
@@ -111,12 +122,13 @@ void ComponentSelector::LoadCompSetAt( QDir compSetDir )
     qDebug() << "\n";
 }
 
-void ComponentSelector::loadXml( const QString &setFile )
+void ComponentSelector::loadXml( QString setFile )
 {
     QFile file( setFile );
     if( !file.open(QFile::ReadOnly | QFile::Text) )
     {
-          QMessageBox::warning( 0, "ComponentSelector::loadXml", tr("Cannot read file %1:\n%2.").arg(setFile).arg(file.errorString()));
+          QMessageBox::warning( 0, "ComponentSelector::loadXml"
+                              , tr("Cannot read file %1:\n%2.").arg(setFile).arg(file.errorString()));
           return;
     }
     QXmlStreamReader reader(&file);
@@ -124,8 +136,8 @@ void ComponentSelector::loadXml( const QString &setFile )
     {
         if( reader.name() != "itemlib" )
         {
-            QMessageBox::warning(0, "ComponentSelector::loadXml"
-                                 , tr("Error parsing file (itemlib):\n%1.").arg(setFile) );
+            QMessageBox::warning( 0, "ComponentSelector::loadXml"
+                                , tr("Error parsing file (itemlib):\n%1.").arg(setFile) );
             file.close();
             return;
         }
@@ -142,7 +154,7 @@ void ComponentSelector::loadXml( const QString &setFile )
             }
 
             QString category = reader.attributes().value("category").toString();
-            QStringList catPath = category.split( "/" );
+            QStringList catPath = category.split("/");
 
             QTreeWidgetItem* catItem = NULL;
             QString parent = "";
@@ -160,19 +172,22 @@ void ComponentSelector::loadXml( const QString &setFile )
             }
 
             QString type = reader.attributes().value("type").toString();
+            QString folder = reader.attributes().value("folder").toString();
 
             while( reader.readNextStartElement() )
             {
                 if( reader.name() == "item")
                 {
-                    icon = "";
+                    QString name = reader.attributes().value("name").toString();
+
                     if( reader.attributes().hasAttribute("icon") )
                     {
                         icon = reader.attributes().value("icon").toString();
                         if( !icon.startsWith(":/") )
                             icon = MainWindow::self()->getDataFilePath("images/"+icon);
                     }
-                    QString name = reader.attributes().value("name").toString();
+                    else icon = getIcon( folder, name );
+
                     if( !m_components.contains( name ) )
                     {
                         m_components.append( name );
@@ -188,6 +203,14 @@ void ComponentSelector::loadXml( const QString &setFile )
     QString compSetName = setFile.split( "/").last();
     //m_compSetUnique.append( compSetName );
     qDebug() << tr("        Loaded Component set:           ") << compSetName;
+}
+
+QString ComponentSelector::getIcon( QString folder, QString name )
+{
+    QString icon = folder+"/"+name+"/"+name+"_icon.png";
+    if( m_compSetDir.exists( icon ) ) icon = m_compSetDir.absoluteFilePath( icon );
+    else                              icon = "";
+    return icon;
 }
 
 void ComponentSelector::addItem( QString caption, QTreeWidgetItem* catItem, QString icon, QString type )

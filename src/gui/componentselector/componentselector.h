@@ -43,13 +43,15 @@ class ComponentSelector : public QTreeWidget
     private:
  static ComponentSelector* m_pSelf;
 
-        void loadXml( const QString &setFile );
+        void loadXml( QString setFile );
 
         void addItem( QString caption, QTreeWidgetItem* catItem, QString icon, QString type );
 
         void LoadLibraryItems();
 
         QTreeWidgetItem* addCategory( QString nameTr, QString name, QString parent, QString icon );
+
+        QString getIcon( QString folder, QString name );
 
         QStringList m_components;
         QHash<QString, QTreeWidgetItem*> m_categories;
@@ -58,6 +60,8 @@ class ComponentSelector : public QTreeWidget
         QHash<QString, QString> m_xmlFileList;
         QHash<QString, QString> m_dirFileList;
         QHash<QString, QString> m_shortCuts;
+
+        QDir m_compSetDir;
 
         manCompDialog m_mcDialog;
 
