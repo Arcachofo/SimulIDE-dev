@@ -4,8 +4,8 @@
     
     <itemset category="Shields" type="Subcircuit" folder="shields">
     
-        <item name="LcdShield"   info=" (experimental)"                icon="lcdshield_icon.png"/> 
-        <item name="DigitShield" info=" 4 digit 7-segment LED display" icon="DigitShield_icon.png"/>
+        <item name="LcdShield"   info=" (experimental)"                /> 
+        <item name="DigitShield" info=" 4 digit 7-segment LED display" />
         
     </itemset>
 

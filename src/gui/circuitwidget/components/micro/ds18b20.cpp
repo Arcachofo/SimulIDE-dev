@@ -30,7 +30,7 @@ LibraryItem* Ds18b20::libraryItem()
     return new LibraryItem(
         "DS18B20",
         "Sensors",
-        "ic_comp.png",
+        "ic2_comp.png",
         "DS18B20",
         Ds18b20::construct );
 }
