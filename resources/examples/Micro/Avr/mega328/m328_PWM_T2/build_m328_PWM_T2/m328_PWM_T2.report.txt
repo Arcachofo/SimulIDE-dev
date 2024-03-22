@@ -1,0 +1,79 @@
+Compilation Report
+
+Compiler Version (YYYY-MM-DD): 1.00.00 2022-12-01 (Linux 64 bit) : Build 1199
+
+;********************************************************************************
+
+Compilation time:
+ (Compile time: 0 seconds)
+ (Assembly time: 0 seconds)
+ (Download time: 0 seconds)
+ (Total time: 0 seconds)
+
+;********************************************************************************
+
+Chip resource usage:
+Chip Model: MEGA328P
+Program Memory: 319/16384 words (1.95%)
+RAM: 15/2048 bytes (.73%)
+
+
+;********************************************************************************
+
+RAM Allocation
+;********************************************************************************
+
+Subroutines
+Main
+Code Size (lines): 14
+Compiled Size (words): 109
+Outgoing calls: PWMHANDLER(1), SYSCOMPLESSTHANINT(2), Delay_S(2), Delay_MS(2), INITLEDCONTROL(1), INITSYS(12)
+
+INITLEDCONTROL
+Code Size (lines): 6
+Compiled Size (words): 25
+Outgoing calls: STARTTIMER(1), INITTIMER2(1)
+
+PWMHANDLER
+Code Size (lines): 9
+Compiled Size (words): 22
+
+STARTTIMER
+Code Size (lines): 143
+Compiled Size (words): 55
+
+INITTIMER2
+Code Size (lines): 35
+Compiled Size (words): 12
+
+INITSYS
+Code Size (lines): 895
+Compiled Size (words): 7
+
+SYSCOMPLESSTHANINT
+Code Size (lines): 48
+Compiled Size (words): 42
+
+Delay_MS
+Code Size (lines): 0
+Compiled Size (words): 12
+
+Delay_S
+Code Size (lines): 0
+Compiled Size (words): 7
+Outgoing calls: Delay_MS(1)
+
+SysIntContextSave
+Code Size (lines): 0
+Compiled Size (words): 12
+
+SysIntContextRestore
+Code Size (lines): 0
+Compiled Size (words): 12
+
+IntTIMER2_OVF
+Code Size (lines): 0
+Compiled Size (words): 4
+
+;********************************************************************************
+

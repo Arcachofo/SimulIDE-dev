@@ -1,0 +1,73 @@
+<circuit version="" rev="2224" stepSize="10000" stepsPS="100000000" NLsteps="100000" reaStep="1000000" animate="0" >
+
+<item itemtype="Ground" CircId="Ground-4" mainComp="false" Show_id="false" Show_Val="false" Pos="-404,-324" rotation="0" hflip="1" vflip="1" label="Ground-4" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" />
+
+<item itemtype="Rail" CircId="Rail-6" mainComp="false" ShowProp="Voltage" Show_id="false" Show_Val="true" Pos="-404,-596" rotation="90" hflip="1" vflip="1" label="Rail-2" idLabPos="-64,-24" labelrot="0" valLabPos="-11.7637,6.08919" valLabRot="-90" Voltage="5 V" />
+
+<item itemtype="Probe" CircId="Probe-214" mainComp="false" Show_id="false" Show_Val="true" Pos="-252,-436" rotation="-45" hflip="1" vflip="1" label="Probe-214" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
+
+<item itemtype="Resistor" CircId="Resistor-216" mainComp="false" ShowProp="Resistance" Show_id="false" Show_Val="true" Pos="-404,-460" rotation="90" hflip="1" vflip="1" label="Resistor-216" idLabPos="-16,-24" labelrot="0" valLabPos="-10.9849,-16.1899" valLabRot="0" Resistance="120 Ω" />
+
+<item itemtype="Strain" CircId="Strain-228" mainComp="false" ShowProp="Force_N" Show_id="true" Show_Val="true" Pos="-404,-388" rotation="90" hflip="1" vflip="1" label="Force" idLabPos="-8.21179,58.0052" labelrot="-90" valLabPos="-24.763,32.0185" valLabRot="-90" Force_N="500 N" Min_Force_N="1e-12 N" Max_Force_N="1000 N" Dial_Step="0 N" Ref_Temp="20 ºC" Temp="20 ºC" Slider="false" Scale="1" />
+
+<item itemtype="Resistor" CircId="Resistor-231" mainComp="false" ShowProp="Resistance" Show_id="false" Show_Val="true" Pos="-356,-460" rotation="90" hflip="1" vflip="1" label="Resistor-231" idLabPos="-16,-24" labelrot="0" valLabPos="-11.3917,-15.6805" valLabRot="0" Resistance="120 Ω" />
+
+<item itemtype="Resistor" CircId="Resistor-232" mainComp="false" ShowProp="Resistance" Show_id="false" Show_Val="true" Pos="-356,-388" rotation="90" hflip="1" vflip="1" label="Resistor-232" idLabPos="-16,-24" labelrot="0" valLabPos="-11.0324,-15.171" valLabRot="0" Resistance="120 Ω" />
+
+<item itemtype="opAmp" CircId="opAmp-235" mainComp="false" Show_id="false" Show_Val="false" Pos="-308,-420" rotation="0" hflip="1" vflip="1" label="opAmp-235" idLabPos="-16,-32" labelrot="0" valLabPos="-16,20" valLabRot="0" Gain="1000" Out_Imped="1e-14 Ω" Power_Pins="true" Switch_Pins="false" Volt_Pos="5 V" Volt_Neg="0 V" />
+
+<item itemtype="VarResistor" CircId="VarResistor-249" mainComp="false" Show_id="true" Show_Val="false" Pos="-404,-508" rotation="90" hflip="1" vflip="1" label="Adjust" idLabPos="-7.29554,61.6703" labelrot="-90" valLabPos="-24.2463,38.7045" valLabRot="-90" Min_Resistance="0 Ω" Max_Resistance="1.2 kΩ" Value_Ohm="862.8 Ω" Dial_Step="0 Ω" Slider="false" Scale="1" />
+
+<item itemtype="Resistor" CircId="Resistor-251" mainComp="false" ShowProp="Resistance" Show_id="false" Show_Val="true" Pos="-404,-548" rotation="90" hflip="1" vflip="1" label="Resistor-251" idLabPos="-16,-24" labelrot="0" valLabPos="-11.9011,-15.7318" valLabRot="0" Resistance="8 kΩ" />
+
+<item itemtype="Node" CircId="Node-234" mainComp="false" Pos="-404,-348" />
+
+<item itemtype="Node" CircId="Node-237" mainComp="false" Pos="-356,-412" />
+
+<item itemtype="Node" CircId="Node-250" mainComp="false" Pos="-404,-484" />
+
+<item itemtype="Node" CircId="Node-254" mainComp="false" Pos="-404,-428" />
+
+<item itemtype="Node" CircId="Node-255" mainComp="false" Pos="-404,-572" />
+
+<item itemtype="Node" CircId="Node-256" mainComp="false" Pos="-356,-348" />
+
+<item itemtype="Connector" uid="Connector-237" startpinid="Strain-228-rPin" endpinid="Node-234-0" pointList="-404,-372,-404,-348" />
+
+<item itemtype="Connector" uid="Connector-238" startpinid="Node-234-2" endpinid="Ground-4-Gnd" pointList="-404,-348,-404,-340" />
+
+<item itemtype="Connector" uid="Connector-244" startpinid="opAmp-235-inputInv" endpinid="Node-237-1" pointList="-332,-412,-356,-412" />
+
+<item itemtype="Connector" uid="Connector-245" startpinid="Resistor-231-rPin" endpinid="Node-237-0" pointList="-356,-444,-356,-412" />
+
+<item itemtype="Connector" uid="Connector-246" startpinid="Node-237-2" endpinid="Resistor-232-lPin" pointList="-356,-412,-356,-404" />
+
+<item itemtype="Connector" uid="Connector-247" startpinid="opAmp-235-output" endpinid="Probe-214-inpin" pointList="-284,-420,-268,-420" />
+
+<item itemtype="Connector" uid="Connector-266" startpinid="VarResistor-249-rPin" endpinid="Node-250-1" pointList="-404,-492,-404,-484" />
+
+<item itemtype="Connector" uid="Connector-267" startpinid="Resistor-216-lPin" endpinid="Node-250-0" pointList="-404,-476,-404,-484" />
+
+<item itemtype="Connector" uid="Connector-268" startpinid="Node-250-2" endpinid="Resistor-231-lPin" pointList="-404,-484,-356,-484,-356,-476" />
+
+<item itemtype="Connector" uid="Connector-275" startpinid="VarResistor-249-lPin" endpinid="Resistor-251-rPin" pointList="-404,-524,-404,-532" />
+
+<item itemtype="Connector" uid="Connector-278" startpinid="Strain-228-lPin" endpinid="Node-254-1" pointList="-404,-404,-404,-428" />
+
+<item itemtype="Connector" uid="Connector-279" startpinid="opAmp-235-inputNinv" endpinid="Node-254-0" pointList="-332,-428,-404,-428" />
+
+<item itemtype="Connector" uid="Connector-280" startpinid="Node-254-2" endpinid="Resistor-216-rPin" pointList="-404,-428,-404,-444" />
+
+<item itemtype="Connector" uid="Connector-281" startpinid="Node-255-1" endpinid="opAmp-235-powerPos" pointList="-404,-572,-308,-572,-308,-436" />
+
+<item itemtype="Connector" uid="Connector-282" startpinid="Resistor-251-lPin" endpinid="Node-255-0" pointList="-404,-564,-404,-572" />
+
+<item itemtype="Connector" uid="Connector-283" startpinid="Node-255-2" endpinid="Rail-6-outnod" pointList="-404,-572,-404,-580" />
+
+<item itemtype="Connector" uid="Connector-284" startpinid="Node-256-1" endpinid="opAmp-235-powerNeg" pointList="-356,-348,-308,-348,-308,-404" />
+
+<item itemtype="Connector" uid="Connector-285" startpinid="Node-234-1" endpinid="Node-256-0" pointList="-404,-348,-356,-348" />
+
+<item itemtype="Connector" uid="Connector-286" startpinid="Node-256-2" endpinid="Resistor-232-rPin" pointList="-356,-348,-356,-372" />
+
+</circuit>

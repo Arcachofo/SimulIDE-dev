@@ -1,0 +1,31 @@
+<circuit version="" rev="2224" stepSize="1000000" stepsPS="1000000" NLsteps="100000" reaStep="1000000" animate="0" >
+
+<item itemtype="Subcircuit" CircId="Uno-1" mainComp="false" Show_id="true" Show_Val="false" Pos="764,508" rotation="0" hflip="1" vflip="1" label="Uno" idLabPos="12.5327,-4.23306" labelrot="0" valLabPos="-16,20" valLabRot="0" Logic_Symbol="false">
+<mainCompProps MainCompId="mega328-109" Frequency="16 MHz" Program="ds1621.hex" Auto_Load="false" saveEepr="true" SerialMon="-1" />
+</item>
+
+<item itemtype="DS1621" CircId="DS1621-2" mainComp="false" Show_id="true" Show_Val="false" Pos="988,540" rotation="0" hflip="1" vflip="1" label="DS1621" idLabPos="-13.893,-29.2128" labelrot="0" valLabPos="-16,20" valLabRot="0" Temp="22 °C" TempInc="0.5 °C" />
+
+<item itemtype="Hd44780" CircId="Hd44780-3" mainComp="false" Show_id="true" Show_Val="false" Pos="660,492" rotation="0" hflip="1" vflip="1" label="Hd44780" idLabPos="79.2985,-79.9786" labelrot="0" valLabPos="-16,20" valLabRot="0" Rows="2" Cols="16" />
+
+<item itemtype="Ground" CircId="Ground-10" mainComp="false" Show_id="false" Show_Val="false" Pos="684,572" rotation="0" hflip="1" vflip="1" label="Ground-10" idLabPos="-16,8" labelrot="0" valLabPos="-16,20" valLabRot="0" />
+
+<item itemtype="Connector" uid="connector-11" startpinid="Hd44780-3-dataPin7" endpinid="Uno-1-7" pointList="756,500,756,580,772,580" />
+
+<item itemtype="Connector" uid="connector-12" startpinid="Hd44780-3-dataPin6" endpinid="Uno-1-6" pointList="748,500,748,572,772,572" />
+
+<item itemtype="Connector" uid="connector-13" startpinid="Hd44780-3-dataPin5" endpinid="Uno-1-5" pointList="740,500,740,564,772,564" />
+
+<item itemtype="Connector" uid="connector-14" startpinid="Hd44780-3-dataPin4" endpinid="Uno-1-4" pointList="732,500,732,556,772,556" />
+
+<item itemtype="Connector" uid="connector-15" startpinid="Hd44780-3-PinEn" endpinid="Uno-1-3" pointList="692,500,692,548,772,548" />
+
+<item itemtype="Connector" uid="connector-16" startpinid="Hd44780-3-PinRS" endpinid="Uno-1-2" pointList="676,500,676,540,772,540" />
+
+<item itemtype="Connector" uid="connector-17" startpinid="Ground-10-Gnd" endpinid="Hd44780-3-PinRW" pointList="684,556,684,500" />
+
+<item itemtype="Connector" uid="connector-18" startpinid="DS1621-2-in1" endpinid="Uno-1-A5" pointList="956,540,940,540,940,524,916,524" />
+
+<item itemtype="Connector" uid="connector-19" startpinid="Uno-1-A4" endpinid="DS1621-2-in0" pointList="916,532,956,532" />
+
+</circuit>

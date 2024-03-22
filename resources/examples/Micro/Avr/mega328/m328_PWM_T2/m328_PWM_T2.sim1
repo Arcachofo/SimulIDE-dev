@@ -1,0 +1,25 @@
+<circuit version="" rev="2224" stepSize="1000000" stepsPS="1000000" NLsteps="100000" reaStep="1000000" animate="0" >
+
+<item itemtype="MCU" CircId="mega328-2" mainComp="false" Show_id="true" Show_Val="false" Pos="-340,-188" rotation="0" hflip="1" vflip="1" label="atmega328" idLabPos="-10.3768,-14.8986" labelrot="0" valLabPos="0,0" valLabRot="0" Frequency="16 MHz" Program="build_m328_PWM_T2/m328_PWM_T2.hex" Auto_Load="false" saveEepr="false" Logic_Symbol="false" Rst_enabled="false" Ext_Osc="false" Wdt_enabled="false" Clk_Out="false" varList=",DDRB,PORTB,,TCCR2A,TCCR2B,TIFR2,TIMSK2,TCNT2" SerialMon="-1" />
+
+<item itemtype="Led" CircId="Led-3" mainComp="false" Show_id="false" Show_Val="false" Pos="-220,-108" rotation="0" hflip="1" vflip="1" label="Led-5" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Color="Yellow" Grounded="false" Threshold="2.4 V" MaxCurrent="0.03 A" Resistance="0.01 Ω" />
+
+<item itemtype="Ground" CircId="Ground (0 V)-4" mainComp="false" Show_id="false" Show_Val="false" Pos="-124,-68" rotation="0" hflip="1" vflip="1" label="Ground (0 V)-4" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" />
+
+<item itemtype="Resistor" CircId="Resistor-5" mainComp="false" ShowProp="Resistance" Show_id="false" Show_Val="true" Pos="-164,-108" rotation="0" hflip="1" vflip="1" label="Resistor-3" idLabPos="-16,-24" labelrot="0" valLabPos="-9.53623,-14.5362" valLabRot="0" Resistance="50 Ω" />
+
+<item itemtype="Oscope" CircId="Oscope-6" mainComp="false" Show_id="false" Show_Val="false" Pos="-148,-220" rotation="0" hflip="1" vflip="1" label="Oscope-2" idLabPos="-80,-80" labelrot="0" valLabPos="0,0" valLabRot="0" Basic_X="135 _Px" Basic_Y="135 _Px" BufferSize="600000" connectGnd="true" InputImped="1e+07 Ω" TimDiv="968015913" TimPos="0,0,0,0," VolDiv="0.868882,0.868882,0.868882,0.868882," Tunnels=",,,," Trigger="0" Filter="0.3 V" Trigger="0" AutoSC="4" Tracks="1" HideCh="false,false,false,false," VolPos="-1.92228,0,0,0," />
+
+<item itemtype="Node" CircId="Node-1" mainComp="false" Pos="-268,-108" />
+
+<item itemtype="Connector" uid="Connector-7" startpinid="Led-3-rPin" endpinid="Resistor-5-lPin" pointList="-204,-108,-180,-108" />
+
+<item itemtype="Connector" uid="Connector-9" startpinid="Resistor-5-rPin" endpinid="Ground (0 V)-4-Gnd" pointList="-148,-108,-124,-108,-124,-84" />
+
+<item itemtype="Connector" uid="Connector-11" startpinid="mega328-2-PORTB5" endpinid="Node-1-0" pointList="-300,-108,-268,-108" />
+
+<item itemtype="Connector" uid="Connector-13" startpinid="Oscope-6-Pin0" endpinid="Node-1-1" pointList="-236,-268,-268,-268,-268,-108" />
+
+<item itemtype="Connector" uid="Connector-14" startpinid="Node-1-2" endpinid="Led-3-lPin" pointList="-268,-108,-236,-108" />
+
+</circuit>

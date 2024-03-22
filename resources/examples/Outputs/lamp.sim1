@@ -1,0 +1,17 @@
+<circuit version="" rev="2229" stepSize="1000000" stepsPS="1000000" NLsteps="100000" reaStep="1000000" animate="0" >
+
+<item itemtype="Lamp" CircId="Lamp-1" mainComp="false" Show_id="false" Show_Val="false" Pos="856,692" rotation="0" hflip="1" vflip="1" label="Lamp-1" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Resistance="10 Ω" MaxCurrent="0.2 A" />
+
+<item itemtype="Voltage Source" CircId="Voltage Source-2" mainComp="false" ShowProp="MaxValue" Show_id="false" Show_Val="true" Pos="788,676" rotation="0" hflip="1" vflip="1" label="Voltage Source-2" idLabPos="-32,-48" labelrot="0" valLabPos="-8,30" valLabRot="0" Running="true" Value_Volt="2.5 V" MaxValue="5 V" MinValue="0 V" />
+
+<item itemtype="Ground" CircId="Ground-4" mainComp="false" Show_id="false" Show_Val="false" Pos="916,708" rotation="0" hflip="1" vflip="1" label="Ground-4" idLabPos="-16,8" labelrot="0" valLabPos="-16,20" valLabRot="0" />
+
+<item itemtype="Amperimeter" CircId="Amperimeter-7" mainComp="false" Show_id="false" Show_Val="false" Pos="892,648" rotation="0" hflip="1" vflip="1" label="Amperimeter-7" idLabPos="-24,-40" labelrot="0" valLabPos="-16,20" valLabRot="0" />
+
+<item itemtype="Connector" uid="connector-5" startpinid="Voltage Source-2-outPin" endpinid="Lamp-1-lPin" pointList="816,692,840,692" />
+
+<item itemtype="Connector" uid="Connector-8" startpinid="Lamp-1-rPin" endpinid="Amperimeter-7-lPin" pointList="872,692,884,692,884,664" />
+
+<item itemtype="Connector" uid="Connector-9" startpinid="Amperimeter-7-rPin" endpinid="Ground-4-Gnd" pointList="900,664,900,692,916,692" />
+
+</circuit>

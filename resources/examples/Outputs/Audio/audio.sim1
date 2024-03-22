@@ -1,0 +1,25 @@
+<circuit version="" rev="2229" stepSize="1000000" stepsPS="1000000" NLsteps="100000" reaStep="1000000" animate="0" >
+
+<item itemtype="Ground" CircId="Ground-3" mainComp="false" Show_id="false" Show_Val="false" Pos="-540,-252" rotation="0" hflip="1" vflip="1" label="Ground-7" idLabPos="-16,8" labelrot="0" valLabPos="0,0" valLabRot="0" />
+
+<item itemtype="WaveGen" CircId="WaveGen-4" mainComp="false" ShowProp="Freq" Show_id="false" Show_Val="true" Pos="-580,-404" rotation="0" hflip="1" vflip="1" label="WaveGen-5" idLabPos="-64,-24" labelrot="0" valLabPos="-16,9.61669" valLabRot="0" Out="true" Running="true" Wave_Type="Sine" Freq="1000 Hz" Phase="0 _º" Steps="200 _Steps" Duty="50 _%" Always_On="false" Bipolar="false" Floating="false" Semi_Ampli="2.5 V" Mid_Volt="0 V" />
+
+<item itemtype="AudioOut" CircId="AudioOut-5" mainComp="false" Show_id="false" Show_Val="false" Pos="-572,-300" rotation="0" hflip="-1" vflip="1" label="AudioOut-4" idLabPos="-20,-36" labelrot="0" valLabPos="0,0" valLabRot="0" Buzzer="false" Impedance="8 Ω" />
+
+<item itemtype="Oscope" CircId="Oscope-6" mainComp="false" Show_id="false" Show_Val="false" Pos="-380,-356" rotation="0" hflip="1" vflip="1" label="Oscope-10" idLabPos="-100,-80" labelrot="0" valLabPos="0,0" valLabRot="0" Basic_X="135 _Px" Basic_Y="135 _Px" BufferSize="600000" connectGnd="true" InputImped="1e+07 Ω" TimDiv="200000000" TimPos="0,0,0,0," VolDiv="1,1,1,1," Tunnels=",,,," Trigger="4" Filter="0.3 V" Trigger="4" AutoSC="4" Tracks="1" HideCh="false,false,false,false," VolPos="0,0,0,0," />
+
+<item itemtype="VarResistor" CircId="VarResistor-12" mainComp="false" Show_id="true" Show_Val="false" Pos="-540,-356" rotation="90" hflip="1" vflip="1" label="Volume" idLabPos="-6.94471,70.7032" labelrot="-90" valLabPos="-16,30" valLabRot="0" Min_Resistance="0 Ω" Max_Resistance="1000 Ω" Value_Ohm="519 Ω" Dial_Step="0 Ω" Slider="false" Scale="1" />
+
+<item itemtype="Node" CircId="Node-15" mainComp="false" Pos="-540,-404" />
+
+<item itemtype="Connector" uid="Connector-7" startpinid="Ground-3-Gnd" endpinid="AudioOut-5-rPin" pointList="-540,-268,-540,-300,-556,-300" />
+
+<item itemtype="Connector" uid="Connector-20" startpinid="VarResistor-12-rPin" endpinid="AudioOut-5-lPin" pointList="-540,-340,-540,-308,-556,-308" />
+
+<item itemtype="Connector" uid="Connector-22" startpinid="VarResistor-12-lPin" endpinid="Node-15-1" pointList="-540,-372,-540,-404" />
+
+<item itemtype="Connector" uid="Connector-23" startpinid="WaveGen-4-outnod" endpinid="Node-15-0" pointList="-564,-404,-540,-404" />
+
+<item itemtype="Connector" uid="Connector-24" startpinid="Node-15-2" endpinid="Oscope-6-Pin0" pointList="-540,-404,-468,-404" />
+
+</circuit>
