@@ -186,5 +186,5 @@ void AvrTwi::I2Cstop()
 {
     TwiModule::I2Cstop();
     if( m_mode != TWI_SLAVE ) return;
-    setTwiState( TWI_SRX_STOP_RESTART );
+    if (m_addrMatch) setTwiState( TWI_SRX_STOP_RESTART );
 }
