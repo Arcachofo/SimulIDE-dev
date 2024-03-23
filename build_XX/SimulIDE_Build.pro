@@ -3,4 +3,4 @@
 BUILD_DIR = $$PWD
 
 
-include(../SimulIDE.pro)
+include(../SimulIDE.pri)
