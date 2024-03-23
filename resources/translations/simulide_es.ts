@@ -44,7 +44,7 @@
     <name>AboutDialog</name>
     <message>
         <source> Compiled:</source>
-        <translation type="unfinished"> Compilado:</translation>
+        <translation> Compilado:</translation>
     </message>
     <message>
         <source> Version:</source>
@@ -56,7 +56,7 @@
     </message>
     <message>
         <source>About SimulIDE</source>
-        <translation type="unfinished">Sobre SimulIDE</translation>
+        <translation>Sobre SimulIDE</translation>
     </message>
     <message>
         <source>&lt;a href=&quot;https://www.patreon.com/simulide/&quot;&gt;https://www.patreon.com/simulide&lt;/a&gt;</source>
@@ -72,7 +72,7 @@
     </message>
     <message>
         <source>Author:</source>
-        <translation type="unfinished"></translation>
+        <translation>Autor:</translation>
     </message>
     <message>
         <source>Santiago González</source>
@@ -80,7 +80,7 @@
     </message>
     <message>
         <source>Contributors</source>
-        <translation type="unfinished"></translation>
+        <translation>Colaboradores:</translation>
     </message>
     <message>
         <source>       Jarda Vrana</source>
@@ -140,7 +140,7 @@
     </message>
     <message>
         <source>Translations</source>
-        <translation type="unfinished"></translation>
+        <translation>Traducciones</translation>
     </message>
     <message>
         <source>Maico Smaniotto.</source>
@@ -275,7 +275,7 @@
     <name>Amperimeter</name>
     <message>
         <source>Ampmeter</source>
-        <translation type="unfinished">Amperímetro</translation>
+        <translation>Amperímetro</translation>
     </message>
 </context>
 <context>
@@ -412,7 +412,7 @@
     </message>
     <message>
         <source>Logic Outputs Edges</source>
-        <translation>Frentes Salidas Lógicas</translation>
+        <translation>Flancos de Salidas Lógicas</translation>
     </message>
     <message>
         <source>Slope Steps</source>
@@ -1145,7 +1145,7 @@ No se pudo encontrar el archivo:
     </message>
     <message>
         <source>Resume Simulation</source>
-        <translation type="unfinished">Seguir Simulación</translation>
+        <translation>Reanudar Simulación</translation>
     </message>
     <message>
         <source>Stopped</source>
@@ -1231,7 +1231,7 @@ No se pudo encontrar el archivo:
     </message>
     <message>
         <source>File Settings</source>
-        <translation>Configuraciones de archivo</translation>
+        <translation>Configuracion de archivo</translation>
     </message>
     <message>
         <source>Compiler</source>
@@ -1251,7 +1251,7 @@ No se pudo encontrar el archivo:
     </message>
     <message>
         <source>Load Breakpoints</source>
-        <translation type="unfinished">Cargar breakpoints</translation>
+        <translation>Cargar breakpoints</translation>
     </message>
     <message>
         <source>Restore files</source>
@@ -1324,11 +1324,11 @@ No se pudo encontrar el archivo:
     </message>
     <message>
         <source>Tool Path</source>
-        <translation type="unfinished">Ruta al compilador</translation>
+        <translation>Ruta al compilador</translation>
     </message>
     <message>
         <source>Include Path</source>
-        <translation type="unfinished">Ruta a includes</translation>
+        <translation>Ruta a includes</translation>
     </message>
     <message>
         <source>Device</source>
@@ -1937,7 +1937,7 @@ No se pudo encontrar el archivo:
     <name>DynamicMemory</name>
     <message>
         <source>Dynamic Ram</source>
-        <translation type="unfinished">Ram Dinámica</translation>
+        <translation>Ram Dinámica</translation>
     </message>
     <message>
         <source>Main</source>
@@ -2008,11 +2008,11 @@ No se pudo encontrar el archivo:
     </message>
     <message>
         <source>Pin Id:   </source>
-        <translation type="unfinished">Id. de Pin:</translation>
+        <translation>Id. de Pin:   </translation>
     </message>
     <message>
         <source>Pin Angle:</source>
-        <translation type="unfinished">Ángulo de Pin:</translation>
+        <translation>Ángulo de Pin:</translation>
     </message>
     <message>
         <source>Right</source>
@@ -2032,7 +2032,7 @@ No se pudo encontrar el archivo:
     </message>
     <message>
         <source>Space to Label:</source>
-        <translation type="unfinished">Espacio al texto:</translation>
+        <translation>Espacio al texto:</translation>
     </message>
     <message>
         <source>Bus Pin</source>
@@ -2295,7 +2295,7 @@ No se pudo encontrar el archivo:
     </message>
     <message>
         <source>Last Files</source>
-        <translation type="unfinished">Últimos archivos</translation>
+        <translation>Archivos recientes</translation>
     </message>
     <message>
         <source>Font Size</source>
@@ -2311,7 +2311,7 @@ No se pudo encontrar el archivo:
     </message>
     <message>
         <source>Show Spaces and Tabs</source>
-        <translation type="unfinished">Mostar Espacios como Tabs</translation>
+        <translation>Mostar Espacios como Tabs</translation>
     </message>
     <message>
         <source>NEW</source>
@@ -2319,7 +2319,7 @@ No se pudo encontrar el archivo:
     </message>
     <message>
         <source>File Settings</source>
-        <translation>Configuraciones de archivo</translation>
+        <translation>Configuracion de archivo</translation>
     </message>
 </context>
 <context>
@@ -2568,7 +2568,7 @@ No se pudo encontrar el archivo:
     </message>
     <message>
         <source>FlipFlopD</source>
-        <translation type="unfinished"></translation>
+        <translation>Biestable D</translation>
     </message>
 </context>
 <context>
@@ -2583,7 +2583,7 @@ No se pudo encontrar el archivo:
     </message>
     <message>
         <source>FlipFlop JK</source>
-        <translation type="unfinished"></translation>
+        <translation>Biestable JK</translation>
     </message>
 </context>
 <context>
@@ -2602,7 +2602,7 @@ No se pudo encontrar el archivo:
     </message>
     <message>
         <source>FlipFlop RS</source>
-        <translation type="unfinished"></translation>
+        <translation>Biestable RS</translation>
     </message>
 </context>
 <context>
@@ -2617,7 +2617,7 @@ No se pudo encontrar el archivo:
     </message>
     <message>
         <source>FlipFlop T</source>
-        <translation type="unfinished"></translation>
+        <translation>Biestable T</translation>
     </message>
 </context>
 <context>
@@ -2850,7 +2850,7 @@ No se pudo encontrar el archivo:
     </message>
     <message>
         <source>Persistent</source>
-        <translation>Permanente</translation>
+        <translation>Persistente</translation>
     </message>
     <message>
         <source>Load data</source>
@@ -3412,7 +3412,7 @@ No se pudo encontrar el archivo:
     </message>
     <message>
         <source>Color</source>
-        <translation type="unfinished">Color</translation>
+        <translation>Color</translation>
     </message>
     <message>
         <source>Grounded</source>
@@ -3766,35 +3766,35 @@ No se pudo encontrar el archivo:
     </message>
     <message>
         <source>Color</source>
-        <translation type="unfinished">Color</translation>
+        <translation>Color</translation>
     </message>
     <message>
         <source>Yellow</source>
-        <translation type="unfinished">Amarillo</translation>
+        <translation>Amarillo</translation>
     </message>
     <message>
         <source>Red</source>
-        <translation type="unfinished">Rojo</translation>
+        <translation>Rojo</translation>
     </message>
     <message>
         <source>Green</source>
-        <translation type="unfinished">Verde</translation>
+        <translation>Verde</translation>
     </message>
     <message>
         <source>Blue</source>
-        <translation type="unfinished">Azul</translation>
+        <translation>Azul</translation>
     </message>
     <message>
         <source>Orange</source>
-        <translation type="unfinished">Naranja</translation>
+        <translation>Naranja</translation>
     </message>
     <message>
         <source>Purple</source>
-        <translation type="unfinished">Púrpura</translation>
+        <translation>Púrpura</translation>
     </message>
     <message>
         <source>White</source>
-        <translation type="unfinished">Blanco</translation>
+        <translation>Blanco</translation>
     </message>
     <message>
         <source>Max72xx matrix</source>
@@ -3897,7 +3897,7 @@ No se pudo encontrar el archivo:
     </message>
     <message>
         <source>EEPROM persitent</source>
-        <translation type="unfinished">Peristente</translation>
+        <translation>Biestable Persistente</translation>
     </message>
     <message>
         <source>Files not found for: %1</source>
@@ -3987,7 +3987,7 @@ No se pudo encontrar el archivo:
     </message>
     <message>
         <source>Persistent</source>
-        <translation>Permanente</translation>
+        <translation>Persistente</translation>
     </message>
     <message>
         <source>Invert Outputs</source>
@@ -5200,15 +5200,15 @@ Archivo packae no valido:</translation>
     </message>
     <message>
         <source>Auto Open</source>
-        <translation type="unfinished">Auto Abrir</translation>
+        <translation>Auto Abrir</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished">Cerrar</translation>
+        <translation>Cerrar</translation>
     </message>
     <message>
         <source>Config</source>
-        <translation type="unfinished">Configuracion</translation>
+        <translation>Configuracion</translation>
     </message>
 </context>
 <context>
@@ -5239,11 +5239,11 @@ Archivo packae no valido:</translation>
     </message>
     <message>
         <source>Open</source>
-        <translation type="unfinished">Abrir</translation>
+        <translation>Abrir</translation>
     </message>
     <message>
         <source>Config</source>
-        <translation type="unfinished">Configuracion</translation>
+        <translation>Configuracion</translation>
     </message>
 </context>
 <context>
@@ -5274,7 +5274,7 @@ Archivo packae no valido:</translation>
     </message>
     <message>
         <source>Max. Pulse Width</source>
-        <translation type="unfinished">Ancho de Pulso Máximo</translation>
+        <translation>Ancho de Pulso Máximo</translation>
     </message>
     <message>
         <source>Servo Motor</source>
@@ -5344,7 +5344,7 @@ Archivo packae no valido:</translation>
     </message>
     <message>
         <source>Show Point Pin</source>
-        <translation type="unfinished">Mostrar Pin de decimal</translation>
+        <translation>Mostrar Pin de decimal</translation>
     </message>
     <message>
         <source>Show Enable Pin</source>
@@ -5440,11 +5440,11 @@ Archivo packae no valido:</translation>
     <name>Simulator</name>
     <message>
         <source>Running</source>
-        <translation type="unfinished">Simulando</translation>
+        <translation>Simulando</translation>
     </message>
     <message>
         <source>Stopped</source>
-        <translation type="unfinished">Parado</translation>
+        <translation>Detenido</translation>
     </message>
 </context>
 <context>
@@ -6445,7 +6445,7 @@ Quiere guardar los cambios?
     </message>
     <message>
         <source>Real Speed:</source>
-        <translation type="unfinished"></translation>
+        <translation>Velocidad Real:</translation>
     </message>
 </context>
 <context>

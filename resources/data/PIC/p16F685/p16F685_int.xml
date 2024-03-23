@@ -4,6 +4,8 @@
         <interrupt name="INT"      enable="INTE"   flag="INTF"   priority="1" vector="0x0004"/>
         <interrupt name="T0_OVF"   enable="T0IE"   flag="T0IF"   priority="1" vector="0x0004"/>
         <interrupt name="PA_INT"   enable="RAIE"   flag="RAIF"   priority="1" vector="0x0004"/>
+        <interrupt name="USART_R"  enable="RCIE"   flag="RCIF"   priority="1" vector="0x0004"/>
+        <interrupt name="USART_T"  enable="TXIE"   flag="TXIF"   priority="1" vector="0x0004"/>
         <interrupt name="ACOMP1"   enable="C1IE"   flag="C1IF"   priority="1" vector="0x0004"/>
         <interrupt name="ACOMP2"   enable="C2IE"   flag="C2IF"   priority="1" vector="0x0004"/>
         <interrupt name="ADC"      enable="ADIE"   flag="ADIF"   priority="1" vector="0x0004"/>

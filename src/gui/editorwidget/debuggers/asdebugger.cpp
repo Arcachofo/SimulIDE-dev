@@ -16,6 +16,8 @@ asDebugger::asDebugger( CodeEditor* parent, OutPanelText* outPane )
           : BaseDebugger( parent, outPane )
 {
     m_device = NULL;
+
+    removeProperty( "ToolPath" );
 }
 asDebugger::~asDebugger() {}
 
