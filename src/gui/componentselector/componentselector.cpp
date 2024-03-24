@@ -15,6 +15,7 @@
 
 #include "componentselector.h"
 #include "mainwindow.h"
+#include "utils.h"
 
 ComponentSelector* ComponentSelector::m_pSelf = NULL;
 
@@ -146,13 +147,35 @@ void ComponentSelector::LoadCompSetAt( QDir compSetDir )
                     }
                 }
                 QString icon = "";
-                if( reader.attributes().hasAttribute("icon") )
+                QByteArray ba;
+
+                QXmlStreamAttributes at = reader.attributes();
+
+                if( at.hasAttribute("icondata") )
                 {
-                    icon = reader.attributes().value("icon").toString();
-                    if( !icon.startsWith(":/") )
-                        icon = MainWindow::self()->getDataFilePath("images/"+icon);
+                    //QByteArray ba = fileToByteArray( icon, "kk");
+                    //QString icStr( ba.toHex(':') );
+
+                    QString icStr = at.value("icondata").toString();
+                    QStringList list = icStr.split(":");
+                    bool ok;
+                    for( QString ch : list ) ba.append( ch.toInt( &ok, 16 ) );
                 }
-                else icon = getIcon( "components", compName );
+                else
+                {
+                    if( at.hasAttribute("icon") )
+                    {
+                        icon = at.value("icon").toString();
+                        if( !icon.startsWith(":/") )
+                            icon = MainWindow::self()->getDataFilePath("images/"+icon);
+                    }
+                    else icon = getIcon("components", compName );
+                    ba = fileToByteArray( icon, "ComponentSelector::LoadCompSetAt");
+                }
+
+                QPixmap ic;
+                ic.loadFromData( ba );
+                QIcon ico( ic );
 
                 /// TODO: reuse get category from catPath
                 QString category = reader.attributes().value("category").toString();
@@ -169,7 +192,7 @@ void ComponentSelector::LoadCompSetAt( QDir compSetDir )
                     if( !catItem /*&& !parent.isEmpty()*/ )
                     {
                         QString catTr = QObject::tr( category.toLocal8Bit() );
-                        catItem = addCategory( catTr, category, parent, icon );
+                        catItem = addCategory( catTr, category, parent, "" );
                     }
                 }
 
@@ -177,7 +200,7 @@ void ComponentSelector::LoadCompSetAt( QDir compSetDir )
 
                 if( !type.isEmpty() )
                 {
-                    addItem( compName, catItem, icon, type );
+                    addItem( compName, catItem, ico, type );
                     m_dirFileList[ compName ] = compSetDir.absoluteFilePath( compName );
                 }
             }
@@ -275,6 +298,14 @@ QString ComponentSelector::getIcon( QString folder, QString name )
 
 void ComponentSelector::addItem( QString caption, QTreeWidgetItem* catItem, QString icon, QString type )
 {
+    QPixmap ic( icon );
+    QIcon ico( ic );
+    addItem( caption, catItem, ico, type );
+
+}
+
+void ComponentSelector::addItem( QString caption, QTreeWidgetItem* catItem, QIcon &icon, QString type )
+{
     QStringList nameFull = caption.split( "???" );
     QString       nameTr = nameFull.first();
     QString info = "";
@@ -289,7 +320,7 @@ void ComponentSelector::addItem( QString caption, QTreeWidgetItem* catItem, QStr
 
     item->setFlags( QFlag(32) );
     item->setFont( 0, font );
-    item->setIcon( 0, QIcon( QPixmap( icon ) ) );
+    item->setIcon( 0, icon );
     item->setText( 0, nameTr+info );
     item->setData( 0, Qt::UserRole, type );
 

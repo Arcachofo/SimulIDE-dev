@@ -46,6 +46,7 @@ class ComponentSelector : public QTreeWidget
         void loadXml( QString setFile );
 
         void addItem( QString caption, QTreeWidgetItem* catItem, QString icon, QString type );
+        void addItem( QString caption, QTreeWidgetItem* catItem, QIcon &icon, QString type );
 
         void LoadLibraryItems();
 
