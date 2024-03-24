@@ -118,6 +118,70 @@ void ComponentSelector::LoadCompSetAt( QDir compSetDir )
                 }
             }
         }
+        compSetDir.cd("..");
+    }
+    if( compSetDir.cd("components") )
+    {
+        QStringList dirList = compSetDir.entryList( {"*"}, QDir::Dirs );
+        if( !dirList.isEmpty() )
+        {
+            for( QString compName : dirList )
+            {
+                QString path = compName+"/"+compName;
+                QString compFile = compSetDir.absoluteFilePath( path+".comp" );
+                if( !compSetDir.exists( compFile ) ) continue;
+
+                QFile file( compFile );
+                if( !file.open(QFile::ReadOnly | QFile::Text) ){
+                      qDebug() << "ComponentSelector::LoadCompSetAt Cannot read file"<< endl << compFile << endl << file.errorString();
+                      return;
+                }
+                QXmlStreamReader reader( &file );
+                if( reader.readNextStartElement() )
+                {
+                    if( reader.name() != "item" ){
+                        qDebug() << "ComponentSelector::LoadCompSetAt Error parsing file (itemlib):"<< endl << compFile;
+                        file.close();
+                        continue;
+                    }
+                }
+                QString icon = "";
+                if( reader.attributes().hasAttribute("icon") )
+                {
+                    icon = reader.attributes().value("icon").toString();
+                    if( !icon.startsWith(":/") )
+                        icon = MainWindow::self()->getDataFilePath("images/"+icon);
+                }
+                else icon = getIcon( "components", compName );
+
+                /// TODO: reuse get category from catPath
+                QString category = reader.attributes().value("category").toString();
+                QStringList catPath = category.split("/");
+
+                QTreeWidgetItem* catItem = NULL;
+                QString parent = "";
+                category = "";
+                while( !catPath.isEmpty() )
+                {
+                    parent = category;
+                    category = catPath.takeFirst();
+                    catItem = getCategory( category );
+                    if( !catItem /*&& !parent.isEmpty()*/ )
+                    {
+                        QString catTr = QObject::tr( category.toLocal8Bit() );
+                        catItem = addCategory( catTr, category, parent, icon );
+                    }
+                }
+
+                QString type = reader.attributes().value("type").toString();
+
+                if( !type.isEmpty() )
+                {
+                    addItem( compName, catItem, icon, type );
+                    m_dirFileList[ compName ] = compSetDir.absoluteFilePath( compName );
+                }
+            }
+        }
     }
     qDebug() << "\n";
 }
@@ -125,19 +189,15 @@ void ComponentSelector::LoadCompSetAt( QDir compSetDir )
 void ComponentSelector::loadXml( QString setFile )
 {
     QFile file( setFile );
-    if( !file.open(QFile::ReadOnly | QFile::Text) )
-    {
-          QMessageBox::warning( 0, "ComponentSelector::loadXml"
-                              , tr("Cannot read file %1:\n%2.").arg(setFile).arg(file.errorString()));
+    if( !file.open(QFile::ReadOnly | QFile::Text) ){
+          qDebug() << "ComponentSelector::loadXml Cannot read file"<< endl << setFile << endl << file.errorString();
           return;
     }
-    QXmlStreamReader reader(&file);
+    QXmlStreamReader reader( &file );
     if( reader.readNextStartElement() )
     {
-        if( reader.name() != "itemlib" )
-        {
-            QMessageBox::warning( 0, "ComponentSelector::loadXml"
-                                , tr("Error parsing file (itemlib):\n%1.").arg(setFile) );
+        if( reader.name() != "itemlib" ){
+            qDebug() <<  "ComponentSelector::loadXml Error parsing file (itemlib):"<< endl << setFile;
             file.close();
             return;
         }
