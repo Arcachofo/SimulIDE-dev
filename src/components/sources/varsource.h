@@ -7,7 +7,7 @@
 #define VARSOURCE_H
 
 #include "component.h"
-#include "voltwidget.h"
+#include "sourcewidget.h"
 #include "e-element.h"
 
 class VarSource : public Component, public eElement
@@ -48,7 +48,7 @@ class VarSource : public Component, public eElement
 
         QString m_unit;
         
-        VoltWidget m_voltw;
+        SourceWidget m_voltw;
 
         CustomButton* m_button;
         QGraphicsProxyWidget* m_proxy;

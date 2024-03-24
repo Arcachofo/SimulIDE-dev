@@ -19,24 +19,24 @@ FORMS       += $$files( $$PWD/src/*.ui, true )
 RESOURCES    = ../src/application.qrc
 
 INCLUDEPATH += ../src \
+    ../src/components \
+    ../src/components/active \
+    ../src/components/logic \
+    ../src/components/micro \
+    ../src/components/meters \
+    ../src/components/other \
+    ../src/components/outputs \
+    ../src/components/outputs/displays \
+    ../src/components/outputs/leds \
+    ../src/components/outputs/motors \
+    ../src/components/passive \
+    ../src/components/passive/reactive \
+    ../src/components/passive/resistors \
+    ../src/components/passive/resist_sensors \
+    ../src/components/sources \
+    ../src/components/switches \
     ../src/gui \
     ../src/gui/circuitwidget \
-    ../src/gui/circuitwidget/components \
-    ../src/gui/circuitwidget/components/active \
-    ../src/gui/circuitwidget/components/logic \
-    ../src/gui/circuitwidget/components/micro \
-    ../src/gui/circuitwidget/components/meters \
-    ../src/gui/circuitwidget/components/other \
-    ../src/gui/circuitwidget/components/outputs \
-    ../src/gui/circuitwidget/components/outputs/displays \
-    ../src/gui/circuitwidget/components/outputs/leds \
-    ../src/gui/circuitwidget/components/outputs/motors \
-    ../src/gui/circuitwidget/components/passive \
-    ../src/gui/circuitwidget/components/passive/reactive \
-    ../src/gui/circuitwidget/components/passive/resistors \
-    ../src/gui/circuitwidget/components/passive/resist_sensors \
-    ../src/gui/circuitwidget/components/sources \
-    ../src/gui/circuitwidget/components/switches \
     ../src/gui/circuitwidget/properties \
     ../src/gui/circuitwidget/subcircuits \
     ../src/gui/dataplotwidget \
@@ -46,7 +46,7 @@ INCLUDEPATH += ../src \
     ../src/gui/editorwidget \
     ../src/gui/editorwidget/dialogs \
     ../src/gui/editorwidget/debuggers \
-    ../src/gui/dialogs \
+    ../src/gui/appdialogs \
     ../src/gui/memory \
     ../src/simulator \
     ../src/simulator/elements \
@@ -67,6 +67,7 @@ INCLUDEPATH += ../src \
     ../src/microsim/modules/usart \
     ../src/microsim/modules/twi \
     ../src/microsim/modules/spi\
+    ../src/microsim/modules/script\
     ../src/angel/include \
     ../src/angel/JIT \
     ../src/angel/src

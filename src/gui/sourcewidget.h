@@ -3,18 +3,18 @@
  *                                                                         *
  ***( see copyright.txt file at root folder )*******************************/
 
-#ifndef VOLTWIDGET_H
-#define VOLTWIDGET_H
+#ifndef SOURCEWIDGET_H
+#define SOURCEWIDGET_H
 
 #include "dialwidget.h"
 
 class CustomButton;
 
-class VoltWidget : public DialWidget
+class SourceWidget : public DialWidget
 {
     public:
-        VoltWidget();
-        ~VoltWidget();
+        SourceWidget();
+        ~SourceWidget();
 
         CustomButton* pushButton;
 };

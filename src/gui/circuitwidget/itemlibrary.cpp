@@ -274,7 +274,7 @@ void ItemLibrary::loadItems()
     addItem( SevenSegmentBCD::libraryItem() );
     addItem( Lm555::libraryItem() );
     // Subcircuits
-    addItem( new LibraryItem( QObject::tr("Ternary")    , "Logic", "subc.png","Ternary", NULL ) );
+    /*addItem( new LibraryItem( QObject::tr("Ternary")    , "Logic", "subc.png","Ternary", NULL ) );
     addItem( new LibraryItem( QObject::tr("Digital Potentiometer"), "Logic", "subc.png","Digital Potentiometer", NULL ) );
     addItem( new LibraryItem( QObject::tr("IC 74")      , "Logic", "ic2.png","IC 74", NULL ) );
     addItem( new LibraryItem( QObject::tr("IC CD")      , "Logic", "ic2.png","IC CD", NULL ) );
@@ -283,6 +283,7 @@ void ItemLibrary::loadItems()
     addItem( new LibraryItem( QObject::tr("Keys")       , "Logic", "ic2.png","Keys", NULL ) );
     addItem( new LibraryItem( QObject::tr("Led display"), "Logic", "7segbcd.png","Led display", NULL ) );
     addItem( new LibraryItem( QObject::tr("Tools")      , "Logic", "subc.png","Tools", NULL ) );
+    */
     addItem( SubCircuit::libraryItem() );
     // Connectors
     addItem( new LibraryItem( QObject::tr("Connectors"), "", "","Connectors", NULL ) );

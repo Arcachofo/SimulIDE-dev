@@ -5,13 +5,13 @@
 
 #include <QVBoxLayout>
 
-#include "voltwidget.h"
+#include "sourcewidget.h"
 #include "custombutton.h"
 #include "customdial.h"
 #include "customslider.h"
 #include "mainwindow.h"
 
-VoltWidget::VoltWidget()
+SourceWidget::SourceWidget()
 {
     DialWidget::setSize( 36 );
     m_dial->setValue( 0 );
@@ -33,4 +33,4 @@ VoltWidget::VoltWidget()
 
     //setFixedSize( 60, 90 );
 }
-VoltWidget::~VoltWidget() {}
+SourceWidget::~SourceWidget() {}

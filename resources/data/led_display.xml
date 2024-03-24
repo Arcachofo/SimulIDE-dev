@@ -2,7 +2,7 @@
 
 <itemlib>
     
-  <itemset category="Logic/Led display" type="Subcircuit" folder="led_display" icon="segbcd.png" >
+  <itemset category="Logic/Led display" type="Subcircuit" folder="led_display" icon=":/7segbcd.png" >
       
     <item name="1bit_led_scc"  info="1-Bit Led digital Tube module (74hc595, com. cathode, static)" /> 
     <item name="1bit_led_sca"  info="1-Bit Led digital Tube module (74hc595, com. anode, static)" /> 
