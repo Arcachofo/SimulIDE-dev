@@ -39,7 +39,7 @@ LibraryItem* Function::libraryItem()
 
 Function::Function( QString type, QString id )
         : IoComponent( type, id )
-        , ScriptModule( id )
+        , ScriptBase( id )
 {
     m_lastDir = Circuit::self()->getFilePath();
     m_width = 4;

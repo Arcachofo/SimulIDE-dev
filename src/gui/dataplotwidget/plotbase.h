@@ -7,14 +7,14 @@
 #define PLOTBASE_H
 
 #include "component.h"
-#include "scriptmodule.h"
+#include "scriptbase.h"
 #include "datachannel.h"
 
 class IoPin;
 class PlotDisplay;
 class QGraphicsProxyWidget;
 
-class PlotBase : public Component, public ScriptModule
+class PlotBase : public Component, public ScriptBase
 {
     public:
         PlotBase( QString type, QString id );

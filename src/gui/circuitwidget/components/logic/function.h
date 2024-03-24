@@ -7,13 +7,13 @@
 #define FUNCTION_H
 
 #include "iocomponent.h"
-#include "scriptmodule.h"
+#include "scriptbase.h"
 
 class LibraryItem;
 class CustomButton;
 class QGraphicsProxyWidget;
 
-class Function : public IoComponent, public ScriptModule
+class Function : public IoComponent, public ScriptBase
 {
     public:
         Function( QString type, QString id );

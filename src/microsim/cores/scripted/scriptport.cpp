@@ -8,7 +8,7 @@
 #include "mcupin.h"
 
 ScriptPort::ScriptPort( eMcu* mcu, QString name )
-          : ScriptModule( mcu->getId()+"-"+name )
+          : ScriptBase( mcu->getId()+"-"+name )
           , McuPort( mcu, name )
 {
 }
@@ -41,7 +41,7 @@ void ScriptPort::setExtIntTrig( int pinNumber, int trig )
 
 void ScriptPort::setScript( QString script )
 {
-    ScriptModule::setScript( script );
+    ScriptBase::setScript( script );
 
     /*m_configureA = evalFunc("configureA");
     m_configureB = evalFunc("configureB");

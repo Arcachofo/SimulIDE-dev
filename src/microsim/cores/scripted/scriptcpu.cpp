@@ -22,7 +22,7 @@
 using namespace std;
 
 ScriptCpu::ScriptCpu( eMcu* mcu )
-         : ScriptModule( mcu->getId()+"-"+"ScriptCpu" )
+         : ScriptBase( mcu->getId()+"-"+"ScriptCpu" )
          , McuCpu( mcu )
 {
     m_watcher = NULL;
@@ -169,7 +169,7 @@ void ScriptCpu::setPeriferals( std::vector<ScriptPerif*> p )
 
 void ScriptCpu::setScriptFile( QString scriptFile, bool compile )
 {
-    ScriptModule::setScriptFile( scriptFile, compile );
+    ScriptBase::setScriptFile( scriptFile, compile );
     if( compile ) compileScript();
 }
 
@@ -177,7 +177,7 @@ int ScriptCpu::compileScript()
 {
     if( !m_aEngine ) return -1;
 
-    int r = ScriptModule::compileScript();
+    int r = ScriptBase::compileScript();
     if( r < 0 ) return r;
 
     m_reset       = m_aEngine->GetModule(0)->GetFunctionByDecl("void reset()");

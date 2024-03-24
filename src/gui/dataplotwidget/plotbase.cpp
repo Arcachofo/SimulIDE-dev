@@ -21,7 +21,7 @@
 
 PlotBase::PlotBase( QString type, QString id )
         : Component( type, id )
-        , ScriptModule( id )
+        , ScriptBase( id )
 {
     m_graphical = true;
     m_bufferSize = 600000;
@@ -205,7 +205,7 @@ void PlotBase::updateConds( QString conds )
     }
     m_script = "void pause() { pb.m_pause = "+conds+";}";
     /// qDebug() << m_script <<endl;
-    int r = ScriptModule::compileScript();
+    int r = ScriptBase::compileScript();
     if( r < 0 ) { qDebug() << "PlotBase::updateConds Failed to compile expression:"<<conds; return; }
 
     m_pauseFunc = m_aEngine->GetModule(0)->GetFunctionByDecl("void pause()");

@@ -6,7 +6,7 @@
 #ifndef SCRIPTCPU_H
 #define SCRIPTCPU_H
 
-#include "scriptmodule.h"
+#include "scriptbase.h"
 #include "iopin.h"
 #include "mcucpu.h"
 
@@ -15,7 +15,7 @@ using namespace std;
 class ScriptPerif;
 class Mcu;
 
-class ScriptCpu : public ScriptModule, public McuCpu
+class ScriptCpu : public ScriptBase, public McuCpu
 {
     public:
         ScriptCpu( eMcu* mcu );

@@ -6,10 +6,10 @@
 #ifndef SCRIPTPORT_H
 #define SCRIPTPORT_H
 
-#include "scriptmodule.h"
+#include "scriptbase.h"
 #include "mcuport.h"
 
-class ScriptPort : public ScriptModule, public McuPort
+class ScriptPort : public ScriptBase, public McuPort
 {
     public:
         ScriptPort( eMcu* mcu, QString name );
