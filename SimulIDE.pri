@@ -106,7 +106,7 @@ CONFIG += warn_on
 CONFIG += no_qml_debug
 CONFIG *= c++11
 
-REV_NO = $$system( bzr revno )
+REV_NO = $$system( git rev-parse --short HEAD )
 DEFINES += REVNO=\\\"$$REV_NO\\\"
 DEFINES += APP_VERSION=\\\"$$VERSION$$RELEASE\\\"
 
