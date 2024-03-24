@@ -18,5 +18,3 @@ Other
    Save Circuit backup if there are changes.
    0 disables Auto Backup.
 
-More Info:
-http://simulide.blogspot.com/p/blog-page_15.html

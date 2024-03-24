@@ -21,5 +21,3 @@
    输出引脚上升/下降沿的步数.
    0表示禁用.
 
-更多信息见:
-http://simulide.blogspot.com/p/blog-page_15.html

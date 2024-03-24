@@ -21,6 +21,3 @@ Logic Output Edges
    Number of steps for Output Pins rising/falling edges.
    0 for disabled.
 
-
-More Info:
-http://simulide.blogspot.com/p/blog-page_15.html

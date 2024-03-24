@@ -20,5 +20,3 @@
    仅当存在修改时才会真正保存备份.
    设为0表示禁用自动备份.
 
-更多信息见:
-http://simulide.blogspot.com/p/blog-page_15.html
