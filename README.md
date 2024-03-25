@@ -2,18 +2,16 @@
 
 Electronic Circuit Simulator
 
+**SimulIDE is a simple real time electronic circuit simulator**, intended for hobbyist or students to learn and experiment with analog and digital electronic circuits and microcontrollers.
+It supports PIC, AVR, Arduino and other MCUs and MPUs.
 
-SimulIDE is a simple real time electronic circuit simulator.
+**Simplicity, speed and ease of use** are the key features of this simulator.
+You can create, simulate and interact with your circuits within minutes, just drag components from the list, drop into the circuit, connect them and push the “power button” to see how it works.
 
-It's intended for general purpose electronics and microcontroller simulation, supporting PIC, AVR and Arduino.
+Simulation speed is one of the most relevant characteristics of this simulator.
+It has been deeply optimized to achieve excellent speeds and low cpu usage.
 
-This is not an accurate simulator for circuit analisis, it aims to be the fast, simple and easy to use, so this means simple and not very accurate electronic models and limited features.
-
-Intended for hobbist or students to learn and experiment with simple circuits.
-
-
-SimulIDE also features a code Editor and Debugger.
-Editor/Debugger is still in it's firsts stages of development, with basic functionalities, but it is possible to write, compile and basic debugging with breakpoints, watch registers and global variables.
+SimulIDE also features a code Editor and Debugger for Arduino, GcBasic, PIC asm, AVR asm and others. It is possible to write, compile and do basic debugging with breakpoints, watch registers and global variables.
 
 
 ## Building SimulIDE:
