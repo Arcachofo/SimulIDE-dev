@@ -72,7 +72,7 @@ QString decToBase( int value, int base, int digits )
 
 //---------------------------------------------------
 
-void MessageBoxNB( const QString &title, const QString &message )
+void MessageBoxNB( QString title, QString message )
 {
     QMessageBox* msgBox = new QMessageBox( MainWindow::self() );
     msgBox->setAttribute( Qt::WA_DeleteOnClose ); //makes sure the msgbox is deleted automatically when closed
@@ -150,7 +150,7 @@ QString findFile( QString dir, QString fileName )
 
 //---------------------------------------------------
 
-QDomDocument fileToDomDoc( const QString &fileName, const QString &caller )
+QDomDocument fileToDomDoc( QString fileName, QString caller )
 {
     QDomDocument domDoc;
 
@@ -175,7 +175,7 @@ QDomDocument fileToDomDoc( const QString &fileName, const QString &caller )
     return domDoc;
 }
 
-QString fileToString( const QString &fileName, const QString &caller )
+QString fileToString( QString fileName, QString caller )
 {
     QFile file( fileName );
     if (!file.open( QFile::ReadOnly | QFile::Text) )
@@ -192,12 +192,12 @@ QString fileToString( const QString &fileName, const QString &caller )
     return text;
 }
 
-QStringList fileToStringList( const QString &fileName, const QString &caller )
+QStringList fileToStringList( QString fileName, QString caller )
 {
     return fileToString( fileName, caller ).split('\n');
 }
 
-QByteArray fileToByteArray( const QString &fileName, const QString &caller )
+QByteArray fileToByteArray( QString fileName, QString caller )
 {
     QByteArray ba;
 

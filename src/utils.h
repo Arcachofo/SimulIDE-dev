@@ -53,7 +53,7 @@ QString decToBase( int value, int base, int digits );
 
 //---------------------------------------------------
 
-void MessageBoxNB( const QString &title, const QString &message );
+void MessageBoxNB( QString title, QString message );
 
 //---------------------------------------------------
 
@@ -71,10 +71,10 @@ QString findFile( QString dir, QString fileName );
 
 //---------------------------------------------------
 
-QDomDocument fileToDomDoc( const QString &fileName, const QString &caller );
-QString      fileToString( const QString &fileName, const QString &caller );
-QStringList  fileToStringList( const QString &fileName, const QString &caller );
-QByteArray   fileToByteArray( const QString &fileName, const QString &caller );
+QDomDocument fileToDomDoc( QString fileName, QString caller );
+QString      fileToString( QString fileName, QString caller );
+QStringList  fileToStringList( QString fileName, QString caller );
+QByteArray   fileToByteArray( QString fileName, QString caller );
 
 //---------------------------------------------------
 

@@ -3,12 +3,12 @@
  *                                                                         *
  ***( see copyright.txt file at root folder )*******************************/
 
+#ifndef APPDIALOG_H
+#define APPDIALOG_H
+
 #include <QDialog>
 
 #include "ui_appdialog.h"
-
-#ifndef APPDIALOG_H
-#define APPDIALOG_H
 
 class PropVal;
 
