@@ -153,9 +153,6 @@ void ComponentSelector::LoadCompSetAt( QDir compSetDir )
 
                 if( at.hasAttribute("icondata") )
                 {
-                    //QByteArray ba = fileToByteArray( icon, "kk");
-                    //QString icStr( ba.toHex(':') );
-
                     QString icStr = at.value("icondata").toString();
                     QStringList list = icStr.split(":");
                     bool ok;

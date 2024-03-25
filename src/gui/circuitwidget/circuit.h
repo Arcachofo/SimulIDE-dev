@@ -15,6 +15,7 @@
 
 #define COMP_STATE_NEW "__COMP_STATE_NEW__"
 
+class creCompDialog;
 class CircuitView;
 class SubPackage;
 class Simulator;
@@ -113,6 +114,8 @@ class Circuit : public QGraphicsScene
         const QString getFilePath() const { return m_filePath; }
         void setFilePath( QString f ) { m_filePath = f; }
 
+        bool saveString( QString &fileName, QString doc );
+
         void drawBackground( QPainter* painter, const QRectF &rect );
 
     signals:
@@ -124,6 +127,7 @@ class Circuit : public QGraphicsScene
         void undo();
         void redo();
         void importCircuit();
+        void createComp();
         //void bom();
         void saveBackup();
 
@@ -139,9 +143,10 @@ class Circuit : public QGraphicsScene
  static Circuit*  m_pSelf;
 
         void loadStrDoc( QString &doc );
-        bool saveString( QString &fileName, QString doc );
+
         QString circuitHeader();
         QString circuitToString();
+        QString circuitToComp();
 
         void updatePinName( QString* name );
 
@@ -190,6 +195,8 @@ class Circuit : public QGraphicsScene
         QTimer m_bckpTimer;
 
         Simulator* m_simulator;
+
+        creCompDialog* m_creCompDialog;
 
         //--- Undo/Redo ----------------------------------
 

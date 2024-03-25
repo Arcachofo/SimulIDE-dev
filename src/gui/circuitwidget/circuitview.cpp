@@ -245,6 +245,13 @@ void CircuitView::contextMenuEvent( QContextMenuEvent* event )
         connect( saveImgAct, &QAction::triggered,
                        this, &CircuitView::saveImage, Qt::UniqueConnection );
 
+        if( !m_circuit->getFilePath().isEmpty() )
+        {
+            QAction* createCompAct = menu.addAction(QIcon(":/savecirc.png"), tr("Create component") );
+            connect( createCompAct, &QAction::triggered,
+                       m_circuit, &Circuit::createComp, Qt::UniqueConnection );
+        }
+
         /*QAction* createBomAct = menu.addAction(QIcon(":/savecirc.png"), tr("Bill of Materials") );
         connect(createBomAct, &QAction::triggered,
                    m_circuit, &Circuit::bom, Qt::UniqueConnection );*/

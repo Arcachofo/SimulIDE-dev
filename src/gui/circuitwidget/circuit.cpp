@@ -27,6 +27,7 @@
 #include "shield.h"
 #include "linker.h"
 #include "tunnel.h"
+#include "createcomp.h"
 
 Circuit* Circuit::m_pSelf = NULL;
 
@@ -57,6 +58,7 @@ Circuit::Circuit( qreal x, qreal y, qreal width, qreal height, CircuitView*  par
     m_acceptKeys = true;
     m_cicuitBatch = 0;
 
+    m_creCompDialog = NULL;
     m_board = NULL;
     m_newConnector = NULL;
     m_seqNumber = 0;
@@ -85,6 +87,8 @@ Circuit::~Circuit()
     QFile file( m_backupPath );
     if( !file.exists() ) return;
     QFile::remove( m_backupPath ); // Remove backup file
+
+    if( m_creCompDialog ) m_creCompDialog->deleteLater();
 }
 
 Component* Circuit::getCompById( QString id )
@@ -470,6 +474,20 @@ void Circuit::loadStrDoc( QString &doc )
     update();
 }
 
+void Circuit::createComp()
+{
+    if( !m_creCompDialog ) m_creCompDialog = new creCompDialog( CircuitWidget::self() );
+    m_creCompDialog->show();
+}
+
+QString Circuit::circuitToComp()
+{
+
+    QString comp = "";
+
+    return comp;
+}
+
 QString Circuit::circuitHeader()
 {
     QString header = "<circuit version=\""+QString( APP_VERSION )+"\" rev=\""+QString( REVNO )+"\" ";
@@ -480,6 +498,7 @@ QString Circuit::circuitHeader()
     header += "animate=\""+QString::number( m_animate )+"\" >\n";
     return header;
 }
+
 QString Circuit::circuitToString()
 {
     if( m_board && m_board->m_boardMode ) m_board->setBoardMode( false );
@@ -504,7 +523,7 @@ bool Circuit::saveString( QString &fileName, QString doc )
         tr("Cannot write file %1:\n%2.").arg(fileName).arg(file.errorString()));
         return false;
     }
-    QTextStream out(&file);
+    QTextStream out( &file );
     out.setCodec("UTF-8");
     out << doc;
     file.close();
