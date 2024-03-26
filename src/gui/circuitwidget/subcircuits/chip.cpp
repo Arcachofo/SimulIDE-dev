@@ -79,6 +79,8 @@ void Chip::initChip()
 {
     m_error = 0;
 
+    if( m_pkgeFile.isEmpty() ) return;
+
     QDir circuitDir = QFileInfo( Circuit::self()->getFilePath() ).absoluteDir();
     QString fileNameAbs = circuitDir.absoluteFilePath( m_pkgeFile );
 
@@ -104,6 +106,30 @@ void Chip::initChip()
         return;
     }
     m_initialized = true;
+}
+
+void Chip::setWidth( int width )
+{
+    if( width < 1 ) width = 1;
+    if( m_width == width ) return;
+    m_changed = true;
+
+    m_width = width;
+    m_area = QRect(0, 0, m_width*8, m_height*8);
+    update();
+    Circuit::self()->update();
+}
+
+void Chip::setHeight( int height )
+{
+    if( height < 1 ) height = 1;
+    if( m_height == height ) return;
+    m_changed = true;
+
+    m_height = height;
+    m_area = QRect( 0, 0, m_width*8, m_height*8 );
+    update();
+    Circuit::self()->update();
 }
 
 void Chip::setName( QString name )
@@ -166,6 +192,39 @@ void Chip::initPackage( QDomElement root )
     }
     setName( m_name );
     update();
+}
+
+void Chip::setPinStr( QString pin )
+{
+    //qDebug() << "Chip::setPinStr" << pin;
+    QStringList tokens = pin.split("; ");
+
+    int length = 8;
+    int xpos   = -m_width/2-length;
+    int ypos   = 8;
+    int angle  = 0;
+    int space  = 0;
+    QString id;
+    QString label;
+    QString type;
+
+    for( QString token : tokens )
+    {
+        QStringList p = token.split("=");
+        if( p.size() != 2 ) continue;
+
+        QString prop = p.first();
+        QString val  = p.last();
+        if     ( prop == "xpos"  ) xpos   = val.toInt();
+        else if( prop == "ypos"  ) ypos   = val.toInt();
+        else if( prop == "angle" ) angle  = val.toInt();
+        else if( prop == "length") length = val.toInt();
+        else if( prop == "space" ) space  = val.toInt();
+        else if( prop == "id"    ) id     = val;
+        else if( prop == "label" ) label  = val;
+        else if( prop == "type"  ) type   = val;
+    }
+    addNewPin( id, type, label, 0, xpos, ypos, angle, length, space );
 }
 
 void Chip::addNewPin( QString id, QString type, QString label, int pos, int xpos, int ypos, int angle, int length, int space )

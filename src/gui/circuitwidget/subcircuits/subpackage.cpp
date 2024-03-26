@@ -99,6 +99,9 @@ SubPackage::SubPackage( QString type, QString id )
 
         new BoolProp<SubPackage>("Logic_Symbol", tr("Logic Symbol"),""
                                 , this, &SubPackage::logicSymbol, &SubPackage::setLogicSymbol ),
+
+        new StrProp <SubPackage>("Pins", "",""
+                                , this, &SubPackage::pinsStr, &SubPackage::setPinsStr,propHidden ),
     }, 0} );
 }
 SubPackage::~SubPackage()
@@ -293,7 +296,7 @@ void SubPackage::setBoardMode( bool mode )
     }
 }
 
-void SubPackage::remove()
+/*void SubPackage::remove()
 {
     if( m_changed )
     {
@@ -306,31 +309,7 @@ void SubPackage::remove()
         if( ret == QMessageBox::Save ) slotSave();
     }
     Circuit::self()->compRemoved( true );
-}
-
-void SubPackage::setWidth( int width )
-{
-    if( width < 1 ) width = 1;
-    if( m_width == width ) return;
-    m_changed = true;
-
-    m_width = width;
-    m_area = QRect(0, 0, m_width*8, m_height*8);
-    update();
-    Circuit::self()->update();
-}
-
-void SubPackage::setHeight( int height )
-{
-    if( height < 1 ) height = 1;
-    if( m_height == height ) return;
-    m_changed = true;
-    
-    m_height = height;
-    m_area = QRect( 0, 0, m_width*8, m_height*8 );
-    update();
-    Circuit::self()->update();
-}
+}*/
 
 Pin* SubPackage::addPin( QString id, QString type, QString label, int pos, int xpos, int ypos, int angle, int length, int space )
 {
@@ -461,6 +440,7 @@ QString SubPackage::package()
 void SubPackage::setPackage( QString package )
 {
     m_pkgeFile = package;
+    if( package.isEmpty() ) return;
 
     m_pkgePins.clear();
     for( Pin* pin : m_pin ) deletePin( pin );
@@ -492,6 +472,43 @@ void SubPackage::setLogicSymbol( bool ls )
     for( Pin* pin : m_pkgePins ) pin->setLabelColor( labelColor );
 
     Circuit::self()->update();
+}
+
+QString SubPackage::pinsStr()
+{
+    QString pins;
+    int pP = 1;
+    for( Pin* pin : m_pkgePins ) { pins += pinStrEntry( pin ); pP++; }
+    return pins;
+}
+
+void SubPackage::setPinsStr( QString pinsStr )
+{
+    if( !m_pkgeFile.isEmpty() ) return;
+
+    QStringList pins = pinsStr.split("\n");
+    for( QString pin : pins )
+    {
+        if( !pin.isEmpty() ) setPinStr( pin );
+    }
+}
+
+QString SubPackage::pinStrEntry( Pin* pin )
+{
+    QString type;
+    if( pin->inverted() ) type = "inv";
+    if( pin->unused()   ) type = "nc";
+    QString pinStr = "Pin";
+    pinStr += "; type="  +type;
+    pinStr += "; xpos="  +QString::number( pin->x() );
+    pinStr += "; ypos="  +QString::number( pin->y() );
+    pinStr += "; angle=" +QString::number( pin->pinAngle() );
+    pinStr += "; length="+QString::number( pin->length() );
+    pinStr += "; space=" +QString::number( pin->space() );
+    pinStr += "; id="    +pin->pinId();
+    pinStr += "; label=" +pin->getLabelText();
+
+    return pinStr+"\n";
 }
 
 void SubPackage::slotSave()

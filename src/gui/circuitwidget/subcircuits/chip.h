@@ -24,6 +24,12 @@ class Chip : public Component, public eElement
             Shield,
             Module
         };
+
+        int width() { return m_width; }
+        void setWidth( int width );
+
+        int height() { return m_height; }
+        void setHeight( int height );
         
         bool logicSymbol() { return m_isLS; }
         virtual void setLogicSymbol( bool ls );
@@ -32,6 +38,8 @@ class Chip : public Component, public eElement
 
         QString name() { return m_name; }
         virtual void setName( QString name );
+
+        void setPinStr( QString pin );
 
         subcType_t subcType() { return m_subcType; }
 

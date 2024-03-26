@@ -23,14 +23,11 @@ class SubPackage : public Chip, public Linker
     static Component* construct( QString type, QString id );
     static LibraryItem* libraryItem();
 
-        int width() { return m_width; }
-        void setWidth( int width );
-        
-        int height() { return m_height; }
-        void setHeight( int height );
-        
         QString package();
         void setPackage( QString package );
+
+        QString pinsStr();
+        void setPinsStr( QString pinsStr );
 
         void setEventPin( Pin* pin ) { m_eventPin = pin; }
 
@@ -38,7 +35,7 @@ class SubPackage : public Chip, public Linker
         virtual void setSubcTypeStr( QString s ) override;
         virtual void setLogicSymbol( bool ls ) override;
 
-        virtual void remove() override;
+        //virtual void remove() override;
 
         virtual void compSelected( Component* comp ) override;  // Use link mechanism to select main components
 
@@ -75,6 +72,7 @@ class SubPackage : public Chip, public Linker
 
     private:
         QString pinEntry( Pin* pin );
+        QString pinStrEntry( Pin* pin );
         QString adjustSize( QString str, int size );
 
  static QString m_lastPkg;
