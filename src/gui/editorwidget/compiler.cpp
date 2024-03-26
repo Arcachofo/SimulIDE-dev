@@ -171,10 +171,10 @@ void Compiler::addFilePropHead()
     if( m_fileProps ) return;
     m_fileProps = true;
 
-    addProperty( "Compiler Settings",
+    addProperty( tr("Compiler Settings"),
     new ComProperty("", "separator","","",0) );
 
-    addProperty( "Compiler Settings",
+    addProperty( tr("Compiler Settings"),
     new ComProperty("", tr("For this file:"),"","",0) );
 }
 
