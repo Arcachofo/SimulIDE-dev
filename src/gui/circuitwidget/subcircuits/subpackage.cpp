@@ -20,6 +20,7 @@
 
 #include "subpackage.h"
 #include "packagepin.h"
+#include "mainwindow.h"
 #include "itemlibrary.h"
 #include "circuitwidget.h"
 #include "circuit.h"
@@ -108,8 +109,11 @@ SubPackage::SubPackage( QString type, QString id )
         new StrProp <SubPackage>("Package_File", tr("Package File"),""
                                 , this, &SubPackage::packageFile, &SubPackage::setPackageFile),
 
-        new StrProp <SubPackage>("Background", tr("Background")  ,""
+        new StrProp <SubPackage>("Background", tr("Background"),""
                                 , this, &SubPackage::background, &SubPackage::setBackground ),
+
+        new StrProp <SubPackage>("BckGndData", "",""
+                                , this, &SubPackage::bckGndData, &SubPackage::setBckGndData,propHidden ),
 
         new BoolProp<SubPackage>("Logic_Symbol", tr("Logic Symbol"),""
                                 , this, &SubPackage::logicSymbol, &SubPackage::setLogicSymbol ),
@@ -121,6 +125,30 @@ SubPackage::SubPackage( QString type, QString id )
 SubPackage::~SubPackage()
 {
     delete m_boardModeAction;
+}
+
+void SubPackage::setWidth( int width )
+{
+    if( width < 1 ) width = 1;
+    if( m_width == width ) return;
+    m_changed = true;
+
+    m_width = width;
+    m_area = QRect(0, 0, m_width*8, m_height*8);
+    update();
+    Circuit::self()->update();
+}
+
+void SubPackage::setHeight( int height )
+{
+    if( height < 1 ) height = 1;
+    if( m_height == height ) return;
+    m_changed = true;
+
+    m_height = height;
+    m_area = QRect( 0, 0, m_width*8, m_height*8 );
+    update();
+    Circuit::self()->update();
 }
 
 void SubPackage::setSubcTypeStr( QString s )
@@ -310,21 +338,6 @@ void SubPackage::setBoardMode( bool mode )
     }
 }
 
-/*void SubPackage::remove()
-{
-    if( m_changed )
-    {
-        const QMessageBox::StandardButton ret
-        = QMessageBox::warning( 0l, "SubPackage::remove",
-                               tr("\nPackage has been modified.\n"
-                                  "Do you want to save your changes?\n"),
-                               QMessageBox::Save | QMessageBox::Discard );
-                               
-        if( ret == QMessageBox::Save ) slotSave();
-    }
-    Circuit::self()->compRemoved( true );
-}*/
-
 Pin* SubPackage::addPin( QString id, QString type, QString label, int pos, int xpos, int ypos, int angle, int length, int space )
 {
     PackagePin* pin = new PackagePin( angle, QPoint(xpos, ypos), m_id+"-"+id, pos-1, this ); // pos in package starts at 1
@@ -445,6 +458,43 @@ void SubPackage::setBusPin( bool bus )
     m_changed = true;
 }
 
+void SubPackage::setBckGndData( QString data )
+{
+    m_BckGndData = data;
+    Chip::setBckGndData( data );
+}
+
+void SubPackage::setBackground( QString bck )
+{
+    m_background = bck;
+
+    if( bck.startsWith("color") )
+    {
+        bck.remove("color").remove("(").remove(")").remove(" ");
+        QStringList rgb = bck.split(",");
+        if( rgb.size() < 3 ) return;
+
+        m_color = QColor( rgb.at(0).toInt(), rgb.at(1).toInt(), rgb.at(2).toInt() );
+    }
+    else if( bck != "" )
+    {
+        QDir dir = QFileInfo( m_dataFile ).absoluteDir();
+        QString pixmapPath = dir.absoluteFilePath( bck );  // Image in subcircuit folder
+
+        if( !QFile::exists( pixmapPath ) ){
+            dir = QFileInfo( Circuit::self()->getFilePath() ).absoluteDir();
+            pixmapPath = dir.absoluteFilePath( bck );    // Image in circuit/data folder
+        }
+        if( !QFile::exists( pixmapPath ) ) pixmapPath = MainWindow::self()->getDataFilePath("images/"+bck );
+        if( QFile::exists( pixmapPath ) )
+        {
+            QByteArray ba = fileToByteArray( pixmapPath, "SubPackage::setBackground");
+            QString iconData( ba.toHex() );
+            setBckGndData( iconData );
+        }
+    }
+}
+
 QString SubPackage::packageFile()
 {
     return m_pkgeFile;
@@ -472,23 +522,6 @@ void SubPackage::setPackageFile( QString package )
     setLogicSymbol( package.endsWith("_LS.package") );
     Circuit::self()->update();
     m_changed = false;
-}
-
-void SubPackage::setLogicSymbol( bool ls )
-{
-    if( ls == m_isLS ) return;
-    m_isLS = ls;
-
-    QColor labelColor = QColor( 0, 0, 0 );
-
-    if( ls ) m_color = m_lsColor;
-    else{
-        m_color = m_icColor;
-        labelColor = QColor( 250, 250, 200 );
-    }
-    for( Pin* pin : m_pkgePins ) pin->setLabelColor( labelColor );
-
-    Circuit::self()->update();
 }
 
 QString SubPackage::pinsStr()
@@ -643,9 +676,9 @@ QString SubPackage::adjustSize( QString str, int size )
     while( str.length() < size ) str.append(" ");
     return str;
 }
-void SubPackage::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
+void SubPackage::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w )
 {
-    Chip::paint( p, option, widget );
+    Chip::paint( p, o, w );
 
     if( m_background != "" ) p->setBrush( Qt::transparent );
     p->drawRoundedRect( m_area, 1, 1);

@@ -99,11 +99,11 @@ void CircuitView::dragEnterEvent( QDragEnterEvent* event )
     m_enterItem = m_circuit->createItem( type, name+"-"+m_circuit->newSceneId() );
     if( m_enterItem )
     {
-        if( type == "Subcircuit" )
+        /*if( type == "Subcircuit" )
         {
             SubCircuit* subC = static_cast<SubCircuit*>( m_enterItem );
             if( subC->subcType() < Chip::Board ) subC->setLogicSymbol( true );
-        }
+        }*/
         m_circuit->clearSelection();
         m_circuit->addComponent( m_enterItem );
         m_circuit->saveCompChange( m_enterItem->getUid(), COMP_STATE_NEW, "" );

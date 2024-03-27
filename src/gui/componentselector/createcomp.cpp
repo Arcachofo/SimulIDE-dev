@@ -26,7 +26,7 @@ creCompDialog::creCompDialog( QWidget* parent )
 void creCompDialog::accept()
 {
     QString comp = "<item";
-    comp += " type=\""    + typeBox->currentText()+"\"";
+    comp += " itemtype=\""+ typeBox->currentText()+"\"";
     comp += " category=\""+ categoryEdit->text()  +"\"";
     comp += " icondata=\""+ m_iconData            +"\"";
     comp += ">";
@@ -75,7 +75,7 @@ void creCompDialog::on_iconChoose_clicked()
 void creCompDialog::embedIcon()
 {
     QByteArray ba = fileToByteArray( m_iconFile, "creCompDialog::accept");
-    QString iconData( ba.toHex(':') );
+    QString iconData( ba.toHex() );
     m_iconData = iconData;
 
     QPixmap ic( m_iconFile );

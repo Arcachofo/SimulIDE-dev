@@ -32,7 +32,8 @@ class SubCircuit : public Chip
         virtual void contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu ) override;
 
     protected:
-        void loadSubCircuit( QString file );
+        void loadSubCircuitFile( QString file );
+        void loadSubCircuit( QString doc );
 
         virtual Pin* addPin( QString id, QString type, QString label,
                             int pos, int xpos, int ypos, int angle, int length=8, int space=0 ) override;

@@ -66,12 +66,16 @@ QString Chip::convertPackage( QString domText ) // Static, converts xml to new f
     QString pkg;
     domText.replace("<!--","\n<!--");
     QStringList lines = domText.split("\n");
-    for ( QString line : lines )
+    for( QString line : lines )
     {
         if( line.isEmpty() ) continue;
         if( line.startsWith("<!") ) continue;
         if( line.startsWith("</") ) continue;
+        line.replace("<item itemtype=\"Package\"","Package;");
+        line.replace("&#xa;","");
+        line.replace("Pin;","\nPin;");
         line.replace("<pin","Pin;");
+        line.replace("Pins=","\n");
         line.replace("<packageB","Package;");
         line.replace("/>","");
         line.replace("=\"","=");
@@ -79,16 +83,11 @@ QString Chip::convertPackage( QString domText ) // Static, converts xml to new f
         line.replace("  ","");
         line.replace(" ;",";");
         line.append("\n");
-        pkg.append( line );
+        pkg.append( line );//
         //qDebug() << line;
     }
     //qDebug() << "-----------------------------------------";
     return pkg;
-}
-
-QString Chip::package()
-{
-    return m_package;
 }
 
 void Chip::setPackage( QString package )
@@ -99,30 +98,6 @@ void Chip::setPackage( QString package )
 
     QString pkgStr = m_packageList.value( package );
     initPackage( pkgStr );
-}
-
-void Chip::setWidth( int width )
-{
-    if( width < 1 ) width = 1;
-    if( m_width == width ) return;
-    m_changed = true;
-
-    m_width = width;
-    m_area = QRect(0, 0, m_width*8, m_height*8);
-    update();
-    Circuit::self()->update();
-}
-
-void Chip::setHeight( int height )
-{
-    if( height < 1 ) height = 1;
-    if( m_height == height ) return;
-    m_changed = true;
-
-    m_height = height;
-    m_area = QRect( 0, 0, m_width*8, m_height*8 );
-    update();
-    Circuit::self()->update();
 }
 
 void Chip::setName( QString name )
@@ -146,6 +121,7 @@ void Chip::initPackage( QString pkgStr )
     QStringList lines = pkgStr.split("\n");
     for( QString line : lines )
     {
+        if( line.isEmpty() ) continue;
         if( line.startsWith("Package") )
         {
             QStringList tokens = line.split(";");
@@ -157,13 +133,15 @@ void Chip::initPackage( QString pkgStr )
                 QStringList p = prop.split("=");
                 if( p.size() != 2 ) continue;
 
-                QString name = p.first();// Property_name
+                QString name = p.first().toLower();// Property_name
                 QString val  = p.last(); // Property_value
 
-                if     ( name == "width"     ) m_width   = val.toInt();
-                else if( name == "height"    ) m_height  = val.toInt();
-                else if( name == "name"      ) { if( val.toLower() != "package" ) setName( val ); }
-                else if( name == "background") setBackground( val );
+                if     ( name == "width"       ) m_width   = val.toInt();
+                else if( name == "height"      ) m_height  = val.toInt();
+                else if( name == "name"        ) { if( val.toLower() != "package" ) setName( val ); }
+                //else if( name == "background"  ) setBackground( val );
+                else if( name == "bckgnddata"  ) setBckGndData( val );
+                else if( name == "logic_symbol") setLogicSymbol( val == "true" );
             }
         }
         else if( line.startsWith("Pin") ) setPinStr( line );
@@ -215,15 +193,10 @@ void Chip::addNewPin( QString id, QString type, QString label, int pos, int xpos
     {
         Pin* pin = new Pin( angle, QPoint(xpos, ypos), m_id+"-"+id, pos-1, this ); // pos in package starts at 1
 
+        if( m_isLS ) pin->setVisible( false );
+        else         pin->setLabelText( label );
         pin->setSpace( space );
-
         pin->setUnused( true ); // Chip::addPin is only for unused Pins
-        if( m_isLS )
-        {
-            pin->setVisible( false );
-            label = "";
-        }
-        pin->setLabelText( label );
         pin->setLength( length );
         pin->setFlag( QGraphicsItem::ItemStacksBehindParent, false );
 
@@ -249,6 +222,23 @@ void Chip::setLogicSymbol( bool ls )
         labelColor = QColor( 250, 250, 200 );
     }
     for( Pin* pin : m_pin ) pin->setLabelColor( labelColor );
+
+    Circuit::self()->update();
+}
+
+void Chip::setBckGndData( QString data )
+{
+    QByteArray ba;
+    bool ok;
+    for( int i=0; i<data.size(); i+=2 )
+    {
+        QString ch = data.mid( i, 2 );
+        ba.append( ch.toInt( &ok, 16 ) );
+    }
+
+    if( !m_backPixmap ) m_backPixmap = new QPixmap();
+    m_backPixmap->loadFromData( ba );
+    update();
 }
 
 void Chip::setBackground( QString bck )
@@ -281,7 +271,6 @@ void Chip::setBackground( QString bck )
     }
     update();
 }
-
 
 void Chip::setflip()
 {
@@ -319,7 +308,6 @@ void Chip::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w )
             for( int col=0; col<w; col++ )
             {
                 int x = col*3;
-
                 for( int y=0; y<h; y++ )
                     painter.fillRect( QRectF( x, y*3, 3, 3 ), QColor(m_backData->at(col).at(y) ) );
             }

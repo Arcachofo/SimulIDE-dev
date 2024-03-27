@@ -23,8 +23,19 @@ class SubPackage : public Chip, public Linker
     static Component* construct( QString type, QString id );
     static LibraryItem* libraryItem();
 
+
+        int width() { return m_width; }
+        void setWidth( int width );
+
+        int height() { return m_height; }
+        void setHeight( int height );
+
         QString packageFile();
         void setPackageFile( QString package );
+
+        QString bckGndData() { return m_BckGndData; }
+        virtual void setBckGndData( QString data ) override;
+        virtual void setBackground( QString bck ) override;
 
         QString pinsStr();
         void setPinsStr( QString pinsStr );
@@ -36,13 +47,11 @@ class SubPackage : public Chip, public Linker
         QString subcTypeStr() { return m_enumUids.at( (int)m_subcType ); }
         void setSubcTypeStr( QString s );
 
-        virtual void setLogicSymbol( bool ls ) override;
-
         //virtual void remove() override;
 
         virtual void compSelected( Component* comp ) override;  // Use link mechanism to select main components
 
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w ) override;
 
     //public slots:
         void invertPin( bool invert );
@@ -93,6 +102,8 @@ class SubPackage : public Chip, public Linker
         QAction* m_boardModeAction;
 
         QString m_pkgeFile;     // file containig package defs
+
+        QString m_BckGndData;   // Embedded background png data
 
         Pin* m_eventPin;
         QList<Pin*> m_pkgePins;

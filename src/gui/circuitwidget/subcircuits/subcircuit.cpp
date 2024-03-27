@@ -47,6 +47,12 @@ Component* SubCircuit::construct( QString type, QString id )
     if( rev >= 2220 ){ if( name.contains("@") ) list = name.split("@");}
     else if( name.contains("_") ) list = name.split("_");
 
+    QMap<QString, QString> packageList;
+    QString subcTyp = "None";
+    QString subcDoc;
+    QString pkgeFile;
+    QString subcFile;
+
     if( list.size() > 1 )  // Subcircuit inside Subcircuit: 1_74HC00 to 74HC00
     {
         QString n = list.first();
@@ -67,7 +73,27 @@ Component* SubCircuit::construct( QString type, QString id )
     }
     else if( dataFile.endsWith(".comp") ) // Subcircuit in single file (.comp)
     {
+        subcFile = dataFile;
+        QStringList list = fileToStringList( dataFile, "SubCircuit::construct" );
 
+        for( QString line : list )
+        {
+            if( line.isEmpty() ) continue;
+            if( line.startsWith("<item itemtype=\"Subcircuit\"") ) continue;  /// TODO: improve this
+
+            QDomDocument domDoc;
+            domDoc.setContent( line );
+            QDomElement root = domDoc.documentElement();
+
+            QString itemType = root.attribute("itemtype");
+            if( itemType != "Package") break;
+
+            QString type = root.attribute("type");
+            if( !type.isEmpty() ) subcTyp = type;
+
+            QString pkgName = root.attribute("label");
+            packageList[pkgName] = convertPackage( line );
+        }
     }
     else                                  // Subcircuit in several files: .package, .sim1, etc
     {
@@ -103,15 +129,10 @@ Component* SubCircuit::construct( QString type, QString id )
             rNode = rNode.nextSibling();
         }
     }
-    if( m_subcDir.isEmpty() ){
+    /*if( m_subcDir.isEmpty() ){
         qDebug() << "SubCircuit::construct: No Circuit files found for"<<name;
         return NULL;
-    }
-
-    QMap<QString, QString> packageList;
-    QString subcTyp = "None";
-    QString pkgeFile;
-    QString subcFile;
+    }*/
 
     if( !m_subcDir.isEmpty() ) // Packages from package files
     {
@@ -156,7 +177,6 @@ Component* SubCircuit::construct( QString type, QString id )
         return NULL;
     }else{
         Circuit::self()->m_createSubc = true;
-        //subcircuit->m_pkgeFile = pkgeFile;
 
         QStringList pkges = packageList.keys();
         subcircuit->m_packageList = packageList;
@@ -172,7 +192,7 @@ Component* SubCircuit::construct( QString type, QString id )
         },groupNoCopy} );
 
         subcircuit->setPackage( pkges.first() );
-        if( m_error == 0 ) subcircuit->loadSubCircuit( subcFile );
+        if( m_error == 0 ) subcircuit->loadSubCircuitFile( subcFile );
 
         Circuit::self()->m_createSubc = false;
     }
@@ -204,14 +224,22 @@ SubCircuit::SubCircuit( QString type, QString id )
 }
 SubCircuit::~SubCircuit(){}
 
-void SubCircuit::loadSubCircuit( QString file )
+void SubCircuit::loadSubCircuitFile( QString file )
 {
     m_dataFile = file;
     QString doc = fileToString( file, "SubCircuit::loadSubCircuit" );
 
+    /// FIXME: Subcircuit loaded from .comp
     QString oldFilePath = Circuit::self()->getFilePath();
     Circuit::self()->setFilePath( file );             // Path to find subcircuits/Scripted in our data folder
 
+    loadSubCircuit( doc );
+
+    Circuit::self()->setFilePath( oldFilePath ); // Restore original filePath
+}
+
+void SubCircuit::loadSubCircuit( QString doc )
+{
     QStringList graphProps;
     for( propGroup pg : m_propGroups ) // Create list of "Graphical" poperties (We don't need them)
     {
@@ -255,6 +283,8 @@ void SubCircuit::loadSubCircuit( QString file )
             }   }
             newUid = numId+"@"+uid;
 
+            if( type == "Package" || type == "Subcircuit" ) continue;
+
             if( type == "Connector" )
             {
                 QString startPinId, endPinId, enodeId;
@@ -287,7 +317,6 @@ void SubCircuit::loadSubCircuit( QString file )
                     if( !startPin ) qDebug()<<"\n   ERROR!!  SubCircuit::loadSubCircuit: "<<m_name<<m_id+" null startPin in "<<type<<uid<<startPinId;
                     if( !endPin )   qDebug()<<"\n   ERROR!!  SubCircuit::loadSubCircuit: "<<m_name<<m_id+" null endPin in "  <<type<<uid<<endPinId;
             }   }
-            else if( type == "Package" ) { ; }
             else{
                 Component* comp = NULL;
 
@@ -354,8 +383,6 @@ void SubCircuit::loadSubCircuit( QString file )
                 else qDebug() << "SubCircuit:"<<m_name<<m_id<< "ERROR Creating Component: "<<type<<uid<<label;
     }   }   }
     for( Linker* l : linkList ) l->createLinks( &m_compList );
-
-    Circuit::self()->setFilePath( oldFilePath ); // Restore original filePath
 }
 
 Pin* SubCircuit::addPin( QString id, QString type, QString label, int pos, int xpos, int ypos, int angle, int length, int space )
@@ -444,11 +471,7 @@ Pin* SubCircuit::updatePin( QString id, QString type, QString label, int xpos, i
 
 void SubCircuit::setLogicSymbol( bool ls )
 {
-    ///if( !m_initialized ) return;
-    ///if( m_isLS == ls ) return;
-
     Chip::setLogicSymbol( ls );
-    ///if( m_isLS != ls ) return; // Change not done
 
     if( m_isLS )               // Don't show unused Pins in LS
     {

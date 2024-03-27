@@ -25,18 +25,13 @@ class Chip : public Component, public eElement
             Module
         };
 
-        QString package();
-        void setPackage( QString package );
-
-        int width() { return m_width; }
-        void setWidth( int width );
-
-        int height() { return m_height; }
-        void setHeight( int height );
+        QString package() { return m_package; }
+        virtual void setPackage( QString package );
         
         bool logicSymbol() { return m_isLS; }
         virtual void setLogicSymbol( bool ls );
 
+        virtual void setBckGndData( QString data );
         virtual void setBackground( QString bck ) override;
 
         QString name() { return m_name; }
