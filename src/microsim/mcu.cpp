@@ -58,7 +58,7 @@ Component* Mcu::construct( QString type, QString id )
     m_error = 0;
     Mcu* mcu = new Mcu( type, id );
     if( !m_error) m_error = McuCreator::createMcu( mcu, id );
-    if( !m_error) mcu->setLogicSymbol( false );
+    //if( !m_error) mcu->setLogicSymbol( false );
 
     if( m_error > 0 )
     {
@@ -100,12 +100,12 @@ Mcu::Mcu( QString type, QString id )
     m_isLinker = true;
 
     m_extFreq = 0;
-
     m_serialMon = -1;
-
     m_icColor = QColor( 20, 30, 60 );
 
-    QString xmlFile = ComponentSelector::self()->getXmlFile( m_device );
+    QString baseFile;
+    QString dataFile;
+    QString xmlFile = ComponentSelector::self()->getDataFile( m_device );
     QFile file( xmlFile );
 
     if( file.exists() )
@@ -135,12 +135,11 @@ Mcu::Mcu( QString type, QString id )
                     QFileInfo fi( xmlFile );
                     if( !folder.isEmpty() )
                     {
-                        QString stripped = fi.absolutePath()+"/"+folder+"/"+m_device+"/"+m_device;
-                        m_pkgeFile = stripped+".package";
-                        m_dataFile = stripped+".mcu";
+                        baseFile = fi.absolutePath()+"/"+folder+"/"+m_device+"/"+m_device;
+                        dataFile = baseFile;
                     }else{
-                        m_pkgeFile = fi.absolutePath()+"/"+ element.attribute("package")+".package";
-                        m_dataFile = fi.absolutePath()+"/"+ element.attribute("data")+".mcu";
+                        baseFile = fi.absolutePath()+"/"+ element.attribute("package");
+                        dataFile = fi.absolutePath()+"/"+ element.attribute("data");
                     }
                     found = true;
                 }
@@ -163,24 +162,28 @@ Mcu::Mcu( QString type, QString id )
             mcuDir = QFileInfo( Circuit::self()->getFilePath() ).absoluteDir();
             folder = "data/"+m_device;
         }
-        m_dataFile = mcuDir.absoluteFilePath( folder+"/"+m_device+".mcu" );
-        m_pkgeFile = mcuDir.absoluteFilePath( folder+"/"+m_device+".package" );
-
-        QFile dataFile( m_dataFile );
-        QFile pkgeFile( m_pkgeFile );
-        if( !pkgeFile.exists() )   // Check if package file exist, if not try LS or no LS
-        {
-            if     ( m_pkgeFile.endsWith("_LS.package")) m_pkgeFile.replace( "_LS.package", ".package" );
-            else if( m_pkgeFile.endsWith(".package"))    m_pkgeFile.replace( ".package", "_LS.package" );
-            pkgeFile.setFileName( m_pkgeFile );
-        }
-        if( !dataFile.exists() || !pkgeFile.exists() )
-        {
-            qDebug() << "Mcu::Mcu Files not found for:" << m_device;
-            m_error = 1;
-            return;
-        }
+        baseFile = mcuDir.absoluteFilePath( folder+"/"+m_device);
+        dataFile = baseFile;
     }
+    m_dataFile = dataFile+".mcu";
+    QString pkgeFile = baseFile+".package";
+    bool dip = QFileInfo::exists( pkgeFile );
+    if( !dip || !QFileInfo::exists( m_dataFile ) )
+    {
+        qDebug() << "Mcu::Mcu Files not found for:" << m_device;
+        m_error = 1;
+        return;
+    }
+
+    QString pkgStr = fileToString( pkgeFile, "Mcu::Mcu" );
+    m_packageList[m_device+"_DIP"] = convertPackage( pkgStr );
+
+    QString pkgFileLS = baseFile+"_LS.package";
+    if( QFileInfo::exists( pkgFileLS ) ){
+        QString pkgStr = fileToString( pkgFileLS, "Mcu::Mcu" );
+        m_packageList[m_device+"_LS"] = convertPackage( pkgStr );
+    }
+
     QSettings* settings = MainWindow::self()->settings();
     m_lastFirmDir = settings->value("lastFirmDir").toString();
 
@@ -196,57 +199,69 @@ void Mcu::setup( QString type )
 {
     slotmain();
 
-// Main Property Group --------------------------------------
+    // Main Property Group --------------------------------------
 
-if( m_eMcu.m_intOsc )
-addProperty(tr("Main"),new DoubProp<Mcu>("Frequency", tr("Frequency"),"MHz", this, &Mcu::extFreq, &Mcu::setExtFreq ));
+    if( m_eMcu.m_intOsc )
+    addProperty(tr("Main"),new DoubProp<Mcu>("Frequency", tr("Frequency"),"MHz"
+                                            , this, &Mcu::extFreq, &Mcu::setExtFreq ));
 
-if( m_eMcu.flashSize() )
-{
-addProperty(tr("Main"),new StrProp <Mcu>("Program"  , tr("Firmware"),"", this, &Mcu::program, &Mcu::setProgram ));
-addProperty(tr("Main"),new BoolProp<Mcu>("Auto_Load", tr("Reload hex at Simulation Start"),"", this, &Mcu::autoLoad, &Mcu::setAutoLoad ));
-}
-if( m_eMcu.romSize() )
-addProperty(tr("Main"),new BoolProp<Mcu>("saveEepr" , tr("EEPROM persitent"),"", this, &Mcu::saveEepr,   &Mcu::setSaveEepr ));
+    if( m_eMcu.flashSize() )
+    {
+    addProperty(tr("Main"),new StrProp <Mcu>("Program", tr("Firmware"),""
+                                            , this, &Mcu::program, &Mcu::setProgram ));
 
-if( QFileInfo::exists( m_pkgeFile.replace(".package","_LS.package") ) )
-addProperty(tr("Main"),new BoolProp<Mcu>( "Logic_Symbol", tr("Logic Symbol"),"", this, &Mcu::logicSymbol, &Mcu::setLogicSymbol, propNoCopy ));
+    addProperty(tr("Main"),new BoolProp<Mcu>("Auto_Load", tr("Reload hex at Simulation Start"),""
+                                            , this, &Mcu::autoLoad, &Mcu::setAutoLoad ));
+    }
+    if( m_eMcu.romSize() )
+    addProperty(tr("Main"),new BoolProp<Mcu>("saveEepr", tr("EEPROM persitent"),""
+                                            , this, &Mcu::saveEepr,&Mcu::setSaveEepr ));
+
+    if( m_packageList.size() > 1 )
+    addProperty(tr("Main"), new StrProp<Mcu>("Package", tr("Package"),""
+                                            , this, &Mcu::package, &Mcu::setPackage,0,"enum" ) );
+
+    // Config Property Group ------------------------------------
+
+    propGroup cg = { tr("Config"), {
+        new ComProperty( "", tr("Changes applied after Simulation Restart"),"","",0),}, groupNoCopy};
+
+    if( m_portRstPin )
+        cg.propList.append(new BoolProp<Mcu>("Rst_enabled", tr("Enable Reset Pin"),""
+                                            , this, &Mcu::rstPinEnabled, &Mcu::enableRstPin ) );
+
+    if( m_eMcu.m_intOsc && m_eMcu.m_intOsc->hasClockPins() )
+        cg.propList.append(new BoolProp<Mcu>("Ext_Osc", tr("External Oscillator"),""
+                                            , this, &Mcu::extOscEnabled, &Mcu::enableExtOsc ) );
+
+    if( m_eMcu.m_wdt )
+        cg.propList.append(new BoolProp<Mcu>("Wdt_enabled", tr("Enable WatchDog"),""
+                                            , this, &Mcu::wdtEnabled, &Mcu::enableWdt ) );
+
+    if( m_eMcu.m_intOsc && m_eMcu.m_intOsc->clkOutPin() )
+        cg.propList.append(new BoolProp<Mcu>("Clk_Out", tr("Clock Out"),""
+                                            , this, &Mcu::clockOut, &Mcu::setClockOut ) );
+
+    if( cg.propList.size() > 1 ) addPropGroup( cg );
 
 
-// Config Property Group ------------------------------------
+    // Hidden Property Group -----------------------------------
 
-propGroup cg = { tr("Config"), { new ComProperty( "", tr("Changes applied after Simulation Restart"),"","",0),}, groupNoCopy};
+    propGroup hi = {"Hidden", {}, groupHidden };
 
-if( m_portRstPin )
-cg.propList.append(new BoolProp<Mcu>("Rst_enabled", tr("Enable Reset Pin")   ,"", this, &Mcu::rstPinEnabled, &Mcu::enableRstPin ) );
+    hi.propList.append(new StrProp<Mcu>("varList"  ,"","", this, &Mcu::varList,   &Mcu::setVarList) );
+    hi.propList.append(new StrProp<Mcu>("cpuRegs"  ,"","", this, &Mcu::cpuRegs,   &Mcu::setCpuRegs) );
+    hi.propList.append(new StrProp<Mcu>("Links"    ,"","", this, &Mcu::getLinks , &Mcu::setLinks ) );
 
-if( m_eMcu.m_intOsc && m_eMcu.m_intOsc->hasClockPins() )
-cg.propList.append(new BoolProp<Mcu>("Ext_Osc"    , tr("External Oscillator"),"", this, &Mcu::extOscEnabled, &Mcu::enableExtOsc ) );
+    if( m_eMcu.romSize() )
+    hi.propList.append(new StrProp<Mcu>("eeprom"   ,"","", this, &Mcu::getEeprom, &Mcu::setEeprom ) );
 
-if( m_eMcu.m_wdt )
-cg.propList.append(new BoolProp<Mcu>("Wdt_enabled", tr("Enable WatchDog")    ,"", this, &Mcu::wdtEnabled   , &Mcu::enableWdt ) );
+    if( m_eMcu.m_usarts.size() )
+    hi.propList.append(new IntProp<Mcu>("SerialMon","","", this, &Mcu::serialMon, &Mcu::setSerialMon ) );
 
-if( m_eMcu.m_intOsc && m_eMcu.m_intOsc->clkOutPin() )
-cg.propList.append(new BoolProp<Mcu>("Clk_Out"    , tr("Clock Out")          ,"", this, &Mcu::clockOut     , &Mcu::setClockOut ) );
+    if( hi.propList.size() > 0 ) addPropGroup( hi );
 
-if( cg.propList.size() > 1 ) addPropGroup( cg );
-
-
-// Hidden Property Group -----------------------------------
-
-propGroup hi = {"Hidden", {}, groupHidden };
-
-hi.propList.append(new StrProp<Mcu>("varList"  ,"","", this, &Mcu::varList,   &Mcu::setVarList) );
-hi.propList.append(new StrProp<Mcu>("cpuRegs"  ,"","", this, &Mcu::cpuRegs,   &Mcu::setCpuRegs) );
-hi.propList.append(new StrProp<Mcu>("Links"    ,"","", this, &Mcu::getLinks , &Mcu::setLinks ) );
-
-if( m_eMcu.romSize() )
-hi.propList.append(new StrProp<Mcu>("eeprom"   ,"","", this, &Mcu::getEeprom, &Mcu::setEeprom ) );
-
-if( m_eMcu.m_usarts.size() )
-hi.propList.append(new IntProp<Mcu>("SerialMon","","", this, &Mcu::serialMon, &Mcu::setSerialMon ) );
-
-if( hi.propList.size() > 0 ) addPropGroup( hi );
+    setPackage( m_packageList.keys().first() );
 }
 Mcu::~Mcu()
 {
@@ -660,8 +675,17 @@ bool Mcu::clockOut()
 
 void Mcu::setClockOut( bool clkOut ) { if( m_eMcu.m_intOsc ) m_eMcu.m_intOsc->setClockOut( clkOut ); }
 
-QStringList Mcu::getEnumUids( QString e) { return m_eMcu.m_cpu->getEnumUids( e ); }
-QStringList Mcu::getEnumNames( QString e) { return m_eMcu.m_cpu->getEnumNames( e ); }
+QStringList Mcu::getEnumUids( QString prop )
+{
+    if( prop == "Package") return m_packageList.keys();
+    return m_eMcu.m_cpu->getEnumUids( prop );
+}
+
+QStringList Mcu::getEnumNames( QString prop )
+{
+    if( prop == "Package") return m_packageList.keys();
+    return m_eMcu.m_cpu->getEnumNames( prop );
+}
 
 void Mcu::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
 {

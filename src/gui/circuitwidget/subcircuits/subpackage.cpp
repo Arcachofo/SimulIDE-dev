@@ -52,6 +52,20 @@ SubPackage::SubPackage( QString type, QString id )
 {
     m_linkCursor = QCursor( QPixmap(":/expose.png"), 10, 10 );
 
+    m_enumUids = QStringList()
+        << "None"
+        << "Logic"
+        << "Board"
+        << "Shield"
+        << "Module";
+
+    m_enumNames = QStringList()
+        << tr("None")
+        << tr("Logic")
+        << tr("Board")
+        << tr("Shield")
+        << tr("Module");
+
     m_subcType = Chip::None;
     m_width  = 4;
     m_height = 8;
@@ -92,7 +106,7 @@ SubPackage::SubPackage( QString type, QString id )
                                 , this, &SubPackage::name, &SubPackage::setName ),
 
         new StrProp <SubPackage>("Package_File", tr("Package File"),""
-                                , this, &SubPackage::package, &SubPackage::setPackage),
+                                , this, &SubPackage::packageFile, &SubPackage::setPackageFile),
 
         new StrProp <SubPackage>("Background", tr("Background")  ,""
                                 , this, &SubPackage::background, &SubPackage::setBackground ),
@@ -431,28 +445,31 @@ void SubPackage::setBusPin( bool bus )
     m_changed = true;
 }
 
-QString SubPackage::package()
+QString SubPackage::packageFile()
 {
     return m_pkgeFile;
     Circuit::self()->update();
 }
 
-void SubPackage::setPackage( QString package )
+void SubPackage::setPackageFile( QString package )
 {
     m_pkgeFile = package;
     if( package.isEmpty() ) return;
 
-    m_pkgePins.clear();
     for( Pin* pin : m_pin ) deletePin( pin );
+    m_pkgePins.clear();
 
-    Chip::initChip();
+    QDir circuitDir = QFileInfo( Circuit::self()->getFilePath() ).absoluteDir();
+    QString fileNameAbs = circuitDir.absoluteFilePath( m_pkgeFile );
+    QString domText = fileToString( fileNameAbs, "SubPackage::setPackageFile");
+    QString pkgStr  = convertPackage( domText );
+    initPackage( pkgStr );
 
     m_pkgePins += m_unusedPins;
 
-    //m_name = QFileInfo( m_pkgeFile ).baseName().remove(".package").remove("_LS");
     m_label.setPlainText( m_name );
     
-    setLogicSymbol( m_isLS );
+    setLogicSymbol( package.endsWith("_LS.package") );
     Circuit::self()->update();
     m_changed = false;
 }
@@ -542,10 +559,10 @@ void SubPackage::loadPackage()
     if( fileName.isEmpty() ) return; // User cancels loading
 
     Circuit::self()->saveCompChange( m_id, "Package_File", fileName );
-    setPackage( fileName );
 
     QDir pdir = QFileInfo( Circuit::self()->getFilePath() ).absoluteDir();
-    m_pkgeFile = pdir.relativeFilePath( fileName );
+    QString pkgeFile = pdir.relativeFilePath( fileName );
+    setPackageFile( pkgeFile );
     m_lastPkg = fileName;
 }
 

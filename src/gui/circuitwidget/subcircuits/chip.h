@@ -25,6 +25,9 @@ class Chip : public Component, public eElement
             Module
         };
 
+        QString package();
+        void setPackage( QString package );
+
         int width() { return m_width; }
         void setWidth( int width );
 
@@ -42,9 +45,6 @@ class Chip : public Component, public eElement
         void setPinStr( QString pin );
 
         subcType_t subcType() { return m_subcType; }
-
-        QString subcTypeStr() { return m_enumUids.at( (int)m_subcType ); }
-        virtual void setSubcTypeStr( QString s ){;}
 
         int pkgWidth() { return m_width; }
 
@@ -64,8 +64,8 @@ class Chip : public Component, public eElement
         void addNewPin( QString id, QString type, QString label,
                         int pos, int xpos, int ypos, int angle, int length=8, int space=0 );
 
-        virtual void initChip();
-        virtual void initPackage( QDomElement root );
+        void initPackage(  QString pkgStr  );
+ static QString convertPackage( QString domText );
 
         virtual void findHelp() override;
 
@@ -81,9 +81,11 @@ class Chip : public Component, public eElement
         QColor m_icColor;
 
         QString m_name;
-        QString m_pkgeFile;     // file containig package defs
         QString m_dataFile;
 
+        QMap<QString, QString> m_packageList;
+
+        QString m_package;
         QList<Pin*> m_unusedPins;
 
         std::vector<std::vector<int>>* m_backData;

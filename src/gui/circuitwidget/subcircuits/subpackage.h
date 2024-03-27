@@ -23,8 +23,8 @@ class SubPackage : public Chip, public Linker
     static Component* construct( QString type, QString id );
     static LibraryItem* libraryItem();
 
-        QString package();
-        void setPackage( QString package );
+        QString packageFile();
+        void setPackageFile( QString package );
 
         QString pinsStr();
         void setPinsStr( QString pinsStr );
@@ -32,7 +32,10 @@ class SubPackage : public Chip, public Linker
         void setEventPin( Pin* pin ) { m_eventPin = pin; }
 
         void savePackage( QString fileName );
-        virtual void setSubcTypeStr( QString s ) override;
+
+        QString subcTypeStr() { return m_enumUids.at( (int)m_subcType ); }
+        void setSubcTypeStr( QString s );
+
         virtual void setLogicSymbol( bool ls ) override;
 
         //virtual void remove() override;
@@ -88,6 +91,8 @@ class SubPackage : public Chip, public Linker
         bool m_circPosSaved;
         bool m_boardMode;
         QAction* m_boardModeAction;
+
+        QString m_pkgeFile;     // file containig package defs
 
         Pin* m_eventPin;
         QList<Pin*> m_pkgePins;

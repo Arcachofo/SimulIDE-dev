@@ -482,20 +482,26 @@ void Circuit::createComp()
 
 QString Circuit::circuitToComp()
 {
+    if( m_board && m_board->m_boardMode ) m_board->setBoardMode( false );
 
-    QString comp = "";
+    QString circuit = "\n";
+    for( Component* comp : m_compList ) circuit += comp->toString();
+    for( Node* node      : m_nodeList ) circuit += node->toString();
+    for( Connector* conn : m_connList ) circuit += conn->toString();
+    circuit += "\n";
 
-    return comp;
+    if( m_board && m_board->m_boardMode ) m_board->setBoardMode( true );
+    return circuit;
 }
 
 QString Circuit::circuitHeader()
 {
     QString header = "<circuit version=\""+QString( APP_VERSION )+"\" rev=\""+QString( REVNO )+"\" ";
-    header += "stepSize=\""+QString::number( m_simulator->stepSize() )+"\" ";
-    header += "stepsPS=\""+QString::number( m_simulator->stepsPerSec() )+"\" ";
-    header += "NLsteps=\""+QString::number( m_simulator->maxNlSteps() )+"\" ";
-    header += "reaStep=\""+QString::number( m_simulator->reactStep() )+"\" ";
-    header += "animate=\""+QString::number( m_animate )+"\" >\n";
+    header += "stepSize=\""+ QString::number( m_simulator->stepSize() )+"\" ";
+    header += "stepsPS=\"" + QString::number( m_simulator->stepsPerSec() )+"\" ";
+    header += "NLsteps=\"" + QString::number( m_simulator->maxNlSteps() )+"\" ";
+    header += "reaStep=\"" + QString::number( m_simulator->reactStep() )+"\" ";
+    header += "animate=\"" + QString::number( m_animate )+"\" >\n";
     return header;
 }
 

@@ -198,7 +198,8 @@ void ComponentSelector::LoadCompSetAt( QDir compSetDir )
                 if( !type.isEmpty() )
                 {
                     addItem( compName, catItem, ico, type );
-                    m_dirFileList[ compName ] = compSetDir.absoluteFilePath( compName );
+                    //m_dirFileList[ compName ] = compSetDir.absoluteFilePath( compName );
+                    m_xmlFileList[ compName ] = compFile;   // Save comp File used to create this item
                 }
             }
         }

@@ -25,24 +25,10 @@ Chip::Chip( QString type, QString id )
     QStringList list = id.split("-");
     if( list.size() > 1 ) m_name = list.at( list.size()-2 ); // for example: "atmega328-1" to: "atmega328"
 
-    m_enumUids = QStringList()
-        << "None"
-        << "Logic"
-        << "Board"
-        << "Shield"
-        << "Module";
-
-    m_enumNames = QStringList()
-        << tr("None")
-        << tr("Logic")
-        << tr("Board")
-        << tr("Shield")
-        << tr("Module");
-
     m_subcType = None;
     m_isLS = false;
     m_initialized = false;
-    m_pkgeFile = "";
+    m_package  = "";
     m_backPixmap = NULL;
     m_backData   = NULL;
     
@@ -75,37 +61,44 @@ Chip::~Chip()
     if( m_backPixmap ) delete m_backPixmap;
 }
 
-void Chip::initChip()
+QString Chip::convertPackage( QString domText ) // Static, converts xml to new format
 {
-    m_error = 0;
-
-    if( m_pkgeFile.isEmpty() ) return;
-
-    QDir circuitDir = QFileInfo( Circuit::self()->getFilePath() ).absoluteDir();
-    QString fileNameAbs = circuitDir.absoluteFilePath( m_pkgeFile );
-
-    QFile pfile( fileNameAbs );
-    if( !pfile.exists() )   // Check if package file exist, if not try LS or no LS
+    QString pkg;
+    domText.replace("<!--","\n<!--");
+    QStringList lines = domText.split("\n");
+    for ( QString line : lines )
     {
-        if( m_initialized ) { m_error = 1; return; }
-        if     ( m_pkgeFile.endsWith("_LS.package")) m_pkgeFile.replace( "_LS.package", ".package" );
-        else if( m_pkgeFile.endsWith(".package"))    m_pkgeFile.replace( ".package", "_LS.package" );
-        else{
-            m_error = 1;
-            qDebug() << "Chip::initChip: No package files found.\n";
-        }
-        fileNameAbs = circuitDir.absoluteFilePath( m_pkgeFile );
+        if( line.isEmpty() ) continue;
+        if( line.startsWith("<!") ) continue;
+        if( line.startsWith("</") ) continue;
+        line.replace("<pin","Pin;");
+        line.replace("<packageB","Package;");
+        line.replace("/>","");
+        line.replace("=\"","=");
+        line.replace("\"",";");
+        line.replace("  ","");
+        line.replace(" ;",";");
+        line.append("\n");
+        pkg.append( line );
+        //qDebug() << line;
     }
-    QDomDocument domDoc = fileToDomDoc( fileNameAbs, "Chip::initChip" );
-    QDomElement   root  = domDoc.documentElement();
+    //qDebug() << "-----------------------------------------";
+    return pkg;
+}
 
-    if( root.tagName() == "packageB" ) initPackage( root );
-    else{
-        qDebug() <<"Chip::initChip"<<"Error: Not valid Package file:\n"<< m_pkgeFile;
-        m_error = 3;
-        return;
-    }
-    m_initialized = true;
+QString Chip::package()
+{
+    return m_package;
+}
+
+void Chip::setPackage( QString package )
+{
+    m_package = package;
+
+    setLogicSymbol( package.endsWith("_LS") );
+
+    QString pkgStr = m_packageList.value( package );
+    initPackage( pkgStr );
 }
 
 void Chip::setWidth( int width )
@@ -142,62 +135,50 @@ void Chip::setName( QString name )
     setflip();
 }
 
-void Chip::initPackage( QDomElement root )
+void Chip::initPackage( QString pkgStr )
 {
-    if( m_pkgeFile.endsWith( "_LS.package" )) m_isLS = true;
-    else                                      m_isLS = false;
-
-    if( m_isLS ) m_color = m_lsColor;
-    else         m_color = m_icColor;
-
-    m_width   = root.attribute( "width" ).toInt();
-    m_height  = root.attribute( "height" ).toInt();
-    m_area = QRect( 0, 0, 8*m_width, 8*m_height );
-
+    if( Simulator::self()->isRunning() ) CircuitWidget::self()->powerCircOff();
     for( Pin* pin : m_unusedPins ) if( pin ) deletePin( pin );
     m_unusedPins.clear();
     m_ePin.clear();
     m_pin.clear();
 
-    if( root.hasAttribute("type") ) setSubcTypeStr( root.attribute("type") );
-    if( root.hasAttribute("background") ) setBackground( root.attribute("background") );
-    if( m_subcType >= Board ) setTransformOriginPoint( toGrid( boundingRect().center()) );
-    if( root.hasAttribute("name"))
+    QStringList lines = pkgStr.split("\n");
+    for( QString line : lines )
     {
-        QString name = root.attribute("name");
-        if( name.toLower() != "package" ) m_name = name;
-    }
-
-    int chipPos = 0;
-    QDomNode node = root.firstChild();
-    while( !node.isNull() )
-    {
-        QDomElement element = node.toElement();
-        if( element.tagName() == "pin" )
+        if( line.startsWith("Package") )
         {
-            QString type  = element.attribute("type" );
-            QString label = element.attribute("label");
-            QString id    = element.attribute("id").remove(" ");
+            QStringList tokens = line.split(";");
+            QString type = tokens.takeFirst();
 
-            int xpos   = element.attribute("xpos"  ).toInt();
-            int ypos   = element.attribute("ypos"  ).toInt();
-            int angle  = element.attribute("angle" ).toInt();
-            int length = element.attribute("length").toInt();
-            int space  = element.attribute("space" ).toInt();
+            for( QString prop : tokens )
+            {
+                while( prop.startsWith(" ") ) prop.remove( 0, 1 );
+                QStringList p = prop.split("=");
+                if( p.size() != 2 ) continue;
 
-            chipPos++;
-            addNewPin( id, type, label, chipPos, xpos, ypos, angle, length, space );
+                QString name = p.first();// Property_name
+                QString val  = p.last(); // Property_value
+
+                if     ( name == "width"     ) m_width   = val.toInt();
+                else if( name == "height"    ) m_height  = val.toInt();
+                else if( name == "name"      ) { if( val.toLower() != "package" ) setName( val ); }
+                else if( name == "background") setBackground( val );
+            }
         }
-        node = node.nextSibling();
+        else if( line.startsWith("Pin") ) setPinStr( line );
     }
-    setName( m_name );
+    m_initialized = true;
+    m_area = QRect( 0, 0, 8*m_width, 8*m_height );
+    moveSignal();
     update();
+    Circuit::self()->update();
 }
 
 void Chip::setPinStr( QString pin )
 {
     //qDebug() << "Chip::setPinStr" << pin;
-    QStringList tokens = pin.split("; ");
+    QStringList tokens = pin.split(";");
 
     int length = 8;
     int xpos   = -m_width/2-length;
@@ -210,6 +191,7 @@ void Chip::setPinStr( QString pin )
 
     for( QString token : tokens )
     {
+        while( token.startsWith(" ") ) token.remove( 0, 1 );
         QStringList p = token.split("=");
         if( p.size() != 2 ) continue;
 
@@ -255,17 +237,18 @@ void Chip::addNewPin( QString id, QString type, QString label, int pos, int xpos
 
 void Chip::setLogicSymbol( bool ls )
 {
-    if( m_initialized && (m_isLS == ls) ) return;
+    m_isLS = ls;
+    if( m_isLS ) m_color = m_lsColor;
+    else         m_color = m_icColor;
 
-    if( Simulator::self()->isRunning() ) CircuitWidget::self()->powerCircOff();
+    QColor labelColor = QColor( 0, 0, 0 );
 
-    if(  ls && m_pkgeFile.endsWith(".package"))    m_pkgeFile.replace(".package", "_LS.package" );
-    if( !ls && m_pkgeFile.endsWith("_LS.package")) m_pkgeFile.replace("_LS.package", ".package" );
-
-    m_error = 0;
-    Chip::initChip();
-    
-    if( m_error == 0 ) Circuit::self()->update();
+    if( ls ) m_color = m_lsColor;
+    else{
+        m_color = m_icColor;
+        labelColor = QColor( 250, 250, 200 );
+    }
+    for( Pin* pin : m_pin ) pin->setLabelColor( labelColor );
 }
 
 void Chip::setBackground( QString bck )
@@ -286,7 +269,7 @@ void Chip::setBackground( QString bck )
         m_color = QColor( rgb.at(0).toInt(), rgb.at(1).toInt(), rgb.at(2).toInt() );
     }
     else if( bck != "" ){
-        QDir dir = QFileInfo( m_pkgeFile ).absoluteDir();
+        QDir dir = QFileInfo( m_dataFile ).absoluteDir();
         QString pixmapPath = dir.absoluteFilePath( bck );  // Image in subcircuit folder
 
         if( !QFile::exists( pixmapPath ) ){

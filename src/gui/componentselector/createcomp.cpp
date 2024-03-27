@@ -26,10 +26,12 @@ creCompDialog::creCompDialog( QWidget* parent )
 void creCompDialog::accept()
 {
     QString comp = "<item";
-    comp += " type=\""+typeBox->currentText()+"\"";
-    comp += " category=\""+categoryEdit->text()+"\"";
-    comp += " icondata=\""+m_iconData+"\"";
+    comp += " type=\""    + typeBox->currentText()+"\"";
+    comp += " category=\""+ categoryEdit->text()  +"\"";
+    comp += " icondata=\""+ m_iconData            +"\"";
     comp += ">";
+
+    comp += Circuit::self()->circuitToComp();
 
     QFileInfo info( m_circuitPath );
     QString fileName = info.path()+"/"+info.baseName()+".comp";

@@ -115,6 +115,7 @@ class Circuit : public QGraphicsScene
         void setFilePath( QString f ) { m_filePath = f; }
 
         bool saveString( QString &fileName, QString doc );
+        QString circuitToComp();
 
         void drawBackground( QPainter* painter, const QRectF &rect );
 
@@ -146,7 +147,6 @@ class Circuit : public QGraphicsScene
 
         QString circuitHeader();
         QString circuitToString();
-        QString circuitToComp();
 
         void updatePinName( QString* name );
 

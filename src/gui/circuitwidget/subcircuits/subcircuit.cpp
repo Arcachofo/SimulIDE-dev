@@ -24,7 +24,8 @@
 #include "shield.h"
 #include "module.h"
 
-#include "boolprop.h"
+#include "stringprop.h"
+//#include "boolprop.h"
 
 #define tr(str) simulideTr("SubCircuit",str)
 
@@ -53,7 +54,7 @@ Component* SubCircuit::construct( QString type, QString id )
         n.toInt(&ok);
         if( ok ) name = list.at( 1 );
     }
-    QString dataFile = ComponentSelector::self()->getXmlFile( name );
+    QString dataFile = ComponentSelector::self()->getDataFile( name );
 
     if( dataFile == "" ) // Component is not in SimulIDE, search in Circuit folder
     {
@@ -64,7 +65,12 @@ Component* SubCircuit::construct( QString type, QString id )
             m_subcDir = circuitDir.absoluteFilePath( "data/"+name );
         }
     }
-    else{
+    else if( dataFile.endsWith(".comp") ) // Subcircuit in single file (.comp)
+    {
+
+    }
+    else                                  // Subcircuit in several files: .package, .sim1, etc
+    {
         QDomDocument domDoc = fileToDomDoc( dataFile, "SubCircuit::construct");
         if( domDoc.isNull() ) return NULL; // m_error = 1;
 
@@ -98,31 +104,43 @@ Component* SubCircuit::construct( QString type, QString id )
         }
     }
     if( m_subcDir.isEmpty() ){
-        qDebug() << "SubCircuit::construct: No Circuit files found for"<<name<<endl;
+        qDebug() << "SubCircuit::construct: No Circuit files found for"<<name;
         return NULL;
     }
-    QString pkgeFile  = m_subcDir+"/"+name+".package";
-    QString pkgFileLS = m_subcDir+"/"+name+"_LS.package";
-    QString subcFile  = m_subcDir+"/"+name+".sim1";
 
-    // Package in sim file
+    QMap<QString, QString> packageList;
+    QString subcTyp = "None";
+    QString pkgeFile;
+    QString subcFile;
 
+    if( !m_subcDir.isEmpty() ) // Packages from package files
+    {
+        subcFile  = m_subcDir+"/"+name+".sim1";
+        pkgeFile  = m_subcDir+"/"+name+".package";
+        QString pkgFileLS = m_subcDir+"/"+name+"_LS.package";
 
-    bool dip = QFile::exists( pkgeFile );
-    bool ls  = QFile::exists( pkgFileLS );
-
-    if( !dip ){        // Check if package file exist, if not try LS
-        if( !ls ){
-            qDebug() << "SubCircuit::construct: No package files found for "<<name<<endl<<pkgeFile<<endl;
+        bool dip = QFile::exists( pkgeFile );
+        bool ls  = QFile::exists( pkgFileLS );
+        if( !dip && !ls ){
+            qDebug() << "SubCircuit::construct: No package files found for "<<name;
             return NULL;
         }
-        pkgeFile = pkgFileLS;
-    }
-    QDomDocument domDoc1 = fileToDomDoc( pkgeFile, "SubCircuit::construct" );
-    QDomElement   root1  = domDoc1.documentElement();
 
-    QString subcTyp = "None";
-    if( root1.hasAttribute("type") ) subcTyp = root1.attribute("type").remove("subc");
+        if( dip ){
+            QString pkgStr = fileToString( pkgeFile, "SubCircuit::construct" );
+            packageList[name+"_DIP"] = convertPackage( pkgStr );
+        }
+        else pkgeFile = pkgFileLS; // If no DIP package file then use LS
+
+        if( ls ){
+            QString pkgStr = fileToString( pkgFileLS, "SubCircuit::construct" );
+            packageList[name+"_LS"] = convertPackage( pkgStr );
+        }
+
+        QDomDocument domDoc1 = fileToDomDoc( pkgeFile, "SubCircuit::construct" );
+        QDomElement   root1  = domDoc1.documentElement();
+        if( root1.hasAttribute("type") ) subcTyp = root1.attribute("type").remove("subc");
+    }
 
     SubCircuit* subcircuit = NULL;
     if     ( subcTyp == "Logic"  ) subcircuit = new LogicSubc( type, id );
@@ -138,15 +156,23 @@ Component* SubCircuit::construct( QString type, QString id )
         return NULL;
     }else{
         Circuit::self()->m_createSubc = true;
-        subcircuit->m_pkgeFile = pkgeFile;
-        subcircuit->initChip();
-        if( m_error == 0 ) subcircuit->loadSubCircuit( subcFile );
+        //subcircuit->m_pkgeFile = pkgeFile;
 
-        if( dip && ls ) // If no both files exist, this prop. is not needed
+        QStringList pkges = packageList.keys();
+        subcircuit->m_packageList = packageList;
+        subcircuit->m_enumUids = pkges;
+        subcircuit->m_enumNames = subcircuit->m_enumUids;
+
+        if( packageList.size() > 1 ) // Add package list if there is more than 1 to choose
         subcircuit->addPropGroup( { tr("Main"), {
-        new BoolProp<SubCircuit>("Logic_Symbol", tr("Logic Symbol"),"",
-                                subcircuit, &SubCircuit::logicSymbol, &SubCircuit::setLogicSymbol, propNoCopy ),
+        new StrProp <SubCircuit>("Package", tr("Package"),""
+                                , subcircuit, &SubCircuit::package, &SubCircuit::setPackage,0,"enum" ),
+        /*new BoolProp<SubCircuit>("Logic_Symbol", tr("Logic Symbol"),"",
+                                subcircuit, &SubCircuit::logicSymbol, &SubCircuit::setLogicSymbol, propNoCopy ),*/
         },groupNoCopy} );
+
+        subcircuit->setPackage( pkges.first() );
+        if( m_error == 0 ) subcircuit->loadSubCircuit( subcFile );
 
         Circuit::self()->m_createSubc = false;
     }
@@ -418,11 +444,11 @@ Pin* SubCircuit::updatePin( QString id, QString type, QString label, int xpos, i
 
 void SubCircuit::setLogicSymbol( bool ls )
 {
-    if( !m_initialized ) return;
-    if( m_isLS == ls ) return;
+    ///if( !m_initialized ) return;
+    ///if( m_isLS == ls ) return;
 
     Chip::setLogicSymbol( ls );
-    if( m_isLS != ls ) return; // Change not done
+    ///if( m_isLS != ls ) return; // Change not done
 
     if( m_isLS )               // Don't show unused Pins in LS
     {

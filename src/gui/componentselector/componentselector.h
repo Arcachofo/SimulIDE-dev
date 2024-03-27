@@ -22,7 +22,7 @@ class ComponentSelector : public QTreeWidget
 
         void LoadCompSetAt( QDir compSetDir );
 
-        QString getXmlFile( QString compName ) { return m_xmlFileList.value( compName ); }
+        QString getDataFile( QString compName ) { return m_xmlFileList.value( compName ); }
         QString getFileDir( QString compName ) { return m_dirFileList.value( compName ); }
 
         void search( QString filter );

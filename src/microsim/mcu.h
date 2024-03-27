@@ -100,8 +100,8 @@ class Mcu : public Chip, public Linker
         virtual void setLinkedValue( double v, int i=0  ) override;
         virtual void setLinkedString( QString str, int i=0 ) override;
 
-        virtual QStringList getEnumUids( QString ) override;
-        virtual QStringList getEnumNames( QString ) override;
+        virtual QStringList getEnumUids( QString prop ) override;
+        virtual QStringList getEnumNames( QString prop ) override;
 
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w ) override;
 
