@@ -80,6 +80,7 @@ Component* SubCircuit::construct( QString type, QString id )
         {
             if( line.isEmpty() ) continue;
             if( line.startsWith("<item itemtype=\"Subcircuit\"") ) continue;  /// TODO: improve this
+            line.replace("&#x3D","=");
 
             QDomDocument domDoc;
             domDoc.setContent( line );
@@ -129,10 +130,6 @@ Component* SubCircuit::construct( QString type, QString id )
             rNode = rNode.nextSibling();
         }
     }
-    /*if( m_subcDir.isEmpty() ){
-        qDebug() << "SubCircuit::construct: No Circuit files found for"<<name;
-        return NULL;
-    }*/
 
     if( !m_subcDir.isEmpty() ) // Packages from package files
     {
@@ -143,24 +140,29 @@ Component* SubCircuit::construct( QString type, QString id )
         bool dip = QFile::exists( pkgeFile );
         bool ls  = QFile::exists( pkgFileLS );
         if( !dip && !ls ){
-            qDebug() << "SubCircuit::construct: No package files found for "<<name;
+            qDebug() << "SubCircuit::construct: Error No package files found for "<<name<<endl;
             return NULL;
         }
 
         if( dip ){
             QString pkgStr = fileToString( pkgeFile, "SubCircuit::construct" );
-            packageList[name+"_DIP"] = convertPackage( pkgStr );
+            packageList["2- "+name+"_DIP"] = convertPackage( pkgStr );
         }
         else pkgeFile = pkgFileLS; // If no DIP package file then use LS
 
         if( ls ){
             QString pkgStr = fileToString( pkgFileLS, "SubCircuit::construct" );
-            packageList[name+"_LS"] = convertPackage( pkgStr );
+            packageList["1- "+name+"_LS"] = convertPackage( pkgStr );
         }
 
         QDomDocument domDoc1 = fileToDomDoc( pkgeFile, "SubCircuit::construct" );
         QDomElement   root1  = domDoc1.documentElement();
         if( root1.hasAttribute("type") ) subcTyp = root1.attribute("type").remove("subc");
+    }
+
+    if( packageList.isEmpty() ){
+        qDebug() << "SubCircuit::construct: No Packages found for"<<name<<endl;
+        return NULL;
     }
 
     SubCircuit* subcircuit = NULL;
@@ -185,12 +187,12 @@ Component* SubCircuit::construct( QString type, QString id )
         subcircuit->m_dataFile = subcFile;
 
         if( packageList.size() > 1 ) // Add package list if there is more than 1 to choose
-        subcircuit->addPropGroup( { tr("Main"), {
+        subcircuit->addProperty( tr("Main"),
         new StrProp <SubCircuit>("Package", tr("Package"),""
-                                , subcircuit, &SubCircuit::package, &SubCircuit::setPackage,0,"enum" ),
+                                , subcircuit, &SubCircuit::package, &SubCircuit::setPackage,0,"enum" ));
         /*new BoolProp<SubCircuit>("Logic_Symbol", tr("Logic Symbol"),"",
                                 subcircuit, &SubCircuit::logicSymbol, &SubCircuit::setLogicSymbol, propNoCopy ),*/
-        },groupNoCopy} );
+
 
         subcircuit->setPackage( pkges.first() );
         if( m_error == 0 ) subcircuit->loadSubCircuitFile( subcFile );
@@ -222,6 +224,8 @@ SubCircuit::SubCircuit( QString type, QString id )
 {
     m_lsColor = QColor( 235, 240, 255 );
     m_icColor = QColor( 20, 30, 60 );
+
+    addPropGroup( { tr("Main"), {},0} );
 }
 SubCircuit::~SubCircuit(){}
 

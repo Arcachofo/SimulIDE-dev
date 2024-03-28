@@ -48,7 +48,7 @@ Chip::Chip( QString type, QString id )
     f.setPixelSize(5);
 
     m_label.setFont( f );
-    m_label.setDefaultTextColor( QColor( 125, 125, 110 ) );
+    m_label.setDefaultTextColor( QColor( 135, 135, 120 ) );
     m_label.setAcceptedMouseButtons( 0 );
     m_label.setRotation(-90 );
     m_label.setVisible( true );
@@ -72,11 +72,13 @@ QString Chip::convertPackage( QString domText ) // Static, converts xml to new f
         if( line.startsWith("<!") ) continue;
         if( line.startsWith("</") ) continue;
         line.replace("<item itemtype=\"Package\"","Package;");
+        line.replace("<packageB","Package;");
+        line.replace("&#x3C;", "<").replace("&#x3D;", "=").replace("&#x3E;", ">");
+        line.replace("&#x3C" , "<").replace("&#x3D" , "=").replace("&#x3E" , ">");
         line.replace("&#xa;","");
         line.replace("Pin;","\nPin;");
         line.replace("<pin","Pin;");
         line.replace("Pins=","\n");
-        line.replace("<packageB","Package;");
         line.replace("/>","");
         line.replace("=\"","=");
         line.replace("\"",";");
@@ -136,9 +138,9 @@ void Chip::initPackage( QString pkgStr )
                 QString name = p.first().toLower();// Property_name
                 QString val  = p.last(); // Property_value
 
-                if     ( name == "width"       ) m_width   = val.toInt();
-                else if( name == "height"      ) m_height  = val.toInt();
-                else if( name == "name"        ) { if( val.toLower() != "package" ) setName( val ); }
+                if     ( name == "width"       ) m_width  = val.toInt();
+                else if( name == "height"      ) m_height = val.toInt();
+                else if( name == "name"        ) m_name   = val;
                 else if( name == "background"  ) setBackground( val );
                 else if( name == "bckgnddata"  ) setBckGndData( val );
                 else if( name == "logic_symbol") setLogicSymbol( val == "true" );
@@ -148,6 +150,7 @@ void Chip::initPackage( QString pkgStr )
     }
     m_initialized = true;
     m_area = QRect( 0, 0, 8*m_width, 8*m_height );
+    setName( m_name );
     moveSignal();
     update();
     Circuit::self()->update();

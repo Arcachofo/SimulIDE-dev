@@ -645,13 +645,13 @@ void SubPackage::savePackage( QString fileName )
 
 QString SubPackage::pinEntry( Pin* pin )
 {
-    QString xpos   = "xpos=\""+QString::number( pin->x() )+"\"";
-    QString ypos   = "ypos=\""+QString::number( pin->y() )+"\"";
-    QString angle  = "angle=\""+QString::number( pin->pinAngle() )+"\"";
+    QString xpos   = "xpos=\""  +QString::number( pin->x() )+"\"";
+    QString ypos   = "ypos=\""  +QString::number( pin->y() )+"\"";
+    QString angle  = "angle=\"" +QString::number( pin->pinAngle() )+"\"";
     QString length = "length=\""+QString::number( pin->length() )+"\"";
-    QString id     = "id=\""+pin->pinId().split( "-" ).last().replace( " ", "" )+"\"";
-    QString label  = "label=\""+pin->getLabelText().replace("<","&#x3C;").replace("=","&#x3D;").replace(">","&#x3E;")+"\"";
-    QString space  = "space=\""+QString::number( pin->space() )+"\"";
+    QString id     = "id=\""    +pin->pinId().split("-").last().replace(" ", "")+"\"";
+    QString label  = "label=\"" +pin->getLabelText().replace("<","&#x3C;").replace("=","&#x3D;").replace(">","&#x3E;")+"\"";
+    QString space  = "space=\"" +QString::number( pin->space() )+"\"";
     QString type;
     if     ( pin->unused()   ) type = "nc";
     else if( pin->isBus()    ) type = "bus";
