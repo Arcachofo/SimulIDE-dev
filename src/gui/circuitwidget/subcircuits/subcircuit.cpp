@@ -182,6 +182,7 @@ Component* SubCircuit::construct( QString type, QString id )
         subcircuit->m_packageList = packageList;
         subcircuit->m_enumUids = pkges;
         subcircuit->m_enumNames = subcircuit->m_enumUids;
+        subcircuit->m_dataFile = subcFile;
 
         if( packageList.size() > 1 ) // Add package list if there is more than 1 to choose
         subcircuit->addPropGroup( { tr("Main"), {
@@ -226,7 +227,6 @@ SubCircuit::~SubCircuit(){}
 
 void SubCircuit::loadSubCircuitFile( QString file )
 {
-    m_dataFile = file;
     QString doc = fileToString( file, "SubCircuit::loadSubCircuit" );
 
     /// FIXME: Subcircuit loaded from .comp

@@ -90,16 +90,6 @@ QString Chip::convertPackage( QString domText ) // Static, converts xml to new f
     return pkg;
 }
 
-void Chip::setPackage( QString package )
-{
-    m_package = package;
-
-    setLogicSymbol( package.endsWith("_LS") );
-
-    QString pkgStr = m_packageList.value( package );
-    initPackage( pkgStr );
-}
-
 void Chip::setName( QString name )
 {
     m_name = name;
@@ -108,6 +98,16 @@ void Chip::setName( QString name )
     m_label.setY( m_area.height()/2+m_label.textWidth()/2 );
     m_label.setX( ( m_area.width()/2-m_label.boundingRect().height()/2 ) );
     setflip();
+}
+
+void Chip::setPackage( QString package )
+{
+    m_package = package;
+
+    setLogicSymbol( package.endsWith("_LS") );
+
+    QString pkgStr = m_packageList.value( package );
+    initPackage( pkgStr );
 }
 
 void Chip::initPackage( QString pkgStr )
@@ -139,7 +139,7 @@ void Chip::initPackage( QString pkgStr )
                 if     ( name == "width"       ) m_width   = val.toInt();
                 else if( name == "height"      ) m_height  = val.toInt();
                 else if( name == "name"        ) { if( val.toLower() != "package" ) setName( val ); }
-                //else if( name == "background"  ) setBackground( val );
+                else if( name == "background"  ) setBackground( val );
                 else if( name == "bckgnddata"  ) setBckGndData( val );
                 else if( name == "logic_symbol") setLogicSymbol( val == "true" );
             }
