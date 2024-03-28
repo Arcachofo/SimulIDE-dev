@@ -37,8 +37,8 @@ class SubPackage : public Chip, public Linker
         virtual void setBckGndData( QString data ) override;
         virtual void setBackground( QString bck ) override;
 
-        QString pinsStr();
-        void setPinsStr( QString pinsStr );
+        QString packagePins();
+        void setPackagePins( QString pinsStr );
 
         void setEventPin( Pin* pin ) { m_eventPin = pin; }
 

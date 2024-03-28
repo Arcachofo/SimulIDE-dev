@@ -119,7 +119,7 @@ SubPackage::SubPackage( QString type, QString id )
                                 , this, &SubPackage::logicSymbol, &SubPackage::setLogicSymbol ),
 
         new StrProp <SubPackage>("Pins", "",""
-                                , this, &SubPackage::pinsStr, &SubPackage::setPinsStr,propHidden ),
+                                , this, &SubPackage::packagePins, &SubPackage::setPackagePins,propHidden ),
     }, 0} );
 }
 SubPackage::~SubPackage()
@@ -524,7 +524,7 @@ void SubPackage::setPackageFile( QString package )
     m_changed = false;
 }
 
-QString SubPackage::pinsStr()
+QString SubPackage::packagePins()
 {
     QString pins;
     int pP = 1;
@@ -532,7 +532,7 @@ QString SubPackage::pinsStr()
     return pins;
 }
 
-void SubPackage::setPinsStr( QString pinsStr )
+void SubPackage::setPackagePins( QString pinsStr )
 {
     if( !m_pkgeFile.isEmpty() ) return;
 
@@ -555,7 +555,7 @@ QString SubPackage::pinStrEntry( Pin* pin )
     pinStr += "; angle=" +QString::number( pin->pinAngle() );
     pinStr += "; length="+QString::number( pin->length() );
     pinStr += "; space=" +QString::number( pin->space() );
-    pinStr += "; id="    +pin->pinId();
+    pinStr += "; id="    +pin->pinId().split("-").last();
     pinStr += "; label=" +pin->getLabelText();
 
     return pinStr+"\n";
