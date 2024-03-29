@@ -43,6 +43,7 @@ class CircuitWidget : public QWidget
         void simDebugMessage( QString msg ) { m_outPane.appendLine( msg.remove("\"") ); }
 
         QSplitter* splitter() { return m_mainSplitter; }
+        QSplitter* panelSplitter() { return m_panelSplitter; }
         
     public slots:
         bool newCircuit();

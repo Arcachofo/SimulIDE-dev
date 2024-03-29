@@ -25,6 +25,8 @@ class Chip : public Component, public eElement
             Module
         };
 
+        virtual bool setPropStr( QString prop, QString val ) override;
+
         QString package() { return m_package; }
         virtual void setPackage( QString package );
         

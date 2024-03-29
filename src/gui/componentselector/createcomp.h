@@ -29,6 +29,7 @@ class creCompDialog : public QDialog, private Ui::creCompDialog
 
     private:
         void embedIcon();
+        void updtIconData();
 
         QString m_circuitPath;
         QString m_iconFile;

@@ -84,11 +84,11 @@ Circuit::~Circuit()
     m_bckpTimer.stop();
     m_undoStack.clear();
 
+    cancelComp();
+
     QFile file( m_backupPath );
     if( !file.exists() ) return;
     QFile::remove( m_backupPath ); // Remove backup file
-
-    if( m_creCompDialog ) m_creCompDialog->deleteLater();
 }
 
 Component* Circuit::getCompById( QString id )
@@ -190,22 +190,30 @@ void Circuit::loadStrDoc( QString &doc )
         if( line.startsWith( "<circuit") && !m_pasting )
         {
             line = line.mid( 9, line.length()-11 );
-            QVector<QStringRef> props = line.split(" ");
+            QStringRef name;
+
+            QVector<QStringRef> props = line.split("\"");
+            QHash<QStringRef, QStringRef> properties;
             for( QStringRef prop : props )
             {
-                QVector<QStringRef> p = prop.split("=");
-                if( p.size() != 2 ) continue;
-
-                QStringRef name = p.first(), val = p.last();
-                val = val.mid( 1, val.lastIndexOf("\"")-1 ); // Remove "
-
-                if     ( name == "stepSize") m_simulator->setStepSize( val.toULongLong() );
-                else if( name == "stepsPS" ) m_simulator->setStepsPerSec( val.toULongLong() );
-                else if( name == "NLsteps" ) m_simulator->setMaxNlSteps( val.toUInt() );
-                else if( name == "reaStep" ) m_simulator->setreactStep( val.toULongLong() );
-                else if( name == "animate" ) setAnimate( val.toInt() );
-                else if( name == "rev"     ) rev = val.toInt();
-            }
+                if( prop.size() < 2 ) continue;
+                if( prop.endsWith("=") )
+                {
+                    prop = prop.split(" ").last();
+                    name = prop.mid( 0, prop.length()-1 );
+                    continue;
+                }
+                else if( prop.endsWith(">") ) continue;
+                else{
+                    if     ( name == "stepSize") m_simulator->setStepSize( prop.toULongLong() );
+                    else if( name == "stepsPS" ) m_simulator->setStepsPerSec(prop.toULongLong() );
+                    else if( name == "NLsteps" ) m_simulator->setMaxNlSteps( prop.toUInt() );
+                    else if( name == "reaStep" ) m_simulator->setreactStep( prop.toULongLong() );
+                    else if( name == "animate" ) setAnimate( prop.toInt() );
+                    else if( name == "rev"     ) rev = prop.toInt();
+                    else if( name == "category") m_category = prop.toString();
+                    else if( name == "icondata") m_iconData = prop.toString();
+            }   }
         }
         else if( line.contains("<mainCompProps") )
         {
@@ -253,12 +261,12 @@ void Circuit::loadStrDoc( QString &doc )
                 }
                 else if( prop.endsWith(">") ) continue;
                 else{
-                    if     ( name == "itemtype"   ) type  = prop.toString();
-                    else if( name == "uid"        ) uid   = prop.toString();
-                    else if( name == "CircId"     ) uid   = prop.toString();
-                    else if( name == "objectName" ) uid   = prop.toString();
-                    else if( name == "label"      ) label = prop.toString();
-                    else if( name == "id"         ) label = prop.toString();
+                    if     ( name == "itemtype"  ) type  = prop.toString();
+                    else if( name == "uid"       ) uid   = prop.toString();
+                    else if( name == "CircId"    ) uid   = prop.toString();
+                    else if( name == "objectName") uid   = prop.toString();
+                    else if( name == "label"     ) label = prop.toString();
+                    else if( name == "id"        ) label = prop.toString();
                     else properties[name] = prop ;
             }   }
             if( type.isEmpty() ) { qDebug() << "ERROR: Component with no type:"<<label<< uid; continue;}
@@ -452,7 +460,7 @@ void Circuit::loadStrDoc( QString &doc )
     {
         for( Component* comp : compList ) { comp->setSelected( true ); comp->move( m_deltaMove ); }
         for( Component* comp : nodeList ) { comp->setSelected( true ); comp->move( m_deltaMove ); }
-        for( Connector* con  : conList )  { con->setSelected( true );  con->move( m_deltaMove ); }
+        for( Connector* con  : conList  ) { con->setSelected( true );  con->move( m_deltaMove ); }
     }
     else for( Component* comp : compList ) { comp->moveSignal(); }
 
@@ -469,6 +477,8 @@ void Circuit::loadStrDoc( QString &doc )
     setAnimate( m_animate ); // Force Pin update
 
     if( m_pasting ) m_idMap.clear();
+
+    if( !m_category.isEmpty() || !m_iconData.isEmpty() ) createComp(); // Add comp widget to bottom panel
     m_busy = false;
     QApplication::restoreOverrideCursor();
     update();
@@ -476,22 +486,33 @@ void Circuit::loadStrDoc( QString &doc )
 
 void Circuit::createComp()
 {
-    if( !m_creCompDialog ) m_creCompDialog = new creCompDialog( CircuitWidget::self() );
+    if( m_creCompDialog ) return;
+    m_creCompDialog = new creCompDialog( CircuitWidget::self() );
+    CircuitWidget::self()->panelSplitter()->addWidget( m_creCompDialog );
     m_creCompDialog->show();
 }
 
-QString Circuit::circuitToComp()
+void Circuit::cancelComp()
 {
-    if( m_board && m_board->m_boardMode ) m_board->setBoardMode( false );
+    if( m_creCompDialog ){
+        m_creCompDialog->deleteLater();
+        m_creCompDialog = nullptr;
+    }
+}
 
-    QString circuit = "\n";
-    for( Component* comp : m_compList ) circuit += comp->toString();
-    for( Node* node      : m_nodeList ) circuit += node->toString();
-    for( Connector* conn : m_connList ) circuit += conn->toString();
-    circuit += "\n";
+QString Circuit::circuitToComp( QString category, QString iconData, QString compType )
+{
+    m_category = category;
+    m_iconData = iconData;
+    m_compType = compType;
+    QString component = circuitToString();
 
-    if( m_board && m_board->m_boardMode ) m_board->setBoardMode( true );
-    return circuit;
+    if( !m_filePath.endsWith(".comp")){
+        m_category = "";
+        m_iconData = "";
+        m_compType = "";
+    }
+    return component;
 }
 
 QString Circuit::circuitHeader()
@@ -501,7 +522,11 @@ QString Circuit::circuitHeader()
     header += "stepsPS=\"" + QString::number( m_simulator->stepsPerSec() )+"\" ";
     header += "NLsteps=\"" + QString::number( m_simulator->maxNlSteps() )+"\" ";
     header += "reaStep=\"" + QString::number( m_simulator->reactStep() )+"\" ";
-    header += "animate=\"" + QString::number( m_animate )+"\" >\n";
+    header += "animate=\"" + QString::number( m_animate )+"\" ";
+    if( !m_compType.isEmpty() ) header += "comptype=\"" + m_compType+"\" ";
+    if( !m_category.isEmpty() ) header += "category=\"" + m_category+"\" ";
+    if( !m_iconData.isEmpty() ) header += "icondata=\"" + m_iconData+"\" ";
+    header += " >\n";
     return header;
 }
 
@@ -541,7 +566,7 @@ bool Circuit::saveCircuit( QString filePath )
 {
     if( m_conStarted ) return false;
 
-    QApplication::setOverrideCursor(Qt::WaitCursor);
+    QApplication::setOverrideCursor( Qt::WaitCursor );
 
     QString oldFilePath = m_filePath;
     m_filePath = filePath;

@@ -142,7 +142,7 @@ void ComponentSelector::LoadCompSetAt( QDir compSetDir )
             QXmlStreamReader reader( &file );
             if( reader.readNextStartElement() )
             {
-                if( reader.name() != "item" ){
+                if( reader.name() != "circuit" ){
                     qDebug() << "ComponentSelector::LoadCompSetAt Error parsing file (itemlib):"<< endl << compFile;
                     file.close();
                     continue;
@@ -196,7 +196,7 @@ void ComponentSelector::LoadCompSetAt( QDir compSetDir )
                 }
             }
 
-            QString type = reader.attributes().value("itemtype").toString();
+            QString type = reader.attributes().value("comptype").toString();
 
             if( !type.isEmpty() )
             {

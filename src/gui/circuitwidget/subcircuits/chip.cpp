@@ -61,6 +61,18 @@ Chip::~Chip()
     if( m_backPixmap ) delete m_backPixmap;
 }
 
+bool Chip::setPropStr( QString prop, QString val )
+{
+    if( prop =="Logic_Symbol" )
+    {
+        QStringList pkges = m_packageList.keys();
+        if( val == "true" ) setPackage( pkges.last() );
+        else                setPackage( pkges.first() );
+        return true;
+    }
+    return CompBase::setPropStr( prop, val );
+}
+
 QString Chip::convertPackage( QString domText ) // Static, converts xml to new format
 {
     QString pkg;
@@ -120,6 +132,8 @@ void Chip::initPackage( QString pkgStr )
     m_ePin.clear();
     m_pin.clear();
 
+    QString embedName;
+
     QStringList lines = pkgStr.split("\n");
     for( QString line : lines )
     {
@@ -140,7 +154,7 @@ void Chip::initPackage( QString pkgStr )
 
                 if     ( name == "width"       ) m_width  = val.toInt();
                 else if( name == "height"      ) m_height = val.toInt();
-                else if( name == "name"        ) m_name   = val;
+                else if( name == "name"        ) embedName = val;
                 else if( name == "background"  ) setBackground( val );
                 else if( name == "bckgnddata"  ) setBckGndData( val );
                 else if( name == "logic_symbol") setLogicSymbol( val == "true" );
@@ -150,7 +164,8 @@ void Chip::initPackage( QString pkgStr )
     }
     m_initialized = true;
     m_area = QRect( 0, 0, 8*m_width, 8*m_height );
-    setName( m_name );
+    if( embedName == "Package" ) embedName = m_name;
+    setName( embedName );
     moveSignal();
     update();
     Circuit::self()->update();

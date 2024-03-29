@@ -115,7 +115,14 @@ class Circuit : public QGraphicsScene
         void setFilePath( QString f ) { m_filePath = f; }
 
         bool saveString( QString &fileName, QString doc );
-        QString circuitToComp();
+        QString circuitToComp( QString category, QString iconData, QString compType );
+
+        bool isComp() { return m_creCompDialog != NULL; }
+        QString category() { return m_category; }
+        void setCategory( QString c ) { m_category = c; }
+
+        QString iconData() { return m_iconData; }
+        void setIconData( QString id ) { m_iconData = id; }
 
         void drawBackground( QPainter* painter, const QRectF &rect );
 
@@ -129,6 +136,7 @@ class Circuit : public QGraphicsScene
         void redo();
         void importCircuit();
         void createComp();
+        void cancelComp();
         //void bom();
         void saveBackup();
 
@@ -152,6 +160,10 @@ class Circuit : public QGraphicsScene
 
         QString m_filePath;
         QString m_backupPath;
+
+        QString m_compType;
+        QString m_category;
+        QString m_iconData;
 
         QRect        m_scenerect;
         CircuitView* m_graphicView;

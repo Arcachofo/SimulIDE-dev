@@ -75,11 +75,11 @@ Component* SubCircuit::construct( QString type, QString id )
     {
         subcFile = dataFile;
         QStringList list = fileToStringList( dataFile, "SubCircuit::construct" );
+        list.takeFirst(); // Remove first line: <circuit ...
 
         for( QString line : list )
         {
             if( line.isEmpty() ) continue;
-            if( line.startsWith("<item itemtype=\"Subcircuit\"") ) continue;  /// TODO: improve this
             line.replace("&#x3D","=");
 
             QDomDocument domDoc;

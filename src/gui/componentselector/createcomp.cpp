@@ -18,30 +18,46 @@ creCompDialog::creCompDialog( QWidget* parent )
     setupUi( this );
 
     m_circuitPath = Circuit::self()->getFilePath();
+    categoryEdit->setText( Circuit::self()->category() );
+    m_iconData = Circuit::self()->iconData();
 
-    m_iconFile =":/ic_comp.png";
-    embedIcon();
+    if( m_circuitPath.endsWith(".comp") ) buttonBox->button( QDialogButtonBox::Cancel )->hide();
+
+    if( m_iconData.isEmpty() ){
+        m_iconFile =":/ic_comp.png";
+        embedIcon();
+    }
+    else updtIconData();
 }
 
 void creCompDialog::accept()
 {
+    /*return;
     QString comp = "<item";
     comp += " itemtype=\""+ typeBox->currentText()+"\"";
     comp += " category=\""+ categoryEdit->text()  +"\"";
     comp += " icondata=\""+ m_iconData            +"\"";
-    comp += ">";
+    comp += ">";*/
 
-    comp += Circuit::self()->circuitToComp();
+    QString comp = Circuit::self()->circuitToComp(
+                                      categoryEdit->text()
+                                     , m_iconData
+                                     , typeBox->currentText() );
 
     QFileInfo info( m_circuitPath );
-    QString fileName = info.path()+"/"+info.baseName()+".comp";
+
+    const QString dir = info.path();
+    QString fileName = QFileDialog::getSaveFileName( this, tr("Save Copmponent"), dir,
+                                                     tr("Components (*.comp);;All files (*.*)") );
+    if( fileName.isEmpty() ) return;
+
     Circuit::self()->saveString( fileName, comp );
-    this->hide();
+    //this->hide();
 }
 
 void creCompDialog::reject()
 {
-    this->hide();
+    Circuit::self()->cancelComp();
 }
 
 /*void creCompDialog::on_typeBox_currentIndexChanged( int index )
@@ -79,6 +95,21 @@ void creCompDialog::embedIcon()
     m_iconData = iconData;
 
     QPixmap ic( m_iconFile );
+    QIcon ico( ic );
+    iconImage->setIcon( ico );
+}
+
+void creCompDialog::updtIconData()
+{
+    QByteArray ba;
+    bool ok;
+    for( int i=0; i<m_iconData.size(); i+=2 )
+    {
+        QString ch = m_iconData.mid( i, 2 );
+        ba.append( ch.toInt( &ok, 16 ) );
+    }
+    QPixmap ic;
+    ic.loadFromData( ba );
     QIcon ico( ic );
     iconImage->setIcon( ico );
 }
