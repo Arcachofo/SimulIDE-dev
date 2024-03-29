@@ -12,6 +12,7 @@
 #include "iopin.h"
 
 #include "intprop.h"
+#include "doubleprop.h"
 
 #define tr(str) simulideTr("WS2812",str)
 
@@ -34,6 +35,13 @@ WS2812::WS2812( QString type, QString id )
 {
     m_graphical = true;
 
+    // WS2812B-V2
+    m_RES = 50;  // us
+    m_T0H = 400; // ns
+    m_T1H = 850; // ns
+    m_T0L = 850; // ns
+    m_T1L = 400; // ns
+
     m_rgb.resize( 3 );
     m_pin.resize( 2 );
 
@@ -51,10 +59,27 @@ WS2812::WS2812( QString type, QString id )
 
     addPropGroup( { tr("Main"), {
         new IntProp<WS2812>("Rows", tr("Rows"),""
-                           , this, &WS2812::rows, &WS2812::setRows,0,"uint" ),
+                           , this, &WS2812::rows, &WS2812::setRows ),
 
         new IntProp<WS2812>("Cols", tr("Columns"),""
                            , this, &WS2812::cols, &WS2812::setCols,0,"uint" ),
+    }, groupNoCopy} );
+
+    addPropGroup( { tr("Timing"), {
+        new IntProp<WS2812>("RstTime", tr("Minimum Reset pulse"),"_µs"
+                            , this, &WS2812::resetPulse, &WS2812::setResetPulse ),
+
+        new IntProp<WS2812>("T0H", tr("0, High time"),"_ns"
+                           , this, &WS2812::t0H, &WS2812::setT0H ),
+
+        new IntProp<WS2812>("T0L", tr("0, Low time"),"_ns"
+                            , this, &WS2812::t0L, &WS2812::setT0L ),
+
+        new IntProp<WS2812>("T1H", tr("1, High time"),"_ns"
+                            , this, &WS2812::t1H, &WS2812::setT1H ),
+
+        new IntProp<WS2812>("T1H", tr("1, Low time"),"_ns"
+                            , this, &WS2812::t1L, &WS2812::setT1L ),
     }, groupNoCopy} );
 }
 WS2812::~WS2812() { }
@@ -81,30 +106,42 @@ void WS2812::voltChanged()
 
     if( m_clkState == Clock_Rising )    // Input Rising edge
     {
-        if( time > 50*1e6 )             // Time > 50uS -> Reset
+        if( time > m_RES*1e6 )             // Time >  -> Reset
         {
             m_data = 0;
             m_word = 0;
             m_byte = 0;
             m_bit  = 7;
         }
-        else if(( time > 400*1e3 )&&( time < 951*1e3 )) // Valid L State Time
+        else if(( time > (m_T1L-150)*1e3 )&&( time < (m_T0L+150)*1e3 )) // Valid L State Time
+        {
+            if( m_word >= m_leds ) setOut( true );
+            else if( m_newWord )
+            {
+                if( m_lastHstate  ) { if( time < (m_T1L+150)*1e3 ) saveBit( 1 );} // Valid bit = 1
+                else                  if( time > (m_T0L-150)*1e3 ) saveBit( 0 );  // Valid bit = 0
+        }   }
+        /*else if(( time > 400*1e3 )&&( time < 951*1e3 )) // Valid L State Time
         {
             if( m_word >= m_leds ) setOut( true );
             else if( m_newWord )
             {
                 if( m_lastHstate  ) { if( time < 751*1e3 ) saveBit( 1 );} // Valid bit = 1
                 else                  if( time > 649 *1e3) saveBit( 0 );  // Valid bit = 0
-        }   }
+        }   }*/
         m_newWord = true;
     }
     else if( m_clkState == Clock_Falling )              // Input Falling edge
     {
         if( m_word >= m_leds ) setOut( false );
-        else if(( time > 199*1e3 )&&( time < 851*1e3 )) // Valid H State Time
+        else if(( time > (m_T0H-150)*1e3 )&&( time < (m_T1H+150)*1e3 )) // Valid H State Time
         {
-            if( time > 500*1e3 ) m_lastHstate = true;
-            else                 m_lastHstate = false;
+            if     ( time > (m_T1H-150)*1e3 ) m_lastHstate = true;
+            else                              m_lastHstate = false;
+        /*else if(( time > 199*1e3 )&&( time < 851*1e3 )) // Valid H State Time
+                {
+                    if( time > 500*1e3 ) m_lastHstate = true;
+                    else                 m_lastHstate = false;*/
 
             if(( m_byte == 2 )&&( m_bit == 0 )) // Low time for last bit can be anything?
             {                                   // so save it here and skip saving
@@ -161,9 +198,9 @@ void WS2812::updateLeds()
     Circuit::self()->update();
 }
 
-void WS2812::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
+void WS2812::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w )
 {
-    Component::paint( p, option, widget );
+    Component::paint( p, o, w );
 
     p->setBrush( QColor(Qt::black) );
     p->drawRect( m_area );

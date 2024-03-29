@@ -26,11 +26,26 @@ class WS2812 : public Component, public eClockedDevice
         int  cols() { return m_cols; }
         void setCols( int cols );
 
+        int resetPulse() { return m_RES; }
+        void setResetPulse( int r ) { m_RES = r; }
+
+        int t0H() { return m_T0H; }
+        void setT0H( int t0h ) { m_T0H = t0h; }
+
+        int t0L() { return m_T0L; }
+        void setT0L( int t0l ) { m_T0L = t0l; }
+
+        int t1H() { return m_T1H; }
+        void setT1H( int t1h ) { m_T1H = t1h; }
+
+        int t1L() { return m_T1L; }
+        void setT1L( int t1l ) { m_T1L = t1l; }
+
         virtual void initialize() override;
         virtual void updateStep() override;
         virtual void voltChanged() override;
 
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w ) override;
 
     private:
         void setOut( bool state );
@@ -46,6 +61,12 @@ class WS2812 : public Component, public eClockedDevice
         int m_rows;
         int m_cols;
         int m_leds;
+
+        uint64_t m_RES;
+        uint64_t m_T0H;
+        uint64_t m_T0L;
+        uint64_t m_T1H;
+        uint64_t m_T1L;
 
         double m_stepsPerus;
 
