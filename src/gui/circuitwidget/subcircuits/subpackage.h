@@ -47,13 +47,10 @@ class SubPackage : public Chip, public Linker
         QString subcTypeStr() { return m_enumUids.at( (int)m_subcType ); }
         void setSubcTypeStr( QString s );
 
-        //virtual void remove() override;
-
         virtual void compSelected( Component* comp ) override;  // Use link mechanism to select main components
 
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w ) override;
 
-    //public slots:
         void invertPin( bool invert );
         void setPinId( QString id );
         void setPinName( QString name );
@@ -147,4 +144,3 @@ class EditDialog : public QDialog
 };
 
 #endif
-

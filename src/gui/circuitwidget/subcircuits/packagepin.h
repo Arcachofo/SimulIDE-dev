@@ -18,7 +18,7 @@ class PackagePin : public Pin
         virtual void setLabelText( QString label, bool over=true ) override;
         virtual void setLength( int length ) override;
 
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w ) override;
 
     protected:
         virtual void mousePressEvent( QGraphicsSceneMouseEvent* event ) override;

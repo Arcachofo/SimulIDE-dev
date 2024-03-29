@@ -16,7 +16,7 @@ BoardSubc::BoardSubc( QString type, QString id )
 }
 BoardSubc::~BoardSubc(){}
 
-void BoardSubc::setLogicSymbol( bool ls )
+void BoardSubc::setLogicSymbol( bool ls ) /// FIXME
 {
     if( m_shields.size() ) return;
     Chip::setLogicSymbol( ls );

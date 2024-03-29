@@ -66,8 +66,8 @@ bool Chip::setPropStr( QString prop, QString val )
     if( prop =="Logic_Symbol" )
     {
         QStringList pkges = m_packageList.keys();
-        if( val == "true" ) setPackage( pkges.last() );
-        else                setPackage( pkges.first() );
+        if( val == "true" ) setPackage( pkges.first() );
+        else                setPackage( pkges.last() );
         return true;
     }
     return CompBase::setPropStr( prop, val );

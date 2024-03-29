@@ -380,7 +380,7 @@ void SubPackage::deleteEventPin()
     m_changed = true;
 
     m_pkgePins.removeOne( m_eventPin );
-    //m_signalPin.removeOne( m_eventPin ); // ToDelete
+
     delete m_eventPin;
     m_eventPin = NULL;
     

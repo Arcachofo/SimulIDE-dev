@@ -24,7 +24,6 @@ class ShieldSubc : public BoardSubc
         virtual void contextMenuEvent( QGraphicsSceneContextMenuEvent* event ) override;
         virtual void contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu ) override;
 
-    //public slots:
         virtual void slotAttach();
         virtual void slotDetach();
 

@@ -79,9 +79,9 @@ void PackagePin::setLength( int length )
     m_area = QRectF(-1.5,-2, m_length+2, 4 );
 }
 
-void PackagePin::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
+void PackagePin::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w )
 {
-    Pin::paint( p, option, widget );
+    Pin::paint( p, o, w);
     QPen pen( Qt::lightGray, 0.5, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin );
     p->setPen( pen );
 

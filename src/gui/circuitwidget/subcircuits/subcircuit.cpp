@@ -190,9 +190,6 @@ Component* SubCircuit::construct( QString type, QString id )
         subcircuit->addProperty( tr("Main"),
         new StrProp <SubCircuit>("Package", tr("Package"),""
                                 , subcircuit, &SubCircuit::package, &SubCircuit::setPackage,0,"enum" ));
-        /*new BoolProp<SubCircuit>("Logic_Symbol", tr("Logic Symbol"),"",
-                                subcircuit, &SubCircuit::logicSymbol, &SubCircuit::setLogicSymbol, propNoCopy ),*/
-
 
         subcircuit->setPackage( pkges.first() );
         if( m_error == 0 ) subcircuit->loadSubCircuitFile( subcFile );

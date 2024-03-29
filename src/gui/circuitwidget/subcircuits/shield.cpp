@@ -26,7 +26,8 @@ ShieldSubc::ShieldSubc( QString type, QString id )
     setZValue( 1 );
 
     addPropGroup( {"Hidden", {
-new StrProp<ShieldSubc>( "BoardId", "","", this, &ShieldSubc::boardId, &ShieldSubc::setBoardId )
+        new StrProp<ShieldSubc>( "BoardId", "",""
+                               , this, &ShieldSubc::boardId, &ShieldSubc::setBoardId )
     }, groupHidden} );
 }
 ShieldSubc::~ShieldSubc(){}
