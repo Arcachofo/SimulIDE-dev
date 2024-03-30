@@ -26,7 +26,7 @@ class Hd44780_Base : public Component
 
         void showPins( bool show );
         
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w );
         
     protected:
         void clearDDRAM();
@@ -41,10 +41,10 @@ class Hd44780_Base : public Component
         void setDDaddr( int addr );
         void setCGaddr( int addr );
         
-        QImage m_fontImg;                  //Characters image
+        QImage m_fontImg;          //Characters image
 
-        int m_DDram[80];                   //80 DDRAM
-        int m_CGram[64];                   //64 CGRAM
+        int m_DDram[80];           //80 DDRAM
+        int m_CGram[64];           //64 CGRAM
         
         int m_rows;
         int m_cols;

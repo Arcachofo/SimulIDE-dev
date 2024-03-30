@@ -108,10 +108,10 @@ void Hd44780_Base::functionSet( int data )
   
 void Hd44780_Base::C_D_Shift( int data )
 {
-    int dir = 1;    // Move Right/Left
+    int dir = 1;                    // Move Right/Left
     if( data & 4 ) dir = -1;
 
-    if( data & 8 )     // Shift Cursor/Display
+    if( data & 8 )                  // Shift Cursor/Display
     {
         m_shiftPos += dir;
         int lineEnd = m_lineLength-1;
@@ -124,13 +124,13 @@ void Hd44780_Base::C_D_Shift( int data )
 
 void Hd44780_Base::dispControl( int data )
 {
-    if( data & 4 ) m_dispOn = 1;                       // Display On/Off
+    if( data & 4 ) m_dispOn = 1;         // Display On/Off
     else           m_dispOn = 0;
     
-    if( data & 2 ) m_cursorOn = 1;                      // Cursor On/Off
+    if( data & 2 ) m_cursorOn = 1;       // Cursor On/Off
     else           m_cursorOn = 0;
     
-    if( data & 1 ) m_cursorBlink = 1;                    // Cursor Blink
+    if( data & 1 ) m_cursorBlink = 1;    // Cursor Blink
     else           m_cursorBlink = 0;
 }
 
@@ -153,14 +153,14 @@ void Hd44780_Base::clearLcd()
 
 void Hd44780_Base::cursorHome()
 {
-    m_DDaddr   = 0;
+    setDDaddr( 0 );
     m_cursPos  = 0;
     m_shiftPos = 0;
 }
 
 void Hd44780_Base::setDDaddr( int addr )
 {
-    if( (m_lineLength==40) & (addr>63) ) addr -= 24;
+    if( (m_lineLength==40) && (addr>63) ) addr -= 24;
     m_DDaddr = addr & 0b01111111;
     
     m_writeDDRAM = true;
@@ -202,9 +202,9 @@ void Hd44780_Base::showPins( bool show )
     for( int i=0; i<8; i++ ) m_dataPin[i]->setVisible( show );
 }
 
-void Hd44780_Base::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
+void Hd44780_Base::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w )
 {
-    Component::paint( p, option, widget );
+    Component::paint( p, o, w );
 
     QPen pen(Qt::black, 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
     p->setPen( pen );
