@@ -107,7 +107,7 @@ SubPackage::SubPackage( QString type, QString id )
                                 , this, &SubPackage::name, &SubPackage::setName ),
 
         new StrProp <SubPackage>("Package_File", tr("Package File"),""
-                                , this, &SubPackage::packageFile, &SubPackage::setPackageFile),
+                                , this, &SubPackage::packageFile, &SubPackage::setPackageFile, propHidden ),
 
         new StrProp <SubPackage>("Background", tr("Background"),""
                                 , this, &SubPackage::background, &SubPackage::setBackground ),
@@ -338,7 +338,7 @@ void SubPackage::setBoardMode( bool mode )
     }
 }
 
-Pin* SubPackage::addPin( QString id, QString type, QString label, int pos, int xpos, int ypos, int angle, int length, int space )
+void SubPackage::addNewPin( QString id, QString type, QString label, int pos, int xpos, int ypos, int angle, int length, int space )
 {
     PackagePin* pin = new PackagePin( angle, QPoint(xpos, ypos), m_id+"-"+id, pos-1, this ); // pos in package starts at 1
 
@@ -352,9 +352,11 @@ Pin* SubPackage::addPin( QString id, QString type, QString label, int pos, int x
     pin->setLabelText( label );
     pin->setIsBus( type == "bus" );
     pin->setInverted( type == "inverted" || type == "inv" );
+    pin->setUnused( type == "unused" || type == "nc" );
 
+    m_ePin.emplace_back( pin );
+    m_pin.emplace_back( pin );
     m_pkgePins.append( pin );
-    return pin;
 }
 
 void SubPackage::editPin()

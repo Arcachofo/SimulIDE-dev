@@ -76,7 +76,7 @@ class SubPackage : public Chip, public Linker
         
         virtual void contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu ) override;
 
-        virtual Pin* addPin( QString id, QString type, QString label,
+        virtual void addNewPin( QString id, QString type, QString label,
                             int pos, int xpos, int ypos, int angle, int length=8, int space=0 ) override;
 
     private:

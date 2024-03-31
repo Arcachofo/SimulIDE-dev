@@ -96,7 +96,7 @@ Component* SubCircuit::construct( QString type, QString id )
             packageList[pkgName] = convertPackage( line );
         }
     }
-    else                                  // Subcircuit in several files: .package, .sim1, etc
+    else                                  // Subcircuit listed in xml file
     {
         QDomDocument domDoc = fileToDomDoc( dataFile, "SubCircuit::construct");
         if( domDoc.isNull() ) return NULL; // m_error = 1;
