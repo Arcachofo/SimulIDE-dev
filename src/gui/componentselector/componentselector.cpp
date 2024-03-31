@@ -123,90 +123,106 @@ void ComponentSelector::LoadCompSetAt( QDir compSetDir )
     }
     if( compSetDir.cd("components") )
     {
-        QStringList compList = compSetDir.entryList( {"*.comp"}, QDir::Files );
-
-        for( QString compFile : compList )
-        {
-            //QString path = compName+"/"+compName;
-            compFile = compSetDir.absoluteFilePath( compFile );
-            if( !compSetDir.exists( compFile ) ) continue;
-
-            QFile file( compFile );
-            if( !file.open(QFile::ReadOnly | QFile::Text) ){
-                  qDebug() << "ComponentSelector::LoadCompSetAt Cannot read file"<< endl << compFile << endl << file.errorString();
-                  return;
-            }
-            QFileInfo fi( compFile );
-            QString compName = fi.baseName();
-
-            QXmlStreamReader reader( &file );
-            if( reader.readNextStartElement() )
-            {
-                if( reader.name() != "circuit" ){
-                    qDebug() << "ComponentSelector::LoadCompSetAt Error parsing file (itemlib):"<< endl << compFile;
-                    file.close();
-                    continue;
-                }
-            }
-            QString icon = "";
-            QByteArray ba;
-
-            QXmlStreamAttributes at = reader.attributes();
-
-            if( at.hasAttribute("icondata") )
-            {
-                QString icStr = at.value("icondata").toString();
-                bool ok;
-                for( int i=0; i<icStr.size(); i+=2 )
-                {
-                    QString ch = icStr.mid( i, 2 );
-                    ba.append( ch.toInt( &ok, 16 ) );
-                }
-            }else{
-                if( at.hasAttribute("icon") )
-                {
-                    icon = at.value("icon").toString();
-                    if( !icon.startsWith(":/") )
-                        icon = MainWindow::self()->getDataFilePath("images/"+icon);
-                }
-                else icon = getIcon("components", compName );
-                ba = fileToByteArray( icon, "ComponentSelector::LoadCompSetAt");
-            }
-
-            QPixmap ic;
-            ic.loadFromData( ba );
-            QIcon ico( ic );
-
-            /// TODO: reuse get category from catPath
-            QString category = reader.attributes().value("category").toString();
-            QStringList catPath = category.split("/");
-
-            QTreeWidgetItem* catItem = NULL;
-            QString parent = "";
-            category = "";
-            while( !catPath.isEmpty() )
-            {
-                parent = category;
-                category = catPath.takeFirst();
-                catItem = getCategory( category );
-                if( !catItem /*&& !parent.isEmpty()*/ )
-                {
-                    QString catTr = QObject::tr( category.toLocal8Bit() );
-                    catItem = addCategory( catTr, category, parent, "" );
-                }
-            }
-
-            QString type = reader.attributes().value("comptype").toString();
-
-            if( !type.isEmpty() )
-            {
-                addItem( compName, catItem, ico, type );
-                //m_dirFileList[ compName ] = compSetDir.absoluteFilePath( compName );
-                m_xmlFileList[ compName ] = compFile;   // Save comp File used to create this item
-            }
-        }
+        loadComps( compSetDir );
     }
     qDebug() << "\n";
+}
+
+void ComponentSelector::loadComps( QDir compSetDir )
+{
+    QStringList compList = compSetDir.entryList( {"*.comp"}, QDir::Files );
+
+    for( QString compFile : compList )
+    {
+        //QString path = compName+"/"+compName;
+        compFile = compSetDir.absoluteFilePath( compFile );
+        if( !compSetDir.exists( compFile ) ) continue;
+
+        QFile file( compFile );
+        if( !file.open(QFile::ReadOnly | QFile::Text) ){
+              qDebug() << "ComponentSelector::loadComps Cannot read file"<< endl << compFile << endl << file.errorString();
+              continue;
+        }
+        QFileInfo fi( compFile );
+        QString compName = fi.baseName();
+
+        QXmlStreamReader reader( &file );
+        if( reader.readNextStartElement() )
+        {
+            if( reader.name() != "circuit" ){
+                qDebug() << "ComponentSelector::loadComps Error parsing file (itemlib):"<< endl << compFile;
+                file.close();
+                continue;
+            }
+        }
+        QString icon = "";
+        QByteArray ba;
+
+        QXmlStreamAttributes at = reader.attributes();
+
+        if( at.hasAttribute("icondata") )
+        {
+            QString icStr = at.value("icondata").toString();
+            bool ok;
+            for( int i=0; i<icStr.size(); i+=2 )
+            {
+                QString ch = icStr.mid( i, 2 );
+                ba.append( ch.toInt( &ok, 16 ) );
+            }
+        }else{
+            if( at.hasAttribute("icon") )
+            {
+                icon = at.value("icon").toString();
+                if( !icon.startsWith(":/") )
+                    icon = MainWindow::self()->getDataFilePath("images/"+icon);
+            }
+            else icon = getIcon("components", compName );
+            ba = fileToByteArray( icon, "ComponentSelector::loadComps");
+        }
+
+        QPixmap ic;
+        ic.loadFromData( ba );
+        QIcon ico( ic );
+
+        /// TODO: reuse get category from catPath
+        QString category = reader.attributes().value("category").toString();
+        QStringList catPath = category.split("/");
+
+        QTreeWidgetItem* catItem = NULL;
+        QString parent = "";
+        category = "";
+        while( !catPath.isEmpty() )
+        {
+            parent = category;
+            category = catPath.takeFirst();
+            catItem = getCategory( category );
+            if( !catItem /*&& !parent.isEmpty()*/ )
+            {
+                QString catTr = QObject::tr( category.toLocal8Bit() );
+                catItem = addCategory( catTr, category, parent, "" );
+            }
+        }
+
+        QString type = reader.attributes().value("comptype").toString();
+
+        if( !type.isEmpty() )
+        {
+            addItem( compName, catItem, ico, type );
+            //m_dirFileList[ compName ] = compSetDir.absoluteFilePath( compName );
+            m_xmlFileList[ compName ] = compFile;   // Save comp File used to create this item
+        }
+    }
+
+    QStringList dirList = compSetDir.entryList( {"*"}, QDir::Dirs );
+    for( QString dir : dirList )
+    {
+        if( dir == "." || dir == "..") continue;
+        if( compSetDir.cd( dir ) )
+        {
+            loadComps( compSetDir );
+            compSetDir.cd( ".." );
+        }
+    }
 }
 
 void ComponentSelector::loadXml( QString setFile )

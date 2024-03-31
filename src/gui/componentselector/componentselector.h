@@ -50,6 +50,8 @@ class ComponentSelector : public QTreeWidget
 
         void LoadLibraryItems();
 
+        void loadComps( QDir compSetDir );
+
         QTreeWidgetItem* addCategory( QString nameTr, QString name, QString parent, QString icon );
 
         QString getIcon( QString folder, QString name );
