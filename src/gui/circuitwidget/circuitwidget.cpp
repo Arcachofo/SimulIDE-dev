@@ -11,6 +11,7 @@
 #include <QSettings>
 
 #include "circuitwidget.h"
+#include "editorwindow.h"
 #include "mainwindow.h"
 #include "simulator.h"
 #include "circuit.h"
@@ -243,7 +244,8 @@ void CircuitWidget::createToolBars()
 
 bool CircuitWidget::newCircuit()
 {
-    if( Simulator::self() ) powerCircOff();
+    if( EditorWindow::self() && EditorWindow::self()->debugStarted() ) EditorWindow::self()->stop();
+    else if( Simulator::self() ) powerCircOff();
     
     if( MainWindow::self()->windowTitle().endsWith('*') )
     {
