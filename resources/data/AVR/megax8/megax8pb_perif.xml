@@ -15,9 +15,11 @@
     <extint    name="INT1" pin="PORTD3" configbits="ISC10,ISC11"/>
   </port>
 
- <port name="PORTE" pins="4" outreg="PORTE" inreg="PINE" dirreg="DDRE">
+  <port name="PORTE" pins="4" outreg="PORTE" inreg="PINE" dirreg="DDRE">
     <interrupt name="PCINT3" mask="PCMSK3"/>
   </port>
+
+  <intosc name="intosc" clockpins="PORTB6,PORTB7" clockoutpin="PORTB0" />
 
   <timer name="TIMER0" type="800" configregsA="TCCR0A" configregsB="TCCR0B" 
                        counter="TCNT0" 
