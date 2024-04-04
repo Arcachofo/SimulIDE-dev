@@ -125,6 +125,8 @@
         <file alias="ic2.png">../src/icons/components/ic2.png</file>
         <file alias="ic_comp.png">../src/icons/components/ic_comp.png</file>
         <file alias="ic2_comp.png">../src/icons/components/ic2_comp.png</file>
+        <file alias="script_ico.png">../src/icons/components/script_ico.png</file>
+        <file alias="subc_ico.png">../src/icons/components/subc_ico.png</file>
         <file alias="subc.png">../src/icons/components/subc.png</file>
         <file alias="subc2.png">../src/icons/components/subc2.png</file>
         <file alias="subcl.png">../src/icons/components/subcl.png</file>
