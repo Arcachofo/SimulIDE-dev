@@ -82,18 +82,12 @@ MainWindow::MainWindow()
     qApp->setFont( df );
     setFont( df );
 
+    if( !QDir( m_userDir ).exists() ) m_userDir = "";
+
     QApplication::setStyle( QStyleFactory::create("Fusion") ); //applyStyle();
     createWidgets();
 
-    if( !m_userDir.isEmpty() && QDir( m_userDir ).exists() )
-    {
-        ComponentSelector::self()->LoadCompSetAt( m_userDir );
-        m_fileSystemTree->addEntry( "User Data", m_userDir );
-    }
-    else m_userDir = "";
-
-    QDir compSetDir = m_filesDir.absoluteFilePath("data");
-    if( compSetDir.exists() ) ComponentSelector::self()->LoadCompSetAt( compSetDir );
+    if( !m_userDir.isEmpty() ) m_fileSystemTree->addEntry( tr("User Data"), m_userDir );
 
     readSettings();
 
@@ -255,15 +249,15 @@ void MainWindow::createWidgets()
     connect( m_searchComponent, SIGNAL( editingFinished() ),
              this,               SLOT(  searchChanged()), Qt::UniqueConnection);
 
+    m_fileSystemTree = new FileWidget( this );
+    m_circuit = new CircuitWidget( this );
+
     m_components = new ComponentSelector( m_sidepanel );
     m_componentWidgetLayout->addWidget( m_components );
 
     m_sidepanel->addTab( m_componentWidget, tr("Components") );
-
-    m_fileSystemTree = new FileWidget( this );
     m_sidepanel->addTab( m_fileSystemTree, tr( "File explorer" ) );
 
-    m_circuit = new CircuitWidget( this );
     m_Centralsplitter->addWidget( m_circuit );
 
     m_editor = new EditorWindow( this );

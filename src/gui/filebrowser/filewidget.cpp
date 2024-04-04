@@ -55,8 +55,8 @@ FileWidget::FileWidget( QWidget* parent )
     
     addEntry( "FileSystem", QDir::rootPath() );
     addEntry( "Home",       QDir::homePath() );
-    addEntry( "Examples",   MainWindow::self()->getFilePath("examples") );
-    addEntry( "Data",       MainWindow::self()->getFilePath("data") );
+    //addEntry( "Examples",   MainWindow::self()->getFilePath("examples") );
+    //addEntry( "Data",       MainWindow::self()->getFilePath("data") );
     addEntry( "Settings",   settingsDir );
 
     connect( m_bookmarks, SIGNAL( itemClicked( QListWidgetItem* )), 
@@ -101,6 +101,8 @@ void FileWidget::writeSettings()
 
 void FileWidget::addEntry( QString name, QString path )
 {
+    if( !QDir( path ).exists() ) return;
+
     QListWidgetItem* item = new QListWidgetItem( name, m_bookmarks, 0 );
     item->setData( 4, path );
     

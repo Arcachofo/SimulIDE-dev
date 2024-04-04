@@ -42,6 +42,16 @@ ComponentSelector::ComponentSelector( QWidget* parent )
 
     LoadLibraryItems();
 
+    QString userDir = MainWindow::self()->userPath();
+    if( !userDir.isEmpty() && QDir( userDir ).exists() ) LoadCompSetAt( userDir );
+
+    for( QTreeWidgetItem* it : m_categories )
+    {
+        if( it->childCount() ) continue;
+        QTreeWidgetItem* pa = it->parent();
+        if( pa ) pa->removeChild( it  );
+    }
+
     setContextMenuPolicy( Qt::CustomContextMenu );
 
     connect( this, &ComponentSelector::customContextMenuRequested,
@@ -75,18 +85,10 @@ void ComponentSelector::LoadCompSetAt( QDir compSetDir )
 {
     m_compSetDir = compSetDir;
 
-    compSetDir.setNameFilters( QStringList( "*.xml" ) );
-
-    QStringList xmlList = compSetDir.entryList( QDir::Files );
-
-    //if( xmlList.isEmpty() ) return;                  // No comp sets to load
-
-    qDebug() << "\n" << tr("    Loading Component sets at:")<< "\n" << compSetDir.absolutePath()<<"\n";
-
-    for( QString compSetName : xmlList )
+    if( compSetDir.cd("components") )
     {
-        QString compSetFilePath = compSetDir.absoluteFilePath( compSetName );
-        if( !compSetFilePath.isEmpty() ) loadXml( compSetFilePath );
+        qDebug() << "\n" << tr("    Loading User Components at:")<< "\n" << compSetDir.absolutePath()+"/components"<<"\n";
+        loadComps( compSetDir );
     }
     if( compSetDir.cd("test") )
     {
@@ -112,8 +114,9 @@ void ComponentSelector::LoadCompSetAt( QDir compSetDir )
                     if( icon.isEmpty() ) icon = ":/ic2.png";
                     type = "MCU";
                 }
-                if( !type.isEmpty() )
+                if( !type.isEmpty() && !m_components.contains( compName ) )
                 {
+                    m_components.append( compName );
                     addItem( compName, catItem, icon, type );
                     m_dirFileList[ compName ] = compSetDir.absoluteFilePath( compName );
                 }
@@ -121,10 +124,21 @@ void ComponentSelector::LoadCompSetAt( QDir compSetDir )
         }
         compSetDir.cd("..");
     }
-    if( compSetDir.cd("components") )
+    compSetDir.cd("..");
+    compSetDir.setNameFilters( QStringList( "*.xml" ) );
+
+    QStringList xmlList = compSetDir.entryList( QDir::Files );
+
+    //if( xmlList.isEmpty() ) return;                  // No comp sets to load
+
+    qDebug() << "\n" << tr("    Loading Component sets at:")<< "\n" << compSetDir.absolutePath()<<"\n";
+
+    for( QString compSetName : xmlList )
     {
-        loadComps( compSetDir );
+        QString compSetFilePath = compSetDir.absoluteFilePath( compSetName );
+        if( !compSetFilePath.isEmpty() ) loadXml( compSetFilePath );
     }
+
     qDebug() << "\n";
 }
 
@@ -146,13 +160,10 @@ void ComponentSelector::loadComps( QDir compSetDir )
         QString compName = fi.baseName();
 
         QXmlStreamReader reader( &file );
-        if( reader.readNextStartElement() )
-        {
-            if( reader.name() != "libitem" ){
-                qDebug() << "ComponentSelector::loadComps Error parsing file (itemlib):"<< endl << compFile;
-                file.close();
-                continue;
-            }
+        if( !reader.readNextStartElement() || reader.name() != "libitem" ){
+            qDebug() << "ComponentSelector::loadComps Error parsing file (itemlib):"<< endl << compFile;
+            file.close();
+            continue;
         }
         QString icon = "";
         QByteArray ba;
@@ -201,13 +212,12 @@ void ComponentSelector::loadComps( QDir compSetDir )
                 catItem = addCategory( catTr, category, parent, "" );
             }
         }
-
         QString type = reader.attributes().value("itemtype").toString();
 
-        if( !type.isEmpty() )
+        if( !type.isEmpty() && !m_components.contains( compName ) )
         {
+            m_components.append( compName );
             addItem( compName, catItem, ico, type );
-            //m_dirFileList[ compName ] = compSetDir.absoluteFilePath( compName );
             m_xmlFileList[ compName ] = compFile;   // Save comp File used to create this item
         }
     }
@@ -216,11 +226,10 @@ void ComponentSelector::loadComps( QDir compSetDir )
     for( QString dir : dirList )
     {
         if( dir == "." || dir == "..") continue;
-        if( compSetDir.cd( dir ) )
-        {
-            loadComps( compSetDir );
-            compSetDir.cd( ".." );
-        }
+        if( !compSetDir.cd( dir )    ) continue;
+
+        loadComps( compSetDir );
+        compSetDir.cd( ".." );
     }
 }
 
