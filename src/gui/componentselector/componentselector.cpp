@@ -134,7 +134,6 @@ void ComponentSelector::loadComps( QDir compSetDir )
 
     for( QString compFile : compList )
     {
-        //QString path = compName+"/"+compName;
         compFile = compSetDir.absoluteFilePath( compFile );
         if( !compSetDir.exists( compFile ) ) continue;
 
@@ -149,7 +148,7 @@ void ComponentSelector::loadComps( QDir compSetDir )
         QXmlStreamReader reader( &file );
         if( reader.readNextStartElement() )
         {
-            if( reader.name() != "circuit" ){
+            if( reader.name() != "libitem" ){
                 qDebug() << "ComponentSelector::loadComps Error parsing file (itemlib):"<< endl << compFile;
                 file.close();
                 continue;
@@ -177,7 +176,7 @@ void ComponentSelector::loadComps( QDir compSetDir )
                     icon = MainWindow::self()->getDataFilePath("images/"+icon);
             }
             else icon = getIcon("components", compName );
-            ba = fileToByteArray( icon, "ComponentSelector::loadComps");
+            if( !icon.isEmpty() ) ba = fileToByteArray( icon, "ComponentSelector::loadComps");
         }
 
         QPixmap ic;
@@ -203,7 +202,7 @@ void ComponentSelector::loadComps( QDir compSetDir )
             }
         }
 
-        QString type = reader.attributes().value("comptype").toString();
+        QString type = reader.attributes().value("itemtype").toString();
 
         if( !type.isEmpty() )
         {

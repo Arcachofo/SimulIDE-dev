@@ -24,7 +24,7 @@ creCompDialog::creCompDialog( QWidget* parent )
     if( m_circuitPath.endsWith(".comp") ) buttonBox->button( QDialogButtonBox::Cancel )->hide();
 
     if( m_iconData.isEmpty() ){
-        m_iconFile =":/ic_comp.png";
+        m_iconFile =":/subc_ico.png";
         embedIcon();
     }
     else updtIconData();
@@ -32,24 +32,23 @@ creCompDialog::creCompDialog( QWidget* parent )
 
 void creCompDialog::accept()
 {
-    /*return;
-    QString comp = "<item";
+    QString comp = "<libitem";
     comp += " itemtype=\""+ typeBox->currentText()+"\"";
     comp += " category=\""+ categoryEdit->text()  +"\"";
     comp += " icondata=\""+ m_iconData            +"\"";
-    comp += ">";*/
+    comp += ">\n\n";
 
-    QString comp = Circuit::self()->circuitToComp(
-                                      categoryEdit->text()
-                                     , m_iconData
-                                     , typeBox->currentText() );
+    comp += Circuit::self()->circuitToString();
+    comp += "</libitem>";
 
     QFileInfo info( m_circuitPath );
 
-    const QString dir = info.path();
+    const QString dir = info.path()+"/"+info.baseName()+".comp";
     QString fileName = QFileDialog::getSaveFileName( this, tr("Save Copmponent"), dir,
                                                      tr("Components (*.comp);;All files (*.*)") );
     if( fileName.isEmpty() ) return;
+
+    if( !fileName.endsWith(".comp") ) fileName.append(".comp");
 
     Circuit::self()->saveString( fileName, comp );
     //this->hide();

@@ -75,12 +75,12 @@ Component* SubCircuit::construct( QString type, QString id )
     {
         subcFile = dataFile;
         QStringList list = fileToStringList( dataFile, "SubCircuit::construct" );
-        list.takeFirst(); // Remove first line: <circuit ...
+        //list.takeFirst(); // Remove first line: <circuit or <libitem
 
         for( QString line : list )
         {
-            if( line.isEmpty() ) continue;
-            line.replace("&#x3D","=");
+            if( !line.startsWith("<item") ) continue;
+            line.replace("&#x3D;","=");
 
             QDomDocument domDoc;
             domDoc.setContent( line );
@@ -136,6 +136,8 @@ Component* SubCircuit::construct( QString type, QString id )
         subcFile  = m_subcDir+"/"+name+".sim1";
         pkgeFile  = m_subcDir+"/"+name+".package";
         QString pkgFileLS = m_subcDir+"/"+name+"_LS.package";
+        QString pkgName   = "2- "+name+"_DIP";
+        QString pkgNameLS = "1- "+name+"_LS";
 
         bool dip = QFile::exists( pkgeFile );
         bool ls  = QFile::exists( pkgFileLS );
@@ -146,18 +148,31 @@ Component* SubCircuit::construct( QString type, QString id )
 
         if( dip ){
             QString pkgStr = fileToString( pkgeFile, "SubCircuit::construct" );
-            packageList["2- "+name+"_DIP"] = convertPackage( pkgStr );
+            packageList[pkgName] = convertPackage( pkgStr );
         }
         else pkgeFile = pkgFileLS; // If no DIP package file then use LS
 
         if( ls ){
             QString pkgStr = fileToString( pkgFileLS, "SubCircuit::construct" );
-            packageList["1- "+name+"_LS"] = convertPackage( pkgStr );
+            packageList[pkgNameLS] = convertPackage( pkgStr );
         }
 
         QDomDocument domDoc1 = fileToDomDoc( pkgeFile, "SubCircuit::construct" );
         QDomElement   root1  = domDoc1.documentElement();
         if( root1.hasAttribute("type") ) subcTyp = root1.attribute("type").remove("subc");
+
+        if( packageList.size() > 1 && subcTyp != "None" && subcTyp != "Logic" ) // For Boards insert LS last
+        {
+            QMap<QString, QString> pList;
+
+            QString pkg = packageList.value( pkgName );
+            if( !pkg.isEmpty() ) pList["1- "+name+"_DIP"] = pkg;
+
+            pkg = packageList.value( pkgNameLS );
+            if( !pkg.isEmpty() ) pList["2- "+name+"_LS"] = pkg; // LS last
+
+            packageList = pList;
+        }
     }
 
     if( packageList.isEmpty() ){

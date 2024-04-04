@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>285</width>
-    <height>158</height>
+    <width>301</width>
+    <height>159</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -31,7 +31,7 @@
         </sizepolicy>
        </property>
        <property name="text">
-        <string>Icon (36x24 png)</string>
+        <string>Icon (20x20 png)</string>
        </property>
       </widget>
      </item>

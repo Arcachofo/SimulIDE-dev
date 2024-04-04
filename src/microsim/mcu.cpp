@@ -104,12 +104,51 @@ Mcu::Mcu( QString type, QString id )
     m_icColor = QColor( 20, 30, 60 );
 
     QString baseFile;
-    QString dataFile;
-    QString xmlFile = ComponentSelector::self()->getDataFile( m_device );
-    QFile file( xmlFile );
+    QString dataFile = ComponentSelector::self()->getDataFile( m_device );
 
-    if( file.exists() )
+    if( dataFile == "" ) // Component is not in SimulIDE, search in Circuit folder
     {
+            QDir mcuDir;
+            QString folder = ComponentSelector::self()->getFileDir( m_device );
+
+            if( !folder.isEmpty() ) // Found in folder (no xml file)
+            {
+                mcuDir = QDir( folder );
+            }
+            else              // Try to find a "data" folder in Circuit folder
+            {
+                mcuDir = QFileInfo( Circuit::self()->getFilePath() ).absoluteDir();
+                folder = "data/"+m_device;
+            }
+            baseFile = mcuDir.absoluteFilePath( folder+"/"+m_device);
+            dataFile = baseFile;
+    }
+    else if( dataFile.endsWith(".comp") )
+    {
+        m_dataFile = dataFile;
+
+        QStringList list = fileToStringList( dataFile, "SubCircuit::construct" );
+        //list.takeFirst(); // Remove first line: <libitem
+
+        for( QString line : list )
+        {
+            if( !line.startsWith("<item") ) continue;
+            line.replace("&#x3D;","=");
+
+            QDomDocument domDoc;
+            domDoc.setContent( line );
+            QDomElement root = domDoc.documentElement();
+
+            QString itemType = root.attribute("itemtype");
+            if( itemType != "Package") break;
+
+            QString pkgName = root.attribute("label");
+            m_packageList[pkgName] = convertPackage( line );
+        }
+    }
+    else if( QFile::exists( dataFile ) ) // MCU defined in xml file
+    {
+        QString xmlFile = dataFile;
         QDomDocument domDoc = fileToDomDoc( xmlFile, "Mcu::Mcu" );
         if( domDoc.isNull() ) { m_error = 1; return; }
 
@@ -149,39 +188,34 @@ Mcu::Mcu( QString type, QString id )
             if( found ) break;
             rNode = rNode.nextSibling();
         }
-    }else{
-        QDir mcuDir;
-        QString folder = ComponentSelector::self()->getFileDir( m_device );
-
-        if( !folder.isEmpty() ) // Found in folder (no xml file)
-        {
-            mcuDir = QDir( folder );
-        }
-        else              // Try to find a "data" folder in Circuit folder
-        {
-            mcuDir = QFileInfo( Circuit::self()->getFilePath() ).absoluteDir();
-            folder = "data/"+m_device;
-        }
-        baseFile = mcuDir.absoluteFilePath( folder+"/"+m_device);
-        dataFile = baseFile;
     }
-    m_dataFile = dataFile+".mcu";
-    QString pkgeFile = baseFile+".package";
-    bool dip = QFileInfo::exists( pkgeFile );
-    if( !dip || !QFileInfo::exists( m_dataFile ) )
+
+    if( !baseFile.isEmpty() )
     {
-        qDebug() << "Mcu::Mcu Files not found for:" << m_device;
+        m_dataFile = dataFile+".mcu";
+        QString pkgeFile = baseFile+".package";
+        bool dip = QFileInfo::exists( pkgeFile );
+        if( !dip || !QFileInfo::exists( m_dataFile ) )
+        {
+            qDebug() << "Mcu::Mcu Files not found for:" << m_device;
+            m_error = 1;
+            return;
+        }
+
+        QString pkgStr = fileToString( pkgeFile, "Mcu::Mcu" );
+        m_packageList["1- "+m_device+"_DIP"] = convertPackage( pkgStr );
+
+        QString pkgFileLS = baseFile+"_LS.package";
+        if( QFileInfo::exists( pkgFileLS ) ){
+            QString pkgStr = fileToString( pkgFileLS, "Mcu::Mcu" );
+            m_packageList["2- "+m_device+"_LS"] = convertPackage( pkgStr );
+        }
+    }
+
+    if( m_packageList.isEmpty() ){
+        qDebug() << "Mcu::Mcu: No Packages found for"<<m_device<<endl;
         m_error = 1;
         return;
-    }
-
-    QString pkgStr = fileToString( pkgeFile, "Mcu::Mcu" );
-    m_packageList[m_device+"_DIP"] = convertPackage( pkgStr );
-
-    QString pkgFileLS = baseFile+"_LS.package";
-    if( QFileInfo::exists( pkgFileLS ) ){
-        QString pkgStr = fileToString( pkgFileLS, "Mcu::Mcu" );
-        m_packageList[m_device+"_LS"] = convertPackage( pkgStr );
     }
 
     QSettings* settings = MainWindow::self()->settings();

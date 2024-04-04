@@ -115,7 +115,8 @@ class Circuit : public QGraphicsScene
         void setFilePath( QString f ) { m_filePath = f; }
 
         bool saveString( QString &fileName, QString doc );
-        QString circuitToComp( QString category, QString iconData, QString compType );
+        QString circuitToString();
+        //QString circuitToComp( QString category, QString iconData, QString compType );
 
         bool isComp() { return m_creCompDialog != NULL; }
         QString category() { return m_category; }
@@ -154,14 +155,12 @@ class Circuit : public QGraphicsScene
         void loadStrDoc( QString &doc );
 
         QString circuitHeader();
-        QString circuitToString();
-
         void updatePinName( QString* name );
 
         QString m_filePath;
         QString m_backupPath;
 
-        QString m_compType;
+        QString m_itemType;
         QString m_category;
         QString m_iconData;
 

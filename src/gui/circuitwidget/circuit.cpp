@@ -187,64 +187,7 @@ void Circuit::loadStrDoc( QString &doc )
     QVector<QStringRef> docLines = doc.splitRef("\n");
     for( QStringRef line : docLines )
     {
-        if( line.startsWith( "<circuit") && !m_pasting )
-        {
-            line = line.mid( 9, line.length()-11 );
-            QStringRef name;
-
-            QVector<QStringRef> props = line.split("\"");
-            QHash<QStringRef, QStringRef> properties;
-            for( QStringRef prop : props )
-            {
-                if( prop.size() < 2 ) continue;
-                if( prop.endsWith("=") )
-                {
-                    prop = prop.split(" ").last();
-                    name = prop.mid( 0, prop.length()-1 );
-                    continue;
-                }
-                else if( prop.endsWith(">") ) continue;
-                else{
-                    if     ( name == "stepSize") m_simulator->setStepSize( prop.toULongLong() );
-                    else if( name == "stepsPS" ) m_simulator->setStepsPerSec(prop.toULongLong() );
-                    else if( name == "NLsteps" ) m_simulator->setMaxNlSteps( prop.toUInt() );
-                    else if( name == "reaStep" ) m_simulator->setreactStep( prop.toULongLong() );
-                    else if( name == "animate" ) setAnimate( prop.toInt() );
-                    else if( name == "rev"     ) rev = prop.toInt();
-                    else if( name == "category") m_category = prop.toString();
-                    else if( name == "icondata") m_iconData = prop.toString();
-            }   }
-        }
-        else if( line.contains("<mainCompProps") )
-        {
-            if( !lastComp ) continue;
-            SubCircuit* subci = static_cast<SubCircuit*>(lastComp);
-            Component* mComp = subci->getMainComp();      // Old circuits with only 1 MainComp
-            if( !mComp ) continue;
-
-            QString propName = "";
-            QVector<QStringRef> props = line.split("\"");
-            for( QStringRef prop : props )
-            {
-                if( prop.endsWith("=") )
-                {
-                    prop = prop.split(" ").last();
-                    propName = prop.toString().mid( 0, prop.length()-1 );
-                    continue;
-                }
-                else if( prop.endsWith("/>") ) continue;
-                if( propName == "MainCompId")  // If more than 1 mainComp then get Component
-                {
-                    QString compName = prop.toString();
-                    mComp = subci->getMainComp( compName );
-                    if( !mComp ) qDebug() << "ERROR: Could not get Main Component:"<< compName;
-                }
-                else if( mComp ) mComp->setPropStr( propName, prop.toString() );
-
-                propName = "";
-            }
-        }
-        else if( line.startsWith("<item") )
+        if( line.startsWith("<item") )
         {
             QString uid, newUid, type, label, newNum;
 
@@ -455,7 +398,68 @@ void Circuit::loadStrDoc( QString &doc )
                     }
                 }
                 else qDebug() << " ERROR Creating Component: "<< type << uid;
-    }   }   }
+            }
+        }
+        else if( line.contains("<mainCompProps") )
+        {
+            if( !lastComp ) continue;
+            SubCircuit* subci = static_cast<SubCircuit*>(lastComp);
+            Component* mComp = subci->getMainComp();      // Old circuits with only 1 MainComp
+            if( !mComp ) continue;
+
+            QString propName = "";
+            QVector<QStringRef> props = line.split("\"");
+            for( QStringRef prop : props )
+            {
+                if( prop.endsWith("=") )
+                {
+                    prop = prop.split(" ").last();
+                    propName = prop.toString().mid( 0, prop.length()-1 );
+                    continue;
+                }
+                else if( prop.endsWith("/>") ) continue;
+                if( propName == "MainCompId")  // If more than 1 mainComp then get Component
+                {
+                    QString compName = prop.toString();
+                    mComp = subci->getMainComp( compName );
+                    if( !mComp ) qDebug() << "ERROR: Could not get Main Component:"<< compName;
+                }
+                else if( mComp ) mComp->setPropStr( propName, prop.toString() );
+
+                propName = "";
+            }
+        }
+        else if( (line.startsWith("<circuit") || line.startsWith("<libitem") ) && !m_pasting )
+        {
+            line = line.mid( 9, line.length()-11 );
+            QStringRef name;
+
+            QVector<QStringRef> props = line.split("\"");
+            QHash<QStringRef, QStringRef> properties;
+            for( QStringRef prop : props )
+            {
+                if( prop.size() < 2 ) continue;
+                if( prop.endsWith("=") )
+                {
+                    prop = prop.split(" ").last();
+                    name = prop.mid( 0, prop.length()-1 );
+                    continue;
+                }
+                else if( prop.endsWith(">") ) continue;
+                else{
+                    if     ( name == "stepSize") m_simulator->setStepSize( prop.toULongLong() );
+                    else if( name == "stepsPS" ) m_simulator->setStepsPerSec(prop.toULongLong() );
+                    else if( name == "NLsteps" ) m_simulator->setMaxNlSteps( prop.toUInt() );
+                    else if( name == "reaStep" ) m_simulator->setreactStep( prop.toULongLong() );
+                    else if( name == "animate" ) setAnimate( prop.toInt() );
+                    else if( name == "rev"     ) rev = prop.toInt();
+                    else if( name == "category") m_category = prop.toString();
+                    else if( name == "icondata") m_iconData = prop.toString();
+                    else if( name == "itemtype") m_itemType = prop.toString();
+            }   }
+        }
+        else if( line.startsWith("</circuit") ) break;
+    }
     if( m_pasting )
     {
         for( Component* comp : compList ) { comp->setSelected( true ); comp->move( m_deltaMove ); }
@@ -500,7 +504,7 @@ void Circuit::cancelComp()
     }
 }
 
-QString Circuit::circuitToComp( QString category, QString iconData, QString compType )
+/*QString Circuit::circuitToComp( QString category, QString iconData, QString compType )
 {
     m_category = category;
     m_iconData = iconData;
@@ -513,7 +517,7 @@ QString Circuit::circuitToComp( QString category, QString iconData, QString comp
         m_compType = "";
     }
     return component;
-}
+}*/
 
 QString Circuit::circuitHeader()
 {
@@ -523,10 +527,7 @@ QString Circuit::circuitHeader()
     header += "NLsteps=\"" + QString::number( m_simulator->maxNlSteps() )+"\" ";
     header += "reaStep=\"" + QString::number( m_simulator->reactStep() )+"\" ";
     header += "animate=\"" + QString::number( m_animate )+"\" ";
-    if( !m_compType.isEmpty() ) header += "comptype=\"" + m_compType+"\" ";
-    if( !m_category.isEmpty() ) header += "category=\"" + m_category+"\" ";
-    if( !m_iconData.isEmpty() ) header += "icondata=\"" + m_iconData+"\" ";
-    header += " >\n";
+    header += ">\n";
     return header;
 }
 
