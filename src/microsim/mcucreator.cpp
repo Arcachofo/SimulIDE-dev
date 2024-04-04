@@ -130,6 +130,19 @@ int McuCreator::processFile( QString fileName, bool main )
 
     QDomElement root = domDoc.documentElement();
 
+    if( root.tagName() != "mcu" && root.tagName() != "parts")
+    {
+        QDomNode node = root.firstChild();
+
+        while( !node.isNull() )
+        {
+            root = node.toElement();
+            QString tagName = root.tagName();
+            if( root.tagName() == "mcu" ) break;
+            node = node.nextSibling();
+        }
+    }
+
     if( root.hasAttribute("core") ) m_core = root.attribute("core");
 
     if( root.hasAttribute("data") )       createDataMem( root.attribute("data").toUInt(0,0) );

@@ -353,6 +353,7 @@ void SubPackage::addNewPin( QString id, QString type, QString label, int pos, in
     pin->setIsBus( type == "bus" );
     pin->setInverted( type == "inverted" || type == "inv" );
     pin->setUnused( type == "unused" || type == "nc" );
+    if( type == "nul" ) pin->setPinType( Pin::pinNull );
 
     m_ePin.emplace_back( pin );
     m_pin.emplace_back( pin );
@@ -507,6 +508,7 @@ void SubPackage::setPackageFile( QString package )
 {
     m_pkgeFile = package;
     if( package.isEmpty() ) return;
+    if( !QFile::exists( m_pkgeFile ) );
 
     for( Pin* pin : m_pin ) deletePin( pin );
     m_pkgePins.clear();
@@ -550,6 +552,7 @@ QString SubPackage::pinStrEntry( Pin* pin )
     QString type;
     if( pin->inverted() ) type = "inv";
     if( pin->unused()   ) type = "nc";
+    if( pin->pinType() == Pin::pinNull ) type = "nul";
     QString pinStr = "Pin";
     pinStr += "; type="  +type;
     pinStr += "; xpos="  +QString::number( pin->x() );

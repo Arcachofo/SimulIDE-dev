@@ -69,9 +69,8 @@ bool Chip::setPropStr( QString prop, QString val )
         QString pkgLS;
         for( QString key : m_packageList.keys() )
         {
-            QString pkg = m_packageList.value( key );
-            if( pkg.endsWith("LS") ) pkgLS  = pkg;
-            else                     pkgDIP = pkg;
+            if( key.endsWith("DIP") ) pkgDIP = key;
+            else                      pkgLS  = key;
         }
 
         if( val == "true" ) setPackage( pkgLS );
@@ -126,7 +125,7 @@ void Chip::setPackage( QString package )
 {
     m_package = package;
 
-    setLogicSymbol( package.endsWith("_LS") );
+    setLogicSymbol( !package.endsWith("DIP") );
 
     QString pkgStr = m_packageList.value( package );
     initPackage( pkgStr );

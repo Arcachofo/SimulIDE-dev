@@ -136,8 +136,8 @@ Component* SubCircuit::construct( QString type, QString id )
         subcFile  = m_subcDir+"/"+name+".sim1";
         pkgeFile  = m_subcDir+"/"+name+".package";
         QString pkgFileLS = m_subcDir+"/"+name+"_LS.package";
-        QString pkgName   = "2- "+name+"_DIP";
-        QString pkgNameLS = "1- "+name+"_LS";
+        QString pkgName   = "2- DIP";
+        QString pkgNameLS = "1- Logic Symbol";
 
         bool dip = QFile::exists( pkgeFile );
         bool ls  = QFile::exists( pkgFileLS );
@@ -166,10 +166,10 @@ Component* SubCircuit::construct( QString type, QString id )
             QMap<QString, QString> pList;
 
             QString pkg = packageList.value( pkgName );
-            if( !pkg.isEmpty() ) pList["1- "+name+"_DIP"] = pkg;
+            if( !pkg.isEmpty() ) pList["1- DIP"] = pkg;
 
             pkg = packageList.value( pkgNameLS );
-            if( !pkg.isEmpty() ) pList["2- "+name+"_LS"] = pkg; // LS last
+            if( !pkg.isEmpty() ) pList["2- Logic Symbol"] = pkg; // LS last
 
             packageList = pList;
         }
@@ -401,7 +401,7 @@ void SubCircuit::loadSubCircuit( QString doc )
     for( Linker* l : linkList ) l->createLinks( &m_compList );
 }
 
-Pin* SubCircuit::addPin( QString id, QString type, QString label, int pos, int xpos, int ypos, int angle, int length, int space )
+Pin* SubCircuit::addPin( QString id, QString type, QString label, int, int xpos, int ypos, int angle, int length, int space )
 {
     if( m_initialized && m_pinTunnels.contains( m_id+"-"+id ) )
     {

@@ -235,6 +235,10 @@ void Mcu::setup( QString type )
 
     // Main Property Group --------------------------------------
 
+    if( m_packageList.size() > 1 )
+    addProperty(tr("Main"), new StrProp<Mcu>("Package", tr("Package"),""
+                                            , this, &Mcu::package, &Mcu::setPackage,0,"enum" ) );
+
     if( m_eMcu.m_intOsc )
     addProperty(tr("Main"),new DoubProp<Mcu>("Frequency", tr("Frequency"),"MHz"
                                             , this, &Mcu::extFreq, &Mcu::setExtFreq ));
@@ -250,10 +254,6 @@ void Mcu::setup( QString type )
     if( m_eMcu.romSize() )
     addProperty(tr("Main"),new BoolProp<Mcu>("saveEepr", tr("EEPROM persitent"),""
                                             , this, &Mcu::saveEepr,&Mcu::setSaveEepr ));
-
-    if( m_packageList.size() > 1 )
-    addProperty(tr("Main"), new StrProp<Mcu>("Package", tr("Package"),""
-                                            , this, &Mcu::package, &Mcu::setPackage,0,"enum" ) );
 
     // Config Property Group ------------------------------------
 
@@ -650,8 +650,10 @@ Pin* Mcu::addPin( QString id, QString type, QString label,
     {
         pin->setVisible( false );
         pin->setLabelText( "" );
+    }else{
+        pin->setVisible( true );
+        if( type.startsWith("inv") ) pin->setInverted( true );
     }
-    else if( type.startsWith("inv") ) pin->setInverted( true );
 
     pin->setPos( QPoint( xpos, ypos ) );
     pin->setPinAngle( angle );
