@@ -16,61 +16,61 @@ SOURCES      = $$files( $$PWD/src/*.cpp, true )
 HEADERS      = $$files( $$PWD/src/*.h, true )
 TRANSLATIONS = $$files( $$PWD/resources/translations/*.ts )
 FORMS       += $$files( $$PWD/src/*.ui, true )
-RESOURCES    = ../src/application.qrc
+RESOURCES    = $$PWD/src/application.qrc
 
-INCLUDEPATH += ../src \
-    ../src/components \
-    ../src/components/active \
-    ../src/components/logic \
-    ../src/components/micro \
-    ../src/components/meters \
-    ../src/components/other \
-    ../src/components/outputs \
-    ../src/components/outputs/displays \
-    ../src/components/outputs/leds \
-    ../src/components/outputs/motors \
-    ../src/components/passive \
-    ../src/components/passive/reactive \
-    ../src/components/passive/resistors \
-    ../src/components/passive/resist_sensors \
-    ../src/components/sources \
-    ../src/components/switches \
-    ../src/gui \
-    ../src/gui/circuitwidget \
-    ../src/gui/circuitwidget/properties \
-    ../src/gui/circuitwidget/subcircuits \
-    ../src/gui/dataplotwidget \
-    ../src/gui/serial \
-    ../src/gui/componentselector \
-    ../src/gui/filebrowser \
-    ../src/gui/editorwidget \
-    ../src/gui/editorwidget/dialogs \
-    ../src/gui/editorwidget/debuggers \
-    ../src/gui/appdialogs \
-    ../src/gui/memory \
-    ../src/simulator \
-    ../src/simulator/elements \
-    ../src/simulator/elements/active \
-    ../src/simulator/elements/outputs \
-    ../src/simulator/elements/passive \
-    ../src/microsim \
-    ../src/microsim/cores \
-    ../src/microsim/cores/avr \
-    ../src/microsim/cores/i51 \
-    ../src/microsim/cores/pic \
-    ../src/microsim/cores/mcs65 \
-    ../src/microsim/cores/z80 \
-    ../src/microsim/cores/scripted \
-    ../src/microsim/cores/intmem \
-    ../src/microsim/modules \
-    ../src/microsim/modules/memory \
-    ../src/microsim/modules/usart \
-    ../src/microsim/modules/twi \
-    ../src/microsim/modules/spi\
-    ../src/microsim/modules/script\
-    ../src/angel/include \
-    ../src/angel/JIT \
-    ../src/angel/src
+INCLUDEPATH += $$PWD/src \
+    $$PWD/src/components \
+    $$PWD/src/components/active \
+    $$PWD/src/components/logic \
+    $$PWD/src/components/micro \
+    $$PWD/src/components/meters \
+    $$PWD/src/components/other \
+    $$PWD/src/components/outputs \
+    $$PWD/src/components/outputs/displays \
+    $$PWD/src/components/outputs/leds \
+    $$PWD/src/components/outputs/motors \
+    $$PWD/src/components/passive \
+    $$PWD/src/components/passive/reactive \
+    $$PWD/src/components/passive/resistors \
+    $$PWD/src/components/passive/resist_sensors \
+    $$PWD/src/components/sources \
+    $$PWD/src/components/switches \
+    $$PWD/src/gui \
+    $$PWD/src/gui/circuitwidget \
+    $$PWD/src/gui/circuitwidget/properties \
+    $$PWD/src/gui/circuitwidget/subcircuits \
+    $$PWD/src/gui/dataplotwidget \
+    $$PWD/src/gui/serial \
+    $$PWD/src/gui/componentselector \
+    $$PWD/src/gui/filebrowser \
+    $$PWD/src/gui/editorwidget \
+    $$PWD/src/gui/editorwidget/dialogs \
+    $$PWD/src/gui/editorwidget/debuggers \
+    $$PWD/src/gui/appdialogs \
+    $$PWD/src/gui/memory \
+    $$PWD/src/simulator \
+    $$PWD/src/simulator/elements \
+    $$PWD/src/simulator/elements/active \
+    $$PWD/src/simulator/elements/outputs \
+    $$PWD/src/simulator/elements/passive \
+    $$PWD/src/microsim \
+    $$PWD/src/microsim/cores \
+    $$PWD/src/microsim/cores/avr \
+    $$PWD/src/microsim/cores/i51 \
+    $$PWD/src/microsim/cores/pic \
+    $$PWD/src/microsim/cores/mcs65 \
+    $$PWD/src/microsim/cores/z80 \
+    $$PWD/src/microsim/cores/scripted \
+    $$PWD/src/microsim/cores/intmem \
+    $$PWD/src/microsim/modules \
+    $$PWD/src/microsim/modules/memory \
+    $$PWD/src/microsim/modules/usart \
+    $$PWD/src/microsim/modules/twi \
+    $$PWD/src/microsim/modules/spi\
+    $$PWD/src/microsim/modules/script\
+    $$PWD/src/angel/include \
+    $$PWD/src/angel/JIT \
+    $$PWD/src/angel/src
 
 QMAKE_CXXFLAGS += -Wno-unused-parameter
 QMAKE_CXXFLAGS += -Wno-implicit-fallthrough
@@ -90,7 +90,7 @@ QMAKE_CXXFLAGS_DEBUG += -O0
 win32 {
     OS = Windows
     QMAKE_LIBS += -lwsock32
-    RC_ICONS += ../resources/icons/simulide.ico
+    RC_ICONS += $$PWD/resources/icons/simulide.ico
 }
 linux {
     OS = Linux
@@ -99,7 +99,7 @@ linux {
 macx {
     OS = MacOs
     QMAKE_LFLAGS += -no-pie
-    ICON = ../resources/icons/simulide.icns
+    ICON = $$PWD/resources/icons/simulide.icns
 }
 
 CONFIG += qt 
@@ -117,43 +117,30 @@ DEFINES += BUILDDATE=\\\"$$BUILD_DATE\\\"
 TARGET_NAME   = SimulIDE_$$VERSION$$RELEASE
 TARGET_PREFIX = $$BUILD_DIR/executables/$$TARGET_NAME
 
+DESTDIR = $$TARGET_PREFIX
+
 OBJECTS_DIR *= $$OUT_PWD/build/objects
 MOC_DIR     *= $$OUT_PWD/build/moc
 INCLUDEPATH += $$MOC_DIR
 
-win32 | linux {
-    DESTDIR = $$TARGET_PREFIX
-    mkpath( $$TARGET_PREFIX/data )
-    mkpath( $$TARGET_PREFIX/examples )
-    copy2dest.commands = \
-        $(COPY_DIR) ../resources/data     $$TARGET_PREFIX; \
-        $(COPY_DIR) ../resources/examples $$TARGET_PREFIX; \
-}
 macx {
-QMAKE_CC = /usr/local/Cellar/gcc@7/7.5.0_4/bin/gcc-7
-QMAKE_CXX = /usr/local/Cellar/gcc@7/7.5.0_4/bin/g++-7
+QMAKE_CC   = /usr/local/Cellar/gcc@7/7.5.0_4/bin/gcc-7
+QMAKE_CXX  = /usr/local/Cellar/gcc@7/7.5.0_4/bin/g++-7
 QMAKE_LINK = /usr/local/Cellar/gcc@7/7.5.0_4/bin/g++-7
 
     QMAKE_CXXFLAGS -= -stdlib=libc++
     QMAKE_LFLAGS   -= -stdlib=libc++
-    DESTDIR = $$TARGET_PREFIX
     mkpath( $$TARGET_PREFIX/simulide.app )
-    mkpath( $$TARGET_PREFIX/simulide.app/Contents/MacOs/data )
-    mkpath( $$TARGET_PREFIX/simulide.app/Contents/MacOs/examples )
-    copy2dest.commands = \
-        $(COPY_DIR) ../resources/data     $$TARGET_PREFIX/simulide.app/Contents/MacOs; \
-        $(COPY_DIR) ../resources/examples $$TARGET_PREFIX/simulide.app/Contents/MacOs;
 }
 
-runLrelease.commands = lrelease ../resources/translations/*.ts; \
-                       lrelease ../resources/translations/qt/*.ts; \
-                        $(MOVE) ../resources/translations/*.qm ../resources/qm; \
-                        $(MOVE) ../resources/translations/qt/*.qm ../resources/qm;
+runLrelease.commands = \
+    lrelease $$PWD/resources/translations/*.ts; \
+    lrelease $$PWD/resources/translations/qt/*.ts; \
+    $(MOVE) $$PWD/resources/translations/*.qm $$PWD/resources/qm; \
+    $(MOVE) $$PWD/resources/translations/qt/*.qm $$PWD/resources/qm;
 
 QMAKE_EXTRA_TARGETS += runLrelease
-QMAKE_EXTRA_TARGETS += copy2dest
 PRE_TARGETDEPS      += runLrelease
-POST_TARGETDEPS     += copy2dest
 
 message( "-----------------------------------")
 message( "    "                               )
