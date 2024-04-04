@@ -231,7 +231,7 @@ Mcu::Mcu( QString type, QString id )
 
 void Mcu::setup( QString type )
 {
-    slotmain();
+    if( m_pSelf == NULL ) slotmain();
 
     // Main Property Group --------------------------------------
 
@@ -283,9 +283,10 @@ void Mcu::setup( QString type )
 
     propGroup hi = {"Hidden", {}, groupHidden };
 
-    hi.propList.append(new StrProp<Mcu>("varList"  ,"","", this, &Mcu::varList,   &Mcu::setVarList) );
-    hi.propList.append(new StrProp<Mcu>("cpuRegs"  ,"","", this, &Mcu::cpuRegs,   &Mcu::setCpuRegs) );
-    hi.propList.append(new StrProp<Mcu>("Links"    ,"","", this, &Mcu::getLinks , &Mcu::setLinks ) );
+    hi.propList.append(new StrProp<Mcu>("varList" ,"","", this, &Mcu::varList,   &Mcu::setVarList) );
+    hi.propList.append(new StrProp<Mcu>("cpuRegs" ,"","", this, &Mcu::cpuRegs,   &Mcu::setCpuRegs) );
+    hi.propList.append(new StrProp<Mcu>("Links"   ,"","", this, &Mcu::getLinks , &Mcu::setLinks ) );
+    hi.propList.append(new BoolProp<Mcu>("MainMcu","","", this, &Mcu::mainMcu , &Mcu::setMainMcu ) );
 
     if( m_eMcu.romSize() )
     hi.propList.append(new StrProp<Mcu>("eeprom"   ,"","", this, &Mcu::getEeprom, &Mcu::setEeprom ) );
@@ -523,8 +524,7 @@ bool Mcu::load( QString fileName )
 void Mcu::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
 {
     QAction* mainAction = menu->addAction( QIcon(":/subc.png"),tr("Main Mcu") );
-    QObject::connect( mainAction, &QAction::triggered
-                      , [=](){ slotmain(); } );
+    QObject::connect( mainAction, &QAction::triggered, [=](){ slotmain(); } );
 
     if( m_scriptLink && !parentItem() )
     {

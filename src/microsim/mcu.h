@@ -39,6 +39,9 @@ class Mcu : public Chip, public Linker
 
         virtual bool setPropStr( QString prop, QString val ) override;
 
+        bool mainMcu() { return m_pSelf == this; }
+        void setMainMcu( bool m ) { if( m ) slotmain(); }
+
         QString program() { return m_eMcu.getFileName(); }
         void setProgram( QString pro );
 
@@ -105,7 +108,7 @@ class Mcu : public Chip, public Linker
 
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w ) override;
 
-    public slots:
+    //public slots:
         void slotmain();
         void slotLoad();
         void slotReload();
