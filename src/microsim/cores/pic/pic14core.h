@@ -24,7 +24,7 @@ protected:
         {
             addr = m_mcu->getMapperAddr( addr+m_bank );
 
-            if( addr == 0 ) addr = *m_FSR;// INDF
+            if( addr == 0 ) addr = getINDF();// INDF
             return McuCpu::GET_RAM( addr );
         }
         virtual void SET_RAM( uint16_t addr, uint8_t v ) override //
@@ -32,9 +32,15 @@ protected:
             addr = m_mcu->getMapperAddr( addr+m_bank );
 
             if( addr == m_PCLaddr ) setPC( v + (m_dataMem[m_PCHaddr]<<8) ); // Writting to PCL
-            else if( addr == 0 ) addr = *m_FSR;      // INDF
+            else if( addr == 0 ) addr = getINDF();      // INDF
 
             McuCpu::SET_RAM( addr, v );
+        }
+        inline uint16_t getINDF()
+        {
+            uint16_t  addr = *m_FSR;
+            if( *m_STATUS & 1<<IRP ) addr |= 1<<8;
+            return addr;
         }
 };
 
