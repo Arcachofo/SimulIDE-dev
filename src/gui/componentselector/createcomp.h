@@ -21,18 +21,19 @@ class creCompDialog : public QDialog, private Ui::creCompDialog
         //void on_typeBox_currentIndexChanged( int index );
         //void on_categoryEdit_editingFinished();
         void on_iconChoose_clicked();
-        //void on_iconImage_clicked();
 
     private slots:
         void accept();
         void reject();
 
     private:
-        void embedIcon();
+        void addIcon();
         void updtIconData();
 
         QString m_circuitPath;
         QString m_iconFile;
         QString m_iconData;
+
+        QStringList m_iconList;
 };
 #endif
