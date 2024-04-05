@@ -1,6 +1,0 @@
-Tlačítko:
-
-Jedná se o spínač bez aretace.
-
-Je možné jej nastavit pomocí vlastnosti "Sepnuto v klidovém stavu" tak, aby bylo v klidovém stavu rozepnuté nebo sepnuté.
-

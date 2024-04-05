@@ -1,8 +1,0 @@
-全加器(Full Adder)
-
-属性: (默认值)
-
-电气特性:
-#include logicinputs
-#include logicoutputs
-#include logicedges

@@ -1,6 +1,0 @@
-Krokový motor:
-
-- Nastavitelný počet kroků na otáčků.
-- Nastavitelný odpor vinutí.
-
-Pro jednoduchost a rychlost je vinutí motoru modelováno pouze odpory.

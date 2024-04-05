@@ -1,3 +1,0 @@
-Flipflop "JK" type.
-
-#include flipflopfull

@@ -1,3 +1,0 @@
-48x84 pixels matrix LCD based on PCD8544 controller.
-
-The PCD8544 interfaces to microcontrollers through a serial bus interface.

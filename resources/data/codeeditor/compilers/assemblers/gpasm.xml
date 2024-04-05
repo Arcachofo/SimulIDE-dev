@@ -1,8 +1,0 @@
-<!DOCTYPE SimulIDE>
-
-<compiler name="GpAsm" inclPath="./" type="piasm00" syntax="pic14asm">
-    <step 
-        command="gpasm"
-        arguments=" -L -w1 -i -ainhx32 -I $fileDir -I $inclPath $filePath"
-    />
-</compiler>

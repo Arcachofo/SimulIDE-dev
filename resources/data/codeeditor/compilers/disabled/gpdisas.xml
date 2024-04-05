@@ -1,8 +1,0 @@
-<!DOCTYPE SimulIDE>
-
-<compiler name="GpDisas" type="picdisas" >
-    <step 
-        command="gpdasm"
-        arguments=" -cs -p$device $fileName$fileExt"
-    />
-</compiler>

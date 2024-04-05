@@ -1,9 +1,0 @@
-<!DOCTYPE SimulIDE>
-
-<iou name="DAC" core="scripted" script="dac_core.as" >
-    
-    <ioport name="PORTA" pins="I0,I1,I2,I3,I4,I5,I6,I7" />
-    
-    <ioport name="PORTB" pins="Out" />
-    
-</iou>

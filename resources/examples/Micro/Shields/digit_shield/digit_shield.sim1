@@ -1,9 +1,0 @@
-<circuit version="" rev="2224" stepSize="1000000" stepsPS="1000000" NLsteps="100000" reaStep="1000000" animate="0" >
-
-<item itemtype="Subcircuit" CircId="DigitShield-6" mainComp="false" Show_id="true" Show_Val="false" Pos="12,0" rotation="0" hflip="1" vflip="1" label="DigitShield-6" idLabPos="48.137,-15.8368" labelrot="0" valLabPos="-16,20" valLabRot="0" BoardId="Uno-4" />
-
-<item itemtype="Subcircuit" CircId="Uno-4" mainComp="false" Show_id="false" Show_Val="false" Pos="-96,8" rotation="90" hflip="1" vflip="1" label="Uno-4" idLabPos="-15.0916,134.559" labelrot="-90" valLabPos="-16,20" valLabRot="0" Logic_Symbol="false">
-<mainCompProps MainCompId="mega328-109" Frequency="16 MHz" Program="digit_shield.hex" Auto_Load="false" saveEepr="true" SerialMon="-1" />
-</item>
-
-</circuit>

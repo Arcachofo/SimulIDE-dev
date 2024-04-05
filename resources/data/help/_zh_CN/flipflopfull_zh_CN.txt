@@ -1,7 +1,0 @@
-属性: (默认)
-
-主要特性:
-- 使用Set/Reset引脚: (否)
-   显示/隐藏Set和Reset引脚.
-
-#include flipflop

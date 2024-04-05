@@ -1,7 +1,0 @@
-Zvukový výstup:
-
-Připojení na standardní zvukový výstup Vašeho počítače.
-
-Pokud není standardní zvukový výstup nalezen, na schématické značce se zobrazí symbol "X".
-
-

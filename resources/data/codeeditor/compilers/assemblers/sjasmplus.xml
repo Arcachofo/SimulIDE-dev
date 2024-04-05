@@ -1,8 +1,0 @@
-<!DOCTYPE SimulIDE>
-
-<compiler name="SjASMPlus" type="asm02" syntax="z80asm" buildPath="build" uploadhex="false">
-    <step 
-        command="sjasmplus"
-        arguments=" --lst=$buildPath$fileName.lst --raw=$buildPath$fileName.bin $filePath"
-    />
-</compiler>

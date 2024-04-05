@@ -1,8 +1,0 @@
-<!DOCTYPE SimulIDE>
-
-<compiler name="SDCC" type="sdcc" buildPath="build" >
-    <step 
-        command="sdcc"
-        arguments=" $extraArgs -o$buildPath $filePath"
-    />
-</compiler>

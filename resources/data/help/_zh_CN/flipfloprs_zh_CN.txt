@@ -1,6 +1,0 @@
-RS触发器(Flipflop RS)
-
-属性: (默认值)
-
-主要特性:
-#include flipflop

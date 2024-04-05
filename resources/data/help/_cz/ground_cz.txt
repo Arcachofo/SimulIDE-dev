@@ -1,5 +1,0 @@
-Země:
-
-Jedná o zdroj nulového napětí.
-
-Zdroj je vždy zapnutý.

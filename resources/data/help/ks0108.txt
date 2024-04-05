@@ -1,6 +1,0 @@
-128x64 dot-matrix liquid crystal graphic display based on KS0108 LCD driver.
-
-Property: (default value)
-
-- CS Active Low: (no)
-   Whether CS Pin is active low..

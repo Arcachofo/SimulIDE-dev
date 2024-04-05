@@ -1,6 +1,0 @@
-<!DOCTYPE SimulIDE>
-
-<mcu name="MCS52" core="8051" data="256" prog="8192" progword="1" eeprom="0" 
-            inst_cycle="12">
-            <include file="MCS51.xml" />
-</mcu>

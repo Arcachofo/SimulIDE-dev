@@ -1,3 +1,0 @@
-JK触发器(Flipflop JK)
-
-#include flipflopfull

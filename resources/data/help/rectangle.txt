@@ -1,3 +1,0 @@
-Configurable Rectangle.
-
-#include shape

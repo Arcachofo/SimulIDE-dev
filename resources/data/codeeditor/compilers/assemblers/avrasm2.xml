@@ -1,8 +1,0 @@
-<!DOCTYPE SimulIDE>
-
-<compiler name="Avrasm2" inclPath="./" type="avrasm00" syntax="avrasm">
-    <step 
-        command="avrasm2"
-        arguments=" -fI -o $buildPath$fileName.hex -W NoRegDef -l $buildPath$fileName.lst -I $inclPath $filePath"
-    />
-</compiler>

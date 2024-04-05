@@ -1,7 +1,0 @@
-Connection to voltage rail.
-This is a simple voltage source.
-
-Property: (default value)
-
-- Voltage: (5 V)
-   Rail voltage.

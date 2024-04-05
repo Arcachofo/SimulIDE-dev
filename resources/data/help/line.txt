@@ -1,3 +1,0 @@
-Configurable Line.
-
-#include shape

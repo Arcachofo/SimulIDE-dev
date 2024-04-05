@@ -1,4 +1,0 @@
-Ultrasonic distance sensor.
-
-Feed a voltage to Pin "In" (left side) to simulate distance.
-Volts equal to meters: 1.5 V = 1.5 m

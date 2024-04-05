@@ -1,9 +1,0 @@
-<circuit version="1.1.0-RC1" rev="2162" stepSize="1000000" stepsPS="1000000" NLsteps="100000" reaStep="1000000" animate="0" >
-
-<item itemtype="Subcircuit" CircId="LcdShield-2" mainComp="false" Show_id="true" Show_Val="false" Pos="12,0" rotation="0" hflip="1" vflip="1" label="LcdShield-2" idLabPos="-25.9461,72.7435" labelrot="-90" valLabPos="-16,20" valLabRot="0" BoardId="Uno-1" />
-
-<item itemtype="Subcircuit" CircId="Uno-1" mainComp="false" Show_id="true" Show_Val="false" Pos="-128,-164" rotation="90" hflip="1" vflip="1" label="Uno-1" idLabPos="-14.9052,196.402" labelrot="-90" valLabPos="-16,20" valLabRot="0" Logic_Symbol="false">
-<mainCompProps MainCompId="mega328-109" Frequency="16 MHz" Program="lcd_shield.hex" Auto_Load="false" saveEepr="true" SerialMon="-1" />
-</item>
-
-</circuit>

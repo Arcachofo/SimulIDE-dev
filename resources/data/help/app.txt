@@ -1,8 +1,0 @@
-Property: (default value)
-
-- Language: (English)
-   Needs Restart.
-
-- Font Scale: (1)
-   Scale interface font, for example 1,5 = 150%.
-   Needs Restart.

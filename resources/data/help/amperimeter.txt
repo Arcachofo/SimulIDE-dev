@@ -1,8 +1,0 @@
-Current meter with output pin.
-
-Pins:
-- Red Pin: Positive.
-- Black Pin: Negative.
-- Right Pin: Output reading as voltage
-   Updates at Circuit FPS.
-

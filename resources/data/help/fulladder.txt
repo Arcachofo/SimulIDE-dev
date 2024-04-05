@@ -1,8 +1,0 @@
-Configurable full adder.
-
-Property: (default value)
-
-Electric:
-#include logicinputs
-#include logicoutputs
-#include logicedges

@@ -1,5 +1,0 @@
-Odpor DIP:
-
-Sada odporů.
-
-Počet odporů se nastavuje vlastností "Velikost".

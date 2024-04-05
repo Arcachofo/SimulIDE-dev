@@ -1,3 +1,0 @@
-Bipolární tranzistor:
- 
-Tranzistor je možné nastavit jako PNP nebo NPN pomocí vlastnosti "PNP".

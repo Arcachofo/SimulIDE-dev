@@ -1,3 +1,0 @@
-D触发器(Flipflop D)
-
-#include flipflopfull

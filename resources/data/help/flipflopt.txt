@@ -1,3 +1,0 @@
-Flipflop "T" type.
-
-#include flipflopfull

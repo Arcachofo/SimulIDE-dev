@@ -1,9 +1,0 @@
-5x8 dot-matrix liquid crystal display based on Hitachi HD44780 LCD controller.
-
-Property: (default value)
-
-- Rows: (2 Rows)
-   Number of rows of characters.
-
-- Columns: (16 Columns)
-   Number of characters per row.

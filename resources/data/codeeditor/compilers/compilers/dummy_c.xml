@@ -1,8 +1,0 @@
-<!DOCTYPE SimulIDE>
-
-<compiler name="Dummy C" type="c10" buildPath="build" >
-    <step 
-        command="sdcc"
-        arguments=""
-    />
-</compiler>

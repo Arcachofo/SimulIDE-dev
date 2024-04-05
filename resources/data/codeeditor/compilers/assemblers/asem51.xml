@@ -1,8 +1,0 @@
-<!DOCTYPE SimulIDE>
-
-<compiler name="Asem-51" type="avrasm01" syntax="i51asm">
-    <step 
-        command="asem"
-        arguments=" -v $filePath"
-    />
-</compiler>
