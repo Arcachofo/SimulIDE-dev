@@ -318,11 +318,14 @@ void MainWindow::getUserPath()
 {
     QString path = getDirDialog( tr("Select User data directory"), m_userDir );
 
-    if( !path.isEmpty() )
-    {
-         m_settings->setValue("userPath", path);
-         m_userDir = path;
-    }
+    setUserPath( path );
+}
+
+void MainWindow::setUserPath( QString path )
+{
+    if( !QFileInfo::exists( path ) ) return;
+    m_settings->setValue("userPath", path);
+    m_userDir = path;
 }
 
 QString MainWindow::getUserFilePath( QString f )

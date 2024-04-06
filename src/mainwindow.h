@@ -76,7 +76,7 @@ class MainWindow : public QMainWindow
         QString getDataFilePath( QString file );          // Get file path in data folder, first user folder, if not SimulIDE folder
         QString getUserFilePath( QString f );             // Get file path in user folder
         QString userPath() { return m_userDir; }          // User folder path
-        void setUserPath( QString p ) { m_userDir = p; }
+        void setUserPath( QString p );
         void getUserPath();                               // File open Dialog
         
         QTabWidget* m_sidepanel;
