@@ -14,12 +14,15 @@ class creCompDialog : public QDialog, private Ui::creCompDialog
 {
     Q_OBJECT
 
+    struct iconItem_t{
+        QString iconFile;
+        QString iconData;
+    };
+
     public:
         creCompDialog( QWidget* parent=0 );
 
     public slots:
-        //void on_typeBox_currentIndexChanged( int index );
-        //void on_categoryEdit_editingFinished();
         void on_iconChoose_clicked();
 
     private slots:
@@ -27,13 +30,12 @@ class creCompDialog : public QDialog, private Ui::creCompDialog
         void reject();
 
     private:
-        void addIcon();
-        void updtIconData();
+        void addIcon( iconItem_t iconItem );
+        void addIconFile( QString iconFile );
 
         QString m_circuitPath;
         QString m_iconFile;
-        QString m_iconData;
 
-        QStringList m_iconList;
+        QList<iconItem_t> m_itemList;
 };
 #endif

@@ -21,32 +21,37 @@ creCompDialog::creCompDialog( QWidget* parent )
     categoryEdit->setText( Circuit::self()->category() );
     nameEdit->setText( Circuit::self()->compName() );
     infoEdit->setText( Circuit::self()->compInfo() );
-    m_iconData = Circuit::self()->iconData();
+    QString iconData = Circuit::self()->iconData();
 
     if( m_circuitPath.endsWith(".comp") ) buttonBox->button( QDialogButtonBox::Cancel )->hide();
 
-    m_iconList <<":/null_ico.png"<<":/subc_ico.png"<<":/subcl.png"<<":/subc2.png"<<":/ic2.png"
-               <<":/perif.png"<<":/1to1.png"<<":/1to2.png"<<":/1to3.png"<<":/2to1.png"<<":/2to2.png"
-               <<":/2to3.png"<<":/2to3g.png"<<":/3to1.png"<<":/3to2.png"<<":/3to2g.png"
-               <<":/demux.png"<<":/mux.png"<<":/script_ico.png"<<":/shield.png"<<":/7segbcd.png";
-    for( QString icon : m_iconList ) iconBox->addItem( QIcon( icon ), "");
+    QStringList iconList;
+    iconList <<":/null_ico.png"<<":/subc_ico.png"<<":/subcl.png"<<":/subc2.png"<<":/ic2.png"
+             <<":/perif.png"<<":/1to1.png"<<":/1to2.png"<<":/1to3.png"<<":/2to1.png"<<":/2to2.png"
+             <<":/2to3.png"<<":/2to3g.png"<<":/3to1.png"<<":/3to2.png"<<":/3to2g.png"
+             <<":/demux.png"<<":/mux.png"<<":/script_ico.png"<<":/shield.png"<<":/7segbcd.png";
 
-    if( m_iconData.isEmpty() ) iconBox->setCurrentIndex( 1 );
-    else                       addIcon();
+    for( QString icon : iconList ) addIconFile( icon ); // iconBox->addItem( QIcon( icon ), "");
+
+    if( iconData.isEmpty() ) iconBox->setCurrentIndex( 1 );
+    else{
+        iconItem_t iconItem;
+        iconItem.iconData = iconData;
+        addIcon( iconItem );
+    }
 }
 
 void creCompDialog::accept()
 {
     int index = iconBox->currentIndex();
-    m_iconFile = m_iconList.at( index );
-    updtIconData();
+    QString iconData = m_itemList.at( index ).iconData;
 
     QString comp = "<libitem";
     comp += " itemtype=\""+ typeBox->currentText()+"\"";
     comp += " category=\""+ categoryEdit->text()  +"\"";
     comp += " compname=\""+ nameEdit->text()      +"\"";
     comp += " compinfo=\""+ infoEdit->text()      +"\"";
-    comp += " icondata=\""+ m_iconData            +"\"";
+    comp += " icondata=\""+ iconData              +"\"";
     comp += ">\n\n";
 
     comp += Circuit::self()->circuitToString();
@@ -69,53 +74,39 @@ void creCompDialog::reject()
     Circuit::self()->cancelComp();
 }
 
-/*void creCompDialog::on_typeBox_currentIndexChanged( int index )
-{
-    qDebug() << "on_typeBox_currentIndexChanged";
-}
-
-void creCompDialog::on_categoryEdit_editingFinished()
-{
-    qDebug() << "on_categoryEdit_editingFinished";
-}*/
-
 void creCompDialog::on_iconChoose_clicked()
 {
-    //qDebug() << "on_iconChoose_clicked";
-
     QString path = m_iconFile;
     if( path.isEmpty() ) path = m_circuitPath;
 
     QString iconFile = QFileDialog::getOpenFileName( 0l, tr("Select icon"), path,
                                           tr("png Files (*.png);;All files (*.*)"));
 
-    if( iconFile.isEmpty() ) return;
     m_iconFile = iconFile;
-
-    int index = 0;
-
-    if( m_iconList.contains( m_iconFile ) )
-    {
-        index = m_iconList.indexOf( m_iconFile );
-    }else{
-        updtIconData();
-        QPixmap ic( m_iconFile );
-        QIcon ico( ic );
-
-        iconBox->addItem( ico, "" );
-        iconBox->setCurrentIndex( iconBox->count()-1 );
-    }
-
-    iconBox->setCurrentIndex( index );
+    if( !iconFile.isEmpty() ) addIconFile( iconFile );
 }
 
-void creCompDialog::addIcon()
+void creCompDialog::addIconFile( QString iconFile )
 {
+    iconItem_t iconItem;
+    iconItem.iconFile = iconFile;
+
+    QByteArray ba = fileToByteArray( iconFile, "creCompDialog::addIconFile");
+    QString iconData( ba.toHex() );
+    iconItem.iconData = iconData;
+
+    addIcon( iconItem );
+}
+
+void creCompDialog::addIcon( iconItem_t iconItem )
+{
+    m_itemList.append( iconItem );
+
     QByteArray ba;
     bool ok;
-    for( int i=0; i<m_iconData.size(); i+=2 )
+    for( int i=0; i<iconItem.iconData.size(); i+=2 )
     {
-        QString ch = m_iconData.mid( i, 2 );
+        QString ch = iconItem.iconData.mid( i, 2 );
         ba.append( ch.toInt( &ok, 16 ) );
     }
     QPixmap ic;
@@ -124,11 +115,4 @@ void creCompDialog::addIcon()
 
     iconBox->addItem( ico, "" );
     iconBox->setCurrentIndex( iconBox->count()-1 );
-}
-
-void creCompDialog::updtIconData()
-{
-    QByteArray ba = fileToByteArray( m_iconFile, "creCompDialog::accept");
-    QString iconData( ba.toHex() );
-    m_iconData = iconData;
 }
