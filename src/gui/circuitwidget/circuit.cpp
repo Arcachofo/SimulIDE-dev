@@ -934,7 +934,12 @@ void Circuit::copy( QPointF eventpoint )
         if( item->type() == QGraphicsItem::UserType+1 ) // Component
         {
             Component* comp =  qgraphicsitem_cast<Component*>( item );
-            if( comp && !comp->isHidden() && !comp->parentItem() ) complist.append( comp );
+            if( comp && !comp->isHidden() && !comp->parentItem() )
+            {
+                QString type = comp->itemType();
+                if( type == "Package" ) complist.prepend( comp );
+                else                    complist.append( comp );
+            }
         }
         else if( item->type() == QGraphicsItem::UserType+2 ) // ConnectorLine
         {
