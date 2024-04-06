@@ -22,7 +22,7 @@ class ComponentSelector : public QTreeWidget
 
         void LoadCompSetAt( QDir compSetDir );
 
-        QString getDataFile( QString compName ) { return m_xmlFileList.value( compName ); }
+        QString getDataFile( QString compName ) { return m_dataFileList.value( compName ); }
         QString getFileDir( QString compName ) { return m_dirFileList.value( compName ); }
 
         void search( QString filter );
@@ -52,6 +52,8 @@ class ComponentSelector : public QTreeWidget
 
         void loadComps( QDir compSetDir );
 
+        bool m_customComp;
+
         QTreeWidgetItem* addCategory( QString nameTr, QString name, QString parent, QString icon );
 
         QString getIcon( QString folder, QString name );
@@ -60,7 +62,7 @@ class ComponentSelector : public QTreeWidget
         QHash<QString, QTreeWidgetItem*> m_categories;
         QHash<QString, QString> m_catTr;
 
-        QHash<QString, QString> m_xmlFileList;
+        QHash<QString, QString> m_dataFileList;
         QHash<QString, QString> m_dirFileList;
         QHash<QString, QString> m_shortCuts;
 

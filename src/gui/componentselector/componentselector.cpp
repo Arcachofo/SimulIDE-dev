@@ -40,7 +40,9 @@ ComponentSelector::ComponentSelector( QWidget* parent )
     setIconSize( QSize( 30*scale, 24*scale ));
     //setIconSize( QSize( 36, 24 ));
 
+    m_customComp = false;
     LoadLibraryItems();
+    m_customComp = true;
 
     QString userDir = MainWindow::self()->userPath();
     if( !userDir.isEmpty() && QDir( userDir ).exists() ) LoadCompSetAt( userDir );
@@ -194,6 +196,9 @@ void ComponentSelector::loadComps( QDir compSetDir )
         ic.loadFromData( ba );
         QIcon ico( ic );
 
+        if( reader.attributes().hasAttribute("name") )
+            compName = reader.attributes().value("name").toString();
+
         /// TODO: reuse get category from catPath
         QString category = reader.attributes().value("category").toString();
         QStringList catPath = category.split("/");
@@ -217,8 +222,12 @@ void ComponentSelector::loadComps( QDir compSetDir )
         if( !type.isEmpty() && !m_components.contains( compName ) )
         {
             m_components.append( compName );
+            m_dataFileList[ compName ] = compFile;   // Save comp File used to create this item
+
+            if( reader.attributes().hasAttribute("info") )
+                compName += "???"+reader.attributes().value("info").toString();
+
             addItem( compName, catItem, ico, type );
-            m_xmlFileList[ compName ] = compFile;   // Save comp File used to create this item
         }
     }
 
@@ -299,7 +308,7 @@ void ComponentSelector::loadXml( QString setFile )
                     {
                         m_components.append( name );
 
-                        m_xmlFileList[ name ] = setFile;   // Save xml File used to create this item
+                        m_dataFileList[ name ] = setFile;   // Save xml File used to create this item
                         if( reader.attributes().hasAttribute("info") )
                             name += "???"+reader.attributes().value("info").toString();
 
@@ -347,6 +356,7 @@ void ComponentSelector::addItem( QString caption, QTreeWidgetItem* catItem, QIco
     item->setIcon( 0, icon );
     item->setText( 0, nameTr+info );
     item->setData( 0, Qt::UserRole, type );
+    if( m_customComp ) item->setTextColor( 0, QColor( 0, 0, 90 ) );
 
     if( type == "Subcircuit" || type == "MCU" )
          item->setData( 0, Qt::WhatsThisRole, nameTr );
@@ -388,13 +398,15 @@ QTreeWidgetItem* ComponentSelector::addCategory( QString nameTr, QString name, Q
     {
         catItem = new QTreeWidgetItem( this );
         catItem->setIcon( 0, QIcon(":/null-0.png") );
-        catItem->setTextColor( 0, QColor( 110, 95, 50 ) );
+        if( m_customComp ) catItem->setTextColor( 0, QColor( 95, 95, 110 ) );
+        else               catItem->setTextColor( 0, QColor( 110, 95, 50 ) );
         catItem->setBackground( 0, QBrush(QColor(240, 235, 245)) );
         font.setPixelSize( 13*fontScale );
         expanded = true;
     }else{
         catItem = new QTreeWidgetItem(0);
         catItem->setIcon( 0, QIcon( QPixmap( icon ) ) );
+        if( m_customComp ) catItem->setTextColor( 0, QColor( 0, 0, 90 ) );
         font.setPixelSize( 12*fontScale );
     }
     catItem->setFlags( QFlag(32) );

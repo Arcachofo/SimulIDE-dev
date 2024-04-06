@@ -247,7 +247,7 @@ void CircuitView::contextMenuEvent( QContextMenuEvent* event )
 
         if( !m_circuit->getFilePath().isEmpty() && !m_circuit->isComp() )
         {
-            QAction* createCompAct = menu.addAction(QIcon(":/subc.png"), tr("Create Subcircuit") );
+            QAction* createCompAct = menu.addAction(QIcon(":/subc.png"), tr("Create Component") );
             connect( createCompAct, &QAction::triggered,
                        m_circuit, &Circuit::createComp, Qt::UniqueConnection );
         }

@@ -89,7 +89,7 @@ Component* SubCircuit::construct( QString type, QString id )
             QString itemType = root.attribute("itemtype");
             if( itemType != "Package") break;
 
-            QString type = root.attribute("type");
+            QString type = root.attribute("SubcType");
             if( !type.isEmpty() ) subcTyp = type;
 
             QString pkgName = root.attribute("label");
