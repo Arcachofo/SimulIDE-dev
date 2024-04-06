@@ -196,8 +196,8 @@ void ComponentSelector::loadComps( QDir compSetDir )
         ic.loadFromData( ba );
         QIcon ico( ic );
 
-        if( reader.attributes().hasAttribute("name") )
-            compName = reader.attributes().value("name").toString();
+        if( reader.attributes().hasAttribute("compname") )
+            compName = reader.attributes().value("compname").toString();
 
         /// TODO: reuse get category from catPath
         QString category = reader.attributes().value("category").toString();
@@ -224,8 +224,8 @@ void ComponentSelector::loadComps( QDir compSetDir )
             m_components.append( compName );
             m_dataFileList[ compName ] = compFile;   // Save comp File used to create this item
 
-            if( reader.attributes().hasAttribute("info") )
-                compName += "???"+reader.attributes().value("info").toString();
+            if( reader.attributes().hasAttribute("compinfo") )
+                compName += "???"+reader.attributes().value("compinfo").toString();
 
             addItem( compName, catItem, ico, type );
         }

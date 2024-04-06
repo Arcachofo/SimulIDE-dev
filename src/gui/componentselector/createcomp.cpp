@@ -19,6 +19,8 @@ creCompDialog::creCompDialog( QWidget* parent )
 
     m_circuitPath = Circuit::self()->getFilePath();
     categoryEdit->setText( Circuit::self()->category() );
+    nameEdit->setText( Circuit::self()->compName() );
+    infoEdit->setText( Circuit::self()->compInfo() );
     m_iconData = Circuit::self()->iconData();
 
     if( m_circuitPath.endsWith(".comp") ) buttonBox->button( QDialogButtonBox::Cancel )->hide();
@@ -42,8 +44,8 @@ void creCompDialog::accept()
     QString comp = "<libitem";
     comp += " itemtype=\""+ typeBox->currentText()+"\"";
     comp += " category=\""+ categoryEdit->text()  +"\"";
-    comp += " name=\""    + nameEdit->text()      +"\"";
-    comp += " info=\""    + infoEdit->text()      +"\"";
+    comp += " compname=\""+ nameEdit->text()      +"\"";
+    comp += " compinfo=\""+ infoEdit->text()      +"\"";
     comp += " icondata=\""+ m_iconData            +"\"";
     comp += ">\n\n";
 

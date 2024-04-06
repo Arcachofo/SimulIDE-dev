@@ -120,7 +120,8 @@ class Circuit : public QGraphicsScene
 
         bool isComp() { return m_creCompDialog != NULL; }
         QString category() { return m_category; }
-        void setCategory( QString c ) { m_category = c; }
+        QString compName() { return m_compName; }
+        QString compInfo() { return m_compInfo; }
 
         QString iconData() { return m_iconData; }
         void setIconData( QString id ) { m_iconData = id; }
@@ -162,6 +163,8 @@ class Circuit : public QGraphicsScene
 
         QString m_itemType;
         QString m_category;
+        QString m_compName;
+        QString m_compInfo;
         QString m_iconData;
 
         QRect        m_scenerect;

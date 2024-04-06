@@ -454,6 +454,8 @@ void Circuit::loadStrDoc( QString &doc )
                     else if( name == "animate" ) setAnimate( prop.toInt() );
                     else if( name == "rev"     ) rev = prop.toInt();
                     else if( name == "category") m_category = prop.toString();
+                    else if( name == "compname") m_compName = prop.toString();
+                    else if( name == "compinfo") m_compInfo = prop.toString();
                     else if( name == "icondata") m_iconData = prop.toString();
                     else if( name == "itemtype") m_itemType = prop.toString();
             }   }
