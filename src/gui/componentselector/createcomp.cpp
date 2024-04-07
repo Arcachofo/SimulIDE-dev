@@ -9,6 +9,7 @@
 #include <QFileInfo>
 
 #include "createcomp.h"
+#include "mainwindow.h"
 #include "circuit.h"
 #include "utils.h"
 
@@ -43,13 +44,18 @@ creCompDialog::creCompDialog( QWidget* parent )
 
 void creCompDialog::accept()
 {
+    QString name = nameEdit->text();
+    if( name.isEmpty() ){
+        qDebug() << "creCompDialog::accept Error: Component name is empty";
+        return;
+    }
     int index = iconBox->currentIndex();
     QString iconData = m_itemList.at( index ).iconData;
 
     QString comp = "<libitem";
     comp += " itemtype=\""+ typeBox->currentText()+"\"";
     comp += " category=\""+ categoryEdit->text()  +"\"";
-    comp += " compname=\""+ nameEdit->text()      +"\"";
+    comp += " compname=\""+ name                  +"\"";
     comp += " compinfo=\""+ infoEdit->text()      +"\"";
     comp += " icondata=\""+ iconData              +"\"";
     comp += ">\n\n";
@@ -57,9 +63,9 @@ void creCompDialog::accept()
     comp += Circuit::self()->circuitToString();
     comp += "</libitem>";
 
-    QFileInfo info( m_circuitPath );
+    QFileInfo info( MainWindow::self()->userPath() );
 
-    const QString dir = info.path()+"/"+info.baseName()+".comp";
+    const QString dir = info.path()+"/"+name+".comp";
     QString fileName = QFileDialog::getSaveFileName( this, tr("Save Copmponent"), dir,
                                                      tr("Components (*.comp);;All files (*.*)") );
     if( fileName.isEmpty() ) return;
@@ -79,7 +85,7 @@ void creCompDialog::on_iconChoose_clicked()
     QString path = m_iconFile;
     if( path.isEmpty() ) path = m_circuitPath;
 
-    QString iconFile = QFileDialog::getOpenFileName( 0l, tr("Select icon"), path,
+    QString iconFile = QFileDialog::getOpenFileName( 0l, tr("Select icon file"), path,
                                           tr("png Files (*.png);;All files (*.*)"));
 
     m_iconFile = iconFile;

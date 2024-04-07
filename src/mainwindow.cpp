@@ -39,28 +39,22 @@ MainWindow::MainWindow()
 
     this->setWindowTitle( m_version );
 
-    //QString appImg = QProcessEnvironment::systemEnvironment().value( QStringLiteral("APPIMAGE") );
-    //if( !appImg.isEmpty() ) m_filesDir.setPath( appImg.left( appImg.lastIndexOf("/") ) );
-    //else                    m_filesDir.setPath( QApplication::applicationDirPath() );
-
-    //if( m_filesDir.exists("../share/simulide") ) m_filesDir.cd("../share/simulide");
-
     m_configDir.setPath( QStandardPaths::writableLocation( QStandardPaths::DataLocation ) );
 
     m_settings     = new QSettings( getConfigPath("simulide.ini"), QSettings::IniFormat, this );
     m_compSettings = new QSettings( getConfigPath("compList.ini"), QSettings::IniFormat, this );
 
-    m_userDir = m_settings->value( "userPath" ).toString();
+    m_userDir = m_settings->value("userPath").toString();
     if( m_userDir.isEmpty() || !QDir( m_userDir ).exists() )
-        m_userDir = getConfigPath("addons");
+        m_userDir = QDir::homePath();
 
     // Fonts --------------------------------------
-    QFontDatabase::addApplicationFont( ":/Ubuntu-R.ttf" );
-    QFontDatabase::addApplicationFont( ":/Ubuntu-B.ttf" );
-    QFontDatabase::addApplicationFont( ":/UbuntuMono-B.ttf" );
-    QFontDatabase::addApplicationFont( ":/UbuntuMono-BI.ttf" );
-    QFontDatabase::addApplicationFont( ":/UbuntuMono-R.ttf" );
-    QFontDatabase::addApplicationFont( ":/UbuntuMono-RI.ttf" );
+    QFontDatabase::addApplicationFont(":/Ubuntu-R.ttf" );
+    QFontDatabase::addApplicationFont(":/Ubuntu-B.ttf" );
+    QFontDatabase::addApplicationFont(":/UbuntuMono-B.ttf" );
+    QFontDatabase::addApplicationFont(":/UbuntuMono-BI.ttf" );
+    QFontDatabase::addApplicationFont(":/UbuntuMono-R.ttf" );
+    QFontDatabase::addApplicationFont(":/UbuntuMono-RI.ttf" );
 
     float scale = 1.0;
     if( m_settings->contains( "fontScale" ) )
@@ -71,26 +65,20 @@ MainWindow::MainWindow()
         scale = dpiX/96.0;
     }
     setFontScale( scale );
-    //----------------------------------------------
 
     QString fontName = "Ubuntu";
-    if( m_settings->contains( "fontName" ) ) fontName = m_settings->value( "fontName" ).toString();
+    if( m_settings->contains("fontName") ) fontName = m_settings->value("fontName").toString();
     setDefaultFontName( fontName );
 
     QFont df=qApp->font();
     df.setFamily( fontName );
     qApp->setFont( df );
     setFont( df );
-
-    if( !QDir( m_userDir ).exists() ) m_userDir = "";
+    //----------------------------------------------
 
     QApplication::setStyle( QStyleFactory::create("Fusion") ); //applyStyle();
     createWidgets();
-
-    if( !m_userDir.isEmpty() ) m_fileSystemTree->addEntry( tr("User Data"), m_userDir );
-
     readSettings();
-
 
     QString backPath = getConfigPath( "backup.sim1" );
     if( QFile::exists( backPath ) )
@@ -103,9 +91,9 @@ MainWindow::MainWindow()
         msgBox.setInformativeText(tr("Do you want to open the auto-saved copy of the Circuit?"));
         msgBox.setStandardButtons( QMessageBox::Open | QMessageBox::Discard );
         msgBox.setDefaultButton( QMessageBox::Open );
-        if( msgBox.exec() == QMessageBox::Open )
-             CircuitWidget::self()->loadCirc( backPath );
-        else QFile::remove( backPath ); // Remove backup file
+
+        if( msgBox.exec() == QMessageBox::Open ) CircuitWidget::self()->loadCirc( backPath );
+        else                                     QFile::remove( backPath ); // Remove backup file
     }
 }
 MainWindow::~MainWindow(){ }
@@ -121,9 +109,9 @@ void MainWindow::closeEvent( QCloseEvent *event )
 
 void MainWindow::readSettings()
 {
-    restoreGeometry(                 m_settings->value( "geometry" ).toByteArray());
-    restoreState(                    m_settings->value( "windowState" ).toByteArray());
-    m_Centralsplitter->restoreState( m_settings->value( "Centralsplitter/geometry" ).toByteArray());
+    restoreGeometry(                 m_settings->value("geometry" ).toByteArray());
+    restoreState(                    m_settings->value("windowState" ).toByteArray());
+    m_Centralsplitter->restoreState( m_settings->value("Centralsplitter/geometry" ).toByteArray());
     CircuitWidget::self()->splitter()->restoreState( m_settings->value( "Circsplitter/geometry" ).toByteArray());
 
     m_autoBck = 15;
@@ -133,13 +121,13 @@ void MainWindow::readSettings()
 
 void MainWindow::writeSettings()
 {
-    m_settings->setValue( "autoBck",   m_autoBck );
-    m_settings->setValue( "fontName", m_fontName );
-    m_settings->setValue( "fontScale", m_fontScale );
-    m_settings->setValue( "geometry",  saveGeometry() );
-    m_settings->setValue( "windowState", saveState() );
-    m_settings->setValue( "Centralsplitter/geometry", m_Centralsplitter->saveState() );
-    m_settings->setValue( "Circsplitter/geometry", CircuitWidget::self()->splitter()->saveState() );
+    m_settings->setValue("autoBck",   m_autoBck );
+    m_settings->setValue("fontName", m_fontName );
+    m_settings->setValue("fontScale", m_fontScale );
+    m_settings->setValue("geometry",  saveGeometry() );
+    m_settings->setValue("windowState", saveState() );
+    m_settings->setValue("Centralsplitter/geometry", m_Centralsplitter->saveState() );
+    m_settings->setValue("Circsplitter/geometry", CircuitWidget::self()->splitter()->saveState() );
 
     for( QString name : m_components->getCategories() )
     {
@@ -346,10 +334,10 @@ QString MainWindow::getDataFilePath( QString file )
         {
             QDir circuitDir = QFileInfo( circPath ).absoluteDir();
             path = circuitDir.absoluteFilePath("data/"+file );
-            if( QFileInfo::exists( path ) ) return path;      // File in Circuit data folder
+            if( QFileInfo::exists( path ) ) return path;                     // File in Circuit data folder
         }
     }
-    path = MainWindow::self()->getUserFilePath( file );       // File in user data folder
+    if( path.isEmpty() ) path = MainWindow::self()->getUserFilePath( file ); // File in user data folder
     //if( path.isEmpty() || !QFileInfo::exists( path ) )
     //    path = getFilePath("data/"+file );                    // File in SimulIDE data folder
 

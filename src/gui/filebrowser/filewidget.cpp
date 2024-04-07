@@ -53,11 +53,11 @@ FileWidget::FileWidget( QWidget* parent )
     setDir.cdUp( );
     QString settingsDir = setDir.absolutePath() ;
     
-    addEntry( "FileSystem", QDir::rootPath() );
-    addEntry( "Home",       QDir::homePath() );
-    //addEntry( "Examples",   MainWindow::self()->getFilePath("examples") );
-    //addEntry( "Data",       MainWindow::self()->getFilePath("data") );
-    addEntry( "Settings",   settingsDir );
+    addEntry("FileSystem", QDir::rootPath() );
+    addEntry("Home",       QDir::homePath() );
+    //addEntry("Examples",   MainWindow::self()->getFilePath("examples") );
+    addEntry("User Data",  MainWindow::self()->userPath() );
+    addEntry("Settings",   settingsDir );
 
     connect( m_bookmarks, SIGNAL( itemClicked( QListWidgetItem* )), 
              this,        SLOT(   itemClicked( QListWidgetItem* )), Qt::UniqueConnection);

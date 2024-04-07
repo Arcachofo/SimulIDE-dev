@@ -20,9 +20,10 @@ class SubPackage : public Chip, public Linker
         SubPackage( QString type, QString id );
         ~SubPackage();
         
-    static Component* construct( QString type, QString id );
-    static LibraryItem* libraryItem();
+ static Component* construct( QString type, QString id );
+ static LibraryItem* libraryItem();
 
+        virtual void setLogicSymbol( bool ls ) override;
 
         int width() { return m_width; }
         void setWidth( int width );

@@ -43,6 +43,8 @@ class FileBrowser : public QTreeView
         void openInEditor();
         void addBookMark();
         void showHidden();
+
+        void convert();
         
     protected:
         void contextMenuEvent( QContextMenuEvent* event );

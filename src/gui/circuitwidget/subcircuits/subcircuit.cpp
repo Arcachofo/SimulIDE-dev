@@ -62,13 +62,20 @@ Component* SubCircuit::construct( QString type, QString id )
     }
     QString dataFile = ComponentSelector::self()->getDataFile( name );
 
-    if( dataFile == "" ) // Component is not in SimulIDE, search in Circuit folder
+    if( dataFile.isEmpty() ) // Component not installed, search in Circuit folder
+    {
+        dataFile = MainWindow::self()->getDataFilePath( name+".comp" );
+        if( !QFile::exists( dataFile ) ) dataFile = "";
+    }
+
+    if( dataFile.isEmpty() ) // use old system
     {
         m_subcDir = ComponentSelector::self()->getFileDir( name ); // Found in folder (no xml file)
         if( m_subcDir.isEmpty() )                                  // Try to find a "data" folder in Circuit folder
         {
-            QDir circuitDir = QFileInfo( Circuit::self()->getFilePath() ).absoluteDir();
-            m_subcDir = circuitDir.absoluteFilePath( "data/"+name );
+            m_subcDir = MainWindow::self()->getDataFilePath( name );
+            //QDir circuitDir = QFileInfo( Circuit::self()->getFilePath() ).absoluteDir();
+            //m_subcDir = circuitDir.absoluteFilePath( "data/"+name );
         }
     }
     else if( dataFile.endsWith(".comp") ) // Subcircuit in single file (.comp)

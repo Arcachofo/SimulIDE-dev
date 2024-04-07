@@ -127,6 +127,13 @@ SubPackage::~SubPackage()
     delete m_boardModeAction;
 }
 
+void SubPackage::setLogicSymbol( bool ls )
+{
+    if( ls ) setIdLabel("1- Logic Symbol");
+    else     setIdLabel("2- DIP");
+    Chip::setLogicSymbol( ls );
+}
+
 void SubPackage::setWidth( int width )
 {
     if( width < 1 ) width = 1;
@@ -177,7 +184,7 @@ void SubPackage::setSubcTypeStr( QString s )
 
 void SubPackage::hoverMoveEvent( QGraphicsSceneHoverEvent* event ) 
 {
-    if( event->modifiers() & Qt::ShiftModifier) 
+    if( (event->modifiers() & Qt::ShiftModifier) && !(event->modifiers() & Qt::ControlModifier) )
     {
         m_fakePin = true;
         
@@ -506,15 +513,16 @@ QString SubPackage::packageFile()
 
 void SubPackage::setPackageFile( QString package )
 {
+    QDir circuitDir = QFileInfo( Circuit::self()->getFilePath() ).absoluteDir();
+    QString fileNameAbs = circuitDir.absoluteFilePath( package );
+
+    if( !QFile::exists( fileNameAbs ) ) package = "";
     m_pkgeFile = package;
     if( package.isEmpty() ) return;
-    if( !QFile::exists( m_pkgeFile ) );
 
     for( Pin* pin : m_pin ) deletePin( pin );
     m_pkgePins.clear();
 
-    QDir circuitDir = QFileInfo( Circuit::self()->getFilePath() ).absoluteDir();
-    QString fileNameAbs = circuitDir.absoluteFilePath( m_pkgeFile );
     QString domText = fileToString( fileNameAbs, "SubPackage::setPackageFile");
     QString pkgStr  = convertPackage( domText );
     initPackage( pkgStr );

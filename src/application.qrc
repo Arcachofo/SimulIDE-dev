@@ -39,7 +39,7 @@
         <file alias="simulide.png">../resources/icons/simulide.png</file>
 
         <file alias="null.png">../src/icons/components/null.png</file>
-
+        <file alias="null_ico.png">../src/icons/components/null_ico.png</file>
         <file alias="null-0.png">../src/icons/components/null-0.png</file>
         <file alias="new.svg">../src/icons/mainwindow/new.svg</file>
         <file alias="open.svg">../src/icons/mainwindow/open.svg</file>

@@ -35,6 +35,8 @@ class ComponentSelector : public QTreeWidget
         void setShortCuts( QHash<QString, QString> s ) { m_shortCuts = s; }
         QHash<QString, QString> getShortCuts() { return m_shortCuts; }
 
+        void loadXml( QString setFile, bool convert=false );
+
     private slots:
         void slotItemClicked( QTreeWidgetItem* item, int );
         void slotContextMenu( const QPoint& );
@@ -43,7 +45,7 @@ class ComponentSelector : public QTreeWidget
     private:
  static ComponentSelector* m_pSelf;
 
-        void loadXml( QString setFile );
+        void convertItem( QString folder, QString itemFile, QString name, QString category, QString icon, QString type );
 
         void addItem( QString caption, QTreeWidgetItem* catItem, QString icon, QString type );
         void addItem( QString caption, QTreeWidgetItem* catItem, QIcon &icon, QString type );

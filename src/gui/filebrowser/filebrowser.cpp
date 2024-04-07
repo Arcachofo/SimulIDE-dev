@@ -11,6 +11,7 @@
 #include "circuit.h"
 #include "filewidget.h"
 #include "editorwindow.h"
+#include "componentselector.h"
 
 FileBrowser* FileBrowser::m_pSelf = NULL;
 
@@ -118,6 +119,12 @@ void FileBrowser::mouseDoubleClickEvent( QMouseEvent* event )
     open();
 }
 
+void FileBrowser::convert()
+{
+    QString path = m_fileSystemModel->filePath( currentIndex() );
+    ComponentSelector::self()->loadXml( path, true );
+}
+
 void FileBrowser::contextMenuEvent( QContextMenuEvent* event )
 {
     QTreeView::contextMenuEvent( event );
@@ -141,6 +148,14 @@ void FileBrowser::contextMenuEvent( QContextMenuEvent* event )
                      this,           SLOT(   openInEditor()), Qt::UniqueConnection );
                      
             menu.addSeparator();
+
+            QString path = m_fileSystemModel->filePath( currentIndex() );
+            if( path.endsWith(".xml") )
+            {
+                QAction* convertXml = menu.addAction(QIcon(":/open.png"),tr("Convert components"));
+                connect( convertXml, SIGNAL( triggered()),
+                         this,       SLOT(   convert()), Qt::UniqueConnection );
+            }
         }
         QAction* showHidden = menu.addAction( tr("Show Hidden"));
         showHidden->setCheckable( true );

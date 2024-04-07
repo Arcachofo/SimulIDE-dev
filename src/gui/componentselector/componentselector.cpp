@@ -15,6 +15,8 @@
 
 #include "componentselector.h"
 #include "mainwindow.h"
+#include "circuit.h"    /// TODELETE
+#include "circuitwidget.h"
 #include "utils.h"
 
 ComponentSelector* ComponentSelector::m_pSelf = NULL;
@@ -91,6 +93,7 @@ void ComponentSelector::LoadCompSetAt( QDir compSetDir )
     {
         qDebug() << "\n" << tr("    Loading User Components at:")<< "\n" << compSetDir.absolutePath()+"/components"<<"\n";
         loadComps( compSetDir );
+        compSetDir.cd("..");
     }
     if( compSetDir.cd("test") )
     {
@@ -126,7 +129,6 @@ void ComponentSelector::LoadCompSetAt( QDir compSetDir )
         }
         compSetDir.cd("..");
     }
-    compSetDir.cd("..");
     compSetDir.setNameFilters( QStringList( "*.xml" ) );
 
     QStringList xmlList = compSetDir.entryList( QDir::Files );
@@ -242,7 +244,7 @@ void ComponentSelector::loadComps( QDir compSetDir )
     }
 }
 
-void ComponentSelector::loadXml( QString setFile )
+void ComponentSelector::loadXml( QString setFile, bool convert )
 {
     QFile file( setFile );
     if( !file.open(QFile::ReadOnly | QFile::Text) ){
@@ -269,12 +271,13 @@ void ComponentSelector::loadXml( QString setFile )
                     icon = MainWindow::self()->getDataFilePath("images/"+icon);
             }
 
-            QString category = reader.attributes().value("category").toString();
-            QStringList catPath = category.split("/");
+            QString catFull = reader.attributes().value("category").toString();
+            catFull.replace( "IC 74", "Logic/IC 74");
+            QStringList catPath = catFull.split("/");
 
             QTreeWidgetItem* catItem = NULL;
             QString parent = "";
-            category = "";
+            QString category = "";
             while( !catPath.isEmpty() )
             {
                 parent = category;
@@ -304,7 +307,17 @@ void ComponentSelector::loadXml( QString setFile )
                     }
                     else icon = getIcon( folder, name );
 
-                    if( !m_components.contains( name ) )
+                    if( convert )
+                    {
+                        if( type == "Subcircuit" )
+                        {
+                            if( reader.attributes().hasAttribute("info") )
+                                name += "???"+reader.attributes().value("info").toString();
+
+                            convertItem( folder, setFile, name, catFull, icon, type );
+                        }
+                    }
+                    else if( catItem && !m_components.contains( name ) )
                     {
                         m_components.append( name );
 
@@ -312,12 +325,12 @@ void ComponentSelector::loadXml( QString setFile )
                         if( reader.attributes().hasAttribute("info") )
                             name += "???"+reader.attributes().value("info").toString();
 
-                        if( catItem ) addItem( name, catItem, icon, type );
+                        if( !convert ) addItem( name, catItem, icon, type );
                     }
                     reader.skipCurrentElement();
     }   }   }   }
     QString compSetName = setFile.split( "/").last();
-    //m_compSetUnique.append( compSetName );
+
     qDebug() << tr("        Loaded Component set:           ") << compSetName;
 }
 
@@ -329,12 +342,47 @@ QString ComponentSelector::getIcon( QString folder, QString name )
     return icon;
 }
 
+void ComponentSelector::convertItem( QString folder, QString itemFile, QString name, QString category, QString icon, QString type )
+{
+    qDebug() << "ComponentSelector::convertItem Corverting" << name;
+    QStringList nameFull = name.split( "???" );
+    QString info = "";
+    if( nameFull.size() > 1 ) info = "   "+nameFull.last();
+    name = nameFull.first();
+
+    QString destFolder = QFileInfo( itemFile ).absolutePath();
+    QString simFile = destFolder+"/"+folder+"/"+name+"/"+name+".sim1";
+    QString compFile = destFolder+"/"+folder+"/"+name+".comp";
+    //qDebug() << simFile;
+    //            return;
+    QString iconData;
+    if( QFile::exists( icon ) )
+    {
+        QByteArray ba = fileToByteArray( icon, "ComponentSelector::convertItem");
+        QString data( ba.toHex() );
+        iconData = data;
+    }
+
+    QString comp = "<libitem";
+    comp += " itemtype=\""+ type+"\"";
+    comp += " category=\""+ category  +"\"";
+    comp += " compname=\""+ name      +"\"";
+    comp += " compinfo=\""+ info      +"\"";
+    comp += " icondata=\""+ iconData  +"\"";
+    comp += ">\n\n";
+
+    CircuitWidget::self()->loadCirc( simFile );
+    comp += Circuit::self()->circuitToString();
+    comp += "</libitem>";
+
+    Circuit::self()->saveString( compFile, comp );
+}
+
 void ComponentSelector::addItem( QString caption, QTreeWidgetItem* catItem, QString icon, QString type )
 {
     QPixmap ic( icon );
     QIcon ico( ic );
     addItem( caption, catItem, ico, type );
-
 }
 
 void ComponentSelector::addItem( QString caption, QTreeWidgetItem* catItem, QIcon &icon, QString type )
