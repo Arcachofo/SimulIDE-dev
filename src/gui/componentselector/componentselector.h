@@ -46,6 +46,7 @@ class ComponentSelector : public QTreeWidget
  static ComponentSelector* m_pSelf;
 
         void convertItem( QString folder, QString itemFile, QString name, QString category, QString icon, QString type );
+        QString convertMcuFile( QString file );
 
         void addItem( QString caption, QTreeWidgetItem* catItem, QString icon, QString type );
         void addItem( QString caption, QTreeWidgetItem* catItem, QIcon &icon, QString type );

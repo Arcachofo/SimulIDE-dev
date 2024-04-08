@@ -464,17 +464,39 @@ void Circuit::loadStrDoc( QString &doc )
     }
     if( m_pasting )
     {
-        for( Component* comp : compList ) { comp->setSelected( true ); comp->move( m_deltaMove ); }
-        for( Component* comp : nodeList ) { comp->setSelected( true ); comp->move( m_deltaMove ); }
-        for( Connector* con  : conList  ) { con->setSelected( true );  con->move( m_deltaMove ); }
+        for( Component* comp : compList )
+        {
+            comp->setSelected( true ); comp->move( m_deltaMove );
+            if( comp->itemType() == "Package" ) m_compList.prepend( comp );
+            else                                m_compList.append( comp );
+        }
+        for( Node* nod : nodeList )
+        {
+            nod->setSelected( true );
+            nod->move( m_deltaMove );
+            m_nodeList.append( nod );
+
+        }
+        for( Connector* con  : conList  )
+        {
+            con->setSelected( true );
+            con->move( m_deltaMove );
+            m_connList.append( con );
+        }
     }
-    else for( Component* comp : compList ) { comp->moveSignal(); }
+    else{
+        for( Component* comp : compList )
+        {
+            comp->moveSignal();
+            m_compList.append( comp );
+            //if( comp->itemType() == "Package" ) m_compList.prepend( comp );
+            //else                                m_compList.append( comp );
+        }
+        m_nodeList += nodeList;
+        m_connList += conList;
+    }
 
     for( Linker* l : linkList ) l->createLinks( &compList );
-
-    m_compList += compList;
-    m_nodeList += nodeList;
-    m_connList += conList;
 
     // Take care about unconnected Joints
     if( !m_undo && !m_redo )  for( Node* joint : nodeList ) joint->checkRemove(); // Only removed if some missing connector
@@ -936,9 +958,7 @@ void Circuit::copy( QPointF eventpoint )
             Component* comp =  qgraphicsitem_cast<Component*>( item );
             if( comp && !comp->isHidden() && !comp->parentItem() )
             {
-                QString type = comp->itemType();
-                if( type == "Package" ) complist.prepend( comp );
-                else                    complist.append( comp );
+                complist.append( comp );
             }
         }
         else if( item->type() == QGraphicsItem::UserType+2 ) // ConnectorLine

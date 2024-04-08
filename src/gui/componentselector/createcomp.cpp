@@ -63,9 +63,11 @@ void creCompDialog::accept()
     comp += Circuit::self()->circuitToString();
     comp += "</libitem>";
 
-    QFileInfo info( MainWindow::self()->userPath() );
+    QString dir = m_circuitPath;
+    if( dir.isEmpty() ) dir = MainWindow::self()->userPath();
 
-    const QString dir = info.path()+"/"+name+".comp";
+    QFileInfo info( dir );
+    dir = info.path()+"/"+name+".comp";
     QString fileName = QFileDialog::getSaveFileName( this, tr("Save Copmponent"), dir,
                                                      tr("Components (*.comp);;All files (*.*)") );
     if( fileName.isEmpty() ) return;

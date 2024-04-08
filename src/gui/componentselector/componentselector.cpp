@@ -309,10 +309,12 @@ void ComponentSelector::loadXml( QString setFile, bool convert )
 
                     if( convert )
                     {
-                        if( type == "Subcircuit" )
+                        if( type == "Subcircuit" || type == "MCU" )
                         {
                             if( reader.attributes().hasAttribute("info") )
                                 name += "???"+reader.attributes().value("info").toString();
+
+                            if( type == "MCU" ) folder = reader.attributes().value("data").toString();
 
                             convertItem( folder, setFile, name, catFull, icon, type );
                         }
@@ -350,9 +352,18 @@ void ComponentSelector::convertItem( QString folder, QString itemFile, QString n
     if( nameFull.size() > 1 ) info = "   "+nameFull.last();
     name = nameFull.first();
 
+    QString simFile;
+    QString compFile;
     QString destFolder = QFileInfo( itemFile ).absolutePath();
-    QString simFile = destFolder+"/"+folder+"/"+name+"/"+name+".sim1";
-    QString compFile = destFolder+"/"+folder+"/"+name+".comp";
+    if( type == "MCU" )
+    {
+        simFile = destFolder+"/"+folder+".sim1";
+        compFile = destFolder+"/"+folder+".comp";
+    }
+    else{
+        simFile = destFolder+"/"+folder+"/"+name+"/"+name+".sim1";
+        compFile = destFolder+"/"+folder+"/"+name+".comp";
+    }
     //qDebug() << simFile;
     //            return;
     QString iconData;
@@ -373,9 +384,35 @@ void ComponentSelector::convertItem( QString folder, QString itemFile, QString n
 
     CircuitWidget::self()->loadCirc( simFile );
     comp += Circuit::self()->circuitToString();
+
+    if( type == "MCU" )
+    {
+        QString mcuFile = destFolder+"/"+folder+".mcu";
+        comp += convertMcuFile( mcuFile );
+    }
     comp += "</libitem>";
 
     Circuit::self()->saveString( compFile, comp );
+}
+
+QString ComponentSelector::convertMcuFile( QString file )
+{
+    QString converted;
+    QString folder = QFileInfo( file ).absolutePath();
+
+    QStringList lines = fileToStringList( file, "ComponentSelector::convertItem" );
+    for( QString line : lines )
+    {
+        if( line.contains("parts>") ) continue;
+        if( line.startsWith("<!") ) continue;
+        if( line.contains("<include") )
+        {
+            line = line.split("\"").at(1);
+            line = convertMcuFile( folder+"/"+line );
+        }
+        converted.append( line+"\n" );
+    }
+    return converted;
 }
 
 void ComponentSelector::addItem( QString caption, QTreeWidgetItem* catItem, QString icon, QString type )

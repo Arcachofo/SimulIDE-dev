@@ -37,7 +37,7 @@ class Chip : public Component, public eElement
         virtual void setBackground( QString bck ) override;
 
         QString name() { return m_name; }
-        virtual void setName( QString name );
+        void setName( QString name );
 
         void setPinStr( QString pin );
 

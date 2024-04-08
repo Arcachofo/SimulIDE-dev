@@ -36,7 +36,8 @@ class Pin : public QGraphicsItem, public ePin, public Updatable
             pinNormal=0,
             pinSocket,
             pinHeader,
-            pinNull
+            pinNull,
+            pinRst
         };
 
         enum { Type = UserType + 3 };

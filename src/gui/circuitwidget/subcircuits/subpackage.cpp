@@ -77,11 +77,11 @@ SubPackage::SubPackage( QString type, QString id )
     m_isLS    = true;
     m_graphical = true;
     m_boardMode = false;
-    m_name = m_id.split("-").first();
+    m_name = "";
 
     m_lsColor = QColor( 210, 210, 255 );
     m_icColor = QColor( 40, 40, 120 );
-    m_color = m_lsColor;
+    m_color   = m_lsColor;
 
     m_boardModeAction = new QAction( tr("Board Mode") );
     m_boardModeAction->setCheckable( true );
@@ -129,8 +129,8 @@ SubPackage::~SubPackage()
 
 void SubPackage::setLogicSymbol( bool ls )
 {
-    if( ls ) setIdLabel("1- Logic Symbol");
-    else     setIdLabel("2- DIP");
+    //if( ls ) setIdLabel("1- Logic Symbol"); /// FIXME
+    //else     setIdLabel("2- DIP");
     Chip::setLogicSymbol( ls );
 }
 
@@ -361,6 +361,7 @@ void SubPackage::addNewPin( QString id, QString type, QString label, int pos, in
     pin->setInverted( type == "inverted" || type == "inv" );
     pin->setUnused( type == "unused" || type == "nc" );
     if( type == "nul" ) pin->setPinType( Pin::pinNull );
+    if( type == "rst" ) pin->setPinType( Pin::pinRst );
 
     m_ePin.emplace_back( pin );
     m_pin.emplace_back( pin );
@@ -558,9 +559,11 @@ void SubPackage::setPackagePins( QString pinsStr )
 QString SubPackage::pinStrEntry( Pin* pin )
 {
     QString type;
-    if( pin->inverted() ) type = "inv";
-    if( pin->unused()   ) type = "nc";
-    if( pin->pinType() == Pin::pinNull ) type = "nul";
+    if     ( pin->inverted() ) type = "inv";
+    else if( pin->unused()   ) type = "nc";
+    else if( pin->pinType() == Pin::pinNull ) type = "nul";
+    else if( pin->pinType() == Pin::pinRst  ) type = "rst";
+
     QString pinStr = "Pin";
     pinStr += "; type="  +type;
     pinStr += "; xpos="  +QString::number( pin->x() );
@@ -669,6 +672,8 @@ QString SubPackage::pinEntry( Pin* pin )
     if     ( pin->unused()   ) type = "nc";
     else if( pin->isBus()    ) type = "bus";
     else if( pin->inverted() ) type = "inv";
+    else if( pin->pinType() == Pin::pinNull ) type = "nul";
+    else if( pin->pinType() == Pin::pinRst  ) type = "rst";
 
     type = "type=\""+type+"\"";
 
