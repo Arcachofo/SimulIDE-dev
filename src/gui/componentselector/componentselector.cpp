@@ -37,6 +37,8 @@ ComponentSelector::ComponentSelector( QWidget* parent )
     setRootIsDecorated( true );
     setCursor( Qt::OpenHandCursor );
     headerItem()->setHidden( true );
+    //setStyleSheet("QTreeWidget::item { padding: 2px }");
+    //setStyleSheet("background-color: #FDFDF8;");
 
     float scale = MainWindow::self()->fontScale();
     setIconSize( QSize( 30*scale, 24*scale ));
@@ -59,10 +61,10 @@ ComponentSelector::ComponentSelector( QWidget* parent )
     setContextMenuPolicy( Qt::CustomContextMenu );
 
     connect( this, &ComponentSelector::customContextMenuRequested,
-             this, &ComponentSelector::slotContextMenu, Qt::UniqueConnection );
+             this, &ComponentSelector::slotContextMenu );
 
     connect( this, &ComponentSelector::itemPressed,
-             this, &ComponentSelector::slotItemClicked, Qt::UniqueConnection );
+             this, &ComponentSelector::slotItemClicked );
 }
 ComponentSelector::~ComponentSelector(){}
 
@@ -441,7 +443,10 @@ void ComponentSelector::addItem( QString caption, QTreeWidgetItem* catItem, QIco
     item->setIcon( 0, icon );
     item->setText( 0, nameTr+info );
     item->setData( 0, Qt::UserRole, type );
-    if( m_customComp ) item->setTextColor( 0, QColor( 0, 0, 90 ) );
+    if( icon.isNull() ) item->setSizeHint( 0, QSize(100, 14*scale) );
+    //else                item->setSizeHint( 0, QSize(100, 24) );
+    if( m_customComp ) item->setTextColor( 0, QColor( 80, 90, 110 ) );
+    else               item->setTextColor( 0, QColor( 100, 90, 60 ) );
 
     if( type == "Subcircuit" || type == "MCU" )
          item->setData( 0, Qt::WhatsThisRole, nameTr );
@@ -483,17 +488,23 @@ QTreeWidgetItem* ComponentSelector::addCategory( QString nameTr, QString name, Q
     {
         catItem = new QTreeWidgetItem( this );
         catItem->setIcon( 0, QIcon(":/null-0.png") );
-        if( m_customComp ) catItem->setTextColor( 0, QColor( 95, 95, 110 ) );
-        else               catItem->setTextColor( 0, QColor( 110, 95, 50 ) );
-        catItem->setBackground( 0, QBrush(QColor(240, 235, 245)) );
+        if( m_customComp ) catItem->setTextColor( 0, QColor( 50, 60, 80 ) );
+        else               catItem->setTextColor( 0, QColor( 75, 70, 10 ) );
+        catItem->setBackground( 0, QBrush(QColor(220, 240, 235)) );
+        catItem->setSizeHint( 0, QSize(100, 30*fontScale) );
         font.setPixelSize( 13*fontScale );
         expanded = true;
     }else{
         catItem = new QTreeWidgetItem(0);
         catItem->setIcon( 0, QIcon( QPixmap( icon ) ) );
-        if( m_customComp ) catItem->setTextColor( 0, QColor( 0, 0, 90 ) );
+        if( m_customComp ) catItem->setTextColor( 0, QColor( 70, 80, 100 ) );
+        else               catItem->setTextColor( 0, QColor( 90, 80, 50 ) );
+        catItem->setBackground( 0, QBrush(QColor( 230, 250, 245)) );
+        if( icon.isEmpty() ) catItem->setSizeHint( 0, QSize(100, 16*fontScale) );
+        else                 catItem->setSizeHint( 0, QSize(100, 20*fontScale) );
         font.setPixelSize( 12*fontScale );
     }
+
     catItem->setFlags( QFlag(32) );
 
     catItem->setFont( 0, font );
