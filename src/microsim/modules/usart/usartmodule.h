@@ -40,7 +40,7 @@ class UsartModule
         UsartModule( eMcu* mcu, QString name );
         ~UsartModule();
 
-        int baudRate() { return m_baudRate; }
+        int  baudRate() { return m_baudRate; }
         void setBaudRate( int br );
         void setDataBits( uint8_t b );
 

@@ -316,7 +316,11 @@ void ComponentSelector::loadXml( QString setFile, bool convert )
                             if( reader.attributes().hasAttribute("info") )
                                 name += "???"+reader.attributes().value("info").toString();
 
-                            if( type == "MCU" ) folder = reader.attributes().value("data").toString();
+                            if( type == "MCU" )
+                            {
+                                QString data = reader.attributes().value("data").toString();
+                                if( !data.isEmpty() ) folder = data;
+                            }
 
                             convertItem( folder, setFile, name, catFull, icon, type );
                         }
@@ -488,18 +492,26 @@ QTreeWidgetItem* ComponentSelector::addCategory( QString nameTr, QString name, Q
     {
         catItem = new QTreeWidgetItem( this );
         catItem->setIcon( 0, QIcon(":/null-0.png") );
-        if( m_customComp ) catItem->setTextColor( 0, QColor( 50, 60, 80 ) );
-        else               catItem->setTextColor( 0, QColor( 75, 70, 10 ) );
-        catItem->setBackground( 0, QBrush(QColor(220, 240, 235)) );
+        if( m_customComp ){
+            catItem->setTextColor( 0, QColor( 50, 60, 80 ) );
+            catItem->setBackground( 0, QBrush(QColor(220, 235, 240)) );
+        }else{
+            catItem->setTextColor( 0, QColor( 75, 70, 10 ) );
+            catItem->setBackground( 0, QBrush(QColor(220, 240, 235)) );
+        }
         catItem->setSizeHint( 0, QSize(100, 30*fontScale) );
         font.setPixelSize( 13*fontScale );
         expanded = true;
     }else{
         catItem = new QTreeWidgetItem(0);
         catItem->setIcon( 0, QIcon( QPixmap( icon ) ) );
-        if( m_customComp ) catItem->setTextColor( 0, QColor( 70, 80, 100 ) );
-        else               catItem->setTextColor( 0, QColor( 90, 80, 50 ) );
-        catItem->setBackground( 0, QBrush(QColor( 230, 250, 245)) );
+        if( m_customComp ){
+            catItem->setTextColor( 0, QColor( 70, 80, 100 ) );
+            catItem->setBackground( 0, QBrush(QColor( 230, 245, 250)) );
+        }else{
+            catItem->setTextColor( 0, QColor( 90, 80, 50 ) );
+            catItem->setBackground( 0, QBrush(QColor( 230, 250, 245)) );
+        }
         if( icon.isEmpty() ) catItem->setSizeHint( 0, QSize(100, 16*fontScale) );
         else                 catItem->setSizeHint( 0, QSize(100, 20*fontScale) );
         font.setPixelSize( 12*fontScale );

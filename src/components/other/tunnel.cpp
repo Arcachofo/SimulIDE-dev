@@ -79,6 +79,20 @@ bool Tunnel::setPropStr( QString prop, QString val )
     return true;
 }
 
+eNode* Tunnel::getEnode( QString n ) // Static
+{
+    QList<Tunnel*>* list = m_tunnels.value( n );
+    if( !list ) return NULL;
+    Tunnel* tunnel= list->first();
+    if( tunnel ) return tunnel->getPin()->getEnode();
+    return NULL;
+}
+
+void Tunnel::clearTunnels() // Static
+{
+    m_tunnels.clear();
+}
+
 void Tunnel::setEnode( eNode* node, int n )
 {
     if( m_blocked ) return;
@@ -261,7 +275,7 @@ void Tunnel::mousePressEvent( QGraphicsSceneMouseEvent* event )
         Component::mousePressEvent( event ); // Tunnel should not be linked or main component
 }
 
-void Tunnel::paint( QPainter* p, const QStyleOptionGraphicsItem *option, QWidget *widget )
+void Tunnel::paint( QPainter* p, const QStyleOptionGraphicsItem *o, QWidget *w )
 {
     if( m_hidden || m_packed ) return;
 
@@ -271,7 +285,7 @@ void Tunnel::paint( QPainter* p, const QStyleOptionGraphicsItem *option, QWidget
         else                    m_color = QColor( 255, 255, 250 );
     } else                      m_color = QColor( 210, 210, 230 );
 
-    Component::paint( p, option, widget );
+    Component::paint( p, o, w );
 
     if( m_rotated ){
         QPointF points[5] =        {
@@ -298,18 +312,4 @@ void Tunnel::paint( QPainter* p, const QStyleOptionGraphicsItem *option, QWidget
         p->setOpacity( 1 );
     }
     Component::paintSelected( p );
-}
-
-eNode* Tunnel::getEnode( QString n ) // Static
-{
-    QList<Tunnel*>* list = m_tunnels.value( n );
-    if( !list ) return NULL;
-    Tunnel* tunnel= list->first();
-    if( tunnel ) return tunnel->getPin()->getEnode();
-    return NULL;
-}
-
-void Tunnel::clearTunnels() // Static
-{
-    m_tunnels.clear();
 }

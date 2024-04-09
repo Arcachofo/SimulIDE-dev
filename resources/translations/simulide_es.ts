@@ -4994,7 +4994,7 @@ Archivo packae no valido:</translation>
     <name>Resistor</name>
     <message>
         <source>Resistor</source>
-        <translation>Reistencia</translation>
+        <translation>Resistencia</translation>
     </message>
     <message>
         <source>Resistors</source>
