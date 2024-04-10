@@ -1289,7 +1289,7 @@ void Circuit::dropEvent( QGraphicsSceneDragDropEvent* event )
         else CircuitWidget::self()->loadCirc( id );
 }   }
 
-void Circuit::drawBackground( QPainter*  painter, const QRectF &rect )
+void Circuit::drawBackground( QPainter* painter, const QRectF &rect )
 {
     /*painter->setBrush(QColor( 255, 255, 255 ) );
     painter->drawRect( m_scenerect );
@@ -1301,18 +1301,32 @@ void Circuit::drawBackground( QPainter*  painter, const QRectF &rect )
 
     if( m_hideGrid ) return;
 
-    int startx = int(m_scenerect.x());///2;
-    int endx   = int(m_scenerect.width())/2;
-    int starty = int(m_scenerect.y());///2;
-    int endy   = int(m_scenerect.height())/2;
+    int startx = m_scenerect.x();
+    int endx   = m_scenerect.width()/2;
+    int starty = m_scenerect.y();
+    int endy   = m_scenerect.height()/2;
+
+    int scnStrX = rect.x()-16;
+    if( scnStrX < startx ) scnStrX = startx;
+
+    int scnEndX = scnStrX+rect.width()+32;
+    if( scnEndX > endx ) scnEndX = endx;
+
+    int scnStrY = rect.y()-16;
+    if( scnStrY < starty ) scnStrY = starty;
+
+    int scnEndY = scnStrY+rect.height()+32;
+    if( scnEndY > endy ) scnEndY = endy;
 
     for( int i=4; i<endx; i+=8 ){
-        painter->drawLine( i, starty, i, endy );
-        painter->drawLine(-i, starty,-i, endy );
+        if( i > scnEndX && -i < scnStrX) break;
+        if(  i < scnEndX ) painter->drawLine( i, scnStrY, i, scnEndY );
+        if( -i > scnStrX ) painter->drawLine(-i, scnStrY,-i, scnEndY );
     }
     for( int i=4; i<endy; i+=8 ){
-        painter->drawLine( startx, i, endx, i);
-        painter->drawLine( startx,-i, endx,-i);
+        if( i > scnEndY && -i < scnStrY) break;
+        if(  i < scnEndY ) painter->drawLine( scnStrX, i, scnEndX, i);
+        if( -i > scnStrY ) painter->drawLine( scnStrX,-i, scnEndX,-i);
 }   }
 
 void Circuit::updatePin( ePin* epin, QString oldId, QString newId )
