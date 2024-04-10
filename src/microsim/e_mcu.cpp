@@ -98,7 +98,9 @@ void eMcu::runEvent()
     else if( m_state >= mcuRunning && m_freq > 0 )
     {
         stepCpu();
-        Simulator::self()->addEvent( cyclesDone*m_psTick, this );
+        int cycles = cyclesDone;
+        if( cycles == 0 ) cycles = 1;
+        Simulator::self()->addEvent( cycles*m_psTick, this );
     }
 }
 

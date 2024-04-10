@@ -139,6 +139,7 @@ class I51Core : public McuCpu, public eElement
         inline void opr2I08();
         inline void opr2Dir();
 
+        inline void addrNul();
         inline void addrRgx();
         inline void addrInd();
         inline void addrI08();

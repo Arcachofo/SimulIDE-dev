@@ -64,15 +64,17 @@ void I51Core::reset()
     m_laPin->setOutState( false );
     m_laPin->updateStep();
 
-    m_psStep = m_mcu->psInst()/12;  // We are doing 2 Read cycles per Machine cycle
+    uint64_t readCycle = m_mcu->psInst()/2; // We are doing 2 Read cycles per Machine cycle
+    m_psStep = readCycle/12;                // Half clock
+
     m_addrSetTime = 3*m_psStep;    // Addr pins
     m_laEnEndTime = 4*m_psStep;    // LA 0
     m_readSetTime = 6*m_psStep;    // PSEN 0
     // m_writeSetTime ???
-    m_readBusTime = 12*m_psStep-10; // PSEN 1, Read data Bus
+    m_readBusTime = readCycle-10; // PSEN 1, Read data Bus
 }
 
-void I51Core::runEvent()
+void I51Core::runEvent()  // External Memory operations
 {
     switch( m_memState ) {
         case mem_IDLE: break;
@@ -130,9 +132,8 @@ void I51Core::runEvent()
     }
 }
 
-void I51Core::runStep()
+void I51Core::runStep()  // Machine cycle: 1/6 frequency
 {
-    m_mcu->cyclesDone = 1;
     m_cycle++;
 
     bool extPGM = !m_eaPin->getInpState();
@@ -175,14 +176,16 @@ void I51Core::runStep()
             m_cpuState = cpu_FETCH;
         }
     }
-    if( extPGM )// m_mcu->extMem->read( m_tmpPC, ExtMemModule::EN | ExtMemModule::LA );
+    if( extPGM )
     {
-        m_read = true;
-        m_addr = m_tmpPC;
+        m_read  = true;
+        m_addr  = m_tmpPC;
         m_addrH = m_tmpPC >> 8;
         m_memState = mem_LAEN;
-        runEvent();//Start next Read cycle
+        runEvent();             //Start next Read cycle
     }
+    if( m_cycle & 1 ) m_mcu->cyclesDone = 1; // 1 machine cyle = 2 read cycle, so (m_cycle+1) should be multiple of 2
+    else              m_mcu->cyclesDone = 0;
 }
 
 void I51Core::readOperand()
@@ -190,7 +193,7 @@ void I51Core::readOperand()
     uint8_t addrMode = m_dataEvent.takeFirst();
 
     if( addrMode & aIMME ){
-        if( addrMode & aORIG ) m_op0 = m_pgmData;
+        if     ( addrMode & aORIG ) m_op0 = m_pgmData;
         else if( addrMode & aRELA ) m_op2 = m_pgmData;
         else {
             if      ( addrMode & a16BIT_HIGH ) m_opAddr  = (uint16_t)m_pgmData << 8; //16bit address high
@@ -199,12 +202,12 @@ void I51Core::readOperand()
         }
     }
     else if( addrMode & aDIRE ){
-        if( addrMode & aORIG ) m_op0    = GET_RAM( m_pgmData );
+        if     ( addrMode & aORIG ) m_op0 = GET_RAM( m_pgmData );
         else if( addrMode & aRELA ) m_op2 = GET_RAM( m_pgmData );
-        else                   m_opAddr = m_pgmData;
+        else                        m_opAddr = m_pgmData;
     }
     else if( addrMode & aRELA ){
-        m_op2    = m_pgmData;
+        m_op2 = m_pgmData;
     }
     else if( addrMode & aBIT ){   // Get bit mask and Reg address
         m_bitAddr = m_pgmData;
@@ -212,17 +215,18 @@ void I51Core::readOperand()
         if( m_bitAddr > m_lowDataMemEnd ) m_bitAddr &= 0xF8;
         else{ m_bitAddr >>= 3; m_bitAddr += 0x20; }
     }
+    else if( addrMode == aNONE ) m_tmpPC--; // Dummy read
 }
 
 void I51Core::operRgx() { m_op0 = GET_RAM( m_RxAddr ); }               //
-void I51Core::operInd() { m_op0 = GET_RAM(  checkAddr( I_RX_VAL ) ); }//
+void I51Core::operInd() { m_op0 = GET_RAM(  checkAddr( I_RX_VAL ) ); } //
 void I51Core::operI08() { m_dataEvent.append( aIMME | aORIG ); }       // m_op0 = data
 void I51Core::operDir() { m_dataEvent.append( aDIRE | aORIG ); }       // m_op0 = GET_RAM( data );
 void I51Core::operACC() { m_op0 = ACC; }                               //
 void I51Core::opr2I08() { m_dataEvent.append( aIMME | aRELA ); }       // m_op2 = data;
 void I51Core::opr2Dir() { m_dataEvent.append( aDIRE | aRELA ); }       // m_op2 = GET_RAM( data );
 
-
+void I51Core::addrNul() { m_dataEvent.append( aNONE ); }               // Dummy read
 void I51Core::addrRgx() { m_opAddr = m_RxAddr; }
 void I51Core::addrInd() { m_opAddr = checkAddr( I_RX_VAL );}           //
 void I51Core::addrI08() { m_dataEvent.append( aIMME ); }               // m_opAddr = data;
@@ -318,7 +322,7 @@ void I51Core::JBC()
 
 void I51Core::JB()
 {
-    if( GET_RAM( m_bitAddr ) & m_bitMask  ) m_PC += (int8_t)m_opAddr;
+    if( GET_RAM( m_bitAddr ) & m_bitMask ) m_PC += (int8_t)m_opAddr;
 }
 
 void I51Core::JNB()
@@ -541,19 +545,23 @@ void I51Core::Decode()
             case 0x05:                                // 1-1 ANL  Ac &= Rx
             case 0x06:            operRgx(); break;   // 1-1 XRL  Ac ^= Rx
             case 0x07: addrRgx(); operI08(); break;   // 2-1 MOVr Rx <- #imm8
-            case 0x08: addrDir(); operRgx(); break;   // 2-2 MOVm Di <- Rx
+            case 0x08: addrDir(); operRgx();
+                       addrNul();            break;   // 2-2 MOVm Di <- Rx
             case 0x09:            operRgx(); break;   // 1-1 SUBB Ac -= Rx-C
-            case 0x0A: addrRgx(); operDir(); break;   // 2-2 MOVr Rx <- Di
-            case 0x0B: operRgx(); opr2I08(); addrDir(); break;   // 3-2 CJNE Rx == Op2 ? 0 :Jump
+            case 0x0A: addrRgx(); operDir();
+                       addrNul();            break;   // 2-2 MOVr Rx <- Di
+            case 0x0B: operRgx(); opr2I08();
+                       addrDir();            break;   // 3-2 CJNE Rx == Op2 ? 0 :Jump
             case 0x0C: addrRgx();            break;   // 1-1 XCH  Ac <> Rx
-            case 0x0D: m_op0=m_RxAddr; addrDir(); break;   // 2-2 DJNZ Rx--      ? Jump : 0
+            case 0x0D: m_op0 = m_RxAddr;
+                       addrDir(); addrNul(); break;   // 2-2 DJNZ Rx--      ? Jump : 0
             case 0x0E:            operRgx(); break;   // 1-1 MOVa Ac <- Rx
             case 0x0F: addrRgx(); operACC(); break;   // 1-1 MOV Rx <- A
         }
     }else{
         switch( m_opcode ){                           // b-c Inst
             case 0x00:                       break;   // 1-1 NOP
-            case 0x01: addrI08();            break;   // 2-2 AJMP addr11
+            case 0x01: addrI08(); addrNul(); break;   // 2-2 AJMP addr11
             case 0x02: addrI16();            break;   // 3-2 LJMP addr16
             case 0x03:                       break;   // 1-1 RRa Ac >> 1
             case 0x04:                       break;   // 1-1 INC Ac <- Ac++  Accumulator
@@ -562,7 +570,7 @@ void I51Core::Decode()
             case 0x07: addrInd();            break;   // 1-1 INC In <- In++  @Indirect Rx
 
             case 0x10: addrBit(); addrI08(); break;   // 3-2 JBC
-            case 0x11: addrI08();            break;   // 2-2 ACALL addr11
+            case 0x11: addrI08(); addrNul(); break;   // 2-2 ACALL addr11
             case 0x12: addrI16();            break;   // 3-2 LCALL addr16
             case 0x13:                       break;   // 1-1 RRCa C >> Ac>>1
             case 0x14:                       break;   // 1-1 DEC Ac <- Ac++  Accumulator
@@ -571,8 +579,8 @@ void I51Core::Decode()
             case 0x17: addrInd();            break;   // 1-1 DEC In <- In++  @Indirect Rx
 
             case 0x20: addrBit(); addrI08(); break;   // 3-2 JB
-            case 0x21: addrI08();            break;   // 2-2 AJMP addr11
-            case 0x22:                       break;   // 1-2 RET
+            case 0x21: addrI08(); addrNul(); break;   // 2-2 AJMP addr11
+            case 0x22: addrNul(); addrNul(); break;   // 1-2 RET
             case 0x23:                       break;   // 1-1 RLa Ac << 1
             case 0x24:            operI08(); break;   // 2-1 ADD Ac += #imm8  #Imminent
             case 0x25:            operDir(); break;   // 2-1 ADD AC += Di     Direct
@@ -580,16 +588,16 @@ void I51Core::Decode()
             case 0x27:            operInd(); break;   // 1-1 ADD Ac += In     @Indirect
 
             case 0x30: addrBit(); addrI08(); break;   // 2-2 JNB
-            case 0x31: addrI08();            break;   // 2-2 ACALL addr11
-            case 0x32:                       break;   // 1-2 RETI
+            case 0x31: addrI08(); addrNul(); break;   // 2-2 ACALL addr11
+            case 0x32: addrNul(); addrNul(); break;   // 1-2 RETI
             case 0x33:                       break;   // 1-1 RLCa C << Ac<<1
             case 0x34:            operI08(); break;   // 2-1 ADDC Ac += C+#imm8  #Imminent
             case 0x35:            operDir(); break;   // 2-1 ADDC AC += C+Di     Direct
             case 0x36:
             case 0x37:            operInd(); break;   // 1-1 ADDC Ac += C+In     @Indirect
 
-            case 0x40: addrI08();            break;   // 2-2 JC C ? jump : 0
-            case 0x41: addrI08();            break;   // 2-2 AJMP addr11
+            case 0x40: addrI08(); addrNul(); break;   // 2-2 JC C ? jump : 0
+            case 0x41: addrI08(); addrNul(); break;   // 2-2 AJMP addr11
             case 0x42: addrDir(); operACC(); break;   // 2-1 ORL Di |= Ac
             case 0x43: addrDir(); operI08(); break;   // 3-2 ORL Di |= #I8
             case 0x44:            operI08(); break;   // 2-1 ORL Ac |= #I8   #Imminent
@@ -597,8 +605,8 @@ void I51Core::Decode()
             case 0x46:
             case 0x47:            operInd(); break;   // 1-1 ORL Ac |= In    @Indirect
 
-            case 0x50: addrI08();            break;   // 2-2 JNC C ? 0 : jump
-            case 0x51: addrI08();            break;   // 2-2 ACALL addr11
+            case 0x50: addrI08(); addrNul(); break;   // 2-2 JNC C ? 0 : jump
+            case 0x51: addrI08(); addrNul(); break;   // 2-2 ACALL addr11
             case 0x52: addrDir(); operACC(); break;   // 2-1 ANL Di &= Ac
             case 0x53: addrDir(); operI08(); break;   // 3-2 ANL Di &= #I8
             case 0x54:            operI08(); break;   // 2-1 ANL Ac &= #I8 #Imminent
@@ -606,8 +614,8 @@ void I51Core::Decode()
             case 0x56:
             case 0x57:            operInd(); break;   // 1-1 ANL Ac &= In
 
-            case 0x60: addrI08();            break;   // 2-2 JZ A == 0 ? jump : 0
-            case 0x61: addrI08();            break;   // 2-2 AJMP addr11
+            case 0x60: addrI08(); addrNul(); break;   // 2-2 JZ A == 0 ? jump : 0
+            case 0x61: addrI08(); addrNul(); break;   // 2-2 AJMP addr11
             case 0x62: addrDir(); operACC(); break;   // 2-1 XRL  Di ^= Ac
             case 0x63: addrDir(); operI08(); break;   // 3-2 XRL  Di ^= #I8
             case 0x64:            operI08(); break;   // 2-1 XRLa Ac ^= #I8 #Imminent
@@ -615,82 +623,89 @@ void I51Core::Decode()
             case 0x66:
             case 0x67:            operInd(); break;   // 1-1 XRLa Ac ^= In  @Indirect
 
-            case 0x70: addrI08();            break;   // 2-2 JNZ A == 0 ? 0 : jump
-            case 0x71: addrI08();            break;   // 2-2 ACALL addr11
-            case 0x72: addrBit();            break;   // 2-2 ORLc  C  <- C|b
-            case 0x73:                       break;   // 1-2 JMP  Dptr+A
+            case 0x70: addrI08(); addrNul(); break;   // 2-2 JNZ A == 0 ? 0 : jump
+            case 0x71: addrI08(); addrNul(); break;   // 2-2 ACALL addr11
+            case 0x72: addrBit(); addrNul(); break;   // 2-2 ORLc  C  <- C|b
+            case 0x73: addrNul(); addrNul(); break;   // 1-2 JMP  Dptr+A
             case 0x74:            operI08(); break;   // 2-1 MOVa Ac <- #I8  #Imminent
             case 0x75: addrDir(); operI08(); break;   // 3-2 MOVm Di <- #I8
             case 0x76:
             case 0x77: addrInd(); operI08(); break;   // 2-1 MOVm In <- #I8  @Indirect
 
-            case 0x80: addrI08();            break;   // 2-2 SJMP PC += addr8
-            case 0x81: addrI08();            break;   // 2-2 AJMP addr11
-            case 0x82: addrBit();            break;   // 2-2 ANLc  C  <- C&b
-            case 0x83:                       break;   // 1-2 MOVCp Ac += (PC)
-            case 0x84:                       break;   // 1-4 DIVab Ac <- Ac/B
+            case 0x80: addrI08(); addrNul(); break;   // 2-2 SJMP PC += addr8
+            case 0x81: addrI08(); addrNul(); break;   // 2-2 AJMP addr11
+            case 0x82: addrBit(); addrNul(); break;   // 2-2 ANLc  C  <- C&b
+            case 0x83: addrNul(); addrNul(); break;   // 1-2 MOVCp Ac += (PC)
+            case 0x84: addrNul(); addrNul();
+                       addrNul(); addrNul(); break;   // 1-4 DIVab Ac <- Ac/B
             case 0x85: operDir(); addrDir(); break;   // 3-2 MOVm  Di <- Di ( 0x85 source addr, dest addr )
             case 0x86:
-            case 0x87: addrDir(); operInd(); break;   // 2-2 MOVm Di <- In  @Indirect
+            case 0x87: addrDir(); operInd();
+                       addrNul();            break;   // 2-2 MOVm Di <- In  @Indirect
 
             case 0x90: addrI16();            break;   // 3-2 MOVd  Dptr <- addr16;
-            case 0x91: addrI08();            break;   // 2-2 ACALL addr11
-            case 0x92: addrBit();            break;   // 2-2 MOVbc b  <- C
-            case 0x93:                       break;   // 1-2 MOVCd Ac += (Dptr)
+            case 0x91: addrI08(); addrNul(); break;   // 2-2 ACALL addr11
+            case 0x92: addrBit(); addrNul(); break;   // 2-2 MOVbc b  <- C
+            case 0x93: addrNul(); addrNul(); break;   // 1-2 MOVCd Ac += (Dptr)
             case 0x94:            operI08(); break;   // 2-1 SUBB  Ac -= #I8 #Imminent
             case 0x95:            operDir(); break;   // 2-1 SUBB  Ac -= Di  Direct
             case 0x96:
             case 0x97:            operInd(); break;   // 1-1 SUBB Ac -= In  @Indirect
 
-            case 0xa0: addrBit( true );      break;   // 2-2 ORLc  C <- C|!b
-            case 0xa1: addrI08();            break;   // 2-2 AJMP addr11
+            case 0xa0: addrBit(1);addrNul(); break;   // 2-2 ORLc  C <- C|!b
+            case 0xa1: addrI08(); addrNul(); break;   // 2-2 AJMP addr11
             case 0xa2: addrBit();            break;   // 2-1 MOVc C <- b
-            case 0xa3:                       break;   // 1-2 INCd Dptr++
-            case 0xa4:                       break;   // 1-4 MULab A <- A*B
+            case 0xa3: addrNul(); addrNul(); break;   // 1-2 INCd Dptr++
+            case 0xa4: addrNul(); addrNul();
+                       addrNul(); addrNul(); break;   // 1-4 MULab A <- A*B
             case 0xa5:                       break;   // Nop unused
             case 0xa6:
-            case 0xa7: addrInd(); operDir(); break;   // 2-2 MOVm In <- Di @Indirect
+            case 0xa7: addrInd(); operDir();
+                       addrNul();            break;   // 2-2 MOVm In <- Di @Indirect
 
-            case 0xb0: addrBit( true );      break;   // 2-2 ANLc  C  <- C&!b
-            case 0xb1: addrI08();            break;   // 2-2 ACALL addr11
+            case 0xb0: addrBit(1);addrNul(); break;   // 2-2 ANLc  C  <- C&!b
+            case 0xb1: addrI08(); addrNul(); break;   // 2-2 ACALL addr11
             case 0xb2: addrBit();            break;   // 2-1 CPLb b = !b
             case 0xb3:                       break;   // 2-1 CPLc C = !C
-            case 0xb4: operACC(); opr2I08(); addrDir(); break;   // 3-2 CJNE Ac == #in8 ? 0 :Jump
-            case 0xb5: operACC(); opr2Dir(); addrDir(); break;   // 3-2 CJNE Ac == Di   ? 0 :Jump
+            case 0xb4: operACC(); opr2I08();
+                       addrDir();            break;   // 3-2 CJNE Ac == #in8 ? 0 :Jump
+            case 0xb5: operACC(); opr2Dir();
+                       addrDir();            break;   // 3-2 CJNE Ac == Di   ? 0 :Jump
             case 0xb6:
-            case 0xb7: operInd(); opr2I08(); addrDir(); break;   // 3-2 CJNE In == #in8 ? 0 :Jump
+            case 0xb7: operInd(); opr2I08();
+                       addrDir();            break;   // 3-2 CJNE In == #in8 ? 0 :Jump
 
-            case 0xc0:            operDir(); break;   // 2-2 PUSH Stack <- Di
-            case 0xc1: addrI08();            break;   // 2-2 AJMP addr11
-            case 0xc2: addrBit();            break;   // 2-2 CLRb b = 0
+            case 0xc0: operDir(); addrNul(); break;   // 2-2 PUSH Stack <- Di
+            case 0xc1: addrI08(); addrNul(); break;   // 2-2 AJMP addr11
+            case 0xc2: addrBit(); addrNul(); break;   // 2-2 CLRb b = 0
             case 0xc3:                       break;   // 1-1 CLRc C = 0
             case 0xc4:                       break;   // 1-1 SWAPa
             case 0xc5: addrDir();            break;   // 1-1 XCH Ac <> Di  Direct
             case 0xc6:
-            case 0xc7: addrInd();            break;  // 1-1 XCH Ac <> In @Indirect
+            case 0xc7: addrInd();            break;   // 1-1 XCH Ac <> In @Indirect
 
-            case 0xd0: addrDir();            break;   // 2-2 POP  Di <- Stack
-            case 0xd1: addrI08();            break;   // 2-2 ACALL addr11
-            case 0xd2: addrBit();            break;   // 2-2 SETBb b = 1
+            case 0xd0: addrDir(); addrNul(); break;   // 2-2 POP  Di <- Stack
+            case 0xd1: addrI08(); addrNul(); break;   // 2-2 ACALL addr11
+            case 0xd2: addrBit(); addrNul(); break;   // 2-2 SETBb b = 1
             case 0xd3:                       break;   // 1-1 SETBc C = 1
             case 0xd4:                       break;   // 1-1 DAa
             case 0xd5: operDir(); addrDir(); break;   // 3-2 DJNZ Dir-- ? Jump : 0
             case 0xd6:
-            case 0xd7: addrInd();            break;   //1-1 XCHD A In @Indirect
+            case 0xd7: addrInd();            break;   // 1-1 XCHD A In @Indirect
 
-            case 0xe0: addrI16();            break;   // MOVX A <- @DPTR, unimplemented
-            case 0xe1: addrI08();            break;   // 2-2 AJMP addr11
-            case 0xe2:                       break;   // MOVX A <- @R0, unimplemented
-            case 0xe3:                       break;   // MOVX A <- @R1, unimplemented
+            case 0xe0: addrI16();            break;   //     MOVX A <- @DPTR, unimplemented
+            case 0xe1: addrI08(); addrNul(); break;   // 2-2 AJMP addr11
+            case 0xe2:                       break;   //     MOVX A <- @R0, unimplemented
+            case 0xe3:                       break;   //     MOVX A <- @R1, unimplemented
             case 0xe4:                       break;   // 1-1 CLR A
             case 0xe5:            operDir(); break;   // 2-1 MOVa A <- Di  Direct
             case 0xe6:
             case 0xe7:            operInd(); break;   // 1-1 MOV Ac <- In  @Indirect Rx
 
-            case 0xf0: addrI16();            break;   // MOVX @DPTR <- A, unimplemented
-            case 0xf1: addrI08();            break;   // 2-2 ACALL addr11
-            case 0xf2:                       break;   // MOVX @R0 <- A, unimplemented
-            case 0xf3:                       break;   // MOVX @R1 <- A, unimplemented
+            case 0xf0: addrI16();            break;   //     MOVX @DPTR <- A, unimplemented
+            case 0xf1: addrI08(); addrNul(); break;   // 2-2 ACALL addr11
+            case 0xf2:                       break;   //     MOVX @R0 <- A, unimplemented
+            case 0xf3:                       break;   //     MOVX @R1 <- A, unimplemented
             case 0xf4:                       break;   // 1-1 CPL A
             case 0xf5: addrI08(); operACC(); break;   // 2-1 MOVm Di <- A
             case 0xf6:
