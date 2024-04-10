@@ -49,7 +49,7 @@ class IntProp : public ComProperty
             if( l.size() > 1 )
             {
                 QString unit = l.last();
-                if( !unit.startsWith("_") ) m_unit = unit;
+                if( !unit.startsWith("_") && !m_unit.isEmpty() ) m_unit = unit;
             }
             if( comp->getPropStr("ShowProp") == m_name ) comp->setPropStr("ValLabelText", QString::number( v )+" "+m_unit );
 
