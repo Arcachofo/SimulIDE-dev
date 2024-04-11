@@ -109,14 +109,14 @@ SubPackage::SubPackage( QString type, QString id )
         new StrProp <SubPackage>("Package_File", tr("Package File"),""
                                 , this, &SubPackage::packageFile, &SubPackage::setPackageFile, propHidden ),
 
+        new BoolProp<SubPackage>("Logic_Symbol", tr("Logic Symbol"),""
+                                , this, &SubPackage::logicSymbol, &SubPackage::setLogicSymbol ),
+
         new StrProp <SubPackage>("Background", tr("Background"),""
                                 , this, &SubPackage::background, &SubPackage::setBackground ),
 
         new StrProp <SubPackage>("BckGndData", "",""
                                 , this, &SubPackage::bckGndData, &SubPackage::setBckGndData,propHidden ),
-
-        new BoolProp<SubPackage>("Logic_Symbol", tr("Logic Symbol"),""
-                                , this, &SubPackage::logicSymbol, &SubPackage::setLogicSymbol ),
 
         new StrProp <SubPackage>("Pins", "",""
                                 , this, &SubPackage::packagePins, &SubPackage::setPackagePins,propHidden ),
