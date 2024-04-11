@@ -83,7 +83,10 @@ void Interrupt::setContinuous( bool c ) // Pin INT
 
 void Interrupt::raise( uint8_t v )
 {
-    if( v ){
+    if( v )
+    {
+        if( !m_callBacks.isEmpty() ) { for( McuModule* mod : m_callBacks ) mod->callBack(); }
+
         if( m_raised ) return;
         m_raised = true;
 
@@ -101,7 +104,7 @@ void Interrupt::raise( uint8_t v )
              && (m_wakeup & m_mcu->sleepMode()) )
                 m_mcu->sleep( false ); // Exit sleep
         }
-        if( !m_callBacks.isEmpty() ) { for( McuModule* mod : m_callBacks ) mod->callBack(); }
+
     }
     else if( m_autoClear || m_continuous ) clearFlag();
 }
