@@ -373,9 +373,9 @@ void I51Core::CLRc()  { clear_S_Bit( Cy ); }
 void I51Core::SETBc() { set_S_Bit( Cy ); }
 void I51Core::CPLc()  { *m_STATUS ^= 1 << Cy; }
 
-void I51Core::CLRb()  { SET_RAM( m_bitAddr, GET_RAM( m_bitAddr ) & ~m_bitMask ); }
-void I51Core::SETBb() { SET_RAM( m_bitAddr, GET_RAM( m_bitAddr ) | m_bitMask ); }
-void I51Core::CPLb()  { SET_RAM( m_bitAddr, GET_RAM( m_bitAddr ) ^ m_bitMask ); }
+void I51Core::CLRb()  { SET_RAM( m_bitAddr, m_dataMem[m_bitAddr] & ~m_bitMask ); }
+void I51Core::SETBb() { SET_RAM( m_bitAddr, m_dataMem[m_bitAddr] | m_bitMask ); }
+void I51Core::CPLb()  { SET_RAM( m_bitAddr, m_dataMem[m_bitAddr] ^ m_bitMask ); }
 
 void I51Core::CJNE()  ///
 {
@@ -587,7 +587,7 @@ void I51Core::Decode()
             case 0x26:
             case 0x27:            operInd(); break;   // 1-1 ADD Ac += In     @Indirect
 
-            case 0x30: addrBit(); addrI08(); break;   // 2-2 JNB
+            case 0x30: addrBit(); addrI08(); break;   // 3-2 JNB
             case 0x31: addrI08(); addrNul(); break;   // 2-2 ACALL addr11
             case 0x32: addrNul(); addrNul(); break;   // 1-2 RETI
             case 0x33:                       break;   // 1-1 RLCa C << Ac<<1
@@ -677,7 +677,7 @@ void I51Core::Decode()
 
             case 0xc0: operDir(); addrNul(); break;   // 2-2 PUSH Stack <- Di
             case 0xc1: addrI08(); addrNul(); break;   // 2-2 AJMP addr11
-            case 0xc2: addrBit(); addrNul(); break;   // 2-2 CLRb b = 0
+            case 0xc2: addrBit();            break;   // 2-1 CLRb b = 0
             case 0xc3:                       break;   // 1-1 CLRc C = 0
             case 0xc4:                       break;   // 1-1 SWAPa
             case 0xc5: addrDir();            break;   // 1-1 XCH Ac <> Di  Direct
@@ -686,7 +686,7 @@ void I51Core::Decode()
 
             case 0xd0: addrDir(); addrNul(); break;   // 2-2 POP  Di <- Stack
             case 0xd1: addrI08(); addrNul(); break;   // 2-2 ACALL addr11
-            case 0xd2: addrBit(); addrNul(); break;   // 2-2 SETBb b = 1
+            case 0xd2: addrBit();            break;   // 2-1 SETBb b = 1
             case 0xd3:                       break;   // 1-1 SETBc C = 1
             case 0xd4:                       break;   // 1-1 DAa
             case 0xd5: operDir(); addrDir(); break;   // 3-2 DJNZ Dir-- ? Jump : 0
