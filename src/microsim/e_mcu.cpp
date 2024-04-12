@@ -99,7 +99,7 @@ void eMcu::runEvent()
     {
         stepCpu();
         int cycles = cyclesDone;
-        if( cycles == 0 ) cycles = 1;
+        if( cycles == 0 ) cycles = 1;                        // 8051: 2 Read cycles per Machine cycle
         Simulator::self()->addEvent( cycles*m_psTick, this );
     }
 }

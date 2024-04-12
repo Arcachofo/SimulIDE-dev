@@ -29,7 +29,7 @@ PropDialog::PropDialog( QWidget* parent, QString help )
 
     m_helpExpanded = false;
     mainLayout->removeWidget( helpText );
-    helpText->setText( help );
+    helpText->setMarkdown( help );
     helpText->adjustSize();
     helpText->setVisible( false );
 }

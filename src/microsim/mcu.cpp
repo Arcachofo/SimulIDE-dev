@@ -309,7 +309,7 @@ bool Mcu::setPropStr( QString prop, QString val )
 {
     if( prop =="program" ) setProgram( val ); //  Old: TODELETE
     else if( prop =="Mhz" ) setFreq( val.toDouble()*1e6 );
-    else return Component::setPropStr( prop, val );
+    else return Chip::setPropStr( prop, val );
     return true;
 }
 

@@ -129,8 +129,15 @@ SubPackage::~SubPackage()
 
 void SubPackage::setLogicSymbol( bool ls )
 {
-    //if( ls ) setIdLabel("1- Logic Symbol"); /// FIXME
-    //else     setIdLabel("2- DIP");
+    // Used when loading old subcircuits with only DIP and LS
+    // To convert original pkg labels to "Logic Symbol" and "DIP"
+    // In these cases package file exist
+    // But this needs a solution (probably use it only when converting)
+    if( !m_pkgeFile.isEmpty() )  /// FIXME
+    {
+        if( ls ) setIdLabel("1- Logic Symbol");
+        else     setIdLabel("2- DIP");
+    }
     Chip::setLogicSymbol( ls );
 }
 
@@ -475,7 +482,7 @@ void SubPackage::setBckGndData( QString data )
     Chip::setBckGndData( data );
 }
 
-void SubPackage::setBackground( QString bck )
+void SubPackage::setBackground( QString bck ) /// FIXME: almost a cpopy fromChip::setBackground
 {
     m_background = bck;
 

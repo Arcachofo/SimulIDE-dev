@@ -347,6 +347,8 @@ void SubCircuit::loadSubCircuit( QString doc )
                 else                 comp = circ->createItem( type, newUid, false );
 
                 if( comp ){
+                    comp->setIdLabel( uid ); // Avoid parent Uids in label
+
                     QString propName = "";
                     for( QStringRef prop : properties )
                     {

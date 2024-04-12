@@ -438,14 +438,14 @@ void Circuit::loadStrDoc( QString &doc )
             QHash<QStringRef, QStringRef> properties;
             for( QStringRef prop : props )
             {
-                if( prop.size() < 2 ) continue;
+                //if( prop.size() < 2 ) continue;
                 if( prop.endsWith("=") )
                 {
                     prop = prop.split(" ").last();
                     name = prop.mid( 0, prop.length()-1 );
                     continue;
                 }
-                else if( prop.endsWith(">") ) continue;
+                else if( prop.isEmpty() ) continue;
                 else{
                     if     ( name == "stepSize") m_simulator->setStepSize( prop.toULongLong() );
                     else if( name == "stepsPS" ) m_simulator->setStepsPerSec(prop.toULongLong() );
@@ -550,7 +550,7 @@ QString Circuit::circuitHeader()
     header += "stepsPS=\"" + QString::number( m_simulator->stepsPerSec() )+"\" ";
     header += "NLsteps=\"" + QString::number( m_simulator->maxNlSteps() )+"\" ";
     header += "reaStep=\"" + QString::number( m_simulator->reactStep() )+"\" ";
-    header += "animate=\"" + QString::number( m_animate )+"\" ";
+    header += "animate=\"" + QString::number( m_animate ? 1 : 0 )+"\" ";
     header += ">\n";
     return header;
 }

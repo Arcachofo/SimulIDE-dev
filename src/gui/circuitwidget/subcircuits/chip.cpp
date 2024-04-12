@@ -72,6 +72,8 @@ bool Chip::setPropStr( QString prop, QString val )
             if( key.endsWith("DIP") ) pkgDIP = key;
             else                      pkgLS  = key;
         }
+        if( pkgDIP.isEmpty() ) pkgDIP = m_packageList.first();
+        if( pkgLS.isEmpty()  ) pkgLS  = m_packageList.first();
 
         if( val == "true" ) setPackage( pkgLS );
         else                setPackage( pkgDIP );

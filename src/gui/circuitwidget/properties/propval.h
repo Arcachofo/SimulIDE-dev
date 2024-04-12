@@ -45,4 +45,3 @@ class PropVal : public QWidget
 };
 
 #endif
-
