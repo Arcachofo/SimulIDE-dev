@@ -41,7 +41,7 @@ void McuOcUnit::clockStep( uint16_t count )
 void McuOcUnit::runEvent()  // Compare match
 {
     m_interrupt->raise();   // Trigger interrupt
-    drivePin( m_comAct );
+    if( m_enabled ) drivePin( m_comAct );
 }
 
 void McuOcUnit::drivePin( ocAct_t act )
@@ -96,7 +96,7 @@ void McuOcUnit::setOcActs( ocAct_t comAct, ocAct_t tovAct )
 void McuOcUnit::ocrWriteL( uint8_t val )
 {
     m_comMatch = (m_comMatch & 0xFF00) | val;
-    sheduleEvents( m_timer->ovfMatch(), m_timer->getCount() );
+    if( m_timer->running() ) sheduleEvents( m_timer->ovfMatch(), m_timer->getCount() );
 }
 
 void McuOcUnit::ocrWriteH( uint8_t val )

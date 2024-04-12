@@ -49,6 +49,8 @@ class McuTimer : public McuPrescaled, public eElement
         void enableExtClock( bool en );
         bool extClocked() { return m_extClock; }
 
+        bool running() { return m_running; }
+
         uint32_t getCount();
         QString  name()     { return m_name; }
         uint64_t scale()    { return m_scale; }
