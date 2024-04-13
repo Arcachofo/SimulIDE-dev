@@ -53,15 +53,16 @@ void I51Usart::configureA( uint8_t newSCON ) //SCON
     }
     m_mode = mode;
 
-    bool  useTimer = false;
+    setSynchronous( mode == 0 );
+
+    bool useTimer = false;
 
     switch( mode )
     {
         case 0:             // Synchronous 8 bit
-            /// TODO
-            // setPeriod(  m_mcu->psInst() );// Fixed baudrate 32 or 64
+            m_uartSync->setPeriod( m_mcu->psInst() );// Fixed baudrate 32 or 64
+            m_uartSync->setClkOffset( 200*1e3 );     // 200 ns first clock edge
             sm2 = 0;
-            m_dataBits = 8;
             break;
         case 1:             // Asynchronous Timer1 8 bits
             useTimer = true;
@@ -77,7 +78,6 @@ void I51Usart::configureA( uint8_t newSCON ) //SCON
             m_dataBits = 9;
             break;
     }
-
     m_receiver->ignoreData( sm2 );
 
     m_timer1->getInterrupt()->callBack( this, useTimer );
@@ -91,7 +91,10 @@ void I51Usart::configureB( uint8_t newPCON )
 
 void I51Usart::sendByte( uint8_t data )
 {
-    if( m_mcu->state() != mcuStopped ) m_sender->processData( data );
+    if( m_mcu->state() == mcuStopped ) return;
+
+    if( m_synchronous ) m_uartSync->sendSyncData( data );
+    else                m_sender->processData( data );
 }
 
 void I51Usart::callBack()

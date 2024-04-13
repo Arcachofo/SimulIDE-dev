@@ -23,6 +23,7 @@ class I51Pin : public McuPin
         //virtual void initialize() override;
 
         virtual void setOutState( bool state ) override;
+        virtual void scheduleState( bool state, uint64_t time ) override;
 
         virtual void ConfExtInt( uint8_t bits ) override;
 

@@ -38,6 +38,12 @@ void I51Pin::setOutState( bool state )
     IoPin::setOutState( state );
 }
 
+void I51Pin::scheduleState( bool state, uint64_t time )
+{
+    state = state && m_portState;
+    IoPin::scheduleState( state, time );
+}
+
 void I51Pin::ConfExtInt( uint8_t bits )
 {
     bool fallEdge = getRegBitsBool( bits, m_extIntBits );

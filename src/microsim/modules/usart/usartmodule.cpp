@@ -13,6 +13,8 @@
 #include "circuitwidget.h"
 #include "serialmon.h"
 #include "datautils.h"
+#include "iopin.h"
+#include "simulator.h"
 
 UsartModule::UsartModule( eMcu* mcu, QString name )
 {
@@ -20,20 +22,30 @@ UsartModule::UsartModule( eMcu* mcu, QString name )
     m_receiver = new UartRx( this, mcu, name+"Rx" );
 
     m_mode = 0xFF; // Force first mode change.
-    m_monitor = NULL;
+    m_monitor = nullptr;
 
     m_stopBits = 1;
     m_dataBits = 8;
     m_dataMask = 0xFF;
     m_parity   = parNONE;
 
-    m_serialMon = false;
+    m_synchronous = false;
+    m_serialMon   = false;
 }
 UsartModule::~UsartModule( )
 {
     delete m_sender;
     delete m_receiver;
     if( m_monitor ) m_monitor->close();
+}
+
+void UsartModule::setSynchronous( bool s )
+{
+    m_synchronous = s;
+    if( ! m_uartSync ) m_uartSync = new UartSync( this, "uartSync");
+
+    m_uartSync->m_syncTxPin  = m_receiver->getPin();
+    m_uartSync->m_syncClkPin = m_sender->getPin();
 }
 
 void UsartModule::setBaudRate( int br )
@@ -56,7 +68,8 @@ void UsartModule::setPeriod( uint64_t period )
 
 void UsartModule::sendByte( uint8_t data )  // Buffer is being written
 {
-    m_sender->processData( data );
+    if( m_synchronous ) m_uartSync->sendSyncData( data );
+    else                m_sender->processData( data );
 }
 
 void UsartModule::frameSent( uint8_t data )
@@ -87,6 +100,51 @@ void UsartModule::monitorClosed()
 
 //---------------------------------------
 //---------------------------------------
+
+
+UartSync::UartSync( UsartModule* usart, /*eMcu* mcu,*/ QString name )
+        : eElement( name )
+{
+    m_usart = usart;
+
+    m_syncTxPin  = nullptr;
+    m_syncClkPin = nullptr;
+    m_syncClkOffset = 10;
+}
+UartSync::~UartSync(){;}
+
+
+void UartSync::runEvent() // Used in Sybchronous mode
+{
+    if( m_clkState )
+    {
+        if( ++m_currentBit <= 8 ) //sendSyncBit(); // Still transmitting
+        {
+            m_syncTxPin->setOutState( m_frame & 1 );
+            m_frame >>= 1;
+        }else{
+            m_syncTxPin->setOutState( true );
+            m_usart->frameSent( m_syncData );
+            return;
+        }
+    }
+    Simulator::self()->addEvent( m_syncPeriod/2, this ); // Shedule next bit
+    m_clkState = !m_clkState;
+    m_syncClkPin->scheduleState( m_clkState, m_syncClkOffset );
+}
+
+void UartSync::sendSyncData( uint8_t data )
+{
+    if( !m_syncTxPin || !m_syncClkPin || !m_syncPeriod ) return;
+    m_frame = m_syncData = data;
+    m_currentBit = 0;
+    m_clkState = true;
+    runEvent();
+}
+
+//---------------------------------------
+//---------------------------------------
+
 
 UartTR::UartTR( UsartModule* usart, eMcu* mcu, QString name )
       : McuModule( mcu, name )

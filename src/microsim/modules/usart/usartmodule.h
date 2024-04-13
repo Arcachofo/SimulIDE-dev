@@ -31,6 +31,7 @@ enum rxError_t{
 class IoPin;
 class UartTx;
 class UartRx;
+class UartSync;
 class SerialMonitor;
 
 class UsartModule
@@ -67,16 +68,47 @@ class UsartModule
 
     protected:
         void setPeriod( uint64_t period );
+        void setSynchronous( bool s );
 
-        SerialMonitor* m_monitor;
-
-        UartTx* m_sender;
-        UartRx* m_receiver;
-
-        bool m_sync;
+        bool m_synchronous;
         bool m_serialMon;
 
         int m_baudRate;
+
+        SerialMonitor* m_monitor;
+
+        UartSync* m_uartSync;
+        UartTx* m_sender;
+        UartRx* m_receiver;
+};
+
+class UartSync : public eElement
+{
+    friend class UsartModule;
+
+    public:
+        UartSync( UsartModule* usart, /*eMcu* mcu,*/ QString name );
+        ~UartSync();
+
+        virtual void runEvent() override;
+
+        void setClkOffset( uint64_t o ) { m_syncClkOffset = o; }
+        void sendSyncData( uint8_t data );
+        void setPeriod( uint64_t p ) { m_syncPeriod = p; }
+
+    private:
+        int m_currentBit;
+        bool m_clkState;
+
+        uint8_t  m_syncData;
+        uint16_t m_frame;
+        uint64_t m_syncPeriod;
+        uint64_t m_syncClkOffset; // Synchronous clock first edge after data set
+
+        UsartModule* m_usart;
+
+        IoPin* m_syncTxPin;
+        IoPin* m_syncClkPin;
 };
 
 class Interrupt;
@@ -93,6 +125,7 @@ class UartTR : public McuModule, public eElement
             usartSTOPPED=0,
             usartIDLE,
             usartTRANSMIT,
+            usartCLOCK,
             usartTXEND,
             usartRECEIVE,
         };
@@ -106,7 +139,7 @@ class UartTR : public McuModule, public eElement
 
         bool isEnabled() { return m_enabled; }
 
-        void setPeriod( uint64_t period ) { m_period = period; }
+        void setPeriod( uint64_t p ) { m_period = p; }
         bool getParity( uint16_t data );
 
         state_t state() { return m_state; }
@@ -130,7 +163,6 @@ class UartTR : public McuModule, public eElement
         state_t m_state;
 
         bool m_enabled;
-        //bool m_runHardware; // If m_ioPin is not connected don't run hardware
 
         uint64_t m_period; // Baudrate period
 };
