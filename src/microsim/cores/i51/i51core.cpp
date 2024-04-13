@@ -186,6 +186,7 @@ void I51Core::runStep()  // Machine cycle: 1/6 frequency
     }
     if( m_cycle & 1 ) m_mcu->cyclesDone = 1; // 1 machine cyle = 2 read cycle, so (m_cycle+1) should be multiple of 2
     else              m_mcu->cyclesDone = 0;
+    if( m_tmpPC >= m_progSize ) m_tmpPC -= m_progSize;
 }
 
 void I51Core::readOperand()
