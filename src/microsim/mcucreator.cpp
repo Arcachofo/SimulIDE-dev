@@ -130,15 +130,17 @@ int McuCreator::processFile( QString fileName, bool main )
 
     QDomElement root = domDoc.documentElement();
 
-    if( root.tagName() != "mcu" && root.tagName() != "parts")
+    QString tagName = root.tagName();
+
+    if( tagName != "mcu" && tagName != "iou" && tagName != "parts")
     {
         QDomNode node = root.firstChild();
 
         while( !node.isNull() )
         {
             root = node.toElement();
-            QString tagName = root.tagName();
-            if( root.tagName() == "mcu" ) break;
+            tagName = root.tagName();
+            if( tagName == "mcu" || tagName == "iou" ) break;
             node = node.nextSibling();
         }
     }
