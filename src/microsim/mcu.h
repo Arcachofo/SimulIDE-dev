@@ -12,12 +12,12 @@
 #include "chip.h"
 #include "linker.h"
 
-enum deviceType_t{
+/*enum deviceType_t{
     typeNONE=0,
     typeIOU,
     typeMPU,
     typeMCU
-};
+};*/
 
 class LibraryItem;
 class MCUMonitor;
@@ -128,6 +128,7 @@ class Mcu : public Chip, public Linker
         QString findIdLabel();
 
         //deviceType_t m_deviceType;
+        bool m_isTQFP;
 
         bool m_autoLoad;
         bool m_scripted;

@@ -43,7 +43,7 @@ Component* SubCircuit::construct( QString type, QString id )
         list.takeLast();
     }
 
-    int rev = MainWindow::self()->revision();
+    int rev = Circuit::self()->circuitRev();
     if( rev >= 2220 ){ if( name.contains("@") ) list = name.split("@");}
     else if( name.contains("_") ) list = name.split("_");
 
@@ -457,12 +457,11 @@ Pin* SubCircuit::updatePin( QString id, QString type, QString label, int xpos, i
     Pin* pin = NULL;
     Tunnel* tunnel = m_pinTunnels.value( m_id+"-"+id );
     if( !tunnel ){
-        qDebug() <<"SubCircuit::updatePin Pin Not Found:"<<id<<type<<label;
-        return NULL;
+        //qDebug() <<"SubCircuit::updatePin Pin Not Found:"<<id<<type<<label;
+        return nullptr;
     }
     tunnel->setPos( xpos, ypos );
     tunnel->setRotated( angle >= 180 );      // Our Pins at left side
-
     tunnel->setIsbus( type == "bus" );
 
     if     ( angle == 180) tunnel->setRotation( 0 );
@@ -472,17 +471,17 @@ Pin* SubCircuit::updatePin( QString id, QString type, QString label, int xpos, i
     pin  = tunnel->getPin();
     type = type.toLower();
 
+    bool unused = type == "unused" || type == "nc";
+    pin->setUnused( unused );
+    if( unused && m_isLS )
+    {
+        pin->setVisible( false );
+        pin->setLabelText( "" );
+        return pin;
+    }
     if( m_isLS ) pin->setLabelColor( QColor( 0, 0, 0 ) );
     else         pin->setLabelColor( QColor( 250, 250, 200 ) );
 
-    if( type == "unused" || type == "nc" )
-    {
-        pin->setUnused( true );
-        if( m_isLS ){
-            pin->setVisible( false );
-            pin->setLabelText( "" );
-        }
-    }
     pin->setInverted( type == "inverted" || type == "inv" );
     pin->setLength( length );
     pin->setSpace( space );
@@ -498,19 +497,25 @@ void SubCircuit::setLogicSymbol( bool ls )
 {
     Chip::setLogicSymbol( ls );
 
-    if( m_isLS )               // Don't show unused Pins in LS
+    if( m_isLS )
     {
-        for( QString tNam : m_pinTunnels.keys() )
+        for( QString tNam : m_pinTunnels.keys() )   // Don't show unused Pins in LS
         {
             Tunnel* tunnel = m_pinTunnels.value( tNam );
             Pin* pin = tunnel->getPin();
             if( pin->unused() ) { pin->setVisible( false ); pin->setLabelText( "" ); }
         }
+        if( m_backPixmap )    // No background image in LS
+        {
+            delete m_backPixmap;
+            m_backPixmap = nullptr;
+        }
     }
-    if( m_subcType >= Board ) // Don't show graphical components in LS if Board
+    for( Component* c : m_compList ) // Don't show graphical components in LS if Board
     {
-        for( Component* c : m_compList )
-            if( c->isGraphical() ) c->setVisible( !m_isLS );
+        if( !c->isGraphical() ) continue;
+        if( m_subcType >= Board ) c->setVisible( !m_isLS );
+        else if( m_isLS )         c->setVisible( false );
     }
 }
 

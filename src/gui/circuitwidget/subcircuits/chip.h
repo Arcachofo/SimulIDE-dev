@@ -83,7 +83,9 @@ class Chip : public Component, public eElement
         QMap<QString, QString> m_packageList;
 
         QString m_package;
-        QList<Pin*> m_unusedPins;
+        QList<Pin*> m_ncPins;
+        QList<Pin*> m_tempPins;
+        QMap<QString, Pin*> m_pinMap;
 
         std::vector<std::vector<int>>* m_backData;
 

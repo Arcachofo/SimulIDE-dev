@@ -125,6 +125,9 @@ void Chip::setName( QString name )
 
 void Chip::setPackage( QString package )
 {
+    if( !m_packageList.contains( package) ) package = m_packageList.keys().first();
+    if( m_package == package ) return;
+
     m_package = package;
 
     setLogicSymbol( !package.endsWith("DIP") );
@@ -136,8 +139,10 @@ void Chip::setPackage( QString package )
 void Chip::initPackage( QString pkgStr )
 {
     if( Simulator::self()->isRunning() ) CircuitWidget::self()->powerCircOff();
-    for( Pin* pin : m_unusedPins ) if( pin ) deletePin( pin );
-    m_unusedPins.clear();
+    m_tempPins.clear();
+    for( Pin* pin : m_ncPins ) m_tempPins.append( pin );
+    for( Pin* pin : m_pin    ) m_tempPins.append( pin );
+    m_ncPins.clear();
     m_ePin.clear();
     m_pin.clear();
 
@@ -171,8 +176,17 @@ void Chip::initPackage( QString pkgStr )
         }
         else if( line.startsWith("Pin") ) setPinStr( line );
     }
+
+    for( Pin* pin : m_tempPins ) // Pins present in previous package and not present in this one
+    {
+        pin->setVisible( false );
+        pin->setLabelText("");
+    }
+
     m_initialized = true;
     m_area = QRect( 0, 0, 8*m_width, 8*m_height );
+    if( m_subcType >= Board ) setTransformOriginPoint( toGrid( boundingRect().center()) );
+
     if( embedName == "Package" ) embedName = m_name;
     setName( embedName );
     moveSignal();
@@ -216,35 +230,53 @@ void Chip::setPinStr( QString pin )
 
 void Chip::addNewPin( QString id, QString type, QString label, int pos, int xpos, int ypos, int angle, int length, int space )
 {
-    if( type == "unused" || type == "nc" )
+    Pin* pin = nullptr;
+
+    if( m_pinMap.contains( id ) )
     {
-        Pin* pin = new Pin( angle, QPoint(xpos, ypos), m_id+"-"+id, pos-1, this ); // pos in package starts at 1
+        pin = updatePin( id, type, label, xpos, ypos, angle, length, space );
+    }
+    if( !pin ){
+        if( type == "unused" || type == "nc" )
+        {
+            if( m_pinMap.contains( id ) )
+            {
+                pin = m_pinMap.value( id );
+                pin->setPos( xpos, ypos );
+                pin->setPinAngle( angle );
+            }
+            else pin = new Pin( angle, QPoint(xpos, ypos), m_id+"-"+id, pos-1, this ); // pos in package starts at 1
 
-        if( m_isLS ) pin->setVisible( false );
-        else         pin->setLabelText( label );
-        pin->setSpace( space );
-        pin->setUnused( true ); // Chip::addPin is only for unused Pins
-        pin->setLength( length );
-        pin->setFlag( QGraphicsItem::ItemStacksBehindParent, false );
+            pin->setVisible( true );
+            pin->setLabelText( label );
+            pin->setSpace( space );
+            pin->setUnused( true ); // Chip::addPin is only for unused Pins
+            pin->setLength( length );
+            pin->setFlag( QGraphicsItem::ItemStacksBehindParent, false );
+            pin->isMoved();
+        }
+        else pin = addPin( id, type, label, pos, xpos, ypos, angle, length, space );
 
-        m_unusedPins.append( pin );
-    }else{
-        Pin* pin = addPin( id, type, label, pos, xpos, ypos, angle, length, space );
+        if( !m_pinMap.contains( id ) ) m_pinMap.insert( id, pin );
+    }
+    if( !pin ) return;
+
+    if( pin->unused() ) m_ncPins.append( pin );
+    else{
         m_ePin.emplace_back( pin );
         m_pin.emplace_back( pin );
     }
+    m_tempPins.removeOne( pin );
 }
 
 void Chip::setLogicSymbol( bool ls )
 {
     m_isLS = ls;
-    if( m_isLS ) m_color = m_lsColor;
-    else         m_color = m_icColor;
-
     QColor labelColor = QColor( 0, 0, 0 );
 
-    if( ls ) m_color = m_lsColor;
-    else{
+    if( ls ){
+        m_color = m_lsColor;
+    }else{
         m_color = m_icColor;
         labelColor = QColor( 250, 250, 200 );
     }
@@ -255,6 +287,15 @@ void Chip::setLogicSymbol( bool ls )
 
 void Chip::setBckGndData( QString data )
 {
+    if( m_backPixmap )
+    {
+        delete m_backPixmap;
+        m_backPixmap = nullptr;
+    }
+    if( data.isEmpty() ) return;
+
+    m_backPixmap = new QPixmap();
+
     QByteArray ba;
     bool ok;
     for( int i=0; i<data.size(); i+=2 )
@@ -262,8 +303,6 @@ void Chip::setBckGndData( QString data )
         QString ch = data.mid( i, 2 );
         ba.append( ch.toInt( &ok, 16 ) );
     }
-
-    if( !m_backPixmap ) m_backPixmap = new QPixmap();
     m_backPixmap->loadFromData( ba );
     update();
 }
@@ -272,11 +311,6 @@ void Chip::setBackground( QString bck )
 {
     m_background = bck;
 
-    if( m_backPixmap )
-    {
-        delete m_backPixmap;
-        m_backPixmap = NULL;
-    }
     if( bck.startsWith("color") )
     {
         bck.remove("color").remove("(").remove(")").remove(" ");
@@ -294,7 +328,11 @@ void Chip::setBackground( QString bck )
             pixmapPath = dir.absoluteFilePath( bck );    // Image in circuit/data folder
         }
         if( !QFile::exists( pixmapPath ) ) pixmapPath = MainWindow::self()->getDataFilePath("images/"+bck );
-        if( QFile::exists( pixmapPath ) ) m_backPixmap = new QPixmap( pixmapPath );
+        if( QFile::exists( pixmapPath ) )
+        {
+            if( !m_backPixmap ) m_backPixmap = new QPixmap();
+            m_backPixmap->load( pixmapPath );
+        }
     }
     update();
 }

@@ -19,7 +19,7 @@ BoardSubc::~BoardSubc(){}
 void BoardSubc::setLogicSymbol( bool ls ) /// FIXME
 {
     if( m_shields.size() ) return;
-    Chip::setLogicSymbol( ls );
+    SubCircuit::setLogicSymbol( ls );
 }
 
 void BoardSubc::attachShield( ShieldSubc* shield )

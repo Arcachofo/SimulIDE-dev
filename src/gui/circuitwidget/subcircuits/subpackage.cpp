@@ -535,7 +535,7 @@ void SubPackage::setPackageFile( QString package )
     QString pkgStr  = convertPackage( domText );
     initPackage( pkgStr );
 
-    m_pkgePins += m_unusedPins;
+    m_pkgePins += m_ncPins;
 
     m_label.setPlainText( m_name );
     

@@ -76,19 +76,6 @@ Mcu::Mcu( QString type, QString id )
 {
     qDebug() << "        Initializing"<<id;
 
-    addPropGroup( { tr("Main"), {},0} );
-
-    m_device = m_name;//.split("_").last(); // for example: "atmega328-1" to: "atmega328"
-    if     ( m_device.contains("@") ) m_device = m_device.split("@").last(); // MCU in Subcircuit
-    else if( m_device.contains("_") ) m_device = m_device.split("_").last(); // MCU in Subcircuit Old
-
-    if( m_device.startsWith("p") ) // PICs TODELETE
-    {
-        if( m_device.endsWith("a") ) m_device.remove( m_device.size()-1, 1 );
-        m_device.replace("f", "F");
-    }
-    setName( m_device );
-
     m_resetPin   = NULL;
     m_portRstPin = NULL;
     m_mcuMonitor = NULL;
@@ -103,8 +90,34 @@ Mcu::Mcu( QString type, QString id )
     m_serialMon = -1;
     m_icColor = QColor( 20, 30, 60 );
 
+    addPropGroup( { tr("Main"), {},0} );
+
+    m_device = m_name;//.split("_").last(); // for example: "atmega328-1" to: "atmega328"
+
+    int rev = Circuit::self()->circuitRev();
+    if( rev >= 2220 ){ if( m_device.contains("@") ) m_device = m_device.split("@").last(); }// MCU in Subcircuit
+    else if( m_device.contains("_") ) m_device = m_device.split("_").last(); // MCU in Subcircuit Old
+
     QString baseFile;
     QString dataFile = ComponentSelector::self()->getDataFile( m_device );
+
+    m_isTQFP = false;
+    if( dataFile.isEmpty() )
+    {
+        if( m_device.endsWith("TQFP") ) // Compatibilty with 1.1.0
+        {
+            m_isTQFP = true;
+            m_device.remove(" TQFP");
+            if( m_device.startsWith("m") ) m_device.replace("m", "mega");
+        }
+        else if( m_device.startsWith("p") ) // Compatibilty with 0.4.15
+        {
+            if( m_device.endsWith("a") ) m_device.remove( m_device.size()-1, 1 );
+            m_device.replace("f", "F");
+        }
+        dataFile = ComponentSelector::self()->getDataFile( m_device );
+    }
+    setName( m_device );
 
     if( dataFile == "" ) // Component is not in SimulIDE, search in Circuit folder
     {
@@ -193,18 +206,19 @@ Mcu::Mcu( QString type, QString id )
     if( !baseFile.isEmpty() )
     {
         m_dataFile = dataFile+".mcu";
-        QString pkgeFile = baseFile+".package";
-        bool dip = QFileInfo::exists( pkgeFile );
-        if( !dip || !QFileInfo::exists( m_dataFile ) )
+        if( !QFileInfo::exists( m_dataFile ) )
         {
-            qDebug() << "Mcu::Mcu Files not found for:" << m_device;
+            qDebug() <<"Mcu::Mcu Files not found for:"<< m_device;
+            qDebug() << m_dataFile;
             m_error = 1;
             return;
         }
 
-        QString pkgStr = fileToString( pkgeFile, "Mcu::Mcu" );
-        m_packageList["1- "+m_device+"_DIP"] = convertPackage( pkgStr );
-
+        QString pkgeFile = baseFile+".package";
+        if( QFileInfo::exists( pkgeFile ) ){
+            QString pkgStr = fileToString( pkgeFile, "Mcu::Mcu" );
+            m_packageList["1- "+m_device+"_DIP"] = convertPackage( pkgStr );
+        }
         QString pkgFileLS = baseFile+"_LS.package";
         if( QFileInfo::exists( pkgFileLS ) ){
             QString pkgStr = fileToString( pkgFileLS, "Mcu::Mcu" );
@@ -296,7 +310,8 @@ void Mcu::setup( QString type )
 
     if( hi.propList.size() > 0 ) addPropGroup( hi );
 
-    setPackage( m_packageList.keys().first() );
+    int index = m_isTQFP ? 1 : 0;
+    setPackage( m_packageList.keys().at( index ) );
 }
 Mcu::~Mcu()
 {
