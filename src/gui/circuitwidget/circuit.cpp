@@ -180,7 +180,7 @@ void Circuit::loadStrDoc( QString &doc )
     Component* lastComp = NULL;
     QList<ShieldSubc*> shieldList;
 
-    int rev = 0;
+    m_circRev = 0;
     m_busy  = true;
     if( !m_undo && !m_redo ) m_LdPinMap.clear();
 
@@ -281,7 +281,7 @@ void Circuit::loadStrDoc( QString &doc )
                     con->setPointList( pointList );
                     conList.append( con );
                     m_newComp = con;
-                    if( !rev ){
+                    if( m_circRev == 0 ){
                         startpin->isMoved();
                         endpin->isMoved();
                     }
@@ -452,7 +452,7 @@ void Circuit::loadStrDoc( QString &doc )
                     else if( name == "NLsteps" ) m_simulator->setMaxNlSteps( prop.toUInt() );
                     else if( name == "reaStep" ) m_simulator->setreactStep( prop.toULongLong() );
                     else if( name == "animate" ) setAnimate( prop.toInt() );
-                    else if( name == "rev"     ) rev = prop.toInt();
+                    else if( name == "rev"     ) m_circRev  = prop.toInt();
                     else if( name == "category") m_category = prop.toString();
                     else if( name == "compname") m_compName = prop.toString();
                     else if( name == "compinfo") m_compInfo = prop.toString();
@@ -545,7 +545,8 @@ void Circuit::cancelComp()
 
 QString Circuit::circuitHeader()
 {
-    QString header = "<circuit version=\""+QString( APP_VERSION )+"\" rev=\""+QString( REVNO )+"\" ";
+    QString header = "<circuit version=\""+QString( APP_VERSION )+"\" ";
+    header += "rev=\""     + QString::number( MainWindow::self()->revision() )+"\" ";
     header += "stepSize=\""+ QString::number( m_simulator->stepSize() )+"\" ";
     header += "stepsPS=\"" + QString::number( m_simulator->stepsPerSec() )+"\" ";
     header += "NLsteps=\"" + QString::number( m_simulator->maxNlSteps() )+"\" ";

@@ -126,6 +126,8 @@ class Circuit : public QGraphicsScene
         QString iconData() { return m_iconData; }
         void setIconData( QString id ) { m_iconData = id; }
 
+        int circuitRev() { return m_circRev; }
+
         void drawBackground( QPainter* painter, const QRectF &rect );
 
     signals:
@@ -172,6 +174,7 @@ class Circuit : public QGraphicsScene
         Connector*   m_newConnector;
         CompBase*    m_newComp;
 
+        int m_circRev;
         int m_seqNumber;
         int m_conNumber;
         int m_error;
