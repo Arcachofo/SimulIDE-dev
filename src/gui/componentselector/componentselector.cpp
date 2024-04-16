@@ -365,6 +365,7 @@ void ComponentSelector::convertItem( QString folder, QString itemFile, QString n
     {
         simFile = destFolder+"/"+folder+".sim1";
         compFile = destFolder+"/"+folder+".comp";
+        if( !category.startsWith("Micro") ) category = "Micro/"+category;
     }
     else{
         simFile = destFolder+"/"+folder+"/"+name+"/"+name+".sim1";

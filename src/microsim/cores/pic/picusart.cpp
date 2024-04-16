@@ -67,12 +67,11 @@ void PicUsart::configureA( uint8_t newTXSTA ) // TXSTA changed
 {
     // clockPol = getRegBitsVal( val, CSRC );
 
-    m_sync = getRegBitsBool( newTXSTA, m_SYNC );
+    m_synchronous = getRegBitsBool( newTXSTA, m_SYNC );
 
     bool txEn = getRegBitsBool( newTXSTA, m_txEn );
-    //if( m_sync );
-    //else
-    {
+    if( m_synchronous );
+    else{
         if( txEn != m_sender->isEnabled() )
         {
             setRegBits( m_TXIF );

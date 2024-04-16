@@ -34,7 +34,7 @@ creCompDialog::creCompDialog( QWidget* parent )
 
     for( QString icon : iconList ) addIconFile( icon ); // iconBox->addItem( QIcon( icon ), "");
 
-    if( iconData.isEmpty() ) iconBox->setCurrentIndex( 1 );
+    if( iconData.isEmpty() ) iconBox->setCurrentIndex( 0 );
     else{
         iconItem_t iconItem;
         iconItem.iconData = iconData;
