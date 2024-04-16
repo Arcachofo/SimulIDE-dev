@@ -16,11 +16,12 @@ Highlighter::Highlighter( QTextDocument* parent )
 }
 Highlighter::~Highlighter(){}
 
-void Highlighter::readSyntaxFile( QString fileName )
+QStringList Highlighter::readSyntaxFile( QString fileName )
 {
+    QStringList keyWords;
     QString path = MainWindow::self()->getDataFilePath("codeeditor/syntax/");
 
-    if( !QDir( path ).exists() ) return;
+    if( !QDir( path ).exists() ) return keyWords;
 
     fileName = path+fileName;
 
@@ -90,10 +91,14 @@ void Highlighter::readSyntaxFile( QString fileName )
                         m_multiEnd.setPattern( exp.replace("\\\\","\\")  );
                 }   }
                 else{
-                    for( QString exp : words )
+                    for( QString exp : words )  // Keywords
                     {
+
                         if( exp.startsWith("\"")) exp = remQuotes( exp ); // RegExp
-                        else                      exp = "\\b"+exp+"\\b";
+                        else{
+                            if( exp.length() > 2 ) keyWords.append( exp );
+                            exp = "\\b"+exp+"\\b";
+                        }
                         addRule( format, exp );
                 }   }
                 format.setFontWeight( QFont::Normal );         // Reset to Defaults
@@ -104,8 +109,10 @@ void Highlighter::readSyntaxFile( QString fileName )
     format.setForeground( QColor(12303291) ); // Show Spaces color
     addRule( format, QString( " " ) );
     addRule( format, QString( "\t" ) );
-    
+
     this->rehighlight();
+
+    return keyWords;
 }
 
 void Highlighter::addRegisters( QStringList patterns )

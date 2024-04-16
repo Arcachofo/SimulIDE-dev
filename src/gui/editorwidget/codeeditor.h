@@ -14,6 +14,7 @@ class BaseDebugger;
 class LineNumberArea;
 class Highlighter;
 class OutPanelText;
+class QCompleter;
 
 class CodeEditor : public QPlainTextEdit, public CompBase
 {
@@ -51,6 +52,9 @@ class CodeEditor : public QPlainTextEdit, public CompBase
 
         QString fileList();
         void setFileList( QString fl );
+
+        void setCompleter( QCompleter* completer );
+        void addKeyWords( QStringList words );
 
         void setSyntaxFile( QString file );
 
@@ -96,6 +100,7 @@ class CodeEditor : public QPlainTextEdit, public CompBase
         void slotAddBreak() { m_brkAction = 1; }
         void slotRemBreak() { m_brkAction = 2; }
         void slotClearBreak() { m_brkPoints.clear(); }
+        void insertCompletion( QString text );
 
     private slots:
         void updateLineNumberAreaWidth(int) { setViewportMargins( lineNumberAreaWidth(), 0, 0, 0 ); }
@@ -111,14 +116,20 @@ class CodeEditor : public QPlainTextEdit, public CompBase
     private:
         int  getSyntaxCoincidences();
         void remBreakPoint( int line );
-
         void indentSelection( bool unIndent );
+        void complete( QKeyEvent* e );
+        QString wordUnderCursor();
 
         BaseDebugger* m_compiler;
         OutPanelText* m_outPane;
 
         LineNumberArea* m_lNumArea;
         Highlighter*    m_hlighter;
+
+        QString m_prevWord;
+        QString m_object;
+        QStringList m_keyWords;
+        QCompleter* m_completer;
 
         QList<QTextEdit::ExtraSelection> m_found;
 

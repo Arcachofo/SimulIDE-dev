@@ -6,6 +6,9 @@
 #include <QPainter>
 #include <QTextDocumentFragment>
 #include <QDomDocument>
+#include <QCompleter>
+#include <QAbstractItemView>
+#include <QScrollBar>
 #include <QDebug>
 
 #include "codeeditor.h"
@@ -44,7 +47,8 @@ CodeEditor::CodeEditor( QWidget* parent, OutPanelText* outPane )
     m_loadCompiler = false;
     m_loadBreakp   = false;
 
-    m_compiler   = NULL;
+    m_completer = nullptr;
+    m_compiler  = nullptr;
     m_debugLine = 0;
     m_brkAction = 0;
     m_help = "";
@@ -122,7 +126,11 @@ CodeEditor::~CodeEditor()
     m_documents.removeAll( this );
 }
 
-void CodeEditor::setSyntaxFile( QString file ){ m_hlighter->readSyntaxFile( file ); }
+void CodeEditor::setSyntaxFile( QString file )
+{
+    QStringList keyWords = m_hlighter->readSyntaxFile( file );
+    addKeyWords( keyWords );
+}
 
 void CodeEditor::fileProps()
 {
@@ -218,6 +226,83 @@ void CodeEditor::setFileList( QString fl )
     }
 }
 
+void  CodeEditor::addKeyWords( QStringList words )
+{
+    m_keyWords.append( words );
+    QCompleter* completer = new QCompleter( m_keyWords, this );
+    setCompleter( completer );
+}
+
+void CodeEditor::setCompleter( QCompleter* completer )
+{
+    if( m_completer ){
+        disconnect( m_completer, nullptr, this, nullptr );
+        delete m_completer;
+    }
+
+    m_completer = completer;
+    if (!m_completer) return;
+
+    m_completer->setWidget( this );
+    m_completer->setCompletionMode( QCompleter::PopupCompletion );
+
+    connect( m_completer, QOverload<const QString&>::of( &QCompleter::activated ),
+             this       , &CodeEditor::insertCompletion );
+}
+
+void CodeEditor::insertCompletion( QString text )
+{
+    QTextCursor cursor = textCursor();
+    cursor.select( QTextCursor::WordUnderCursor );
+    cursor.insertText( text );
+    setTextCursor( cursor );
+}
+
+void CodeEditor::complete( QKeyEvent* e )
+{
+    QString text = e->text();
+    auto ctrlOrShift = e->modifiers() & (Qt::ControlModifier | Qt::ShiftModifier);
+
+    if( (ctrlOrShift && text.isEmpty()) || e->key() == Qt::Key_Delete)
+    {
+        return;
+    }
+    QString word = wordUnderCursor();
+
+    QString lastChar = text.right(1);
+    if( lastChar == "." ) m_object = m_prevWord + lastChar;
+    m_prevWord = word;
+    word = m_object + word;
+
+    if( text.isEmpty() || word.length() < 2  )
+    {
+        m_object.clear();
+        m_completer->popup()->hide();
+        return;
+    }
+
+    if( word != m_completer->completionPrefix() )
+    {
+        m_completer->setCompletionPrefix( word  );
+        m_completer->popup()->setCurrentIndex( m_completer->completionModel()->index(0, 0) );
+    }
+
+    auto cursRect = cursorRect();
+    cursRect.setWidth(
+        m_completer->popup()->sizeHintForColumn(0) +
+        m_completer->popup()->verticalScrollBar()->sizeHint().width()
+    );
+
+    m_completer->complete( cursRect );
+}
+
+QString CodeEditor::wordUnderCursor()
+{
+    auto tc = textCursor();
+    tc.select( QTextCursor::WordUnderCursor );
+    return tc.selectedText();
+}
+
 void CodeEditor::setFile( QString filePath )
 {
     if( m_file == filePath ) return;
@@ -239,7 +324,7 @@ void CodeEditor::setFile( QString filePath )
 
     if( extension == ".gcb" )
     {
-        m_hlighter->readSyntaxFile("gcbasic.syntax");
+        setSyntaxFile("gcbasic.syntax");
         if( !m_compiler ) m_compiler = EditorWindow::self()->createDebugger( "GcBasic", this );
     }
     else if( extension == ".cpp"
@@ -248,7 +333,7 @@ void CodeEditor::setFile( QString filePath )
           || extension == ".h"
           || extension == ".as" )
     {
-        m_hlighter->readSyntaxFile("cpp.syntax");
+        setSyntaxFile("cpp.syntax");
         if( extension == ".ino" )
         {   if( !m_compiler ) m_compiler = EditorWindow::self()->createDebugger( "Arduino", this );}
         else if( extension == ".as" )
@@ -257,13 +342,13 @@ void CodeEditor::setFile( QString filePath )
     }
     /*else if( extension == ".s" )
     {
-        m_hlighter->readSyntaxFile( "avrasm.syntax" );
+        setSyntaxFile( "avrasm.syntax" );
         m_compiler = EditorWindow::self()->createDebugger( "Avrgcc-asm", this );
     }*/
     else if( extension == ".a51" ) // 8051
     {
         m_outPane->appendLine( "I51 asm\n" );
-        m_hlighter->readSyntaxFile("i51asm.syntax");
+        setSyntaxFile("i51asm.syntax");
     }
     else if( extension == ".asm" ) // We should identify if pic, avr or i51 asm
     {
@@ -273,17 +358,17 @@ void CodeEditor::setFile( QString filePath )
         if( type == 1 )   // Is Pic
         {
             m_outPane->appendLine( "Pic asm\n" );
-            m_hlighter->readSyntaxFile("pic14asm.syntax");
+            setSyntaxFile("pic14asm.syntax");
         }
         else if( type == 2 )  // Is Avr
         {
             m_outPane->appendLine( "Avr asm\n" );
-            m_hlighter->readSyntaxFile("avrasm.syntax");
+            setSyntaxFile("avrasm.syntax");
         }
         else if( type == 3 )  // Is 8051
         {
             m_outPane->appendLine( "I51 asm\n" );
-            m_hlighter->readSyntaxFile("i51asm.syntax");
+            setSyntaxFile("i51asm.syntax");
         }
         else m_outPane->appendLine( "Unknown asm\n" );
     }
@@ -294,22 +379,22 @@ void CodeEditor::setFile( QString filePath )
          ||  extension == ".sim1"
          ||  extension == ".simu" )
     {
-        m_hlighter->readSyntaxFile("xml.syntax");
+        setSyntaxFile("xml.syntax");
     }
     else if( getFileName( m_file ).toLower() == "makefile"  )
     {
-        m_hlighter->readSyntaxFile("makef.syntax");
+        setSyntaxFile("makef.syntax");
     }
     else if( extension == ".hex"
          ||  extension == ".ihx" )
     {
         m_font.setLetterSpacing( QFont::PercentageSpacing, 110 );
         setFont( m_font );
-        m_hlighter->readSyntaxFile("hex.syntax");
+        setSyntaxFile("hex.syntax");
     }
     else if( extension == ".js" )
     {
-        m_hlighter->readSyntaxFile("js.syntax");
+        setSyntaxFile("js.syntax");
     }
     /*else if( extension == ".sac" )
     {
@@ -448,6 +533,12 @@ void CodeEditor::updateScreen()
 
 void CodeEditor::keyPressEvent( QKeyEvent* event )
 {
+    if( m_completer && m_completer->popup()->isVisible() && event->key() == Qt::Key_Return )
+    {
+        event->ignore();
+        return;
+    }
+
     if( event->key() == Qt::Key_Plus && (event->modifiers() & Qt::ControlModifier) )
     {
         EditorWindow::self()->scaleFont( 1 );
@@ -486,7 +577,9 @@ void CodeEditor::keyPressEvent( QKeyEvent* event )
         QPlainTextEdit::keyPressEvent( event );
 
         if( event->key() == Qt::Key_Return ) insertPlainText( tabs );
-}   }
+    }
+    if( m_completer ) complete( event );
+}
 
 void CodeEditor::deleteSelected()
 {
