@@ -23,7 +23,7 @@ class ScriptUsart : public McuUsart, public ScriptPerif
         virtual void byteReceived( uint8_t data ) override;
         virtual void frameSent( uint8_t data ) override;
 
-        virtual void registerScript( ScriptCpu* cpu ) override;
+        virtual QStringList registerScript( ScriptCpu* cpu ) override;
         virtual void startScript() override;
 
     private:

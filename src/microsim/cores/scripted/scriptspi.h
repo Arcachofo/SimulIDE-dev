@@ -25,7 +25,7 @@ class ScriptSpi : public McuSpi, public ScriptPerif
 
         virtual void endTransaction() override;
 
-        virtual void registerScript( ScriptCpu* cpu ) override;
+        virtual QStringList registerScript( ScriptCpu* cpu ) override;
         virtual void startScript() override;
 
     private:

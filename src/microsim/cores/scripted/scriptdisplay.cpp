@@ -14,10 +14,20 @@ ScriptDisplay::ScriptDisplay( int w, int h, QString name, QWidget* parent )
              , ScriptPerif( name )
 {
     m_clear = NULL;
+
+    m_type = "Display";
+
+    m_methods << "setWidth( int pixels )"
+              << "setHeight( int pixels )"
+              << "setBackground( int RGB )"
+              << "setPixel( uint x, uint y, int RGB )"
+              << "setData( array<array<int>> &data )"
+              << "setPalette( array<int> &data )"
+                 ;
 }
 ScriptDisplay::~ScriptDisplay(){}
 
-void ScriptDisplay::registerScript( ScriptCpu* cpu )
+QStringList ScriptDisplay::registerScript( ScriptCpu* cpu )
 {
     m_scriptCpu = cpu;
 
@@ -28,6 +38,8 @@ void ScriptDisplay::registerScript( ScriptCpu* cpu )
 
     string display = "Display "+m_perifName.toStdString(); // Type name
     engine->RegisterGlobalProperty( display.c_str(), this );
+
+    return m_methods;
 }
 
 void ScriptDisplay::registerScriptMetods( asIScriptEngine* engine ) // Static: register Object type and methods only once

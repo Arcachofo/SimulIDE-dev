@@ -230,25 +230,38 @@ void CodeEditor::setFileList( QString fl )
 void  CodeEditor::addKeyWords( QStringList words )
 {
     m_keyWords.append( words );
-    QCompleter* completer = new QCompleter( m_keyWords, this );
-    setCompleter( completer );
+
+    if( !m_completer ){
+        QCompleter* completer = new QCompleter( m_keyWords, this );
+        setCompleter( completer );
+    }else{
+        QStringListModel* model = new QStringListModel( m_keyWords );
+        m_completer->setModel( model );
+    }
+}
+
+void CodeEditor::setExtraTypes( QStringList types )
+{
+    m_hlighter->setExtraTypes( types );
 }
 
 void CodeEditor::setMemberWords( QMap<QString, QStringList> mb )
 {
     m_memberWords = mb;
-    QStringList objects = mb.keys();
+   m_objects = mb.keys();
 
-    addKeyWords( objects ); /// TODO: must clear previous objects
-    m_hlighter->addObjects( objects );
+    QStringListModel* model = new QStringListModel( m_keyWords + m_objects );
+    m_completer->setModel( model );
+
+    m_hlighter->addObjects( m_objects );
 
     QStringList members;
-    for( QString object : objects )
+    for( QString object : m_objects )
     {
         QStringList m = mb.value( object );
         for( QString member : m )
         {
-            member = member.split("(").first();
+            member = "."+member.split("(").first();
             if( !members.contains( member ) ) members.append( member );
         }
     }
@@ -269,6 +282,7 @@ void CodeEditor::setCompleter( QCompleter* completer )
 
     m_completer->setWidget( this );
     m_completer->setCompletionMode( QCompleter::PopupCompletion );
+    m_completer->setCaseSensitivity( Qt::CaseInsensitive );
 
     connect( m_completer, QOverload<const QString&>::of( &QCompleter::activated ),
              this       , &CodeEditor::insertCompletion );
@@ -276,11 +290,22 @@ void CodeEditor::setCompleter( QCompleter* completer )
 
 void CodeEditor::insertCompletion( QString text )
 {
-    QTextCursor cursor = textCursor();
-    cursor.select( QTextCursor::WordUnderCursor );
-    cursor.insertText( text );
-    if( text.endsWith(")") ) cursor.movePosition( QTextCursor::PreviousCharacter, QTextCursor::MoveAnchor );
-    setTextCursor( cursor );
+    QTextCursor tc = textCursor();
+    tc.select( QTextCursor::WordUnderCursor );
+    tc.insertText( text );
+    if( text.endsWith(")") )
+    {
+        QString charact = "";
+        while( charact != "(" ){
+            tc.movePosition( QTextCursor::PreviousCharacter, QTextCursor::KeepAnchor);
+            if( tc.atStart() or (tc.positionInBlock() == 0) ) break;
+            charact = tc.selectedText()[0];
+        }
+        tc.removeSelectedText();
+        tc.insertText( "()" );
+        tc.movePosition( QTextCursor::PreviousCharacter, QTextCursor::MoveAnchor );
+    }
+    setTextCursor( tc );
 }
 
 void CodeEditor::complete( QKeyEvent* e )
@@ -293,12 +318,6 @@ void CodeEditor::complete( QKeyEvent* e )
         return;
     }
     QString word = wordUnderCursor();
-
-    /*if( !m_object.isEmpty() && !word.startsWith( m_object ) ) // Check that we are still matching members
-    {
-        m_object.clear();
-        m_completer->setModel( new QStringListModel( m_keyWords ) );
-    }*/
 
     QString lastChar = text.right(1);
     if( word.contains(".") )                // Check if we should match members
@@ -313,22 +332,16 @@ void CodeEditor::complete( QKeyEvent* e )
             QStringListModel* model = new QStringListModel( keyWords );
             m_completer->setModel( model );
         }
-        else m_completer->setModel( new QStringListModel( m_keyWords ) );
+        else m_completer->setModel( new QStringListModel( m_keyWords + m_objects ) );
     }
     else if( !m_object.isEmpty() )
     {
-        m_completer->setModel( new QStringListModel( m_keyWords ) );
+        m_completer->setModel( new QStringListModel( m_keyWords + m_objects ) );
         m_object.clear();
     }
-    //m_prevWord = word;
-    //word = m_object + word;
 
-    if( text.isEmpty() || m_object.length() + word.length() < 2  )
+    if( text.isEmpty() || (m_object.length()+word.length() < 2)  )
     {
-        //m_object.clear();
-
-        //m_completer->setModel( new QStringListModel( m_keyWords ) );
-
         m_completer->popup()->hide();
         return;
     }
@@ -443,7 +456,8 @@ void CodeEditor::setFile( QString filePath )
          ||  extension == ".package"
          ||  extension == ".mcu"
          ||  extension == ".sim1"
-         ||  extension == ".simu" )
+         ||  extension == ".simu"
+         ||  extension == ".comp" )
     {
         setSyntaxFile("xml.syntax");
     }

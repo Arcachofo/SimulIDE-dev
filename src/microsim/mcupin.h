@@ -55,7 +55,7 @@ class McuPin : public IoPin
 
         void setOpenColl( bool o );
 
-        static void registerScript( asIScriptEngine* engine );
+ static QStringList registerScript( asIScriptEngine* engine );
 
     protected:
         QString m_id;

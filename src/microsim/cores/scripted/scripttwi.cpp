@@ -12,10 +12,17 @@ ScriptTwi::ScriptTwi( eMcu* mcu, QString name )
          , ScriptPerif( name )
 {
     m_byteReceived = NULL;
+
+    m_type = "TWI";
+
+    m_methods << "setMode( int mode )"
+              << "sendByte( uint8 byte )"
+              << "setAddress( uint8 address )"
+                 ;
 }
 ScriptTwi::~ScriptTwi(){}
 
-void ScriptTwi::registerScript( ScriptCpu* cpu )
+QStringList ScriptTwi::registerScript( ScriptCpu* cpu )
 {
     m_scriptCpu = cpu;
 
@@ -37,6 +44,8 @@ void ScriptTwi::registerScript( ScriptCpu* cpu )
     engine->RegisterObjectMethod("TWI", "void setAddress(uint8 a)"
                                    , asMETHODPR( ScriptTwi, setAddress, (uint8_t), void)
                                    , asCALL_THISCALL );
+
+    return m_methods;
 }
 
 void ScriptTwi::startScript()

@@ -32,7 +32,7 @@ void print( string &msg )
 }
 
 ScriptBase::ScriptBase( QString name )
-            : eElement( name )
+          : eElement( name )
 {
     m_aEngine = NULL;
     m_context = NULL;

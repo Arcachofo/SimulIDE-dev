@@ -53,105 +53,134 @@ ScriptCpu::ScriptCpu( eMcu* mcu )
 
     m_mcuComp = m_mcu->component();
 
-    m_aEngine->RegisterObjectType("eElement" ,0, asOBJ_REF | asOBJ_NOCOUNT );
-    m_aEngine->RegisterObjectType("ScriptCpu",0, asOBJ_REF | asOBJ_NOCOUNT );
     //m_aEngine->RegisterObjectType("pod", sizeof(pod), asOBJ_VALUE | asOBJ_POD);
 
+    m_aEngine->RegisterObjectType("ScriptCpu", 0, asOBJ_REF | asOBJ_NOCOUNT );
     m_aEngine->RegisterGlobalProperty("ScriptCpu component", this );
+
+    m_aEngine->RegisterObjectType("eElement", 0, asOBJ_REF | asOBJ_NOCOUNT );
     m_aEngine->RegisterGlobalProperty("eElement element", this );
 
-    m_typeWords.insert("IoPort", IoPort::registerScript( m_aEngine ) );
-    m_typeWords.insert("IoPin" , IoPin::registerScript( m_aEngine ) );
-    McuPort::registerScript( m_aEngine );
-    McuPin::registerScript( m_aEngine );
+    m_typeWords.insert("IoPort" , IoPort::registerScript( m_aEngine ) );
+    m_typeWords.insert("IoPin"  , IoPin::registerScript( m_aEngine ) );
+    m_typeWords.insert("McuPort", McuPort::registerScript( m_aEngine ) );
+    m_typeWords.insert("McuPin" , McuPin::registerScript( m_aEngine ) );
 
+    m_types = m_typeWords.keys();
+
+    QStringList memberList;
+
+    memberList << "addCpuReg( string name, string type )";
     m_aEngine->RegisterObjectMethod("ScriptCpu", "void addCpuReg(string n, string t)"
                                    , asMETHODPR( ScriptCpu, addCpuReg, (string, string), void)
                                    , asCALL_THISCALL );
 
+    memberList << "addCpuVar( string name, string type )";
     m_aEngine->RegisterObjectMethod("ScriptCpu", "void addCpuVar( string n, string t )"
                                    , asMETHODPR( ScriptCpu, addCpuVar, (string, string), void)
                                    , asCALL_THISCALL );
 
+    memberList << "toConsole( string message )";
     m_aEngine->RegisterObjectMethod("ScriptCpu", "void toConsole( string r )"
                                    , asMETHODPR( ScriptCpu, toConsole, (string), void)
                                    , asCALL_THISCALL );
 
+    memberList << "showValue( string property )";
     m_aEngine->RegisterObjectMethod("ScriptCpu", "void showValue( string r )"
                                    , asMETHODPR( ScriptCpu, showValue, (string), void)
                                    , asCALL_THISCALL );
 
+    memberList << "addEvent( uint time )";
     m_aEngine->RegisterObjectMethod("ScriptCpu", "void addEvent(uint t)"
                                    , asMETHODPR( ScriptCpu, addEvent, (uint), void)
                                    , asCALL_THISCALL );
 
+    memberList << "cancelEvents()";
     m_aEngine->RegisterObjectMethod("ScriptCpu", "void cancelEvents()"
                                    , asMETHOD( ScriptCpu, cancelEvents )
                                    , asCALL_THISCALL );
 
+    memberList << "circTime()";
     m_aEngine->RegisterObjectMethod("ScriptCpu", "uint64 circTime()"
                                    , asMETHODPR( ScriptCpu, circTime, (), uint64_t)
                                    , asCALL_THISCALL );
 
+    memberList << "readPGM( uint address )";
     m_aEngine->RegisterObjectMethod("ScriptCpu", "int readPGM(uint n)"
                                    , asMETHODPR( ScriptCpu, readPGM, (uint), int)
                                    , asCALL_THISCALL );
 
+    memberList << "writePGM( uint address, int value )";
     m_aEngine->RegisterObjectMethod("ScriptCpu", "void writePGM(uint a, int v)"
                                    , asMETHODPR( ScriptCpu, writePGM, (uint, int), void)
                                    , asCALL_THISCALL );
 
+    memberList << "readRAM( uint address )";
     m_aEngine->RegisterObjectMethod("ScriptCpu", "int readRAM(uint n)"
                                    , asMETHODPR( ScriptCpu, readRAM, (uint), int)
                                    , asCALL_THISCALL );
 
+    memberList << "writeRAM( uint address, int value )";
     m_aEngine->RegisterObjectMethod("ScriptCpu", "void writeRAM(uint a, int v)"
                                    , asMETHODPR( ScriptCpu, writeRAM, (uint, int), void)
                                    , asCALL_THISCALL );
 
+    memberList << "readROM( uint address )";
     m_aEngine->RegisterObjectMethod("ScriptCpu", "int readROM(uint n)"
                                    , asMETHODPR( ScriptCpu, readROM, (uint), int)
                                    , asCALL_THISCALL );
 
+    memberList << "writeROM( uint address, int value )";
     m_aEngine->RegisterObjectMethod("ScriptCpu", "void writeROM(uint a, int v)"
                                    , asMETHODPR( ScriptCpu, writeROM, (uint, int), void)
                                    , asCALL_THISCALL );
 
+    memberList << "getPort( const string port )";
     m_aEngine->RegisterObjectMethod("ScriptCpu", "IoPort@ getPort(const string port)"
                                    , asMETHODPR( ScriptCpu, getPort, (const string), IoPort*)
                                    , asCALL_THISCALL );
 
+    memberList << "getPin( const string pin )";
     m_aEngine->RegisterObjectMethod("ScriptCpu", "IoPin@ getPin(const string pin)"
                                    , asMETHODPR( ScriptCpu, getPin, (const string), IoPin*)
                                    , asCALL_THISCALL );
 
+    memberList << "getMcuPort( const string port )";
     m_aEngine->RegisterObjectMethod("ScriptCpu", "McuPort@ getMcuPort(const string port)"
                                    , asMETHODPR( ScriptCpu, getMcuPort, (const string), McuPort*)
                                    , asCALL_THISCALL );
 
+    memberList << "getMcuPin(const string pin)";
     m_aEngine->RegisterObjectMethod("ScriptCpu", "McuPin@ getMcuPin(const string pin)"
                                    , asMETHODPR( ScriptCpu, getMcuPin, (const string), McuPin*)
                                    , asCALL_THISCALL );
 
+    memberList << "INTERRUPT( uint vector )";
     m_aEngine->RegisterObjectMethod("ScriptCpu", "void INTERRUPT( uint vector )"
                                    , asMETHODPR( ScriptCpu, INTERRUPT, (uint32_t), void)
                                    , asCALL_THISCALL );
 
+    memberList << "getPropStr( int index, const string name )";
     m_aEngine->RegisterObjectMethod("ScriptCpu", "string getPropStr( int index, const string p )"
                                    , asMETHODPR( ScriptCpu, getPropStr, (int,const string), string)
                                    , asCALL_THISCALL );
 
+    memberList << "setPropStr( int index, const string name, const string value )";
     m_aEngine->RegisterObjectMethod("ScriptCpu", "void setPropStr( int index, const string p,const string v )"
                                    , asMETHODPR( ScriptCpu, setPropStr, (int,const string,const string), void)
                                    , asCALL_THISCALL );
 
+    memberList << "setLinkedValue( int index, double value, int i )";
     m_aEngine->RegisterObjectMethod("ScriptCpu", "void setLinkedValue( int index, double v, int i )"
                                    , asMETHODPR( ScriptCpu, setLinkedValue, (int,double,int), void)
                                    , asCALL_THISCALL );
 
+    memberList << "setLinkedString( int index, string valuie, int i )";
     m_aEngine->RegisterObjectMethod("ScriptCpu", "void setLinkedString( int index, string v, int i )"
                                    , asMETHODPR( ScriptCpu, setLinkedString, (int,const string,int), void)
                                    , asCALL_THISCALL );
+
+    m_typeWords.insert("ScriptCpu", memberList );
 }
 ScriptCpu::~ScriptCpu()
 {
@@ -164,7 +193,8 @@ ScriptCpu::~ScriptCpu()
 void ScriptCpu::setPeriferals( std::vector<ScriptPerif*> p )
 {
     m_periferals = p;
-    for( ScriptPerif* perif : m_periferals ) perif->registerScript( this );
+    for( ScriptPerif* perif : m_periferals )
+        m_typeWords.insert( perif->type(), perif->registerScript( this ) );
 }
 
 void ScriptCpu::setScriptFile( QString scriptFile, bool compile )
@@ -186,6 +216,9 @@ int ScriptCpu::compileScript()
     asCModule* module = (asCModule*)m_aEngine->GetModule( 0 );
 
     m_memberWords.clear();
+    m_memberWords.insert( "component", m_typeWords.value("ScriptCpu") );
+    m_memberWords.insert( "element", QStringList() );
+
     int n = module->GetGlobalVarCount();
 
     for( int i=0; i<n; ++i )

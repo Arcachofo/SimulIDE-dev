@@ -20,6 +20,13 @@ ScriptUsart::ScriptUsart( eMcu* mcu, QString name, int number )
 
     m_byteReceived = NULL;
     m_frameSent = NULL;
+
+    m_type = "Uart";
+
+    m_methods << "setBaudRate( int bauds )"
+              << "setDataBits( uint8 bits )"
+              << "sendByte( uint8 byte )"
+                 ;
 }
 ScriptUsart::~ScriptUsart(){}
 
@@ -29,7 +36,7 @@ void ScriptUsart::reset()
     m_receiver->enable( true );
 }
 
-void ScriptUsart::registerScript( ScriptCpu* cpu )
+QStringList ScriptUsart::registerScript( ScriptCpu* cpu )
 {
     m_scriptCpu = cpu;
 
@@ -51,6 +58,8 @@ void ScriptUsart::registerScript( ScriptCpu* cpu )
     engine->RegisterObjectMethod("Uart", "void sendByte(uint8 b)"
                                    , asMETHODPR( ScriptUsart, sendByte, (uint8_t), void)
                                    , asCALL_THISCALL );
+
+    return m_methods;
 }
 
 void ScriptUsart::startScript()

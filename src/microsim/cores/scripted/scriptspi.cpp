@@ -17,6 +17,12 @@ ScriptSpi::ScriptSpi( eMcu* mcu, QString name )
          , ScriptPerif( name )
 {
     m_byteReceived = NULL;
+
+    m_type = "SPI";
+
+    m_methods << "setMode( int mode )"
+              << "sendByte( uint8 byte )"
+                 ;
 }
 ScriptSpi::~ScriptSpi(){}
 
@@ -24,7 +30,7 @@ void ScriptSpi::reset()
 {
 }
 
-void ScriptSpi::registerScript( ScriptCpu* cpu )
+QStringList ScriptSpi::registerScript( ScriptCpu* cpu )
 {
     m_scriptCpu = cpu;
 
@@ -42,6 +48,8 @@ void ScriptSpi::registerScript( ScriptCpu* cpu )
     engine->RegisterObjectMethod("SPI", "void sendByte(uint8 b)"
                                    , asMETHODPR( ScriptSpi, sendByte, (uint8_t), void)
                                    , asCALL_THISCALL );
+
+    return m_methods;
 }
 
 void ScriptSpi::startScript()

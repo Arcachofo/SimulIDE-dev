@@ -66,6 +66,7 @@ int asDebugger::compile( bool )
     int r = m_device->compileScript();
     if( r == 0 )
     {
+        m_editor->setExtraTypes( m_device->getTypes() );
         m_editor->setMemberWords( m_device->getMemberWords() );
         m_outPane->appendLine( "\n"+tr("     SUCCESS!!! Compilation Ok")+"\n" );
     }

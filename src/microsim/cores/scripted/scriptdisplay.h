@@ -19,7 +19,7 @@ class ScriptDisplay : public Display, public ScriptPerif
 
         virtual void initialize() override;
 
-        virtual void registerScript( ScriptCpu* cpu ) override;
+        virtual QStringList registerScript( ScriptCpu* cpu ) override;
         virtual void startScript() override;
 
         void setData( CScriptArray* d );

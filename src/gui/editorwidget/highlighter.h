@@ -23,6 +23,7 @@ class Highlighter : public QSyntaxHighlighter
 
         void addObjects( QStringList patterns );
         void addMembers( QStringList patterns );
+        void setExtraTypes( QStringList types );
 
     protected:
         void highlightBlock( const QString &text );
@@ -41,6 +42,7 @@ class Highlighter : public QSyntaxHighlighter
         QVector<HighlightRule> m_rules;
         QVector<HighlightRule> m_objectRules;
         QVector<HighlightRule> m_memberRules;
+        QVector<HighlightRule> m_extraRules;
 
         QRegExp m_multiStart;
         QRegExp m_multiEnd;

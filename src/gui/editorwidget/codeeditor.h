@@ -56,6 +56,7 @@ class CodeEditor : public QPlainTextEdit, public CompBase
         void setCompleter( QCompleter* completer );
         void addKeyWords( QStringList words );
         void setMemberWords( QMap<QString, QStringList> mb );
+        void setExtraTypes( QStringList types );
 
         void setSyntaxFile( QString file );
 
@@ -129,6 +130,7 @@ class CodeEditor : public QPlainTextEdit, public CompBase
 
         //QString m_prevWord;
         QString m_object;
+        QStringList m_objects;
         QStringList m_keyWords;
         QMap<QString, QStringList> m_memberWords;
         QCompleter* m_completer;

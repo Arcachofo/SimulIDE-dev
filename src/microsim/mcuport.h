@@ -55,7 +55,7 @@ class McuPort : public McuModule
         //uint16_t getOutAddr() { return m_outAddr; }
         //uint16_t getInAddr() { return m_inAddr; }
 
- static void registerScript( asIScriptEngine* engine );
+ static QStringList registerScript( asIScriptEngine* engine );
 
     protected:
         void createPins( Mcu* mcuComp, QString pins, uint32_t pinMask );

@@ -93,7 +93,6 @@ QStringList Highlighter::readSyntaxFile( QString fileName )
                 else{
                     for( QString exp : words )  // Keywords
                     {
-
                         if( exp.startsWith("\"")) exp = remQuotes( exp ); // RegExp
                         else{
                             if( exp.length() > 2 ) keyWords.append( exp );
@@ -134,10 +133,19 @@ void Highlighter::addMembers( QStringList patterns )
     f.setFontWeight( QFont::Bold );
     f.setForeground( QColor( 0, 95, 160 ) );
 
-    for( QString exp : patterns )
-    {
-        m_memberRules.append( HighlightRule{ QRegExp( "\\b"+exp+"\\b"), f } );
-    }
+    for( QString exp : patterns ) m_memberRules.append( HighlightRule{ QRegExp( "\\b"+exp+"\\b"), f } );
+
+    this->rehighlight();
+}
+
+void Highlighter::setExtraTypes( QStringList patterns )
+{
+    m_extraRules.clear();
+    QTextCharFormat f;
+    f.setFontWeight( QFont::Bold );
+    f.setForeground( QColor( 0x904020 ) );
+
+    for( QString exp : patterns ) m_extraRules.append( HighlightRule{ QRegExp( "\\b"+exp+"\\b"), f } );
 
     this->rehighlight();
 }
@@ -147,9 +155,10 @@ void Highlighter::highlightBlock( const QString &text )
     QString lcText = text;
     lcText = lcText.toLower(); // Do case insensitive
 
-    for( const HighlightRule &rule : m_rules ) processRule( rule, lcText );
     for( const HighlightRule &rule : m_objectRules ) processRule( rule, text );
     for( const HighlightRule &rule : m_memberRules ) processRule( rule, text );
+    for( const HighlightRule &rule : m_extraRules  ) processRule( rule, text );
+    for( const HighlightRule &rule : m_rules       ) processRule( rule, lcText );
 
     if( m_multiline )                              // Multiline comment:
     {

@@ -7,6 +7,7 @@
 #define SCRIPTPERIF_H
 
 #include <QString>
+#include <QStringList>
 
 class ScriptCpu;
 class asIScriptEngine;
@@ -17,13 +18,19 @@ class ScriptPerif
         ScriptPerif( QString name );
         ~ScriptPerif();
 
-        virtual void registerScript( ScriptCpu* cpu ){;}
+        virtual QStringList registerScript( ScriptCpu* cpu ){;}
         virtual void startScript(){;}
+
+        QString type() { return m_type; }
 
     protected:
         QString m_perifName;
 
         ScriptCpu* m_scriptCpu;
+
+        QString m_type;
+
+        QStringList m_methods;
 };
 
 #endif

@@ -24,7 +24,7 @@ class ScriptTwi : public McuTwi, public ScriptPerif
         virtual void readByte() override;
         void sendByte( uint8_t data );
 
-        virtual void registerScript( ScriptCpu* cpu ) override;
+        virtual QStringList registerScript( ScriptCpu* cpu ) override;
         virtual void startScript() override;
 
     private:

@@ -72,6 +72,7 @@ class ScriptCpu : public ScriptBase, public McuCpu
 
         virtual void INTERRUPT( uint vector ) override;
 
+        QStringList getTypes() { return m_types; }
         QMap<QString, QStringList> getMemberWords() { return m_memberWords; }
 
     protected:
@@ -104,6 +105,7 @@ class ScriptCpu : public ScriptBase, public McuCpu
         QHash<QString, asIScriptFunction*> m_propGetters;
         QHash<QString, asIScriptFunction*> m_propSetters;
 
+        QStringList m_types;
         QMap<QString, QStringList> m_typeWords;
         QMap<QString, QStringList> m_memberWords;
 

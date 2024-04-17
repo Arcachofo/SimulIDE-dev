@@ -199,23 +199,30 @@ McuPin* McuPort::getPin( QString pinName )
 
 // ---- Script Engine -------------------
 #include "angelscript.h"
-void McuPort::registerScript( asIScriptEngine* engine )
+QStringList McuPort::registerScript( asIScriptEngine* engine )
 {
+    QStringList memberList;
     engine->RegisterObjectType("McuPort", 0, asOBJ_REF | asOBJ_NOCOUNT );
 
+    memberList << "controlPort( bool outCtrl, bool dirCtrl )";
     engine->RegisterObjectMethod("McuPort", "void controlPort( bool o, bool d )"
                                    , asMETHODPR( McuPort, controlPort, (bool, bool), void)
                                    , asCALL_THISCALL );
 
+    memberList << "setDirection( uint direction )";
     engine->RegisterObjectMethod("McuPort", "void setDirection( uint d )"
                                    , asMETHODPR( McuPort, setDirection, (uint), void)
                                    , asCALL_THISCALL );
 
+    memberList << "getInpState()";
     engine->RegisterObjectMethod("McuPort", "uint getInpState()"
                                    , asMETHODPR( McuPort, getInpState, (), uint)
                                    , asCALL_THISCALL );
 
+    memberList << "setOutState( uint state )";
     engine->RegisterObjectMethod("McuPort", "void setOutState(uint s)"
                                    , asMETHODPR( McuPort, setOutState, (uint), void)
                                    , asCALL_THISCALL );
+
+    return memberList;
 }

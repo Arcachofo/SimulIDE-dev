@@ -177,48 +177,62 @@ void McuPin::setExtInt( uint mode )
 
 // ---- Script Engine -------------------
 #include "angelscript.h"
-void McuPin::registerScript( asIScriptEngine* engine )
+QStringList McuPin::registerScript( asIScriptEngine* engine )
 {
+    QStringList memberList;
     engine->RegisterObjectType("McuPin", 0, asOBJ_REF | asOBJ_NOCOUNT );
 
+    memberList << "setDirection( bool out )";
     engine->RegisterObjectMethod("McuPin", "void setDirection( bool o )"
                                    , asMETHODPR( McuPin, setDirection, (bool), void)
                                    , asCALL_THISCALL );
 
+    memberList << "setPortState( bool state )";
     engine->RegisterObjectMethod("McuPin", "void setPortState( bool s )"
                                    , asMETHODPR( McuPin, setPortState, (bool), void)
                                    , asCALL_THISCALL );
 
+    memberList << "controlPin( bool outCtrl, bool dirCtrl )";
     engine->RegisterObjectMethod("McuPin", "void controlPin( bool outCtrl, bool dirCtrl )"
                                    , asMETHODPR( McuPin, controlPin, (bool,bool), void)
                                    , asCALL_THISCALL );
 
+    memberList << "setExtInt( uint mode )";
     engine->RegisterObjectMethod("McuPin", "void setExtInt( uint mode )"
                                    , asMETHODPR( McuPin, setExtInt, (uint), void)
                                    , asCALL_THISCALL );
 
     // IoPin ------------
+
+    memberList << "setPinMode( uint mode )";
     engine->RegisterObjectMethod("McuPin", "void setPinMode(uint m)"
                                    , asMETHODPR( McuPin, setPinMode, (uint), void)
                                    , asCALL_THISCALL );
 
+    memberList << "getInpState()";
     engine->RegisterObjectMethod("McuPin", "bool getInpState()"
                                    , asMETHODPR( McuPin, getInpState, (), bool)
                                    , asCALL_THISCALL );
 
+    memberList << "void setOutState( bool state )";
     engine->RegisterObjectMethod("McuPin", "void setOutState(bool s)"
                                    , asMETHODPR( McuPin, setOutState, (bool), void)
                                    , asCALL_THISCALL );
 
+    memberList << "getVoltage()";
     engine->RegisterObjectMethod("McuPin", "double getVoltage()"
                                    , asMETHODPR( McuPin, getVoltage, (), double)
                                    , asCALL_THISCALL );
 
+    memberList << "setVoltage( double voltage )";
     engine->RegisterObjectMethod("McuPin", "void setVoltage(double v)"
                                    , asMETHODPR( McuPin, setVoltage, (double), void)
                                    , asCALL_THISCALL );
 
+    memberList << "changeCallBack( eElement@ e, bool call )";
     engine->RegisterObjectMethod("McuPin", "void changeCallBack(eElement@ p, bool s)"
                                    , asMETHODPR( McuPin, changeCallBack, (eElement*, bool), void)
                                    , asCALL_THISCALL );
+
+    return memberList;
 }
