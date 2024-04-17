@@ -89,7 +89,7 @@ class IoPin : public Pin, public eElement
         void setRiseTime( double time ) { m_timeRis = time; }
         void setFallTime( double time ) { m_timeFal = time; }
 
-        static void registerScript( asIScriptEngine* engine );
+ static QStringList registerScript( asIScriptEngine* engine );
 
     protected:
         inline void updtState()

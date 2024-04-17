@@ -280,47 +280,60 @@ void IoPin::stampAll()
 
 // ---- Script Engine -------------------
 #include "angelscript.h"
-void IoPin::registerScript( asIScriptEngine* engine )
+QStringList IoPin::registerScript( asIScriptEngine* engine )
 {
+    QStringList memberList;
     engine->RegisterObjectType("IoPin", 0, asOBJ_REF | asOBJ_NOCOUNT );
 
+    memberList << "setPinMode( uint mode )";
     engine->RegisterObjectMethod("IoPin", "void setPinMode(uint m)"
                                    , asMETHODPR( IoPin, setPinMode, (uint), void)
                                    , asCALL_THISCALL );
 
+    memberList << "getInpState()";
     engine->RegisterObjectMethod("IoPin", "bool getInpState()"
                                    , asMETHODPR( IoPin, getInpState, (), bool)
                                    , asCALL_THISCALL );
 
+    memberList << "void setOutState( bool state )";
     engine->RegisterObjectMethod("IoPin", "void setOutState(bool s)"
                                    , asMETHODPR( IoPin, setOutState, (bool), void)
                                    , asCALL_THISCALL );
 
+    memberList << "setStateZ( bool state )";
     engine->RegisterObjectMethod("IoPin", "void setStateZ( bool z )"
                                    , asMETHODPR( IoPin, setStateZ, (bool), void)
                                    , asCALL_THISCALL );
 
+    memberList << "setOutStatFast( bool state )";
     engine->RegisterObjectMethod("IoPin", "void setOutStatFast(bool s)"
                                    , asMETHODPR( IoPin, setOutStatFast, (bool), void)
                                    , asCALL_THISCALL );
 
+    memberList << "scheduleState( bool state, uint64 time )";
     engine->RegisterObjectMethod("IoPin", "void scheduleState( bool state, uint64 time )"
                                    , asMETHODPR( IoPin, scheduleState, (bool,uint64_t), void)
                                    , asCALL_THISCALL );
 
+    memberList << "getVoltage()";
     engine->RegisterObjectMethod("IoPin", "double getVoltage()"
                                    , asMETHODPR( IoPin, getVoltage, (), double)
                                    , asCALL_THISCALL );
 
+    memberList << "setVoltage( double voltage )";
     engine->RegisterObjectMethod("IoPin", "void setVoltage(double v)"
                                    , asMETHODPR( IoPin, setVoltage, (double), void)
                                    , asCALL_THISCALL );
 
+    memberList << "setImpedance( double impedance )";
     engine->RegisterObjectMethod("IoPin", "void setImpedance( double imp )"
                                    , asMETHODPR( IoPin, setImpedance, (double), void)
                                    , asCALL_THISCALL );
 
+    memberList << "changeCallBack( eElement@ e, bool call )";
     engine->RegisterObjectMethod("IoPin", "void changeCallBack(eElement@ p, bool s)"
                                    , asMETHODPR( IoPin, changeCallBack, (eElement*, bool), void)
                                    , asCALL_THISCALL );
+
+    return memberList;
 }

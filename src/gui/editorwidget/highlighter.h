@@ -21,7 +21,8 @@ class Highlighter : public QSyntaxHighlighter
 
         QStringList readSyntaxFile( QString fileName );
 
-        void addRegisters( QStringList patterns );
+        void addObjects( QStringList patterns );
+        void addMembers( QStringList patterns );
 
     protected:
         void highlightBlock( const QString &text );
@@ -38,6 +39,8 @@ class Highlighter : public QSyntaxHighlighter
         bool m_multiline;
         
         QVector<HighlightRule> m_rules;
+        QVector<HighlightRule> m_objectRules;
+        QVector<HighlightRule> m_memberRules;
 
         QRegExp m_multiStart;
         QRegExp m_multiEnd;

@@ -206,35 +206,45 @@ void IoPort::addSequence( CScriptArray* t )
     if( outVector.size() ) m_outVectors.emplace_back( outVector );
 }
 
-void IoPort::registerScript( asIScriptEngine* engine )
+QStringList IoPort::registerScript( asIScriptEngine* engine )
 {
+    QStringList memberList;
     engine->RegisterObjectType("IoPort", 0, asOBJ_REF | asOBJ_NOCOUNT );
 
+    memberList << "setPinMode( uint mode )";
     engine->RegisterObjectMethod("IoPort", "void setPinMode(uint m)"
                                    , asMETHODPR( IoPort, setPinMode, (uint), void)
                                    , asCALL_THISCALL );
 
+    memberList << "getInpState()";
     engine->RegisterObjectMethod("IoPort", "uint getInpState()"
                                    , asMETHODPR( IoPort, getInpState, (), uint)
                                    , asCALL_THISCALL );
 
+    memberList << "scheduleState( uint32 state, uint64 time )";
     engine->RegisterObjectMethod("IoPort", "void scheduleState( uint32 state, uint64 time )"
                                    , asMETHODPR( IoPort, scheduleState, (uint32_t,uint64_t), void)
                                    , asCALL_THISCALL );
 
+    memberList << "setOutState( uint state )";
     engine->RegisterObjectMethod("IoPort", "void setOutState(uint s)"
                                    , asMETHODPR( IoPort, setOutState, (uint), void)
                                    , asCALL_THISCALL );
 
+    memberList << "addSequence( array<array<uint64>>@ sequence)";
     engine->RegisterObjectMethod("IoPort", "void addSequence( array<array<uint64>>@ t )"
                                    , asMETHODPR( IoPort, addSequence, (CScriptArray*), void)
                                    , asCALL_THISCALL );
 
+    memberList << "changeCallBack( eElement@ e, bool call )";
     engine->RegisterObjectMethod("IoPort", "void changeCallBack(eElement@ s, bool s)"
                                    , asMETHODPR( IoPort, changeCallBack, (eElement*, bool), void)
                                    , asCALL_THISCALL );
 
+    memberList << "trigger( uint index )";
     engine->RegisterObjectMethod("IoPort", "void trigger(uint n)"
                                    , asMETHODPR( IoPort, trigger, (uint), void)
                                    , asCALL_THISCALL );
+
+    return memberList;
 }

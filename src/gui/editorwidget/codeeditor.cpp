@@ -8,6 +8,7 @@
 #include <QDomDocument>
 #include <QCompleter>
 #include <QAbstractItemView>
+#include <QStringListModel>
 #include <QScrollBar>
 #include <QDebug>
 
@@ -233,6 +234,27 @@ void  CodeEditor::addKeyWords( QStringList words )
     setCompleter( completer );
 }
 
+void CodeEditor::setMemberWords( QMap<QString, QStringList> mb )
+{
+    m_memberWords = mb;
+    QStringList objects = mb.keys();
+
+    addKeyWords( objects ); /// TODO: must clear previous objects
+    m_hlighter->addObjects( objects );
+
+    QStringList members;
+    for( QString object : objects )
+    {
+        QStringList m = mb.value( object );
+        for( QString member : m )
+        {
+            member = member.split("(").first();
+            if( !members.contains( member ) ) members.append( member );
+        }
+    }
+    m_hlighter->addMembers( members );
+}
+
 void CodeEditor::setCompleter( QCompleter* completer )
 {
     if( m_completer ){
@@ -242,6 +264,8 @@ void CodeEditor::setCompleter( QCompleter* completer )
 
     m_completer = completer;
     if (!m_completer) return;
+
+    m_memberWords.insert("component", {"addCpuReg()", "addCpuVar()", "toCOnsole()"});
 
     m_completer->setWidget( this );
     m_completer->setCompletionMode( QCompleter::PopupCompletion );
@@ -255,6 +279,7 @@ void CodeEditor::insertCompletion( QString text )
     QTextCursor cursor = textCursor();
     cursor.select( QTextCursor::WordUnderCursor );
     cursor.insertText( text );
+    if( text.endsWith(")") ) cursor.movePosition( QTextCursor::PreviousCharacter, QTextCursor::MoveAnchor );
     setTextCursor( cursor );
 }
 
@@ -269,14 +294,41 @@ void CodeEditor::complete( QKeyEvent* e )
     }
     QString word = wordUnderCursor();
 
-    QString lastChar = text.right(1);
-    if( lastChar == "." ) m_object = m_prevWord + lastChar;
-    m_prevWord = word;
-    word = m_object + word;
-
-    if( text.isEmpty() || word.length() < 2  )
+    /*if( !m_object.isEmpty() && !word.startsWith( m_object ) ) // Check that we are still matching members
     {
         m_object.clear();
+        m_completer->setModel( new QStringListModel( m_keyWords ) );
+    }*/
+
+    QString lastChar = text.right(1);
+    if( word.contains(".") )                // Check if we should match members
+    {
+        QStringList words = word.split(".");
+        word = words.takeLast();
+        QString object = words.takeLast();
+        QStringList keyWords = m_memberWords.value( object );
+        if( !keyWords.isEmpty() )       // This is an object with members
+        {
+            m_object = object;
+            QStringListModel* model = new QStringListModel( keyWords );
+            m_completer->setModel( model );
+        }
+        else m_completer->setModel( new QStringListModel( m_keyWords ) );
+    }
+    else if( !m_object.isEmpty() )
+    {
+        m_completer->setModel( new QStringListModel( m_keyWords ) );
+        m_object.clear();
+    }
+    //m_prevWord = word;
+    //word = m_object + word;
+
+    if( text.isEmpty() || m_object.length() + word.length() < 2  )
+    {
+        //m_object.clear();
+
+        //m_completer->setModel( new QStringListModel( m_keyWords ) );
+
         m_completer->popup()->hide();
         return;
     }
@@ -298,9 +350,23 @@ void CodeEditor::complete( QKeyEvent* e )
 
 QString CodeEditor::wordUnderCursor()
 {
-    auto tc = textCursor();
-    tc.select( QTextCursor::WordUnderCursor );
-    return tc.selectedText();
+    QTextCursor tc = textCursor();
+    //tc.select( QTextCursor::WordUnderCursor );
+    //return tc.selectedText();
+
+    bool isStartOfWord = false;
+    if( tc.atStart() || (tc.positionInBlock() == 0) )
+        isStartOfWord = true;
+
+    while( !isStartOfWord ){
+        tc.movePosition( QTextCursor::PreviousCharacter, QTextCursor::KeepAnchor);
+        if( tc.atStart() or (tc.positionInBlock() == 0) )
+            isStartOfWord = true;
+
+        else if( QChar( tc.selectedText()[0]).isSpace() )
+            isStartOfWord = true;
+    }
+    return tc.selectedText().trimmed();
 }
 
 void CodeEditor::setFile( QString filePath )

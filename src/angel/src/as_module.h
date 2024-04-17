@@ -130,6 +130,8 @@ public:
 	virtual void       *GetAddressOfGlobalVar(asUINT index);
 	virtual int         RemoveGlobalVar(asUINT index);
 
+    int getGlobalVarData( asUINT index, const char **name, const char **type );
+
 	// Type identification
 	virtual asUINT         GetObjectTypeCount() const;
 	virtual asITypeInfo   *GetObjectTypeByIndex(asUINT index) const;

@@ -9,6 +9,7 @@
 #include "outpaneltext.h"
 #include "scriptcpu.h"
 #include "mcu.h"
+#include "codeeditor.h"
 
 #define tr(str) QCoreApplication::translate("Compiler",str)
 
@@ -18,6 +19,10 @@ asDebugger::asDebugger( CodeEditor* parent, OutPanelText* outPane )
     m_device = NULL;
 
     removeProperty( "ToolPath" );
+
+    //QStringList keywords;
+    //keywords << "component.addCpuReg";
+    //parent->addKeyWords( keywords );
 }
 asDebugger::~asDebugger() {}
 
@@ -59,8 +64,12 @@ int asDebugger::compile( bool )
     m_device = static_cast<ScriptCpu*>( mcu->cpu() );
     m_device->setScriptFile( m_firmware, false );
     int r = m_device->compileScript();
-    if( r == 0 ) m_outPane->appendLine( "\n"+tr("     SUCCESS!!! Compilation Ok")+"\n" );
-    else         m_outPane->appendLine( "\n"+tr("     ERROR!!! Compilation Failed")+"\n" );
+    if( r == 0 )
+    {
+        m_editor->setMemberWords( m_device->getMemberWords() );
+        m_outPane->appendLine( "\n"+tr("     SUCCESS!!! Compilation Ok")+"\n" );
+    }
+    else m_outPane->appendLine( "\n"+tr("     ERROR!!! Compilation Failed")+"\n" );
 
     return r;
 }

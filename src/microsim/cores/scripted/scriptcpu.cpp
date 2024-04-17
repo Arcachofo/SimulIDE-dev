@@ -60,8 +60,8 @@ ScriptCpu::ScriptCpu( eMcu* mcu )
     m_aEngine->RegisterGlobalProperty("ScriptCpu component", this );
     m_aEngine->RegisterGlobalProperty("eElement element", this );
 
-    IoPort::registerScript( m_aEngine );
-    IoPin::registerScript( m_aEngine );
+    m_typeWords.insert("IoPort", IoPort::registerScript( m_aEngine ) );
+    m_typeWords.insert("IoPin" , IoPin::registerScript( m_aEngine ) );
     McuPort::registerScript( m_aEngine );
     McuPin::registerScript( m_aEngine );
 
@@ -173,6 +173,9 @@ void ScriptCpu::setScriptFile( QString scriptFile, bool compile )
     if( compile ) compileScript();
 }
 
+#include "as_module.h"
+#include "as_typeinfo.h"
+
 int ScriptCpu::compileScript()
 {
     if( !m_aEngine ) return -1;
@@ -180,19 +183,36 @@ int ScriptCpu::compileScript()
     int r = ScriptBase::compileScript();
     if( r < 0 ) return r;
 
-    m_reset       = m_aEngine->GetModule(0)->GetFunctionByDecl("void reset()");
-    m_voltChanged = m_aEngine->GetModule(0)->GetFunctionByDecl("void voltChanged()");
-    m_updateStep  = m_aEngine->GetModule(0)->GetFunctionByDecl("void updateStep()");
-    m_runEvent    = m_aEngine->GetModule(0)->GetFunctionByDecl("void runEvent()");
-    m_INTERRUPT   = m_aEngine->GetModule(0)->GetFunctionByDecl("void INTERRUPT( uint vector )");
-    m_runStep     = m_aEngine->GetModule(0)->GetFunctionByDecl("void runStep()");
-    m_extClock    = m_aEngine->GetModule(0)->GetFunctionByDecl("void extClock( bool clkState )");
-    m_extClockF   = m_aEngine->GetModule(0)->GetFunctionByDecl("void extClock()");
-    m_getCpuReg   = m_aEngine->GetModule(0)->GetFunctionByDecl("int getCpuReg( string reg )");
-    m_getStrReg   = m_aEngine->GetModule(0)->GetFunctionByDecl("string getStrReg( string reg )");
-    m_command     = m_aEngine->GetModule(0)->GetFunctionByDecl("void command( string c )");
-    m_setLinkedVal= m_aEngine->GetModule(0)->GetFunctionByDecl("void setLinkedValue( double v, int i )");
-    m_setLinkedStr= m_aEngine->GetModule(0)->GetFunctionByDecl("void setLinkedString( string str, int i )");
+    asCModule* module = (asCModule*)m_aEngine->GetModule( 0 );
+
+    m_memberWords.clear();
+    int n = module->GetGlobalVarCount();
+
+    for( int i=0; i<n; ++i )
+    {
+        const char* name;
+        const char* type;
+        if( module->getGlobalVarData( i, &name, &type ) != asERROR )
+        {
+            QStringList list = m_typeWords.value( QString( type ) ); //
+            m_memberWords.insert( QString( name ), list );
+            //qDebug() << name << type;
+        }
+    }
+
+    m_reset       = module->GetFunctionByDecl("void reset()");
+    m_voltChanged = module->GetFunctionByDecl("void voltChanged()");
+    m_updateStep  = module->GetFunctionByDecl("void updateStep()");
+    m_runEvent    = module->GetFunctionByDecl("void runEvent()");
+    m_INTERRUPT   = module->GetFunctionByDecl("void INTERRUPT( uint vector )");
+    m_runStep     = module->GetFunctionByDecl("void runStep()");
+    m_extClock    = module->GetFunctionByDecl("void extClock( bool clkState )");
+    m_extClockF   = module->GetFunctionByDecl("void extClock()");
+    m_getCpuReg   = module->GetFunctionByDecl("int getCpuReg( string reg )");
+    m_getStrReg   = module->GetFunctionByDecl("string getStrReg( string reg )");
+    m_command     = module->GetFunctionByDecl("void command( string c )");
+    m_setLinkedVal= module->GetFunctionByDecl("void setLinkedValue( double v, int i )");
+    m_setLinkedStr= module->GetFunctionByDecl("void setLinkedString( string str, int i )");
 
     m_vChangedCtx = m_voltChanged ? m_aEngine->CreateContext() : NULL;
     m_runEventCtx = m_runEvent    ? m_aEngine->CreateContext() : NULL;

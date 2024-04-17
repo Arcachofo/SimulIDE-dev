@@ -1028,6 +1028,19 @@ int asCModule::GetGlobalVar(asUINT index, const char **out_name, const char **ou
 	return asSUCCESS;
 }
 
+// SimulIDE interface
+int asCModule::getGlobalVarData( asUINT index, const char **name, const char **type )
+{
+    const asCGlobalProperty *prop = m_scriptGlobals.Get(index);
+    if( !prop ) return asERROR;
+
+    asCTypeInfo* info = prop->type.GetTypeInfo();
+
+    if( name ) *name = prop->name.AddressOf();
+    if( type && info ) *type = info->GetName();
+    return asSUCCESS;
+}
+
 // interface
 asUINT asCModule::GetObjectTypeCount() const
 {

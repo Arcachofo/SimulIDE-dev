@@ -72,6 +72,8 @@ class ScriptCpu : public ScriptBase, public McuCpu
 
         virtual void INTERRUPT( uint vector ) override;
 
+        QMap<QString, QStringList> getMemberWords() { return m_memberWords; }
+
     protected:
         uint m_progWordMask;
 
@@ -101,6 +103,9 @@ class ScriptCpu : public ScriptBase, public McuCpu
         QHash<QString, QString> m_propFunctions;
         QHash<QString, asIScriptFunction*> m_propGetters;
         QHash<QString, asIScriptFunction*> m_propSetters;
+
+        QMap<QString, QStringList> m_typeWords;
+        QMap<QString, QStringList> m_memberWords;
 
         QString m_value;
 
