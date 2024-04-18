@@ -293,7 +293,7 @@ void CodeEditor::insertCompletion( QString text )
     QTextCursor tc = textCursor();
     tc.select( QTextCursor::WordUnderCursor );
     tc.insertText( text );
-    if( text.endsWith(")") )
+    if( text.endsWith(")") && !text.endsWith("())") )
     {
         QString charact = "";
         while( charact != "(" ){

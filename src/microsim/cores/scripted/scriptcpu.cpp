@@ -204,7 +204,6 @@ void ScriptCpu::setScriptFile( QString scriptFile, bool compile )
 }
 
 #include "as_module.h"
-#include "as_typeinfo.h"
 
 int ScriptCpu::compileScript()
 {

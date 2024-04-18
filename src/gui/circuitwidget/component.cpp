@@ -117,8 +117,8 @@ new PointProp<Component>("boardPos", "","", this, &Component::boardPos, &Compone
 new PointProp<Component>("circPos" , "","", this, &Component::circPos,  &Component::setCircPos ),
 new DoubProp <Component>("boardRot", "","", this, &Component::boardRot, &Component::setBoardRot ),
 new DoubProp <Component>("circRot" , "","", this, &Component::circRot,  &Component::setCircRot ),
-new IntProp  <Component>("boardHflip" ,"","", this, &Component::boardHflip,  &Component::setBoardHflip ),
-new IntProp  <Component>("boardVflip" ,"","", this, &Component::boardVflip,  &Component::setBoardVflip ),
+new IntProp  <Component>("boardHflip","","", this, &Component::boardHflip,  &Component::setBoardHflip ),
+new IntProp  <Component>("boardVflip","","", this, &Component::boardVflip,  &Component::setBoardVflip ),
     }, groupHidden | groupNoCopy } );
 }
 Component::~Component(){}

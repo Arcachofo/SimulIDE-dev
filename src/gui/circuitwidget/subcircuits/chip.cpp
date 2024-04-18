@@ -79,7 +79,7 @@ bool Chip::setPropStr( QString prop, QString val )
         else                setPackage( pkgDIP );
         return true;
     }
-    return CompBase::setPropStr( prop, val );
+    return Component::setPropStr( prop, val );
 }
 
 QString Chip::convertPackage( QString domText ) // Static, converts xml to new format

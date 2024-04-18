@@ -93,10 +93,7 @@ Mcu::Mcu( QString type, QString id )
     addPropGroup( { tr("Main"), {},0} );
 
     m_device = m_name;//.split("_").last(); // for example: "atmega328-1" to: "atmega328"
-
-    int rev = Circuit::self()->circuitRev();
-    if( rev >= 2220 ){ if( m_device.contains("@") ) m_device = m_device.split("@").last(); }// MCU in Subcircuit
-    else if( m_device.contains("_") ) m_device = m_device.split("_").last(); // MCU in Subcircuit Old
+    if( m_device.contains("@") ) m_device = m_device.split("@").last(); // MCU in Subcircuit
 
     QString baseFile;
     QString dataFile = ComponentSelector::self()->getDataFile( m_device );
