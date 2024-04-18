@@ -8,12 +8,13 @@
 #include "scriptbase.h"
 #include "scriptstdstring.h"
 #include "scriptarray.h"
-#include "editorwindow.h"
+#include "circuitwidget.h"
 #include "utils.h"
+#include "asdebugger.h"
 
 using namespace std;
 
-void MessageCallback( const asSMessageInfo* msg, void* param )
+void ScriptBase::MessageCallback( const asSMessageInfo* msg )
 {
     QString type = " ERROR ";
     if     ( msg->type == asMSGTYPE_WARNING     ) type = " WARNING ";
@@ -22,7 +23,13 @@ void MessageCallback( const asSMessageInfo* msg, void* param )
     QString deb = QString( msg->section )+" line: "+QString::number( msg->row )
                   +" "+QString::number( msg->col )+type+QString( msg->message );
 
-    EditorWindow::self()->outPane()->appendLine( deb.remove("\n") );
+    if( m_debugger )
+    {
+        m_debugger->outPane()->appendLine( deb.remove("\n") );
+        if     ( type == " ERROR "  ) m_debugger->scriptError( msg->row );
+        else if( type == " WARNING ") m_debugger->scriptWarning( msg->row );
+    }
+    else CircuitWidget::self()->simDebugMessage( deb.remove("\n") );
     //qDebug() << msg->section << "line:" << msg->row << msg->col << type << msg->message;
 }
 
@@ -34,8 +41,9 @@ void print( string &msg )
 ScriptBase::ScriptBase( QString name )
           : eElement( name )
 {
-    m_aEngine = NULL;
-    m_context = NULL;
+    m_aEngine = nullptr;
+    m_context = nullptr;
+    m_debugger = nullptr;
 
     m_aEngine = asCreateScriptEngine();
     if( m_aEngine == 0 ) { qDebug() << "Failed to create script engine."; return; }
@@ -47,7 +55,8 @@ ScriptBase::ScriptBase( QString name )
     m_aEngine->SetEngineProperty( asEP_BUILD_WITHOUT_LINE_CUES, true );
     m_aEngine->SetEngineProperty( asEP_OPTIMIZE_BYTECODE      , true );
 
-    m_aEngine->SetMessageCallback( asFUNCTION( MessageCallback ), 0, asCALL_CDECL );
+    //m_aEngine->SetMessageCallback( asFUNCTION( MessageCallback ), 0, asCALL_CDECL );
+    m_aEngine->SetMessageCallback(asMETHOD( ScriptBase, MessageCallback ), this, asCALL_THISCALL);
     RegisterStdString( m_aEngine );
     RegisterScriptArray( m_aEngine, true );
 

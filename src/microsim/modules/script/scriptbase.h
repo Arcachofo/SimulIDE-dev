@@ -12,11 +12,15 @@
 //#include "mcumodule.h"
 #include "e-element.h"
 
+class asDebugger;
+
 class ScriptBase : public eElement
 {
     public:
         ScriptBase( QString name );
         ~ScriptBase();
+
+        void MessageCallback( const asSMessageInfo* msg );
 
         virtual int compileScript();
 
@@ -31,6 +35,8 @@ class ScriptBase : public eElement
         inline void prepare( asIScriptFunction* func ) { m_context->Prepare( func ); }
         void execute();
 
+        void setDebugger( asDebugger* d ) { m_debugger = d; }
+
     protected:
         void printError( asIScriptContext* context );
 
@@ -41,5 +47,7 @@ class ScriptBase : public eElement
         asCJITCompiler* m_jit;
         asIScriptEngine* m_aEngine;
         asIScriptContext* m_context;
+
+        asDebugger* m_debugger;
 };
 #endif

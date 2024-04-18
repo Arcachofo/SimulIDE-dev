@@ -19,6 +19,9 @@ class asDebugger : public BaseDebugger
         virtual bool upload() override;
         virtual int  compile( bool debug ) override;
 
+        void scriptError( int line );
+        void scriptWarning( int line );
+
     protected:
         //virtual bool postProcess() override;
 

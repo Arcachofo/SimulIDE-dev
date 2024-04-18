@@ -24,7 +24,10 @@ asDebugger::asDebugger( CodeEditor* parent, OutPanelText* outPane )
     //keywords << "component.addCpuReg";
     //parent->addKeyWords( keywords );
 }
-asDebugger::~asDebugger() {}
+asDebugger::~asDebugger()
+{
+    if( m_device ) m_device->setDebugger( nullptr );
+}
 
 bool asDebugger::upload() // Copy hex file to Circuit folder, then upload
 {
@@ -47,7 +50,7 @@ bool asDebugger::upload() // Copy hex file to Circuit folder, then upload
 int asDebugger::compile( bool )
 {
     m_firmware = m_buildPath+m_fileName+m_fileExt;
-    m_device = NULL;
+    m_device = nullptr;
 
     if( !m_firmware.isEmpty() && !QFileInfo::exists( m_firmware ) )
     {
@@ -62,6 +65,7 @@ int asDebugger::compile( bool )
         return -1;
     }
     m_device = static_cast<ScriptCpu*>( mcu->cpu() );
+    m_device->setDebugger( this );
     m_device->setScriptFile( m_firmware, false );
     int r = m_device->compileScript();
     if( r == 0 )
@@ -73,4 +77,13 @@ int asDebugger::compile( bool )
     else m_outPane->appendLine( "\n"+tr("     ERROR!!! Compilation Failed")+"\n" );
 
     return r;
+}
+
+void asDebugger::scriptError( int line )
+{
+    m_editor->addError( line );
+}
+void asDebugger::scriptWarning( int line )
+{
+    m_editor->addWarning( line );
 }

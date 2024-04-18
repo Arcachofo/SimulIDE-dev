@@ -25,7 +25,7 @@ ScriptCpu::ScriptCpu( eMcu* mcu )
          : ScriptBase( mcu->getId()+"-"+"ScriptCpu" )
          , McuCpu( mcu )
 {
-    m_watcher = NULL;
+    m_watcher  = nullptr;
 
     m_progWordMask = 0;
     for( uint i=0; i<mcu->wordSize(); ++i )
