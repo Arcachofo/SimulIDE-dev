@@ -25,7 +25,7 @@ class SubCircuit : public Chip
         virtual void setLogicSymbol( bool ls ) override;
 
         QList<Tunnel*> getPinTunnels() { return m_pinTunnels.values(); }
-        Component* getMainComp( QString name="" );
+        Component* getMainComp( QString uid="" );
 
         virtual QString toString() override;
 
