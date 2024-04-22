@@ -66,18 +66,20 @@ class I51Core : public McuCpu, public eElement
     protected:
 
         uint64_t m_psStep;  // Half Clock cycle ps = 1/24 Machine cycle, = 1/12 Read cycle.
-        int m_cycle;
+        int m_readCycle;
+        int m_rCycles;
 
         bool m_readExtPGM;
 
         cpuState_t m_cpuState;
 
-        uint16_t m_tmpPC;
+        uint16_t m_readPC;
+        uint16_t m_lastPC;
         uint8_t m_pgmData;
         uint8_t m_opcode;
         uint8_t* m_acc;
         
-        QVector<uint8_t> m_dataEvent;
+        QVector<uint8_t> m_readOp;
         uint8_t m_addrMode;
         uint16_t m_opAddr;
         uint8_t m_op0;
@@ -139,7 +141,6 @@ class I51Core : public McuCpu, public eElement
         inline void opr2I08();
         inline void opr2Dir();
 
-        inline void addrNul();
         inline void addrRgx();
         inline void addrInd();
         inline void addrI08();
@@ -153,21 +154,19 @@ class I51Core : public McuCpu, public eElement
             return addr;
         }
 
-        inline uint8_t getValue( uint16_t addr ) // Read Fake Input instead
-        {
-            if( addr == REG_SBUF ) addr++;     // Fake Uart Input Register
-            return GET_RAM( addr );
-        }
-
-        inline uint8_t GET_RAM( uint16_t addr ) override
+        inline uint8_t readInd( uint16_t addr )
         {
             addr = checkAddr( addr );
             return McuCpu::GET_RAM( addr );
         }
-        inline void SET_RAM( uint16_t addr, uint8_t val ) override
+
+        inline void writeInd( uint16_t addr, uint8_t val )
         {
-            addr = checkAddr( addr );
-            McuCpu::SET_RAM( addr, val );
+            if( addr > m_lowDataMemEnd )
+            {
+                if( m_upperData ) m_dataMem[addr+m_regEnd] = val;
+            }
+            else m_dataMem[m_opAddr] = val;
         }
 
         inline void    pushStack8( uint8_t v );
@@ -228,6 +227,7 @@ class I51Core : public McuCpu, public eElement
         inline void ORLa();
         inline void ANLa();
         inline void XCH();
+        inline void XCHr();
         inline void XCHD();
         inline void XRLa();
         inline void RR();
@@ -243,6 +243,7 @@ class I51Core : public McuCpu, public eElement
         inline void MOVr();
         inline void MOVa();
         inline void MOVm();
+        inline void MOVml();
 
         inline void movx_a_indir_dptr();
         inline void movx_a_indir_rx();
