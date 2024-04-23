@@ -20,6 +20,7 @@ UsartModule::UsartModule( eMcu* mcu, QString name )
 {
     m_sender   = new UartTx( this, mcu, name+"Tx" );
     m_receiver = new UartRx( this, mcu, name+"Rx" );
+    m_uartSync = nullptr;
 
     m_mode = 0xFF; // Force first mode change.
     m_monitor = nullptr;
@@ -42,7 +43,8 @@ UsartModule::~UsartModule( )
 void UsartModule::setSynchronous( bool s )
 {
     m_synchronous = s;
-    if( ! m_uartSync ) m_uartSync = new UartSync( this, "uartSync");
+    if( !s ) return;
+    if( !m_uartSync ) m_uartSync = new UartSync( this, "uartSync");
 
     m_uartSync->m_syncTxPin  = m_receiver->getPin();
     m_uartSync->m_syncClkPin = m_sender->getPin();
