@@ -126,9 +126,14 @@ void Highlighter::addObjects( QStringList patterns )
     this->rehighlight();
 }
 
-void Highlighter::addMembers( QStringList patterns )
+void Highlighter::setMembers( QStringList patterns )
 {
     m_memberRules.clear();
+    addMembers( patterns );
+}
+
+void Highlighter::addMembers( QStringList patterns )
+{
     QTextCharFormat f;
     f.setFontWeight( QFont::Bold );
     f.setForeground( QColor( 0, 95, 160 ) );

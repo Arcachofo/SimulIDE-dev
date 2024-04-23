@@ -69,6 +69,14 @@ CodeEditor::CodeEditor( QWidget* parent, OutPanelText* outPane )
     p.setColor( QPalette::Text, QColor( 0, 0, 0) );
     setPalette( p );
 
+    m_completer = new QCompleter( this );
+    m_completer->setWidget( this );
+    m_completer->setCompletionMode( QCompleter::PopupCompletion );
+    m_completer->setCaseSensitivity( Qt::CaseInsensitive );
+
+    connect( m_completer, QOverload<const QString&>::of( &QCompleter::activated ),
+             this       , &CodeEditor::insertCompletion );
+
     connect( this, &CodeEditor::blockCountChanged,
              this, &CodeEditor::updateLineNumberAreaWidth, Qt::UniqueConnection );
 
@@ -231,18 +239,24 @@ void  CodeEditor::addKeyWords( QStringList words )
 {
     m_keyWords.append( words );
 
-    if( !m_completer ){
-        QCompleter* completer = new QCompleter( m_keyWords, this );
-        setCompleter( completer );
-    }else{
-        QStringListModel* model = new QStringListModel( m_keyWords );
-        m_completer->setModel( model );
-    }
+    QStringListModel* model = new QStringListModel( m_keyWords );
+    m_completer->setModel( model );
 }
 
 void CodeEditor::setExtraTypes( QStringList types )
 {
     m_hlighter->setExtraTypes( types );
+}
+
+void CodeEditor::setFunctions( QStringList words )
+{
+    m_keyWords.append( words );
+    QStringListModel* model = new QStringListModel( m_keyWords + m_objects );
+    m_completer->setModel( model );
+
+    QStringList functs;
+    for( QString func : words ) functs.append( func.split("(").first() );
+    m_hlighter->addMembers( functs );
 }
 
 void CodeEditor::setMemberWords( QMap<QString, QStringList> mb )
@@ -265,27 +279,7 @@ void CodeEditor::setMemberWords( QMap<QString, QStringList> mb )
             if( !members.contains( member ) ) members.append( member );
         }
     }
-    m_hlighter->addMembers( members );
-}
-
-void CodeEditor::setCompleter( QCompleter* completer )
-{
-    if( m_completer ){
-        disconnect( m_completer, nullptr, this, nullptr );
-        delete m_completer;
-    }
-
-    m_completer = completer;
-    if (!m_completer) return;
-
-    m_memberWords.insert("component", {"addCpuReg()", "addCpuVar()", "toCOnsole()"});
-
-    m_completer->setWidget( this );
-    m_completer->setCompletionMode( QCompleter::PopupCompletion );
-    m_completer->setCaseSensitivity( Qt::CaseInsensitive );
-
-    connect( m_completer, QOverload<const QString&>::of( &QCompleter::activated ),
-             this       , &CodeEditor::insertCompletion );
+    m_hlighter->setMembers( members );
 }
 
 void CodeEditor::insertCompletion( QString text )
@@ -293,7 +287,7 @@ void CodeEditor::insertCompletion( QString text )
     QTextCursor tc = textCursor();
     tc.select( QTextCursor::WordUnderCursor );
     tc.insertText( text );
-    if( text.endsWith(")") && !text.endsWith("())") )
+    if( text.endsWith(")") && !text.endsWith("()") )
     {
         QString charact = "";
         while( charact != "(" ){

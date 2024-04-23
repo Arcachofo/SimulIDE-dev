@@ -53,8 +53,8 @@ class CodeEditor : public QPlainTextEdit, public CompBase
         QString fileList();
         void setFileList( QString fl );
 
-        void setCompleter( QCompleter* completer );
         void addKeyWords( QStringList words );
+        void setFunctions( QStringList words );
         void setMemberWords( QMap<QString, QStringList> mb );
         void setExtraTypes( QStringList types );
 

@@ -3,7 +3,7 @@
  *                                                                         *
  ***( see copyright.txt file at root folder )*******************************/
 
-//#include <QDebug>
+#include <QDebug>
 #include <QFileInfo>
 #include <QDir>
 
@@ -99,7 +99,7 @@ bool AvrGccDebugger::getVariables()
 
         eMcu::self()->getRamTable()->addVariable( symbol, address, type );
         varList.append( symbol );
-        //qDebug() << "AvrGccDebugger::getAvrGccData  variable "<<type<<symbol<<address;
+        qDebug() << "AvrGccDebugger::getAvrGccData  variable "<<type<<symbol<<address;
     }
     eMcu::self()->getRamTable()->setVariables( varList );
     m_outPane->appendLine( QString::number( varList.size() )+" variables found" );
@@ -141,16 +141,22 @@ bool AvrGccDebugger::getFunctions()
     for( QString line : p_stdout.split("\n") )
     {
         if( line.isEmpty() ) continue;
+        //qDebug() << "AvrGccDebugger::getFunctions "<< line;
         QStringList words = line.split(" ");
         words.removeAll("");
         if( words.size() < 8 ) continue;
         if( words.at(3) != "FUNC" ) continue;
 
+        QString funcName = words.last();
+        if( funcName.startsWith("_") ) continue;
+
+        QString bind = words.at(4);
+        if( bind != "LOCAL") continue;
+
         QString addr   = words.at(1);
         bool ok = false;
         int address = addr.toInt( &ok, 16 )/2;
         if( !ok ) continue;
-        QString funcName = words.last();
 
         m_functions[funcName] = address;
         //qDebug() << "AvrGccDebugger::getFunctions "<< funcName <<address;

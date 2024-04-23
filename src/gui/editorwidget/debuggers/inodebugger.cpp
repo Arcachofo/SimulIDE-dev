@@ -8,6 +8,7 @@
 //#include <QDebug>
 
 #include "inodebugger.h"
+#include "codeeditor.h"
 #include "outpaneltext.h"
 #include "propdialog.h"
 #include "mainwindow.h"
@@ -22,6 +23,93 @@ InoDebugger::InoDebugger( CodeEditor* parent, OutPanelText* outPane )
     m_version = 0;
     m_board = "Uno";
     m_buildPath = MainWindow::self()->getConfigPath("codeeditor/buildIno");
+
+    QMap<QString, QStringList> mb;
+    mb.insert("Serial", {
+              "available()",
+              "availableForWrite()",
+              "begin( speed, config=SERIAL_8N1 )",
+              "end()",
+              "find( target, length )",
+              "findUntil( target, terminal )",
+              "flush()",
+              "parseFloat( lookahead, ignore )",
+              "parseInt( lookahead, ignore )",
+              "peek()",
+              "print( val, format )",
+              "println( val, format )",
+              "read()",
+              "readBytes( buffer, length )",
+              "readBytesUntil( character, buffer, length )",
+              "readString()",
+              "readStringUntil( terminator )",
+              "setTimeout( time )",
+              "write( buf, len )"
+          });
+    m_editor->setMemberWords( mb );
+
+    QStringList functions;
+    functions
+            << "setup()"
+            << "loop()"
+            << "digitalRead( pin )"
+            << "digitalWrite( pin, value )"
+            << "pinMode( pin, mode )"
+            << "analogRead( pin )"
+            << "analogReadResolution( bits )"
+            << "analogReference( type )"
+            << "analogWrite( pin, value )"
+            << "analogWriteResolution( bits ) "
+            << "noTone( pin )"
+            << "pulseIn( pin, value, timeout=1s )"
+            << "pulseInLong( pin, value, timeout=1s )"
+            << "shiftIn( dataPin, clockPin, bitOrder )"
+            << "shiftOut( dataPin, clockPin, bitOrder, value )"
+            << "tone( pin, frequency, duration ) "
+            << "delay( ms )"
+            << "delayMicroseconds( us )"
+            << "micros()"
+            << "millis() "
+            << "abs( x )"
+            << "constrain( x, a, b )"
+            << "map( value, fromLow, fromHigh, toLow, toHigh )"
+            << "max( x, y )"
+            << "min( x, y )"
+            << "pow( base, exponent )"
+            << "sq( x )"
+            << "sqrt( x )"
+            << "cos( rad )"
+            << "sin( rad )"
+            << "tan( rad ) "
+            << "isAlpha( thisChar )"
+            << "isAlphaNumeric( thisChar )"
+            << "isAscii( thisChar )"
+            << "isControl( thisChar )"
+            << "isDigit( thisChar )"
+            << "isGraph( thisChar )"
+            << "isHexadecimalDigit( thisChar )"
+            << "isLowerCase( thisChar )"
+            << "isPrintable( thisChar )"
+            << "isPunct( thisChar )"
+            << "isSpace( thisChar )"
+            << "isUpperCase( thisChar )"
+            << "isWhitespace( thisChar )"
+            << "random( min, max )"
+            << "randomSeed( seed )"
+            << "bit( n )"
+            << "bitClear( x, n )"
+            << "bitRead( x, n )"
+            << "bitSet( x, n )"
+            << "bitWrite( x, n, b )"
+            << "highByte( x )"
+            << "lowByte( x )"
+            << "attachInterrupt( interrupt, ISR, mode )"
+            << "detachInterrupt( interrupt )"
+            << "digitalPinToInterrupt( pin )"
+            << "interrupts()"
+            << "noInterrupts()"
+            << "Print";
+    m_editor->setFunctions( functions );
 
     m_enumUids = QStringList()
         << "Uno"

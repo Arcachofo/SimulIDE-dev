@@ -23,6 +23,7 @@ class Highlighter : public QSyntaxHighlighter
 
         void addObjects( QStringList patterns );
         void addMembers( QStringList patterns );
+        void setMembers( QStringList patterns );
         void setExtraTypes( QStringList types );
 
     protected:
