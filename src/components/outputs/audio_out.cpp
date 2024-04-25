@@ -10,6 +10,7 @@
 #include "audio_out.h"
 #include "connector.h"
 #include "itemlibrary.h"
+#include "propdialog.h"
 #include "pin.h"
 #include "label.h"
 #include "simulator.h"
@@ -57,7 +58,7 @@ AudioOut::AudioOut( QString type, QString id )
     
     m_admit = 1.0/8;
     m_buzzer = false;
-    m_audioOutput = NULL;
+    m_audioOutput = nullptr;
 
     m_deviceinfo = QAudioDeviceInfo::defaultOutputDevice(); 
     if( m_deviceinfo.isNull() ) 
@@ -82,8 +83,8 @@ AudioOut::AudioOut( QString type, QString id )
     m_format = m_deviceinfo.preferredFormat();
     m_format.setCodec( "audio/pcm" );
     //m_format.setSampleRate( sampleRate );
-    m_format.setChannelCount(1);
-    m_format.setSampleSize(8);
+    m_format.setChannelCount( 1 );
+    m_format.setSampleSize( 8 );
     m_format.setSampleType( QAudioFormat::UnSignedInt );
     m_format.setByteOrder( QAudioFormat::LittleEndian );  
 
@@ -96,12 +97,17 @@ AudioOut::AudioOut( QString type, QString id )
     m_audioOutput = new QAudioOutput( m_deviceinfo, m_format );
 
     addPropGroup( { tr("Main"), {
+        new DoubProp<AudioOut>("Impedance", tr("Impedance"), "Ω"
+                              , this, &AudioOut::res, &AudioOut::setResSafe ),
+
         new BoolProp<AudioOut>("Buzzer", tr("Buzzer"), ""
                               , this, &AudioOut::buzzer, &AudioOut::setBuzzer ),
 
-        new DoubProp<AudioOut>("Impedance", tr("Impedance"), "Ω"
-                              , this, &AudioOut::res, &AudioOut::setResSafe )
+        new DoubProp<AudioOut>("Frequency", tr("Frequency"), "Hz"
+                              , this, &AudioOut::frequency, &AudioOut::setFrequency ),
     },0} );
+
+    setPropStr( "Frequency", "1 kHz" );
 }
 AudioOut::~AudioOut()
 {
@@ -126,7 +132,7 @@ void AudioOut::stamp()
     if( m_deviceinfo.isNull() ) return;
 
     m_audioBuffer = m_audioOutput->start();
-    m_dataSize = m_audioOutput->periodSize();
+    m_dataSize    = m_audioOutput->periodSize();
     m_dataBuffer.reserve( m_dataSize );
 
     if( m_ePin[0]->isConnected() && m_ePin[1]->isConnected() )
@@ -141,7 +147,7 @@ void AudioOut::runEvent()
     if( m_buzzer){
         if( voltPN > 2.5 )
         {
-            double stepsPC = 1e12/1000;
+            double stepsPC = 1e12/m_frequency;
             double time = Simulator::self()->circTime();
             time = remainder( time, stepsPC );
             time = qDegreesToRadians( time*360/stepsPC );
@@ -178,6 +184,25 @@ void AudioOut::runEvent()
     qDebug() << state << m_audioOutput->bytesFree() ;
 }*/
 
+void AudioOut::setBuzzer( bool b )
+{
+    m_buzzer = b;
+    updtProperties();
+}
+
+void AudioOut::slotProperties()
+{
+    Component::slotProperties();
+    updtProperties();
+}
+
+void AudioOut::updtProperties()
+{
+    if( !m_propDialog ) return;
+    m_propDialog->showProp("Frequency", m_buzzer );
+    m_propDialog->adjustWidgets();
+}
+
 QPainterPath AudioOut::shape() const
 {
     QPainterPath path;
@@ -196,9 +221,9 @@ QPainterPath AudioOut::shape() const
     return path;
 }
 
-void AudioOut::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget )
+void AudioOut::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w )
 {
-    Component::paint( p, option, widget );
+    Component::paint( p, o, w );
 
     //p->drawRect( -10.5, -12, 12, 24 );
     static const QPointF points[7] = {

@@ -27,10 +27,17 @@ class AudioOut : public Component, public eResistor
         virtual void runEvent() override;
 
         bool buzzer() { return m_buzzer; }
-        void setBuzzer( bool b ) { m_buzzer = b; }
+        void setBuzzer( bool b );
+
+        double frequency() { return m_frequency; }
+        void setFrequency( double f ) { m_frequency = f; }
         
         virtual QPainterPath shape() const override;
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w ) override;
+
+    protected:
+        virtual void slotProperties() override;
+        void updtProperties();
 
     private:
         QAudioDeviceInfo m_deviceinfo;
@@ -39,6 +46,8 @@ class AudioOut : public Component, public eResistor
         QAudioOutput* m_audioOutput;
         QIODevice*    m_audioBuffer;
         QByteArray    m_dataBuffer;
+
+        double m_frequency;
 
         int m_dataSize;
         int m_dataCount;
