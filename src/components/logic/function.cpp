@@ -44,11 +44,7 @@ Function::Function( QString type, QString id )
     m_lastDir = Circuit::self()->getFilePath();
     m_width = 4;
 
-    m_inHighV = 0;
-    m_inLowV  = 0;
-    m_ouHighV = 0;
-
-    m_voltChanged = NULL;
+    m_voltChanged = nullptr;
     m_aEngine->RegisterObjectType("Function",0, asOBJ_REF | asOBJ_NOCOUNT );
     m_aEngine->RegisterGlobalProperty("Function fu", this );
 
@@ -217,7 +213,7 @@ void Function::updateFunctions()
     }
     m_script += "}\n";
     m_script += "//----------------------;\n";
-    /// qDebug() << m_script.toLocal8Bit().data();
+    qDebug() << m_script.toLocal8Bit().data();
 
     int r = compileScript();
     if( r < 0 ) return;
