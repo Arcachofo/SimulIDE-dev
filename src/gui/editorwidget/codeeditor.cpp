@@ -26,6 +26,14 @@
 #include "stringprop.h"
 #include "boolprop.h"
 
+static QVector<QPair<QString, QString>> pairs = {
+    {"(", ")"},
+    {"{", "}"},
+    {"[", "]"},
+    {"\"", "\""},
+    {"'", "'"}
+};
+
 QStringList CodeEditor::m_picInstr = QString("addlw addwf andlw andwf banksel bcf bov bsf btfsc btg btfss clrf clrw clrwdt comf decf decfsz goto incf incfsz iorlw iorwf movf movlw movwf reset retfie retlw return rlf rrf sublw subwf swapf xorlw xorwf").split(" ");
 QStringList CodeEditor::m_avrInstr = QString("nop add adc adiw call inc sleep sub subi sbc sbci sbiw and andi or ori eor elpm fmul fmuls fmulsu mul muls smp com neg sbr cbr dec tst clr ser mul rjmp ijmp jmp rcall icall ret reti cpse cp cpc cpi sbrc sbrs sbic sbis brbs brbc breq brne brcs break brcc brsh brlo brmi brpl brge brlt brhs brhc brts brtc brvs brvc brie brid mov movw ldi lds ld ldd sts st std lpm in out push pop lsl lsr rol ror asr swap bset bclr sbi cbi bst bld sec clc sen cln sez clz sei cli ses cls sev clv set clt seh clh wdr des eicall eijmp lac las lat spm xch").split(" ");
 QStringList CodeEditor::m_i51Instr = QString("nop ajmp ljmp rr inc jbc acall lcall rrc dec jb ajmp ret rl add jnb reti rlc addc jc jnz orl jmp jnc anl jz xrl mov sjmp ajmp movc subb mul cpl cjne push clr swap xch pop setb da djnz xchd movx").split(" ");
@@ -634,25 +642,65 @@ void CodeEditor::keyPressEvent( QKeyEvent* event )
     {
         if( textCursor().hasSelection() ) indentSelection( true );
         else textCursor().movePosition( QTextCursor::PreviousCharacter, QTextCursor::MoveAnchor , m_tab.size() );
-    }else{
-        QString tabs;
+    }
+    else
+    {
+        QString indent;
+        bool extraIndent = false;
+        bool indentBrackect = false;
         if( event->key() == Qt::Key_Return )
         {
+            QTextCursor tc = textCursor();
+
             int n0 = 0;
             int n = m_tab.size();
-            QString line = textCursor().block().text();
+            QString line = tc.block().text();
 
             while(1)
             {
                 QString part = line.mid( n0, n );
-                if( part == m_tab ) { n0 += n; tabs += m_tab; }
+                if( part == m_tab ) { n0 += n; indent += m_tab; }
                 else break;
-        }   }
+            }
+
+            if( tc.positionInBlock() != 0 )
+            {
+                tc.movePosition( QTextCursor::PreviousCharacter, QTextCursor::KeepAnchor );
+                if( tc.selectedText() == "{" ) extraIndent = true;
+                tc.movePosition( QTextCursor::NextCharacter, QTextCursor::MoveAnchor );
+
+                if( extraIndent ){
+                    tc.movePosition( QTextCursor::NextCharacter, QTextCursor::KeepAnchor );
+                    if( tc.selectedText() == "}" ) indentBrackect = true;
+                    tc.movePosition( QTextCursor::PreviousCharacter, QTextCursor::MoveAnchor );
+                }
+            }
+        }
         QPlainTextEdit::keyPressEvent( event );
 
-        if( event->key() == Qt::Key_Return ) insertPlainText( tabs );
+        if( event->key() == Qt::Key_Return )
+        {
+            insertPlainText( indent );
+            if( extraIndent ){
+                if( indentBrackect ){
+                    insertPlainText( "\n"+indent );
+                    moveCursor( QTextCursor::MoveOperation::PreviousBlock );
+                    moveCursor( QTextCursor::MoveOperation::EndOfBlock );
+                }
+                insertPlainText( m_tab );
+            }
+        }else{
+            QString text = event->text();
+            for( QPair<QString, QString> pair : pairs )
+            {
+                if( pair.first != text ) continue;
+                insertPlainText( pair.second );
+                moveCursor( QTextCursor::MoveOperation::Left );
+                break;
+            }
+        }
+        if( m_completer ) complete( event );
     }
-    if( m_completer ) complete( event );
 }
 
 void CodeEditor::deleteSelected()
