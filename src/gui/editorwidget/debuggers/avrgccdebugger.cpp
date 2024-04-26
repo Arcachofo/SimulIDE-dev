@@ -99,7 +99,7 @@ bool AvrGccDebugger::getVariables()
 
         eMcu::self()->getRamTable()->addVariable( symbol, address, type );
         varList.append( symbol );
-        qDebug() << "AvrGccDebugger::getAvrGccData  variable "<<type<<symbol<<address;
+        //qDebug() << "AvrGccDebugger::getAvrGccData  variable "<<type<<symbol<<address;
     }
     eMcu::self()->getRamTable()->setVariables( varList );
     m_outPane->appendLine( QString::number( varList.size() )+" variables found" );
@@ -218,7 +218,7 @@ bool AvrGccDebugger::mapFlashToSource()
     ok = flashToLine.waitForStarted( 1000 );
     if( ok )
     {
-        for( int flashAddr=0; flashAddr<flashSize; ++flashAddr ) // Map Flash Address to Source Line
+        for( int flashAddr=0; flashAddr<flashSize; ++flashAddr )
         {
             QString addr = val2hex( flashAddr )+"\n";
             flashToLine.write( addr.toUtf8() );
@@ -236,18 +236,17 @@ bool AvrGccDebugger::mapFlashToSource()
             int idx = p_stdout.lastIndexOf( ":" );
             if( idx == -1 ) continue;
 
-            QString filePath = QFileInfo( p_stdout.left( idx ) ).filePath();//  .fileName();
+            QString filePath = QFileInfo( p_stdout.left( idx ) ).absoluteFilePath();// filePath();//  .fileName();
+            if( !m_fileList.contains( filePath ) ) m_fileList.append( filePath );
 
-            if( m_fileList.contains( filePath ) )
-            {
-                bool ok = false;
-                int line = p_stdout.mid( idx+1 ).toInt( &ok );
-                if( !ok ) continue;
-                int addr = flashAddr*m_addrBytes/2;
-                //qDebug() << QString::number(flashAddr,16)<<addr<<line <<" -----> "<< p_stdout;
+            bool ok = false;
+            int line = p_stdout.mid( idx+1 ).toInt( &ok );
+            if( !ok ) continue;
+            int addr = flashAddr*m_addrBytes/2;
+            //qDebug() << QString::number(flashAddr,16)<<addr<<line <<" -----> "<< p_stdout;
 
-                setLineToFlash( {filePath,line}, addr );
-        }   }
+            setLineToFlash( {filePath,line}, addr );
+        }
         flashToLine.close();
     }
     ok = !m_flashToSource.isEmpty();
