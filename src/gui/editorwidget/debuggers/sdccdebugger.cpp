@@ -147,26 +147,34 @@ bool SdccDebugger::postProcess()
             for( QString lstLine : lstLines )
             {
                 lstLineNumber++;
-                if( lstLine.contains( file ) )
+                if( !found )
                 {
-                    QString str = lstLine.split( file ).takeLast();
-                    QStringList words = str.remove(":").split(" ");
-                    words.removeAll("");
-                    if( words.isEmpty() ) continue;
-                    str = words.first();
-                    bool ok = false;
-                    srcLineNumber = str.toInt( &ok );
-                    if( ok ) {
-                        found = true;
+                    for( QString sFile : m_fileList )
+                    {
+                        if( !lstLine.contains( sFile ) ) continue;
+
+                        QString str = lstLine.split( sFile ).takeLast();
+                        QStringList words = str.remove(":").split(" ");
+                        words.removeAll("");
+                        if( words.isEmpty() ) continue;
+
+                        str = words.first();
+                        bool ok = false;
+                        srcLineNumber = str.toInt( &ok );
+                        if( ok ){
+                            srcFile = sFile;
+                            found = true;
+                            break;
+                        }
                     }
-                } else if( found )
-                {
+                }else{
                     QStringList words = lstLine.split(" ");
                     words.removeAll("");
                     if( words.isEmpty() ) continue;
                     else if( words.contains( ";" ) ) continue;     // comment
                     else if( words.last().endsWith( ":" ) ) continue; // label;
-                    else {  // don't have []
+                    else   // don't have []
+                    {
                         bool hasBrackets = false;
                         foreach( const QString& word, words ) {
                             if( word.startsWith( '[' ) && word.endsWith( ']' ) ) {
@@ -183,6 +191,7 @@ bool SdccDebugger::postProcess()
                     int address = lstLine.toInt( &ok, 16 );
                     if( ok )
                     {
+                        //qDebug() << srcFile;
                         //qDebug("%d %x", srcLineNumber, m_codeStart+address);
                         setLineToFlash( {srcFile, srcLineNumber}, m_codeStart+address );
                     }
