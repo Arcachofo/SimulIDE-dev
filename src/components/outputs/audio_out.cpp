@@ -57,6 +57,7 @@ AudioOut::AudioOut( QString type, QString id )
     setLabelPos(-20,-36, 0);
     
     m_admit = 1.0/8;
+    m_impedance = 8;
     m_buzzer = false;
     m_audioOutput = nullptr;
 
@@ -97,17 +98,19 @@ AudioOut::AudioOut( QString type, QString id )
     m_audioOutput = new QAudioOutput( m_deviceinfo, m_format );
 
     addPropGroup( { tr("Main"), {
-        new DoubProp<AudioOut>("Impedance", tr("Impedance"), "Ω"
-                              , this, &AudioOut::res, &AudioOut::setResSafe ),
-
         new BoolProp<AudioOut>("Buzzer", tr("Buzzer"), ""
                               , this, &AudioOut::buzzer, &AudioOut::setBuzzer ),
+
+        new DoubProp<AudioOut>("Impedance", tr("Impedance"), "Ω"
+                              , this, &AudioOut::impedance, &AudioOut::setImpedance ),
 
         new DoubProp<AudioOut>("Frequency", tr("Frequency"), "Hz"
                               , this, &AudioOut::frequency, &AudioOut::setFrequency ),
     },0} );
 
     setPropStr( "Frequency", "1 kHz" );
+
+    Simulator::self()->addToUpdateList( this );
 }
 AudioOut::~AudioOut()
 {
@@ -127,6 +130,7 @@ void AudioOut::initialize()
 
 void AudioOut::stamp()
 {
+    m_admit = m_buzzer ? 1e-4 : m_impedance;
     eResistor::stamp();
 
     if( m_deviceinfo.isNull() ) return;
@@ -137,6 +141,15 @@ void AudioOut::stamp()
 
     if( m_ePin[0]->isConnected() && m_ePin[1]->isConnected() )
             Simulator::self()->addEvent( 1, this );
+}
+
+void AudioOut::updateStep()
+{
+    if( !m_changed ) return;
+    m_changed = false;
+
+    double admit = m_buzzer ? 1e-4 : m_impedance;
+    setAdmit( admit );
 }
 
 void AudioOut::runEvent()
@@ -184,9 +197,18 @@ void AudioOut::runEvent()
     qDebug() << state << m_audioOutput->bytesFree() ;
 }*/
 
+void AudioOut::setImpedance( double i )
+{
+    m_impedance = i;
+    m_changed = true;
+    if( !Simulator::self()->isRunning() ) updateStep();
+}
+
 void AudioOut::setBuzzer( bool b )
 {
     m_buzzer = b;
+    m_changed = true;
+    if( !Simulator::self()->isRunning() ) updateStep();
     updtProperties();
 }
 
@@ -200,6 +222,7 @@ void AudioOut::updtProperties()
 {
     if( !m_propDialog ) return;
     m_propDialog->showProp("Frequency", m_buzzer );
+    m_propDialog->showProp("Impedance", !m_buzzer );
     m_propDialog->adjustWidgets();
 }
 

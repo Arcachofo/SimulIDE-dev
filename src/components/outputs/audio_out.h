@@ -24,7 +24,11 @@ class AudioOut : public Component, public eResistor
 
         virtual void initialize() override;
         virtual void stamp() override;
+        virtual void updateStep() override;
         virtual void runEvent() override;
+
+        double impedance() { return m_impedance; }
+        void setImpedance( double i );
 
         bool buzzer() { return m_buzzer; }
         void setBuzzer( bool b );
@@ -48,6 +52,7 @@ class AudioOut : public Component, public eResistor
         QByteArray    m_dataBuffer;
 
         double m_frequency;
+        double m_impedance;
 
         int m_dataSize;
         int m_dataCount;
