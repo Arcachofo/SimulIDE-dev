@@ -77,7 +77,7 @@ Stepper::Stepper( QString type, QString id )
     m_resB2.setEpin( 0, &m_pinB2 );
     m_resB2.setEpin( 1, &m_ePinB2Co );
     
-    setRes( 100 );
+    setResistance( 100 );
     setShowId( true );
     setLabelPos(-32,-62, 0);
     setValLabelPos(-14, 36, 0);
@@ -92,7 +92,7 @@ Stepper::Stepper( QString type, QString id )
                              , this, &Stepper::steps, &Stepper::setSteps ),
 
         new DoubProp<Stepper>( "Resistance", tr("Resistance"),"Ω"
-                             , this, &Stepper::res, &Stepper::setRes )
+                             , this, &Stepper::resistance, &Stepper::setResistance )
     },0} );
 }
 Stepper::~Stepper(){}
@@ -124,10 +124,10 @@ void Stepper::updateStep()
     if( m_changed )
     {
         m_changed = false;
-        m_resA1.setRes( m_res );
-        m_resA2.setRes( m_res );
-        m_resB1.setRes( m_res );
-        m_resB2.setRes( m_res );
+        m_resA1.setResistance( m_resistance );
+        m_resA2.setResistance( m_resistance );
+        m_resB1.setResistance( m_resistance );
+        m_resB2.setResistance( m_resistance );
     }
     update();
 }
@@ -189,11 +189,11 @@ void Stepper::setSteps( int steps ) //" 4, 8,16,32"
     update();
 }
 
-void Stepper::setRes( double res )
+void Stepper::setResistance( double res )
 {
     if( res < 1e-12 ) res = 1e-12;
-    if( m_res == res ) return;
-    m_res = res;
+    if( m_resistance == res ) return;
+    m_resistance = res;
     m_changed = true;
 }
 

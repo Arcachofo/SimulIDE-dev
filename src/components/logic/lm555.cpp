@@ -121,9 +121,9 @@ void Lm555::stamp()
     m_ePinC.setEnode( enod );         // Set eNode to internal eResistors ePins
     m_ePinD.setEnode( enod );
 
-    m_resA.setRes( 5000 );
-    m_resB.setRes( 10000 );
-    m_resD.setRes( 1 );
+    m_resA.setResistance( 5000 );
+    m_resB.setResistance( 10000 );
+    m_resD.setResistance( 1 );
 
     for( int i=0; i<8; ++i )
     {
@@ -182,7 +182,7 @@ void Lm555::voltChanged()
 void Lm555::runEvent()
 {
     m_output->setOutState( m_outState );
-    m_resD.setRes( m_outState ? high_imp : 1 );
+    m_resD.setResistance( m_outState ? high_imp : 1 );
 }
 
 void Lm555::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w )

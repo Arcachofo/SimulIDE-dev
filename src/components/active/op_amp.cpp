@@ -37,7 +37,7 @@ OpAmp::OpAmp( QString type, QString id )
      : Component( type, id )
      , eElement( id )
 {
-    m_area = QRect( -18, -8*2, 36, 8*2*2 );
+    m_area = QRect(-18, -8*2, 36, 8*2*2 );
     setLabelPos(-16,-32, 0);
 
     m_pin.resize( 5 );
@@ -53,7 +53,7 @@ OpAmp::OpAmp( QString type, QString id )
     m_pin[1]->setLabelText("–");  // U+2013
     m_pin[1]->setLabelColor( QColor( 0, 0, 0 ) );
 
-    m_output = new IoPin(   0, QPoint( 16+8, 0), id+"-output",   2, this, source );
+    m_output = new IoPin( 0, QPoint( 16+8, 0), id+"-output",   2, this, source );
     m_pin[2] = m_output;
 
     m_pin[3] = new Pin( 90, QPoint(0,-16), id+"-powerPos", 3, this );
@@ -205,10 +205,11 @@ void OpAmp::setPowerPins( bool set )
 void OpAmp::setSwitchPins( bool s )
 {
     m_switchPins = s;
-    int angleP = s ? 270 : 90;
-    int angleN = s ? 90  : 270;
+    int angleP = s ? 270 :  90;
+    int angleN = s ?  90 : 270;
     qreal yP   = s ?  16 : -16;
-    qreal yN   = s ? -16 : 16;
+    qreal yN   = s ? -16 :  16;
+
     m_pin[3]->setPinAngle( angleP );
     m_pin[3]->setY( yP );
     m_pin[4]->setPinAngle( angleN );
@@ -246,9 +247,9 @@ QPainterPath OpAmp::shape() const
     return path;
 }
 
-void OpAmp::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
+void OpAmp::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w )
 {
-    Component::paint( p, option, widget );
+    Component::paint( p, o, w );
 
     QPen pen = p->pen();
     pen.setWidth(2);

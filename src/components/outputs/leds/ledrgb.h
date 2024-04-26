@@ -28,21 +28,21 @@ class LedRgb : public Component, public eElement
         void   setThreshold_R( double threshold );
         double maxCurrent_R() { return m_led[0]->maxCurrent(); }
         void   setMaxCurrent_R( double current );
-        double res_R() { return m_led[0]->res(); }
+        double res_R() { return m_led[0]->resistance(); }
         void   setRes_R( double resist );
 
         double threshold_G() { return m_led[1]->threshold(); }
         void   setThreshold_G( double threshold );
         double maxCurrent_G() { return m_led[1]->maxCurrent(); }
         void   setMaxCurrent_G( double current );
-        double res_G() { return m_led[1]->res(); }
+        double res_G() { return m_led[1]->resistance(); }
         void   setRes_G( double resist );
 
         double threshold_B() { return m_led[2]->threshold(); }
         void   setThreshold_B( double threshold );
         double maxCurrent_B() { return m_led[2]->maxCurrent(); }
         void   setMaxCurrent_B( double current );
-        double res_B() { return m_led[2]->res(); }
+        double res_B() { return m_led[2]->resistance(); }
         void   setRes_B( double resist );
 
         bool isComCathode() { return m_commonCathode; }

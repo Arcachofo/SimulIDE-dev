@@ -58,7 +58,7 @@ ResistorDip::ResistorDip( QString type, QString id )
 
     addPropGroup( { tr("Main"), {
         new DoubProp<ResistorDip>("Resistance", tr("Resistance"), "Ω"
-                                 , this, &ResistorDip::getRes, &ResistorDip::setRes ),
+                                 , this, &ResistorDip::resistance, &ResistorDip::setResistance ),
 
         new IntProp <ResistorDip>("Size", tr("Size"), ""
                                  , this, &ResistorDip::size, &ResistorDip::setSize, propNoCopy,"uint" ),
@@ -84,7 +84,7 @@ void ResistorDip::stamp()
         int index = i*2;
         m_pin[index+1]->setEnode( &m_puEnode );
         m_pin[index]->createCurrent();
-        m_pin[index]->stampCurrent( m_puVolt/m_resist );
+        m_pin[index]->stampCurrent( m_puVolt/m_resistance );
     }
 }
 
@@ -93,7 +93,7 @@ void ResistorDip::updateStep()
     if( !m_changed ) return;
     m_changed = false;
 
-    for( eResistor* res : m_resistor ) res->setRes( m_resist );
+    for( eResistor* res : m_resistor ) res->setResistance( m_resistance );
 }
 
 void ResistorDip::createResistors( int c )
@@ -131,11 +131,11 @@ void ResistorDip::deleteResistors( int d )
     m_pin.resize( m_size*2 );
 }
 
-void ResistorDip::setRes( double resist )
+void ResistorDip::setResistance( double resist )
 {
     if( resist < 1e-12 ) resist = 1e-12;
-    if( m_resist == resist ) return;
-    m_resist = resist;
+    if( m_resistance == resist ) return;
+    m_resistance = resist;
     m_changed = true;
     if( !Simulator::self()->isRunning() ) updateStep();
 }

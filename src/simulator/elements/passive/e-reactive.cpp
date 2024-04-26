@@ -72,7 +72,7 @@ void eReactive::updtReactStep()
     if( m_reacStep ) m_timeStep = m_reacStep;
     else             m_timeStep = Simulator::self()->reactStep(); // Time in ps
     m_tStep = (double)m_timeStep/1e12;         // Time in seconds
-    eResistor::setRes( updtRes() );
+    eResistor::setResistance( updtRes() );
 
     m_running = false;
     Simulator::self()->cancelEvents( this );

@@ -212,7 +212,7 @@ void SevenSegment::setResistance( double res )
 {
     if( res < 1e-6 ) res = 1;
     m_resistance = res;
-    for( uint i=0; i<m_segment.size(); ++i ) m_segment[i]->setRes( res );
+    for( uint i=0; i<m_segment.size(); ++i ) m_segment[i]->setResistance( res );
 }
 
 void SevenSegment::setThreshold( double threshold )
@@ -258,7 +258,7 @@ void SevenSegment::createDisplay(int n )
         lsmd->setParentItem(this);
         lsmd->setFlag( QGraphicsItem::ItemIsSelectable, false );
         lsmd->setAcceptedMouseButtons( 0 );
-        lsmd->setRes( m_resistance );
+        lsmd->setResistance( m_resistance );
         lsmd->setMaxCurrent( m_maxCurrent );
         lsmd->setThreshold( m_threshold );
         lsmd->setColorStr( colorStr() );

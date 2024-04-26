@@ -27,7 +27,7 @@ class Thermistor : public ThermistorBase
 
         virtual void updateStep() override;
 
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget *widget ) override;
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget *w ) override;
 
     private:
         int m_bVal;

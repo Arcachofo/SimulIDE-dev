@@ -24,8 +24,8 @@ class eLed : public eResistor
         double maxCurrent()             { return m_maxCurrent; }
         void  setMaxCurrent( double c ) { m_maxCurrent = c; m_changed = true; }
 
-        virtual void   setRes( double resist ) override ;
-        virtual double res() override { return m_imped; }
+        virtual void   setResistance( double resist ) override ;
+        virtual double resistance() override { return m_impedance; }
 
         double brightness() { return m_brightness; }
         double overCurrent() { return m_avgCurrent/m_maxCurrent; }
@@ -49,7 +49,7 @@ class eLed : public eResistor
 
         double m_voltPN;
         double m_threshold;
-        double m_imped;
+        double m_impedance;
         double m_lastThCurrent;
 };
 

@@ -76,7 +76,7 @@ Diode::Diode( QString type, QString id, bool zener )
                            , this, &Diode::maxCurrent, &Diode::setMaxCurrent ),
 
         new DoubProp<Diode>("Resistance", tr("Resistance"),"Ω"
-                           , this, &Diode::res, &Diode::setResSafe ),
+                           , this, &Diode::resistance, &Diode::setResSafe ),
     },0} );
 
     addPropGroup( { tr("Advanced"), {

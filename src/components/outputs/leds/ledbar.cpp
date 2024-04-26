@@ -39,7 +39,7 @@ LedBar::LedBar( QString type, QString id )
     m_color = QColor(0,0,0);
     m_size = 0;
     setSize( 8 );
-    setRes( 0.6 );
+    setResistance( 0.6 );
     setLabelPos(-16,-44, 0);
     setValLabelPos(-16,-44-12, 0);
 
@@ -62,7 +62,7 @@ LedBar::LedBar( QString type, QString id )
                             , this, &LedBar::maxCurrent, &LedBar::setMaxCurrent ),
 
         new DoubProp<LedBar>("Resistance", tr("Resistance"), "Ω"
-                            , this, &LedBar::res, &LedBar::setRes ),
+                            , this, &LedBar::resistance, &LedBar::setResistance ),
     }, 0} );
 }
 LedBar::~LedBar(){}
@@ -95,7 +95,7 @@ void LedBar::createLeds( int c )
         
         if( initialized ){
             m_led[i]->setGrounded( grounded() );
-            m_led[i]->setRes( res() );
+            m_led[i]->setResistance( resistance() );
             m_led[i]->setMaxCurrent( maxCurrent() ); 
             m_led[i]->setThreshold( threshold() );
             m_led[i]->setColorStr( colorStr() );
@@ -155,10 +155,10 @@ double LedBar::maxCurrent() { return m_led[0]->maxCurrent(); }
 void LedBar::setMaxCurrent( double current ) 
 { for( int i=0; i<m_size; i++ ) m_led[i]->setMaxCurrent( current ); }
 
-double LedBar::res() { return m_led[0]->res(); }
+double LedBar::resistance() { return m_led[0]->resistance(); }
 
-void LedBar::setRes( double resist )
-{ for( int i=0; i<m_size; i++ ) m_led[i]->setRes( resist ); }
+void LedBar::setResistance( double resist )
+{ for( int i=0; i<m_size; i++ ) m_led[i]->setResistance( resist ); }
 
 bool LedBar::grounded() { return m_led[0]->grounded(); }
 

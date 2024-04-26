@@ -32,8 +32,8 @@ class LedBar : public Component
         double maxCurrent();
         void  setMaxCurrent( double current );
         
-        double res();
-        void  setRes( double resist );
+        double resistance();
+        void  setResistance( double resist );
         
         bool grounded();
         void setGrounded( bool grounded );

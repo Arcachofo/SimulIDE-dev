@@ -39,8 +39,8 @@ LedMatrix::LedMatrix( QString type, QString id )
 
     m_rows = 8;
     m_cols = 8;
-    m_resist  = 0.6;
-    m_maxCurr = 0.02;
+    m_resistance = 0.6;
+    m_maxCurrent = 0.02;
     m_threshold = 2.4;
 
     m_color = QColor(0,0,0);
@@ -69,7 +69,7 @@ LedMatrix::LedMatrix( QString type, QString id )
                                , this, &LedMatrix::maxCurrent, &LedMatrix::setMaxCurrent ),
 
         new DoubProp<LedMatrix>("Resistance", tr("Resistance"), "Ω"
-                               , this, &LedMatrix::res, &LedMatrix::setRes ),
+                               , this, &LedMatrix::resistance, &LedMatrix::setResistance ),
     }, 0} );
 }
 LedMatrix::~LedMatrix(){}
@@ -129,8 +129,8 @@ void LedMatrix::createMatrix()
 
             lsmd->setParentItem(this);
             lsmd->setPos( col*8, row*8 );
-            lsmd->setRes( m_resist );
-            lsmd->setMaxCurrent( m_maxCurr );
+            lsmd->setResistance( m_resistance );
+            lsmd->setMaxCurrent( m_maxCurrent );
             lsmd->setThreshold( m_threshold );
             lsmd->setColorStr( colorStr() );
             lsmd->setFlag( QGraphicsItem::ItemIsSelectable, false );
@@ -234,7 +234,7 @@ void LedMatrix::setThreshold( double threshold )
 void LedMatrix::setMaxCurrent( double current ) 
 {
     if( current < 1e-6 ) current = 1e-6;
-    m_maxCurr = current;
+    m_maxCurrent = current;
     
     for( int row=0; row<m_rows; ++row )
     {
@@ -242,15 +242,15 @@ void LedMatrix::setMaxCurrent( double current )
             m_led[row][col]->setMaxCurrent( current );
 }   }
 
-void LedMatrix::setRes( double resist )
+void LedMatrix::setResistance( double resist )
 {
     if( resist == 0 ) resist = 1e-14;
-    m_resist = resist;
+    m_resistance = resist;
     
     for( int row=0; row<m_rows; ++row )
     {
         for( int col=0; col<m_cols; ++col )
-            m_led[row][col]->setRes( resist ); 
+            m_led[row][col]->setResistance( resist );
 }   }
 
 void LedMatrix::setHidden( bool hid, bool hidArea, bool hidLabel )

@@ -66,7 +66,7 @@ LedBase::LedBase( QString type, QString id )
                              , this, &LedBase::maxCurrent, &LedBase::setMaxCurrent ),
 
         new DoubProp<LedBase>("Resistance", tr("Resistance"), "Ω"
-                             , this, &LedBase::res, &LedBase::setRes ),
+                             , this, &LedBase::resistance, &LedBase::setResistance ),
     }, 0} );
 }
 LedBase::~LedBase(){}

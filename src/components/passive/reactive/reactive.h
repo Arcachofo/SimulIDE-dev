@@ -22,7 +22,7 @@ class Reactive : public Comp2Pin, public eReactive
         double value() { return m_value; }
         void setValue( double c );
 
-        double resist() { return m_resistor->res(); }
+        double resist() { return m_resistor->resistance(); }
         void setResist( double resist );
 
         double reaStep() { return m_reacStep*1e-12; }

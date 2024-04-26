@@ -70,7 +70,7 @@ DcMotor::DcMotor( QString type, QString id )
                              , this, &DcMotor::volt, &DcMotor::setVolt ),
 
         new DoubProp<DcMotor>("Resistance", tr("Resistance"), "Ω"
-                             , this, &DcMotor::getRes, &DcMotor::setResSafe )
+                             , this, &DcMotor::resistance, &DcMotor::setResSafe )
     },0} );
 }
 DcMotor::~DcMotor(){}

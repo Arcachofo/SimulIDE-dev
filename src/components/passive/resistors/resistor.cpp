@@ -38,7 +38,7 @@ Resistor::Resistor( QString type, QString id )
 
     addPropGroup( { tr("Main"), {
         new DoubProp<Resistor>("Resistance", tr("Resistance"), "Ω"
-                              , this, &Resistor::getRes, &Resistor::setResSafe )
+                              , this, &Resistor::resistance, &Resistor::setResistance )
     }, 0 } );
 
     setShowProp("Resistance");

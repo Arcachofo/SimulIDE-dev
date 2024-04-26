@@ -97,7 +97,7 @@ void Strain::updateStep()
     //m_last_step = m_step;
 
     double res = sensorFunction( m_value );
-    eResistor::setRes( res );
+    eResistor::setResistance( res );
     if( m_propDialog ) m_propDialog->updtValues();
     else setValLabelText( getPropStr( showProp() ) );
 }
@@ -128,11 +128,11 @@ double Strain::sensorFunction(double forceN )
   return resisteance;
 }
 
-void Strain::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
+void Strain::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w )
 {
     if( m_hidden ) return;
 
-    Component::paint( p, option, widget );
+    Component::paint( p, o, w );
     p->drawRect(-11,-20, 22, 24 );
     p->fillRect(-8,-2, 4, 4, Qt::black );
     p->fillRect( 8,-2,-4, 4, Qt::black );

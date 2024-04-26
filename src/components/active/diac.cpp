@@ -73,10 +73,10 @@ Diac::Diac( QString type, QString id )
                           , this, &Diac::resOn, &Diac::setResOn ),
 
         new DoubProp<Diac>("ResOff", tr("Off Resistance"), "Ω"
-                          , this, &Diac::resOff,   &Diac::setResOff ),
+                          , this, &Diac::resOff, &Diac::setResOff ),
 
         new DoubProp<Diac>("BrkVolt" , tr("Breakdown Voltage"), "V"
-                          , this, &Diac::brkVolt,  &Diac::setBrkVolt ),
+                          , this, &Diac::brkVolt, &Diac::setBrkVolt ),
 
         new DoubProp<Diac>("HoldCurr", tr("Hold Current"), "A"
                           , this, &Diac::holdCurr, &Diac::setHoldCurr )
@@ -115,7 +115,7 @@ void Diac::stamp()
     if( node0 ) node0->addToNoLinList( this );
     if( node1 ) node1->addToNoLinList( this );
 
-    m_resistor->setRes( m_resOff );
+    m_resistor->setResistance( m_resOff );
 }
 
 void Diac::updateStep()
@@ -124,7 +124,7 @@ void Diac::updateStep()
     m_changed = false;
 
     double res = m_state ? m_resOn : m_resOff;
-    m_resistor->setRes( res );
+    m_resistor->setResistance( res );
     voltChanged();
 }
 
@@ -143,7 +143,7 @@ void Diac::voltChanged()
     //qDebug() << "Diac::voltChanged" << state;
     m_state = state;
     double res = state ? m_resOn : m_resOff;
-    m_resistor->setRes( res );
+    m_resistor->setResistance( res );
 }
 
 void Diac::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w )

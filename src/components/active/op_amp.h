@@ -44,13 +44,11 @@ class OpAmp : public Component, public eElement
         bool switchPins() { return m_switchPins; }
         void setSwitchPins( bool s );
 
-        virtual QPainterPath shape() const;
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
-
-    protected slots:
-        virtual void slotProperties() override;
+        virtual QPainterPath shape() const override;
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w ) override;
 
     protected:
+        virtual void slotProperties() override;
         void updtProperties();
 
         bool m_powerPins;

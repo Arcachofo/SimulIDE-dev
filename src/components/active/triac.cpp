@@ -120,8 +120,8 @@ void Triac::stamp()
     if( nodeT1 ) nodeT1->addToNoLinList( this );
     if( nodeG ) nodeG->addToNoLinList( this );
 
-    m_resistor->setRes( 10e5 );
-    m_resistGa->setRes( m_gateRes );
+    m_resistor->setResistance( 10e5 );
+    m_resistGa->setResistance( m_gateRes );
 }
 
 void Triac::updateStep()
@@ -129,7 +129,7 @@ void Triac::updateStep()
     if( !m_changed ) return;
     m_changed = false;
 
-    m_resistGa->setRes( m_gateRes );
+    m_resistGa->setResistance( m_gateRes );
     voltChanged();
 }
 
@@ -146,7 +146,7 @@ void Triac::voltChanged()
     {
         m_state = state;
         double res = state ? 0.01 : 10e5;
-        m_resistor->setRes( res );
+        m_resistor->setResistance( res );
     }
 }
 

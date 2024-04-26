@@ -28,7 +28,7 @@ class Diode : public LinkerComponent, public eDiode
         virtual void stamp() override;
         virtual void updateStep() override;
 
-        virtual double res() override{ return m_resistor->res(); }
+        virtual double resistance() override{ return m_resistor->resistance(); }
         virtual void setResSafe( double resist ) override { m_resistor->setResSafe(resist);}
 
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;

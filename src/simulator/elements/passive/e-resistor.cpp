@@ -32,7 +32,7 @@ void eResistor::stampAdmit()
     m_ePin[1]->stampAdmitance( m_admit );
 }
 
-void eResistor::setRes( double resist )
+void eResistor::setResistance( double resist )
 {
     if( resist < 1e-12 ) resist = 1e-12;
     setAdmit( 1/resist );
@@ -47,7 +47,7 @@ void eResistor::setAdmit( double admit )   // Admit can be 0
 void eResistor::setResSafe( double resist )
 {
     Simulator::self()->pauseSim();
-    eResistor::setRes( resist );
+    eResistor::setResistance( resist );
     Simulator::self()->resumeSim();
 }
 

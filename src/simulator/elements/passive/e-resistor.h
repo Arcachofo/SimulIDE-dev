@@ -16,9 +16,9 @@ class eResistor : public eElement
 
         virtual void stamp() override;
 
-        virtual double res() { return 1/m_admit; }
-        virtual void setRes( double resist );
-        double getRes() { return 1/m_admit; }
+        virtual double resistance() { return 1/m_admit; }
+        virtual void setResistance( double resist );
+
         virtual void setResSafe( double resist );
         
         double admit() { return m_admit; }

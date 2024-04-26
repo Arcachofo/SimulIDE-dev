@@ -47,10 +47,10 @@ Battery::Battery( QString type, QString id )
 
     addPropGroup( { tr("Main"), {
         new DoubProp<Battery>("Voltage", tr("Voltage"),"V"
-                             , this, &Battery::volt, &Battery::setVolt ),
+                             , this, &Battery::voltage, &Battery::setVoltage ),
 
         new DoubProp<Battery>("Resistance", tr("Resistance"),"mΩ"
-                             , this, &Battery::res,  &Battery::setRes ),
+                             , this, &Battery::resistance,  &Battery::setResistance ),
     },0 } );
 }
 Battery::~Battery() {}
@@ -80,14 +80,14 @@ void Battery::updateStep()
     m_pin[1]->stampCurrent(-m_volt*m_admit );
 }
 
-void Battery::setVolt( double volt )
+void Battery::setVoltage( double volt )
 {
     if( volt < 1e-12 ) volt = 1e-12;
     m_volt = volt;
     m_changed = true;
 }
 
-void Battery::setRes( double resist )
+void Battery::setResistance( double resist )
 {
     if( resist < 1e-14 ) resist = 1e-14;
     m_admit = 1/resist;

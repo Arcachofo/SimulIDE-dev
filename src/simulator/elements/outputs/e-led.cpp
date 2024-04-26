@@ -13,7 +13,7 @@
 eLed::eLed( QString id ) 
     : eResistor( id )
 {
-    m_imped = 0.6;
+    m_impedance  = 0.6;
     m_threshold  = 2.4;
     m_maxCurrent = 0.03;
     eLed::initialize();
@@ -61,7 +61,7 @@ void eLed::voltChanged()
     double deltaV = m_voltPN-m_threshold;
     if( deltaV > -1e-12 )   // Conducing
     {
-        admit = 1/m_imped;
+        admit = 1/m_impedance;
         ThCurrent = m_threshold*admit;
         if( deltaV > 0 ) m_current = deltaV*admit;
     }
@@ -120,12 +120,12 @@ void eLed::updateBright()
     }
 }
 
-void eLed::setRes( double resist )
+void eLed::setResistance( double resist )
 {
     Simulator::self()->pauseSim();
 
     if( resist == 0 ) resist = 0.1;
-    m_imped = resist;
+    m_impedance = resist;
     voltChanged();
 
     Simulator::self()->resumeSim();

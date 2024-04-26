@@ -29,8 +29,8 @@ class Stepper : public LinkerComponent, public eElement
         int steps() { return m_steps; }
         void setSteps( int steps ); //" 4, 8,16,32"
         
-        double res()  { return m_res; }
-        void setRes( double rows );
+        double resistance()  { return m_resistance; }
+        void setResistance( double rows );
 
         bool bipolar() { return m_bipolar; }
         void setBipolar( bool bi );
@@ -41,7 +41,7 @@ class Stepper : public LinkerComponent, public eElement
 
     protected:
         int m_steps;
-        double m_res;
+        double m_resistance;
         int m_ang;
         int m_stpang;
         int m_Ppos;

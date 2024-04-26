@@ -30,8 +30,8 @@ class ResistorDip : public Component, public eElement
         int size() { return m_size; }
         void setSize( int size );
 
-        double getRes() { return m_resist; }
-        void setRes( double resist );
+        double resistance() { return m_resistance; }
+        void setResistance( double resist );
 
         bool pullUp() { return m_pullUp; }
         void setPullUp( bool p );
@@ -52,7 +52,7 @@ class ResistorDip : public Component, public eElement
     private:
         void updtProperties();
 
-        double m_resist;
+        double m_resistance;
         int m_size;
 
         bool m_pullUp;

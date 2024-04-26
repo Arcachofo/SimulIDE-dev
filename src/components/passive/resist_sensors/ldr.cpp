@@ -66,7 +66,7 @@ void Ldr::updateStep()
     m_needUpdate = false;
 
     double res = double(m_r1)*pow( m_value, -m_gamma );
-    eResistor::setRes( res );
+    eResistor::setResistance( res );
     if( m_propDialog ) m_propDialog->updtValues();
     else setValLabelText( getPropStr( showProp() ) );
 }

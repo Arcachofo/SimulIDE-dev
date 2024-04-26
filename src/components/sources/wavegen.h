@@ -64,11 +64,10 @@ class WaveGen : public ClockBase
 
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )override;
         
-    public slots:
         void slotLoad();
         virtual void contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu ) override;
 
-    protected slots:
+    protected:
         virtual void slotProperties() override;
 
     private:

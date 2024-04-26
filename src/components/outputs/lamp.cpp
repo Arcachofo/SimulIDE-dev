@@ -36,7 +36,7 @@ Lamp::Lamp( QString type, QString id )
     m_graphical = true;
 
     m_maxCurrent = 0.2;
-    setRes( 5 );
+    setResistance( 5 );
 
     m_ePin[0] = m_pin[0];
     m_ePin[1] = m_pin[1];
@@ -46,7 +46,7 @@ Lamp::Lamp( QString type, QString id )
 
     addPropGroup( { tr("Main"), {
         new DoubProp<Lamp>("Resistance", tr("Resistance"), "Ω"
-                          , this, &Lamp::getRes, &Lamp::setResSafe ),
+                          , this, &Lamp::resistance, &Lamp::setResSafe ),
 
         new DoubProp<Lamp>("MaxCurrent", tr("Max Current"), "A"
                           , this, &Lamp::maxCurrent, &Lamp::setMaxCurrent ),

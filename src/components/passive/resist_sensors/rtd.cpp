@@ -58,7 +58,7 @@ void RTD::updateStep()
 
     //double res = m_resist + dr*(1.0 -exp(-dt/m_tau));
     double res = sensorFunction( m_value );
-    eResistor::setRes( res );
+    eResistor::setResistance( res );
    if( m_propDialog ) m_propDialog->updtValues();
    else setValLabelText( getPropStr( showProp() ) );
     //m_lastTime = time;
@@ -75,11 +75,11 @@ double RTD::sensorFunction( double temp )
   return r_sense;
 }
 
-void RTD::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
+void RTD::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w )
 {
     if( m_hidden ) return;
 
-    Component::paint( p, option, widget );
+    Component::paint( p, o, w );
 
     QFont font = p->font();
     font.setPixelSize(8);

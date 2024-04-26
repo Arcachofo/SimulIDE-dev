@@ -166,8 +166,8 @@ void TouchPad::updateStep()
             xResB = m_RxMin + m_RxMax - xResA;
             tAdmit = 1;
         }
-        m_resXA.setRes( xResA );
-        m_resXB.setRes( xResB );
+        m_resXA.setResistance( xResA );
+        m_resXB.setResistance( xResB );
         m_resTouch.setAdmit( tAdmit );
         //qDebug()<<"X" << xResA<< xResB<< tAdmit;
     }
@@ -185,8 +185,8 @@ void TouchPad::updateStep()
             yResB = m_RyMin + m_RyMax - yResA;
             tAdmit = 1;
         }
-        m_resYA.setRes( yResA );
-        m_resYB.setRes( yResB );
+        m_resYA.setResistance( yResA );
+        m_resYB.setResistance( yResB );
         m_resTouch.setAdmit( tAdmit );
         //qDebug()<<"y" << yResA<< yResB<< tAdmit;
     }

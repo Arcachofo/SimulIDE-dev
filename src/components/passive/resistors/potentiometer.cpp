@@ -70,10 +70,10 @@ Potentiometer::Potentiometer( QString type, QString id )
 
     addPropGroup( { tr("Main"), {
         new DoubProp<Potentiometer>("Resistance", tr("Resistance"),"Ω"
-                                   , this, &Potentiometer::getRes, &Potentiometer::setRes ),
+                                   , this, &Potentiometer::resistance, &Potentiometer::setResistance ),
 
         new DoubProp<Potentiometer>("Value_Ohm", tr("Current Value"),"Ω"
-                                   , this, &Potentiometer::getVal, &Potentiometer::setVal ),
+                                   , this, &Potentiometer::getValue, &Potentiometer::setValue ),
     },0 } );
 
     addPropGroup( { tr("Dial"), Dialed::dialProps(), groupNoCopy } );
@@ -102,46 +102,46 @@ void Potentiometer::updateStep()
     if( !m_needUpdate ) return;
     m_needUpdate = false;
 
-    double res1 = double( m_resist*m_dialW.value()/1000 );
-    double res2 = m_resist-res1;
+    double res1 = double( m_resistance*m_dialW.value()/1000 );
+    double res2 = m_resistance-res1;
 
     if( res1 < 1e-6 ){
         res1 = 1e-3;
-        res2 = m_resist-res1;
+        res2 = m_resistance-res1;
     }
     if( res2 < 1e-6 ){
         res2 = 1e-6;
-        res1 = m_resist-res2;
+        res1 = m_resistance-res2;
     }
-    m_resA.setRes( res1 );
-    m_resB.setRes( res2 );
+    m_resA.setResistance( res1 );
+    m_resB.setResistance( res2 );
 
     if( m_propDialog ) m_propDialog->updtValues();
     else setValLabelText( getPropStr( showProp() ) );
 }
 
-double Potentiometer::getVal() { return m_resist*m_dialW.value()/1000; }
+double Potentiometer::getValue() { return m_resistance*m_dialW.value()/1000; }
 
-void Potentiometer::setVal( double val )
+void Potentiometer::setValue( double val )
 {
-    if( val > m_resist ) val = m_resist;
+    if( val > m_resistance ) val = m_resistance;
     else if( val < 1e-12 ) val = 1e-12;
-    m_dialW.setValue( val*1000/m_resist );
+    m_dialW.setValue( val*1000/m_resistance );
     m_res1 = val;
     m_needUpdate = true;
     if( !Simulator::self()->isRunning() ) updateStep();
 }
 
-void Potentiometer::setRes( double res ) // Called when property resistance is changed
+void Potentiometer::setResistance( double res ) // Called when property resistance is changed
 {
     if( res < 1e-12 ) res = 1e-12;
-    m_resist = res;
-    setVal( m_res1 );
+    m_resistance = res;
+    setValue( m_res1 );
 }
 
 void Potentiometer::setLinkedValue( double v, int i )
 {
-    if( i ) setRes( v );
+    if( i ) setResistance( v );
     else Dialed::setLinkedValue( v, i );
 }
 

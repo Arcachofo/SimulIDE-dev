@@ -43,7 +43,7 @@ VarResistor::VarResistor( QString type, QString id )
                                  , this, &VarResistor::getVal, &VarResistor::setVal ),
 
         new DoubProp<VarResistor>("Dial_Step", tr("Dial Step"), "Ω"
-                                 , this, &VarResistor::getStep,&VarResistor::setStep ),
+                                 , this, &VarResistor::getStep, &VarResistor::setStep ),
     },0 } );
 
     addPropGroup( { tr("Dial"), Dialed::dialProps(), groupNoCopy } );
@@ -55,7 +55,7 @@ void VarResistor::updateStep()
     if( !m_needUpdate ) return;
     m_needUpdate = false;
 
-    eResistor::setRes( m_value );
+    eResistor::setResistance( m_value );
     if( m_propDialog ) m_propDialog->updtValues();
     else setValLabelText( getPropStr( showProp() ) );
 }

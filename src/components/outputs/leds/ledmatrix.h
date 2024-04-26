@@ -36,11 +36,11 @@ class LedMatrix : public Component, public eElement
         double threshold() { return m_threshold; }
         void   setThreshold( double threshold );
 
-        double maxCurrent() { return m_maxCurr; }
+        double maxCurrent() { return m_maxCurrent; }
         void   setMaxCurrent( double current );
         
-        double res() { return m_resist; }
-        void  setRes( double resist );
+        double resistance() { return m_resistance; }
+        void  setResistance( double resist );
 
         virtual void stamp() override;
         virtual void remove() override;
@@ -63,8 +63,8 @@ class LedMatrix : public Component, public eElement
         
         bool m_verticalPins;
 
-        double m_resist;
-        double m_maxCurr;
+        double m_resistance;
+        double m_maxCurrent;
         double m_threshold;
         
         int m_rows;

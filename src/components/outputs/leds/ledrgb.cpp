@@ -161,7 +161,7 @@ void LedRgb::setMaxCurrent_R( double current )
 void LedRgb::setRes_R( double resist )
 {
     if( resist == 0 ) resist = 1e-14;
-    m_led[0]->setRes( resist );
+    m_led[0]->setResistance( resist );
 }
 
 void LedRgb::setThreshold_G( double threshold )
@@ -179,7 +179,7 @@ void LedRgb::setMaxCurrent_G( double current )
 void LedRgb::setRes_G( double resist )
 {
     if( resist == 0 ) resist = 1e-14;
-    m_led[1]->setRes( resist );
+    m_led[1]->setResistance( resist );
 }
 
 void LedRgb::setThreshold_B( double threshold )
@@ -197,7 +197,7 @@ void LedRgb::setMaxCurrent_B( double current )
 void LedRgb::setRes_B( double resist )
 {
     if( resist == 0 ) resist = 1e-14;
-    m_led[2]->setRes( resist );
+    m_led[2]->setResistance( resist );
 }
 
 void LedRgb::setHidden( bool hid, bool hidArea, bool hidLabel )

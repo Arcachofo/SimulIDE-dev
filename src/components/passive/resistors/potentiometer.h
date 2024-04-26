@@ -24,11 +24,11 @@ class Potentiometer : public Dialed, public eElement
         virtual void initialize() override;
         virtual void updateStep() override;
 
-        double getVal();
-        void setVal( double val );
+        double getValue();
+        void setValue( double val );
 
-        double getRes() { return m_resist; }
-        void setRes( double v );
+        double resistance() { return m_resistance; }
+        void setResistance( double v );
 
         virtual void setLinkedValue( double v, int i=0 ) override;
 
@@ -38,7 +38,7 @@ class Potentiometer : public Dialed, public eElement
         virtual void updateProxy() override;
 
     private:
-        double m_resist;
+        double m_resistance;
         double m_voltOut;
         double m_res1;
 

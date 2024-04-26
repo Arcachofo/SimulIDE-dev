@@ -35,7 +35,7 @@ class Strain : public VarResBase
         //public slots:
           void senseChanged( int val );
 
-          virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
+          virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w ) override;
 
     private:
         double sensorFunction ( double forceN );

@@ -107,8 +107,7 @@ InoDebugger::InoDebugger( CodeEditor* parent, OutPanelText* outPane )
             << "detachInterrupt( interrupt )"
             << "digitalPinToInterrupt( pin )"
             << "interrupts()"
-            << "noInterrupts()"
-            << "Print";
+            << "noInterrupts()";
     m_editor->setFunctions( functions );
 
     m_enumUids = QStringList()

@@ -20,7 +20,7 @@ Reactive::Reactive( QString type, QString id )
     setNumEpins( 3 );
 
     m_resistor = new eResistor( m_elmId+"-resistor");
-    m_resistor->setRes( 1e-6 );
+    m_resistor->setResistance( 1e-6 );
     m_resistor->setEpin( 0, m_ePin[2] );
     m_resistor->setEpin( 1, m_pin[1] );
 

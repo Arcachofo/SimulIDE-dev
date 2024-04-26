@@ -20,10 +20,10 @@ class Battery : public Comp2Pin, public eResistor
  static Component* construct( QString type, QString id );
  static LibraryItem* libraryItem();
 
-        double volt() { return m_volt; }
-        void setVolt( double volt );
+        double voltage() { return m_volt; }
+        void setVoltage( double volt );
 
-        virtual void setRes( double resist ) override;
+        virtual void setResistance( double resist ) override;
 
         virtual void stamp() override;
         virtual void updateStep() override;

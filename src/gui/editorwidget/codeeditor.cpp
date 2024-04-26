@@ -663,7 +663,7 @@ void CodeEditor::keyPressEvent( QKeyEvent* event )
                 else break;
             }
 
-            if( tc.positionInBlock() != 0 )
+            if( tc.positionInBlock() != 0 ) // Indent brackets
             {
                 tc.movePosition( QTextCursor::PreviousCharacter, QTextCursor::KeepAnchor );
                 if( tc.selectedText() == "{" ) extraIndent = true;
@@ -691,7 +691,7 @@ void CodeEditor::keyPressEvent( QKeyEvent* event )
             }
         }else{
             QString text = event->text();
-            for( QPair<QString, QString> pair : pairs )
+            for( QPair<QString, QString> pair : pairs )  // Auto close pairs
             {
                 if( pair.first != text ) continue;
                 insertPlainText( pair.second );

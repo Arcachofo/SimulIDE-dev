@@ -112,8 +112,8 @@ void SCR::stamp()
     if( nodeC ) nodeC->addToNoLinList( this );
     if( nodeG ) nodeG->addToNoLinList( this );
 
-    m_resistor->setRes( 10e5 );
-    m_resistGa->setRes( m_gateRes );
+    m_resistor->setResistance( 10e5 );
+    m_resistGa->setResistance( m_gateRes );
 }
 
 void SCR::updateStep()
@@ -142,7 +142,7 @@ void SCR::voltChanged()
     {
         m_state = state;
         double res = state ? 0.0105 : 10e5;
-        m_resistor->setRes( res );
+        m_resistor->setResistance( res );
     }
 }
 

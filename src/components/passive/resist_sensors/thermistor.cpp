@@ -56,7 +56,7 @@ void Thermistor::updateStep()
     //double res = m_r25/pow( e, m_bVal/k );
     double k = (t0-t)/(t*t0);
     double res = m_r25*qPow( e, m_bVal*k );
-    eResistor::setRes( res );
+    eResistor::setResistance( res );
     if( m_propDialog ) m_propDialog->updtValues();
     else setValLabelText( getPropStr( showProp() ) );
 }
@@ -73,11 +73,11 @@ void Thermistor::setR25( int r25 )
     m_needUpdate = true;
 }
 
-void Thermistor::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
+void Thermistor::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w )
 {
     if( m_hidden ) return;
 
-    Component::paint( p, option, widget );
+    Component::paint( p, o, w );
 
     p->drawRect( QRectF(-11,-4.5, 22, 9 ));
     
