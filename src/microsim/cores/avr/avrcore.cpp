@@ -153,6 +153,7 @@ void AvrCore::runStep()
     uint16_t instruction = m_progMem[m_PC];
 
     uint32_t new_pc = m_PC + 1;    // future "default" pc
+    m_RET_ADDR = new_pc;
     int cycle = 1;
 
     switch( instruction & 0xf000 )

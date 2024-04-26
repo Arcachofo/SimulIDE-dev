@@ -147,6 +147,7 @@ void I51Core::runStep()  // Machine cycle: 1/6 frequency
         m_readCycle = 0;
         m_readPC++;
         m_lastPC = m_readPC;
+        m_RET_ADDR = m_lastPC;
         Decode();
         m_cpuState = cpu_OPERAND;
     }

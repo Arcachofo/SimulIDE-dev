@@ -270,6 +270,7 @@ void PicMrCore::runStep()
 
     m_mcu->cyclesDone = 0;
     incDefault();
+    m_RET_ADDR = m_PC;
 
     runStep( instr );
 }

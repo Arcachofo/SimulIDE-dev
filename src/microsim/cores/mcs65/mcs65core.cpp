@@ -208,6 +208,7 @@ void Mcs65Cpu::clkFallingEdge()
             if( m_aMode <= aACCU ) m_PC--;           // If dummy Read then read the same PC
             m_debugPC = m_PC;
             readPGM();                               // Read opCode
+            m_RET_ADDR = m_PC;
             m_cycle = 0;
             m_state = cDECODE;
 
