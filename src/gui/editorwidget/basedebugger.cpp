@@ -112,13 +112,15 @@ bool BaseDebugger::postProcess()
                 }
                 lstLine = words.at( addrIndex );
                 int address = lstLine.toInt( &ok, 16 );
-                if( ok )
-                {
+                if( ok ){
                     setLineToFlash( {srcFile, srcLineNumber}, m_codeStart+address );
                     continue;
-            }   }
-            if( lstLine.contains( file ) )
+                }
+            }
+            for( QString sFile : m_fileList )  // Search in all files
             {
+                if( !lstLine.contains( file ) ) continue;
+
                 QString str = lstLine.split( file ).takeLast();
                 QStringList words = str.remove(":").split(" ");
                 words.removeAll("");
@@ -126,6 +128,10 @@ bool BaseDebugger::postProcess()
                 str = words.first();
 
                 srcLineNumber = str.toInt( &found ); // src line number found
+                if( found ){
+                    srcFile = sFile;
+                    break;
+                }
             }
         }
     }
