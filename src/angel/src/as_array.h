@@ -52,23 +52,24 @@ public:
 
 	void   Allocate(asUINT numElements, bool keepData);
 	void   AllocateNoConstruct(asUINT numElements, bool keepData);
-	asUINT GetCapacity() const;
+    inline asUINT GetCapacity() const;
 
 	void PushLast(const T &element);
-	T    PopLast();
+    inline T    PopLast();
 
 	bool   SetLength(asUINT numElements);
 	bool   SetLengthNoConstruct(asUINT numElements);
-	asUINT GetLength() const;
+    inline void SetLengthNoAllocate(asUINT numElements);
+    inline asUINT GetLength() const;
 
 	void         Copy(const T*, asUINT count);
 	asCArray<T> &operator =(const asCArray<T> &);
 	void         SwapWith(asCArray<T> &other);
 
-	const T &operator [](asUINT index) const;
-	T       &operator [](asUINT index);
-	T       *AddressOf();
-	const T *AddressOf() const;
+    inline const T &operator [](asUINT index) const;
+    inline T       &operator [](asUINT index);
+    inline T       *AddressOf();
+    inline const T *AddressOf() const;
 
 	bool Concatenate(const asCArray<T> &);
 	void Concatenate(T*, unsigned int count);
@@ -82,23 +83,27 @@ public:
 	bool operator==(const asCArray<T> &) const;
 	bool operator!=(const asCArray<T> &) const;
 
+public:
+    // These are public to allow external code (e.g. JIT compiler) to do asOFFSET to
+    // access the members directly without having to modify the code to add friend
+    T      *array;
+    asUINT  length;                  // 32bits is enough for all uses of this array
+    asUINT  maxLength;
+
 protected:
-	T      *array;
-	asUINT  length;                  // 32bits is enough for all uses of this array
-	asUINT  maxLength;
-	char    buf[2*4*AS_PTR_SIZE];    // Avoid dynamically allocated memory for tiny arrays
+    char    buf[2*4*AS_PTR_SIZE];    // Avoid dynamically allocated memory for tiny arrays
 };
 
 // Implementation
 
 template <class T>
-T *asCArray<T>::AddressOf()
+inline T *asCArray<T>::AddressOf()
 {
 	return array;
 }
 
 template <class T>
-const T *asCArray<T>::AddressOf() const
+inline const T *asCArray<T>::AddressOf() const
 {
 	return array;
 }
@@ -139,13 +144,13 @@ asCArray<T>::~asCArray(void)
 }
 
 template <class T>
-asUINT asCArray<T>::GetLength() const
+inline asUINT asCArray<T>::GetLength() const
 {
 	return length;
 }
 
 template <class T>
-const T &asCArray<T>::operator [](asUINT index) const
+inline const T &asCArray<T>::operator [](asUINT index) const
 {
 	asASSERT(index < length);
 
@@ -153,7 +158,7 @@ const T &asCArray<T>::operator [](asUINT index) const
 }
 
 template <class T>
-T &asCArray<T>::operator [](asUINT index)
+inline T &asCArray<T>::operator [](asUINT index)
 {
 	asASSERT(index < length);
 
@@ -181,7 +186,7 @@ void asCArray<T>::PushLast(const T &element)
 }
 
 template <class T>
-T asCArray<T>::PopLast()
+inline T asCArray<T>::PopLast()
 {
 	asASSERT(length > 0);
 
@@ -333,9 +338,17 @@ void asCArray<T>::AllocateNoConstruct(asUINT numElements, bool keepData)
 }
 
 template <class T>
-asUINT asCArray<T>::GetCapacity() const
+inline asUINT asCArray<T>::GetCapacity() const
 {
 	return maxLength;
+}
+
+
+template <class T>
+inline void asCArray<T>::SetLengthNoAllocate(asUINT numElements)
+{
+    asASSERT(numElements <= maxLength);
+    length = numElements;
 }
 
 template <class T>

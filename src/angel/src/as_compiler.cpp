@@ -14018,17 +14018,6 @@ void asCCompiler::CompileMathOperator(asCScriptNode *node, asCExprContext *lctx,
 	if( op == ttUnrecognizedToken )
 		op = node->tokenType;
 
-	// If integer division is disabled, convert to floating-point
-	if( engine->ep.disableIntegerDivision &&
-		(op == ttSlash || op == ttDivAssign) &&
-		(to.IsIntegerType() || to.IsUnsignedType()) )
-	{
-		// Use double to avoid losing precision when dividing with 32bit ints
-		// For 64bit ints there is unfortunately no greater type so with those
-		// there is still a risk of loosing precision
-		to.SetTokenType(ttDouble);
-	}
-
 	// Do the actual conversion
 	int l = int(reservedVariables.GetLength());
 	rctx->bc.GetVarsUsed(reservedVariables);

@@ -116,7 +116,6 @@ enum asERetCodes
 enum asEEngineProp
 {
     asEP_ALLOW_UNSAFE_REFERENCES            = 1,
-    asEP_OPTIMIZE_BYTECODE                  = 2,
     asEP_COPY_SCRIPT_SECTIONS               = 3,
     asEP_MAX_STACK_SIZE                     = 4,
     asEP_USE_CHARACTER_LITERALS             = 5,
@@ -131,12 +130,10 @@ enum asEEngineProp
     asEP_PROPERTY_ACCESSOR_MODE             = 14,
     asEP_EXPAND_DEF_ARRAY_TO_TMPL           = 15,
     asEP_AUTO_GARBAGE_COLLECT               = 16,
-    asEP_DISALLOW_GLOBAL_VARS               = 17,
     asEP_ALWAYS_IMPL_DEFAULT_CONSTRUCT      = 18,
     asEP_COMPILER_WARNINGS                  = 19,
     asEP_DISALLOW_VALUE_ASSIGN_FOR_REF_TYPE = 20,
     asEP_ALTER_SYNTAX_NAMED_ARGS            = 21,
-    asEP_DISABLE_INTEGER_DIVISION           = 22,
     asEP_DISALLOW_EMPTY_LIST_ELEMENTS       = 23,
     asEP_PRIVATE_PROP_AS_PROTECTED          = 24,
     asEP_ALLOW_UNICODE_IDENTIFIERS          = 25,
@@ -632,8 +629,8 @@ public:
     virtual int            RegisterObjectProperty(const char *obj, const char *declaration, int byteOffset, int compositeOffset = 0, bool isCompositeIndirect = false) = 0;
     virtual int            RegisterObjectMethod(const char *obj, const char *declaration, const asSFuncPtr &funcPointer, asDWORD callConv, void *auxiliary = 0, int compositeOffset = 0, bool isCompositeIndirect = false) = 0;
     virtual int            RegisterObjectBehaviour(const char *obj, asEBehaviours behaviour, const char *declaration, const asSFuncPtr &funcPointer, asDWORD callConv, void *auxiliary = 0, int compositeOffset = 0, bool isCompositeIndirect = false) = 0;
-    virtual int            RegisterInterface(const char *name) = 0;
-    virtual int            RegisterInterfaceMethod(const char *intf, const char *declaration) = 0;
+    //virtual int            RegisterInterface(const char *name) = 0;
+    //virtual int            RegisterInterfaceMethod(const char *intf, const char *declaration) = 0;
     virtual asUINT         GetObjectTypeCount() const = 0;
     virtual asITypeInfo   *GetObjectTypeByIndex(asUINT index) const = 0;
 
@@ -662,12 +659,9 @@ public:
     virtual asITypeInfo *GetTypedefByIndex(asUINT index) const = 0;
 
     // Configuration groups
-    virtual int         BeginConfigGroup(const char *groupName) = 0;
-    virtual int         EndConfigGroup() = 0;
-    virtual int         RemoveConfigGroup(const char *groupName) = 0;
     virtual asDWORD     SetDefaultAccessMask(asDWORD defaultMask) = 0;
-    virtual int         SetDefaultNamespace(const char *nameSpace) = 0;
-    virtual const char *GetDefaultNamespace() const = 0;
+    //virtual int         SetDefaultNamespace(const char *nameSpace) = 0;
+    //virtual const char *GetDefaultNamespace() const = 0;
 
     // Script modules
     virtual asIScriptModule *GetModule(const char *module, asEGMFlags flag = asGM_ONLY_IF_EXISTS) = 0;
@@ -690,7 +684,6 @@ public:
     virtual asIScriptContext      *CreateContext() = 0;
     virtual void                  *CreateScriptObject(const asITypeInfo *type) = 0;
     virtual void                  *CreateScriptObjectCopy(void *obj, const asITypeInfo *type) = 0;
-    virtual void                  *CreateUninitializedScriptObject(const asITypeInfo *type) = 0;
     virtual asIScriptFunction     *CreateDelegate(asIScriptFunction *func, void *obj) = 0;
     virtual int                    AssignScriptObject(void *dstObj, void *srcObj, const asITypeInfo *type) = 0;
     virtual void                   ReleaseScriptObject(void *obj, const asITypeInfo *type) = 0;
@@ -719,15 +712,7 @@ public:
     // User data
     virtual void *SetUserData(void *data, asPWORD type = 0) = 0;
     virtual void *GetUserData(asPWORD type = 0) const = 0;
-    virtual void  SetEngineUserDataCleanupCallback(asCLEANENGINEFUNC_t callback, asPWORD type = 0) = 0;
-    virtual void  SetModuleUserDataCleanupCallback(asCLEANMODULEFUNC_t callback, asPWORD type = 0) = 0;
-    virtual void  SetContextUserDataCleanupCallback(asCLEANCONTEXTFUNC_t callback, asPWORD type = 0) = 0;
-    virtual void  SetFunctionUserDataCleanupCallback(asCLEANFUNCTIONFUNC_t callback, asPWORD type = 0) = 0;
     virtual void  SetTypeInfoUserDataCleanupCallback(asCLEANTYPEINFOFUNC_t callback, asPWORD type = 0) = 0;
-    virtual void  SetScriptObjectUserDataCleanupCallback(asCLEANSCRIPTOBJECTFUNC_t callback, asPWORD type = 0) = 0;
-
-    // Exception handling
-    virtual int SetTranslateAppExceptionCallback(asSFuncPtr callback, void *param, int callConv) = 0;
 
 protected:
     virtual ~asIScriptEngine() {}
@@ -1062,7 +1047,6 @@ public:
     virtual const char      *GetModuleName() const = 0;
     virtual asIScriptModule *GetModule() const = 0;
     virtual const char      *GetScriptSectionName() const = 0;
-    virtual const char      *GetConfigGroup() const = 0;
     virtual asDWORD          GetAccessMask() const = 0;
     virtual void            *GetAuxiliary() const = 0;
 

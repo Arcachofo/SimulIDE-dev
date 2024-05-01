@@ -115,7 +115,6 @@ asCBuilder::~asCBuilder()
     for( n = 0; n < scripts.GetLength(); n++ )
     {
         if( scripts[n] ) asDELETE(scripts[n],asCScriptCode);
-
         scripts[n] = 0;
     }
 
@@ -371,8 +370,7 @@ int asCBuilder::CompileGlobalVar(const char *sectionName, const char *code, int 
         asCCompiler compiler(engine);
         asCScriptFunction *func = engine->scriptFunctions[functions[n]->funcId];
         int r = compiler.CompileFunction(this, functions[n]->script, func->parameterNames, functions[n]->node, func, 0);
-        if( r < 0 )
-            break;
+        if( r < 0 ) break;
     }
 
     if( numWarnings > 0 && engine->ep.compilerWarnings == 2 )
@@ -394,9 +392,8 @@ int asCBuilder::CompileGlobalVar(const char *sectionName, const char *code, int 
         }
     }
 
-    if( numErrors > 0 )
+    if( numErrors > 0 ) // Remove the variable from the module, if it was registered
     {
-        // Remove the variable from the module, if it was registered
         if( globVariables.GetSize() > 0 )
             module->RemoveGlobalVar(module->GetGlobalVarCount()-1);
 
@@ -489,8 +486,7 @@ int asCBuilder::CompileFunction(const char *sectionName, const char *code, int l
 
     // Add the string to the script code
     asCScriptCode *script = asNEW(asCScriptCode);
-    if( script == 0 )
-        return asOUT_OF_MEMORY;
+    if( script == 0 ) return asOUT_OF_MEMORY;
 
     script->SetCode(sectionName, code, true);
     script->lineOffset = lineOffset;
@@ -499,8 +495,7 @@ int asCBuilder::CompileFunction(const char *sectionName, const char *code, int l
 
     // Parse the string
     asCParser parser(this);
-    if( parser.ParseScript(scripts[0]) < 0 )
-        return asERROR;
+    if( parser.ParseScript(scripts[0]) < 0 ) return asERROR;
 
     asCScriptNode *node = parser.GetScriptNode();
 
@@ -520,8 +515,7 @@ int asCBuilder::CompileFunction(const char *sectionName, const char *code, int l
     // Create the function
     asSFunctionTraits funcTraits;
     asCScriptFunction *func = asNEW(asCScriptFunction)(engine, compileFlags & asCOMP_ADD_TO_MODULE ? module : 0, asFUNC_SCRIPT);
-    if( func == 0 )
-        return asOUT_OF_MEMORY;
+    if( func == 0 ) return asOUT_OF_MEMORY;
 
     GetParsedFunctionDetails(node, scripts[0], 0, func->name, func->returnType, func->parameterNames, func->parameterTypes, func->inOutFlags, func->defaultArgs, funcTraits, module->m_defaultNamespace);
     func->id                           = engine->GetNextScriptFunctionId();
@@ -553,8 +547,7 @@ int asCBuilder::CompileFunction(const char *sectionName, const char *code, int l
 
         module->AddScriptFunction(func);
     }
-    else
-        engine->AddScriptFunction(func);
+    else engine->AddScriptFunction(func);
 
     // Fill in the function info for the builder too
     node->DisconnectParent();
@@ -579,8 +572,7 @@ int asCBuilder::CompileFunction(const char *sectionName, const char *code, int l
         asCCompiler compiler(engine);
         asCScriptFunction *f = engine->scriptFunctions[functions[n]->funcId];
         r = compiler.CompileFunction(this, functions[n]->script, f->parameterNames, functions[n]->node, f, 0);
-        if( r < 0 )
-            break;
+        if( r < 0 ) break;
     }
 
     if( numWarnings > 0 && engine->ep.compilerWarnings == 2 )
@@ -606,13 +598,10 @@ int asCBuilder::CompileFunction(const char *sectionName, const char *code, int l
     {
         // Release the function pointer that would otherwise be returned if no errors occured
         func->ReleaseInternal();
-
         return asERROR;
     }
 
-    // Return the function
-    *outFunc = func;
-
+    *outFunc = func; // Return the function
     return asSUCCESS;
 }
 
@@ -932,8 +921,7 @@ int asCBuilder::ParseDataType(const char *datatype, asCDataType *result, asSName
     if( isReturnType )
         *result = ModifyDataTypeFromNode(*result, dataType->next, &source, 0, 0);
 
-    if( numErrors > 0 )
-        return asINVALID_TYPE;
+    if( numErrors > 0 ) return asINVALID_TYPE;
 
     return asSUCCESS;
 }
@@ -947,8 +935,7 @@ int asCBuilder::ParseTemplateDecl(const char *decl, asCString *name, asCArray<as
 
     asCParser parser(this);
     int r = parser.ParseTemplateDecl(&source);
-    if( r < 0 )
-        return asINVALID_TYPE;
+    if( r < 0 ) return asINVALID_TYPE;
 
     // Get the template name and subtype names
     asCScriptNode *node = parser.GetScriptNode()->firstChild;
@@ -962,9 +949,7 @@ int asCBuilder::ParseTemplateDecl(const char *decl, asCString *name, asCArray<as
     }
 
     // TODO: template: check for name conflicts
-
-    if( numErrors > 0 )
-        return asINVALID_DECLARATION;
+    if( numErrors > 0 ) return asINVALID_DECLARATION;
 
     return asSUCCESS;
 }
@@ -989,8 +974,7 @@ int asCBuilder::VerifyProperty(asCDataType *dt, const char *decl, asCString &nam
 
     asCParser parser(this);
     int r = parser.ParsePropertyDeclaration(&source);
-    if( r < 0 )
-        return asINVALID_DECLARATION;
+    if( r < 0 ) return asINVALID_DECLARATION;
 
     // Get data type
     asCScriptNode *dataType = parser.GetScriptNode()->firstChild;
@@ -1028,8 +1012,7 @@ int asCBuilder::VerifyProperty(asCDataType *dt, const char *decl, asCString &nam
             return asNAME_TAKEN;
     }
 
-    if( numErrors > 0 )
-        return asINVALID_DECLARATION;
+    if( numErrors > 0 ) return asINVALID_DECLARATION;
 
     return asSUCCESS;
 }
@@ -1047,11 +1030,9 @@ asCObjectProperty *asCBuilder::GetObjectProperty(asCDataType &obj, const char *p
         {
             if( module->m_accessMask & props[n]->accessMask )
                 return props[n];
-            else
-                return 0;
+            else return 0;
         }
     }
-
     return 0;
 }
 #endif
@@ -1093,7 +1074,6 @@ bool asCBuilder::DoesGlobalPropertyExist(const char *prop, asSNameSpace *ns, asC
             return true;
         }
     }
-
     return false;
 }
 
@@ -1126,7 +1106,6 @@ asCGlobalProperty *asCBuilder::GetGlobalProperty(const char *prop, asSNameSpace 
         }
         return globProp;
     }
-
     return 0;
 }
 
@@ -1134,13 +1113,10 @@ int asCBuilder::ParseFunctionDeclaration(asCObjectType *objType, const char *dec
 {
     asASSERT( objType || ns );
 
-    if( listPattern)
-        *listPattern = 0;
-    if( outParentClass)
-        *outParentClass = 0;
+    if( listPattern   ) *listPattern = 0;
+    if( outParentClass)  *outParentClass = 0;
 
     // TODO: Can't we use GetParsedFunctionDetails to do most of what is done in this function?
-
     Reset();
 
     asCScriptCode source;
@@ -1148,8 +1124,7 @@ int asCBuilder::ParseFunctionDeclaration(asCObjectType *objType, const char *dec
 
     asCParser parser(this);
     int r = parser.ParseFunctionDefinition(&source, listPattern != 0);
-    if( r < 0 )
-        return asINVALID_DECLARATION;
+    if( r < 0 ) return asINVALID_DECLARATION;
 
     asCScriptNode *node = parser.GetScriptNode();
 
@@ -1159,11 +1134,9 @@ int asCBuilder::ParseFunctionDeclaration(asCObjectType *objType, const char *dec
     func->nameSpace = GetNameSpaceFromNode(n, &source, ns, &n, &parentClass);
     if( func->nameSpace == 0 && parentClass == 0 )
         return asINVALID_DECLARATION;
-    if( parentClass && func->funcType != asFUNC_FUNCDEF)
-        return asINVALID_DECLARATION;
+    if( parentClass && func->funcType != asFUNC_FUNCDEF) return asINVALID_DECLARATION;
 
-    if( outParentClass)
-        *outParentClass = parentClass;
+    if( outParentClass) *outParentClass = parentClass;
 
     // Find name
     func->name.Assign(&source.code[n->tokenPos], n->tokenLength);
@@ -1434,10 +1407,8 @@ int asCBuilder::CheckNameConflictMember(asCTypeInfo *t, const char *name, asCScr
     // If there is a namespace at the same level with the same name as the class, then need to check for conflicts with symbols in that namespace too
     // TODO: When classes can have static members, the code should change so that class name cannot be the same as a namespace
     asCString scope;
-    if( ot->nameSpace->name != "")
-        scope = ot->nameSpace->name + "::" + ot->name;
-    else
-        scope = ot->name;
+    if( ot->nameSpace->name != "") scope = ot->nameSpace->name + "::" + ot->name;
+    else                           scope = ot->name;
     asSNameSpace *ns = engine->FindNameSpace(scope.AddressOf());
     if( ns)
     {
@@ -1922,10 +1893,6 @@ void asCBuilder::CompleteFuncDef(sFuncDef *funcDef)
 
 int asCBuilder::RegisterGlobalVar(asCScriptNode *node, asCScriptCode *file, asSNameSpace *ns)
 {
-    // Has the application disabled global vars?
-    if( engine->ep.disallowGlobalVars )
-        WriteError(TXT_GLOBAL_VARS_NOT_ALLOWED, file, node);
-
     // What data type is it?
     asCDataType type = CreateDataTypeFromNode(node->firstChild, file, ns);
 
@@ -5437,8 +5404,7 @@ asSNameSpace *asCBuilder::GetNameSpaceFromNode(asCScriptNode *node, asCScriptCod
             asCObjectType *templateType = GetObjectType(templateName.AddressOf(), ns);
             if( templateType == 0 || (templateType->flags & asOBJ_TEMPLATE) == 0)
             {
-                // TODO: child funcdef: Report error
-                return ns;
+                return ns; // TODO: child funcdef: Report error
             }
 
             if( objType) *objType = GetTemplateInstanceFromNode(sn, script, templateType, implicitNs, 0);
@@ -5727,10 +5693,8 @@ asCDataType asCBuilder::CreateDataTypeFromNode(asCScriptNode *node, asCScriptCod
             // Make the type an array (or multidimensional array)
             if( dt.MakeArray(engine, module) < 0 )
             {
-                if( reportError )
-                    WriteError(TXT_NO_DEFAULT_ARRAY_TYPE, file, n);
-                if( isValid)
-                    *isValid = false;
+                if( reportError )  WriteError(TXT_NO_DEFAULT_ARRAY_TYPE, file, n);
+                if( isValid) *isValid = false;
                 break;
             }
         }
@@ -5738,19 +5702,15 @@ asCDataType asCBuilder::CreateDataTypeFromNode(asCScriptNode *node, asCScriptCod
             // Make the type a handle
             if( dt.IsObjectHandle() )
             {
-                if( reportError )
-                    WriteError(TXT_HANDLE_OF_HANDLE_IS_NOT_ALLOWED, file, n);
-                if( isValid)
-                    *isValid = false;
+                if( reportError ) WriteError(TXT_HANDLE_OF_HANDLE_IS_NOT_ALLOWED, file, n);
+                if( isValid) *isValid = false;
                 break;
             }
             else{
                 if( dt.MakeHandle(true, acceptHandleForScope) < 0 )
                 {
-                    if( reportError )
-                        WriteError(TXT_OBJECT_HANDLE_NOT_SUPPORTED, file, n);
-                    if( isValid)
-                        *isValid = false;
+                    if( reportError ) WriteError(TXT_OBJECT_HANDLE_NOT_SUPPORTED, file, n);
+                    if( isValid)  *isValid = false;
                     break;
                 }
 
@@ -5767,8 +5727,7 @@ asCDataType asCBuilder::CreateDataTypeFromNode(asCScriptNode *node, asCScriptCod
         // Make the type a handle
         if( dt.MakeHandle(true, acceptHandleForScope) < 0)
         {
-            if( reportError )
-                WriteError(TXT_OBJECT_HANDLE_NOT_SUPPORTED, file, n);
+            if( reportError ) WriteError(TXT_OBJECT_HANDLE_NOT_SUPPORTED, file, n);
             if( isValid) *isValid = false;
         }
     }
@@ -5883,14 +5842,10 @@ asCDataType asCBuilder::ModifyDataTypeFromNode(const asCDataType &type, asCScrip
         {
             if( inOutFlags )
             {
-                if( n->tokenType == ttIn )
-                    *inOutFlags = asTM_INREF;
-                else if( n->tokenType == ttOut )
-                    *inOutFlags = asTM_OUTREF;
-                else if( n->tokenType == ttInOut )
-                    *inOutFlags = asTM_INOUTREF;
-                else
-                    asASSERT(false);
+                if     ( n->tokenType == ttIn    ) *inOutFlags = asTM_INREF;
+                else if( n->tokenType == ttOut   ) *inOutFlags = asTM_OUTREF;
+                else if( n->tokenType == ttInOut ) *inOutFlags = asTM_INOUTREF;
+                else                               asASSERT(false);
             }
             n = n->next;
         }
@@ -5943,8 +5898,7 @@ asCTypeInfo *asCBuilder::GetType(const char *type, asSNameSpace *ns, asCObjectTy
     if( ns)
     {
         asCTypeInfo *ti = engine->GetRegisteredType(type, ns);
-        if( !ti && module)
-            ti = module->GetType(type, ns);
+        if( !ti && module) ti = module->GetType(type, ns);
         return ti;
     }
     else{
@@ -5955,8 +5909,7 @@ asCTypeInfo *asCBuilder::GetType(const char *type, asSNameSpace *ns, asCObjectTy
             for( asUINT n = 0; n < currType->childFuncDefs.GetLength(); n++)
             {
                 asCFuncdefType *funcDef = currType->childFuncDefs[n];
-                if( funcDef && funcDef->name == type)
-                    return funcDef;
+                if( funcDef && funcDef->name == type) return funcDef;
             }
             currType = currType->derivedFrom;
         }

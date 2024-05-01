@@ -43,8 +43,8 @@ BEGIN_AS_NAMESPACE
 // internal
 asCModule::asCModule(const char *name, asCScriptEngine *engine)
 {
-	m_name     = name;
-	m_engine   = engine;
+    m_name   = name;
+    m_engine = engine;
 
 	m_userData = 0;
 	m_builder = 0;
@@ -117,7 +117,7 @@ void asCModule::Discard()
 }
 
 // interface
-void *asCModule::SetUserData(void *data, asPWORD type)
+void *asCModule::SetUserData( void *data, asPWORD type)
 {
 	// It is not intended to store a lot of different types of userdata,
 	// so a more complex structure like a associative map would just have
@@ -131,13 +131,13 @@ void *asCModule::SetUserData(void *data, asPWORD type)
 			return oldData;
 		}
 	}
-	m_userData.PushLast(type);
-	m_userData.PushLast(reinterpret_cast<asPWORD>(data));
+    m_userData.PushLast( type );
+    m_userData.PushLast( reinterpret_cast<asPWORD>(data) );
 	return 0;
 }
 
 // interface
-void *asCModule::GetUserData(asPWORD type) const
+void *asCModule::GetUserData( asPWORD type ) const
 {
 	for( asUINT n = 0; n < m_userData.GetLength(); n += 2 )
 	{
@@ -175,7 +175,7 @@ const char *asCModule::GetDefaultNamespace() const
 }
 
 // interface
-int asCModule::SetDefaultNamespace(const char *nameSpace)
+int asCModule::SetDefaultNamespace( const char *nameSpace )
 {
 	// TODO: cleanup: This function is similar to asCScriptEngine::SetDefaultNamespace. Can we reuse the code?
 	if( nameSpace == 0 )
@@ -199,8 +199,7 @@ int asCModule::SetDefaultNamespace(const char *nameSpace)
 			expectIdentifier = !expectIdentifier;
 		}
 		// If the namespace ends with :: then strip it off
-		if( t == ttScope )
-			ns.SetLength(ns.GetLength()-2);
+        if( t == ttScope ) ns.SetLength(ns.GetLength()-2);
 	}
 	m_defaultNamespace = m_engine->AddNameSpace(ns.AddressOf());
 
@@ -280,7 +279,6 @@ int asCModule::Build()
 	if( r < 0 )
     {
         InternalReset(); // Reset module again
-
 		m_engine->BuildCompleted();
 		return r;
 	}
@@ -309,7 +307,7 @@ int asCModule::Build()
 }
 
 // interface
-int asCModule::ResetGlobalVars(asIScriptContext *ctx)
+int asCModule::ResetGlobalVars( asIScriptContext *ctx )
 {
     if( m_isGlobalVarInitialized ) CallExit();
 	return CallInit(ctx);
@@ -322,7 +320,7 @@ asIScriptFunction *asCModule::GetFunctionByIndex(asUINT index) const
 }
 
 // internal
-int asCModule::CallInit(asIScriptContext *myCtx)
+int asCModule::CallInit( asIScriptContext *myCtx )
 {
     if( m_isGlobalVarInitialized ) return asERROR;
 
@@ -371,7 +369,7 @@ int asCModule::CallInit(asIScriptContext *myCtx)
 
 // internal
 // This function assumes the memory for the global property is already cleared
-int asCModule::InitGlobalProp(asCGlobalProperty *prop, asIScriptContext *myCtx)
+int asCModule::InitGlobalProp( asCGlobalProperty *prop, asIScriptContext *myCtx )
 {
 	// Call the init function for each of the global variables
 	asIScriptContext *ctx = myCtx;
@@ -447,16 +445,13 @@ void asCModule::UninitializeGlobalProp(asCGlobalProperty *prop)
 			if (ot->flags & asOBJ_REF)
 			{
 				asASSERT((ot->flags & asOBJ_NOCOUNT) || ot->beh.release);
-				if (ot->beh.release)
-					m_engine->CallObjectMethod(*obj, ot->beh.release);
+                if (ot->beh.release) m_engine->CallObjectMethod(*obj, ot->beh.release);
             }else{
-				if (ot->beh.destruct)
-					m_engine->CallObjectMethod(*obj, ot->beh.destruct);
+                if (ot->beh.destruct) m_engine->CallObjectMethod(*obj, ot->beh.destruct);
 
 				m_engine->CallFree(*obj);
-			}
-			// Set the address to 0 as someone might try to access the variable afterwards
-			*obj = 0;
+            }
+            *obj = 0; // Set the address to 0 as someone might try to access the variable afterwards
 		}
 	}
 	else if (prop->type.IsFuncdef())
@@ -485,7 +480,7 @@ void asCModule::CallExit()
 }
 
 // internal
-bool asCModule::HasExternalReferences(bool shuttingDown)
+bool asCModule::HasExternalReferences( bool shuttingDown )
 {
 	// Check all entities in the module for any external references.
 	// If there are any external references the module cannot be deleted yet.
@@ -634,9 +629,8 @@ void asCModule::InternalReset()
 			// The type is owned by another module, just release our reference
 			type->ReleaseInternal();
 			continue;
-		}
-		// Orphan the template instance
-		type->module = 0;
+        }
+        type->module = 0; // Orphan the template instance
 
 		// No other module is holding the template type
 		m_engine->RemoveTemplateInstanceType(type);
@@ -650,9 +644,8 @@ void asCModule::InternalReset()
 		{
 			// The type is shared, so transfer ownership to another module that also uses it
 			if( m_engine->FindNewOwnerForSharedType(type, this) != this )
-			{
-				// The type is owned by another module, just release our reference
-				type->ReleaseInternal();
+            {
+                type->ReleaseInternal(); // The type is owned by another module, just release our reference
 				continue;
 			}
 		}
@@ -677,9 +670,8 @@ void asCModule::InternalReset()
 		{
 			// The type is shared, so transfer ownership to another module that also uses it
 			if( m_engine->FindNewOwnerForSharedType(type, this) != this )
-			{
-				// The type is owned by another module, just release our reference
-				type->ReleaseInternal();
+            {
+                type->ReleaseInternal(); // The type is owned by another module, just release our reference
 				continue;
 			}
 		}
@@ -698,8 +690,7 @@ void asCModule::InternalReset()
 	{
 		asCTypedefType *type = m_typeDefs[n];
 
-		// The type should be destroyed now
-		type->DestroyInternal();
+        type->DestroyInternal(); // The type should be destroyed now
 
 		// Release it from the module
 		type->module = 0;
@@ -716,9 +707,8 @@ void asCModule::InternalReset()
 		{
 			// The funcdef is shared, so transfer ownership to another module that also uses it
 			if( m_engine->FindNewOwnerForSharedType(func, this) != this )
-			{
-				// The funcdef is owned by another module, just release our reference
-				func->ReleaseInternal();
+            {
+                func->ReleaseInternal(); // The funcdef is owned by another module, just release our reference
 				continue;
 			}
 		}
@@ -737,9 +727,8 @@ void asCModule::InternalReset()
 		{
 			// The func is shared, so transfer ownership to another module that also uses it
 			if( m_engine->FindNewOwnerForSharedFunc(func, this) != this )
-			{
-				// The func is owned by another module, just release our reference
-				func->ReleaseInternal();
+            {
+                func->ReleaseInternal(); // The func is owned by another module, just release our reference
 				continue;
 			}
 		}
@@ -784,8 +773,7 @@ asIScriptFunction *asCModule::GetFunctionByName(const char *in_name) const
 		const asIScriptFunction *func = m_globalFunctions.Get(idxs[0]);
         if( func ) return const_cast<asIScriptFunction*>(func);
 
-		// Recursively search parent namespaces
-		ns = m_engine->GetParentNameSpace(ns);
+        ns = m_engine->GetParentNameSpace(ns);// Recursively search parent namespaces
 	}
 	return 0;
 }
@@ -844,7 +832,7 @@ asUINT asCModule::GetFunctionCount() const
 }
 
 // interface
-asIScriptFunction *asCModule::GetFunctionByDecl(const char *decl) const
+asIScriptFunction *asCModule::GetFunctionByDecl( const char *decl ) const
 {
 	asCBuilder bld(m_engine, const_cast<asCModule*>(this));
 
@@ -853,12 +841,7 @@ asIScriptFunction *asCModule::GetFunctionByDecl(const char *decl) const
 
 	asCScriptFunction func(m_engine, const_cast<asCModule*>(this), asFUNC_DUMMY);
 	int r = bld.ParseFunctionDeclaration(0, decl, &func, false, 0, 0, m_defaultNamespace);
-	if( r < 0 )
-	{
-		// Invalid declaration
-		// TODO: Write error to message stream
-		return 0;
-	}
+    if( r < 0 ) return 0; // Invalid declaration
 
 	// Use the defaultNamespace implicitly unless an explicit namespace has been provided
 	asSNameSpace *ns = func.nameSpace == m_engine->nameSpaces[0] ? m_defaultNamespace : func.nameSpace;
@@ -893,10 +876,7 @@ asIScriptFunction *asCModule::GetFunctionByDecl(const char *decl) const
 			}
 		}
         if( f ) return f;
-        else{
-			// Search for matching functions in the parent namespace
-			ns = m_engine->GetParentNameSpace(ns);
-		}
+        else    ns = m_engine->GetParentNameSpace(ns); // Search for matching functions in the parent namespace
 	}
 	return 0;
 }
@@ -908,7 +888,7 @@ asUINT asCModule::GetGlobalVarCount() const
 }
 
 // interface
-int asCModule::GetGlobalVarIndexByName(const char *in_name) const
+int asCModule::GetGlobalVarIndexByName( const char *in_name ) const
 {
 	asCString name;
 	asSNameSpace *ns = 0;
@@ -919,16 +899,14 @@ int asCModule::GetGlobalVarIndexByName(const char *in_name) const
 	while( ns )
 	{
 		int id = m_scriptGlobals.GetFirstIndex(ns, name);
-		if( id >= 0 ) return id;
-
-		// Recursively search parent namespaces
-		ns = m_engine->GetParentNameSpace(ns);
+        if( id >= 0 ) return id;
+        ns = m_engine->GetParentNameSpace(ns); // Recursively search parent namespaces
 	}
 	return asNO_GLOBAL_VAR;
 }
 
 // interface
-int asCModule::RemoveGlobalVar(asUINT index)
+int asCModule::RemoveGlobalVar( asUINT index )
 {
 	asCGlobalProperty *prop = m_scriptGlobals.Get(index);
 	if( !prop )
@@ -954,7 +932,7 @@ int asCModule::RemoveGlobalVar(asUINT index)
 }
 
 // interface
-int asCModule::GetGlobalVarIndexByDecl(const char *decl) const
+int asCModule::GetGlobalVarIndexByDecl( const char *decl ) const
 {
 	asCBuilder bld(m_engine, const_cast<asCModule*>(this));
 
@@ -973,8 +951,7 @@ int asCModule::GetGlobalVarIndexByDecl(const char *decl) const
 		int id = m_scriptGlobals.GetFirstIndex(nameSpace, declName, asCCompGlobPropType(dt));
         if( id != -1 ) return id;
 
-		// Recursively search parent namespace
-		nameSpace = m_engine->GetParentNameSpace(nameSpace);
+        nameSpace = m_engine->GetParentNameSpace(nameSpace); // Recursively search parent namespace
 	}
 	return asNO_GLOBAL_VAR;
 }
@@ -1016,14 +993,10 @@ int asCModule::GetGlobalVar(asUINT index, const char **out_name, const char **ou
 	const asCGlobalProperty *prop = m_scriptGlobals.Get(index);
 	if (!prop) return asINVALID_ARG;
 
-	if( out_name )
-		*out_name = prop->name.AddressOf();
-	if( out_nameSpace )
-		*out_nameSpace = prop->nameSpace->name.AddressOf();
-	if( out_typeId )
-		*out_typeId = m_engine->GetTypeIdFromDataType(prop->type);
-	if( out_isConst )
-		*out_isConst = prop->type.IsReadOnly();
+    if( out_name      ) *out_name = prop->name.AddressOf();
+    if( out_nameSpace ) *out_nameSpace = prop->nameSpace->name.AddressOf();
+    if( out_typeId    ) *out_typeId = m_engine->GetTypeIdFromDataType(prop->type);
+    if( out_isConst   ) *out_isConst = prop->type.IsReadOnly();
 
 	return asSUCCESS;
 }
@@ -1050,9 +1023,7 @@ asUINT asCModule::GetObjectTypeCount() const
 // interface
 asITypeInfo *asCModule::GetObjectTypeByIndex(asUINT index) const
 {
-	if( index >= m_classTypes.GetLength() )
-		return 0;
-
+    if( index >= m_classTypes.GetLength() ) return 0;
 	return m_classTypes[index];
 }
 
@@ -1068,9 +1039,7 @@ asITypeInfo *asCModule::GetTypeInfoByName(const char *in_name) const
 	{
 		asITypeInfo* info = GetType(name, ns);
         if(info) return info;
-
-		// Recursively search parent namespace
-		ns = m_engine->GetParentNameSpace(ns);
+        ns = m_engine->GetParentNameSpace(ns); // Recursively search parent namespace
 	}
 	return 0;
 }
@@ -1118,9 +1087,7 @@ asUINT asCModule::GetEnumCount() const
 // interface
 asITypeInfo *asCModule::GetEnumByIndex(asUINT index) const
 {
-	if( index >= m_enumTypes.GetLength() )
-		return 0;
-
+    if( index >= m_enumTypes.GetLength() ) return 0;
 	return m_enumTypes[index];
 }
 
@@ -1133,9 +1100,7 @@ asUINT asCModule::GetTypedefCount() const
 // interface
 asITypeInfo *asCModule::GetTypedefByIndex(asUINT index) const
 {
-	if( index >= m_typeDefs.GetLength() )
-		return 0;
-
+    if( index >= m_typeDefs.GetLength() ) return 0;
 	return m_typeDefs[index];
 }
 
@@ -1168,8 +1133,7 @@ int asCModule::AddScriptFunction(int sectionIdx, int declaredAt, int id, const a
     if( ns == 0 ) ns = m_engine->nameSpaces[0];
 
 	// All methods of shared objects are also shared
-	if( objType && objType->IsShared() )
-		funcTraits.SetTrait(asTRAIT_SHARED, true);
+    if( objType && objType->IsShared() ) funcTraits.SetTrait(asTRAIT_SHARED, true);
 
 	func->name             = funcName;
 	func->nameSpace        = ns;
@@ -1198,11 +1162,9 @@ int asCModule::AddScriptFunction(int sectionIdx, int declaredAt, int id, const a
 	m_scriptFunctions.PushLast(func);
 	m_engine->AddScriptFunction(func);
 
-	// Compute the signature id
-    if( objType ) func->ComputeSignatureId();
+    if( objType ) func->ComputeSignatureId(); // Compute the signature id
 
-	// Add reference
-    if( isGlobalFunction ) m_globalFunctions.Put(func);
+    if( isGlobalFunction ) m_globalFunctions.Put(func); // Add reference
 
 	return 0;
 }
@@ -1330,8 +1292,7 @@ int asCModule::BindImportedFunction(asUINT index, asIScriptFunction *func)
 // interface
 int asCModule::UnbindImportedFunction(asUINT index)
 {
-	if( index >= m_bindInformations.GetLength() )
-		return asINVALID_ARG;
+    if( index >= m_bindInformations.GetLength() ) return asINVALID_ARG;
 
 	// Remove reference to old module
 	if( m_bindInformations[index] )
@@ -1362,8 +1323,7 @@ const char *asCModule::GetImportedFunctionDeclaration(asUINT index) const
 // interface
 const char *asCModule::GetImportedFunctionSourceModule(asUINT index) const
 {
-	if( index >= m_bindInformations.GetLength() )
-		return 0;
+    if( index >= m_bindInformations.GetLength() ) return 0;
 
 	return m_bindInformations[index]->importFromModule.AddressOf();
 }
@@ -1388,13 +1348,11 @@ int asCModule::BindAllImportedFunctions()
 
 		asCModule *srcMod = m_engine->GetModule(moduleName, false);
 		asIScriptFunction *func = 0;
-		if( srcMod )
-			func = srcMod->GetFunctionByDecl(str.AddressOf());
+        if( srcMod ) func = srcMod->GetFunctionByDecl(str.AddressOf());
 
         if( func == 0 ) notAllFunctionsWereBound = true;
         else{
-			if( BindImportedFunction(n, func) < 0 )
-				notAllFunctionsWereBound = true;
+            if( BindImportedFunction(n, func) < 0 ) notAllFunctionsWereBound = true;
 		}
 	}
     if( notAllFunctionsWereBound ) return asCANT_BIND_ALL_FUNCTIONS;
@@ -1412,7 +1370,7 @@ int asCModule::UnbindAllImportedFunctions()
 }
 
 // internal
-void asCModule::AddClassType(asCObjectType* type)
+void asCModule::AddClassType( asCObjectType* type )
 {
 	m_classTypes.PushLast(type);
 	m_typeLookup.Insert(asSNameSpaceNamePair(type->nameSpace, type->name), type);
@@ -1462,9 +1420,8 @@ asCTypeInfo *asCModule::GetType(const asCString &type, asSNameSpace *ns) const
 {
 	asSMapNode<asSNameSpaceNamePair, asCTypeInfo*>* result = 0;
 	if(m_typeLookup.MoveTo(&result, asSNameSpaceNamePair(ns, type)))
-	{
 		return result->value;
-	}
+
 	return 0;
 }
 
@@ -1473,10 +1430,9 @@ asCObjectType *asCModule::GetObjectType(const char *type, asSNameSpace *ns) cons
 {
 	asSMapNode<asSNameSpaceNamePair, asCTypeInfo*>* result = 0;
 	if(m_typeLookup.MoveTo(&result, asSNameSpaceNamePair(ns, type)))
-	{
 		return CastToObjectType(result->value);
-    }
-	return 0;
+
+    return 0;
 }
 
 // internal
@@ -1579,7 +1535,7 @@ int asCModule::CompileFunction(const char* sectionName, const char* code, int li
 
 	// Prepare the engine
 	m_engine->PrepareEngine();
-	if (m_engine->configFailed)
+    if( m_engine->configFailed )
 	{
 		m_engine->WriteMessage("", 0, 0, asMSGTYPE_ERROR, TXT_INVALID_CONFIGURATION);
 		m_engine->BuildCompleted();
@@ -1592,28 +1548,25 @@ int asCModule::CompileFunction(const char* sectionName, const char* code, int li
 	asCScriptFunction* func = 0;
 	r = funcBuilder.CompileFunction(sectionName, str.AddressOf(), lineOffset, compileFlags, &func);
 
-    if( r >= 0 )
-	{
-		// Invoke the JIT compiler if it has been set
+    if( r >= 0 ) // Invoke the JIT compiler if it has been set
+    {
 		asIJITCompiler* jit = m_engine->GetJITCompiler();
         if (jit) func->JITCompile();
 	}
 	m_engine->BuildCompleted();
 
-	if( r >= 0 && outFunc && func )
-	{
-		// Return the function to the caller and add an external reference
+    if( r >= 0 && outFunc && func ) // Return the function to the caller and add an external reference
+    {
 		*outFunc = func;
 		func->AddRef();
-	}
-	// Release our reference to the function
-    if( func ) func->ReleaseInternal();
+    }
+    if( func ) func->ReleaseInternal(); // Release our reference to the function
 
 	return r;
 }
 
 // interface
-int asCModule::RemoveFunction(asIScriptFunction *func)
+int asCModule::RemoveFunction( asIScriptFunction *func )
 {
 	// Find the global function
 	asCScriptFunction *f = static_cast<asCScriptFunction*>(func);
@@ -1630,7 +1583,7 @@ int asCModule::RemoveFunction(asIScriptFunction *func)
 
 #ifndef AS_NO_COMPILER
 // internal
-int asCModule::AddFuncDef(const asCString &funcName, asSNameSpace *ns, asCObjectType *parent)
+int asCModule::AddFuncDef( const asCString &funcName, asSNameSpace *ns, asCObjectType *parent )
 {
 	// namespace and parent are mutually exclusive
 	asASSERT((ns == 0 && parent) || (ns && parent == 0));
@@ -1659,7 +1612,7 @@ int asCModule::AddFuncDef(const asCString &funcName, asSNameSpace *ns, asCObject
 #endif
 
 // interface
-asDWORD asCModule::SetAccessMask(asDWORD mask)
+asDWORD asCModule::SetAccessMask( asDWORD mask )
 {
 	asDWORD old = m_accessMask;
 	m_accessMask = mask;

@@ -28,13 +28,9 @@
    andreas@angelcode.com
 */
 
-
-//
 // as_texts.h
 //
 // These are text strings used through out the library
-//
-
 
 #ifndef AS_TEXTS_H
 #define AS_TEXTS_H

@@ -95,10 +95,10 @@ CScriptArray* CScriptArray::Create(asITypeInfo *ti, void *initList)
 	return a;
 }
 
-CScriptArray* CScriptArray::Create(asITypeInfo *ti, asUINT length, void *defVal)
+CScriptArray* CScriptArray::Create( asITypeInfo *ti, asUINT length, void *defVal )
 {
 	// Allocate the memory
-	void *mem = userAlloc(sizeof(CScriptArray));
+    void *mem = userAlloc( sizeof(CScriptArray) );
 	if( mem == 0 )
 	{
 		asIScriptContext *ctx = asGetActiveContext();
@@ -112,7 +112,7 @@ CScriptArray* CScriptArray::Create(asITypeInfo *ti, asUINT length, void *defVal)
 	return a;
 }
 
-CScriptArray* CScriptArray::Create(asITypeInfo *ti)
+CScriptArray* CScriptArray::Create( asITypeInfo *ti )
 {
 	return CScriptArray::Create(ti, asUINT(0));
 }
@@ -122,7 +122,7 @@ CScriptArray* CScriptArray::Create(asITypeInfo *ti)
 // subtype at compile time, instead of at runtime. The output argument dontGarbageCollect
 // allow the callback to tell the engine if the template instance type shouldn't be garbage collected,
 // i.e. no asOBJ_GC flag.
-static bool ScriptArrayTemplateCallback(asITypeInfo *ti, bool &dontGarbageCollect)
+static bool ScriptArrayTemplateCallback( asITypeInfo *ti, bool &dontGarbageCollect )
 {
 	// Make sure the subtype can be instantiated with a default factory/constructor,
 	// otherwise we won't be able to instantiate the elements.
@@ -229,7 +229,7 @@ static bool ScriptArrayTemplateCallback(asITypeInfo *ti, bool &dontGarbageCollec
 }
 
 // Registers the template array type
-void RegisterScriptArray(asIScriptEngine *engine, bool defaultArray)
+void RegisterScriptArray( asIScriptEngine *engine, bool defaultArray )
 {
 	if( strstr(asGetLibraryOptions(), "AS_MAX_PORTABILITY") == 0 )
 		RegisterScriptArray_Native(engine);
@@ -243,13 +243,13 @@ void RegisterScriptArray(asIScriptEngine *engine, bool defaultArray)
 	}
 }
 
-static void RegisterScriptArray_Native(asIScriptEngine *engine)
+static void RegisterScriptArray_Native( asIScriptEngine *engine )
 {
 	int r = 0;
 	UNUSED_VAR(r);
 
 	// Register the object type user data clean up
-	engine->SetTypeInfoUserDataCleanupCallback(CleanupTypeInfoArrayCache, ARRAY_CACHE);
+    engine->SetTypeInfoUserDataCleanupCallback( CleanupTypeInfoArrayCache, ARRAY_CACHE );
 
 	// Register the array type as a template
 	r = engine->RegisterObjectType("array<class T>", 0, asOBJ_REF | asOBJ_GC | asOBJ_TEMPLATE); assert( r >= 0 );
@@ -448,9 +448,8 @@ CScriptArray::CScriptArray(asUINT length, asITypeInfo *ti)
 	Precache();
 
 	// Determine element size
-	if( subTypeId & asTYPEID_MASK_OBJECT )
-		elementSize = sizeof(asPWORD);
-    else elementSize = objType->GetEngine()->GetSizeOfPrimitiveType(subTypeId);
+    if( subTypeId & asTYPEID_MASK_OBJECT ) elementSize = sizeof(asPWORD);
+    else                                   elementSize = objType->GetEngine()->GetSizeOfPrimitiveType(subTypeId);
 
 	// Make sure the array size isn't too large for us to handle
     if( !CheckMaxSize(length) ) return; // Don't continue with the initialization

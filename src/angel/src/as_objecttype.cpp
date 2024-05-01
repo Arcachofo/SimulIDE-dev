@@ -38,7 +38,6 @@
 
 #include "as_config.h"
 #include "as_objecttype.h"
-#include "as_configgroup.h"
 #include "as_scriptengine.h"
 
 BEGIN_AS_NAMESPACE
@@ -76,8 +75,7 @@ asUINT asCObjectType::GetChildFuncdefCount() const
 // interface
 asITypeInfo *asCObjectType::GetChildFuncdef(asUINT index) const
 {
-	if (index >= childFuncDefs.GetLength())
-		return 0;
+    if (index >= childFuncDefs.GetLength()) return 0;
 
 	return childFuncDefs[index];
 }
@@ -497,14 +495,13 @@ asIScriptFunction *asCObjectType::GetBehaviourByIndex(asUINT index, asEBehaviour
 		if( outBehaviour ) *outBehaviour = asBEHAVE_CONSTRUCT;
 		return engine->scriptFunctions[beh.constructors[index - count]];
 	}
-	else 
-		count += (asUINT)beh.constructors.GetLength();
+    else count += (asUINT)beh.constructors.GetLength();
 
 	return 0;
 }
 
 // internal
-asCObjectProperty *asCObjectType::AddPropertyToClass(const asCString &propName, const asCDataType &dt, bool isPrivate, bool isProtected, bool isInherited)
+asCObjectProperty *asCObjectType::AddPropertyToClass( const asCString &propName, const asCDataType &dt, bool isPrivate, bool isProtected, bool isInherited )
 {
 	asASSERT( flags & asOBJ_SCRIPT_OBJECT );
 	asASSERT( dt.CanBeInstantiated() );
@@ -512,11 +509,8 @@ asCObjectProperty *asCObjectType::AddPropertyToClass(const asCString &propName, 
 
 	// Store the properties in the object type descriptor
 	asCObjectProperty *prop = asNEW(asCObjectProperty);
-	if( prop == 0 )
-	{
-		// Out of memory
-		return 0;
-	}
+    if( prop == 0 ) return 0; // Out of memory
+
 
 	prop->name        = propName;
 	prop->type        = dt;
@@ -536,8 +530,7 @@ asCObjectProperty *asCObjectType::AddPropertyToClass(const asCString &propName, 
 		else
 		{
 			propSize = dt.GetSizeOnStackDWords()*4;
-			if( !dt.IsObjectHandle() )
-				prop->type.MakeReference(true);
+            if( !dt.IsObjectHandle() ) prop->type.MakeReference(true);
 		}
 	}
 	else if (dt.IsFuncdef())
@@ -546,8 +539,7 @@ asCObjectProperty *asCObjectType::AddPropertyToClass(const asCString &propName, 
 		asASSERT(dt.IsObjectHandle());
 		propSize = AS_PTR_SIZE * 4;
 	}
-	else
-		propSize = dt.GetSizeInMemoryBytes();
+    else propSize = dt.GetSizeInMemoryBytes();
 
 	// Add extra bytes so that the property will be properly aligned
 #ifndef WIP_16BYTE_ALIGN
@@ -569,14 +561,9 @@ asCObjectProperty *asCObjectType::AddPropertyToClass(const asCString &propName, 
 
 	properties.PushLast(prop);
 
-	// Make sure the struct holds a reference to the config group where the object is registered
-	asCConfigGroup *group = engine->FindConfigGroupForTypeInfo(prop->type.GetTypeInfo());
-	if( group != 0 ) group->AddRef();
-
 	// Add reference to object types
 	asCTypeInfo *type = prop->type.GetTypeInfo();
-	if( type )
-		type->AddRefInternal();
+    if( type ) type->AddRefInternal();
 
 	return prop;
 }
@@ -590,27 +577,17 @@ void asCObjectType::ReleaseAllProperties()
 		{
 			if( flags & asOBJ_SCRIPT_OBJECT )
 			{
-				// Release the config group for script classes that are being destroyed
-				asCConfigGroup *group = engine->FindConfigGroupForTypeInfo(properties[n]->type.GetTypeInfo());
-				if( group != 0 ) group->Release();
-
 				// Release references to objects types
 				asCTypeInfo *type = properties[n]->type.GetTypeInfo();
-				if( type )
-					type->ReleaseInternal();
-			}
-			else
-			{
+                if( type ) type->ReleaseInternal();
+            }else{
 				// Release template instance types (ref increased by RegisterObjectProperty)
 				asCTypeInfo *type = properties[n]->type.GetTypeInfo();
-				if( type )
-					type->ReleaseInternal();
+                if( type ) type->ReleaseInternal();
 			}
-
 			asDELETE(properties[n],asCObjectProperty);
 		}
 	}
-
 	properties.SetLength(0);
 }
 

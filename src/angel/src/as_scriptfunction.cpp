@@ -959,31 +959,15 @@ void asCScriptFunction::AddReferences()
 	// Only count references if there is any bytecode
 	if( scriptData && scriptData->byteCode.GetLength() )
 	{
-		if( returnType.GetTypeInfo() )
-		{
-			returnType.GetTypeInfo()->AddRefInternal();
-
-			asCConfigGroup *group = engine->FindConfigGroupForTypeInfo(returnType.GetTypeInfo());
-			if( group != 0 ) group->AddRef();
-		}
+        if( returnType.GetTypeInfo() ) returnType.GetTypeInfo()->AddRefInternal();
 
 		for( asUINT p = 0; p < parameterTypes.GetLength(); p++ )
 			if( parameterTypes[p].GetTypeInfo() )
-			{
 				parameterTypes[p].GetTypeInfo()->AddRefInternal();
-
-				asCConfigGroup *group = engine->FindConfigGroupForTypeInfo(parameterTypes[p].GetTypeInfo());
-				if( group != 0 ) group->AddRef();
-			}
 
 		for( asUINT v = 0; v < scriptData->objVariableTypes.GetLength(); v++ )
 			if( scriptData->objVariableTypes[v] ) // The null handle is also stored, but it doesn't have an object type
-			{
 				scriptData->objVariableTypes[v]->AddRefInternal();
-
-				asCConfigGroup *group = engine->FindConfigGroupForTypeInfo(scriptData->objVariableTypes[v]);
-				if( group != 0 ) group->AddRef();
-			}
 
 		// Go through the byte code and add references to all resources used by the function
 		asCArray<asDWORD> &bc = scriptData->byteCode;
@@ -1064,9 +1048,6 @@ void asCScriptFunction::AddReferences()
 						prop->AddRef();
 						ptrs.PushLast(gvarPtr);
 					}
-
-					asCConfigGroup *group = engine->FindConfigGroupForGlobalVar(prop->id);
-					if( group != 0 ) group->AddRef();
 				}
 				break;
 
@@ -1074,12 +1055,9 @@ void asCScriptFunction::AddReferences()
 			case asBC_CALLSYS:
 				{
 					int funcId = asBC_INTARG(&bc[n]);
-					asCConfigGroup *group = engine->FindConfigGroupForFunction(funcId);
-					if( group != 0 ) group->AddRef();
 
 					asASSERT( funcId > 0 );
-					if( funcId > 0 )
-						engine->scriptFunctions[funcId]->AddRefInternal();
+                    if( funcId > 0 ) engine->scriptFunctions[funcId]->AddRefInternal();
 				}
 				break;
 
@@ -1089,8 +1067,7 @@ void asCScriptFunction::AddReferences()
 				{
 					int funcId = asBC_INTARG(&bc[n]);
 					asASSERT( funcId > 0 );
-					if( funcId > 0 )
-						engine->scriptFunctions[funcId]->AddRefInternal();
+                    if( funcId > 0 ) engine->scriptFunctions[funcId]->AddRefInternal();
 				}
 				break;
 
@@ -1099,8 +1076,7 @@ void asCScriptFunction::AddReferences()
 				{
 					asCScriptFunction *func = (asCScriptFunction*)asBC_PTRARG(&bc[n]);
 					asASSERT( func );
-					if( func )
-						func->AddRefInternal();
+                    if( func ) func->AddRefInternal();
 				}
 				break;
 			}
@@ -1116,31 +1092,15 @@ void asCScriptFunction::ReleaseReferences()
 	// Only count references if there is any bytecode
 	if( scriptData && scriptData->byteCode.GetLength() )
 	{
-		if( returnType.GetTypeInfo() )
-		{
-			returnType.GetTypeInfo()->ReleaseInternal();
-
-			asCConfigGroup *group = engine->FindConfigGroupForTypeInfo(returnType.GetTypeInfo());
-			if( group != 0 ) group->Release();
-		}
+        if( returnType.GetTypeInfo() ) returnType.GetTypeInfo()->ReleaseInternal();
 
 		for( asUINT p = 0; p < parameterTypes.GetLength(); p++ )
 			if( parameterTypes[p].GetTypeInfo() )
-			{
 				parameterTypes[p].GetTypeInfo()->ReleaseInternal();
-
-				asCConfigGroup *group = engine->FindConfigGroupForTypeInfo(parameterTypes[p].GetTypeInfo());
-				if( group != 0 ) group->Release();
-			}
 
 		for( asUINT v = 0; v < scriptData->objVariableTypes.GetLength(); v++ )
 			if( scriptData->objVariableTypes[v] ) // The null handle is also stored, but it doesn't have an object type
-			{
 				scriptData->objVariableTypes[v]->ReleaseInternal();
-
-				asCConfigGroup *group = engine->FindConfigGroupForTypeInfo(scriptData->objVariableTypes[v]);
-				if( group != 0 ) group->Release();
-			}
 
 		// Go through the byte code and release references to all resources used by the function
 		asCArray<asDWORD> &bc = scriptData->byteCode;
@@ -1155,8 +1115,7 @@ void asCScriptFunction::ReleaseReferences()
 			case asBC_RefCpyV:
 				{
 					asCObjectType *objType = (asCObjectType*)asBC_PTRARG(&bc[n]);
-					if( objType )
-						objType->ReleaseInternal();
+                    if( objType ) objType->ReleaseInternal();
 				}
 				break;
 
@@ -1171,8 +1130,7 @@ void asCScriptFunction::ReleaseReferences()
 					if( funcId > 0 )
 					{
 						asCScriptFunction *fptr = engine->scriptFunctions[funcId];
-						if( fptr )
-							fptr->ReleaseInternal();
+                        if( fptr ) fptr->ReleaseInternal();
 
 						// The engine may have been forced to destroy the function internals early
 						// and this may will make it impossible to find the function by id anymore.
@@ -1219,9 +1177,6 @@ void asCScriptFunction::ReleaseReferences()
 						prop->Release();
 						ptrs.PushLast(gvarPtr);
 					}
-
-					asCConfigGroup *group = engine->FindConfigGroupForGlobalVar(prop->id);
-					if( group != 0 ) group->Release();
 				}
 				break;
 
@@ -1229,14 +1184,11 @@ void asCScriptFunction::ReleaseReferences()
 			case asBC_CALLSYS:
 				{
 					int funcId = asBC_INTARG(&bc[n]);
-					asCConfigGroup *group = engine->FindConfigGroupForFunction(funcId);
-					if( group != 0 ) group->Release();
 
 					if( funcId )
 					{
 						asCScriptFunction *fptr = engine->scriptFunctions[funcId];
-						if( fptr )
-							fptr->ReleaseInternal();
+                        if( fptr ) fptr->ReleaseInternal();
 					}
 				}
 				break;
@@ -1249,8 +1201,7 @@ void asCScriptFunction::ReleaseReferences()
 					if( funcId )
 					{
 						asCScriptFunction *fptr = engine->scriptFunctions[funcId];
-						if( fptr )
-							fptr->ReleaseInternal();
+                        if( fptr ) fptr->ReleaseInternal();
 
 						// The engine may have been forced to destroy the function internals early
 						// and this may will make it impossible to find the function by id anymore.
@@ -1265,8 +1216,7 @@ void asCScriptFunction::ReleaseReferences()
 			case asBC_FuncPtr:
 				{
 					asCScriptFunction *func = (asCScriptFunction*)asBC_PTRARG(&bc[n]);
-					if( func )
-						func->ReleaseInternal();
+                    if( func ) func->ReleaseInternal();
 				}
 				break;
 			}
@@ -1279,11 +1229,9 @@ void asCScriptFunction::ReleaseReferences()
 	}
 
 	// Delegate
-	if( objForDelegate )
-		engine->ReleaseScriptObject(objForDelegate, funcForDelegate->GetObjectType());
+    if( objForDelegate ) engine->ReleaseScriptObject(objForDelegate, funcForDelegate->GetObjectType());
 	objForDelegate = 0;
-	if( funcForDelegate )
-		funcForDelegate->Release();
+    if( funcForDelegate ) funcForDelegate->Release();
 	funcForDelegate = 0;
 }
 
@@ -1314,8 +1262,7 @@ int asCScriptFunction::GetParam(asUINT index, int *out_typeId, asDWORD *out_flag
 	if( index >= parameterTypes.GetLength() )
 		return asINVALID_ARG;
 
-	if( out_typeId )
-		*out_typeId = engine->GetTypeIdFromDataType(parameterTypes[index]);
+    if( out_typeId ) *out_typeId = engine->GetTypeIdFromDataType(parameterTypes[index]);
 
 	if( out_flags )
 	{
@@ -1328,16 +1275,14 @@ int asCScriptFunction::GetParam(asUINT index, int *out_typeId, asDWORD *out_flag
 		// The parameter names are not stored if loading from bytecode without debug information
 		if( index < parameterNames.GetLength() )
 			*out_name = parameterNames[index].AddressOf();
-		else
-			*out_name = 0;
+        else *out_name = 0;
 	}
 
 	if( out_defaultArg )
 	{
 		if( index < defaultArgs.GetLength() && defaultArgs[index] )
 			*out_defaultArg = defaultArgs[index]->AddressOf();
-		else
-			*out_defaultArg = 0;
+        else *out_defaultArg = 0;
 	}
 	return asSUCCESS;
 }
@@ -1363,20 +1308,6 @@ const char *asCScriptFunction::GetScriptSectionName() const
 		return engine->scriptSectionNames[scriptData->scriptSectionIdx]->AddressOf();
 
 	return 0;
-}
-
-// interface
-const char *asCScriptFunction::GetConfigGroup() const
-{
-	asCConfigGroup *group = 0;
-	if( funcType != asFUNC_FUNCDEF )
-		group = engine->FindConfigGroupForFunction(id);
-	else
-		group = engine->FindConfigGroupForFuncDef(this->funcdefType);
-
-    if( group == 0 ) return 0;
-
-	return group->groupName.AddressOf();
 }
 
 // interface

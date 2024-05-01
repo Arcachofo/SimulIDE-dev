@@ -271,7 +271,7 @@ int asCDataType::MakeHandle(bool b, bool acceptHandleForScope)
 	return 0;
 }
 
-int asCDataType::MakeArray(asCScriptEngine *engine, asCModule *module)
+int asCDataType::MakeArray( asCScriptEngine *engine, asCModule *module )
 {
     if( engine->defaultArrayObjectType == 0 ) return asINVALID_TYPE;
 
@@ -279,7 +279,7 @@ int asCDataType::MakeArray(asCScriptEngine *engine, asCModule *module)
 	isReadOnly = false;
 	asCArray<asCDataType> subTypes;
 	subTypes.PushLast(*this);
-	asCObjectType *at = engine->GetTemplateInstanceType(engine->defaultArrayObjectType, subTypes, module);
+    asCObjectType *at = engine->GetTemplateInstanceType( engine->defaultArrayObjectType, subTypes, module );
 	isReadOnly = tmpIsReadOnly;
 
 	isObjectHandle = false;
@@ -606,7 +606,6 @@ bool asCDataType::IsEnumType() const
 	asASSERT(typeInfo == 0 || typeInfo->name.GetLength() < 100);
 
     if (typeInfo && (typeInfo->flags & asOBJ_ENUM)) return true;
-
 	return false;
 }
 

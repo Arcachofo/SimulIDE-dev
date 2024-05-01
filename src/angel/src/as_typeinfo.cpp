@@ -195,9 +195,7 @@ asIScriptEngine *asCTypeInfo::GetEngine() const { return engine; }
 // interface
 const char *asCTypeInfo::GetConfigGroup() const
 {
-	asCConfigGroup *group = engine->FindConfigGroupForTypeInfo(this);
-    if (group == 0) return 0;
-	return group->groupName.AddressOf();
+    return 0;
 }
 
 // interface

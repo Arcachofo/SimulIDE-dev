@@ -17,9 +17,10 @@ class GcbDebugger : public BaseDebugger
     protected:
         virtual int getErrorLine( QString txt ) override;
         virtual bool postProcess() override;
-        virtual void getSubs() override;
+
 
     private:
         bool mapFlashToSource();
+        void getSubs();
 };
 #endif

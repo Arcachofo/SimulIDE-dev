@@ -64,8 +64,7 @@ int asCConfigGroup::Release()
 asCTypeInfo *asCConfigGroup::FindType(const char *obj)
 {
 	for( asUINT n = 0; n < types.GetLength(); n++ )
-		if( types[n]->name == obj )
-			return types[n];
+        if( types[n]->name == obj ) return types[n];
 
 	return 0;
 }
@@ -76,10 +75,9 @@ void asCConfigGroup::RefConfigGroup(asCConfigGroup *group)
 
 	// Verify if the group is already referenced
 	for( asUINT n = 0; n < referencedConfigGroups.GetLength(); n++ )
-		if( referencedConfigGroups[n] == group )
-			return;
+        if( referencedConfigGroups[n] == group ) return;
 
-	referencedConfigGroups.PushLast(group);
+    referencedConfigGroups.PushLast( group );
 	group->AddRef();
 }
 
@@ -95,7 +93,7 @@ void asCConfigGroup::AddReferencesForType(asCScriptEngine *engine, asCTypeInfo *
 	if( type == 0 ) return;
 
 	// Keep reference to other groups
-	RefConfigGroup(engine->FindConfigGroupForTypeInfo(type));
+    RefConfigGroup( engine->FindConfigGroupForTypeInfo(type) );
 
 	// Keep track of which generated template instances the config group uses
 	if( type->flags & asOBJ_TEMPLATE && engine->generatedTemplateTypes.Exists(CastToObjectType(type)) && !generatedTemplateInstances.Exists(CastToObjectType(type)) )

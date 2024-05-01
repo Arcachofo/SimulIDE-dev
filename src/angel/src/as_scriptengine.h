@@ -35,8 +35,6 @@
 // The implementation of the script engine interface
 //
 
-
-
 #ifndef AS_SCRIPTENGINE_H
 #define AS_SCRIPTENGINE_H
 
@@ -103,8 +101,8 @@ public:
 	virtual int            RegisterObjectProperty(const char *obj, const char *declaration, int byteOffset, int compositeOffset = 0, bool isCompositeIndirect = false);
 	virtual int            RegisterObjectMethod(const char *obj, const char *declaration, const asSFuncPtr &funcPointer, asDWORD callConv, void *auxiliary = 0, int compositeOffset = 0, bool isCompositeIndirect = false);
 	virtual int            RegisterObjectBehaviour(const char *obj, asEBehaviours behaviour, const char *declaration, const asSFuncPtr &funcPointer, asDWORD callConv, void *auxiliary = 0, int compositeOffset = 0, bool isCompositeIndirect = false);
-	virtual int            RegisterInterface(const char *name);
-	virtual int            RegisterInterfaceMethod(const char *intf, const char *declaration);
+    //virtual int            RegisterInterface(const char *name);
+    //virtual int            RegisterInterfaceMethod(const char *intf, const char *declaration);
 	virtual asUINT         GetObjectTypeCount() const;
 	virtual asITypeInfo   *GetObjectTypeByIndex(asUINT index) const;
 
@@ -133,13 +131,10 @@ public:
 	virtual asUINT       GetTypedefCount() const;
 	virtual asITypeInfo *GetTypedefByIndex(asUINT index) const;
 
-	// Configuration groups
-	virtual int         BeginConfigGroup(const char *groupName);
-	virtual int         EndConfigGroup();
-	virtual int         RemoveConfigGroup(const char *groupName);
+    // Configuration groups
 	virtual asDWORD     SetDefaultAccessMask(asDWORD defaultMask);
-	virtual int         SetDefaultNamespace(const char *nameSpace);
-	virtual const char *GetDefaultNamespace() const;
+    //virtual int         SetDefaultNamespace(const char *nameSpace);
+    //virtual const char *GetDefaultNamespace() const;
 
 	// Script modules
 	virtual asIScriptModule *GetModule(const char *module, asEGMFlags flag);
@@ -162,7 +157,6 @@ public:
 	virtual asIScriptContext      *CreateContext();
 	virtual void                  *CreateScriptObject(const asITypeInfo *type);
 	virtual void                  *CreateScriptObjectCopy(void *obj, const asITypeInfo *type);
-	virtual void                  *CreateUninitializedScriptObject(const asITypeInfo *type);
 	virtual asIScriptFunction     *CreateDelegate(asIScriptFunction *func, void *obj);
 	virtual int                    AssignScriptObject(void *dstObj, void *srcObj, const asITypeInfo *type);
 	virtual void                   ReleaseScriptObject(void *obj, const asITypeInfo *type);
@@ -190,16 +184,9 @@ public:
 
 	// User data
 	virtual void *SetUserData(void *data, asPWORD type);
-	virtual void *GetUserData(asPWORD type) const;
-	virtual void  SetEngineUserDataCleanupCallback(asCLEANENGINEFUNC_t callback, asPWORD type);
-	virtual void  SetModuleUserDataCleanupCallback(asCLEANMODULEFUNC_t callback, asPWORD type);
-	virtual void  SetContextUserDataCleanupCallback(asCLEANCONTEXTFUNC_t callback, asPWORD type);
-	virtual void  SetFunctionUserDataCleanupCallback(asCLEANFUNCTIONFUNC_t callback, asPWORD type);
-	virtual void  SetTypeInfoUserDataCleanupCallback(asCLEANTYPEINFOFUNC_t callback, asPWORD type);
-	virtual void  SetScriptObjectUserDataCleanupCallback(asCLEANSCRIPTOBJECTFUNC_t callback, asPWORD type);
+    virtual void *GetUserData(asPWORD type) const;
+    virtual void  SetTypeInfoUserDataCleanupCallback(asCLEANTYPEINFOFUNC_t callback, asPWORD type);
 
-	// Exception handling
-	virtual int SetTranslateAppExceptionCallback(asSFuncPtr callback, void *param, int callConv);
 
 //===========================================================
 // internal methods
@@ -246,12 +233,9 @@ public:
 
 	void DeleteDiscardedModules();
 
-	void RemoveTemplateInstanceType(asCObjectType *t);
+    void RemoveTemplateInstanceType(asCObjectType *t);
 
-	asCConfigGroup *FindConfigGroupForFunction(int funcId) const;
-	asCConfigGroup *FindConfigGroupForGlobalVar(int gvarId) const;
-	asCConfigGroup *FindConfigGroupForTypeInfo(const asCTypeInfo *type) const;
-	asCConfigGroup *FindConfigGroupForFuncDef(const asCFuncdefType *funcDef) const;
+    asCConfigGroup *FindConfigGroupForTypeInfo(const asCTypeInfo *type) const;
 
 	int  RequestBuild();
 	void BuildCompleted();
@@ -409,16 +393,16 @@ public:
 	asCArray<asCString *> scriptSectionNames;
 
 	// Type identifiers
-	mutable int                             typeIdSeqNbr;
-	mutable asCMap<int, asCTypeInfo*>       mapTypeIdToTypeInfo;
+    mutable int                       typeIdSeqNbr;
+    mutable asCMap<int, asCTypeInfo*> mapTypeIdToTypeInfo;
 
 	// Garbage collector
 	asCGarbageCollector gc;
 
-	// Dynamic groups
-	asCConfigGroup             defaultGroup;
-	asCArray<asCConfigGroup*>  configGroups;
-	asCConfigGroup            *currentGroup;
+    // Dynamic groups
+    asCConfigGroup             defaultGroup;
+    asCArray<asCConfigGroup*>  configGroups;
+    asCConfigGroup            *currentGroup;
 	asDWORD                    defaultAccessMask;
 	asSNameSpace              *defaultNamespace;
 
@@ -468,8 +452,7 @@ public:
 	// Engine properties
 	struct
 	{
-		bool   allowUnsafeReferences;
-		bool   optimizeByteCode;
+        bool   allowUnsafeReferences;
 		bool   copyScriptSections;
 		asUINT maximumContextStackSize;
 		asUINT initContextStackSize;
@@ -484,14 +467,12 @@ public:
 		int    stringEncoding;
 		int    propertyAccessorMode;
 		bool   expandDefaultArrayToTemplate;
-		bool   autoGarbageCollect;
-		bool   disallowGlobalVars;
+        bool   autoGarbageCollect;
 		bool   alwaysImplDefaultConstruct;
 		int    compilerWarnings;
 		bool   disallowValueAssignForRefType;
 		// TODO: 3.0.0: Remove the alterSyntaxNamedArgs
 		int    alterSyntaxNamedArgs;
-		bool   disableIntegerDivision;
 		bool   disallowEmptyListElements;
 		// TODO: 3.0.0: Remove the privatePropAsProtected
 		bool   privatePropAsProtected;
@@ -502,13 +483,6 @@ public:
 		asUINT initCallStackSize;
 		asUINT maxCallStackSize;
 	} ep;
-
-	// Callbacks
-#ifndef AS_NO_EXCEPTIONS
-	bool                       translateExceptionCallback;
-	asSSystemFunctionInterface translateExceptionCallbackFunc;
-	void *                     translateExceptionCallbackObj;
-#endif
 
 	// This flag is to allow a quicker shutdown when releasing the engine
 	bool shuttingDown;

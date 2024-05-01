@@ -53,7 +53,6 @@ ScriptBase::ScriptBase( QString name )
 
     m_aEngine->SetEngineProperty( asEP_AUTO_GARBAGE_COLLECT   , false );
     m_aEngine->SetEngineProperty( asEP_BUILD_WITHOUT_LINE_CUES, true );
-    m_aEngine->SetEngineProperty( asEP_OPTIMIZE_BYTECODE      , true );
 
     //m_aEngine->SetMessageCallback( asFUNCTION( MessageCallback ), 0, asCALL_CDECL );
     m_aEngine->SetMessageCallback(asMETHOD( ScriptBase, MessageCallback ), this, asCALL_THISCALL);

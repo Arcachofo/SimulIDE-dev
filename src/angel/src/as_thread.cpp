@@ -58,7 +58,7 @@ asCThreadManager::asCThreadManager()
 	refCount = 1;
 }
 
-int asCThreadManager::Prepare(asIThreadManager *externalThreadMgr)
+int asCThreadManager::Prepare( asIThreadManager *externalThreadMgr )
 {
 	// Don't allow an external thread manager if there
 	// is already a thread manager defined
@@ -91,7 +91,7 @@ int asCThreadManager::Prepare(asIThreadManager *externalThreadMgr)
 
 void asCThreadManager::Unprepare()
 {
-	asASSERT(threadManager);
+    asASSERT( threadManager );
 
     if( threadManager == 0 ) return;
 

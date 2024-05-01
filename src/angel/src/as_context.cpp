@@ -538,255 +538,93 @@ int asCContext::SetObject(void *obj)
 	return 0;
 }
 
-int asCContext::SetArgByte(asUINT arg, asBYTE value)
+int asCContext::checkArgumentType( asUINT arg, int size )
 {
     if( m_status != asEXECUTION_PREPARED ) return asCONTEXT_NOT_PREPARED;
 
-	if( arg >= (unsigned)m_initialFunction->parameterTypes.GetLength() )
-	{
-		m_status = asEXECUTION_ERROR;
-		return asINVALID_ARG;
-	}
+    if( arg >= (unsigned)m_initialFunction->parameterTypes.GetLength() )
+    {
+        m_status = asEXECUTION_ERROR;
+        return asINVALID_ARG;
+    }
 
-	// Verify the type of the argument
-	asCDataType *dt = &m_initialFunction->parameterTypes[arg];
-	if( dt->IsObject() || dt->IsFuncdef() || dt->IsReference() )
-	{
-		m_status = asEXECUTION_ERROR;
-		return asINVALID_TYPE;
-	}
+    // Verify the type of the argument
+    asCDataType *dt = &m_initialFunction->parameterTypes[arg];
+    if( dt->IsObject() || dt->IsFuncdef() || dt->IsReference()
+     || dt->GetSizeInMemoryBytes() != size )
+    {
+        m_status = asEXECUTION_ERROR;
+        return asINVALID_TYPE;
+    }
 
-	if( dt->GetSizeInMemoryBytes() != 1 )
-	{
-		m_status = asEXECUTION_ERROR;
-		return asINVALID_TYPE;
-	}
-
-	// Determine the position of the argument
-	int offset = 0;
+    // Determine the position of the argument
+    int offset = 0;
     if( m_initialFunction->objectType ) offset += AS_PTR_SIZE;
 
-	// If function returns object by value an extra pointer is pushed on the stack
+    // If function returns object by value an extra pointer is pushed on the stack
     if( m_returnValueSize ) offset += AS_PTR_SIZE;
 
-	for( asUINT n = 0; n < arg; n++ )
-		offset += m_initialFunction->parameterTypes[n].GetSizeOnStackDWords();
+    for( asUINT n=0; n<arg; n++ )
+        offset += m_initialFunction->parameterTypes[n].GetSizeOnStackDWords();
 
-	// Set the value
-	*(asBYTE*)&m_regs.stackFramePointer[offset] = value;
+    return offset;
+}
 
+int asCContext::SetArgByte( asUINT arg, asBYTE value )
+{
+    int offset = checkArgumentType( arg, 1 );
+    if( offset < 0 ) return offset;
+
+    *(asBYTE*)&m_regs.stackFramePointer[offset] = value; // Set the value
 	return 0;
 }
 
 int asCContext::SetArgWord(asUINT arg, asWORD value)
 {
-	if( m_status != asEXECUTION_PREPARED )
-		return asCONTEXT_NOT_PREPARED;
+    int offset = checkArgumentType( arg, 2 );
+    if( offset < 0 ) return offset;
 
-	if( arg >= m_initialFunction->parameterTypes.GetLength() )
-	{
-		m_status = asEXECUTION_ERROR;
-		return asINVALID_ARG;
-	}
-
-	// Verify the type of the argument
-	asCDataType *dt = &m_initialFunction->parameterTypes[arg];
-	if( dt->IsObject() || dt->IsFuncdef() || dt->IsReference() )
-	{
-		m_status = asEXECUTION_ERROR;
-		return asINVALID_TYPE;
-	}
-
-	if( dt->GetSizeInMemoryBytes() != 2 )
-	{
-		m_status = asEXECUTION_ERROR;
-		return asINVALID_TYPE;
-	}
-
-	// Determine the position of the argument
-	int offset = 0;
-    if( m_initialFunction->objectType ) offset += AS_PTR_SIZE;
-
-	// If function returns object by value an extra pointer is pushed on the stack
-    if( m_returnValueSize ) offset += AS_PTR_SIZE;
-
-	for( asUINT n = 0; n < arg; n++ )
-		offset += m_initialFunction->parameterTypes[n].GetSizeOnStackDWords();
-
-	// Set the value
-	*(asWORD*)&m_regs.stackFramePointer[offset] = value;
-
+    *(asWORD*)&m_regs.stackFramePointer[offset] = value; // Set the value
 	return 0;
 }
 
-int asCContext::SetArgDWord(asUINT arg, asDWORD value)
+int asCContext::SetArgDWord( asUINT arg, asDWORD value )
 {
-    if( m_status != asEXECUTION_PREPARED ) return asCONTEXT_NOT_PREPARED;
+    int offset = checkArgumentType( arg, 4 );
+    if( offset < 0 ) return offset;
 
-	if( arg >= (unsigned)m_initialFunction->parameterTypes.GetLength() )
-	{
-		m_status = asEXECUTION_ERROR;
-		return asINVALID_ARG;
-	}
-
-	// Verify the type of the argument
-	asCDataType *dt = &m_initialFunction->parameterTypes[arg];
-	if( dt->IsObject() || dt->IsFuncdef() || dt->IsReference() )
-	{
-		m_status = asEXECUTION_ERROR;
-		return asINVALID_TYPE;
-	}
-
-	if( dt->GetSizeInMemoryBytes() != 4 )
-	{
-		m_status = asEXECUTION_ERROR;
-		return asINVALID_TYPE;
-	}
-
-	// Determine the position of the argument
-	int offset = 0;
-    if( m_initialFunction->objectType ) offset += AS_PTR_SIZE;
-
-	// If function returns object by value an extra pointer is pushed on the stack
-    if( m_returnValueSize ) offset += AS_PTR_SIZE;
-
-	for( asUINT n = 0; n < arg; n++ )
-		offset += m_initialFunction->parameterTypes[n].GetSizeOnStackDWords();
-
-	// Set the value
-	*(asDWORD*)&m_regs.stackFramePointer[offset] = value;
-
+    *(asDWORD*)&m_regs.stackFramePointer[offset] = value; // Set the value
 	return 0;
 }
 
-int asCContext::SetArgQWord(asUINT arg, asQWORD value)
+int asCContext::SetArgQWord( asUINT arg, asQWORD value )
 {
-	if( m_status != asEXECUTION_PREPARED )
-		return asCONTEXT_NOT_PREPARED;
+    int offset = checkArgumentType( arg, 2 );
+    if( offset < 0 ) return offset;
 
-	if( arg >= (unsigned)m_initialFunction->parameterTypes.GetLength() )
-	{
-		m_status = asEXECUTION_ERROR;
-		return asINVALID_ARG;
-	}
-
-	// Verify the type of the argument
-	asCDataType *dt = &m_initialFunction->parameterTypes[arg];
-	if( dt->IsObject() || dt->IsFuncdef() || dt->IsReference() )
-	{
-		m_status = asEXECUTION_ERROR;
-		return asINVALID_TYPE;
-	}
-
-	if( dt->GetSizeOnStackDWords() != 2 )
-	{
-		m_status = asEXECUTION_ERROR;
-		return asINVALID_TYPE;
-	}
-
-	// Determine the position of the argument
-	int offset = 0;
-    if( m_initialFunction->objectType ) offset += AS_PTR_SIZE;
-
-	// If function returns object by value an extra pointer is pushed on the stack
-    if( m_returnValueSize ) offset += AS_PTR_SIZE;
-
-	for( asUINT n = 0; n < arg; n++ )
-		offset += m_initialFunction->parameterTypes[n].GetSizeOnStackDWords();
-
-	// Set the value
-	*(asQWORD*)(&m_regs.stackFramePointer[offset]) = value;
-
+    *(asQWORD*)(&m_regs.stackFramePointer[offset]) = value; // Set the value
 	return 0;
 }
 
 int asCContext::SetArgFloat(asUINT arg, float value)
 {
-	if( m_status != asEXECUTION_PREPARED )
-		return asCONTEXT_NOT_PREPARED;
+    int offset = checkArgumentType( arg, 1 );
+    if( offset < 0 ) return offset;
 
-	if( arg >= (unsigned)m_initialFunction->parameterTypes.GetLength() )
-	{
-		m_status = asEXECUTION_ERROR;
-		return asINVALID_ARG;
-	}
-
-	// Verify the type of the argument
-	asCDataType *dt = &m_initialFunction->parameterTypes[arg];
-	if( dt->IsObject() || dt->IsFuncdef() || dt->IsReference() )
-	{
-		m_status = asEXECUTION_ERROR;
-		return asINVALID_TYPE;
-	}
-
-	if( dt->GetSizeOnStackDWords() != 1 )
-	{
-		m_status = asEXECUTION_ERROR;
-		return asINVALID_TYPE;
-	}
-
-	// Determine the position of the argument
-	int offset = 0;
-	if( m_initialFunction->objectType )
-		offset += AS_PTR_SIZE;
-
-	// If function returns object by value an extra pointer is pushed on the stack
-	if( m_returnValueSize )
-		offset += AS_PTR_SIZE;
-
-	for( asUINT n = 0; n < arg; n++ )
-		offset += m_initialFunction->parameterTypes[n].GetSizeOnStackDWords();
-
-	// Set the value
-	*(float*)(&m_regs.stackFramePointer[offset]) = value;
-
+    *(float*)(&m_regs.stackFramePointer[offset]) = value; // Set the value
 	return 0;
 }
 
-int asCContext::SetArgDouble(asUINT arg, double value)
+int asCContext::SetArgDouble( asUINT arg, double value )
 {
-	if( m_status != asEXECUTION_PREPARED )
-		return asCONTEXT_NOT_PREPARED;
+    int offset = checkArgumentType( arg, 2 );
+    if( offset < 0 ) return offset;
 
-	if( arg >= (unsigned)m_initialFunction->parameterTypes.GetLength() )
-	{
-		m_status = asEXECUTION_ERROR;
-		return asINVALID_ARG;
-	}
-
-	// Verify the type of the argument
-	asCDataType *dt = &m_initialFunction->parameterTypes[arg];
-	if( dt->IsObject() || dt->IsFuncdef() || dt->IsReference() )
-	{
-		m_status = asEXECUTION_ERROR;
-		return asINVALID_TYPE;
-	}
-
-	if( dt->GetSizeOnStackDWords() != 2 )
-	{
-		m_status = asEXECUTION_ERROR;
-		return asINVALID_TYPE;
-	}
-
-	// Determine the position of the argument
-	int offset = 0;
-	if( m_initialFunction->objectType )
-		offset += AS_PTR_SIZE;
-
-	// If function returns object by value an extra pointer is pushed on the stack
-	if( m_returnValueSize )
-		offset += AS_PTR_SIZE;
-
-	for( asUINT n = 0; n < arg; n++ )
-		offset += m_initialFunction->parameterTypes[n].GetSizeOnStackDWords();
-
-	// Set the value
-	*(double*)(&m_regs.stackFramePointer[offset]) = value;
-
+    *(double*)(&m_regs.stackFramePointer[offset]) = value; // Set the value
 	return 0;
 }
 
-int asCContext::SetArgAddress(asUINT arg, void *value)
+int asCContext::SetArgAddress( asUINT arg, void *value )
 {
 	if( m_status != asEXECUTION_PREPARED )
 		return asCONTEXT_NOT_PREPARED;
@@ -807,23 +645,19 @@ int asCContext::SetArgAddress(asUINT arg, void *value)
 
 	// Determine the position of the argument
 	int offset = 0;
-	if( m_initialFunction->objectType )
-		offset += AS_PTR_SIZE;
+    if( m_initialFunction->objectType ) offset += AS_PTR_SIZE;
 
 	// If function returns object by value an extra pointer is pushed on the stack
-	if( m_returnValueSize )
-		offset += AS_PTR_SIZE;
+    if( m_returnValueSize ) offset += AS_PTR_SIZE;
 
 	for( asUINT n = 0; n < arg; n++ )
 		offset += m_initialFunction->parameterTypes[n].GetSizeOnStackDWords();
 
-	// Set the value
-	*(asPWORD*)(&m_regs.stackFramePointer[offset]) = (asPWORD)value;
-
+    *(asPWORD*)(&m_regs.stackFramePointer[offset]) = (asPWORD)value; // Set the value
 	return 0;
 }
 
-int asCContext::SetArgObject(asUINT arg, void *obj)
+int asCContext::SetArgObject( asUINT arg, void *obj )
 {
 	if( m_status != asEXECUTION_PREPARED )
 		return asCONTEXT_NOT_PREPARED;
@@ -848,8 +682,7 @@ int asCContext::SetArgObject(asUINT arg, void *obj)
 		if( dt->IsObjectHandle() )
 		{
 			// Increase the reference counter
-			if (obj && dt->IsFuncdef())
-				((asIScriptFunction*)obj)->AddRef();
+            if (obj && dt->IsFuncdef()) ((asIScriptFunction*)obj)->AddRef();
 			else
 			{
 				asSTypeBehaviour *beh = &CastToObjectType(dt->GetTypeInfo())->beh;
@@ -857,20 +690,15 @@ int asCContext::SetArgObject(asUINT arg, void *obj)
 					m_engine->CallObjectMethod(obj, beh->addref);
 			}
 		}
-		else
-		{
-			obj = m_engine->CreateScriptObjectCopy(obj, dt->GetTypeInfo());
-		}
+        else obj = m_engine->CreateScriptObjectCopy( obj, dt->GetTypeInfo() );
 	}
 
 	// Determine the position of the argument
 	int offset = 0;
-	if( m_initialFunction->objectType )
-		offset += AS_PTR_SIZE;
+    if( m_initialFunction->objectType ) offset += AS_PTR_SIZE;
 
 	// If function returns object by value an extra pointer is pushed on the stack
-	if( m_returnValueSize )
-		offset += AS_PTR_SIZE;
+    if( m_returnValueSize ) offset += AS_PTR_SIZE;
 
 	for( asUINT n = 0; n < arg; n++ )
 		offset += m_initialFunction->parameterTypes[n].GetSizeOnStackDWords();
@@ -902,12 +730,10 @@ int asCContext::SetArgVarType(asUINT arg, void *ptr, int typeId)
 
 	// Determine the position of the argument
 	int offset = 0;
-	if( m_initialFunction->objectType )
-		offset += AS_PTR_SIZE;
+    if( m_initialFunction->objectType ) offset += AS_PTR_SIZE;
 
 	// If function returns object by value an extra pointer is pushed on the stack
-	if( m_returnValueSize )
-		offset += AS_PTR_SIZE;
+    if( m_returnValueSize ) offset += AS_PTR_SIZE;
 
 	for( asUINT n = 0; n < arg; n++ )
 		offset += m_initialFunction->parameterTypes[n].GetSizeOnStackDWords();
@@ -1483,19 +1309,24 @@ int asCContext::PopState()
 
 int asCContext::PushCallState()
 {
-	if( m_callStack.GetLength() == m_callStack.GetCapacity() )
-	{
-		if (m_engine->ep.maxCallStackSize > 0 && m_callStack.GetLength() >= m_engine->ep.maxCallStackSize*CALLSTACK_FRAME_SIZE)
-		{
-			// The call stack is too big to grow further
-			SetInternalException(TXT_STACK_OVERFLOW);
-			return asERROR;
-		}
+    // PushCallState is called whenever we already have m_callStack n*CALLSTACK_FRAME_SIZE memory
+    // We only need to increment it if it is full (old_length >= m_callStack.maxLength)
+    // Here we assume that AllocateNoConstruct will always execute and allocate us extra memory,
+    // so we can use the faster m_callStack.SetLengthNoAllocate since it is already known the capacity
+    // is enough.
 
-		// Allocate space for 10 call states at a time to save time
-		m_callStack.AllocateNoConstruct(m_callStack.GetLength() + 10*CALLSTACK_FRAME_SIZE, true);
-	}
-	m_callStack.SetLengthNoConstruct(m_callStack.GetLength() + CALLSTACK_FRAME_SIZE);
+    asUINT oldLength = m_callStack.GetLength();
+    if (oldLength >= m_callStack.GetCapacity())
+    {
+        if (m_engine->ep.maxCallStackSize > 0 && oldLength >= m_engine->ep.maxCallStackSize * CALLSTACK_FRAME_SIZE)
+        {
+            // The call stack is too big to grow further
+            SetInternalException(TXT_STACK_OVERFLOW);
+            return asERROR;
+        }
+        m_callStack.AllocateNoConstruct(oldLength + 10 * CALLSTACK_FRAME_SIZE, true);
+    }
+    m_callStack.SetLengthNoAllocate(oldLength + CALLSTACK_FRAME_SIZE);
 
     // Separating the loads and stores limits data cache trash, and with a smart compiler
     // could turn into SIMD style loading/storing if available.
@@ -1511,7 +1342,7 @@ int asCContext::PushCallState()
 	s[3] = (asPWORD)m_regs.stackPointer;
 	s[4] = m_stackIndex;
 
-	asPWORD *tmp = m_callStack.AddressOf() + m_callStack.GetLength() - CALLSTACK_FRAME_SIZE;
+    asPWORD *tmp = m_callStack.AddressOf() + oldLength;
 	tmp[0] = s[0];
 	tmp[1] = s[1];
 	tmp[2] = s[2];
@@ -1523,22 +1354,25 @@ int asCContext::PushCallState()
 
 void asCContext::PopCallState()
 {
-	// See comments in PushCallState about pointer aliasing and data cache trashing
-	asPWORD *tmp = m_callStack.AddressOf() + m_callStack.GetLength() - CALLSTACK_FRAME_SIZE;
-	asPWORD s[5];
-	s[0] = tmp[0];
-	s[1] = tmp[1];
-	s[2] = tmp[2];
-	s[3] = tmp[3];
-	s[4] = tmp[4];
+    // See comments in PushCallState about pointer aliasing and data cache trashing
+    asUINT newLength = m_callStack.GetLength() - CALLSTACK_FRAME_SIZE;
 
-	m_regs.stackFramePointer = (asDWORD*)s[0];
-	m_currentFunction        = (asCScriptFunction*)s[1];
-	m_regs.programPointer    = (asDWORD*)s[2];
-	m_regs.stackPointer      = (asDWORD*)s[3];
-	m_stackIndex             = (int)s[4];
+    asPWORD *tmp = m_callStack.array + newLength;
+    asPWORD s[5];
+    s[0] = tmp[0];
+    s[1] = tmp[1];
+    s[2] = tmp[2];
+    s[3] = tmp[3];
+    s[4] = tmp[4];
 
-	m_callStack.SetLength(m_callStack.GetLength() - CALLSTACK_FRAME_SIZE);
+    m_regs.stackFramePointer = (asDWORD*)s[0];
+    m_currentFunction        = (asCScriptFunction*)s[1];
+    m_regs.programPointer    = (asDWORD*)s[2];
+    m_regs.stackPointer      = (asDWORD*)s[3];
+    m_stackIndex             = (int)s[4];
+
+    // Here we reduce the length, so we can use the faster SetLengtNoAllocate.
+    m_callStack.SetLengthNoAllocate(newLength);
 }
 
 // interface
@@ -1697,19 +1531,25 @@ void asCContext::PrepareScriptFunction()
 {
 	asASSERT( m_currentFunction->scriptData );
 
-	// Make sure there is space on the stack to execute the function
-	asDWORD *oldStackPointer = m_regs.stackPointer;
-    if( !ReserveStackSpace(m_currentFunction->scriptData->stackNeeded) ) return;
+    // Make sure there is space on the stack to execute the function
+    asDWORD *oldStackPointer = m_regs.stackPointer;
+    asUINT needSize = m_currentFunction->scriptData->stackNeeded;
 
-	// If a new stack block was allocated then we'll need to move
-	// over the function arguments to the new block.
-	if( m_regs.stackPointer != oldStackPointer )
-	{
-		int numDwords = m_currentFunction->GetSpaceNeededForArguments() + 
-		                (m_currentFunction->objectType ? AS_PTR_SIZE : 0) + 
-		                (m_currentFunction->DoesReturnOnStack() ? AS_PTR_SIZE : 0);
-		memcpy(m_regs.stackPointer, oldStackPointer, sizeof(asDWORD)*numDwords);
-	}
+    // With a quick check we know right away that we don't need to call ReserveStackSpace and do other checks inside it
+    if (m_stackBlocks.GetLength() == 0 ||
+        oldStackPointer - (needSize + RESERVE_STACK) < m_stackBlocks[m_stackIndex])
+    {
+        if( !ReserveStackSpace(needSize) )
+            return;
+
+        if( m_regs.stackPointer != oldStackPointer )
+        {
+            int numDwords = m_currentFunction->GetSpaceNeededForArguments() +
+                            (m_currentFunction->objectType ? AS_PTR_SIZE : 0) +
+                            (m_currentFunction->DoesReturnOnStack() ? AS_PTR_SIZE : 0);
+            memcpy(m_regs.stackPointer, oldStackPointer, sizeof(asDWORD)*numDwords);
+        }
+    }
 
 	// Update framepointer
 	m_regs.stackFramePointer = m_regs.stackPointer;
@@ -4483,14 +4323,6 @@ void asCContext::ExecuteNext()
 		asASSERT(false);
 		SetInternalException(TXT_UNRECOGNIZED_BYTE_CODE);
 #endif
-#if defined(_MSC_VER) && !defined(AS_DEBUG)
-	default:
-		// This Microsoft specific code allows the
-		// compiler to optimize the switch case as
-		// it will know that the code will never
-		// reach this point
-		__assume(0);
-#endif
 	}
 
 #ifdef AS_DEBUG
@@ -4937,7 +4769,7 @@ bool asCContext::FindExceptionTryCatch()
 	return false;
 }
 
-bool asCContext::CleanStackFrame(bool catchException)
+bool asCContext::CleanStackFrame( bool catchException )
 {
 	bool exceptionCaught = false;
 	asSTryCatchInfo *tryCatchInfo = 0;
@@ -5124,10 +4956,8 @@ int asCContext::GetExceptionLineNumber(int *column, const char **sectionName)
 		// The section index can be -1 if the exception was raised in a generated function, e.g. $fact for templates
 		if( m_exceptionSectionIdx >= 0 )
 			*sectionName = m_engine->scriptSectionNames[m_exceptionSectionIdx]->AddressOf();
-		else
-			*sectionName = 0;
+        else *sectionName = 0;
 	}
-
 	return m_exceptionLine;
 }
 
@@ -5195,8 +5025,7 @@ void asCContext::CallLineCallback()
 {
 	if( m_lineCallbackFunc.callConv < ICC_THISCALL )
 		m_engine->CallGlobalFunction(this, m_lineCallbackObj, &m_lineCallbackFunc, 0);
-	else
-		m_engine->CallObjectMethod(m_lineCallbackObj, this, &m_lineCallbackFunc, 0);
+    else m_engine->CallObjectMethod(m_lineCallbackObj, this, &m_lineCallbackFunc, 0);
 }
 
 // interface
@@ -5228,26 +5057,6 @@ void asCContext::CallExceptionCallback()
 	else
 		m_engine->CallObjectMethod(m_exceptionCallbackObj, this, &m_exceptionCallbackFunc, 0);
 }
-
-#ifndef AS_NO_EXCEPTIONS
-// internal
-void asCContext::HandleAppException()
-{
-	// This method is called from within a catch(...) block
-	if (m_engine->translateExceptionCallback)
-	{
-		// Allow the application to translate the application exception to a proper exception string
-		if (m_engine->translateExceptionCallbackFunc.callConv < ICC_THISCALL)
-			m_engine->CallGlobalFunction(this, m_engine->translateExceptionCallbackObj, &m_engine->translateExceptionCallbackFunc, 0);
-		else
-			m_engine->CallObjectMethod(m_engine->translateExceptionCallbackObj, this, &m_engine->translateExceptionCallbackFunc, 0);
-	}
-
-	// Make sure an exception is set even if the application decides not to do any specific translation
-	if( m_status != asEXECUTION_EXCEPTION )
-		SetException(TXT_EXCEPTION_CAUGHT);
-}
-#endif
 
 // interface
 void asCContext::ClearLineCallback()
@@ -5298,22 +5107,9 @@ int asCContext::CallGeneric(asCScriptFunction *descr)
 	asCGeneric gen(m_engine, descr, currentObject, args);
 
 	m_callingSystemFunction = descr;
-#ifdef AS_NO_EXCEPTIONS
+
 	func(&gen);
-#else
-	// This try/catch block is to catch potential exception that may 
-	// be thrown by the registered function. 
-	try
-	{
-		func(&gen);
-	}
-	catch (...)
-	{
-		// Convert the exception to a script exception so the VM can 
-		// properly report the error to the application and then clean up
-		HandleAppException();
-	}
-#endif
+
 	m_callingSystemFunction = 0;
 
 	m_regs.valueRegister = gen.returnVal;
@@ -5449,7 +5245,6 @@ void *asCContext::GetAddressOfVar(asUINT varIndex, asUINT stackLevel)
 
                             if( liveObjects[n] <= 0 ) return 0;
 						}
-
 						break;
 					}
 				}
@@ -5466,11 +5261,9 @@ void *asCContext::GetAddressOfVar(asUINT varIndex, asUINT stackLevel)
 
 			for( asUINT n = 0; n < func->parameterTypes.GetLength(); n++ )
 			{
-				if( stackPos == pos )
-				{
-					// The right argument was found. Is this a reference parameter?
+                if( stackPos == pos ) // The right argument was found. Is this a reference parameter?
+                {
                     if( func->inOutFlags[n] != asTM_NONE ) onHeap = true;
-
 					break;
 				}
 				stackPos -= func->parameterTypes[n].GetSizeOnStackDWords();
@@ -5617,9 +5410,8 @@ int as_powi(int base, int exponent, bool& isOverflow)
 
 		return 0;
 	}
-	else if( exponent == 0 && base == 0 )
-	{
-		// Domain error
+    else if( exponent == 0 && base == 0 ) // Domain error
+    {
 		isOverflow = true;
 		return 0;
 	}
@@ -5627,18 +5419,10 @@ int as_powi(int base, int exponent, bool& isOverflow)
 	{
 		switch( base )
 		{
-		case -1:
-			isOverflow = false;
-			return exponent & 1 ? -1 : 1;
-		case 0:
-			isOverflow = false;
-			break;
-		case 1:
-			isOverflow = false;
-			return 1;
-		default:
-			isOverflow = true;
-			break;
+        case -1: isOverflow = false; return exponent & 1 ? -1 : 1;
+        case 0:  isOverflow = false; break;
+        case 1:  isOverflow = false; return 1;
+        default: isOverflow = true;  break;
 		}
 		return 0;
 	}
@@ -5680,7 +5464,7 @@ int as_powi(int base, int exponent, bool& isOverflow)
 	}
 }
 
-asDWORD as_powu(asDWORD base, asDWORD exponent, bool& isOverflow)
+asDWORD as_powu( asDWORD base, asDWORD exponent, bool& isOverflow )
 {
 	if( exponent == 0 && base == 0 )
 	{
@@ -5692,15 +5476,9 @@ asDWORD as_powu(asDWORD base, asDWORD exponent, bool& isOverflow)
 	{
 		switch( base )
 		{
-		case 0:
-			isOverflow = false;
-			break;
-		case 1:
-			isOverflow = false;
-			return 1;
-		default:
-			isOverflow = true;
-			break;
+        case 0:  isOverflow = false; break;
+        case 1:  isOverflow = false; return 1;
+        default: isOverflow = true;  break;
 		}
 		return 0;
 	}
@@ -5751,9 +5529,8 @@ asINT64 as_powi64(asINT64 base, asINT64 exponent, bool& isOverflow)
 
 		return 0;
 	}
-	else if( exponent == 0 && base == 0 )
-	{
-		// Domain error
+    else if( exponent == 0 && base == 0 ) // Domain error
+    {
 		isOverflow = true;
 		return 0;
 	}
@@ -5761,18 +5538,10 @@ asINT64 as_powi64(asINT64 base, asINT64 exponent, bool& isOverflow)
 	{
 		switch( base )
 		{
-		case -1:
-			isOverflow = false;
-			return exponent & 1 ? -1 : 1;
-		case 0:
-			isOverflow = false;
-			break;
-		case 1:
-			isOverflow = false;
-			return 1;
-		default:
-			isOverflow = true;
-			break;
+        case -1: isOverflow = false; return exponent & 1 ? -1 : 1;
+        case 0:  isOverflow = false; break;
+        case 1:  isOverflow = false; return 1;
+        default: isOverflow = true;  break;
 		}
 		return 0;
 	}
@@ -5830,15 +5599,9 @@ asQWORD as_powu64(asQWORD base, asQWORD exponent, bool& isOverflow)
 	{
 		switch( base )
 		{
-		case 0:
-			isOverflow = false;
-			break;
-		case 1:
-			isOverflow = false;
-			return 1;
-		default:
-			isOverflow = true;
-			break;
+        case 0:  isOverflow = false; break;
+        case 1:  isOverflow = false; return 1;
+        default: isOverflow = true;  break;
 		}
 		return 0;
 	}

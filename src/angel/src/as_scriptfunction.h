@@ -159,7 +159,6 @@ public:
 	const char          *GetModuleName() const;
 	asIScriptModule     *GetModule() const;
 	const char          *GetScriptSectionName() const;
-	const char          *GetConfigGroup() const;
 	asDWORD              GetAccessMask() const;
 	void                *GetAuxiliary() const;
 

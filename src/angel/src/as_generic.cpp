@@ -444,7 +444,7 @@ int asCGeneric::SetReturnAddress(void *val)
 }
 
 // interface
-int asCGeneric::SetReturnObject(void *obj)
+int asCGeneric::SetReturnObject( void *obj )
 {
 	asCDataType *dt = &sysFunction->returnType;
 	if( !dt->IsObject() && !dt->IsFuncdef() )
@@ -461,14 +461,12 @@ int asCGeneric::SetReturnObject(void *obj)
 		// Increase the reference counter
 		if (dt->IsFuncdef())
 		{
-			if (obj)
-				reinterpret_cast<asIScriptFunction*>(obj)->AddRef();
+            if (obj) reinterpret_cast<asIScriptFunction*>(obj)->AddRef();
 		}
 		else
 		{
 			asSTypeBehaviour *beh = &CastToObjectType(dt->GetTypeInfo())->beh;
-			if (obj && beh && beh->addref)
-				engine->CallObjectMethod(obj, beh->addref);
+            if (obj && beh && beh->addref) engine->CallObjectMethod(obj, beh->addref);
 		}
 	}
 	else

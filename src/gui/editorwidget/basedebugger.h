@@ -56,8 +56,6 @@ class BaseDebugger : public Compiler    // Base Class for all debuggers
 
         bool isNoValid( QString line );
 
-        virtual void getSubs(){;}
-
         bool m_debugStep;
         bool m_running;
         bool m_over;
