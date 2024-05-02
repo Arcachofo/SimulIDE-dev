@@ -360,17 +360,18 @@ void SubCircuit::loadSubCircuit( QString doc )
                     if( m_subcType >= Board && comp->isGraphical() )
                     {
                         QPointF pos = comp->boardPos();
-                        if( pos == QPointF(-1e6,-1e6 ) ) // Don't show Components not placed
+                        /*if( pos == QPointF(-1e6,-1e6 ) ) // Don't show Components not placed
                         {
                             pos = QPointF( 0, 0 );
                             comp->setVisible( false );
-                        }
+                        }*/
                         comp->moveTo( pos );
                         comp->setRotation( comp->boardRot() );
                         comp->setHflip( comp->boardHflip() );
                         comp->setVflip( comp->boardVflip() );
                         if( !this->collidesWithItem( comp ) ) // Don't show Components out of Board
                         {
+                            comp->setBoardPos( QPointF(-1e6,-1e6 ) ); // Used in setLogicSymbol to identify Components not visible
                             comp->moveTo( QPointF( 0, 0 ) );
                             comp->setVisible( false );
                         }
@@ -510,11 +511,14 @@ void SubCircuit::setLogicSymbol( bool ls )
             m_backPixmap = nullptr;
         }
     }
-    for( Component* c : m_compList ) // Don't show graphical components in LS if Board
+    for( Component* comp : m_compList ) // Don't show graphical components in LS if Board
     {
-        if( !c->isGraphical() ) continue;
-        if( m_subcType >= Board ) c->setVisible( !m_isLS );
-        else if( m_isLS )         c->setVisible( false );
+        if( !comp->isGraphical() ) continue;
+        if( m_subcType >= Board )
+        {
+            comp->setVisible( !m_isLS && comp->boardPos() != QPointF(-1e6,-1e6 ) );
+        }
+        else if( m_isLS )  comp->setVisible( false );
     }
 }
 
