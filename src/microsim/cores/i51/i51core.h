@@ -50,9 +50,10 @@ class I51Core : public McuCpu, public eElement
             aRELA=1<<3,
 
             aORIG=1<<4,
-            aBIT =1<<5,
-            a16BIT_LOW=1<<6,
-            a16BIT_HIGH=1<<7
+            aADDR=1<<5,
+            aBIT =1<<6,
+            a16BIT_LOW=1<<7,
+            a16BIT_HIGH=1<<8
         };
 
         virtual void stamp() override;
@@ -79,7 +80,7 @@ class I51Core : public McuCpu, public eElement
         uint8_t m_opcode;
         uint8_t* m_acc;
         
-        QVector<uint8_t> m_readOp;
+        QVector<uint16_t> m_readOp;
         uint8_t m_addrMode;
         uint16_t m_opAddr;
         uint8_t m_op0;
@@ -137,6 +138,7 @@ class I51Core : public McuCpu, public eElement
         inline void operInd();
         inline void operI08();
         inline void operDir();
+        inline void operAdr();
         inline void operACC();
         inline void opr2I08();
         inline void opr2Dir();

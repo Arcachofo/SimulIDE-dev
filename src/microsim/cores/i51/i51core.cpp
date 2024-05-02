@@ -186,7 +186,7 @@ void I51Core::readOperand()
 
     if( m_readOp.isEmpty() ) return; // All operands ready
 
-    uint8_t addrMode = m_readOp.takeFirst();
+    uint16_t addrMode = m_readOp.takeFirst();
 
     if( addrMode & aIMME ){
         if     ( addrMode & aORIG ) m_op0 = m_pgmData;
@@ -199,6 +199,7 @@ void I51Core::readOperand()
     }
     else if( addrMode & aDIRE ){
         if     ( addrMode & aORIG ) m_op0 = GET_RAM( m_pgmData );
+        else if( addrMode & aADDR ) m_op0 = m_pgmData;
         else if( addrMode & aRELA ) m_op2 = GET_RAM( m_pgmData );
         else                        m_opAddr = m_pgmData;
     }
@@ -218,6 +219,7 @@ void I51Core::operRgx() { m_op0 = m_dataMem[ m_RxAddr ]; }        //
 void I51Core::operInd() { m_op0 = readInd( I_RX_VAL ); }          //
 void I51Core::operI08() { m_readOp.append( aIMME | aORIG ); }     // m_op0 = data
 void I51Core::operDir() { m_readOp.append( aDIRE | aORIG ); }     // m_op0 = GET_RAM( data );
+void I51Core::operAdr() { m_readOp.append( aDIRE | aADDR ); }     // m_op0 = GET_RAM( data );
 void I51Core::operACC() { m_op0 = ACC; }                          //
 void I51Core::opr2I08() { m_readOp.append( aIMME | aRELA ); }     // m_op2 = data;
 void I51Core::opr2Dir() { m_readOp.append( aDIRE | aRELA ); }     // m_op2 = GET_RAM( data );
@@ -369,8 +371,8 @@ void I51Core::SETBc() { set_S_Bit( Cy ); }
 void I51Core::CPLc()  { *m_STATUS ^= 1 << Cy; }
 
 void I51Core::CLRb()  { SET_RAM( m_bitAddr, m_dataMem[m_bitAddr] & ~m_bitMask ); }
-void I51Core::SETBb() { SET_RAM( m_bitAddr, m_dataMem[m_bitAddr] | m_bitMask ); }
-void I51Core::CPLb()  { SET_RAM( m_bitAddr, m_dataMem[m_bitAddr] ^ m_bitMask ); }
+void I51Core::SETBb() { SET_RAM( m_bitAddr, m_dataMem[m_bitAddr] |  m_bitMask ); }
+void I51Core::CPLb()  { SET_RAM( m_bitAddr, m_dataMem[m_bitAddr] ^  m_bitMask ); }
 
 void I51Core::CJNE()  ///
 {
@@ -700,7 +702,7 @@ void I51Core::Decode()
             case 0xd2: addrBit();                break;   // 2-1 SETBb b = 1
             case 0xd3:                           break;   // 1-1 SETBc C = 1
             case 0xd4:                           break;   // 1-1 DAa
-            case 0xd5: operDir(); addrDir();
+            case 0xd5: operAdr(); addrDir();
                                   m_rCycles = 4; break;   // 3-2 DJNZ Dir-- ? Jump : 0
             case 0xd6:
             case 0xd7: addrInd();                break;   // 1-1 XCHD A In @Indirect
