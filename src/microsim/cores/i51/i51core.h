@@ -50,10 +50,9 @@ class I51Core : public McuCpu, public eElement
             aRELA=1<<3,
 
             aORIG=1<<4,
-            aADDR=1<<5,
-            aBIT =1<<6,
-            a16BIT_LOW=1<<7,
-            a16BIT_HIGH=1<<8
+            aBIT =1<<5,
+            a16BIT_LOW=1<<6,
+            a16BIT_HIGH=1<<7
         };
 
         virtual void stamp() override;
@@ -76,13 +75,13 @@ class I51Core : public McuCpu, public eElement
 
         uint16_t m_readPC;
         uint16_t m_lastPC;
-        uint8_t m_pgmData;
-        uint8_t m_opcode;
+        uint8_t  m_pgmData;
+        uint8_t  m_opcode;
         uint8_t* m_acc;
         
         QVector<uint16_t> m_readOp;
-        uint8_t m_addrMode;
         uint16_t m_opAddr;
+        uint8_t m_addrMode;
         uint8_t m_op0;
         uint8_t m_op2;
         uint8_t m_RxAddr;
@@ -129,7 +128,6 @@ class I51Core : public McuCpu, public eElement
         uint64_t m_readBusTime; // |--readBus-------------------------|
         uint64_t m_dataTime;    // to store previous times
 
-
         inline void readOperand();
         inline void Exec();
         inline void Decode();
@@ -138,7 +136,6 @@ class I51Core : public McuCpu, public eElement
         inline void operInd();
         inline void operI08();
         inline void operDir();
-        inline void operAdr();
         inline void operACC();
         inline void opr2I08();
         inline void opr2Dir();
