@@ -126,6 +126,9 @@ class Circuit : public QGraphicsScene
         QString iconData() { return m_iconData; }
         void setIconData( QString id ) { m_iconData = id; }
 
+        void setConverting( bool c ) { m_converting = c; } // used when converting old Components from xml
+        bool converting() { return m_converting; }
+
         int circuitRev() { return m_circRev; }
 
         void drawBackground( QPainter* painter, const QRectF &rect );
@@ -178,6 +181,8 @@ class Circuit : public QGraphicsScene
         int m_seqNumber;
         int m_conNumber;
         int m_error;
+
+        bool m_converting;
 
         bool m_pasting;
         bool m_deleting;
