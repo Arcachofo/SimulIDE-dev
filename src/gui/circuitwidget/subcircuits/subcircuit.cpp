@@ -376,6 +376,7 @@ void SubCircuit::loadSubCircuit( QString doc )
                             comp->setVisible( false );
                         }
                         comp->setHidden( true, true, true ); // Boards: hide non graphical
+                        if( m_isLS ) comp->setVisible( false ); // Don't show any component if Logic Symbol
                     }
                     else{
                         comp->moveTo( QPointF(20, 20) );
