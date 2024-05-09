@@ -44,6 +44,8 @@ Function::Function( QString type, QString id )
     m_lastDir = Circuit::self()->getFilePath();
     m_width = 4;
 
+    m_compiled = false;
+
     m_voltChanged = nullptr;
     m_aEngine->RegisterObjectType("Function",0, asOBJ_REF | asOBJ_NOCOUNT );
     m_aEngine->RegisterGlobalProperty("Function fu", this );
@@ -106,6 +108,17 @@ void Function::stamp()
     IoComponent::initState();
 
     for( uint i=0; i<m_inPin.size(); ++i ) m_inPin[i]->changeCallBack( this );
+
+    if( !m_compiled )
+    {
+        createScript();
+        int r = compileScript();
+        if( r < 0 ) return;
+
+        m_compiled = true;
+
+        m_voltChanged = m_aEngine->GetModule(0)->GetFunctionByDecl("void voltChanged()");
+    }
 }
 
 void Function::voltChanged()
@@ -152,14 +165,13 @@ double Function::getOutputVoltage( int pin )
 
 void Function::setFunctions( QString f )
 {
+    if( Simulator::self()->isRunning() ) CircuitWidget::self()->powerCircOff();
     m_funcList = f.split(",");
-    updateFunctions();
+    m_compiled = false;
 }
 
-void Function::updateFunctions()
+void Function::createScript()
 {
-    if( Simulator::self()->isRunning() ) CircuitWidget::self()->powerCircOff();
-
     m_script = "\n// "+m_id+" Script --------;\n";
 
     m_script += "\n// Declaring Variables:\n";
@@ -213,12 +225,7 @@ void Function::updateFunctions()
     }
     m_script += "}\n";
     m_script += "//----------------------;\n";
-    qDebug() << m_script.toLocal8Bit().data();
-
-    int r = compileScript();
-    if( r < 0 ) return;
-
-    m_voltChanged = m_aEngine->GetModule(0)->GetFunctionByDecl("void voltChanged()");
+    //qDebug() << m_script.toLocal8Bit().data();
 }
 
 void Function::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
@@ -381,6 +388,8 @@ void Function::onbuttonclicked( int  i )
                                              QLineEdit::Normal,
                                              m_funcList[i], &ok);
     if( ok ){
+        if( Simulator::self()->isRunning() ) CircuitWidget::self()->powerCircOff();
         m_funcList[i] = text;
-        updateFunctions();
-}   }
+        m_compiled = false;
+    }
+}

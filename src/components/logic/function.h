@@ -49,8 +49,10 @@ class Function : public IoComponent, public ScriptBase
         virtual void contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu ) override;
 
     private:
-        void updateFunctions();
+        void createScript();
         void updateArea( uint ins, uint outs );
+
+        bool m_compiled;
 
         asIScriptFunction* m_voltChanged;
         QStringList m_funcList;
