@@ -45,7 +45,7 @@ Circuit::Circuit( qreal x, qreal y, qreal width, qreal height, CircuitView*  par
 
     m_pSelf = this;
 
-    m_converting = false;
+    //m_converting = false;
 
     m_busy       = false;
     m_undo       = false;

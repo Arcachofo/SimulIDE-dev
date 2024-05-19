@@ -389,7 +389,7 @@ void ComponentSelector::convertItem( QString folder, QString itemFile, QString n
     comp += " icondata=\""+ iconData  +"\"";
     comp += ">\n\n";
 
-    Circuit::self()->setConverting( true );
+    //Circuit::self()->setConverting( true );
     CircuitWidget::self()->loadCirc( simFile );
     comp += Circuit::self()->circuitToString();
 
@@ -401,7 +401,7 @@ void ComponentSelector::convertItem( QString folder, QString itemFile, QString n
     comp += "</libitem>";
 
     Circuit::self()->saveString( compFile, comp );
-    Circuit::self()->setConverting( false );
+    //Circuit::self()->setConverting( false );
 }
 
 QString ComponentSelector::convertMcuFile( QString file )
