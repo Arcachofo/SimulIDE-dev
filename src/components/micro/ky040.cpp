@@ -186,9 +186,16 @@ void KY040::setSteps( int s )
     m_dial->setMaximum( s*2*RESOLUTION );
 }
 
-void KY040::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
+void KY040::setLinkedValue( double v, int )
 {
-    Component::paint( p, option, widget );
+    double val = v*m_steps*2*RESOLUTION/1000;
+    m_dial->setValue( val );
+    m_changed = true;
+}
+
+void KY040::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w )
+{
+    Component::paint( p, o, w );
     
     p->setBrush(QColor( 50, 50, 70 ));
     p->drawRoundedRect( m_area, 2, 2 );
