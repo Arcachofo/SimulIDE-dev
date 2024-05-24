@@ -245,8 +245,6 @@ void Mcu::setup( QString type )
 {
     if( m_pSelf == NULL ) slotmain();
 
-    propGroup hi = {"Hidden", {}, groupHidden }; // Set before Main
-
     // Main Property Group --------------------------------------
 
     if( m_packageList.size() > 1 )
@@ -259,18 +257,18 @@ void Mcu::setup( QString type )
 
     if( m_eMcu.flashSize() )
     {
+    addProperty(tr("Main"),new BoolProp<Mcu>("savePGM", tr("PGM persitent"),""
+                                            , this, &Mcu::savePGM, &Mcu::setSavePGM ));
+
     addProperty(tr("Main"),new StrProp <Mcu>("Program", tr("Firmware"),""
                                             , this, &Mcu::program, &Mcu::setProgram ));
 
     addProperty(tr("Main"),new BoolProp<Mcu>("Auto_Load", tr("Reload hex at Simulation Start"),""
                                             , this, &Mcu::autoLoad, &Mcu::setAutoLoad ));
-
-    addProperty(tr("Main"),new BoolProp<Mcu>("saveEepr", tr("PGM persitent"),""
-                                            , this, &Mcu::savePGM,&Mcu::setSavePGM ));
     }
     if( m_eMcu.romSize() )
     addProperty(tr("Main"),new BoolProp<Mcu>("saveEepr", tr("EEPROM persitent"),""
-                                            , this, &Mcu::saveEepr,&Mcu::setSaveEepr ));
+                                            , this, &Mcu::saveEepr, &Mcu::setSaveEepr ));
 
     // Config Property Group ------------------------------------
 
@@ -297,6 +295,8 @@ void Mcu::setup( QString type )
 
 
     // Hidden Property Group -----------------------------------
+
+    propGroup hi = {"Hidden", {}, groupHidden }; // Set before Main
 
     hi.propList.append(new StrProp<Mcu>("varList" ,"","", this, &Mcu::varList,   &Mcu::setVarList) );
     hi.propList.append(new StrProp<Mcu>("cpuRegs" ,"","", this, &Mcu::cpuRegs,   &Mcu::setCpuRegs) );
