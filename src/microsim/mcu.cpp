@@ -81,6 +81,7 @@ Mcu::Mcu( QString type, QString id )
     m_mcuMonitor = NULL;
     m_scriptLink = NULL;
 
+    m_savePGM  = false;
     m_autoLoad = false;
     m_scripted = false;
     m_resetPol = false;
@@ -244,6 +245,8 @@ void Mcu::setup( QString type )
 {
     if( m_pSelf == NULL ) slotmain();
 
+    propGroup hi = {"Hidden", {}, groupHidden }; // Set before Main
+
     // Main Property Group --------------------------------------
 
     if( m_packageList.size() > 1 )
@@ -261,6 +264,9 @@ void Mcu::setup( QString type )
 
     addProperty(tr("Main"),new BoolProp<Mcu>("Auto_Load", tr("Reload hex at Simulation Start"),""
                                             , this, &Mcu::autoLoad, &Mcu::setAutoLoad ));
+
+    addProperty(tr("Main"),new BoolProp<Mcu>("saveEepr", tr("PGM persitent"),""
+                                            , this, &Mcu::savePGM,&Mcu::setSavePGM ));
     }
     if( m_eMcu.romSize() )
     addProperty(tr("Main"),new BoolProp<Mcu>("saveEepr", tr("EEPROM persitent"),""
@@ -292,12 +298,13 @@ void Mcu::setup( QString type )
 
     // Hidden Property Group -----------------------------------
 
-    propGroup hi = {"Hidden", {}, groupHidden };
-
     hi.propList.append(new StrProp<Mcu>("varList" ,"","", this, &Mcu::varList,   &Mcu::setVarList) );
     hi.propList.append(new StrProp<Mcu>("cpuRegs" ,"","", this, &Mcu::cpuRegs,   &Mcu::setCpuRegs) );
     hi.propList.append(new StrProp<Mcu>("Links"   ,"","", this, &Mcu::getLinks , &Mcu::setLinks ) );
     hi.propList.append(new BoolProp<Mcu>("MainMcu","","", this, &Mcu::mainMcu , &Mcu::setMainMcu ) );
+
+    if( m_eMcu.flashSize() )
+    hi.propList.append(new StrProp<Mcu>("pgm"   ,"","", this, &Mcu::getPGM, &Mcu::setPGM ) );
 
     if( m_eMcu.romSize() )
     hi.propList.append(new StrProp<Mcu>("eeprom"   ,"","", this, &Mcu::getEeprom, &Mcu::setEeprom ) );
@@ -375,6 +382,7 @@ void Mcu::voltChanged() // Reset Pin callBack
 
 void Mcu::setProgram( QString pro )
 {
+    if( m_savePGM ) return;
     if( pro == "" ) return;
     if( Circuit::self()->isSubc() ) m_eMcu.m_firmware = pro; // Let Subcircuit load firmware with path to subc dir
     else load( pro );
@@ -424,6 +432,32 @@ void Mcu::setCpuRegs( QString vl )
     Watcher* watcher = m_eMcu.getWatcher();
     if( !watcher ) return;
     m_eMcu.getWatcher()->loadVarSet( vl.split(",") );
+}
+
+QString Mcu::getPGM()
+{
+    if( m_savePGM )
+    {
+        QString pgmStr;
+        QVector<int> pgm;
+        for( uint16_t val : m_eMcu.m_progMem ) pgmStr += QString::number( val )+",";
+
+        return pgmStr;
+    }
+    return "";
+}
+
+void Mcu::setPGM( QString pgm )
+{
+    if( pgm.isEmpty() ) return;
+    QStringList valList = pgm.split(",");
+    int size = m_eMcu.flashSize();
+    int i = 0;
+    for( QString valStr : valList )
+    {
+        if(! valStr.isEmpty() ) m_eMcu.setFlashValue( i, valStr.toInt() );
+        if( ++i >= size ) break;
+    }
 }
 
 void Mcu::setEeprom( QString eep )

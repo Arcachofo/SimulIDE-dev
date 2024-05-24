@@ -48,6 +48,9 @@ class Mcu : public Chip, public Linker
         bool autoLoad() { return m_autoLoad; }
         void setAutoLoad( bool al ) { m_autoLoad = al; }
 
+        bool savePGM() { return m_savePGM; }
+        void setSavePGM( bool s ) { m_savePGM = s; }
+
         double extFreq() { return m_extFreq; }
         void setExtFreq( double freq ) { m_extFreq = freq; setFreq( freq ); }
 
@@ -122,6 +125,9 @@ class Mcu : public Chip, public Linker
     protected:
  static Mcu* m_pSelf;
 
+        QString getPGM();
+        void setPGM( QString pgm );
+
         virtual void contextMenu( QGraphicsSceneContextMenuEvent* e, QMenu* m ) override;
         //virtual void contextMenuEvent(QGraphicsSceneContextMenuEvent* e) override;
 
@@ -131,6 +137,7 @@ class Mcu : public Chip, public Linker
         bool m_isTQFP;
 
         bool m_autoLoad;
+        bool m_savePGM;
         bool m_scripted;
         bool m_resetPol;
 
