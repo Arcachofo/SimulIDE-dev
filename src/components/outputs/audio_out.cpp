@@ -130,7 +130,7 @@ void AudioOut::initialize()
 
 void AudioOut::stamp()
 {
-    m_admit = m_buzzer ? 1e-4 : m_impedance;
+    m_admit = m_buzzer ? 1e-4 : 1/m_impedance;
     eResistor::stamp();
 
     if( m_deviceinfo.isNull() ) return;
@@ -148,7 +148,7 @@ void AudioOut::updateStep()
     if( !m_changed ) return;
     m_changed = false;
 
-    double admit = m_buzzer ? 1e-4 : m_impedance;
+    double admit = m_buzzer ? 1e-4 : 1/m_impedance;
     setAdmit( admit );
 }
 
