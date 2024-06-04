@@ -96,7 +96,7 @@ Component* SubCircuit::construct( QString type, QString id )
             if( itemType != "Package") break;
 
             QString type = root.attribute("SubcType");
-            if( !type.isEmpty() ) subcTyp = type;
+            if( type != "None" ) subcTyp = type;
 
             QString pkgName = root.attribute("label");
             packageList[pkgName] = convertPackage( line );
