@@ -26,7 +26,7 @@ class Ili9341 : public Component, public eClockedDevice
         virtual void voltChanged() override;
         virtual void updateStep() override;
         
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w ) override;
 
     protected:
         void proccessCommand();
@@ -36,8 +36,8 @@ class Ili9341 : public Component, public eClockedDevice
         void reset();
         void clearDDRAM();
 
-        unsigned char m_rxReg;     // Received value
-        unsigned int m_aDispRam[240][320]; // DDRAM
+        uint8_t m_rxReg;     // Received value
+        uint m_aDispRam[240][320]; // DDRAM
 
         int m_inBit;        //How many bits have we read since last byte
         int m_inByte;
@@ -55,15 +55,14 @@ class Ili9341 : public Component, public eClockedDevice
         int m_dirX;
         int m_dirY;
 
+        uint16_t m_TFA; // Top Fixed Area
+        uint16_t m_VSA; // Vertical Scrolling Area
+        uint16_t m_BFA; // Bottom Fixed Area
+        uint16_t m_VSP; // Vertical Scrolling Pointer
+
         int m_startLin;
         //int m_addrMode;
         int m_lastCommand;
-
-        int m_scrollStartPage;
-        int m_scrollEndPage;
-        int m_scrollInterval;
-        int m_scrollVertOffset;
-        int m_scrollCount;
 
         int m_readBytes;
 

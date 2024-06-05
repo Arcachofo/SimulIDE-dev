@@ -201,6 +201,20 @@ void Ili9341::getParameter()
                         m_endY = m_startY;
                 }
             }break;
+            case 0x33:   // Vertical Scrolling Definition
+            {
+                if     ( m_readBytes == 6 ) m_TFA = (uint16_t)m_rxReg << 8; // TFA [15:8]
+                else if( m_readBytes == 5 ) m_TFA |= m_rxReg;               // TFA [7:0]
+                else if( m_readBytes == 4 ) m_VSA = (uint16_t)m_rxReg << 8; // VSA [15:8]
+                else if( m_readBytes == 3 ) m_VSA |= m_rxReg;               // VSA [7:0]
+                else if( m_readBytes == 2 ) m_BFA = (uint16_t)m_rxReg << 8; // BFA [15:8]
+                else;                       m_BFA |= m_rxReg;               // BFA [7:0]
+            }break;
+            case 0x37:   // Vertical Scrolling Start Address, Ignored if Partial Mode
+            {
+                if( m_readBytes == 2 ) m_VSP = (uint16_t)m_rxReg << 8; // VSP [15:8]
+                else;                  m_VSP |= m_rxReg;               // VSP [7:0]
+            }break;
             case 0x3A:
             {
                 int mode = (m_rxReg>>4) & 1;
@@ -261,7 +275,7 @@ void Ili9341::proccessCommand()
         //case 0x34: // Tearing Effect Line Off
         case 0x35: m_readBytes = 1; break;   // Tearing Effect Line On
         case 0x36: m_readBytes = 1; break;   // Memory Access Control
-        case 0x37: m_readBytes = 2; break;   // Vertical Scrolling Start Address (2 params in datasheet??:
+        case 0x37: m_readBytes = 2; break;   // Vertical Scrolling Start Address
         //case 0x38: // Idle Mode Off
         //case 0x39: // Idle Mode On
         case 0x3A: m_readBytes = 1; break;   // COLMOD: Pixel Formay Set
@@ -374,11 +388,6 @@ void Ili9341::reset()
     m_inByte = 0;
     m_data   = 0;
 
-    m_scrollStartPage  = 0;
-    m_scrollEndPage    = 7;
-    m_scrollInterval   = 5;
-    m_scrollVertOffset = 0;
-
     m_startLin = 0;
     m_readBytes = 0;
     m_dataBytes = 2; //16bit mode
@@ -390,14 +399,19 @@ void Ili9341::reset()
     m_scroll  = false;
     m_scrollR = false;
     m_scrollV = false;
-    m_RGB = true;
+    m_RGB = true;;
+
+    m_TFA = 0;   // Top Fixed Area
+    m_VSA = 320; // Vertical Scrolling Area
+    m_BFA = 0;   // Bottom Fixed Area
+    m_VSP = 0;   // Vertical Scrolling Pointer
 
     m_lastCommand = 0;
 
     //m_reset = true;
 }
 
-void Ili9341::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
+void Ili9341::paint( QPainter* p, const QStyleOptionGraphicsItem*, QWidget* )
 {
     p->setRenderHint( QPainter::Antialiasing, true );
     QPen pen( Qt::black, 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin );
@@ -413,14 +427,23 @@ void Ili9341::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidge
         painter.begin( &img );
         painter.setRenderHint( QPainter::Antialiasing, true );
 
-        for( int row=0; row<=319; row++ )
+        for( int row=0; row<320; ++row )
         {
             int y = row*2;
-            for( int col=0; col<=239; col++ )
+            int yRAM = row;
+            if( m_VSP > 0 )
             {
-                uint pixel = m_aDispRam[col][row];
-                painter.fillRect( col*2, y, 2, 2, QColor(pixel).rgb() );
-        }   }
+                if( row >= m_TFA && row < 320-m_BFA )
+                {
+                    int srcollEnd = m_TFA+m_VSA-1;
+                    yRAM = m_VSP+row-m_TFA;
+                    if     ( yRAM > srcollEnd ) yRAM -= m_VSA;
+                    //else if( yRAM < 0   ) yRAM += 320;
+                }
+            }
+            for( int col=0; col<240; ++col )
+                painter.fillRect( col*2, y, 2, 2, QColor( m_aDispRam[col][yRAM] ).rgb() );
+        }
 
         painter.end();
         p->drawImage(QRectF(-120,-162, 240, 320), img );
