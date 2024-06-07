@@ -1400,5 +1400,12 @@ void McuCreator::setPrescalers( QString pr, McuPrescaled* module )
     module->m_prescList.resize( prescalers.size() );
 
     for( int i=0; i<prescalers.size(); ++i )
-        module->m_prescList[i] = prescalers.value(i).toUInt();
+    {
+        QString prStr = prescalers.value(i);
+        uint prVal;
+        if     ( prStr == "EXT_F" ) prVal = 0x8000; // Ext clock, falling edge
+        else if( prStr == "EXT_R" ) prVal = 0x8001; // Ext clock, rising edge
+        else                        prVal = prStr.toUInt();
+        module->m_prescList[i] = prVal;
+    }
 }

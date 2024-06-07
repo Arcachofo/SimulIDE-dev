@@ -36,7 +36,6 @@ class AvrTimer : public McuTimer
     protected:
         virtual void updtWgm(){;}
         virtual void configureClock();
-        void configureExtClock();
         void configureOcUnits( bool wgm3 );
         void updtPrescaler( uint8_t val );
 
@@ -70,9 +69,6 @@ class AvrTimer800 : public AvrTimer8bit
     public:
         AvrTimer800( eMcu* mcu, QString name );
         ~AvrTimer800();
-
-    protected:
-        virtual void configureClock() override;
 };
 
 class AvrTimer801 : public McuTimer
@@ -144,7 +140,6 @@ class AvrTimer16bit : public AvrTimer
 
     protected:
         virtual void updtWgm() override;
-        virtual void configureClock() override;
         void setICRX( QString reg );
 
         bool m_useICR;

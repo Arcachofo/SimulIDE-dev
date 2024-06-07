@@ -96,16 +96,16 @@ void AvrTimer::updtPrescaler( uint8_t val )
 void AvrTimer::configureClock()
 {
     m_prescaler = m_prescList.at( m_prIndex );
-    m_scale = m_prescaler*m_mcu->psInst();
-    enableExtClock( false );
-}
 
-void AvrTimer::configureExtClock()
-{
-    m_prescaler = 1;
-    enableExtClock( true );
-    /// if     ( m_prIndex == 6 ) m_clkEdge = 1;
-    /// else if( m_prIndex == 7 ) m_clkEdge = 0;
+    if( m_prescaler >= 0x8000 )      // Ext clock
+    {
+        m_clkEdge = m_prescaler & 1; // 0 = falling edge, 1 = rising edge
+        m_prescaler = 1;
+        enableExtClock( true );
+    }
+    else enableExtClock( false );
+
+    m_scale = m_prescaler*m_mcu->psInst();
 }
 
 void AvrTimer::configureOcUnits( bool wgm3 )
@@ -203,12 +203,6 @@ AvrTimer800::AvrTimer800( eMcu* mcu, QString name)
 }
 AvrTimer800::~AvrTimer800(){}
 
-void AvrTimer800::configureClock()
-{
-    if( m_prIndex > 5 ) AvrTimer::configureExtClock();
-    else                AvrTimer::configureClock();
-}
-
 //--------------------------------------------------
 // TIMER 0 -----------------------------------------
 
@@ -241,18 +235,17 @@ void AvrTimer801::configureA( uint8_t newTCCR0 )
 
 void AvrTimer801::configureClock() // This Timer is not derived from AvrTimer
 {
-    if( m_prIndex > 5 ) //AvrTimer::configureExtClock();
+    m_prescaler = m_prescList.at( m_prIndex );
+
+    if( m_prescaler >= 0x8000 )      // Ext clock
     {
+        m_clkEdge = m_prescaler & 1; // 0 = falling edge, 1 = rising edge
         m_prescaler = 1;
         enableExtClock( true );
-        /// if     ( m_prIndex == 6 ) m_clkEdge = Clock_Falling;
-        /// else if( m_prIndex == 7 ) m_clkEdge = Clock_Rising;
     }
-    else{               //AvrTimer::configureClock();
-        m_prescaler = m_prescList.at( m_prIndex );
-        m_scale = m_prescaler*m_mcu->psInst();
-        enableExtClock( false );
-    }
+    else enableExtClock( false );
+
+    m_scale = m_prescaler*m_mcu->psInst();
 }
 
 //--------------------------------------------------
@@ -478,10 +471,4 @@ void AvrTimer16bit::setICRX( QString reg )
     m_topReg1H = m_mcu->getReg( reg );
     /// Low byte triggers red/write operations
     /// watchRegNames( reg, R_WRITE, this, &AvrTimer16bit::ICRXLchanged, m_mcu );
-}
-
-void AvrTimer16bit::configureClock()
-{
-    if( m_prIndex > 5 ) AvrTimer::configureExtClock();
-    else                AvrTimer::configureClock();
 }
