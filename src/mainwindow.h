@@ -15,6 +15,7 @@ class EditorWindow;
 class FileWidget;
 class QVBoxLayout;
 class QLineEdit;
+class QPushButton;
 class QSplitter;
 class QSettings;
 
@@ -86,6 +87,7 @@ class MainWindow : public QMainWindow
 
     private slots:
         void searchChanged();
+        void clearSearch();
 
     private:
  static MainWindow* m_pSelf;
@@ -123,6 +125,7 @@ class MainWindow : public QMainWindow
         QWidget*      m_componentWidget;
         QVBoxLayout*  m_componentWidgetLayout;
         QLineEdit*    m_searchComponent;
+        QPushButton*  m_clearButton;
         EditorWindow* m_editor;
         
         QSplitter*  m_Centralsplitter;

@@ -11,6 +11,7 @@
 #include <QMessageBox>
 #include <QSplitter>
 #include <QLineEdit>
+#include <QPushButton>
 #include <QTextStream>
 #include <QDebug>
 #include <QStyleFactory>
@@ -231,11 +232,22 @@ void MainWindow::createWidgets()
     m_componentWidgetLayout->setSpacing(0);
     m_componentWidgetLayout->setContentsMargins(0, 0, 0, 0);
 
+    QHBoxLayout* searchLayout = new QHBoxLayout( this );
+
     m_searchComponent = new QLineEdit( this );
-    m_searchComponent->setPlaceholderText( tr( "Search Components" ));
-    m_componentWidgetLayout->addWidget( m_searchComponent );
+    m_searchComponent->setPlaceholderText( tr("Search Components"));
+    searchLayout->addWidget( m_searchComponent );
     connect( m_searchComponent, SIGNAL( editingFinished() ),
-             this,               SLOT(  searchChanged()), Qt::UniqueConnection);
+             this,              SLOT(   searchChanged()) );
+
+    m_clearButton = new QPushButton( this );
+    m_clearButton->setIcon( QIcon(":/remove.svg") );
+    m_clearButton->setToolTip( tr("Clear search"));
+    searchLayout->addWidget( m_clearButton );
+    connect( m_clearButton, SIGNAL( clicked() ),
+             this,          SLOT(   clearSearch()) );
+
+    m_componentWidgetLayout->addLayout( searchLayout );
 
     m_fileSystemTree = new FileWidget( this );
     m_circuit = new CircuitWidget( this );
@@ -257,6 +269,12 @@ void MainWindow::createWidgets()
     m_Centralsplitter->setSizes( {150, 350, 500} );
 
     this->showMaximized();
+}
+
+void MainWindow::clearSearch()
+{
+    m_searchComponent->clear();
+    searchChanged();
 }
 
 void MainWindow::searchChanged()
