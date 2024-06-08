@@ -73,6 +73,7 @@ void SpiModule::voltChanged() // Called in Slave mode on SCK or SS changes
         {
             m_clkPin->changeCallBack( this, true );
             resetSR();
+            if( m_dataOutPin ) m_dataOutPin->scheduleState( (m_srReg & m_outBit)>0, 0 );// Write one bit (Only if dataOut Pin exist)
         }else{                                      // Disabling
             m_clkPin->changeCallBack( this, false );
             m_srReg = 0;// Reset SPI Logic
@@ -160,8 +161,12 @@ void SpiModule::setMode( spiMode_t mode )
         if( !m_MOSI || !m_clkPin ) { m_mode = SPI_OFF; return; }
         m_dataOutPin = m_MISO;
         m_dataInPin  = m_MOSI;
-        m_clkPin->changeCallBack( this, true );
-        if( m_useSS && m_SS ) m_SS->changeCallBack( this, true );
+        //m_clkPin->changeCallBack( this, true );
+        if( m_useSS && m_SS )
+        {
+            m_SS->changeCallBack( this, true );
+            SpiModule::voltChanged();
+        }
     }
     if( m_dataOutPin && m_mode == SPI_MASTER ) m_dataOutPin->setOutState( true );
 }
