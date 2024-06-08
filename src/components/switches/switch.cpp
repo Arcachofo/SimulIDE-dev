@@ -65,7 +65,7 @@ void Switch::stamp()
 
 void Switch::keyEvent( QString key, bool pressed )
 {
-    if( key.toUpper() == m_key )
+    if( key == m_key )
     {
         if( !pressed )
         {
@@ -73,10 +73,10 @@ void Switch::keyEvent( QString key, bool pressed )
             SwitchBase::onbuttonclicked();
 }   }   }
 
-void Switch::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget )
+void Switch::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w )
 {
     if( m_hidden ) return;
 
-    Component::paint( p, option, widget );
-    MechContact::paint( p, option, widget );
+    Component::paint( p, o, w );
+    MechContact::paint( p, o, w );
 }

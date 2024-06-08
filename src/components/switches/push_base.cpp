@@ -35,7 +35,7 @@ void PushBase::onbuttonReleased()
 
 void PushBase::keyEvent( QString key, bool pressed )
 {
-    if( key.toUpper() == m_key )
+    if( key == m_key )
     {
         if( pressed ) onbuttonPressed();
         else          onbuttonReleased();
