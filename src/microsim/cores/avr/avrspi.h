@@ -23,11 +23,16 @@ class AvrSpi : public McuSpi
         virtual void endTransaction() override;
 
     protected:
+        void updateSpeed();
+
+        bool m_speed2x;
+
         regBits_t m_SPE;
         regBits_t m_DODR;
         regBits_t m_MSTR;
         regBits_t m_CPOL;
         regBits_t m_CPHA;
+        regBits_t m_SPI2X;
 };
 
 #endif
