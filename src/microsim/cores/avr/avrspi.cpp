@@ -17,6 +17,7 @@ AvrSpi::AvrSpi( eMcu* mcu, QString name )
     n.toInt( &ok );
     if( !ok ) n = "";
 
+    m_SPR   = getRegBits( "SPR"+n+"0,SPR"+n+"1", mcu );
     m_SPE   = getRegBits( "SPE"+n, mcu );
     m_DODR  = getRegBits( "DODR"+n, mcu );
     m_MSTR  = getRegBits( "MSTR"+n, mcu );
@@ -75,18 +76,20 @@ void AvrSpi::configureA( uint8_t newSPCR ) // SPCR is being written
     m_clkPin->setOutState( clkPol );
     updateClock();
 
-    bool clkPha = getRegBitsVal( newSPCR, m_CPHA ); // Clock phase
+    bool clkPha = getRegBitsBool( newSPCR, m_CPHA ); // Clock phase
     m_sampleEdge = ( clkPol == clkPha ) ? Clock_Rising : Clock_Falling; // This shows up in the truth table
 
-    m_prescaler = m_prescList[newSPCR & 0b00000011];
+    uint8_t spr = getRegBitsVal( newSPCR, m_SPR );
+    m_prescaler = m_prescList[spr];
     updateSpeed();
 }
 
 void AvrSpi::writeStatus( uint8_t newSPSR ) // SPSR is being written
 {
-    m_speed2x = getRegBitsBool( newSPSR, m_SPI2X );
+    uint8_t spi2x = getRegBitsVal( newSPSR, m_SPI2X );
+    m_speed2x = spi2x > 0;
     updateSpeed();
-    m_mcu->m_regOverride = newSPSR | (*m_statReg & 0b00000001); // Preserve Status bits
+    m_mcu->m_regOverride = (*m_statReg & ~m_SPI2X.mask) | spi2x; // Preserve Status bits
 }
 
 void AvrSpi::writeSpiReg( uint8_t newSPDR ) // SPDR is being written

@@ -20,7 +20,7 @@ class McuSpi : public McuPrescaled, public SpiModule
         McuSpi( eMcu* mcu, QString name );
         ~McuSpi();
 
-        //virtual void initialize() override;
+        virtual void initialize() override;
 
         //virtual void setMode( spiMode_t mode ) override;
         virtual void writeStatus( uint8_t val ){;}

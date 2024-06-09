@@ -27,6 +27,7 @@ class AvrSpi : public McuSpi
 
         bool m_speed2x;
 
+        regBits_t m_SPR;
         regBits_t m_SPE;
         regBits_t m_DODR;
         regBits_t m_MSTR;

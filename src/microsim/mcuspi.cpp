@@ -19,13 +19,13 @@ McuSpi::~McuSpi()
 {
 }
 
-/*void McuSpi::initialize()
+void McuSpi::initialize()
 {
     SpiModule::initialize();
-
+    if( m_statReg ) *m_statReg = 0;
 }
 
-void McuSpi::setMode( spiMode_t mode )
+/*void McuSpi::setMode( spiMode_t mode )
 {
     SpiModule::setMode(  mode );
 }*/
