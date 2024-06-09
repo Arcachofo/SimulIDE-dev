@@ -48,7 +48,6 @@ class I51Core : public McuCpu, public eElement
             aINDI=1<<1,
             aIMME=1<<2,
             aRELA=1<<3,
-
             aORIG=1<<4,
             aBIT =1<<5,
             a16BIT_LOW=1<<6,
@@ -79,7 +78,7 @@ class I51Core : public McuCpu, public eElement
         uint8_t  m_opcode;
         uint8_t* m_acc;
         
-        QVector<uint16_t> m_readOp;
+        QVector<uint8_t> m_readOp;
         uint16_t m_opAddr;
         uint8_t m_addrMode;
         uint8_t m_op0;

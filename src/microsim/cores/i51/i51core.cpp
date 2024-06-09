@@ -187,7 +187,7 @@ void I51Core::readOperand()
 
     if( m_readOp.isEmpty() ) return; // All operands ready
 
-    uint16_t addrMode = m_readOp.takeFirst();
+    uint8_t addrMode = m_readOp.takeFirst();
 
     if( addrMode & aIMME ){
         if     ( addrMode & aORIG ) m_op0 = m_pgmData;
