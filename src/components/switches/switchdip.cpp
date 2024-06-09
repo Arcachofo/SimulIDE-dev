@@ -185,6 +185,7 @@ void SwitchDip::createSwitches( int c )
         QObject::connect( button, &QPushButton::released, [=](){ onbuttonclicked(); });
 
         Pin* pin = new Pin( 180, QPoint(-8,-32+8+i*8 ), butId+"-pinP", 0, this, 5 );
+        pin->setVisible( !m_commonPin );
         m_pin[index] = pin;
 
         pin = new Pin( 0, QPoint( 16,-32+8+i*8 ), butId+"-pinN", 0, this, 5 );
