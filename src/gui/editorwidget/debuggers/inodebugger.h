@@ -6,6 +6,8 @@
 #ifndef INODEBUGGER_H
 #define INODEBUGGER_H
 
+#include <QMap>
+
 #include "avrgccdebugger.h"
 
 class InoDebugger : public AvrGccDebugger
@@ -43,6 +45,8 @@ class InoDebugger : public AvrGccDebugger
         QString m_sketchBook;
         QString m_customBoard;
         QString m_board;
+
+        QMap<QString, QString> m_boardMap;
 };
 
 #endif

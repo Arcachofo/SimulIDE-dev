@@ -5,7 +5,7 @@
 
 #include <QApplication>
 #include <QSettings>
-//#include <QDebug>
+#include <QDebug>
 
 #include "inodebugger.h"
 #include "codeeditor.h"
@@ -126,6 +126,11 @@ InoDebugger::InoDebugger( CodeEditor* parent, OutPanelText* outPane )
 //            << "Leonardo"
             << tr("custom");
 
+    m_boardMap.insert( "Uno", "arduino:avr:uno" );
+    m_boardMap.insert( "Mega", "arduino:avr:megaADK" );
+    m_boardMap.insert( "Nano", "arduino:avr:nano" );
+    m_boardMap.insert( "Duemilanove", "arduino:avr:diecimila" );
+
     addProperty( tr("Compiler Settings"),
     new StrProp<Compiler>("InclPath", tr("Custom Library Path"),"", this
                          , &Compiler::includePath, &Compiler::setIncludePath, 0,"path") );
@@ -192,15 +197,41 @@ void InoDebugger::setToolPath( QString path )
             //qDebug() << config;
 
             QStringList configLines = config.split( "\n" );
-            QRegExp rx( "^  data: .*$" );
-            int idx = configLines.indexOf(rx);
-            if( idx != -1 )
+            for( QString line : configLines )
             {
-                m_toolPath = QDir::fromNativeSeparators( configLines[idx].mid( 8 ) )+"/packages/arduino/tools/avr-gcc/";
+                if( !line.contains("data: ") ) continue;
+                m_toolPath = QDir::fromNativeSeparators( line. split("data: ").last() )+"/packages/arduino/tools/avr-gcc/";
                 QDir toolDir( m_toolPath );
                 QStringList dirList = toolDir.entryList( QDir::Dirs, QDir::Name | QDir::Reversed );
                 if( !dirList.isEmpty() ) m_toolPath += dirList[0]+"/bin/";
+                break;
             }
+
+            command = builder;
+            command = addQuotes( command );
+            command += " board listall";
+
+            QProcess getBoards( this );  // Get config
+            getBoards.start( command );
+            getBoards.waitForFinished();
+            QString boards = getBoards.readAllStandardOutput();
+            getBoards.close();
+
+            QStringList boardList = boards.split("\n");
+            boardList.takeFirst();
+            for( QString b : boardList )
+            {
+                QStringList boardData = b.split(" ");
+                boardData.removeAll("");
+                if( boardData.isEmpty() ) continue;
+                QString sign = boardData.takeLast();
+                QString name = boardData.join(" ");
+                //qDebug() << name << sign;
+                m_enumUids.append( name );
+                m_enumNames.append( name );
+                m_boardMap.insert( name, sign );
+            }
+
             QDir pathDir( path );
             builder = pathDir.relativeFilePath( builder );
             m_outPane->appendLine( "Found Arduino Version 2" );
@@ -266,9 +297,7 @@ int InoDebugger::compile( bool debug )
         boardName = m_customBoard;
         boardSource = "Custom ";
     }else{
-        if( boardName == "duemilanove" ) boardName = "diecimila";
-        else if( boardName == "mega" )   boardName = "megaADK";
-        boardName = "arduino:avr:"+boardName;
+        boardName = m_boardMap.value( m_board );
         boardSource = "Arduino";
     }
 
