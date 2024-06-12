@@ -8,7 +8,7 @@
 #include "subcircuit.h"
 #include "itemlibrary.h"
 #include "mainwindow.h"
-#include "componentselector.h"
+#include "componentlist.h"
 #include "circuitwidget.h"
 #include "simulator.h"
 #include "circuit.h"
@@ -59,7 +59,7 @@ Component* SubCircuit::construct( QString type, QString id )
         n.toInt(&ok);
         if( ok ) name = list.at( 1 );
     }
-    QString dataFile = ComponentSelector::self()->getDataFile( name );
+    QString dataFile = ComponentList::self()->getDataFile( name );
 
     if( dataFile.isEmpty() ) // Component not installed, search in Circuit folder
     {
@@ -69,7 +69,7 @@ Component* SubCircuit::construct( QString type, QString id )
 
     if( dataFile.isEmpty() ) // use old system
     {
-        m_subcDir = ComponentSelector::self()->getFileDir( name ); // Found in folder (no xml file)
+        m_subcDir = ComponentList::self()->getFileDir( name ); // Found in folder (no xml file)
         if( m_subcDir.isEmpty() )                                  // Try to find a "data" folder in Circuit folder
         {
             m_subcDir = MainWindow::self()->getDataFilePath( name );

@@ -41,7 +41,7 @@ INCLUDEPATH += $$PWD/src \
     $$PWD/src/gui/circuitwidget/subcircuits \
     $$PWD/src/gui/dataplotwidget \
     $$PWD/src/gui/serial \
-    $$PWD/src/gui/componentselector \
+    $$PWD/src/gui/componentlist \
     $$PWD/src/gui/filebrowser \
     $$PWD/src/gui/editorwidget \
     $$PWD/src/gui/editorwidget/dialogs \

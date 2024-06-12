@@ -3,16 +3,20 @@
  *                                                                         *
  ***( see copyright.txt file at root folder )*******************************/
 
+#include <QDebug>
+
 #include <QSvgGenerator>
 #include <QMimeData>
 #include <QFileDialog>
 #include <QSettings>
 #include <QGuiApplication>
 #include <QScrollBar>
+#include <QTreeWidgetItem>
 
 #include "circuitview.h"
 #include "circuitwidget.h"
 #include "circuit.h"
+#include "componentlist.h"
 #include "mainwindow.h"
 #include "component.h"
 #include "subcircuit.h"
@@ -68,7 +72,7 @@ void CircuitView::clear()
 }
 
 void CircuitView::setShowScroll( bool show )
-{this->verticalScrollBar()->setValue(10);
+{
     m_showScroll = show;
     if( show ){
         setHorizontalScrollBarPolicy( Qt::ScrollBarAlwaysOn );
@@ -89,13 +93,17 @@ void CircuitView::wheelEvent( QWheelEvent* event )
 
 void CircuitView::dragEnterEvent( QDragEnterEvent* event )
 {
-    event->accept();
     m_enterItem = NULL;
 
-    QString type = event->mimeData()->html();
-    QString name = event->mimeData()->text();
+    QStringList data = event->mimeData()->text().split(",");
+    if( data.size() != 2 ) return;
+
+    QString type = data.last();
+    QString name = data.first();
 
     if( type.isEmpty() || name.isEmpty() ) return;
+
+    event->accept(); // Not moving items in the list (this will prevent removing items from the list)
 
     m_enterItem = m_circuit->createItem( type, name+"-"+m_circuit->newSceneId() );
     if( m_enterItem )

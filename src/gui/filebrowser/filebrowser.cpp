@@ -11,7 +11,7 @@
 #include "circuit.h"
 #include "filewidget.h"
 #include "editorwindow.h"
-#include "componentselector.h"
+#include "componentlist.h"
 
 FileBrowser* FileBrowser::m_pSelf = NULL;
 
@@ -123,7 +123,7 @@ void FileBrowser::mouseDoubleClickEvent( QMouseEvent* event )
 void FileBrowser::convert()
 {
     QString path = m_fileSystemModel->filePath( currentIndex() );
-    ComponentSelector::self()->loadXml( path, true );
+    ComponentList::self()->loadXml( path, true );
 }
 
 void FileBrowser::contextMenuEvent( QContextMenuEvent* event )

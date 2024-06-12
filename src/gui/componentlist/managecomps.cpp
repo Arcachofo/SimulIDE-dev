@@ -7,7 +7,8 @@
 #include <QCloseEvent>
 
 #include "managecomps.h"
-#include "componentselector.h"
+#include "treeitem.h"
+#include "componentlist.h"
 #include "mainwindow.h"
 
 manCompDialog::manCompDialog( QWidget* parent )
@@ -26,35 +27,33 @@ manCompDialog::manCompDialog( QWidget* parent )
               this, &manCompDialog::slotItemChanged, Qt::UniqueConnection );
 }
 
-void manCompDialog::addItem( QTreeWidgetItem* item )
+void manCompDialog::addItem( TreeItem* treeItem )
 {
-    QString nameTr = item->text( 0 );
-    QString name   = item->data( 0, Qt::WhatsThisRole ).toString();
-
     QTableWidgetItem* listItem = new QTableWidgetItem();
     listItem->setFlags( Qt::ItemIsEnabled | Qt::ItemIsUserCheckable );
-    listItem->setText( nameTr );
+    listItem->setText( treeItem->nameTr() );
 
-    if( item->isHidden() ) listItem->setCheckState( Qt::Unchecked );
+    if( treeItem->isHidden() ) listItem->setCheckState( Qt::Unchecked );
     else                   listItem->setCheckState( Qt::Checked );
 
     QTableWidgetItem* shortItem = new QTableWidgetItem();
-    if( m_shortCuts.contains( name ) ) shortItem->setText( m_shortCuts.value( name ) );
+    shortItem->setText( treeItem->shortcut() );
 
     int row = table->rowCount();
     table->insertRow( row );
     table->setItem( row, 0, listItem );
     table->setItem( row, 1, shortItem );
 
-    m_qtwItem[ listItem ] = item;
+    m_treeItems[ listItem ]  = treeItem;
+    m_treeItems[ shortItem ] = treeItem;
 
-    int childCount = item->childCount();
+    int childCount = treeItem->childCount();
     if( childCount > 0 )
     {
-        listItem->setBackgroundColor( QColor(240, 235, 245));
+        listItem->setBackground( QColor(240, 235, 245) );
         listItem->setForeground( QBrush( QColor( 110, 95, 50 )));
 
-        for( int i=0; i<childCount; i++ ) addItem( item->child( i ) );
+        for( int i=0; i<childCount; i++ ) addItem( (TreeItem*)treeItem->child( i ) );
     }
     else listItem->setIcon( QIcon(":/blanc.png") );
 }
@@ -63,10 +62,9 @@ void manCompDialog::initialize()
 {
     if( m_initialized ) return;
 
-    m_shortCuts = ComponentSelector::self()->getShortCuts();
-    QList<QTreeWidgetItem*> itemList = ComponentSelector::self()->findItems("",Qt::MatchStartsWith);
+    QList<QTreeWidgetItem*> itemList = ComponentList::self()->findItems("",Qt::MatchStartsWith);
 
-    for( QTreeWidgetItem* item : itemList ) addItem( item );
+    for( QTreeWidgetItem* item : itemList ) addItem( (TreeItem*)item );
 
     m_initialized = true;
 }
@@ -74,32 +72,32 @@ void manCompDialog::initialize()
 void manCompDialog::slotItemChanged( QTableWidgetItem* item )
 {
     if( !m_initialized ) return;
-    int column = item->column();
-    if( column == 0 ) setItemVisible( item, item->checkState() );
-    else{
-        QString text = item->text();
-        if( text.length() > 1 ) item->setText( text.left(1) );
-    }
-}
 
-void manCompDialog::setItemVisible( QTableWidgetItem* item, bool visible )
-{
-    QTreeWidgetItem* treeItem = m_qtwItem[ item ];
-    if( !treeItem ) return;
-    ComponentSelector::self()->hideFromList( treeItem, !visible );
+    TreeItem* treeItem = m_treeItems[ item ];
 
-    int childCount = treeItem->childCount();
-    if( childCount > 0 )
+    if( item->column() == 0 )  // Hidden
     {
-        for( int i=0; i<childCount; i++ )
+        bool visible = item->checkState();
+        treeItem->setItemHidden( !visible );
+
+        for( int i=0; i<treeItem->childCount(); ++i )
         {
-            QTableWidgetItem* listItem = m_qtwItem.keys( treeItem->child( i ) ).at(0);
+            TreeItem*         childItem = (TreeItem*)treeItem->child( i );
+            QTableWidgetItem* listItem  = m_treeItems.keys( childItem ).at(0);
 
             if( visible ) listItem->setCheckState( Qt::Checked );
             else          listItem->setCheckState( Qt::Unchecked );
-}   }   }
+        }
+    }else              // Shortcut
+    {
+        QString text = item->text().left(1);
+        item->setText( text );
+        treeItem->setShortCut( text );
+        ComponentList::self()->setShortcut( text, treeItem->name() );
+    }
+}
 
-void manCompDialog::reject()
+/*void manCompDialog::reject()
 {
     this->setVisible( false );
 
@@ -109,7 +107,7 @@ void manCompDialog::reject()
     {
         QTableWidgetItem* listItem = table->item( row, 0 );
         bool hidden = ( listItem->checkState() == Qt::Unchecked );
-        QString name = m_qtwItem.value( listItem )->data(0, Qt::WhatsThisRole ).toString();
+        QString name = m_treeItems.value( listItem )->name();
         MainWindow::self()->compSettings()->setValue( name+"/hidden", hidden );
 
         QString shortCut = table->item( row, 1 )->text();
@@ -119,5 +117,5 @@ void manCompDialog::reject()
             MainWindow::self()->compSettings()->setValue( name+"/shortcut", shortCut );
         }
     }
-    ComponentSelector::self()->setShortCuts( shortCuts );
-}
+    ComponentList::self()->setShortCuts( shortCuts );
+}*/

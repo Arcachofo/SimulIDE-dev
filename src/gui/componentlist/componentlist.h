@@ -6,19 +6,27 @@
 #ifndef COMPONENTSELECTOR_H
 #define COMPONENTSELECTOR_H
 
+#include <QDropEvent>
+#include <QDebug>
+
 #include <QDir>
 #include <QTreeWidget>
+
+#include <QMimeData>
 
 #include "managecomps.h"
 #include "itemlibrary.h"
 
-class ComponentSelector : public QTreeWidget
+class TreeItem;
+class QDomNode;
+
+class ComponentList : public QTreeWidget
 {
     public:
-        ComponentSelector( QWidget* parent );
-        ~ComponentSelector();
+        ComponentList( QWidget* parent );
+        ~ComponentList();
 
- static ComponentSelector* self() { return m_pSelf; }
+ static ComponentList* self() { return m_pSelf; }
 
         void LoadCompSetAt( QDir compSetDir );
 
@@ -27,15 +35,19 @@ class ComponentSelector : public QTreeWidget
 
         void search( QString filter );
 
-        void hideFromList( QTreeWidgetItem* item, bool hide );
-
-        QTreeWidgetItem* getCategory( QString category );
+        TreeItem* getCategory( QString category );
         QStringList getCategories(){ return m_categories.keys(); }
 
-        void setShortCuts( QHash<QString, QString> s ) { m_shortCuts = s; }
-        QHash<QString, QString> getShortCuts() { return m_shortCuts; }
+        void setShortcut( QString s, QString c ) { m_shortCuts[s] = c; }
+        QString getComponent( QString shortcut ) { return m_shortCuts.value( shortcut ); }
 
         void loadXml( QString setFile, bool convert=false );
+
+        void writeSettings();
+
+        void mousePressEvent( QMouseEvent* event );
+
+        void dropEvent( QDropEvent* event );
 
     private slots:
         void slotItemClicked( QTreeWidgetItem* item, int );
@@ -43,27 +55,30 @@ class ComponentSelector : public QTreeWidget
         void slotManageComponents();
 
     private:
- static ComponentSelector* m_pSelf;
+ static ComponentList* m_pSelf;
 
         void convertItem( QString folder, QString itemFile, QString name, QString category, QString icon, QString type );
         QString convertMcuFile( QString file );
 
-        void addItem( QString caption, QTreeWidgetItem* catItem, QString icon, QString type );
-        void addItem( QString caption, QTreeWidgetItem* catItem, QIcon &icon, QString type );
+        void addItem( QString caption, TreeItem* catItem, QString icon, QString type );
+        void addItem( QString caption, TreeItem* catItem, QIcon &icon, QString type );
 
         void LoadLibraryItems();
-
         void loadComps( QDir compSetDir );
+        void insertItems();
+        void insertItem( QDomNode* node, TreeItem* parent );
 
         bool m_customComp;
 
-        QTreeWidgetItem* addCategory( QString nameTr, QString name, QString parent, QString icon );
+        TreeItem* addCategory( QString nameTr, QString name, QString parent, QString icon );
 
         QString getIcon( QString folder, QString name );
 
-        QStringList m_components;
-        QHash<QString, QTreeWidgetItem*> m_categories;
-        QHash<QString, QString> m_catTr;
+        //QStringList m_components;
+        QHash<QString, TreeItem*> m_components;
+        QHash<QString, TreeItem*> m_categories;
+        QHash<QString, QString>   m_catNames;
+
 
         QHash<QString, QString> m_dataFileList;
         QHash<QString, QString> m_dirFileList;

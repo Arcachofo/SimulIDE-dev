@@ -19,7 +19,7 @@
 
 #include "mainwindow.h"
 #include "circuit.h"
-#include "componentselector.h"
+#include "componentlist.h"
 #include "editorwindow.h"
 #include "circuitwidget.h"
 #include "filewidget.h"
@@ -112,11 +112,11 @@ void MainWindow::readSettings()
 {
     restoreGeometry(                 m_settings->value("geometry" ).toByteArray());
     restoreState(                    m_settings->value("windowState" ).toByteArray());
-    m_Centralsplitter->restoreState( m_settings->value("Centralsplitter/geometry" ).toByteArray());
-    CircuitWidget::self()->splitter()->restoreState( m_settings->value( "Circsplitter/geometry" ).toByteArray());
+    m_Centralsplitter->restoreState( m_settings->value("Centralsplitter/geometry").toByteArray());
+    CircuitWidget::self()->splitter()->restoreState( m_settings->value("Circsplitter/geometry").toByteArray());
 
     m_autoBck = 15;
-    if( m_settings->contains( "autoBck" )) m_autoBck = m_settings->value( "autoBck" ).toInt();
+    if( m_settings->contains("autoBck") ) m_autoBck = m_settings->value( "autoBck" ).toInt();
     Circuit::self()->setAutoBck( m_autoBck );
 }
 
@@ -130,15 +130,11 @@ void MainWindow::writeSettings()
     m_settings->setValue("Centralsplitter/geometry", m_Centralsplitter->saveState() );
     m_settings->setValue("Circsplitter/geometry", CircuitWidget::self()->splitter()->saveState() );
 
-    for( QString name : m_components->getCategories() )
-    {
-        QTreeWidgetItem* item = m_components->getCategory( name );
-        m_compSettings->setValue( name+"/collapsed", !item->isExpanded() );
-    }
+    ComponentList::self()->writeSettings();
     FileWidget::self()->writeSettings();
 }
 
-void MainWindow::setFontScale(float scale )
+void MainWindow::setFontScale( float scale )
 {
     if     ( scale < 0.5 ) scale = 0.5;
     else if( scale > 2 )   scale = 2;
@@ -252,7 +248,7 @@ void MainWindow::createWidgets()
     m_fileSystemTree = new FileWidget( this );
     m_circuit = new CircuitWidget( this );
 
-    m_components = new ComponentSelector( m_sidepanel );
+    m_components = new ComponentList( m_sidepanel );
     m_componentWidgetLayout->addWidget( m_components );
 
     m_sidepanel->addTab( m_componentWidget, tr("Components") );

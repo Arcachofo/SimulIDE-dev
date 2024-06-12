@@ -10,7 +10,7 @@
 
 #include "ui_managecomps.h"
 
-class QTreeWidgetItem;
+class TreeItem;
 
 class manCompDialog : public QDialog, private Ui::manCompDialog
 {
@@ -23,12 +23,10 @@ class manCompDialog : public QDialog, private Ui::manCompDialog
         void slotItemChanged( QTableWidgetItem* item );
 
     private:
-        void reject();
-        void addItem( QTreeWidgetItem* item );
-        void setItemVisible( QTableWidgetItem* item, bool visible );
+        //void reject();
+        void addItem( TreeItem* treeItem );
 
-        QHash<QTableWidgetItem*, QTreeWidgetItem*> m_qtwItem;
-        QHash<QString, QString> m_shortCuts;
+        QHash<QTableWidgetItem*, TreeItem*> m_treeItems;
 
         bool m_initialized;
 };

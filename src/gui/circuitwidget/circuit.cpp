@@ -16,7 +16,7 @@
 #include "circuitwidget.h"
 #include "comproperty.h"
 #include "connectorline.h"
-#include "componentselector.h"
+#include "componentlist.h"
 #include "node.h"
 #include "utils.h"
 #include "subcircuit.h"
@@ -1157,12 +1157,9 @@ void Circuit::keyPressEvent( QKeyEvent* event )
             QGraphicsScene::keyPressEvent( event );
             return;
         }
-        QHash<QString, QString> shortCuts = ComponentSelector::self()->getShortCuts();
-        QStringList keys = shortCuts.values();
-        if( keys.contains( str ) )
+        QString compNam = ComponentList::self()->getComponent( str );
+        if( !compNam.isEmpty() )
         {
-            QString compNam = shortCuts.key( str );
-
             Component* enterItem = createItem( compNam, compNam+"-"+newSceneId() );
             if( enterItem )
             {

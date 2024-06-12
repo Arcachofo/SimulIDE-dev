@@ -24,7 +24,7 @@
 #include "circuitwidget.h"
 #include "infowidget.h"
 #include "mainwindow.h"
-#include "componentselector.h"
+#include "componentlist.h"
 #include "mcumonitor.h"
 #include "memdata.h"
 #include "mcuuart.h"
@@ -97,7 +97,7 @@ Mcu::Mcu( QString type, QString id )
     if( m_device.contains("@") ) m_device = m_device.split("@").last(); // MCU in Subcircuit
 
     QString baseFile;
-    QString dataFile = ComponentSelector::self()->getDataFile( m_device );
+    QString dataFile = ComponentList::self()->getDataFile( m_device );
 
     m_isTQFP = false;
     if( dataFile.isEmpty() )
@@ -113,14 +113,14 @@ Mcu::Mcu( QString type, QString id )
             if( m_device.endsWith("a") ) m_device.remove( m_device.size()-1, 1 );
             m_device.replace("f", "F");
         }
-        dataFile = ComponentSelector::self()->getDataFile( m_device );
+        dataFile = ComponentList::self()->getDataFile( m_device );
     }
     setName( m_device );
 
     if( dataFile == "" ) // Component is not in SimulIDE, search in Circuit folder
     {
             QDir mcuDir;
-            QString folder = ComponentSelector::self()->getFileDir( m_device );
+            QString folder = ComponentList::self()->getFileDir( m_device );
 
             if( !folder.isEmpty() ) // Found in folder (no xml file)
             {

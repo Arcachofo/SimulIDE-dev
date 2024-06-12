@@ -9,7 +9,7 @@
 #include <QMainWindow>
 #include <QDir>
 
-class ComponentSelector;
+class ComponentList;
 class CircuitWidget;
 class EditorWindow;
 class FileWidget;
@@ -121,12 +121,12 @@ class MainWindow : public QMainWindow
         QHash<QString, QString> m_help;
         
         CircuitWidget* m_circuit;
-        ComponentSelector* m_components;
-        QWidget*      m_componentWidget;
-        QVBoxLayout*  m_componentWidgetLayout;
-        QLineEdit*    m_searchComponent;
-        QPushButton*  m_clearButton;
-        EditorWindow* m_editor;
+        ComponentList* m_components;
+        QWidget*       m_componentWidget;
+        QVBoxLayout*   m_componentWidgetLayout;
+        QLineEdit*     m_searchComponent;
+        QPushButton*   m_clearButton;
+        EditorWindow*  m_editor;
         
         QSplitter*  m_Centralsplitter;
         FileWidget* m_fileSystemTree;
