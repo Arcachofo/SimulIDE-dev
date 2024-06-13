@@ -5,7 +5,7 @@
 
 #include <QApplication>
 #include <QSettings>
-#include <QDebug>
+//#include <QDebug>
 
 #include "inodebugger.h"
 #include "codeeditor.h"
@@ -110,6 +110,25 @@ InoDebugger::InoDebugger( CodeEditor* parent, OutPanelText* outPane )
             << "noInterrupts()";
     m_editor->setFunctions( functions );
 
+    initializeBoards();
+
+    addProperty( tr("Compiler Settings"),
+    new StrProp<Compiler>("InclPath", tr("Custom Library Path"),"", this
+                         , &Compiler::includePath, &Compiler::setIncludePath, 0,"path") );
+
+    addFilePropHead();
+
+    addProperty( tr("Compiler Settings"),
+    new StrProp<InoDebugger>("Board", tr("Board"),"", this
+                            , &InoDebugger::getBoard, &InoDebugger::setBoard, 0,"enum") );
+
+    addProperty( tr("Compiler Settings"),
+    new StrProp<InoDebugger>("CustomBoard", tr("Custom Board"),"", this, &InoDebugger::customBoard, &InoDebugger::setCustomBoard, 0 ) );
+}
+InoDebugger::~InoDebugger() {}
+
+void InoDebugger::initializeBoards()
+{
     m_enumUids = QStringList()
         << "Uno"
         << "Mega"
@@ -126,25 +145,12 @@ InoDebugger::InoDebugger( CodeEditor* parent, OutPanelText* outPane )
 //            << "Leonardo"
             << tr("custom");
 
+    m_boardMap.clear();
     m_boardMap.insert( "Uno", "arduino:avr:uno" );
     m_boardMap.insert( "Mega", "arduino:avr:megaADK" );
     m_boardMap.insert( "Nano", "arduino:avr:nano" );
     m_boardMap.insert( "Duemilanove", "arduino:avr:diecimila" );
-
-    addProperty( tr("Compiler Settings"),
-    new StrProp<Compiler>("InclPath", tr("Custom Library Path"),"", this
-                         , &Compiler::includePath, &Compiler::setIncludePath, 0,"path") );
-
-    addFilePropHead();
-
-    addProperty( tr("Compiler Settings"),
-    new StrProp<InoDebugger>("Board", tr("Board"),"", this
-                            , &InoDebugger::getBoard,&InoDebugger::setBoard, 0,"enum") );
-
-    addProperty( tr("Compiler Settings"),
-    new StrProp<InoDebugger>("CustomBoard", tr("Custom Board"),"", this, &InoDebugger::customBoard, &InoDebugger::setCustomBoard, 0 ) );
 }
-InoDebugger::~InoDebugger() {}
 
 void InoDebugger::setToolPath( QString path )
 {
@@ -216,6 +222,8 @@ void InoDebugger::setToolPath( QString path )
             getBoards.waitForFinished();
             QString boards = getBoards.readAllStandardOutput();
             getBoards.close();
+
+            initializeBoards();
 
             QStringList boardList = boards.split("\n");
             boardList.takeFirst();
@@ -394,5 +402,5 @@ void InoDebugger::setBoard( QString board )
     if( m_propDialog )
         m_propDialog->showProp("CustomBoard", board == "Custom");
 
-    m_outPane->appendText("\nBoard: "+board+"\n");
+    m_outPane->appendLine("\nBoard: "+board+"\n");
 }

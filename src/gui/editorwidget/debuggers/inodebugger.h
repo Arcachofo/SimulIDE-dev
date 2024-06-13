@@ -36,6 +36,8 @@ class InoDebugger : public AvrGccDebugger
         virtual bool postProcess() override;
         
     private:
+        void initializeBoards();
+
         int m_version;
         int m_lastInoLine;
         int m_loopInoLine;
