@@ -26,7 +26,8 @@ class manCompDialog : public QDialog, private Ui::manCompDialog
         //void reject();
         void addItem( TreeItem* treeItem );
 
-        QHash<QTableWidgetItem*, TreeItem*> m_treeItems;
+        QHash<QTableWidgetItem*, TreeItem*> m_treeToList;
+        QHash<QTableWidgetItem*, TreeItem*> m_treeToShort;
 
         bool m_initialized;
 };

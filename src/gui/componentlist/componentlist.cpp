@@ -31,6 +31,9 @@ ComponentList::ComponentList( QWidget* parent )
 
     m_mcDialog.setVisible( false );
 
+    m_listFile = MainWindow::self()->getConfigPath("compList.xml");
+    m_insertItems = !QFile::exists( m_listFile ); // xml file doesn't exist: Insert items when created
+
     setSelectionMode( QAbstractItemView::SingleSelection );
     setDragEnabled( true );
     //setAcceptDrops( true );
@@ -55,7 +58,7 @@ ComponentList::ComponentList( QWidget* parent )
     QString userDir = MainWindow::self()->userPath();
     if( !userDir.isEmpty() && QDir( userDir ).exists() ) LoadCompSetAt( userDir );
 
-    insertItems(); // Add items to tree widget
+    if( !m_insertItems ) insertItems(); // Add items to tree widget from xml file
 
     /*for( TreeItem* it : m_categories ) // Remove empty categories
     {
@@ -129,7 +132,6 @@ void ComponentList::LoadCompSetAt( QDir compSetDir )
                 }
                 if( !type.isEmpty() && !m_components.contains( compName ) )
                 {
-                    //m_components.append( compName );
                     addItem( compName, catItem, icon, type );
                     m_dirFileList[ compName ] = compSetDir.absoluteFilePath( compName );
                 }
@@ -231,7 +233,6 @@ void ComponentList::loadComps( QDir compSetDir )
 
         if( !type.isEmpty() && !m_components.contains( compName ) )
         {
-            //m_components.append( compName );
             m_dataFileList[ compName ] = compFile;   // Save comp File used to create this item
 
             if( reader.attributes().hasAttribute("compinfo") )
@@ -333,8 +334,6 @@ void ComponentList::loadXml( QString setFile, bool convert )
                     }
                     else if( catItem && !m_components.contains( name ) )
                     {
-                        //m_components.append( name );
-
                         m_dataFileList[ name ] = setFile;   // Save xml File used to create this item
                         if( reader.attributes().hasAttribute("info") )
                             name += "???"+reader.attributes().value("info").toString();
@@ -452,14 +451,17 @@ void ComponentList::addItem( QString caption, TreeItem* catItem, QIcon &icon, QS
 
     m_components.insert( name, item );
 
-    /* catItem->addChild( item );
+    if( m_insertItems )
+    {
+        catItem->addChild( item );
 
-    bool hidden = MainWindow::self()->compSettings()->value( name+"/hidden" ).toBool();
-    item->setItemHidden( hidden );
+        bool hidden = MainWindow::self()->compSettings()->value( name+"/hidden" ).toBool();
+        item->setItemHidden( hidden );
 
-    QString shortCut = MainWindow::self()->compSettings()->value( name+"/shortcut" ).toString();
-    if( !shortCut.isEmpty() ) m_shortCuts[name] = shortCut;
-    */
+        QString shortCut = MainWindow::self()->compSettings()->value( name+"/shortcut" ).toString();
+        item->setShortCut( shortCut );
+        if( !shortCut.isEmpty() ) m_shortCuts[name] = shortCut;
+    }
 }
 
 TreeItem* ComponentList::getCategory( QString category )
@@ -478,12 +480,13 @@ TreeItem* ComponentList::addCategory( QString nameTr, QString name, QString pare
 {
     TreeItem* catItem = NULL;
 
-    //bool expanded = false;
+    bool expanded = false;
 
     if( parent.isEmpty() )                              // Is Main Category
     {
         catItem = new TreeItem( name, nameTr, "", categ_MAIN, QIcon( QPixmap( icon ) )/*QIcon(":/null-0.png")*/, m_customComp );
-        //expanded = true;
+        catItem->setExpanded( true );
+        expanded = true;
     }else{
         catItem = new TreeItem( name, nameTr, "", categ_CHILD, QIcon( QPixmap( icon ) ), m_customComp );
     }
@@ -492,20 +495,21 @@ TreeItem* ComponentList::addCategory( QString nameTr, QString name, QString pare
     /// catItem->setData( 0, Qt::WhatsThisRole, name );
     m_categories.insert( name, catItem );
     m_catNames.insert( nameTr, name );
-/*
-    if( parent.isEmpty() ) addTopLevelItem( catItem ); // Is root category or root category doesn't exist
-    else if( m_categories.contains( parent ) )
-        m_categories.value( parent )->addChild( catItem );
+    if( m_insertItems )
+    {
+        if( parent.isEmpty() ) addTopLevelItem( catItem ); // Is root category or root category doesn't exist
+        else if( m_categories.contains( parent ) )
+            m_categories.value( parent )->addChild( catItem );
 
-    if( MainWindow::self()->compSettings()->contains(name+"/collapsed") )
-        expanded = !MainWindow::self()->compSettings()->value( name+"/collapsed" ).toBool();
+        if( MainWindow::self()->compSettings()->contains(name+"/collapsed") )
+            expanded = !MainWindow::self()->compSettings()->value( name+"/collapsed" ).toBool();
 
-    catItem->setExpanded( expanded );
-    catItem->setData( 0, Qt::UserRole+2, expanded );
+        catItem->setExpanded( expanded );
+        catItem->setData( 0, Qt::UserRole+2, expanded );
 
-    bool hidden = MainWindow::self()->compSettings()->value( name+"/hidden" ).toBool();
-    catItem->setItemHidden( hidden );
-*/
+        bool hidden = MainWindow::self()->compSettings()->value( name+"/hidden" ).toBool();
+        catItem->setItemHidden( hidden );
+    }
     return catItem;
 }
 
@@ -588,9 +592,7 @@ void ComponentList::search( QString filter )
 
 void ComponentList::insertItems()
 {
-    QString file = "/home/user/treeList.xml";
-
-    QDomDocument domDoc = fileToDomDoc( file, "ComponentList::insertItems" );
+    QDomDocument domDoc = fileToDomDoc( m_listFile, "ComponentList::insertItems" );
     if( domDoc.isNull() ) return;
 
     QDomElement root = domDoc.documentElement();
@@ -657,7 +659,5 @@ void ComponentList::writeSettings()
     }
     treeStr += "</comptree>\n";
 
-    /// Save to file
-    QString file = "/home/user/treeList.xml";
-    Circuit::self()->saveString( file, treeStr );
+    Circuit::self()->saveString( m_listFile, treeStr );
 }

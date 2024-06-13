@@ -74,7 +74,9 @@ class ComponentList : public QTreeWidget
 
         QString getIcon( QString folder, QString name );
 
-        //QStringList m_components;
+        bool m_insertItems;
+        QString m_listFile;
+
         QHash<QString, TreeItem*> m_components;
         QHash<QString, TreeItem*> m_categories;
         QHash<QString, QString>   m_catNames;

@@ -34,7 +34,7 @@ void manCompDialog::addItem( TreeItem* treeItem )
     listItem->setText( treeItem->nameTr() );
 
     if( treeItem->isHidden() ) listItem->setCheckState( Qt::Unchecked );
-    else                   listItem->setCheckState( Qt::Checked );
+    else                       listItem->setCheckState( Qt::Checked );
 
     QTableWidgetItem* shortItem = new QTableWidgetItem();
     shortItem->setText( treeItem->shortcut() );
@@ -44,8 +44,8 @@ void manCompDialog::addItem( TreeItem* treeItem )
     table->setItem( row, 0, listItem );
     table->setItem( row, 1, shortItem );
 
-    m_treeItems[ listItem ]  = treeItem;
-    m_treeItems[ shortItem ] = treeItem;
+    m_treeToList[ listItem ]   = treeItem;
+    m_treeToShort[ shortItem ] = treeItem;
 
     int childCount = treeItem->childCount();
     if( childCount > 0 )
@@ -73,23 +73,24 @@ void manCompDialog::slotItemChanged( QTableWidgetItem* item )
 {
     if( !m_initialized ) return;
 
-    TreeItem* treeItem = m_treeItems[ item ];
-
-    if( item->column() == 0 )  // Hidden
+    if( item->column() == 0 )  // Show/Hide
     {
+        TreeItem* treeItem = m_treeToList[ item ];
+
         bool visible = item->checkState();
         treeItem->setItemHidden( !visible );
 
         for( int i=0; i<treeItem->childCount(); ++i )
         {
             TreeItem*         childItem = (TreeItem*)treeItem->child( i );
-            QTableWidgetItem* listItem  = m_treeItems.keys( childItem ).at(0);
+            QTableWidgetItem* listItem  = m_treeToList.keys( childItem ).at(0);
 
             if( visible ) listItem->setCheckState( Qt::Checked );
             else          listItem->setCheckState( Qt::Unchecked );
         }
-    }else              // Shortcut
+    }else                      // Shortcut
     {
+        TreeItem* treeItem = m_treeToShort[ item ];
         QString text = item->text().left(1);
         item->setText( text );
         treeItem->setShortCut( text );
