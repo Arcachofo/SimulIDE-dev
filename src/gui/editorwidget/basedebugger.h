@@ -44,7 +44,7 @@ class BaseDebugger : public Compiler    // Base Class for all debuggers
 
         QString getVarType( QString var );
 
-        static QString getValue( QString line, QString word );
+        static QString getValueInFile( QString line, QString word );
 
         int flashToSourceSize() { return m_flashToSource.size(); }
         

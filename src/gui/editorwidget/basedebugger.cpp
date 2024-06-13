@@ -278,7 +278,7 @@ void BaseDebugger::stepDebug()
                 EditorWindow::self()->lineReached( line );
 }   }   }   }
 
-QString BaseDebugger::getValue( QString line, QString key ) // Static
+QString BaseDebugger::getValueInFile( QString line, QString key ) // Static
 {
     QString lineL = line.toLower();
     if( !lineL.contains( key.toLower() ) ) return "";

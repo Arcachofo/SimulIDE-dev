@@ -245,6 +245,9 @@ void InoDebugger::setToolPath( QString path )
     m_builder = builder;
     m_arduinoPath = path;
     MainWindow::self()->settings()->setValue( m_compName+"_toolPath", path );
+
+    QString line = m_editor->document()->findBlockByLineNumber(0).text(); // Board name in file first line
+    setBoard( BaseDebugger::getValueInFile( line, "board" ) );
 }
 
 bool InoDebugger::upload() // Copy hex file to Circuit folder, then upload
@@ -381,12 +384,15 @@ bool InoDebugger::postProcess()
 void InoDebugger::compilerProps()
 {
     Compiler::compilerProps();
-    m_propDialog->showProp("CustomBoard", m_board == "Custom" );
+    m_propDialog->showProp("CustomBoard", m_board == "Custom");
 }
 
 void InoDebugger::setBoard( QString board )
 {
+    if( board.isEmpty() ) return;
     m_board = board;
     if( m_propDialog )
-        m_propDialog->showProp("CustomBoard", board == "Custom" );
+        m_propDialog->showProp("CustomBoard", board == "Custom");
+
+    m_outPane->appendText("\nBoard: "+board+"\n");
 }

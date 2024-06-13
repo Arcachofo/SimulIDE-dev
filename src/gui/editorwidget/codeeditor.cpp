@@ -766,7 +766,7 @@ void CodeEditor::loadConfig()
         }
 
         QString line = this->document()->findBlockByLineNumber(0).text();
-        QString compiler = BaseDebugger::getValue( line, "compiler" );
+        QString compiler = BaseDebugger::getValueInFile( line, "compiler" );
         if( !compiler.isEmpty() )
         {
             m_outPane->appendLine( tr("Found Compiler definition in file: ") + compiler );
@@ -778,8 +778,8 @@ void CodeEditor::loadConfig()
             m_compiler = EditorWindow::self()->createDebugger( compiler, this );
 
             if( m_compiler ){
-                m_compiler->setFamily( BaseDebugger::getValue( line, "family" ) );
-                m_compiler->setDevice( BaseDebugger::getValue( line, "device" ) );
+                m_compiler->setFamily( BaseDebugger::getValueInFile( line, "family" ) );
+                m_compiler->setDevice( BaseDebugger::getValueInFile( line, "device" ) );
             }
         }
         return;
