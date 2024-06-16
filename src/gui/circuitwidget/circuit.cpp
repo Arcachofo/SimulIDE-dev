@@ -1265,7 +1265,7 @@ void Circuit::dropEvent( QGraphicsSceneDragDropEvent* event )
 {
     QString id   = event->mimeData()->text();
     QString file = "file://";
-
+qDebug() << "Circuit::dropEvent";
     if( id.startsWith( file ) )
     {
         id.replace( file, "" ).replace("\r\n", "" ).replace("%20", " ");
@@ -1276,7 +1276,6 @@ void Circuit::dropEvent( QGraphicsSceneDragDropEvent* event )
         if( loId.endsWith( ".jpg") || loId.endsWith( ".png") || loId.endsWith( ".gif"))
         {
             file = id;
-            id   = "Image";
             Component* enterItem = createItem( "Image", newSceneId() );
             if( enterItem )
             {
@@ -1287,7 +1286,8 @@ void Circuit::dropEvent( QGraphicsSceneDragDropEvent* event )
                 saveCompChange( enterItem->getUid(), COMP_STATE_NEW, "" );
         }   }
         else CircuitWidget::self()->loadCirc( id );
-}   }
+}
+}
 
 void Circuit::drawBackground( QPainter* painter, const QRectF &rect )
 {

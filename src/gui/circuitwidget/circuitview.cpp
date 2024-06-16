@@ -95,7 +95,15 @@ void CircuitView::dragEnterEvent( QDragEnterEvent* event )
 {
     m_enterItem = NULL;
 
-    QStringList data = event->mimeData()->text().split(",");
+    QString text  = event->mimeData()->text();
+
+    if( text.startsWith( "file://" ) )
+    {
+        QGraphicsView::dragEnterEvent( event );
+        return;
+    }
+
+    QStringList data = text.split(",");
     if( data.size() != 2 ) return;
 
     QString type = data.last();
