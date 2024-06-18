@@ -40,7 +40,10 @@ CurrSource::CurrSource( QString type, QString id )
                                 , this, &CurrSource::getVal, &CurrSource::setVal ),
 
         new DoubProp<CurrSource>("MaxValue", tr("Max. Current"), "A"
-                                , this, &CurrSource::maxValue, &CurrSource::setMaxValue )
+                                , this, &CurrSource::maxValue, &CurrSource::setMaxValue ),
+
+        new DoubProp<CurrSource>("MinValue", tr("Min. Current"), "A"
+                                , this, &CurrSource::minValue, &CurrSource::setMinValue )
     }, 0} );
 
     setShowProp("MaxValue");
