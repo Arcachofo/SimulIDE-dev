@@ -6,8 +6,9 @@
 #include "treeitem.h"
 #include "mainwindow.h"
 
-TreeItem::TreeItem( QString name, QString nameTr, QString compType, treItemType_t itemType, const QIcon &icon, bool custom  )
+TreeItem::TreeItem( TreeItem* parent, QString name, QString nameTr, QString compType, treItemType_t itemType, const QIcon &icon, bool custom  )
 {
+    m_parent   = parent;
     m_name     = name;
     m_nameTr   = nameTr;
     m_compType = compType;

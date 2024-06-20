@@ -18,6 +18,7 @@
 #include "mainwindow.h"
 #include "circuit.h"    /// TODELETE
 #include "circuitwidget.h"
+#include "chip.h"
 #include "utils.h"
 
 ComponentList* ComponentList::m_pSelf = NULL;
@@ -253,18 +254,18 @@ void ComponentList::loadComps( QDir compSetDir )
     }
 }
 
-void ComponentList::loadXml( QString setFile, bool convert )
+void ComponentList::loadXml( QString xmlFile, bool convert )
 {
-    QFile file( setFile );
+    QFile file( xmlFile );
     if( !file.open(QFile::ReadOnly | QFile::Text) ){
-          qDebug() << "ComponentList::loadXml Cannot read file"<< endl << setFile << endl << file.errorString();
+          qDebug() << "ComponentList::loadXml Cannot read file"<< endl << xmlFile << endl << file.errorString();
           return;
     }
     QXmlStreamReader reader( &file );
     if( reader.readNextStartElement() )
     {
         if( reader.name() != "itemlib" ){
-            qDebug() <<  "ComponentList::loadXml Error parsing file (itemlib):"<< endl << setFile;
+            qDebug() <<  "ComponentList::loadXml Error parsing file (itemlib):"<< endl << xmlFile;
             file.close();
             return;
         }
@@ -318,31 +319,69 @@ void ComponentList::loadXml( QString setFile, bool convert )
 
                     if( convert )
                     {
-                        if( type == "Subcircuit" || type == "MCU" )
+                        qDebug() << "ComponentList::loadXml Corverting" << name;
+
+                        QString info;
+                        if( reader.attributes().hasAttribute("info") ) info = reader.attributes().value("info").toString();
+
+                        QString iconData;
+                        if( QFile::exists( icon ) )
                         {
-                            if( reader.attributes().hasAttribute("info") )
-                                name += "???"+reader.attributes().value("info").toString();
-
-                            if( type == "MCU" )
-                            {
-                                QString data = reader.attributes().value("data").toString();
-                                if( !data.isEmpty() ) folder = data;
-                            }
-
-                            convertItem( folder, setFile, name, catFull, icon, type );
+                            QByteArray ba = fileToByteArray( icon, "ComponentList::loadXml");
+                            QString data( ba.toHex() );
+                            iconData = data;
                         }
+
+                        QString compFolder = QFileInfo( xmlFile ).absolutePath()+"/"+folder;
+                        QString compFile = compFolder+name+".comp";
+
+                        QString compStr;
+
+                        if( type == "Subcircuit" )
+                        {
+                            CircuitWidget::self()->loadCirc( compFolder+"/"+name+"/"+name+".sim1" );
+                            compStr = Circuit::self()->circuitToString();
+
+
+                        }
+                        else if( type == "MCU" )
+                        {
+                            QString data = reader.attributes().value("data").toString();
+                            QString pkge = reader.attributes().value("package").toString();
+
+                            if( !category.startsWith("Micro") ) category = "Micro/"+category;
+
+                            QString pkgFile = compFolder+pkge+".package";
+                            if( !QFile::exists( pkgFile ) ) pkgFile = compFolder+pkge+"_LS.package";
+                            compStr += Chip::convertPackage( fileToString( pkgFile, "ComponentList::convertItem" ) );
+
+                            QString mcuFile = compFolder+data+".mcu";
+                            compStr += convertMcuFile( mcuFile );
+                        }
+                        QString comp = "<libitem";
+                        comp += " itemtype=\""+ type+"\"";
+                        comp += " category=\""+ category  +"\"";
+                        comp += " compname=\""+ name      +"\"";
+                        comp += " compinfo=\""+ info      +"\"";
+                        comp += " icondata=\""+ iconData  +"\"";
+                        comp += ">\n\n";
+                        comp += compStr;
+                        comp += "</libitem>";
+
+                        Circuit::self()->saveString( compFile, comp );
+
                     }
                     else if( catItem && !m_components.contains( name ) )
                     {
-                        m_dataFileList[ name ] = setFile;   // Save xml File used to create this item
+                        m_dataFileList[ name ] = xmlFile;   // Save xml File used to create this item
                         if( reader.attributes().hasAttribute("info") )
                             name += "???"+reader.attributes().value("info").toString();
 
-                        if( !convert ) addItem( name, catItem, icon, type );
+                        addItem( name, catItem, icon, type );
                     }
                     reader.skipCurrentElement();
     }   }   }   }
-    QString compSetName = setFile.split( "/").last();
+    QString compSetName = xmlFile.split( "/").last();
 
     qDebug() << tr("        Loaded Component set:           ") << compSetName;
 }
@@ -353,60 +392,6 @@ QString ComponentList::getIcon( QString folder, QString name )
     if( m_compSetDir.exists( icon ) ) icon = m_compSetDir.absoluteFilePath( icon );
     else                              icon = "";
     return icon;
-}
-
-void ComponentList::convertItem( QString folder, QString itemFile, QString name, QString category, QString icon, QString type )
-{
-    qDebug() << "ComponentList::convertItem Corverting" << name;
-    QStringList nameFull = name.split( "???" );
-    QString info = "";
-    if( nameFull.size() > 1 ) info = "   "+nameFull.last();
-    name = nameFull.first();
-
-    QString simFile;
-    QString compFile;
-    QString destFolder = QFileInfo( itemFile ).absolutePath();
-    if( type == "MCU" )
-    {
-        simFile = destFolder+"/"+folder+".sim1";
-        compFile = destFolder+"/"+folder+".comp";
-        if( !category.startsWith("Micro") ) category = "Micro/"+category;
-    }
-    else{
-        simFile = destFolder+"/"+folder+"/"+name+"/"+name+".sim1";
-        compFile = destFolder+"/"+folder+"/"+name+".comp";
-    }
-    //qDebug() << simFile;
-    //            return;
-    QString iconData;
-    if( QFile::exists( icon ) )
-    {
-        QByteArray ba = fileToByteArray( icon, "ComponentList::convertItem");
-        QString data( ba.toHex() );
-        iconData = data;
-    }
-
-    QString comp = "<libitem";
-    comp += " itemtype=\""+ type+"\"";
-    comp += " category=\""+ category  +"\"";
-    comp += " compname=\""+ name      +"\"";
-    comp += " compinfo=\""+ info      +"\"";
-    comp += " icondata=\""+ iconData  +"\"";
-    comp += ">\n\n";
-
-    //Circuit::self()->setConverting( true );
-    CircuitWidget::self()->loadCirc( simFile );
-    comp += Circuit::self()->circuitToString();
-
-    if( type == "MCU" )
-    {
-        QString mcuFile = destFolder+"/"+folder+".mcu";
-        comp += convertMcuFile( mcuFile );
-    }
-    comp += "</libitem>";
-
-    Circuit::self()->saveString( compFile, comp );
-    //Circuit::self()->setConverting( false );
 }
 
 QString ComponentList::convertMcuFile( QString file )
@@ -445,7 +430,7 @@ void ComponentList::addItem( QString caption, TreeItem* catItem, QIcon &icon, QS
 
     QString name = ( type == "Subcircuit" || type == "MCU" ) ? nameTr : type;
 
-    TreeItem* item = new TreeItem( name, nameTr, type, component, icon, m_customComp );
+    TreeItem* item = new TreeItem( catItem, name, nameTr, type, component, icon, m_customComp );
 
     item->setText( 0, nameTr+info );
 
@@ -478,17 +463,19 @@ TreeItem* ComponentList::getCategory( QString category )
 
 TreeItem* ComponentList::addCategory( QString nameTr, QString name, QString parent, QString icon )
 {
-    TreeItem* catItem = NULL;
+    TreeItem* catItem = nullptr;
+    TreeItem* catParent = nullptr;
 
     bool expanded = false;
 
     if( parent.isEmpty() )                              // Is Main Category
     {
-        catItem = new TreeItem( name, nameTr, "", categ_MAIN, QIcon( QPixmap( icon ) )/*QIcon(":/null-0.png")*/, m_customComp );
+        catItem = new TreeItem( nullptr, name, nameTr, "", categ_MAIN, QIcon( QPixmap( icon ) )/*QIcon(":/null-0.png")*/, m_customComp );
         catItem->setExpanded( true );
         expanded = true;
     }else{
-        catItem = new TreeItem( name, nameTr, "", categ_CHILD, QIcon( QPixmap( icon ) ), m_customComp );
+        if( m_categories.contains( parent ) ) catParent = m_categories.value( parent );
+        catItem = new TreeItem( catParent, name, nameTr, "", categ_CHILD, QIcon( QPixmap( icon ) ), m_customComp );
     }
 
     catItem->setText( 0, nameTr );
@@ -498,8 +485,7 @@ TreeItem* ComponentList::addCategory( QString nameTr, QString name, QString pare
     if( m_insertItems )
     {
         if( parent.isEmpty() ) addTopLevelItem( catItem ); // Is root category or root category doesn't exist
-        else if( m_categories.contains( parent ) )
-            m_categories.value( parent )->addChild( catItem );
+        else if( catParent )   catParent->addChild( catItem );
 
         if( MainWindow::self()->compSettings()->contains(name+"/collapsed") )
             expanded = !MainWindow::self()->compSettings()->value( name+"/collapsed" ).toBool();
@@ -597,7 +583,20 @@ void ComponentList::insertItems()
 
     QDomElement root = domDoc.documentElement();
     QDomNode    tree = root.firstChild();
-    insertItem( &domDoc, nullptr );
+    insertItem( &domDoc, nullptr );               // Insert items as stored in file
+
+    for( TreeItem* item : m_categories.values() ) // Insert new categories
+    {
+        TreeItem* parent = item->parentItem();
+        if( parent ) parent->addChild( item );
+        else         addTopLevelItem( item );
+    }
+
+    for( TreeItem* item : m_components.values() ) // Insert new components
+    {
+        TreeItem* catItem = item->parentItem();
+        if( catItem ) catItem->addChild( item );
+    }
 }
 
 void ComponentList::insertItem( QDomNode* node, TreeItem* parent )
@@ -613,6 +612,7 @@ void ComponentList::insertItem( QDomNode* node, TreeItem* parent )
         item = m_categories.value( name );
 
         if( item ){
+            m_categories.remove( name );
             expanded = element.attribute("expanded") == "1";
 
             treItemType_t itemType = parent ? categ_CHILD : categ_MAIN;
@@ -624,6 +624,7 @@ void ComponentList::insertItem( QDomNode* node, TreeItem* parent )
         item = m_components.value( name );
 
         if( item ){
+            m_components.remove( name );
             QString shortcut = element.attribute("shortcut");
             item->setShortCut( shortcut );
             m_shortCuts.insert( shortcut, name );
@@ -638,7 +639,7 @@ void ComponentList::insertItem( QDomNode* node, TreeItem* parent )
         item->setItemHidden( hidden );
     }
 
-    QDomNode child = node->firstChild();
+    QDomNode child = node->firstChild(); // Recursively add items
     while( !child.isNull() ){
         insertItem( &child, item );
         child = child.nextSibling();

@@ -18,12 +18,14 @@ enum treItemType_t{
 class TreeItem : public QTreeWidgetItem
 {
     public:
-        TreeItem( QString name, QString nameTr, QString compType, treItemType_t itemType, const QIcon &icon, bool custom );
+        TreeItem( TreeItem* parent, QString name, QString nameTr, QString compType, treItemType_t itemType, const QIcon &icon, bool custom );
         ~TreeItem();
 
         QString name()     { return m_name; }
         QString nameTr()   { return m_nameTr; }
         QString compType() { return m_compType; }
+
+        TreeItem* parentItem() { return m_parent; }
 
         QString shortcut() { return m_shortcut; }
         void setShortCut( QString s ) { m_shortcut = s; }
@@ -50,6 +52,8 @@ class TreeItem : public QTreeWidgetItem
         bool m_hidden;
 
         treItemType_t m_itemType;
+
+        TreeItem* m_parent;
 };
 
 #endif

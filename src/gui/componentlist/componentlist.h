@@ -41,7 +41,7 @@ class ComponentList : public QTreeWidget
         void setShortcut( QString s, QString c ) { m_shortCuts[s] = c; }
         QString getComponent( QString shortcut ) { return m_shortCuts.value( shortcut ); }
 
-        void loadXml( QString setFile, bool convert=false );
+        void loadXml( QString xmlFile, bool convert=false );
 
         void writeSettings();
 
@@ -57,7 +57,6 @@ class ComponentList : public QTreeWidget
     private:
  static ComponentList* m_pSelf;
 
-        void convertItem( QString folder, QString itemFile, QString name, QString category, QString icon, QString type );
         QString convertMcuFile( QString file );
 
         void addItem( QString caption, TreeItem* catItem, QString icon, QString type );
