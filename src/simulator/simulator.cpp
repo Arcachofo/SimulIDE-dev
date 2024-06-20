@@ -284,7 +284,7 @@ void Simulator::startSim( bool paused )
 
     createNodes();
 
-    /// qDebug() <<"  Initializing "<< m_elementList.size() << "\teElements";
+    qDebug() <<"  Initializing "<< m_elementList.size() << "\teElements";
     for( eElement* el : m_elementList )    // Initialize all Elements
     {                                      // This can create new eNodes
         //qDebug() << "initializing  "<< el->getId();
@@ -293,7 +293,7 @@ void Simulator::startSim( bool paused )
         el->added = false;
     }
 
-    /// qDebug() <<"  Initializing "<< m_eNodeList.size()<< "\teNodes";
+    qDebug() <<"  Initializing "<< m_eNodeList.size()<< "\teNodes";
     for( int i=0; i<m_eNodeList.size(); i++ )         // Initialize eNodes
     {
         eNode* enode = m_eNodeList.at(i);

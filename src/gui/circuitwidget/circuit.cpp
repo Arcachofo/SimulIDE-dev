@@ -1265,7 +1265,7 @@ void Circuit::dropEvent( QGraphicsSceneDragDropEvent* event )
 {
     QString id   = event->mimeData()->text();
     QString file = "file://";
-qDebug() << "Circuit::dropEvent";
+//qDebug() << "Circuit::dropEvent";
     if( id.startsWith( file ) )
     {
         id.replace( file, "" ).replace("\r\n", "" ).replace("%20", " ");

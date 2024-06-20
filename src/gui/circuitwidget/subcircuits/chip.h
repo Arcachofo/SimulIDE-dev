@@ -51,6 +51,8 @@ class Chip : public Component, public eElement
 
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w ) override;
 
+ static QString convertPackage( QString domText );
+
     protected:
         virtual Pin* addPin( QString id, QString type, QString label,
                              int pos, int xpos, int ypos, int angle, int length=8, int space=0 ){return NULL;}
@@ -62,7 +64,6 @@ class Chip : public Component, public eElement
                         int pos, int xpos, int ypos, int angle, int length=8, int space=0 );
 
         void initPackage(  QString pkgStr  );
- static QString convertPackage( QString domText );
 
         virtual void findHelp() override;
 

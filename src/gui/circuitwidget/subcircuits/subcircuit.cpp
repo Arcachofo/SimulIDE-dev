@@ -86,7 +86,8 @@ Component* SubCircuit::construct( QString type, QString id )
         for( QString line : list )
         {
             if( !line.startsWith("<item") ) continue;
-            line.replace("&#x3D;","=");
+            //line.replace("&#x3D;","=");
+            //line.replace("&lt","&#x3E;");
 
             QDomDocument domDoc;
             domDoc.setContent( line );

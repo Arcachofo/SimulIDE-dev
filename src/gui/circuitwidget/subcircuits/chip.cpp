@@ -96,6 +96,7 @@ QString Chip::convertPackage( QString domText ) // Static, converts xml to new f
         line.replace("<packageB","Package;");
         line.replace("&#x3C;", "<").replace("&#x3D;", "=").replace("&#x3E;", ">");
         line.replace("&#x3C" , "<").replace("&#x3D" , "=").replace("&#x3E" , ">");
+        line.replace("&lt;" , "<");
         line.replace("&#xa;","");
         line.replace("Pin;","\nPin;");
         line.replace("<pin","Pin;");
