@@ -312,7 +312,7 @@ void CircuitWidget::loadCirc( QString path )
       || path.endsWith(".sim1")
       || path.endsWith(".comp")  ) )
     {
-        newCircuit();
+        if( !newCircuit() ) return;
         Circuit::self()->loadCircuit( path );
    
         m_curCirc = path;
