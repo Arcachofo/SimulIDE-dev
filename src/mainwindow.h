@@ -84,7 +84,7 @@ class MainWindow : public QMainWindow
 
     protected:
         void closeEvent( QCloseEvent* event );
-
+		void keyPressEvent( QKeyEvent* event );
     private slots:
         void searchChanged();
         void clearSearch();
