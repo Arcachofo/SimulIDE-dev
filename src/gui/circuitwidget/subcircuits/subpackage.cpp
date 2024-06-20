@@ -528,8 +528,9 @@ void SubPackage::setPackageFile( QString package )
     m_pkgeFile = package;
     if( package.isEmpty() ) return;
 
-    for( Pin* pin : m_pin ) deletePin( pin );
     m_pkgePins.clear();
+    for( Pin* pin : m_pin ) deletePin( pin );
+    m_pin.clear();
 
     QString domText = fileToString( fileNameAbs, "SubPackage::setPackageFile");
     QString pkgStr  = convertPackage( domText );
