@@ -50,7 +50,8 @@ void creCompDialog::accept()
         return;
     }
     int index = iconBox->currentIndex();
-    QString iconData = m_itemList.at( index ).iconData;
+    QString iconData;
+    if( index > 0 ) iconData = m_itemList.at( index ).iconData;
 
     QString comp = "<libitem";
     comp += " itemtype=\""+ typeBox->currentText()+"\"";
