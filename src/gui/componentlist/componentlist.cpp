@@ -32,9 +32,6 @@ ComponentList::ComponentList( QWidget* parent )
 
     m_mcDialog.setVisible( false );
 
-    m_listFile = MainWindow::self()->getConfigPath("compList.xml");
-    m_insertItems = !QFile::exists( m_listFile ); // xml file doesn't exist: Insert items when created
-
     setSelectionMode( QAbstractItemView::SingleSelection );
     setDragEnabled( true );
     //setAcceptDrops( true );
@@ -52,11 +49,15 @@ ComponentList::ComponentList( QWidget* parent )
     float scale = MainWindow::self()->fontScale();
     setIconSize( QSize( 30*scale, 24*scale ));
 
+    QString userDir = MainWindow::self()->userPath();
+    m_listFile = userDir+"compList.xml";
+    //m_listFile = MainWindow::self()->getConfigPath("compList.xml");
+    m_insertItems = !QFile::exists( m_listFile ); // xml file doesn't exist: Insert items when created
+
     m_customComp = false;
     LoadLibraryItems();
     m_customComp = true;
 
-    QString userDir = MainWindow::self()->userPath();
     if( !userDir.isEmpty() && QDir( userDir ).exists() ) LoadCompSetAt( userDir );
 
     if( !m_insertItems ) insertItems(); // Add items to tree widget from xml file
