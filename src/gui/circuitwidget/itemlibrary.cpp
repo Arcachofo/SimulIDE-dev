@@ -20,6 +20,7 @@
 #include "bus.h"
 #include "capacitor.h"
 #include "clock.h"
+#include "comparator.h"
 #include "csource.h"
 #include "currsource.h"
 #include "dac.h"
@@ -191,6 +192,7 @@ void ItemLibrary::loadItems()
     addItem( BJT::libraryItem() );
     addItem( new LibraryItem( QObject::tr("Other Active"), "Active", "2to2.png","Other Active", NULL ) );
     addItem( OpAmp::libraryItem() );
+    addItem( Comparator::libraryItem() );
     addItem( VoltReg::libraryItem() );
     addItem( MuxAnalog::libraryItem() );
     // Outputs
