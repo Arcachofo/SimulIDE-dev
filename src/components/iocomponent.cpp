@@ -26,6 +26,7 @@ IoComponent::IoComponent( QString type, QString id)
     m_inImp = 1e9;
     m_ouImp = 40;
 
+    m_openCol    = false;
     m_invInputs  = false;
     m_invOutputs = false;
 

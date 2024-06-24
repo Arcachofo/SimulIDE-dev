@@ -18,7 +18,6 @@ LogicComponent::LogicComponent( QString type, QString id )
 {
     m_oePin     = NULL;
     m_tristate  = false;
-    m_openCol   = false;
     m_outEnable = true;
 
     m_enumUids = QStringList()

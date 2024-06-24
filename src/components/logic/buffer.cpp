@@ -76,9 +76,9 @@ QPainterPath Buffer::shape() const
     return path;
 }
 
-void Buffer::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
+void Buffer::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w )
 {
-    Component::paint( p, option, widget );
+    Component::paint( p, o, w );
 
     static const QPointF points[4] = {
         QPointF(-8,-8 ),

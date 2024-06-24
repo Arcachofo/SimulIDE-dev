@@ -21,8 +21,8 @@ class Buffer : public Gate
 
         virtual void setTristate( bool t ) override;
 
-        virtual QPainterPath shape() const;
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
+        virtual QPainterPath shape() const override;
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w ) override;
 };
 
 #endif
