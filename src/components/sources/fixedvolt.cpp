@@ -34,8 +34,6 @@ FixedVolt::FixedVolt( QString type, QString id )
           : Component( type, id )
           , eElement( id )
 {
-    m_area = QRect( -10, -10, 20, 20 );
-
     m_graphical = true;
     m_changed   = false;
 
@@ -46,13 +44,12 @@ FixedVolt::FixedVolt( QString type, QString id )
     setLabelPos(-64,-24 );
 
     m_button = new CustomButton();
-    m_button->setMaximumSize( 16,16 );
-    m_button->setGeometry(-20,-16,16,16);
     m_button->setCheckable( true );
 
     m_proxy = Circuit::self()->addWidget( m_button );
     m_proxy->setParentItem( this );
-    m_proxy->setPos( QPoint(-32, -8) );
+
+    setSmall( false );
 
     setVolt( 5.0 );
     
@@ -62,11 +59,15 @@ FixedVolt::FixedVolt( QString type, QString id )
 
     addPropGroup( { tr("Main"), {
         new DoubProp<FixedVolt>("Voltage", tr("Voltage"), "V"
-                               , this, &FixedVolt::volt, &FixedVolt::setVolt )
+                               , this, &FixedVolt::volt, &FixedVolt::setVolt ),
+
+        new BoolProp<FixedVolt>("Small", tr("Small size"), ""
+                           , this, &FixedVolt::isSmall, &FixedVolt::setSmall )
     }, 0} );
 
     addPropGroup( { "Hidden", {
-new BoolProp<FixedVolt>( "Out", "","", this, &FixedVolt::out, &FixedVolt::setOut ),
+        new BoolProp<FixedVolt>( "Out", "",""
+                        , this, &FixedVolt::out, &FixedVolt::setOut ),
     }, groupHidden} );
 }
 FixedVolt::~FixedVolt(){}
@@ -114,16 +115,35 @@ void FixedVolt::setVolt( double v )
     m_changed = true;
 }
 
-void FixedVolt::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
+void FixedVolt::setSmall( bool s )
+{
+    m_small = s;
+
+    if( s ){
+        m_button->setMaximumSize( 9, 9 );
+        m_button->setGeometry(-5,-5, 9, 9);
+        m_proxy->setPos( QPointF(-6,-4.5) );
+        m_area = QRect( 4, -4, 8, 8 );
+    }else{
+        m_button->setMaximumSize( 16, 16 );
+        m_button->setGeometry(-20,-16, 16, 16);
+        m_proxy->setPos( QPoint(-32,-8) );
+        m_area = QRect(-10,-10, 20, 20 );
+    }
+    Circuit::self()->update();
+}
+
+void FixedVolt::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w )
 {
     if( m_hidden ) return;
 
-    Component::paint( p, option, widget );
+    Component::paint( p, o, w );
 
     if( m_button->isChecked() ) p->setBrush( QColor( 255, 166, 0 ) );
     else                        p->setBrush( QColor( 230, 230, 255 ) );
 
-    p->drawRoundedRect( QRectF( -8, -8, 16, 16 ), 2, 2);
+    if( m_small )p->drawRoundedRect( QRectF( 4,-4,  8,  8 ), 2, 2);
+    else         p->drawRoundedRect( QRectF(-8,-8, 16, 16 ), 2, 2);
 
     Component::paintSelected( p );
 }

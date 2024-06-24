@@ -25,6 +25,9 @@ class FixedVolt : public Component, public eElement
  static Component* construct( QString type, QString id );
  static LibraryItem* libraryItem();
 
+        void setSmall( bool s );
+        bool isSmall() { return m_small; }
+
         virtual void stamp() override;
         virtual void updateStep() override;
 
@@ -34,7 +37,7 @@ class FixedVolt : public Component, public eElement
         double volt() { return m_voltage; }
         void setVolt( double v );
 
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w ) override;
 
     public slots:
         virtual void onbuttonclicked();
@@ -43,6 +46,8 @@ class FixedVolt : public Component, public eElement
         void updateOutput();
 
         double m_voltage;
+
+        bool m_small;
 
         IoPin* m_outpin;
 
