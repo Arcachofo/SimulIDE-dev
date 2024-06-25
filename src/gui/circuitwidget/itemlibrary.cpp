@@ -71,6 +71,7 @@
 #include "line.h"
 #include "lm555.h"
 #include "logicanalizer.h"
+#include "magnitudecomp.h"
 #include "max72xx_matrix.h"
 #include "mcu.h"
 #include "memory.h"
@@ -252,6 +253,7 @@ void ItemLibrary::loadItems()
     addItem( new LibraryItem( QObject::tr("Arithmetic"), "Logic", "2to2.png","Arithmetic", NULL ) );
     addItem( BinCounter::libraryItem() );
     addItem( FullAdder::libraryItem() );
+    addItem( MagnitudeComp::libraryItem() );
     addItem( ShiftReg::libraryItem() );
     addItem( Function::libraryItem() );
     addItem( new LibraryItem( QObject::tr("Memory"), "Logic", "subc.png","Memory", NULL ) );
