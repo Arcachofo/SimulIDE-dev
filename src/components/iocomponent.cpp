@@ -380,8 +380,7 @@ void IoComponent::setNumPins( std::vector<IoPin*>* pinList, uint pins
 
     int halfH;
     if( label.isEmpty() ) halfH = m_height*8/2; // Gates
-    else
-    {
+    else{
         m_height += 1;
         halfH = (m_height/2)*8;
     }
@@ -407,7 +406,7 @@ void IoComponent::setNumPins( std::vector<IoPin*>* pinList, uint pins
             pinList->at(i) = new IoPin( angle, QPoint( x, y ), pinId, i, this, mode );
             initPin( pinList->at(i) );
             if( mode == output && m_invOutputs ) pinList->at(i)->setInverted( true );
-            if( mode == input && m_invInputs ) pinList->at(i)->setInverted( true );
+            if( mode == input  && m_invInputs  ) pinList->at(i)->setInverted( true );
 
             if( !label.isEmpty() ) pinList->at(i)->setLabelText( label+num );
             pinList->at(i)->setLabelColor( QColor( 0, 0, 0 ) );

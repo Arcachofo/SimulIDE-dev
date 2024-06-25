@@ -18,8 +18,8 @@ class Comparator : public IoComponent, public eElement
         Comparator( QString type, QString id );
         ~Comparator();
         
-        static Component* construct( QString type, QString id );
-        static LibraryItem* libraryItem();
+ static Component* construct( QString type, QString id );
+ static LibraryItem* libraryItem();
 
         virtual void stamp() override;
         virtual void voltChanged() override;

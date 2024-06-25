@@ -18,8 +18,8 @@ class Mux : public LogicComponent
         Mux( QString type, QString id );
         ~Mux();
 
-        static Component* construct( QString type, QString id );
-        static LibraryItem* libraryItem();
+  static Component* construct( QString type, QString id );
+  static LibraryItem* libraryItem();
 
         virtual void stamp() override;
         virtual void voltChanged() override;

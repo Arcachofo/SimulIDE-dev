@@ -122,7 +122,7 @@ void FixedVolt::setSmall( bool s )
     if( s ){
         m_button->setMaximumSize( 9, 9 );
         m_button->setGeometry(-5,-5, 9, 9);
-        m_proxy->setPos( QPointF(-6,-4.5) );
+        m_proxy->setPos( QPointF(-8,-4.5) );
         m_area = QRect( 4, -4, 8, 8 );
     }else{
         m_button->setMaximumSize( 16, 16 );
@@ -142,8 +142,8 @@ void FixedVolt::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* 
     if( m_button->isChecked() ) p->setBrush( QColor( 255, 166, 0 ) );
     else                        p->setBrush( QColor( 230, 230, 255 ) );
 
-    if( m_small )p->drawRoundedRect( QRectF( 4,-4,  8,  8 ), 2, 2);
-    else         p->drawRoundedRect( QRectF(-8,-8, 16, 16 ), 2, 2);
+    if( m_small ) p->drawRoundedRect( QRectF( 4,-4,  8,  8 ), 2, 2);
+    else          p->drawRoundedRect( QRectF(-8,-8, 16, 16 ), 2, 2);
 
     Component::paintSelected( p );
 }
