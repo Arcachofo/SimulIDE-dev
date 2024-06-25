@@ -25,17 +25,22 @@ class Probe : public Component, public eElement
 
         void setVolt( double volt );
 
+        void setSmall( bool s );
+        bool isSmall() { return m_small; }
+
         double threshold() { return m_voltTrig; }
         void setThreshold( double t ) { m_voltTrig = t; }
 
         virtual void rotateAngle( double a ) override;
 
         virtual QPainterPath shape() const override;
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w ) override;
 
     private: 
         double m_voltIn;
         double m_voltTrig;
+
+        bool m_small;
 
         IoPin* m_inputPin;
 };

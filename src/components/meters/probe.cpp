@@ -4,13 +4,14 @@
  ***( see copyright.txt file at root folder )*******************************/
 
 #include <QtMath>
+#include <QPainter>
 
 #include "probe.h"
 #include "connector.h"
 #include "connectorline.h"
+#include "circuit.h"
 #include "simulator.h"
 #include "itemlibrary.h"
-#include "circuitwidget.h"
 #include "label.h"
 #include "iopin.h"
 
@@ -39,12 +40,12 @@ Probe::Probe( QString type, QString id )
     setZValue( 200 );
     m_area = QRect(-12,-8, 20, 16 );
     m_graphical = true;
+
     m_voltTrig = 2.5;
     m_voltIn = 0;
 
     m_pin.resize(1); // Create Input Pin
     m_pin[0] = m_inputPin = new IoPin( 180, QPoint(-22,0), id+"-inpin", 0, this, undef_mode );
-    m_inputPin->setLength( 14 );
     m_inputPin->setBoundingRect( QRect(-1, -1, 2, 2) );
     m_inputPin->setImpedance( 1e9 );
 
@@ -55,6 +56,8 @@ Probe::Probe( QString type, QString id )
     m_voltIn = -1; // Force update
     setVolt( 0 );
 
+    setSmall( false );
+
     Simulator::self()->addToUpdateList( this );
 
     addPropGroup( { tr("Main"), {
@@ -62,7 +65,10 @@ Probe::Probe( QString type, QString id )
                            , this, &Probe::showVal, &Probe::setShowVal, propNoCopy ),
 
         new DoubProp<Probe>("Threshold", tr("Threshold"), "V"
-                           , this, &Probe::threshold, &Probe::setThreshold )
+                           , this, &Probe::threshold, &Probe::setThreshold ),
+
+        new BoolProp<Probe>("Small", tr("Small size"), ""
+                           , this, &Probe::isSmall, &Probe::setSmall )
     }, 0 } );
 }
 Probe::~Probe(){}
@@ -115,21 +121,36 @@ void Probe::rotateAngle( double a )
     m_valLabel->rotateAngle(-a );
 }
 
+void Probe::setSmall( bool s )
+{
+    m_small = s;
+
+    if( s ){
+        m_inputPin->setLength( 6 );
+        m_area = QRect(-16, -4, 8, 8 );
+    }else{
+        m_inputPin->setLength( 14 );
+        m_area = QRect(-12,-8, 20, 16 );
+    }
+    Circuit::self()->update();
+}
+
 QPainterPath Probe::shape() const
 {
     QPainterPath path;
     path.addEllipse( m_area );
     return path;
 }
-void Probe::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget )
+void Probe::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w )
 {
-    Component::paint( p, option, widget );
+    Component::paint( p, o, w );
 
     if      ( m_voltIn > m_voltTrig)  p->setBrush( QColor( 255, 166, 0 ) );
     else if ( m_voltIn < -m_voltTrig) p->setBrush( QColor( 0, 100, 255 ) );
     else                              p->setBrush( QColor( 230, 230, 255 ) );
 
-    p->drawEllipse( QRect(-8,-8, 16, 16 ) );
+    if( m_small ) p->drawEllipse( m_area );
+    else          p->drawEllipse( QRect(-8,-8, 16, 16 ) );
 
     Component::paintSelected( p );
 }
