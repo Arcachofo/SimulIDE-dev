@@ -62,8 +62,9 @@ MagnitudeComp::~MagnitudeComp(){}
 void MagnitudeComp::stamp()
 {
     IoComponent::initState();
-    m_outPin[0]->setOutState( true );
-    m_outPin[2]->setOutState( true );
+    // Logic for 7485
+    //m_outPin[0]->setOutState( true );
+    //m_outPin[2]->setOutState( true );
 
     for( uint i=0; i<m_inPin.size(); ++i ) m_inPin[i]->changeCallBack( this );
 }

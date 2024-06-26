@@ -98,9 +98,13 @@ MainWindow::MainWindow()
     }
 }
 MainWindow::~MainWindow(){ }
-void MainWindow::keyPressEvent( QKeyEvent* event) {
-	int key = event->key();
-	if( key == Qt::Key_F5 )CircuitWidget::self()->powerCircOn();
+
+void MainWindow::keyPressEvent( QKeyEvent* event)
+{
+    if( event->key() == Qt::Key_F5 )
+        CircuitWidget::self()->powerCircOn();
+    else
+        QMainWindow::keyPressEvent( event);
 }
 
 void MainWindow::closeEvent( QCloseEvent *event )

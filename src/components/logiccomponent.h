@@ -43,7 +43,7 @@ class LogicComponent : public IoComponent, public eClockedDevice
         bool m_outEnable;
         bool m_tristate;
 
-        IoPin*  m_oePin;
+        IoPin* m_oePin;
 };
 
 #endif

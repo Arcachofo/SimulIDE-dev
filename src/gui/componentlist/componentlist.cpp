@@ -650,6 +650,8 @@ void ComponentList::insertItem( QDomNode* node, TreeItem* parent )
 
 void ComponentList::writeSettings()
 {
+    search("");
+
     QString treeStr = "<comptree>\n";
 
     QList<QTreeWidgetItem*> topLevelList = ComponentList::self()->findItems("",Qt::MatchStartsWith);
