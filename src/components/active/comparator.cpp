@@ -38,8 +38,8 @@ Comparator::Comparator( QString type, QString id )
           , eElement( id )
 {
     m_width = 4;
-    setNumInps( 2, "", 0 );
-    setNumOuts( 1, "", 0, false );
+    setNumInps( 2,"", 0 );
+    setNumOuts( 1,"",-1 );
 
     m_area = QRect(-18,-8*2, 36, 8*2*2 );
     setLabelPos(-16,-32, 0);

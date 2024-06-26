@@ -293,10 +293,17 @@ void IoComponent::init( QStringList pins ) // Example: pin = "IL02Name" => input
         i++;
 }   }
 
-IoPin* IoComponent::createPin( QString data, QString id ) // Example data = "L02" => left side, number 2
+IoPin* IoComponent::createPin( QString data, QString id ) // Example data = "IL02" => Input, left side, position 2
 {
     pinMode_t mode = (data.left(1) == "I") ? input : output ;
     data.remove( 0, 1 );
+    IoPin* pin = new IoPin( 0, QPoint( 0, 0 ), id, 0, this, mode );
+    setupPin( pin, data );
+    return pin;
+}
+
+void IoComponent::setupPin( IoPin *pin, QString data ) // Example data = "L02" => left side, position 2
+{
     QString pos = data.left(1);
     data.remove( 0, 1 );
     int num = data.left(2).toInt();
@@ -334,11 +341,13 @@ IoPin* IoComponent::createPin( QString data, QString id ) // Example data = "L02
           && label.startsWith("!")) )
             label.prepend(" ");
     }
-    IoPin* pin = new IoPin( angle, QPoint( x, y ), id, 0, this, mode );
+    pin->setPinAngle( angle );
+    pin->setPos( x, y );
+
     pin->setLabelColor( QColor( 0, 0, 0 ) );
     pin->setLabelText( label );
     initPin( pin );
-    return pin;
+
 }
 
 void IoComponent::initPin( IoPin* pin )
@@ -351,14 +360,14 @@ void IoComponent::initPin( IoPin* pin )
     pin->setOutputImp( m_ouImp  );
 }
 
-void IoComponent::setNumInps( uint pins, QString label, int bit0, bool number )
-{ setNumPins( &m_inPin, pins, label, bit0, false, number ); }
+void IoComponent::setNumInps( uint pins, QString label, int bit0, int id0 )
+{ setNumPins( &m_inPin, pins, label, bit0, false, id0 ); }
 
-void IoComponent::setNumOuts( uint pins, QString label, int bit0, bool number )
-{ setNumPins( &m_outPin, pins, label, bit0, true, number ); }
+void IoComponent::setNumOuts( uint pins, QString label, int bit0, int id0 )
+{ setNumPins( &m_outPin, pins, label, bit0, true, id0 ); }
 
 void IoComponent::setNumPins( std::vector<IoPin*>* pinList, uint pins
-                              , QString label, int bit0, bool out, bool number )
+                              , QString label, int bit0, bool out, int id0 )
 {
     uint oldSize = pinList->size();
     //if( pins == oldSize ) return;
@@ -398,30 +407,37 @@ void IoComponent::setNumPins( std::vector<IoPin*>* pinList, uint pins
         QString pinId = id;
         if( i < oldSize ) pinList->at(i)->setY( y );
         else{
-            if( number )
+            if( bit0 >= 0 )
             {
-                pinId += QString::number(i);
-                num = QString::number(i+bit0);
+                pinId += QString::number( id0 );
+                num    = QString::number( bit0 );
             }
-            pinList->at(i) = new IoPin( angle, QPoint( x, y ), pinId, i, this, mode );
-            initPin( pinList->at(i) );
-            if( mode == output && m_invOutputs ) pinList->at(i)->setInverted( true );
-            if( mode == input  && m_invInputs  ) pinList->at(i)->setInverted( true );
+            IoPin* pin = new IoPin( angle, QPoint( x, y ), pinId, i, this, mode );
+            pinList->at(i) = pin;
+            initPin( pin );
+            if( mode == output && m_invOutputs ) pin->setInverted( true );
+            if( mode == input  && m_invInputs  ) pin->setInverted( true );
 
-            if( !label.isEmpty() ) pinList->at(i)->setLabelText( label+num );
-            pinList->at(i)->setLabelColor( QColor( 0, 0, 0 ) );
-    }   }
+            if( !label.isEmpty() ) pin->setLabelText( label+num );
+            pin->setLabelColor( QColor( 0, 0, 0 ) );
+        }
+        if( bit0 >= 0 )
+        {
+            id0++;
+            bit0++;
+        }
+    }
     setflip();
     Circuit::self()->update();
 }
 
-void IoComponent::deletePins( std::vector<IoPin*>* pinList, uint pins )
+void IoComponent::deletePins( std::vector<IoPin*>* pinList, int pins )
 {
-    uint oldSize = pinList->size();
+    int oldSize = pinList->size();
     if( pins > oldSize ) pins = oldSize;
 
-    uint newSize = oldSize-pins;
-    for( uint i=oldSize-1; i>newSize-1; --i ) deletePin( pinList->at(i) );
+    int newSize = oldSize-pins;
+    for( int i=oldSize-1; i>newSize-1; --i ) deletePin( pinList->at(i) );
 
     pinList->resize( newSize );
 }

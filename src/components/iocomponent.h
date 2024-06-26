@@ -65,10 +65,10 @@ class IoComponent : public Component
         void setFallTime( double time );
 
         int  numInps() { return m_inPin.size(); }
-        virtual void setNumInps( uint pins, QString label="I", int bit0=0, bool number=true );
+        virtual void setNumInps( uint pins, QString label="I", int bit0=0, int id0=0 );
 
         int  numOuts() { return m_outPin.size(); }
-        virtual void setNumOuts( uint pins, QString label="O", int bit0=0, bool number=true );
+        virtual void setNumOuts( uint pins, QString label="O", int bit0=0, int id0=0 );
 
         bool openCol() { return m_openCol; }
         void setOpenCol( bool op );
@@ -86,8 +86,9 @@ class IoComponent : public Component
 
     protected:
         IoPin* createPin( QString data, QString id );
-        void setNumPins( std::vector<IoPin*>* pinList, uint pins, QString label, int bit0, bool out, bool number );
-        void deletePins( std::vector<IoPin*>* pinList, uint pins );
+        void setupPin( IoPin *pin, QString data );
+        void setNumPins( std::vector<IoPin*>* pinList, uint pins, QString label, int bit0, bool out, int id0 );
+        void deletePins( std::vector<IoPin*>* pinList, int pins );
 
         uint m_outValue;
         uint m_nextOutVal;

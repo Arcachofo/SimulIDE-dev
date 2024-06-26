@@ -19,7 +19,7 @@ Gate::Gate( QString type, QString id, int inputs )
     m_initState = false;
     m_minInputs = inputs;
 
-    setNumOuts( 1, "", 0, false );
+    setNumOuts( 1,"",-1 );
     setNumInputs( inputs );  // Create Input Pins
 
     /// m_rndPD = true; // Randomize Propagation Delay:
