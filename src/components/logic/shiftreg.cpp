@@ -33,17 +33,25 @@ ShiftReg::ShiftReg( QString type, QString id )
     m_height = 9;
     m_parallelIn = false;
     m_ldInps = false;
+    m_bidir = false;
 
     m_dinPin = new IoPin( 0, QPoint(0,0), id+"-in0", 0, this, input ); // Will be configured later
     m_clkPin = new IoPin( 0, QPoint(0,0), id+"-in1", 0, this, input );
     m_rstPin = new IoPin( 0, QPoint(0,0), id+"-in2", 0, this, input );
     m_serPin = new IoPin( 0, QPoint(0,0), id+"-in4", 0, this, input );
     m_serPin->setInverted( true );
+    m_serPin->setVisible( false );
+    m_dilPin = new IoPin( 0, QPoint(0,0), id+"-in5", 0, this, input );
+    m_dilPin->setVisible( false );
+    m_dirPin = new IoPin( 0, QPoint(0,0), id+"-in6", 0, this, input );
+    m_dirPin->setVisible( false );
 
     createOePin("IU02OE ", id+"-in3"); //createOePin( "IU01OE ", id+"-in3");
     setBits( 8 );
     setupPin( m_dinPin, "L03DI" );
+    setupPin( m_dilPin, "L04DL" );
     setupPin( m_clkPin, "L05>" );
+    setupPin( m_dirPin, "L06DIR" );
     setupPin( m_rstPin, "L07Rst" );
     setupPin( m_serPin, "L00S" );
 
@@ -55,6 +63,9 @@ ShiftReg::ShiftReg( QString type, QString id )
 
         new BoolProp<ShiftReg>("Parallel_input", tr("Parallel Input"),""
                               , this, &ShiftReg::parallelIn, &ShiftReg::setParallelIn, propNoCopy ),
+
+        new BoolProp<ShiftReg>("Bidirectional", tr("Bidirectional"),""
+                              , this, &ShiftReg::bidirectional, &ShiftReg::setBidirectional, propNoCopy ),
 
         new BoolProp<ShiftReg>("Clock_Inverted", tr("Clock Inverted"),""
                               , this, &ShiftReg::clockInv, &ShiftReg::setClockInv ),
@@ -108,10 +119,20 @@ void ShiftReg::voltChanged()
     }
     else if( clkRising )                 // Shift
     {
-        m_nextOutVal <<= 1;
+        bool right = m_bidir ? m_dirPin->getInpState() : false;
 
-        bool data = m_dinPin->getInpState();
-        if( data ) m_nextOutVal += 1;
+        if( right )    // Rotate Right
+        {
+            m_nextOutVal >>= 1;
+            bool data = m_dilPin->getInpState();
+            if( data ) m_nextOutVal |= 1<<(m_bits-1);
+        }
+        else           // Rotate Left
+        {
+            m_nextOutVal <<= 1;
+            bool data = m_dinPin->getInpState();
+            if( data ) m_nextOutVal |= 1;
+        }
     }
     scheduleOutPuts( this );
 }
@@ -138,6 +159,17 @@ void ShiftReg::setParallelIn( bool p )
     }
 }
 
+void ShiftReg::setBidirectional( bool b )
+{
+    m_bidir = b;
+    updatePins();
+    m_dilPin->setVisible( b );
+    m_dirPin->setVisible( b );
+
+    if( b ) m_dinPin->setLabelText("DR");
+    else    m_dinPin->setLabelText("DI");
+}
+
 void ShiftReg::updatePins()
 {
     int inBits = m_parallelIn ? m_bits : 0;
@@ -147,13 +179,19 @@ void ShiftReg::updatePins()
 
     int start = inBits-m_height/2;
     if( m_parallelIn ) start++;
-    m_serPin->setY( 8*(0+start) );
-    m_dinPin->setY( 8*(1+start) );
-    m_clkPin->setY( 8*(2+start) );
-    m_rstPin->setY( 8*(3+start) );
+    m_serPin->setY( 8*(start++) );
+    m_dinPin->setY( 8*(start++) );
+    if( m_bidir ){
+        m_dilPin->setY( 8*(start++) );
+        m_dirPin->setY( 8*(start++) );
+    }
+    m_clkPin->setY( 8*(start++) );
+    m_rstPin->setY( 8*(start++) );
 
-    int noPara = (m_bits < 3) ? 3-m_bits : 0;
-    int deltaH = m_parallelIn ? 4 : noPara;
+    int nBidir  = m_bidir ? 2 : 0;
+    int nPins = 3+nBidir;
+    int noPara = (m_bits < nPins ) ? nPins-m_bits : 0;
+    int deltaH = m_parallelIn ? 4+nBidir : noPara;
     m_area.setHeight(  m_area.height()+deltaH*8 );
 
     setupPin( m_oePin, "U02OE" ); // Reposition OE pin
@@ -169,6 +207,8 @@ void ShiftReg::remove()
 {
     m_serPin->removeConnector();
     m_dinPin->removeConnector();
+    m_dilPin->removeConnector();
+    m_dirPin->removeConnector();
     m_clkPin->removeConnector();
     m_rstPin->removeConnector();
     LogicComponent::remove();

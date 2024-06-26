@@ -31,6 +31,9 @@ class ShiftReg : public LogicComponent
         bool parallelIn() { return m_parallelIn; }
         void setParallelIn( bool p );
 
+        bool bidirectional() { return m_bidir; }
+        void setBidirectional( bool b );
+
         bool resetInv() { return m_resetInv; }
         void setResetInv( bool inv );
 
@@ -40,10 +43,13 @@ class ShiftReg : public LogicComponent
         int m_bits;
 
         bool m_parallelIn;
+        bool m_bidir;
         bool m_ldInps;
         bool m_resetInv;
 
         IoPin* m_dinPin;
+        IoPin* m_dilPin;
+        IoPin* m_dirPin;
         IoPin* m_rstPin;
         IoPin* m_serPin;
 };
