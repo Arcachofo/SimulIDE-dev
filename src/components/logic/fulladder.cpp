@@ -33,8 +33,12 @@ FullAdder::FullAdder( QString type, QString id)
     m_height = 4;
     m_bits   = 0;
 
-    m_ciPin = createPin("IR01Ci", m_id+"-ci");
-    m_coPin = createPin("OR03Co", m_id+"-co");
+    m_area = QRect( -8, -(m_height/2)*8, m_width*8, m_height*8 );
+    m_inPin.resize( 1 );
+    m_outPin.resize( 1 );
+
+    m_inPin[0]  = m_ciPin = createPin("IR01Ci", m_id+"-ci");
+    m_outPin[0] = m_coPin = createPin("OR03Co", m_id+"-co");
     setBits( 1 );
 
     addPropGroup( { tr("Main"), {
@@ -51,14 +55,8 @@ FullAdder::~FullAdder(){}
 
 void FullAdder::stamp()
 {
-    for( int i=0; i<m_bits; ++i )
-    {
-        m_inA[i]->changeCallBack( this );
-        m_inB[i]->changeCallBack( this );
-    }
-    m_ciPin->changeCallBack( this );
-
     IoComponent::initState();
+    for( IoPin* pin : m_inPin ) pin->changeCallBack( this );
 }
 
 void FullAdder::voltChanged()
@@ -68,10 +66,14 @@ void FullAdder::voltChanged()
     int A=0, B=0;
     for( int i=0; i<m_bits; ++i )
     {
-        if( m_inA[i]->getInpState() ) A |= 1<<i;
-        if( m_inB[i]->getInpState() ) B |= 1<<i;
+        if( m_inPin[1+i]->getInpState()        ) A |= 1<<i;
+        if( m_inPin[1+i+m_bits]->getInpState() ) B |= 1<<i;
     }
     m_nextOutVal = A + B + Ci;
+
+    bool Co = m_nextOutVal & 1<<m_bits; // Move Carry out to first bit: m_outPin[0] = m_coPin
+    m_nextOutVal <<= 1;
+    if( Co ) m_nextOutVal |= 1;
 
     scheduleOutPuts( this );
 }
@@ -81,72 +83,22 @@ void FullAdder::setBits( int b )
     if( b < 1 ) b = 1;
     if( b == m_bits ) return;
 
-    m_outPin.resize( b+1 );
+    setNumInps( 1+b*2, "I", 0, 10 ); // Set a label to get Pin 1 full cell below edge
+    setNumOuts( 1+b  , "S", 0, 10 );
 
-    if( b > m_bits )  // Add pins
+    for( int i=0; i<b; ++i )
     {
-        m_inA.resize( b );
-        m_inB.resize( b );
-        m_outS.resize( b );
+        QString iStr = ( b > 1 ) ? QString::number(i) : "";
 
-        for( int i=0; i<b; ++i )
-        {
-            int yB = i+b+2;
-
-            if( i < m_bits ) m_inB.at(i)->setY( yB*8 );
-            else{
-                QString iStr = QString::number(i);
-
-                QString posStr = QString::number( i+1 );
-                if( posStr.size() < 2 ) posStr.prepend("0");
-                m_inA.at(i) = createPin("IL"+posStr+"A"+iStr, m_id+"-inA"+iStr );
-
-                posStr = QString::number( yB );
-                if( posStr.size() < 2 ) posStr.prepend("0");
-                m_inB.at(i) = createPin("IL"+posStr+"B"+iStr, m_id+"-inB"+iStr );
-
-                posStr = QString::number( i+2 );
-                if( posStr.size() < 2 ) posStr.prepend("0");
-                m_outS.at(i) = createPin("OR"+posStr+"S"+iStr, m_id+"-outS"+iStr );
-                m_outPin.at(i) = m_outS.at(i);
-            }
-        }
-    }
-    else if( b < m_bits ) // Remove pins
-    {
-        int toDelete = m_bits-b;
-        deletePins( &m_inA, toDelete );
-        deletePins( &m_inB, toDelete );
-        deletePins( &m_outS, toDelete );
-
-        for( int i=0; i<b; ++i ) m_inB.at(i)->setY( (i+b+2)*8 );
+        m_inPin[1+i]->setY( m_area.y()+i*8+8 );
+        m_inPin[1+i]->setLabelText("A"+iStr );
+        m_inPin[1+b+i]->setLabelText("B"+iStr );
+        m_outPin[1+i]->setLabelText("S"+iStr );
     }
 
-    QString iStr = ( b > 1 ) ? "0" : "";
-    m_inA.at(0)->setLabelText("A"+iStr);
-    m_inB.at(0)->setLabelText("B"+iStr);
-    m_outS.at(0)->setLabelText("S"+iStr);
+    m_coPin->setY( m_area.y()+b*8+16 );
 
-    m_outPin.at( b ) = m_coPin;
-    m_coPin->setY( b*8 + 16 );
     m_bits = b;
 
-    m_height = m_bits*2+2;
-    if( m_bits == 1 ) m_height = 4;
-    m_area = QRect(m_area.x(), 0, m_width*8, m_height*8 );
-
     Circuit::self()->update();
-}
-
-void FullAdder::remove()
-{
-    for( int i=0; i<m_bits; ++i )
-    {
-        m_inA[i]->removeConnector();
-        m_inB[i]->removeConnector();
-    }
-    m_ciPin->removeConnector();
-    m_coPin->removeConnector();
-
-    IoComponent::remove();
 }

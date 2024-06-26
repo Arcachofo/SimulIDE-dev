@@ -24,8 +24,6 @@ class FullAdder : public IoComponent, public eElement
         virtual void voltChanged() override;
         virtual void runEvent() override { IoComponent::runOutputs(); }
 
-        virtual void remove() override;
-
         int bits() { return m_bits; }
         void setBits( int b );
 
@@ -35,10 +33,6 @@ class FullAdder : public IoComponent, public eElement
 
         IoPin* m_ciPin;
         IoPin* m_coPin;
-
-        std::vector<IoPin*> m_inA;
-        std::vector<IoPin*> m_inB;
-        std::vector<IoPin*> m_outS;
 };
 
 #endif

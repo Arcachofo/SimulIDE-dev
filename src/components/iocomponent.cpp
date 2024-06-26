@@ -373,11 +373,11 @@ void IoComponent::setNumPins( std::vector<IoPin*>* pinList, uint pins
     //if( pins == oldSize ) return;
     if( Simulator::self()->isRunning() ) CircuitWidget::self()->powerCircOff();
 
-    int halfW = (m_width/2)*8;//m_width*8/2;
-    int x           = out ? halfW+8 : -(halfW)-8;
-    int angle       = out ?  0  : 180;
-    QString id      = out ? "-out" : "-in";
-    pinMode_t mode  = out ? output : input;
+    int halfW = (m_width/2)*8;//m_width*8/2;//
+
+    int angle       = out ?       0 : 180;
+    QString id      = out ?  "-out" : "-in";
+    pinMode_t mode  = out ?  output : input;
 
     id = m_id+id;
 
@@ -395,6 +395,7 @@ void IoComponent::setNumPins( std::vector<IoPin*>* pinList, uint pins
     }
     m_area = QRect(-halfW,-halfH, m_width*8, m_height*8 );
 
+    int x = out ? m_area.x()+m_width*8+8 : m_area.x()-8;
     int start = 8;
     if( label.isEmpty() ) start = 4;  // Gates
     else if( start%8 ) start +=4;
