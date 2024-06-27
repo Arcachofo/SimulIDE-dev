@@ -23,6 +23,7 @@
 #include "mainwindow.h"
 #include "itemlibrary.h"
 #include "circuitwidget.h"
+#include "componentlist.h"
 #include "circuit.h"
 #include "node.h"
 #include "utils.h"
@@ -132,7 +133,7 @@ void SubPackage::setLogicSymbol( bool ls )
     // Used when loading old subcircuits with only DIP and LS
     // To convert original pkg labels to "Logic Symbol" and "DIP"
     // In these cases package file exist
-    if( !m_pkgeFile.isEmpty() /*&& Circuit::self()->converting()*/ )
+    if( !m_pkgeFile.isEmpty() && ComponentList::self()->isConverting() )
     {
         if     ( ls )                  setIdLabel("1- Logic Symbol");
         else if( m_subcType == Board ) setIdLabel("0- Board");
@@ -484,6 +485,7 @@ void SubPackage::setBckGndData( QString data )
 
 void SubPackage::setBackground( QString bck ) /// FIXME: almost a cpopy fromChip::setBackground
 {
+    /// TODO: mostly repeated in Chip::setBackground
     m_background = bck;
 
     if( bck.startsWith("color") )
@@ -511,6 +513,7 @@ void SubPackage::setBackground( QString bck ) /// FIXME: almost a cpopy fromChip
             setBckGndData( iconData );
         }
     }
+    update();
 }
 
 QString SubPackage::packageFile()
@@ -525,7 +528,7 @@ void SubPackage::setPackageFile( QString package )
     QString fileNameAbs = circuitDir.absoluteFilePath( package );
 
     if( !QFile::exists( fileNameAbs ) ) package = "";
-    m_pkgeFile = package;
+    m_pkgeFile = circuitDir.relativeFilePath( package );
     if( package.isEmpty() ) return;
 
     m_pkgePins.clear();
@@ -706,7 +709,8 @@ void SubPackage::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget*
 {
     Chip::paint( p, o, w );
 
-    if( m_background != "" ) p->setBrush( Qt::transparent );
+    //if( m_background != "" )
+    p->setBrush( Qt::transparent );
     p->drawRoundedRect( m_area, 1, 1);
 
     if( m_fakePin )
