@@ -43,6 +43,8 @@ class ComponentList : public QTreeWidget
 
         void loadXml( QString xmlFile, bool convert=false );
 
+        bool isConverting() { return m_converting; }
+
         void writeSettings();
 
         void mousePressEvent( QMouseEvent* event );
@@ -68,6 +70,7 @@ class ComponentList : public QTreeWidget
         void insertItem( QDomNode* node, TreeItem* parent );
 
         bool m_customComp;
+        bool m_converting;
 
         TreeItem* addCategory( QString nameTr, QString name, QString parent, QString icon );
 

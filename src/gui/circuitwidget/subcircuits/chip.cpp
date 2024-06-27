@@ -313,6 +313,7 @@ void Chip::setBckGndData( QString data )
 
 void Chip::setBackground( QString bck )
 {
+    /// TODO: mostly repeated in SubPackage::setBackground
     m_background = bck;
 
     if( bck.startsWith("color") )
@@ -383,7 +384,7 @@ void Chip::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w )
             painter.end();
             p->drawImage( m_area, img );
         }
-        else if( !m_isLS && m_background.isEmpty() )
+        else if( m_subcType < Board && !m_isLS /*&& m_background.isEmpty()*/ )
         {
             p->setPen( QColor( 170, 170, 150 ) );
             if( m_width == m_height ) p->drawEllipse( 4, 4, 4, 4);

@@ -30,6 +30,8 @@ ComponentList::ComponentList( QWidget* parent )
 {
     m_pSelf = this;
 
+    m_converting = false;
+
     m_mcDialog.setVisible( false );
 
     setSelectionMode( QAbstractItemView::SingleSelection );
@@ -257,6 +259,8 @@ void ComponentList::loadComps( QDir compSetDir )
 
 void ComponentList::loadXml( QString xmlFile, bool convert )
 {
+    m_converting = convert;
+
     QFile file( xmlFile );
     if( !file.open(QFile::ReadOnly | QFile::Text) ){
           qDebug() << "ComponentList::loadXml Cannot read file"<< endl << xmlFile << endl << file.errorString();
@@ -385,6 +389,8 @@ void ComponentList::loadXml( QString xmlFile, bool convert )
     QString compSetName = xmlFile.split( "/").last();
 
     qDebug() << tr("        Loaded Component set:           ") << compSetName;
+
+    m_converting = false;
 }
 
 QString ComponentList::getIcon( QString folder, QString name )
