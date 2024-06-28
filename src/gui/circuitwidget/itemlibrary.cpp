@@ -107,6 +107,7 @@
 #include "switch.h"
 #include "switchdip.h"
 #include "thermistor.h"
+#include "testunit.h"
 #include "textcomponent.h"
 #include "touchpad.h"
 #include "transformer.h"
@@ -305,6 +306,7 @@ void ItemLibrary::loadItems()
     // Other
     addItem( new LibraryItem( QObject::tr("Other"), "", "","Other", NULL ) );
     addItem( SubPackage::libraryItem() );
+    addItem( TestUnit::libraryItem() );
     addItem( Dial::libraryItem() );
 }
 
