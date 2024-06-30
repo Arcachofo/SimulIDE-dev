@@ -130,6 +130,7 @@
         <file alias="subc.png">../src/icons/components/subc.png</file>
         <file alias="subc2.png">../src/icons/components/subc2.png</file>
         <file alias="subcl.png">../src/icons/components/subcl.png</file>
+        <file alias="bug.png">../src/icons/components/bug.png</file>
         <file alias="ground.png">../src/icons/components/ground.png</file>
         <file alias="voltsource.png">../src/icons/components/voltsource.png</file>
         <file alias="cursource.png">../src/icons/components/cursource.png</file>

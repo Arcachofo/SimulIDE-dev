@@ -3,12 +3,12 @@
  *                                                                         *
  ***( see copyright.txt file at root folder )*******************************/
 
-#include <QTableWidget>
-#include <QHeaderView>
 #include <math.h>
 
 #include "testunit.h"
 #include "itemlibrary.h"
+#include "truthtable.h"
+#include "circuitwidget.h"
 #include "simulator.h"
 #include "iopin.h"
 
@@ -24,7 +24,7 @@ LibraryItem* TestUnit::libraryItem()
     return new LibraryItem(
         tr("Test Unit"),
         "Other",
-        "3to2g.png",
+        "bug.png",
         "TestUnit",
         TestUnit::construct );
 }
@@ -36,11 +36,13 @@ TestUnit::TestUnit( QString type, QString id )
     m_width  = 4;
     m_height = 4;
 
+    m_testing = false;
+
     m_interval = 100*1e3; // 100 ns
     m_truthTable = nullptr;
 
-    setInputs("I0,I1");
-    setOutputs("O");
+    setInputs("O");
+    setOutputs("I0,I1");
 
     Simulator::self()->addToUpdateList( this );
 
@@ -50,13 +52,16 @@ TestUnit::TestUnit( QString type, QString id )
 
         new StrProp<TestUnit>("Outputs", tr("Outputs"),""
                              , this, &TestUnit::outputs, &TestUnit::setOutputs, propNoCopy ),
+
+        new StrProp<TestUnit>("Truth", "Truth",""
+                             , this, &TestUnit::truth, &TestUnit::setTruth, propHidden ),
     },0} );
 }
 TestUnit::~TestUnit()
 {
     if( m_truthTable )
     {
-        m_truthTable->clear();
+        //m_truthTable->clear();
         delete m_truthTable;
     }
 }
@@ -68,9 +73,9 @@ void TestUnit::stamp()
     m_read = false;
     m_changed = false;
 
-    m_steps = pow( 2, m_outPin.size() );
-    m_values.clear();
-    m_values.resize( m_steps );
+    m_steps = pow( 2, m_outPin.size() ); // Output pins are the inputs of the tested device
+    m_samples.clear();
+    m_samples.resize( m_steps );
 
     Simulator::self()->addEvent( m_interval, this );
 }
@@ -93,69 +98,72 @@ void TestUnit::runEvent()
         for( uint i=0; i<m_inPin.size(); ++i )
             if( m_inPin[i]->getInpState() ) inputVal |= 1<<i;
 
-        m_values[m_outValue] = inputVal;
+        m_samples[m_outValue] = inputVal;
 
         if( ++m_outValue < (uint)m_steps )
             Simulator::self()->addEvent( m_interval, this );
         else
             m_changed = true;
-    }
-    else
-    {
+    }else{
         m_read = true;
         for( uint i=0; i<m_outPin.size(); ++i )
         {
             bool state = m_outValue & (1<<i);
             m_outPin[i]->setOutState( state );
         }
-
         Simulator::self()->addEvent( m_interval, this );
     }
 }
 
+void TestUnit::runTest()
+{
+    CircuitWidget::self()->powerCircOff();
+    CircuitWidget::self()->powerCircOn();
+}
+
 void TestUnit::createTable()
 {
-    int inputs  = m_outPin.size();
-    int columns = inputs+ m_inPin.size();
-
     if( !m_truthTable )
-        m_truthTable = new QTableWidget( m_steps, columns );
+        m_truthTable = new TruthTable( this, CircuitView::self() );
 
-    m_truthTable->clear();
-    m_truthTable->verticalHeader()->setVisible( false );
-
-    QStringList header = m_inputStr.split(",");
-    header.append( m_outputStr.split(",") );
-    m_truthTable->setHorizontalHeaderLabels( header );
-    m_truthTable->horizontalHeader()->setDefaultSectionSize( 10 );
-
-    for( int row=0; row<m_steps; ++row )
-    {
-        uint values = m_values[row];
-        for( int col=0; col<columns; ++col )
-        {
-            int value = 0;
-            if( col < inputs ) value = (   row & 1<<col);
-            else               value = (values & 1<<(col-inputs));
-            QString valStr = value ? "H" : "L";
-            m_truthTable->setItem( row, col, new QTableWidgetItem( valStr ) );
-        }
-    }
-    //for( int col=0; col<columns; ++col )
-    //    m_truthTable->horizontalHeader()->resizeSection( col, 10 );
-    //resizeColumnToContents( col );//setColumnWidth( col, 30 );
+    m_truthTable->setup( m_inputStr, m_outputStr, &m_samples, &m_truthT );
+    m_testing = !(m_truthT.size() == 0);
+    if( !m_testing ) m_truthT = m_samples; // save samples as truth
 
     m_truthTable->show();
 }
 
-void TestUnit::loadTest()
+void TestUnit::save()
 {
-
+    m_truthT = m_samples;
+    m_truthTable->setup( m_inputStr, m_outputStr, &m_samples, &m_truthT );
 }
 
-void TestUnit::setTest( QString t )
+void TestUnit::loadTest()
 {
+}
 
+QString TestUnit::truth()
+{
+    QString truthStr;
+    for( int i=0; i<m_truthT.size(); ++i )
+    {
+        truthStr += QString::number( m_truthT[i],16 )+",";
+    }
+    return truthStr;
+}
+
+void TestUnit::setTruth( QString t )
+{
+    QStringList truthList = t.split(",");
+
+    bool ok;
+    m_truthT.clear();
+    for( QString valStr : truthList )
+    {
+        if( !valStr.isEmpty() )
+            m_truthT.push_back( valStr.toUInt( &ok, 16 ) );
+    }
 }
 
 void TestUnit::setInputs( QString i )

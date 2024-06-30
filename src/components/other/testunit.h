@@ -10,7 +10,7 @@
 #include "e-element.h"
 
 class LibraryItem;
-class QTableWidget;
+class TruthTable;
 
 class TestUnit: public IoComponent, public eElement
 {
@@ -31,8 +31,12 @@ class TestUnit: public IoComponent, public eElement
         QString outputs() { return m_outputStr; }
         void setOutputs( QString o );
 
-        QString test() { return m_test; }
-        void setTest( QString t );
+        QString truth();
+        void setTruth( QString t );
+
+        void save();
+
+        void runTest();
 
         void loadTest();
 
@@ -41,15 +45,17 @@ class TestUnit: public IoComponent, public eElement
 
         uint64_t m_interval;
 
+        bool m_testing;
         bool m_read;
         int m_steps;
 
-        std::vector<uint> m_values;
+        std::vector<uint> m_samples;
+        std::vector<uint> m_truthT;
 
-        QString m_test;
+        //QString m_test;
         QString m_inputStr;
         QString m_outputStr;
 
-        QTableWidget* m_truthTable;
+        TruthTable* m_truthTable;
 };
 #endif
