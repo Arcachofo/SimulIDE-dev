@@ -5,7 +5,6 @@
 
 #include "magnitudecomp.h"
 #include "itemlibrary.h"
-#include "iocomponent.h"
 #include "iopin.h"
 
 #include "intprop.h"
@@ -66,7 +65,7 @@ void MagnitudeComp::stamp()
     //m_outPin[0]->setOutState( true );
     //m_outPin[2]->setOutState( true );
 
-    for( uint i=0; i<m_inPin.size(); ++i ) m_inPin[i]->changeCallBack( this );
+    for( IoPin* pin : m_inPin ) pin->changeCallBack( this );
 }
 
 void MagnitudeComp::voltChanged() // Called when any pin node change volt
@@ -78,7 +77,7 @@ void MagnitudeComp::voltChanged() // Called when any pin node change volt
 
     for( int i=0; i<m_bits; ++i )
     {
-        if( m_inPin[3+i]->getInpState() ) A |= 1<<i;
+        if( m_inPin[3+i]->getInpState()        ) A |= 1<<i;
         if( m_inPin[3+m_bits+i]->getInpState() ) B |= 1<<i;
     }
 

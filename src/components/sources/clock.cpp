@@ -58,11 +58,11 @@ void Clock::runEvent()
     if( m_isRunning ) Simulator::self()->addEvent( m_stepsPC/2+remainerInt, this );
 }
 
-void Clock::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
+void Clock::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w )
 {
     if( m_hidden ) return;
 
-    Component::paint( p, option, widget );
+    Component::paint( p, o, w );
 
     if (  m_isRunning ) p->setBrush( QColor( 250, 200, 50 ) );
     else                p->setBrush( QColor( 230, 230, 255 ) );

@@ -44,6 +44,7 @@ class IoPort :public eElement
         IoPin* getPin( QString pinName );
 
         QString name() { return m_name; }
+        int     size() { return m_numPins; }
 
         // ----------------
         struct outState_t{
