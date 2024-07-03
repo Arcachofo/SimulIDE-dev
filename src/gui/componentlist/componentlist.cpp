@@ -54,7 +54,7 @@ ComponentList::ComponentList( QWidget* parent )
     QString userDir = MainWindow::self()->userPath();
     m_listFile = userDir+"compList.xml";
     //m_listFile = MainWindow::self()->getConfigPath("compList.xml");
-    m_insertItems = !QFile::exists( m_listFile ); // xml file doesn't exist: Insert items when created
+    m_insertItems = true; //!QFile::exists( m_listFile ); // xml file doesn't exist: Insert items when created
 
     m_customComp = false;
     LoadLibraryItems();
@@ -657,6 +657,9 @@ void ComponentList::insertItem( QDomNode* node, TreeItem* parent )
 void ComponentList::writeSettings()
 {
     search("");
+
+    /// Disable saving listFile
+    return;
 
     QString treeStr = "<comptree>\n";
 
