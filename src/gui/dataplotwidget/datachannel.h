@@ -43,9 +43,17 @@ class DataChannel : public eElement, public Updatable
 
         QString getChName() { return m_chTunnel; }
 
+        bool doTest();
+
+        QString testData();
+        void setTestData( QString td );
+
     protected:
         QVector<double> m_buffer;
         QVector<uint64_t> m_time;
+
+        QVector<double> m_bufferTest;
+        QVector<uint64_t> m_timeTest;
 
         bool m_connected;
         bool m_rising;

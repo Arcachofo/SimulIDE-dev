@@ -29,6 +29,9 @@ PlotBase::PlotBase( QString type, QString id )
     m_connectGnd = true;
     m_inputAdmit = 1e-7;
 
+    //m_doTest = false;
+    m_testTime = 0;
+
     m_color[0] = QColor( 240, 240, 100 );
     m_color[1] = QColor( 220, 220, 255 );
     m_color[2] = QColor( 255, 210, 90  );
@@ -84,6 +87,11 @@ PlotBase::PlotBase( QString type, QString id )
                               , this, &PlotBase::inputImped, &PlotBase::setInputImped )
     }, groupNoCopy} );
 
+    addPropGroup( { tr("Test"), {
+        new IntProp <PlotBase>("TestTime",tr("Test Time"),""
+                              , this, &PlotBase::testTime, &PlotBase::setTestTime,0,"uint" ),
+    }, 0 } );
+
     addPropGroup( {"Hidden", {
         new StrProp<PlotBase>("TimDiv" ,"",""
                              , this, &PlotBase::timDiv, &PlotBase::setTimDiv ),
@@ -102,6 +110,9 @@ PlotBase::PlotBase( QString type, QString id )
 
         new IntProp<PlotBase>("Trigger","",""
                              , this, &PlotBase::trigger, &PlotBase::setTrigger ),
+
+       new StrProp<PlotBase>("TestData" ,"",""
+                            , this, &PlotBase::testData, &PlotBase::setTestData ),
     }, groupHidden } );
 }
 PlotBase::~PlotBase()
@@ -116,6 +127,45 @@ bool PlotBase::setPropStr( QString prop, QString val )
     else if( prop =="TimePos") setTimPos( val+"000" );
     else return Component::setPropStr( prop, val );
     return true;
+}
+
+void PlotBase::initialize()
+{
+    if( m_testTime )
+        Simulator::self()->addEvent( m_testTime*1000, this );
+}
+
+void PlotBase::runEvent() // Test time reached, make comparison
+{
+    for( int i=0; i<m_numChannels; ++i )
+    {
+        if( !m_channel[i]->doTest() )
+        {
+            qDebug() << "PlotBase::runEvent Error: Test failed for Channel" << i;
+        }
+    }
+}
+
+QString PlotBase::testData()
+{
+    QString td;
+    if( !m_testTime ) return td;
+
+    for( int i=0; i<m_numChannels; ++i ) td += m_channel[i]->testData()+";";
+    td.remove( td.size()-1, 1);
+    return td;
+}
+
+void PlotBase::setTestData( QString td )
+{
+    if( td.isEmpty() ) return;
+
+    QStringList chDataList = td.split(";");
+    for( int i=0; i<chDataList.size(); ++i )
+    {
+        if( i == m_numChannels ) break;
+        m_channel[i]->setTestData( chDataList.at(i) );
+    }
 }
 
 void PlotBase::setBaSizeX( int size )
