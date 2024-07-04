@@ -53,6 +53,9 @@ Switch::Switch( QString type, QString id )
 
         new StrProp <Switch>("Key", tr("Key"), ""
                             , this, &Switch::key, &Switch::setKey ),
+
+        new BoolProp<Switch>("Checked", "", ""
+                            , this, &Switch::checked, &Switch::setChecked, propHidden ),
     },0} );
 }
 Switch::~Switch(){}
@@ -72,6 +75,17 @@ void Switch::keyEvent( QString key, bool pressed )
             m_button->setChecked( !m_button->isChecked() );
             SwitchBase::onbuttonclicked();
 }   }   }
+
+bool Switch::checked()
+{
+    return m_button->isChecked();
+}
+
+void Switch::setChecked( bool c )
+{
+    m_button->setChecked( c );
+    SwitchBase::onbuttonclicked();
+}
 
 void Switch::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w )
 {

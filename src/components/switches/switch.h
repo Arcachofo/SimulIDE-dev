@@ -21,6 +21,9 @@ class Switch : public SwitchBase
 
         virtual void stamp() override;
 
+        bool checked();
+        void setChecked( bool c );
+
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w ) override;
 
     public slots:
