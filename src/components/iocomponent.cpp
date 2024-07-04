@@ -126,15 +126,23 @@ void IoComponent::runOutputs()
 
 void IoComponent::scheduleOutPuts( eElement* el )
 {
+    uint64_t delay = m_propDelay*m_propSize;
+    if( !delay )
+    {
+        if( m_nextOutVal == m_outValue ) return;
+        m_outValue = m_nextOutVal;
+        for( uint i=0; i<m_outPin.size(); ++i )
+            m_outPin[i]->scheduleState( m_outValue & (1<<i), 0 );
+    }
     if(  m_outQueue.empty() )
     {
         if( m_nextOutVal == m_outValue ) return;
-        Simulator::self()->addEvent( m_propDelay*m_propSize, el );
+        Simulator::self()->addEvent( delay, el );
     }
     else          // New Event while previous Event not dispatched
     {
         if( m_nextOutVal == m_outQueue.back() ) return;
-        uint64_t nextTime = Simulator::self()->circTime()+m_propDelay*m_propSize;
+        uint64_t nextTime = Simulator::self()->circTime()+delay;
         m_timeQueue.push( nextTime );
 
         m_eElement = el;
