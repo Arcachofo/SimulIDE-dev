@@ -133,6 +133,7 @@ void IoComponent::scheduleOutPuts( eElement* el )
         m_outValue = m_nextOutVal;
         for( uint i=0; i<m_outPin.size(); ++i )
             m_outPin[i]->scheduleState( m_outValue & (1<<i), 0 );
+        return;
     }
     if(  m_outQueue.empty() )
     {
