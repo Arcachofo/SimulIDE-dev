@@ -12,6 +12,7 @@
 #include <QDebug>
 #include <QDrag>
 #include <QMenu>
+#include <QDir>
 
 #include "componentlist.h"
 #include "treeitem.h"
@@ -31,6 +32,7 @@ ComponentList::ComponentList( QWidget* parent )
     m_pSelf = this;
 
     m_converting = false;
+    m_searchFilter = "";
 
     m_mcDialog.setVisible( false );
 
@@ -52,9 +54,9 @@ ComponentList::ComponentList( QWidget* parent )
     setIconSize( QSize( 30*scale, 24*scale ));
 
     QString userDir = MainWindow::self()->userPath();
-    m_listFile = userDir+"compList.xml";
+    m_listFile = userDir+"components/compList.xml";
     //m_listFile = MainWindow::self()->getConfigPath("compList.xml");
-    m_insertItems = true; //!QFile::exists( m_listFile ); // xml file doesn't exist: Insert items when created
+    m_insertItems = !QFile::exists( m_listFile ); // xml file doesn't exist: Insert items when created
 
     m_customComp = false;
     LoadLibraryItems();
@@ -474,21 +476,17 @@ TreeItem* ComponentList::addCategory( QString nameTr, QString name, QString pare
     TreeItem* catParent = nullptr;
 
     bool expanded = false;
+    bool hidden   = false;
 
     if( parent.isEmpty() )                              // Is Main Category
     {
         catItem = new TreeItem( nullptr, name, nameTr, "", categ_MAIN, QIcon( QPixmap( icon ) )/*QIcon(":/null-0.png")*/, m_customComp );
-        catItem->setExpanded( true );
         expanded = true;
     }else{
         if( m_categories.contains( parent ) ) catParent = m_categories.value( parent );
         catItem = new TreeItem( catParent, name, nameTr, "", categ_CHILD, QIcon( QPixmap( icon ) ), m_customComp );
     }
 
-    catItem->setText( 0, nameTr );
-    /// catItem->setData( 0, Qt::WhatsThisRole, name );
-    m_categories.insert( name, catItem );
-    m_catNames.insert( nameTr, name );
     if( m_insertItems )
     {
         if( parent.isEmpty() ) addTopLevelItem( catItem ); // Is root category or root category doesn't exist
@@ -497,12 +495,15 @@ TreeItem* ComponentList::addCategory( QString nameTr, QString name, QString pare
         if( MainWindow::self()->compSettings()->contains(name+"/collapsed") )
             expanded = !MainWindow::self()->compSettings()->value( name+"/collapsed" ).toBool();
 
-        catItem->setExpanded( expanded );
-        catItem->setData( 0, Qt::UserRole+2, expanded );
-
-        bool hidden = MainWindow::self()->compSettings()->value( name+"/hidden" ).toBool();
-        catItem->setItemHidden( hidden );
+        if( MainWindow::self()->compSettings()->contains(name+"/hidden") )
+        hidden = MainWindow::self()->compSettings()->value( name+"/hidden" ).toBool();
     }
+    catItem->setText( 0, nameTr );
+    catItem->setItemHidden( hidden );
+    catItem->setItemExpanded( expanded );
+    m_categories.insert( name, catItem );
+    m_catNames.insert( nameTr, name );
+
     return catItem;
 }
 
@@ -569,7 +570,9 @@ void ComponentList::search( QString filter )
 
         if( treeItem->childCount() > 0  )
         {
-            treeItem->setExpanded( treeItem->isItemExpanded() );
+            if( m_searchFilter.isEmpty() )                            // First search, update actual expanded state
+                treeItem->setItemExpanded( treeItem->isExpanded() );
+            else treeItem->setExpanded( treeItem->isItemExpanded() ); // Don't setItemExpanded (keeps the original state)
             continue;
         }
         if( !cList.contains( item ) ) continue;
@@ -581,6 +584,7 @@ void ComponentList::search( QString filter )
             item = item->parent();
         }
     }
+    m_searchFilter = filter;
 }
 
 void ComponentList::insertItems()
@@ -639,6 +643,7 @@ void ComponentList::insertItem( QDomNode* node, TreeItem* parent )
     }
 
     if( item ){
+        qDebug() << "Adding "<< name;
         if( parent ) parent->addChild( item );
         else         addTopLevelItem( item );
 
@@ -656,10 +661,15 @@ void ComponentList::insertItem( QDomNode* node, TreeItem* parent )
 
 void ComponentList::writeSettings()
 {
-    search("");
+    if( !QFile::exists( m_listFile ) )
+    {
+        QString userDir = MainWindow::self()->userPath();
+        if( userDir.isEmpty() ) return;
+        QDir compDir = QDir( userDir );
+        if( !compDir.exists( userDir+"components" ) ) compDir.mkdir( userDir+"components" );
+    }
 
-    /// Disable saving listFile
-    return;
+    search(""); // Exit from a posible search and update item states
 
     QString treeStr = "<comptree>\n";
 

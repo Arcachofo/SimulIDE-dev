@@ -7,6 +7,7 @@
 #include "mainwindow.h"
 
 TreeItem::TreeItem( TreeItem* parent, QString name, QString nameTr, QString compType, treItemType_t itemType, const QIcon &icon, bool custom  )
+        : QTreeWidgetItem()
 {
     m_parent   = parent;
     m_name     = name;
@@ -95,7 +96,8 @@ QString TreeItem::toString( QString indent )
     catStr += "name=\""    +m_name+"\" ";
     //catStr += "nametr=\""  +m_nameTr+"\" ";
     //catStr += "comptype=\""+m_compType+"\" ";
-    catStr += "hidden=\""  +QString::number( isHidden() ?   1 : 0 )+"\" ";
+    catStr += "hidden=\""  +QString::number( isHidden() ? 1 : 0 )+"\" ";
+
     if( m_itemType > component )
         catStr += "expanded=\""+QString::number( isExpanded() ? 1 : 0 )+"\" > \n";
     else catStr += "shortcut=\""+m_shortcut+"\" />\n";

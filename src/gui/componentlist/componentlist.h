@@ -79,6 +79,8 @@ class ComponentList : public QTreeWidget
         bool m_insertItems;
         QString m_listFile;
 
+        QString m_searchFilter;
+
         QHash<QString, TreeItem*> m_components;
         QHash<QString, TreeItem*> m_categories;
         QHash<QString, QString>   m_catNames;
