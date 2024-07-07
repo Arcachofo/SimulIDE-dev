@@ -16,6 +16,10 @@ TreeItem::TreeItem( TreeItem* parent, QString name, QString nameTr, QString comp
     m_isCustom = custom;
     m_itemType = type_NONE;
 
+    m_shortcut = "";
+    m_expanded = false;
+    m_hidden   = false;
+
     setIcon( 0, icon );
     setItemType( itemType );
 }
