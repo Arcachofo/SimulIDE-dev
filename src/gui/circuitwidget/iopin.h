@@ -80,6 +80,7 @@ class IoPin : public Pin, public eElement
         void setStateZ( bool z );
         virtual void setPullup( bool up );
 
+        void invertPin();
         virtual void setInverted( bool inverted ) override;
 
         virtual void controlPin( bool outCtrl , bool dirCtrl ){;}
@@ -92,6 +93,9 @@ class IoPin : public Pin, public eElement
  static QStringList registerScript( asIScriptEngine* engine );
 
     protected:
+
+        void contextMenuEvent( QGraphicsSceneContextMenuEvent* event ) override;
+
         inline void updtState()
         {
             double vddAdmit = m_vddAdmit + m_vddAdmEx;
@@ -133,6 +137,7 @@ class IoPin : public Pin, public eElement
         bool m_stateZ;
         bool m_nextState;
         bool m_skipStamp;
+        bool m_userInvert;
 
         int m_steps;
         uint64_t m_timeRis;  // Time for Output voltage to switch from 0% to 100%

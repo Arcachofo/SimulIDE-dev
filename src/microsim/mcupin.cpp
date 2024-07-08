@@ -23,6 +23,7 @@ McuPin::McuPin( McuPort* port, int i, QString id, Component* mcu )
     m_extInt = NULL;
     m_extIntTrigger = pinLow;
 
+    m_userInvert = false;
     m_outState = false;
     m_openColl = false;
     m_puMask   = false;

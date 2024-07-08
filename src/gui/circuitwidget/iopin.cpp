@@ -4,6 +4,7 @@
  ***( see copyright.txt file at root folder )*******************************/
 
 #include <QtMath>
+#include <QMenu>
 
 #include "iopin.h"
 #include "simulator.h"
@@ -18,6 +19,7 @@ IoPin::IoPin( int angle, const QPoint pos, QString id, int index, Component* par
     m_outState = false;
     m_stateZ   = false;
     m_skipStamp = false;
+    m_userInvert = true;
 
     m_inpHighV = 2.5;
     m_inpLowV  = 2.5;
@@ -263,12 +265,18 @@ void IoPin::setOutputImp( double imp )
     }
 }
 
+void IoPin::invertPin()
+{
+    setInverted( !m_inverted );
+}
+
 void IoPin::setInverted( bool inverted )
 {
     if( inverted == m_inverted ) return;
     m_inverted = inverted;
 
     if( m_pinMode > input ) setOutState( m_outState );
+    else                    ePin::stampAdmitance( m_admit );
     update();
 }
 
@@ -276,6 +284,18 @@ void IoPin::stampAll()
 {
     ePin::stampAdmitance( m_admit );
     stampVolt( m_outVolt );
+}
+
+void IoPin::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
+{
+    if( !m_userInvert ) return;
+
+    QMenu* menu = new QMenu();
+    QAction* editAction = menu->addAction( QIcon(":/invert.png"),QObject::tr("Invert Pin"));
+    QObject::connect( editAction, &QAction::triggered,
+                      [=](){ invertPin(); } );
+
+    menu->exec( event->screenPos() );
 }
 
 // ---- Script Engine -------------------

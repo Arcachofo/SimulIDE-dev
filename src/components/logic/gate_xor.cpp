@@ -33,8 +33,13 @@ XorGate::XorGate( QString type, QString id )
         new BoolProp<XorGate>("Invert_Inputs", tr("Invert Inputs"),""
                              , this, &XorGate::invertInps, &XorGate::setInvertInps,propNoCopy )
                             })
-    + Gate::outputProps()
-    + IoComponent::outputType(),0 } );
+        + Gate::outputProps()
+      //+ IoComponent::outputType()
+        +QList<ComProperty*>({
+        new BoolProp<XorGate>("Open_Collector", tr("Open Drain"), ""
+                               , this, &IoComponent::openCol, &IoComponent::setOpenCol, propNoCopy )
+                    })
+                    ,0 } );
 
     addPropGroup( { tr("Timing"), IoComponent::edgeProps(),0 } );
 

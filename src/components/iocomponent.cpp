@@ -10,6 +10,7 @@
 #include "iopin.h"
 
 #include "doubleprop.h"
+#include "stringprop.h"
 #include "boolprop.h"
 
 #define tr(str) simulideTr("IoComponent",str)
@@ -29,13 +30,28 @@ IoComponent::IoComponent( QString type, QString id)
     m_openCol    = false;
     m_invInputs  = false;
     m_invOutputs = false;
+    m_pinsInverted = false;
 
     m_propSize  = 1;
     m_propDelay = 10*1000; // 10 ns
     m_timeLH    = 3000;
     m_timeHL    = 4000;
+
+    addPropGroup( { "IoHidden", {
+        new StrProp<IoComponent>("invertPins", "",""
+                     , this, &IoComponent::invertedPins, &IoComponent::invertPins, propHidden )
+    }, groupHidden} );
 }
 IoComponent::~IoComponent(){}
+
+bool IoComponent::setPropStr( QString prop, QString val )
+{
+    if( m_pinsInverted  && (prop =="Inverted" || prop =="Invert_Inputs") ) // Old circuit
+    {
+        return true;  // Now managed by property "invertPins"
+    }
+    else return Component::setPropStr( prop, val );
+}
 
 QList<ComProperty*> IoComponent::inputProps()
 {
@@ -74,7 +90,7 @@ QList<ComProperty*> IoComponent::outputType()
                                  , this, &IoComponent::invertOuts, &IoComponent::setInvertOuts, propNoCopy ),
 
         new BoolProp<IoComponent>("Open_Collector", tr("Open Drain"), ""
-                                 , this, &IoComponent::openCol, &IoComponent::setOpenCol   , propNoCopy )};
+                                 , this, &IoComponent::openCol, &IoComponent::setOpenCol, propNoCopy )};
 }
 
 QList<ComProperty*> IoComponent::edgeProps()
@@ -222,7 +238,7 @@ void IoComponent::setInvertOuts( bool inverted )
     if( m_invOutputs == inverted ) return;
     m_invOutputs = inverted;
     Simulator::self()->pauseSim();
-    for( uint i=0; i<m_outPin.size(); ++i ) m_outPin[i]->setInverted( inverted );
+    for( IoPin* pin : m_outPin ) pin->setInverted( inverted );
     Circuit::self()->update();
     Simulator::self()->resumeSim();
 }
@@ -235,6 +251,29 @@ void IoComponent::setInvertInps( bool invert )
     for( IoPin* pin : m_inPin ) pin->setInverted( invert );
     Circuit::self()->update();
     Simulator::self()->resumeSim();
+}
+
+QString IoComponent::invertedPins()
+{
+    QString pinListStr;
+    std::vector<Pin*> pins = getPins();
+    for( Pin* pin : pins )
+        if( pin->inverted() )
+            pinListStr += pin->pinId()+",";
+
+    if( pinListStr.isEmpty() ) pinListStr += ","; // Force save property
+    return pinListStr;
+}
+
+void IoComponent::invertPins( QString p )
+{
+    QStringList pinList = p.split(",");
+
+    std::vector<Pin*> pins = getPins();
+    for( Pin* pin : pins )
+        pin->setInverted( pinList.contains( pin->pinId() ) );
+
+    m_pinsInverted = true;
 }
 
 void IoComponent::setOpenCol( bool op )

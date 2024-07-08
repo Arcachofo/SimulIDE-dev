@@ -42,8 +42,12 @@ Buffer::Buffer( QString type, QString id )
         new BoolProp<Buffer>("Invert_Inputs", tr("Invert Inputs"),""
                             , this, &Buffer::invertInps, &Buffer::setInvertInps, propNoCopy )
                             })
-                            +Gate::outputProps()+IoComponent::outputType()
+        +Gate::outputProps()
+      //+IoComponent::outputType()
         +QList<ComProperty*>({
+        new BoolProp<Buffer>("Open_Collector", tr("Open Drain"), ""
+                            , this, &IoComponent::openCol, &IoComponent::setOpenCol, propNoCopy ),
+
         new BoolProp<Buffer>("Tristate", tr("Tristate"),""
                             , this, &Buffer::tristate, &Buffer::setTristate, propNoCopy )
                             })

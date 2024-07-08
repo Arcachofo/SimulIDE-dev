@@ -66,11 +66,7 @@ bool LogicComponent::outputEnabled()
 {
     if( !m_oePin ) return true;
 
-    double volt = m_oePin->getVoltage();
-    if     ( volt > m_inHighV ) m_outEnable = false;   // Active Low
-    else if( volt < m_inLowV )  m_outEnable = true;
-
-    //m_oePin->setPinState( m_outEnable? input_low:input_high ); // Low-High colors
+    m_outEnable = m_oePin->getInpState();
     return m_outEnable;
 }
 

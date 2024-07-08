@@ -24,6 +24,8 @@ class IoComponent : public Component
         QList<ComProperty*> outputType();
         QList<ComProperty*> edgeProps();
 
+        virtual bool setPropStr( QString prop, QString val ) override;
+
         void initState();
         void runOutputs();
         void scheduleOutPuts( eElement* el );
@@ -51,6 +53,9 @@ class IoComponent : public Component
 
         bool invertInps() { return m_invInputs; }
         virtual void setInvertInps( bool invert );
+
+        QString invertedPins();
+        void invertPins( QString p );
 
         double propSize() { return m_propSize; }
         void setPropSize( double g ) { m_propSize = g; }
@@ -111,6 +116,7 @@ class IoComponent : public Component
         bool m_openCol;
         bool m_invOutputs;
         bool m_invInputs;
+        bool m_pinsInverted; // Pins already inverted in invertPins()
 
         uint m_width;
         uint m_height;

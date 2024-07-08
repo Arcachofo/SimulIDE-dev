@@ -29,16 +29,22 @@ LibraryItem* OrGate::libraryItem()
 OrGate::OrGate( QString type, QString id )
       : Gate( type, id, 2 )
 {
-    addPropGroup( { tr("Electric"), IoComponent::inputProps()
-                                   +QList<ComProperty*>({
+    addPropGroup( { tr("Electric"),
+        IoComponent::inputProps()
+        +QList<ComProperty*>({
         new BoolProp<OrGate>("Invert_Inputs", tr("Invert Inputs"),""
                             , this, &OrGate::invertInps, &OrGate::setInvertInps, propNoCopy ),
 
         new IntProp <OrGate>("Num_Inputs", tr("Input Size"),"_Inputs"
                             , this, &OrGate::numInps, &OrGate::setNumInputs, propNoCopy,"uint" )
                     })
-                    + Gate::outputProps()
-                    + IoComponent::outputType(),0 } );
+        + Gate::outputProps()
+      //+ IoComponent::outputType()
+        +QList<ComProperty*>({
+        new BoolProp<OrGate>("Open_Collector", tr("Open Drain"), ""
+                                 , this, &IoComponent::openCol, &IoComponent::setOpenCol, propNoCopy )
+                    })
+                    ,0 } );
 
     addPropGroup( { tr("Timing"), IoComponent::edgeProps(),0 } );
 
