@@ -29,8 +29,11 @@ class ePin
 
         void changeCallBack( eElement* el , bool cb=true );
 
+        void userInvertPin();
+        bool userInverted() { return m_userInverted; }
+
         bool inverted() { return m_inverted; }
-        virtual void setInverted( bool inverted ) { m_inverted = inverted; }
+        virtual void setInverted( bool i ) { m_inverted = i; }
 
         inline void stampAdmitance( double data ) { if( m_enode ) m_enode->stampAdmitance( this, data ); }
 
@@ -55,6 +58,7 @@ class ePin
         int m_index;
 
         bool m_inverted;
+        bool m_userInverted;
 };
 
 #endif

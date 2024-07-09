@@ -60,6 +60,8 @@ class CompBase
 
         virtual bool isHidden() { return false;}
 
+        virtual void setup(){;} // Called after all properties are set
+
     protected:
         QString m_id;
         QString m_type;

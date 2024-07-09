@@ -386,6 +386,7 @@ void Circuit::loadStrDoc( QString &doc )
                                 if( oldArduino && mcu ) mcu->setPropStr( propName, value );
                         }
                     }
+                    comp->setup();
                     int number = comp->getUid().split("-").last().toInt();
                     if( number > m_seqNumber ) m_seqNumber = number;               // Adjust item counter: m_seqNumber
                     addItem( comp );

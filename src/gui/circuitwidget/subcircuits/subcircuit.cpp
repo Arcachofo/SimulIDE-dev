@@ -356,6 +356,7 @@ void SubCircuit::loadSubCircuit( QString doc )
                         if( !graphProps.contains( propName ) ) comp->setPropStr( propName, prop.toString() );
                         propName = "";
                     }
+                    comp->setup();
                     comp->setParentItem( this );
 
                     if( m_subcType >= Board && comp->isGraphical() )

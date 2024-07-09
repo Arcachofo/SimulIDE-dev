@@ -10,9 +10,10 @@ ePin::ePin( QString id, int index )
 {
     m_id    = id;
     m_index = index;
-    m_enode    = NULL;
+    m_enode = NULL;
     m_enodeComp = NULL;
     m_inverted = false;
+    m_userInverted = false;
 }
 ePin::~ePin()
 {
@@ -69,4 +70,10 @@ void ePin::setId( QString id )
 {
     Circuit::self()->updatePin( this, m_id, id );
     m_id = id;
+}
+
+void ePin::userInvertPin()  // Slot for Context Menu
+{
+    m_userInverted = !m_userInverted;
+    setInverted( !m_inverted );
 }

@@ -265,11 +265,6 @@ void IoPin::setOutputImp( double imp )
     }
 }
 
-void IoPin::invertPin()
-{
-    setInverted( !m_inverted );
-}
-
 void IoPin::setInverted( bool inverted )
 {
     if( inverted == m_inverted ) return;
@@ -293,7 +288,7 @@ void IoPin::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
     QMenu* menu = new QMenu();
     QAction* editAction = menu->addAction( QIcon(":/invert.png"),QObject::tr("Invert Pin"));
     QObject::connect( editAction, &QAction::triggered,
-                      [=](){ invertPin(); } );
+                      [=](){ userInvertPin(); } );
 
     menu->exec( event->screenPos() );
 }
