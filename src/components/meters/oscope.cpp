@@ -88,19 +88,16 @@ Oscope::Oscope( QString type, QString id )
         new DoubProp<Oscope>("Filter", "", "V"
                             , this, &Oscope::filter, &Oscope::setFilter ),
 
-        new IntProp <Oscope>("Trigger","", ""
-                            , this, &Oscope::trigger, &Oscope::setTrigger ),
-
         new IntProp <Oscope>("AutoSC" ,"", ""
                             , this, &Oscope::autoSC, &Oscope::setAutoSC ),
 
-        new IntProp <Oscope>("Tracks" ,"", ""
+        new IntProp <Oscope>("Tracks","", ""
                             , this, &Oscope::tracks, &Oscope::setTracks ),
 
-        new StrProp <Oscope>("HideCh" ,"", ""
+        new StrProp <Oscope>("HideCh","", ""
                             , this, &Oscope::hideCh, &Oscope::setHideCh ),
 
-        new StrProp <Oscope>("VolPos" ,"", ""
+        new StrProp <Oscope>("VolPos","", ""
                             , this, &Oscope::volPos, &Oscope::setVolPos )
     }, groupHidden } );
 }

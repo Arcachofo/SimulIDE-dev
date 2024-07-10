@@ -93,7 +93,7 @@ PlotBase::PlotBase( QString type, QString id )
     }, 0 } );
 
     addPropGroup( {"Hidden", {
-        new StrProp<PlotBase>("TimDiv" ,"",""
+        new StrProp<PlotBase>("TimDiv","",""
                              , this, &PlotBase::timDiv, &PlotBase::setTimDiv ),
 
         new StrProp<PlotBase>("TimPos","",""
@@ -111,7 +111,7 @@ PlotBase::PlotBase( QString type, QString id )
         new IntProp<PlotBase>("Trigger","",""
                              , this, &PlotBase::trigger, &PlotBase::setTrigger ),
 
-       new StrProp<PlotBase>("TestData" ,"",""
+       new StrProp<PlotBase>("TestData","",""
                             , this, &PlotBase::testData, &PlotBase::setTestData ),
     }, groupHidden } );
 }
