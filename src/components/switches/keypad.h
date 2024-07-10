@@ -16,14 +16,15 @@ class KeyPad : public Component, public eElement
     public:
         KeyPad( QString type, QString id );
         ~KeyPad();
-		void initialize();
+
+        void initialize() override;
 
  static Component* construct( QString type, QString id );
  static LibraryItem* libraryItem();
 
         int rows() { return m_rows; }
         void setRows( int rows );
-		        
+
         int cols() { return m_cols; }
         void setCols( int cols );
         
@@ -32,25 +33,26 @@ class KeyPad : public Component, public eElement
         
         virtual void stamp() override;
         virtual void remove() override;
-		
-		bool has_diodes() {return m_has_diodes; }
-		void set_has_diodes(bool d);
-		bool direction(){ return m_direction; }
-		void setDirection(bool dir);
+
+        bool hasDiodes() { return m_hasDiodes; }
+        void setHasDiodes( bool d );
+
+        bool direction(){ return m_direction; }
+        void setDirection( bool dir );
        
-	   	virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w ) override;
 
     protected:
         virtual void setflip() override;
-        void setupButtons(int prev_rows, int prev_cols);
+        void setupButtons( int newRows, int newCols );
 
         int m_rows;
         int m_cols;
         
-		bool m_has_diodes;
-		bool m_direction;
+        bool m_hasDiodes;
+        bool m_direction;
         
-		QString m_keyLabels;
+        QString m_keyLabels;
         
         QList<PushBase*> m_buttons;
         QList<eDiode*> m_diodes;
