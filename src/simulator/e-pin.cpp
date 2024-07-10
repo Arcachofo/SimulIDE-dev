@@ -75,5 +75,5 @@ void ePin::setId( QString id )
 void ePin::userInvertPin()  // Slot for Context Menu
 {
     m_userInverted = !m_userInverted;
-    setInverted( !m_inverted );
+    setInverted( m_userInverted ? m_inverted : !m_inverted );
 }

@@ -237,16 +237,12 @@ void IoComponent::setOutImp( double imp )
     Simulator::self()->resumeSim();
 }
 
-void IoComponent::setInvertOuts(bool invert )
+void IoComponent::setInvertOuts( bool invert )
 {
     //if( m_invOutputs == invert ) return;
     m_invOutputs = invert;
     Simulator::self()->pauseSim();
-    for( IoPin* pin : m_outPin )
-    {
-        bool inverted = pin->userInverted() ? !invert : invert;
-        pin->setInverted( inverted );
-    }
+    for( IoPin* pin : m_outPin ) pin->setInverted( invert );
     Circuit::self()->update();
     Simulator::self()->resumeSim();
 }
@@ -256,11 +252,7 @@ void IoComponent::setInvertInps( bool invert )
     //if( m_invInputs == invert ) return;
     m_invInputs = invert;
     Simulator::self()->pauseSim();
-    for( IoPin* pin : m_inPin )
-    {
-        bool inverted = pin->userInverted() ? !invert : invert;
-        pin->setInverted( inverted );
-    }
+    for( IoPin* pin : m_inPin ) pin->setInverted( invert );
     Circuit::self()->update();
     Simulator::self()->resumeSim();
 }

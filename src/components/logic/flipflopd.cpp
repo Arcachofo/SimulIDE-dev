@@ -39,12 +39,13 @@ FlipFlopD::FlipFlopD( QString type, QString id )
             "OR02!Q"
         });
 
-    m_setPin   = m_inPin[1];
-    m_resetPin = m_inPin[2];
-    m_clkPin   = m_inPin[3];
+    m_setPin = m_inPin[1];
+    m_rstPin = m_inPin[2];
+    m_clkPin = m_inPin[3];
 
-    setSrInv( true );       // Inver Set & Reset pins
-    setClockInv( false );   // Don't Invert Clock pin
+    m_setPin->setInverted( true );
+    m_rstPin->setInverted( true );
+
     setTrigger( Clock );
 }
 FlipFlopD::~FlipFlopD(){}

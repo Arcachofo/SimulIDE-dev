@@ -265,8 +265,9 @@ void IoPin::setOutputImp( double imp )
     }
 }
 
-void IoPin::setInverted( bool inverted )
+void IoPin::setInverted( bool invert )
 {
+    bool inverted = m_userInverted ? !invert : invert;
     if( inverted == m_inverted ) return;
     m_inverted = inverted;
 

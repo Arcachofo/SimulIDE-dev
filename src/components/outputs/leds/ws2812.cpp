@@ -49,8 +49,6 @@ WS2812::WS2812( QString type, QString id )
     m_pin[1] = m_output = new IoPin(   0, QPoint( 12,0), id+"-OutPin",1, this, output );
     m_output->setOutHighV( 5 );
 
-    setClockInv( false ); //Don't Invert Clock pin
-
     m_cols = 1;
     m_rows = 1;
     updateLeds();

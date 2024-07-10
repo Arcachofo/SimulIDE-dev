@@ -14,14 +14,12 @@ class FlipFlopBase : public LogicComponent
         FlipFlopBase( QString type, QString id );
         ~FlipFlopBase();
 
-        bool srInv() { return m_srInv; }
-        void setSrInv( bool inv );
+        virtual bool setPropStr( QString prop, QString val ) override;
 
         bool pinsRS() { return m_useRS; }
         void usePinsRS( bool rs );
 
         virtual void stamp() override;
-        virtual void updateStep() override;
         virtual void voltChanged() override;
         virtual void runEvent() override{ IoComponent::runOutputs(); }
 
@@ -30,14 +28,13 @@ class FlipFlopBase : public LogicComponent
 
     protected:
         virtual void calcOutput(){;}
+
         bool m_useRS;
-        bool m_srInv;
         bool m_Q0;
 
         int m_dataPins;
 
         IoPin* m_setPin;
-        IoPin* m_resetPin;
+        IoPin* m_rstPin;
 };
-
 #endif

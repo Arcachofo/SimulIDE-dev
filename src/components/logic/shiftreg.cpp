@@ -36,15 +36,23 @@ ShiftReg::ShiftReg( QString type, QString id )
     m_bidir = false;
 
     m_dinPin = new IoPin( 0, QPoint(0,0), id+"-in0", 0, this, input ); // Will be configured later
+    m_otherPin.emplace_back( m_dinPin );
     m_clkPin = new IoPin( 0, QPoint(0,0), id+"-in1", 0, this, input );
+    m_otherPin.emplace_back( m_clkPin );
     m_rstPin = new IoPin( 0, QPoint(0,0), id+"-in2", 0, this, input );
+    m_otherPin.emplace_back( m_rstPin );
     m_serPin = new IoPin( 0, QPoint(0,0), id+"-in4", 0, this, input );
+    m_otherPin.emplace_back( m_serPin );
     m_serPin->setInverted( true );
     m_serPin->setVisible( false );
     m_dilPin = new IoPin( 0, QPoint(0,0), id+"-in5", 0, this, input );
+    m_otherPin.emplace_back( m_dilPin );
     m_dilPin->setVisible( false );
     m_dirPin = new IoPin( 0, QPoint(0,0), id+"-in6", 0, this, input );
+    m_otherPin.emplace_back( m_dirPin );
     m_dirPin->setVisible( false );
+
+    m_otherPin.emplace_back( m_dinPin );
 
     createOePin("IU02OE ", id+"-in3"); //createOePin( "IU01OE ", id+"-in3");
     setBits( 8 );
@@ -55,7 +63,7 @@ ShiftReg::ShiftReg( QString type, QString id )
     setupPin( m_rstPin, "L07Rst" );
     setupPin( m_serPin, "L00S" );
 
-    setResetInv( true );         // Invert Reset Pin
+    m_rstPin->setInverted( true );    // Invert Reset Pin
 
     addPropGroup( { tr("Main"), {
         new IntProp <ShiftReg>("Bits", tr("Size"),"_bits"
@@ -66,12 +74,6 @@ ShiftReg::ShiftReg( QString type, QString id )
 
         new BoolProp<ShiftReg>("Bidirectional", tr("Bidirectional"),""
                               , this, &ShiftReg::bidirectional, &ShiftReg::setBidirectional, propNoCopy ),
-
-        new BoolProp<ShiftReg>("Clock_Inverted", tr("Clock Inverted"),""
-                              , this, &ShiftReg::clockInv, &ShiftReg::setClockInv ),
-
-        new BoolProp<ShiftReg>("Reset_Inverted", tr("Reset Inverted"),""
-                              , this, &ShiftReg::resetInv, &ShiftReg::setResetInv ),
     }, groupNoCopy} );
 
     addPropGroup( { tr("Electric"), IoComponent::inputProps()
@@ -81,6 +83,20 @@ ShiftReg::ShiftReg( QString type, QString id )
     addPropGroup( { tr("Timing")  , IoComponent::edgeProps(),0 } );
 }
 ShiftReg::~ShiftReg(){}
+
+bool ShiftReg::setPropStr( QString prop, QString val )
+{
+    if( prop =="Clock_Inverted" ) // Old circuits
+    {
+        m_clkPin->setInverted( val == "true" );
+    }
+    else if( prop =="Reset_Inverted" ) // Old circuits
+    {
+        m_rstPin->setInverted( val == "true" );
+    }
+    else return Component::setPropStr( prop, val );
+    return true;
+}
 
 void ShiftReg::stamp()
 {
@@ -195,21 +211,4 @@ void ShiftReg::updatePins()
     m_area.setHeight(  m_area.height()+deltaH*8 );
 
     setupPin( m_oePin, "U02OE" ); // Reposition OE pin
-}
-
-void ShiftReg::setResetInv( bool inv )
-{
-    m_resetInv = inv;
-    m_rstPin->setInverted( inv );
-}
-
-void ShiftReg::remove()
-{
-    m_serPin->removeConnector();
-    m_dinPin->removeConnector();
-    m_dilPin->removeConnector();
-    m_dirPin->removeConnector();
-    m_clkPin->removeConnector();
-    m_rstPin->removeConnector();
-    LogicComponent::remove();
 }

@@ -80,7 +80,7 @@ class IoPin : public Pin, public eElement
         void setStateZ( bool z );
         virtual void setPullup( bool up );
 
-        virtual void setInverted( bool inverted ) override;
+        virtual void setInverted( bool invert ) override;
 
         virtual void controlPin( bool outCtrl , bool dirCtrl ){;}
 

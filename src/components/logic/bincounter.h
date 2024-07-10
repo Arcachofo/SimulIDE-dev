@@ -16,16 +16,14 @@ class BinCounter : public LogicComponent
         BinCounter( QString type, QString id );
         ~BinCounter();
 
-        static Component* construct( QString type, QString id );
-        static LibraryItem* libraryItem();
+ static Component* construct( QString type, QString id );
+ static LibraryItem* libraryItem();
 
-        bool srInv() { return m_resetInv; }
-        void setSrInv( bool inv );
+        virtual bool setPropStr( QString prop, QString val ) override;
 
         bool pinSet() { return m_pinSet; }
         void useSetPin( bool set );
 
-        //virtual void initialize() override;
         virtual void stamp() override;
         virtual void voltChanged() override;
         virtual void runEvent() override { IoComponent::runOutputs(); }
@@ -37,11 +35,10 @@ class BinCounter : public LogicComponent
         int m_Counter;
         int m_TopValue;
 
-        bool m_resetInv;
         bool m_pinSet;
 
         IoPin* m_setPin;
-        IoPin* m_resetPin;
+        IoPin* m_rstPin;
 };
 
 #endif
