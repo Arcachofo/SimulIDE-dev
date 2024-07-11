@@ -208,9 +208,9 @@ void Max72xx_matrix::setHidden( bool hid, bool hidArea, bool hidLabel )
     else      m_area = QRectF(-36,-44, 4+64*m_numDisplays+4, 88 );
 }
 
-void Max72xx_matrix::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
+void Max72xx_matrix::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w )
 {
-    Component::paint( p, option, widget );
+    Component::paint( p, o, w );
     p->setRenderHint( QPainter::Antialiasing );
 
     QPen pen( Qt::black, 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin );

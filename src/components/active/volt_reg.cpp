@@ -116,9 +116,9 @@ void VoltReg::voltChanged()
     m_pin[1]->stampCurrent(-current );
 }
 
-void VoltReg::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
+void VoltReg::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w )
 {
-    Component::paint( p, option, widget );
+    Component::paint( p, o, w );
     p->drawRect( m_area );
 
     Component::paintSelected( p );

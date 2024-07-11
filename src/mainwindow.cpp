@@ -344,7 +344,6 @@ QString MainWindow::getUserFilePath( QString f )
     return QDir( m_userDir ).absoluteFilePath( f );
 }
 
-//QString MainWindow::getFilePath( QString file )   { return m_filesDir.absoluteFilePath( file ); }
 QString MainWindow::getConfigPath( QString file ) { return m_configDir.absoluteFilePath( file ); }
 QString MainWindow::getDataFilePath( QString file )
 {
@@ -361,8 +360,6 @@ QString MainWindow::getDataFilePath( QString file )
         }
     }
     if( path.isEmpty() ) path = MainWindow::self()->getUserFilePath( file ); // File in user data folder
-    //if( path.isEmpty() || !QFileInfo::exists( path ) )
-    //    path = getFilePath("data/"+file );                    // File in SimulIDE data folder
 
     return path;
 }

@@ -217,7 +217,7 @@ void LedRgb::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w )
     QPen pen(Qt::black, 4, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
     QColor color;
 
-    if( m_warning/*m_current > m_maxCurrent*1.2*/ ) // Led overcurrent
+    if( m_warning ) // Led overcurrent
     {
         p->setBrush( QColor( 255, 150, 0 ) );
         color = QColor( Qt::red );
@@ -235,8 +235,8 @@ void LedRgb::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w )
     p->drawRoundedRect( m_area, 2, 2 );
 
     pen.setColor( color );
-    pen.setWidth(2.5);
-    p->setPen(pen);
+    pen.setWidth( 2.5 );
+    p->setPen( pen );
     p->setBrush( color );
     p->drawEllipse( m_area );
 

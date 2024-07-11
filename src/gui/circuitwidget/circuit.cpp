@@ -1202,7 +1202,6 @@ void Circuit::drawBackground( QPainter* painter, const QRectF &rect )
     painter->drawRect( m_scenerect );
     return;*/
 
-    //painter->setBrush( QColor( 240, 240, 210 ) );
     painter->fillRect( m_scenerect, QColor( 240, 240, 210 ) );
     painter->setPen( QColor( 210, 210, 210 ) );
 

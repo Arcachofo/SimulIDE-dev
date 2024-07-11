@@ -29,7 +29,7 @@ class Ks0108 : public Component, public eElement
         void setCsActLow( bool low ) { m_csActLow = low; }
         bool csActLow() { return m_csActLow; }
         
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w ) override;
 
     private:
         void initPins();

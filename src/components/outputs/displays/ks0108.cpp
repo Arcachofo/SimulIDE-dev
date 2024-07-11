@@ -237,11 +237,11 @@ void Ks0108::reset()
     m_reset  = true;
 }
 
-void Ks0108::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
+void Ks0108::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w )
 {
-    Component::paint( p, option, widget );
+    Component::paint( p, o, w );
 
-    QPen pen(Qt::black, 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
+    QPen pen( Qt::black, 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin );
     p->setPen( pen );
     
     p->setBrush( QColor(50, 70, 100) );

@@ -36,7 +36,7 @@ class Pcd8544 : public Component, public eElement
         virtual void voltChanged() override;
         virtual void updateStep() override;
         
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w ) override;
 
     protected:
         void initPins();

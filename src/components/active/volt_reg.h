@@ -27,7 +27,7 @@ class VoltReg : public Component, public eResistor
         double outVolt() { return m_vRef; }
         void setOutVolt( double v ) { m_vRef = v; m_changed = true; }
 
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w );
 
     protected:
         double m_vRef;
