@@ -107,8 +107,7 @@ void IoComponent::setup()
     QStringList pinList = m_invertPins.split(",");
 
     for( Pin* pin : getPins() ){
-        QString id = pin->pinId();
-        if( id.contains("@") ) id = id.split("@").last(); // In Subcircuit
+        QString id = pin->pinId().split("-").last();
         if( pinList.contains( id ) ) pin->userInvertPin();
     }
 }
@@ -263,7 +262,7 @@ QString IoComponent::invertedPins()
     std::vector<Pin*> pins = getPins();
     for( Pin* pin : pins )
         if( pin->userInverted() )
-            pinListStr += pin->pinId()+",";
+            pinListStr += pin->pinId().split("-").last()+",";
 
     return pinListStr;
 }
