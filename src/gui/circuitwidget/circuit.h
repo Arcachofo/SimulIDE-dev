@@ -29,7 +29,7 @@ class Circuit : public QGraphicsScene
     Q_OBJECT
 
     public:
-        Circuit( qreal x, qreal y, qreal width, qreal height, CircuitView* parent );
+        Circuit( int width, int height, CircuitView* parent );
         ~Circuit();
 
  static Circuit* self() { return m_pSelf; }
@@ -39,6 +39,12 @@ class Circuit : public QGraphicsScene
 
         bool animate() { return m_animate; }
         void setAnimate( bool an );
+
+        int sceneWidth() { return m_sceneWidth; }
+        void setSceneWidth( int w );
+
+        int sceneHeight() { return m_sceneHeight; }
+        void setSceneHeight( int h );
 
         int autoBck();
         void setAutoBck( int secs );
@@ -165,6 +171,8 @@ class Circuit : public QGraphicsScene
         QString circuitHeader();
         void updatePinName( QString* name );
 
+        void setSize( int width, int height );
+
         QString m_filePath;
         QString m_backupPath;
 
@@ -177,6 +185,9 @@ class Circuit : public QGraphicsScene
         QRect        m_scenerect;
         CircuitView* m_graphicView;
         Connector*   m_newConnector;
+
+        int m_sceneWidth;
+        int m_sceneHeight;
 
         int m_circRev;
         int m_seqNumber;

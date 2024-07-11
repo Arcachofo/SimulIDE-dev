@@ -31,8 +31,8 @@
 
 Circuit* Circuit::m_pSelf = NULL;
 
-Circuit::Circuit( qreal x, qreal y, qreal width, qreal height, CircuitView* parent )
-       : QGraphicsScene( x, y, width, height, parent )
+Circuit::Circuit( int width, int height, CircuitView* parent )
+       : QGraphicsScene( parent )
 {
     m_simulator = new Simulator();
     Tunnel::clearTunnels();
@@ -40,8 +40,10 @@ Circuit::Circuit( qreal x, qreal y, qreal width, qreal height, CircuitView* pare
     setObjectName( "Circuit" );
     setParent( parent );
     m_graphicView = parent;
-    m_scenerect.setRect( x, y, width, height );
-    setSceneRect( QRectF(x, y, width, height) );
+
+    m_sceneWidth  = width;
+    m_sceneHeight = height;
+    setSize( width, height );
 
     m_pSelf = this;
 
@@ -71,7 +73,7 @@ Circuit::Circuit( qreal x, qreal y, qreal width, qreal height, CircuitView* pare
     m_filePath   = "";//qApp->applicationDirPath()+"/new.simu"; // AppImage tries to write in read olny filesystem
 
     connect( &m_bckpTimer, &QTimer::timeout,
-                     this,&Circuit::saveBackup, Qt::UniqueConnection );
+                     this, &Circuit::saveBackup );
 
     qDebug() << endl << "-------------------------------------------------";
     qDebug() << "                   NEW CIRCUIT                   "<<endl;
@@ -398,7 +400,9 @@ void Circuit::loadStrDoc( QString &doc )
                     else if( name == "stepsPS" ) m_simulator->setStepsPerSec(prop.toULongLong() );
                     else if( name == "NLsteps" ) m_simulator->setMaxNlSteps( prop.toUInt() );
                     else if( name == "reaStep" ) m_simulator->setReactStep( prop.toULongLong() );
-                    else if( name == "animate" ) setAnimate( prop.toInt() );
+                    else if( name == "animate" ) m_animate = prop.toInt();
+                    else if( name == "width"   ) m_sceneWidth  = prop.toInt();
+                    else if( name == "height"  ) m_sceneHeight = prop.toInt();
                     else if( name == "rev"     ) m_circRev  = prop.toInt();
                     else if( name == "category") m_category = prop.toString();
                     else if( name == "compname") m_compName = prop.toString();
@@ -445,6 +449,7 @@ void Circuit::loadStrDoc( QString &doc )
     for( Linker*     linker : linkList   ) linker->createLinks( &compList );
 
     setAnimate( m_animate ); // Force Pin update
+    setSize( m_sceneWidth, m_sceneHeight );
 
     m_busy = false;
     QApplication::restoreOverrideCursor();
@@ -475,6 +480,8 @@ QString Circuit::circuitHeader()
     header += "NLsteps=\"" + QString::number( m_simulator->maxNlSteps() )+"\" ";
     header += "reaStep=\"" + QString::number( m_simulator->reactStep() )+"\" ";
     header += "animate=\"" + QString::number( m_animate ? 1 : 0 )+"\" ";
+    header += "width=\""   + QString::number( m_sceneWidth )+"\" ";
+    header += "height=\""  + QString::number( m_sceneHeight )+"\" ";
     header += ">\n";
     return header;
 }
@@ -1195,8 +1202,8 @@ void Circuit::drawBackground( QPainter* painter, const QRectF &rect )
     painter->drawRect( m_scenerect );
     return;*/
 
-    painter->setBrush( QColor( 240, 240, 210 ) );
-    painter->drawRect( m_scenerect );
+    //painter->setBrush( QColor( 240, 240, 210 ) );
+    painter->fillRect( m_scenerect, QColor( 240, 240, 210 ) );
     painter->setPen( QColor( 210, 210, 210 ) );
 
     if( m_hideGrid ) return;
@@ -1227,13 +1234,37 @@ void Circuit::drawBackground( QPainter* painter, const QRectF &rect )
         if( i > scnEndY && -i < scnStrY) break;
         if(  i < scnEndY ) painter->drawLine( scnStrX, i, scnEndX, i);
         if( -i > scnStrY ) painter->drawLine( scnStrX,-i, scnEndX,-i);
-}   }
+    }
+    QPen pen( QColor( 60, 60, 70 ), 2, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin );
+    painter->setPen( pen );
+    painter->setBrush( Qt::transparent );
+    painter->drawRect( m_scenerect );
+}
 
 void Circuit::updatePin( ePin* epin, QString oldId, QString newId )
 {
     remPin( oldId );
     Pin* pin = static_cast<Pin*>( epin );
     addPin( pin, newId );
+}
+
+void Circuit::setSceneWidth( int w )
+{
+    m_sceneWidth = w;
+    setSize( m_sceneWidth, m_sceneHeight );
+}
+
+void Circuit::setSceneHeight( int h )
+{
+    m_sceneHeight = h;
+    setSize( m_sceneWidth, m_sceneHeight );
+}
+
+void Circuit::setSize( int width, int height )
+{
+    m_scenerect.setRect( -width/2, -height/2, width, height );
+    setSceneRect( m_scenerect );
+    update();
 }
 
 void Circuit::setDrawGrid( bool draw )

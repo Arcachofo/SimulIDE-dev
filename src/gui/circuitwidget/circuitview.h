@@ -25,7 +25,7 @@ class CircuitView : public QGraphicsView
 
         bool showScroll() { return m_showScroll; }
         void setShowScroll( bool show );
-        
+
         void wheelEvent( QWheelEvent* event );
         void dragMoveEvent( QDragMoveEvent* event );
         void dragEnterEvent( QDragEnterEvent* event );
@@ -49,6 +49,7 @@ class CircuitView : public QGraphicsView
         
     protected:
         void contextMenuEvent( QContextMenuEvent* event );
+        void drawBackground( QPainter* painter, const QRectF &rect );
 
     private:
  static CircuitView*  m_pSelf;
