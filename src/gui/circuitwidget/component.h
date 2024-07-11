@@ -30,7 +30,6 @@ class Component : public CompBase, public QGraphicsItem, public Updatable
         ~Component();
 
         virtual bool setPropStr( QString prop, QString val ) override;
- static void substitution( QString &propName );
 
         enum { Type = UserType + 1 };
         int type() const override { return Type; }

@@ -155,22 +155,6 @@ bool Component::setPropStr( QString prop, QString val )
     return true;
 }
 
-void Component::substitution( QString &propName ) // static, Old: TODELETE
-{
-    if     ( propName == "Volts"       ) propName = "Voltage";
-    else if( propName == "id"          ) propName = "label";
-    else if( propName == "Duty_Square" ) propName = "Duty";
-    else if( propName == "S_R_Inverted") propName = "Reset_Inverted";
-    else if( propName == "Show_res"
-          || propName == "Show_Volt"
-          || propName == "Show_volt"
-          || propName == "Show_Amp"
-          || propName == "Show_Ind"
-          || propName == "Show_Ind"
-          || propName == "Show_Cap" )    propName = "Show_Val";
-   /// else if( propName == "Inverted")    propName = "InvertOuts";
-}
-
 QVariant Component::itemChange( GraphicsItemChange change, const QVariant &value )
 {
     if( m_isLinker && change == QGraphicsItem::ItemSelectedChange && value == false ) // Hide linked Components

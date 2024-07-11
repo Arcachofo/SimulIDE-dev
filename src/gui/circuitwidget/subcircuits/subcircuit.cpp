@@ -24,7 +24,6 @@
 #include "module.h"
 
 #include "stringprop.h"
-//#include "boolprop.h"
 
 #define tr(str) simulideTr("SubCircuit",str)
 
@@ -282,29 +281,10 @@ void SubCircuit::loadSubCircuit( QString doc )
     {
         if( line.startsWith("<item") )
         {
-            QString uid, newUid, type, label;
+            QVector<QStringRef> properties = Circuit::parseProps( line );
 
-            QStringRef name;
-            QVector<QStringRef> props = line.split("\"");
-            QVector<QStringRef> properties;
-            for( QStringRef prop : props )
-            {
-                if( prop.endsWith("=") )
-                {
-                    prop = prop.split(" ").last();
-                    name = prop.mid( 0, prop.length()-1 );
-                    continue;
-                }
-                else if( prop.endsWith("/>") ) continue;
-                else{
-                    if     ( name == "itemtype"  ) type  = prop.toString();
-                    else if( name == "CircId"    ) uid   = prop.toString();
-                    else if( name == "objectName") uid   = prop.toString();
-                    else if( name == "label"     ) label = prop.toString();
-                    else if( name == "id"        ) label = prop.toString();
-                    else properties << name << prop ;
-            }   }
-            newUid = numId+"@"+uid;
+            if( properties.takeFirst() != "itemtype") continue;
+            QString type = properties.takeFirst().toString();
 
             if( type == "Package" || type == "Subcircuit" ) continue;
 
@@ -320,28 +300,31 @@ void SubCircuit::loadSubCircuit( QString doc )
 
                     if     ( name == "startpinid") startPinId = numId+"@"+prop.toString();
                     else if( name == "endpinid"  ) endPinId   = numId+"@"+prop.toString();
-                    else if( name == "enodeid"   ) enodeId    = prop.toString();
                     else if( name == "pointList" ) pointList  = prop.toString().split(",");
                     name = "";
                 }
-                startPinId = startPinId.replace("Pin-", "Pin_"); // Old TODELETE
-                endPinId   =   endPinId.replace("Pin-", "Pin_"); // Old TODELETE
+                //startPinId = startPinId.replace("Pin-", "Pin_"); // Old TODELETE
+                //endPinId   =   endPinId.replace("Pin-", "Pin_"); // Old TODELETE
 
                 Pin* startPin = circ->m_LdPinMap.value( startPinId );
                 Pin* endPin   = circ->m_LdPinMap.value( endPinId );
 
-                if( startPin && endPin )    // Create Connector
+                if( startPin && endPin ) // Create Connection
                 {
                     startPin->setConPin( endPin );
                     endPin->setConPin( startPin );
                 }
                 else // Start or End pin not found
                 {
-                    if( !startPin ) qDebug()<<"\n   ERROR!!  SubCircuit::loadSubCircuit: "<<m_name<<m_id+" null startPin in "<<type<<uid<<startPinId;
-                    if( !endPin )   qDebug()<<"\n   ERROR!!  SubCircuit::loadSubCircuit: "<<m_name<<m_id+" null endPin in "  <<type<<uid<<endPinId;
+                    if( !startPin ) qDebug()<<"\n   ERROR!!  SubCircuit::loadSubCircuit: "<<m_name<<m_id+" null startPin in "<<type<<startPinId;
+                    if( !endPin )   qDebug()<<"\n   ERROR!!  SubCircuit::loadSubCircuit: "<<m_name<<m_id+" null endPin in "  <<type<<endPinId;
             }   }
             else{
                 Component* comp = NULL;
+
+                if( properties.takeFirst() != "CircId") continue; // ERROR
+                QString uid  = properties.takeFirst().toString();
+                QString newUid = numId+"@"+uid;
 
                 if( type == "Node" ) comp = new Node( type, newUid );
                 else                 comp = circ->createItem( type, newUid, false );
@@ -362,15 +345,12 @@ void SubCircuit::loadSubCircuit( QString doc )
                     if( m_subcType >= Board && comp->isGraphical() )
                     {
                         QPointF pos = comp->boardPos();
-                        /*if( pos == QPointF(-1e6,-1e6 ) ) // Don't show Components not placed
-                        {
-                            pos = QPointF( 0, 0 );
-                            comp->setVisible( false );
-                        }*/
+
                         comp->moveTo( pos );
                         comp->setRotation( comp->boardRot() );
                         comp->setHflip( comp->boardHflip() );
                         comp->setVflip( comp->boardVflip() );
+
                         if( !this->collidesWithItem( comp ) ) // Don't show Components out of Board
                         {
                             comp->setBoardPos( QPointF(-1e6,-1e6 ) ); // Used in setLogicSymbol to identify Components not visible
@@ -408,7 +388,7 @@ void SubCircuit::loadSubCircuit( QString doc )
                         tunnel->setName( m_id+"-"+tunnel->name() );
                         m_subcTunnels.append( tunnel );
                 }   }
-                else qDebug() << "SubCircuit:"<<m_name<<m_id<< "ERROR Creating Component: "<<type<<uid<<label;
+                else qDebug() << "SubCircuit:"<<m_name<<m_id<< "ERROR Creating Component: "<<type<<uid;
     }   }   }
     for( Linker* l : linkList ) l->createLinks( &m_compList );
 }
@@ -551,9 +531,7 @@ void SubCircuit::remove()
 void SubCircuit::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
 {
     event->accept();
-
     addMainCompsMenu( menu );
-
     Component::contextMenu( event, menu );
 }
 

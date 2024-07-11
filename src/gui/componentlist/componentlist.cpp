@@ -188,11 +188,11 @@ void ComponentList::loadComps( QDir compSetDir )
         QString icon = "";
         QByteArray ba;
 
-        QXmlStreamAttributes at = reader.attributes();
+        QXmlStreamAttributes attribs = reader.attributes();
 
-        if( at.hasAttribute("icondata") )
+        if( attribs.hasAttribute("icondata") )
         {
-            QString icStr = at.value("icondata").toString();
+            QString icStr = attribs.value("icondata").toString();
             bool ok;
             for( int i=0; i<icStr.size(); i+=2 )
             {
@@ -200,9 +200,9 @@ void ComponentList::loadComps( QDir compSetDir )
                 ba.append( ch.toInt( &ok, 16 ) );
             }
         }else{
-            if( at.hasAttribute("icon") )
+            if( attribs.hasAttribute("icon") )
             {
-                icon = at.value("icon").toString();
+                icon = attribs.value("icon").toString();
                 if( !icon.startsWith(":/") )
                     icon = MainWindow::self()->getDataFilePath("images/"+icon);
             }
@@ -214,11 +214,11 @@ void ComponentList::loadComps( QDir compSetDir )
         ic.loadFromData( ba );
         QIcon ico( ic );
 
-        if( reader.attributes().hasAttribute("compname") )
-            compName = reader.attributes().value("compname").toString();
+        if( attribs.hasAttribute("compname") )
+            compName = attribs.value("compname").toString();
 
         /// TODO: reuse get category from catPath
-        QString category = reader.attributes().value("category").toString();
+        QString category = attribs.value("category").toString();
         QStringList catPath = category.split("/");
 
         TreeItem* catItem = NULL;
@@ -235,14 +235,14 @@ void ComponentList::loadComps( QDir compSetDir )
                 catItem = addCategory( catTr, category, parent, "" );
             }
         }
-        QString type = reader.attributes().value("itemtype").toString();
+        QString type = attribs.value("itemtype").toString();
 
         if( !type.isEmpty() && !m_components.contains( compName ) )
         {
             m_dataFileList[ compName ] = compFile;   // Save comp File used to create this item
 
-            if( reader.attributes().hasAttribute("compinfo") )
-                compName += "???"+reader.attributes().value("compinfo").toString();
+            if( attribs.hasAttribute("compinfo") )
+                compName += "???"+attribs.value("compinfo").toString();
 
             addItem( compName, catItem, ico, type );
         }
@@ -338,18 +338,14 @@ void ComponentList::loadXml( QString xmlFile, bool convert )
                             QString data( ba.toHex() );
                             iconData = data;
                         }
-
                         QString compFolder = QFileInfo( xmlFile ).absolutePath()+"/"+folder;
                         QString compFile = compFolder+name+".comp";
-
                         QString compStr;
 
                         if( type == "Subcircuit" )
                         {
                             CircuitWidget::self()->loadCirc( compFolder+"/"+name+"/"+name+".sim1" );
                             compStr = Circuit::self()->circuitToString();
-
-
                         }
                         else if( type == "MCU" )
                         {

@@ -239,7 +239,7 @@ void AppDialog::updtReactStep()
     if( m_blocked ) return;
     uint64_t mult = pow( 1000, reactStepUnitBox->currentIndex() );
     uint64_t reactStep = mult*reactStepBox->value();
-    Simulator::self()->setreactStep( reactStep );
+    Simulator::self()->setReactStep( reactStep );
 }
 
 void AppDialog::on_slopeStepsBox_editingFinished()

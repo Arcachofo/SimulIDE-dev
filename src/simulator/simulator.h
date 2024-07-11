@@ -65,7 +65,7 @@ class Simulator : public QObject
         void setStepsPerSec( uint64_t sps );
 
         uint64_t reactStep() { return m_reactStep; }
-        void setreactStep( uint64_t rs ) { m_reactStep = rs; }
+        void setReactStep( uint64_t rs ) { m_reactStep = rs; }
 
         void  setSlopeSteps( int steps ) { m_slopeSteps = steps; }
         int slopeSteps( ) { return m_slopeSteps; }
