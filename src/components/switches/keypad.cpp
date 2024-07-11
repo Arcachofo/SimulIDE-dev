@@ -35,11 +35,13 @@ KeyPad::KeyPad( QString type, QString id )
 {
     m_graphical = true;
     m_keyLabels = "123456789*0#";
-    m_rows = 4;
-    m_cols = 3;
-    m_hasDiodes=false;
-    m_direction=false;
-    setupButtons( 0, 0 );
+
+    m_hasDiodes = false;
+    m_direction = false;
+    m_rows = 0;
+    m_cols = 0;
+
+    setupButtons( 4, 3 );
     setLabelPos(-8,-16, 0);
 
     addPropGroup( { tr("Main"), {
@@ -57,7 +59,6 @@ KeyPad::KeyPad( QString type, QString id )
 
         new StrProp<KeyPad>("Key_Labels", tr("Key Labels"), ""
                            , this, &KeyPad::keyLabels, &KeyPad::setKeyLabels )
-        
     },0} );
 }
 KeyPad::~KeyPad(){}
@@ -68,14 +69,13 @@ void KeyPad::initialize()
 
     if( !m_hasDiodes ) return;
 
-    for( int row=0; row<m_rows; row++ ){
+    for( int row=0; row<m_rows; row++ )
         for( int col=0; col<m_cols; col++ )
-         {
+        {
             QString nodId = m_id+"eNode"+QString::number(row)+QString::number(col);
             eNode* enode = new eNode( nodId );
             m_enodes.append(enode);
         }
-    }
 }
 
 void KeyPad::stamp()
@@ -131,49 +131,37 @@ void KeyPad::setHasDiodes( bool d )
 void KeyPad::setupButtons( int newRows, int newCols )
 {
     if( Simulator::self()->isRunning() ) CircuitWidget::self()->powerCircOff();
-    
-    m_area = QRectF(-12,-4, 16*m_cols+8, 16*m_rows+8 );
-    
-    for( PushBase* button : m_buttons ) 
-    {
-       m_buttons.removeOne( button );
-       delete button;
-    }
-    for( eDiode* diode : m_diodes ) 
-    {
-       m_diodes.removeOne( diode );
-       delete diode;
-    }
 
-    for( int col=m_cols; col<newCols; col++ )
-    {
-        deletePin( m_pin.end()[-1] );
-        m_pin.pop_back();
-    }
-    if( newRows > m_rows )
-    {
-        for( int row=m_rows; row<newRows; row ++ ) deletePin( m_pin[row] );
-        m_pin.erase( m_pin.begin()+m_rows, m_pin.begin()+newRows );
-    }
-    m_pin.resize( m_rows + m_cols );
+    for( PushBase* button : m_buttons ) delete button;
+    m_buttons.clear();
 
-    int n_added_rows = m_rows-newRows;
-    if( n_added_rows > 0 )
-        for( int i=m_pin.size()-1; i>=m_pin.size()-m_cols; i-- )
-            m_pin[i] = m_pin[i-n_added_rows];
-    
+    for( eDiode* diode : m_diodes ) delete diode;
+    m_diodes.clear();
+
+    for( int i=newRows; i<m_rows; ++i ) deletePin( m_rowPins.at(i) );
+    for( int i=newCols; i<m_cols; ++i ) deletePin( m_colPins.at(i) );
+
+    m_pin.clear();
+    m_rowPins.resize( newRows );
+    m_colPins.resize( newCols );
+
+    m_pin.clear();
+    m_pin.resize( newRows + newCols );
+
     int labelMax = m_keyLabels.size()-1;
     
-    for( int row=0; row<m_rows; row++ )
+    for( int row=0; row<newRows; row++ )
     {
-        if( row >= newRows )
+        if( row >= m_rows )
         {
-            QPoint pinPos = QPoint( m_cols*16, 8+row*16 );
+            QPoint pinPos = QPoint( newCols*16, 8+row*16 );
             Pin* pin = new Pin( 0, pinPos, m_id+"-Pin"+QString::number(row), 0, this);
             pin->setLength( 4 );
-            m_pin[row] = pin;
+            m_rowPins[row] = pin;
         }
-        for( int col=0; col<m_cols; col++ )
+        m_pin[row] = m_rowPins[row];
+
+        for( int col=0; col<newCols; col++ )
         {
             QString butId = m_id+"button"+QString::number(row)+QString::number(col);
             PushBase* button = new PushBase("PushBase", butId );
@@ -192,25 +180,31 @@ void KeyPad::setupButtons( int newRows, int newCols )
                 diode->setNumEpins( 2 );
                 m_diodes.append( diode );
             }
-
-            int pos = row*m_cols+col;
+            int pos = row*newCols+col;
             QString buttonLabel = "";
             if( pos <= labelMax ) buttonLabel = m_keyLabels.mid( pos, 1 );
             button->setKey( buttonLabel );
 
-            if( row == 0 )
+            if( row > 0 ) continue;
+            int index = newRows+col;
+            QString pinId = m_id+"-Pin"+QString::number(index);
+            if( col >= m_cols )
             {
-                if( col >= newCols ){
-                    int index = m_rows+col;
-                    QPoint pinPos = QPoint( col*16, m_rows*16+8);
-                    Pin* pin = new Pin( 270, pinPos, m_id+"-Pin"+QString::number(index), 0, this);
-                    pin->setLength( 4 );
-                    m_pin[index] = pin;
-                }
+                QPoint pinPos = QPoint( col*16, newRows*16+8);
+                Pin* pin = new Pin( 270, pinPos, pinId, 0, this);
+                pin->setLength( 4 );
+                m_colPins[col] = pin;
             }
-            Circuit::self()->update();
-    }   }
+            else m_colPins[col]->setId( pinId );
+            m_pin[index] = m_colPins[col];
+        }
+    }
+    m_rows = newRows;
+    m_cols = newCols;
+    m_area = QRectF(-12,-4, 16*m_cols+8, 16*m_rows+8 );
+
     setflip();
+    Circuit::self()->update();
 }
 
 void KeyPad::setDirection( bool dir )
@@ -222,17 +216,13 @@ void KeyPad::setDirection( bool dir )
 void KeyPad::setRows( int rows )
 {
     if( rows < 1 ) rows = 1;
-    int prev_rows = m_rows;
-    m_rows = rows;
-    setupButtons(prev_rows,m_cols);
+    setupButtons( rows, m_cols );
 }
 
 void KeyPad::setCols( int cols )
 {
     if( cols < 1 ) cols = 1;
-    int prev_cols = m_cols;
-    m_cols = cols;
-    setupButtons(m_rows, prev_cols);
+    setupButtons( m_rows, cols );
 }
 
 void KeyPad::setKeyLabels( QString keyLabels )

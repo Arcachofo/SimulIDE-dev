@@ -55,8 +55,11 @@ class KeyPad : public Component, public eElement
         QString m_keyLabels;
         
         QList<PushBase*> m_buttons;
-        QList<eDiode*> m_diodes;
-        QList<eNode*> m_enodes;
+        QList<eDiode*>   m_diodes;
+        QList<eNode*>    m_enodes;
+
+        std::vector<Pin*> m_rowPins;
+        std::vector<Pin*> m_colPins;
 };
 
 #endif
