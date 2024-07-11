@@ -65,18 +65,21 @@ bool Chip::setPropStr( QString prop, QString val )
 {
     if( prop =="Logic_Symbol" )
     {
-        QString pkgDIP;
-        QString pkgLS;
-        for( QString key : m_packageList.keys() )
-        {
-            if( key.endsWith("DIP") ) pkgDIP = key;
-            else                      pkgLS  = key;
-        }
-        if( pkgDIP.isEmpty() ) pkgDIP = m_packageList.first();
-        if( pkgLS.isEmpty()  ) pkgLS  = m_packageList.first();
+        if( m_packageList.isEmpty() ) setLogicSymbol( val == "true" );
+        else{
+            QString pkgDIP;
+            QString pkgLS;
+            for( QString key : m_packageList.keys() )
+            {
+                if( key.endsWith("DIP") ) pkgDIP = key;
+                else                      pkgLS  = key;
+            }
+            if( pkgDIP.isEmpty() ) pkgDIP = m_packageList.first();
+            if( pkgLS.isEmpty()  ) pkgLS  = m_packageList.first();
 
-        if( val == "true" ) setPackage( pkgLS );
-        else                setPackage( pkgDIP );
+            if( val == "true" ) setPackage( pkgLS );
+            else                setPackage( pkgDIP );
+        }
         return true;
     }
     return Component::setPropStr( prop, val );
