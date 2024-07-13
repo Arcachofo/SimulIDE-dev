@@ -175,6 +175,7 @@ void TestUnit::setInputs( QString i )
     for( int i=0; i<size; ++i )
         m_outPin[i]->setLabelText( inputList.at(i) );
 
+    updtOutPins();
     updtData();
 }
 
@@ -189,6 +190,7 @@ void TestUnit::setOutputs( QString o )
     for( int i=0; i<size; ++i )
         m_inPin[i]->setLabelText( outputList.at(i) );
 
+    updtInPins();
     updtData();
 }
 
