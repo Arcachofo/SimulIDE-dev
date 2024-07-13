@@ -309,6 +309,9 @@ void SubCircuit::loadSubCircuit( QString doc )
                 Pin* startPin = circ->m_LdPinMap.value( startPinId );
                 Pin* endPin   = circ->m_LdPinMap.value( endPinId );
 
+                if( !startPin ) startPin = findPin( startPinId );
+                if( !endPin   ) endPin   = findPin( endPinId );
+
                 if( startPin && endPin ) // Create Connection
                 {
                     startPin->setConPin( endPin );
@@ -474,6 +477,17 @@ Pin* SubCircuit::updatePin( QString id, QString type, QString label, int xpos, i
     pin->isMoved();
 
     return pin;
+}
+
+Pin* SubCircuit::findPin( QString pinId )
+{
+    QStringList words = pinId.split("-");
+    pinId = words.takeLast();
+    QString compId = words.join("-");
+
+    for( Component* comp : m_compList ) if( comp->getUid() == compId ) return comp->getPin( pinId );
+
+    return nullptr;
 }
 
 void SubCircuit::setLogicSymbol( bool ls )
