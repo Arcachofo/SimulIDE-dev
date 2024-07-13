@@ -33,7 +33,7 @@ FullAdder::FullAdder( QString type, QString id)
     m_height = 4;
     m_bits   = 0;
 
-    m_area = QRect( -8, -(m_height/2)*8, m_width*8, m_height*8 );
+    m_area = QRect(-8,-(m_height/2)*8, m_width*8, m_height*8 );
     m_inPin.resize( 1 );
     m_outPin.resize( 1 );
 
@@ -95,10 +95,18 @@ void FullAdder::setBits( int b )
         m_inPin[1+b+i]->setLabelText("B"+iStr );
         m_outPin[1+i]->setLabelText("S"+iStr );
     }
-
     m_coPin->setY( m_area.y()+b*8+16 );
-
     m_bits = b;
-
     Circuit::self()->update();
+}
+
+Pin* FullAdder::getPin( QString pinName )
+{
+    if( pinName == "in0" ) return m_inPin[1];
+    if( pinName == "in1" ) return m_inPin[2];
+    if( pinName == "in2" ) return m_ciPin;
+    if( pinName == "out0") return m_outPin[1];
+    if( pinName == "out1") return m_coPin;
+    /// TODO: find pins from number in pinName
+    return nullptr;
 }

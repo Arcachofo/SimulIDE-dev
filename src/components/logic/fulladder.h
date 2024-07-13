@@ -27,6 +27,8 @@ class FullAdder : public IoComponent, public eElement
         int bits() { return m_bits; }
         void setBits( int b );
 
+        virtual Pin* getPin( QString pinName ) override;
+
     private:
 
         int m_bits;
