@@ -124,7 +124,7 @@ void MainWindow::readSettings()
     CircuitWidget::self()->splitter()->restoreState( m_settings->value("Circsplitter/geometry").toByteArray());
 
     m_autoBck = 15;
-    if( m_settings->contains("autoBck") ) m_autoBck = m_settings->value( "autoBck" ).toInt();
+    if( m_settings->contains("autoBck") ) m_autoBck = m_settings->value("autoBck").toInt();
     Circuit::self()->setAutoBck( m_autoBck );
 }
 

@@ -26,7 +26,7 @@ class DAC : public LogicComponent
         double maxVolt() { return m_maxVolt; }
         void setMaxVolt( double v ) { m_maxVolt = v; }
 
-        void setNumInps( int pins );
+        void setNumInputs( int pins );
         
     protected:
         double m_maxVolt;

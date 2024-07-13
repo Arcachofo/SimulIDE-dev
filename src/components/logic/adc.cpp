@@ -37,6 +37,7 @@ ADC::ADC( QString type, QString id )
 
     setLabelPos(-16,-80, 0);
     setNumOutputs( 8 );    // Create Output Pins
+    setNumInps( 1, "In" );
     m_maxVolt = 5;
 
     addPropGroup( { tr("Main"), {
@@ -71,5 +72,5 @@ void ADC::setNumOutputs( int outs )
     if( outs < 1 ) return;
     m_maxValue = pow( 2, outs )-1;
     IoComponent::setNumOuts( outs, "D" );
-    IoComponent::setNumInps( 1, "In" );
+    updtInPins();
 }

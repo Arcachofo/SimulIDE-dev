@@ -36,13 +36,13 @@ DAC::DAC( QString type, QString id )
     m_height = 9;
 
     setLabelPos(-16,-80, 0);
-    setNumInps( 8 );       // Create Input Pins
+    setNumInputs( 8 );       // Create Input Pins
     setNumOuts( 1, "Out" );
     m_maxVolt = 5;
 
     addPropGroup( { tr("Main"), {
         new IntProp <DAC>("Num_Bits", tr("Size"),"_bits"
-                         , this, &DAC::numInps, &DAC::setNumInps, propNoCopy,"uint" ),
+                         , this, &DAC::numInps, &DAC::setNumInputs, propNoCopy,"uint" ),
 
         new DoubProp<DAC>("Vref", tr("Reference Voltage"),"V"
                          , this, &DAC::maxVolt, &DAC::setMaxVolt )
@@ -85,10 +85,10 @@ void DAC::runEvent()
     m_outPin[0]->setOutState( true );
 }
 
-void DAC::setNumInps( int inputs )
+void DAC::setNumInputs( int inputs )
 {
     if( inputs < 1 ) return;
     m_maxValue = pow( 2, inputs )-1;
     IoComponent::setNumInps( inputs, "D" );
-    IoComponent::setNumOuts( 1, "Out" );
+    updtOutPins();
 }

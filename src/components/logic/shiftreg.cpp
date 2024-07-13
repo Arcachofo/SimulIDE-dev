@@ -191,7 +191,7 @@ void ShiftReg::updatePins()
     int inBits = m_parallelIn ? m_bits : 0;
     setNumOuts( m_bits, "Q" );
     setNumInps( inBits, "I", 0, 10 ); // Start at id 10 to leave room for new control inputs
-    setNumOuts( m_bits, "Q" ); // Fix pin positions
+    updtOutPins(); // Fix pin positions
 
     int start = inBits-m_height/2;
     if( m_parallelIn ) start++;
