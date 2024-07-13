@@ -96,26 +96,35 @@ Circuit::~Circuit()
 Component* Circuit::getCompById( QString id )
 {
     for( Component* comp : m_compList ) if( comp->getUid() == id ) return comp;
-    return NULL;
+    return nullptr;
 }
 
 QString Circuit::getSeqNumber( QString name )
 {
     QStringList words = name.split("-");
+    if( words.size() > 1 ) return words.takeLast();
+
+    /*QStringList words = name.split("-");
     for( int i=1; i<words.size(); ++i )    // Start at second word, first must be name
     {
         QString word = words.at( i );
         bool ok;
         word.toInt( &ok );  // If it converts to int, then this is old seqNumber
         if( ok ) return word;
-    }
+    }*/
     return "";
 }
 
 QString Circuit::replaceId( QString pinName )
 {
     QStringList words = pinName.split("-");
-    for( int i=1; i<words.size(); ++i )    // Start at second word, first must be name
+    QString pinId = words.takeLast();
+    QString compNumber = words.takeLast();
+    bool ok;
+    compNumber.toInt( &ok );
+    if( ok ) return words.join("-")+"-"+compNumber+"-"+pinId;
+
+    /*for( int i=1; i<words.size(); ++i )    // Start at second word, first must be name
     {
         QString word = words.at( i );
         bool ok;
@@ -125,18 +134,32 @@ QString Circuit::replaceId( QString pinName )
             break;
         }
     }
-    return words.join("-");
+    return words.join("-");*/
+    return pinName;
+}
+
+Pin* Circuit::findPin( QString id )
+{
+    QStringList words = id.split("-");
+    id = words.takeLast();
+    QString compId = words.join("-");
+    Component* comp = getCompById( compId );
+    if( comp ) return comp->getPin( id );
+
+    return nullptr;
 }
 
 Pin* Circuit::findPin( int x, int y, QString id )
 {
+    Pin* pin = findPin( id );
+    if( pin ) return pin;
     // qDebug() << "Circuit::findPin" << id;
     QRectF itemRect = QRectF ( x-4, y-4, 8, 8 );
 
     QList<QGraphicsItem*> list = items( itemRect ); // List of items in (x, y)
     for( QGraphicsItem* it : list )
     {
-        Pin* pin =  qgraphicsitem_cast<Pin*>( it );
+        pin =  qgraphicsitem_cast<Pin*>( it );
         if( pin && pin->pinId().left(1) == id.left(1) && !pin->connector() ) return pin; // Check if names start by same letter
     }
     for( QGraphicsItem* it : list ) // Not found by first letter, take first Pin
@@ -144,7 +167,7 @@ Pin* Circuit::findPin( int x, int y, QString id )
         Pin* pin =  qgraphicsitem_cast<Pin*>( it );
         if( pin ) return pin;
     }
-    return NULL;
+    return nullptr;
 }
 
 void Circuit::loadCircuit( QString fileName )

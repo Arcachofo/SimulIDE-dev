@@ -75,6 +75,7 @@ class Circuit : public QGraphicsScene
         void accepKeys( bool a ) { m_acceptKeys = a; }
 
         Pin* findPin( int x, int y, QString id );
+        Pin* findPin( QString id );
 
         void loadCircuit( QString fileName );
         bool saveCircuit( QString fileName );
