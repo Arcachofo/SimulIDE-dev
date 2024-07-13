@@ -73,9 +73,7 @@ void TestUnit::stamp()
     m_read = false;
     m_changed = false;
 
-    m_steps = pow( 2, m_outPin.size() ); // Output pins are the inputs of the tested device
-    m_samples.clear();
-    m_samples.resize( m_steps );
+    updtData();
 
     Simulator::self()->addEvent( m_interval, this );
 }
@@ -146,7 +144,7 @@ void TestUnit::loadTest()
 QString TestUnit::truth()
 {
     QString truthStr;
-    for( int i=0; i<m_truthT.size(); ++i )
+    for( uint i=0; i<m_truthT.size(); ++i )
     {
         truthStr += QString::number( m_truthT[i],16 )+",";
     }
@@ -176,6 +174,8 @@ void TestUnit::setInputs( QString i )
 
     for( int i=0; i<size; ++i )
         m_outPin[i]->setLabelText( inputList.at(i) );
+
+    updtData();
 }
 
 void TestUnit::setOutputs( QString o )
@@ -188,4 +188,16 @@ void TestUnit::setOutputs( QString o )
 
     for( int i=0; i<size; ++i )
         m_inPin[i]->setLabelText( outputList.at(i) );
+
+    updtData();
+}
+
+void TestUnit::updtData()
+{
+    m_steps = pow( 2, m_outPin.size() ); // Output pins are the inputs of the tested device
+    m_samples.clear();
+    m_samples.resize( m_steps );
+
+    m_truthT.clear();
+    m_truthT.resize( m_steps );
 }

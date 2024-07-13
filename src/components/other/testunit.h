@@ -42,6 +42,7 @@ class TestUnit: public IoComponent, public eElement
 
     private:
         void createTable();
+        void updtData();
 
         uint64_t m_interval;
 
