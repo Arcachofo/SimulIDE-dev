@@ -391,7 +391,6 @@ void IoComponent::setupPin( IoPin *pin, QString data ) // Example data = "L02" =
     pin->setLabelColor( QColor( 0, 0, 0 ) );
     pin->setLabelText( label );
     initPin( pin );
-
 }
 
 void IoComponent::initPin( IoPin* pin )
@@ -405,10 +404,14 @@ void IoComponent::initPin( IoPin* pin )
 }
 
 void IoComponent::setNumInps( uint pins, QString label, int bit0, int id0 )
-{ setNumPins( &m_inPin, pins, label, bit0, false, id0 ); }
+{
+    setNumPins( &m_inPin, pins, label, bit0, false, id0 );
+}
 
 void IoComponent::setNumOuts( uint pins, QString label, int bit0, int id0 )
-{ setNumPins( &m_outPin, pins, label, bit0, true, id0 ); }
+{
+    setNumPins( &m_outPin, pins, label, bit0, true, id0 );
+}
 
 void IoComponent::setNumPins( std::vector<IoPin*>* pinList, uint pins
                               , QString label, int bit0, bool out, int id0 )
@@ -419,9 +422,9 @@ void IoComponent::setNumPins( std::vector<IoPin*>* pinList, uint pins
 
     int halfW = (m_width/2)*8;//m_width*8/2;//
 
-    int angle       = out ?       0 : 180;
-    QString id      = out ?  "-out" : "-in";
-    pinMode_t mode  = out ?  output : input;
+    int angle      = out ?      0 : 180;
+    QString id     = out ? "-out" : "-in";
+    pinMode_t mode = out ? output : input;
 
     id = m_id+id;
 
@@ -442,7 +445,7 @@ void IoComponent::setNumPins( std::vector<IoPin*>* pinList, uint pins
     int x = out ? m_area.x()+m_width*8+8 : m_area.x()-8;
     int start = 8;
     if( label.isEmpty() ) start = 4;  // Gates
-    else if( start%8 ) start +=4;
+    //else if( start%8 ) start +=4;
 
     for( uint i=0; i<pins; ++i )
     {
@@ -474,6 +477,18 @@ void IoComponent::setNumPins( std::vector<IoPin*>* pinList, uint pins
     }
     setflip();
     Circuit::self()->update();
+}
+
+void IoComponent::updtOutPins()
+{
+    for( uint i=0; i<m_outPin.size(); ++i )
+        m_outPin.at(i)->setY( m_area.y() + i*8 + 8 );
+}
+
+void IoComponent::updtInPins()
+{
+    for( uint i=0; i<m_inPin.size(); ++i )
+        m_inPin.at(i)->setY( m_area.y() + i*8 + 8 );
 }
 
 void IoComponent::deletePins( std::vector<IoPin*>* pinList, int pins )

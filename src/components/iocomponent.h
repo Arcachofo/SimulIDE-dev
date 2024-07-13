@@ -95,6 +95,9 @@ class IoComponent : public Component
         void setNumPins( std::vector<IoPin*>* pinList, uint pins, QString label, int bit0, bool out, int id0 );
         void deletePins( std::vector<IoPin*>* pinList, int pins );
 
+        virtual void updtOutPins();
+        virtual void updtInPins();
+
         uint m_outValue;
         uint m_nextOutVal;
         std::queue<uint> m_outQueue;
