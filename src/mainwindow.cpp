@@ -144,8 +144,8 @@ void MainWindow::writeSettings()
 
 void MainWindow::setFontScale( float scale )
 {
-    if     ( scale < 0.5 ) scale = 0.5;
-    else if( scale > 2 )   scale = 2;
+    if     ( scale < 0.2 ) scale = 0.2;
+    else if( scale > 10  ) scale = 10;
     m_fontScale = scale;
 }
 
