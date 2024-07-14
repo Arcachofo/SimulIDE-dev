@@ -19,12 +19,15 @@ creCompDialog::creCompDialog( QWidget* parent )
     setupUi( this );
 
     m_circuitPath = Circuit::self()->getFilePath();
+    if( m_circuitPath.endsWith(".comp") )
+    {
+        buttonBox->hide();//  button( QDialogButtonBox::Cancel )->hide();
+        line->hide();
+    }
     categoryEdit->setText( Circuit::self()->category() );
     nameEdit->setText( Circuit::self()->compName() );
     infoEdit->setText( Circuit::self()->compInfo() );
     QString iconData = Circuit::self()->iconData();
-
-    if( m_circuitPath.endsWith(".comp") ) buttonBox->button( QDialogButtonBox::Cancel )->hide();
 
     QStringList iconList;
     iconList <<":/null_ico.png"<<":/subc_ico.png"<<":/subcl.png"<<":/subc2.png"<<":/ic2.png"
@@ -42,13 +45,14 @@ creCompDialog::creCompDialog( QWidget* parent )
     }
 }
 
-void creCompDialog::accept()
+QString creCompDialog::toString()
 {
     QString name = nameEdit->text();
     if( name.isEmpty() ){
-        qDebug() << "creCompDialog::accept Error: Component name is empty";
-        return;
+        qDebug() << "creCompDialog::toString Error: Component name is empty";
+        return "";
     }
+
     int index = iconBox->currentIndex();
     QString iconData;
     if( index > 0 ) iconData = m_itemList.at( index ).iconData;
@@ -64,11 +68,19 @@ void creCompDialog::accept()
     comp += Circuit::self()->circuitToString();
     comp += "</libitem>";
 
+    return comp;
+}
+
+void creCompDialog::accept()
+{
+    QString comp = toString();
+    if( comp.isEmpty() ) return;
+
     QString dir = m_circuitPath;
     if( dir.isEmpty() ) dir = MainWindow::self()->userPath();
 
     QFileInfo info( dir );
-    dir = info.path()+"/"+name+".comp";
+    dir = info.path()+"/"+nameEdit->text()+".comp";
     QString fileName = QFileDialog::getSaveFileName( this, tr("Save Copmponent"), dir,
                                                      tr("Components (*.comp);;All files (*.*)") );
     if( fileName.isEmpty() ) return;

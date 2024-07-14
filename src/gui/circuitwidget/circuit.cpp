@@ -170,16 +170,16 @@ Pin* Circuit::findPin( int x, int y, QString id )
     return nullptr;
 }
 
-void Circuit::loadCircuit( QString fileName )
+void Circuit::loadCircuit( QString filePath )
 {
     if( m_conStarted ) return;
 
     m_busy = true;
     m_loading = true;
-    m_filePath = fileName;
+    m_filePath = filePath;
     m_error = 0;
 
-    QString doc = fileToString( fileName, "Circuit::loadCircuit" );
+    QString doc = fileToString( filePath, "Circuit::loadCircuit" );
     loadStrDoc( doc );
 
     m_busy = false;
@@ -189,7 +189,7 @@ void Circuit::loadCircuit( QString fileName )
     else{
         m_graphicView->zoomToFit();
         qDebug() << "Circuit Loaded: ";
-        qDebug() << fileName;
+        qDebug() << filePath;
 }   }
 
 QVector<QStringRef> Circuit::parseProps( QStringRef line ) // Static
@@ -550,7 +550,12 @@ bool Circuit::saveCircuit( QString filePath )
     QString oldFilePath = m_filePath;
     m_filePath = filePath;
 
-    bool saved = saveString( filePath, circuitToString() );
+    bool saved = false;
+    if( filePath.endsWith(".comp") && m_creCompDialog ){
+        saved = saveString( filePath, m_creCompDialog->toString() );
+    }
+    else saved = saveString( filePath, circuitToString() );
+
     if( saved ){
         qDebug() << "\nCircuit Saved: \n" << filePath;
         if( QFile::exists( m_backupPath ) ) QFile::remove( m_backupPath ); // Remove backup file

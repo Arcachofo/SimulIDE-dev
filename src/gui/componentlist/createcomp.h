@@ -22,6 +22,8 @@ class creCompDialog : public QDialog, private Ui::creCompDialog
     public:
         creCompDialog( QWidget* parent=0 );
 
+        QString toString();
+
     public slots:
         void on_iconChoose_clicked();
 

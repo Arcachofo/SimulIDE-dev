@@ -77,8 +77,8 @@ class Circuit : public QGraphicsScene
         Pin* findPin( int x, int y, QString id );
         Pin* findPin( QString id );
 
-        void loadCircuit( QString fileName );
-        bool saveCircuit( QString fileName );
+        void loadCircuit( QString filePath );
+        bool saveCircuit( QString filePath );
 
         Component* createItem( QString name, QString id, bool map=true );
 
