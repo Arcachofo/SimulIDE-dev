@@ -40,6 +40,8 @@ class SerialTerm : public Component, public UsartModule, public eElement
 
         virtual void sendByte( uint8_t data ) override;
 
+        virtual void setIdLabel( QString id ) override;
+
         virtual void byteReceived( uint8_t byte ) override;
         virtual void frameSent( uint8_t data ) override;
 

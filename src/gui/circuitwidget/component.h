@@ -41,7 +41,7 @@ class Component : public CompBase, public QGraphicsItem, public Updatable
         virtual void setAngle( double angle ) { setRotation( angle ); }
 
         QString idLabel();
-        void setIdLabel( QString id );
+        virtual void setIdLabel( QString id );
 
         bool showId() { return m_showId; }
         void setShowId( bool show );

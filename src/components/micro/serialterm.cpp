@@ -163,9 +163,15 @@ void SerialTerm::onbuttonclicked()
     else                        m_monitor->close();
 }
 
+void SerialTerm::setIdLabel( QString id )
+{
+    Component::setIdLabel( id );
+    if( m_monitor ) m_monitor->setWindowTitle( id );
+}
+
 void SerialTerm::slotOpenTerm()
 {
-    openMonitor( m_id, 0, /*send=*/true );
+    openMonitor( idLabel(), 0, /*send=*/true );
     m_monitor->activateSend();
 }
 

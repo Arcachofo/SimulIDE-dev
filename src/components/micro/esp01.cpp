@@ -418,6 +418,12 @@ void Esp01::connectReply( QByteArray OP, int link )
     m_action = uartReply; // Send Reply
 }
 
+void Esp01::setIdLabel( QString id )
+{
+    Component::setIdLabel( id );
+    if( m_monitor ) m_monitor->setWindowTitle( id );
+}
+
 void Esp01::slotOpenTerm()
 {
     openMonitor( idLabel(), 0 );

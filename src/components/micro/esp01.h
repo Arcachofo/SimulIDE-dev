@@ -43,6 +43,8 @@ class Esp01 : public Component, public UsartModule, public eElement
         virtual void updateStep() override;
         virtual void runEvent() override;
 
+        virtual void setIdLabel( QString id ) override;
+
         virtual void byteReceived( uint8_t byte ) override;
         virtual void frameSent( uint8_t data ) override;
 

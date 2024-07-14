@@ -49,6 +49,8 @@ class SerialPort : public Component, public UsartModule, public eElement
 
         void setSerialMon( bool s );
 
+        virtual void setIdLabel( QString id ) override;
+
         virtual void byteReceived( uint8_t byte ) override;
         virtual void frameSent( uint8_t data ) override;
 

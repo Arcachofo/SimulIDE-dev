@@ -223,9 +223,15 @@ void SerialPort::onbuttonclicked()
     else                        close();
 }
 
+void SerialPort::setIdLabel( QString id )
+{
+    Component::setIdLabel( id );
+    if( m_monitor ) m_monitor->setWindowTitle( id );
+}
+
 void SerialPort::slotOpenTerm()
 {
-    openMonitor( m_id, 0 );
+    openMonitor( idLabel(), 0 );
 }
 
 void SerialPort::setSerialMon( bool s )
