@@ -43,6 +43,7 @@ IoPin::IoPin( int angle, const QPoint pos, QString id, int index, Component* par
 
     m_pinMode = undef_mode;
     setPinMode( mode );
+    animate( Circuit::self()->animate() );
 }
 IoPin::~IoPin(){}
 
@@ -250,8 +251,10 @@ void IoPin::setInputImp( double imp )
     m_inputImp = imp;
     if( m_pinMode == input )
     {
-        m_gndAdmit = 1/m_inputImp;
-        updtState();
+        //m_gndAdmit = 1/m_inputImp;
+        //updtState();
+        m_admit = 1/m_inputImp;
+        ePin::stampAdmitance( m_admit );
     }
 }
 
@@ -260,8 +263,10 @@ void IoPin::setOutputImp( double imp )
     m_outputImp = imp;
     if( m_pinMode == output )
     {
-        m_vddAdmit = 1/m_outputImp;
-        updtState();
+        //m_vddAdmit = 1/m_outputImp;
+        //updtState();
+        m_admit = 1/m_outputImp;
+        ePin::stampAdmitance( m_admit );
     }
 }
 

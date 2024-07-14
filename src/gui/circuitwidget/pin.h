@@ -100,15 +100,13 @@ class Pin : public QGraphicsItem, public ePin, public Updatable
 
         void setDataChannel( LaChannel* ch ) { m_dataCannel = ch; }
 
-        //inline void setPinState( pinState_t st ) { m_pinState = st; /*m_PinChanged = true;*/ }
-
         void warning( bool w );
         void animate( bool an );
         virtual void updateStep() override;
 
         virtual Pin* getPin() override { return this; }
 
-        virtual void paint( QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w ) override;
 
         void isMoved();
         void flip( int h, int v );

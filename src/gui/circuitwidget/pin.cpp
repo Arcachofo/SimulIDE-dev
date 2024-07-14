@@ -75,7 +75,6 @@ Pin::Pin( int angle, const QPoint pos, QString id, int index, Component* parent,
     setFlag( QGraphicsItem::ItemIsSelectable, false );
 
     Circuit::self()->addPin( this, id );
-    animate( Circuit::self()->animate() );
 
     m_component->addSignalPin( this );
 }
@@ -335,7 +334,6 @@ void Pin::setLength( int length )
 void Pin::setIsBus( bool bus )
 {
     if( m_isBus == bus ) return;
-    /// if( !bus ) return;          // Why?
     m_isBus = bus;
     
     if( my_connector ) my_connector->setIsBus( true );
@@ -368,20 +366,19 @@ void Pin::animate( bool an )
     if     (  m_animate ) Simulator::self()->addToUpdateList( this );
     else if( !m_warning ) Simulator::self()->remFromUpdateList( this );
 
-    update();
+    if( !Simulator::self()->isRunning() ) updateStep();
+    else                                  update();
 }
 
 void Pin::updateStep()
 {
     if( m_unused ) return;
-    //if( m_PinChanged )
-        update();
+    update();
 }
 
-void Pin::paint( QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget )
+void Pin::paint(QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w )
 {
     if( !isVisible() ) return;
-    //m_PinChanged = false;
 
     /*QPen pen0( m_color[0], 0, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin );
     painter->setPen(pen0);
@@ -395,10 +392,10 @@ void Pin::paint( QPainter* painter, const QStyleOptionGraphicsItem* option, QWid
         if( Simulator::self()->isRunning() ) m_opCount += speed;
         else                                 m_opCount = 0.65;
 
-        painter->setOpacity( m_opCount+opaci );
+        p->setOpacity( m_opCount+opaci );
         if( m_opCount > 0.7 ) m_opCount = 0.0;
 
-        painter->fillRect( QRect(-4, -4, m_length+4, 8 ), QColor(200, 100, 0, 240) );
+        p->fillRect( QRect(-4, -4, m_length+4, 8 ), QColor(200, 100, 0, 240) );
     }
 
     if( m_overScore > -1 )
@@ -409,8 +406,8 @@ void Pin::paint( QPainter* painter, const QStyleOptionGraphicsItem* option, QWid
         if( m_angle == 0 ) y = -y; // Right
 
         QPen pen( m_label.brush().color(), 0.5, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin );
-        painter->setPen( pen );
-        painter->drawLine( QPointF( x, y ), QPointF( x+width, y ) );
+        p->setPen( pen );
+        p->drawLine( QPointF( x, y ), QPointF( x+width, y ) );
     }
     QPen pen( m_color[0], 3, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin );
 
@@ -418,31 +415,31 @@ void Pin::paint( QPainter* painter, const QStyleOptionGraphicsItem* option, QWid
     else if( m_isBus   ) pen.setColor( Qt::darkGreen );
     else if( m_animate ) pen.setColor( m_color[m_pinState] );
 
-    painter->setPen(pen);
-    if( m_length > 1 ) painter->drawLine( QPointF(0, 0), QPointF( m_length-0.7, 0) );
-    else               painter->drawLine( QPointF(-0.01, 0 ), QPointF( 0.03, 0 ) );
+    p->setPen(pen);
+    if( m_length > 1 ) p->drawLine( QPointF(0, 0), QPointF( m_length-0.7, 0) );
+    else               p->drawLine( QPointF(-0.01, 0 ), QPointF( 0.03, 0 ) );
 
     if( m_inverted )
     {
-        painter->setBrush( Qt::white );
-        QPen pen = painter->pen();
+        p->setBrush( Qt::white );
+        QPen pen = p->pen();
         pen.setWidthF( 1.8 );
-        painter->setPen(pen);
+        p->setPen(pen);
         QRectF rect( 3.5,-2.2, 4.4, 4.4 );
-        painter->drawEllipse(rect);
+        p->drawEllipse(rect);
     }
     if( !m_unused && m_animate )
     {
         pen.setWidthF( 1.5 );
-        painter->setPen(pen);
+        p->setPen(pen);
         if( m_pinState >= input_low ) // Draw Input arrow
         {
-            painter->drawLine( 2, 0, 0, 2);
-            painter->drawLine( 0,-2, 2, 0);
+            p->drawLine( 2, 0, 0, 2);
+            p->drawLine( 0,-2, 2, 0);
         }else{
             if( m_pinState >= out_low ) // Draw lower half Output arrow
-            painter->drawLine( 0, 0, 2, 2);
+            p->drawLine( 0, 0, 2, 2);
             if( m_pinState >= driven_low )
-            painter->drawLine( 2,-2, 0, 0);// Draw upper half Output arrow
+            p->drawLine( 2,-2, 0, 0);  // Draw upper half Output arrow
         }
 }   }
