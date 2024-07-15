@@ -36,12 +36,17 @@ LatchD::LatchD( QString type, QString id )
     m_height = 10;
     m_area = QRect(-(m_width*8/2),-(m_height*8/2), m_width*8, m_height*8 );
     
+    m_useReset = false;
     m_tristate = true;
     createOePin("IR00OE", id+"-Pin_outEnable");
 
-    m_clkPin = new IoPin( 180, QPoint( -24,0 ), m_id+"-Pin_clock", 0, this, input );
+    m_clkPin = new IoPin( 180, QPoint(-24, 0 ), m_id+"-Pin_clock", 0, this, input );
     m_clkPin->setLabelColor( QColor( 0, 0, 0 ) );
     LatchD::setTrigger( InEnable );
+
+    m_resetPin = new IoPin( 180, QPoint(-24, 8 ), m_id+"-Pin_reset", 0, this, input );
+    setupPin( m_resetPin,"L03RST");
+    m_resetPin->setVisible( false );
 
     m_channels = 0;
     setChannels( 8 );
@@ -55,6 +60,9 @@ LatchD::LatchD( QString type, QString id )
 
         new BoolProp<LatchD>("Tristate", tr("Tristate"),""
                             , this, &LatchD::tristate, &LatchD::setTristate ),
+
+        new BoolProp<LatchD>("UseRS", tr("Use Set/Reset Pins"),""
+                                  , this, &LatchD::pinReset, &LatchD::setPinReset, propNoCopy ),
     }, groupNoCopy } );
 
     addPropGroup( { tr("Electric"),
@@ -75,6 +83,8 @@ void LatchD::stamp()
 {
     if( m_trigger != Clock )
     { for( uint i=0; i<m_inPin.size(); ++i ) m_inPin[i]->changeCallBack( this ); }
+
+    m_resetPin->changeCallBack( this );
     LogicComponent::stamp();
 }
 
@@ -82,7 +92,9 @@ void LatchD::voltChanged()
 {
     updateOutEnabled();
     updateClock();
-    if( m_clkState == Clock_Allow )
+
+    if( m_resetPin->getInpState() ) m_nextOutVal = 0;
+    else if( m_clkState == Clock_Allow )
     {
         m_nextOutVal = 0;
         for( uint i=0; i<m_outPin.size(); ++i )
@@ -111,6 +123,7 @@ void LatchD::setChannels( int channels )
     y += channels*8;
     m_clkPin->setY( y );
     m_oePin->setY( y );
+    m_resetPin->setY( y+8 );
 
     updateSize();
 }
@@ -127,10 +140,18 @@ void LatchD::setTrigger( trigger_t trigger )
     updateSize();
 }
 
+void LatchD::setPinReset( bool r )
+{
+    m_useReset = r;
+    m_resetPin->setVisible( r );
+    if( !r ) m_resetPin->removeConnector();
+    updateSize();
+}
 void LatchD::updateSize()
 {
     int height = m_height;
     if( !m_tristate && (m_trigger == None) ) height--;
+    if( m_useReset ) height++;
     m_area = QRect( -(m_width/2)*8, -(m_height/2)*8, m_width*8, height*8 );
     Circuit::self()->update();
 }

@@ -26,6 +26,9 @@ class LatchD : public LogicComponent
         int channels() { return m_channels; }
         void setChannels( int channels );
 
+        bool pinReset() { return m_useReset; }
+        void setPinReset( bool r );
+
         virtual void setTristate( bool t ) override;
         virtual void setTrigger( trigger_t trigger ) override;
 
@@ -33,6 +36,10 @@ class LatchD : public LogicComponent
         void updateSize();
         
         int m_channels;
+
+        bool m_useReset;
+
+        IoPin* m_resetPin;
 };
 
 #endif
