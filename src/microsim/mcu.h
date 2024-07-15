@@ -84,6 +84,8 @@ class Mcu : public Chip, public Linker
         int serialMon();
         void setSerialMon( int s );
 
+        virtual void setIdLabel( QString id ) override;
+
         virtual void initialize() override;
         virtual void stamp() override;
         virtual void updateStep() override;

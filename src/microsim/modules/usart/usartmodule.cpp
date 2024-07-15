@@ -95,6 +95,11 @@ void UsartModule::openMonitor( QString id, int num, bool send )
     m_serialMon = true;
 }
 
+void UsartModule::setMonitorTittle( QString t )
+{
+    if( m_monitor ) m_monitor->setWindowTitle( t );
+}
+
 void UsartModule::monitorClosed()
 {
     m_serialMon = false;

@@ -632,6 +632,16 @@ void Mcu::slotLinkComp()
     Linker::startLinking();
 }
 
+void Mcu::setIdLabel( QString id )
+{
+    Component::setIdLabel( id );
+    for( uint i=0; i<m_eMcu.m_usarts.size(); ++i )
+    {
+        QString id = findIdLabel()+" - Uart"+QString::number(i+1);
+        m_eMcu.m_usarts.at(i)->setMonitorTittle( id );
+    }
+}
+
 void Mcu::slotOpenMcuMonitor()
 {
     if( !m_mcuMonitor ) m_mcuMonitor = new MCUMonitor( CircuitWidget::self(), &m_eMcu );
