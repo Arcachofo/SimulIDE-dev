@@ -42,7 +42,6 @@ LatchD::LatchD( QString type, QString id )
 
     m_clkPin = new IoPin( 180, QPoint(-24, 0 ), m_id+"-Pin_clock", 0, this, input );
     m_clkPin->setLabelColor( QColor( 0, 0, 0 ) );
-    LatchD::setTrigger( InEnable );
 
     m_resetPin = new IoPin( 180, QPoint(-24, 8 ), m_id+"-Pin_reset", 0, this, input );
     setupPin( m_resetPin,"L03RST");
@@ -51,6 +50,7 @@ LatchD::LatchD( QString type, QString id )
 
     m_channels = 0;
     setChannels( 8 );
+    LatchD::setTrigger( InEnable );
 
     addPropGroup( { tr("Main"), {
         new IntProp <LatchD>("Channels", tr("Size"),"_bits"
@@ -121,11 +121,6 @@ void LatchD::setChannels( int channels )
         m_inPin[i]->setY( y+i*8 );
         m_outPin[i]->setY( y+i*8 );
     }
-    y += channels*8;
-    m_clkPin->setY( y );
-    m_oePin->setY( y );
-    m_resetPin->setY( y+8 );
-
     updateSize();
 }
 
@@ -150,9 +145,18 @@ void LatchD::setPinReset( bool r )
 }
 void LatchD::updateSize()
 {
-    int height = m_height;
-    if( !m_tristate && (m_trigger == None) ) height--;
-    if( m_useReset ) height++;
-    m_area = QRect( -(m_width/2)*8, -(m_height/2)*8, m_width*8, height*8 );
+    int height = m_height-1;
+    int l = m_useReset ? 1 : 0;
+    if( m_trigger != None ) l++;
+    int d = m_tristate ? 1 : 0;
+    height = (l > d) ? height+l : height+d;
+
+    int y = -(m_height/2)*8;
+    m_area = QRect( -(m_width/2)*8, y, m_width*8, height*8 );
+    y += m_channels*8+8;
+    m_clkPin->setY( y );
+    m_oePin->setY( y );
+    if( m_trigger != None ) y += 8;
+    m_resetPin->setY( y );
     Circuit::self()->update();
 }
