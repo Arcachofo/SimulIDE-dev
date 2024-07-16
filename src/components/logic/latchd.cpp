@@ -47,6 +47,7 @@ LatchD::LatchD( QString type, QString id )
     m_resetPin = new IoPin( 180, QPoint(-24, 8 ), m_id+"-Pin_reset", 0, this, input );
     setupPin( m_resetPin,"L03RST");
     m_resetPin->setVisible( false );
+    m_otherPin.emplace_back( m_resetPin );
 
     m_channels = 0;
     setChannels( 8 );
@@ -61,8 +62,8 @@ LatchD::LatchD( QString type, QString id )
         new BoolProp<LatchD>("Tristate", tr("Tristate"),""
                             , this, &LatchD::tristate, &LatchD::setTristate ),
 
-        new BoolProp<LatchD>("UseRS", tr("Use Set/Reset Pins"),""
-                                  , this, &LatchD::pinReset, &LatchD::setPinReset, propNoCopy ),
+        new BoolProp<LatchD>("UseRS", tr("Reset Pin"),""
+                            , this, &LatchD::pinReset, &LatchD::setPinReset, propNoCopy ),
     }, groupNoCopy } );
 
     addPropGroup( { tr("Electric"),
