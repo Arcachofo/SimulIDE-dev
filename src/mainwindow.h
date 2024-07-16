@@ -63,7 +63,7 @@ class MainWindow : public QMainWindow
         QString defaultFontName() { return m_fontName; }
         
         float fontScale() { return m_fontScale; }
-        void setFontScale( float scale );
+        void setFontScale( float scale ) { m_fontScale = scale; }
 
         int autoBck() { return m_autoBck; }
         void setAutoBck( int secs ) { m_autoBck = secs; }

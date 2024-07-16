@@ -70,7 +70,7 @@
         <locale language="C" country="AnyCountry"/>
        </property>
        <property name="currentIndex">
-        <number>1</number>
+        <number>0</number>
        </property>
        <property name="usesScrollButtons">
         <bool>false</bool>
@@ -89,7 +89,7 @@
             <number>9</number>
            </property>
            <property name="bottomMargin">
-            <number>9</number>
+            <number>4</number>
            </property>
            <item>
             <widget class="QLabel" name="label_19">
@@ -138,7 +138,41 @@
           </layout>
          </item>
          <item>
+          <widget class="QLabel" name="label_25">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="font">
+            <font>
+             <family>Ubuntu</family>
+             <pointsize>10</pointsize>
+             <weight>50</weight>
+             <italic>false</italic>
+             <bold>false</bold>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">font: &quot;Ubuntu&quot;; color: rgb(85, 0, 127)</string>
+           </property>
+           <property name="text">
+            <string>Restart required to apply new settings.</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+           <property name="margin">
+            <number>0</number>
+           </property>
+          </widget>
+         </item>
+         <item>
           <layout class="QHBoxLayout" name="horizontalLayout_9">
+           <property name="topMargin">
+            <number>12</number>
+           </property>
            <item>
             <widget class="QLabel" name="label_3">
              <property name="text">
@@ -307,10 +341,13 @@
               </size>
              </property>
              <property name="minimum">
-              <double>0.500000000000000</double>
+              <double>0.200000000000000</double>
              </property>
              <property name="maximum">
-              <double>2.000000000000000</double>
+              <double>10.000000000000000</double>
+             </property>
+             <property name="singleStep">
+              <double>0.100000000000000</double>
              </property>
              <property name="value">
               <double>1.000000000000000</double>

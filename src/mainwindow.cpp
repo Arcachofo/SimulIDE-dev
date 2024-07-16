@@ -142,13 +142,6 @@ void MainWindow::writeSettings()
     FileWidget::self()->writeSettings();
 }
 
-void MainWindow::setFontScale( float scale )
-{
-    if     ( scale < 0.2 ) scale = 0.2;
-    else if( scale > 10  ) scale = 10;
-    m_fontScale = scale;
-}
-
 QString MainWindow::loc()
 {
     if( m_lang == Chinese )    return "zh_CN";
@@ -178,7 +171,7 @@ void MainWindow::setLoc( QString loc )
     else if( loc == "it" )    lang = Italian;
     else if( loc == "ru" )    lang = Russian;
     else if( loc == "es" )    lang = Spanish;
-    else if( loc == "pt_PT" ) lang = Pt_Brasil;
+    else if( loc == "pt_PT" ) lang = Portuguese;
     else if( loc == "pt_BR" ) lang = Pt_Brasil;
     else if( loc == "sk" )    lang = Slovak;
     else if( loc == "tr" )    lang = Turkish;
