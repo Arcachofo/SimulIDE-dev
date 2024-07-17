@@ -30,7 +30,7 @@ bool Gate::setPropStr( QString prop, QString val )
 {
     if( prop =="Inverted" ) // Old circuits
     {
-        if( val == "true" ) setInvertOuts( true );
+        if( val == "true" ) m_outPin[0]->userInvertPin();
         return true;
     }
     else return Component::setPropStr( prop, val );
