@@ -173,6 +173,8 @@ void IoPin::setPinMode( pinMode_t mode )
     }
     if( m_pinMode > input ) IoPin::setOutState( m_outState );
     else                    updtState();
+
+    if( !Simulator::self()->isRunning() ) IoPin::updateStep();
 }
 
 /*void IoPin::updtState()
