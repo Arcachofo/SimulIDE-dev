@@ -59,9 +59,6 @@ LatchD::LatchD( QString type, QString id )
         new StrProp <LatchD>("Trigger", tr("Trigger Type"),""
                             , this, &LatchD::triggerStr, &LatchD::setTriggerStr, propNoCopy,"enum" ),
 
-        new BoolProp<LatchD>("Tristate", tr("Tristate"),""
-                            , this, &LatchD::tristate, &LatchD::setTristate ),
-
         new BoolProp<LatchD>("UseRS", tr("Reset Pin"),""
                             , this, &LatchD::pinReset, &LatchD::setPinReset, propNoCopy ),
     }, groupNoCopy } );
@@ -69,11 +66,15 @@ LatchD::LatchD( QString type, QString id )
     addPropGroup( { tr("Electric"),
         IoComponent::inputProps()
         +QList<ComProperty*>({
-        new BoolProp<LatchD>("Invert_Inputs", tr("Invert Inputs"),""
-                            , this, &LatchD::invertInps, &LatchD::setInvertInps,propNoCopy )
+            new BoolProp<LatchD>("Invert_Inputs", tr("Invert Inputs"),""
+                                , this, &LatchD::invertInps, &LatchD::setInvertInps,propNoCopy )
         })
         + IoComponent::outputProps()
         + IoComponent::outputType()
+        +QList<ComProperty*>({
+            new BoolProp<LatchD>("Tristate", tr("Tristate"),""
+                                , this, &LatchD::tristate, &LatchD::setTristate ),
+        })
     ,0 } );
 
     addPropGroup( { tr("Timing"), IoComponent::edgeProps(),0 } );
@@ -91,7 +92,7 @@ void LatchD::stamp()
 
 void LatchD::voltChanged()
 {
-    updateOutEnabled();
+    if( m_tristate ) updateOutEnabled();
     updateClock();
 
     if( m_resetPin->getInpState() ) m_nextOutVal = 0;

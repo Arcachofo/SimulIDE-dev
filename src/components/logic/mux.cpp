@@ -64,10 +64,14 @@ Mux::Mux( QString type, QString id )
 
     addPropGroup( { tr("Electric"), IoComponent::inputProps()
         +QList<ComProperty*>({
-        new BoolProp<Mux>( "Invert_Inputs", tr("Invert Inputs"),""
-                         , this, &Mux::invertInps, &Mux::setInvertInps, propNoCopy )
-                    })
+            new BoolProp<Mux>("Invert_Inputs", tr("Invert Inputs"),""
+                             , this, &Mux::invertInps, &Mux::setInvertInps, propNoCopy )
+        })
         + IoComponent::outputProps()
+        +QList<ComProperty*>({
+            new BoolProp<Mux>("Tristate", tr("Tristate"),""
+                             , this, &Mux::tristate, &Mux::setTristate ),
+        })
     ,0 } );
 
     addPropGroup( { tr("Timing"), IoComponent::edgeProps(),0 } );
@@ -82,7 +86,7 @@ void Mux::stamp()
 
 void Mux::voltChanged()
 {
-    LogicComponent::updateOutEnabled();
+    if( m_tristate ) LogicComponent::updateOutEnabled();
 
     int address = 0;
 

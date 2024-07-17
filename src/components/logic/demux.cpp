@@ -59,9 +59,15 @@ Demux::Demux( QString type, QString id )
                           , this , &Demux::addrBits, &Demux::setAddrBits, propNoCopy,"uint" )
     }, groupNoCopy } );
 
-    addPropGroup( { tr("Electric"), IoComponent::inputProps()
-                                  + IoComponent::outputProps()
-                                  + IoComponent::outputType(),0 } );
+    addPropGroup( { tr("Electric"),
+        IoComponent::inputProps()
+        + IoComponent::outputProps()
+        + IoComponent::outputType()
+        + QList<ComProperty*>({
+            new BoolProp<Demux>("Tristate", tr("Tristate"),""
+                                , this, &Demux::tristate, &Demux::setTristate ),
+        })
+    ,0 } );
 
     addPropGroup( { tr("Timing")  , IoComponent::edgeProps(),0 } );
 }
@@ -75,7 +81,7 @@ void Demux::stamp()
 
 void Demux::voltChanged()
 {
-    LogicComponent::updateOutEnabled();
+    if( m_tristate ) LogicComponent::updateOutEnabled();
 
     int address = 0;
 

@@ -31,6 +31,7 @@ ShiftReg::ShiftReg( QString type, QString id )
 {
     m_width  = 4;
     m_height = 9;
+    m_tristate = true;
     m_parallelIn = false;
     m_ldInps = false;
     m_bidir = false;
@@ -76,9 +77,15 @@ ShiftReg::ShiftReg( QString type, QString id )
                               , this, &ShiftReg::bidirectional, &ShiftReg::setBidirectional, propNoCopy ),
     }, groupNoCopy} );
 
-    addPropGroup( { tr("Electric"), IoComponent::inputProps()
-                                  + IoComponent::outputProps()
-                                  + IoComponent::outputType(),0 } );
+    addPropGroup( { tr("Electric"),
+          IoComponent::inputProps()
+        + IoComponent::outputProps()
+        + IoComponent::outputType()
+        + QList<ComProperty*>({
+            new BoolProp<ShiftReg>("Tristate", tr("Tristate"),""
+                                  , this, &ShiftReg::tristate, &ShiftReg::setTristate ),
+        })
+    ,0 } );
 
     addPropGroup( { tr("Timing")  , IoComponent::edgeProps(),0 } );
 }
@@ -108,7 +115,7 @@ void ShiftReg::stamp()
 
 void ShiftReg::voltChanged()
 {
-    updateOutEnabled();
+    if( m_tristate ) updateOutEnabled();
     updateClock();
 
     bool clkRising = (m_clkState == Clock_Rising);// Get Clk to don't miss any clock changes

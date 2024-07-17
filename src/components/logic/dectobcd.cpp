@@ -57,9 +57,15 @@ DecToBcd::DecToBcd( QString type, QString id )
     addPropGroup( { tr("Electric"), IoComponent::inputProps()
         +QList<ComProperty*>({
         new BoolProp<DecToBcd>("Invert_Inputs", tr("Invert Inputs"),""
-                              , this, &DecToBcd::invertInps, &DecToBcd::setInvertInps, propNoCopy )})
-
-    +IoComponent::outputProps()+IoComponent::outputType(),0 } );
+                              , this, &DecToBcd::invertInps, &DecToBcd::setInvertInps, propNoCopy )
+        })
+        +IoComponent::outputProps()
+        +IoComponent::outputType()
+        +QList<ComProperty*>({
+            new BoolProp<DecToBcd>("Tristate", tr("Tristate"),""
+                                , this, &DecToBcd::tristate, &DecToBcd::setTristate ),
+        })
+    ,0 } );
 
     addPropGroup( { tr("Timing"), IoComponent::edgeProps(),0 } );
 }
@@ -73,7 +79,7 @@ void DecToBcd::stamp()
 
 void DecToBcd::voltChanged()
 {
-    LogicComponent::updateOutEnabled();
+    if( m_tristate ) LogicComponent::updateOutEnabled();
 
     int i;
     for( i=m_bits-2; i>=0; --i ) { if( m_inPin[i]->getInpState() ) break; }
