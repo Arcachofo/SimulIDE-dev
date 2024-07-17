@@ -43,28 +43,28 @@ DynamicMemory::DynamicMemory( QString type, QString id )
 
     m_otherPin.resize( 4 );
     m_WePin = new IoPin( 180, QPoint( 0,0 ), m_id+"-Pin_We", 0, this, input );
-    m_WePin->setLabelText( "WE" );
+    m_WePin->setLabelText("WE");
     m_WePin->setLabelColor( QColor( 0, 0, 0 ) );
     m_WePin->setInverted( true );
     m_otherPin[0] = m_WePin;
     
     m_RasPin = new IoPin(  0, QPoint( 0,0 ), m_id+"-Pin_Ras", 0, this, input );
-    m_RasPin->setLabelText( "RAS" );
+    m_RasPin->setLabelText("RAS");
     m_RasPin->setLabelColor( QColor( 0, 0, 0 ) );
     m_RasPin->setInverted( true );
     m_otherPin[1] = m_RasPin;
 
     m_CasPin = new IoPin(  0, QPoint( 0,0 ), m_id+"-Pin_Cas", 0, this, input );
-    m_CasPin->setLabelText( "CAS" );
+    m_CasPin->setLabelText("CAS");
     m_CasPin->setLabelColor( QColor( 0, 0, 0 ) );
     m_CasPin->setInverted( true );
     m_otherPin[2] = m_CasPin;
 
-    m_oePin = new IoPin( 180, QPoint( 0,0 ), m_id+"-Pin_outEnable" , 0, this, input );
-    m_oePin->setLabelText( "OE" );
-    m_oePin->setLabelColor( QColor( 0, 0, 0 ) );
-    m_oePin->setInverted( true );
-    m_otherPin[3] = m_oePin;
+    m_OePin = new IoPin( 180, QPoint( 0,0 ), m_id+"-Pin_outEnable" , 0, this, input );
+    m_OePin->setLabelText( "OE" );
+    m_OePin->setLabelColor( QColor( 0, 0, 0 ) );
+    m_OePin->setInverted( true );
+    m_otherPin[3] = m_OePin;
 
     m_dataBytes = 1;
     m_rowAddrBits = 0;
@@ -120,7 +120,7 @@ void DynamicMemory::stamp()                   // Called at Simulation Start
     m_WePin->changeCallBack( this );
     m_RasPin->changeCallBack( this );
     m_CasPin->changeCallBack( this );
-    m_oePin->changeCallBack( this );
+    m_OePin->changeCallBack( this );
 
     for( IoPin* pin : m_outPin ) pin->setPinMode( input );
 
@@ -139,7 +139,7 @@ void DynamicMemory::voltChanged()        // Some Pin Changed State, Manage it
     bool RAS = m_RasPin->getInpState();
     bool CAS = m_CasPin->getInpState();
     bool WE  = m_WePin->getInpState();
-    bool OE  = m_oePin->getInpState() && !WE & CAS; // Enable output buffers only if OE & CAS & RAS & Read
+    bool OE  = m_OePin->getInpState() && !WE & CAS; // Enable output buffers only if OE & CAS & RAS & Read
 
     if( m_oe != OE ){
         m_oe = OE;
@@ -222,17 +222,17 @@ void DynamicMemory::updatePins()
         m_outPin[i]->setPos( QPoint(24,origY+8+i*8 ) ); 
         m_outPin[i]->isMoved();
     }
-    m_WePin->setPos( QPoint(-24,origY+h*8 ) );          // WE
+    m_WePin->setPos( QPoint(-24,origY+h*8 ) );    // WE
     m_WePin->isMoved();
     
-    m_RasPin->setPos( QPoint( 24,origY+h*8 ) );         // RAS
+    m_RasPin->setPos( QPoint( 24,origY+h*8 ) );   // RAS
     m_RasPin->isMoved();
 
-    m_CasPin->setPos( QPoint( 24,origY+8+h*8 ) );       // CAS
+    m_CasPin->setPos( QPoint( 24,origY+8+h*8 ) ); // CAS
     m_CasPin->isMoved();
     
-    m_oePin->setPos( QPoint(-24,origY+8+h*8 ) );        // OE
-    m_oePin->isMoved();
+    m_OePin->setPos( QPoint(-24,origY+8+h*8 ) );  // OE
+    m_OePin->isMoved();
     
     m_area   = QRect( -(m_width/2)*8, origY, m_width*8, m_height*8 );
 }

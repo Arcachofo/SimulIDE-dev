@@ -49,7 +49,7 @@ Demux::Demux( QString type, QString id )
     m_inPin[0]->setLength( 4 );
 
     setNumOuts( 8 );
-    createOePin( "IU01OE ", id+"-in4");
+    createOePin("IU01OE ", id+"-in4");
 
     m_addrBits = 0;
     setAddrBits( 3 );

@@ -73,6 +73,7 @@ class DynamicMemory : public LogicComponent, public MemData
         IoPin* m_RasPin;
         IoPin* m_CasPin;
         IoPin* m_WePin;
+        IoPin* m_OePin;
 };
 
 #endif

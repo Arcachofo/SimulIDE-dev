@@ -43,22 +43,22 @@ Memory::Memory( QString type, QString id )
 
     m_otherPin.resize( 3 );
     m_WePin = new IoPin( 180, QPoint( 0,0 ), m_id+"-Pin_We", 0, this, input );
-    m_WePin->setLabelText( "WE" );
+    m_WePin->setLabelText("WE");
     m_WePin->setLabelColor( QColor( 0, 0, 0 ) );
     m_WePin->setInverted( true );
     m_otherPin[0] = m_WePin;
     
     m_CsPin = new IoPin(  0, QPoint( 0,0 ), m_id+"-Pin_Cs", 0, this, input );
-    m_CsPin->setLabelText( "CS" );
+    m_CsPin->setLabelText("CS");
     m_CsPin->setLabelColor( QColor( 0, 0, 0 ) );
     m_CsPin->setInverted( true );
     m_otherPin[1] = m_CsPin;
     
-    m_oePin = new IoPin( 180, QPoint( 0,0 ), m_id+"-Pin_outEnable" , 0, this, input );
-    m_oePin->setLabelText( "OE" );
-    m_oePin->setLabelColor( QColor( 0, 0, 0 ) );
-    m_oePin->setInverted( true );
-    m_otherPin[2] = m_oePin;
+    m_OePin = new IoPin( 180, QPoint( 0,0 ), m_id+"-Pin_outEnable" , 0, this, input );
+    m_OePin->setLabelText("OE");
+    m_OePin->setLabelColor( QColor( 0, 0, 0 ) );
+    m_OePin->setInverted( true );
+    m_otherPin[2] = m_OePin;
 
     m_asynchro = true;
     m_dataBytes = 1;
@@ -116,7 +116,7 @@ void Memory::stamp()                   // Called at Simulation Start
 
     m_WePin->changeCallBack( this );
     m_CsPin->changeCallBack( this );
-    m_oePin->changeCallBack( this );
+    m_OePin->changeCallBack( this );
 }
 
 void Memory::updateStep()
@@ -134,7 +134,7 @@ void Memory::voltChanged()        // Some Pin Changed State, Manage it
 {
     bool cs = m_CsPin->getInpState();
     bool we = m_WePin->getInpState();
-    bool oe = cs && !we && m_oePin->getInpState(); // Enable output buffers only if OE & CS & Read
+    bool oe = cs && !we && m_OePin->getInpState(); // Enable output buffers only if OE & CS & Read
     if( m_oe != oe || m_cs != cs || m_we != we )
     {
         m_oe = oe;
@@ -208,16 +208,16 @@ void Memory::updatePins()
         m_outPin[i]->setPos( QPoint(24,origY+8+i*8 ) ); 
         m_outPin[i]->isMoved();
     }
-    m_WePin->setPos( QPoint(-24,origY+h*8 ) );          // WE
+    m_WePin->setPos( QPoint(-24,origY+h*8 ) );   // WE
     m_WePin->isMoved();
     
-    m_CsPin->setPos( QPoint( 24,origY+8+h*8 ) );        // CS
+    m_CsPin->setPos( QPoint( 24,origY+8+h*8 ) ); // CS
     m_CsPin->isMoved();
     
-    m_oePin->setPos( QPoint(-24,origY+8+h*8 ) );        // OE
-    m_oePin->isMoved();
+    m_OePin->setPos( QPoint(-24,origY+8+h*8 ) ); // OE
+    m_OePin->isMoved();
     
-    m_area   = QRect( -(m_width/2)*8, origY, m_width*8, m_height*8 );
+    m_area = QRect(-(m_width/2)*8, origY, m_width*8, m_height*8 );
 }
 
 void Memory::setAddrBits( int bits )

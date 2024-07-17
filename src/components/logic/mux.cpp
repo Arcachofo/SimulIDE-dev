@@ -87,7 +87,7 @@ void Mux::voltChanged()
     int address = 0;
 
     for( int i=8; i<11; ++i )
-        if( m_inPin[i]->getInpState() ) address += pow( 2, i-8 );
+        if( m_inPin[i]->getInpState() ) address |= 1<<(i-8) ;
 
     bool out = m_inPin[address]->getInpState();
     m_nextOutVal = out? 1:2;
@@ -160,9 +160,9 @@ QPainterPath Mux::shape() const
     return path;
 }
 
-void Mux::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
+void Mux::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* wi )
 {
-    Component::paint( p, option, widget );
+    Component::paint( p, o, wi );
 
     int w = m_width*8/2;
     int h = m_height*8/2;

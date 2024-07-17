@@ -34,7 +34,6 @@ void TreeItem::setItemType( treItemType_t itemType )
     QFont font;
     font.setFamily( MainWindow::self()->defaultFontName() );
     font.setBold( true );
-    font.setPixelSize( 11*scale );
 
     if( itemType == component )
     {
@@ -44,6 +43,8 @@ void TreeItem::setItemType( treItemType_t itemType )
 
         if( m_isCustom ) setTextColor( 0, QColor( 80, 90, 110 ) );
         else             setTextColor( 0, QColor( 100, 90, 60 ) );
+
+        font.setPixelSize( 11*scale );
     }
     else   // Is Category
     {

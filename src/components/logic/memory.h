@@ -71,7 +71,7 @@ class Memory : public IoComponent, public eElement, public MemData
 
         IoPin* m_CsPin;
         IoPin* m_WePin;
-        IoPin*  m_oePin;
+        IoPin* m_OePin;
 };
 
 #endif

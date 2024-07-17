@@ -21,8 +21,6 @@ Gate::Gate( QString type, QString id, int inputs )
 
     setNumOuts( 1,"",-1 );
     setNumInputs( inputs );  // Create Input Pins
-
-    /// m_rndPD = true; // Randomize Propagation Delay:
 }
 Gate::~Gate(){}
 
@@ -40,8 +38,8 @@ QList<ComProperty*> Gate::outputProps()
 {
     QList<ComProperty*> outProps = IoComponent::outputProps();
     outProps.append(
-new BoolProp<Gate>( "initHigh", tr("Initial High State"),""
-                  , this, &Gate::initHigh, &Gate::setInitHigh ) );
+        new BoolProp<Gate>("initHigh", tr("Initial High State"),""
+                          , this, &Gate::initHigh, &Gate::setInitHigh ) );
 
     return outProps;
 }
