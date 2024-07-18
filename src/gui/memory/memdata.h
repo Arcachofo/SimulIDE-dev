@@ -23,7 +23,7 @@ class MemData
         static bool loadFile( QVector<int>* toData, QString file, bool resize, int bits, eMcu* eMcu=NULL );
         static bool loadDat( QVector<int>* toData, QString file, bool resize );
         static bool loadHex( QVector<int>* toData, QString file, bool resize, int bits );
-        static bool loadBin( QVector<int>* toData, QString fileName, bool resize, int bits );
+        static bool loadBin( QVector<int>* toData, QString file, bool resize, int bits );
 
         static QString getMem( QVector<int>* data );
         static void setMem( QVector<int>* data, QString m );

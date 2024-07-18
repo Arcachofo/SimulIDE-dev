@@ -214,12 +214,12 @@ bool MemData::loadHex( QVector<int>* toData, QString file, bool resize, int bits
     return false;
 }
 
-bool MemData::loadBin( QVector<int>* toData, QString fileName, bool resize, int bits )
+bool MemData::loadBin(QVector<int>* toData, QString file, bool resize, int bits )
 {
     int bytes = (bits+7)/8;
     int dataEnd = toData->size()-1;
 
-    QByteArray ba = fileToByteArray( fileName, "MemData::loadData" );
+    QByteArray ba = fileToByteArray( file, "MemData::loadData" );
     int memSize = ba.size()/bytes;
 
     if( resize )

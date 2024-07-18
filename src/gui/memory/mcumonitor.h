@@ -53,5 +53,4 @@ class MCUMonitor : public QDialog, private Ui::McuMonitor
         bool m_jumpToAddress;
 };
 
-
 #endif

@@ -535,8 +535,8 @@ void SubPackage::setPackageFile( QString package )
     for( Pin* pin : m_pin ) deletePin( pin );
     m_pin.clear();
 
-    QString domText = fileToString( fileNameAbs, "SubPackage::setPackageFile");
-    QString pkgStr  = convertPackage( domText );
+    QString pkgText = fileToString( fileNameAbs, "SubPackage::setPackageFile");
+    QString pkgStr  = convertPackage( pkgText );
     initPackage( pkgStr );
 
     m_pkgePins += m_ncPins;

@@ -3,8 +3,6 @@
  *                                                                         *
  ***( see copyright.txt file at root folder )*******************************/
 
-#include <QDomDocument>
-
 #include "chip.h"
 #include "circuitwidget.h"
 #include "mainwindow.h"

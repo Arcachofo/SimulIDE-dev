@@ -24,16 +24,16 @@ MCUMonitor::MCUMonitor( QWidget* parent, eMcu* mcu )
 
     m_jumpToAddress = false;
 
-    m_statusReg    = NULL;
-    m_ramTable     = NULL;
-    m_ramMonitor   = NULL;
-    m_flashMonitor = NULL;
-    m_romMonitor   = NULL;
+    m_statusReg    = nullptr;
+    m_ramTable     = nullptr;
+    m_ramMonitor   = nullptr;
+    m_flashMonitor = nullptr;
+    m_romMonitor   = nullptr;
 
     createStatusPC();
 
     horizontalLayout->setStretchFactor( byteButton, 20 );
-    QSplitter* spl = NULL;
+    QSplitter* spl = nullptr;
 
     m_watcher = m_processor->getWatcher();
     if( m_watcher )
@@ -141,9 +141,9 @@ void MCUMonitor::updateStep()
     if( m_ramMonitor && m_ramMonitor->isVisible() ) // RAM MemTable visible
     {
         for( uint32_t i=0; i<m_processor->ramSize(); ++i )
-            m_ramMonitor->setValue( i, m_processor->getRamValue(i));
+            m_ramMonitor->setValue( i, m_processor->getRamValue(i) );
 
-        if(  Simulator::self()->simState() == SIM_RUNNING )
+        if( Simulator::self()->simState() == SIM_RUNNING )
             m_ramMonitor->setAddrSelected( m_ramTable->getCurrentAddr(), m_jumpToAddress );
     }
     if( m_romMonitor && m_romMonitor->isVisible() )

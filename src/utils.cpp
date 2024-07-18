@@ -61,12 +61,8 @@ QString decToBase( int value, int base, int digits )
         if( value >= base ) converted = toDigit( value%base ) + converted;
         else                converted = toDigit( value ) + converted;
 
-        //if( base == 2 && i+1 == 4 ) converted = " " + converted;
-        //if( (i+1)%8 == 0 ) converted = " " + converted;
-
         value = floor( value/base );
     }
-
     return converted;
 }
 
@@ -158,7 +154,6 @@ QDomDocument fileToDomDoc( QString fileName, QString caller )
     if( !file.open( QFile::ReadOnly | QFile::Text) )
     {
         qDebug() << caller << "Error: Cannot read file:\n"+fileName+"\n"+file.errorString();
-        //MessageBoxNB( caller, "Cannot read file:\n"+fileName+"\n"+file.errorString() );
         return domDoc;
     }
     QString error;
@@ -166,7 +161,6 @@ QDomDocument fileToDomDoc( QString fileName, QString caller )
     int errorColumn=0;
     if( !domDoc.setContent( &file, false, &error, &errorLine, &errorColumn ) )
     {
-         //MessageBoxNB( caller, "Cannot set file to DomDocument:\n\n"+fileName );
          qDebug() << caller << "Error: Cannot set file to DomDocument:\n"<<fileName<<"\nLine"<<errorLine<<errorColumn+"\n";
          qDebug() << error;
          domDoc.clear();
@@ -181,7 +175,6 @@ QString fileToString( QString fileName, QString caller )
     if (!file.open( QFile::ReadOnly | QFile::Text) )
     {
         qDebug() << caller << "Error: Cannot read file"<<endl<<fileName<<endl<<file.errorString();
-        //MessageBoxNB( caller, "Cannot read file "+fileName+"\n"+file.errorString() );
         return "";
     }
     QTextStream in(&file);
@@ -205,7 +198,6 @@ QByteArray fileToByteArray( QString fileName, QString caller )
     if( !file.open( QFile::ReadOnly ) )
     {
         qDebug() << caller << "Error: Cannot read file"<<endl<<fileName<<endl<<file.errorString();
-        //MessageBoxNB( caller, "Cannot read file "+fileName+"\n"+file.errorString() );
         return ba;
     }
     ba = file.readAll();

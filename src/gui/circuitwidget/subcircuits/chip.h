@@ -9,8 +9,6 @@
 #include "component.h"
 #include "e-element.h"
 
-class QDomElement;
-
 class Chip : public Component, public eElement
 {
     public:
@@ -79,11 +77,11 @@ class Chip : public Component, public eElement
         QColor m_icColor;
 
         QString m_name;
+        QString m_package;
         QString m_dataFile;
 
         QMap<QString, QString> m_packageList;
 
-        QString m_package;
         QList<Pin*> m_ncPins;
         QList<Pin*> m_tempPins;
         QMap<QString, Pin*> m_pinMap;
