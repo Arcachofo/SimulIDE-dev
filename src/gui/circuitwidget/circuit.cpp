@@ -60,6 +60,7 @@ Circuit::Circuit( int width, int height, CircuitView* parent )
     m_createSubc = false;
     m_acceptKeys = true;
     m_cicuitBatch = 0;
+    m_circRev = 1e6;          /// Fixme
 
     m_creCompDialog = NULL;
     m_board = NULL;
