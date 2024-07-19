@@ -9,8 +9,11 @@
 #include "simulator.h"
 #include "connector.h"
 #include "circuit.h"
+#include "proputils.h"
 #include "utils.h"
 #include "pin.h"
+
+QString Chip::s_subcType = "None";
 
 #define tr(str) simulideTr("Chip",str)
 
@@ -83,36 +86,43 @@ bool Chip::setPropStr( QString prop, QString val )
     return Component::setPropStr( prop, val );
 }
 
-QString Chip::convertPackage( QString domText ) // Static, converts xml to new format
+QString Chip::convertPackage( QString pkgText ) // Static, converts xml to new format
 {
-    QString pkg;
-    domText.replace("<!--","\n<!--");
-    QStringList lines = domText.split("\n");
-    for( QString line : lines )
+    QString pkgStr;
+    QVector<QStringRef> docLines = pkgText.splitRef("\n");
+    for( QStringRef line : docLines )
     {
-        if( line.isEmpty() ) continue;
         if( line.startsWith("<!") ) continue;
         if( line.startsWith("</") ) continue;
-        line.replace("<item itemtype=\"Package\"","Package;");
-        line.replace("<packageB","Package;");
-        line.replace("&#x3C;", "<").replace("&#x3D;", "=").replace("&#x3E;", ">");
-        line.replace("&#x3C" , "<").replace("&#x3D" , "=").replace("&#x3E" , ">");
-        line.replace("&lt;" , "<");
-        line.replace("&#xa;","");
-        line.replace("Pin;","\nPin;");
-        line.replace("<pin","Pin;");
-        line.replace("Pins=","\n");
-        line.replace("/>","");
-        line.replace("=\"","=");
-        line.replace("\"",";");
-        line.replace("  ","");
-        line.replace(" ;",";");
-        line.append("\n");
-        pkg.append( line );//
-        //qDebug() << line;
+        if( line.isEmpty() ) continue;
+
+        QVector<propStr_t> properties = parseProps( line );
+
+        if( line.startsWith("<package") )
+        {
+            pkgStr += "Package; ";
+
+            for( propStr_t prop : properties )
+            {
+                QString propName  = prop.name.toString();
+                QString propValue = prop.value.toString();
+                pkgStr += propName+"="+propValue+"; ";
+
+                if( propName == "type" )
+                {
+                    s_subcType = propValue.remove("subc");
+                }
+            }
+        }else{
+            pkgStr += "Pin; ";
+            for( propStr_t prop : properties )
+                pkgStr += prop.name.toString()+"="+prop.value.toString()+"; ";
+        }
+        pkgStr += "\n";
     }
-    //qDebug() << "-----------------------------------------";
-    return pkg;
+    //qDebug() << pkgStr;
+
+    return pkgStr;
 }
 
 void Chip::setName( QString name )

@@ -28,6 +28,7 @@
 #include "linker.h"
 #include "tunnel.h"
 #include "createcomp.h"
+#include "proputils.h"
 
 Circuit* Circuit::m_pSelf = NULL;
 
@@ -192,27 +193,6 @@ void Circuit::loadCircuit( QString filePath )
         qDebug() << filePath;
 }   }
 
-QVector<QStringRef> Circuit::parseProps( QStringRef line ) // Static
-{
-    QVector<QStringRef> properties;
-
-    QStringRef name;
-    QVector<QStringRef> props = line.split("\"");
-    props.removeLast();
-
-    for( QStringRef prop : props )
-    {
-        if( prop.endsWith("=") )
-        {
-            prop = prop.split(" ").last();
-            name = prop.mid( 0, prop.length()-1 );
-            continue;
-        }
-        else properties << name << prop ;
-    }
-    return properties;
-}
-
 void Circuit::loadStrDoc( QString &doc )
 {
     QApplication::setOverrideCursor(Qt::WaitCursor);
@@ -232,12 +212,13 @@ void Circuit::loadStrDoc( QString &doc )
     QVector<QStringRef> docLines = doc.splitRef("\n");
     for( QStringRef line : docLines )
     {
-        QVector<QStringRef> properties = Circuit::parseProps( line );
+        QVector<propStr_t> properties = parseProps( line );
 
         if( line.startsWith("<item") )
         {
-            if( properties.takeFirst() != "itemtype") continue;
-            QString type = properties.takeFirst().toString();
+            propStr_t itemType = properties.takeFirst();
+            if( itemType.name != "itemtype") continue;
+            QString type = itemType.value.toString();
 
             if( type == "Connector" )
             {
@@ -247,17 +228,12 @@ void Circuit::loadStrDoc( QString &doc )
                 QStringList pointList;
 
                 QString uid;
-                QString name;
-                for( QStringRef prop : properties )
+                for( propStr_t prop : properties )
                 {
-                    if( name.isEmpty() ) name = prop.toString();
-                    else{
-                        if     ( name == "startpinid") startpinid = prop.toString();
-                        else if( name == "endpinid"  ) endpinid   = prop.toString();
-                        else if( name == "pointList" ) pointList  = prop.toString().split(",");
-                        else if( name == "uid"       ) uid        = prop.toString();
-                        name ="";
-                    }
+                    if     ( prop.name == "startpinid") startpinid = prop.value.toString();
+                    else if( prop.name == "endpinid"  ) endpinid   = prop.value.toString();
+                    else if( prop.name == "pointList" ) pointList  = prop.value.toString().split(",");
+                    else if( prop.name == "uid"       ) uid        = prop.value.toString();
                 }
                 if( m_pasting )
                 {
@@ -308,8 +284,9 @@ void Circuit::loadStrDoc( QString &doc )
             }
             else          // Component
             {
-                if( properties.takeFirst() != "CircId") continue; /// ERROR
-                QString uid = properties.takeFirst().toString();
+                propStr_t circId = properties.takeFirst();
+                if( circId.name != "CircId") continue; /// ERROR
+                QString uid = circId.value.toString();
                 QString newUid;
 
                 if( m_pasting ) // Create new id
@@ -327,16 +304,11 @@ void Circuit::loadStrDoc( QString &doc )
                 {
                     Node* joint = new Node( type, newUid );
 
-                    QString name;
-                    for( QStringRef prop : properties )
+                    for( propStr_t prop : properties )
                     {
-                        if( name.isEmpty() ) name = prop.toString();
-                        else{
-                            if     ( name == "Pos") joint->setPropStr( "Pos", prop.toString() );
-                            else if( name == "x"  ) joint->setX( prop.toInt() );
-                            else if( name == "y"  ) joint->setY( prop.toInt() );
-                            name = "";
-                        }
+                        if     ( prop.name == "Pos") joint->setPropStr( "Pos", prop.value.toString() );
+                        else if( prop.name == "x"  ) joint->setX( prop.value.toInt() );
+                        else if( prop.name == "y"  ) joint->setY( prop.value.toInt() );
                     }
                     addItem( joint );
                     nodeList.append( joint );
@@ -347,10 +319,8 @@ void Circuit::loadStrDoc( QString &doc )
                     lastComp = nullptr;
                     Component* comp = createItem( type, newUid );
 
-                    if( !comp ){
-                        qDebug() << " ERROR Creating Component: "<< type << uid;
-                        continue;
-                    }
+                    if( !comp ){ qDebug() << " ERROR Creating Component: "<< type << uid;
+                        continue; }
 
                     if( type == "Subcircuit")
                     {
@@ -360,15 +330,9 @@ void Circuit::loadStrDoc( QString &doc )
                     }
                     /// Why?? // comp->setPropStr("label", label ); //setIdLabel( label );
 
-                    QString name;
-                    for( QStringRef prop : properties ) // Set properties
-                    {
-                        if( name.isEmpty() ) name = prop.toString();
-                        else{
-                            comp->setPropStr( name, prop.toString()  );
-                            name = "";
-                        }
-                    }
+                    for( propStr_t prop : properties ) // Set properties
+                        comp->setPropStr( prop.name.toString(), prop.value.toString() );
+
                     comp->setup();
 
                     if( m_pasting ) comp->setIdLabel( newUid );
@@ -395,45 +359,36 @@ void Circuit::loadStrDoc( QString &doc )
             Component*  mComp = subci->getMainComp();      // Old circuits with only 1 MainComp
             if( !mComp ) continue;
 
-            QString name;
-            for( QStringRef prop : properties )
+            for( propStr_t prop : properties )
             {
-                if( name.isEmpty() ) name = prop.toString();
-                else{
-                    if( name == "MainCompId")  // If more than 1 mainComp then get Component
-                    {
-                        QString compName = prop.toString();
-                        mComp = subci->getMainComp( compName );
-                        if( !mComp ) qDebug() << "ERROR: Could not get Main Component:"<< compName;
-                    }
-                    else mComp->setPropStr( name, prop.toString() );
-                    name = "";
+                if( prop.name == "MainCompId")  // If more than 1 mainComp then get Component
+                {
+                    QString compName = prop.value.toString();
+                    mComp = subci->getMainComp( compName );
+                    if( !mComp ) qDebug() << "ERROR: Could not get Main Component:"<< compName;
                 }
+                else mComp->setPropStr( prop.name.toString(), prop.value.toString() );
             }
         }
         else if( line.startsWith("<circuit") || line.startsWith("<libitem") )
         {
             if( m_pasting ) continue;
-            QString name;
-            for( QStringRef prop : properties ) // Set properties
+
+            for( propStr_t prop : properties ) // Set properties
             {
-                if( name.isEmpty() ) name = prop.toString();
-                else{
-                    if     ( name == "stepSize") m_simulator->setStepSize( prop.toULongLong() );
-                    else if( name == "stepsPS" ) m_simulator->setStepsPerSec(prop.toULongLong() );
-                    else if( name == "NLsteps" ) m_simulator->setMaxNlSteps( prop.toUInt() );
-                    else if( name == "reaStep" ) m_simulator->setReactStep( prop.toULongLong() );
-                    else if( name == "animate" ) m_animate = prop.toInt();
-                    else if( name == "width"   ) m_sceneWidth  = prop.toInt();
-                    else if( name == "height"  ) m_sceneHeight = prop.toInt();
-                    else if( name == "rev"     ) m_circRev  = prop.toInt();
-                    else if( name == "category") m_category = prop.toString();
-                    else if( name == "compname") m_compName = prop.toString();
-                    else if( name == "compinfo") m_compInfo = prop.toString();
-                    else if( name == "icondata") m_iconData = prop.toString();
-                    else if( name == "itemtype") m_itemType = prop.toString();
-                    name = "";
-                }
+                if     ( prop.name == "stepSize") m_simulator->setStepSize( prop.value.toULongLong() );
+                else if( prop.name == "stepsPS" ) m_simulator->setStepsPerSec(prop.value.toULongLong() );
+                else if( prop.name == "NLsteps" ) m_simulator->setMaxNlSteps( prop.value.toUInt() );
+                else if( prop.name == "reaStep" ) m_simulator->setReactStep( prop.value.toULongLong() );
+                else if( prop.name == "animate" ) m_animate = prop.value.toInt();
+                else if( prop.name == "width"   ) m_sceneWidth  = prop.value.toInt();
+                else if( prop.name == "height"  ) m_sceneHeight = prop.value.toInt();
+                else if( prop.name == "rev"     ) m_circRev  = prop.value.toInt();
+                else if( prop.name == "category") m_category = prop.value.toString();
+                else if( prop.name == "compname") m_compName = prop.value.toString();
+                else if( prop.name == "compinfo") m_compInfo = prop.value.toString();
+                else if( prop.name == "icondata") m_iconData = prop.value.toString();
+                else if( prop.name == "itemtype") m_itemType = prop.value.toString();
             }
         }
         else if( line.startsWith("</circuit") ) break;

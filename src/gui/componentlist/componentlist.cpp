@@ -293,7 +293,7 @@ void ComponentList::loadXml( QString xmlFile, bool convert )
             QStringList catPath = catFull.split("/");
 
             TreeItem* catItem = NULL;
-            QString parent = "";
+            QString parent   = "";
             QString category = "";
             while( !catPath.isEmpty() )
             {
@@ -376,6 +376,11 @@ void ComponentList::loadXml( QString xmlFile, bool convert )
                     }
                     else if( catItem && !m_components.contains( name ) )
                     {
+                        if( type == "Subcircuit" )
+                        {
+                            QString compFolder = QFileInfo( xmlFile ).absolutePath()+"/"+folder+"/"+name;
+                            m_dirFileList[ name ] = compFolder;
+                        }
                         m_dataFileList[ name ] = xmlFile;   // Save xml File used to create this item
                         if( reader.attributes().hasAttribute("info") )
                             name += "???"+reader.attributes().value("info").toString();

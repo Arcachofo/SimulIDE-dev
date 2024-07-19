@@ -41,8 +41,6 @@ CircuitView::CircuitView( QWidget *parent )
     m_circuit   = NULL;
     m_enterItem = NULL;
 
-    eDiode::getModels();
-
     //viewport()->setFixedSize( 3200, 2400 );
     bool scrollBars = MainWindow::self()->settings()->value( "Circuit/showScroll" ).toBool();
     setShowScroll( scrollBars );

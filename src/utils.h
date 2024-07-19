@@ -88,8 +88,8 @@ QPointF toCompGrid( QPointF point );
 bool lessPinX( Pin* pinA, Pin* pinB );
 bool lessPinY( Pin* pinA, Pin* pinB );
 
-QPointF getPointF( QString p );
-QString getStrPointF( QPointF p );
+//QPointF getPointF( QString p );
+//QString getStrPointF( QPointF p );
 
 //---------------------------------------------------
 

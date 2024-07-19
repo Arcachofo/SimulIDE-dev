@@ -6,8 +6,6 @@
 #ifndef POINTPROP_H
 #define POINTPROP_H
 
-#include <QPointF>
-
 #include "comproperty.h"
 #include "proputils.h"
 

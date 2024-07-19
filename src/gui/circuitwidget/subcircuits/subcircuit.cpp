@@ -17,6 +17,7 @@
 #include "utils.h"
 #include "mcu.h"
 #include "linker.h"
+#include "proputils.h"
 
 #include "logicsubc.h"
 #include "board.h"
@@ -28,6 +29,7 @@
 #define tr(str) simulideTr("SubCircuit",str)
 
 QString SubCircuit::m_subcDir = "";
+QStringList SubCircuit::s_graphProps;
 
 Component* SubCircuit::construct( QString type, QString id )
 {
@@ -59,6 +61,7 @@ Component* SubCircuit::construct( QString type, QString id )
         if( ok ) name = list.at( 1 );
     }
     QString dataFile = ComponentList::self()->getDataFile( name );
+    m_subcDir = ComponentList::self()->getFileDir( name );
 
     if( dataFile.isEmpty() ) // Component not installed, search in Circuit folder
     {
@@ -68,72 +71,43 @@ Component* SubCircuit::construct( QString type, QString id )
 
     if( dataFile.isEmpty() ) // use old system
     {
-        m_subcDir = ComponentList::self()->getFileDir( name ); // Found in folder (no xml file)
         if( m_subcDir.isEmpty() )                                  // Try to find a "data" folder in Circuit folder
-        {
             m_subcDir = MainWindow::self()->getDataFilePath( name );
-            //QDir circuitDir = QFileInfo( Circuit::self()->getFilePath() ).absoluteDir();
-            //m_subcDir = circuitDir.absoluteFilePath( "data/"+name );
-        }
     }
-    else if( dataFile.endsWith(".comp") ) // Subcircuit in single file (.comp)
+    else if( dataFile.endsWith(".comp") || dataFile.endsWith(".sim1")) // Subcircuit in single file (.comp)
     {
         subcFile = dataFile;
-        QStringList list = fileToStringList( dataFile, "SubCircuit::construct" );
-        //list.takeFirst(); // Remove first line: <circuit or <libitem
 
-        for( QString line : list )
+        QString doc = fileToString( subcFile, "SubCircuit::construct");
+
+        QVector<QStringRef> docLines = doc.splitRef("\n");
+
+        for( QStringRef line : docLines )
         {
             if( !line.startsWith("<item") ) continue;
-            //line.replace("&#x3D;","=");
-            //line.replace("&lt","&#x3E;");
 
-            QDomDocument domDoc;
-            domDoc.setContent( line );
-            QDomElement root = domDoc.documentElement();
+            QVector<propStr_t> properties = parseProps( line );
+            propStr_t itemType = properties.takeFirst();
+            if( itemType.name != "itemtype") continue;
+            if( itemType.value != "Package") break;    // All packages processed
 
-            QString itemType = root.attribute("itemtype");
-            if( itemType != "Package") break;
+            QString pkgName;
+            QString pkgStr = "Package; ";
 
-            QString type = root.attribute("SubcType");
-            if( type != "None" ) subcTyp = type;
-
-            QString pkgName = root.attribute("label");
-            packageList[pkgName] = convertPackage( line );
-        }
-    }
-    else                                  // Subcircuit listed in xml file
-    {
-        QDomDocument domDoc = fileToDomDoc( dataFile, "SubCircuit::construct");
-        if( domDoc.isNull() ) return NULL; // m_error = 1;
-
-        QDomElement root  = domDoc.documentElement();
-        QDomNode    rNode = root.firstChild();
-
-        bool found = false;
-        while( !rNode.isNull() )
-        {
-            QDomElement itemSet = rNode.toElement();
-            QDomNode    node    = itemSet.firstChild();
-
-            QString folder = "";
-            if( itemSet.hasAttribute("folder") ) folder = itemSet.attribute("folder");
-
-            while( !node.isNull() )
+            for( propStr_t prop : properties )
             {
-                QDomElement element = node.toElement();
+                QString propName  = prop.name.toString();
+                QString propValue = prop.value.toString();
+                if     ( propName == "SubcType" && propValue != "None") subcTyp = propValue;
+                else if( propName == "label") pkgName = propValue;
 
-                if( element.attribute("name") == name )
-                {
-                    if( element.hasAttribute("folder") ) folder = element.attribute("folder");
-                    m_subcDir = MainWindow::self()->getDataFilePath( folder+"/"+name );
-                    found = true;
+                if( propName == "Pins"){
+                    propValue.replace("&#xa;","\n").replace("&#x3D;", "=");
+                    pkgStr += "\n"+propValue;
                 }
-                if( found ) break;
-                node = node.nextSibling();
+                else pkgStr += propName+"="+propValue+"; ";
             }
-            if( found ) break;
-            rNode = rNode.nextSibling();
+            if( !pkgName.isEmpty() ) packageList[pkgName] = pkgStr;
         }
     }
 
@@ -152,32 +126,16 @@ Component* SubCircuit::construct( QString type, QString id )
             return NULL;
         }
 
+        Chip::s_subcType = "None";
         if( dip ){
             QString pkgStr = fileToString( pkgeFile, "SubCircuit::construct" );
             packageList[pkgName] = convertPackage( pkgStr );
+            subcTyp = s_subcType;
         }
-        else pkgeFile = pkgFileLS; // If no DIP package file then use LS
-
         if( ls ){
             QString pkgStr = fileToString( pkgFileLS, "SubCircuit::construct" );
             packageList[pkgNameLS] = convertPackage( pkgStr );
-        }
-
-        QDomDocument domDoc1 = fileToDomDoc( pkgeFile, "SubCircuit::construct" );
-        QDomElement   root1  = domDoc1.documentElement();
-        if( root1.hasAttribute("type") ) subcTyp = root1.attribute("type").remove("subc");
-
-        if( packageList.size() > 1 && subcTyp != "None" && subcTyp != "Logic" ) // For Boards insert LS last
-        {
-            QMap<QString, QString> pList;
-
-            QString pkg = packageList.value( pkgName );
-            if( !pkg.isEmpty() ) pList["1- DIP"] = pkg;
-
-            pkg = packageList.value( pkgNameLS );
-            if( !pkg.isEmpty() ) pList["2- Logic Symbol"] = pkg; // LS last
-
-            packageList = pList;
+            if( subcTyp == "None" ) subcTyp = s_subcType;
         }
     }
 
@@ -244,6 +202,8 @@ SubCircuit::SubCircuit( QString type, QString id )
     m_icColor = QColor( 20, 30, 60 );
 
     addPropGroup( { tr("Main"), {},0} );
+
+    if( s_graphProps.isEmpty() ) s_graphProps = loadGraphProps();
 }
 SubCircuit::~SubCircuit(){}
 
@@ -262,14 +222,6 @@ void SubCircuit::loadSubCircuitFile( QString file )
 
 void SubCircuit::loadSubCircuit( QString doc )
 {
-    QStringList graphProps;
-    for( propGroup pg : m_propGroups ) // Create list of "Graphical" poperties (We don't need them)
-    {
-        if( (pg.name != "CompGraphic") ) continue;
-        for( ComProperty* prop : pg.propList ) graphProps.append( prop->name() );
-        break;
-    }
-
     QString numId = m_id;
     numId = numId.split("-").last();
     Circuit* circ = Circuit::self();
@@ -281,10 +233,11 @@ void SubCircuit::loadSubCircuit( QString doc )
     {
         if( line.startsWith("<item") )
         {
-            QVector<QStringRef> properties = Circuit::parseProps( line );
+            QVector<propStr_t> properties = parseProps( line );
 
-            if( properties.takeFirst() != "itemtype") continue;
-            QString type = properties.takeFirst().toString();
+            propStr_t itemType = properties.takeFirst();
+            if( itemType.name != "itemtype") continue;
+            QString type = itemType.value.toString();
 
             if( type == "Package" || type == "Subcircuit" ) continue;
 
@@ -293,15 +246,11 @@ void SubCircuit::loadSubCircuit( QString doc )
                 QString startPinId, endPinId, enodeId;
                 QStringList pointList;
 
-                QString name = "";
-                for( QStringRef prop : properties )
+                for( propStr_t prop : properties )
                 {
-                    if( name.isEmpty() ) { name = prop.toString(); continue; }
-
-                    if     ( name == "startpinid") startPinId = numId+"@"+prop.toString();
-                    else if( name == "endpinid"  ) endPinId   = numId+"@"+prop.toString();
-                    else if( name == "pointList" ) pointList  = prop.toString().split(",");
-                    name = "";
+                    if     ( prop.name == "startpinid") startPinId = numId+"@"+prop.value.toString();
+                    else if( prop.name == "endpinid"  ) endPinId   = numId+"@"+prop.value.toString();
+                    else if( prop.name == "pointList" ) pointList  = prop.value.toString().split(",");
                 }
                 //startPinId = startPinId.replace("Pin-", "Pin_"); // Old TODELETE
                 //endPinId   =   endPinId.replace("Pin-", "Pin_"); // Old TODELETE
@@ -325,8 +274,9 @@ void SubCircuit::loadSubCircuit( QString doc )
             else{
                 Component* comp = NULL;
 
-                if( properties.takeFirst() != "CircId") continue; // ERROR
-                QString uid  = properties.takeFirst().toString();
+                propStr_t circId = properties.takeFirst();
+                if( circId.name != "CircId") continue; /// ERROR
+                QString uid = circId.value.toString();
                 QString newUid = numId+"@"+uid;
 
                 if( type == "Node" ) comp = new Node( type, newUid );
@@ -335,12 +285,10 @@ void SubCircuit::loadSubCircuit( QString doc )
                 if( comp ){
                     comp->setIdLabel( uid ); // Avoid parent Uids in label
 
-                    QString propName = "";
-                    for( QStringRef prop : properties )
+                    for( propStr_t prop : properties )
                     {
-                        if( propName.isEmpty() ) { propName = prop.toString(); continue; }
-                        if( !graphProps.contains( propName ) ) comp->setPropStr( propName, prop.toString() );
-                        propName = "";
+                        QString propName = prop.name.toString();
+                        if( !s_graphProps.contains( propName ) ) comp->setPropStr( propName, prop.value.toString() );
                     }
                     comp->setup();
                     comp->setParentItem( this );
@@ -589,4 +537,15 @@ QString SubCircuit::toString()
         item += "</item>\n";
     }
     return item;
+}
+
+QStringList SubCircuit::loadGraphProps()
+{
+    QStringList graphProps;
+    for( propGroup pg : m_propGroups ) // Create list of "Graphical" poperties (We don't need them)
+    {
+        if( (pg.name != "CompGraphic") ) continue;
+        for( ComProperty* prop : pg.propList ) graphProps.append( prop->name() );
+        break;
+    }
 }

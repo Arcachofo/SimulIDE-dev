@@ -49,7 +49,8 @@ class Chip : public Component, public eElement
 
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w ) override;
 
- static QString convertPackage( QString domText );
+ static QString convertPackage( QString pkgText );
+ static QString s_subcType;
 
     protected:
         virtual Pin* addPin( QString id, QString type, QString label,

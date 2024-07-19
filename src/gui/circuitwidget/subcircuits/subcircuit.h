@@ -51,6 +51,9 @@ class SubCircuit : public Chip
         QList<Component*>       m_compList;
         QList<Tunnel*>          m_subcTunnels;
         QHash<QString, Tunnel*> m_pinTunnels;
+
+ static QStringList s_graphProps;
+        QStringList loadGraphProps();
 };
 #endif
 

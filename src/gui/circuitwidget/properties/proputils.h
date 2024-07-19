@@ -6,9 +6,21 @@
 #ifndef PROPUTILS_H
 #define PROPUTILS_H
 
+#include <QPointF>
+#include <QStringRef>
+
 QPointF getPointF( QString p );
 
 QString getStrPointF( QPointF p );
 
-#endif
 
+//---------------------------------------------------
+
+struct propStr_t{
+    QStringRef name;
+    QStringRef value;
+};
+
+QVector<propStr_t> parseProps( QStringRef line );
+
+#endif

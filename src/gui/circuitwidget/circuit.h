@@ -136,8 +136,6 @@ class Circuit : public QGraphicsScene
         //void setConverting( bool c ) { m_converting = c; } // used when converting old Components from xml
         //bool converting() { return m_converting; }
 
- static QVector<QStringRef> parseProps( QStringRef line );
-
         int circuitRev() { return m_circRev; }
 
         void drawBackground( QPainter* painter, const QRectF &rect );
