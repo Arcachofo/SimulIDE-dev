@@ -58,7 +58,6 @@ Component* Mcu::construct( QString type, QString id )
     m_error = 0;
     Mcu* mcu = new Mcu( type, id );
     if( !m_error) m_error = McuCreator::createMcu( mcu, id );
-    //if( !m_error) mcu->setLogicSymbol( false );
 
     if( m_error > 0 )
     {

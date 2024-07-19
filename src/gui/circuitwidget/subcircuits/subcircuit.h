@@ -53,7 +53,7 @@ class SubCircuit : public Chip
         QHash<QString, Tunnel*> m_pinTunnels;
 
  static QStringList s_graphProps;
-        QStringList loadGraphProps();
+        void loadGraphProps();
 };
 #endif
 

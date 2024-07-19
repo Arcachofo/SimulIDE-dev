@@ -86,7 +86,7 @@ Component::Component( QString type, QString id )
     m_valLabel->setVisible( false );
 
     if( !id.contains("-") ) id.prepend( type+"-" );
-    setIdLabel( id );
+    Component::setIdLabel( id );
 
     setCursor( Qt::OpenHandCursor );
     setFlag( QGraphicsItem::ItemIsSelectable, true );
@@ -117,43 +117,18 @@ new PointProp<Component>("boardPos", "","", this, &Component::boardPos, &Compone
 new PointProp<Component>("circPos" , "","", this, &Component::circPos,  &Component::setCircPos ),
 new DoubProp <Component>("boardRot", "","", this, &Component::boardRot, &Component::setBoardRot ),
 new DoubProp <Component>("circRot" , "","", this, &Component::circRot,  &Component::setCircRot ),
-new IntProp  <Component>("boardHflip","","", this, &Component::boardHflip,  &Component::setBoardHflip ),
-new IntProp  <Component>("boardVflip","","", this, &Component::boardVflip,  &Component::setBoardVflip ),
+new IntProp  <Component>("boardHflip","","",this, &Component::boardHflip, &Component::setBoardHflip ),
+new IntProp  <Component>("boardVflip","","",this, &Component::boardVflip, &Component::setBoardVflip ),
     }, groupHidden | groupNoCopy } );
 }
 Component::~Component(){}
 
-bool Component::setPropStr( QString prop, QString val )
+/*bool Component::setPropStr( QString prop, QString val )
 {
-    if     ( prop =="id" )        m_idLabel->setPlainText( val );       // Old: TODELETE
-    else if( prop =="objectName") return true;                          // Old: TODELETE
-
-    else if( prop =="x" )         setX( val.toInt() );                  // Old: TODELETE
-    else if( prop =="y" )         setY( val.toInt() );                  // Old: TODELETE
-
-    else if( prop =="labelx" )    m_idLabel->m_labelx = val.toInt();    // Old: TODELETE
-    else if( prop =="labely" )    m_idLabel->m_labely = val.toInt();    // Old: TODELETE
-
-    else if( prop =="valLabelx" ) m_valLabel->m_labelx = val.toInt();   // Old: TODELETE
-    else if( prop =="valLabely" ) m_valLabel->m_labely = val.toInt();   // Old: TODELETE
-
-    else if( prop =="Unit" )                                            // Old: TODELETE
-    {
-        val = val.remove(" ").replace("u","µ");
-        if( !val.isEmpty() )
-        {
-            ComProperty* p =  m_propHash.value( m_showProperty );
-            if( !p ) return true;
-            QString un = p->unit();
-            if( val == un ) return true;
-            QString vstr = p->getValStr().replace( un, val );
-            p->setValStr( vstr );
-        }
-    }
-    else if( prop =="ValLabelText" ) setValLabelText( val );
+    if( prop =="ValLabelText" ) setValLabelText( val );
     else return CompBase::setPropStr( prop, val );
     return true;
-}
+}*/
 
 QVariant Component::itemChange( GraphicsItemChange change, const QVariant &value )
 {

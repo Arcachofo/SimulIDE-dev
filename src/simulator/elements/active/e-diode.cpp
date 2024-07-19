@@ -26,6 +26,8 @@ eDiode::eDiode( QString id )
     m_vt = 0.025865;
     m_vzCoef = 1/m_vt;
     m_maxCur = 1;
+
+    if( m_diodes.isEmpty() ) getModels();
 }
 eDiode::~eDiode(){}
 

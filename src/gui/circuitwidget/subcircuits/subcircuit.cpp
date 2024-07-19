@@ -203,7 +203,7 @@ SubCircuit::SubCircuit( QString type, QString id )
 
     addPropGroup( { tr("Main"), {},0} );
 
-    if( s_graphProps.isEmpty() ) s_graphProps = loadGraphProps();
+    if( s_graphProps.isEmpty() ) loadGraphProps();
 }
 SubCircuit::~SubCircuit(){}
 
@@ -539,13 +539,13 @@ QString SubCircuit::toString()
     return item;
 }
 
-QStringList SubCircuit::loadGraphProps()
+void SubCircuit::loadGraphProps()
 {
-    QStringList graphProps;
     for( propGroup pg : m_propGroups ) // Create list of "Graphical" poperties (We don't need them)
     {
         if( (pg.name != "CompGraphic") ) continue;
-        for( ComProperty* prop : pg.propList ) graphProps.append( prop->name() );
+        for( ComProperty* prop : pg.propList ) s_graphProps.append( prop->name() );
         break;
     }
+
 }
