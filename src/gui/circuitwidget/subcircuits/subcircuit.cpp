@@ -74,14 +74,15 @@ Component* SubCircuit::construct( QString type, QString id )
         if( m_subcDir.isEmpty() )                                  // Try to find a "data" folder in Circuit folder
             m_subcDir = MainWindow::self()->getDataFilePath( name );
     }
-    else if( dataFile.endsWith(".comp") || dataFile.endsWith(".sim1")) // Subcircuit in single file (.comp)
+
+    if( dataFile.endsWith(".comp") || dataFile.endsWith(".sim1")) // Subcircuit in single file (.comp)
     {
         subcFile = dataFile;
         packageList = getPackages( subcFile );
         subcTyp = s_subcType;
     }
 
-    if( !m_subcDir.isEmpty() ) // Packages from package files
+    if( packageList.isEmpty() && !m_subcDir.isEmpty() ) // Packages from package files
     {
         subcFile  = m_subcDir+"/"+name+".sim1";
         pkgeFile  = m_subcDir+"/"+name+".package";

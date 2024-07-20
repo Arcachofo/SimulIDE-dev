@@ -118,20 +118,20 @@ Mcu::Mcu( QString type, QString id )
 
     if( dataFile == "" ) // Component is not in SimulIDE, search in Circuit folder
     {
-            QDir mcuDir;
-            QString folder = ComponentList::self()->getFileDir( m_device );
+        QDir mcuDir;
+        QString folder = ComponentList::self()->getFileDir( m_device );
 
-            if( !folder.isEmpty() ) // Found in folder (no xml file)
-            {
-                mcuDir = QDir( folder );
-            }
-            else              // Try to find a "data" folder in Circuit folder
-            {
-                mcuDir = QFileInfo( Circuit::self()->getFilePath() ).absoluteDir();
-                folder = "data/"+m_device;
-            }
-            baseFile = mcuDir.absoluteFilePath( folder+"/"+m_device);
-            dataFile = baseFile;
+        if( !folder.isEmpty() ) // Found in folder (no xml file)
+        {
+            mcuDir = QDir( folder );
+        }
+        else              // Try to find a "data" folder in Circuit folder
+        {
+            mcuDir = QFileInfo( Circuit::self()->getFilePath() ).absoluteDir();
+            folder = "data/"+m_device;
+        }
+        baseFile = mcuDir.absoluteFilePath( folder+"/"+m_device);
+        dataFile = baseFile;
     }
     else if( dataFile.endsWith(".comp") )
     {

@@ -560,11 +560,8 @@ void SubPackage::setPackagePins( QString pinsStr )
 {
     if( !m_pkgeFile.isEmpty() ) return;
 
-    QStringList pins = pinsStr.split("\n");
-    for( QString pin : pins )
-    {
-        if( !pin.isEmpty() ) setPinStr( pin );
-    }
+    QStringList pins = pinsStr.split("&#xa;");
+    for( QString pin : pins ) if( !pin.isEmpty() ) setPinStr( pin );
 }
 
 QString SubPackage::pinStrEntry( Pin* pin )
@@ -585,7 +582,7 @@ QString SubPackage::pinStrEntry( Pin* pin )
     pinStr += "; id="    +pin->pinId().split("-").last();
     pinStr += "; label=" +pin->getLabelText();
 
-    return pinStr+"\n";
+    return pinStr+"&#xa;";
 }
 
 void SubPackage::slotSave()

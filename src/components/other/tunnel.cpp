@@ -180,12 +180,6 @@ void Tunnel::setPacked( bool p )
     if( p ) m_pin[0]->setLength( 8 );
     else    m_pin[0]->setLength( 5 );
     m_pin[0]->setSpace( 8-m_pin[0]->length() );
-    /*if( this->parent() )
-    {
-        Component* comp = (Component*)parent();
-        connect( comp, &Component::flip,
-                   this, &Tunnel::flip(); } );
-    }*/
 }
 
 void Tunnel::removeTunnel()

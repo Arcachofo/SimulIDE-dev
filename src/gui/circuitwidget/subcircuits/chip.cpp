@@ -114,12 +114,13 @@ QMap<QString, QString> Chip::getPackages( QString compFile )
             else if( propName == "label") pkgName = propValue;
 
             if( propName == "Pins"){
-                propValue.replace("&#xa;","\n").replace("&#x3D;", "=");
+                propValue.replace("&#xa;","\n"); ///.replace("&#x3D;", "=");
                 pkgStr += "\n"+propValue;
             }
             else pkgStr += propName+"="+propValue+"; ";
         }
         if( !pkgName.isEmpty() ) packageList[pkgName] = pkgStr;
+        //qDebug() << pkgStr;
     }
     return packageList;
 }
@@ -148,7 +149,8 @@ QString Chip::convertPackage( QString pkgText ) // Static, converts xml to new f
 
                 if( propName == "type" ) s_subcType = propValue.remove("subc");
             }
-        }else{
+        }else if( !properties.isEmpty() )
+        {
             pkgStr += "Pin; ";
             for( propStr_t prop : properties )
                 pkgStr += prop.name.toString()+"="+prop.value.toString()+"; ";

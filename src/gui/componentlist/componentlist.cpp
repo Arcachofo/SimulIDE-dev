@@ -17,7 +17,7 @@
 #include "componentlist.h"
 #include "treeitem.h"
 #include "mainwindow.h"
-#include "circuit.h"    /// TODELETE
+#include "circuit.h"
 #include "circuitwidget.h"
 #include "chip.h"
 #include "utils.h"
@@ -38,13 +38,9 @@ ComponentList::ComponentList( QWidget* parent )
 
     setSelectionMode( QAbstractItemView::SingleSelection );
     setDragEnabled( true );
-    //setAcceptDrops( true );
     viewport()->setAcceptDrops( true );
     setDropIndicatorShown( true );
 
-    //setDragDropMode( QAbstractItemView::InternalMove );
-    //setDragDropMode( QAbstractItemView::DragOnly );
-    //setAlternatingRowColors(true);
     setIndentation( 12 );
     setRootIsDecorated( true );
     setCursor( Qt::OpenHandCursor );
@@ -53,8 +49,6 @@ ComponentList::ComponentList( QWidget* parent )
     float scale = MainWindow::self()->fontScale();
     setIconSize( QSize( 30*scale, 24*scale ));
 
-    QString userDir = MainWindow::self()->userPath();
-    //m_listFile = userDir+"components/compList.xml";
     m_listFile = MainWindow::self()->getConfigPath("compList.xml");
     m_insertItems = !QFile::exists( m_listFile ); // xml file doesn't exist: Insert items when created
 
@@ -62,6 +56,7 @@ ComponentList::ComponentList( QWidget* parent )
     LoadLibraryItems();
     m_customComp = true;
 
+    QString userDir = MainWindow::self()->userPath();
     if( !userDir.isEmpty() && QDir( userDir ).exists() ) LoadCompSetAt( userDir );
 
     if( !m_insertItems ) insertItems(); // Add items to tree widget from xml file
@@ -124,12 +119,14 @@ void ComponentList::LoadCompSetAt( QDir compSetDir )
             {
                 QString path = compName+"/"+compName;
                 QString icon = getIcon( "test", compName );
+                QString compFile;
                 QString type;
 
                 if( compSetDir.exists( path+".sim1") )
                 {
                     if( icon.isEmpty() ) icon = ":/subc.png";
                     type = "Subcircuit";
+                    compFile = compSetDir.absoluteFilePath( path+".sim1" );
                 }
                 else if( compSetDir.exists( path+".mcu") )
                 {
@@ -140,6 +137,7 @@ void ComponentList::LoadCompSetAt( QDir compSetDir )
                 {
                     addItem( compName, catItem, icon, type );
                     m_dirFileList[ compName ] = compSetDir.absoluteFilePath( compName );
+                    if( !compFile.isEmpty() ) m_dataFileList[ compName ] = compFile;   // Save sim1 File used to create this item
                 }
             }
         }
@@ -338,8 +336,14 @@ void ComponentList::loadXml( QString xmlFile, bool convert )
                             QString data( ba.toHex() );
                             iconData = data;
                         }
-                        QString compFolder = QFileInfo( xmlFile ).absolutePath()+"/"+folder;
-                        QString compFile = compFolder+name+".comp";
+                        QString xmlFolder = QFileInfo( xmlFile ).absolutePath();
+                        QString compFolder = xmlFolder+"/"+folder;
+                        QString convFolder = xmlFolder+"/converted/"+folder;
+
+                        if( !QDir( convFolder ).exists() )
+                            QDir( xmlFolder ).mkpath("converted/"+folder);
+
+                        QString compFile = convFolder+"/"+name+".comp";
                         QString compStr;
 
                         if( type == "Subcircuit" )
@@ -433,6 +437,8 @@ void ComponentList::addItem( QString caption, TreeItem* catItem, QString icon, Q
 
 void ComponentList::addItem( QString caption, TreeItem* catItem, QIcon &icon, QString type )
 {
+    if( !catItem ) return;
+
     QStringList nameFull = caption.split( "???" );
     QString       nameTr = nameFull.first();
     QString info = "";
@@ -665,14 +671,6 @@ void ComponentList::insertItem( QDomNode* node, TreeItem* parent )
 
 void ComponentList::writeSettings()
 {
-    /*if( !QFile::exists( m_listFile ) )
-    {
-        QString userDir = MainWindow::self()->userPath();
-        if( userDir.isEmpty() ) return;
-        QDir compDir = QDir( userDir );
-        if( !compDir.exists( userDir+"components" ) ) compDir.mkdir( userDir+"components" );
-    }*/
-
     search(""); // Exit from a posible search and update item states
 
     QString treeStr = "<comptree>\n";
