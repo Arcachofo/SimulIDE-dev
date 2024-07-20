@@ -31,11 +31,7 @@ class ComProperty
 
         virtual QString toString();
 
-        //void setWidget( PropVal* w );
-
     protected:
-        //PropVal* m_widget;
-
         QString m_name;
         QString m_capt;
         QString m_type;

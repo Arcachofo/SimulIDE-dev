@@ -5,6 +5,7 @@
 
 #include "comproperty.h"
 #include "propval.h"
+#include "utils.h"
 
 ComProperty::ComProperty( QString name, QString caption, QString unit, QString type, uint8_t flags )
 {
@@ -23,10 +24,7 @@ QString ComProperty::unit() { return m_unit; }
 uint8_t ComProperty::flags(){ return m_flags; }
 
 void    ComProperty::setValStr( QString ){;}
-QString ComProperty::getValStr(){return "";}
-double  ComProperty::getValue(){return 0;}
+QString ComProperty::getValStr(){ return ""; }
+double  ComProperty::getValue(){ return getValStr().toDouble(); }
 
-QString ComProperty::toString(){return getValStr();}
-
-//void ComProperty::setWidget( PropVal* w ) { m_widget = w; }
-
+QString ComProperty::toString(){ return getValStr(); }

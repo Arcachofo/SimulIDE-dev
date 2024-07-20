@@ -123,12 +123,11 @@ new IntProp  <Component>("boardVflip","","",this, &Component::boardVflip, &Compo
 }
 Component::~Component(){}
 
-/*bool Component::setPropStr( QString prop, QString val )
+void Component::setup()
 {
-    if( prop =="ValLabelText" ) setValLabelText( val );
-    else return CompBase::setPropStr( prop, val );
-    return true;
-}*/
+    QString showP = showProp();
+    if( !showP.isEmpty() ) setValLabelText( getPropStr( showP ) );
+}
 
 QVariant Component::itemChange( GraphicsItemChange change, const QVariant &value )
 {

@@ -110,6 +110,7 @@ void IoComponent::setup()
         QString id = pin->pinId().split("-").last();
         if( pinList.contains( id ) ) pin->userInvertPin();
     }
+    Component::setup();
 }
 
 void IoComponent::initState()

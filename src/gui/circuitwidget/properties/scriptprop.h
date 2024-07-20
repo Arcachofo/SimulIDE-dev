@@ -6,16 +6,16 @@
 #ifndef SCRIPTPROP_H
 #define SCRIPTPROP_H
 
-#include "strbaseprop.h"
+#include "comproperty.h"
 
 template <class Comp>
-class ScriptProp : public StrBaseProp
+class ScriptProp : public ComProperty
 {
     public:
         ScriptProp( QString name, QString caption, QString unit, Comp* comp
                   , QString (Comp::*getter)(ComProperty*), void (Comp::*setter)(ComProperty*, QString)
                   , QString type="string", uint8_t flags=0 )
-        : StrBaseProp( name, caption, unit, type, flags )
+        : ComProperty( name, caption, unit, type, flags )
         {
             m_comp = comp;
             m_getter = getter;
@@ -24,14 +24,10 @@ class ScriptProp : public StrBaseProp
         ~ScriptProp(){;}
 
         virtual void setValStr( QString val ) override
-        {
-            (m_comp->*m_setter)( this, setStr( val ) ); // Call setter with property name
-        }
+        { (m_comp->*m_setter)( this, val /*setStr( val )*/ ); } // Call setter with property name
 
         virtual QString getValStr() override
         { return (m_comp->*m_getter)(this); }
-
-        virtual QString toString(){ return getStr( (m_comp->*m_getter)(this) ); }
 
     private:
         Comp* m_comp;

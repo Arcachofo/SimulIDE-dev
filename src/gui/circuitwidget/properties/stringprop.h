@@ -6,16 +6,16 @@
 #ifndef STRPROP_H
 #define STRPROP_H
 
-#include "strbaseprop.h"
+#include "comproperty.h"
 
 template <class Comp>
-class StrProp : public StrBaseProp
+class StrProp : public ComProperty
 {
     public:
         StrProp( QString name, QString caption, QString unit, Comp* comp
                , QString (Comp::*getter)(), void (Comp::*setter)(QString)
                , uint8_t flags=0, QString type="string" )
-        : StrBaseProp( name, caption, unit, type, flags )
+        : ComProperty( name, caption, unit, type, flags )
         {
             m_comp = comp;
             m_getter = getter;
@@ -24,15 +24,10 @@ class StrProp : public StrBaseProp
         ~StrProp(){;}
 
         virtual void setValStr( QString val ) override
-        {
-            /// if( m_comp->showProp() == m_name ) m_comp->setValLabelText( val );  // Needed???
-            (m_comp->*m_setter)( setStr( val ) ); // Comp setter can change valLabel
-        }
+        { (m_comp->*m_setter)( val/*setStr( val )*/ ); } // Comp setter can change valLabel
 
         virtual QString getValStr() override
         { return (m_comp->*m_getter)(); }
-
-        virtual QString toString(){ return getStr( (m_comp->*m_getter)() ); }
 
     private:
         Comp* m_comp;

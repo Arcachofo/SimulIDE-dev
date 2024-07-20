@@ -29,7 +29,7 @@ class Component : public CompBase, public QGraphicsItem, public Updatable
         Component( QString type, QString id );
         ~Component();
 
-        //virtual bool setPropStr( QString prop, QString val ) override;
+        virtual void setup() override;
 
         enum { Type = UserType + 1 };
         int type() const override { return Type; }
