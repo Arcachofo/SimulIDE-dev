@@ -366,7 +366,7 @@ void Pin::animate( bool an )
     if     (  m_animate ) Simulator::self()->addToUpdateList( this );
     else if( !m_warning ) Simulator::self()->remFromUpdateList( this );
 
-    if( !Simulator::self()->isRunning() ) updateStep();
+    if( !Simulator::self()->isRunning() ) Pin::updateStep();
     else                                  update();
 }
 

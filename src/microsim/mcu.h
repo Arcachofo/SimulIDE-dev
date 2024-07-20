@@ -35,7 +35,7 @@ class Mcu : public Chip, public Linker
  static Component* construct( QString type, QString id );
  static LibraryItem* libraryItem();
 
-        void setup( QString type );
+        void setupMcu();
 
         virtual bool setPropStr( QString prop, QString val ) override;
 

@@ -86,6 +86,44 @@ bool Chip::setPropStr( QString prop, QString val )
     return Component::setPropStr( prop, val );
 }
 
+QMap<QString, QString> Chip::getPackages( QString compFile )
+{
+    QMap<QString, QString> packageList;
+
+    QString doc = fileToString( compFile, "Chip::getPackages");
+
+    QVector<QStringRef> docLines = doc.splitRef("\n");
+
+    for( QStringRef line : docLines )
+    {
+        if( !line.startsWith("<item") ) continue;
+
+        QVector<propStr_t> properties = parseProps( line );
+        propStr_t itemType = properties.takeFirst();
+        if( itemType.name != "itemtype") continue;
+        if( itemType.value != "Package") break;    // All packages processed
+
+        QString pkgName;
+        QString pkgStr = "Package; ";
+
+        for( propStr_t prop : properties )
+        {
+            QString propName  = prop.name.toString();
+            QString propValue = prop.value.toString();
+            if     ( propName == "SubcType" && propValue != "None") s_subcType = propValue; // Only for Subcircuits
+            else if( propName == "label") pkgName = propValue;
+
+            if( propName == "Pins"){
+                propValue.replace("&#xa;","\n").replace("&#x3D;", "=");
+                pkgStr += "\n"+propValue;
+            }
+            else pkgStr += propName+"="+propValue+"; ";
+        }
+        if( !pkgName.isEmpty() ) packageList[pkgName] = pkgStr;
+    }
+    return packageList;
+}
+
 QString Chip::convertPackage( QString pkgText ) // Static, converts xml to new format
 {
     QString pkgStr;
@@ -108,10 +146,7 @@ QString Chip::convertPackage( QString pkgText ) // Static, converts xml to new f
                 QString propValue = prop.value.toString();
                 pkgStr += propName+"="+propValue+"; ";
 
-                if( propName == "type" )
-                {
-                    s_subcType = propValue.remove("subc");
-                }
+                if( propName == "type" ) s_subcType = propValue.remove("subc");
             }
         }else{
             pkgStr += "Pin; ";

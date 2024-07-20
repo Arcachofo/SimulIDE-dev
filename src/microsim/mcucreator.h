@@ -30,7 +30,7 @@ class McuCreator
         static int createMcu( Mcu* mcuComp, QString name );
 
     private:
-        static int  processFile( QString fileName, bool main=false );
+        static int  processFile( QString fileName );
         static void createProgMem( uint32_t size );
         static void createDataMem( uint32_t size );
         static void createRomMem( uint32_t size );

@@ -49,6 +49,7 @@ class Chip : public Component, public eElement
 
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w ) override;
 
+ static QMap<QString, QString> getPackages( QString compText );
  static QString convertPackage( QString pkgText );
  static QString s_subcType;
 

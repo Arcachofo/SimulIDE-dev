@@ -77,38 +77,8 @@ Component* SubCircuit::construct( QString type, QString id )
     else if( dataFile.endsWith(".comp") || dataFile.endsWith(".sim1")) // Subcircuit in single file (.comp)
     {
         subcFile = dataFile;
-
-        QString doc = fileToString( subcFile, "SubCircuit::construct");
-
-        QVector<QStringRef> docLines = doc.splitRef("\n");
-
-        for( QStringRef line : docLines )
-        {
-            if( !line.startsWith("<item") ) continue;
-
-            QVector<propStr_t> properties = parseProps( line );
-            propStr_t itemType = properties.takeFirst();
-            if( itemType.name != "itemtype") continue;
-            if( itemType.value != "Package") break;    // All packages processed
-
-            QString pkgName;
-            QString pkgStr = "Package; ";
-
-            for( propStr_t prop : properties )
-            {
-                QString propName  = prop.name.toString();
-                QString propValue = prop.value.toString();
-                if     ( propName == "SubcType" && propValue != "None") subcTyp = propValue;
-                else if( propName == "label") pkgName = propValue;
-
-                if( propName == "Pins"){
-                    propValue.replace("&#xa;","\n").replace("&#x3D;", "=");
-                    pkgStr += "\n"+propValue;
-                }
-                else pkgStr += propName+"="+propValue+"; ";
-            }
-            if( !pkgName.isEmpty() ) packageList[pkgName] = pkgStr;
-        }
+        packageList = getPackages( subcFile );
+        subcTyp = s_subcType;
     }
 
     if( !m_subcDir.isEmpty() ) // Packages from package files
@@ -547,5 +517,4 @@ void SubCircuit::loadGraphProps()
         for( ComProperty* prop : pg.propList ) s_graphProps.append( prop->name() );
         break;
     }
-
 }

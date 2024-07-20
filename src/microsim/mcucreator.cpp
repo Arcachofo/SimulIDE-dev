@@ -116,13 +116,14 @@ int McuCreator::createMcu( Mcu* mcuComp, QString name )
     m_basePath = QFileInfo( dataFile ).absolutePath();
     dataFile   = QFileInfo( dataFile ).fileName();
 
-    int error = processFile( dataFile, true );
+    int error = processFile( dataFile );
 
-    if( error == 0 ) mcu->getRamTable()->setRegisters( mcu->m_regInfo.keys() );
+    if( error == 0 ) m_mcuComp->setupMcu();
+
     return error;
 }
 
-int McuCreator::processFile( QString fileName, bool main )
+int McuCreator::processFile( QString fileName )
 {
     fileName = m_basePath+"/"+fileName;
     QDomDocument domDoc = fileToDomDoc( fileName, "McuCreator::processFile" );
@@ -276,7 +277,6 @@ int McuCreator::processFile( QString fileName, bool main )
     {
         mcu->m_clkPin = mcu->getIoPin( root.attribute("clkpin") );
     }
-    if( main ) m_mcuComp->setup( root.tagName() );
     return 0;
 }
 

@@ -136,25 +136,7 @@ Mcu::Mcu( QString type, QString id )
     else if( dataFile.endsWith(".comp") )
     {
         m_dataFile = dataFile;
-
-        QStringList list = fileToStringList( dataFile, "SubCircuit::construct" );
-        //list.takeFirst(); // Remove first line: <libitem
-
-        for( QString line : list )
-        {
-            if( !line.startsWith("<item") ) continue;
-            line.replace("&#x3D;","=");
-
-            QDomDocument domDoc;
-            domDoc.setContent( line );
-            QDomElement root = domDoc.documentElement();
-
-            QString itemType = root.attribute("itemtype");
-            if( itemType != "Package") break;
-
-            QString pkgName = root.attribute("label");
-            m_packageList[pkgName] = convertPackage( line );
-        }
+        m_packageList = getPackages( dataFile );
     }
     else if( QFile::exists( dataFile ) ) // MCU defined in xml file
     {
@@ -239,8 +221,14 @@ Mcu::Mcu( QString type, QString id )
 
     qDebug() << "       "<<id<< "Initialized"<<endl;
 }
+Mcu::~Mcu()
+{
+    if( m_mcuMonitor ) delete m_mcuMonitor;
+    if( m_pSelf == this ) m_pSelf = NULL;
+    InfoWidget::self()->updtMcu();
+}
 
-void Mcu::setup( QString type )
+void Mcu::setupMcu()
 {
     if( m_pSelf == NULL ) slotmain();
 
@@ -315,12 +303,8 @@ void Mcu::setup( QString type )
 
     int index = m_isTQFP ? 1 : 0;
     setPackage( m_packageList.keys().at( index ) );
-}
-Mcu::~Mcu()
-{
-    if( m_mcuMonitor ) delete m_mcuMonitor;
-    if( m_pSelf == this ) m_pSelf = NULL;
-    InfoWidget::self()->updtMcu();
+
+    m_eMcu.getRamTable()->setRegisters( m_eMcu.m_regInfo.keys() );
 }
 
 bool Mcu::setPropStr( QString prop, QString val )
