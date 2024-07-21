@@ -3,8 +3,6 @@
  *                                                                         *
  ***( see copyright.txt file at root folder )*******************************/
 
-#include <QDomDocument>
-
 #include "subcircuit.h"
 #include "itemlibrary.h"
 #include "mainwindow.h"
@@ -17,7 +15,6 @@
 #include "utils.h"
 #include "mcu.h"
 #include "linker.h"
-#include "proputils.h"
 
 #include "logicsubc.h"
 #include "board.h"

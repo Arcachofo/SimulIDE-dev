@@ -9,7 +9,6 @@
 #include "simulator.h"
 #include "connector.h"
 #include "circuit.h"
-#include "proputils.h"
 #include "utils.h"
 #include "pin.h"
 

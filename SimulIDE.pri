@@ -21,9 +21,11 @@ RESOURCES    = $$PWD/src/application.qrc
 INCLUDEPATH += $$PWD/src \
     $$PWD/src/components \
     $$PWD/src/components/active \
+    $$PWD/src/components/connectors \
+    $$PWD/src/components/graphical \
     $$PWD/src/components/logic \
-    $$PWD/src/components/micro \
     $$PWD/src/components/meters \
+    $$PWD/src/components/micro \
     $$PWD/src/components/other \
     $$PWD/src/components/other/truthtable \
     $$PWD/src/components/outputs \
@@ -35,20 +37,20 @@ INCLUDEPATH += $$PWD/src \
     $$PWD/src/components/passive/resistors \
     $$PWD/src/components/passive/resist_sensors \
     $$PWD/src/components/sources \
+    $$PWD/src/components/subcircuits \
     $$PWD/src/components/switches \
     $$PWD/src/gui \
-    $$PWD/src/gui/circuitwidget \
-    $$PWD/src/gui/circuitwidget/properties \
-    $$PWD/src/gui/circuitwidget/subcircuits \
-    $$PWD/src/gui/dataplotwidget \
-    $$PWD/src/gui/serial \
-    $$PWD/src/gui/componentlist \
-    $$PWD/src/gui/filebrowser \
-    $$PWD/src/gui/editorwidget \
-    $$PWD/src/gui/editorwidget/dialogs \
-    $$PWD/src/gui/editorwidget/debuggers \
     $$PWD/src/gui/appdialogs \
+    $$PWD/src/gui/circuitwidget \
+    $$PWD/src/gui/componentlist \
+    $$PWD/src/gui/dataplotwidget \
+    $$PWD/src/gui/editorwidget \
+    $$PWD/src/gui/editorwidget/debuggers \
+    $$PWD/src/gui/editorwidget/dialogs \
+    $$PWD/src/gui/filebrowser \
     $$PWD/src/gui/memory \
+    $$PWD/src/gui/properties \
+    $$PWD/src/gui/serial \
     $$PWD/src/simulator \
     $$PWD/src/simulator/elements \
     $$PWD/src/simulator/elements/active \
