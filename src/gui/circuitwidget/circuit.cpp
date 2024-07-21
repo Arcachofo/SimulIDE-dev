@@ -28,7 +28,6 @@
 #include "linker.h"
 #include "tunnel.h"
 #include "createcomp.h"
-#include "proputils.h"
 
 Circuit* Circuit::m_pSelf = NULL;
 
@@ -331,9 +330,7 @@ void Circuit::loadStrDoc( QString &doc )
                     }
                     /// Why?? // comp->setPropStr("label", label ); //setIdLabel( label );
 
-                    for( propStr_t prop : properties ) // Set properties
-                        comp->setPropStr( prop.name.toString(), prop.value.toString() );
-
+                    comp->loadProperties( properties );
                     comp->setup();
 
                     if( m_pasting ) comp->setIdLabel( newUid );

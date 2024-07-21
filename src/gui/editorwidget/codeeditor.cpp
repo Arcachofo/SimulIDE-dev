@@ -5,7 +5,6 @@
 
 #include <QPainter>
 #include <QTextDocumentFragment>
-#include <QDomDocument>
 #include <QCompleter>
 #include <QAbstractItemView>
 #include <QStringListModel>
@@ -785,25 +784,20 @@ void CodeEditor::loadConfig()
         return;
     }//---------------------------------------------------------------------------
 
-    QHash<QString, QString> properties;
-    QDomDocument domDoc = fileToDomDoc( fileF, "EditorWidget::loadConfig" );
-    if( domDoc.isNull() ) return;
+    QString doc = fileToString( fileF, "EditorWidget::loadConfig" );
+    QVector<QStringRef> docLines = doc.splitRef("\n");
 
-    QDomElement root = domDoc.documentElement();
-    if( root.tagName() != "document" ) return;
-
-    QDomNode node = root.firstChild();
-    while( !node.isNull() )
+    for( QStringRef line : docLines )
     {
-        QDomElement el = node.toElement();
-        if( el.tagName() != "item" ) continue;
+        if( !line.startsWith("<item") ) continue;
+        QVector<propStr_t> properties = parseProps( line );
 
-        QString type = el.attribute("itemtype");
+        propStr_t itemType = properties.takeFirst();
+        if( itemType.name != "itemtype") continue;
+        QString type = itemType.value.toString();
 
-        if( type == m_type ) loadProperties( &el ); // CodeEditor
-        else if( type == "Compiler" && m_compiler ) m_compiler->loadProperties( &el ); // Compiler
-
-        node = node.nextSibling();
+        if     ( type == m_type ) loadProperties( properties ); // CodeEditor
+        else if( type == "Compiler" && m_compiler ) m_compiler->loadProperties( properties ); // Compiler
     }
 }
 

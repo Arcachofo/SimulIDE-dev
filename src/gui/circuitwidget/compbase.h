@@ -11,6 +11,8 @@
 #include <QHash>
 #include <QCoreApplication>
 
+#include "proputils.h"
+
 #define simulideTr(comp_name,str) QCoreApplication::translate(comp_name,str)
 
 class ComProperty;
@@ -27,8 +29,6 @@ struct propGroup{
 };
 
 class PropDialog;
-class QDomElement;
-class QGraphicsItemGroup;
 
 class CompBase
 {
@@ -40,9 +40,9 @@ class CompBase
         void remPropGroup( QString name );
         void addProperty( QString group, ComProperty* p );
         void removeProperty( QString prop );
-        void loadProperties( QDomElement* el );
         QList<propGroup>* properties() { return &m_propGroups; } // Circuit needs pointer bcos properties can change (ex: loadHex changes Config)
 
+        virtual void loadProperties( QVector<propStr_t> p );
         virtual QStringList getEnumUids( QString )  { return m_enumUids; }
         virtual QStringList getEnumNames( QString ) { return m_enumNames; }
         int getEnumIndex( QString prop );

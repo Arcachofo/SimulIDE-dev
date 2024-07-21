@@ -3,8 +3,6 @@
  *                                                                         *
  ***( see copyright.txt file at root folder )*******************************/
 
-#include <QDomDocument>
-
 #include "compbase.h"
 #include "circuit.h"
 #include "propdialog.h"
@@ -28,27 +26,10 @@ CompBase::~CompBase()
     }
 }
 
-void CompBase::loadProperties( QDomElement* el ) // Set properties in correct order
+void CompBase::loadProperties( QVector<propStr_t> properties ) // Set properties in correct order
 {
-    QHash<QString, QString> properties;
-    QDomNamedNodeMap atrs = el->attributes();
-    for( int i=0; i<atrs.count(); ++i )
-    {
-        QDomAttr atr = atrs.item(i).toAttr();
-        properties[atr.name()] = atr.value();
-    }
-    for( propGroup group : m_propGroups )
-    {
-        QList<ComProperty*> propList = group.propList;
-        if( propList.isEmpty() ) continue;
-        for( ComProperty* prop : propList )
-        {
-            QString pn = prop->name();
-            if( !properties.contains( pn ) ) continue;
-            prop->setValStr( properties.value( pn ) );
-            properties.remove( pn );
-        }
-    }
+    for( propStr_t prop : properties ) // Set properties
+        setPropStr( prop.name.toString(), prop.value.toString() );
 }
 
 void CompBase::remPropGroup( QString name )
