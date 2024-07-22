@@ -97,7 +97,7 @@ QMap<QString, QString> Chip::getPackages( QString compFile )
     {
         if( !line.startsWith("<item") ) continue;
 
-        QVector<propStr_t> properties = parseProps( line );
+        QVector<propStr_t> properties = parseXmlProps( line );
         propStr_t itemType = properties.takeFirst();
         if( itemType.name != "itemtype") continue;
         if( itemType.value != "Package") break;    // All packages processed
@@ -134,7 +134,7 @@ QString Chip::convertPackage( QString pkgText ) // Static, converts xml to new f
         if( line.startsWith("</") ) continue;
         if( line.isEmpty() ) continue;
 
-        QVector<propStr_t> properties = parseProps( line );
+        QVector<propStr_t> properties = parseXmlProps( line );
 
         if( line.startsWith("<package") )
         {
@@ -207,12 +207,14 @@ void Chip::initPackage( QString pkgStr )
 
             for( QString prop : tokens )
             {
-                while( prop.startsWith(" ") ) prop.remove( 0, 1 );
-                QStringList p = prop.split("=");
-                if( p.size() != 2 ) continue;
+                int index = prop.indexOf("="); // First occurrence of "="
+                if( index == -1 ) continue;
 
-                QString name = p.first().toLower();// Property_name
-                QString val  = p.last(); // Property_value
+                QString name = prop.left( index ).toLower();      // Property_name
+                QString val  = prop.right( prop.size()-index-1 ); // Property value
+
+                index = name.lastIndexOf(" ");
+                name.remove( 0, index-1 );      // Remove leading spaces
 
                 if     ( name == "width"       ) m_width  = val.toInt();
                 else if( name == "height"      ) m_height = val.toInt();
@@ -258,23 +260,23 @@ void Chip::setPinStr( QString pin )
 
     for( QString token : tokens )
     {
-        while( token.startsWith(" ") ) token.remove( 0, 1 );
-
         int index = token.indexOf("=");
         if( index == -1 ) continue;
 
-        QString prop = token.left( index ); //  p.first().toLower();// Property_name
-        index++;
-        QString val  = token.mid( index, prop.length()-index ); //p.last(); // Property_value
+        QString name = token.left( index ); // Property_name
+        QString val  = token.right( name.length()-index-1 ); // Property_value
 
-        if     ( prop == "xpos"  ) xpos   = val.toInt();
-        else if( prop == "ypos"  ) ypos   = val.toInt();
-        else if( prop == "angle" ) angle  = val.toInt();
-        else if( prop == "length") length = val.toInt();
-        else if( prop == "space" ) space  = val.toInt();
-        else if( prop == "id"    ) id     = val;
-        else if( prop == "label" ) label  = val;
-        else if( prop == "type"  ) type   = val;
+        index = name.lastIndexOf(" ");
+        name.remove( 0, index-1 );      // Remove leading spaces
+
+        if     ( name == "xpos"  ) xpos   = val.toInt();
+        else if( name == "ypos"  ) ypos   = val.toInt();
+        else if( name == "angle" ) angle  = val.toInt();
+        else if( name == "length") length = val.toInt();
+        else if( name == "space" ) space  = val.toInt();
+        else if( name == "id"    ) id     = val;
+        else if( name == "label" ) label  = val;
+        else if( name == "type"  ) type   = val;
     }
     addNewPin( id, type, label, 0, xpos, ypos, angle, length, space );
 }

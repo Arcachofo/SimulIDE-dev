@@ -201,7 +201,7 @@ void SubCircuit::loadSubCircuit( QString doc )
     {
         if( line.startsWith("<item") )
         {
-            QVector<propStr_t> properties = parseProps( line );
+            QVector<propStr_t> properties = parseXmlProps( line );
 
             propStr_t itemType = properties.takeFirst();
             if( itemType.name != "itemtype") continue;
@@ -286,7 +286,7 @@ void SubCircuit::loadSubCircuit( QString doc )
 
                     if( comp->itemType() == "MCU" )
                     {
-                        comp->removeProperty("Logic_Symbol");
+                        comp->remProperty("Logic_Symbol");
                         Mcu* mcu = (Mcu*)comp;
                         QString program = mcu->program();
                         if( !program.isEmpty() ) mcu->load( m_subcDir+"/"+program );

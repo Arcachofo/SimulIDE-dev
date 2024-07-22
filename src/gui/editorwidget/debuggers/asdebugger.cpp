@@ -18,7 +18,7 @@ asDebugger::asDebugger( CodeEditor* parent, OutPanelText* outPane )
 {
     m_device = NULL;
 
-    removeProperty( "ToolPath" );
+    remProperty( "ToolPath" );
 
     //QStringList keywords;
     //keywords << "component.addCpuReg";

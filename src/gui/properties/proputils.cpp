@@ -21,7 +21,7 @@ QString getStrPointF( QPointF p )
 
 //---------------------------------------------------
 
-QVector<propStr_t> parseProps( QStringRef line )
+QVector<propStr_t> parseXmlProps( QStringRef line )
 {
     QVector<propStr_t> properties;
 
@@ -41,3 +41,37 @@ QVector<propStr_t> parseProps( QStringRef line )
     }
     return properties;
 }
+
+QVector<propStr_t> parseProps( QStringRef line )
+{
+    QVector<propStr_t> properties;
+
+    QVector<QStringRef> tokens = line.split(";");
+
+    for( QStringRef token : tokens )
+    {
+        propStr_t property = parseProp( token );
+        properties.append( property );
+    }
+    return properties;
+}
+
+propStr_t parseProp( QStringRef token )
+{
+    QStringRef name;       // Property_name
+    QStringRef value;      // Property value
+    int index = token.indexOf("="); // First occurrence of "="
+
+    if( index == -1 ) name = token;
+    else{
+        name  = token.left( index );
+        value = token.right( token.size()-1-index );
+    }
+    if( name.indexOf(" ") == 0)   // Only remove leading spaces
+    {
+        index = name.lastIndexOf(" ");
+        name = name.right( name.size()-index-1 ); // Remove spaces
+    }
+    return { name, value };
+}
+

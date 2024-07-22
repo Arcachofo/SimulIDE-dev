@@ -790,7 +790,7 @@ void CodeEditor::loadConfig()
     for( QStringRef line : docLines )
     {
         if( !line.startsWith("<item") ) continue;
-        QVector<propStr_t> properties = parseProps( line );
+        QVector<propStr_t> properties = parseXmlProps( line );
 
         propStr_t itemType = properties.takeFirst();
         if( itemType.name != "itemtype") continue;

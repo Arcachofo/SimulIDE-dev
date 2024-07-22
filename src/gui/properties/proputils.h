@@ -21,6 +21,8 @@ struct propStr_t{
     QStringRef value;
 };
 
+QVector<propStr_t> parseXmlProps( QStringRef line );
 QVector<propStr_t> parseProps( QStringRef line );
+propStr_t parseProp( QStringRef token );
 
 #endif

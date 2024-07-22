@@ -212,7 +212,7 @@ void Circuit::loadStrDoc( QString &doc )
     QVector<QStringRef> docLines = doc.splitRef("\n");
     for( QStringRef line : docLines )
     {
-        QVector<propStr_t> properties = parseProps( line );
+        QVector<propStr_t> properties = parseXmlProps( line );
 
         if( line.startsWith("<item") )
         {

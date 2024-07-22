@@ -17,7 +17,7 @@ CompBase::CompBase( QString type, QString id )
 }
 CompBase::~CompBase()
 {
-    for( ComProperty* p : m_propHash.values() ) delete p;
+    for( ComProperty* p : m_propMap.values() ) delete p;
     if( m_propDialog )
     {
         m_propDialog->setParent( NULL );
@@ -38,7 +38,7 @@ void CompBase::remPropGroup( QString name )
     {
         if( m_propGroups.at(i).name == name )
         {
-            for( ComProperty* p : m_propGroups.at(i).propList ) m_propHash.remove( p->name() );
+            for( ComProperty* p : m_propGroups.at(i).propList ) m_propMap.remove( p->name() );
             m_propGroups.removeAt(i);
             break;
 }   }   }
@@ -48,7 +48,7 @@ void CompBase::addPropGroup( propGroup pg, bool list )
     m_propGroups.append( pg );
 
     if( list )
-        for( ComProperty* p : pg.propList ) m_propHash[p->name()] = p;
+        for( ComProperty* p : pg.propList ) m_propMap[p->name()] = p;
 }
 
 void CompBase::addProperty( QString group, ComProperty* p )
@@ -60,11 +60,11 @@ void CompBase::addProperty( QString group, ComProperty* p )
 
         pg.propList.append( p );
         m_propGroups.replace( i, pg );
-        m_propHash[p->name()] = p;
+        m_propMap[p->name()] = p;
         return;
 }   }
 
-void CompBase::removeProperty( QString prop )
+void CompBase::remProperty( QString prop )
 {
     for( int i=0; i<m_propGroups.size(); ++i )
     {
@@ -74,14 +74,14 @@ void CompBase::removeProperty( QString prop )
             if( p->name() != prop ) continue;
             pg.propList.removeAll( p );
             m_propGroups.replace( i, pg );
-            m_propHash.remove( prop );
+            m_propMap.remove( prop );
             delete p;
             return;
 }   }   }
 
 bool CompBase::setPropStr( QString prop, QString val )
 {
-    ComProperty* p = m_propHash.value( prop );
+    ComProperty* p = m_propMap.value( prop );
     if( p ){
         p->setValStr( val );
         if( m_propDialog ) m_propDialog->updtValues();
@@ -91,7 +91,7 @@ bool CompBase::setPropStr( QString prop, QString val )
 }
 QString CompBase::getPropStr( QString prop )
 {
-    ComProperty* p = m_propHash.value( prop );
+    ComProperty* p = m_propMap.value( prop );
     if( p ) return p->getValStr();
     return "";
 }

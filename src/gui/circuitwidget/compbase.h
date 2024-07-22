@@ -8,7 +8,7 @@
 
 #include <QString>
 #include <QPointF>
-#include <QHash>
+#include <QMap>
 #include <QCoreApplication>
 
 #include "proputils.h"
@@ -39,7 +39,7 @@ class CompBase
         void addPropGroup( propGroup pg, bool list=true );
         void remPropGroup( QString name );
         void addProperty( QString group, ComProperty* p );
-        void removeProperty( QString prop );
+        void remProperty( QString prop );
         QList<propGroup>* properties() { return &m_propGroups; } // Circuit needs pointer bcos properties can change (ex: loadHex changes Config)
 
         virtual void loadProperties( QVector<propStr_t> p );
@@ -69,7 +69,7 @@ class CompBase
 
         PropDialog* m_propDialog;
         QList<propGroup> m_propGroups;
-        QHash<QString, ComProperty*> m_propHash;
+        QMap<QString, ComProperty*> m_propMap;
 
         QStringList m_enumUids;
         QStringList m_enumNames;
