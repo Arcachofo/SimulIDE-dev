@@ -47,7 +47,7 @@ FlipFlopRS::FlipFlopRS( QString type, QString id )
 
     setTrigger( Clock );
 
-    removeProperty("UseRS");
+    remProperty("UseRS");
 }
 FlipFlopRS::~FlipFlopRS(){}
 

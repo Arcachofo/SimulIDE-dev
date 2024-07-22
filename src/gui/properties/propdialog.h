@@ -22,6 +22,7 @@ class PropDialog : public QDialog, private Ui::PropDialog
 
         void setComponent( CompBase* comp, bool isComp=true );
         void showProp( QString name, bool show );
+        void enableProp( QString name, bool en );
         void updtValues();
 
         void changed();

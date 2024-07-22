@@ -136,6 +136,16 @@ void PropDialog::showProp( QString name, bool show )
     }
 }
 
+void PropDialog::enableProp( QString name, bool en )
+{
+    for( PropVal* prop : m_propList )
+    {
+        if( prop->propName() != name ) continue;
+        prop->setEnabled( en );
+        break;
+    }
+}
+
 void PropDialog::on_labelBox_editingFinished()
 {
     m_component->setPropStr("label", labelBox->text() );

@@ -25,8 +25,11 @@ class LogicComponent : public IoComponent, public eClockedDevice
         void updateOutEnabled();
         bool outputEnabled();
 
-        virtual void setInputHighV( double volt ) override;
-        virtual void setInputLowV( double volt ) override;
+        virtual QStringList getEnumUids( QString ) override;
+        virtual QStringList getEnumNames( QString ) override;
+
+        virtual void setInpHighV( double volt ) override;
+        virtual void setInpLowV( double volt ) override;
         virtual void setInputImp( double imp ) override;
 
         bool tristate() { return m_tristate; }

@@ -9,11 +9,12 @@
 #include <queue>
 
 #include "component.h"
+#include "logicfamily.h"
 
 class eElement;
 class IoPin;
 
-class IoComponent : public Component
+class IoComponent : public Component, public LogicFamily
 {
     public:
         IoComponent( QString type, QString id );
@@ -30,23 +31,17 @@ class IoComponent : public Component
         void runOutputs();
         void scheduleOutPuts( eElement* el );
 
-        double inputHighV() { return m_inHighV; }
-        virtual void setInputHighV( double volt );
+        void updtProperties();
 
-        double inputLowV() { return m_inLowV; }
-        virtual void setInputLowV( double volt );
-
-        double outHighV() { return m_ouHighV; }
-        void  setOutHighV( double volt );
-
-        double outLowV() { return m_ouLowV; }
-        void  setOutLowV( double volt );
-
-        double inputImp() { return m_inImp; }
-        virtual void setInputImp( double imp );
-
-        double outImp() { return m_ouImp; }
-        void  setOutImp( double imp );
+        virtual void setSupplyV( double v ) override;
+        virtual void setInpHighV( double volt ) override;
+        virtual void setInpLowV( double volt ) override;
+        virtual void setOutHighV( double volt ) override;
+        virtual void setOutLowV( double volt ) override;
+        virtual void setInputImp( double imp ) override;
+        virtual void setOutImp( double imp ) override;
+        virtual void setRiseTime( double time ) override;
+        virtual void setFallTime( double time ) override;
 
         bool invertOuts() { return m_invOutputs; }
         void setInvertOuts( bool invert );
@@ -56,18 +51,6 @@ class IoComponent : public Component
 
         QString invertedPins();
         void setInvertPins( QString p );
-
-        double propSize() { return m_propSize; }
-        void setPropSize( double g ) { m_propSize = g; }
-
-        double propDelay() { return m_propDelay*1e-12; }
-        void setPropDelay( double pd );
-
-        double riseTime() { return m_timeLH*1e-12; }
-        void setRiseTime( double time );
-
-        double fallTime() { return m_timeHL*1e-12; }
-        void setFallTime( double time );
 
         int  numInps() { return m_inPin.size(); }
         virtual void setNumInps( uint pins, QString label="I", int bit0=0, int id0=0 );
@@ -90,6 +73,8 @@ class IoComponent : public Component
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w ) override;
 
     protected:
+        virtual void slotProperties() override;
+
         IoPin* createPin( QString data, QString id );
         void setupPin( IoPin *pin, QString data );
         void setNumPins( std::vector<IoPin*>* pinList, uint pins, QString label, int bit0, bool out, int id0 );
@@ -103,22 +88,11 @@ class IoComponent : public Component
         std::queue<uint> m_outQueue;
         std::queue<uint64_t> m_timeQueue;
 
-        double m_propDelay; // Propagation delay
-        double m_timeLH;    // Time for Output voltage to switch from 10% to 90% (1 gate)
-        double m_timeHL;    // Time for Output voltage to switch from 90% to 10% (1 gate)
-        double m_propSize;  // Nunmber of gates for total Propagation delay
-
-        double m_inHighV;   // currently in eClockedDevice
-        double m_inLowV;    // currently in eClockedDevice
-        double m_ouHighV;
-        double m_ouLowV;
-
-        double m_inImp;     // currently in eClockedDevice
-        double m_ouImp;
-
         bool m_openCol;
         bool m_invOutputs;
         bool m_invInputs;
+
+        //bool m_familyAdded;
 
         QString m_invertPins;
 

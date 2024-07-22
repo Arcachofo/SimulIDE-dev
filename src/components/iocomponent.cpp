@@ -5,6 +5,7 @@
 
 #include "iocomponent.h"
 #include "circuitwidget.h"
+#include "propdialog.h"
 #include "simulator.h"
 #include "circuit.h"
 #include "iopin.h"
@@ -17,25 +18,16 @@
 
 IoComponent::IoComponent( QString type, QString id)
            : Component( type, id )
+           , LogicFamily()
 {
-    m_inHighV = 2.5;
-    m_inLowV  = 2.5;
-    m_ouHighV = 5;
-    m_ouLowV  = 0;
     m_outValue = 0;
-
-    m_inImp = 1e9;
-    m_ouImp = 40;
 
     m_openCol    = false;
     m_invInputs  = false;
     m_invOutputs = false;
-    //m_pinsInverted = false;
+    //m_familyAdded = false;
 
-    m_propSize  = 1;
-    m_propDelay = 10*1000; // 10 ns
-    m_timeLH    = 3000;
-    m_timeHL    = 4000;
+    m_enumUids = m_enumNames = m_families.keys();
 
     addPropGroup( { "IoHidden", {
         new StrProp<IoComponent>("invertPins","",""
@@ -46,22 +38,35 @@ IoComponent::~IoComponent(){}
 
 QList<ComProperty*> IoComponent::inputProps()
 {
-    return {
+    QList<ComProperty*> props =
+    {
+        new StrProp<IoComponent>("Family", tr("Logic Family"),""
+                                , this, &IoComponent::family, &IoComponent::setFamily, 0,"enum" ),
+
+        new DoubProp<IoComponent>("SupplyV", tr("Supply Voltage"), "V"
+                                 , this, &IoComponent::supplyV, &IoComponent::setSupplyV ),
+
+        //new ComProperty("", " ","","",0),
         new ComProperty( "", tr("Inputs:"),"","",0),
 
         new DoubProp<IoComponent>("Input_High_V", tr("Low to High Threshold"), "V"
-                                 , this, &IoComponent::inputHighV, &IoComponent::setInputHighV ),
+                                 , this, &IoComponent::inpHighV, &IoComponent::setInpHighV ),
 
         new DoubProp<IoComponent>("Input_Low_V", tr("High to Low Threshold"), "V"
-                                 , this, &IoComponent::inputLowV, &IoComponent::setInputLowV ),
+                                 , this, &IoComponent::inpLowV, &IoComponent::setInpLowV ),
 
         new DoubProp<IoComponent>("Input_Imped", tr("Input Impedance"), "MΩ"
-                                 , this, &IoComponent::inputImp, &IoComponent::setInputImp ) };
+                                 , this, &IoComponent::inputImp, &IoComponent::setInputImp )
+    };
+    //m_familyAdded = true;
+    return props;
 }
 
 QList<ComProperty*> IoComponent::outputProps()
 {
-    return {
+    QList<ComProperty*> props =
+    {
+        //new ComProperty("", " ","","",0),
         new ComProperty("", tr("Outputs:"),"","",0),
 
         new DoubProp<IoComponent>("Out_High_V", tr("Output High Voltage"), "V"
@@ -71,7 +76,14 @@ QList<ComProperty*> IoComponent::outputProps()
                                  , this, &IoComponent::outLowV, &IoComponent::setOutLowV ),
 
         new DoubProp<IoComponent>("Out_Imped", tr("Output Impedance"), "Ω"
-                                 , this, &IoComponent::outImp, &IoComponent::setOutImp ) };
+                                 , this, &IoComponent::outImp, &IoComponent::setOutImp )
+    };
+    /*if( !m_familyAdded )
+        props.prepend(
+            new StrProp<IoComponent>("Family", tr("Logic Family"),""
+                              , this, &IoComponent::family, &IoComponent::setFamily, 0,"enum" )
+                    );*/
+    return props;
 }
 
 QList<ComProperty*> IoComponent::outputType()
@@ -87,10 +99,10 @@ QList<ComProperty*> IoComponent::outputType()
 QList<ComProperty*> IoComponent::edgeProps()
 {
     return {
-        new DoubProp<IoComponent>("pd_n"  , tr("Propagation delay"), "_Gates"
+        new DoubProp<IoComponent>("pd_n"  , tr("Delay Multiplier"), ""
                                  , this, &IoComponent::propSize, &IoComponent::setPropSize ),
 
-        new DoubProp<IoComponent>("Tpd_ps", tr("Gate Delay"), "ns"
+        new DoubProp<IoComponent>("Tpd_ps", tr("Family Delay"), "ns"
                                  , this, &IoComponent::propDelay, &IoComponent::setPropDelay ),
 
         new DoubProp<IoComponent>("Tr_ps" , tr("Rise Time"), "ns"
@@ -171,47 +183,95 @@ void IoComponent::scheduleOutPuts( eElement* el )
     m_outQueue.push( m_nextOutVal );
 }
 
-void IoComponent::setInputHighV( double volt )
+void IoComponent::setSupplyV( double v )
 {
+    if( v < 0 ) v = 0;
+    m_supplyV = v;
+
+    updateData();
+    updtProperties();
+}
+
+void IoComponent::slotProperties()
+{
+    Component::slotProperties();
+    updtProperties();
+}
+
+void IoComponent::updtProperties()
+{
+    if( !m_propDialog ) return;
+
+    bool en = (m_family == "Custom");
+
+    m_propDialog->enableProp("SupplyV", m_enableSupply || en );
+    m_propDialog->enableProp("Input_High_V", en );
+    m_propDialog->enableProp("Input_Low_V", en );
+    m_propDialog->enableProp("Input_Imped", en );
+    m_propDialog->enableProp("Out_High_V", en );
+    m_propDialog->enableProp("Out_Low_V", en );
+    m_propDialog->enableProp("Out_Imped", en );
+
+    //m_propDialog->showProp("Floating", m_bipolar );
+    //m_propDialog->adjustWidgets();
+}
+
+void IoComponent::setInpHighV( double volt )
+{
+    if( volt > m_supplyV ) volt = m_supplyV;
+
     if( m_inHighV == volt ) return;
     m_inHighV = volt;
+
     Simulator::self()->pauseSim();
     for( IoPin* pin : m_inPin )    pin->setInputHighV( volt );
     for( IoPin* pin : m_outPin )   pin->setInputHighV( volt );
     for( IoPin* pin : m_otherPin ) pin->setInputHighV( volt );
+    LogicFamily::setInpHighV( volt );
     Simulator::self()->resumeSim();
 }
 
-void IoComponent::setInputLowV( double volt )
+void IoComponent::setInpLowV( double volt )
 {
+    if( volt < 0) volt = 0;
     if( m_inLowV == volt ) return;
     m_inLowV = volt;
+
     Simulator::self()->pauseSim();
     for( IoPin* pin : m_inPin )    pin->setInputLowV( volt );
     for( IoPin* pin : m_outPin )   pin->setInputLowV( volt );
     for( IoPin* pin : m_otherPin ) pin->setInputLowV( volt );
+    LogicFamily::setInpLowV( volt );
     Simulator::self()->resumeSim();
 }
 
 void IoComponent::setOutHighV( double volt )
 {
+    if( volt > m_supplyV ) volt = m_supplyV;
+
     if( m_ouHighV == volt ) return;
     m_ouHighV = volt;
+
     Simulator::self()->pauseSim();
     for( IoPin* pin : m_inPin )    pin->setOutHighV( volt );
     for( IoPin* pin : m_outPin )   pin->setOutHighV( volt );
     for( IoPin* pin : m_otherPin ) pin->setOutHighV( volt );
+    LogicFamily::setOutHighV( volt );
     Simulator::self()->resumeSim();
 }
 
 void IoComponent::setOutLowV( double volt )
 {
+    if( volt < 0) volt = 0;
+
     if( m_ouLowV == volt ) return;
     m_ouLowV = volt;
+
     Simulator::self()->pauseSim();
     for( IoPin* pin : m_inPin )    pin->setOutLowV( volt );
     for( IoPin* pin : m_outPin )   pin->setOutLowV( volt );
     for( IoPin* pin : m_otherPin ) pin->setOutLowV( volt );
+    LogicFamily::setOutLowV( volt );
     Simulator::self()->resumeSim();
 }
 
@@ -287,26 +347,15 @@ void IoComponent::setOpenCol( bool op )
     Simulator::self()->resumeSim();
 }
 
-void IoComponent::setPropDelay( double pd )
-{
-    if( pd < 0 ) pd = 0;
-    if( pd > 1e6   ) pd = 1e6;
-    m_propDelay = pd*1e12;
-}
-
 void IoComponent::setRiseTime( double time )
 {
-    if( time < 1e-12 ) time = 1e-12;
-    if( time > 1e6   ) time = 1e6;
-    m_timeLH = time*1e12;
+    LogicFamily::setRiseTime( time );
     for( IoPin* pin : m_outPin ) pin->setRiseTime( m_timeLH*1.25 );
 }
 
 void IoComponent::setFallTime( double time )
 {
-    if( time < 1e-12 ) time = 1e-12;
-    if( time > 1e6   ) time = 1e6;
-    m_timeHL = time*1e12;
+    LogicFamily::setFallTime( time );
     for( IoPin* pin : m_outPin ) pin->setFallTime( m_timeHL*1.25 );
 }
 

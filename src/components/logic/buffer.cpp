@@ -37,7 +37,8 @@ Buffer::Buffer( QString type, QString id )
     addPropGroup( { tr("Main"), {
 
     },0} );
-    addPropGroup( { tr("Electric"), IoComponent::inputProps()
+    addPropGroup( { tr("Electric"),
+        IoComponent::inputProps()
         +QList<ComProperty*>({
         new BoolProp<Buffer>("Invert_Inputs", tr("Invert Inputs"),""
                             , this, &Buffer::invertInps, &Buffer::setInvertInps, propNoCopy )
@@ -54,8 +55,6 @@ Buffer::Buffer( QString type, QString id )
     ,0} );
 
     addPropGroup( { tr("Timing"), IoComponent::edgeProps(),0 } );
-
-    removeProperty("pd_n");
 }
 Buffer::~Buffer(){}
 

@@ -40,6 +40,18 @@ void LogicComponent::stamp()
     m_outEnable = true;
 }
 
+QStringList LogicComponent::getEnumUids( QString property )
+{
+    if( property == "Family" ) return LogicFamily::getEnumUids( property );
+    else                       return m_enumUids;
+}
+
+QStringList LogicComponent::getEnumNames( QString  property )
+{
+    if( property == "Family" ) return LogicFamily::getEnumNames( property );
+    else                       return m_enumNames;
+}
+
 std::vector<Pin*> LogicComponent::getPins()
 {
     std::vector<Pin*> pins = IoComponent::getPins();
@@ -104,18 +116,18 @@ void LogicComponent::enableOutputs( bool en )
     for( uint i=0; i<m_outPin.size(); ++i ) m_outPin[i]->setStateZ( !en );
 }
 
-void LogicComponent::setInputHighV( double volt )
+void LogicComponent::setInpHighV( double volt )
 {
     Simulator::self()->pauseSim();
-    IoComponent::setInputHighV( volt );
+    IoComponent::setInpHighV( volt );
     if( m_clkPin) m_clkPin->setInputHighV( volt );
     Simulator::self()->resumeSim();
 }
 
-void LogicComponent::setInputLowV( double volt )
+void LogicComponent::setInpLowV( double volt )
 {
     Simulator::self()->pauseSim();
-    IoComponent::setInputLowV( volt );
+    IoComponent::setInpLowV( volt );
     if( m_clkPin) m_clkPin->setInputLowV( volt );
     Simulator::self()->resumeSim();
 }

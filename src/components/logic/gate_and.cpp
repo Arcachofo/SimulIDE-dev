@@ -47,8 +47,6 @@ AndGate::AndGate( QString type, QString id )
                     ,0 } );
 
     addPropGroup( { tr("Timing"), IoComponent::edgeProps(),0 } );
-
-    removeProperty("pd_n");
 }
 AndGate::~AndGate(){}
 
