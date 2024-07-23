@@ -23,7 +23,10 @@ void TextVal::setup( bool )
     //font.setPixelSize( 11.0*scale );
     //textBox->setFont( font );
 
-    textBox->setText( m_property->getValStr() );
+    QString text = m_property->getValStr();
+    text = text.replace("&#xa;", "\n").replace("&#x22;", "\"")
+            .replace("&#x3D", "=").replace("&#x3C", "<").replace("&#x3E", ">");
+    textBox->setText( text );
     updatValue();
     this->adjustSize();
 }

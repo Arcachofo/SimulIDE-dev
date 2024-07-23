@@ -55,7 +55,7 @@ class TextComponent : public LinkerComponent
         virtual void setLinkedString( QString str, int i=0 ) override;
         virtual void setLinkedValue( double v, int i=0 ) override;
 
-        void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
+        void paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w ) override;
 
     public slots:
         void updateGeometry(int, int, int);
@@ -80,4 +80,4 @@ class TextComponent : public LinkerComponent
         QString m_fontColor;
 };
 
-#endif // TEXTCOMPONENT_H
+#endif

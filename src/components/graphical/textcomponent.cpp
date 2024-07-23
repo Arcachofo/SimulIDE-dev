@@ -211,12 +211,14 @@ void TextComponent::setFixedW( bool fixedW )
 
 QString TextComponent::getText()
 {
-    return m_textString;
+    return m_textString.replace("\n", "&#xa;").replace("\"", "&#x22;")
+            .replace("=", "&#x3D").replace("<", "&#x3C").replace(">", "&#x3E");
 }
 
 void TextComponent::setText( QString text )
 {
-    m_textString = text;
+    m_textString = text.replace("&#xa;", "\n").replace("&#x22;", "\"")
+            .replace("&#x3D", "=").replace("&#x3C", "<").replace("&#x3E", ">");
     m_changed = true;
     if( !Simulator::self()->isRunning() ) updateStep();
 }
@@ -249,9 +251,9 @@ void TextComponent::setLinkedValue( double v, int i )
     else         setText( m_textString+"/n"+str );
 }
 
-void TextComponent::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
+void TextComponent::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w )
 {
-    Component::paint( p, option, widget );
+    Component::paint( p, o, w );
 
     QPen pen( Qt::black, m_border, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
     p->setPen( pen );
