@@ -97,7 +97,7 @@ void BinCounter::voltChanged()
        m_Counter = 0;
        m_nextOutVal = 0;
     }
-    else if( m_setPin->getInpState() ) // Set
+    else if( m_pinSet && m_setPin->getInpState() ) // Set
     {
        m_Counter = m_TopValue;
        m_nextOutVal = 1;
