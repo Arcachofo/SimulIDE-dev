@@ -6,7 +6,7 @@
 #ifndef EDIODE_H
 #define EDIODE_H
 
-#include <QHash>
+#include <QMap>
 
 #include "e-resistor.h"
 
@@ -76,9 +76,9 @@ class eDiode : public eResistor
         QString m_diodeType;
         QString m_model;
 
- static QHash<QString, diodeData_t> m_diodes;
- static QHash<QString, diodeData_t> m_zeners;
- static QHash<QString, diodeData_t> m_leds;
+ static QMap<QString, diodeData_t> m_diodes;
+ static QMap<QString, diodeData_t> m_zeners;
+ static QMap<QString, diodeData_t> m_leds;
 };
 
 #endif

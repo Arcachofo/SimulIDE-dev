@@ -74,7 +74,7 @@ void DAC::voltChanged()
     for( uint i=0; i<m_inPin.size(); ++i )
         if( m_inPin[i]->getInpState() ) m_val += pow( 2, i );
 
-    Simulator::self()->addEvent( m_propDelay*m_propSize, this );
+    Simulator::self()->addEvent( m_delayBase*m_delayMult, this );
 }
 
 void DAC::runEvent()

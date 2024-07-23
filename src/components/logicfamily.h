@@ -45,10 +45,10 @@ class LogicFamily
         double outImp() { return m_ouImp; }
         virtual void setOutImp( double i ){;}
 
-        double propSize() { return m_propSize; }
-        void setPropSize( double g ) { m_propSize = g; }
+        double propSize() { return m_delayMult; }
+        void setPropSize( double g ) { m_delayMult = g; }
 
-        double propDelay() { return m_propDelay*1e-12; }
+        double propDelay() { return m_delayBase*1e-12; }
         void setPropDelay( double pd );
 
         double riseTime() { return m_timeLH*1e-12; }
@@ -61,7 +61,7 @@ class LogicFamily
         void setFamily( QString f );
         void setFamilyData( logicFamily_t lf );
 
-        virtual QStringList getEnumUids( QString ) { return m_families.keys(); }
+        virtual QStringList getEnumUids( QString )  { return m_families.keys(); }
         virtual QStringList getEnumNames( QString ) { return m_families.keys(); }
 
  static void getFamilies();
@@ -69,10 +69,10 @@ class LogicFamily
     protected:
         void updateData();
 
-        double m_propDelay; // Propagation delay
+        double m_delayBase; // Propagation delay Base (Family delay)
+        double m_delayMult; // Multiplier for total Propagation delay
         double m_timeLH;    // Time for Output voltage to switch from 10% to 90% (1 gate)
         double m_timeHL;    // Time for Output voltage to switch from 90% to 10% (1 gate)
-        double m_propSize;  // Nunmber of gates for total Propagation delay
 
         bool m_blocked;
         bool m_enableSupply;

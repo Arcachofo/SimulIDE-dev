@@ -158,7 +158,7 @@ void IoComponent::runOutputs()
 
 void IoComponent::scheduleOutPuts( eElement* el )
 {
-    uint64_t delay = m_propDelay*m_propSize;
+    uint64_t delay = m_delayBase*m_delayMult;
     if( !delay )
     {
         if( m_nextOutVal == m_outValue ) return;
@@ -223,12 +223,10 @@ void IoComponent::setInpHighV( double volt )
     if( m_inHighV == volt ) return;
     m_inHighV = volt;
 
-    Simulator::self()->pauseSim();
     for( IoPin* pin : m_inPin )    pin->setInputHighV( volt );
     for( IoPin* pin : m_outPin )   pin->setInputHighV( volt );
     for( IoPin* pin : m_otherPin ) pin->setInputHighV( volt );
     LogicFamily::setInpHighV( volt );
-    Simulator::self()->resumeSim();
 }
 
 void IoComponent::setInpLowV( double volt )
@@ -237,12 +235,10 @@ void IoComponent::setInpLowV( double volt )
     if( m_inLowV == volt ) return;
     m_inLowV = volt;
 
-    Simulator::self()->pauseSim();
     for( IoPin* pin : m_inPin )    pin->setInputLowV( volt );
     for( IoPin* pin : m_outPin )   pin->setInputLowV( volt );
     for( IoPin* pin : m_otherPin ) pin->setInputLowV( volt );
     LogicFamily::setInpLowV( volt );
-    Simulator::self()->resumeSim();
 }
 
 void IoComponent::setOutHighV( double volt )
@@ -252,12 +248,10 @@ void IoComponent::setOutHighV( double volt )
     if( m_ouHighV == volt ) return;
     m_ouHighV = volt;
 
-    Simulator::self()->pauseSim();
     for( IoPin* pin : m_inPin )    pin->setOutHighV( volt );
     for( IoPin* pin : m_outPin )   pin->setOutHighV( volt );
     for( IoPin* pin : m_otherPin ) pin->setOutHighV( volt );
     LogicFamily::setOutHighV( volt );
-    Simulator::self()->resumeSim();
 }
 
 void IoComponent::setOutLowV( double volt )
@@ -267,18 +261,19 @@ void IoComponent::setOutLowV( double volt )
     if( m_ouLowV == volt ) return;
     m_ouLowV = volt;
 
-    Simulator::self()->pauseSim();
     for( IoPin* pin : m_inPin )    pin->setOutLowV( volt );
     for( IoPin* pin : m_outPin )   pin->setOutLowV( volt );
     for( IoPin* pin : m_otherPin ) pin->setOutLowV( volt );
     LogicFamily::setOutLowV( volt );
-    Simulator::self()->resumeSim();
 }
 
 void IoComponent::setInputImp( double imp )
 {
+    if( imp < 1e-14 ) imp = 1e-14;
+
     if( m_inImp == imp ) return;
     m_inImp = imp;
+
     Simulator::self()->pauseSim();
     for( IoPin* pin : m_inPin )    pin->setInputImp( imp );
     for( IoPin* pin : m_outPin )   pin->setInputImp( imp );
@@ -288,8 +283,11 @@ void IoComponent::setInputImp( double imp )
 
 void IoComponent::setOutImp( double imp )
 {
+    if( imp < 1e-14 ) imp = 1e-14;
+
     if( m_ouImp == imp ) return;
     m_ouImp = imp;
+
     Simulator::self()->pauseSim();
     for( IoPin* pin : m_inPin )    pin->setOutputImp( imp );
     for( IoPin* pin : m_outPin )   pin->setOutputImp( imp );
@@ -301,6 +299,7 @@ void IoComponent::setInvertOuts( bool invert )
 {
     //if( m_invOutputs == invert ) return;
     m_invOutputs = invert;
+
     Simulator::self()->pauseSim();
     for( IoPin* pin : m_outPin ) pin->setInverted( invert );
     Circuit::self()->update();
@@ -311,6 +310,7 @@ void IoComponent::setInvertInps( bool invert )
 {
     //if( m_invInputs == invert ) return;
     m_invInputs = invert;
+
     Simulator::self()->pauseSim();
     for( IoPin* pin : m_inPin ) pin->setInverted( invert );
     Circuit::self()->update();

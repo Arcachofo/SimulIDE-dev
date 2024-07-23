@@ -14,6 +14,7 @@ LogicFamily::LogicFamily()
 {
     m_blocked = false;
     m_enableSupply = true;
+
     m_supplyV = 5.0; // Power Supply
     m_inHighVp = 0.5;
     m_inHighV = 2.5;
@@ -27,8 +28,8 @@ LogicFamily::LogicFamily()
     m_inImp = 1e9;
     m_ouImp = 40;
 
-    m_propSize  = 1;
-    m_propDelay = 10*1000; // 10 ns
+    m_delayMult = 1;
+    m_delayBase = 10*1000; // 10 ns
     m_timeLH    = 3000;
     m_timeHL    = 4000;
 
@@ -65,7 +66,7 @@ void LogicFamily::setPropDelay( double pd )
 {
     if( pd < 0 ) pd = 0;
     if( pd > 1e6   ) pd = 1e6;
-    m_propDelay = pd*1e12;
+    m_delayBase = pd*1e12;
 }
 
 void LogicFamily::setRiseTime( double time )
@@ -85,11 +86,8 @@ void LogicFamily::setFallTime( double time )
 void LogicFamily::setFamily( QString f )
 {
     m_family = f;
-    if( f == "Custom")
-    {
-        setSupplyV( m_supplyV );
-    }
-    else setFamilyData( m_families.value( f ) );
+    if( f == "Custom") setSupplyV( m_supplyV );
+    else               setFamilyData( m_families.value( f ) );
 }
 
 void LogicFamily::setFamilyData( logicFamily_t lf )

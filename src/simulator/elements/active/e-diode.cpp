@@ -16,9 +16,9 @@
 #include "mainwindow.h"
 #include "utils.h"
 
-QHash<QString, diodeData_t> eDiode::m_diodes;
-QHash<QString, diodeData_t> eDiode::m_zeners;
-QHash<QString, diodeData_t> eDiode::m_leds;
+QMap<QString, diodeData_t> eDiode::m_diodes;
+QMap<QString, diodeData_t> eDiode::m_zeners;
+QMap<QString, diodeData_t> eDiode::m_leds;
 
 eDiode::eDiode( QString id )
       : eResistor( id )

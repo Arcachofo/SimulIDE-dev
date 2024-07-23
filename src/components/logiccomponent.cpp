@@ -118,24 +118,20 @@ void LogicComponent::enableOutputs( bool en )
 
 void LogicComponent::setInpHighV( double volt )
 {
-    Simulator::self()->pauseSim();
     IoComponent::setInpHighV( volt );
-    if( m_clkPin) m_clkPin->setInputHighV( volt );
-    Simulator::self()->resumeSim();
+    if( m_clkPin) m_clkPin->setInputHighV( m_inHighV );
 }
 
 void LogicComponent::setInpLowV( double volt )
 {
-    Simulator::self()->pauseSim();
     IoComponent::setInpLowV( volt );
-    if( m_clkPin) m_clkPin->setInputLowV( volt );
-    Simulator::self()->resumeSim();
+    if( m_clkPin) m_clkPin->setInputLowV( m_inLowV );
 }
 
 void LogicComponent::setInputImp( double imp )
 {
-    Simulator::self()->pauseSim();
     IoComponent::setInputImp( imp );
-    if( m_clkPin) m_clkPin->setInputImp( imp );
+    Simulator::self()->pauseSim();
+    if( m_clkPin) m_clkPin->setInputImp( m_inImp );
     Simulator::self()->resumeSim();
 }
