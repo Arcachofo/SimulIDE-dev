@@ -196,35 +196,29 @@ void Chip::initPackage( QString pkgStr )
 
     QString embedName;
 
-    QStringList lines = pkgStr.split("\n");
-    for( QString line : lines )
+    QVector<QStringRef> docLines = pkgStr.splitRef("\n");
+    for( QStringRef line : docLines )
     {
         if( line.isEmpty() ) continue;
-        if( line.startsWith("Package") )
+
+        QVector<propStr_t> properties = parseProps( line );
+        QStringRef item = properties.takeFirst().name;
+        if( item == "Package" )
         {
-            QStringList tokens = line.split(";");
-            QString type = tokens.takeFirst();
-
-            for( QString prop : tokens )
+            for( propStr_t property : properties )
             {
-                int index = prop.indexOf("="); // First occurrence of "="
-                if( index == -1 ) continue;
-
-                QString name = prop.left( index ).toLower();      // Property_name
-                QString val  = prop.right( prop.size()-index-1 ); // Property value
-
-                index = name.lastIndexOf(" ");
-                name.remove( 0, index-1 );      // Remove leading spaces
+                QStringRef name = property.name;  // Property_name
+                QStringRef val  = property.value; // Property value
 
                 if     ( name == "width"       ) m_width  = val.toInt();
                 else if( name == "height"      ) m_height = val.toInt();
-                else if( name == "name"        ) embedName = val;
-                else if( name == "background"  ) setBackground( val );
-                else if( name == "bckgnddata"  ) setBckGndData( val );
+                else if( name == "name"        ) embedName = val.toString();
+                else if( name == "background"  ) setBackground( val.toString() );
+                else if( name == "bckgnddata"  ) setBckGndData( val.toString() );
                 else if( name == "logic_symbol") setLogicSymbol( val == "true" );
             }
         }
-        else if( line.startsWith("Pin") ) setPinStr( line );
+        else if( item == "Pin" ) setPinStr( properties );
     }
 
     for( Pin* pin : m_tempPins ) // Pins present in previous package and not present in this one
@@ -244,11 +238,8 @@ void Chip::initPackage( QString pkgStr )
     Circuit::self()->update();
 }
 
-void Chip::setPinStr( QString pin )
+void Chip::setPinStr( QVector<propStr_t> properties )
 {
-    //qDebug() << "Chip::setPinStr" << pin;
-    QStringList tokens = pin.split(";");
-
     int length = 8;
     int xpos   = -m_width/2-length;
     int ypos   = 8;
@@ -258,25 +249,19 @@ void Chip::setPinStr( QString pin )
     QString label;
     QString type;
 
-    for( QString token : tokens )
+    for( propStr_t property : properties )
     {
-        int index = token.indexOf("=");
-        if( index == -1 ) continue;
-
-        QString name = token.left( index ); // Property_name
-        QString val  = token.right( name.length()-index-1 ); // Property_value
-
-        index = name.lastIndexOf(" ");
-        name.remove( 0, index-1 );      // Remove leading spaces
+        QStringRef name = property.name;  // Property_name
+        QStringRef val  = property.value; // Property_value
 
         if     ( name == "xpos"  ) xpos   = val.toInt();
         else if( name == "ypos"  ) ypos   = val.toInt();
         else if( name == "angle" ) angle  = val.toInt();
         else if( name == "length") length = val.toInt();
         else if( name == "space" ) space  = val.toInt();
-        else if( name == "id"    ) id     = val;
-        else if( name == "label" ) label  = val;
-        else if( name == "type"  ) type   = val;
+        else if( name == "id"    ) id     = val.toString();
+        else if( name == "label" ) label  = val.toString();
+        else if( name == "type"  ) type   = val.toString();
     }
     addNewPin( id, type, label, 0, xpos, ypos, angle, length, space );
 }

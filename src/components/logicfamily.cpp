@@ -141,7 +141,7 @@ void LogicFamily::getFamilies() // Static
 
         for( propStr_t property : properties )
         {
-            QString propName  = property.name.toString();
+            QStringRef propName = property.name;
             double  propValue = property.value.toDouble();
             if     ( propName == "supply") family.supply = propValue;
             else if( propName == "inpLHp") family.inpLHp = propValue;

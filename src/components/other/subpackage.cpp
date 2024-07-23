@@ -560,8 +560,14 @@ void SubPackage::setPackagePins( QString pinsStr )
 {
     if( !m_pkgeFile.isEmpty() ) return;
 
-    QStringList pins = pinsStr.split("&#xa;");
-    for( QString pin : pins ) if( !pin.isEmpty() ) setPinStr( pin );
+    QVector<QStringRef> pins = pinsStr.splitRef("&#xa;");
+    for( QStringRef pin : pins )
+    {
+        if( pin.isEmpty() ) continue;
+        QVector<propStr_t> properties = parseProps( pin );
+        QStringRef item = properties.takeFirst().name;
+        if( item == "Pin" ) setPinStr( properties );
+    }
 }
 
 QString SubPackage::pinStrEntry( Pin* pin )

@@ -37,8 +37,6 @@ class Chip : public Component, public eElement
         QString name() { return m_name; }
         void setName( QString name );
 
-        void setPinStr( QString pin );
-
         subcType_t subcType() { return m_subcType; }
 
         int pkgWidth() { return m_width; }
@@ -64,6 +62,8 @@ class Chip : public Component, public eElement
                         int pos, int xpos, int ypos, int angle, int length=8, int space=0 );
 
         void initPackage(  QString pkgStr  );
+
+        void setPinStr( QVector<propStr_t> properties );
 
         virtual void findHelp() override;
 
