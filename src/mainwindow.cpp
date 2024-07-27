@@ -32,7 +32,7 @@ MainWindow::MainWindow()
 {
     setWindowIcon( QIcon(":/simulide.png") );
     m_pSelf   = this;
-    m_circuit = NULL;
+    m_circuitW = NULL;
     m_autoBck = 15;
     m_state = "■";
     m_revision = 2300; /// FIXME
@@ -85,6 +85,7 @@ MainWindow::MainWindow()
 
     QApplication::setStyle( QStyleFactory::create("Fusion") ); //applyStyle();
     createWidgets();
+    m_circuitW->newCircuit();
     readSettings();
 
     QString backPath = getConfigPath( "backup.sim1" );
@@ -116,7 +117,7 @@ void MainWindow::keyPressEvent( QKeyEvent* event)
 void MainWindow::closeEvent( QCloseEvent *event )
 {
     if( !m_editor->close() )      { event->ignore(); return; }
-    if( !m_circuit->newCircuit()) { event->ignore(); return; }
+    if( !m_circuitW->newCircuit()) { event->ignore(); return; }
 
     writeSettings();
     event->accept();
@@ -253,7 +254,7 @@ void MainWindow::createWidgets()
     m_componentWidgetLayout->addLayout( searchLayout );
 
     m_fileSystemTree = new FileWidget( this );
-    m_circuit = new CircuitWidget( this );
+    m_circuitW = new CircuitWidget( this );
 
     m_components = new ComponentList( m_sidepanel );
     m_componentWidgetLayout->addWidget( m_components );
@@ -261,7 +262,7 @@ void MainWindow::createWidgets()
     m_sidepanel->addTab( m_componentWidget, tr("Components") );
     m_sidepanel->addTab( m_fileSystemTree, tr( "File explorer" ) );
 
-    m_Centralsplitter->addWidget( m_circuit );
+    m_Centralsplitter->addWidget( m_circuitW );
 
     m_editor = new EditorWindow( this );
     m_editor->setObjectName(QString::fromUtf8("editor"));

@@ -121,7 +121,7 @@ class MainWindow : public QMainWindow
 
         QHash<QString, QString> m_help;
         
-        CircuitWidget* m_circuit;
+        CircuitWidget* m_circuitW;
         ComponentList* m_components;
         QWidget*       m_componentWidget;
         QVBoxLayout*   m_componentWidgetLayout;

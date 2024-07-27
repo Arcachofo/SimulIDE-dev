@@ -28,6 +28,7 @@ class ComponentList : public QTreeWidget
 
  static ComponentList* self() { return m_pSelf; }
 
+        void createList();
         void LoadCompSetAt( QDir compSetDir );
 
         QString getDataFile( QString compName ) { return m_dataFileList.value( compName ); }

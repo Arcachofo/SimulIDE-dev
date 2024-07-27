@@ -80,7 +80,6 @@ CircuitWidget::CircuitWidget( QWidget *parent  )
         QString appPath = QCoreApplication::applicationDirPath();
         m_lastCircDir = appPath + "./data/examples";
     }
-    newCircuit();
     m_infoWidget->setRate();
 }
 CircuitWidget::~CircuitWidget() { }

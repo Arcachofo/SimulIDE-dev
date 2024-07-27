@@ -55,7 +55,8 @@ FileWidget::FileWidget( QWidget* parent )
     
     addEntry("FileSystem", QDir::rootPath() );
     addEntry("Home",       QDir::homePath() );
-    //addEntry("Examples",   MainWindow::self()->getFilePath("examples") );
+    addEntry("Examples",   MainWindow::self()->getFilePath("examples") );
+    addEntry("Data",       MainWindow::self()->getFilePath("data") );
     addEntry("User Data",  MainWindow::self()->userPath() );
     addEntry("Settings",   settingsDir );
 

@@ -48,6 +48,20 @@ ComponentList::ComponentList( QWidget* parent )
     float scale = MainWindow::self()->fontScale();
     setIconSize( QSize( 30*scale, 24*scale ));
 
+    setContextMenuPolicy( Qt::CustomContextMenu );
+
+    createList();
+
+    connect( this, &ComponentList::customContextMenuRequested,
+             this, &ComponentList::slotContextMenu );
+
+    connect( this, &ComponentList::itemPressed,
+             this, &ComponentList::slotItemClicked );
+}
+ComponentList::~ComponentList(){}
+
+void ComponentList::createList()
+{
     m_listFile = MainWindow::self()->getConfigPath("compList.xml");
     m_insertItems = !QFile::exists( m_listFile ); // xml file doesn't exist: Insert items when created
 
@@ -56,7 +70,49 @@ ComponentList::ComponentList( QWidget* parent )
     m_customComp = true;
 
     QString userDir = MainWindow::self()->userPath();
-    if( !userDir.isEmpty() && QDir( userDir ).exists() ) LoadCompSetAt( userDir );
+    if( !userDir.isEmpty() && QDir( userDir ).exists() )
+    {
+        LoadCompSetAt( userDir );
+
+        QDir compSetDir( userDir );
+        if( compSetDir.cd("test") )  // Load Test Components
+        {
+            QStringList dirList = compSetDir.entryList( {"*"}, QDir::Dirs );
+            if( !dirList.isEmpty() )
+            {
+                qDebug() << "\n" << tr("    Loading Component sets at:")<< "\n" << compSetDir.absolutePath()<<"\n";
+
+                TreeItem* catItem = getCategory("test");
+                if( !catItem ) catItem = addCategory("test","test","","" );
+
+                for( QString compName : dirList )
+                {
+                    QString path = compName+"/"+compName;
+                    QString icon = getIcon( "test", compName );
+                    QString compFile;
+                    QString type;
+
+                    if( compSetDir.exists( path+".sim1") )
+                    {
+                        if( icon.isEmpty() ) icon = ":/subc.png";
+                        type = "Subcircuit";
+                        compFile = compSetDir.absoluteFilePath( path+".sim1" );
+                    }
+                    else if( compSetDir.exists( path+".mcu") )
+                    {
+                        if( icon.isEmpty() ) icon = ":/ic2.png";
+                        type = "MCU";
+                    }
+                    if( !type.isEmpty() && !m_components.contains( compName ) )
+                    {
+                        addItem( compName, catItem, icon, type );
+                        m_dirFileList[ compName ] = compSetDir.absoluteFilePath( compName );
+                        if( !compFile.isEmpty() ) m_dataFileList[ compName ] = compFile;   // Save sim1 File used to create this item
+                    }
+                }
+            }
+        }
+    }
 
     QDir compSetDir = MainWindow::self()->getFilePath("data");
     if( compSetDir.exists() ) LoadCompSetAt( compSetDir );
@@ -69,16 +125,7 @@ ComponentList::ComponentList( QWidget* parent )
         QTreeWidgetItem* pa = it->parent();
         if( pa ) pa->removeChild( it  );
     }*/
-
-    setContextMenuPolicy( Qt::CustomContextMenu );
-
-    connect( this, &ComponentList::customContextMenuRequested,
-             this, &ComponentList::slotContextMenu );
-
-    connect( this, &ComponentList::itemPressed,
-             this, &ComponentList::slotItemClicked );
 }
-ComponentList::~ComponentList(){}
 
 void ComponentList::LoadLibraryItems()
 {
@@ -103,47 +150,11 @@ void ComponentList::LoadCompSetAt( QDir compSetDir )
 {
     m_compSetDir = compSetDir;
 
-    if( compSetDir.cd("test") )
-    {
-        QStringList dirList = compSetDir.entryList( {"*"}, QDir::Dirs );
-        if( !dirList.isEmpty() )
-        {
-            TreeItem* catItem = getCategory("test");
-            if( !catItem ) catItem = addCategory("test","test","","" );
-
-            for( QString compName : dirList )
-            {
-                QString path = compName+"/"+compName;
-                QString icon = getIcon( "test", compName );
-                QString compFile;
-                QString type;
-
-                if( compSetDir.exists( path+".sim1") )
-                {
-                    if( icon.isEmpty() ) icon = ":/subc.png";
-                    type = "Subcircuit";
-                    compFile = compSetDir.absoluteFilePath( path+".sim1" );
-                }
-                else if( compSetDir.exists( path+".mcu") )
-                {
-                    if( icon.isEmpty() ) icon = ":/ic2.png";
-                    type = "MCU";
-                }
-                if( !type.isEmpty() && !m_components.contains( compName ) )
-                {
-                    addItem( compName, catItem, icon, type );
-                    m_dirFileList[ compName ] = compSetDir.absoluteFilePath( compName );
-                    if( !compFile.isEmpty() ) m_dataFileList[ compName ] = compFile;   // Save sim1 File used to create this item
-                }
-            }
-        }
-        compSetDir.cd("..");
-    }
     compSetDir.setNameFilters( QStringList( "*.xml" ) );
 
     QStringList xmlList = compSetDir.entryList( QDir::Files );
 
-    //if( xmlList.isEmpty() ) return;                  // No comp sets to load
+    if( xmlList.isEmpty() ) return;                  // No comp sets to load
 
     qDebug() << "\n" << tr("    Loading Component sets at:")<< "\n" << compSetDir.absolutePath()<<"\n";
 
