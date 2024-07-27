@@ -93,8 +93,6 @@ class IoPin : public Pin, public eElement
 
     protected:
 
-        void contextMenuEvent( QGraphicsSceneContextMenuEvent* event ) override;
-
         inline void updtState()
         {
             double vddAdmit = m_vddAdmit + m_vddAdmEx;

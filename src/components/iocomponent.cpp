@@ -28,11 +28,6 @@ IoComponent::IoComponent( QString type, QString id)
     //m_familyAdded = false;
 
     m_enumUids = m_enumNames = m_families.keys();
-
-    addPropGroup( { "IoHidden", {
-        new StrProp<IoComponent>("invertPins","",""
-                     , this, &IoComponent::invertedPins, &IoComponent::setInvertPins, propHidden ),
-    }, groupHidden} );
 }
 IoComponent::~IoComponent(){}
 
@@ -58,7 +53,6 @@ QList<ComProperty*> IoComponent::inputProps()
         new DoubProp<IoComponent>("Input_Imped", tr("Input Impedance"), "MΩ"
                                  , this, &IoComponent::inputImp, &IoComponent::setInputImp )
     };
-    //m_familyAdded = true;
     return props;
 }
 
@@ -66,7 +60,6 @@ QList<ComProperty*> IoComponent::outputProps()
 {
     QList<ComProperty*> props =
     {
-        //new ComProperty("", " ","","",0),
         new ComProperty("", tr("Outputs:"),"","",0),
 
         new DoubProp<IoComponent>("Out_High_V", tr("Output High Voltage"), "V"
@@ -78,11 +71,6 @@ QList<ComProperty*> IoComponent::outputProps()
         new DoubProp<IoComponent>("Out_Imped", tr("Output Impedance"), "Ω"
                                  , this, &IoComponent::outImp, &IoComponent::setOutImp )
     };
-    /*if( !m_familyAdded )
-        props.prepend(
-            new StrProp<IoComponent>("Family", tr("Logic Family"),""
-                              , this, &IoComponent::family, &IoComponent::setFamily, 0,"enum" )
-                    );*/
     return props;
 }
 
@@ -110,19 +98,6 @@ QList<ComProperty*> IoComponent::edgeProps()
 
         new DoubProp<IoComponent>("Tf_ps" , tr("Fall Time"), "ns"
                                  , this, &IoComponent::fallTime,  &IoComponent::setFallTime ) };
-}
-
-void IoComponent::setup()
-{
-    if( m_invertPins.isEmpty() ) return;
-
-    QStringList pinList = m_invertPins.split(",");
-
-    for( Pin* pin : getPins() ){
-        QString id = pin->pinId().split("-").last();
-        if( pinList.contains( id ) ) pin->userInvertPin();
-    }
-    Component::setup();
 }
 
 void IoComponent::initState()
@@ -315,22 +290,6 @@ void IoComponent::setInvertInps( bool invert )
     for( IoPin* pin : m_inPin ) pin->setInverted( invert );
     Circuit::self()->update();
     Simulator::self()->resumeSim();
-}
-
-QString IoComponent::invertedPins()
-{
-    QString pinListStr;
-    std::vector<Pin*> pins = getPins();
-    for( Pin* pin : pins )
-        if( pin->userInverted() )
-            pinListStr += pin->pinId().split("-").last()+",";
-
-    return pinListStr;
-}
-
-void IoComponent::setInvertPins( QString p )
-{
-    m_invertPins = p;
 }
 
 void IoComponent::setOpenCol( bool op )

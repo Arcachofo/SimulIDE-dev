@@ -274,9 +274,8 @@ void IoPin::setOutputImp( double imp )
 
 void IoPin::setInverted( bool invert )
 {
-    bool inverted = m_userInverted ? !invert : invert;
-    if( inverted == m_inverted ) return;
-    m_inverted = inverted;
+    if( invert == m_inverted ) return;
+    m_inverted = invert;
 
     if( m_pinMode > input ) setOutState( m_outState );
     else                    ePin::stampAdmitance( m_admit );
@@ -287,18 +286,6 @@ void IoPin::stampAll()
 {
     ePin::stampAdmitance( m_admit );
     stampVolt( m_outVolt );
-}
-
-void IoPin::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
-{
-    if( !m_userInvert ) return;
-
-    QMenu* menu = new QMenu();
-    QAction* editAction = menu->addAction( QIcon(":/invert.png"),QObject::tr("Invert Pin"));
-    QObject::connect( editAction, &QAction::triggered,
-                      [=](){ userInvertPin(); } );
-
-    menu->exec( event->screenPos() );
 }
 
 // ---- Script Engine -------------------

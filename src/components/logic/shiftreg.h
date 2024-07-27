@@ -19,8 +19,6 @@ class ShiftReg : public LogicComponent
  static Component* construct( QString type, QString id );
  static LibraryItem *libraryItem();
 
-        virtual bool setPropStr( QString prop, QString val ) override;
-
         virtual void stamp() override;
         virtual void voltChanged() override;
         virtual void runEvent() override{ IoComponent::runOutputs(); }
@@ -34,11 +32,15 @@ class ShiftReg : public LogicComponent
         bool bidirectional() { return m_bidir; }
         void setBidirectional( bool b );
 
+        bool resetInv() { return m_resetInv; }
+        void setResetInv( bool inv );
+
     private:
         void updatePins();
 
         int m_bits;
 
+        bool m_resetInv;
         bool m_parallelIn;
         bool m_bidir;
         bool m_ldInps;

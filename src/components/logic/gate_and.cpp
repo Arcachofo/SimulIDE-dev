@@ -38,13 +38,8 @@ AndGate::AndGate( QString type, QString id )
         new BoolProp<AndGate>("Invert_Inputs", tr("Invert Inputs"),""
                              , this, &AndGate::invertInps, &AndGate::setInvertInps, propNoCopy )
                         })
-        +Gate::outputProps()
-      //+ IoComponent::outputType()
-        +QList<ComProperty*>({
-        new BoolProp<AndGate>("Open_Collector", tr("Open Drain"), ""
-                                 , this, &IoComponent::openCol, &IoComponent::setOpenCol, propNoCopy )
-                    })
-                    ,0 } );
+        + Gate::outputProps()
+        + IoComponent::outputType() ,0 } );
 
     addPropGroup( { tr("Timing"), IoComponent::edgeProps(),0 } );
 }

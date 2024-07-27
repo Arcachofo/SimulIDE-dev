@@ -25,8 +25,6 @@ class IoComponent : public Component, public LogicFamily
         QList<ComProperty*> outputType();
         QList<ComProperty*> edgeProps();
 
-        virtual void setup() override;
-
         void initState();
         void runOutputs();
         void scheduleOutPuts( eElement* el );
@@ -48,9 +46,6 @@ class IoComponent : public Component, public LogicFamily
 
         bool invertInps() { return m_invInputs; }
         virtual void setInvertInps( bool invert );
-
-        QString invertedPins();
-        void setInvertPins( QString p );
 
         int  numInps() { return m_inPin.size(); }
         virtual void setNumInps( uint pins, QString label="I", int bit0=0, int id0=0 );
@@ -91,10 +86,6 @@ class IoComponent : public Component, public LogicFamily
         bool m_openCol;
         bool m_invOutputs;
         bool m_invInputs;
-
-        //bool m_familyAdded;
-
-        QString m_invertPins;
 
         uint m_width;
         uint m_height;

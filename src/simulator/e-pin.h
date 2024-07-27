@@ -29,9 +29,6 @@ class ePin
 
         void changeCallBack( eElement* el , bool cb=true );
 
-        void userInvertPin();
-        bool userInverted() { return m_userInverted; }
-
         bool inverted() { return m_inverted; }
         virtual void setInverted( bool i ) { m_inverted = i; }
 
@@ -58,7 +55,6 @@ class ePin
         int m_index;
 
         bool m_inverted;
-        bool m_userInverted;
 };
 
 #endif

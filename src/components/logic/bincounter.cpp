@@ -40,19 +40,23 @@ BinCounter::BinCounter( QString type, QString id)
                    // Outputs:
             "OR01Q"
         });
-    
+
     m_clkPin = m_inPin[0];     // eClockedDevice
     m_rstPin = m_inPin[1];
     m_setPin = m_inPin[2];
 
-    m_setPin->setInverted( true );
-    m_rstPin->setInverted( true );
-
+    setSrInv( true );            // Invert Reset Pin
     useSetPin( false );          // Don't use Set Pin
 
     addPropGroup( { tr("Main"), {
         new BoolProp<BinCounter>("Pin_SET", tr("Use Set Pin"),""
                                 , this, &BinCounter::pinSet,&BinCounter::useSetPin, propNoCopy ),
+
+        new BoolProp<BinCounter>("Clock_Inverted", tr("Clock Inverted"),""
+                                , this, &BinCounter::clockInv, &BinCounter::setClockInv ),
+
+        new BoolProp<BinCounter>("Reset_Inverted", tr("Set/Reset Inverted"),""
+                                , this, &BinCounter::srInv, &BinCounter::setSrInv ),
 
         new IntProp <BinCounter>("Max_Value", tr("Count to"),""
                                 , this, &BinCounter::maxVal, &BinCounter::setMaxVal,0,"uint" ),
@@ -62,22 +66,6 @@ BinCounter::BinCounter( QString type, QString id)
     addPropGroup( { tr("Timing")  , IoComponent::edgeProps(),0 } );
 }
 BinCounter::~BinCounter(){}
-
-bool BinCounter::setPropStr( QString prop, QString val )
-{
-    if( prop =="Clock_Inverted" ) // Old circuits
-    {
-        m_clkPin->setInverted( val == "true" );
-    }
-    else if( prop =="Reset_Inverted" ) // Old circuits
-    {
-        bool invert = (val == "true");
-        m_setPin->setInverted( invert );
-        m_rstPin->setInverted( invert );
-    }
-    else return Component::setPropStr( prop, val );
-    return true;
-}
 
 void BinCounter::stamp()
 {
@@ -113,6 +101,15 @@ void BinCounter::voltChanged()
             m_nextOutVal = 0;
     }   }
     IoComponent::scheduleOutPuts( this );
+}
+
+void BinCounter::setSrInv( bool inv )
+{
+    m_resetInv = inv;
+    m_rstPin->setInverted( inv );
+
+    if( m_pinSet ) m_setPin->setInverted( inv );
+    else           m_setPin->setInverted( false );
 }
 
 void BinCounter::useSetPin( bool set )

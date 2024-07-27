@@ -39,12 +39,7 @@ OrGate::OrGate( QString type, QString id )
                             , this, &OrGate::numInps, &OrGate::setNumInputs, propNoCopy,"uint" )
                     })
         + Gate::outputProps()
-      //+ IoComponent::outputType()
-        +QList<ComProperty*>({
-        new BoolProp<OrGate>("Open_Collector", tr("Open Drain"), ""
-                                 , this, &IoComponent::openCol, &IoComponent::setOpenCol, propNoCopy )
-                    })
-                    ,0 } );
+        + IoComponent::outputType() ,0 } );
 
     addPropGroup( { tr("Timing"), IoComponent::edgeProps(),0 } );
 }
