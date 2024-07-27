@@ -62,7 +62,7 @@ Component* SubCircuit::construct( QString type, QString id )
 
     if( dataFile.isEmpty() ) // Component not installed, search in Circuit folder
     {
-        dataFile = MainWindow::self()->getDataFilePath( name+".comp" );
+        dataFile = MainWindow::self()->getDataFilePath( name+".sim1" );
         if( !QFile::exists( dataFile ) ) dataFile = "";
     }
 
@@ -179,7 +179,6 @@ void SubCircuit::loadSubCircuitFile( QString file )
 {
     QString doc = fileToString( file, "SubCircuit::loadSubCircuit" );
 
-    /// FIXME: Subcircuit loaded from .comp
     QString oldFilePath = Circuit::self()->getFilePath();
     Circuit::self()->setFilePath( file );             // Path to find subcircuits/Scripted in our data folder
 

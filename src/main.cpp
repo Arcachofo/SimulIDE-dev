@@ -76,9 +76,7 @@ int main( int argc, char *argv[] )
     if( argc > 1 )
     {
         QString circ = QString::fromStdString( argv[1] );
-        if( circ.endsWith(".simu")
-         || circ.endsWith(".sim1")
-         || circ.endsWith(".comp") ) CircuitWidget::self()->loadCirc( circ );
+        if( circ.endsWith(".sim1") ) CircuitWidget::self()->loadCirc( circ );
     }
     window.show();
 

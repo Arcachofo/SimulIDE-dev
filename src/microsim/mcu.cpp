@@ -133,11 +133,6 @@ Mcu::Mcu( QString type, QString id )
         baseFile = mcuDir.absoluteFilePath( folder+"/"+m_device);
         dataFile = baseFile;
     }
-    else if( dataFile.endsWith(".comp") )
-    {
-        m_dataFile = dataFile;
-        m_packageList = getPackages( dataFile );
-    }
     else if( QFile::exists( dataFile ) ) // MCU defined in xml file
     {
         QString xmlFile = dataFile;

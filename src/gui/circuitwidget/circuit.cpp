@@ -27,9 +27,8 @@
 #include "shield.h"
 #include "linker.h"
 #include "tunnel.h"
-#include "createcomp.h"
 
-Circuit* Circuit::m_pSelf = NULL;
+Circuit* Circuit::m_pSelf = nullptr;
 
 Circuit::Circuit( int width, int height, CircuitView* parent )
        : QGraphicsScene( parent )
@@ -61,9 +60,8 @@ Circuit::Circuit( int width, int height, CircuitView* parent )
     m_cicuitBatch = 0;
     m_circRev = 1e6;          /// Fixme
 
-    m_creCompDialog = NULL;
-    m_board = NULL;
-    m_newConnector = NULL;
+    m_board = nullptr;
+    m_newConnector = nullptr;
     m_seqNumber = 0;
     m_conNumber = 0;
     m_maxUndoSteps = 100;
@@ -86,8 +84,6 @@ Circuit::~Circuit()
 
     m_bckpTimer.stop();
     m_undoStack.clear();
-
-    cancelComp();
 
     QFile file( m_backupPath );
     if( !file.exists() ) return;
@@ -222,8 +218,8 @@ void Circuit::loadStrDoc( QString &doc )
 
             if( type == "Connector" )
             {
-                Pin* startpin = NULL;
-                Pin* endpin   = NULL;
+                Pin* startpin = nullptr;
+                Pin* endpin   = nullptr;
                 QString startpinid, endpinid;
                 QStringList pointList;
 
@@ -382,11 +378,6 @@ void Circuit::loadStrDoc( QString &doc )
                 else if( prop.name == "width"   ) m_sceneWidth  = prop.value.toInt();
                 else if( prop.name == "height"  ) m_sceneHeight = prop.value.toInt();
                 else if( prop.name == "rev"     ) m_circRev  = prop.value.toInt();
-                else if( prop.name == "category") m_category = prop.value.toString();
-                else if( prop.name == "compname") m_compName = prop.value.toString();
-                else if( prop.name == "compinfo") m_compInfo = prop.value.toString();
-                else if( prop.name == "icondata") m_iconData = prop.value.toString();
-                else if( prop.name == "itemtype") m_itemType = prop.value.toString();
             }
         }
         else if( line.startsWith("</circuit") ) break;
@@ -409,14 +400,8 @@ void Circuit::loadStrDoc( QString &doc )
             con->move( m_deltaMove );
             m_connList.append( con );
         }
-    }else{
-        if( !m_category.isEmpty() || !m_iconData.isEmpty() ) createComp(); // Add comp widget to bottom panel
-
-        for( Component* comp : compList ) comp->moveSignal();
-        m_nodeList += nodeList;
-        m_connList += conList;
     }
-     m_compList += compList;
+    m_compList += compList;
 
     if( !m_undo && !m_redo ) // Take care about unconnected Joints
         for( Node* joint : nodeList ) joint->checkRemove(); // Only removed if some missing connector
@@ -430,21 +415,6 @@ void Circuit::loadStrDoc( QString &doc )
     m_busy = false;
     QApplication::restoreOverrideCursor();
     update();
-}
-
-void Circuit::createComp()
-{
-    if( m_creCompDialog ) return;
-    m_creCompDialog = new creCompDialog( CircuitWidget::self() );
-    CircuitWidget::self()->panelSplitter()->addWidget( m_creCompDialog );
-    m_creCompDialog->show();
-}
-
-void Circuit::cancelComp()
-{
-    if( !m_creCompDialog ) return;
-    m_creCompDialog->deleteLater();
-    m_creCompDialog = nullptr;
 }
 
 QString Circuit::circuitHeader()
@@ -482,7 +452,7 @@ bool Circuit::saveString( QString &fileName, QString doc )
     if( !file.open( QFile::WriteOnly | QFile::Text ))
     {
         QApplication::restoreOverrideCursor();
-        QMessageBox::warning( NULL, "Circuit::saveString",
+        QMessageBox::warning( nullptr, "Circuit::saveString",
         tr("Cannot write file %1:\n%2.").arg(fileName).arg(file.errorString()));
         return false;
     }
@@ -503,11 +473,7 @@ bool Circuit::saveCircuit( QString filePath )
     QString oldFilePath = m_filePath;
     m_filePath = filePath;
 
-    bool saved = false;
-    if( filePath.endsWith(".comp") && m_creCompDialog ){
-        saved = saveString( filePath, m_creCompDialog->toString() );
-    }
-    else saved = saveString( filePath, circuitToString() );
+    bool saved = saveString( filePath, circuitToString() );
 
     if( saved ){
         qDebug() << "\nCircuit Saved: \n" << filePath;
@@ -539,7 +505,7 @@ void Circuit::importCircuit()
 
 Component* Circuit::createItem( QString type, QString id, bool map )
 {
-    Component* comp = NULL;
+    Component* comp = nullptr;
     for( LibraryItem* item : ItemLibrary::self()->items() )
     {
         if( !item->createItemFnPtr() ) continue; // Is category

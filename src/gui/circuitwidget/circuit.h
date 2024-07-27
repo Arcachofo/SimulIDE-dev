@@ -15,7 +15,6 @@
 
 #define COMP_STATE_NEW "__COMP_STATE_NEW__"
 
-class creCompDialog;
 class CircuitView;
 class SubPackage;
 class Simulator;
@@ -123,18 +122,6 @@ class Circuit : public QGraphicsScene
 
         bool saveString( QString &fileName, QString doc );
         QString circuitToString();
-        //QString circuitToComp( QString category, QString iconData, QString compType );
-
-        bool isComp() { return m_creCompDialog != NULL; }
-        QString category() { return m_category; }
-        QString compName() { return m_compName; }
-        QString compInfo() { return m_compInfo; }
-
-        QString iconData() { return m_iconData; }
-        void setIconData( QString id ) { m_iconData = id; }
-
-        //void setConverting( bool c ) { m_converting = c; } // used when converting old Components from xml
-        //bool converting() { return m_converting; }
 
         int circuitRev() { return m_circRev; }
 
@@ -149,8 +136,6 @@ class Circuit : public QGraphicsScene
         void undo();
         void redo();
         void importCircuit();
-        void createComp();
-        void cancelComp();
         //void bom();
         void saveBackup();
 
@@ -174,12 +159,6 @@ class Circuit : public QGraphicsScene
 
         QString m_filePath;
         QString m_backupPath;
-
-        QString m_itemType;
-        QString m_category;
-        QString m_compName;
-        QString m_compInfo;
-        QString m_iconData;
 
         QRect        m_scenerect;
         CircuitView* m_graphicView;
@@ -226,8 +205,6 @@ class Circuit : public QGraphicsScene
         QTimer m_bckpTimer;
 
         Simulator* m_simulator;
-
-        creCompDialog* m_creCompDialog;
 
         //--- Undo/Redo ----------------------------------
 

@@ -457,8 +457,7 @@ void CodeEditor::setFile( QString filePath )
          ||  extension == ".package"
          ||  extension == ".mcu"
          ||  extension == ".sim1"
-         ||  extension == ".simu"
-         ||  extension == ".comp" )
+         ||  extension == ".simu" )
     {
         setSyntaxFile("xml.syntax");
     }
