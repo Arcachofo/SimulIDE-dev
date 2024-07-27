@@ -72,7 +72,7 @@ Component* SubCircuit::construct( QString type, QString id )
             m_subcDir = MainWindow::self()->getDataFilePath( name );
     }
 
-    if( dataFile.endsWith(".comp") || dataFile.endsWith(".sim1")) // Subcircuit in single file (.comp)
+    if( dataFile.endsWith(".sim1")) // Subcircuit in single file
     {
         subcFile = dataFile;
         packageList = getPackages( subcFile );

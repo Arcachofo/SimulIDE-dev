@@ -128,20 +128,6 @@ SubPackage::~SubPackage()
     delete m_boardModeAction;
 }
 
-void SubPackage::setLogicSymbol( bool ls )
-{
-    // Used when loading old subcircuits with only DIP and LS
-    // To convert original pkg labels to "Logic Symbol" and "DIP"
-    // In these cases package file exist
-    if( !m_pkgeFile.isEmpty() && ComponentList::self()->isConverting() )
-    {
-        if     ( ls )                  setIdLabel("1- Logic Symbol");
-        else if( m_subcType == Board ) setIdLabel("0- Board");
-        else                           setIdLabel("2- DIP");
-    }
-    Chip::setLogicSymbol( ls );
-}
-
 void SubPackage::setWidth( int width )
 {
     if( width < 1 ) width = 1;

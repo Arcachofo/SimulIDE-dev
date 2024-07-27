@@ -40,6 +40,12 @@ MainWindow::MainWindow()
 
     this->setWindowTitle( m_version );
 
+    QString appImg = QProcessEnvironment::systemEnvironment().value( QStringLiteral("APPIMAGE") );
+    if( !appImg.isEmpty() ) m_filesDir.setPath( appImg.left( appImg.lastIndexOf("/") ) );
+    else                    m_filesDir.setPath( QApplication::applicationDirPath() );
+
+    if( m_filesDir.exists("../share/simulide") ) m_filesDir.cd("../share/simulide");
+
     m_configDir.setPath( QStandardPaths::writableLocation( QStandardPaths::DataLocation ) );
 
     m_settings     = new QSettings( getConfigPath("simulide.ini"), QSettings::IniFormat, this );
@@ -336,7 +342,7 @@ QString MainWindow::getUserFilePath( QString f )
     if( m_userDir.isEmpty() ) return "";
     return QDir( m_userDir ).absoluteFilePath( f );
 }
-
+QString MainWindow::getFilePath( QString file )   { return m_filesDir.absoluteFilePath( file ); }
 QString MainWindow::getConfigPath( QString file ) { return m_configDir.absoluteFilePath( file ); }
 QString MainWindow::getDataFilePath( QString file )
 {

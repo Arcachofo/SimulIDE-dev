@@ -41,9 +41,7 @@ class ComponentList : public QTreeWidget
         void setShortcut( QString s, QString c ) { m_shortCuts[s] = c; }
         QString getComponent( QString shortcut ) { return m_shortCuts.value( shortcut ); }
 
-        void loadXml( QString xmlFile, bool convert=false );
-
-        bool isConverting() { return m_converting; }
+        void loadXml( QString xmlFile );
 
         void writeSettings();
 
@@ -65,12 +63,10 @@ class ComponentList : public QTreeWidget
         void addItem( QString caption, TreeItem* catItem, QIcon &icon, QString type );
 
         void LoadLibraryItems();
-        void loadComps( QDir compSetDir );
         void insertItems();
         void insertItem( QDomNode* node, TreeItem* parent );
 
         bool m_customComp;
-        bool m_converting;
 
         TreeItem* addCategory( QString nameTr, QString name, QString parent, QString icon );
 
@@ -96,5 +92,4 @@ class ComponentList : public QTreeWidget
 
         ItemLibrary m_itemLibrary;
 };
-
 #endif
