@@ -1,0 +1,8 @@
+<!DOCTYPE SimulIDE>
+
+<compiler name="Vasm-6502" type="asm01" syntax="6502asm" buildPath="build" uploadhex="false">
+    <step 
+        command="vasm6502_old"
+        arguments=" -L $buildPath$fileName.lst -o $buildPath$fileName.bin -Fbin -dotdir $filePath"
+    />
+</compiler>

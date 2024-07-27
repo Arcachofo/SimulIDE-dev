@@ -1,0 +1,85 @@
+<!DOCTYPE SimulIDE>
+
+<parts>
+    <datablock name="GPR" start="0x0000" end="0x007F"/>
+    <regblock  name="SFR" start="0x0080" end="0x00FF" offset="0x0080" streg="PSW">
+        <register name="P0"     addr="0"   bits="0-7" reset="11111111"/>
+        <register name="SP"     addr="1"   bits=""    reset="00000111"/>
+        <register name="DPL"    addr="2"   bits=""/>
+        <register name="DPH"    addr="3"   bits=""/>
+        <register name="PCON"   addr="7"   bits="IDL,PD,GF0,GF1,0,0,0,SMOD"/>
+        <register name="TCON"   addr="8"   bits="IT0,IE0,IT1,IE1,TR0,TF0,TR1,TF1"/>
+        <register name="TMOD"   addr="9"   bits="T0M0,T0M1,C/T0,GATE0,T1M0,T1M1,C/T1,GATE1"/>
+        <register name="TL0"    addr="10"  bits=""/>
+        <register name="TL1"    addr="11"  bits=""/>
+        <register name="TH0"    addr="12"  bits=""/>
+        <register name="TH1"    addr="13"  bits=""/>
+        <register name="P1"     addr="16"  bits="0-7" reset="11111111"/>
+        
+        <register name="SCON"   addr="24"  bits="RI,TI,RB8,TB8,REN,SM2,SM1,SM0"/>
+        <register name="SBUF"   addr="25"  mask="00000000"/>
+        
+        <register name="P2"     addr="32"  bits="0-7" reset="11111111"/>
+        <register name="IE"     addr="40"  bits="EX0,ET0,EX1,ET1,ES,ET2,0,EA"/>
+        <register name="P3"     addr="48"  bits="0-7" reset="11111111"/>
+        <register name="IP"     addr="56"  bits="PX0,PT0,PX1,PT1,PS"/>
+        <register name="T2CON"  addr="72"  bits=""/>
+        <register name="RCAP2L" addr="74"  bits=""/>
+        <register name="RCAP2H" addr="75"  bits=""/>
+        <register name="TL2"    addr="76"  bits=""/>
+        <register name="TH2"    addr="77"  bits=""/>
+        <register name="PSW"    addr="80"  bits="P,0,OV,R0,R1,F0,AC,CY"/>
+        <register name="ACC"    addr="96"  bits=""/>
+        <register name="B"      addr="112" bits=""/>
+    </regblock>
+    <stack  spreg="SP" increment="preinc" />
+    
+    <interrupts enable="EA">
+        <interrupt name="RESET"                                          vector="0x0000" />
+        <interrupt name="EXT_0"   enable="EX0" flag="IE0" priority="PX0" vector="0x0003" />
+        <interrupt name="T0_OVF"  enable="ET0" flag="TF0" priority="PT0" vector="0x000B" />
+        <interrupt name="EXT_1"   enable="EX1" flag="IE1" priority="PX1" vector="0x0013" />
+        <interrupt name="T1_OVF"  enable="ET1" flag="TF1" priority="PT1" vector="0x001B" />
+        <interrupt name="USART_R" enable="ES"  flag="RI"  priority="PS"  vector="0x0023" />
+        <interrupt name="USART_T" enable="ES"  flag="TI"  priority="PS"  vector="0x0023" />
+    </interrupts>
+
+    <intosc name="intosc" />
+    
+    <port name="PORT0" pins="8" outreg="P0" outmask="11111111" 
+                                opencol="11111111">
+    </port>
+    
+    <port name="PORT1" pins="8" outreg="P1" outmask="11111111" 
+                                pullups="11111111" opencol="11111111">
+    </port>
+    
+    <port name="PORT2" pins="8" outreg="P2" outmask="11111111" 
+                                pullups="11111111" opencol="11111111">
+    </port>
+    
+    <port name="PORT3" pins="8" outreg="P3" outmask="11111111" 
+                                pullups="11111111" opencol="11111111">
+        <extint name="EXT_0" pin="PORT32" configbits="IT0"/>
+        <extint name="EXT_1" pin="PORT33" configbits="IT1"/>
+    </port>
+    
+    <ioport name="PORTE" pins="ALE,PSEN,EA" />
+    
+    <timer name="TIMER0" enable="TR0" configregsA="TMOD"
+                         counter="TL0,TH0" 
+                         clockpin="PORT34"
+                         interrupt="T0_OVF" >
+    </timer>
+    
+    <timer name="TIMER1" enable="TR1" configregsA="TMOD"
+                         counter="TL1,TH1"
+                         clockpin="PORT35"
+                         interrupt="T1_OVF" >
+    </timer>
+    
+    <usart name="USART0" number="1" configregsA="SCON" configregsB="PCON" >
+        <trunit type="tx" pin="PORT31" register="SBUF" interrupt="USART_T" />
+        <trunit type="rx" pin="PORT30" enable="REN"    interrupt="USART_R" />
+    </usart>
+</parts>

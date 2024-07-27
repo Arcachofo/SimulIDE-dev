@@ -1,0 +1,125 @@
+<circuit type="simulide_1.0" stepSize="1000000" stepsPS="1000000" NLsteps="100000" animate="0" >
+
+<item itemtype="Probe" CircId="Probe-1267" mainComp="false" Show_id="true" Show_Val="false" Pos="-332,-20" rotation="-45" hflip="1" vflip="1" label="Carry Out" idLabPos="13,3" labelrot="45" valLabPos="16,0" valLabRot="45" ShowVolt="false" Threshold="2.5 V" />
+
+<item itemtype="7-Seg BCD" CircId="7 Seg BCD-1262" mainComp="false" Show_id="false" Show_Val="false" Pos="-336,-96" rotation="0" hflip="1" vflip="1" label="7 Seg BCD-7" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" />
+
+<item itemtype="Clock" CircId="Clock-1" mainComp="false" Show_id="true" Show_Val="false" Pos="-604,-300" rotation="0" hflip="1" vflip="1" label="Clock" idLabPos="-68,-5" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="true" Running="true" Voltage="5 V" Freq="2 Hz" Always_On="false" />
+
+<item itemtype="Subcircuit" CircId="CD4510-2" mainComp="false" Show_id="true" Show_Val="false" Pos="-468,-220" rotation="0" hflip="1" vflip="1" label="CD4510" idLabPos="-6,72" labelrot="0" valLabPos="0,0" valLabRot="0" Logic_Symbol="false" />
+
+<item itemtype="7-Seg BCD" CircId="7 Seg BCD-7" mainComp="false" Show_id="false" Show_Val="false" Pos="-324,-332" rotation="0" hflip="1" vflip="1" label="7 Seg BCD-7" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Volt.-12" mainComp="false" Show_id="true" Show_Val="false" Pos="-604,-204" rotation="0" hflip="1" vflip="1" label="P4" idLabPos="-46,-5" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Volt.-13" mainComp="false" Show_id="true" Show_Val="false" Pos="-604,-188" rotation="0" hflip="1" vflip="1" label="P3" idLabPos="-46,-5" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="true" Voltage="5 V" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Volt.-14" mainComp="false" Show_id="true" Show_Val="false" Pos="-604,-172" rotation="0" hflip="1" vflip="1" label="P2" idLabPos="-46,-5" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="true" Voltage="5 V" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Volt.-15" mainComp="false" Show_id="true" Show_Val="false" Pos="-604,-156" rotation="0" hflip="1" vflip="1" label="P1" idLabPos="-46,-5" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="true" Voltage="5 V" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Volt.-16" mainComp="false" Show_id="true" Show_Val="false" Pos="-604,-228" rotation="0" hflip="1" vflip="1" label="P En" idLabPos="-58,-6" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Volt.-17" mainComp="false" Show_id="true" Show_Val="false" Pos="-604,-260" rotation="0" hflip="1" vflip="1" label="Carry In" idLabPos="-73,-6" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
+
+<item itemtype="Probe" CircId="Probe-18" mainComp="false" Show_id="true" Show_Val="false" Pos="-316,-244" rotation="-45" hflip="1" vflip="1" label="Carry Out" idLabPos="13,3" labelrot="45" valLabPos="16,0" valLabRot="45" ShowVolt="false" Threshold="2.5 V" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Volt.-19" mainComp="false" Show_id="true" Show_Val="false" Pos="-604,-108" rotation="0" hflip="1" vflip="1" label="Up/Down" idLabPos="-81,-6" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Volt.-20" mainComp="false" Show_id="true" Show_Val="false" Pos="-604,-84" rotation="0" hflip="1" vflip="1" label="Reset" idLabPos="-73,-6" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
+
+<item itemtype="Subcircuit" CircId="CD4510-317" mainComp="false" Show_id="true" Show_Val="false" Pos="-468,-60" rotation="0" hflip="1" vflip="1" label="CD4510" idLabPos="-3,88" labelrot="0" valLabPos="13,54" valLabRot="-90" Logic_Symbol="true" />
+
+<item itemtype="Node" CircId="Node-1260" mainComp="false" Pos="-548,-84" />
+
+<item itemtype="Node" CircId="Node-1257" mainComp="false" Pos="-544,-212" />
+
+<item itemtype="Node" CircId="Node-620" mainComp="false" Pos="-516,-188" />
+
+<item itemtype="Node" CircId="Node-623" mainComp="false" Pos="-520,-132" />
+
+<item itemtype="Node" CircId="Node-626" mainComp="false" Pos="-524,-124" />
+
+<item itemtype="Node" CircId="Node-629" mainComp="false" Pos="-528,-196" />
+
+<item itemtype="Node" CircId="Node-632" mainComp="false" Pos="-532,-300" />
+
+<item itemtype="Node" CircId="Node-635" mainComp="false" Pos="-536,-260" />
+
+<item itemtype="Node" CircId="Node-638" mainComp="false" Pos="-540,-108" />
+
+<item itemtype="Connector" uid="Connector-37" startpinid="CD4510-2-P4" endpinid="Node-629-0" pointList="-476,-196,-528,-196" />
+
+<item itemtype="Connector" uid="Connector-39" startpinid="CD4510-2-P1" endpinid="Node-620-0" pointList="-476,-188,-516,-188" />
+
+<item itemtype="Connector" uid="Connector-41" startpinid="CD4510-2-P2" endpinid="Node-623-0" pointList="-428,-180,-384,-180,-384,-132,-520,-132" />
+
+<item itemtype="Connector" uid="Connector-43" startpinid="Fixed Volt.-13-outnod" endpinid="Node-626-0" pointList="-588,-188,-580,-188,-580,-124,-524,-124" />
+
+<item itemtype="Connector" uid="Connector-45" startpinid="Fixed Volt.-16-outnod" endpinid="Node-1257-0" pointList="-588,-228,-580,-228,-580,-212,-544,-212" />
+
+<item itemtype="Connector" uid="Connector-47" startpinid="Fixed Volt.-17-outnod" endpinid="Node-635-0" pointList="-588,-260,-536,-260" />
+
+<item itemtype="Connector" uid="Connector-49" startpinid="CD4510-2-Cout" endpinid="Probe-18-inpin" pointList="-476,-164,-488,-164,-488,-228,-332,-228" />
+
+<item itemtype="Connector" uid="Connector-51" startpinid="Fixed Volt.-19-outnod" endpinid="Node-638-0" pointList="-588,-108,-540,-108" />
+
+<item itemtype="Connector" uid="Connector-53" startpinid="Fixed Volt.-20-outnod" endpinid="Node-1260-0" pointList="-588,-84,-548,-84" />
+
+<item itemtype="Connector" uid="Connector-55" startpinid="Clock-1-outnod" endpinid="Node-632-0" pointList="-588,-300,-532,-300" />
+
+<item itemtype="Connector" uid="Connector-21" startpinid="CD4510-2-Q1" endpinid="7 Seg BCD-7-in0" pointList="-476,-172,-492,-172,-492,-116,-372,-116,-372,-268,-312,-268,-312,-300" />
+
+<item itemtype="Connector" uid="Connector-29" startpinid="CD4510-2-Q3" endpinid="7 Seg BCD-7-in2" pointList="-428,-196,-380,-196,-380,-284,-328,-284,-328,-300" />
+
+<item itemtype="Connector" uid="Connector-25" startpinid="CD4510-2-Q2" endpinid="7 Seg BCD-7-in1" pointList="-428,-172,-376,-172,-376,-276,-320,-276,-320,-300" />
+
+<item itemtype="Connector" uid="Connector-33" startpinid="CD4510-2-Q4" endpinid="7 Seg BCD-7-in3" pointList="-476,-204,-484,-204,-484,-292,-336,-292,-336,-300" />
+
+<item itemtype="Connector" uid="Connector-619" startpinid="CD4510-317-P1" endpinid="Node-620-1" pointList="-476,-52,-516,-52,-516,-188" />
+
+<item itemtype="Connector" uid="Connector-621" startpinid="Node-620-2" endpinid="Fixed Volt.-15-outnod" pointList="-516,-188,-572,-188,-572,-156,-588,-156" />
+
+<item itemtype="Connector" uid="Connector-622" startpinid="CD4510-317-P2" endpinid="Node-623-1" pointList="-476,-44,-520,-44,-520,-132" />
+
+<item itemtype="Connector" uid="Connector-624" startpinid="Node-623-2" endpinid="Fixed Volt.-14-outnod" pointList="-520,-132,-576,-132,-576,-172,-588,-172" />
+
+<item itemtype="Connector" uid="Connector-625" startpinid="CD4510-317-P3" endpinid="Node-626-1" pointList="-476,-36,-524,-36,-524,-124" />
+
+<item itemtype="Connector" uid="Connector-627" startpinid="Node-626-2" endpinid="CD4510-2-P3" pointList="-524,-124,-380,-124,-380,-188,-428,-188" />
+
+<item itemtype="Connector" uid="Connector-628" startpinid="CD4510-317-P4" endpinid="Node-629-1" pointList="-476,-28,-528,-28,-528,-196" />
+
+<item itemtype="Connector" uid="Connector-630" startpinid="Node-629-2" endpinid="Fixed Volt.-12-outnod" pointList="-528,-196,-580,-196,-580,-204,-588,-204" />
+
+<item itemtype="Connector" uid="Connector-631" startpinid="CD4510-317-Clk" endpinid="Node-632-1" pointList="-476,-12,-532,-12,-532,-300" />
+
+<item itemtype="Connector" uid="Connector-633" startpinid="Node-632-2" endpinid="CD4510-2-Clk" pointList="-532,-300,-384,-300,-384,-204,-428,-204" />
+
+<item itemtype="Connector" uid="Connector-634" startpinid="CD4510-317-CIn" endpinid="Node-635-1" pointList="-476,-4,-536,-4,-536,-260" />
+
+<item itemtype="Connector" uid="Connector-636" startpinid="Node-635-2" endpinid="CD4510-2-CIn" pointList="-536,-260,-508,-260,-508,-180,-476,-180" />
+
+<item itemtype="Connector" uid="Connector-637" startpinid="CD4510-317-U/!D" endpinid="Node-638-1" pointList="-476,4,-540,4,-540,-108" />
+
+<item itemtype="Connector" uid="Connector-639" startpinid="Node-638-2" endpinid="CD4510-2-U/!D" pointList="-540,-108,-388,-108,-388,-164,-428,-164" />
+
+<item itemtype="Connector" uid="Connector-1256" startpinid="CD4510-317-PE" endpinid="Node-1257-1" pointList="-476,12,-544,12,-544,-212" />
+
+<item itemtype="Connector" uid="Connector-1258" startpinid="Node-1257-2" endpinid="CD4510-2-PE" pointList="-544,-212,-476,-212" />
+
+<item itemtype="Connector" uid="Connector-1259" startpinid="CD4510-317-Rst" endpinid="Node-1260-1" pointList="-476,20,-548,20,-548,-84" />
+
+<item itemtype="Connector" uid="Connector-1261" startpinid="Node-1260-2" endpinid="CD4510-2-Rst" pointList="-548,-84,-392,-84,-392,-156,-428,-156" />
+
+<item itemtype="Connector" uid="Connector-1263" startpinid="7 Seg BCD-1262-in0" endpinid="CD4510-317-Q1" pointList="-324,-64,-324,-52,-428,-52" />
+
+<item itemtype="Connector" uid="Connector-1264" startpinid="7 Seg BCD-1262-in1" endpinid="CD4510-317-Q2" pointList="-332,-64,-332,-44,-428,-44" />
+
+<item itemtype="Connector" uid="Connector-1265" startpinid="7 Seg BCD-1262-in2" endpinid="CD4510-317-Q3" pointList="-340,-64,-340,-36,-428,-36" />
+
+<item itemtype="Connector" uid="Connector-1266" startpinid="7 Seg BCD-1262-in3" endpinid="CD4510-317-Q4" pointList="-348,-64,-348,-28,-428,-28" />
+
+<item itemtype="Connector" uid="Connector-1268" startpinid="Probe-1267-inpin" endpinid="CD4510-317-Cout" pointList="-348,-4,-428,-4" />
+
+</circuit>

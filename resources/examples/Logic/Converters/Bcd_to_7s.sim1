@@ -1,0 +1,45 @@
+<circuit type="simulide_1.0" stepSize="1000000" stepsPS="1000000" NLsteps="100000" animate="1" >
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-6" mainComp="false" Show_id="false" Show_Val="true" Pos="-244,52" rotation="0" hflip="1" vflip="1" label="Fixed Voltage-6" idLabPos="-64,-24" labelrot="0" valLabPos="-53,-3" valLabRot="0" Out="false" Voltage="5 V" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-5" mainComp="false" Show_id="false" Show_Val="true" Pos="-244,36" rotation="0" hflip="1" vflip="1" label="Fixed Voltage-3" idLabPos="-64,-24" labelrot="0" valLabPos="-52,-4" valLabRot="0" Out="false" Voltage="5 V" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-3" mainComp="false" Show_id="false" Show_Val="true" Pos="-244,68" rotation="0" hflip="1" vflip="1" label="Fixed Voltage-6" idLabPos="-64,-24" labelrot="0" valLabPos="-53,-3" valLabRot="0" Out="false" Voltage="5 V" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-2" mainComp="false" Show_id="false" Show_Val="true" Pos="-244,84" rotation="0" hflip="1" vflip="1" label="Fixed Voltage-6" idLabPos="-64,-24" labelrot="0" valLabPos="-53,-3" valLabRot="0" Out="false" Voltage="5 V" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-35" mainComp="false" Show_id="false" Show_Val="true" Pos="-244,4" rotation="0" hflip="1" vflip="1" label="Fixed Voltage-35" idLabPos="-64,-24" labelrot="0" valLabPos="-53,-1" valLabRot="0" Out="false" Voltage="5 V" />
+
+<item itemtype="BcdTo7S" CircId="BcdTo7S-51" mainComp="false" Show_id="false" Show_Val="false" Pos="-168,52" rotation="0" hflip="1" vflip="1" label="BcdTo7S-51" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Inverted="false" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+9 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
+
+<item itemtype="Seven Segment" CircId="Seven Segment-60" mainComp="false" Show_id="false" Show_Val="false" Pos="-100,52" rotation="0" hflip="1" vflip="1" label="Seven Segment-60" idLabPos="20,-44" labelrot="0" valLabPos="0,0" valLabRot="0" NumDisplays="1 _7seg" Color="0" Vertical_Pins="false" CommonCathode="true" Threshold="2.4 V" MaxCurrent="0.02 A" Resistance="100 Ω" />
+
+<item itemtype="Ground" CircId="Ground-68" mainComp="false" Show_id="false" Show_Val="false" Pos="-92,112" rotation="0" hflip="1" vflip="1" label="Ground-68" idLabPos="-16,8" labelrot="0" valLabPos="0,0" valLabRot="0" />
+
+<item itemtype="Connector" uid="Connector-57" startpinid="Fixed Voltage-35-outnod" endpinid="BcdTo7S-51-in4" pointList="-228,4,-176,4,-176,12" />
+
+<item itemtype="Connector" uid="Connector-61" startpinid="Seven Segment-60-pin_a" endpinid="BcdTo7S-51-out0" pointList="-124,28,-144,28" />
+
+<item itemtype="Connector" uid="Connector-62" startpinid="Seven Segment-60-pin_b" endpinid="BcdTo7S-51-out1" pointList="-124,36,-144,36" />
+
+<item itemtype="Connector" uid="Connector-63" startpinid="Seven Segment-60-pin_c" endpinid="BcdTo7S-51-out2" pointList="-124,44,-144,44" />
+
+<item itemtype="Connector" uid="Connector-64" startpinid="Seven Segment-60-pin_d" endpinid="BcdTo7S-51-out3" pointList="-124,52,-144,52" />
+
+<item itemtype="Connector" uid="Connector-65" startpinid="Seven Segment-60-pin_e" endpinid="BcdTo7S-51-out4" pointList="-124,60,-144,60" />
+
+<item itemtype="Connector" uid="Connector-66" startpinid="Seven Segment-60-pin_f" endpinid="BcdTo7S-51-out5" pointList="-124,68,-144,68" />
+
+<item itemtype="Connector" uid="Connector-67" startpinid="Seven Segment-60-pin_g" endpinid="BcdTo7S-51-out6" pointList="-124,76,-144,76" />
+
+<item itemtype="Connector" uid="Connector-69" startpinid="Ground-68-Gnd" endpinid="Seven Segment-60-pin_commona" pointList="-92,96,-92,84" />
+
+<item itemtype="Connector" uid="Connector-53" startpinid="Fixed Voltage-5-outnod" endpinid="BcdTo7S-51-in0" pointList="-228,36,-196,36,-196,44,-192,44" />
+
+<item itemtype="Connector" uid="Connector-54" startpinid="Fixed Voltage-6-outnod" endpinid="BcdTo7S-51-in1" pointList="-228,52,-192,52" />
+
+<item itemtype="Connector" uid="Connector-55" startpinid="Fixed Voltage-3-outnod" endpinid="BcdTo7S-51-in2" pointList="-228,68,-212,68,-212,60,-192,60" />
+
+<item itemtype="Connector" uid="Connector-56" startpinid="Fixed Voltage-2-outnod" endpinid="BcdTo7S-51-in3" pointList="-228,84,-192,84,-192,68" />
+
+</circuit>

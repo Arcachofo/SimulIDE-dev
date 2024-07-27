@@ -1,0 +1,17 @@
+解复用器(Demux)
+
+属性: (默认值)
+
+主要特性:
+- 地址位数: (3 Bits)
+   地址选择引脚的数量.
+   其决定了通道数n: n = 2^地址位数
+
+- 对输出取反: (否)
+   对输出引脚的信号取反.
+
+
+电气特性:
+#include logicinputs
+#include logicoutputs
+#include logicedges

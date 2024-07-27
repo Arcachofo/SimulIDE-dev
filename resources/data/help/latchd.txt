@@ -1,0 +1,28 @@
+Configurable latch.
+
+Property: (default value)
+
+Main:
+- Input Size: (8 Channels)
+   Number of channels.
+
+- Trigger Type: (Enable)
+   "Clock" triggers every active edge.
+   "enable" any change during active state.
+   "None" hides Clock pin.
+
+- Tristate: (yes)
+   If yes, creates an enable pin (active Low).
+   When disabled, output is high impedance.
+
+Electric:
+#include logicinputs
+#include logicoutputs
+- Invert Outputs: (no)
+   Invert output pins.
+
+- Open Drain: (no)
+   If yes, output act as an open drain:
+   It can sink but not source current.
+   
+#include logicedges

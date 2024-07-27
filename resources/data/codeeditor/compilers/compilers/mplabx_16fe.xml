@@ -1,0 +1,14 @@
+<!DOCTYPE SimulIDE>
+
+<compiler name="Mplabx_xc8_16Fe" type="xc8" buildPath="build" >
+    
+    <step 
+        command="bin/xc8-cc"
+        arguments=" -mcpu=$device -c -mdfp=/opt/microchip/mplabx/v5.50/packs/Microchip/PIC12-16F1xxx_DFP/1.2.63/xc8 -fno-short-double -fno-short-float -O0 -fasmfile -maddrqual=ignore -xassembler-with-cpp -mwarn=-3 -Wa,-a -DXPRJ_default=default  -msummary=-psect,-class,+mem,-hex,-file -ginhx32 -Wl,--data-init -mno-keep-startup -mno-osccal -mno-resetbits -mno-save-resetbits -mno-download -mno-stackcall -gdwarf-3 -mstack=compiled:auto:auto -o $buildPath$fileName.p1 $filePath"
+    />
+    <step 
+        command="bin/xc8-cc"
+        arguments=" -mcpu=$device -Wl,-Map=$buildPath$fileName.map -DXPRJ_default=default -Wl,--defsym=__MPLAB_BUILD=1   -mdfp=/opt/microchip/mplabx/v5.50/packs/Microchip/PIC12-16F1xxx_DFP/1.2.63/xc8 -fno-short-double -fno-short-float -O0 -fasmfile -maddrqual=ignore -xassembler-with-cpp -mwarn=-3 -Wa,-a -msummary=-psect,-class,+mem,-hex,-file  -ginhx32 -Wl,--data-init -mno-keep-startup -mno-osccal -mno-resetbits -mno-save-resetbits -mno-download -mno-stackcall -gdwarf-3 -mstack=compiled:auto:auto -Wl,--memorysummary,$buildPath$fileName.xml -o $buildPath$fileName.elf  $buildPath$fileName.p1 "
+    />
+    
+</compiler>

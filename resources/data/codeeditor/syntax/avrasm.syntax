@@ -1,0 +1,26 @@
+rules: directives instructions preprocessor number Label htmlTag quotation lineComment
+
+
+directives-style: #326432 default true false
+directives: equ include org
+
+instructions-style: #141446 default true false
+instructions: add adc adiw call inc sleep sub subi sbc sbci sbiw andi and ori eor elpm fmul fmuls fmulsu mul muls smp com neg sbr cbr dec tst clr ser mul rjmp ijmp jmp rcall icall ret reti cpse cp cpc cpi sbrc sbrs sbic sbis brbs brbc breq brne brcs break brcc brsh brlo brmi brpl brge brlt brhs brhc brts brtc brvs brvc brie brid mov movw ldi lds ld ldd sts st std lpm in out push pop lsl lsr rol ror asr swap bset bclr sbi cbi bst bld sec clc sen cln sez clz sei cli ses cls sev clv set clt seh clh wdr des nop or eicall eijmp lac las lat spm xch
+
+preprocessor-style: #414164 default true false
+preprocessor: "#+[^\n]*"
+
+number-style: #3030B8 default false false
+number: "\b[0-9]+\b" "0[bB][0-1]+" "0[xX][0-9a-fA-F]+"
+
+Label-style: #903000 default false false
+Label: "^[\x20\x09]*\w+:"
+
+htmlTag-style: #303078 default false false
+htmlTag: "<.*>" 
+
+quotation-style: #407055 default false false
+quotation: "\"(\\.|[^\"])*\""
+
+lineComment-style: #646464 default false true
+lineComment: ";[^\n]*"

@@ -1,0 +1,33 @@
+<circuit type="simulide_1.0" stepSize="1000000" stepsPS="1000000" NLsteps="100000" animate="0" >
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-9" mainComp="false" ShowProp="Voltage" Show_id="false" Show_Val="true" Pos="-440,-96" rotation="0" hflip="1" vflip="1" label="Fixed Voltage-28" idLabPos="-64,-24" labelrot="0" valLabPos="-51,-6" valLabRot="0" Out="true" Voltage="-5 V" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-8" mainComp="false" ShowProp="Voltage" Show_id="false" Show_Val="true" Pos="-444,-160" rotation="0" hflip="1" vflip="1" label="Fixed Voltage-26" idLabPos="-64,-24" labelrot="0" valLabPos="-47,-5" valLabRot="0" Out="true" Voltage="5 V" />
+
+<item itemtype="Probe" CircId="Probe-7" mainComp="false" Show_id="false" Show_Val="true" Pos="-300,-112" rotation="-45" hflip="1" vflip="1" label="Probe-2" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
+
+<item itemtype="Subcircuit" CircId="T_NOT-6" mainComp="false" Show_id="true" Show_Val="false" Pos="-388,-104" rotation="0" hflip="1" vflip="1" label="T_NOT-1" idLabPos="0,-20" labelrot="0" valLabPos="0,0" valLabRot="0" Logic_Symbol="true" />
+
+<item itemtype="Probe" CircId="Probe-5" mainComp="false" Show_id="false" Show_Val="true" Pos="-300,-176" rotation="-45" hflip="1" vflip="1" label="Probe-2" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
+
+<item itemtype="Subcircuit" CircId="T_NOT-4" mainComp="false" Show_id="true" Show_Val="false" Pos="-388,-168" rotation="0" hflip="1" vflip="1" label="T_NOT-1" idLabPos="0,-20" labelrot="0" valLabPos="0,0" valLabRot="0" Logic_Symbol="true" />
+
+<item itemtype="Ground" CircId="Ground-3" mainComp="false" Show_id="false" Show_Val="false" Pos="-428,-204" rotation="0" hflip="1" vflip="1" label="Ground-6" idLabPos="-16,8" labelrot="0" valLabPos="0,0" valLabRot="0" />
+
+<item itemtype="Probe" CircId="Probe-2" mainComp="false" Show_id="false" Show_Val="true" Pos="-300,-240" rotation="-45" hflip="1" vflip="1" label="Probe-2" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
+
+<item itemtype="Subcircuit" CircId="T_NOT-1" mainComp="false" Show_id="true" Show_Val="false" Pos="-388,-232" rotation="0" hflip="1" vflip="1" label="T_NOT-1" idLabPos="0,-20" labelrot="0" valLabPos="0,0" valLabRot="0" Logic_Symbol="true" />
+
+<item itemtype="Connector" uid="Connector-10" startpinid="Probe-2-inpin" endpinid="T_NOT-1-!TX" pointList="-316,-224,-348,-224" />
+
+<item itemtype="Connector" uid="Connector-12" startpinid="Ground-3-Gnd" endpinid="T_NOT-1-TX" pointList="-428,-220,-428,-224,-396,-224" />
+
+<item itemtype="Connector" uid="Connector-14" startpinid="Probe-5-inpin" endpinid="T_NOT-4-!TX" pointList="-316,-160,-348,-160" />
+
+<item itemtype="Connector" uid="Connector-16" startpinid="Probe-7-inpin" endpinid="T_NOT-6-!TX" pointList="-316,-96,-348,-96" />
+
+<item itemtype="Connector" uid="Connector-18" startpinid="Fixed Voltage-8-outnod" endpinid="T_NOT-4-TX" pointList="-428,-160,-396,-160" />
+
+<item itemtype="Connector" uid="Connector-20" startpinid="Fixed Voltage-9-outnod" endpinid="T_NOT-6-TX" pointList="-424,-96,-396,-96" />
+
+</circuit>

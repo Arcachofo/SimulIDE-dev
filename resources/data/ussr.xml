@@ -1,0 +1,22 @@
+<!DOCTYPE SimulIDE>
+
+<itemlib>
+    
+  <itemset category="Logic/USSR IC" type="Subcircuit" folder="ICs" icon="ic2.png" >
+
+    <item name="564IK2"   info="5 bit 7 segment display controller" />
+    <item name="K155ID11" info="linear led scale driver" /> 
+    <item name="K155ID13" info="linear led scale driver" /> 
+    <item name="K176IE3"  info="module 6 counter with output to a 7-segment indicator" /> 
+    <item name="K176IE4"  info="module 10 counter with output to a 7-segment indicator" />
+    <item name="K176IE5"  info="15-bit binary counter - generator of second pulses" />
+    <item name="K176IE13" info="Counter for building a clock with an alarm clock" />
+    <item name="K176IE12" info="15-bit binary counter and divisor by 60" />
+    <item name="K176ID2"  info="Cmos BCD to 7-segment LCD/LED driver with latch" />
+    <item name="K176ID3"  info="Cmos BCD to 7-segment LCD/LED driver with latch, open Drain" />
+    <item name="K490IP1"  info="BCD counter with 7-segment display" /> 
+    <item name="K490IP2"  info="binary code decoder with 7 segment display" />
+    
+  </itemset>
+  
+</itemlib>

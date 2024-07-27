@@ -1,0 +1,21 @@
+<circuit version="" rev="2229" stepSize="1000000" stepsPS="1000000" NLsteps="100000" reaStep="1000000" animate="0" >
+
+<item itemtype="DcMotor" CircId="DcMotor-1" mainComp="false" Show_id="true" Show_Val="false" Pos="-316,-292" rotation="0" hflip="1" vflip="1" label="DcMotor" idLabPos="-22,-48" labelrot="0" valLabPos="0,0" valLabRot="0" RPM_Nominal="60 _RPM" Volt_Nominal="5 V" Resistance="100 Ω" />
+
+<item itemtype="Ground" CircId="Ground-3" mainComp="false" Show_id="false" Show_Val="false" Pos="-244,-252" rotation="0" hflip="1" vflip="1" label="Ground-4" idLabPos="-16,8" labelrot="0" valLabPos="0,0" valLabRot="0" />
+
+<item itemtype="Rail" CircId="Rail-9" mainComp="false" ShowProp="Voltage" Show_id="false" Show_Val="true" Pos="-452,-356" rotation="90" hflip="1" vflip="1" label="Rail-9" idLabPos="-16,-24" labelrot="0" valLabPos="-13.6743,5.6743" valLabRot="-90" Voltage="5 V" />
+
+<item itemtype="Rail" CircId="Rail-10" mainComp="false" ShowProp="Voltage" Show_id="false" Show_Val="true" Pos="-452,-220" rotation="-90" hflip="1" vflip="1" label="Rail-10" idLabPos="-16,-24" labelrot="0" valLabPos="-2.89064,-7.73123" valLabRot="90" Voltage="-5 V" />
+
+<item itemtype="Switch" CircId="Switch-11" mainComp="false" Show_id="false" Show_Val="false" Pos="-400,-292" rotation="-180" hflip="1" vflip="1" label="Switch-11" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Norm_Close="false" DT="true" Poles="1" />
+
+<item itemtype="Connector" uid="Connector-6" startpinid="DcMotor-1-rPin" endpinid="Ground-3-Gnd" pointList="-276,-292,-244,-292,-244,-268" />
+
+<item itemtype="Connector" uid="Connector-12" startpinid="Switch-11-pinP0" endpinid="DcMotor-1-lPin" pointList="-384,-292,-356,-292" />
+
+<item itemtype="Connector" uid="Connector-13" startpinid="Rail-9-outnod" endpinid="Switch-11-switch0pinN" pointList="-452,-340,-452,-292,-416,-292" />
+
+<item itemtype="Connector" uid="Connector-14" startpinid="Switch-11-switch1pinN" endpinid="Rail-10-outnod" pointList="-416,-284,-452,-284,-452,-236" />
+
+</circuit>

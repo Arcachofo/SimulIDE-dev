@@ -1,0 +1,12 @@
+<!DOCTYPE SimulIDE>
+
+<mcu name="p10F202" core="Pic14" data="32" prog="512" progword="2"
+            inst_cycle="4" freq="20000000">
+            
+    <include file="pic/pic14_regs.xml" />
+    <include file="p10F20x/p10F20x_regs.xml" />
+    <include file="p10F20x/p10F20x_perif.xml" />
+    
+    <datablock name="GPR" start="0x08" end="0x01F"/>
+    
+</mcu>

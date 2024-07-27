@@ -1,0 +1,14 @@
+Logic and voltage probe.
+Hover or connect to Wires or Pins to get voltage.
+
+As logic probe:
+- Orange = High State.
+- Blue = Low State
+
+Property: (default value)
+
+- Show Voltage: (yes)
+   Show voltage label.
+
+- Threshold: (2.5 V)
+   Digital threshold to determine High/Low states. 

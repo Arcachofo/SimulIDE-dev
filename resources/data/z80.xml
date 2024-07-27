@@ -1,0 +1,12 @@
+<!DOCTYPE SimulIDE>
+
+<itemlib>
+    
+    <itemset category="Z80" type="MCU" folder="Z80">
+        
+        <item name="Z80"       info="CPU" ></item>
+        <item name="ULA ZX48k" info=""    ></item>
+    
+    </itemset>
+    
+</itemlib>

@@ -1,0 +1,25 @@
+
+#chip p16f1826, 20
+
+TRISA = 0
+Do
+    PORTB.0 = 1
+    wait 200 ms
+    PORTB.0 = 0
+    wait 200 ms
+    
+    PORTA = 1
+    
+    PORTB = 0b00000001
+    wait 200 ms
+    PORTB = 0b00000000
+    wait 200 ms
+    
+    PORTA = 2
+    
+    RB0=1
+    wait 200 ms
+    RB0=0
+    wait 200 ms
+    
+Loop

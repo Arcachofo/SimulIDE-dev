@@ -1,0 +1,49 @@
+Wave generator.
+
+Turn On/Off with the letf button.
+
+Wave types:
+- Sine
+- Saw
+- Triangle
+- Square
+- Random
+- Wav
+
+
+Property: (default value)
+
+Main:
+- Wave type: (Sine)
+   Set output wave type.
+
+- Frequency:  (1 kHz)
+   Set output frequency.
+
+- Phase shift: (0 º)
+   Phase shift relative to wave start.
+
+- Quality: (100)
+   Number of steps per cycle.
+
+- Duty: (50 %)
+   Duty cicle.
+   Not available for all types.
+
+- Always On: (yes)
+   Removes the button and keeps always active.
+
+
+Electric:
+- Bipolar: (false)
+   If true, use 2 output pins.
+
+- Floating: (false)
+   If true, output voltages are not refered to ground.
+   Only visible is Bipolar is true.
+
+- Middle Voltage:  (0 V)
+   Central voltage of the wave.
+
+- Semi amplitude: (2.5 V)
+   Half wave amplitude. 

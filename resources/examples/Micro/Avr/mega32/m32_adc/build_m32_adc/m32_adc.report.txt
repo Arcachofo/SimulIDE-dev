@@ -1,0 +1,41 @@
+Compilation Report
+
+Compiler Version (YYYY-MM-DD): 1.00.00 2022-12-01 (Linux 64 bit) : Build 1199
+
+;********************************************************************************
+
+Compilation time:
+ (Compile time: 0 seconds)
+ (Assembly time: 0 seconds)
+ (Download time: 0 seconds)
+ (Total time: 0 seconds)
+
+;********************************************************************************
+
+Chip resource usage:
+Chip Model: MEGA32
+Program Memory: 47/16384 words (.29%)
+RAM: 0/2048 bytes (0.%)
+
+
+;********************************************************************************
+
+RAM Allocation
+;********************************************************************************
+
+Subroutines
+Main
+Code Size (lines): 11
+Compiled Size (words): 26
+Outgoing calls: Delay_MS(1), INITSYS(1)
+
+INITSYS
+Code Size (lines): 895
+Compiled Size (words): 9
+
+Delay_MS
+Code Size (lines): 0
+Compiled Size (words): 12
+
+;********************************************************************************
+

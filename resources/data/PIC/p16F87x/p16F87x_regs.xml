@@ -1,0 +1,109 @@
+<parts>
+    <!-- BANK 0 -->
+    <regblock name="SFR0" start="0x0000" end="0x001F">
+        <register name="PORTA"   addr="0x05" bits="RA0,RA1,RA2,RA3,RA4,RA5,RA6,RA7"/>
+        <register name="PORTB"   addr="0x06" bits="RB0,RB1,RB2,RB3,RB4,RB5,RB6,RB7"/>
+        <register name="PORTC"   addr="0x07" bits="RC0,RC1,RC2,RC3,RC4,RC5,RC6,RC7"/>
+
+        <register name="PCLATH"  addr="0x0A" bits=""/>
+        <register name="INTCON"  addr="0x0B" bits="RBIF,INTF,T0IF,RBIE,INTE,T0IE,PEIE,GIE"/>
+        <register name="PIR1"    addr="0x0C" bits="TMR1IF,TMR2IF,CCP1IF,SSPIF,TXIF,RCIF,ADIF,PSPIF"/>
+        <register name="PIR2"    addr="0x0D" bits=""/>
+        <register name="TMR1L"   addr="0x0E" bits=""/>
+        <register name="TMR1H"   addr="0x0F" bits=""/>
+        <register name="T1CON"   addr="0x10" bits="TMR1ON,TMR1CS,T1SYNC,T1OSCEN,T1CKPS0,T1CKPS1"/>
+        <register name="TMR2"    addr="0x11" bits=""/>
+        <register name="T2CON"   addr="0x12" bits="T2CKPS0,T2CKPS1,TMR2ON,TOUTPS0,TOUTPS1,TOUTPS2,TOUTPS3"/>
+        <register name="SSPBUF"  addr="0x13" />
+        <register name="SSPCON"  addr="0x14" bits="SSPM0,SSPM1,SSPM2,SSPM3,CKP,SSPEN,SSPOV,WCOL" />
+        <register name="CCPR1L"  addr="0x15" bits=""/>
+        <register name="CCPR1H"  addr="0x16" bits=""/>
+        <register name="CCP1CON" addr="0x17" 
+                  bits="CCP1M0,CCP1M1,CCP1M2,CCP1M3,CCP1Y,CCP1X,0,0"/>
+                  
+        <register name="RCSTA"   addr="0x18"  mask="11111000"
+                  bits="RX9D,OERR,FERR,ADEN,CREN,SREN,RX9,SPEN"/>
+                  
+        <register name="TXREG"   addr="0x19" bits=""/>
+        <register name="RCREG"   addr="0x1A" mask="00000000" bits=""/>
+        
+        <register name="CCPR2L"  addr="0x1B" bits=""/>
+        <register name="CCPR2H"  addr="0x1C" bits=""/>
+        <register name="CCP2CON" addr="0x1D" 
+                  bits="CCP2M0,CCP2M1,CCP2M2,CCP2M3,CCP2Y,CCP2X,0,0"/>
+        <register name="ADRESH"  addr="0x1E" bits=""/>
+        <register name="ADCON0"  addr="0x1F" 
+                  bits="ADON,0,GO/DONE,CHS0,CHS1,CHS2,ADCS0,ADCS1"/>
+    </regblock>
+    <datablock name="GPR0" start="0x0020" end="0x007F"/>
+    <!-- BANK 1 -->
+    <regblock name="SFR1" start="0x0080" end="0x009F">
+        <mapped                  addr="0x80" mapto="0x00"/><!-- INDF -->
+        <register name="OPTION" addr="0x81" reset="11111111"
+                  bits="PS0,PS1,PS2,PSA,T0SE,T0CS,INTEDG,RBPU"/>
+                  
+        <mapped                  addr="0x82" mapto="0x02"/><!-- PCL -->
+        <mapped                  addr="0x83" mapto="0x03"/><!-- STATUS -->
+        <mapped                  addr="0x84" mapto="0x04"/><!-- FSR -->
+        <register name="TRISA"   addr="0x85" bits="0-7" reset="00111111" mask="00111111"/>
+        <register name="TRISB"   addr="0x86" bits="0-7" reset="11111111"/>
+        <register name="TRISC"   addr="0x87" bits="0-7" reset="11111111"/>
+        <mapped                  addr="0x8A" mapto="0x0A"/><!-- PCLATH -->
+        <mapped                  addr="0x8B" mapto="0x0B"/><!-- INTCON -->
+        <register name="PIE1"    addr="0x8C" 
+                  bits="TMR1IE,TMR2IE,CCP1IE,SSPIE,TXIE,RCIE,ADIE,PSPIE"/>
+                  
+        <register name="PIE2"    addr="0x8D" 
+                  bits="CCP2IE,0,0,BCLIE,EEIE,0,0,0"/>
+                  
+        <register name="PCON"    addr="0x8E" reset="00001000"
+                  bits="BOR,POR,0,OSCF" />
+                  
+        <register name="SSPCON2" addr="0x91" mask="10111111"
+                  bits="SEN,RSEN,PEN,RCEN,ACKEN,ACKDT,ACKSTAT,GCEN" />
+                  
+        <register name="PR2"     addr="0x92" bits="" reset="11111111"/>
+        <register name="SSPADD"  addr="0x93" />
+        <register name="SSPSTAT" addr="0x94" mask="11000000"
+                  bits="BF,UA,RW,S,P,DA,CKE,SMP" />
+                  
+        <register name="TXSTA"   addr="0x98" reset="00000010" mask="11110101"
+                  bits="TX9D,TRMT,BRGH,0,SYNC,TXEN,TX9,CSRC"/>
+                  
+        <register name="SPBRG"  addr="0x99" bits=""/>
+        
+        <register name="ADRESL" addr="0x9E" bits=""/>
+        <register name="ADCON1" addr="0x9F" 
+                  bits="PCFG0,PCFG1,PCFG2,PCFG3,0,0,0,ADFM"/>
+    </regblock>
+    <!-- BANK 2 -->
+    <regblock name="SFR2" start="0x0100" end="0x010F">
+        <mapped                  addr="0x100" mapto="0x00"/><!-- INDF -->
+        <mapped                  addr="0x101" mapto="0x01"/><!-- TMR0 -->
+        <mapped                  addr="0x102" mapto="0x02"/><!-- PCL -->
+        <mapped                  addr="0x103" mapto="0x03"/><!-- STATUS -->
+        <mapped                  addr="0x104" mapto="0x04"/><!-- FSR -->
+        <mapped                  addr="0x106" mapto="0x04"/><!-- PORTB -->
+        <mapped                  addr="0x10A" mapto="0x0A"/><!-- PCLATH -->
+        <mapped                  addr="0x10B" mapto="0x0B"/><!-- INTCON -->
+        
+        <register name="EEDATA" addr="0x10C" bits=""/>
+        <register name="EEADR"  addr="0x10D" bits=""/>
+        <register name="EEDATH" addr="0x10E" bits=""/>
+        <register name="EEADRH" addr="0x10F" bits=""/>
+    </regblock>
+    <!-- BANK 3 -->
+    <regblock name="SFR3" start="0x0180" end="0x018F">
+        <mapped                  addr="0x180" mapto="0x00"/><!-- INDF -->
+        <mapped                  addr="0x181" mapto="0x81"/><!-- OPTION -->
+        <mapped                  addr="0x182" mapto="0x02"/><!-- PCL -->
+        <mapped                  addr="0x183" mapto="0x03"/><!-- STATUS -->
+        <mapped                  addr="0x184" mapto="0x04"/><!-- FSR -->
+        <mapped                  addr="0x186" mapto="0x86"/><!-- TRISB -->
+        <mapped                  addr="0x18A" mapto="0x0A"/><!-- PCLATH -->
+        <mapped                  addr="0x18B" mapto="0x0B"/><!-- INTCON -->
+        
+        <register name="EECON1" addr="0x18C" bits="RD,WR,WREN,WRERR,0,0,0,EEPGD"/>
+        <register name="EECON2" addr="0x18D" bits=""/>
+    </regblock>
+</parts>

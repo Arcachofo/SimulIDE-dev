@@ -1,0 +1,51 @@
+
+ADC:
+- Type 00: megaX8,XX4.
+- Type 01: mega8.
+- Type 02: tinyX4.
+- Type 03: mega32,1281.
+- Type 04: mega640.
+- Type 10: tiny13.
+- Type 11: tinyX5.
+
+Timer:
+- Type 800: 8 bits.
+    tiny13   Timer0.
+    tityX313 Timer0.
+    tinyX4   Timer0.
+    tinyX5   Timer0.
+    megaX8   Timer0.
+    mega640  Timer0.
+    mega1281 Timer0.
+    
+- Type 801: 8 bits.
+    mega8    Timer0.
+   
+- Type 810: 8 bits.
+    tinyX5  Timer1.
+
+- Type 820: 8 bits.
+    megaX8   Timer2.
+    megaXX4  Timer2.
+    mega640  Timer2.
+    mega1281 Timer2.
+    
+- Type 821: 8 bits.
+    mega8    Timer2.
+    mega32   Timer0.
+    mega32   Timer2.
+    
+- Type 160: 16 bits.
+    tinyX313 Timer1.
+    tinyX4   Timer1.
+    mega8    Timer1.
+    megaX8   Timer1.
+    megaXX4  Timer1,3.
+    mega640  Timer1,3,4,5.
+    mega1281 Timer1,3.
+    mega32   Timer1.
+    
+WDT:
+- Type 00: megaX8,XX4,640,1281, tinyX4,X5,13,X313.
+- Type 01: mega8.
+

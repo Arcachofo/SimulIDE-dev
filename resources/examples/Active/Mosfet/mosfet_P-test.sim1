@@ -1,0 +1,25 @@
+<circuit version="" rev="2208" stepSize="1000000" stepsPS="1000000" NLsteps="100000" reaStep="1000000" animate="1" >
+
+<item itemtype="Probe" CircId="Probe-7" mainComp="false" Show_id="false" Show_Val="true" Pos="-396,-236" rotation="-45" hflip="1" vflip="1" label="Probe-1" idLabPos="16,-16" labelrot="45" valLabPos="7.17303,-23.6935" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
+
+<item itemtype="Voltage Source" CircId="Volt. Source-6" mainComp="false" ShowProp="MaxValue" Show_id="false" Show_Val="true" Pos="-456,-236" rotation="0" hflip="1" vflip="1" label="Volt. Source-2" idLabPos="-16,-24" labelrot="0" valLabPos="-6.28964,-41.2469" valLabRot="0" Running="false" Value_Volt="0 V" MaxValue="5 V" MinValue="0 V" />
+
+<item itemtype="Ground" CircId="Ground (0 V)-5" mainComp="false" Show_id="false" Show_Val="false" Pos="-364,-172" rotation="0" hflip="1" vflip="1" label="Ground (0 V)-3" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" />
+
+<item itemtype="Amperimeter" CircId="Amperimeter-4" mainComp="false" Show_id="false" Show_Val="false" Pos="-372,-332" rotation="0" hflip="1" vflip="1" label="Amperimeter-4" idLabPos="-12,-24" labelrot="0" valLabPos="-20,-22" valLabRot="0" />
+
+<item itemtype="Voltage Source" CircId="Volt. Source-3" mainComp="false" ShowProp="MaxValue" Show_id="false" Show_Val="true" Pos="-456,-316" rotation="0" hflip="1" vflip="1" label="Volt. Source-5" idLabPos="-16,-24" labelrot="0" valLabPos="-4.97562,-41.9039" valLabRot="0" Running="false" Value_Volt="0 V" MaxValue="5 V" MinValue="0 V" />
+
+<item itemtype="Mosfet" CircId="Mosfet-2" mainComp="false" Show_id="false" Show_Val="false" Pos="-372,-220" rotation="0" hflip="1" vflip="-1" label="Mosfet-6" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" P_Channel="true" Depletion="false" RDSon="1 Ω" Threshold="3 V" />
+
+<item itemtype="Probe" CircId="Probe-1" mainComp="false" Show_id="false" Show_Val="true" Pos="-348,-292" rotation="-45" hflip="1" vflip="1" label="Probe-7" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
+
+<item itemtype="Connector" uid="Connector-8" startpinid="Volt. Source-6-outPin" endpinid="Mosfet-2-Gate" pointList="-428,-220,-388,-220" />
+
+<item itemtype="Connector" uid="Connector-10" startpinid="Volt. Source-3-outPin" endpinid="Amperimeter-4-lPin" pointList="-428,-300,-380,-300,-380,-316" />
+
+<item itemtype="Connector" uid="Connector-12" startpinid="Amperimeter-4-rPin" endpinid="Mosfet-2-Sour" pointList="-364,-316,-364,-236" />
+
+<item itemtype="Connector" uid="Connector-14" startpinid="Mosfet-2-Dren" endpinid="Ground (0 V)-5-Gnd" pointList="-364,-204,-364,-188" />
+
+</circuit>

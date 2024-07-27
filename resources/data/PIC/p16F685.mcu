@@ -1,0 +1,57 @@
+<!DOCTYPE SimulIDE>
+
+<mcu name="p16F685" core="Pic14" data="512" prog="4096" progword="2" eeprom="256"
+            inst_cycle="4" freq="20000000">
+            
+    <include file="pic/pic14_regs.xml" />
+    <include file="p16F685/p16F685_regs.xml" />
+    
+    <!-- BANK 0 -->
+      <regblock name="SFR0" start="0x001E" end="0x001F" >
+        <register name="TMR2"    addr="0x11" />
+        <register name="T2CON"   addr="0x12" mask="01111111"
+                  bits="T2CKPS0,T2CKPS1,TMR2ON,TOUTPS0,TOUTPS1,TOUTPS2,TOUTPS3"/>
+                  
+        <register name="CCPR1L"  addr="0x15" bits=""/>
+        <register name="CCPR1H"  addr="0x16" bits=""/>
+        <register name="CCP1CON" addr="0x17" 
+                  bits="CCP1M0,CCP1M1,CCP1M2,CCP1M3,DC1B0,DC1B1,P1M0,P1M1"/>
+        
+        <register name="PWM1CON" addr="0x1C"
+                  bits="PDC0,PDC1,PDC2,PDC3,PDC4,PDC5,PRSEN" />
+                  
+        <register name="ECCPAS"  addr="0x1D" 
+                  bits="PSSBD0,PSSBD1,PSSAC0,PSSAC1,ECCPAS0,ECCPAS1,ECCPAS2,ECCPASE"/>
+      </regblock>
+      
+    <!-- BANK 1 -->
+      <regblock name="SFR1" start="0x009E" end="0x0009F" >
+        <register name="PR2"    addr="0x92" bits="" reset="11111111"/>
+      </regblock>
+      
+    <!-- BANK 2 -->
+      <regblock name="SFR2" start="0x0100" end="0x010F">
+        <register name="EEDATH"  addr="0x10E" />
+        <register name="EEADRH"  addr="0x10F" />
+      </regblock>
+    
+    <!-- BANK 3 -->
+      <regblock name="SFR3" start="0x0180" end="0x018F">
+        <register name="PSTRCON" addr="0x19D" reset="00000001" mask="00011111"
+                  bits="STRA,STRB,STRC,STRD,STRSYNC"/>
+      </regblock>
+    
+    <include file="p16F685/p16F685_int.xml" />
+                   
+    <include file="p16F685/p16F685_perif.xml" />
+    
+    <timer name="TIMER2" type="820" configregsA="T2CON" configregsB="PR2"
+                   counter="TMR2"
+                   interrupt="T2_MATCH"
+                   prescalers="1,4,16,16"/>
+                   
+    <ccpunit name="CCP+1" type="01" configregsA="CCP1CON"
+                       ccpreg="CCPR1L,CCPR1H"
+                       pin="PORTC2"
+                       interrupt="CCP1" />
+</mcu>

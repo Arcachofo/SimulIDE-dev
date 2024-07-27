@@ -1,0 +1,35 @@
+<!DOCTYPE SimulIDE>
+
+<mcu name="p16F884" core="Pic14" data="512" prog="4096" progword="2" eeprom="256"
+            inst_cycle="4" freq="20000000">
+            
+    <include file="pic/pic14_regs.xml" />
+    <include file="p16F88x/p16F88x_regs.xml" />
+
+        <!-- BANK 0 -->
+        <regblock name="SFR0" start="0x0008" end="0x0009" >
+            <register name="PORTD" addr="0x08" bits=""/>
+            <register name="PORTE" addr="0x09" bits=""  mask="00001111"/>
+        </regblock>
+        <!-- BANK 1 -->
+        <regblock name="SFR0" start="0x0088" end="0x0089" >
+            <register name="TRISD" addr="0x88" bits="" reset="11111111"/>
+            <register name="TRISE" addr="0x89" bits="" reset="00001111" mask="00001111"/>
+        </regblock>
+        <datablock name="GPR1" start="0x00A0" end="0x00EF"/>
+        <!-- BANK 2 -->
+        <datablock name="GPR2" start="0x0120" end="0x016F"/>
+        
+    <include file="p16F88x/p16F88x_int.xml" />
+    <include file="p16F88x/p16F88x_perif.xml" />
+
+        <port name="PORTD" pins="8" outreg="PORTD" dirreg="!TRISD"/>
+        <port name="PORTE" pins="4" outreg="PORTE" dirreg="!TRISE" resetpin="PORTE3"/>
+        
+        <adc name="ADC" type="10" bits="10" configregsA="ADCON0" configregsB="ADCON1"
+                        dataregs="ADRESL,ADRESH"
+                        interrupt="ADC"
+                        prescalers="2,8,32"
+                        adcpins="PORTA0,PORTA1,PORTA2,PORTA3,PORTA5,PORTE0,PORTE1,PORTE2,PORTB2,PORTB3,PORTB1,PORTB4,PORTB0,PORTB5"
+                        vrefpins="PORTA3,PORTA2"/>
+</mcu>

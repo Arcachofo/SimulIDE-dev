@@ -1,0 +1,167 @@
+<circuit type="simulide_1.0" stepSize="1000000" stepsPS="1000000" NLsteps="100000" animate="1" >
+
+<item itemtype="ResistorDip" CircId="ResistorDip-1" mainComp="false" ShowProp="Resistance" Show_id="false" Show_Val="true" Pos="-444,-244" rotation="0" hflip="1" vflip="1" label="ResistorDip-24" idLabPos="-24,-40" labelrot="0" valLabPos="5,-26" valLabRot="90" Resistance="10 Ω" Size="7 _Resist." />
+
+<item itemtype="Seven Segment" CircId="Seven Segment-2" mainComp="false" Show_id="false" Show_Val="false" Pos="-388,-244" rotation="0" hflip="1" vflip="1" label="Seven Segment-23" idLabPos="20,-44" labelrot="0" valLabPos="0,0" valLabRot="0" NumDisplays="4 _7seg" Color="0" Vertical_Pins="false" CommonCathode="true" Threshold="2.4 V" MaxCurrent="0.02 A" Resistance="1 Ω" />
+
+<item itemtype="Clock" CircId="Clock-3" mainComp="false" Show_id="false" Show_Val="false" Pos="-564,-276" rotation="0" hflip="1" vflip="1" label="Clock-2" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="true" Running="true" Voltage="5 V" Freq="5 Hz" Always_On="false" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-4" mainComp="false" Show_id="false" Show_Val="false" Pos="-564,-252" rotation="0" hflip="1" vflip="1" label="Fixed Voltage-4" idLabPos="-64,-24" labelrot="0" valLabPos="-50,-5" valLabRot="0" Out="false" Voltage="5 V" />
+
+<item itemtype="Buffer" CircId="Buffer-5" mainComp="false" Show_id="false" Show_Val="false" Pos="-404,-180" rotation="0" hflip="1" vflip="1" label="Buffer-9" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Tristate="false" Inverted="true" Open_Collector="false" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="1 Ω" rndPD="false" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
+
+<item itemtype="Buffer" CircId="Buffer-6" mainComp="false" Show_id="false" Show_Val="false" Pos="-420,-188" rotation="0" hflip="1" vflip="1" label="Buffer-9" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Tristate="false" Inverted="true" Open_Collector="false" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="1 Ω" rndPD="false" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
+
+<item itemtype="Buffer" CircId="Buffer-7" mainComp="false" Show_id="false" Show_Val="false" Pos="-432,-196" rotation="0" hflip="1" vflip="1" label="Buffer-9" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Tristate="false" Inverted="true" Open_Collector="false" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="1 Ω" rndPD="false" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
+
+<item itemtype="Buffer" CircId="Buffer-8" mainComp="false" Show_id="false" Show_Val="false" Pos="-448,-204" rotation="0" hflip="1" vflip="1" label="Buffer-9" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Tristate="false" Inverted="true" Open_Collector="false" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="1 Ω" rndPD="false" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-9" mainComp="false" Show_id="false" Show_Val="false" Pos="-564,-236" rotation="0" hflip="1" vflip="1" label="Fixed Voltage-4" idLabPos="-64,-24" labelrot="0" valLabPos="-50,-5" valLabRot="0" Out="false" Voltage="5 V" />
+
+<item itemtype="Subcircuit" CircId="74C926-10" mainComp="false" Show_id="true" Show_Val="false" Pos="-516,-276" rotation="0" hflip="1" vflip="1" label="74C926-65" idLabPos="0,-20" labelrot="0" valLabPos="13,66" valLabRot="-90" Logic_Symbol="true" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-834" mainComp="false" Show_id="false" Show_Val="false" Pos="-564,-220" rotation="0" hflip="1" vflip="1" label="Fixed Voltage-4" idLabPos="-64,-24" labelrot="0" valLabPos="-50,-5" valLabRot="0" Out="true" Voltage="5 V" />
+
+<item itemtype="Probe" CircId="Probe-835" mainComp="false" Show_id="false" Show_Val="true" Pos="-268,-172" rotation="-45" hflip="1" vflip="1" label="Probe-83" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
+
+<item itemtype="Subcircuit" CircId="74C926-890" mainComp="false" Show_id="true" Show_Val="false" Pos="-556,-508" rotation="0" hflip="1" vflip="1" label="74C926-65" idLabPos="0,-20" labelrot="0" valLabPos="13,50" valLabRot="-90" Logic_Symbol="false" />
+
+<item itemtype="Buffer" CircId="Buffer-1403" mainComp="false" Show_id="false" Show_Val="false" Pos="-428,-432" rotation="0" hflip="1" vflip="1" label="Buffer-9" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Tristate="false" Inverted="true" Open_Collector="false" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="1 Ω" rndPD="false" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
+
+<item itemtype="Buffer" CircId="Buffer-1404" mainComp="false" Show_id="false" Show_Val="false" Pos="-444,-440" rotation="0" hflip="1" vflip="1" label="Buffer-9" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Tristate="false" Inverted="true" Open_Collector="false" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="1 Ω" rndPD="false" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
+
+<item itemtype="Buffer" CircId="Buffer-1405" mainComp="false" Show_id="false" Show_Val="false" Pos="-400,-416" rotation="0" hflip="1" vflip="1" label="Buffer-9" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Tristate="false" Inverted="true" Open_Collector="false" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="1 Ω" rndPD="false" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
+
+<item itemtype="Seven Segment" CircId="Seven Segment-1406" mainComp="false" Show_id="false" Show_Val="false" Pos="-384,-480" rotation="0" hflip="1" vflip="1" label="Seven Segment-23" idLabPos="20,-44" labelrot="0" valLabPos="0,0" valLabRot="0" NumDisplays="4 _7seg" Color="0" Vertical_Pins="false" CommonCathode="true" Threshold="2.4 V" MaxCurrent="0.02 A" Resistance="1 Ω" />
+
+<item itemtype="Buffer" CircId="Buffer-1407" mainComp="false" Show_id="false" Show_Val="false" Pos="-416,-424" rotation="0" hflip="1" vflip="1" label="Buffer-9" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Tristate="false" Inverted="true" Open_Collector="false" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="1 Ω" rndPD="false" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
+
+<item itemtype="Probe" CircId="Probe-1408" mainComp="false" Show_id="false" Show_Val="true" Pos="-240,-560" rotation="-45" hflip="1" vflip="1" label="Probe-83" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
+
+<item itemtype="ResistorDip" CircId="ResistorDip-1409" mainComp="false" ShowProp="Resistance" Show_id="false" Show_Val="true" Pos="-440,-480" rotation="0" hflip="1" vflip="1" label="ResistorDip-24" idLabPos="-24,-40" labelrot="0" valLabPos="5,-26" valLabRot="90" Resistance="10 Ω" Size="7 _Resist." />
+
+<item itemtype="Node" CircId="Node-1444" mainComp="false" Pos="-540,-276" />
+
+<item itemtype="Node" CircId="Node-1448" mainComp="false" Pos="-536,-236" />
+
+<item itemtype="Node" CircId="Node-1452" mainComp="false" Pos="-544,-220" />
+
+<item itemtype="Node" CircId="Node-1455" mainComp="false" Pos="-532,-252" />
+
+<item itemtype="Connector" uid="Connector-836" startpinid="ResistorDip-1-resistor0-ePin1" endpinid="Seven Segment-2-pin_a" pointList="-428,-268,-412,-268" />
+
+<item itemtype="Connector" uid="Connector-838" startpinid="ResistorDip-1-resistor1-ePin3" endpinid="Seven Segment-2-pin_b" pointList="-428,-260,-412,-260" />
+
+<item itemtype="Connector" uid="Connector-840" startpinid="ResistorDip-1-resistor2-ePin5" endpinid="Seven Segment-2-pin_c" pointList="-428,-252,-412,-252" />
+
+<item itemtype="Connector" uid="Connector-842" startpinid="ResistorDip-1-resistor3-ePin7" endpinid="Seven Segment-2-pin_d" pointList="-428,-244,-412,-244" />
+
+<item itemtype="Connector" uid="Connector-844" startpinid="ResistorDip-1-resistor4-ePin9" endpinid="Seven Segment-2-pin_e" pointList="-428,-236,-412,-236" />
+
+<item itemtype="Connector" uid="Connector-846" startpinid="ResistorDip-1-resistor5-ePin11" endpinid="Seven Segment-2-pin_f" pointList="-428,-228,-412,-228" />
+
+<item itemtype="Connector" uid="Connector-848" startpinid="ResistorDip-1-resistor6-ePin13" endpinid="Seven Segment-2-pin_g" pointList="-428,-220,-412,-220" />
+
+<item itemtype="Connector" uid="Connector-850" startpinid="Buffer-8-out" endpinid="Seven Segment-2-pin_commond" pointList="-432,-204,-284,-204,-284,-212" />
+
+<item itemtype="Connector" uid="Connector-852" startpinid="Buffer-7-out" endpinid="Seven Segment-2-pin_commonc" pointList="-416,-196,-316,-196,-316,-212" />
+
+<item itemtype="Connector" uid="Connector-854" startpinid="Buffer-6-out" endpinid="Seven Segment-2-pin_commonb" pointList="-404,-188,-348,-188,-348,-212" />
+
+<item itemtype="Connector" uid="Connector-856" startpinid="Buffer-5-out" endpinid="Seven Segment-2-pin_commona" pointList="-388,-180,-380,-180,-380,-212" />
+
+<item itemtype="Connector" uid="Connector-858" startpinid="74C926-10-a" endpinid="ResistorDip-1-resistor0-ePin0" pointList="-476,-268,-460,-268" />
+
+<item itemtype="Connector" uid="Connector-860" startpinid="74C926-10-b" endpinid="ResistorDip-1-resistor1-ePin2" pointList="-476,-260,-460,-260" />
+
+<item itemtype="Connector" uid="Connector-862" startpinid="74C926-10-c" endpinid="ResistorDip-1-resistor2-ePin4" pointList="-476,-252,-460,-252" />
+
+<item itemtype="Connector" uid="Connector-864" startpinid="74C926-10-d" endpinid="ResistorDip-1-resistor3-ePin6" pointList="-476,-244,-460,-244" />
+
+<item itemtype="Connector" uid="Connector-866" startpinid="74C926-10-e" endpinid="ResistorDip-1-resistor4-ePin8" pointList="-476,-236,-460,-236" />
+
+<item itemtype="Connector" uid="Connector-868" startpinid="74C926-10-f" endpinid="ResistorDip-1-resistor5-ePin10" pointList="-476,-228,-460,-228" />
+
+<item itemtype="Connector" uid="Connector-870" startpinid="74C926-10-g" endpinid="ResistorDip-1-resistor6-ePin12" pointList="-476,-220,-460,-220" />
+
+<item itemtype="Connector" uid="Connector-872" startpinid="Clock-3-outnod" endpinid="Node-1444-0" pointList="-548,-276,-540,-276" />
+
+<item itemtype="Connector" uid="Connector-874" startpinid="Fixed Voltage-4-outnod" endpinid="Node-1455-0" pointList="-548,-252,-532,-252" />
+
+<item itemtype="Connector" uid="Connector-876" startpinid="Fixed Voltage-9-outnod" endpinid="Node-1448-0" pointList="-548,-236,-536,-236" />
+
+<item itemtype="Connector" uid="Connector-878" startpinid="Fixed Voltage-834-outnod" endpinid="Node-1452-0" pointList="-548,-220,-544,-220" />
+
+<item itemtype="Connector" uid="Connector-880" startpinid="74C926-10-DS0" endpinid="Buffer-8-in0" pointList="-476,-204,-464,-204" />
+
+<item itemtype="Connector" uid="Connector-882" startpinid="74C926-10-DS1" endpinid="Buffer-7-in0" pointList="-476,-196,-448,-196" />
+
+<item itemtype="Connector" uid="Connector-884" startpinid="74C926-10-DS2" endpinid="Buffer-6-in0" pointList="-476,-188,-436,-188" />
+
+<item itemtype="Connector" uid="Connector-886" startpinid="74C926-10-DS3" endpinid="Buffer-5-in0" pointList="-476,-180,-420,-180" />
+
+<item itemtype="Connector" uid="Connector-888" startpinid="Probe-835-inpin" endpinid="74C926-10-CO" pointList="-284,-156,-476,-156,-476,-172" />
+
+<item itemtype="Connector" uid="Connector-1410" startpinid="Buffer-1404-out" endpinid="Seven Segment-1406-pin_commond" pointList="-428,-440,-280,-440,-280,-448" />
+
+<item itemtype="Connector" uid="Connector-1412" startpinid="ResistorDip-1409-resistor6-ePin13" endpinid="Seven Segment-1406-pin_g" pointList="-424,-456,-408,-456" />
+
+<item itemtype="Connector" uid="Connector-1414" startpinid="ResistorDip-1409-resistor1-ePin3" endpinid="Seven Segment-1406-pin_b" pointList="-424,-496,-408,-496" />
+
+<item itemtype="Connector" uid="Connector-1416" startpinid="Buffer-1403-out" endpinid="Seven Segment-1406-pin_commonc" pointList="-412,-432,-312,-432,-312,-448" />
+
+<item itemtype="Connector" uid="Connector-1418" startpinid="ResistorDip-1409-resistor2-ePin5" endpinid="Seven Segment-1406-pin_c" pointList="-424,-488,-408,-488" />
+
+<item itemtype="Connector" uid="Connector-1420" startpinid="Buffer-1407-out" endpinid="Seven Segment-1406-pin_commonb" pointList="-400,-424,-344,-424,-344,-448" />
+
+<item itemtype="Connector" uid="Connector-1423" startpinid="ResistorDip-1409-resistor4-ePin9" endpinid="Seven Segment-1406-pin_e" pointList="-424,-472,-408,-472" />
+
+<item itemtype="Connector" uid="Connector-1425" startpinid="Buffer-1405-out" endpinid="Seven Segment-1406-pin_commona" pointList="-384,-416,-376,-416,-376,-448" />
+
+<item itemtype="Connector" uid="Connector-1427" startpinid="ResistorDip-1409-resistor5-ePin11" endpinid="Seven Segment-1406-pin_f" pointList="-424,-464,-408,-464" />
+
+<item itemtype="Connector" uid="Connector-1429" startpinid="ResistorDip-1409-resistor3-ePin7" endpinid="Seven Segment-1406-pin_d" pointList="-424,-480,-408,-480" />
+
+<item itemtype="Connector" uid="Connector-1431" startpinid="ResistorDip-1409-resistor0-ePin1" endpinid="Seven Segment-1406-pin_a" pointList="-424,-504,-408,-504" />
+
+<item itemtype="Connector" uid="Connector-1433" startpinid="74C926-890-a" endpinid="ResistorDip-1409-resistor0-ePin0" pointList="-516,-476,-472,-476,-472,-504,-456,-504" />
+
+<item itemtype="Connector" uid="Connector-1434" startpinid="74C926-890-b" endpinid="ResistorDip-1409-resistor1-ePin2" pointList="-516,-484,-468,-484,-468,-496,-456,-496" />
+
+<item itemtype="Connector" uid="Connector-1435" startpinid="74C926-890-c" endpinid="ResistorDip-1409-resistor2-ePin4" pointList="-516,-492,-464,-492,-464,-488,-456,-488" />
+
+<item itemtype="Connector" uid="Connector-1436" startpinid="74C926-890-d" endpinid="ResistorDip-1409-resistor3-ePin6" pointList="-564,-500,-572,-500,-572,-512,-488,-512,-488,-480,-456,-480" />
+
+<item itemtype="Connector" uid="Connector-1437" startpinid="74C926-890-e" endpinid="ResistorDip-1409-resistor4-ePin8" pointList="-564,-492,-576,-492,-576,-528,-492,-528,-492,-472,-456,-472" />
+
+<item itemtype="Connector" uid="Connector-1438" startpinid="74C926-890-f" endpinid="ResistorDip-1409-resistor5-ePin10" pointList="-564,-484,-580,-484,-580,-532,-496,-532,-496,-464,-456,-464" />
+
+<item itemtype="Connector" uid="Connector-1439" startpinid="74C926-890-g" endpinid="ResistorDip-1409-resistor6-ePin12" pointList="-564,-476,-584,-476,-584,-536,-500,-536,-500,-456,-456,-456" />
+
+<item itemtype="Connector" uid="Connector-1440" startpinid="Buffer-1404-in0" endpinid="74C926-890-DS0" pointList="-460,-440,-460,-412,-580,-412,-580,-452,-564,-452" />
+
+<item itemtype="Connector" uid="Connector-1441" startpinid="Buffer-1403-in0" endpinid="74C926-890-DS1" pointList="-444,-432,-444,-408,-588,-408,-588,-444,-564,-444" />
+
+<item itemtype="Connector" uid="Connector-1442" startpinid="Buffer-1407-in0" endpinid="74C926-890-DS2" pointList="-432,-424,-516,-424,-516,-436" />
+
+<item itemtype="Connector" uid="Connector-1443" startpinid="Buffer-1405-in0" endpinid="74C926-890-DS3" pointList="-416,-416,-512,-416,-512,-444,-516,-444" />
+
+<item itemtype="Connector" uid="Connector-1445" startpinid="Node-1444-2" endpinid="74C926-10-CLK" pointList="-540,-276,-540,-268,-524,-268" />
+
+<item itemtype="Connector" uid="Connector-1446" startpinid="Node-1444-1" endpinid="74C926-890-CLK" pointList="-540,-276,-540,-364,-508,-364,-508,-452,-516,-452" />
+
+<item itemtype="Connector" uid="Connector-1447" startpinid="74C926-890-CO" endpinid="Probe-1408-inpin" pointList="-516,-468,-504,-468,-504,-544,-256,-544" />
+
+<item itemtype="Connector" uid="Connector-1449" startpinid="Node-1448-2" endpinid="74C926-10-RES" pointList="-536,-236,-524,-236" />
+
+<item itemtype="Connector" uid="Connector-1450" startpinid="Node-1448-1" endpinid="74C926-890-RES" pointList="-536,-236,-536,-360,-504,-360,-504,-460,-516,-460" />
+
+<item itemtype="Connector" uid="Connector-1451" startpinid="74C926-890-Dsel" endpinid="Node-1452-1" pointList="-564,-460,-592,-460,-592,-352,-544,-352,-544,-220" />
+
+<item itemtype="Connector" uid="Connector-1453" startpinid="Node-1452-2" endpinid="74C926-10-Dsel" pointList="-544,-220,-524,-220" />
+
+<item itemtype="Connector" uid="Connector-1454" startpinid="74C926-890-LE" endpinid="Node-1455-1" pointList="-564,-468,-576,-468,-576,-356,-532,-356,-532,-252" />
+
+<item itemtype="Connector" uid="Connector-1456" startpinid="Node-1455-2" endpinid="74C926-10-LE" pointList="-532,-252,-524,-252" />
+
+</circuit>

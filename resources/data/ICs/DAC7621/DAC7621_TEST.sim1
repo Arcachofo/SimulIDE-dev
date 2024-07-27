@@ -1,0 +1,83 @@
+<circuit type="simulide_1.0" stepSize="1000000" stepsPS="1000000" NLsteps="100000" animate="1" >
+
+<item itemtype="Buffer" CircId="Buffer-613" mainComp="false" Show_id="false" Show_Val="false" Pos="-252,-48" rotation="0" hflip="1" vflip="1" label="Buffer-613" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Tristate="false" Inverted="true" Open_Collector="false" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" rndPD="false" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
+
+<item itemtype="And Gate" CircId="And Gate-612" mainComp="false" Show_id="false" Show_Val="false" Pos="-216,-44" rotation="0" hflip="1" vflip="1" label="And Gate-612" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Num_Inputs="2 _Inputs" Inverted="true" Open_Collector="false" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" rndPD="false" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
+
+<item itemtype="Oscope" CircId="Oscope-607" mainComp="false" Show_id="false" Show_Val="false" Pos="40,-104" rotation="0" hflip="1" vflip="1" label="Oscope-607" idLabPos="-90,-100" labelrot="0" valLabPos="0,0" valLabRot="0" Basic_X="135 _Pixels" Basic_Y="135 _Pixels" TimDiv="32028021916" TimPos="0,0,0,0," VolDiv="1,0.5,1,1," Tunnels=",,,," Trigger="1" Filter="0 V" Trigger="1" AutoSC="4" Tracks="2" HideCh="false,false,false,false," VolPos="0,-2.5,0,0," />
+
+<item itemtype="Ground" CircId="Ground-605" mainComp="false" Show_id="false" Show_Val="false" Pos="-260,-80" rotation="0" hflip="1" vflip="1" label="Ground-605" idLabPos="-16,8" labelrot="0" valLabPos="0,0" valLabRot="0" />
+
+<item itemtype="Ground" CircId="Ground-601" mainComp="false" Show_id="false" Show_Val="false" Pos="-152,40" rotation="0" hflip="1" vflip="1" label="Ground-601" idLabPos="-16,8" labelrot="0" valLabPos="0,0" valLabRot="0" />
+
+<item itemtype="Clock" CircId="Clock-599" mainComp="false" Show_id="false" Show_Val="true" Pos="-304,-144" rotation="0" hflip="1" vflip="1" label="Clock-599" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="true" Running="true" Voltage="5 V" Freq="20000 Hz" Always_On="false" />
+
+<item itemtype="Subcircuit" CircId="74HC4040-361" mainComp="false" Show_id="true" Show_Val="false" Pos="-248,-160" rotation="0" hflip="1" vflip="1" label="74HC4040-361" idLabPos="0,-20" labelrot="0" valLabPos="13,36" valLabRot="-90" Logic_Symbol="true" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-354" mainComp="false" Show_id="false" Show_Val="true" Pos="-204,4" rotation="0" hflip="1" vflip="1" label="Fixed Voltage-354" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="true" Voltage="5 V" />
+
+<item itemtype="Subcircuit" CircId="DAC7621-1" mainComp="false" Show_id="true" Show_Val="false" Pos="-140,-160" rotation="0" hflip="1" vflip="1" label="DAC7621-1" idLabPos="0,-20" labelrot="0" valLabPos="13,44" valLabRot="-90" Logic_Symbol="true" />
+
+<item itemtype="Node" CircId="Node-622" mainComp="false" Pos="-268,-48" />
+
+<item itemtype="Node" CircId="Node-619" mainComp="false" Pos="-284,-144" />
+
+<item itemtype="Node" CircId="Node-617" mainComp="false" Pos="-164,-48" />
+
+<item itemtype="Node" CircId="Node-609" mainComp="false" Pos="-168,-64" />
+
+<item itemtype="Connector" uid="Connector-355" startpinid="Fixed Voltage-354-outnod" endpinid="DAC7621-1-!CLR" pointList="-188,4,-188,-24,-148,-24" />
+
+<item itemtype="Connector" uid="Connector-357" startpinid="DAC7621-1-!LDAC" endpinid="Node-617-0" pointList="-148,-48,-164,-48" />
+
+<item itemtype="Connector" uid="Connector-587" startpinid="74HC4040-361-Q11" endpinid="Node-609-0" pointList="-208,-64,-168,-64" />
+
+<item itemtype="Connector" uid="Connector-588" startpinid="74HC4040-361-Q5" endpinid="DAC7621-1-D5" pointList="-208,-112,-148,-112" />
+
+<item itemtype="Connector" uid="Connector-589" startpinid="74HC4040-361-Q4" endpinid="DAC7621-1-D4" pointList="-208,-120,-148,-120" />
+
+<item itemtype="Connector" uid="Connector-590" startpinid="74HC4040-361-Q6" endpinid="DAC7621-1-D6" pointList="-208,-104,-148,-104" />
+
+<item itemtype="Connector" uid="Connector-591" startpinid="74HC4040-361-Q3" endpinid="DAC7621-1-D3" pointList="-208,-128,-148,-128" />
+
+<item itemtype="Connector" uid="Connector-592" startpinid="74HC4040-361-Q2" endpinid="DAC7621-1-D2" pointList="-208,-136,-148,-136" />
+
+<item itemtype="Connector" uid="Connector-593" startpinid="74HC4040-361-Q1" endpinid="DAC7621-1-D1" pointList="-208,-144,-148,-144" />
+
+<item itemtype="Connector" uid="Connector-594" startpinid="74HC4040-361-Q0" endpinid="DAC7621-1-D0" pointList="-208,-152,-148,-152" />
+
+<item itemtype="Connector" uid="Connector-595" startpinid="74HC4040-361-Q8" endpinid="DAC7621-1-D8" pointList="-208,-88,-148,-88" />
+
+<item itemtype="Connector" uid="Connector-596" startpinid="74HC4040-361-Q7" endpinid="DAC7621-1-D7" pointList="-208,-96,-148,-96" />
+
+<item itemtype="Connector" uid="Connector-597" startpinid="74HC4040-361-Q9" endpinid="DAC7621-1-D9" pointList="-208,-80,-148,-80" />
+
+<item itemtype="Connector" uid="Connector-598" startpinid="74HC4040-361-Q10" endpinid="DAC7621-1-D10" pointList="-208,-72,-148,-72" />
+
+<item itemtype="Connector" uid="Connector-600" startpinid="Clock-599-outnod" endpinid="Node-619-0" pointList="-288,-144,-284,-144" />
+
+<item itemtype="Connector" uid="Connector-606" startpinid="Ground-605-Gnd" endpinid="74HC4040-361-MR" pointList="-260,-96,-260,-112,-256,-112" />
+
+<item itemtype="Connector" uid="Connector-608" startpinid="Oscope-607-Pin0" endpinid="DAC7621-1-Vout" pointList="-48,-152,-100,-152" />
+
+<item itemtype="Connector" uid="Connector-610" startpinid="Node-609-2" endpinid="DAC7621-1-D11" pointList="-168,-64,-148,-64" />
+
+<item itemtype="Connector" uid="Connector-611" startpinid="Node-609-1" endpinid="Oscope-607-Pin1" pointList="-168,-64,-168,4,-68,4,-68,-120,-48,-120" />
+
+<item itemtype="Connector" uid="Connector-614" startpinid="Buffer-613-out" endpinid="And Gate-612-in0" pointList="-236,-48,-232,-48" />
+
+<item itemtype="Connector" uid="Connector-615" startpinid="Buffer-613-in0" endpinid="Node-622-0" pointList="-268,-48,-268,-48" />
+
+<item itemtype="Connector" uid="Connector-616" startpinid="And Gate-612-out" endpinid="Node-617-1" pointList="-200,-44,-200,-48,-164,-48" />
+
+<item itemtype="Connector" uid="Connector-620" startpinid="Node-619-2" endpinid="74HC4040-361-!CP" pointList="-284,-144,-256,-144" />
+
+<item itemtype="Connector" uid="Connector-621" startpinid="Node-619-1" endpinid="Node-622-1" pointList="-284,-144,-284,-48,-268,-48" />
+
+<item itemtype="Connector" uid="Connector-623" startpinid="Node-622-2" endpinid="And Gate-612-in1" pointList="-268,-48,-268,-40,-232,-40" />
+
+<item itemtype="Connector" uid="Connector-618" startpinid="Node-617-2" endpinid="DAC7621-1-!CS" pointList="-164,-48,-164,-40,-148,-40" />
+
+<item itemtype="Connector" uid="Connector-705" startpinid="Ground-601-Gnd" endpinid="DAC7621-1-R/!W" pointList="-152,24,-152,-32,-148,-32" />
+
+</circuit>

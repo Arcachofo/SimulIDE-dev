@@ -1,0 +1,43 @@
+<circuit version="" rev="2208" stepSize="1000000" stepsPS="1000000" NLsteps="100000" reaStep="1000000" animate="0" >
+
+<item itemtype="Amperimeter" CircId="Amperimetro-10" mainComp="false" Show_id="false" Show_Val="false" Pos="-332,-292" rotation="0" hflip="1" vflip="1" label="Amperimetro-24" idLabPos="-12,-24" labelrot="0" valLabPos="0,0" valLabRot="0" />
+
+<item itemtype="Probe" CircId="Sonda Voltaje.-9" mainComp="false" Show_id="false" Show_Val="true" Pos="-428,-284" rotation="-45" hflip="1" vflip="1" label="Sonda Voltaje.-23" idLabPos="16,-16" labelrot="45" valLabPos="10.1596,-17.5213" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
+
+<item itemtype="Potentiometer" CircId="Potenciometro-8" mainComp="false" ShowProp="Resistance" Show_id="false" Show_Val="true" Pos="-468,-268" rotation="-90" hflip="1" vflip="1" label="Potenciometro-19" idLabPos="-16,-24" labelrot="0" valLabPos="25,-26" valLabRot="-270" Resistance="1 kΩ" Value_Ohm="500 Ω" Slider="false" Scale="1" />
+
+<item itemtype="Rail" CircId="Rail.-7" mainComp="false" ShowProp="Voltage" Show_id="false" Show_Val="true" Pos="-468,-316" rotation="90" hflip="1" vflip="1" label="Rail.-18" idLabPos="-64,-24" labelrot="0" valLabPos="-14.0334,6.03342" valLabRot="-90" Voltage="5 V" />
+
+<item itemtype="Rail" CircId="Rail.-6" mainComp="false" ShowProp="Voltage" Show_id="false" Show_Val="true" Pos="-468,-220" rotation="-90" hflip="1" vflip="1" label="Rail.-17" idLabPos="-64,-24" labelrot="0" valLabPos="-3.02057,-8.51928" valLabRot="90" Voltage="-5 V" />
+
+<item itemtype="Probe" CircId="Sonda Voltaje.-5" mainComp="false" Show_id="false" Show_Val="true" Pos="-408,-196" rotation="-225" hflip="1" vflip="1" label="Sonda Voltaje.-16" idLabPos="16,-16" labelrot="225" valLabPos="10.7158,-1.39058" valLabRot="225" ShowVolt="true" Threshold="2.5 V" />
+
+<item itemtype="Ground" CircId="Tierra-4" mainComp="false" Show_id="false" Show_Val="false" Pos="-324,-212" rotation="0" hflip="1" vflip="1" label="Tierra-7" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" />
+
+<item itemtype="Diode" CircId="Diodo-3" mainComp="false" Show_id="false" Show_Val="false" Pos="-364,-236" rotation="90" hflip="1" vflip="1" label="Diodo-4" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Model="Diode Default" Threshold="0.528862 V" MaxCurrent="1 A" Resistance="100 Ω" BrkDownV="0 V" SatCurrent="1328.05 nA" EmCoef="2" />
+
+<item itemtype="Resistor" CircId="Reistencia-2" mainComp="false" ShowProp="Resistance" Show_id="false" Show_Val="true" Pos="-324,-252" rotation="90" hflip="1" vflip="1" label="Reistencia-2" idLabPos="-12,-24" labelrot="0" valLabPos="-11.6735,-16.0257" valLabRot="0" Resistance="100 Ω" />
+
+<item itemtype="opAmp" CircId="Amplificador Operacional-1" mainComp="false" Show_id="false" Show_Val="false" Pos="-404,-260" rotation="0" hflip="1" vflip="1" label="Amplificador Operacional-1" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Gain="1000" Out_Imped="1e-14 Ω" Power_Pins="false" Switch_Pins="false" Volt_Pos="5 V" Volt_Neg="0 V" />
+
+<item itemtype="Node" CircId="Node-11" mainComp="false" Pos="-364,-212" />
+
+<item itemtype="Connector" uid="Connector-12" startpinid="Amplificador Operacional-1-output" endpinid="Diodo-3-lPin" pointList="-380,-260,-364,-260,-364,-252" />
+
+<item itemtype="Connector" uid="Connector-14" startpinid="Tierra-4-Gnd" endpinid="Reistencia-2-rPin" pointList="-324,-228,-324,-236" />
+
+<item itemtype="Connector" uid="Connector-16" startpinid="Potenciometro-8-PinM" endpinid="Amplificador Operacional-1-inputNinv" pointList="-452,-268,-428,-268" />
+
+<item itemtype="Connector" uid="Connector-18" startpinid="Rail.-7-outnod" endpinid="Potenciometro-8-PinB" pointList="-468,-300,-468,-284" />
+
+<item itemtype="Connector" uid="Connector-20" startpinid="Rail.-6-outnod" endpinid="Potenciometro-8-PinA" pointList="-468,-236,-468,-252" />
+
+<item itemtype="Connector" uid="Connector-22" startpinid="Diodo-3-rPin" endpinid="Node-11-0" pointList="-364,-220,-364,-212" />
+
+<item itemtype="Connector" uid="Connector-24" startpinid="Amperimetro-10-lPin" endpinid="Node-11-1" pointList="-340,-276,-340,-212,-364,-212" />
+
+<item itemtype="Connector" uid="Connector-25" startpinid="Node-11-2" endpinid="Amplificador Operacional-1-inputInv" pointList="-364,-212,-436,-212,-436,-252,-428,-252" />
+
+<item itemtype="Connector" uid="Connector-26" startpinid="Amperimetro-10-rPin" endpinid="Reistencia-2-lPin" pointList="-324,-276,-324,-268" />
+
+</circuit>

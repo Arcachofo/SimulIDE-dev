@@ -1,0 +1,61 @@
+<circuit type="simulide_1.0" stepSize="1000000" stepsPS="1000000" NLsteps="100000" animate="1" >
+
+<item itemtype="Subcircuit" CircId="K176IE3-1" mainComp="false" Show_id="true" Show_Val="true" Pos="-468,-360" rotation="0" hflip="1" vflip="1" label="K176IE3-1" idLabPos="0,-20" labelrot="0" valLabPos="0,0" valLabRot="0" Logic_Symbol="true" />
+
+<item itemtype="Probe" CircId="Probe-2" mainComp="false" Show_id="false" Show_Val="true" Pos="-356,-268" rotation="-45" hflip="1" vflip="1" label="Probe-2" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
+
+<item itemtype="Probe" CircId="Probe-4" mainComp="false" Show_id="false" Show_Val="true" Pos="-328,-260" rotation="-45" hflip="1" vflip="1" label="Probe-4" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
+
+<item itemtype="Seven Segment" CircId="Seven Segment-6" mainComp="false" Show_id="false" Show_Val="false" Pos="-292,-328" rotation="0" hflip="1" vflip="1" label="Seven Segment-6" idLabPos="20,-44" labelrot="0" valLabPos="0,0" valLabRot="0" NumDisplays="1 _7seg" Color="0" Vertical_Pins="false" CommonCathode="true" Threshold="2.4 V" MaxCurrent="0.02 A" Resistance="1 Ω" />
+
+<item itemtype="ResistorDip" CircId="ResistorDip-7" mainComp="false" ShowProp="Resistance" Show_id="false" Show_Val="true" Pos="-384,-328" rotation="0" hflip="1" vflip="1" label="ResistorDip-7" idLabPos="-24,-40" labelrot="0" valLabPos="5,-26" valLabRot="90" Resistance="100 Ω" Size="7 _Resist." />
+
+<item itemtype="Ground" CircId="Ground-22" mainComp="false" Show_id="false" Show_Val="false" Pos="-284,-268" rotation="0" hflip="1" vflip="1" label="Ground-22" idLabPos="-16,8" labelrot="0" valLabPos="0,0" valLabRot="0" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-48" mainComp="false" Show_id="false" Show_Val="true" Pos="-524,-344" rotation="0" hflip="1" vflip="1" label="Fixed Voltage-48" idLabPos="-64,-24" labelrot="0" valLabPos="-5,-4" valLabRot="0" Out="false" Voltage="5 V" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-50" mainComp="false" Show_id="false" Show_Val="true" Pos="-524,-316" rotation="0" hflip="1" vflip="1" label="Fixed Voltage-50" idLabPos="-64,-24" labelrot="0" valLabPos="-6,-4" valLabRot="0" Out="false" Voltage="5 V" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-52" mainComp="false" Show_id="false" Show_Val="true" Pos="-524,-280" rotation="0" hflip="1" vflip="1" label="Fixed Voltage-52" idLabPos="-64,-24" labelrot="0" valLabPos="-6,-6" valLabRot="0" Out="true" Voltage="5 V" />
+
+<item itemtype="Connector" uid="Connector-3" startpinid="Probe-2-inpin" endpinid="K176IE3-1-2" pointList="-372,-252,-420,-252,-420,-288,-428,-288" />
+
+<item itemtype="Connector" uid="Connector-5" startpinid="Probe-4-inpin" endpinid="K176IE3-1-6" pointList="-344,-244,-428,-244,-428,-280" />
+
+<item itemtype="Connector" uid="Connector-8" startpinid="K176IE3-1-a" endpinid="ResistorDip-7-resistor0-ePin0" pointList="-428,-352,-400,-352" />
+
+<item itemtype="Connector" uid="Connector-9" startpinid="K176IE3-1-b" endpinid="ResistorDip-7-resistor1-ePin2" pointList="-428,-344,-400,-344" />
+
+<item itemtype="Connector" uid="Connector-10" startpinid="K176IE3-1-c" endpinid="ResistorDip-7-resistor2-ePin4" pointList="-428,-336,-400,-336" />
+
+<item itemtype="Connector" uid="Connector-11" startpinid="K176IE3-1-d" endpinid="ResistorDip-7-resistor3-ePin6" pointList="-428,-328,-400,-328" />
+
+<item itemtype="Connector" uid="Connector-12" startpinid="K176IE3-1-e" endpinid="ResistorDip-7-resistor4-ePin8" pointList="-428,-320,-400,-320" />
+
+<item itemtype="Connector" uid="Connector-13" startpinid="K176IE3-1-f" endpinid="ResistorDip-7-resistor5-ePin10" pointList="-428,-312,-400,-312" />
+
+<item itemtype="Connector" uid="Connector-14" startpinid="K176IE3-1-g" endpinid="ResistorDip-7-resistor6-ePin12" pointList="-428,-304,-400,-304" />
+
+<item itemtype="Connector" uid="Connector-23" startpinid="Ground-22-Gnd" endpinid="Seven Segment-6-pin_commona" pointList="-284,-284,-284,-296" />
+
+<item itemtype="Connector" uid="Connector-49" startpinid="Fixed Voltage-48-outnod" endpinid="K176IE3-1-Clk" pointList="-508,-344,-476,-344" />
+
+<item itemtype="Connector" uid="Connector-51" startpinid="Fixed Voltage-50-outnod" endpinid="K176IE3-1-R" pointList="-508,-316,-492,-316,-492,-328,-476,-328" />
+
+<item itemtype="Connector" uid="Connector-53" startpinid="Fixed Voltage-52-outnod" endpinid="K176IE3-1-S" pointList="-508,-280,-476,-280" />
+
+<item itemtype="Connector" uid="Connector-15" startpinid="ResistorDip-7-resistor0-ePin1" endpinid="Seven Segment-6-pin_a" pointList="-368,-352,-316,-352" />
+
+<item itemtype="Connector" uid="Connector-16" startpinid="ResistorDip-7-resistor1-ePin3" endpinid="Seven Segment-6-pin_b" pointList="-368,-344,-316,-344" />
+
+<item itemtype="Connector" uid="Connector-17" startpinid="ResistorDip-7-resistor2-ePin5" endpinid="Seven Segment-6-pin_c" pointList="-368,-336,-316,-336" />
+
+<item itemtype="Connector" uid="Connector-18" startpinid="ResistorDip-7-resistor3-ePin7" endpinid="Seven Segment-6-pin_d" pointList="-368,-328,-316,-328" />
+
+<item itemtype="Connector" uid="Connector-19" startpinid="ResistorDip-7-resistor4-ePin9" endpinid="Seven Segment-6-pin_e" pointList="-368,-320,-316,-320" />
+
+<item itemtype="Connector" uid="Connector-20" startpinid="ResistorDip-7-resistor5-ePin11" endpinid="Seven Segment-6-pin_f" pointList="-368,-312,-316,-312" />
+
+<item itemtype="Connector" uid="Connector-21" startpinid="ResistorDip-7-resistor6-ePin13" endpinid="Seven Segment-6-pin_g" pointList="-368,-304,-316,-304" />
+
+</circuit>

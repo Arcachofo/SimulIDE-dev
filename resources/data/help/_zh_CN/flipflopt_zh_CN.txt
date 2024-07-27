@@ -1,0 +1,3 @@
+T触发器(Flipflop T)
+
+#include flipflopfull

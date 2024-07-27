@@ -1,0 +1,13 @@
+<!DOCTYPE SimulIDE>
+
+<mcu name="tiny4313" core="AVR" data="352" prog="2048" progword="2" eeprom="256"
+            inst_cycle="1" freq="16000000" >
+
+    <include file="avr/avr_gpr.xml" />
+    <include file="tinyx313/tinyx313_regs.xml" />
+    <datablock name="RAM" start="0x0060" end="0x015F"/>
+
+    <include file="tinyx313/tinyx313_int.xml" />
+    <include file="tinyx313/tinyx313_perif.xml" />
+    
+</mcu>

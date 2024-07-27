@@ -1,0 +1,147 @@
+<circuit type="simulide_1.0" stepSize="1000000" stepsPS="1000000" NLsteps="100000" animate="1" >
+
+<item itemtype="Tunnel" CircId="Tunnel-530" mainComp="false" Show_id="false" Show_Val="false" Pos="-608,-64" rotation="0" hflip="1" vflip="1" label="DS" idLabPos="-36,-6" labelrot="0" valLabPos="-16,8" valLabRot="0" boardPos="-12,-236" circPos="-608,-64" boardRot="0" circRot="0" Name="DO" Rotated="false" />
+
+<item itemtype="ShiftReg" CircId="ShiftReg-159" mainComp="false" Show_id="false" Show_Val="false" Pos="-476,4" rotation="0" hflip="1" vflip="1" label="ShiftReg-159" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="108,-228" circPos="-476,4" boardRot="0" circRot="0" Clock_Inverted="false" Reset_Inverted="true" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" Tpd_ps="10000 ps" Tr_ps="2999 ps" Tf_ps="4000 ps" />
+
+<item itemtype="LatchD" CircId="LatchD-39" mainComp="false" Show_id="false" Show_Val="false" Pos="-380,12" rotation="0" hflip="1" vflip="1" label="LatchD-1" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="204,-220" circPos="-380,12" boardRot="0" circRot="0" Channels="8 _Channels" Trigger="Clock" Inverted="false" Tristate="true" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="1 Ω" Tpd_ps="10000 ps" Tr_ps="2999 ps" Tf_ps="4000 ps" />
+
+<item itemtype="Tunnel" CircId="Tunnel-12" mainComp="false" Show_id="false" Show_Val="false" Pos="-600,12" rotation="0" hflip="1" vflip="1" label="SCLK" idLabPos="-54,-7" labelrot="0" valLabPos="-16,8" valLabRot="0" boardPos="-12,-220" circPos="-600,12" boardRot="0" circRot="0" Name="SCLK" Rotated="false" />
+
+<item itemtype="Tunnel" CircId="Tunnel-10" mainComp="false" Show_id="false" Show_Val="false" Pos="-600,132" rotation="0" hflip="1" vflip="1" label="DS" idLabPos="-36,-6" labelrot="0" valLabPos="-16,8" valLabRot="0" boardPos="-12,-236" circPos="-600,132" boardRot="0" circRot="0" Name="DI" Rotated="false" />
+
+<item itemtype="Tunnel" CircId="Tunnel-1" mainComp="false" Show_id="false" Show_Val="false" Pos="-600,48" rotation="0" hflip="1" vflip="1" label="STC" idLabPos="-56,-5" labelrot="0" valLabPos="-16,8" valLabRot="0" boardPos="-8,-280" circPos="-600,48" boardRot="0" circRot="0" Name="RCLK" Rotated="false" />
+
+<item itemtype="Rail" CircId="Rail-189" mainComp="false" Show_id="false" Show_Val="false" Pos="-520,28" rotation="0" hflip="1" vflip="1" label="Rail-189" idLabPos="-16,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" boardPos="56,-204" circPos="-520,28" boardRot="0" circRot="0" Voltage="5 V" />
+
+<item itemtype="LatchD" CircId="LatchD-191" mainComp="false" Show_id="false" Show_Val="false" Pos="-380,148" rotation="0" hflip="1" vflip="1" label="LatchD-1" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="204,-84" circPos="-380,148" boardRot="0" circRot="0" Channels="8 _Channels" Trigger="Clock" Inverted="false" Tristate="true" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="1 Ω" Tpd_ps="10000 ps" Tr_ps="2999 ps" Tf_ps="4000 ps" />
+
+<item itemtype="Rail" CircId="Rail-192" mainComp="false" Show_id="false" Show_Val="false" Pos="-528,164" rotation="0" hflip="1" vflip="1" label="Rail-189" idLabPos="-16,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" boardPos="56,-68" circPos="-528,164" boardRot="0" circRot="0" Voltage="5 V" />
+
+<item itemtype="ShiftReg" CircId="ShiftReg-193" mainComp="false" Show_id="false" Show_Val="false" Pos="-476,140" rotation="0" hflip="1" vflip="1" label="ShiftReg-159" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="108,-92" circPos="-476,140" boardRot="0" circRot="0" Clock_Inverted="false" Reset_Inverted="true" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" Tpd_ps="10000 ps" Tr_ps="2999 ps" Tf_ps="4000 ps" />
+
+<item itemtype="Package" CircId="Package-254" mainComp="false" Show_id="true" Show_Val="false" Pos="-628,252" rotation="0" hflip="1" vflip="1" label="Package-254" idLabPos="0,-20" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="5.00668e-308" SubcType="Board" Width="9 Cells" Height="11 Cells" Package_File="8x8_led_595_LS.package" Logic_Symbol="true" />
+
+<item itemtype="Ground" CircId="Ground-259" mainComp="false" Show_id="false" Show_Val="false" Pos="-348,220" rotation="0" hflip="1" vflip="1" label="Ground-259" idLabPos="-16,8" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="236,-12" circPos="-348,220" boardRot="0" circRot="0" />
+
+<item itemtype="LedMatrix" CircId="LedMatrix-552" mainComp="false" Show_id="false" Show_Val="false" Pos="-316,-20" rotation="0" hflip="1" vflip="1" label="LedMatrix-552" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="8,8" circPos="-316,-20" boardRot="0" circRot="0" Rows="8 _Leds" Cols="8 _Leds" Color="Yellow" Vertical_Pins="false" Threshold="2.4 V" MaxCurrent="0.02 A" Resistance="10 Ω" />
+
+<item itemtype="Node" CircId="Node-532" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="-444,36" />
+
+<item itemtype="Node" CircId="Node-433" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="-564,12" />
+
+<item itemtype="Node" CircId="Node-430" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="-420,48" />
+
+<item itemtype="Node" CircId="Node-354" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="-444,172" />
+
+<item itemtype="Node" CircId="Node-261" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="-348,180" />
+
+<item itemtype="Node" CircId="Node-264" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="-348,80" />
+
+<item itemtype="Node" CircId="Node-267" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="-432,80" />
+
+<item itemtype="Connector" startpinid="ShiftReg-159-out0" endpinid="LatchD-39-in0" pointList="-452,-20,-404,-20" />
+
+<item itemtype="Connector" startpinid="ShiftReg-159-out1" endpinid="LatchD-39-in1" pointList="-452,-12,-404,-12" />
+
+<item itemtype="Connector" startpinid="ShiftReg-159-out2" endpinid="LatchD-39-in2" pointList="-452,-4,-404,-4" />
+
+<item itemtype="Connector" startpinid="ShiftReg-159-out3" endpinid="LatchD-39-in3" pointList="-452,4,-404,4" />
+
+<item itemtype="Connector" startpinid="ShiftReg-159-out4" endpinid="LatchD-39-in4" pointList="-452,12,-404,12" />
+
+<item itemtype="Connector" startpinid="ShiftReg-159-out5" endpinid="LatchD-39-in5" pointList="-452,20,-404,20" />
+
+<item itemtype="Connector" startpinid="ShiftReg-159-out6" endpinid="LatchD-39-in6" pointList="-452,28,-404,28" />
+
+<item itemtype="Connector" startpinid="Rail-189-outnod" endpinid="ShiftReg-159-in2" pointList="-504,28,-500,28" />
+
+<item itemtype="Connector" startpinid="ShiftReg-193-out3" endpinid="LatchD-191-in3" pointList="-452,140,-404,140" />
+
+<item itemtype="Connector" startpinid="ShiftReg-193-out1" endpinid="LatchD-191-in1" pointList="-452,124,-404,124" />
+
+<item itemtype="Connector" startpinid="ShiftReg-193-out2" endpinid="LatchD-191-in2" pointList="-452,132,-404,132" />
+
+<item itemtype="Connector" startpinid="ShiftReg-193-out6" endpinid="LatchD-191-in6" pointList="-452,164,-404,164" />
+
+<item itemtype="Connector" startpinid="ShiftReg-193-out0" endpinid="LatchD-191-in0" pointList="-452,116,-404,116" />
+
+<item itemtype="Connector" startpinid="ShiftReg-193-out4" endpinid="LatchD-191-in4" pointList="-452,148,-404,148" />
+
+<item itemtype="Connector" startpinid="ShiftReg-193-out5" endpinid="LatchD-191-in5" pointList="-452,156,-404,156" />
+
+<item itemtype="Connector" startpinid="ShiftReg-193-out7" endpinid="Node-354-0" pointList="-452,172,-444,172" />
+
+<item itemtype="Connector" startpinid="Node-261-2" endpinid="LatchD-191-Pin_outEnable" pointList="-348,180,-356,180" />
+
+<item itemtype="Connector" startpinid="Node-261-1" endpinid="Node-264-0" pointList="-348,180,-348,80" />
+
+<item itemtype="Connector" startpinid="Node-264-2" endpinid="LatchD-39-Pin_outEnable" pointList="-348,80,-348,44,-356,44" />
+
+<item itemtype="Connector" startpinid="Node-264-1" endpinid="Node-267-0" pointList="-348,80,-432,80" />
+
+<item itemtype="Connector" startpinid="Node-267-2" endpinid="ShiftReg-159-in3" pointList="-432,80,-432,-40,-484,-40,-484,-36" />
+
+<item itemtype="Connector" startpinid="Node-267-1" endpinid="ShiftReg-193-in3" pointList="-432,80,-484,80,-484,100" />
+
+<item itemtype="Connector" startpinid="ShiftReg-159-out7" endpinid="Node-532-0" pointList="-452,36,-444,36" />
+
+<item itemtype="Connector" startpinid="Tunnel-10-pin" endpinid="ShiftReg-193-in0" pointList="-600,132,-500,132" />
+
+<item itemtype="Connector" startpinid="Node-354-2" endpinid="LatchD-191-in7" pointList="-444,172,-404,172" />
+
+<item itemtype="Connector" startpinid="Node-354-1" endpinid="ShiftReg-159-in0" pointList="-444,172,-444,64,-532,64,-532,-4,-500,-4" />
+
+<item itemtype="Connector" startpinid="LatchD-191-Pin_clock" endpinid="Node-430-0" pointList="-404,180,-420,180,-420,48" />
+
+<item itemtype="Connector" startpinid="ShiftReg-193-in1" endpinid="Node-433-0" pointList="-500,148,-564,148,-564,12" />
+
+<item itemtype="Connector" startpinid="Node-430-2" endpinid="LatchD-39-Pin_clock" pointList="-420,48,-404,48,-404,44" />
+
+<item itemtype="Connector" startpinid="Node-433-2" endpinid="ShiftReg-159-in1" pointList="-564,12,-500,12" />
+
+<item itemtype="Connector" startpinid="Rail-192-outnod" endpinid="ShiftReg-193-in2" pointList="-512,164,-500,164" />
+
+<item itemtype="Connector" startpinid="Ground-259-Gnd" endpinid="Node-261-0" pointList="-348,204,-348,180" />
+
+<item itemtype="Connector" startpinid="Tunnel-530-pin" endpinid="Node-532-1" pointList="-608,-64,-444,-64,-444,36" />
+
+<item itemtype="Connector" startpinid="Node-532-2" endpinid="LatchD-39-in7" pointList="-444,36,-404,36" />
+
+<item itemtype="Connector" startpinid="Tunnel-12-pin" endpinid="Node-433-1" pointList="-600,12,-564,12" />
+
+<item itemtype="Connector" startpinid="Tunnel-1-pin" endpinid="Node-430-1" pointList="-600,48,-420,48" />
+
+<item itemtype="Connector" startpinid="LedMatrix-552-pinRow0" endpinid="LatchD-39-out0" pointList="-332,-20,-356,-20" />
+
+<item itemtype="Connector" startpinid="LedMatrix-552-pinRow1" endpinid="LatchD-39-out1" pointList="-332,-12,-356,-12" />
+
+<item itemtype="Connector" startpinid="LedMatrix-552-pinRow2" endpinid="LatchD-39-out2" pointList="-332,-4,-356,-4" />
+
+<item itemtype="Connector" startpinid="LedMatrix-552-pinRow3" endpinid="LatchD-39-out3" pointList="-332,4,-356,4" />
+
+<item itemtype="Connector" startpinid="LedMatrix-552-pinRow4" endpinid="LatchD-39-out4" pointList="-332,12,-356,12" />
+
+<item itemtype="Connector" startpinid="LedMatrix-552-pinRow5" endpinid="LatchD-39-out5" pointList="-332,20,-356,20" />
+
+<item itemtype="Connector" startpinid="LedMatrix-552-pinRow6" endpinid="LatchD-39-out6" pointList="-332,28,-356,28" />
+
+<item itemtype="Connector" startpinid="LedMatrix-552-pinRow7" endpinid="LatchD-39-out7" pointList="-332,36,-356,36" />
+
+<item itemtype="Connector" startpinid="LedMatrix-552-pinCol0" endpinid="LatchD-191-out0" pointList="-316,52,-316,116,-356,116" />
+
+<item itemtype="Connector" startpinid="LatchD-191-out1" endpinid="LedMatrix-552-pinCol1" pointList="-356,124,-308,124,-308,52" />
+
+<item itemtype="Connector" startpinid="LatchD-191-out2" endpinid="LedMatrix-552-pinCol2" pointList="-356,132,-300,132,-300,52" />
+
+<item itemtype="Connector" startpinid="LatchD-191-out3" endpinid="LedMatrix-552-pinCol3" pointList="-356,140,-292,140,-292,52" />
+
+<item itemtype="Connector" startpinid="LatchD-191-out4" endpinid="LedMatrix-552-pinCol4" pointList="-356,148,-284,148,-284,52" />
+
+<item itemtype="Connector" startpinid="LatchD-191-out5" endpinid="LedMatrix-552-pinCol5" pointList="-356,156,-276,156,-276,52" />
+
+<item itemtype="Connector" startpinid="LatchD-191-out6" endpinid="LedMatrix-552-pinCol6" pointList="-356,164,-268,164,-268,52" />
+
+<item itemtype="Connector" startpinid="LatchD-191-out7" endpinid="LedMatrix-552-pinCol7" pointList="-356,172,-260,172,-260,52" />
+
+</circuit>

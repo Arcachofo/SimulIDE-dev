@@ -1,0 +1,9 @@
+Simple battery.
+
+Property: (default value)
+
+- Voltage: (5 V)
+   Battery voltage.
+
+- Resistance: (1 mΩ)
+   Internal resistance.

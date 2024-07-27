@@ -1,0 +1,25 @@
+128x64 OLED monochrome graphic display.
+
+Property: (default value)
+
+Main:
+- Color: (white)
+   Pixel color.
+
+ - Width: (128)
+   Screen width in pixels
+
+ - Height: (64)
+   Screen height in pixels
+
+- Rotate: (yes)
+   Rotate screen 180º.
+   Some libraries use screen rotation, others don't use it.
+   Using this you can keep the display in same position.
+
+I2C:
+- I2C Address: (62)
+   Device address.
+
+- I2C Frequency: (100 KHz)
+   It is better to be similar to I2C Master frequency, but not critical in most cases.

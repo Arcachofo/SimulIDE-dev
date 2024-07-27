@@ -1,0 +1,41 @@
+<circuit version="" rev="2224" stepSize="1000000" stepsPS="1000000" NLsteps="100000" reaStep="1000000" animate="0" >
+
+<item itemtype="MCU" CircId="mega328-1" mainComp="false" Show_id="true" Show_Val="false" Pos="-244,-180" rotation="0" hflip="1" vflip="1" label="atmega328" idLabPos="-10.5471,-15.1051" labelrot="0" valLabPos="0,0" valLabRot="0" Frequency="16 MHz" Program="gcb_code/m328_7Seg_Counter.hex" Auto_Load="false" saveEepr="false" Logic_Symbol="false" Rst_enabled="false" Ext_Osc="false" Wdt_enabled="false" Clk_Out="false" SerialMon="-1" />
+
+<item itemtype="Seven Segment" CircId="7 Segment-9" mainComp="false" Show_id="false" Show_Val="false" Pos="-44,-116" rotation="0" hflip="1" vflip="1" label="7 Segment-2" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Color="Yellow" NumDisplays="1 _7seg" Vertical_Pins="false" CommonCathode="true" Threshold="2.4 V" MaxCurrent="0.02 A" Resistance="1 Ω" />
+
+<item itemtype="Ground" CircId="Ground (0 V)-10" mainComp="false" Show_id="false" Show_Val="false" Pos="-36,-36" rotation="0" hflip="1" vflip="1" label="Ground (0 V)-1" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" />
+
+<item itemtype="ResistorDip" CircId="ResistorDip-11" mainComp="false" ShowProp="Resistance" Show_id="false" Show_Val="true" Pos="-112,-116" rotation="0" hflip="1" vflip="1" label="ResistorDip-11" idLabPos="-24,-40" labelrot="0" valLabPos="4,-26" valLabRot="90" Resistance="100 Ω" Size="7" PullUp="false" PuVolt="5 V" />
+
+<item itemtype="Connector" uid="Connector-39" startpinid="Ground (0 V)-10-Gnd" endpinid="7 Segment-9-pin_commona" pointList="-36,-52,-36,-84" />
+
+<item itemtype="Connector" uid="Connector-82" startpinid="mega328-1-PORTB0" endpinid="ResistorDip-11-resistor0-ePin0" pointList="-252,-68,-276,-68,-276,-44,-148,-44,-148,-140,-128,-140" />
+
+<item itemtype="Connector" uid="Connector-83" startpinid="ResistorDip-11-resistor0-ePin1" endpinid="7 Segment-9-pin_a" pointList="-96,-140,-68,-140" />
+
+<item itemtype="Connector" uid="Connector-84" startpinid="mega328-1-PORTB1" endpinid="ResistorDip-11-resistor1-ePin2" pointList="-204,-68,-156,-68,-156,-132,-128,-132" />
+
+<item itemtype="Connector" uid="Connector-85" startpinid="ResistorDip-11-resistor1-ePin3" endpinid="7 Segment-9-pin_b" pointList="-96,-132,-68,-132" />
+
+<item itemtype="Connector" uid="Connector-86" startpinid="mega328-1-PORTB2" endpinid="ResistorDip-11-resistor2-ePin4" pointList="-204,-76,-164,-76,-164,-124,-128,-124" />
+
+<item itemtype="Connector" uid="Connector-87" startpinid="ResistorDip-11-resistor2-ePin5" endpinid="7 Segment-9-pin_c" pointList="-96,-124,-68,-124" />
+
+<item itemtype="Connector" uid="Connector-88" startpinid="mega328-1-PORTB3" endpinid="ResistorDip-11-resistor3-ePin6" pointList="-204,-84,-172,-84,-172,-116,-128,-116" />
+
+<item itemtype="Connector" uid="Connector-89" startpinid="ResistorDip-11-resistor3-ePin7" endpinid="7 Segment-9-pin_d" pointList="-96,-116,-68,-116" />
+
+<item itemtype="Connector" uid="Connector-90" startpinid="mega328-1-PORTB4" endpinid="ResistorDip-11-resistor4-ePin8" pointList="-204,-92,-180,-92,-180,-108,-128,-108" />
+
+<item itemtype="Connector" uid="Connector-91" startpinid="ResistorDip-11-resistor4-ePin9" endpinid="7 Segment-9-pin_e" pointList="-96,-108,-68,-108" />
+
+<item itemtype="Connector" uid="Connector-92" startpinid="mega328-1-PORTB6" endpinid="ResistorDip-11-resistor6-ePin12" pointList="-252,-108,-284,-108,-284,-36,-140,-36,-140,-92,-128,-92" />
+
+<item itemtype="Connector" uid="Connector-93" startpinid="ResistorDip-11-resistor6-ePin13" endpinid="7 Segment-9-pin_g" pointList="-96,-92,-68,-92" />
+
+<item itemtype="Connector" uid="Connector-94" startpinid="mega328-1-PORTB5" endpinid="ResistorDip-11-resistor5-ePin10" pointList="-204,-100,-128,-100" />
+
+<item itemtype="Connector" uid="Connector-95" startpinid="ResistorDip-11-resistor5-ePin11" endpinid="7 Segment-9-pin_f" pointList="-96,-100,-68,-100" />
+
+</circuit>

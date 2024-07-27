@@ -1,0 +1,29 @@
+<parts>
+  <port name="PORTA" pins="5" outreg="PORTA" dirreg="!TRISA"
+                   opencol="00010000">
+  </port>
+
+  <port name="PORTB" pins="8" outreg="PORTB" dirreg="!TRISB"
+                     pullups="!RBPU" >
+                     
+    <interrupt name="PB_INT" mask="11110000"/>
+    <extint    name="INT" pin="PORTB0" configbits="INTEDG"/>
+  </port>
+  
+  <port name="PORTX" pins="1" />
+  
+  <intosc name="intosc" type="" clockoutpin="PORTX0" />
+
+  <timer name="TIMER0" type="800" configregsA="OPTION"
+                       counter="TMR0"
+                       clockpin="PORTA4"
+                       interrupt="T0_OVF"
+                       prescalers="2,4,8,16,32,64,128,256">
+  </timer>
+  
+  <configwords name="cfgWord" type="02">
+    <word name="COINFIG1" address="0x2007" value="0xFF" />
+    <word name="COINFIG2" address="0x2008" value="0xFF" />
+  </configwords>
+  
+</parts>

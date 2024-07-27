@@ -1,0 +1,67 @@
+<circuit type="simulide_1.0" stepSize="1000000" stepsPS="1000000" NLsteps="100000" animate="1" >
+
+<item itemtype="Tunnel" CircId="Tunnel-17" mainComp="false" Show_id="true" Show_Val="false" Pos="60,-4" rotation="0" hflip="-1" vflip="1" label="N" idLabPos="-48,-6" labelrot="0" valLabPos="-16,8" valLabRot="0" Name="N" Rotated="false" />
+
+<item itemtype="Tunnel" CircId="Tunnel-16" mainComp="false" Show_id="true" Show_Val="false" Pos="60,-28" rotation="0" hflip="-1" vflip="1" label="0" idLabPos="-48,-6" labelrot="0" valLabPos="-16,8" valLabRot="0" Name="0" Rotated="false" />
+
+<item itemtype="Tunnel" CircId="Tunnel-15" mainComp="false" Show_id="true" Show_Val="false" Pos="60,-48" rotation="0" hflip="-1" vflip="1" label="P" idLabPos="-48,-6" labelrot="0" valLabPos="-16,8" valLabRot="0" Name="P" Rotated="false" />
+
+<item itemtype="Resistor" CircId="Resistor-14" mainComp="false" ShowProp="Resistance" Show_id="false" Show_Val="true" Pos="-156,-64" rotation="90" hflip="1" vflip="1" label="Resistor-5" idLabPos="-12,-20" labelrot="0" valLabPos="-16,6" valLabRot="0" Resistance="1 kΩ" />
+
+<item itemtype="Rail" CircId="Rail-13" mainComp="false" ShowProp="Voltage" Show_id="false" Show_Val="true" Pos="-172,-100" rotation="0" hflip="1" vflip="1" label="Rail-7" idLabPos="-16,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Voltage="5 V" />
+
+<item itemtype="Ground" CircId="Ground-12" mainComp="false" Show_id="false" Show_Val="false" Pos="-32,60" rotation="0" hflip="1" vflip="1" label="Ground-3" idLabPos="-16,8" labelrot="0" valLabPos="0,0" valLabRot="0" />
+
+<item itemtype="Buffer" CircId="Buffer-11" mainComp="false" Show_id="false" Show_Val="false" Pos="-124,-36" rotation="0" hflip="1" vflip="1" label="Buffer-62" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Tristate="false" Inverted="true" Open_Collector="false" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" rndPD="false" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
+
+<item itemtype="Diode" CircId="Diode-10" mainComp="false" Show_id="false" Show_Val="false" Pos="-196,-36" rotation="0" hflip="1" vflip="1" label="Diode-68" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Model="Diode Default" Threshold="0.805905 V" MaxCurrent="1 A" Resistance="0.05 Ω" BrkDownV="20 V" SatCurrent="171.435 nA" EmCoef="2" />
+
+<item itemtype="Buffer" CircId="Buffer-9" mainComp="false" Show_id="false" Show_Val="false" Pos="-124,4" rotation="0" hflip="1" vflip="1" label="Buffer-62" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Tristate="false" Inverted="true" Open_Collector="false" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" rndPD="false" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
+
+<item itemtype="Diode" CircId="Diode-8" mainComp="false" Show_id="false" Show_Val="false" Pos="-180,4" rotation="0" hflip="-1" vflip="1" label="Diode-88" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Model="Diode Default" Threshold="0.805905 V" MaxCurrent="1 A" Resistance="0.05 Ω" BrkDownV="20 V" SatCurrent="171.435 nA" EmCoef="2" />
+
+<item itemtype="MuxAnalog" CircId="MuxAnalog-6" mainComp="false" Show_id="false" Show_Val="false" Pos="-8,-36" rotation="0" hflip="1" vflip="1" label="MuxAnalog-99" idLabPos="-16,-16" labelrot="0" valLabPos="0,0" valLabRot="0" Address_Bits="2 _Bits" Impedance="1 Ω" />
+
+<item itemtype="Tunnel" CircId="Tunnel-5" mainComp="false" Show_id="true" Show_Val="false" Pos="-48,-72" rotation="0" hflip="1" vflip="1" label="Q" idLabPos="16,-16" labelrot="0" valLabPos="16,0" valLabRot="45" Name="Q" Rotated="false" />
+
+<item itemtype="Tunnel" CircId="Tunnel-4" mainComp="false" Show_id="true" Show_Val="false" Pos="-252,-16" rotation="0" hflip="1" vflip="1" label="S" idLabPos="-48,-6" labelrot="0" valLabPos="-16,8" valLabRot="0" Name="S" Rotated="false" />
+
+<item itemtype="Package" CircId="Package-2" mainComp="false" Show_id="true" Show_Val="false" Pos="-280,84" rotation="0" hflip="1" vflip="1" label="Package-121" idLabPos="0,-20" labelrot="0" valLabPos="0,0" valLabRot="0" SubcType="None" Width="4 _Cells" Height="5 _Cells" Name="T_Mux" Package_File="T_Mux.package" Logic_Symbol="false" />
+
+<item itemtype="Package" CircId="Package-1" mainComp="false" Show_id="true" Show_Val="false" Pos="-188,84" rotation="0" hflip="1" vflip="1" label="Package-122" idLabPos="0,-20" labelrot="0" valLabPos="0,0" valLabRot="0" SubcType="None" Width="4 _Cells" Height="6 _Cells" Name="T_Mux" Package_File="T_Mux_LS.package" Logic_Symbol="true" />
+
+<item itemtype="Node" CircId="Node-7" mainComp="false" Pos="-156,4" />
+
+<item itemtype="Node" CircId="Node-3" mainComp="false" Pos="-212,-16" />
+
+<item itemtype="Connector" uid="Connector-18" startpinid="Diode-10-rPin" endpinid="Buffer-11-in0" pointList="-180,-36,-140,-36" />
+
+<item itemtype="Connector" uid="Connector-20" startpinid="Node-7-2" endpinid="Buffer-9-in0" pointList="-156,4,-140,4" />
+
+<item itemtype="Connector" uid="Connector-22" startpinid="Diode-8-rPin" endpinid="Node-3-0" pointList="-196,4,-212,4,-212,-16" />
+
+<item itemtype="Connector" uid="Connector-24" startpinid="Diode-8-lPin" endpinid="Node-7-1" pointList="-164,4,-156,4" />
+
+<item itemtype="Connector" uid="Connector-25" startpinid="Tunnel-5-pin" endpinid="MuxAnalog-6-PinInput" pointList="-48,-72,-48,-28,-32,-28" />
+
+<item itemtype="Connector" uid="Connector-27" startpinid="Tunnel-4-pin" endpinid="Node-3-1" pointList="-252,-16,-212,-16" />
+
+<item itemtype="Connector" uid="Connector-28" startpinid="Diode-10-lPin" endpinid="Node-3-2" pointList="-212,-36,-212,-16" />
+
+<item itemtype="Connector" uid="Connector-29" startpinid="Resistor-14-rPin" endpinid="Node-7-0" pointList="-156,-48,-156,4" />
+
+<item itemtype="Connector" uid="Connector-30" startpinid="Rail-13-outnod" endpinid="Resistor-14-lPin" pointList="-156,-100,-156,-80" />
+
+<item itemtype="Connector" uid="Connector-32" startpinid="MuxAnalog-6-pinAddr0" endpinid="Buffer-11-out" pointList="-32,-12,-56,-12,-56,-36,-108,-36" />
+
+<item itemtype="Connector" uid="Connector-34" startpinid="MuxAnalog-6-pinAddr1" endpinid="Buffer-9-out" pointList="-32,-4,-52,-4,-52,4,-108,4" />
+
+<item itemtype="Connector" uid="Connector-36" startpinid="Tunnel-15-pin" endpinid="MuxAnalog-6-pinY0" pointList="60,-48,16,-48,16,-28" />
+
+<item itemtype="Connector" uid="Connector-39" startpinid="Ground-12-Gnd" endpinid="MuxAnalog-6-PinEnable" pointList="-32,44,-32,12" />
+
+<item itemtype="Connector" uid="Connector-41" startpinid="Tunnel-17-pin" endpinid="MuxAnalog-6-pinY3" pointList="60,-4,16,-4" />
+
+<item itemtype="Connector" uid="Connector-28" startpinid="Tunnel-16-pin" endpinid="MuxAnalog-6-pinY1" pointList="60,-28,32,-28,32,-20,16,-20" />
+
+</circuit>

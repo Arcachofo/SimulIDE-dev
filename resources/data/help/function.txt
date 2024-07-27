@@ -1,0 +1,34 @@
+Combinational Logic device.
+Set a function for each output clicking in it's button.
+
+Property: (default value)
+
+Main:
+- Functions: (i0 | i1)
+   List of functions (separated by comma).
+
+Electric:
+#include logicinputs
+- Input size: (2 Pins)
+   Number of input pins.
+
+- Invert Inputs: (no)
+   Invert input pins.
+
+#include logicoutputs
+- Output size: (1 Pins)
+   Number of output pins.
+
+- Invert Outputs: (no)
+   Invert output pins.
+
+- Open Drain: (no)
+   If yes, output act as an open drain:
+   It can sink but not source current.
+
+#include logicedges
+
+---
+
+Full tutorial:
+https://simulide.com/p/function

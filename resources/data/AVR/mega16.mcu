@@ -1,0 +1,13 @@
+<!DOCTYPE SimulIDE>
+
+<mcu name="mega32" core="AVR" data="1120" prog="16384" progword="2" eeprom="512"
+            inst_cycle="1" freq="16000000" >
+
+    <include file="avr/avr_gpr.xml" />
+    <include file="mega32/mega32_regs.xml" />
+    <datablock name="RAM" start="0x0060" end="0x045F"/>
+
+    <include file="mega32/mega16_int.xml" />
+    <include file="mega32/mega32_perif.xml" />
+    
+</mcu>

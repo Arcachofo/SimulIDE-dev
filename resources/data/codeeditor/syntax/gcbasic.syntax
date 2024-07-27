@@ -1,0 +1,50 @@
+#################################################
+# This header is while the file is WIP (Tonigau)
+#
+# 2021-08-02 
+#   Add REM to comments rule, 
+#   move lineComment2,3 exp --> lineComment1, 
+#   change name Operator --> Symbol, Add ! to Symbol rule, 
+#   add binary number exp., 
+#   add keyword2 (string manipulate, Hser, LCD), 
+#   Improve label rule exp. ,
+#   Delete htmlTag rule, 
+#   Add comment # Dec Bin Hex
+#
+# 2021-08-02  
+#   Delete  commented pre-test expressions, 
+#   consistent capitalization
+#################################################
+
+rules: Modifiers Keyword1 Keyword2 preProcessor Number Label Symbol lineComment1 multiLineComment Quotation 
+
+
+Modifiers-style: #0000C0 default true false
+Modifiers: bit byte word integer array string optional off on out in right left simple ms s sec us
+
+Keyword1-style: #000080 default true false
+Keyword1: and as call case const dim dir do else end exit for function goto gosub if interrupt intoff inton loop macro next not or return peek poke pulseout readtable repeat rotate set select step stop sub then to until wait when while xor table true false forever
+
+Keyword2-style: #000060 default true false
+Keyword2: Asc Bytetobin Chr Fill Hex Instr Lcase Left Leftpad Len Mid Pad Right Rtrim Str Trim Ucase Val Wordtobin HSerPrint HSerPrintCRLF HSerSend HSerReceive PWMOn PWMOff LCDCMD LCDHome LCDOFF LCDON LCD_IO
+
+preProcessor-style: #0000C0 default true false
+preProcessor: "#[chip|config|define|endif|ifdef|ifndef|include|mem|script|startup]+[\^]*"
+
+Number-style: #FF0000 default false false
+Number: "\b[0-9]+\b" "0[bB][0-1]+" "0[xX][0-9a-fA-F]+"
+
+Label-style: #FF1493 default false false
+Label: "^[\x20\x09]*\w+:"
+
+Symbol-style: #800000 default true false
+Symbol: "[\(\)\/\=\+\-\<\>\!]"
+
+Quotation-style: #C00000 default false false
+Quotation: "\"(\\.|[^\"])*\""
+
+lineComment1-style: #00A651 default false true
+lineComment1: "'[^\n]*"  ";[^\n]*"  "//[^\n]*"  "REM[^\n]*"
+
+multiLineComment-style: #00A651 default false true
+multiLineComment: "/\\*" "\\*/"

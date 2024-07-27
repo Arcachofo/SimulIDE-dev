@@ -1,0 +1,11 @@
+Configurable analog multiplexer.
+
+Property: (default value)
+
+- Address Size: (3 bits)
+   Determines number of channels:
+   n = 2^Address_Size
+
+- Impedance: (1 mΩ)
+
+

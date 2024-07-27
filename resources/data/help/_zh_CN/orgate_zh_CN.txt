@@ -1,0 +1,13 @@
+与门(Or Gate)
+
+属性: (默认值)
+
+主要特性:
+- 输入端数量: (2)
+   输入引脚数量.
+
+#include gateinputs
+电气特性:
+#include logicinputs
+#include logicoutputs
+#include logicedges

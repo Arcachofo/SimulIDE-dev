@@ -1,0 +1,29 @@
+<circuit version="" rev="2229" stepSize="1000000" stepsPS="1000000" NLsteps="100000" reaStep="1000000" animate="0" >
+
+<item itemtype="LedRgb" CircId="LedRgb-1" mainComp="false" Show_id="false" Show_Val="false" Pos="804,564" rotation="0" hflip="1" vflip="1" label="LedRgb-1" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" CommonCathode="true" Threshold_R="2.4 V" MaxCurrent_R="0.03 A" Resistance_R="0.6 Ω" Threshold_G="3.5 V" MaxCurrent_G="0.03 A" Resistance_G="0.6 Ω" Threshold_B="3.5 V" MaxCurrent_B="0.03 A" Resistance_B="0.6 Ω" />
+
+<item itemtype="Ground" CircId="Ground-2" mainComp="false" Show_id="false" Show_Val="false" Pos="844,604" rotation="0" hflip="1" vflip="1" label="Ground-2" idLabPos="-16,8" labelrot="0" valLabPos="-16,20" valLabRot="0" />
+
+<item itemtype="Voltage Source" CircId="Voltage Source-4" mainComp="false" ShowProp="MaxValue" Show_id="false" Show_Val="true" Pos="704,484" rotation="0" hflip="1" vflip="1" label="Voltage Source-4" idLabPos="-32,-48" labelrot="0" valLabPos="-33.6064,-25.261" valLabRot="0" Running="true" Value_Volt="4.54 V" MaxValue="5 V" MinValue="0 V" />
+
+<item itemtype="ResistorDip" CircId="ResistorDip-6" mainComp="false" ShowProp="Resistance" Show_id="false" Show_Val="true" Pos="764,580" rotation="0" hflip="1" vflip="1" label="ResistorDip-6" idLabPos="-24,-40" labelrot="0" valLabPos="4,-26" valLabRot="90" Resistance="50 Ω" Size="3 Resist." PullUp="false" PuVolt="5 V" />
+
+<item itemtype="Voltage Source" CircId="Voltage Source-11" mainComp="false" ShowProp="MaxValue" Show_id="false" Show_Val="true" Pos="704,548" rotation="0" hflip="1" vflip="1" label="Voltage Source-11" idLabPos="-32,-48" labelrot="0" valLabPos="-34.0458,-25.3545" valLabRot="0" Running="true" Value_Volt="5.11 V" MaxValue="7 V" MinValue="0 V" />
+
+<item itemtype="Voltage Source" CircId="Voltage Source-13" mainComp="false" ShowProp="MaxValue" Show_id="false" Show_Val="true" Pos="704,612" rotation="0" hflip="1" vflip="1" label="Voltage Source-13" idLabPos="-32,-48" labelrot="0" valLabPos="-34.0277,-25.0471" valLabRot="0" Running="true" Value_Volt="4.067 V" MaxValue="7 V" MinValue="0 V" />
+
+<item itemtype="Connector" uid="Connector-3" startpinid="Ground-2-Gnd" endpinid="LedRgb-1-Pin3" pointList="844,588,844,564,820,564" />
+
+<item itemtype="Connector" uid="Connector-7" startpinid="ResistorDip-6-resistor0-ePin1" endpinid="LedRgb-1-Pin0" pointList="780,556,788,556" />
+
+<item itemtype="Connector" uid="Connector-8" startpinid="ResistorDip-6-resistor1-ePin3" endpinid="LedRgb-1-Pin1" pointList="780,564,788,564" />
+
+<item itemtype="Connector" uid="Connector-9" startpinid="ResistorDip-6-resistor2-ePin5" endpinid="LedRgb-1-Pin2" pointList="780,572,788,572" />
+
+<item itemtype="Connector" uid="Connector-10" startpinid="Voltage Source-4-outPin" endpinid="ResistorDip-6-resistor0-ePin0" pointList="732,500,740,500,740,556,748,556" />
+
+<item itemtype="Connector" uid="Connector-12" startpinid="Voltage Source-11-outPin" endpinid="ResistorDip-6-resistor1-ePin2" pointList="732,564,748,564" />
+
+<item itemtype="Connector" uid="Connector-14" startpinid="Voltage Source-13-outPin" endpinid="ResistorDip-6-resistor2-ePin4" pointList="732,628,740,628,740,572,748,572" />
+
+</circuit>

@@ -1,0 +1,58 @@
+<!DOCTYPE SimulIDE>
+
+<iou name="6522" core="scripted" script="6522_core.as" data="18" clkpin="P2">
+    
+    <regblock name="REGs" start="0x00" end="0x0F" >
+        <register name="ORB"   addr="0x00" />
+        <register name="ORA"   addr="0x01" />
+        <register name="DDRB"  addr="0x02" />
+        <register name="DDRA"  addr="0x03" />
+        <register name="T1CL"  addr="0x04" />
+        <register name="T1CH"  addr="0x05" />
+        <register name="T1LL"  addr="0x06" />
+        <register name="T1LH"  addr="0x07" />
+        <register name="T2CL"  addr="0x08" />
+        <register name="T2CH"  addr="0x09" />
+        <register name="SR"    addr="0x0A" />
+        <register name="ACR"   addr="0x0B"  bits="PA,PB,SRC0,SRC1,SRC2,T2C,T1C0,T1C1"/>
+        <register name="PCR"   addr="0x0C"  bits="CA1,CA20,CA21,CA22,CB1,CB20,CB21,CB22"/>
+        <register name="IFR"   addr="0x0D"  bits="CA2IF,CA1IF,SRIF,CB2IF,CB1IF,T2IF,T1IF,IRQIF"/>
+        <register name="IER"   addr="0x0E"  bits="CA2IE,CA1IE,SRIE,CB2IE,CB1IE,T2IE,T1IE,IRQIE"/>
+        <register name="ORA1"  addr="0x0F" />
+        
+        <register name="IRB"   addr="0x10" />
+        <register name="IRA"   addr="0x11" />
+    </regblock>
+
+    <interrupts >
+        <interrupt name="IRQ"   enable="IRQIE"  flag="IRQIF" priority="8" vector="0x008" />
+        <interrupt name="T1"    enable="T1IE"   flag="T1IF"  priority="7" vector="0x007" />
+        <interrupt name="T2"    enable="T2IE"   flag="T2IF"  priority="6" vector="0x006" />
+        <interrupt name="CB1"   enable="CB1IE"  flag="CB1IF" priority="5" vector="0x005" />
+        <interrupt name="CB2"   enable="CB2IE"  flag="CB2IF" priority="4" vector="0x004" />
+        <interrupt name="SR"    enable="SRIE"   flag="SRIF"  priority="3" vector="0x003" />
+        <interrupt name="CA1"   enable="CA1IE"  flag="CA1IF" priority="2" vector="0x002" />
+        <interrupt name="CA2"   enable="CA2IE"  flag="CA2IF" priority="1" vector="0x001" />
+    </interrupts>
+    
+    <mcuport name="PORTA" pins="8" outreg="ORA" dirreg="DDRA"/>
+    
+    <mcuport name="PORTB" pins="8" outreg="ORB" dirreg="DDRB"/>
+    
+    <mcuport name="PORTE" pins="CA1,CA2,CB1,CB2" >
+      <extint name="IRQA1" pin="CA1" />
+      <extint name="IRQA2" pin="CA2" />
+      <extint name="IRQB1" pin="CB1" />
+      <extint name="IRQB2" pin="CB2" />
+    </mcuport>
+
+    <ioport name="PORTC" pins="CS1,CS2" />
+    
+    <ioport name="PORTD" pins="8" />
+    
+    <ioport name="PORTR" pins="4" />
+    
+    <ioport name="PORTI" pins="RW,IRQ,P2" />
+    
+    
+</iou>

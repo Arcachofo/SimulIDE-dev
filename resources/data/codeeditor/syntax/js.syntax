@@ -1,0 +1,32 @@
+rules: data keyword1 keyword2 number preprocessor lineComment multiLineComment htmlTag quotation function
+
+
+data-style: #904020 default true false
+data: var let byte double float int long short signed char const enum static struct union unsigned virtual void function volatile bool boolean
+
+keyword1-style: #202060 default true false
+keyword1: class enum export extends import super
+
+keyword2-style: #300050 default true false
+keyword2: for if else while continue break switch case return true false this new delete
+
+preprocessor-style: #505090 default true false
+preprocessor: "#[define|endif|ifdef|ifndef|include]+[^\n]*"
+
+number-style: #3030B8 default false false
+number: "\b[0-9]+\b" "0[bB][0-1]+" "0[xX][0-9a-fA-F]+"
+
+htmlTag-style: #303078 default false false
+htmlTag: "<.*>" 
+
+quotation-style: #206410 default false false
+quotation: "\"(\\.|[^\"])*\"" "\'(\\.|[^\'])*\'"
+
+lineComment-style: #646464 default false true
+lineComment: "//[^\n]*"
+
+function-style: #202030 default false true
+function: "\\b[A-Za-z0-9_]+(?=\\()"
+
+multiLineComment-style: #FA5A5A default false true
+multiLineComment: "/\\*" "\\*/"

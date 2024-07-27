@@ -1,0 +1,23 @@
+8 bit shift register.
+
+Property: (default value)
+
+Main:
+- Clock Inverted: (no)
+   Invert Clock pin.
+
+- Reset Inverted: (yes)
+   Invert Reset pin.
+
+
+Electric:
+#include logicinputs
+#include logicoutputs
+- Invert Outputs: (no)
+   Invert output pin.
+   
+- Open Drain: (no)
+   If yes, output act as an open drain:
+   It can sink but not source current.
+
+#include logicedges

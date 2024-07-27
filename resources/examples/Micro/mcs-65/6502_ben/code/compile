@@ -1,0 +1,5 @@
+Hex:
+vasm6502_old -L out.lst -o out.hex -Fihex -dotdir hello-world-final.s
+
+Bin:
+vasm6502_old -L out.lst -o out.bin -Fbin -dotdir hello-world-final.s

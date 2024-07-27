@@ -1,0 +1,13 @@
+<circuit version="" rev="2224" stepSize="1000000" stepsPS="1000000" NLsteps="100000" reaStep="1000000" animate="1" >
+
+<item itemtype="Subcircuit" CircId="Uno-1" mainComp="false" Show_id="true" Show_Val="false" Pos="-988,-748" rotation="0" hflip="1" vflip="1" label="Arduino Uno" idLabPos="45.9096,-14.5589" labelrot="0" valLabPos="0,0" valLabRot="0" Logic_Symbol="false">
+<mainCompProps MainCompId="mega328-109" Frequency="16 MHz" Program="arduino_serial_echo.hex" Auto_Load="false" saveEepr="true" SerialMon="-1" />
+</item>
+
+<item itemtype="SerialPort" CircId="SerialPort-2" mainComp="false" Show_id="true" Show_Val="false" Pos="-956,-788" rotation="0" hflip="1" vflip="1" label="Serial Port" idLabPos="14.1364,-32.0341" labelrot="0" valLabPos="-16,20" valLabRot="0" Auto="false" Baudrate="9600 _Bauds" DataBits="8 _Bits" StopBits="1 _Bits" SerialMon="false" />
+
+<item itemtype="Connector" uid="Connector-3" startpinid="SerialPort-2-pin0" endpinid="Uno-1-0" pointList="-996,-796,-1036,-796,-1036,-732,-980,-732" />
+
+<item itemtype="Connector" uid="Connector-4" startpinid="SerialPort-2-pin1" endpinid="Uno-1-1" pointList="-996,-780,-1028,-780,-1028,-724,-980,-724" />
+
+</circuit>

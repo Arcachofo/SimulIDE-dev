@@ -1,0 +1,12 @@
+<!DOCTYPE SimulIDE>
+
+<mcu name="mega128" core="AVR" data="4352" prog="131072" progword="2" eeprom="4096" inst_cycle="1" freq="16000000" >
+
+    <include file="avr/avr_gpr.xml" />
+    <include file="mega64_128/mega64_regs.xml" />
+    <datablock name="RAM" start="0x0100" end="0x10FF"/>
+
+    <include file="mega64_128/mega64_int.xml" />
+    <include file="mega64_128/mega64_perif.xml" />
+
+</mcu>

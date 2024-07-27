@@ -1,0 +1,21 @@
+逻辑函数(Function）
+
+组合逻辑设备. 点击输出引脚旁的按钮可以设置对应的逻辑函数.
+
+属性: (默认值)
+
+主要特性:
+- 输入数量: (2 Pins)
+   输入引脚的个数.
+
+- 输出数量: (1 Pins)
+   输出引脚的个数.
+
+- 对输出取反: (否)
+   对输出引脚的信号取反.
+
+
+电气特性:
+#include logicinputs
+#include logicoutputs
+#include logicedges

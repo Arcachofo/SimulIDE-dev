@@ -1,0 +1,32 @@
+<!DOCTYPE SimulIDE>
+
+<mcu name="p16F676" core="Pic14" data="256" prog="1024" progword="2" eeprom="128"
+                    inst_cycle="4" freq="20000000" >
+
+    <include file="pic/pic14_regs.xml" />
+    <include file="p16F630/p16F630_regs.xml" />
+    
+    <!-- BANK 0 -->
+        <regblock name="SFR0" start="0x001E" end="0x001F" >
+            <register name="ADRESH" addr="0x1E" bits=""/>
+            <register name="ADCON0" addr="0x1F"  mask="11011111"
+                      bits="ADON,GO/DONE,CHS0,CHS1,CHS2,0,VCFG,ADFM"/>
+        </regblock>
+    <!-- BANK 1 -->
+        <regblock name="SFR1" start="0x009E" end="0x0009F" >
+            <register name="ADRESL" addr="0x9E" bits="" />
+            <register name="ANSEL"  addr="0x91" reset="11111111" />
+            <register name="ADCON1" addr="0x1F"  mask="01110000"
+                      bits="0,0,0,0,ADCS0,ADCS1,ADCS2"/>
+        </regblock>
+        
+    <include file="p16F630/p16F630_int.xml" />
+    <include file="p16F630/p16F630_perif.xml" />
+    
+        <adc name="ADC" type="11" bits="10" configregsA="ADCON0"
+                        dataregs="ADRESL,ADRESH"
+                        interrupt="ADC"
+                        prescalers="2,8,32,0,4,16,64"
+                        adcpins="PORTA0,PORTA1,PORTA2,PORTA4,PORTC0,PORTC1,PORTC2,PORTC3"
+                        vrefpins="PORTA1"/>
+</mcu>

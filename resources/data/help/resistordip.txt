@@ -1,0 +1,16 @@
+Set of resistors in a DIP configuration.
+
+Property: (default value)
+
+- Resistance: (100 Ω)
+
+- Size: (8)
+   Number of resistors.
+
+- Pullup: (no)
+   Configure resistor Dip as pullups connecting directly to a voltage source.
+   If true, it will disconnect and hide pins at the top.
+
+- Pullup Voltage: (5 V)
+   Voltage to connect the resistors.
+   Shown only if "Pullup" property is set.

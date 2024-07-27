@@ -1,0 +1,10 @@
+Connection to default audio output in your machine.
+
+If no default audio device is found, you will se an "X" in the symbol.
+
+Property: (default value)
+
+- Buzzer: (no)
+   Act as a buzzer instead of as a speaker.
+
+- Impedance: (8 Ω)

@@ -1,0 +1,349 @@
+<circuit version="" rev="2224" stepSize="1000000" stepsPS="1000000" NLsteps="100000" reaStep="1000000" animate="1" >
+
+<item itemtype="Probe" CircId="Probe-57" mainComp="false" Show_id="false" Show_Val="true" Pos="-404,-324" rotation="-45" hflip="1" vflip="1" label="Probe-159" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
+
+<item itemtype="Probe" CircId="Probe-56" mainComp="false" Show_id="false" Show_Val="true" Pos="-12,-324" rotation="-45" hflip="1" vflip="1" label="Probe-158" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
+
+<item itemtype="Probe" CircId="Probe-55" mainComp="false" Show_id="false" Show_Val="true" Pos="-68,-324" rotation="-45" hflip="1" vflip="1" label="Probe-157" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
+
+<item itemtype="Probe" CircId="Probe-54" mainComp="false" Show_id="false" Show_Val="true" Pos="-124,-324" rotation="-45" hflip="1" vflip="1" label="Probe-156" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
+
+<item itemtype="Probe" CircId="Probe-53" mainComp="false" Show_id="false" Show_Val="true" Pos="-180,-324" rotation="-45" hflip="1" vflip="1" label="Probe-155" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
+
+<item itemtype="Probe" CircId="Probe-52" mainComp="false" Show_id="false" Show_Val="true" Pos="-236,-324" rotation="-45" hflip="1" vflip="1" label="Probe-154" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
+
+<item itemtype="Probe" CircId="Probe-51" mainComp="false" Show_id="false" Show_Val="true" Pos="-292,-324" rotation="-45" hflip="1" vflip="1" label="Probe-153" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
+
+<item itemtype="Probe" CircId="Probe-50" mainComp="false" Show_id="false" Show_Val="true" Pos="-348,-324" rotation="-45" hflip="1" vflip="1" label="Probe-152" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
+
+<item itemtype="SwitchDip" CircId="SwitchDip-41" mainComp="false" Show_id="true" Show_Val="false" Pos="-228,-44" rotation="-90" hflip="1" vflip="1" label="Input" idLabPos="11,-59" labelrot="90" valLabPos="0,0" valLabRot="0" Size="8" Exclusive="false" CommonPin="false" State="53" />
+
+<item itemtype="Rail" CircId="Rail.-31" mainComp="false" ShowProp="Voltage" Show_id="false" Show_Val="true" Pos="-580,-316" rotation="90" hflip="1" vflip="1" label="Rail.-31" idLabPos="-64,-24" labelrot="0" valLabPos="-11.9767,4.27533" valLabRot="-90" Voltage="5 V" />
+
+<item itemtype="Capacitor" CircId="Capacitor-30" mainComp="false" ShowProp="Capacitance" Show_id="false" Show_Val="true" Pos="-452,-236" rotation="90" hflip="1" vflip="1" label="Capacitor-30" idLabPos="-16,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Capacitance="10 µF" Resistance="1e-06 Ω" InitVolt="0 V" ReaStep="0 ns" />
+
+<item itemtype="RelaySPST" CircId="Relay (all)-14" mainComp="false" Show_id="false" Show_Val="false" Pos="-396,-220" rotation="0" hflip="1" vflip="1" label="Relay (all)-14" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
+
+<item itemtype="RelaySPST" CircId="Relay (all)-13" mainComp="false" Show_id="false" Show_Val="false" Pos="-340,-220" rotation="0" hflip="1" vflip="1" label="Relay (all)-13" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
+
+<item itemtype="RelaySPST" CircId="Relay (all)-12" mainComp="false" Show_id="false" Show_Val="false" Pos="-284,-220" rotation="0" hflip="1" vflip="1" label="Relay (all)-12" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
+
+<item itemtype="RelaySPST" CircId="Relay (all)-11" mainComp="false" Show_id="false" Show_Val="false" Pos="-228,-220" rotation="0" hflip="1" vflip="1" label="Relay (all)-11" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
+
+<item itemtype="RelaySPST" CircId="Relay (all)-10" mainComp="false" Show_id="false" Show_Val="false" Pos="-172,-220" rotation="0" hflip="1" vflip="1" label="Relay (all)-10" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
+
+<item itemtype="RelaySPST" CircId="Relay (all)-9" mainComp="false" Show_id="false" Show_Val="false" Pos="-116,-220" rotation="0" hflip="1" vflip="1" label="Relay (all)-9" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
+
+<item itemtype="RelaySPST" CircId="Relay (all)-8" mainComp="false" Show_id="false" Show_Val="false" Pos="-60,-220" rotation="0" hflip="1" vflip="1" label="Relay (all)-8" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
+
+<item itemtype="RelaySPST" CircId="Relay (all)-7" mainComp="false" Show_id="false" Show_Val="false" Pos="-4,-220" rotation="0" hflip="1" vflip="1" label="Relay (all)-7" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
+
+<item itemtype="Ground" CircId="Ground (0 V)-6" mainComp="false" Show_id="false" Show_Val="false" Pos="20,-180" rotation="0" hflip="1" vflip="1" label="Ground (0 V)-6" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" />
+
+<item itemtype="RelaySPST" CircId="Relay (all)-5" mainComp="false" Show_id="false" Show_Val="false" Pos="-292,-148" rotation="90" hflip="1" vflip="1" label="Relay (all)-5" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="8" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
+
+<item itemtype="RelaySPST" CircId="Relay (all)-4" mainComp="false" Show_id="false" Show_Val="false" Pos="-500,-244" rotation="0" hflip="1" vflip="1" label="Relay (all)-4" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="true" Poles="1" IOn="0.02 A" IOff="0.01 A" Inductance="0.1 H" Rcoil="100 Ω" ReaStep="0 ns" />
+
+<item itemtype="Push" CircId="Push-66" mainComp="false" Show_id="true" Show_Val="false" Pos="-548,-244" rotation="0" hflip="1" vflip="1" label="Latch" idLabPos="-12.2129,18.0784" labelrot="0" valLabPos="-16,20" valLabRot="0" Norm_Close="false" Poles="1" />
+
+<item itemtype="Node" CircId="Node-65" mainComp="false" Pos="-28,-236" />
+
+<item itemtype="Node" CircId="Node-64" mainComp="false" Pos="-84,-236" />
+
+<item itemtype="Node" CircId="Node-63" mainComp="false" Pos="-140,-236" />
+
+<item itemtype="Node" CircId="Node-62" mainComp="false" Pos="-196,-236" />
+
+<item itemtype="Node" CircId="Node-61" mainComp="false" Pos="-252,-236" />
+
+<item itemtype="Node" CircId="Node-60" mainComp="false" Pos="-308,-236" />
+
+<item itemtype="Node" CircId="Node-59" mainComp="false" Pos="-364,-236" />
+
+<item itemtype="Node" CircId="Node-58" mainComp="false" Pos="-420,-236" />
+
+<item itemtype="Node" CircId="Node-49" mainComp="false" Pos="-252,-20" />
+
+<item itemtype="Node" CircId="Node-48" mainComp="false" Pos="-244,-20" />
+
+<item itemtype="Node" CircId="Node-47" mainComp="false" Pos="-236,-20" />
+
+<item itemtype="Node" CircId="Node-46" mainComp="false" Pos="-228,-20" />
+
+<item itemtype="Node" CircId="Node-45" mainComp="false" Pos="-220,-20" />
+
+<item itemtype="Node" CircId="Node-44" mainComp="false" Pos="-212,-20" />
+
+<item itemtype="Node" CircId="Node-43" mainComp="false" Pos="-204,-20" />
+
+<item itemtype="Node" CircId="Node-42" mainComp="false" Pos="-580,-260" />
+
+<item itemtype="Node" CircId="Node-40" mainComp="false" Pos="-452,-260" />
+
+<item itemtype="Node" CircId="Node-39" mainComp="false" Pos="-292,-204" />
+
+<item itemtype="Node" CircId="Node-38" mainComp="false" Pos="-36,-204" />
+
+<item itemtype="Node" CircId="Node-37" mainComp="false" Pos="-92,-204" />
+
+<item itemtype="Node" CircId="Node-36" mainComp="false" Pos="-148,-204" />
+
+<item itemtype="Node" CircId="Node-35" mainComp="false" Pos="-204,-204" />
+
+<item itemtype="Node" CircId="Node-34" mainComp="false" Pos="-260,-204" />
+
+<item itemtype="Node" CircId="Node-33" mainComp="false" Pos="-316,-204" />
+
+<item itemtype="Node" CircId="Node-32" mainComp="false" Pos="20,-204" />
+
+<item itemtype="Node" CircId="Node-29" mainComp="false" Pos="-28,-220" />
+
+<item itemtype="Node" CircId="Node-28" mainComp="false" Pos="-84,-220" />
+
+<item itemtype="Node" CircId="Node-27" mainComp="false" Pos="-140,-220" />
+
+<item itemtype="Node" CircId="Node-26" mainComp="false" Pos="-196,-220" />
+
+<item itemtype="Node" CircId="Node-25" mainComp="false" Pos="-252,-220" />
+
+<item itemtype="Node" CircId="Node-24" mainComp="false" Pos="-308,-220" />
+
+<item itemtype="Node" CircId="Node-23" mainComp="false" Pos="-364,-220" />
+
+<item itemtype="Node" CircId="Node-22" mainComp="false" Pos="-420,-220" />
+
+<item itemtype="Node" CircId="Node-21" mainComp="false" Pos="-372,-268" />
+
+<item itemtype="Node" CircId="Node-20" mainComp="false" Pos="-316,-268" />
+
+<item itemtype="Node" CircId="Node-19" mainComp="false" Pos="-260,-268" />
+
+<item itemtype="Node" CircId="Node-18" mainComp="false" Pos="-204,-268" />
+
+<item itemtype="Node" CircId="Node-17" mainComp="false" Pos="-148,-268" />
+
+<item itemtype="Node" CircId="Node-16" mainComp="false" Pos="-92,-268" />
+
+<item itemtype="Node" CircId="Node-15" mainComp="false" Pos="-36,-268" />
+
+<item itemtype="Node" CircId="Node-2" mainComp="false" Pos="-452,-204" />
+
+<item itemtype="Node" CircId="Node-1" mainComp="false" Pos="-372,-204" />
+
+<item itemtype="Node" CircId="Node-67" mainComp="false" Pos="-580,-244" />
+
+<item itemtype="Connector" uid="Connector-66" startpinid="Relay (all)-7-inductor-rPin" endpinid="Node-32-0" pointList="12,-220,20,-220,20,-204" />
+
+<item itemtype="Connector" uid="Connector-68" startpinid="Relay (all)-4-switch1pinN" endpinid="Node-21-0" pointList="-484,-268,-372,-268" />
+
+<item itemtype="Connector" uid="Connector-70" startpinid="Relay (all)-8-switch0pinN" endpinid="Node-15-1" pointList="-44,-236,-36,-236,-36,-268" />
+
+<item itemtype="Connector" uid="Connector-71" startpinid="Node-15-2" endpinid="Relay (all)-7-switch0pinN" pointList="-36,-268,20,-268,20,-236,12,-236" />
+
+<item itemtype="Connector" uid="Connector-72" startpinid="Relay (all)-9-switch0pinN" endpinid="Node-16-1" pointList="-100,-236,-92,-236,-92,-268" />
+
+<item itemtype="Connector" uid="Connector-73" startpinid="Node-16-2" endpinid="Node-15-0" pointList="-92,-268,-36,-268" />
+
+<item itemtype="Connector" uid="Connector-74" startpinid="Relay (all)-10-switch0pinN" endpinid="Node-17-1" pointList="-156,-236,-148,-236,-148,-268" />
+
+<item itemtype="Connector" uid="Connector-75" startpinid="Node-17-2" endpinid="Node-16-0" pointList="-148,-268,-92,-268" />
+
+<item itemtype="Connector" uid="Connector-76" startpinid="Relay (all)-11-switch0pinN" endpinid="Node-18-1" pointList="-212,-236,-204,-236,-204,-268" />
+
+<item itemtype="Connector" uid="Connector-77" startpinid="Node-18-2" endpinid="Node-17-0" pointList="-204,-268,-148,-268" />
+
+<item itemtype="Connector" uid="Connector-78" startpinid="Relay (all)-12-switch0pinN" endpinid="Node-19-1" pointList="-268,-236,-260,-236,-260,-268" />
+
+<item itemtype="Connector" uid="Connector-79" startpinid="Node-19-2" endpinid="Node-18-0" pointList="-260,-268,-204,-268" />
+
+<item itemtype="Connector" uid="Connector-80" startpinid="Relay (all)-13-switch0pinN" endpinid="Node-20-1" pointList="-324,-236,-316,-236,-316,-268" />
+
+<item itemtype="Connector" uid="Connector-81" startpinid="Node-20-2" endpinid="Node-19-0" pointList="-316,-268,-260,-268" />
+
+<item itemtype="Connector" uid="Connector-82" startpinid="Relay (all)-14-switch0pinN" endpinid="Node-21-1" pointList="-380,-236,-372,-236,-372,-268" />
+
+<item itemtype="Connector" uid="Connector-83" startpinid="Node-21-2" endpinid="Node-20-0" pointList="-372,-268,-316,-268" />
+
+<item itemtype="Connector" uid="Connector-84" startpinid="Relay (all)-14-pinP2" endpinid="Node-58-0" pointList="-412,-236,-420,-236" />
+
+<item itemtype="Connector" uid="Connector-86" startpinid="Relay (all)-14-inductor-lPin" endpinid="Node-22-1" pointList="-412,-220,-420,-220" />
+
+<item itemtype="Connector" uid="Connector-87" startpinid="Node-22-2" endpinid="Relay (all)-5-pinP2" pointList="-420,-220,-420,-172,-276,-172,-276,-164" />
+
+<item itemtype="Connector" uid="Connector-88" startpinid="Relay (all)-13-pinP2" endpinid="Node-59-0" pointList="-356,-236,-364,-236" />
+
+<item itemtype="Connector" uid="Connector-90" startpinid="Relay (all)-13-inductor-lPin" endpinid="Node-23-1" pointList="-356,-220,-364,-220" />
+
+<item itemtype="Connector" uid="Connector-91" startpinid="Node-23-2" endpinid="Relay (all)-5-pinP4" pointList="-364,-220,-364,-180,-260,-180,-260,-164" />
+
+<item itemtype="Connector" uid="Connector-92" startpinid="Relay (all)-12-pinP2" endpinid="Node-60-0" pointList="-300,-236,-308,-236" />
+
+<item itemtype="Connector" uid="Connector-94" startpinid="Relay (all)-11-pinP2" endpinid="Node-61-0" pointList="-244,-236,-252,-236" />
+
+<item itemtype="Connector" uid="Connector-96" startpinid="Relay (all)-10-pinP2" endpinid="Node-62-0" pointList="-188,-236,-196,-236" />
+
+<item itemtype="Connector" uid="Connector-98" startpinid="Relay (all)-9-pinP2" endpinid="Node-63-0" pointList="-132,-236,-140,-236" />
+
+<item itemtype="Connector" uid="Connector-100" startpinid="Relay (all)-8-pinP2" endpinid="Node-64-0" pointList="-76,-236,-84,-236" />
+
+<item itemtype="Connector" uid="Connector-102" startpinid="Relay (all)-5-pinP16" endpinid="Node-29-0" pointList="-164,-164,-164,-172,-28,-172,-28,-220" />
+
+<item itemtype="Connector" uid="Connector-104" startpinid="Relay (all)-12-inductor-lPin" endpinid="Node-24-1" pointList="-300,-220,-308,-220" />
+
+<item itemtype="Connector" uid="Connector-105" startpinid="Node-24-2" endpinid="Relay (all)-5-pinP6" pointList="-308,-220,-308,-188,-244,-188,-244,-164" />
+
+<item itemtype="Connector" uid="Connector-106" startpinid="Relay (all)-11-inductor-lPin" endpinid="Node-25-1" pointList="-244,-220,-252,-220" />
+
+<item itemtype="Connector" uid="Connector-107" startpinid="Node-25-2" endpinid="Relay (all)-5-pinP8" pointList="-252,-220,-252,-196,-228,-196,-228,-164" />
+
+<item itemtype="Connector" uid="Connector-108" startpinid="Relay (all)-10-inductor-lPin" endpinid="Node-26-1" pointList="-188,-220,-196,-220" />
+
+<item itemtype="Connector" uid="Connector-109" startpinid="Node-26-2" endpinid="Relay (all)-5-pinP10" pointList="-196,-220,-196,-196,-212,-196,-212,-164" />
+
+<item itemtype="Connector" uid="Connector-110" startpinid="Relay (all)-9-inductor-lPin" endpinid="Node-27-1" pointList="-132,-220,-140,-220" />
+
+<item itemtype="Connector" uid="Connector-111" startpinid="Node-27-2" endpinid="Relay (all)-5-pinP12" pointList="-140,-220,-140,-188,-196,-188,-196,-164" />
+
+<item itemtype="Connector" uid="Connector-112" startpinid="Relay (all)-8-inductor-lPin" endpinid="Node-28-1" pointList="-76,-220,-84,-220" />
+
+<item itemtype="Connector" uid="Connector-113" startpinid="Node-28-2" endpinid="Relay (all)-5-pinP14" pointList="-84,-220,-84,-180,-180,-180,-180,-164" />
+
+<item itemtype="Connector" uid="Connector-114" startpinid="Relay (all)-7-inductor-lPin" endpinid="Node-29-1" pointList="-20,-220,-28,-220" />
+
+<item itemtype="Connector" uid="Connector-115" startpinid="Node-29-2" endpinid="Node-65-0" pointList="-28,-220,-28,-236" />
+
+<item itemtype="Connector" uid="Connector-116" startpinid="Rail.-31-outnod" endpinid="Node-42-0" pointList="-580,-300,-580,-260" />
+
+<item itemtype="Connector" uid="Connector-120" startpinid="Node-32-2" endpinid="Ground (0 V)-6-Gnd" pointList="20,-204,20,-196" />
+
+<item itemtype="Connector" uid="Connector-121" startpinid="Node-32-1" endpinid="Node-38-0" pointList="20,-204,-36,-204" />
+
+<item itemtype="Connector" uid="Connector-122" startpinid="Relay (all)-13-inductor-rPin" endpinid="Node-33-1" pointList="-324,-220,-316,-220,-316,-204" />
+
+<item itemtype="Connector" uid="Connector-123" startpinid="Node-33-2" endpinid="Node-1-0" pointList="-316,-204,-372,-204" />
+
+<item itemtype="Connector" uid="Connector-124" startpinid="Relay (all)-12-inductor-rPin" endpinid="Node-34-1" pointList="-268,-220,-260,-220,-260,-204" />
+
+<item itemtype="Connector" uid="Connector-125" startpinid="Node-34-2" endpinid="Node-39-0" pointList="-260,-204,-292,-204" />
+
+<item itemtype="Connector" uid="Connector-126" startpinid="Relay (all)-11-inductor-rPin" endpinid="Node-35-1" pointList="-212,-220,-204,-220,-204,-204" />
+
+<item itemtype="Connector" uid="Connector-127" startpinid="Node-35-2" endpinid="Node-34-0" pointList="-204,-204,-260,-204" />
+
+<item itemtype="Connector" uid="Connector-128" startpinid="Relay (all)-10-inductor-rPin" endpinid="Node-36-1" pointList="-156,-220,-148,-220,-148,-204" />
+
+<item itemtype="Connector" uid="Connector-129" startpinid="Node-36-2" endpinid="Node-35-0" pointList="-148,-204,-204,-204" />
+
+<item itemtype="Connector" uid="Connector-130" startpinid="Relay (all)-9-inductor-rPin" endpinid="Node-37-1" pointList="-100,-220,-92,-220,-92,-204" />
+
+<item itemtype="Connector" uid="Connector-131" startpinid="Node-37-2" endpinid="Node-36-0" pointList="-92,-204,-148,-204" />
+
+<item itemtype="Connector" uid="Connector-132" startpinid="Relay (all)-8-inductor-rPin" endpinid="Node-38-1" pointList="-44,-220,-36,-220,-36,-204" />
+
+<item itemtype="Connector" uid="Connector-133" startpinid="Node-38-2" endpinid="Node-37-0" pointList="-36,-204,-92,-204" />
+
+<item itemtype="Connector" uid="Connector-134" startpinid="Relay (all)-4-switch0pinN" endpinid="Node-40-0" pointList="-484,-260,-452,-260" />
+
+<item itemtype="Connector" uid="Connector-136" startpinid="Relay (all)-5-inductor-lPin" endpinid="Node-39-1" pointList="-292,-164,-292,-204" />
+
+<item itemtype="Connector" uid="Connector-137" startpinid="Node-39-2" endpinid="Node-33-0" pointList="-292,-204,-316,-204" />
+
+<item itemtype="Connector" uid="Connector-138" startpinid="Relay (all)-5-inductor-rPin" endpinid="Node-40-1" pointList="-292,-132,-292,-124,-436,-124,-436,-260,-452,-260" />
+
+<item itemtype="Connector" uid="Connector-139" startpinid="Node-40-2" endpinid="Capacitor-30-lPin" pointList="-452,-260,-452,-252" />
+
+<item itemtype="Connector" uid="Connector-140" startpinid="Capacitor-30-rPin" endpinid="Node-2-0" pointList="-452,-220,-452,-204" />
+
+<item itemtype="Connector" uid="Connector-141" startpinid="Node-2-2" endpinid="Relay (all)-4-inductor-rPin" pointList="-452,-204,-476,-204,-476,-244,-484,-244" />
+
+<item itemtype="Connector" uid="Connector-142" startpinid="Node-2-1" endpinid="Node-1-1" pointList="-452,-204,-372,-204" />
+
+<item itemtype="Connector" uid="Connector-143" startpinid="Node-1-2" endpinid="Relay (all)-14-inductor-rPin" pointList="-372,-204,-372,-220,-380,-220" />
+
+<item itemtype="Connector" uid="Connector-144" startpinid="Relay (all)-5-switch0pinN" endpinid="SwitchDip-41-switch0-pinN" pointList="-276,-132,-276,-84,-252,-84,-252,-60" />
+
+<item itemtype="Connector" uid="Connector-146" startpinid="SwitchDip-41-switch7-pinN" endpinid="Relay (all)-5-switch7pinN" pointList="-196,-60,-196,-76,-164,-76,-164,-132" />
+
+<item itemtype="Connector" uid="Connector-148" startpinid="Relay (all)-5-switch1pinN" endpinid="SwitchDip-41-switch1-pinN" pointList="-260,-132,-260,-92,-244,-92,-244,-60" />
+
+<item itemtype="Connector" uid="Connector-150" startpinid="SwitchDip-41-switch6-pinN" endpinid="Relay (all)-5-switch6pinN" pointList="-204,-60,-204,-84,-180,-84,-180,-132" />
+
+<item itemtype="Connector" uid="Connector-152" startpinid="Relay (all)-5-switch5pinN" endpinid="SwitchDip-41-switch5-pinN" pointList="-196,-132,-196,-92,-212,-92,-212,-60" />
+
+<item itemtype="Connector" uid="Connector-154" startpinid="Relay (all)-5-switch2pinN" endpinid="SwitchDip-41-switch2-pinN" pointList="-244,-132,-244,-100,-236,-100,-236,-60" />
+
+<item itemtype="Connector" uid="Connector-156" startpinid="Relay (all)-5-switch3pinN" endpinid="SwitchDip-41-switch3-pinN" pointList="-228,-132,-228,-60" />
+
+<item itemtype="Connector" uid="Connector-158" startpinid="SwitchDip-41-switch4-pinN" endpinid="Relay (all)-5-switch4pinN" pointList="-220,-60,-220,-100,-212,-100,-212,-132" />
+
+<item itemtype="Connector" uid="Connector-160" startpinid="Node-42-2" endpinid="Relay (all)-4-pinP2" pointList="-580,-260,-516,-260" />
+
+<item itemtype="Connector" uid="Connector-162" startpinid="SwitchDip-41-switch6-pinP" endpinid="Node-43-1" pointList="-204,-36,-204,-20" />
+
+<item itemtype="Connector" uid="Connector-163" startpinid="Node-43-2" endpinid="SwitchDip-41-switch7-pinP" pointList="-204,-20,-196,-20,-196,-36" />
+
+<item itemtype="Connector" uid="Connector-164" startpinid="SwitchDip-41-switch5-pinP" endpinid="Node-44-1" pointList="-212,-36,-212,-20" />
+
+<item itemtype="Connector" uid="Connector-165" startpinid="Node-44-2" endpinid="Node-43-0" pointList="-212,-20,-204,-20" />
+
+<item itemtype="Connector" uid="Connector-166" startpinid="SwitchDip-41-switch4-pinP" endpinid="Node-45-1" pointList="-220,-36,-220,-20" />
+
+<item itemtype="Connector" uid="Connector-167" startpinid="Node-45-2" endpinid="Node-44-0" pointList="-220,-20,-212,-20" />
+
+<item itemtype="Connector" uid="Connector-168" startpinid="SwitchDip-41-switch3-pinP" endpinid="Node-46-1" pointList="-228,-36,-228,-20" />
+
+<item itemtype="Connector" uid="Connector-169" startpinid="Node-46-2" endpinid="Node-45-0" pointList="-228,-20,-220,-20" />
+
+<item itemtype="Connector" uid="Connector-170" startpinid="SwitchDip-41-switch2-pinP" endpinid="Node-47-1" pointList="-236,-36,-236,-20" />
+
+<item itemtype="Connector" uid="Connector-171" startpinid="Node-47-2" endpinid="Node-46-0" pointList="-236,-20,-228,-20" />
+
+<item itemtype="Connector" uid="Connector-172" startpinid="SwitchDip-41-switch1-pinP" endpinid="Node-48-1" pointList="-244,-36,-244,-20" />
+
+<item itemtype="Connector" uid="Connector-173" startpinid="Node-48-2" endpinid="Node-47-0" pointList="-244,-20,-236,-20" />
+
+<item itemtype="Connector" uid="Connector-174" startpinid="SwitchDip-41-switch0-pinP" endpinid="Node-49-1" pointList="-252,-36,-252,-20" />
+
+<item itemtype="Connector" uid="Connector-175" startpinid="Node-49-2" endpinid="Node-48-0" pointList="-252,-20,-244,-20" />
+
+<item itemtype="Connector" uid="Connector-176" startpinid="Probe-57-inpin" endpinid="Node-58-1" pointList="-420,-308,-420,-236" />
+
+<item itemtype="Connector" uid="Connector-177" startpinid="Node-58-2" endpinid="Node-22-0" pointList="-420,-236,-420,-220" />
+
+<item itemtype="Connector" uid="Connector-178" startpinid="Node-59-2" endpinid="Node-23-0" pointList="-364,-236,-364,-220" />
+
+<item itemtype="Connector" uid="Connector-179" startpinid="Node-59-1" endpinid="Probe-50-inpin" pointList="-364,-236,-364,-308" />
+
+<item itemtype="Connector" uid="Connector-180" startpinid="Node-60-2" endpinid="Node-24-0" pointList="-308,-236,-308,-220" />
+
+<item itemtype="Connector" uid="Connector-181" startpinid="Node-60-1" endpinid="Probe-51-inpin" pointList="-308,-236,-308,-308" />
+
+<item itemtype="Connector" uid="Connector-182" startpinid="Node-61-2" endpinid="Node-25-0" pointList="-252,-236,-252,-220" />
+
+<item itemtype="Connector" uid="Connector-183" startpinid="Node-61-1" endpinid="Probe-52-inpin" pointList="-252,-236,-252,-308" />
+
+<item itemtype="Connector" uid="Connector-184" startpinid="Node-62-2" endpinid="Node-26-0" pointList="-196,-236,-196,-220" />
+
+<item itemtype="Connector" uid="Connector-185" startpinid="Node-62-1" endpinid="Probe-53-inpin" pointList="-196,-236,-196,-308" />
+
+<item itemtype="Connector" uid="Connector-186" startpinid="Node-63-2" endpinid="Node-27-0" pointList="-140,-236,-140,-220" />
+
+<item itemtype="Connector" uid="Connector-187" startpinid="Node-63-1" endpinid="Probe-54-inpin" pointList="-140,-236,-140,-308" />
+
+<item itemtype="Connector" uid="Connector-188" startpinid="Node-64-2" endpinid="Node-28-0" pointList="-84,-236,-84,-220" />
+
+<item itemtype="Connector" uid="Connector-189" startpinid="Node-64-1" endpinid="Probe-55-inpin" pointList="-84,-236,-84,-308" />
+
+<item itemtype="Connector" uid="Connector-190" startpinid="Node-65-2" endpinid="Relay (all)-7-pinP2" pointList="-28,-236,-20,-236" />
+
+<item itemtype="Connector" uid="Connector-191" startpinid="Node-65-1" endpinid="Probe-56-inpin" pointList="-28,-236,-28,-308" />
+
+<item itemtype="Connector" uid="Connector-192" startpinid="Push-66-switch0pinN" endpinid="Relay (all)-4-inductor-lPin" pointList="-532,-244,-516,-244" />
+
+<item itemtype="Connector" uid="Connector-193" startpinid="Push-66-pinP0" endpinid="Node-67-1" pointList="-564,-244,-580,-244" />
+
+<item itemtype="Connector" uid="Connector-194" startpinid="Node-42-1" endpinid="Node-67-0" pointList="-580,-260,-580,-244" />
+
+<item itemtype="Connector" uid="Connector-195" startpinid="Node-67-2" endpinid="Node-49-0" pointList="-580,-244,-580,-20,-252,-20" />
+
+</circuit>

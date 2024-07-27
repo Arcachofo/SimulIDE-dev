@@ -1,0 +1,149 @@
+<circuit type="simulide_1.0" stepSize="1000000" stepsPS="1000000" NLsteps="100000" animate="0" >
+
+<item itemtype="Rail" CircId="Rail-34" mainComp="false" ShowProp="Voltage" Show_id="false" Show_Val="true" Pos="-140,-32" rotation="0" hflip="1" vflip="1" label="Rail-2" idLabPos="-16,-24" labelrot="0" valLabPos="-28,-7" valLabRot="0" Voltage="5 V" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-33" mainComp="false" Show_id="true" Show_Val="false" Pos="-172,-88" rotation="0" hflip="1" vflip="1" label="20" idLabPos="-44,-8" labelrot="0" valLabPos="-9,9" valLabRot="0" Out="true" Voltage="5 V" />
+
+<item itemtype="FreqMeter" CircId="Frequencimeter-32" mainComp="false" Show_id="false" Show_Val="false" Pos="52,-32" rotation="0" hflip="1" vflip="1" label="Frequencimeter-15" idLabPos="-32,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Filter="0.1 V" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-31" mainComp="false" Show_id="true" Show_Val="false" Pos="-172,-56" rotation="0" hflip="1" vflip="1" label="80" idLabPos="-44,-8" labelrot="0" valLabPos="-9,9" valLabRot="0" Out="false" Voltage="5 V" />
+
+<item itemtype="Ground" CircId="Ground-30" mainComp="false" Show_id="false" Show_Val="false" Pos="-112,24" rotation="0" hflip="1" vflip="1" label="Ground-5" idLabPos="-16,8" labelrot="0" valLabPos="0,0" valLabRot="0" />
+
+<item itemtype="Subcircuit" CircId="CD4526-29" mainComp="false" Show_id="true" Show_Val="false" Pos="-84,-80" rotation="0" hflip="1" vflip="1" label="CD4526-1" idLabPos="0,-20" labelrot="0" valLabPos="0,0" valLabRot="0" Logic_Symbol="true" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-28" mainComp="false" Show_id="true" Show_Val="false" Pos="-172,-104" rotation="0" hflip="1" vflip="1" label="10" idLabPos="-44,-8" labelrot="0" valLabPos="-9,9" valLabRot="0" Out="true" Voltage="5 V" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-27" mainComp="false" Show_id="true" Show_Val="false" Pos="-172,-72" rotation="0" hflip="1" vflip="1" label="40" idLabPos="-44,-8" labelrot="0" valLabPos="-9,9" valLabRot="0" Out="false" Voltage="5 V" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-26" mainComp="false" Show_id="true" Show_Val="false" Pos="-396,-88" rotation="0" hflip="1" vflip="1" label="2" idLabPos="-44,-8" labelrot="0" valLabPos="-9,9" valLabRot="0" Out="false" Voltage="5 V" />
+
+<item itemtype="FreqMeter" CircId="Frequencimeter-25" mainComp="false" Show_id="false" Show_Val="false" Pos="-344,68" rotation="0" hflip="1" vflip="1" label="Frequencimeter-11" idLabPos="-32,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Filter="0.1 V" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-24" mainComp="false" Show_id="true" Show_Val="false" Pos="-396,-56" rotation="0" hflip="1" vflip="1" label="8" idLabPos="-44,-8" labelrot="0" valLabPos="-9,9" valLabRot="0" Out="false" Voltage="5 V" />
+
+<item itemtype="Ground" CircId="Ground-23" mainComp="false" Show_id="false" Show_Val="false" Pos="-336,24" rotation="0" hflip="1" vflip="1" label="Ground-5" idLabPos="-16,8" labelrot="0" valLabPos="0,0" valLabRot="0" />
+
+<item itemtype="Clock" CircId="Clock-22" mainComp="false" Show_id="false" Show_Val="true" Pos="-432,-16" rotation="0" hflip="1" vflip="1" label="Clock-9" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="true" Running="true" Voltage="5 V" Freq="1023.54 Hz" Always_On="false" />
+
+<item itemtype="Subcircuit" CircId="CD4526-21" mainComp="false" Show_id="true" Show_Val="false" Pos="-308,-80" rotation="0" hflip="1" vflip="1" label="CD4526-1" idLabPos="0,-20" labelrot="0" valLabPos="0,0" valLabRot="0" Logic_Symbol="true" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-20" mainComp="false" Show_id="true" Show_Val="false" Pos="-396,-104" rotation="0" hflip="1" vflip="1" label="1" idLabPos="-44,-8" labelrot="0" valLabPos="-9,9" valLabRot="0" Out="false" Voltage="5 V" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-18" mainComp="false" Show_id="true" Show_Val="false" Pos="-396,-72" rotation="0" hflip="1" vflip="1" label="4" idLabPos="-44,-8" labelrot="0" valLabPos="-9,9" valLabRot="0" Out="false" Voltage="5 V" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-17" mainComp="false" Show_id="true" Show_Val="false" Pos="-372,-292" rotation="0" hflip="1" vflip="1" label="8" idLabPos="-44,-8" labelrot="0" valLabPos="-9,9" valLabRot="0" Out="false" Voltage="5 V" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-16" mainComp="false" Show_id="true" Show_Val="false" Pos="-372,-308" rotation="0" hflip="1" vflip="1" label="4" idLabPos="-44,-8" labelrot="0" valLabPos="-9,9" valLabRot="0" Out="true" Voltage="5 V" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-15" mainComp="false" Show_id="true" Show_Val="false" Pos="-372,-324" rotation="0" hflip="1" vflip="1" label="2" idLabPos="-44,-8" labelrot="0" valLabPos="-9,9" valLabRot="0" Out="false" Voltage="5 V" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-14" mainComp="false" Show_id="true" Show_Val="false" Pos="-372,-340" rotation="0" hflip="1" vflip="1" label="1" idLabPos="-44,-8" labelrot="0" valLabPos="-9,9" valLabRot="0" Out="true" Voltage="5 V" />
+
+<item itemtype="FreqMeter" CircId="Frequencimeter-12" mainComp="false" Show_id="false" Show_Val="false" Pos="-148,-268" rotation="0" hflip="1" vflip="1" label="Frequencimeter-15" idLabPos="-32,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Filter="0.1 V" />
+
+<item itemtype="FreqMeter" CircId="Frequencimeter-10" mainComp="false" Show_id="false" Show_Val="false" Pos="-320,-180" rotation="0" hflip="1" vflip="1" label="Frequencimeter-11" idLabPos="-32,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Filter="0.1 V" />
+
+<item itemtype="Clock" CircId="Clock-9" mainComp="false" Show_id="false" Show_Val="true" Pos="-408,-252" rotation="0" hflip="1" vflip="1" label="Clock-9" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="true" Running="true" Voltage="5 V" Freq="1000 Hz" Always_On="false" />
+
+<item itemtype="Ground" CircId="Ground-7" mainComp="false" Show_id="false" Show_Val="false" Pos="-304,-212" rotation="0" hflip="1" vflip="1" label="Ground-5" idLabPos="-16,8" labelrot="0" valLabPos="0,0" valLabRot="0" />
+
+<item itemtype="Rail" CircId="Rail-6" mainComp="false" ShowProp="Voltage" Show_id="false" Show_Val="true" Pos="-352,-268" rotation="0" hflip="1" vflip="1" label="Rail-2" idLabPos="-16,-24" labelrot="0" valLabPos="-28,-7" valLabRot="0" Voltage="5 V" />
+
+<item itemtype="Subcircuit" CircId="CD4526-5" mainComp="false" Show_id="true" Show_Val="false" Pos="-284,-316" rotation="0" hflip="1" vflip="1" label="CD4526-1" idLabPos="0,-20" labelrot="0" valLabPos="0,0" valLabRot="0" Logic_Symbol="true" />
+
+<item itemtype="Node" CircId="Node-19" mainComp="false" Pos="-396,-16" />
+
+<item itemtype="Node" CircId="Node-13" mainComp="false" Pos="-224,-268" />
+
+<item itemtype="Node" CircId="Node-11" mainComp="false" Pos="-372,-252" />
+
+<item itemtype="Node" CircId="Node-8" mainComp="false" Pos="-304,-236" />
+
+<item itemtype="Node" CircId="Node-4" mainComp="false" Pos="-248,32" />
+
+<item itemtype="Node" CircId="Node-3" mainComp="false" Pos="-124,32" />
+
+<item itemtype="Node" CircId="Node-2" mainComp="false" Pos="-336,0" />
+
+<item itemtype="Node" CircId="Node-1" mainComp="false" Pos="-112,0" />
+
+<item itemtype="Connector" uid="Connector-35" startpinid="Rail-6-outnod" endpinid="CD4526-5-CF" pointList="-336,-268,-292,-268" />
+
+<item itemtype="Connector" uid="Connector-37" startpinid="CD4526-5-INH" endpinid="Node-8-0" pointList="-292,-244,-304,-244,-304,-236" />
+
+<item itemtype="Connector" uid="Connector-39" startpinid="Ground-7-Gnd" endpinid="Node-8-1" pointList="-304,-228,-304,-236" />
+
+<item itemtype="Connector" uid="Connector-40" startpinid="Node-8-2" endpinid="CD4526-5-Res" pointList="-304,-236,-292,-236" />
+
+<item itemtype="Connector" uid="Connector-41" startpinid="Clock-9-outnod" endpinid="Node-11-0" pointList="-392,-252,-372,-252" />
+
+<item itemtype="Connector" uid="Connector-43" startpinid="Frequencimeter-10-lPin" endpinid="Node-11-1" pointList="-360,-180,-372,-180,-372,-252" />
+
+<item itemtype="Connector" uid="Connector-44" startpinid="Node-11-2" endpinid="CD4526-5-CLK" pointList="-372,-252,-292,-252" />
+
+<item itemtype="Connector" uid="Connector-45" startpinid="CD4526-5-0" endpinid="Node-13-0" pointList="-244,-268,-224,-268" />
+
+<item itemtype="Connector" uid="Connector-47" startpinid="Frequencimeter-12-lPin" endpinid="Node-13-1" pointList="-188,-268,-224,-268" />
+
+<item itemtype="Connector" uid="Connector-48" startpinid="Node-13-2" endpinid="CD4526-5-PE" pointList="-224,-268,-224,-204,-316,-204,-316,-260,-292,-260" />
+
+<item itemtype="Connector" uid="Connector-49" startpinid="Fixed Voltage-14-outnod" endpinid="CD4526-5-P0" pointList="-356,-340,-304,-340,-304,-308,-292,-308" />
+
+<item itemtype="Connector" uid="Connector-51" startpinid="Fixed Voltage-15-outnod" endpinid="CD4526-5-P1" pointList="-356,-324,-312,-324,-312,-300,-292,-300" />
+
+<item itemtype="Connector" uid="Connector-53" startpinid="Fixed Voltage-16-outnod" endpinid="CD4526-5-P2" pointList="-356,-308,-316,-308,-316,-292,-292,-292" />
+
+<item itemtype="Connector" uid="Connector-55" startpinid="Fixed Voltage-17-outnod" endpinid="CD4526-5-P3" pointList="-356,-292,-328,-292,-328,-284,-292,-284" />
+
+<item itemtype="Connector" uid="Connector-57" startpinid="Fixed Voltage-18-outnod" endpinid="CD4526-21-P2" pointList="-380,-72,-340,-72,-340,-56,-316,-56" />
+
+<item itemtype="Connector" uid="Connector-59" startpinid="Fixed Voltage-24-outnod" endpinid="CD4526-21-P3" pointList="-380,-56,-352,-56,-352,-48,-316,-48" />
+
+<item itemtype="Connector" uid="Connector-61" startpinid="Fixed Voltage-26-outnod" endpinid="CD4526-21-P1" pointList="-380,-88,-336,-88,-336,-64,-316,-64" />
+
+<item itemtype="Connector" uid="Connector-63" startpinid="Frequencimeter-25-lPin" endpinid="Node-19-1" pointList="-384,68,-396,68,-396,-16" />
+
+<item itemtype="Connector" uid="Connector-65" startpinid="Node-19-2" endpinid="CD4526-21-CLK" pointList="-396,-16,-316,-16" />
+
+<item itemtype="Connector" uid="Connector-66" startpinid="Fixed Voltage-20-outnod" endpinid="CD4526-21-P0" pointList="-380,-104,-328,-104,-328,-72,-316,-72" />
+
+<item itemtype="Connector" uid="Connector-68" startpinid="Clock-22-outnod" endpinid="Node-19-0" pointList="-416,-16,-396,-16" />
+
+<item itemtype="Connector" uid="Connector-69" startpinid="Fixed Voltage-27-outnod" endpinid="CD4526-29-P2" pointList="-156,-72,-116,-72,-116,-56,-92,-56" />
+
+<item itemtype="Connector" uid="Connector-71" startpinid="Fixed Voltage-31-outnod" endpinid="CD4526-29-P3" pointList="-156,-56,-128,-56,-128,-48,-92,-48" />
+
+<item itemtype="Connector" uid="Connector-73" startpinid="Fixed Voltage-33-outnod" endpinid="CD4526-29-P1" pointList="-156,-88,-112,-88,-112,-64,-92,-64" />
+
+<item itemtype="Connector" uid="Connector-75" startpinid="Fixed Voltage-28-outnod" endpinid="CD4526-29-P0" pointList="-156,-104,-104,-104,-104,-72,-92,-72" />
+
+<item itemtype="Connector" uid="Connector-77" startpinid="CD4526-21-Q3" endpinid="CD4526-29-CLK" pointList="-268,-48,-224,-48,-224,-16,-92,-16" />
+
+<item itemtype="Connector" uid="Connector-79" startpinid="Rail-34-outnod" endpinid="CD4526-29-CF" pointList="-124,-32,-92,-32" />
+
+<item itemtype="Connector" uid="Connector-81" startpinid="CD4526-29-INH" endpinid="Node-1-0" pointList="-92,-8,-112,-8,-112,0" />
+
+<item itemtype="Connector" uid="Connector-83" startpinid="CD4526-21-0" endpinid="Node-4-0" pointList="-268,-32,-248,-32,-248,32" />
+
+<item itemtype="Connector" uid="Connector-85" startpinid="CD4526-21-INH" endpinid="Node-2-0" pointList="-316,-8,-336,-8,-336,0" />
+
+<item itemtype="Connector" uid="Connector-87" startpinid="Frequencimeter-32-lPin" endpinid="Node-3-0" pointList="12,-32,-24,-32,-24,32,-124,32" />
+
+<item itemtype="Connector" uid="Connector-88" startpinid="Node-4-2" endpinid="CD4526-21-PE" pointList="-248,32,-348,32,-348,-24,-316,-24" />
+
+<item itemtype="Connector" uid="Connector-89" startpinid="Node-4-1" endpinid="Node-3-1" pointList="-248,32,-124,32" />
+
+<item itemtype="Connector" uid="Connector-90" startpinid="Node-3-2" endpinid="CD4526-29-PE" pointList="-124,32,-124,-24,-92,-24" />
+
+<item itemtype="Connector" uid="Connector-91" startpinid="CD4526-21-CF" endpinid="CD4526-29-0" pointList="-316,-32,-352,-32,-352,44,-44,44,-44,-32" />
+
+<item itemtype="Connector" uid="Connector-93" startpinid="CD4526-21-Res" endpinid="Node-2-1" pointList="-316,0,-336,0" />
+
+<item itemtype="Connector" uid="Connector-94" startpinid="Node-2-2" endpinid="Ground-23-Gnd" pointList="-336,0,-336,8" />
+
+<item itemtype="Connector" uid="Connector-95" startpinid="CD4526-29-Res" endpinid="Node-1-1" pointList="-92,0,-112,0" />
+
+<item itemtype="Connector" uid="Connector-96" startpinid="Node-1-2" endpinid="Ground-30-Gnd" pointList="-112,0,-112,8" />
+
+</circuit>

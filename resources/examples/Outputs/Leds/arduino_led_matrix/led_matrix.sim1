@@ -1,0 +1,57 @@
+<circuit version="" rev="2229" stepSize="1000000" stepsPS="1000000" NLsteps="100000" reaStep="1000000" animate="0" >
+
+<item itemtype="LedMatrix" CircId="LedMatrix-5" mainComp="false" Show_id="false" Show_Val="false" Pos="-412,-396" rotation="0" hflip="1" vflip="1" label="LedMatrix-5" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Color="Yellow" Rows="8 _Leds" Cols="8 _Leds" Vertical_Pins="false" Threshold="2.4 V" MaxCurrent="0.005 A" Resistance="0.6 Ω" />
+
+<item itemtype="Subcircuit" CircId="Uno-4" mainComp="false" Show_id="true" Show_Val="false" Pos="-572,-308" rotation="0" hflip="1" vflip="1" label="Arduino Uno" idLabPos="42.5346,-15.3878" labelrot="0" valLabPos="0,0" valLabRot="0" Logic_Symbol="false">
+<mainCompProps MainCompId="mega328-109" Frequency="16 MHz" Program="led_matrix.hex" Auto_Load="false" saveEepr="true" SerialMon="-1" />
+</item>
+
+<item itemtype="Push" CircId="Push-3" mainComp="false" Show_id="true" Show_Val="false" Pos="-652,-164" rotation="-90" hflip="-1" vflip="1" label="Refresh" idLabPos="-29.8476,58.3989" labelrot="-270" valLabPos="0,0" valLabRot="0" Norm_Close="false" Poles="1" />
+
+<item itemtype="Resistor" CircId="Resistor-2" mainComp="false" ShowProp="Resistance" Show_id="false" Show_Val="true" Pos="-604,-196" rotation="90" hflip="1" vflip="1" label="Resistor-2" idLabPos="-12,-24" labelrot="0" valLabPos="11.1607,15.2244" valLabRot="180" Resistance="10 kΩ" />
+
+<item itemtype="Node" CircId="Node-1" mainComp="false" Pos="-604,-220" />
+
+<item itemtype="Connector" uid="Connector-6" startpinid="Uno-4-0" endpinid="LedMatrix-5-pinRow7" pointList="-564,-292,-596,-292,-596,-340,-428,-340" />
+
+<item itemtype="Connector" uid="Connector-8" startpinid="Uno-4-1" endpinid="LedMatrix-5-pinRow6" pointList="-564,-284,-604,-284,-604,-348,-428,-348" />
+
+<item itemtype="Connector" uid="Connector-10" startpinid="Uno-4-2" endpinid="LedMatrix-5-pinRow5" pointList="-564,-276,-612,-276,-612,-356,-428,-356" />
+
+<item itemtype="Connector" uid="Connector-12" startpinid="Uno-4-3" endpinid="LedMatrix-5-pinRow4" pointList="-564,-268,-620,-268,-620,-364,-428,-364" />
+
+<item itemtype="Connector" uid="Connector-14" startpinid="Uno-4-4" endpinid="LedMatrix-5-pinRow3" pointList="-564,-260,-628,-260,-628,-372,-428,-372" />
+
+<item itemtype="Connector" uid="Connector-16" startpinid="Uno-4-5" endpinid="LedMatrix-5-pinRow2" pointList="-564,-252,-636,-252,-636,-380,-428,-380" />
+
+<item itemtype="Connector" uid="Connector-18" startpinid="Uno-4-6" endpinid="LedMatrix-5-pinRow1" pointList="-564,-244,-644,-244,-644,-388,-428,-388" />
+
+<item itemtype="Connector" uid="Connector-20" startpinid="Uno-4-7" endpinid="LedMatrix-5-pinRow0" pointList="-564,-236,-652,-236,-652,-396,-428,-396" />
+
+<item itemtype="Connector" uid="Connector-22" startpinid="Uno-4-A5" endpinid="LedMatrix-5-pinCol0" pointList="-420,-292,-412,-292,-412,-324" />
+
+<item itemtype="Connector" uid="Connector-24" startpinid="LedMatrix-5-pinCol1" endpinid="Uno-4-A4" pointList="-404,-324,-404,-284,-420,-284" />
+
+<item itemtype="Connector" uid="Connector-26" startpinid="LedMatrix-5-pinCol2" endpinid="Uno-4-A3" pointList="-396,-324,-396,-276,-420,-276" />
+
+<item itemtype="Connector" uid="Connector-28" startpinid="LedMatrix-5-pinCol3" endpinid="Uno-4-A2" pointList="-388,-324,-388,-268,-420,-268" />
+
+<item itemtype="Connector" uid="Connector-30" startpinid="LedMatrix-5-pinCol4" endpinid="Uno-4-A1" pointList="-380,-324,-380,-260,-420,-260" />
+
+<item itemtype="Connector" uid="Connector-32" startpinid="LedMatrix-5-pinCol5" endpinid="Uno-4-A0" pointList="-372,-324,-372,-252,-420,-252" />
+
+<item itemtype="Connector" uid="Connector-34" startpinid="Uno-4-13" endpinid="LedMatrix-5-pinCol6" pointList="-564,-180,-580,-180,-580,-76,-364,-76,-364,-324" />
+
+<item itemtype="Connector" uid="Connector-36" startpinid="LedMatrix-5-pinCol7" endpinid="Uno-4-12" pointList="-356,-324,-356,-68,-588,-68,-588,-188,-564,-188" />
+
+<item itemtype="Connector" uid="Connector-38" startpinid="Push-3-switch0pinN" endpinid="Node-1-0" pointList="-652,-180,-652,-220,-604,-220" />
+
+<item itemtype="Connector" uid="Connector-40" startpinid="Push-3-pinP0" endpinid="Uno-4-5V0" pointList="-652,-148,-652,-52,-396,-52,-396,-212,-420,-212" />
+
+<item itemtype="Connector" uid="Connector-42" startpinid="Resistor-2-lPin" endpinid="Node-1-1" pointList="-604,-212,-604,-220" />
+
+<item itemtype="Connector" uid="Connector-43" startpinid="Node-1-2" endpinid="Uno-4-8" pointList="-604,-220,-564,-220" />
+
+<item itemtype="Connector" uid="Connector-44" startpinid="Resistor-2-rPin" endpinid="Uno-4-GND2" pointList="-604,-180,-604,-172,-564,-172" />
+
+</circuit>

@@ -1,0 +1,9 @@
+<circuit version="" rev="2224" stepSize="1000000" stepsPS="1000000" NLsteps="100000" reaStep="1000000" animate="1" >
+
+<item itemtype="MCU" CircId="p16F1826-1" mainComp="false" Show_id="true" Show_Val="false" Pos="-492,-308" rotation="0" hflip="1" vflip="1" label="p16F1826" idLabPos="-7.52744,-13.867" labelrot="0" valLabPos="-16,20" valLabRot="0" Frequency="16 MHz" Program="build_16F1826_T0_int/16F1826_T0_int.hex" Auto_Load="false" saveEepr="false" Rst_enabled="false" Ext_Osc="false" Wdt_enabled="false" Clk_Out="false" SerialMon="-1" />
+
+<item itemtype="FreqMeter" CircId="FreqMeter-3" mainComp="false" Show_id="false" Show_Val="false" Pos="-388,-244" rotation="0" hflip="1" vflip="1" label="FreqMeter-3" idLabPos="-32,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" Filter="0.1 V" />
+
+<item itemtype="Connector" uid="Connector-4" startpinid="FreqMeter-3-lPin" endpinid="p16F1826-1-PORTB5" pointList="-428,-244,-452,-244" />
+
+</circuit>

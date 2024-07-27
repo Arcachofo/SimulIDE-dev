@@ -1,0 +1,15 @@
+#chip tiny13a, 4.8
+
+DIM LDR AS BYTE
+
+do
+
+  LDR = READAD(ADC1)
+  IF LDR <= 60 THEN
+    PORTB.0 = 1
+  ELSE
+    PORTB.0 = 0
+  END IF
+  wait 100 ms
+
+loop

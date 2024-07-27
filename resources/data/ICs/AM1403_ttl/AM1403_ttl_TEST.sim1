@@ -1,0 +1,45 @@
+<circuit type="simulide_1.0" stepSize="1000000" stepsPS="1000000" NLsteps="100000" animate="0" >
+
+<item itemtype="Subcircuit" CircId="AM1403_ttl-1" mainComp="false" Show_id="true" Show_Val="false" Pos="-276,-132" rotation="0" hflip="1" vflip="1" label="AM1403_ttl-1" idLabPos="0,-20" labelrot="0" valLabPos="13,19" valLabRot="-90" Logic_Symbol="true" />
+
+<item itemtype="Subcircuit" CircId="74HC4022-1450" mainComp="false" Show_id="true" Show_Val="false" Pos="-428,-112" rotation="0" hflip="1" vflip="1" label="74HC4022-1450" idLabPos="0,-20" labelrot="0" valLabPos="13,35" valLabRot="-90" Logic_Symbol="true" />
+
+<item itemtype="Buffer" CircId="Buffer-1605" mainComp="false" Show_id="false" Show_Val="false" Pos="-356,-104" rotation="0" hflip="1" vflip="1" label="Buffer-1605" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Tristate="false" Inverted="true" Open_Collector="false" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" rndPD="false" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
+
+<item itemtype="Buffer" CircId="Buffer-1607" mainComp="false" Show_id="false" Show_Val="false" Pos="-356,-88" rotation="0" hflip="1" vflip="1" label="Buffer-1605" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Tristate="false" Inverted="true" Open_Collector="false" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" rndPD="false" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
+
+<item itemtype="Ground" CircId="Ground-1612" mainComp="false" Show_id="false" Show_Val="false" Pos="-444,-64" rotation="0" hflip="1" vflip="1" label="Ground-1612" idLabPos="-16,8" labelrot="0" valLabPos="0,0" valLabRot="0" />
+
+<item itemtype="Clock" CircId="Clock-1614" mainComp="false" Show_id="false" Show_Val="true" Pos="-488,-104" rotation="0" hflip="1" vflip="1" label="Clock-1614" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="true" Running="true" Voltage="5 V" Freq="1000 Hz" Always_On="false" />
+
+<item itemtype="Subcircuit" CircId="2L_Display-1622" mainComp="false" Show_id="true" Show_Val="false" Pos="-176,-136" rotation="0" hflip="1" vflip="1" label="2L_Display-1622" idLabPos="0,-20" labelrot="0" valLabPos="9,15" valLabRot="-90" Logic_Symbol="true" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-1635" mainComp="false" Show_id="false" Show_Val="true" Pos="-496,-152" rotation="0" hflip="1" vflip="1" label="Fixed Voltage-1635" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
+
+<item itemtype="Node" CircId="Node-2980" mainComp="false" Pos="-296,-124" />
+
+<item itemtype="Connector" uid="Connector-1606" startpinid="Buffer-1605-in0" endpinid="74HC4022-1450-Q0" pointList="-372,-104,-380,-104" />
+
+<item itemtype="Connector" uid="Connector-1608" startpinid="74HC4022-1450-Q2" endpinid="Buffer-1607-in0" pointList="-380,-88,-372,-88" />
+
+<item itemtype="Connector" uid="Connector-1609" startpinid="Buffer-1605-out" endpinid="AM1403_ttl-1-F0" pointList="-340,-104,-284,-104,-284,-100" />
+
+<item itemtype="Connector" uid="Connector-1610" startpinid="Buffer-1607-out" endpinid="AM1403_ttl-1-F1" pointList="-340,-88,-284,-88,-284,-92" />
+
+<item itemtype="Connector" uid="Connector-1611" startpinid="74HC4022-1450-Q4" endpinid="74HC4022-1450-MR" pointList="-380,-72,-368,-72,-368,-8,-436,-8,-436,-32" />
+
+<item itemtype="Connector" uid="Connector-1613" startpinid="Ground-1612-Gnd" endpinid="74HC4022-1450-!CE" pointList="-444,-80,-444,-88,-436,-88" />
+
+<item itemtype="Connector" uid="Connector-1615" startpinid="Clock-1614-outnod" endpinid="74HC4022-1450-CLK" pointList="-472,-104,-436,-104" />
+
+<item itemtype="Connector" uid="Connector-1634" startpinid="AM1403_ttl-1-D1o" endpinid="2L_Display-1622-1" pointList="-236,-116,-184,-116,-184,-112" />
+
+<item itemtype="Connector" uid="Connector-1636" startpinid="Fixed Voltage-1635-outnod" endpinid="Node-2980-0" pointList="-480,-152,-296,-152,-296,-124" />
+
+<item itemtype="Connector" uid="Connector-1449" startpinid="AM1403_ttl-1-D0o" endpinid="2L_Display-1622-0" pointList="-236,-124,-212,-124,-212,-128,-184,-128" />
+
+<item itemtype="Connector" uid="Connector-2979" startpinid="AM1403_ttl-1-D1i" endpinid="Node-2980-1" pointList="-284,-116,-296,-116,-296,-124" />
+
+<item itemtype="Connector" uid="Connector-2981" startpinid="Node-2980-2" endpinid="AM1403_ttl-1-D0i" pointList="-296,-124,-284,-124" />
+
+</circuit>

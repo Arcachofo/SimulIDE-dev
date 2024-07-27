@@ -1,0 +1,8 @@
+<!DOCTYPE SimulIDE>
+
+<compiler name="Avra" type="avrasm01" syntax="avrasm" inclPath="./" >
+    <step 
+        command="avra"
+        arguments=" -W NoRegDef -l $buildPath$fileName.lst -I $inclPath $filePath"
+    />
+</compiler>

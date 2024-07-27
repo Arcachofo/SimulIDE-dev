@@ -1,0 +1,33 @@
+<circuit version="" rev="2224" stepSize="1000000" stepsPS="1000000" NLsteps="100000" reaStep="1000000" animate="1" >
+
+<item itemtype="Ground" CircId="Ground-12" mainComp="false" Show_id="false" Show_Val="false" Pos="-676,-72" rotation="0" hflip="1" vflip="1" label="Ground-12" idLabPos="-16,8" labelrot="0" valLabPos="0,0" valLabRot="0" />
+
+<item itemtype="Resistor" CircId="Resistor-10" mainComp="false" ShowProp="Resistance" Show_id="false" Show_Val="true" Pos="-652,-124" rotation="0" hflip="1" vflip="1" label="Resistor-10" idLabPos="-12,-20" labelrot="0" valLabPos="-11.2821,-14.9355" valLabRot="0" Resistance="100 Ω" />
+
+<item itemtype="Led" CircId="Led-8" mainComp="false" Show_id="false" Show_Val="false" Pos="-612,-124" rotation="-180" hflip="1" vflip="1" label="Led-8" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Color="Yellow" Grounded="false" Threshold="2.4 V" MaxCurrent="0.03 A" Resistance="0.6 Ω" />
+
+<item itemtype="Buffer" CircId="Buffer-6" mainComp="false" Show_id="false" Show_Val="false" Pos="-572,-124" rotation="-180" hflip="1" vflip="1" label="Buffer-6" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Invert_Inputs="false" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" initHigh="false" Inverted="false" Open_Collector="false" Tristate="false" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
+
+<item itemtype="MCU" CircId="8051-1" mainComp="false" Show_id="true" Show_Val="false" Pos="-532,-132" rotation="0" hflip="1" vflip="1" label="8051" idLabPos="10,-14" labelrot="0" valLabPos="0,0" valLabRot="0" Frequency="12 MHz" Program="mcs-51_extint.hex" Auto_Load="false" SerialMon="-1" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-17" mainComp="false" Show_id="true" Show_Val="true" Pos="-588,-28" rotation="0" hflip="1" vflip="1" label="INT0" idLabPos="-54,-5" labelrot="0" valLabPos="-50,-3" valLabRot="0" Voltage="5 V" Out="false" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-28" mainComp="false" Show_id="true" Show_Val="false" Pos="-588,-76" rotation="0" hflip="1" vflip="1" label="Reset" idLabPos="-60,-7" labelrot="0" valLabPos="-16,8" valLabRot="0" Voltage="5 V" Out="false" />
+
+<item itemtype="Rail" CircId="Rail-36" mainComp="false" ShowProp="Voltage" Show_id="false" Show_Val="true" Pos="-444,-100" rotation="90" hflip="1" vflip="1" label="Rail-36" idLabPos="-5,-10" labelrot="-90" valLabPos="-12,6" valLabRot="-90" Voltage="5 V" />
+
+<item itemtype="Connector" uid="connector-29" startpinid="Led-8-lPin" endpinid="Buffer-6-out" pointList="-596,-124,-588,-124" />
+
+<item itemtype="Connector" uid="connector-30" startpinid="Resistor-10-rPin" endpinid="Led-8-rPin" pointList="-636,-124,-628,-124" />
+
+<item itemtype="Connector" uid="connector-31" startpinid="Ground-12-Gnd" endpinid="Resistor-10-lPin" pointList="-676,-88,-676,-124,-668,-124" />
+
+<item itemtype="Connector" uid="connector-32" startpinid="Buffer-6-in0" endpinid="8051-1-PORT10" pointList="-556,-124,-540,-124" />
+
+<item itemtype="Connector" uid="connector-33" startpinid="Fixed Voltage-28-outnod" endpinid="8051-1-RST" pointList="-572,-76,-556,-76,-556,-60,-540,-60" />
+
+<item itemtype="Connector" uid="connector-35" startpinid="Fixed Voltage-17-outnod" endpinid="8051-1-PORT32" pointList="-572,-28,-556,-28,-556,-36,-540,-36" />
+
+<item itemtype="Connector" uid="Connector-37" startpinid="8051-1-PORTEEA" endpinid="Rail-36-outnod" pointList="-476,-52,-444,-52,-444,-84" />
+
+</circuit>

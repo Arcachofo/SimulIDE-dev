@@ -1,0 +1,12 @@
+<!DOCTYPE SimulIDE>
+
+<itemlib>
+    
+    <itemset category="Scripted" type="MCU" >
+        
+        <item name="DAC"    package="scripted/DAC/dac"       data="scripted/DAC/dac"></item>
+        <item name="Signal" package="scripted/signal/signal" data="scripted/signal/signal"></item>
+        
+    </itemset>
+    
+</itemlib>

@@ -1,0 +1,65 @@
+<circuit version="" rev="2224" stepSize="1000000" stepsPS="1000000" NLsteps="100000" reaStep="1000000" animate="1" >
+
+<item itemtype="LAnalizer" CircId="LAnalizer-86" mainComp="false" Show_id="false" Show_Val="false" Pos="-444,-460" rotation="0" hflip="1" vflip="1" label="LAnalizer-86" idLabPos="-90,-100" labelrot="0" valLabPos="0,0" valLabRot="0" Basic_X="135 _Px" Basic_Y="135 _Px" BufferSize="100000" connectGnd="true" InputImped="1e+07 Ω" TimDiv="121411000" TimPos="0" VolDiv="0.15" Tunnels=",,,,,,,," Trigger="0" TimeStep="1000 _ps" AutoExport="false" TresholdR="2.5 V" Bus="false,false,false,false,false,false,false,false," TresholdF="2.5 V" />
+
+<item itemtype="7-Seg BCD" CircId="7-16" mainComp="false" Show_id="false" Show_Val="false" Pos="-584,-316" rotation="0" hflip="1" vflip="1" label="7-Seg BCD-6" idLabPos="-16,-40" labelrot="0" valLabPos="0,0" valLabRot="0" Show_Point_Pin="false" Show_Enable_Pin="false" />
+
+<item itemtype="7-Seg BCD" CircId="7-15" mainComp="false" Show_id="false" Show_Val="false" Pos="-616,-316" rotation="0" hflip="1" vflip="1" label="7-Seg BCD-7" idLabPos="-16,-40" labelrot="0" valLabPos="0,0" valLabRot="0" Show_Point_Pin="false" Show_Enable_Pin="false" />
+
+<item itemtype="MCU" CircId="mega328-1" mainComp="false" Show_id="true" Show_Val="true" Pos="-532,-340" rotation="0" hflip="1" vflip="1" label="mega328-tx" idLabPos="-12.478,119.316" labelrot="0" valLabPos="13,72" valLabRot="-90" Frequency="16 MHz" Program="avr_usart-sender.hex" Auto_Load="false" saveEepr="false" Logic_Symbol="false" Rst_enabled="false" Ext_Osc="false" Wdt_enabled="false" Clk_Out="false" SerialMon="-1" />
+
+<item itemtype="7-Seg BCD" CircId="7-44" mainComp="false" Show_id="false" Show_Val="false" Pos="-400,-316" rotation="0" hflip="1" vflip="1" label="7-Seg BCD-6" idLabPos="-16,-40" labelrot="0" valLabPos="0,0" valLabRot="0" Show_Point_Pin="false" Show_Enable_Pin="false" />
+
+<item itemtype="MCU" CircId="mega328-45" mainComp="false" Show_id="true" Show_Val="true" Pos="-348,-340" rotation="0" hflip="1" vflip="1" label="mega328-Rx" idLabPos="-15.2844,121" labelrot="0" valLabPos="13,72" valLabRot="-90" Frequency="16 MHz" Program="avr_usart-receiver.hex" Auto_Load="false" saveEepr="false" Logic_Symbol="false" Rst_enabled="false" Ext_Osc="false" Wdt_enabled="false" Clk_Out="false" varList="PORTB" SerialMon="-1" />
+
+<item itemtype="7-Seg BCD" CircId="7-46" mainComp="false" Show_id="false" Show_Val="false" Pos="-432,-316" rotation="0" hflip="1" vflip="1" label="7-Seg BCD-7" idLabPos="-16,-40" labelrot="0" valLabPos="0,0" valLabRot="0" Show_Point_Pin="false" Show_Enable_Pin="false" />
+
+<item itemtype="Node" CircId="Node-90" mainComp="false" Pos="-548,-356" />
+
+<item itemtype="Node" CircId="Node-88" mainComp="false" Pos="-556,-348" />
+
+<item itemtype="Connector" uid="Connector-17" startpinid="mega328-1-PORTB0" endpinid="7-16-in0" pointList="-540,-228,-572,-228,-572,-284" />
+
+<item itemtype="Connector" uid="Connector-18" startpinid="7-16-in1" endpinid="mega328-1-PORTB1" pointList="-580,-284,-580,-204,-484,-204,-484,-228,-492,-228" />
+
+<item itemtype="Connector" uid="Connector-19" startpinid="7-16-in2" endpinid="mega328-1-PORTB2" pointList="-588,-284,-588,-196,-476,-196,-476,-236,-492,-236" />
+
+<item itemtype="Connector" uid="Connector-20" startpinid="7-16-in3" endpinid="mega328-1-PORTB3" pointList="-596,-284,-596,-188,-468,-188,-468,-244,-492,-244" />
+
+<item itemtype="Connector" uid="Connector-21" startpinid="7-15-in0" endpinid="mega328-1-PORTB4" pointList="-604,-284,-604,-180,-460,-180,-460,-252,-492,-252" />
+
+<item itemtype="Connector" uid="Connector-29" startpinid="mega328-1-PORTB5" endpinid="7-15-in1" pointList="-492,-260,-452,-260,-452,-172,-612,-172,-612,-284" />
+
+<item itemtype="Connector" uid="Connector-30" startpinid="mega328-1-PORTB6" endpinid="7-15-in2" pointList="-540,-268,-620,-268,-620,-284" />
+
+<item itemtype="Connector" uid="Connector-31" startpinid="mega328-1-PORTB7" endpinid="7-15-in3" pointList="-540,-260,-628,-260,-628,-284" />
+
+<item itemtype="Connector" uid="Connector-47" startpinid="7-46-in0" endpinid="mega328-45-PORTB4" pointList="-420,-284,-420,-180,-276,-180,-276,-252,-308,-252" />
+
+<item itemtype="Connector" uid="Connector-49" startpinid="7-44-in1" endpinid="mega328-45-PORTB1" pointList="-396,-284,-396,-204,-300,-204,-300,-228,-308,-228" />
+
+<item itemtype="Connector" uid="Connector-51" startpinid="mega328-45-PORTB6" endpinid="7-46-in2" pointList="-356,-268,-436,-268,-436,-284" />
+
+<item itemtype="Connector" uid="Connector-53" startpinid="mega328-45-PORTB0" endpinid="7-44-in0" pointList="-356,-228,-388,-228,-388,-284" />
+
+<item itemtype="Connector" uid="Connector-55" startpinid="7-44-in3" endpinid="mega328-45-PORTB3" pointList="-412,-284,-412,-188,-284,-188,-284,-244,-308,-244" />
+
+<item itemtype="Connector" uid="Connector-57" startpinid="mega328-45-PORTB7" endpinid="7-46-in3" pointList="-356,-260,-444,-260,-444,-284" />
+
+<item itemtype="Connector" uid="Connector-60" startpinid="7-44-in2" endpinid="mega328-45-PORTB2" pointList="-404,-284,-404,-196,-292,-196,-292,-236,-308,-236" />
+
+<item itemtype="Connector" uid="Connector-62" startpinid="mega328-45-PORTB5" endpinid="7-46-in1" pointList="-308,-260,-268,-260,-268,-172,-428,-172,-428,-284" />
+
+<item itemtype="Connector" uid="Connector-69" startpinid="mega328-45-PORTD0" endpinid="Node-88-0" pointList="-356,-324,-372,-324,-372,-348,-556,-348" />
+
+<item itemtype="Connector" uid="Connector-35" startpinid="mega328-1-PORTD0" endpinid="Node-90-0" pointList="-540,-324,-548,-324,-548,-356" />
+
+<item itemtype="Connector" uid="Connector-87" startpinid="LAnalizer-86-Pin0" endpinid="Node-88-1" pointList="-532,-524,-556,-524,-556,-348" />
+
+<item itemtype="Connector" uid="Connector-89" startpinid="Node-88-2" endpinid="mega328-1-PORTD1" pointList="-556,-348,-556,-316,-540,-316" />
+
+<item itemtype="Connector" uid="Connector-91" startpinid="Node-90-2" endpinid="mega328-45-PORTD1" pointList="-548,-356,-364,-356,-364,-316,-356,-316" />
+
+<item itemtype="Connector" uid="Connector-92" startpinid="Node-90-1" endpinid="LAnalizer-86-Pin1" pointList="-548,-356,-548,-508,-532,-508" />
+
+</circuit>

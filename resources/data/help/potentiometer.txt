@@ -1,0 +1,13 @@
+Interactive potentiometer.
+
+Use the dial to adjust the value.
+
+Property: (default value)
+
+Main:
+- Resistance: (1 kΩ)
+
+- Current Value: (0 Ω)
+   Value determined by dial position.
+
+#include dialed

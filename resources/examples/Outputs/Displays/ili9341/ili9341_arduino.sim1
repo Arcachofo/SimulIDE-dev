@@ -1,0 +1,35 @@
+<circuit version="" rev="2229" stepSize="1000000" stepsPS="1000000" NLsteps="100000" reaStep="1000000" animate="1" >
+
+<item itemtype="Subcircuit" CircId="Uno-2" mainComp="false" Show_id="false" Show_Val="false" Pos="-164,-564" rotation="0" hflip="1" vflip="1" label="Arduino Uno-1" idLabPos="100,-21" labelrot="0" valLabPos="0,0" valLabRot="0" Logic_Symbol="false">
+<mainCompProps MainCompId="mega328-109" Frequency="16 MHz" Program="graphicstest.hex" Auto_Load="false" saveEepr="false" SerialMon="-1" />
+</item>
+
+<item itemtype="Ili9341" CircId="Ili9341-1" mainComp="false" Show_id="true" Show_Val="false" Pos="-372,-476" rotation="0" hflip="1" vflip="1" label="Ili9341" idLabPos="-10.8052,-184.102" labelrot="0" valLabPos="0,0" valLabRot="0" />
+
+<item itemtype="Bus" CircId="Bus-3" mainComp="false" Show_id="false" Show_Val="false" Pos="-428,-276" rotation="90" hflip="1" vflip="1" label="Bus-3" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" Num_Bits="5 _bits" Start_Bit="0" />
+
+<item itemtype="Bus" CircId="Bus-9" mainComp="false" Show_id="false" Show_Val="false" Pos="-192,-476" rotation="180" hflip="1" vflip="1" label="Bus-9" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" Num_Bits="5 _bits" Start_Bit="0" />
+
+<item itemtype="Connector" uid="Connector-44" startpinid="Ili9341-1-PinDC" endpinid="Bus-3-ePin3" pointList="-412,-292,-412,-284" />
+
+<item itemtype="Connector" uid="Connector-45" startpinid="Bus-9-ePin3" endpinid="Uno-2-10" pointList="-184,-460,-156,-460" />
+
+<item itemtype="Connector" uid="Connector-46" startpinid="Ili9341-1-PinSck" endpinid="Bus-3-ePin1" pointList="-396,-292,-396,-284" />
+
+<item itemtype="Connector" uid="Connector-47" startpinid="Bus-9-ePin1" endpinid="Uno-2-13" pointList="-184,-444,-172,-444,-172,-436,-156,-436" />
+
+<item itemtype="Connector" uid="Connector-48" startpinid="Ili9341-1-PinCS" endpinid="Bus-3-ePin5" pointList="-428,-292,-428,-284" />
+
+<item itemtype="Connector" uid="Connector-49" startpinid="Bus-9-ePin5" endpinid="Uno-2-8" pointList="-184,-476,-156,-476" />
+
+<item itemtype="Connector" uid="Connector-50" startpinid="Uno-2-9" endpinid="Bus-9-ePin4" pointList="-156,-468,-184,-468" />
+
+<item itemtype="Connector" uid="Connector-51" startpinid="Bus-3-ePin4" endpinid="Ili9341-1-PinRst" pointList="-420,-284,-420,-292" />
+
+<item itemtype="Connector" uid="Connector-52" startpinid="Uno-2-11" endpinid="Bus-9-ePin2" pointList="-156,-452,-184,-452" />
+
+<item itemtype="Connector" uid="Connector-53" startpinid="Bus-3-ePin2" endpinid="Ili9341-1-PinMosi" pointList="-404,-284,-404,-292" />
+
+<item itemtype="Connector" uid="Connector-54" startpinid="Bus-3-busPinI" endpinid="Bus-9-busPinI" pointList="-396,-276,-192,-276,-192,-444" />
+
+</circuit>

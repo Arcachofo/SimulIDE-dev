@@ -1,0 +1,53 @@
+<circuit type="simulide_1.0" stepSize="1000000" stepsPS="1000000" NLsteps="100000" animate="0" >
+
+<item itemtype="Tunnel" CircId="Tunnel-58" mainComp="false" Show_id="false" Show_Val="false" Pos="-320,-84" rotation="0" hflip="1" vflip="1" label="Tunnel-58" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="88,176" circPos="-320,-84" boardRot="0" circRot="0" Name="7" Rotated="false" />
+
+<item itemtype="Probe" CircId="Probe-57" mainComp="false" Show_id="false" Show_Val="false" Pos="-296,-100" rotation="-45" hflip="1" vflip="1" label="Probe-57" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" boardPos="8,120" circPos="-296,-100" boardRot="-45" circRot="-45" ShowVolt="false" Threshold="2.5 V" />
+
+<item itemtype="Tunnel" CircId="Tunnel-55" mainComp="false" Show_id="false" Show_Val="false" Pos="-320,-108" rotation="0" hflip="1" vflip="1" label="Tunnel-55" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="88,152" circPos="-320,-108" boardRot="0" circRot="0" Name="6" Rotated="false" />
+
+<item itemtype="Probe" CircId="Probe-54" mainComp="false" Show_id="false" Show_Val="false" Pos="-296,-124" rotation="-45" hflip="1" vflip="1" label="Probe-54" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" boardPos="8,104" circPos="-296,-124" boardRot="-45" circRot="-45" ShowVolt="false" Threshold="2.5 V" />
+
+<item itemtype="Tunnel" CircId="Tunnel-52" mainComp="false" Show_id="false" Show_Val="false" Pos="-320,-132" rotation="0" hflip="1" vflip="1" label="Tunnel-52" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="88,128" circPos="-320,-132" boardRot="0" circRot="0" Name="5" Rotated="false" />
+
+<item itemtype="Probe" CircId="Probe-51" mainComp="false" Show_id="false" Show_Val="false" Pos="-296,-148" rotation="-45" hflip="1" vflip="1" label="Probe-51" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" boardPos="8,88" circPos="-296,-148" boardRot="-45" circRot="-45" ShowVolt="false" Threshold="2.5 V" />
+
+<item itemtype="Tunnel" CircId="Tunnel-49" mainComp="false" Show_id="false" Show_Val="false" Pos="-320,-156" rotation="0" hflip="1" vflip="1" label="Tunnel-49" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="88,104" circPos="-320,-156" boardRot="0" circRot="0" Name="4" Rotated="false" />
+
+<item itemtype="Probe" CircId="Probe-48" mainComp="false" Show_id="false" Show_Val="false" Pos="-296,-172" rotation="-45" hflip="1" vflip="1" label="Probe-48" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" boardPos="8,72" circPos="-296,-172" boardRot="-45" circRot="-45" ShowVolt="false" Threshold="2.5 V" />
+
+<item itemtype="Tunnel" CircId="Tunnel-46" mainComp="false" Show_id="false" Show_Val="false" Pos="-320,-180" rotation="0" hflip="1" vflip="1" label="Tunnel-46" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="88,80" circPos="-320,-180" boardRot="0" circRot="0" Name="3" Rotated="false" />
+
+<item itemtype="Probe" CircId="Probe-45" mainComp="false" Show_id="false" Show_Val="false" Pos="-296,-196" rotation="-45" hflip="1" vflip="1" label="Probe-45" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" boardPos="8,56" circPos="-296,-196" boardRot="-45" circRot="-45" ShowVolt="false" Threshold="2.5 V" />
+
+<item itemtype="Tunnel" CircId="Tunnel-43" mainComp="false" Show_id="false" Show_Val="false" Pos="-320,-208" rotation="0" hflip="1" vflip="1" label="Tunnel-43" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="88,52" circPos="-320,-208" boardRot="0" circRot="0" Name="2" Rotated="false" />
+
+<item itemtype="Probe" CircId="Probe-42" mainComp="false" Show_id="false" Show_Val="false" Pos="-296,-224" rotation="-45" hflip="1" vflip="1" label="Probe-42" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" boardPos="8,40" circPos="-296,-224" boardRot="-45" circRot="-45" ShowVolt="false" Threshold="2.5 V" />
+
+<item itemtype="Package" CircId="Package-11" mainComp="false" Show_id="true" Show_Val="false" Pos="-408,-260" rotation="0" hflip="1" vflip="1" label="Package-11" idLabPos="-16,-23" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" SubcType="Board" Width="3 _Cells" Height="16 _Cells" Package_File="8R_Display_LS.package" Logic_Symbol="true" />
+
+<item itemtype="Probe" CircId="Probe-12" mainComp="false" Show_id="false" Show_Val="false" Pos="-296,-264" rotation="-45" hflip="1" vflip="1" label="Probe-12" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" boardPos="8,8" circPos="-296,-264" boardRot="-45" circRot="-45" ShowVolt="false" Threshold="2.5 V" />
+
+<item itemtype="Tunnel" CircId="Tunnel-13" mainComp="false" Show_id="false" Show_Val="false" Pos="-320,-248" rotation="0" hflip="1" vflip="1" label="Tunnel-13" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="88,12" circPos="-320,-248" boardRot="0" circRot="0" Name="0" Rotated="false" />
+
+<item itemtype="Tunnel" CircId="Tunnel-15" mainComp="false" Show_id="false" Show_Val="false" Pos="-320,-232" rotation="0" hflip="1" vflip="1" label="Tunnel-13" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="88,28" circPos="-320,-232" boardRot="0" circRot="0" Name="1" Rotated="false" />
+
+<item itemtype="Probe" CircId="Probe-16" mainComp="false" Show_id="false" Show_Val="false" Pos="-296,-248" rotation="-45" hflip="1" vflip="1" label="Probe-12" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" boardPos="8,24" circPos="-296,-248" boardRot="-45" circRot="-45" ShowVolt="false" Threshold="2.5 V" />
+
+<item itemtype="Connector" uid="Connector-14" startpinid="Tunnel-13-pin" endpinid="Probe-12-inpin" pointList="-320,-248,-312,-248" />
+
+<item itemtype="Connector" uid="Connector-17" startpinid="Tunnel-15-pin" endpinid="Probe-16-inpin" pointList="-320,-232,-312,-232" />
+
+<item itemtype="Connector" uid="Connector-44" startpinid="Tunnel-43-pin" endpinid="Probe-42-inpin" pointList="-320,-208,-312,-208" />
+
+<item itemtype="Connector" uid="Connector-47" startpinid="Tunnel-46-pin" endpinid="Probe-45-inpin" pointList="-320,-180,-312,-180" />
+
+<item itemtype="Connector" uid="Connector-50" startpinid="Tunnel-49-pin" endpinid="Probe-48-inpin" pointList="-320,-156,-312,-156" />
+
+<item itemtype="Connector" uid="Connector-53" startpinid="Tunnel-52-pin" endpinid="Probe-51-inpin" pointList="-320,-132,-312,-132" />
+
+<item itemtype="Connector" uid="Connector-56" startpinid="Tunnel-55-pin" endpinid="Probe-54-inpin" pointList="-320,-108,-312,-108" />
+
+<item itemtype="Connector" uid="Connector-59" startpinid="Tunnel-58-pin" endpinid="Probe-57-inpin" pointList="-320,-84,-312,-84" />
+
+</circuit>

@@ -1,0 +1,29 @@
+### HEXMate logfile and output summary ###
+### Memory Usage ###
+ Unused memory ranges:
+  6h - 7h
+  F0h - 400Dh
+  4012h - 403Fh
+  
+ build/887_ccp.hex ranges:
+  0h - 5h
+  8h - EFh
+  400Eh - 4011h
+  
+### Hex Memory Map ###
+ Legend:
+  - = Unused memory
+  F = Filled ROM
+  S = Stored serial code
+  A = Stored ASCII string
+  R = Reserved for checksum
+  C = Stored checksum result
+  T = Trailing code
+  & = Find & replace opcode
+  X = Find & delete opcode
+  1 = build/887_ccp.hex
+00000000: 111111--11111111111111111111111111111111111111111111111111111111
+00000040: 1111111111111111111111111111111111111111111111111111111111111111
+00000080: 1111111111111111111111111111111111111111111111111111111111111111
+000000C0: 111111111111111111111111111111111111111111111111----------------
+00004000: --------------1111----------------------------------------------

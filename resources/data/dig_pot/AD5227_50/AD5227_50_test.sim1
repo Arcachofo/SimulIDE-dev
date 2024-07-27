@@ -1,0 +1,39 @@
+<circuit type="simulide_1.0" rev="1185" stepSize="1000000" stepsPS="1000000" NLsteps="100000" animate="0" >
+
+<item itemtype="Amperimeter" CircId="Amperimeter-4095" mainComp="false" Show_id="false" Show_Val="false" Pos="-396,-460" rotation="0" hflip="1" vflip="1" label="Amperimeter-4095" idLabPos="-24,-40" labelrot="0" valLabPos="0,0" valLabRot="0" />
+
+<item itemtype="Push" CircId="Push-327" mainComp="false" Show_id="false" Show_Val="false" Pos="-520,-388" rotation="0" hflip="1" vflip="1" label="Push-327" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Norm_Close="true" Poles="1 _Poles" />
+
+<item itemtype="Probe" CircId="Probe-325" mainComp="false" Show_id="false" Show_Val="true" Pos="-368,-396" rotation="-45" hflip="1" vflip="1" label="Probe-325" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
+
+<item itemtype="Ground" CircId="Ground-323" mainComp="false" Show_id="false" Show_Val="false" Pos="-404,-332" rotation="0" hflip="1" vflip="1" label="Ground-323" idLabPos="-16,8" labelrot="0" valLabPos="0,0" valLabRot="0" />
+
+<item itemtype="Rail" CircId="Rail-321" mainComp="false" ShowProp="Voltage" Show_id="false" Show_Val="true" Pos="-464,-488" rotation="0" hflip="1" vflip="1" label="Rail-321" idLabPos="-16,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Voltage="5 V" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-1306" mainComp="false" Show_id="true" Show_Val="false" Pos="-536,-352" rotation="0" hflip="1" vflip="1" label="Up/!Down" idLabPos="-91,-14" labelrot="0" valLabPos="-55,-5" valLabRot="0" Out="false" Voltage="5 V" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-1308" mainComp="false" Show_id="true" Show_Val="false" Pos="-536,-324" rotation="0" hflip="1" vflip="1" label="!CS" idLabPos="-63,-6" labelrot="0" valLabPos="-55,-5" valLabRot="0" Out="false" Voltage="5 V" />
+
+<item itemtype="Subcircuit" CircId="AD5227_50-3029" mainComp="false" Show_id="true" Show_Val="false" Pos="-472,-396" rotation="0" hflip="1" vflip="1" label="AD5227_50-3029" idLabPos="-27,-19" labelrot="0" valLabPos="13,20" valLabRot="-90" Logic_Symbol="true" />
+
+<item itemtype="Node" CircId="Node-4097" mainComp="false" Pos="-432,-460" />
+
+<item itemtype="Connector" uid="Connector-3558" startpinid="Push-327-switch0pinN" endpinid="AD5227_50-3029-!INC" pointList="-504,-388,-480,-388" />
+
+<item itemtype="Connector" uid="Connector-3562" startpinid="Probe-325-inpin" endpinid="AD5227_50-3029-RW" pointList="-384,-380,-432,-380" />
+
+<item itemtype="Connector" uid="Connector-3563" startpinid="Fixed Voltage-1306-outnod" endpinid="AD5227_50-3029-U/!D" pointList="-520,-352,-500,-352,-500,-380,-480,-380" />
+
+<item itemtype="Connector" uid="Connector-3564" startpinid="Fixed Voltage-1308-outnod" endpinid="AD5227_50-3029-!CS" pointList="-520,-324,-480,-324,-480,-372" />
+
+<item itemtype="Connector" uid="Connector-3565" startpinid="Ground-323-Gnd" endpinid="AD5227_50-3029-RL" pointList="-404,-348,-404,-372,-432,-372" />
+
+<item itemtype="Connector" uid="Connector-322" startpinid="Rail-321-outnod" endpinid="Node-4097-0" pointList="-448,-488,-432,-488,-432,-460" />
+
+<item itemtype="Connector" uid="Connector-4096" startpinid="Amperimeter-4095-lPin" endpinid="Node-4097-1" pointList="-404,-444,-432,-444,-432,-460" />
+
+<item itemtype="Connector" uid="Connector-4098" startpinid="Node-4097-2" endpinid="Push-327-pinP0" pointList="-432,-460,-536,-460,-536,-388" />
+
+<item itemtype="Connector" uid="Connector-4099" startpinid="Amperimeter-4095-rPin" endpinid="AD5227_50-3029-RH" pointList="-388,-444,-388,-388,-432,-388" />
+
+</circuit>

@@ -1,0 +1,6 @@
+Serial I2C real time clock.
+
+Property: (default value)
+
+- Set current time at start: (yes)
+   Start simulation at current time (time from your PC).

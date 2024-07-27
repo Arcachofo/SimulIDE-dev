@@ -1,0 +1,20 @@
+<parts>
+    <interrupts enable="I">
+        <interrupt name="RESET"                                  priority="15" vector="0x000" />
+        <interrupt name="INT0"    enable="INT0"    flag="INTF0"  priority="14" vector="0x001" clear="1"/>
+        <interrupt name="PCINT0"  enable="PCIE"    flag="PCIF"   priority="13" vector="0x002" clear="1"/>
+        <interrupt name="T1COA"   enable="OCIE1A"  flag="OCF1A"  priority="12" vector="0x003" clear="1"/>
+        <interrupt name="T1_OVF"  enable="TOIE1"   flag="TOV1"   priority="11" vector="0x004" clear="1"/>
+        <interrupt name="T0_OVF"  enable="TOIE0"   flag="TOV0"   priority="10" vector="0x005" clear="1"/>
+        <interrupt name="EEPR"    enable="EERIE"   flag=""       priority="9"  vector="0x006"/>
+        <interrupt name="ACOMP"   enable="ACIE"    flag="ACI"    priority="8"  vector="0x007" clear="1"/>
+        <interrupt name="ADC"     enable="ADIE"    flag="ADIF"   priority="7"  vector="0x008" clear="1"/>
+        <interrupt name="T1COB"   enable="OCIE1B"  flag="OCF1B"  priority="6"  vector="0x009" clear="1"/>
+        <interrupt name="T0COA"   enable="OCIE0A"  flag="OCF0A"  priority="5"  vector="0x00A" clear="1"/>
+        <interrupt name="T0COB"   enable="OCIE0B"  flag="OCF0B"  priority="4"  vector="0x00B" clear="1"/>
+        <interrupt name="WDT"     enable="WDIE"    flag="WDIF"   priority="3"  vector="0x00C"/>
+        <interrupt name="USISTA"  enable="USISIE"  flag="USISIF" priority="2"  vector="0x00D" clear="1" autoclear="0"/>
+        <interrupt name="USIOVF"  enable="USIOIE"  flag="USIOIF" priority="1"  vector="0x00E" clear="1" autoclear="0"/>
+
+    </interrupts>
+</parts>

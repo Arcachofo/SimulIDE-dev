@@ -1,0 +1,85 @@
+<circuit version="1.0.0-SR1" rev="1402" stepSize="1000000" stepsPS="1000000" NLsteps="100000" reaStep="1000000" animate="1" >
+
+<item itemtype="Rail" CircId="Rail-77" mainComp="false" ShowProp="Voltage" Show_id="false" Show_Val="true" Pos="-748,-364" rotation="90" hflip="1" vflip="1" label="Rail-77" idLabPos="-16,-24" labelrot="0" valLabPos="-18,4" valLabRot="-90" Voltage="5 V" />
+
+<item itemtype="Push" CircId="Push-81" mainComp="false" Show_id="false" Show_Val="false" Pos="-772,-292" rotation="0" hflip="1" vflip="1" label="Push-81" idLabPos="-12,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" Norm_Close="false" Poles="1 _Poles" />
+
+<item itemtype="MCU" CircId="p16F886-113" mainComp="false" Show_id="true" Show_Val="false" Pos="-724,-300" rotation="0" hflip="1" vflip="1" label="p16F886" idLabPos="-1,-14" labelrot="0" valLabPos="-16,20" valLabRot="0" Frequency="20 MHz" Program="build_16F886_hi2c-lcd/16F886_hi2c-lcd.hex" Auto_Load="false" Rst_enabled="false" Ext_Osc="true" Wdt_enabled="false" />
+
+<item itemtype="ResistorDip" CircId="ResistorDip-17" mainComp="false" ShowProp="Resistance" Show_id="false" Show_Val="true" Pos="-652,-148" rotation="-90" hflip="1" vflip="1" label="ResistorDip-17" idLabPos="-24,-40" labelrot="0" valLabPos="5,-26" valLabRot="90" Resistance="5 kΩ" Size="2 Resist." />
+
+<item itemtype="Resistor" CircId="Resistor-78" mainComp="false" ShowProp="Resistance" Show_id="false" Show_Val="true" Pos="-748,-324" rotation="-270" hflip="1" vflip="1" label="Resistor-78" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Resistance="5 kΩ" />
+
+<item itemtype="I2CToParallel" CircId="I2C to Parallel-6" mainComp="false" Show_id="false" Show_Val="false" Pos="-620,-236" rotation="-90" hflip="1" vflip="1" label="I2C to Parallel-4" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Control_Code="39" Frequency="100 _KHz" />
+
+<item itemtype="Ground" CircId="Ground-85" mainComp="false" Show_id="false" Show_Val="false" Pos="-804,-268" rotation="0" hflip="1" vflip="1" label="Ground-85" idLabPos="-16,8" labelrot="0" valLabPos="-16,20" valLabRot="0" />
+
+<item itemtype="Hd44780" CircId="Hd44780-9" mainComp="false" Show_id="true" Show_Val="false" Pos="-684,-316" rotation="0" hflip="1" vflip="1" label="Hd44780-1" idLabPos="70,-82" labelrot="0" valLabPos="0,0" valLabRot="0" Rows="2 _Rows" Cols="16 _Columns" />
+
+<item itemtype="Rail" CircId="Rail.-3" mainComp="false" ShowProp="Voltage" Show_id="false" Show_Val="true" Pos="-708,-124" rotation="-360" hflip="1" vflip="1" label="Rail.-7" idLabPos="-64,-24" labelrot="0" valLabPos="-9,-20" valLabRot="0" Voltage="5 V" />
+
+<item itemtype="LAnalizer" CircId="LAnalizer-10" mainComp="false" Show_id="false" Show_Val="false" Pos="-532,-124" rotation="0" hflip="1" vflip="1" label="LAnalizer-10" idLabPos="-90,-100" labelrot="0" valLabPos="-16,20" valLabRot="0" Basic_X="135 _Pixels" Basic_Y="135 _Pixels" BufferSize="100000 Samples" TimDiv="48575538" TimPos="0" VolDiv="0.15" Tunnels="SDA,SCL,,,,,,," Trigger="9" TimeStep="1000 _ps" AutoExport="false" TresholdR="2.5 V" TresholdF="2.5 V" />
+
+<item itemtype="Node" CircId="Node-112" mainComp="false" Pos="-748,-292" />
+
+<item itemtype="Node" CircId="Node-53" mainComp="false" Pos="-636,-188" />
+
+<item itemtype="Node" CircId="Node-44" mainComp="false" Pos="-676,-172" />
+
+<item itemtype="Node" CircId="Node-51" mainComp="false" Pos="-676,-124" />
+
+<item itemtype="Node" CircId="Node-56" mainComp="false" Pos="-628,-172" />
+
+<item itemtype="Node" CircId="Node-137" mainComp="false" Pos="-668,-188" />
+
+<item itemtype="Connector" uid="connector-138" startpinid="ResistorDip-17-resistor0-ePin1" endpinid="Node-44-1" pointList="-676,-164,-676,-172" />
+
+<item itemtype="Connector" uid="connector-139" startpinid="Hd44780-9-PinEn" endpinid="I2C to Parallel-6-out2" pointList="-652,-308,-652,-300,-628,-300,-628,-260" />
+
+<item itemtype="Connector" uid="connector-140" startpinid="Node-44-2" endpinid="Node-56-0" pointList="-676,-172,-628,-172" />
+
+<item itemtype="Connector" uid="connector-141" startpinid="Rail.-3-outnod" endpinid="Node-51-0" pointList="-692,-124,-676,-124" />
+
+<item itemtype="Connector" uid="connector-142" startpinid="I2C to Parallel-6-in1" endpinid="Node-56-1" pointList="-628,-212,-628,-172" />
+
+<item itemtype="Connector" uid="connector-143" startpinid="Node-56-2" endpinid="LAnalizer-10-Pin1" pointList="-628,-172,-620,-172" />
+
+<item itemtype="Connector" uid="connector-144" startpinid="I2C to Parallel-6-in0" endpinid="Node-53-1" pointList="-636,-212,-636,-188" />
+
+<item itemtype="Connector" uid="connector-145" startpinid="Hd44780-9-PinRW" endpinid="I2C to Parallel-6-out1" pointList="-660,-308,-660,-292,-636,-292,-636,-260" />
+
+<item itemtype="Connector" uid="connector-146" startpinid="Node-137-2" endpinid="ResistorDip-17-resistor1-ePin3" pointList="-668,-188,-668,-164" />
+
+<item itemtype="Connector" uid="connector-147" startpinid="Node-112-1" endpinid="p16F886-113-PORTE3" pointList="-748,-292,-732,-292" />
+
+<item itemtype="Connector" uid="connector-148" startpinid="Hd44780-9-dataPin5" endpinid="I2C to Parallel-6-out5" pointList="-604,-308,-604,-260" />
+
+<item itemtype="Connector" uid="connector-149" startpinid="ResistorDip-17-resistor0-ePin0" endpinid="Node-51-1" pointList="-676,-132,-676,-124" />
+
+<item itemtype="Connector" uid="connector-150" startpinid="Node-137-1" endpinid="p16F886-113-PORTC4" pointList="-668,-188,-684,-188" />
+
+<item itemtype="Connector" uid="connector-151" startpinid="p16F886-113-PORTC3" endpinid="Node-44-0" pointList="-732,-188,-740,-188,-740,-172,-676,-172" />
+
+<item itemtype="Connector" uid="connector-152" startpinid="Hd44780-9-dataPin7" endpinid="I2C to Parallel-6-out7" pointList="-588,-308,-588,-260" />
+
+<item itemtype="Connector" uid="connector-153" startpinid="Hd44780-9-dataPin6" endpinid="I2C to Parallel-6-out6" pointList="-596,-308,-596,-260" />
+
+<item itemtype="Connector" uid="connector-154" startpinid="Hd44780-9-PinRS" endpinid="I2C to Parallel-6-out0" pointList="-668,-308,-668,-284,-644,-284,-644,-260" />
+
+<item itemtype="Connector" uid="connector-155" startpinid="Hd44780-9-dataPin4" endpinid="I2C to Parallel-6-out4" pointList="-612,-308,-612,-260" />
+
+<item itemtype="Connector" uid="connector-156" startpinid="Node-51-2" endpinid="ResistorDip-17-resistor1-ePin2" pointList="-676,-124,-668,-124,-668,-132" />
+
+<item itemtype="Connector" uid="connector-157" startpinid="Node-53-2" endpinid="Node-137-0" pointList="-636,-188,-668,-188" />
+
+<item itemtype="Connector" uid="connector-158" startpinid="Node-112-2" endpinid="Push-81-switch0pinN" pointList="-748,-292,-756,-292" />
+
+<item itemtype="Connector" uid="connector-159" startpinid="Resistor-78-rPin" endpinid="Node-112-0" pointList="-748,-308,-748,-292" />
+
+<item itemtype="Connector" uid="connector-160" startpinid="Ground-85-Gnd" endpinid="Push-81-pinP0" pointList="-804,-284,-804,-292,-788,-292" />
+
+<item itemtype="Connector" uid="connector-161" startpinid="Resistor-78-lPin" endpinid="Rail-77-outnod" pointList="-748,-340,-748,-348" />
+
+<item itemtype="Connector" uid="connector-162" startpinid="LAnalizer-10-Pin0" endpinid="Node-53-0" pointList="-620,-188,-636,-188" />
+
+</circuit>

@@ -1,0 +1,71 @@
+<circuit version="" rev="2224" stepSize="1000000" stepsPS="1000000" NLsteps="100000" reaStep="1000000" animate="1" >
+
+<item itemtype="Resistor" CircId="Resistor-6" mainComp="false" ShowProp="Resistance" Show_id="false" Show_Val="true" Pos="-308,-276" rotation="-450" hflip="1" vflip="1" label="Resistor-6" idLabPos="-12,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Resistance="10 kΩ" />
+
+<item itemtype="MCU" CircId="p16f876-5" mainComp="false" Show_id="true" Show_Val="false" Pos="-372,-236" rotation="0" hflip="1" vflip="1" label="pic16f876" idLabPos="-12,-15" labelrot="0" valLabPos="0,0" valLabRot="0" Frequency="20 MHz" Program="build_pic_i2c-hw/pic_i2c-hw.hex" Auto_Load="false" saveEepr="false" Clk_Out="false" SerialMon="-1" />
+
+<item itemtype="I2CRam" CircId="I2CRam-4" mainComp="false" Show_id="false" Show_Val="false" Pos="-284,-76" rotation="0" hflip="1" vflip="1" label="I2CRam-4" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Size_bytes="512 _bytes" Control_Code="80" Frequency="100 _KHz" Persistent="false" />
+
+<item itemtype="Rail" CircId="Rail-3" mainComp="false" ShowProp="Voltage" Show_id="false" Show_Val="true" Pos="-316,-332" rotation="90" hflip="1" vflip="1" label="Rail-3" idLabPos="-64,-24" labelrot="0" valLabPos="-20,9" valLabRot="-90" Voltage="5 V" />
+
+<item itemtype="Resistor" CircId="Resistor-2" mainComp="false" Show_id="false" Show_Val="false" Pos="-316,-276" rotation="-450" hflip="1" vflip="1" label="Resistor-2" idLabPos="-12,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Resistance="10 kΩ" />
+
+<item itemtype="LAnalizer" CircId="LAnalizer-29" mainComp="false" Show_id="false" Show_Val="false" Pos="-204,-188" rotation="0" hflip="1" vflip="1" label="LAnalizer-29" idLabPos="-90,-100" labelrot="0" valLabPos="-16,20" valLabRot="0" Basic_X="135 _Px" Basic_Y="135 _Px" BufferSize="100000" connectGnd="true" InputImped="1e+07 Ω" TimDiv="44411220" TimPos="-161324752363" VolDiv="0.15" Tunnels="SDA,SCL,,,,,,," Trigger="9" TimeStep="1000 _ps" AutoExport="false" TresholdR="2.5 V" Bus="false,false,false,false,false,false,false,false," TresholdF="2.5 V" />
+
+<item itemtype="Resistor" CircId="Resistor-48" mainComp="false" ShowProp="Resistance" Show_id="false" Show_Val="true" Pos="-404,-260" rotation="-270" hflip="1" vflip="1" label="Resistor-48" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Resistance="5 kΩ" />
+
+<item itemtype="Rail" CircId="Rail-49" mainComp="false" ShowProp="Voltage" Show_id="false" Show_Val="true" Pos="-404,-300" rotation="90" hflip="1" vflip="1" label="Rail-49" idLabPos="-16,-24" labelrot="0" valLabPos="-18,4" valLabRot="-90" Voltage="5 V" />
+
+<item itemtype="Push" CircId="Push-50" mainComp="false" Show_id="false" Show_Val="false" Pos="-428,-228" rotation="0" hflip="1" vflip="1" label="Push-50" idLabPos="-12,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" Norm_Close="false" Poles="1" />
+
+<item itemtype="Ground" CircId="Ground-52" mainComp="false" Show_id="false" Show_Val="false" Pos="-460,-204" rotation="0" hflip="1" vflip="1" label="Ground-52" idLabPos="-16,8" labelrot="0" valLabPos="-16,20" valLabRot="0" />
+
+<item itemtype="Node" CircId="Node-8" mainComp="false" Pos="-308,-124" />
+
+<item itemtype="Node" CircId="Node-7" mainComp="false" Pos="-316,-308" />
+
+<item itemtype="Node" CircId="Node-1" mainComp="false" Pos="-316,-108" />
+
+<item itemtype="Node" CircId="Node-30" mainComp="false" Pos="-308,-252" />
+
+<item itemtype="Node" CircId="Node-33" mainComp="false" Pos="-316,-236" />
+
+<item itemtype="Node" CircId="Node-58" mainComp="false" Pos="-404,-228" />
+
+<item itemtype="Connector" uid="connector-34" startpinid="p16f876-5-PORTC4" endpinid="Node-8-0" pointList="-332,-124,-308,-124" />
+
+<item itemtype="Connector" uid="connector-35" startpinid="p16f876-5-PORTC3" endpinid="Node-1-0" pointList="-380,-124,-396,-124,-396,-108,-316,-108" />
+
+<item itemtype="Connector" uid="connector-36" startpinid="Resistor-2-lPin" endpinid="Node-33-0" pointList="-316,-260,-316,-236" />
+
+<item itemtype="Connector" uid="connector-37" startpinid="Node-1-2" endpinid="I2CRam-4-in1" pointList="-316,-108,-316,-68,-308,-68" />
+
+<item itemtype="Connector" uid="connector-38" startpinid="Node-7-2" endpinid="Rail-3-outnod" pointList="-316,-308,-316,-316" />
+
+<item itemtype="Connector" uid="connector-39" startpinid="Node-7-1" endpinid="Resistor-6-rPin" pointList="-316,-308,-308,-308,-308,-292" />
+
+<item itemtype="Connector" uid="connector-40" startpinid="Resistor-6-lPin" endpinid="Node-30-0" pointList="-308,-260,-308,-252" />
+
+<item itemtype="Connector" uid="connector-41" startpinid="Node-8-2" endpinid="I2CRam-4-in0" pointList="-308,-124,-308,-84" />
+
+<item itemtype="Connector" uid="connector-42" startpinid="Resistor-2-rPin" endpinid="Node-7-0" pointList="-316,-292,-316,-308" />
+
+<item itemtype="Connector" uid="connector-44" startpinid="Node-30-2" endpinid="Node-8-1" pointList="-308,-252,-308,-124" />
+
+<item itemtype="Connector" uid="connector-45" startpinid="Node-30-1" endpinid="LAnalizer-29-Pin0" pointList="-308,-252,-292,-252" />
+
+<item itemtype="Connector" uid="connector-46" startpinid="Node-33-2" endpinid="Node-1-1" pointList="-316,-236,-316,-108" />
+
+<item itemtype="Connector" uid="connector-47" startpinid="Node-33-1" endpinid="LAnalizer-29-Pin1" pointList="-316,-236,-292,-236" />
+
+<item itemtype="Connector" uid="Connector-54" startpinid="Resistor-48-lPin" endpinid="Rail-49-outnod" pointList="-404,-276,-404,-284" />
+
+<item itemtype="Connector" uid="Connector-55" startpinid="Ground-52-Gnd" endpinid="Push-50-pinP0" pointList="-460,-220,-460,-228,-444,-228" />
+
+<item itemtype="Connector" uid="Connector-57" startpinid="Resistor-48-rPin" endpinid="Node-58-0" pointList="-404,-244,-404,-228" />
+
+<item itemtype="Connector" uid="Connector-59" startpinid="Node-58-2" endpinid="Push-50-switch0pinN" pointList="-404,-228,-412,-228" />
+
+<item itemtype="Connector" uid="Connector-60" startpinid="Node-58-1" endpinid="p16f876-5-MCLR" pointList="-404,-228,-380,-228" />
+
+</circuit>

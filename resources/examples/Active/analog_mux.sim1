@@ -1,0 +1,89 @@
+<circuit version="" rev="2208" stepSize="1000000" stepsPS="1000000" NLsteps="100000" reaStep="1000000" animate="1" >
+
+<item itemtype="MuxAnalog" CircId="MuxAnalog-1" mainComp="false" Show_id="true" Show_Val="false" Pos="-508,-404" rotation="0" hflip="1" vflip="1" label="MuxAnalog" idLabPos="-21.121,-14.9026" labelrot="0" valLabPos="-16,-26" valLabRot="0" Address_Bits="3 _bits" Impedance="10 Ω" />
+
+<item itemtype="LedBar" CircId="LedBar-2" mainComp="false" Show_id="false" Show_Val="false" Pos="-460,-372" rotation="0" hflip="1" vflip="1" label="LedBar-2" idLabPos="-16,-44" labelrot="0" valLabPos="-16,-56" valLabRot="0" Color="Yellow" Size="8 _Leds" Grounded="true" Threshold="2.4 V" MaxCurrent="0.03 A" Resistance="100 Ω" />
+
+<item itemtype="Subcircuit" CircId="ENCODER_BCD-11" mainComp="false" Show_id="true" Show_Val="false" Pos="-660,-388" rotation="0" hflip="1" vflip="1" label="ENCODER_BCD" idLabPos="-0.489569,-15.1711" labelrot="0" valLabPos="-16,20" valLabRot="0" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-48" mainComp="false" Show_id="true" Show_Val="false" Pos="-604,-268" rotation="0" hflip="1" vflip="1" label="Enable" idLabPos="-64.401,-8.36023" labelrot="0" valLabPos="-6.85535,-20.8971" valLabRot="0" Voltage="5 V" Out="false" />
+
+<item itemtype="Subcircuit" CircId="74HC4051-61" mainComp="false" Show_id="true" Show_Val="false" Pos="-524,-300" rotation="0" hflip="1" vflip="1" label="74HC4051" idLabPos="-5.48679,-13.0501" labelrot="0" valLabPos="-16,20" valLabRot="0" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+09 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" Logic_Symbol="true" />
+
+<item itemtype="LedBar" CircId="LedBar-87" mainComp="false" Show_id="false" Show_Val="false" Pos="-460,-268" rotation="0" hflip="1" vflip="1" label="LedBar-2" idLabPos="-16,-44" labelrot="0" valLabPos="-16,-56" valLabRot="0" Color="Yellow" Size="8 _Leds" Grounded="true" Threshold="2.4 V" MaxCurrent="0.03 A" Resistance="100 Ω" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-88" mainComp="false" Show_id="true" Show_Val="false" Pos="-604,-300" rotation="0" hflip="1" vflip="1" label="Input" idLabPos="-60.7918,-7.55819" labelrot="0" valLabPos="-6.85535,-20.8971" valLabRot="0" Voltage="5 V" Out="true" />
+
+<item itemtype="Node" CircId="Node-75" mainComp="false" Pos="-540,-380" />
+
+<item itemtype="Node" CircId="Node-78" mainComp="false" Pos="-548,-372" />
+
+<item itemtype="Node" CircId="Node-81" mainComp="false" Pos="-556,-364" />
+
+<item itemtype="Node" CircId="Node-89" mainComp="false" Pos="-564,-300" />
+
+<item itemtype="Node" CircId="Node-90" mainComp="false" Pos="-572,-268" />
+
+<item itemtype="Connector" uid="connector-88" startpinid="LedBar-2-led0-pinP" endpinid="MuxAnalog-1-pinY0" pointList="-476,-396,-484,-396" />
+
+<item itemtype="Connector" uid="connector-89" startpinid="LedBar-2-led1-pinP" endpinid="MuxAnalog-1-pinY1" pointList="-476,-388,-484,-388" />
+
+<item itemtype="Connector" uid="connector-90" startpinid="LedBar-2-led2-pinP" endpinid="MuxAnalog-1-pinY2" pointList="-476,-380,-484,-380" />
+
+<item itemtype="Connector" uid="connector-91" startpinid="LedBar-2-led3-pinP" endpinid="MuxAnalog-1-pinY3" pointList="-476,-372,-484,-372" />
+
+<item itemtype="Connector" uid="connector-92" startpinid="LedBar-2-led4-pinP" endpinid="MuxAnalog-1-pinY4" pointList="-476,-364,-484,-364" />
+
+<item itemtype="Connector" uid="connector-93" startpinid="LedBar-2-led5-pinP" endpinid="MuxAnalog-1-pinY5" pointList="-476,-356,-484,-356" />
+
+<item itemtype="Connector" uid="connector-94" startpinid="LedBar-2-led6-pinP" endpinid="MuxAnalog-1-pinY6" pointList="-476,-348,-484,-348" />
+
+<item itemtype="Connector" uid="connector-95" startpinid="LedBar-2-led7-pinP" endpinid="MuxAnalog-1-pinY7" pointList="-476,-340,-484,-340" />
+
+<item itemtype="Connector" uid="connector-96" startpinid="ENCODER_BCD-11-1" endpinid="Node-75-0" pointList="-580,-380,-540,-380" />
+
+<item itemtype="Connector" uid="connector-97" startpinid="ENCODER_BCD-11-2" endpinid="Node-78-0" pointList="-580,-372,-548,-372" />
+
+<item itemtype="Connector" uid="connector-98" startpinid="ENCODER_BCD-11-4" endpinid="Node-81-0" pointList="-580,-364,-556,-364" />
+
+<item itemtype="Connector" uid="connector-100" startpinid="Node-75-2" endpinid="MuxAnalog-1-pinAddr0" pointList="-540,-380,-532,-380" />
+
+<item itemtype="Connector" uid="connector-101" startpinid="Node-75-1" endpinid="74HC4051-61-S0" pointList="-540,-380,-540,-292,-532,-292" />
+
+<item itemtype="Connector" uid="connector-102" startpinid="Node-78-2" endpinid="MuxAnalog-1-pinAddr1" pointList="-548,-372,-532,-372" />
+
+<item itemtype="Connector" uid="connector-103" startpinid="Node-78-1" endpinid="74HC4051-61-S1" pointList="-548,-372,-548,-284,-532,-284" />
+
+<item itemtype="Connector" uid="connector-104" startpinid="Node-81-2" endpinid="MuxAnalog-1-pinAddr2" pointList="-556,-364,-532,-364" />
+
+<item itemtype="Connector" uid="connector-105" startpinid="Node-81-1" endpinid="74HC4051-61-S2" pointList="-556,-364,-556,-276,-532,-276" />
+
+<item itemtype="Connector" uid="connector-108" startpinid="LedBar-87-led0-pinP" endpinid="74HC4051-61-Y0" pointList="-476,-292,-484,-292" />
+
+<item itemtype="Connector" uid="connector-109" startpinid="LedBar-87-led1-pinP" endpinid="74HC4051-61-Y1" pointList="-476,-284,-484,-284" />
+
+<item itemtype="Connector" uid="connector-110" startpinid="LedBar-87-led2-pinP" endpinid="74HC4051-61-Y2" pointList="-476,-276,-484,-276" />
+
+<item itemtype="Connector" uid="connector-111" startpinid="LedBar-87-led3-pinP" endpinid="74HC4051-61-Y3" pointList="-476,-268,-484,-268" />
+
+<item itemtype="Connector" uid="connector-112" startpinid="LedBar-87-led4-pinP" endpinid="74HC4051-61-Y4" pointList="-476,-260,-484,-260" />
+
+<item itemtype="Connector" uid="connector-113" startpinid="LedBar-87-led5-pinP" endpinid="74HC4051-61-Y5" pointList="-476,-252,-484,-252" />
+
+<item itemtype="Connector" uid="connector-114" startpinid="LedBar-87-led6-pinP" endpinid="74HC4051-61-Y6" pointList="-476,-244,-484,-244" />
+
+<item itemtype="Connector" uid="connector-115" startpinid="LedBar-87-led7-pinP" endpinid="74HC4051-61-Y7" pointList="-476,-236,-484,-236" />
+
+<item itemtype="Connector" uid="Connector-117" startpinid="Fixed Voltage-88-outnod" endpinid="Node-89-1" pointList="-588,-300,-564,-300" />
+
+<item itemtype="Connector" uid="Connector-118" startpinid="74HC4051-61-Z" endpinid="Node-89-0" pointList="-532,-260,-564,-260,-564,-300" />
+
+<item itemtype="Connector" uid="Connector-119" startpinid="Node-89-2" endpinid="MuxAnalog-1-PinInput" pointList="-564,-300,-564,-396,-532,-396" />
+
+<item itemtype="Connector" uid="Connector-121" startpinid="Fixed Voltage-48-outnod" endpinid="Node-90-1" pointList="-588,-268,-572,-268" />
+
+<item itemtype="Connector" uid="Connector-122" startpinid="MuxAnalog-1-PinEnable" endpinid="Node-90-0" pointList="-532,-348,-572,-348,-572,-268" />
+
+<item itemtype="Connector" uid="Connector-123" startpinid="Node-90-2" endpinid="74HC4051-61-!E" pointList="-572,-268,-572,-236,-532,-236" />
+
+</circuit>

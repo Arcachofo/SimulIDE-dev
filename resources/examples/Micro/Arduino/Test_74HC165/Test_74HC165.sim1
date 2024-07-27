@@ -1,0 +1,137 @@
+<circuit version="" rev="2224" stepSize="1000000" stepsPS="1000000" NLsteps="100000" reaStep="1000000" animate="1" >
+
+<item itemtype="KeyPad" CircId="KeyPad-366" mainComp="false" Show_id="false" Show_Val="false" Pos="-300,-212" rotation="0" hflip="1" vflip="1" label="KeyPad-366" idLabPos="-8,-16" labelrot="0" valLabPos="0,0" valLabRot="0" Rows="1" Cols="8" Key_Labels="76543210" />
+
+<item itemtype="TextComponent" CircId="Text-39" mainComp="false" Show_id="false" Show_Val="false" Pos="-488,-168" rotation="0" hflip="1" vflip="1" label="Text-1" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Margin="5 _px" Border="1 _px" Color="#ffffdc" Opacity="1" Font="Helvetica [Cronyx]" Font_Color="#000080" Font_Size="10 _px" Fixed_Width="false" Text="Circuit test with 74HC165 &#xa;8-Bit Parallel-Load Shift Registers&#xa;to add 8 inputs to arduino.&#xa;&#xa;Load Arduino Firmware &#xa;Test_74HC165.ino.hex&#xa;Open serial monitor for testing" />
+
+<item itemtype="ResistorDip" CircId="ResistorDip-37" mainComp="false" ShowProp="Resistance" Show_id="false" Show_Val="true" Pos="-248,-140" rotation="-90" hflip="1" vflip="1" label="ResistorDip-3" idLabPos="-16,-24" labelrot="0" valLabPos="7,-26" valLabRot="90" Resistance="10 kΩ" Size="8" PullUp="false" PuVolt="5 V" />
+
+<item itemtype="Subcircuit" CircId="Uno-36" mainComp="false" Show_id="true" Show_Val="false" Pos="-172,-188" rotation="0" hflip="1" vflip="1" label="Arduino Uno" idLabPos="48,-21" labelrot="0" valLabPos="0,0" valLabRot="0" Logic_Symbol="false">
+<mainCompProps MainCompId="mega328-109" Frequency="16 MHz" Program="Test_74HC165.hex" Auto_Load="false" saveEepr="true" SerialMon="-1" />
+</item>
+
+<item itemtype="Subcircuit" CircId="74HC165-35" mainComp="false" Show_id="true" Show_Val="false" Pos="-260,-60" rotation="0" hflip="1" vflip="1" label="74HC165" idLabPos="-5,74" labelrot="0" valLabPos="0,0" valLabRot="0" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+09 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" Logic_Symbol="false" />
+
+<item itemtype="Ground" CircId="Ground (0 V)-6" mainComp="false" Show_id="false" Show_Val="false" Pos="-272,-92" rotation="0" hflip="1" vflip="1" label="Ground (0 V)-34" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" />
+
+<item itemtype="Rail" CircId="Rail.-4" mainComp="false" ShowProp="Voltage" Show_id="false" Show_Val="true" Pos="-164,-220" rotation="90" hflip="-1" vflip="1" label="Rail.-36" idLabPos="-64,-24" labelrot="0" valLabPos="-11.3974,6.85568" valLabRot="-90" Voltage="5 V" />
+
+<item itemtype="TextComponent" CircId="Text-1" mainComp="false" Show_id="false" Show_Val="false" Pos="-488,-272" rotation="0" hflip="1" vflip="1" label="Text-39" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Margin="2 _px" Border="1 _px" Color="#ffffdc" Opacity="1" Font="Helvetica [Cronyx]" Font_Color="#000080" Font_Size="10 _px" Fixed_Width="false" Text="The file Test_74HC165.ino has been modified from:&#xa;http://wiki.t-o-f.info/Arduino/ExempleMutliplexeurDentr%C3%A9esNum%C3%A9riques74HC165#toc3" />
+
+<item itemtype="Node" CircId="Node-397" mainComp="false" Pos="-252,-180" />
+
+<item itemtype="Node" CircId="Node-394" mainComp="false" Pos="-268,-172" />
+
+<item itemtype="Node" CircId="Node-391" mainComp="false" Pos="-284,-164" />
+
+<item itemtype="Node" CircId="Node-388" mainComp="false" Pos="-236,-180" />
+
+<item itemtype="Node" CircId="Node-385" mainComp="false" Pos="-220,-172" />
+
+<item itemtype="Node" CircId="Node-382" mainComp="false" Pos="-300,-156" />
+
+<item itemtype="Node" CircId="Node-379" mainComp="false" Pos="-204,-164" />
+
+<item itemtype="Node" CircId="Node-376" mainComp="false" Pos="-188,-156" />
+
+<item itemtype="Node" CircId="Node-20" mainComp="false" Pos="-264,-116" />
+
+<item itemtype="Node" CircId="Node-19" mainComp="false" Pos="-256,-116" />
+
+<item itemtype="Node" CircId="Node-18" mainComp="false" Pos="-248,-116" />
+
+<item itemtype="Node" CircId="Node-17" mainComp="false" Pos="-240,-116" />
+
+<item itemtype="Node" CircId="Node-16" mainComp="false" Pos="-232,-116" />
+
+<item itemtype="Node" CircId="Node-15" mainComp="false" Pos="-224,-116" />
+
+<item itemtype="Node" CircId="Node-5" mainComp="false" Pos="-272,-116" />
+
+<item itemtype="Connector" uid="Connector-60" startpinid="ResistorDip-37-resistor1-ePin2" endpinid="Node-20-1" pointList="-264,-124,-264,-116" />
+
+<item itemtype="Connector" uid="Connector-62" startpinid="Node-20-2" endpinid="Node-19-0" pointList="-264,-116,-256,-116" />
+
+<item itemtype="Connector" uid="Connector-63" startpinid="ResistorDip-37-resistor2-ePin4" endpinid="Node-19-1" pointList="-256,-124,-256,-116" />
+
+<item itemtype="Connector" uid="Connector-64" startpinid="Node-19-2" endpinid="Node-18-0" pointList="-256,-116,-248,-116" />
+
+<item itemtype="Connector" uid="Connector-65" startpinid="ResistorDip-37-resistor3-ePin6" endpinid="Node-18-1" pointList="-248,-124,-248,-116" />
+
+<item itemtype="Connector" uid="Connector-66" startpinid="Node-18-2" endpinid="Node-17-0" pointList="-248,-116,-240,-116" />
+
+<item itemtype="Connector" uid="Connector-67" startpinid="ResistorDip-37-resistor4-ePin8" endpinid="Node-17-1" pointList="-240,-124,-240,-116" />
+
+<item itemtype="Connector" uid="Connector-68" startpinid="Node-17-2" endpinid="Node-16-0" pointList="-240,-116,-232,-116" />
+
+<item itemtype="Connector" uid="Connector-69" startpinid="ResistorDip-37-resistor5-ePin10" endpinid="Node-16-1" pointList="-232,-124,-232,-116" />
+
+<item itemtype="Connector" uid="Connector-70" startpinid="Node-16-2" endpinid="Node-15-0" pointList="-232,-116,-224,-116" />
+
+<item itemtype="Connector" uid="Connector-71" startpinid="ResistorDip-37-resistor6-ePin12" endpinid="Node-15-1" pointList="-224,-124,-224,-116" />
+
+<item itemtype="Connector" uid="Connector-72" startpinid="Node-15-2" endpinid="ResistorDip-37-resistor7-ePin14" pointList="-224,-116,-216,-116,-216,-124" />
+
+<item itemtype="Connector" uid="Connector-96" startpinid="Uno-36-11" endpinid="74HC165-35-PL" pointList="-164,-76,-280,-76,-280,-52,-268,-52" />
+
+<item itemtype="Connector" uid="Connector-98" startpinid="ResistorDip-37-resistor0-ePin0" endpinid="Node-5-0" pointList="-272,-124,-272,-116" />
+
+<item itemtype="Connector" uid="Connector-99" startpinid="Ground (0 V)-6-Gnd" endpinid="Node-5-1" pointList="-272,-108,-272,-116" />
+
+<item itemtype="Connector" uid="Connector-100" startpinid="Node-5-2" endpinid="Node-20-0" pointList="-272,-116,-264,-116" />
+
+<item itemtype="Connector" uid="Connector-105" startpinid="74HC165-35-Q7" endpinid="Uno-36-9" pointList="-220,4,-180,4,-180,-92,-164,-92" />
+
+<item itemtype="Connector" uid="Connector-109" startpinid="74HC165-35-CP" endpinid="Uno-36-10" pointList="-268,-44,-284,-44,-284,-84,-164,-84" />
+
+<item itemtype="Connector" uid="Connector-367" startpinid="Rail.-4-outnod" endpinid="KeyPad-366-Pin0" pointList="-164,-204,-172,-204" />
+
+<item itemtype="Connector" uid="Connector-368" startpinid="KeyPad-366-Pin1" endpinid="Node-382-0" pointList="-300,-188,-300,-156" />
+
+<item itemtype="Connector" uid="Connector-369" startpinid="KeyPad-366-Pin2" endpinid="Node-391-0" pointList="-284,-188,-284,-164" />
+
+<item itemtype="Connector" uid="Connector-370" startpinid="KeyPad-366-Pin3" endpinid="Node-394-0" pointList="-268,-188,-268,-172" />
+
+<item itemtype="Connector" uid="Connector-371" startpinid="KeyPad-366-Pin8" endpinid="Node-376-0" pointList="-188,-188,-188,-156" />
+
+<item itemtype="Connector" uid="Connector-372" startpinid="KeyPad-366-Pin7" endpinid="Node-379-0" pointList="-204,-188,-204,-164" />
+
+<item itemtype="Connector" uid="Connector-373" startpinid="KeyPad-366-Pin6" endpinid="Node-385-0" pointList="-220,-188,-220,-172" />
+
+<item itemtype="Connector" uid="Connector-374" startpinid="KeyPad-366-Pin5" endpinid="Node-388-0" pointList="-236,-188,-236,-180" />
+
+<item itemtype="Connector" uid="Connector-375" startpinid="KeyPad-366-Pin4" endpinid="Node-397-0" pointList="-252,-188,-252,-180" />
+
+<item itemtype="Connector" uid="Connector-377" startpinid="Node-376-2" endpinid="ResistorDip-37-resistor7-ePin15" pointList="-188,-156,-216,-156" />
+
+<item itemtype="Connector" uid="Connector-378" startpinid="Node-376-1" endpinid="74HC165-35-D0" pointList="-188,-156,-188,-12,-220,-12" />
+
+<item itemtype="Connector" uid="Connector-380" startpinid="Node-379-2" endpinid="ResistorDip-37-resistor6-ePin13" pointList="-204,-164,-224,-164,-224,-156" />
+
+<item itemtype="Connector" uid="Connector-381" startpinid="Node-379-1" endpinid="74HC165-35-D1" pointList="-204,-164,-192,-164,-192,-20,-220,-20" />
+
+<item itemtype="Connector" uid="Connector-383" startpinid="Node-382-2" endpinid="ResistorDip-37-resistor0-ePin1" pointList="-300,-156,-272,-156" />
+
+<item itemtype="Connector" uid="Connector-384" startpinid="Node-382-1" endpinid="74HC165-35-D7" pointList="-300,-156,-300,-12,-268,-12" />
+
+<item itemtype="Connector" uid="Connector-386" startpinid="Node-385-2" endpinid="ResistorDip-37-resistor5-ePin11" pointList="-220,-172,-232,-172,-232,-156" />
+
+<item itemtype="Connector" uid="Connector-387" startpinid="Node-385-1" endpinid="74HC165-35-D2" pointList="-220,-172,-196,-172,-196,-28,-220,-28" />
+
+<item itemtype="Connector" uid="Connector-389" startpinid="Node-388-2" endpinid="ResistorDip-37-resistor4-ePin9" pointList="-236,-180,-240,-180,-240,-156" />
+
+<item itemtype="Connector" uid="Connector-390" startpinid="Node-388-1" endpinid="74HC165-35-D3" pointList="-236,-180,-200,-180,-200,-36,-220,-36" />
+
+<item itemtype="Connector" uid="Connector-392" startpinid="Node-391-2" endpinid="ResistorDip-37-resistor1-ePin3" pointList="-284,-164,-264,-164,-264,-156" />
+
+<item itemtype="Connector" uid="Connector-393" startpinid="Node-391-1" endpinid="74HC165-35-D6" pointList="-284,-164,-296,-164,-296,-20,-268,-20" />
+
+<item itemtype="Connector" uid="Connector-395" startpinid="Node-394-2" endpinid="ResistorDip-37-resistor2-ePin5" pointList="-268,-172,-256,-172,-256,-156" />
+
+<item itemtype="Connector" uid="Connector-396" startpinid="Node-394-1" endpinid="74HC165-35-D5" pointList="-268,-172,-292,-172,-292,-28,-268,-28" />
+
+<item itemtype="Connector" uid="Connector-398" startpinid="Node-397-2" endpinid="ResistorDip-37-resistor3-ePin7" pointList="-252,-180,-248,-180,-248,-156" />
+
+<item itemtype="Connector" uid="Connector-399" startpinid="Node-397-1" endpinid="74HC165-35-D4" pointList="-252,-180,-288,-180,-288,-36,-268,-36" />
+
+</circuit>

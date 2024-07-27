@@ -1,0 +1,43 @@
+<circuit version="" rev="2208" stepSize="1000000" stepsPS="1000000" NLsteps="100000" reaStep="1000000" animate="1" >
+
+<item itemtype="Demux" CircId="Demux-120" mainComp="false" Show_id="false" Show_Val="false" Pos="-124,52" rotation="0" hflip="1" vflip="1" label="Demux-120" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Address_Bits="3 _bits" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+09 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" Inverted="false" Open_Collector="false" pd_n="1 _Gates" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-35" mainComp="false" Show_id="false" Show_Val="true" Pos="-196,-4" rotation="0" hflip="1" vflip="1" label="Fixed Voltage-35" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Voltage="5 V" Out="false" />
+
+<item itemtype="SwitchDip" CircId="SwitchDip-52" mainComp="false" Show_id="false" Show_Val="false" Pos="-156,132" rotation="0" hflip="1" vflip="1" label="SwitchDip-52" idLabPos="-16,-44" labelrot="0" valLabPos="0,0" valLabRot="0" Size="3" Exclusive="false" CommonPin="true" State="256" />
+
+<item itemtype="Rail" CircId="Rail-68" mainComp="false" ShowProp="Voltage" Show_id="false" Show_Val="true" Pos="-172,84" rotation="90" hflip="1" vflip="1" label="Rail-68" idLabPos="-16,-24" labelrot="0" valLabPos="-13.2002,4.92021" valLabRot="-90" Voltage="5 V" />
+
+<item itemtype="LedBar" CircId="LedBar-94" mainComp="false" Show_id="false" Show_Val="false" Pos="-68,44" rotation="0" hflip="1" vflip="1" label="LedBar-94" idLabPos="-16,-44" labelrot="0" valLabPos="0,0" valLabRot="0" Color="Yellow" Size="8 _Leds" Grounded="true" Threshold="2.4 V" MaxCurrent="0.03 A" Resistance="100 Ω" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-145" mainComp="false" Show_id="false" Show_Val="true" Pos="-196,52" rotation="0" hflip="1" vflip="1" label="Fixed Voltage-145" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Voltage="5 V" Out="true" />
+
+<item itemtype="Connector" uid="Connector-141" startpinid="SwitchDip-52-switch0-pinN" endpinid="Demux-120-in0" pointList="-140,108,-116,108,-116,100" />
+
+<item itemtype="Connector" uid="Connector-142" startpinid="Demux-120-in1" endpinid="SwitchDip-52-switch1-pinN" pointList="-124,100,-124,116,-140,116" />
+
+<item itemtype="Connector" uid="Connector-143" startpinid="Demux-120-in2" endpinid="SwitchDip-52-switch2-pinN" pointList="-132,100,-132,124,-140,124" />
+
+<item itemtype="Connector" uid="Connector-144" startpinid="Fixed Voltage-35-outnod" endpinid="Demux-120-in4" pointList="-180,-4,-132,-4,-132,4" />
+
+<item itemtype="Connector" uid="Connector-146" startpinid="Fixed Voltage-145-outnod" endpinid="Demux-120-in3" pointList="-180,52,-148,52" />
+
+<item itemtype="Connector" uid="Connector-135" startpinid="Demux-120-out6" endpinid="LedBar-94-led6-pinP" pointList="-100,68,-84,68" />
+
+<item itemtype="Connector" uid="Connector-136" startpinid="Demux-120-out7" endpinid="LedBar-94-led7-pinP" pointList="-100,76,-84,76" />
+
+<item itemtype="Connector" uid="Connector-95" startpinid="LedBar-94-led0-pinP" endpinid="Demux-120-out0" pointList="-84,20,-100,20" />
+
+<item itemtype="Connector" uid="Connector-100" startpinid="LedBar-94-led1-pinP" endpinid="Demux-120-out1" pointList="-84,28,-100,28" />
+
+<item itemtype="Connector" uid="Connector-101" startpinid="LedBar-94-led2-pinP" endpinid="Demux-120-out2" pointList="-84,36,-100,36" />
+
+<item itemtype="Connector" uid="Connector-106" startpinid="LedBar-94-led3-pinP" endpinid="Demux-120-out3" pointList="-84,44,-100,44" />
+
+<item itemtype="Connector" uid="Connector-133" startpinid="Demux-120-out4" endpinid="LedBar-94-led4-pinP" pointList="-100,52,-84,52" />
+
+<item itemtype="Connector" uid="Connector-134" startpinid="Demux-120-out5" endpinid="LedBar-94-led5-pinP" pointList="-100,60,-84,60" />
+
+<item itemtype="Connector" uid="Connector-148" startpinid="Rail-68-outnod" endpinid="SwitchDip-52-switch0-pinP" pointList="-172,100,-172,108,-164,108" />
+
+</circuit>

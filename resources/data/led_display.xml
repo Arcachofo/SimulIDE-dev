@@ -1,0 +1,30 @@
+<!DOCTYPE SimulIDE>
+
+<itemlib>
+    
+  <itemset category="Logic/Led display" type="Subcircuit" folder="led_display" icon="segbcd.png" >
+      
+    <item name="1bit_led_scc"  info="1-Bit Led digital Tube module (74hc595, com. cathode, static)" /> 
+    <item name="1bit_led_sca"  info="1-Bit Led digital Tube module (74hc595, com. anode, static)" /> 
+    <item name="2bit_led_scc"  info="2-Bit Led digital Tube module (74hc595, com. cathode, static)" /> 
+    <item name="2bit_led_sca"  info="2-Bit Led digital Tube module (74hc595, com. anode, static)" /> 
+    <item name="3bit_led_scc"  info="3-Bit Led digital Tube module (74hc595, com. cathode, static)" /> 
+    <item name="3bit_led_sca"  info="3-Bit Led digital Tube module (74hc595, com. anode, static)" /> 
+    <item name="4bit_led_scc"  info="4-Bit Led digital Tube module (74hc595, com. cathode, static)" /> 
+    <item name="4bit_led_sca"  info="4-Bit Led digital Tube module (74hc595, com. anode, static)" /> 
+    <item name="2x4bit_led_ca" info="2x4-Bit Led digital Tube module (74hc164, com. anode, dynamic)" /> 
+    <item name="2x4bit_led_cc" info="2x4-Bit Led digital Tube module (74hc164, com. cathode, dynamic)" /> 
+    <item name="4bit_led_ca"   info="4-Bit Led digital Tube module (74hc595, com. anode, dynamic)" /> 
+    <item name="8bit_led_ca"   info="8-Bit Led digital Tube module (74hc595, com. anode), dynamic" /> 
+    <item name="4bit_led_cc"   info="4-Bit Led digital Tube module (74hc595, com. cathode, dynamic)" /> 
+    <item name="8bit_led_cc"   info="8-Bit Led digital Tube module (74hc595, com. cathode, dynamic)" /> 
+    <item name="8x8_led_595"   info="8x8 matrix (74hc595, dynamic)" /> 
+    <item name="8x8_hs_static" info="8x8 matrix, horisontal scan, static" /> 
+    <item name="8x8_vs_static" info="8x8 matrix, vertical scan, static" /> 
+    <item name="8x8_rgb_cc"    info="8x8 RGB matrix common cathode" /> 
+    <item name="8x8_rgb_ca"    info="8x8 RGB matrix common anode" /> 
+    <item name="4bit_clock_cc" info="4-Bit Led display for digital clock, com. cathode" /> 
+
+  </itemset>
+
+</itemlib>

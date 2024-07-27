@@ -1,0 +1,8 @@
+<!DOCTYPE SimulIDE>
+
+<compiler name="SDCC-PIC" type="sdcc" buildPath="build" >
+    <step 
+        command="sdcc"
+        arguments=" --use-non-free -m$family -p$device -o$buildPath $filePath"
+    />
+</compiler>

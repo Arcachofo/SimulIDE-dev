@@ -1,0 +1,1 @@
+电阻操纵杆(Resistive joystick).

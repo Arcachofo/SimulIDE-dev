@@ -1,0 +1,15 @@
+<parts>
+    <!-- BANK 0 -->
+    <regblock name="SFRC" start="0x0000" end="0x0004" streg="STATUS">
+        <register name="INDF"    addr="0x00" bits=""/>
+        <register name="TMR0"    addr="0x01" bits=""/>
+        <register name="PCL"     addr="0x02" bits=""/>
+        <register name="STATUS"  addr="0x03" reset="00011000" mask="11100111"
+                  bits="C,DC,Z,PD,TO,R0,R1,IR"/>
+                  
+        <register name="FSR"     addr="0x04" bits=""/>
+    </regblock>
+    
+    <sleep name="SLEEP"/>
+    
+</parts>

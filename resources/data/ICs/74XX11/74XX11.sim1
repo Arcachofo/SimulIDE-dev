@@ -1,0 +1,61 @@
+<circuit version="" rev="1498" stepSize="1000000" stepsPS="1000000" NLsteps="100000" reaStep="1000000" animate="0" >
+
+<item itemtype="Package" CircId="Package-1" mainComp="false" Show_id="true" Show_Val="false" Pos="388,592" rotation="0" hflip="1" vflip="1" label="7411" idLabPos="0,-14" labelrot="0" valLabPos="-16,20" valLabRot="0" SubcType="Logic" Width="4 _Cells" Height="8 _Cells" Name="7411" Package_File="74XX11.package" Logic_Symbol="false" />
+
+<item itemtype="Tunnel" CircId="Tunnel-2" mainComp="false" Show_id="false" Show_Val="false" Pos="364,692" rotation="0" hflip="1" vflip="1" label="Tunnel-2" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" Name="A1" />
+
+<item itemtype="Tunnel" CircId="Tunnel-3" mainComp="false" Show_id="false" Show_Val="false" Pos="332,700" rotation="0" hflip="1" vflip="1" label="Tunnel-3" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" Name="B1" />
+
+<item itemtype="Tunnel" CircId="Tunnel-5" mainComp="false" Show_id="false" Show_Val="false" Pos="364,708" rotation="0" hflip="1" vflip="1" label="Tunnel-5" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" Name="C1" />
+
+<item itemtype="Tunnel" CircId="Tunnel-8" mainComp="false" Show_id="false" Show_Val="false" Pos="412,700" rotation="0" hflip="-1" vflip="1" label="Tunnel-8" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" Name="Y1" />
+
+<item itemtype="And Gate" CircId="And Gate-16" mainComp="false" Show_id="false" Show_Val="false" Pos="388,700" rotation="0" hflip="1" vflip="1" label="And Gate-16" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" Num_Inputs="3 _Inputs" Inverted="false" Open_Collector="false" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+09 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" initHigh="false" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
+
+<item itemtype="Tunnel" CircId="Tunnel-21" mainComp="false" Show_id="false" Show_Val="false" Pos="332,740" rotation="0" hflip="1" vflip="1" label="Tunnel-21" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" Name="B2" />
+
+<item itemtype="And Gate" CircId="And Gate-22" mainComp="false" Show_id="false" Show_Val="false" Pos="388,740" rotation="0" hflip="1" vflip="1" label="And Gate-22" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" Num_Inputs="3 _Inputs" Inverted="false" Open_Collector="false" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+09 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" initHigh="false" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
+
+<item itemtype="Tunnel" CircId="Tunnel-23" mainComp="false" Show_id="false" Show_Val="false" Pos="364,748" rotation="0" hflip="1" vflip="1" label="Tunnel-23" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" Name="C2" />
+
+<item itemtype="Tunnel" CircId="Tunnel-24" mainComp="false" Show_id="false" Show_Val="false" Pos="412,740" rotation="0" hflip="-1" vflip="1" label="Tunnel-24" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" Name="Y2" />
+
+<item itemtype="Tunnel" CircId="Tunnel-25" mainComp="false" Show_id="false" Show_Val="false" Pos="364,732" rotation="0" hflip="1" vflip="1" label="Tunnel-25" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" Name="A2" />
+
+<item itemtype="Tunnel" CircId="Tunnel-34" mainComp="false" Show_id="false" Show_Val="false" Pos="364,772" rotation="0" hflip="1" vflip="1" label="Tunnel-34" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" Name="A3" />
+
+<item itemtype="And Gate" CircId="And Gate-35" mainComp="false" Show_id="false" Show_Val="false" Pos="388,780" rotation="0" hflip="1" vflip="1" label="And Gate-35" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" Num_Inputs="3 _Inputs" Inverted="false" Open_Collector="false" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+09 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" initHigh="false" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
+
+<item itemtype="Tunnel" CircId="Tunnel-36" mainComp="false" Show_id="false" Show_Val="false" Pos="364,788" rotation="0" hflip="1" vflip="1" label="Tunnel-36" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" Name="C3" />
+
+<item itemtype="Tunnel" CircId="Tunnel-37" mainComp="false" Show_id="false" Show_Val="false" Pos="332,780" rotation="0" hflip="1" vflip="1" label="Tunnel-37" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" Name="B3" />
+
+<item itemtype="Tunnel" CircId="Tunnel-38" mainComp="false" Show_id="false" Show_Val="false" Pos="412,780" rotation="0" hflip="-1" vflip="1" label="Tunnel-38" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" Name="Y3" />
+
+<item itemtype="Package" CircId="Package-44" mainComp="false" Show_id="true" Show_Val="false" Pos="496,584" rotation="0" hflip="1" vflip="1" label="7411_LS" idLabPos="-8,-15" labelrot="0" valLabPos="-16,20" valLabRot="0" SubcType="Logic" Width="4 _Cells" Height="12 Cells" Name="7411" Package_File="74XX11_LS.package" Logic_Symbol="true" />
+
+<item itemtype="Connector" uid="connector-45" startpinid="Tunnel-2-pin" endpinid="And Gate-16-in0" pointList="364,692,372,692" />
+
+<item itemtype="Connector" uid="connector-46" startpinid="Tunnel-3-pin" endpinid="And Gate-16-in1" pointList="332,700,372,700" />
+
+<item itemtype="Connector" uid="connector-47" startpinid="Tunnel-5-pin" endpinid="And Gate-16-in2" pointList="364,708,372,708" />
+
+<item itemtype="Connector" uid="connector-48" startpinid="Tunnel-8-pin" endpinid="And Gate-16-out" pointList="412,700,404,700" />
+
+<item itemtype="Connector" uid="connector-49" startpinid="Tunnel-25-pin" endpinid="And Gate-22-in0" pointList="364,732,372,732" />
+
+<item itemtype="Connector" uid="connector-50" startpinid="Tunnel-24-pin" endpinid="And Gate-22-out" pointList="412,740,404,740" />
+
+<item itemtype="Connector" uid="connector-51" startpinid="Tunnel-21-pin" endpinid="And Gate-22-in1" pointList="332,740,372,740" />
+
+<item itemtype="Connector" uid="connector-52" startpinid="Tunnel-23-pin" endpinid="And Gate-22-in2" pointList="364,748,372,748" />
+
+<item itemtype="Connector" uid="connector-53" startpinid="Tunnel-38-pin" endpinid="And Gate-35-out" pointList="412,780,404,780" />
+
+<item itemtype="Connector" uid="connector-54" startpinid="Tunnel-37-pin" endpinid="And Gate-35-in1" pointList="332,780,372,780" />
+
+<item itemtype="Connector" uid="connector-55" startpinid="Tunnel-34-pin" endpinid="And Gate-35-in0" pointList="364,772,372,772" />
+
+<item itemtype="Connector" uid="connector-56" startpinid="Tunnel-36-pin" endpinid="And Gate-35-in2" pointList="364,788,372,788" />
+
+</circuit>

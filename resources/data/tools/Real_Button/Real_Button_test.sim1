@@ -1,0 +1,11 @@
+<circuit type="simulide_1.0" stepSize="1000000" stepsPS="1000000" NLsteps="100000" animate="0" >
+
+<item itemtype="LAnalizer" CircId="LAnalizer-76" mainComp="false" Show_id="false" Show_Val="false" Pos="-344,72" rotation="0" hflip="1" vflip="1" label="LAnalizer-76" idLabPos="-90,-100" labelrot="0" valLabPos="0,0" valLabRot="0" Basic_X="135 _Pixels" Basic_Y="135 _Pixels" TimDiv="423747000" TimPos="0" VolDiv="0.6" Tunnels=",,,,,,,," Trigger="0" Treshold="2.5 V" />
+
+<item itemtype="Subcircuit" CircId="Real_Button-1" mainComp="false" Show_id="true" Show_Val="false" Pos="-544,8" rotation="0" hflip="1" vflip="1" label="Real_Button-1" idLabPos="0,-20" labelrot="0" valLabPos="13,12" valLabRot="-90" Logic_Symbol="true" />
+
+<item itemtype="Connector" uid="Connector-77" startpinid="Real_Button-1-Q" endpinid="LAnalizer-76-Pin0" pointList="-504,16,-432,16,-432,8" />
+
+<item itemtype="Connector" uid="Connector-78" startpinid="Real_Button-1-!Q" endpinid="LAnalizer-76-Pin1" pointList="-504,24,-432,24" />
+
+</circuit>

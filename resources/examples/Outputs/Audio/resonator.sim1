@@ -1,0 +1,47 @@
+<circuit version="" rev="2229" stepSize="1000000" stepsPS="1000000" NLsteps="100000" reaStep="10000000" animate="0" >
+
+<item itemtype="Rail" CircId="Rail-9" mainComp="false" ShowProp="Voltage" Show_id="false" Show_Val="true" Pos="-252,-348" rotation="90" hflip="1" vflip="1" label="Rail-1" idLabPos="-64,-24" labelrot="0" valLabPos="-18.249,6.36811" valLabRot="-90" Voltage="1 V" />
+
+<item itemtype="Push" CircId="Push-7" mainComp="false" Show_id="true" Show_Val="false" Pos="-252,-296" rotation="-90" hflip="1" vflip="1" label="Push" idLabPos="6.11334,25.464" labelrot="90" valLabPos="0,0" valLabRot="0" Norm_Close="false" Poles="1" />
+
+<item itemtype="Capacitor" CircId="Capacitor-5" mainComp="false" ShowProp="Capacitance" Show_id="false" Show_Val="true" Pos="-316,-188" rotation="90" hflip="1" vflip="1" label="Capacitor-5" idLabPos="0,-24" labelrot="-90" valLabPos="-7.74054,-16.5182" valLabRot="0" Capacitance="10 µF" Resistance="1e-06 Ω" InitVolt="0 V" ReaStep="0 ns" />
+
+<item itemtype="Ground" CircId="Ground (0 V)-4" mainComp="false" Show_id="false" Show_Val="false" Pos="-252,-92" rotation="0" hflip="1" vflip="1" label="Ground (0 V)-6" idLabPos="0,-24" labelrot="0" valLabPos="0,0" valLabRot="0" />
+
+<item itemtype="Inductor" CircId="Inductor-3" mainComp="false" ShowProp="Inductance" Show_id="false" Show_Val="true" Pos="-252,-188" rotation="-90" hflip="1" vflip="1" label="Inductor-7" idLabPos="0,-24" labelrot="90" valLabPos="-12.129,-16.7512" valLabRot="0" Inductance="600 mH" Resistance="1e-06 Ω" InitVolt="0 A" ReaStep="0 ns" />
+
+<item itemtype="AudioOut" CircId="AudioOut-25" mainComp="false" Show_id="false" Show_Val="false" Pos="-340,-228" rotation="-180" hflip="1" vflip="-1" label="AudioOut-25" idLabPos="-20,-36" labelrot="0" valLabPos="-16,20" valLabRot="0" Buzzer="false" Impedance="8 Ω" />
+
+<item itemtype="Oscope" CircId="Oscope-28" mainComp="false" Show_id="false" Show_Val="false" Pos="-124,-180" rotation="0" hflip="1" vflip="1" label="Oscope-28" idLabPos="-90,-100" labelrot="0" valLabPos="-16,20" valLabRot="0" Basic_X="135 _Px" Basic_Y="135 _Px" BufferSize="600000" connectGnd="true" InputImped="1e+07 Ω" TimDiv="100000000000" TimPos="0,0,0,0," VolDiv="5.64267,5.64267,5.64267,5.64267," Tunnels=",,,," Trigger="4" Filter="0.1 V" Trigger="4" AutoSC="4" Tracks="1" HideCh="false,false,false,false," VolPos="0,0,0,0," />
+
+<item itemtype="VarResistor" CircId="VarResistor-30" mainComp="false" Show_id="false" Show_Val="false" Pos="-288,-236" rotation="-180" hflip="1" vflip="1" label="VarResistor-30" idLabPos="-16,-24" labelrot="0" valLabPos="-16,30" valLabRot="0" Min_Resistance="0 Ω" Max_Resistance="100 Ω" Value_Ohm="0 Ω" Dial_Step="0 Ω" Slider="false" Scale="1" />
+
+<item itemtype="Node" CircId="Node-2" mainComp="false" Pos="-252,-140" />
+
+<item itemtype="Node" CircId="Node-33" mainComp="false" Pos="-252,-236" />
+
+<item itemtype="Node" CircId="Node-35" mainComp="false" Pos="-252,-228" />
+
+<item itemtype="Connector" uid="Connector-14" startpinid="Inductor-3-lPin" endpinid="Node-2-1" pointList="-252,-172,-252,-140" />
+
+<item itemtype="Connector" uid="Connector-15" startpinid="Node-2-2" endpinid="Capacitor-5-rPin" pointList="-252,-140,-316,-140,-316,-172" />
+
+<item itemtype="Connector" uid="Connector-20" startpinid="Rail-9-outnod" endpinid="Push-7-switch0pinN" pointList="-252,-332,-252,-312" />
+
+<item itemtype="Connector" uid="Connector-41" startpinid="Ground (0 V)-4-Gnd" endpinid="Node-2-0" pointList="-252,-108,-252,-140" />
+
+<item itemtype="Connector" uid="Connector-48" startpinid="AudioOut-25-rPin" endpinid="Capacitor-5-lPin" pointList="-324,-228,-316,-228,-316,-204" />
+
+<item itemtype="Connector" uid="Connector-50" startpinid="AudioOut-25-lPin" endpinid="VarResistor-30-rPin" pointList="-324,-236,-304,-236" />
+
+<item itemtype="Connector" uid="Connector-51" startpinid="VarResistor-30-lPin" endpinid="Node-33-1" pointList="-272,-236,-252,-236" />
+
+<item itemtype="Connector" uid="Connector-58" startpinid="Push-7-pinP0" endpinid="Node-33-0" pointList="-252,-280,-252,-236" />
+
+<item itemtype="Connector" uid="Connector-59" startpinid="Node-35-1" endpinid="Oscope-28-Pin0" pointList="-252,-228,-212,-228" />
+
+<item itemtype="Connector" uid="Connector-60" startpinid="Node-33-2" endpinid="Node-35-0" pointList="-252,-236,-252,-228" />
+
+<item itemtype="Connector" uid="Connector-61" startpinid="Node-35-2" endpinid="Inductor-3-rPin" pointList="-252,-228,-252,-204" />
+
+</circuit>

@@ -1,0 +1,51 @@
+<circuit type="simulide_1.0" stepSize="1000000" stepsPS="1000000" NLsteps="100000" animate="0" >
+
+<item itemtype="Subcircuit" CircId="CD4096-39" mainComp="false" Show_id="true" Show_Val="false" Pos="-372,-384" rotation="0" hflip="1" vflip="1" label="CD4096-38" idLabPos="0,-20" labelrot="0" valLabPos="0,0" valLabRot="0" Logic_Symbol="false" />
+
+<item itemtype="Subcircuit" CircId="CD4096-38" mainComp="false" Show_id="true" Show_Val="false" Pos="-360,-220" rotation="0" hflip="1" vflip="1" label="CD4096-38" idLabPos="0,-20" labelrot="0" valLabPos="0,0" valLabRot="0" Logic_Symbol="true" />
+
+<item itemtype="Probe" CircId="Probe-13" mainComp="false" Show_id="false" Show_Val="true" Pos="-280,-188" rotation="-45" hflip="1" vflip="1" label="Probe-23" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
+
+<item itemtype="Probe" CircId="Probe-12" mainComp="false" Show_id="false" Show_Val="true" Pos="-280,-220" rotation="-45" hflip="1" vflip="1" label="Probe-21" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-11" mainComp="false" Show_id="true" Show_Val="false" Pos="-464,-92" rotation="0" hflip="1" vflip="1" label="R" idLabPos="-44,-6" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-10" mainComp="false" Show_id="true" Show_Val="false" Pos="-476,-180" rotation="0" hflip="1" vflip="1" label="CLK" idLabPos="-53,-4" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-9" mainComp="false" Show_id="true" Show_Val="false" Pos="-464,-156" rotation="0" hflip="1" vflip="1" label="K1" idLabPos="-46,-5" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="true" Voltage="5 V" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-8" mainComp="false" Show_id="true" Show_Val="false" Pos="-464,-124" rotation="0" hflip="1" vflip="1" label="!K3" idLabPos="-47,-7" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-7" mainComp="false" Show_id="true" Show_Val="false" Pos="-464,-140" rotation="0" hflip="1" vflip="1" label="K2" idLabPos="-47,-6" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="true" Voltage="5 V" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-6" mainComp="false" Show_id="true" Show_Val="false" Pos="-464,-204" rotation="0" hflip="1" vflip="1" label="!J3" idLabPos="-44,-5" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-5" mainComp="false" Show_id="true" Show_Val="false" Pos="-464,-220" rotation="0" hflip="1" vflip="1" label="J2" idLabPos="-44,-6" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="true" Voltage="5 V" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-4" mainComp="false" Show_id="true" Show_Val="false" Pos="-464,-236" rotation="0" hflip="1" vflip="1" label="J1" idLabPos="-43,-5" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="true" Voltage="5 V" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-3" mainComp="false" Show_id="true" Show_Val="false" Pos="-464,-268" rotation="0" hflip="1" vflip="1" label="S" idLabPos="-41,-4" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
+
+<item itemtype="Connector" uid="Connector-40" startpinid="CD4096-38-Q" endpinid="Probe-12-inpin" pointList="-320,-204,-296,-204" />
+
+<item itemtype="Connector" uid="Connector-41" startpinid="CD4096-38-!Q" endpinid="Probe-13-inpin" pointList="-320,-172,-296,-172" />
+
+<item itemtype="Connector" uid="Connector-42" startpinid="Fixed Voltage-3-outnod" endpinid="CD4096-38-S" pointList="-448,-268,-368,-268,-368,-212" />
+
+<item itemtype="Connector" uid="Connector-43" startpinid="Fixed Voltage-11-outnod" endpinid="CD4096-38-R" pointList="-448,-92,-368,-92,-368,-148" />
+
+<item itemtype="Connector" uid="Connector-44" startpinid="Fixed Voltage-10-outnod" endpinid="CD4096-38-CLK" pointList="-460,-180,-368,-180" />
+
+<item itemtype="Connector" uid="Connector-45" startpinid="Fixed Voltage-6-outnod" endpinid="CD4096-38-!J3" pointList="-448,-204,-440,-204,-440,-188,-368,-188" />
+
+<item itemtype="Connector" uid="Connector-46" startpinid="Fixed Voltage-5-outnod" endpinid="CD4096-38-J2" pointList="-448,-220,-428,-220,-428,-196,-368,-196" />
+
+<item itemtype="Connector" uid="Connector-47" startpinid="Fixed Voltage-4-outnod" endpinid="CD4096-38-J1" pointList="-448,-236,-420,-236,-420,-204,-368,-204" />
+
+<item itemtype="Connector" uid="Connector-48" startpinid="Fixed Voltage-9-outnod" endpinid="CD4096-38-K1" pointList="-448,-156,-440,-156,-440,-172,-368,-172" />
+
+<item itemtype="Connector" uid="Connector-49" startpinid="Fixed Voltage-7-outnod" endpinid="CD4096-38-K2" pointList="-448,-140,-428,-140,-428,-164,-368,-164" />
+
+<item itemtype="Connector" uid="Connector-50" startpinid="Fixed Voltage-8-outnod" endpinid="CD4096-38-!K3" pointList="-448,-124,-420,-124,-420,-156,-368,-156" />
+
+</circuit>

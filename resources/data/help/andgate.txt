@@ -1,0 +1,11 @@
+Configurable AND Gate.
+
+Property: (default value)
+
+Electric:
+
+#include logicinputs
+#include gateinputs
+#include logicoutputs
+#include gateoutputs
+#include gatedelay

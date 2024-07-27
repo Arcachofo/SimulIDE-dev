@@ -1,0 +1,41 @@
+Compilation Report
+
+Compiler Version (YYYY-MM-DD): 1.00.00 2022-12-01 (Linux 64 bit) : Build 1199
+
+;********************************************************************************
+
+Compilation time:
+ (Compile time: 0 seconds)
+ (Assembly time: 0 seconds)
+ (Download time: 0 seconds)
+ (Total time: 0 seconds)
+
+;********************************************************************************
+
+Chip resource usage:
+Chip Model: 12F683
+Program Memory: 55/2048 words (2.69%)
+RAM: 0/128 bytes (0.%)
+INTRC_OSC_NOCLKOUT (Internal oscillator)
+
+;********************************************************************************
+
+RAM Allocation
+;********************************************************************************
+
+Subroutines
+Main
+Code Size (lines): 6
+Compiled Size (words): 17
+Outgoing calls: Delay_MS(1), INITSYS(6)
+
+INITSYS
+Code Size (lines): 895
+Compiled Size (words): 24
+
+Delay_MS
+Code Size (lines): 0
+Compiled Size (words): 14
+
+;********************************************************************************
+

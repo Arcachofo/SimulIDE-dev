@@ -1,0 +1,11 @@
+<!DOCTYPE SimulIDE>
+
+<compiler name="Make_avrgcc" type="avrgcc">
+    <step 
+        command="make"
+        arguments=" clean"
+    /><step 
+        command="make"
+        arguments=" all"
+    />
+</compiler>

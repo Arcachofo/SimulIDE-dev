@@ -1,0 +1,13 @@
+<!DOCTYPE SimulIDE>
+
+<mcu name="tiny84" core="AVR" data="608" prog="4096" progword="2" eeprom="512"
+            inst_cycle="1" freq="16000000" >
+
+    <include file="avr/avr_gpr.xml" />
+    <include file="tinyx4/tinyx4_regs.xml" />
+    <datablock name="RAM" start="0x0060" end="0x025F"/>
+
+    <include file="tinyx4/tinyx4_int.xml" />
+    <include file="tinyx4/tinyx4_perif.xml" />
+    
+</mcu>

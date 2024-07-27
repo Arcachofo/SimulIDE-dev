@@ -1,0 +1,16 @@
+<!DOCTYPE SimulIDE>
+
+<itemlib>
+  <itemset category="Logic/Keys" type="Subcircuit" folder="ICs" icon="ic2.png" >
+      
+    <item name="DG401"   info="High-Speed CMOS Analog Switches" /> 
+    <item name="DG403"   info="High-Speed CMOS Analog Switches" /> 
+    <item name="DG405"   info="High-Speed CMOS Analog Switches" />     
+    <item name="L293"    info="Quadruple half-H drivers" />
+    <item name="L298P"   info="Dual Full-Bridge Driver" />
+    <item name="ULN2803" info="8 high-current Darlington transistor keys" />
+    <item name="ULN2001" info="7 high-current Darlington transistor keys" />
+    
+  </itemset>
+  
+</itemlib>

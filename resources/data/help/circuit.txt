@@ -1,0 +1,20 @@
+Property: (default value)
+
+Circuit Canvas
+- Draw Grid: (true)
+
+- Show Scrollbar: (false)
+
+- Animate: (false)
+   Wires will get Red if Volts>2.5, Blue otherwise.
+   Login Pins will show type and logic state.
+
+- Canvas Refresh: (20)
+   Number of Circuit updates/redraws per second.
+
+Other
+- Auto Backup Secs: (15)
+   Time interval in seconds for Circuit to Circuit backup.
+   Save Circuit backup if there are changes.
+   0 disables Auto Backup.
+

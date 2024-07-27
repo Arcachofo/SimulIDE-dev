@@ -1,0 +1,61 @@
+<circuit type="simulide_1.0" stepSize="1000000" stepsPS="1000000" NLsteps="100000" animate="0" >
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-16" mainComp="false" Show_id="true" Show_Val="false" Pos="-464,-44" rotation="0" hflip="1" vflip="1" label="!OE" idLabPos="-49,-4" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-15" mainComp="false" Show_id="true" Show_Val="false" Pos="-484,-72" rotation="0" hflip="1" vflip="1" label="!INH" idLabPos="-55,-4" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="true" Voltage="5 V" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-14" mainComp="false" Show_id="true" Show_Val="false" Pos="-484,-104" rotation="0" hflip="1" vflip="1" label="B" idLabPos="-48,-4" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-13" mainComp="false" Show_id="true" Show_Val="false" Pos="-484,-88" rotation="0" hflip="1" vflip="1" label="C" idLabPos="-48,-4" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-12" mainComp="false" Show_id="true" Show_Val="false" Pos="-484,-120" rotation="0" hflip="1" vflip="1" label="A" idLabPos="-48,-4" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-11" mainComp="false" Show_id="true" Show_Val="false" Pos="-484,-152" rotation="0" hflip="1" vflip="1" label="X7" idLabPos="-48,-4" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-10" mainComp="false" Show_id="true" Show_Val="false" Pos="-484,-184" rotation="0" hflip="1" vflip="1" label="X5" idLabPos="-48,-4" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-9" mainComp="false" Show_id="true" Show_Val="false" Pos="-484,-168" rotation="0" hflip="1" vflip="1" label="X6" idLabPos="-48,-4" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-8" mainComp="false" Show_id="true" Show_Val="false" Pos="-484,-200" rotation="0" hflip="1" vflip="1" label="X4" idLabPos="-48,-4" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-7" mainComp="false" Show_id="true" Show_Val="false" Pos="-484,-216" rotation="0" hflip="1" vflip="1" label="X3" idLabPos="-48,-4" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-6" mainComp="false" Show_id="true" Show_Val="false" Pos="-484,-232" rotation="0" hflip="1" vflip="1" label="X2" idLabPos="-48,-4" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-5" mainComp="false" Show_id="true" Show_Val="false" Pos="-484,-248" rotation="0" hflip="1" vflip="1" label="X1" idLabPos="-48,-4" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="true" Voltage="5 V" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-4" mainComp="false" Show_id="true" Show_Val="false" Pos="-484,-264" rotation="0" hflip="1" vflip="1" label="X0" idLabPos="-48,-4" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="true" Voltage="5 V" />
+
+<item itemtype="Probe" CircId="Probe-2" mainComp="false" Show_id="false" Show_Val="true" Pos="-280,-240" rotation="-45" hflip="1" vflip="1" label="Probe-2" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
+
+<item itemtype="Subcircuit" CircId="CD4512-1" mainComp="false" Show_id="true" Show_Val="false" Pos="-384,-232" rotation="0" hflip="1" vflip="1" label="CD4512-1" idLabPos="0,-20" labelrot="0" valLabPos="0,0" valLabRot="0" Logic_Symbol="true" />
+
+<item itemtype="Connector" uid="Connector-3" startpinid="Probe-2-inpin" endpinid="CD4512-1-Y" pointList="-296,-224,-344,-224" />
+
+<item itemtype="Connector" uid="Connector-17" startpinid="Fixed Voltage-16-outnod" endpinid="CD4512-1-!OE" pointList="-448,-44,-392,-44,-392,-120" />
+
+<item itemtype="Connector" uid="Connector-18" startpinid="Fixed Voltage-12-outnod" endpinid="CD4512-1-A" pointList="-468,-120,-424,-120,-424,-152,-392,-152" />
+
+<item itemtype="Connector" uid="Connector-19" startpinid="Fixed Voltage-14-outnod" endpinid="CD4512-1-B" pointList="-468,-104,-420,-104,-420,-144,-392,-144" />
+
+<item itemtype="Connector" uid="Connector-20" startpinid="Fixed Voltage-13-outnod" endpinid="CD4512-1-C" pointList="-468,-88,-416,-88,-416,-136,-392,-136" />
+
+<item itemtype="Connector" uid="Connector-21" startpinid="Fixed Voltage-15-outnod" endpinid="CD4512-1-!INH" pointList="-468,-72,-468,-68,-412,-68,-412,-128,-392,-128" />
+
+<item itemtype="Connector" uid="Connector-22" startpinid="Fixed Voltage-11-outnod" endpinid="CD4512-1-X7" pointList="-468,-152,-428,-152,-428,-168,-392,-168" />
+
+<item itemtype="Connector" uid="Connector-23" startpinid="Fixed Voltage-9-outnod" endpinid="CD4512-1-X6" pointList="-468,-168,-432,-168,-432,-176,-392,-176" />
+
+<item itemtype="Connector" uid="Connector-24" startpinid="Fixed Voltage-10-outnod" endpinid="CD4512-1-X5" pointList="-468,-184,-392,-184" />
+
+<item itemtype="Connector" uid="Connector-25" startpinid="Fixed Voltage-8-outnod" endpinid="CD4512-1-X4" pointList="-468,-200,-468,-192,-392,-192" />
+
+<item itemtype="Connector" uid="Connector-26" startpinid="Fixed Voltage-7-outnod" endpinid="CD4512-1-X3" pointList="-468,-216,-460,-216,-460,-200,-392,-200" />
+
+<item itemtype="Connector" uid="Connector-27" startpinid="Fixed Voltage-6-outnod" endpinid="CD4512-1-X2" pointList="-468,-232,-456,-232,-456,-208,-392,-208" />
+
+<item itemtype="Connector" uid="Connector-28" startpinid="Fixed Voltage-5-outnod" endpinid="CD4512-1-X1" pointList="-468,-248,-452,-248,-452,-216,-392,-216" />
+
+<item itemtype="Connector" uid="Connector-29" startpinid="Fixed Voltage-4-outnod" endpinid="CD4512-1-X0" pointList="-468,-264,-444,-264,-444,-224,-392,-224" />
+
+</circuit>

@@ -1,0 +1,17 @@
+电感器(Inductor)
+
+如果感应时间处理过长，会不停闪烁.
+
+属性: (默认值)
+
+- 电感: (1 H)
+
+- 电阻: (1e-6 Ω)
+
+- 起始电流: (0 A)
+   模拟开始时的电流值.
+
+- Auto Step: (0 steps)
+   Resize Reactive step automatically.
+   The value sets the number of sub-steps.
+   0 to disable.

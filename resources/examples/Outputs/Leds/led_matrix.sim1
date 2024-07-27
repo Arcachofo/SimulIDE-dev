@@ -1,0 +1,69 @@
+<circuit version="" rev="2229" stepSize="1000000" stepsPS="1000000" NLsteps="100000" reaStep="1000000" animate="0" >
+
+<item itemtype="Fixed Voltage" CircId="Voltage Fijo.-1" mainComp="false" Show_id="false" Show_Val="false" Pos="-260,-188" rotation="-90" hflip="1" vflip="1" label="Voltage Fijo.-25" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Voltage="5 V" Out="false" />
+
+<item itemtype="Fixed Voltage" CircId="Voltage Fijo.-2" mainComp="false" Show_id="false" Show_Val="false" Pos="-276,-188" rotation="-90" hflip="1" vflip="1" label="Voltage Fijo.-24" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Voltage="5 V" Out="true" />
+
+<item itemtype="Fixed Voltage" CircId="Voltage Fijo.-3" mainComp="false" Show_id="false" Show_Val="false" Pos="-292,-188" rotation="-90" hflip="1" vflip="1" label="Voltage Fijo.-23" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Voltage="5 V" Out="false" />
+
+<item itemtype="Fixed Voltage" CircId="Voltage Fijo.-4" mainComp="false" Show_id="false" Show_Val="false" Pos="-308,-188" rotation="-90" hflip="1" vflip="1" label="Voltage Fijo.-22" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Voltage="5 V" Out="true" />
+
+<item itemtype="Fixed Voltage" CircId="Voltage Fijo.-5" mainComp="false" Show_id="false" Show_Val="false" Pos="-324,-188" rotation="-90" hflip="1" vflip="1" label="Voltage Fijo.-21" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Voltage="5 V" Out="true" />
+
+<item itemtype="Fixed Voltage" CircId="Voltage Fijo.-6" mainComp="false" Show_id="false" Show_Val="false" Pos="-340,-188" rotation="-90" hflip="1" vflip="1" label="Voltage Fijo.-20" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Voltage="5 V" Out="false" />
+
+<item itemtype="Fixed Voltage" CircId="Voltage Fijo.-7" mainComp="false" Show_id="false" Show_Val="false" Pos="-356,-188" rotation="-90" hflip="1" vflip="1" label="Voltage Fijo.-19" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Voltage="5 V" Out="false" />
+
+<item itemtype="Fixed Voltage" CircId="Voltage Fijo.-8" mainComp="false" Show_id="false" Show_Val="false" Pos="-372,-188" rotation="-90" hflip="1" vflip="1" label="Voltage Fijo.-18" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Voltage="5 V" Out="false" />
+
+<item itemtype="Fixed Voltage" CircId="Voltage Fijo.-9" mainComp="false" Show_id="false" Show_Val="false" Pos="-436,-372" rotation="0" hflip="1" vflip="1" label="Voltage Fijo.-9" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Voltage="5 V" Out="true" />
+
+<item itemtype="Fixed Voltage" CircId="Voltage Fijo.-10" mainComp="false" Show_id="false" Show_Val="false" Pos="-436,-260" rotation="0" hflip="1" vflip="1" label="Voltage Fijo.-8" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Voltage="5 V" Out="false" />
+
+<item itemtype="Fixed Voltage" CircId="Voltage Fijo.-11" mainComp="false" Show_id="false" Show_Val="false" Pos="-436,-356" rotation="0" hflip="1" vflip="1" label="Voltage Fijo.-7" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Voltage="5 V" Out="false" />
+
+<item itemtype="Fixed Voltage" CircId="Voltage Fijo.-12" mainComp="false" Show_id="false" Show_Val="false" Pos="-436,-276" rotation="0" hflip="1" vflip="1" label="Voltage Fijo.-6" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Voltage="5 V" Out="false" />
+
+<item itemtype="Fixed Voltage" CircId="Voltage Fijo.-13" mainComp="false" Show_id="false" Show_Val="false" Pos="-436,-292" rotation="0" hflip="1" vflip="1" label="Voltage Fijo.-5" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Voltage="5 V" Out="false" />
+
+<item itemtype="Fixed Voltage" CircId="Voltage Fijo.-14" mainComp="false" Show_id="false" Show_Val="false" Pos="-436,-308" rotation="0" hflip="1" vflip="1" label="Voltage Fijo.-4" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Voltage="5 V" Out="true" />
+
+<item itemtype="Fixed Voltage" CircId="Voltage Fijo.-15" mainComp="false" Show_id="false" Show_Val="false" Pos="-436,-324" rotation="0" hflip="1" vflip="1" label="Voltage Fijo.-3" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Voltage="5 V" Out="false" />
+
+<item itemtype="Fixed Voltage" CircId="Voltage Fijo.-16" mainComp="false" Show_id="false" Show_Val="false" Pos="-436,-340" rotation="0" hflip="1" vflip="1" label="Voltage Fijo.-2" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Voltage="5 V" Out="false" />
+
+<item itemtype="LedMatrix" CircId="Matriz Led-17" mainComp="false" Show_id="false" Show_Val="false" Pos="-340,-340" rotation="0" hflip="1" vflip="1" label="Matriz Led-1" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Color="Yellow" Rows="8 _Leds" Cols="8 _Leds" Vertical_Pins="false" Threshold="2.4 V" MaxCurrent="0.03 A" Resistance="100 Ω" />
+
+<item itemtype="Connector" uid="Connector-18" startpinid="Voltage Fijo.-11-outnod" endpinid="Matriz Led-17-pinRow1" pointList="-420,-356,-380,-356,-380,-332,-356,-332" />
+
+<item itemtype="Connector" uid="Connector-20" startpinid="Voltage Fijo.-16-outnod" endpinid="Matriz Led-17-pinRow2" pointList="-420,-340,-388,-340,-388,-324,-356,-324" />
+
+<item itemtype="Connector" uid="Connector-22" startpinid="Voltage Fijo.-15-outnod" endpinid="Matriz Led-17-pinRow3" pointList="-420,-324,-396,-324,-396,-316,-356,-316" />
+
+<item itemtype="Connector" uid="Connector-24" startpinid="Voltage Fijo.-14-outnod" endpinid="Matriz Led-17-pinRow4" pointList="-420,-308,-356,-308" />
+
+<item itemtype="Connector" uid="Connector-26" startpinid="Voltage Fijo.-13-outnod" endpinid="Matriz Led-17-pinRow5" pointList="-420,-292,-396,-292,-396,-300,-356,-300" />
+
+<item itemtype="Connector" uid="Connector-28" startpinid="Voltage Fijo.-12-outnod" endpinid="Matriz Led-17-pinRow6" pointList="-420,-276,-388,-276,-388,-292,-356,-292" />
+
+<item itemtype="Connector" uid="Connector-30" startpinid="Voltage Fijo.-10-outnod" endpinid="Matriz Led-17-pinRow7" pointList="-420,-260,-380,-260,-380,-284,-356,-284" />
+
+<item itemtype="Connector" uid="Connector-32" startpinid="Voltage Fijo.-8-outnod" endpinid="Matriz Led-17-pinCol0" pointList="-372,-204,-372,-252,-340,-252,-340,-268" />
+
+<item itemtype="Connector" uid="Connector-34" startpinid="Voltage Fijo.-7-outnod" endpinid="Matriz Led-17-pinCol1" pointList="-356,-204,-356,-244,-332,-244,-332,-268" />
+
+<item itemtype="Connector" uid="Connector-36" startpinid="Voltage Fijo.-6-outnod" endpinid="Matriz Led-17-pinCol2" pointList="-340,-204,-340,-236,-324,-236,-324,-268" />
+
+<item itemtype="Connector" uid="Connector-38" startpinid="Voltage Fijo.-5-outnod" endpinid="Matriz Led-17-pinCol3" pointList="-324,-204,-324,-228,-316,-228,-316,-268" />
+
+<item itemtype="Connector" uid="Connector-40" startpinid="Voltage Fijo.-4-outnod" endpinid="Matriz Led-17-pinCol4" pointList="-308,-204,-308,-268" />
+
+<item itemtype="Connector" uid="Connector-42" startpinid="Voltage Fijo.-3-outnod" endpinid="Matriz Led-17-pinCol5" pointList="-292,-204,-292,-228,-300,-228,-300,-268" />
+
+<item itemtype="Connector" uid="Connector-44" startpinid="Voltage Fijo.-2-outnod" endpinid="Matriz Led-17-pinCol6" pointList="-276,-204,-276,-236,-292,-236,-292,-268" />
+
+<item itemtype="Connector" uid="Connector-46" startpinid="Voltage Fijo.-1-outnod" endpinid="Matriz Led-17-pinCol7" pointList="-260,-204,-260,-244,-284,-244,-284,-268" />
+
+<item itemtype="Connector" uid="Connector-48" startpinid="Voltage Fijo.-9-outnod" endpinid="Matriz Led-17-pinRow0" pointList="-420,-372,-372,-372,-372,-340,-356,-340" />
+
+</circuit>

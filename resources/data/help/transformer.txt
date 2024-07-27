@@ -1,0 +1,25 @@
+Configurable transformer.
+
+This transformer is highly configurable, allowing users to set up as many coils as needed on each side.
+It's even possible to use coils exclusively on one side.
+
+The term "Primary" refers to the left side, while "Secondary" refers to the right side.
+However, any coil can function as the primary coil within the transformer.
+
+Property: (default value)
+
+- Coupling Coefficient: (0.99)
+
+- Base Inductance: (1 H)
+   Base inductance for all coils (refer to the coil descriptions below)
+
+- Primary: (1)
+   Description of coils in the left side (refer to the coil descriptions below).
+
+- Secondary: (1)
+   Description of coils at the right side (refer to the coil descriptions below).
+
+---
+
+Full tutorial:
+https://simulide.com/p/component-list/#reactive

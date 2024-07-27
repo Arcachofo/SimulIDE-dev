@@ -1,0 +1,17 @@
+<!DOCTYPE SimulIDE>
+
+<mcu name="p10F204" core="Pic14" data="32" prog="256" progword="2"
+            inst_cycle="4" freq="20000000">
+            
+    <include file="pic/pic14_regs.xml" />
+    <include file="p10F20x/p10F20x_regs.xml" />
+    
+    <regblock name="SFR0" start="0x00" end="0x0B" streg="STATUS">
+        <register name="CMCON0"  addr="0x07" bits="CWU,CPREF,CNREF,CMPON,CMPT0CS,POL,COUTEN,CMPOUT" reset="11111111" mask="01111111"/>
+    </regblock>
+    
+    <include file="p10F20x/p10F20x_perif.xml" />
+    
+    <datablock name="GPR" start="0x10" end="0x01F"/>
+    
+</mcu>

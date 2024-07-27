@@ -1,0 +1,72 @@
+<!DOCTYPE SimulIDE>
+
+<itemlib>
+    
+  <itemset category="Logic/IC CD" type="Subcircuit" folder="ICs" icon="ic2.png" >
+      
+    <item name="CD4006"  info="18-stage static shift register" ></item>
+    <item name="CD4009"  info="  Hex buffers, inverted outputs (TTL to CMOS, CMOS to TTL level shifters)" ></item>
+    <item name="CD4010"  info="  Hex buffers (TTL to CMOS, CMOS to TTL level shifters)" ></item>
+    <item name="CD4013"  info="dual D positive edge triggered flip-flop, asynchronous preset and clear " ></item>
+    <item name="CD4014"  info="8-stage static shift register" ></item>
+    <item name="CD4015"  info="dual 4-stage static shift register" ></item>
+    <item name="CD4018"  info="Presettable Divide-By-N Counter" ></item>
+    <item name="CD4019"  info="quadruple 2-input multiplexer" ></item>
+    <item name="CD4021"  info="8-stage static shift register, asynchronous load" ></item>
+    <item name="CD4026"  info="Decade Counter/Divider" ></item>
+    <item name="CD4027"  info="dual J-K flip-flop" ></item>
+    <item name="CD4029"  info="synchronous binary/decade, up/down counter" ></item>
+    <item name="CD4033"  info="Decade Counter/Divider" ></item>
+    <item name="CD4035"  info="4-bit parallel in/parallel out shift register" ></item>
+    <item name="CD4042"  info="quad clocked D-latch" ></item>
+    <item name="CD4043"  info="quad R/S latch (active HIGH), tristate outputs " ></item>
+    <item name="CD4044"  info="quad R/S latch (active LOW), tristate outputs " ></item>
+    <item name="CD4054"  info="cmos 4-segment LCD driver" ></item>
+    <item name="CD4055"  info="cmos BCD to 7-segment LCD driver" ></item>
+    <item name="CD4056"  info="cmos BCD to 7-segment LCD driver with latch "  ></item>
+    <item name="CD4066"  info="cmos quad bilateral switch" ></item>
+    <item name="CD4076"  info="4-bit D-type registers, tristate outputs" ></item>
+    <item name="CD4085"  info="Dual 2 wide 2 input AND-OR-INVERT gate" ></item>
+    <item name="CD4094"  info="8-stage shift and store register, tristate outputs" ></item>
+    <item name="CD4095"  info="J-K flip-flop with triple JK AND-ed inputs" ></item>
+    <item name="CD4096"  info="J-K flip-flop with triple JK AND-ed inputs (one inverted)" ></item>
+    <item name="CD4098"  info="dual monostable multivibrator" ></item>
+    <item name="CD4099"  info="8-bit adressable latch" ></item>
+    <item name="CD4502"  info="Strobed Hex inverter/buffer" ></item>
+    <item name="CD4503"  info="Hex buffer, tristate outputs" ></item>
+    <item name="CD4508"  info="dual 4-bit latch with reset" ></item>
+    <item name="CD4510"  info="Presettable Up/Down Counter" ></item>
+    <item name="CD4511"  info="BCD to 7 Segment Latch Decoder Driver" ></item>
+    <item name="CD4512"  info="8-input multiplexer with tristate output" ></item>
+    <item name="CD4516"  info="Presettable Up/Down Counter" ></item>
+    <item name="CD4521"  info="24-stage frequency divider and oscillator" ></item>
+    <item name="CD4522"  info="Programmable 4-bit BCD DOWN Counter" ></item>
+    <item name="CD4526"  info="Programmable 4-bit Binary DOWN Counter" ></item>
+    <item name="CD4532"  info="8-input priority encoder" ></item>
+    <item name="CD4539"  info="Dual 4 input multiplexer" ></item>
+    <item name="CD4553"  info="3-digit BCD counter" ></item>
+    <item name="CD4555"  info="Dual Binary to 1 of 4 Decoder/Demultiplexer" ></item>
+    <item name="CD4556"  info="Dual Binary to 1 of 4 Decoder/Demultiplexer, inverted outputs" ></item>
+    <item name="CD40110" info="Decade Up/Down Counter Latch Display Driver"></item>
+    <item name="CD40160" info="Synchronous presettable 4-bit decade counter, asynchronous clear"></item>
+    <item name="CD40161" info="Synchronous presettable 4-bit binary counter, asynchronous clear "></item>
+    <item name="CD40162" info="Synchronous presettable 4-bit decade counter, synchronous clear "></item>
+    <item name="CD40163" info="Synchronous presettable 4-bit binary counter, synchronous clear "></item>
+    <item name="CD40174" info="six positive-edge triggered D-type flip-flops "></item>
+    <item name="CD40175" info="four positive-edge triggered D-type flip-flops, true and complement outputs "></item>
+    <item name="CD40192" info="Synchronous presettable up/down decade counter, clear "></item>
+    <item name="CD40193" info="Synchronous presettable up/down 4-bit binary counter, clear"></item>
+    <item name="MC14495" info="Hexadecimal to 7 segment latch/decoder led driver"></item>
+    <item name="MM74C922" info="16 key encoder (SIMPLIFIED MODEL)"></item>
+    <item name="MM74C923" info="20 key encoder (SIMPLIFIED MODEL)"></item>
+    <item name="TC4560"  info="4-bit BCD adder" ></item>
+    <item name="TC4561"  info="9`s complementer" ></item>
+    <item name="TC4467"  info="Logic-input CMOS quad drivers, inverted outputs" ></item>
+    <item name="TC4468"  info="Logic-input CMOS quad drivers" ></item>
+    <item name="TC4469"  info="Logic-input CMOS quad drivers, one inverted input " ></item>
+    <item name="tpic6a595" info="Power Logic 8-bit shift register, 350 mA output " ></item>
+    
+  </itemset>
+  
+</itemlib>
+

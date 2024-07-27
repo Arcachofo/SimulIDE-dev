@@ -1,0 +1,29 @@
+<circuit type="simulide_1.0" rev="1185" stepSize="1000000" stepsPS="1000000" NLsteps="100000" animate="0" >
+
+<item itemtype="Subcircuit" CircId="MCP4011_50-2634" mainComp="false" Show_id="true" Show_Val="false" Pos="-472,-408" rotation="0" hflip="1" vflip="1" label="MCP4011_50-2634" idLabPos="-59,-30" labelrot="0" valLabPos="13,20" valLabRot="-90" Logic_Symbol="true" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-1308" mainComp="false" Show_id="true" Show_Val="false" Pos="-536,-364" rotation="0" hflip="1" vflip="1" label="!CS" idLabPos="-63,-6" labelrot="0" valLabPos="-55,-5" valLabRot="0" Out="false" Voltage="5 V" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-1306" mainComp="false" Show_id="true" Show_Val="false" Pos="-536,-400" rotation="0" hflip="1" vflip="1" label="Up/!Down" idLabPos="-91,-14" labelrot="0" valLabPos="-55,-5" valLabRot="0" Out="false" Voltage="5 V" />
+
+<item itemtype="Rail" CircId="Rail-321" mainComp="false" ShowProp="Voltage" Show_id="false" Show_Val="true" Pos="-472,-472" rotation="0" hflip="1" vflip="1" label="Rail-321" idLabPos="-16,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Voltage="5 V" />
+
+<item itemtype="Ground" CircId="Ground-323" mainComp="false" Show_id="false" Show_Val="false" Pos="-420,-320" rotation="0" hflip="1" vflip="1" label="Ground-323" idLabPos="-16,8" labelrot="0" valLabPos="0,0" valLabRot="0" />
+
+<item itemtype="Probe" CircId="Probe-325" mainComp="false" Show_id="false" Show_Val="true" Pos="-356,-408" rotation="-45" hflip="1" vflip="1" label="Probe-325" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
+
+<item itemtype="Amperimeter" CircId="Amperimeter-3184" mainComp="false" Show_id="false" Show_Val="false" Pos="-424,-488" rotation="0" hflip="1" vflip="1" label="Amperimeter-3184" idLabPos="-24,-40" labelrot="0" valLabPos="0,0" valLabRot="0" />
+
+<item itemtype="Connector" uid="Connector-3178" startpinid="MCP4011_50-2634-U/!D" endpinid="Fixed Voltage-1306-outnod" pointList="-480,-400,-520,-400" />
+
+<item itemtype="Connector" uid="Connector-3179" startpinid="MCP4011_50-2634-!CS" endpinid="Fixed Voltage-1308-outnod" pointList="-480,-384,-520,-384,-520,-364" />
+
+<item itemtype="Connector" uid="Connector-3181" startpinid="MCP4011_50-2634-RW" endpinid="Probe-325-inpin" pointList="-432,-392,-372,-392" />
+
+<item itemtype="Connector" uid="Connector-3182" startpinid="MCP4011_50-2634-RL" endpinid="Ground-323-Gnd" pointList="-432,-384,-420,-384,-420,-336" />
+
+<item itemtype="Connector" uid="Connector-3185" startpinid="Rail-321-outnod" endpinid="Amperimeter-3184-lPin" pointList="-456,-472,-432,-472" />
+
+<item itemtype="Connector" uid="Connector-3186" startpinid="Amperimeter-3184-rPin" endpinid="MCP4011_50-2634-RH" pointList="-416,-472,-416,-400,-432,-400" />
+
+</circuit>

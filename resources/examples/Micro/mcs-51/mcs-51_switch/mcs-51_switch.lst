@@ -1,0 +1,141 @@
+
+ASEM-51 V1.3                                         Copyright (c) 2002 by W.W. Heinz                                         PAGE 1
+
+
+
+
+
+       MCS-51 Family Macro Assembler   A S E M - 5 1   V 1.3
+       =====================================================
+
+
+
+	Source File:	/media/user/soft/simulide/simulide_lauchpad/1.0.0/resources/examples/Micro/mcs-51/mcs-51_test/mcs-51_switch.asm
+	Object File:	/media/user/soft/simulide/simulide_lauchpad/1.0.0/resources/examples/Micro/mcs-51/mcs-51_test/mcs-51_switch.hex
+	List File:	/media/user/soft/simulide/simulide_lauchpad/1.0.0/resources/examples/Micro/mcs-51/mcs-51_test/mcs-51_switch.lst
+
+
+
+ Line  I  Addr  Code            Source
+
+    1:		N      0000	   org 0 ; Reset vector
+    2:	  0000	80 2E		   sjmp Start
+    3:		N      0030	   org 30H     ; Code starts here
+    4:
+    5:	  0030			Start:
+    6:	  0030	75 B0 FF	   mov P3,#0FFH    ; P3 as input
+    7:	  0033			while:
+    8:	  0033	30 B1 04	   jnb P3.1,off    ; If the switch is on
+    9:	  0036	C2 90		   clr P1.0        ; Clear LED pin ( turn off LED )
+   10:	  0038	80 02		   sjmp on
+   11:	  003A			off:
+   12:	  003A	D2 90		   setb P1.0       ; Set LED pin ( turn on LED )
+   13:	  003C			on:
+   14:	  003C	80 F5		   sjmp while      ; do it again ( Forever loop )
+   15:				end
+
+
+
+
+
+                     register banks used:  ---
+
+                     no errors
+
+
+
+
+ASEM-51 V1.3                                         Copyright (c) 2002 by W.W. Heinz                                         PAGE 2
+
+
+
+
+
+	       L I S T   O F   S Y M B O L S
+	       =============================
+
+
+SYMBOL				  TYPE     VALUE	LINE
+------------------------------------------------------------
+??ASEM_51			  NUMBER    8051
+??VERSION			  NUMBER    0130
+AC				  BIT	      D6
+ACC				  DATA	      E0
+B				  DATA	      F0
+CY				  BIT	      D7
+DPH				  DATA	      83
+DPL				  DATA	      82
+EA				  BIT	      AF
+ES				  BIT	      AC
+ET0				  BIT	      A9
+ET1				  BIT	      AB
+EX0				  BIT	      A8
+EX1				  BIT	      AA
+EXTI0				  CODE	    0003
+EXTI1				  CODE	    0013
+F0				  BIT	      D5
+IE				  DATA	      A8
+IE0				  BIT	      89
+IE1				  BIT	      8B
+INT0				  BIT	      B2
+INT1				  BIT	      B3
+IP				  DATA	      B8
+IT0				  BIT	      88
+IT1				  BIT	      8A
+OFF				  CODE	    003A	  11
+ON				  CODE	    003C	  13
+OV				  BIT	      D2
+P				  BIT	      D0
+P0				  DATA	      80
+P1				  DATA	      90
+P2				  DATA	      A0
+P3				  DATA	      B0
+PCON				  DATA	      87
+PS				  BIT	      BC
+PSW				  DATA	      D0
+PT0				  BIT	      B9
+PT1				  BIT	      BB
+PX0				  BIT	      B8
+PX1				  BIT	      BA
+RB8				  BIT	      9A
+RD				  BIT	      B7
+REN				  BIT	      9C
+RESET				  CODE	    0000
+RI				  BIT	      98
+RS0				  BIT	      D3
+RS1				  BIT	      D4
+RXD				  BIT	      B0
+SBUF				  DATA	      99
+SCON				  DATA	      98
+
+ASEM-51 V1.3                                         Copyright (c) 2002 by W.W. Heinz                                         PAGE 3
+
+
+
+SYMBOL				  TYPE     VALUE	LINE
+------------------------------------------------------------
+SINT				  CODE	    0023
+SM0				  BIT	      9F
+SM1				  BIT	      9E
+SM2				  BIT	      9D
+SP				  DATA	      81
+START				  CODE	    0030	   5
+T0				  BIT	      B4
+T1				  BIT	      B5
+TB8				  BIT	      9B
+TCON				  DATA	      88
+TF0				  BIT	      8D
+TF1				  BIT	      8F
+TH0				  DATA	      8C
+TH1				  DATA	      8D
+TI				  BIT	      99
+TIMER0				  CODE	    000B
+TIMER1				  CODE	    001B
+TL0				  DATA	      8A
+TL1				  DATA	      8B
+TMOD				  DATA	      89
+TR0				  BIT	      8C
+TR1				  BIT	      8E
+TXD				  BIT	      B1
+WHILE				  CODE	    0033	   7
+WR				  BIT	      B6

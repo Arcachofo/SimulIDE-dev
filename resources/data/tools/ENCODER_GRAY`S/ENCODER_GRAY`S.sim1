@@ -1,0 +1,175 @@
+<circuit type="simulide_1.0" rev="1185" stepSize="1000000" stepsPS="1000000" NLsteps="100000" animate="1" >
+
+<item itemtype="KeyPad" CircId="KeyPad-497" mainComp="false" Show_id="false" Show_Val="false" Pos="-820,-508" rotation="0" hflip="1" vflip="1" label="KeyPad-497" idLabPos="-8,-16" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="16,8" circPos="-820,-508" boardRot="0" circRot="0" Rows="3 _Buttons" Cols="1 _Buttons" Key_Labels="URD" />
+
+<item itemtype="Package" CircId="Package-496" mainComp="false" Show_id="true" Show_Val="false" Pos="-944,-460" rotation="0" hflip="1" vflip="1" label="Package-496" idLabPos="0,-20" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="6.57819e-313" SubcType="Board" Width="10 Cells" Height="8 _Cells" Package_File="ENCODER_GRAY`S_LS.package" Logic_Symbol="true" />
+
+<item itemtype="Rail" CircId="Rail-62" mainComp="false" ShowProp="Voltage" Show_id="false" Show_Val="true" Pos="-872,-508" rotation="0" hflip="1" vflip="1" label="Rail-62" idLabPos="-16,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" boardPos="72,-48" circPos="-872,-508" boardRot="0" circRot="0" Voltage="5 V" />
+
+<item itemtype="Tunnel" CircId="Tunnel-98" mainComp="false" Show_id="false" Show_Val="false" Pos="-400,-536" rotation="0" hflip="-1" vflip="1" label="PackagePin3" idLabPos="16,-16" labelrot="0" valLabPos="16,0" valLabRot="45" boardPos="544,-76" circPos="-400,-536" boardRot="0" circRot="0" Name="1" />
+
+<item itemtype="Tunnel" CircId="Tunnel-97" mainComp="false" Show_id="false" Show_Val="false" Pos="-400,-524" rotation="0" hflip="-1" vflip="1" label="PackagePin2" idLabPos="16,-16" labelrot="0" valLabPos="16,0" valLabRot="45" boardPos="544,-64" circPos="-400,-524" boardRot="0" circRot="0" Name="2" />
+
+<item itemtype="Tunnel" CircId="Tunnel-79" mainComp="false" Show_id="false" Show_Val="false" Pos="-400,-508" rotation="0" hflip="-1" vflip="1" label="PackagePin6" idLabPos="16,-16" labelrot="0" valLabPos="16,0" valLabRot="45" boardPos="544,-48" circPos="-400,-508" boardRot="0" circRot="0" Name="4" />
+
+<item itemtype="Tunnel" CircId="Tunnel-64" mainComp="false" Show_id="false" Show_Val="false" Pos="-400,-492" rotation="0" hflip="-1" vflip="1" label="PackagePin7" idLabPos="16,-16" labelrot="0" valLabPos="16,0" valLabRot="45" boardPos="544,-32" circPos="-400,-492" boardRot="0" circRot="0" Name="8" />
+
+<item itemtype="Memory" CircId="Memory-1975" mainComp="false" Show_id="false" Show_Val="false" Pos="-492,-444" rotation="0" hflip="1" vflip="1" label="Memory-1975" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="452,16" circPos="-492,-444" boardRot="0" circRot="0" Address_Bits="5 Bits" Data_Bits="8 Bits" Persistent="true" Inverted="false" Asynch="true" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+09 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" pd_n="1 _Gates" Tpd_ps="10000 ps" Tr_ps="2999 ps" Tf_ps="4000 ps" Mem="16,33,51,66,86,103,117,132,156,173,191,206,218,235,249,8,240,1,19,34,54,71,85,100,124,141,159,174,186,203,217,232," />
+
+<item itemtype="FlipFlopD" CircId="FlipFlopD-1976" mainComp="false" Show_id="false" Show_Val="false" Pos="-648,-484" rotation="0" hflip="1" vflip="1" label="FlipFlopD-1976" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="296,-24" circPos="-648,-484" boardRot="0" circRot="0" UseRS="true" Reset_Inverted="false" Clock_Inverted="false" Trigger="Clock" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+09 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" pd_n="1 _Gates" Tpd_ps="10000 ps" Tr_ps="2999 ps" Tf_ps="4000 ps" />
+
+<item itemtype="FlipFlopD" CircId="FlipFlopD-1977" mainComp="false" Show_id="false" Show_Val="false" Pos="-648,-428" rotation="0" hflip="1" vflip="1" label="FlipFlopD-1976" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="296,32" circPos="-648,-428" boardRot="0" circRot="0" UseRS="true" Reset_Inverted="false" Clock_Inverted="false" Trigger="Clock" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+09 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" pd_n="1 _Gates" Tpd_ps="10000 ps" Tr_ps="2999 ps" Tf_ps="4000 ps" />
+
+<item itemtype="FlipFlopD" CircId="FlipFlopD-1978" mainComp="false" Show_id="false" Show_Val="false" Pos="-648,-320" rotation="0" hflip="1" vflip="1" label="FlipFlopD-1976" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="296,140" circPos="-648,-320" boardRot="0" circRot="0" UseRS="true" Reset_Inverted="false" Clock_Inverted="false" Trigger="Clock" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+09 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" pd_n="1 _Gates" Tpd_ps="10000 ps" Tr_ps="2999 ps" Tf_ps="4000 ps" />
+
+<item itemtype="FlipFlopD" CircId="FlipFlopD-1979" mainComp="false" Show_id="false" Show_Val="false" Pos="-648,-372" rotation="0" hflip="1" vflip="1" label="FlipFlopD-1976" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="296,88" circPos="-648,-372" boardRot="0" circRot="0" UseRS="true" Reset_Inverted="false" Clock_Inverted="false" Trigger="Clock" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+09 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" pd_n="1 _Gates" Tpd_ps="10000 ps" Tr_ps="2999 ps" Tf_ps="4000 ps" />
+
+<item itemtype="LedBar" CircId="LedBar-2007" mainComp="false" Show_id="false" Show_Val="false" Pos="-392,-452" rotation="0" hflip="1" vflip="1" label="LedBar-2007" idLabPos="-16,-44" labelrot="0" valLabPos="-16,-56" valLabRot="0" boardPos="68,32" circPos="-392,-452" boardRot="0" circRot="0" Size="4 Leds" Color="Yellow" Grounded="true" Threshold="2.4 V" MaxCurrent="0.03 A" Resistance="100 Ω" />
+
+<item itemtype="Rail" CircId="Rail-2027" mainComp="false" ShowProp="Voltage" Show_id="false" Show_Val="true" Pos="-572,-436" rotation="0" hflip="1" vflip="1" label="Rail-2027" idLabPos="-16,-24" labelrot="0" valLabPos="-5,9" valLabRot="0" boardPos="372,24" circPos="-572,-436" boardRot="0" circRot="0" Voltage="5 V" />
+
+<item itemtype="FlipFlopRS" CircId="FlipFlopRS-2039" mainComp="false" Show_id="false" Show_Val="false" Pos="-760,-392" rotation="0" hflip="1" vflip="1" label="FlipFlopRS-2039" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="184,68" circPos="-760,-392" boardRot="0" circRot="0" Reset_Inverted="false" Clock_Inverted="false" Trigger="None" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+09 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" pd_n="1 _Gates" Tpd_ps="10000 ps" Tr_ps="2999 ps" Tf_ps="4000 ps" />
+
+<item itemtype="Or Gate" CircId="Or Gate-2041" mainComp="false" Show_id="false" Show_Val="false" Pos="-748,-348" rotation="0" hflip="1" vflip="1" label="Or Gate-2041" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="196,112" circPos="-748,-348" boardRot="0" circRot="0" Num_Inputs="2 _Inputs" Inverted="false" Open_Collector="false" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+09 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" rndPD="false" Tpd_ps="10000 ps" Tr_ps="2999 ps" Tf_ps="4000 ps" />
+
+<item itemtype="Buffer" CircId="Buffer-2058" mainComp="false" Show_id="false" Show_Val="false" Pos="-712,-348" rotation="0" hflip="1" vflip="1" label="Buffer-2058" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="232,112" circPos="-712,-348" boardRot="0" circRot="0" Tristate="false" Inverted="false" Open_Collector="false" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+09 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" rndPD="false" Tpd_ps="10 µs" Tr_ps="2999 ps" Tf_ps="4000 ps" />
+
+<item itemtype="7-Seg BCD" CircId="7-Seg BCD-2093" mainComp="false" Show_id="false" Show_Val="false" Pos="-544,-580" rotation="0" hflip="1" vflip="1" label="7-Seg BCD-2093" idLabPos="-16,-40" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="48,28" circPos="-544,-580" boardRot="0" circRot="0" />
+
+<item itemtype="Node" CircId="Node-1989" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="-672,-420" />
+
+<item itemtype="Node" CircId="Node-1992" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="-672,-364" />
+
+<item itemtype="Node" CircId="Node-2030" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="-612,-404" />
+
+<item itemtype="Node" CircId="Node-2033" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="-612,-348" />
+
+<item itemtype="Node" CircId="Node-2037" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="-640,-448" />
+
+<item itemtype="Node" CircId="Node-2047" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="-672,-348" />
+
+<item itemtype="Node" CircId="Node-2050" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="-784,-400" />
+
+<item itemtype="Node" CircId="Node-2053" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="-776,-384" />
+
+<item itemtype="Node" CircId="Node-2078" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="-416,-476" />
+
+<item itemtype="Node" CircId="Node-2081" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="-424,-468" />
+
+<item itemtype="Node" CircId="Node-2084" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="-432,-460" />
+
+<item itemtype="Node" CircId="Node-2087" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="-440,-452" />
+
+<item itemtype="Node" CircId="Node-2095" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="-532,-484" />
+
+<item itemtype="Node" CircId="Node-2098" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="-540,-468" />
+
+<item itemtype="Node" CircId="Node-2101" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="-548,-460" />
+
+<item itemtype="Node" CircId="Node-2104" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="-556,-452" />
+
+<item itemtype="Connector" uid="connector-2105" startpinid="KeyPad-497-Pin3" endpinid="Rail-62-outnod" pointList="-820,-452,-820,-448,-844,-448,-844,-508,-856,-508" />
+
+<item itemtype="Connector" uid="connector-2106" startpinid="FlipFlopD-1976-in3" endpinid="Node-1989-0" pointList="-664,-476,-672,-476,-672,-420" />
+
+<item itemtype="Connector" uid="connector-2107" startpinid="Node-1989-2" endpinid="FlipFlopD-1977-in3" pointList="-672,-420,-664,-420" />
+
+<item itemtype="Connector" uid="connector-2108" startpinid="Node-1989-1" endpinid="Node-1992-0" pointList="-672,-420,-672,-364" />
+
+<item itemtype="Connector" uid="connector-2109" startpinid="Node-1992-2" endpinid="FlipFlopD-1979-in3" pointList="-672,-364,-664,-364" />
+
+<item itemtype="Connector" uid="connector-2110" startpinid="Node-1992-1" endpinid="Node-2047-0" pointList="-672,-364,-672,-348" />
+
+<item itemtype="Connector" uid="connector-2111" startpinid="Rail-2027-outnod" endpinid="Memory-1975-Pin_We" pointList="-556,-436,-516,-436,-516,-420" />
+
+<item itemtype="Connector" uid="connector-2112" startpinid="FlipFlopD-1976-in2" endpinid="Node-2037-0" pointList="-640,-460,-640,-448" />
+
+<item itemtype="Connector" uid="connector-2113" startpinid="Node-2030-2" endpinid="FlipFlopD-1977-in2" pointList="-612,-404,-640,-404" />
+
+<item itemtype="Connector" uid="connector-2114" startpinid="Node-2030-1" endpinid="Node-2033-0" pointList="-612,-404,-612,-348" />
+
+<item itemtype="Connector" uid="connector-2115" startpinid="Node-2033-2" endpinid="FlipFlopD-1979-in2" pointList="-612,-348,-640,-348" />
+
+<item itemtype="Connector" uid="connector-2116" startpinid="Node-2033-1" endpinid="FlipFlopD-1978-in2" pointList="-612,-348,-612,-292,-640,-292,-640,-296" />
+
+<item itemtype="Connector" uid="connector-2117" startpinid="KeyPad-497-Pin1" endpinid="Node-2037-1" pointList="-804,-484,-720,-484,-720,-448,-640,-448" />
+
+<item itemtype="Connector" uid="connector-2118" startpinid="Node-2037-2" endpinid="Node-2030-0" pointList="-640,-448,-612,-448,-612,-404" />
+
+<item itemtype="Connector" uid="connector-2119" startpinid="Or Gate-2041-in0" endpinid="Node-2053-0" pointList="-764,-352,-776,-352,-776,-384" />
+
+<item itemtype="Connector" uid="connector-2120" startpinid="Or Gate-2041-in1" endpinid="Node-2050-0" pointList="-764,-344,-784,-344,-784,-400" />
+
+<item itemtype="Connector" uid="connector-2121" startpinid="Node-2047-2" endpinid="FlipFlopD-1978-in3" pointList="-672,-348,-672,-312,-664,-312" />
+
+<item itemtype="Connector" uid="connector-2122" startpinid="KeyPad-497-Pin0" endpinid="Node-2050-1" pointList="-804,-500,-784,-500,-784,-400" />
+
+<item itemtype="Connector" uid="connector-2123" startpinid="Node-2050-2" endpinid="FlipFlopRS-2039-in0" pointList="-784,-400,-776,-400" />
+
+<item itemtype="Connector" uid="connector-2124" startpinid="KeyPad-497-Pin2" endpinid="Node-2053-1" pointList="-804,-468,-804,-384,-776,-384" />
+
+<item itemtype="Connector" uid="connector-2125" startpinid="Node-2053-2" endpinid="FlipFlopRS-2039-in1" pointList="-776,-384,-776,-384" />
+
+<item itemtype="Connector" uid="connector-2126" startpinid="FlipFlopRS-2039-out1" endpinid="Memory-1975-in4" pointList="-736,-384,-716,-384,-716,-400,-600,-400,-600,-444,-516,-444" />
+
+<item itemtype="Connector" uid="connector-2127" startpinid="Or Gate-2041-out" endpinid="Buffer-2058-in0" pointList="-732,-348,-728,-348" />
+
+<item itemtype="Connector" uid="connector-2128" startpinid="Buffer-2058-out" endpinid="Node-2047-1" pointList="-696,-348,-672,-348" />
+
+<item itemtype="Connector" uid="connector-2129" startpinid="FlipFlopD-1978-out0" endpinid="Node-2104-0" pointList="-624,-320,-584,-320,-584,-452,-556,-452" />
+
+<item itemtype="Connector" uid="connector-2130" startpinid="FlipFlopD-1979-out0" endpinid="Node-2101-0" pointList="-624,-372,-592,-372,-592,-460,-548,-460" />
+
+<item itemtype="Connector" uid="connector-2131" startpinid="FlipFlopD-1977-out0" endpinid="Node-2098-0" pointList="-624,-428,-604,-428,-604,-468,-540,-468" />
+
+<item itemtype="Connector" uid="connector-2132" startpinid="FlipFlopD-1976-out0" endpinid="Node-2095-0" pointList="-624,-484,-532,-484" />
+
+<item itemtype="Connector" uid="connector-2133" startpinid="LedBar-2007-led1-pinP" endpinid="Node-2081-0" pointList="-408,-468,-424,-468" />
+
+<item itemtype="Connector" uid="connector-2134" startpinid="Tunnel-98-pin" endpinid="Node-2078-0" pointList="-400,-536,-416,-536,-416,-476" />
+
+<item itemtype="Connector" uid="connector-2135" startpinid="Tunnel-64-pin" endpinid="Node-2087-0" pointList="-400,-492,-440,-492,-440,-452" />
+
+<item itemtype="Connector" uid="connector-2136" startpinid="LedBar-2007-led2-pinP" endpinid="Node-2084-0" pointList="-408,-460,-432,-460" />
+
+<item itemtype="Connector" uid="connector-2137" startpinid="Memory-1975-out0" endpinid="Node-2078-1" pointList="-468,-476,-416,-476" />
+
+<item itemtype="Connector" uid="connector-2138" startpinid="Node-2078-2" endpinid="LedBar-2007-led0-pinP" pointList="-416,-476,-408,-476" />
+
+<item itemtype="Connector" uid="connector-2139" startpinid="Memory-1975-out1" endpinid="Node-2081-1" pointList="-468,-468,-424,-468" />
+
+<item itemtype="Connector" uid="connector-2140" startpinid="Node-2081-2" endpinid="Tunnel-97-pin" pointList="-424,-468,-424,-524,-400,-524" />
+
+<item itemtype="Connector" uid="connector-2141" startpinid="Memory-1975-out2" endpinid="Node-2084-1" pointList="-468,-460,-432,-460" />
+
+<item itemtype="Connector" uid="connector-2142" startpinid="Node-2084-2" endpinid="Tunnel-79-pin" pointList="-432,-460,-432,-508,-400,-508" />
+
+<item itemtype="Connector" uid="connector-2143" startpinid="Memory-1975-out3" endpinid="Node-2087-1" pointList="-468,-452,-440,-452" />
+
+<item itemtype="Connector" uid="connector-2144" startpinid="Node-2087-2" endpinid="LedBar-2007-led3-pinP" pointList="-440,-452,-408,-452" />
+
+<item itemtype="Connector" uid="connector-2145" startpinid="Memory-1975-out4" endpinid="FlipFlopD-1976-in0" pointList="-468,-444,-460,-444,-460,-520,-676,-520,-676,-484,-664,-484" />
+
+<item itemtype="Connector" uid="connector-2146" startpinid="Memory-1975-out5" endpinid="FlipFlopD-1977-in0" pointList="-468,-436,-456,-436,-456,-524,-680,-524,-680,-428,-664,-428" />
+
+<item itemtype="Connector" uid="connector-2147" startpinid="Memory-1975-out6" endpinid="FlipFlopD-1979-in0" pointList="-468,-428,-452,-428,-452,-528,-684,-528,-684,-372,-664,-372" />
+
+<item itemtype="Connector" uid="connector-2148" startpinid="Memory-1975-out7" endpinid="FlipFlopD-1978-in0" pointList="-468,-420,-448,-420,-448,-532,-688,-532,-688,-320,-664,-320" />
+
+<item itemtype="Connector" uid="connector-2149" startpinid="7-Seg BCD-2093-in0" endpinid="Node-2095-1" pointList="-532,-548,-532,-484" />
+
+<item itemtype="Connector" uid="connector-2150" startpinid="Node-2095-2" endpinid="Memory-1975-in0" pointList="-532,-484,-516,-484,-516,-476" />
+
+<item itemtype="Connector" uid="connector-2151" startpinid="7-Seg BCD-2093-in1" endpinid="Node-2098-1" pointList="-540,-548,-540,-468" />
+
+<item itemtype="Connector" uid="connector-2152" startpinid="Node-2098-2" endpinid="Memory-1975-in1" pointList="-540,-468,-516,-468" />
+
+<item itemtype="Connector" uid="connector-2153" startpinid="7-Seg BCD-2093-in2" endpinid="Node-2101-1" pointList="-548,-548,-548,-460" />
+
+<item itemtype="Connector" uid="connector-2154" startpinid="Node-2101-2" endpinid="Memory-1975-in2" pointList="-548,-460,-516,-460" />
+
+<item itemtype="Connector" uid="connector-2155" startpinid="7-Seg BCD-2093-in3" endpinid="Node-2104-1" pointList="-556,-548,-556,-452" />
+
+<item itemtype="Connector" uid="connector-2156" startpinid="Node-2104-2" endpinid="Memory-1975-in3" pointList="-556,-452,-516,-452" />
+
+</circuit>

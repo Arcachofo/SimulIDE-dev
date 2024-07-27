@@ -1,0 +1,47 @@
+[p GLOBOPT AUTOSTATIC IEEE_DBL IEEE_FLT PIC14 PICREGULAR PICMID ]
+[d version 1.1 ]
+[d edition pro ]
+[d chip 12F675 ]
+[d frameptr 0 ]
+"8 /media/user/software/simulide/tests/MCU/pic/0_Test/12F675/12F675_T0-XC8/12F675_T0-XC8.c
+[v _myisr myisr `II(v  1 e 1 0 ]
+"16
+[v _main main `(v  1 e 1 0 ]
+"10 /opt/microchip/xc8/v2.32/pic/sources/c90/common/sprcadd.c
+[v ___fladd __fladd `(d  1 e 4 0 ]
+"4 /opt/microchip/xc8/v2.32/pic/sources/c90/common/Umul8_16.c
+[v __Umul8_16 _Umul8_16 `(ui  1 e 2 0 ]
+"6 /opt/microchip/xc8/v2.32/pic/sources/c90/pic/__eeprom.c
+[v ___eecpymem __eecpymem `(v  1 e 1 0 ]
+"39
+[v ___memcpyee __memcpyee `(v  1 e 1 0 ]
+"219 /opt/microchip/mplabx/v5.50/packs/Microchip/PIC10-12Fxxx_DFP/1.4.56/xc8/pic/include/proc/pic12f675.h
+[v _GPIO GPIO `VEuc  1 e 1 @5 ]
+"565
+[v _CMCON CMCON `VEuc  1 e 1 @25 ]
+"728
+[v _OPTION_REG OPTION_REG `VEuc  1 e 1 @129 ]
+"798
+[v _TRISIO TRISIO `VEuc  1 e 1 @133 ]
+"990
+[v _WPU WPU `VEuc  1 e 1 @149 ]
+"1574
+[v _GIE GIE `VEb  1 e 0 @95 ]
+"1676
+[v _PEIE PEIE `VEb  1 e 0 @94 ]
+"1700
+[v _T0CS T0CS `VEb  1 e 0 @1037 ]
+"1703
+[v _T0IE T0IE `VEb  1 e 0 @93 ]
+"1706
+[v _T0IF T0IF `VEb  1 e 0 @90 ]
+"16 /media/user/software/simulide/tests/MCU/pic/0_Test/12F675/12F675_T0-XC8/12F675_T0-XC8.c
+[v _main main `(v  1 e 1 0 ]
+{
+"38
+} 0
+"8
+[v _myisr myisr `II(v  1 e 1 0 ]
+{
+"14
+} 0

@@ -1,0 +1,89 @@
+<circuit version="1.0.0" rev="1208" stepSize="1000000" stepsPS="1000000" NLsteps="100000" reaStep="1000000" animate="0" >
+
+<item itemtype="Subcircuit" CircId="74LS11-1" mainComp="false" Show_id="true" Show_Val="false" Pos="716,556" rotation="0" hflip="1" vflip="1" label="74LS11-1" idLabPos="0,-20" labelrot="0" valLabPos="-16,20" valLabRot="0" Logic_Symbol="true" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-2" mainComp="false" Show_id="false" Show_Val="false" Pos="584,552" rotation="0" hflip="1" vflip="1" label="Fixed Voltage-2" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="true" Voltage="5 V" />
+
+<item itemtype="SwitchDip" CircId="SwitchDip-4" mainComp="false" Show_id="false" Show_Val="false" Pos="684,588" rotation="0" hflip="1" vflip="1" label="SwitchDip-4" idLabPos="-16,-44" labelrot="0" valLabPos="16,-37" valLabRot="0" Size="3 Switches" State="511" />
+
+<item itemtype="SwitchDip" CircId="SwitchDip-10" mainComp="false" Show_id="false" Show_Val="false" Pos="684,620" rotation="0" hflip="1" vflip="1" label="SwitchDip-10" idLabPos="-16,-44" labelrot="0" valLabPos="17,-36" valLabRot="0" Size="3 Switches" State="511" />
+
+<item itemtype="SwitchDip" CircId="SwitchDip-14" mainComp="false" Show_id="false" Show_Val="false" Pos="684,652" rotation="0" hflip="1" vflip="1" label="SwitchDip-14" idLabPos="-16,-44" labelrot="0" valLabPos="17,-6" valLabRot="0" Size="3 Switches" State="511" />
+
+<item itemtype="LedBar" CircId="LedBar-24" mainComp="false" Show_id="false" Show_Val="false" Pos="780,620" rotation="0" hflip="1" vflip="1" label="LedBar-24" idLabPos="-16,-44" labelrot="0" valLabPos="-16,-56" valLabRot="0" Size="3 Leds" Color="Yellow" Grounded="true" Threshold="2.4 V" MaxCurrent="0.03 A" Resistance="100 Ω" />
+
+<item itemtype="Node" CircId="Node-46" mainComp="false" Pos="652,628" />
+
+<item itemtype="Node" CircId="Node-49" mainComp="false" Pos="652,636" />
+
+<item itemtype="Node" CircId="Node-52" mainComp="false" Pos="652,596" />
+
+<item itemtype="Node" CircId="Node-55" mainComp="false" Pos="652,604" />
+
+<item itemtype="Node" CircId="Node-58" mainComp="false" Pos="652,612" />
+
+<item itemtype="Node" CircId="Node-61" mainComp="false" Pos="652,564" />
+
+<item itemtype="Node" CircId="Node-64" mainComp="false" Pos="652,572" />
+
+<item itemtype="Node" CircId="Node-67" mainComp="false" Pos="652,580" />
+
+<item itemtype="Connector" uid="connector-32" startpinid="SwitchDip-4-switch0-pinN" endpinid="74LS11-1-A1" pointList="700,564,708,564" />
+
+<item itemtype="Connector" uid="connector-33" startpinid="SwitchDip-4-switch1-pinN" endpinid="74LS11-1-B1" pointList="700,572,708,572" />
+
+<item itemtype="Connector" uid="connector-34" startpinid="SwitchDip-4-switch2-pinN" endpinid="74LS11-1-C1" pointList="700,580,708,580" />
+
+<item itemtype="Connector" uid="connector-35" startpinid="SwitchDip-10-switch0-pinN" endpinid="74LS11-1-A2" pointList="700,596,708,596" />
+
+<item itemtype="Connector" uid="connector-36" startpinid="SwitchDip-10-switch1-pinN" endpinid="74LS11-1-B2" pointList="700,604,708,604" />
+
+<item itemtype="Connector" uid="connector-37" startpinid="SwitchDip-10-switch2-pinN" endpinid="74LS11-1-C2" pointList="700,612,708,612" />
+
+<item itemtype="Connector" uid="connector-38" startpinid="SwitchDip-14-switch0-pinN" endpinid="74LS11-1-A3" pointList="700,628,708,628" />
+
+<item itemtype="Connector" uid="connector-39" startpinid="SwitchDip-14-switch1-pinN" endpinid="74LS11-1-B3" pointList="700,636,708,636" />
+
+<item itemtype="Connector" uid="connector-40" startpinid="SwitchDip-14-switch2-pinN" endpinid="74LS11-1-C3" pointList="700,644,708,644" />
+
+<item itemtype="Connector" uid="connector-41" startpinid="LedBar-24-led0-pinP" endpinid="74LS11-1-Y1" pointList="764,596,764,572,756,572" />
+
+<item itemtype="Connector" uid="connector-42" startpinid="LedBar-24-led1-pinP" endpinid="74LS11-1-Y2" pointList="764,604,756,604" />
+
+<item itemtype="Connector" uid="connector-43" startpinid="LedBar-24-led2-pinP" endpinid="74LS11-1-Y3" pointList="764,612,764,636,756,636" />
+
+<item itemtype="Connector" uid="Connector-44" startpinid="Fixed Voltage-2-outnod" endpinid="Node-61-0" pointList="600,552,652,552,652,564" />
+
+<item itemtype="Connector" uid="Connector-45" startpinid="SwitchDip-14-switch0-pinP" endpinid="Node-46-1" pointList="676,628,652,628" />
+
+<item itemtype="Connector" uid="Connector-47" startpinid="Node-46-2" endpinid="Node-49-0" pointList="652,628,652,636" />
+
+<item itemtype="Connector" uid="Connector-48" startpinid="SwitchDip-14-switch1-pinP" endpinid="Node-49-1" pointList="676,636,652,636" />
+
+<item itemtype="Connector" uid="Connector-50" startpinid="Node-49-2" endpinid="SwitchDip-14-switch2-pinP" pointList="652,636,652,644,676,644" />
+
+<item itemtype="Connector" uid="Connector-51" startpinid="SwitchDip-10-switch0-pinP" endpinid="Node-52-1" pointList="676,596,652,596" />
+
+<item itemtype="Connector" uid="Connector-53" startpinid="Node-52-2" endpinid="Node-55-0" pointList="652,596,652,604" />
+
+<item itemtype="Connector" uid="Connector-54" startpinid="SwitchDip-10-switch1-pinP" endpinid="Node-55-1" pointList="676,604,652,604" />
+
+<item itemtype="Connector" uid="Connector-56" startpinid="Node-55-2" endpinid="Node-58-0" pointList="652,604,652,612" />
+
+<item itemtype="Connector" uid="Connector-57" startpinid="SwitchDip-10-switch2-pinP" endpinid="Node-58-1" pointList="676,612,652,612" />
+
+<item itemtype="Connector" uid="Connector-59" startpinid="Node-58-2" endpinid="Node-46-0" pointList="652,612,652,628" />
+
+<item itemtype="Connector" uid="Connector-60" startpinid="SwitchDip-4-switch0-pinP" endpinid="Node-61-1" pointList="676,564,652,564" />
+
+<item itemtype="Connector" uid="Connector-62" startpinid="Node-61-2" endpinid="Node-64-0" pointList="652,564,652,572" />
+
+<item itemtype="Connector" uid="Connector-63" startpinid="SwitchDip-4-switch1-pinP" endpinid="Node-64-1" pointList="676,572,652,572" />
+
+<item itemtype="Connector" uid="Connector-65" startpinid="Node-64-2" endpinid="Node-67-0" pointList="652,572,652,580" />
+
+<item itemtype="Connector" uid="Connector-66" startpinid="SwitchDip-4-switch2-pinP" endpinid="Node-67-1" pointList="676,580,652,580" />
+
+<item itemtype="Connector" uid="Connector-68" startpinid="Node-67-2" endpinid="Node-52-0" pointList="652,580,652,596" />
+
+</circuit>

@@ -1,0 +1,35 @@
+<circuit version="" rev="2208" stepSize="1000000" stepsPS="1000000" NLsteps="100000" reaStep="1000000" animate="1" >
+
+<item itemtype="Amperimeter" CircId="Amperimeter-9" mainComp="false" Show_id="false" Show_Val="false" Pos="-332,-244" rotation="0" hflip="1" vflip="1" label="Amperimeter-24" idLabPos="-12,-24" labelrot="0" valLabPos="-20,-22" valLabRot="0" />
+
+<item itemtype="Ground" CircId="Ground (0 V)-8" mainComp="false" Show_id="false" Show_Val="false" Pos="-212,-156" rotation="0" hflip="1" vflip="1" label="Ground (0 V)-22" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" />
+
+<item itemtype="Resistor" CircId="Resistor-7" mainComp="false" ShowProp="Resistance" Show_id="false" Show_Val="true" Pos="-212,-196" rotation="90" hflip="1" vflip="1" label="Resistor-20" idLabPos="-12,-24" labelrot="0" valLabPos="-11.0334,-15.5219" valLabRot="0" Resistance="100 Ω" />
+
+<item itemtype="Rail" CircId="Rail.-6" mainComp="false" ShowProp="Voltage" Show_id="false" Show_Val="true" Pos="-268,-252" rotation="90" hflip="1" vflip="1" label="Rail.-18" idLabPos="-64,-24" labelrot="0" valLabPos="-13.9306,6.75835" valLabRot="-90" Voltage="5 V" />
+
+<item itemtype="BJT" CircId="BJT-5" mainComp="false" Show_id="false" Show_Val="false" Pos="-276,-196" rotation="0" hflip="1" vflip="-1" label="BJT-6" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" PNP="true" Gain="100" Vcrit="0.670736 V" />
+
+<item itemtype="Amperimeter" CircId="Amperimeter-4" mainComp="false" Show_id="false" Show_Val="false" Pos="-220,-244" rotation="0" hflip="1" vflip="1" label="Amperimeter-4" idLabPos="-12,-24" labelrot="0" valLabPos="-20,-22" valLabRot="0" />
+
+<item itemtype="Voltage Source" CircId="Volt. Source-3" mainComp="false" ShowProp="MaxValue" Show_id="false" Show_Val="true" Pos="-424,-212" rotation="0" hflip="1" vflip="1" label="Volt. Source-3" idLabPos="-16,-24" labelrot="0" valLabPos="-8,-42" valLabRot="0" Running="true" Value_Volt="0 V" MaxValue="5 V" MinValue="0 V" />
+
+<item itemtype="Resistor" CircId="Resistor-2" mainComp="false" ShowProp="Resistance" Show_id="false" Show_Val="true" Pos="-364,-196" rotation="0" hflip="1" vflip="1" label="Resistor-2" idLabPos="-12,-24" labelrot="0" valLabPos="-9.63945,-14.7619" valLabRot="0" Resistance="1 kΩ" />
+
+<item itemtype="Probe" CircId="Probe-1" mainComp="false" Show_id="false" Show_Val="true" Pos="-320,-180" rotation="-225" hflip="1" vflip="1" label="Probe-1" idLabPos="16,-16" labelrot="225" valLabPos="10.0547,-1.8417" valLabRot="225" ShowVolt="true" Threshold="2.5 V" />
+
+<item itemtype="Connector" uid="Connector-10" startpinid="BJT-5-collector" endpinid="Amperimeter-4-lPin" pointList="-268,-180,-268,-164,-228,-164,-228,-228" />
+
+<item itemtype="Connector" uid="Connector-12" startpinid="Volt. Source-3-outPin" endpinid="Resistor-2-lPin" pointList="-396,-196,-380,-196" />
+
+<item itemtype="Connector" uid="Connector-14" startpinid="Rail.-6-outnod" endpinid="BJT-5-emiter" pointList="-268,-236,-268,-212" />
+
+<item itemtype="Connector" uid="Connector-16" startpinid="Amperimeter-4-rPin" endpinid="Resistor-7-lPin" pointList="-212,-228,-212,-212" />
+
+<item itemtype="Connector" uid="Connector-18" startpinid="Ground (0 V)-8-Gnd" endpinid="Resistor-7-rPin" pointList="-212,-172,-212,-180" />
+
+<item itemtype="Connector" uid="Connector-20" startpinid="Resistor-2-rPin" endpinid="Amperimeter-9-lPin" pointList="-348,-196,-340,-196,-340,-228" />
+
+<item itemtype="Connector" uid="Connector-22" startpinid="Amperimeter-9-rPin" endpinid="BJT-5-base" pointList="-324,-228,-324,-196,-292,-196" />
+
+</circuit>

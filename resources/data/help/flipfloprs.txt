@@ -1,0 +1,6 @@
+Flipflop "RS" type.
+
+Property: (default value)
+
+Main:
+#include flipflop

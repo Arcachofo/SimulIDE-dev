@@ -1,0 +1,12 @@
+<!DOCTYPE SimulIDE>
+
+<compiler name="sdas8051(SDCC)" type="sdcc" >
+  <step
+    command="sdas8051"
+    arguments=" -l -o -s $filePath"
+  />
+  <step
+    command="sdcc"
+    arguments=" -o $buildPath$fileName.ihx  $buildPath$fileName.rel"
+  />
++</compiler>

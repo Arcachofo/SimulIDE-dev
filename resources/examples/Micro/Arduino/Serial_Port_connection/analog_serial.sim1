@@ -1,0 +1,39 @@
+<circuit version="" rev="2224" stepSize="1000000" stepsPS="1000000" NLsteps="100000" reaStep="1000000" animate="0" >
+
+<item itemtype="Potentiometer" CircId="Potentiometer-6" mainComp="false" ShowProp="Resistance" Show_id="false" Show_Val="true" Pos="-196,-364" rotation="0" hflip="1" vflip="1" label="Potentiometer-6" idLabPos="-16,-24" labelrot="0" valLabPos="13.4403,-19.1033" valLabRot="0" Resistance="5 kΩ" Value_Ohm="0 Ω" Slider="false" Scale="1" />
+
+<item itemtype="Capacitor" CircId="Capacitor-5" mainComp="false" ShowProp="Capacitance" Show_id="false" Show_Val="true" Pos="-180,-292" rotation="-270" hflip="1" vflip="1" label="Capacitor-5" idLabPos="-16,-24" labelrot="0" valLabPos="-18,-19" valLabRot="0" Capacitance="10 µF" Resistance="1e-06 Ω" InitVolt="0 V" ReaStep="0 ns" />
+
+<item itemtype="Subcircuit" CircId="Uno-4" mainComp="false" Show_id="true" Show_Val="false" Pos="-376,-284" rotation="0" hflip="1" vflip="1" label="Arduino Uno - Sender" idLabPos="7.77254,-15.9206" labelrot="0" valLabPos="0,0" valLabRot="0" Logic_Symbol="false">
+<mainCompProps MainCompId="mega328-109" Frequency="16 MHz" Program="analog_serial.ino.hex" Auto_Load="false" saveEepr="true" SerialMon="-1" />
+</item>
+
+<item itemtype="Voltage Source" CircId="Volt. Source-3" mainComp="false" ShowProp="MaxValue" Show_id="false" Show_Val="true" Pos="-128,-340" rotation="0" hflip="1" vflip="1" label="Volt. Source-3" idLabPos="-16,-24" labelrot="0" valLabPos="-4.92255,-42.1081" valLabRot="0" Running="false" Value_Volt="0 V" MaxValue="5 V" MinValue="0 V" />
+
+<item itemtype="Voltage Source" CircId="Volt. Source-2" mainComp="false" ShowProp="MaxValue" Show_id="false" Show_Val="true" Pos="-72,-340" rotation="0" hflip="1" vflip="1" label="Volt. Source-2" idLabPos="-16,-24" labelrot="0" valLabPos="-7.26449,-40.9372" valLabRot="0" Running="false" Value_Volt="0 V" MaxValue="5 V" MinValue="0 V" />
+
+<item itemtype="Clock" CircId="Clock-1" mainComp="false" Show_id="false" Show_Val="true" Pos="-236,-364" rotation="0" hflip="1" vflip="1" label="Clock-1" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Running="false" Voltage="5 V" Freq="1 Hz" Always_On="false" />
+
+<item itemtype="SerialPort" CircId="SerialPort-22" mainComp="false" Show_id="false" Show_Val="false" Pos="-340,-316" rotation="0" hflip="1" vflip="1" label="SerialPort-22" idLabPos="-20,-32" labelrot="0" valLabPos="-16,20" valLabRot="0" Auto="false" Baudrate="9600 _Bauds" DataBits="8 _Bits" StopBits="1 _Bits" SerialMon="false" />
+
+<item itemtype="Node" CircId="Node-7" mainComp="false" Pos="-196,-324" />
+
+<item itemtype="Connector" uid="Connector-8" startpinid="Capacitor-5-rPin" endpinid="Uno-4-GND0" pointList="-180,-276,-180,-204,-224,-204" />
+
+<item itemtype="Connector" uid="Connector-10" startpinid="Uno-4-A2" endpinid="Node-7-0" pointList="-224,-244,-196,-244,-196,-324" />
+
+<item itemtype="Connector" uid="Connector-12" startpinid="Clock-1-outnod" endpinid="Potentiometer-6-PinA" pointList="-220,-364,-212,-364" />
+
+<item itemtype="Connector" uid="Connector-14" startpinid="Potentiometer-6-PinM" endpinid="Node-7-1" pointList="-196,-348,-196,-324" />
+
+<item itemtype="Connector" uid="Connector-15" startpinid="Node-7-2" endpinid="Capacitor-5-lPin" pointList="-196,-324,-180,-324,-180,-308" />
+
+<item itemtype="Connector" uid="Connector-16" startpinid="Volt. Source-2-outPin" endpinid="Uno-4-A0" pointList="-44,-324,-44,-228,-224,-228" />
+
+<item itemtype="Connector" uid="Connector-18" startpinid="Uno-4-A1" endpinid="Volt. Source-3-outPin" pointList="-224,-236,-100,-236,-100,-324" />
+
+<item itemtype="Connector" uid="Connector-21" startpinid="SerialPort-22-pin1" endpinid="Uno-4-1" pointList="-380,-308,-396,-308,-396,-260,-368,-260" />
+
+<item itemtype="Connector" uid="Connector-22" startpinid="SerialPort-22-pin0" endpinid="Uno-4-0" pointList="-380,-324,-388,-324,-388,-268,-368,-268" />
+
+</circuit>

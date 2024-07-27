@@ -1,0 +1,753 @@
+
+
+Microchip MPLAB XC8 Assembler V2.32 build 20210201212658 
+                                                                                               Sat Dec 25 04:59:03 2021
+
+Microchip MPLAB XC8 C Compiler v2.32 (Free license) build 20210201212658 Og1 
+     1                           	processor	16F887
+     2                           	pagewidth 120
+     3                           	opt	flic
+     4                           	psect	cinit,global,class=CODE,merge=1,delta=2
+     5                           	psect	bssCOMMON,global,class=COMMON,space=1,delta=1,noexec
+     6                           	psect	cstackCOMMON,global,class=COMMON,space=1,delta=1,noexec
+     7                           	psect	maintext,global,class=CODE,split=1,delta=2
+     8                           	psect	text1,local,class=CODE,merge=1,delta=2
+     9                           	psect	intentry,global,class=CODE,delta=2
+    10                           	psect	config,global,abs,ovrld,class=CONFIG,space=4,delta=2,noexec
+    11                           	dabs	1,0x7E,2
+    12  0000                     
+    13                           ; Version 2.20
+    14                           ; Generated 12/02/2020 GMT
+    15                           ; 
+    16                           ; Copyright © 2020, Microchip Technology Inc. and its subsidiaries ("Microchip")
+    17                           ; All rights reserved.
+    18                           ; 
+    19                           ; This software is developed by Microchip Technology Inc. and its subsidiaries ("Microch
+      +                          ip").
+    20                           ; 
+    21                           ; Redistribution and use in source and binary forms, with or without modification, are
+    22                           ; permitted provided that the following conditions are met:
+    23                           ; 
+    24                           ;     1. Redistributions of source code must retain the above copyright notice, this lis
+      +                          t of
+    25                           ;        conditions and the following disclaimer.
+    26                           ; 
+    27                           ;     2. Redistributions in binary form must reproduce the above copyright notice, this 
+      +                          list
+    28                           ;        of conditions and the following disclaimer in the documentation and/or other
+    29                           ;        materials provided with the distribution.
+    30                           ; 
+    31                           ;     3. Microchip's name may not be used to endorse or promote products derived from th
+      +                          is
+    32                           ;        software without specific prior written permission.
+    33                           ; 
+    34                           ; THIS SOFTWARE IS PROVIDED BY MICROCHIP "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
+    35                           ; INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS F
+      +                          OR
+    36                           ; PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL MICROCHIP BE LIABLE FOR ANY DIRECT, INDIREC
+      +                          T,
+    37                           ; INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING BUT NOT LIMITED TO
+    38                           ; PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA OR PROFITS; OR BUSINESS
+    39                           ; INTERRUPTION) HOWSOEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, ST
+      +                          RICT
+    40                           ; LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE U
+      +                          SE OF
+    41                           ; THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+    42                           ; 
+    43                           ; 
+    44                           ; Code-generator required, PIC16F887 Definitions
+    45                           ; 
+    46                           ; SFR Addresses
+    47  0000                     	;# 
+    48  0001                     	;# 
+    49  0002                     	;# 
+    50  0003                     	;# 
+    51  0004                     	;# 
+    52  0005                     	;# 
+    53  0006                     	;# 
+    54  0007                     	;# 
+    55  0008                     	;# 
+    56  0009                     	;# 
+    57  000A                     	;# 
+    58  000B                     	;# 
+    59  000C                     	;# 
+    60  000D                     	;# 
+    61  000E                     	;# 
+    62  000E                     	;# 
+    63  000F                     	;# 
+    64  0010                     	;# 
+    65  0011                     	;# 
+    66  0012                     	;# 
+    67  0013                     	;# 
+    68  0014                     	;# 
+    69  0015                     	;# 
+    70  0015                     	;# 
+    71  0016                     	;# 
+    72  0017                     	;# 
+    73  0018                     	;# 
+    74  0019                     	;# 
+    75  001A                     	;# 
+    76  001B                     	;# 
+    77  001B                     	;# 
+    78  001C                     	;# 
+    79  001D                     	;# 
+    80  001E                     	;# 
+    81  001F                     	;# 
+    82  0081                     	;# 
+    83  0085                     	;# 
+    84  0086                     	;# 
+    85  0087                     	;# 
+    86  0088                     	;# 
+    87  0089                     	;# 
+    88  008C                     	;# 
+    89  008D                     	;# 
+    90  008E                     	;# 
+    91  008F                     	;# 
+    92  0090                     	;# 
+    93  0091                     	;# 
+    94  0092                     	;# 
+    95  0093                     	;# 
+    96  0093                     	;# 
+    97  0093                     	;# 
+    98  0094                     	;# 
+    99  0095                     	;# 
+   100  0096                     	;# 
+   101  0097                     	;# 
+   102  0098                     	;# 
+   103  0099                     	;# 
+   104  009A                     	;# 
+   105  009B                     	;# 
+   106  009C                     	;# 
+   107  009D                     	;# 
+   108  009E                     	;# 
+   109  009F                     	;# 
+   110  0105                     	;# 
+   111  0107                     	;# 
+   112  0108                     	;# 
+   113  0109                     	;# 
+   114  010C                     	;# 
+   115  010C                     	;# 
+   116  010D                     	;# 
+   117  010E                     	;# 
+   118  010F                     	;# 
+   119  0185                     	;# 
+   120  0187                     	;# 
+   121  0188                     	;# 
+   122  0189                     	;# 
+   123  018C                     	;# 
+   124  018D                     	;# 
+   125  0000                     	;# 
+   126  0001                     	;# 
+   127  0002                     	;# 
+   128  0003                     	;# 
+   129  0004                     	;# 
+   130  0005                     	;# 
+   131  0006                     	;# 
+   132  0007                     	;# 
+   133  0008                     	;# 
+   134  0009                     	;# 
+   135  000A                     	;# 
+   136  000B                     	;# 
+   137  000C                     	;# 
+   138  000D                     	;# 
+   139  000E                     	;# 
+   140  000E                     	;# 
+   141  000F                     	;# 
+   142  0010                     	;# 
+   143  0011                     	;# 
+   144  0012                     	;# 
+   145  0013                     	;# 
+   146  0014                     	;# 
+   147  0015                     	;# 
+   148  0015                     	;# 
+   149  0016                     	;# 
+   150  0017                     	;# 
+   151  0018                     	;# 
+   152  0019                     	;# 
+   153  001A                     	;# 
+   154  001B                     	;# 
+   155  001B                     	;# 
+   156  001C                     	;# 
+   157  001D                     	;# 
+   158  001E                     	;# 
+   159  001F                     	;# 
+   160  0081                     	;# 
+   161  0085                     	;# 
+   162  0086                     	;# 
+   163  0087                     	;# 
+   164  0088                     	;# 
+   165  0089                     	;# 
+   166  008C                     	;# 
+   167  008D                     	;# 
+   168  008E                     	;# 
+   169  008F                     	;# 
+   170  0090                     	;# 
+   171  0091                     	;# 
+   172  0092                     	;# 
+   173  0093                     	;# 
+   174  0093                     	;# 
+   175  0093                     	;# 
+   176  0094                     	;# 
+   177  0095                     	;# 
+   178  0096                     	;# 
+   179  0097                     	;# 
+   180  0098                     	;# 
+   181  0099                     	;# 
+   182  009A                     	;# 
+   183  009B                     	;# 
+   184  009C                     	;# 
+   185  009D                     	;# 
+   186  009E                     	;# 
+   187  009F                     	;# 
+   188  0105                     	;# 
+   189  0107                     	;# 
+   190  0108                     	;# 
+   191  0109                     	;# 
+   192  010C                     	;# 
+   193  010C                     	;# 
+   194  010D                     	;# 
+   195  010E                     	;# 
+   196  010F                     	;# 
+   197  0185                     	;# 
+   198  0187                     	;# 
+   199  0188                     	;# 
+   200  0189                     	;# 
+   201  018C                     	;# 
+   202  018D                     	;# 
+   203  000B                     _INTCONbits	set	11
+   204  001F                     _ADCON0bits	set	31
+   205  0008                     _PORTD	set	8
+   206  0006                     _PORTB	set	6
+   207  001E                     _ADRESH	set	30
+   208  000C                     _PIR1bits	set	12
+   209  008C                     _PIE1bits	set	140
+   210  009F                     _ADCON1bits	set	159
+   211  0088                     _TRISD	set	136
+   212  0086                     _TRISB	set	134
+   213  0085                     _TRISA	set	133
+   214  009E                     _ADRESL	set	158
+   215  0847                     _C2ON	set	2119
+   216  083F                     _C1ON	set	2111
+   217  0189                     _ANSELH	set	393
+   218  0188                     _ANSEL	set	392
+   219                           
+   220                           	psect	cinit
+   221  000F                     start_initialization:	
+   222                           ; #config settings
+   223                           
+   224  000F                     __initialization:
+   225                           
+   226                           ; Clear objects allocated to COMMON
+   227  000F  01F3               	clrf	__pbssCOMMON& (0+127)
+   228  0010  01F4               	clrf	(__pbssCOMMON+1)& (0+127)
+   229  0011                     end_of_initialization:	
+   230                           ;End of C runtime variable initialization code
+   231                           
+   232  0011                     __end_of__initialization:
+   233  0011  0183               	clrf	3
+   234  0012  120A  118A  2815   	ljmp	_main	;jump to C main() function
+   235                           
+   236                           	psect	bssCOMMON
+   237  0073                     __pbssCOMMON:
+   238  0073                     _num_adc:
+   239  0073                     	ds	2
+   240                           
+   241                           	psect	cstackCOMMON
+   242  0070                     __pcstackCOMMON:
+   243  0070                     ?_myisr:
+   244  0070                     ??_myisr:	
+   245                           ; 1 bytes @ 0x0
+   246                           
+   247  0070                     ?_main:	
+   248                           ; 1 bytes @ 0x0
+   249                           
+   250                           
+   251                           ; 1 bytes @ 0x0
+   252  0070                     	ds	2
+   253  0072                     ??_main:
+   254                           
+   255                           ; 1 bytes @ 0x2
+   256  0072                     	ds	1
+   257                           
+   258                           	psect	maintext
+   259  0015                     __pmaintext:	
+   260 ;;
+   261 ;;Main: autosize = 0, tempsize = 1, incstack = 0, save=0
+   262 ;;
+   263 ;; *************** function _main *****************
+   264 ;; Defined at:
+   265 ;;		line 55 in file "/media/user/software/simulide/tests/MCU/pic/0_Test/16F88x/16f887_ADC_INT-XC8/adc_int_example1.c"
+   266 ;; Parameters:    Size  Location     Type
+   267 ;;		None
+   268 ;; Auto vars:     Size  Location     Type
+   269 ;;		None
+   270 ;; Return value:  Size  Location     Type
+   271 ;;                  1    wreg      void 
+   272 ;; Registers used:
+   273 ;;		wreg, status,2, status,0
+   274 ;; Tracked objects:
+   275 ;;		On entry : B00/0
+   276 ;;		On exit  : 0/0
+   277 ;;		Unchanged: 0/0
+   278 ;; Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+   279 ;;      Params:         0       0       0       0       0
+   280 ;;      Locals:         0       0       0       0       0
+   281 ;;      Temps:          1       0       0       0       0
+   282 ;;      Totals:         1       0       0       0       0
+   283 ;;Total ram usage:        1 bytes
+   284 ;; Hardware stack levels required when called: 1
+   285 ;; This function calls:
+   286 ;;		Nothing
+   287 ;; This function is called by:
+   288 ;;		Startup code after reset
+   289 ;; This function uses a non-reentrant model
+   290 ;;
+   291                           
+   292                           
+   293                           ;psect for function _main
+   294  0015                     _main:
+   295  0015                     l653:	
+   296                           ;incstack = 0
+   297                           ; Regs used in _main: [wreg+status,2+status,0]
+   298                           
+   299                           
+   300                           ;/media/user/software/simulide/tests/MCU/pic/0_Test/16F88x/16f887_ADC_INT-XC8/adc_int_ex
+      +                          ample1.c: 59:     num_adc = 0;
+   301  0015  01F3               	clrf	_num_adc
+   302  0016  01F4               	clrf	_num_adc+1
+   303  0017                     l655:
+   304                           
+   305                           ;/media/user/software/simulide/tests/MCU/pic/0_Test/16F88x/16f887_ADC_INT-XC8/adc_int_ex
+      +                          ample1.c: 62:     ANSEL = 0x01;
+   306  0017  3001               	movlw	1
+   307  0018  1683               	bsf	3,5	;RP0=1, select bank3
+   308  0019  1703               	bsf	3,6	;RP1=1, select bank3
+   309  001A  0088               	movwf	8	;volatile
+   310  001B                     l657:
+   311                           
+   312                           ;/media/user/software/simulide/tests/MCU/pic/0_Test/16F88x/16f887_ADC_INT-XC8/adc_int_ex
+      +                          ample1.c: 63:     ANSELH = 0x00;
+   313  001B  0189               	clrf	9	;volatile
+   314  001C                     l659:
+   315                           
+   316                           ;/media/user/software/simulide/tests/MCU/pic/0_Test/16F88x/16f887_ADC_INT-XC8/adc_int_ex
+      +                          ample1.c: 64:     C1ON = 0;
+   317  001C  1283               	bcf	3,5	;RP0=0, select bank2
+   318  001D  1703               	bsf	3,6	;RP1=1, select bank2
+   319  001E  1387               	bcf	7,7	;volatile
+   320  001F                     l661:
+   321                           
+   322                           ;/media/user/software/simulide/tests/MCU/pic/0_Test/16F88x/16f887_ADC_INT-XC8/adc_int_ex
+      +                          ample1.c: 65:     C2ON = 0;
+   323  001F  1388               	bcf	8,7	;volatile
+   324                           
+   325                           ;/media/user/software/simulide/tests/MCU/pic/0_Test/16F88x/16f887_ADC_INT-XC8/adc_int_ex
+      +                          ample1.c: 66:     TRISA = 0xFF;
+   326  0020  30FF               	movlw	255
+   327  0021  1683               	bsf	3,5	;RP0=1, select bank1
+   328  0022  1303               	bcf	3,6	;RP1=0, select bank1
+   329  0023  0085               	movwf	5	;volatile
+   330  0024                     l663:
+   331                           
+   332                           ;/media/user/software/simulide/tests/MCU/pic/0_Test/16F88x/16f887_ADC_INT-XC8/adc_int_ex
+      +                          ample1.c: 67:     TRISB = 0x00;
+   333  0024  0186               	clrf	6	;volatile
+   334  0025                     l665:
+   335                           
+   336                           ;/media/user/software/simulide/tests/MCU/pic/0_Test/16F88x/16f887_ADC_INT-XC8/adc_int_ex
+      +                          ample1.c: 68:     TRISD = 0xF8;
+   337  0025  30F8               	movlw	248
+   338  0026  0088               	movwf	8	;volatile
+   339                           
+   340                           ;/media/user/software/simulide/tests/MCU/pic/0_Test/16F88x/16f887_ADC_INT-XC8/adc_int_ex
+      +                          ample1.c: 69:     PORTB = 0x00;
+   341  0027  1283               	bcf	3,5	;RP0=0, select bank0
+   342  0028  1303               	bcf	3,6	;RP1=0, select bank0
+   343  0029  0186               	clrf	6	;volatile
+   344  002A                     l667:
+   345                           
+   346                           ;/media/user/software/simulide/tests/MCU/pic/0_Test/16F88x/16f887_ADC_INT-XC8/adc_int_ex
+      +                          ample1.c: 70:     PORTD = 0XF8;
+   347  002A  30F8               	movlw	248
+   348  002B  0088               	movwf	8	;volatile
+   349  002C                     l669:
+   350                           
+   351                           ;/media/user/software/simulide/tests/MCU/pic/0_Test/16F88x/16f887_ADC_INT-XC8/adc_int_ex
+      +                          ample1.c: 73:     ADCON0bits.CHS = 0x00;
+   352  002C  30C3               	movlw	-61
+   353  002D  059F               	andwf	31,f	;volatile
+   354  002E                     l671:
+   355                           
+   356                           ;/media/user/software/simulide/tests/MCU/pic/0_Test/16F88x/16f887_ADC_INT-XC8/adc_int_ex
+      +                          ample1.c: 74:     ADCON1bits.VCFG0 = 0x00;
+   357  002E  1683               	bsf	3,5	;RP0=1, select bank1
+   358  002F  1303               	bcf	3,6	;RP1=0, select bank1
+   359  0030  121F               	bcf	31,4	;volatile
+   360  0031                     l673:
+   361                           
+   362                           ;/media/user/software/simulide/tests/MCU/pic/0_Test/16F88x/16f887_ADC_INT-XC8/adc_int_ex
+      +                          ample1.c: 75:     ADCON1bits.VCFG1 = 0x00;
+   363  0031  129F               	bcf	31,5	;volatile
+   364  0032                     l675:
+   365                           
+   366                           ;/media/user/software/simulide/tests/MCU/pic/0_Test/16F88x/16f887_ADC_INT-XC8/adc_int_ex
+      +                          ample1.c: 76:     ADCON0bits.ADCS = 0x02;
+   367  0032  1283               	bcf	3,5	;RP0=0, select bank0
+   368  0033  1303               	bcf	3,6	;RP1=0, select bank0
+   369  0034  081F               	movf	31,w	;volatile
+   370  0035  393F               	andlw	-193
+   371  0036  3880               	iorlw	128
+   372  0037  009F               	movwf	31	;volatile
+   373  0038                     l677:
+   374                           
+   375                           ;/media/user/software/simulide/tests/MCU/pic/0_Test/16F88x/16f887_ADC_INT-XC8/adc_int_ex
+      +                          ample1.c: 77:     ADCON1bits.ADFM = 0x01;
+   376  0038  1683               	bsf	3,5	;RP0=1, select bank1
+   377  0039  1303               	bcf	3,6	;RP1=0, select bank1
+   378  003A  179F               	bsf	31,7	;volatile
+   379  003B                     l679:
+   380                           
+   381                           ;/media/user/software/simulide/tests/MCU/pic/0_Test/16F88x/16f887_ADC_INT-XC8/adc_int_ex
+      +                          ample1.c: 78:     ADCON0bits.ADON = 0x01;
+   382  003B  1283               	bcf	3,5	;RP0=0, select bank0
+   383  003C  1303               	bcf	3,6	;RP1=0, select bank0
+   384  003D  141F               	bsf	31,0	;volatile
+   385  003E                     l681:
+   386                           
+   387                           ;/media/user/software/simulide/tests/MCU/pic/0_Test/16F88x/16f887_ADC_INT-XC8/adc_int_ex
+      +                          ample1.c: 81:     INTCONbits.GIE = 1;
+   388  003E  178B               	bsf	11,7	;volatile
+   389  003F                     l683:
+   390                           
+   391                           ;/media/user/software/simulide/tests/MCU/pic/0_Test/16F88x/16f887_ADC_INT-XC8/adc_int_ex
+      +                          ample1.c: 82:     INTCONbits.PEIE = 1;
+   392  003F  170B               	bsf	11,6	;volatile
+   393  0040                     l685:
+   394                           
+   395                           ;/media/user/software/simulide/tests/MCU/pic/0_Test/16F88x/16f887_ADC_INT-XC8/adc_int_ex
+      +                          ample1.c: 83:     PIR1bits.ADIF = 0;
+   396  0040  130C               	bcf	12,6	;volatile
+   397  0041                     l687:
+   398                           
+   399                           ;/media/user/software/simulide/tests/MCU/pic/0_Test/16F88x/16f887_ADC_INT-XC8/adc_int_ex
+      +                          ample1.c: 84:     PIE1bits.ADIE = 1;
+   400  0041  1683               	bsf	3,5	;RP0=1, select bank1
+   401  0042  1303               	bcf	3,6	;RP1=0, select bank1
+   402  0043  170C               	bsf	12,6	;volatile
+   403  0044                     l689:
+   404                           
+   405                           ;/media/user/software/simulide/tests/MCU/pic/0_Test/16F88x/16f887_ADC_INT-XC8/adc_int_ex
+      +                          ample1.c: 88:         _delay((unsigned long)((20)*(20000000UL/4000000.0)));
+   406  0044  3021               	movlw	33
+   407  0045  00F2               	movwf	??_main
+   408  0046                     u37:
+   409  0046  0BF2               	decfsz	??_main,f
+   410  0047  2846               	goto	u37
+   411  0048                     l691:
+   412                           
+   413                           ;/media/user/software/simulide/tests/MCU/pic/0_Test/16F88x/16f887_ADC_INT-XC8/adc_int_ex
+      +                          ample1.c: 89:         ADCON0bits.GO = 1;
+   414  0048  1283               	bcf	3,5	;RP0=0, select bank0
+   415  0049  1303               	bcf	3,6	;RP1=0, select bank0
+   416  004A  149F               	bsf	31,1	;volatile
+   417  004B                     l48:	
+   418                           ;/media/user/software/simulide/tests/MCU/pic/0_Test/16F88x/16f887_ADC_INT-XC8/adc_int_ex
+      +                          ample1.c: 90:         while(ADCON0bits.GO_DONE);
+   419                           
+   420  004B  189F               	btfsc	31,1	;volatile
+   421  004C  284E               	goto	u21
+   422  004D  284F               	goto	u20
+   423  004E                     u21:
+   424  004E  284B               	goto	l48
+   425  004F                     u20:
+   426  004F                     l693:
+   427                           
+   428                           ;/media/user/software/simulide/tests/MCU/pic/0_Test/16F88x/16f887_ADC_INT-XC8/adc_int_ex
+      +                          ample1.c: 91:         PORTD ^= 0b00000100;
+   429  004F  3004               	movlw	4
+   430  0050  00F2               	movwf	??_main
+   431  0051  0872               	movf	??_main,w
+   432  0052  0688               	xorwf	8,f	;volatile
+   433  0053  2844               	goto	l689
+   434  0054  120A  118A  280C   	ljmp	start
+   435  0057                     __end_of_main:
+   436                           
+   437                           	psect	text1
+   438  0057                     __ptext1:	
+   439 ;; *************** function _myisr *****************
+   440 ;; Defined at:
+   441 ;;		line 45 in file "/media/user/software/simulide/tests/MCU/pic/0_Test/16F88x/16f887_ADC_INT-XC8/adc_int_example1.c"
+   442 ;; Parameters:    Size  Location     Type
+   443 ;;		None
+   444 ;; Auto vars:     Size  Location     Type
+   445 ;;		None
+   446 ;; Return value:  Size  Location     Type
+   447 ;;                  1    wreg      void 
+   448 ;; Registers used:
+   449 ;;		wreg, status,2
+   450 ;; Tracked objects:
+   451 ;;		On entry : 0/0
+   452 ;;		On exit  : 0/0
+   453 ;;		Unchanged: 0/0
+   454 ;; Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+   455 ;;      Params:         0       0       0       0       0
+   456 ;;      Locals:         0       0       0       0       0
+   457 ;;      Temps:          2       0       0       0       0
+   458 ;;      Totals:         2       0       0       0       0
+   459 ;;Total ram usage:        2 bytes
+   460 ;; Hardware stack levels used: 1
+   461 ;; This function calls:
+   462 ;;		Nothing
+   463 ;; This function is called by:
+   464 ;;		Interrupt level 1
+   465 ;; This function uses a non-reentrant model
+   466 ;;
+   467                           
+   468                           
+   469                           ;psect for function _myisr
+   470  0057                     _myisr:
+   471  0057                     i1l645:
+   472                           
+   473                           ;/media/user/software/simulide/tests/MCU/pic/0_Test/16F88x/16f887_ADC_INT-XC8/adc_int_ex
+      +                          ample1.c: 46:     if(PIR1bits.ADIF){
+   474  0057  1283               	bcf	3,5	;RP0=0, select bank0
+   475  0058  1303               	bcf	3,6	;RP1=0, select bank0
+   476  0059  1F0C               	btfss	12,6	;volatile
+   477  005A  285C               	goto	u1_21
+   478  005B  285D               	goto	u1_20
+   479  005C                     u1_21:
+   480  005C  286B               	goto	i1l42
+   481  005D                     u1_20:
+   482  005D                     i1l647:
+   483                           
+   484                           ;/media/user/software/simulide/tests/MCU/pic/0_Test/16F88x/16f887_ADC_INT-XC8/adc_int_ex
+      +                          ample1.c: 47:         PIR1bits.ADIF = 0;
+   485  005D  130C               	bcf	12,6	;volatile
+   486  005E                     i1l649:
+   487                           
+   488                           ;/media/user/software/simulide/tests/MCU/pic/0_Test/16F88x/16f887_ADC_INT-XC8/adc_int_ex
+      +                          ample1.c: 48:         num_adc = ((ADRESH << 8 ) | (ADRESL));
+   489  005E  081E               	movf	30,w	;volatile
+   490  005F  00F4               	movwf	_num_adc+1
+   491  0060  1683               	bsf	3,5	;RP0=1, select bank1
+   492  0061  1303               	bcf	3,6	;RP1=0, select bank1
+   493  0062  081E               	movf	30,w	;volatile
+   494  0063  00F3               	movwf	_num_adc
+   495                           
+   496                           ;/media/user/software/simulide/tests/MCU/pic/0_Test/16F88x/16f887_ADC_INT-XC8/adc_int_ex
+      +                          ample1.c: 49:         PORTB = (num_adc & 0xFF);
+   497  0064  0873               	movf	_num_adc,w
+   498  0065  1283               	bcf	3,5	;RP0=0, select bank0
+   499  0066  1303               	bcf	3,6	;RP1=0, select bank0
+   500  0067  0086               	movwf	6	;volatile
+   501  0068                     i1l651:
+   502                           
+   503                           ;/media/user/software/simulide/tests/MCU/pic/0_Test/16F88x/16f887_ADC_INT-XC8/adc_int_ex
+      +                          ample1.c: 50:         PORTD = ((num_adc>>8) & 0x03);
+   504  0068  0874               	movf	_num_adc+1,w
+   505  0069  3903               	andlw	3
+   506  006A  0088               	movwf	8	;volatile
+   507  006B                     i1l42:
+   508  006B  0871               	movf	??_myisr+1,w
+   509  006C  008A               	movwf	10
+   510  006D  0E70               	swapf	??_myisr,w
+   511  006E  0083               	movwf	3
+   512  006F  0EFE               	swapf	btemp,f
+   513  0070  0E7E               	swapf	btemp,w
+   514  0071  0009               	retfie
+   515  0072                     __end_of_myisr:
+   516  007E                     btemp	set	126	;btemp
+   517  007E                     wtemp0	set	126
+   518                           
+   519                           	psect	intentry
+   520  0004                     __pintentry:	
+   521                           ;incstack = 0
+   522                           ; Regs used in _myisr: [wreg+status,2]
+   523                           
+   524  0004                     interrupt_function:
+   525  007E                     saved_w	set	btemp
+   526  0004  00FE               	movwf	btemp
+   527  0005  0E03               	swapf	3,w
+   528  0006  00F0               	movwf	??_myisr
+   529  0007  080A               	movf	10,w
+   530  0008  00F1               	movwf	??_myisr+1
+   531  0009  120A  118A  2857   	ljmp	_myisr
+   532                           
+   533                           	psect	config
+   534                           
+   535                           ;Config register CONFIG1 @ 0x2007
+   536                           ;	Oscillator Selection bits
+   537                           ;	FOSC = HS, HS oscillator: High-speed crystal/resonator on RA6/OSC2/CLKOUT and RA7/OSC1
+      +                          /CLKIN
+   538                           ;	Watchdog Timer Enable bit
+   539                           ;	WDTE = OFF, WDT disabled and can be enabled by SWDTEN bit of the WDTCON register
+   540                           ;	Power-up Timer Enable bit
+   541                           ;	PWRTE = OFF, PWRT disabled
+   542                           ;	RE3/MCLR pin function select bit
+   543                           ;	MCLRE = ON, RE3/MCLR pin function is MCLR
+   544                           ;	Code Protection bit
+   545                           ;	CP = OFF, Program memory code protection is disabled
+   546                           ;	Data Code Protection bit
+   547                           ;	CPD = OFF, Data memory code protection is disabled
+   548                           ;	Brown Out Reset Selection bits
+   549                           ;	BOREN = ON, BOR enabled
+   550                           ;	Internal External Switchover bit
+   551                           ;	IESO = ON, Internal/External Switchover mode is enabled
+   552                           ;	Fail-Safe Clock Monitor Enabled bit
+   553                           ;	FCMEN = ON, Fail-Safe Clock Monitor is enabled
+   554                           ;	Low Voltage Programming Enable bit
+   555                           ;	LVP = OFF, RB3 pin has digital I/O, HV on MCLR must be used for programming
+   556                           ;	In-Circuit Debugger Mode bit
+   557                           ;	DEBUG = 0x1, unprogrammed default
+   558  2007                     	org	8199
+   559  2007  2FF2               	dw	12274
+   560                           
+   561                           ;Config register CONFIG2 @ 0x2008
+   562                           ;	Brown-out Reset Selection bit
+   563                           ;	BOR4V = BOR40V, Brown-out Reset set to 4.0V
+   564                           ;	Flash Program Memory Self Write Enable bits
+   565                           ;	WRT = OFF, Write protection off
+   566  2008                     	org	8200
+   567  2008  3FFF               	dw	16383
+
+Data Sizes:
+    Strings     0
+    Constant    0
+    Data        0
+    BSS         2
+    Persistent  0
+    Stack       0
+
+Auto Spaces:
+    Space          Size  Autos    Used
+    COMMON           14      3       5
+    BANK0            80      0       0
+    BANK1            80      0       0
+    BANK3            96      0       0
+    BANK2            96      0       0
+
+Pointer List with Targets:
+
+    None.
+
+Critical Paths under _main in COMMON
+
+    None.
+
+Critical Paths under _myisr in COMMON
+
+    None.
+
+Critical Paths under _main in BANK0
+
+    None.
+
+Critical Paths under _myisr in BANK0
+
+    None.
+
+Critical Paths under _main in BANK1
+
+    None.
+
+Critical Paths under _myisr in BANK1
+
+    None.
+
+Critical Paths under _main in BANK3
+
+    None.
+
+Critical Paths under _myisr in BANK3
+
+    None.
+
+Critical Paths under _main in BANK2
+
+    None.
+
+Critical Paths under _myisr in BANK2
+
+    None.
+
+Call Graph Tables:
+
+ ---------------------------------------------------------------------------------
+ (Depth) Function   	        Calls       Base Space   Used Autos Params    Refs
+ ---------------------------------------------------------------------------------
+ (0) _main                                                 1     1      0       0
+                                              2 COMMON     1     1      0
+ ---------------------------------------------------------------------------------
+ Estimated maximum stack depth 0
+ ---------------------------------------------------------------------------------
+ (Depth) Function   	        Calls       Base Space   Used Autos Params    Refs
+ ---------------------------------------------------------------------------------
+ (1) _myisr                                                2     2      0       0
+                                              0 COMMON     2     2      0
+ ---------------------------------------------------------------------------------
+ Estimated maximum stack depth 1
+ ---------------------------------------------------------------------------------
+
+ Call Graph Graphs:
+
+ _main (ROOT)
+
+ _myisr (ROOT)
+
+ Address spaces:
+Name               Size   Autos  Total    Cost      Usage
+BITCOMMON            E      0       0       0        0.0%
+EEDATA             100      0       0       0        0.0%
+NULL                 0      0       0       0        0.0%
+CODE                 0      0       0       0        0.0%
+COMMON               E      3       5       1       35.7%
+BITSFR0              0      0       0       1        0.0%
+SFR0                 0      0       0       1        0.0%
+BITSFR1              0      0       0       2        0.0%
+SFR1                 0      0       0       2        0.0%
+STACK                0      0       0       2        0.0%
+ABS                  0      0       5       3        0.0%
+BITBANK0            50      0       0       4        0.0%
+BITSFR3              0      0       0       4        0.0%
+SFR3                 0      0       0       4        0.0%
+BANK0               50      0       0       5        0.0%
+BITSFR2              0      0       0       5        0.0%
+SFR2                 0      0       0       5        0.0%
+BITBANK1            50      0       0       6        0.0%
+BANK1               50      0       0       7        0.0%
+BITBANK3            60      0       0       8        0.0%
+BANK3               60      0       0       9        0.0%
+BITBANK2            60      0       0      10        0.0%
+BANK2               60      0       0      11        0.0%
+DATA                 0      0       5      12        0.0%
+
+
+Microchip Technology PIC Macro Assembler V2.32 build 20210201212658 
+Symbol Table                                                                                   Sat Dec 25 04:59:03 2021
+
+                     l48 004B                       u20 004F                       u21 004E  
+                     u37 0046                      l661 001F                      l653 0015  
+                    l671 002E                      l663 0024                      l655 0017  
+                    l681 003E                      l673 0031                      l665 0025  
+                    l657 001B                      l691 0048                      l683 003F  
+                    l675 0032                      l667 002A                      l659 001C  
+                    l693 004F                      l685 0040                      l677 0038  
+                    l669 002C                      l687 0041                      l679 003B  
+                    l689 0044                     _C1ON 083F                     _C2ON 0847  
+                   i1l42 006B                     u1_20 005D                     u1_21 005C  
+                   _main 0015                     btemp 007E                     start 000C  
+                  ?_main 0070                    _ANSEL 0188                    i1l651 0068  
+                  i1l645 0057                    i1l647 005D                    i1l649 005E  
+                  _PORTB 0006                    _PORTD 0008                    _TRISA 0085  
+                  _TRISB 0086                    _TRISD 0088                    _myisr 0057  
+                  pclath 000A                    status 0003                    wtemp0 007E  
+        __initialization 000F             __end_of_main 0057                   ??_main 0072  
+                 _ADRESH 001E                   _ADRESL 009E                   ?_myisr 0070  
+                 _ANSELH 0189                   saved_w 007E  __end_of__initialization 0011  
+         __pcstackCOMMON 0070            __end_of_myisr 0072                  ??_myisr 0070  
+             __pmaintext 0015               __pintentry 0004                  __ptext1 0057  
+                _num_adc 0073     end_of_initialization 0011      start_initialization 000F  
+            __pbssCOMMON 0073                ___latbits 0002           __size_of_myisr 001B  
+      interrupt_function 0004                 _PIE1bits 008C                 _PIR1bits 000C  
+             _ADCON0bits 001F               _ADCON1bits 009F            __size_of_main 0042  
+             _INTCONbits 000B                 intlevel1 0000  

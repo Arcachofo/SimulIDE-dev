@@ -1,0 +1,14 @@
+Temperature and humidity sensor.
+
+Property: (default value)
+
+- Model: (HDT22)
+   Choose model: HDT22 or HDT11.
+
+- Temp. increment: (0.5 ºC)
+   Temperature will increment by this value when + or - buttons are pushed.
+
+- Humid. increment: (0.5 ºC)
+   Humidity will increment by this value when + or - buttons are pushed.
+
+

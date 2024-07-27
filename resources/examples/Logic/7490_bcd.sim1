@@ -1,0 +1,27 @@
+<circuit version="" rev="2221" stepSize="1000000" stepsPS="1000000" NLsteps="100000" reaStep="1000000" animate="0" >
+
+<item itemtype="7-Seg BCD" CircId="7-111" mainComp="false" Show_id="false" Show_Val="false" Pos="-232,-268" rotation="0" hflip="1" vflip="1" label="7-3" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Show_Point_Pin="false" Show_Enable_Pin="false" />
+
+<item itemtype="Subcircuit" CircId="74XX90-3" mainComp="false" Show_id="true" Show_Val="false" Pos="-316,-252" rotation="0" hflip="1" vflip="1" label="7490" idLabPos="3.52355,63.7577" labelrot="0" valLabPos="0,0" valLabRot="0" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+09 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" Logic_Symbol="false" />
+
+<item itemtype="Clock" CircId="Clock-2" mainComp="false" Show_id="true" Show_Val="true" Pos="-300,-292" rotation="0" hflip="1" vflip="1" label="Clock" idLabPos="-66,-7" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="true" Running="true" Voltage="5 V" Freq="2 Hz" Always_On="false" />
+
+<item itemtype="TextComponent" CircId="Text-1" mainComp="false" Show_id="false" Show_Val="false" Pos="-372,-380" rotation="0" hflip="1" vflip="1" label="Text-6" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Margin="5 _px" Border="1 _px" Color="#ffffdc" Opacity="1" Font="Helvetica [Cronyx]" Font_Color="#000080" Font_Size="10 _px" Fixed_Width="true" Text="0-9 Counter with 7490.&#xa;&#xa;Turn on Clock to Start Counter." />
+
+<item itemtype="Node" CircId="Node-112" mainComp="false" Pos="-260,-228" />
+
+<item itemtype="Connector" uid="connector-113" startpinid="Clock-2-outnod" endpinid="74XX90-3-CP0" pointList="-284,-292,-268,-292,-268,-244,-276,-244" />
+
+<item itemtype="Connector" uid="connector-114" startpinid="74XX90-3-Q0" endpinid="Node-112-0" pointList="-276,-228,-260,-228" />
+
+<item itemtype="Connector" uid="connector-115" startpinid="Node-112-2" endpinid="74XX90-3-CP1" pointList="-260,-228,-260,-260,-332,-260,-332,-244,-324,-244" />
+
+<item itemtype="Connector" uid="connector-116" startpinid="Node-112-1" endpinid="7-111-in0" pointList="-260,-228,-220,-228,-220,-236" />
+
+<item itemtype="Connector" uid="connector-117" startpinid="74XX90-3-Q1" endpinid="7-111-in1" pointList="-276,-204,-228,-204,-228,-236" />
+
+<item itemtype="Connector" uid="connector-118" startpinid="74XX90-3-Q3" endpinid="7-111-in3" pointList="-276,-220,-244,-220,-244,-236" />
+
+<item itemtype="Connector" uid="connector-119" startpinid="74XX90-3-Q2" endpinid="7-111-in2" pointList="-276,-196,-236,-196,-236,-236" />
+
+</circuit>

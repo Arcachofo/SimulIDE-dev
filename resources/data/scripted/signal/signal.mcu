@@ -1,0 +1,7 @@
+<!DOCTYPE SimulIDE>
+
+<mcu name="Signal" core="scripted" script="signal_core.as" prog="1024" progword="1" clkpin="Clk" >
+    
+    <ioport name="PORTA" pins="Clk,In,Out" />
+    
+</mcu>

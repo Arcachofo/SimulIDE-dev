@@ -1,0 +1,60 @@
+<!DOCTYPE SimulIDE>
+
+<parts>
+  <sleep name="SLEEP" configregsA="MCUCR"/>
+  
+  <port name="PORTB" pins="6" outreg="PORTB" inreg="PINB" dirreg="DDRB"
+                     resetpin="PORTB5">
+    <interrupt name="PCINT0" mask="PCMSK"/>
+    <extint    name="INT0" pin="PORTB2" configbits="ISC00,ISC01"/>
+  </port>
+  
+  <intosc name="intosc" clockpins="PORTB3" clockoutpin="PORTB4"/>
+
+  <timer name="TIMER0" type="800" configregsA="TCCR0A" configregsB="TCCR0B"
+                       counter="TCNT0"
+                       clockpin="PORTB2"
+                       interrupt="T0_OVF"
+                       prescalers="0,1,8,64,256,1024,EXT_F,EXT_R" 
+                       prselect="CS00,CS01,CS02" >
+
+    <ocunit name="OC0A" pin="PORTB0" ocreg="OCR0A" bits="COM0A0,COM0A1" interrupt="T0COA" />
+    <ocunit name="OC0B" pin="PORTB1" ocreg="OCR0B" bits="COM0B0,COM0B1" interrupt="T0COB" />
+  </timer>
+
+  <timer name="TIMER1" type="810" configregsA="TCCR1" configregsB="GTCCR"
+                       counter="TCNT1"
+                       topreg0="OCR1C"
+                       interrupt="T1_OVF"
+                       prescalers="0,1,2,4,8,16,32,64,128,256,512,1024,2048,4096,8192,16384"
+                       prselect="CS10,CS11,CS12,CS13" >
+
+    <ocunit name="OC1A" pin="PORTB1" ocreg="OCR1A" bits="COM1A0,COM1A1" interrupt="T1COA" />
+    <ocunit name="OC1B" pin="PORTB4" ocreg="OCR1B" bits="COM1B0,COM1B1" interrupt="T1COB" />
+  </timer>
+
+  <adc name="ADC" type="11" bits="10" configregsA="ADCSRA" configregsB="ADCSRB"
+                  dataregs="ADCL,ADCH"
+                  multiplex="ADMUX"
+                  interrupt="ADC"
+                  prescalers="2,2,4,8,16,32,64,128"
+                  adcpins="PORTB5,PORTB2,PORTB4,PORTB3"
+                  vrefpins="PORTB0"/>
+
+  <wdt name="WDT00" configregsA="WDTCR"
+                    interrupt="WDT"
+                    prescalers="512,256,128,64,32,16,8,4,2,1,1,1,1,1,1,1"/>
+
+  <rom name="ROM" configregsA="EECR"
+                  dataregs="EEDR"
+                  addressreg="EEARL"
+                  interrupt="EEPR" />
+
+  <comp name="COM" configregsA="ACSR" configbitsB="AIN0D,AIN1D"
+                   interrupt="ACOMP"
+                   pins="PORTB0,PORTB1"/>
+                   
+  <usi name="USI" configregsA="USICR" configregsB="USISR"
+                  interrupt="USIOVF"
+                  pins="PORTB1,PORTB0,PORTB2" /><!-- "DO,DI,USCK" -->
+</parts>

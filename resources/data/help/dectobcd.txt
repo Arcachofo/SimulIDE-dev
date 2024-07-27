@@ -1,0 +1,15 @@
+Converts from decimal to binary.
+
+Property: (default value)
+
+Main:
+- 16 Bits: (no)
+   8 or 16 inputs.
+
+Electric:
+#include logicinputs
+- Invert Inputs: (no)
+   Invert input pins.
+
+#include logicoutputs
+#include logicedges

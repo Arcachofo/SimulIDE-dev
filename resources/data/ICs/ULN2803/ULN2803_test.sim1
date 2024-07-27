@@ -1,0 +1,67 @@
+<circuit type="simulide_1.0" stepSize="1000000" stepsPS="1000000" NLsteps="100000" animate="1" >
+
+<item itemtype="Amperimeter" CircId="Amperimeter-209" mainComp="false" Show_id="false" Show_Val="false" Pos="-128,-76" rotation="0" hflip="1" vflip="1" label="Amperimeter-195" idLabPos="-24,-40" labelrot="0" valLabPos="0,0" valLabRot="0" SwitchPins="false" />
+
+<item itemtype="Amperimeter" CircId="Amperimeter-202" mainComp="false" Show_id="false" Show_Val="false" Pos="-80,-184" rotation="0" hflip="1" vflip="1" label="Amperimeter-195" idLabPos="-24,-40" labelrot="0" valLabPos="0,0" valLabRot="0" SwitchPins="false" />
+
+<item itemtype="Amperimeter" CircId="Amperimeter-195" mainComp="false" Show_id="false" Show_Val="false" Pos="-144,-184" rotation="0" hflip="1" vflip="1" label="Amperimeter-195" idLabPos="-24,-40" labelrot="0" valLabPos="0,0" valLabRot="0" SwitchPins="false" />
+
+<item itemtype="Ground" CircId="Ground-187" mainComp="false" Show_id="false" Show_Val="false" Pos="-232,-56" rotation="0" hflip="1" vflip="1" label="Ground-187" idLabPos="-16,8" labelrot="0" valLabPos="0,0" valLabRot="0" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-185" mainComp="false" Show_id="false" Show_Val="true" Pos="-264,-100" rotation="0" hflip="1" vflip="1" label="Fixed Voltage-181" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-183" mainComp="false" Show_id="false" Show_Val="true" Pos="-264,-132" rotation="0" hflip="1" vflip="1" label="Fixed Voltage-181" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-181" mainComp="false" Show_id="false" Show_Val="true" Pos="-264,-156" rotation="0" hflip="1" vflip="1" label="Fixed Voltage-181" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
+
+<item itemtype="Rail" CircId="Rail-177" mainComp="false" ShowProp="Voltage" Show_id="false" Show_Val="true" Pos="28,-180" rotation="0" hflip="1" vflip="1" label="Rail-177" idLabPos="-16,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Voltage="24 V" />
+
+<item itemtype="RelaySPST" CircId="RelaySPST-171" mainComp="false" Show_id="false" Show_Val="false" Pos="-32,-64" rotation="0" hflip="1" vflip="1" label="RelaySPST-167" idLabPos="-16,8" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1 _Poles" Rcoil="50 Ω" Inductance="0.1 H" IOn="0.02 A" IOff="0.01 A" />
+
+<item itemtype="RelaySPST" CircId="RelaySPST-169" mainComp="false" Show_id="false" Show_Val="false" Pos="-32,-108" rotation="0" hflip="1" vflip="1" label="RelaySPST-167" idLabPos="-16,8" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1 _Poles" Rcoil="100 Ω" Inductance="0.1 H" IOn="0.02 A" IOff="0.01 A" />
+
+<item itemtype="RelaySPST" CircId="RelaySPST-167" mainComp="false" Show_id="false" Show_Val="false" Pos="-32,-156" rotation="0" hflip="1" vflip="1" label="RelaySPST-167" idLabPos="-16,8" labelrot="0" valLabPos="-16,6" valLabRot="0" Norm_Close="false" DT="false" Poles="1 _Poles" Rcoil="400 Ω" Inductance="0.1 H" IOn="0.02 A" IOff="0.01 A" />
+
+<item itemtype="Subcircuit" CircId="ULN2803-1" mainComp="false" Show_id="true" Show_Val="false" Pos="-220,-164" rotation="0" hflip="1" vflip="1" label="ULN2803-1" idLabPos="0,-20" labelrot="0" valLabPos="13,52" valLabRot="-90" Logic_Symbol="true" />
+
+<item itemtype="Node" CircId="Node-190" mainComp="false" Pos="8,-64" />
+
+<item itemtype="Node" CircId="Node-179" mainComp="false" Pos="8,-148" />
+
+<item itemtype="Node" CircId="Node-175" mainComp="false" Pos="8,-108" />
+
+<item itemtype="Connector" uid="Connector-173" startpinid="RelaySPST-167-rPin" endpinid="Node-179-0" pointList="-16,-156,-16,-148,8,-148" />
+
+<item itemtype="Connector" uid="Connector-176" startpinid="Node-175-2" endpinid="Node-190-0" pointList="8,-108,8,-64" />
+
+<item itemtype="Connector" uid="Connector-178" startpinid="Rail-177-outnod" endpinid="Node-179-1" pointList="44,-180,44,-148,8,-148" />
+
+<item itemtype="Connector" uid="Connector-180" startpinid="Node-179-2" endpinid="Node-175-0" pointList="8,-148,8,-108" />
+
+<item itemtype="Connector" uid="Connector-182" startpinid="Fixed Voltage-181-outnod" endpinid="ULN2803-1-In1" pointList="-248,-156,-228,-156" />
+
+<item itemtype="Connector" uid="Connector-184" startpinid="Fixed Voltage-183-outnod" endpinid="ULN2803-1-In4" pointList="-248,-132,-228,-132" />
+
+<item itemtype="Connector" uid="Connector-186" startpinid="Fixed Voltage-185-outnod" endpinid="ULN2803-1-In8" pointList="-248,-100,-228,-100" />
+
+<item itemtype="Connector" uid="Connector-188" startpinid="Ground-187-Gnd" endpinid="ULN2803-1-Gnd" pointList="-232,-72,-232,-92,-228,-92" />
+
+<item itemtype="Connector" uid="Connector-191" startpinid="Node-190-2" endpinid="RelaySPST-171-rPin" pointList="8,-64,-16,-64" />
+
+<item itemtype="Connector" uid="Connector-192" startpinid="RelaySPST-169-rPin" endpinid="Node-175-1" pointList="-16,-108,8,-108" />
+
+<item itemtype="Connector" uid="Connector-199" startpinid="Amperimeter-195-lPin" endpinid="ULN2803-1-Out1" pointList="-152,-168,-152,-156,-180,-156" />
+
+<item itemtype="Connector" uid="Connector-189" startpinid="ULN2803-1-Com" endpinid="Node-190-1" pointList="-180,-92,-180,-44,8,-44,8,-64" />
+
+<item itemtype="Connector" uid="Connector-172" startpinid="RelaySPST-171-lPin" endpinid="Amperimeter-209-rPin" pointList="-48,-64,-72,-64,-72,-52,-120,-52,-120,-60" />
+
+<item itemtype="Connector" uid="Connector-226" startpinid="Amperimeter-209-lPin" endpinid="ULN2803-1-Out8" pointList="-136,-60,-136,-52,-164,-52,-164,-100,-180,-100" />
+
+<item itemtype="Connector" uid="Connector-232" startpinid="Amperimeter-195-rPin" endpinid="RelaySPST-167-lPin" pointList="-136,-168,-136,-156,-48,-156" />
+
+<item itemtype="Connector" uid="Connector-233" startpinid="Amperimeter-202-rPin" endpinid="RelaySPST-169-lPin" pointList="-72,-168,-72,-108,-48,-108" />
+
+<item itemtype="Connector" uid="Connector-234" startpinid="Amperimeter-202-lPin" endpinid="ULN2803-1-Out4" pointList="-88,-168,-88,-132,-180,-132" />
+
+</circuit>

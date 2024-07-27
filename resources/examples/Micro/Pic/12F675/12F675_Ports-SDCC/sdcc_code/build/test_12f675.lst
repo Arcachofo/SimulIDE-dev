@@ -1,0 +1,241 @@
+gplink-1.5.0 #1285 (Sep  9 2021)
+Copyright (c) 1998-2016 gputils project
+Listing File Generated: 10/09/21  12:15:27
+
+
+Address  Value    Disassembly              Source
+-------  -----    -----------              ------
+                                           ;--------------------------------------------------------
+                                           ; File Created by SDCC : free open source ANSI-C Compiler
+                                           ; Version 4.1.0 #12072 (Linux)
+                                           ;--------------------------------------------------------
+                                           ; PIC port for the 14-bit core
+                                           ;--------------------------------------------------------
+                                           ;	.file	"/mnt/software/simulide/tests/pic/sdcc/test_12f675/sdcc_code/test_12f675.c"
+                                           	list	p=12f675
+                                           	radix dec
+                                           	include "p12f675.inc"
+                                                   LIST
+
+                                           ;==========================================================================
+                                           ; Build date : Oct 21 2015
+                                           ;  MPASM PIC12F675 processor include
+                                           ; 
+                                           ;  (c) Copyright 1999-2015 Microchip Technology, All rights reserved
+                                           ;==========================================================================
+
+                                                   NOLIST
+                                           ;--------------------------------------------------------
+                                           ; config word(s)
+                                           ;--------------------------------------------------------
+002007   3e07     addlw   0x07             	__config 0x3e07
+                                           ;--------------------------------------------------------
+                                           ; external declarations
+                                           ;--------------------------------------------------------
+                                           	extern	_ANSEL
+                                           	extern	_TRISIO
+                                           	extern	_CMCON
+                                           	extern	_GPIO
+                                           	extern	_GPIObits
+                                           	extern	__sdcc_gsinit_startup
+                                           ;--------------------------------------------------------
+                                           ; global declarations
+                                           ;--------------------------------------------------------
+                                           	global	_main
+                                           	global	_delay
+
+                                           	global PSAVE
+                                           	global SSAVE
+                                           	global WSAVE
+                                           	global STK12
+                                           	global STK11
+                                           	global STK10
+                                           	global STK09
+                                           	global STK08
+                                           	global STK07
+                                           	global STK06
+                                           	global STK05
+                                           	global STK04
+                                           	global STK03
+                                           	global STK02
+                                           	global STK01
+                                           	global STK00
+
+                                           sharebank udata_ovr 0x0020
+                                           PSAVE	res 1
+                                           SSAVE	res 1
+                                           WSAVE	res 1
+                                           STK12	res 1
+                                           STK11	res 1
+                                           STK10	res 1
+                                           STK09	res 1
+                                           STK08	res 1
+                                           STK07	res 1
+                                           STK06	res 1
+                                           STK05	res 1
+                                           STK04	res 1
+                                           STK03	res 1
+                                           STK02	res 1
+                                           STK01	res 1
+                                           STK00	res 1
+
+                                           ;--------------------------------------------------------
+                                           ; global definitions
+                                           ;--------------------------------------------------------
+                                           ;--------------------------------------------------------
+                                           ; absolute symbol definitions
+                                           ;--------------------------------------------------------
+                                           ;--------------------------------------------------------
+                                           ; compiler-defined variables
+                                           ;--------------------------------------------------------
+                                           UDL_test_12f675_0	udata
+                                           r0x1001	res	1
+                                           r0x1000	res	1
+                                           r0x1002	res	1
+                                           r0x1003	res	1
+                                           r0x1004	res	1
+                                           r0x1005	res	1
+                                           ;--------------------------------------------------------
+                                           ; initialized data
+                                           ;--------------------------------------------------------
+                                           ;--------------------------------------------------------
+                                           ; initialized absolute data
+                                           ;--------------------------------------------------------
+                                           ;--------------------------------------------------------
+                                           ; overlayable items in internal ram 
+                                           ;--------------------------------------------------------
+                                           ;	udata_ovr
+                                           ;--------------------------------------------------------
+                                           ; reset vector 
+                                           ;--------------------------------------------------------
+                                           STARTUP	code 0x0000
+000000   0000     nop                      	nop
+                                           	pagesel __sdcc_gsinit_startup
+000001   2802     goto    0x0002           	goto	__sdcc_gsinit_startup
+                                           ;--------------------------------------------------------
+                                           ; code
+                                           ;--------------------------------------------------------
+                                           code_test_12f675	code
+                                           ;***
+                                           ;  pBlock Stats: dbName = M
+                                           ;***
+                                           ;has an exit
+                                           ;functions called:
+                                           ;   _delay
+                                           ;   _delay
+                                           ;   _delay
+                                           ;   _delay
+                                           ;1 compiler assigned register :
+                                           ;   STK00
+                                           ;; Starting pCode block
+                                           S_test_12f675__main	code
+                                           _main:
+                                           ; 2 exit points
+                                           ;	.line	26; "/mnt/software/simulide/tests/pic/sdcc/test_12f675/sdcc_code/test_12f675.c"	TRISIO = 0x08; //Poner todos los pines como salidas y activar entrada
+0000f0   3008     movlw   0x08             	MOVLW	0x08
+0000f1   1683     bsf     0x03, 0x5        	BANKSEL	_TRISIO
+0000f2   0085     movwf   0x05             	MOVWF	_TRISIO
+                                           ;	.line	27; "/mnt/software/simulide/tests/pic/sdcc/test_12f675/sdcc_code/test_12f675.c"	ANSEL  = 0x00; //desactivar convertidor A/D
+0000f3   019f     clrf    0x1f             	CLRF	_ANSEL
+                                           ;	.line	28; "/mnt/software/simulide/tests/pic/sdcc/test_12f675/sdcc_code/test_12f675.c"	CMCON  = 0x07; //Desabilitar comparadores
+0000f4   3007     movlw   0x07             	MOVLW	0x07
+0000f5   1283     bcf     0x03, 0x5        	BANKSEL	_CMCON
+0000f6   0099     movwf   0x19             	MOVWF	_CMCON
+                                           ;	.line	29; "/mnt/software/simulide/tests/pic/sdcc/test_12f675/sdcc_code/test_12f675.c"	GPIO   = 0x00; //Poner pines en bajo
+0000f7   0185     clrf    0x05             	CLRF	_GPIO
+                                           _00142_DS_:
+                                           ;	.line	33; "/mnt/software/simulide/tests/pic/sdcc/test_12f675/sdcc_code/test_12f675.c"	if( GP3 ){
+0000f8   1283     bcf     0x03, 0x5        	BANKSEL	_GPIObits
+0000f9   1d85     btfss   0x05, 0x3        	BTFSS	_GPIObits,3
+0000fa   2902     goto    0x0102           	GOTO	_00139_DS_
+                                           ;	.line	34; "/mnt/software/simulide/tests/pic/sdcc/test_12f675/sdcc_code/test_12f675.c"	GPIO = 0x02;
+0000fb   3002     movlw   0x02             	MOVLW	0x02
+0000fc   0085     movwf   0x05             	MOVWF	_GPIO
+                                           ;	.line	35; "/mnt/software/simulide/tests/pic/sdcc/test_12f675/sdcc_code/test_12f675.c"	delay( 100 );
+0000fd   3064     movlw   0x64             	MOVLW	0x64
+0000fe   00af     movwf   0x2f             	MOVWF	STK00
+0000ff   3000     movlw   0x00             	MOVLW	0x00
+                                           	PAGESEL	_delay
+000100   20d2     call    0x00d2           	CALL	_delay
+                                           	PAGESEL	$
+000101   28f8     goto    0x00f8           	GOTO	_00142_DS_
+                                           _00139_DS_:
+                                           ;	.line	38; "/mnt/software/simulide/tests/pic/sdcc/test_12f675/sdcc_code/test_12f675.c"	GPIO = 0x01;
+000102   3001     movlw   0x01             	MOVLW	0x01
+000103   1283     bcf     0x03, 0x5        	BANKSEL	_GPIO
+000104   0085     movwf   0x05             	MOVWF	_GPIO
+                                           ;	.line	39; "/mnt/software/simulide/tests/pic/sdcc/test_12f675/sdcc_code/test_12f675.c"	delay( 150 );
+000105   3096     movlw   0x96             	MOVLW	0x96
+000106   00af     movwf   0x2f             	MOVWF	STK00
+000107   3000     movlw   0x00             	MOVLW	0x00
+                                           	PAGESEL	_delay
+000108   20d2     call    0x00d2           	CALL	_delay
+                                           	PAGESEL	$
+000109   28f8     goto    0x00f8           	GOTO	_00142_DS_
+                                           ;	.line	42; "/mnt/software/simulide/tests/pic/sdcc/test_12f675/sdcc_code/test_12f675.c"	}
+00010a   0008     return                   	RETURN	
+                                           ; exit point of _main
+
+                                           ;***
+                                           ;  pBlock Stats: dbName = C
+                                           ;***
+                                           ;has an exit
+                                           ;7 compiler assigned registers:
+                                           ;   r0x1000
+                                           ;   STK00
+                                           ;   r0x1001
+                                           ;   r0x1002
+                                           ;   r0x1003
+                                           ;   r0x1004
+                                           ;   r0x1005
+                                           ;; Starting pCode block
+                                           S_test_12f675__delay	code
+                                           _delay:
+                                           ; 2 exit points
+                                           ;	.line	16; "/mnt/software/simulide/tests/pic/sdcc/test_12f675/sdcc_code/test_12f675.c"	void delay( unsigned int tiempo )
+0000d2   00bd     movwf   0x3d             	MOVWF	r0x1000
+0000d3   082f     movf    0x2f, 0x0        	MOVF	STK00,W
+0000d4   00bc     movwf   0x3c             	MOVWF	r0x1001
+                                           ;	.line	20; "/mnt/software/simulide/tests/pic/sdcc/test_12f675/sdcc_code/test_12f675.c"	for( i=0; i<tiempo; i++ )
+0000d5   01be     clrf    0x3e             	CLRF	r0x1002
+0000d6   01bf     clrf    0x3f             	CLRF	r0x1003
+                                           _00111_DS_:
+0000d7   083d     movf    0x3d, 0x0        	MOVF	r0x1000,W
+0000d8   023f     subwf   0x3f, 0x0        	SUBWF	r0x1003,W
+0000d9   1d03     btfss   0x03, 0x2        	BTFSS	STATUS,2
+0000da   28dd     goto    0x00dd           	GOTO	_00133_DS_
+0000db   083c     movf    0x3c, 0x0        	MOVF	r0x1001,W
+0000dc   023e     subwf   0x3e, 0x0        	SUBWF	r0x1002,W
+                                           _00133_DS_:
+0000dd   1803     btfsc   0x03, 0x0        	BTFSC	STATUS,0
+0000de   28ef     goto    0x00ef           	GOTO	_00113_DS_
+                                           ;;genSkipc:3307: created from rifx:0x7ffffffd7c20
+                                           ;	.line	21; "/mnt/software/simulide/tests/pic/sdcc/test_12f675/sdcc_code/test_12f675.c"	for( j=0; j<1275; j++ );
+0000df   30fb     movlw   0xfb             	MOVLW	0xfb
+0000e0   00c0     movwf   0x40             	MOVWF	r0x1004
+0000e1   3004     movlw   0x04             	MOVLW	0x04
+0000e2   00c1     movwf   0x41             	MOVWF	r0x1005
+                                           _00109_DS_:
+0000e3   30ff     movlw   0xff             	MOVLW	0xff
+0000e4   07c0     addwf   0x40, 0x1        	ADDWF	r0x1004,F
+0000e5   1c03     btfss   0x03, 0x0        	BTFSS	STATUS,0
+0000e6   03c1     decf    0x41, 0x1        	DECF	r0x1005,F
+0000e7   0841     movf    0x41, 0x0        	MOVF	r0x1005,W
+0000e8   0440     iorwf   0x40, 0x0        	IORWF	r0x1004,W
+0000e9   1d03     btfss   0x03, 0x2        	BTFSS	STATUS,2
+0000ea   28e3     goto    0x00e3           	GOTO	_00109_DS_
+                                           ;	.line	20; "/mnt/software/simulide/tests/pic/sdcc/test_12f675/sdcc_code/test_12f675.c"	for( i=0; i<tiempo; i++ )
+0000eb   0abe     incf    0x3e, 0x1        	INCF	r0x1002,F
+0000ec   1903     btfsc   0x03, 0x2        	BTFSC	STATUS,2
+0000ed   0abf     incf    0x3f, 0x1        	INCF	r0x1003,F
+0000ee   28d7     goto    0x00d7           	GOTO	_00111_DS_
+                                           _00113_DS_:
+                                           ;	.line	22; "/mnt/software/simulide/tests/pic/sdcc/test_12f675/sdcc_code/test_12f675.c"	}
+0000ef   0008     return                   	RETURN	
+                                           ; exit point of _delay
+
+
+                                           ;	code size estimation:
+                                           ;	   53+    8 =    61 instructions (  138 byte)
+
+                                           	end

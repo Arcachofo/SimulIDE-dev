@@ -1,0 +1,31 @@
+<!DOCTYPE SimulIDE>
+
+<mcu name="p12F675" core="Pic14" data="256" prog="1024" progword="2" eeprom="128"
+                    inst_cycle="4" freq="20000000" >
+
+    <include file="pic/pic14_regs.xml" />
+    <include file="p12F629/p12F629_regs.xml" />
+    
+    <!-- BANK 0 -->
+        <regblock name="SFR0" start="0x001E" end="0x001F" >
+            <register name="ADRESH" addr="0x1E" bits=""/>
+            <register name="ADCON0" addr="0x1F"  mask="11001111"
+                      bits="ADON,GO/DONE,CHS0,CHS1,0,0,VCFG,ADFM"/>
+        </regblock>
+    <!-- BANK 1 -->
+        <regblock name="SFR1" start="0x009E" end="0x0009F" >
+            <register name="ADRESL" addr="0x9E" bits="" />
+            <register name="ANSEL"  addr="0x9F" reset="00001111" mask="01111111"
+                      bits="ANS0,ANS1,ANS2,ANS3,ADCS0,ADCS1,ADCS2" />
+        </regblock>
+        
+    <include file="p12F629/p12F629_int.xml" />
+    <include file="p12F629/p12F629_perif.xml" />
+    
+        <adc name="ADC" type="11" bits="10" configregsA="ADCON0"
+                        dataregs="ADRESL,ADRESH"
+                        interrupt="ADC"
+                        prescalers="2,8,32,0,4,16,64"
+                        adcpins="PORTP0,PORTP1,PORTP2,PORTP4"
+                        vrefpins="PORTP1"/>
+</mcu>

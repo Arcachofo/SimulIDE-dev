@@ -1,0 +1,92 @@
+<!DOCTYPE SimulIDE>
+
+<parts>
+  <sleep name="SLEEP" configregsA="MCUCR"/>
+  
+  <port name="PORTA" pins="8" outreg="PORTA" inreg="PINA" dirreg="DDRA" >
+  </port>
+  
+  <port name="PORTB" pins="8" outreg="PORTB" inreg="PINB" dirreg="DDRB" >
+      <extint  name="INT2" pin="PORTB2" configbits="ISC2"/>
+  </port>
+
+  <port name="PORTC" pins="8" outreg="PORTC" inreg="PINC" dirreg="DDRC" >
+  </port>
+
+  <port name="PORTD" pins="8" outreg="PORTD" inreg="PIND" dirreg="DDRD">
+    <extint name="INT0" pin="PORTD2" configbits="ISC00,ISC01"/>
+    <extint name="INT1" pin="PORTD3" configbits="ISC10,ISC11"/>
+  </port>
+
+  <intosc name="intosc" />
+
+  <timer name="TIMER0" type="821" configregsA="TCCR0"
+                       counter="TCNT0" 
+                       clockpin="PORTB0" 
+                       interrupt="T0_OVF"
+                       prescalers="0,1,8,64,256,1024,EXT_F,EXT_R" prselect="CS00,CS01,CS02" >
+    
+    <ocunit name="OC0A" pin="PORTB3" ocreg="OCR0" bits="COM00,COM01" interrupt="T0CO" />
+  </timer>
+
+  <timer name="TIMER1" type="160" configregsA="TCCR1A" configregsB="TCCR1B"
+                       counter="TCNT1L,TCNT1H" 
+                       clockpin="PORTB1" 
+                       interrupt="T1_OVF"
+                       prescalers="0,1,8,64,256,1024,EXT_F,EXT_R" prselect="CS10,CS11,CS12" >
+    
+    <ocunit name="OC1A" pin="PORTD5" ocreg="OCR1AL,OCR1AH" bits="COM1A0,COM1A1" interrupt="T1COA" />
+    <ocunit name="OC1B" pin="PORTD4" ocreg="OCR1BL,OCR1BH" bits="COM1B0,COM1B1" interrupt="T1COB" />
+    <icunit name="IC1"  pin="PORTD6" icreg="ICR1L,ICR1H"   bits="ICES1,ICNC1"   interrupt="T1CAP" />
+  </timer>
+
+  <timer name="TIMER2" type="821" configregsA="TCCR2"
+                       counter="TCNT2" 
+                       interrupt="T2_OVF"
+                       prescalers="0,1,8,32,64,128,256,1024" prselect="CS20,CS21,CS22">
+    
+    <ocunit name="OC2A" pin="PORTD7" ocreg="OCR2" bits="COM20,COM21" interrupt="T2CO" />
+  </timer>
+
+  <usart name="USART" number="1" configregsA="UCSRA" configregsB="UCSRB" configregsC="UCSRC"
+                       interrupt="USART_U">
+                                   
+    <trunit type="tx" pin="PORTD1" register="UDR" interrupt="USART_T" />
+    <trunit type="rx" pin="PORTD0"                interrupt="USART_R" />
+  </usart>
+
+  <port name="PORTV" pins="2"/> <!-- Fake Port for aVcc, aRef -->
+  <adc name="ADC" type="03" bits="10" configregsA="ADCSRA" configregsB="SFIOR"
+                  dataregs="ADCL,ADCH"
+                  multiplex="ADMUX"
+                  interrupt="ADC"
+                  prescalers="2,2,4,8,16,32,64,128"
+                  adcpins="PORTA0,PORTA1,PORTA2,PORTA3,PORTA4,PORTA5,PORTA6,PORTA7" />
+
+  <twi name="TWI"  configregsA="TWCR" configregsB="TWBR" 
+                   dataregs="TWDR" 
+                   addressreg="TWAR"
+                   statusreg="TWSR" 
+                   interrupt="TWI"
+                   prescalers="1,4,16,64"
+                   pins="PORTC1,PORTC0" /><!-- "SDA,SCL" -->
+
+  <spi name="SPI"  configregsA="SPCR" 
+                   dataregs="SPDR" 
+                   statusreg="SPSR"
+                   interrupt="SPI" 
+                   prescalers="4,16,64,128,2,8,32,64"
+                   pins="PORTB5,PORTB6,PORTB7,PORTB4" /><!-- "MOSI,MISO,SCK,SS" -->
+
+  <wdt  name="WDT00" configregsA="WDTCR" 
+                     prescalers="512,256,128,64,32,16,8,4,2,1,1,1,1,1,1,1"/>
+
+  <rom  name="ROM"  configregsA="EECR"
+                    dataregs="EEDR" 
+                    addressreg="EEARL,EEARH" 
+                    interrupt="EEPR" />
+
+  <comp name="COMP" configregsA="ACSR"
+                    interrupt="ACOMP" 
+                    pins="PORTB2,PORTB3" />
+</parts>

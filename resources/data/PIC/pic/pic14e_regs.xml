@@ -1,0 +1,24 @@
+<parts>
+    <!-- BANK 0 -->
+    <regblock name="SFRC" start="0x0000" end="0x000B" streg="STATUS">
+        <register name="INDF0"   addr="0x00" bits=""/>
+        <register name="INDF1"   addr="0x01" bits=""/>
+        <register name="PCL"     addr="0x02" bits=""/>
+        <register name="STATUS"  addr="0x03" reset="00011000" mask="11100111"
+                  bits="C,DC,Z,PD,TO,--,--,--"/>
+                  
+        <register name="FSR0L"   addr="0x04" bits=""/>
+        <register name="FSR0H"   addr="0x05" bits=""/>
+        <register name="FSR1L"   addr="0x06" bits=""/>
+        <register name="FSR1H"   addr="0x07" bits=""/>
+        
+        <register name="BSR"     addr="0x08" 
+                  bits="BSR0,BSR1,BSR2,BSR3,BSR4,0,0,0" />
+                  
+        <register name="WREG"    addr="0x09" bits=""/>
+        
+        <register name="PCLATH"  addr="0x0A" bits=""/>
+        <register name="INTCON"  addr="0x0B" 
+                  bits="IOCIF,INTF,TMR0IF,IOCIE,INTE,TMR0IE,PEIE,GIE" />
+    </regblock>
+</parts>

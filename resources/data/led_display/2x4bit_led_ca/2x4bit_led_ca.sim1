@@ -1,0 +1,147 @@
+<circuit type="simulide_1.0" stepSize="1000000" stepsPS="1000000" NLsteps="100000" animate="1" >
+
+<item itemtype="Tunnel" CircId="Tunnel-509" mainComp="false" Show_id="false" Show_Val="false" Pos="-616,24" rotation="0" hflip="1" vflip="1" label="Tunnel-509" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="-32,-208" circPos="-616,24" boardRot="0" circRot="0" Name="SCLK1" Rotated="false" />
+
+<item itemtype="ShiftReg" CircId="ShiftReg-159" mainComp="false" Show_id="false" Show_Val="false" Pos="-476,4" rotation="0" hflip="1" vflip="1" label="ShiftReg-159" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="108,-228" circPos="-476,4" boardRot="0" circRot="0" Clock_Inverted="false" Reset_Inverted="true" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="0.1 Ω" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
+
+<item itemtype="Tunnel" CircId="Tunnel-12" mainComp="false" Show_id="false" Show_Val="false" Pos="-620,12" rotation="0" hflip="1" vflip="1" label="SCLK" idLabPos="-54,-7" labelrot="0" valLabPos="-16,8" valLabRot="0" boardPos="-12,-220" circPos="-620,12" boardRot="0" circRot="0" Name="SCLK" Rotated="false" />
+
+<item itemtype="Tunnel" CircId="Tunnel-10" mainComp="false" Show_id="false" Show_Val="false" Pos="-608,132" rotation="0" hflip="1" vflip="1" label="DS" idLabPos="-36,-6" labelrot="0" valLabPos="-16,8" valLabRot="0" boardPos="-12,-236" circPos="-608,132" boardRot="0" circRot="0" Name="DI" Rotated="false" />
+
+<item itemtype="Rail" CircId="Rail-189" mainComp="false" Show_id="false" Show_Val="false" Pos="-520,28" rotation="0" hflip="1" vflip="1" label="Rail-189" idLabPos="-16,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" boardPos="56,-204" circPos="-520,28" boardRot="0" circRot="0" Voltage="5 V" />
+
+<item itemtype="Rail" CircId="Rail-192" mainComp="false" Show_id="false" Show_Val="false" Pos="-528,164" rotation="0" hflip="1" vflip="1" label="Rail-189" idLabPos="-16,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" boardPos="56,-68" circPos="-528,164" boardRot="0" circRot="0" Voltage="5 V" />
+
+<item itemtype="ShiftReg" CircId="ShiftReg-193" mainComp="false" Show_id="false" Show_Val="false" Pos="-476,140" rotation="0" hflip="1" vflip="1" label="ShiftReg-159" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="108,-92" circPos="-476,140" boardRot="0" circRot="0" Clock_Inverted="false" Reset_Inverted="true" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="0.1 Ω" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
+
+<item itemtype="Seven Segment" CircId="Seven Segment-237" mainComp="false" Show_id="false" Show_Val="false" Pos="-308,4" rotation="0" hflip="1" vflip="1" label="Seven Segment-237" idLabPos="20,-44" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="36,32" circPos="-308,4" boardRot="0" circRot="0" NumDisplays="4 _7seg" Color="0" Vertical_Pins="false" CommonCathode="false" Threshold="2.4 V" MaxCurrent="0.02 A" Resistance="50 Ω" />
+
+<item itemtype="Package" CircId="Package-254" mainComp="false" Show_id="true" Show_Val="false" Pos="-584,232" rotation="0" hflip="1" vflip="1" label="Package-254" idLabPos="0,-20" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="5.00668e-308" SubcType="Board" Width="21 _Cells" Height="15 _Cells" Package_File="2x4bit_led_ca_LS.package" Logic_Symbol="true" />
+
+<item itemtype="Ground" CircId="Ground-259" mainComp="false" Show_id="false" Show_Val="false" Pos="-432,196" rotation="0" hflip="1" vflip="1" label="Ground-259" idLabPos="-16,8" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="236,-12" circPos="-432,196" boardRot="0" circRot="0" />
+
+<item itemtype="Tunnel" CircId="Tunnel-468" mainComp="false" Show_id="false" Show_Val="false" Pos="-420,-52" rotation="0" hflip="1" vflip="1" label="Tunnel-468" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="164,-284" circPos="-420,-52" boardRot="0" circRot="0" Name="DO" Rotated="true" />
+
+<item itemtype="Seven Segment" CircId="Seven Segment-603" mainComp="false" Show_id="false" Show_Val="false" Pos="-288,172" rotation="0" hflip="1" vflip="1" label="Seven Segment-237" idLabPos="20,-44" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="36,88" circPos="-288,172" boardRot="0" circRot="0" NumDisplays="4 _7seg" Color="0" Vertical_Pins="false" CommonCathode="false" Threshold="2.4 V" MaxCurrent="0.02 A" Resistance="50 Ω" />
+
+<item itemtype="Node" CircId="Node-554" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="-608,12" />
+
+<item itemtype="Node" CircId="Node-433" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="-564,12" />
+
+<item itemtype="Node" CircId="Node-267" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="-432,80" />
+
+<item itemtype="Node" CircId="Node-600" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="-420,36" />
+
+<item itemtype="Node" CircId="Node-604" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="-340,-20" />
+
+<item itemtype="Node" CircId="Node-607" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="-344,-12" />
+
+<item itemtype="Node" CircId="Node-610" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="-348,-4" />
+
+<item itemtype="Node" CircId="Node-613" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="-352,4" />
+
+<item itemtype="Node" CircId="Node-616" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="-356,12" />
+
+<item itemtype="Node" CircId="Node-619" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="-360,20" />
+
+<item itemtype="Node" CircId="Node-622" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="-364,28" />
+
+<item itemtype="Node" CircId="Node-628" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="-368,36" />
+
+<item itemtype="Node" CircId="Node-634" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="-444,172" />
+
+<item itemtype="Connector" uid="Connector-190" startpinid="Rail-189-outnod" endpinid="ShiftReg-159-in2" pointList="-504,28,-500,28" />
+
+<item itemtype="Connector" uid="Connector-268" startpinid="Node-267-2" endpinid="ShiftReg-159-in3" pointList="-432,80,-432,-36,-484,-36" />
+
+<item itemtype="Connector" uid="Connector-269" startpinid="Node-267-1" endpinid="ShiftReg-193-in3" pointList="-432,80,-484,80,-484,100" />
+
+<item itemtype="Connector" uid="Connector-353" startpinid="Tunnel-10-pin" endpinid="ShiftReg-193-in0" pointList="-608,132,-500,132" />
+
+<item itemtype="Connector" uid="Connector-231" startpinid="ShiftReg-193-in1" endpinid="Node-433-0" pointList="-500,148,-564,148,-564,12" />
+
+<item itemtype="Connector" uid="Connector-434" startpinid="Node-433-2" endpinid="ShiftReg-159-in1" pointList="-564,12,-500,12" />
+
+<item itemtype="Connector" uid="Connector-190" startpinid="Rail-192-outnod" endpinid="ShiftReg-193-in2" pointList="-512,164,-500,164" />
+
+<item itemtype="Connector" uid="Connector-432" startpinid="Tunnel-12-pin" endpinid="Node-554-0" pointList="-620,12,-608,12" />
+
+<item itemtype="Connector" uid="Connector-553" startpinid="Tunnel-509-pin" endpinid="Node-554-1" pointList="-616,24,-608,24,-608,12" />
+
+<item itemtype="Connector" uid="Connector-555" startpinid="Node-554-2" endpinid="Node-433-1" pointList="-608,12,-564,12" />
+
+<item itemtype="Connector" uid="Connector-169" startpinid="ShiftReg-159-out7" endpinid="Node-600-0" pointList="-452,36,-420,36" />
+
+<item itemtype="Connector" uid="Connector-260" startpinid="Ground-259-Gnd" endpinid="Node-267-0" pointList="-432,180,-432,80" />
+
+<item itemtype="Connector" uid="Connector-200" startpinid="ShiftReg-193-out7" endpinid="Node-634-0" pointList="-452,172,-444,172" />
+
+<item itemtype="Connector" uid="Connector-589" startpinid="ShiftReg-193-out0" endpinid="Seven Segment-237-pin_commond" pointList="-452,116,-204,116,-204,36" />
+
+<item itemtype="Connector" uid="Connector-590" startpinid="ShiftReg-193-out1" endpinid="Seven Segment-237-pin_commonc" pointList="-452,124,-236,124,-236,36" />
+
+<item itemtype="Connector" uid="Connector-591" startpinid="ShiftReg-193-out2" endpinid="Seven Segment-237-pin_commonb" pointList="-452,132,-268,132,-268,36" />
+
+<item itemtype="Connector" uid="Connector-592" startpinid="ShiftReg-193-out3" endpinid="Seven Segment-237-pin_commona" pointList="-452,140,-300,140,-300,36" />
+
+<item itemtype="Connector" uid="Connector-593" startpinid="ShiftReg-159-out0" endpinid="Node-604-0" pointList="-452,-20,-340,-20" />
+
+<item itemtype="Connector" uid="Connector-594" startpinid="ShiftReg-159-out1" endpinid="Node-607-0" pointList="-452,-12,-344,-12" />
+
+<item itemtype="Connector" uid="Connector-595" startpinid="ShiftReg-159-out2" endpinid="Node-610-0" pointList="-452,-4,-348,-4" />
+
+<item itemtype="Connector" uid="Connector-596" startpinid="ShiftReg-159-out3" endpinid="Node-613-0" pointList="-452,4,-352,4" />
+
+<item itemtype="Connector" uid="Connector-597" startpinid="ShiftReg-159-out4" endpinid="Node-616-0" pointList="-452,12,-356,12" />
+
+<item itemtype="Connector" uid="Connector-598" startpinid="ShiftReg-159-out5" endpinid="Node-619-0" pointList="-452,20,-360,20" />
+
+<item itemtype="Connector" uid="Connector-599" startpinid="ShiftReg-159-out6" endpinid="Node-622-0" pointList="-452,28,-364,28" />
+
+<item itemtype="Connector" uid="Connector-601" startpinid="Node-600-2" endpinid="Tunnel-468-pin" pointList="-420,36,-420,-52" />
+
+<item itemtype="Connector" uid="Connector-605" startpinid="Node-604-2" endpinid="Seven Segment-237-pin_a" pointList="-340,-20,-332,-20" />
+
+<item itemtype="Connector" uid="Connector-606" startpinid="Node-604-1" endpinid="Seven Segment-603-pin_a" pointList="-340,-20,-340,148,-312,148" />
+
+<item itemtype="Connector" uid="Connector-608" startpinid="Node-607-2" endpinid="Seven Segment-237-pin_b" pointList="-344,-12,-332,-12" />
+
+<item itemtype="Connector" uid="Connector-609" startpinid="Node-607-1" endpinid="Seven Segment-603-pin_b" pointList="-344,-12,-344,156,-312,156" />
+
+<item itemtype="Connector" uid="Connector-611" startpinid="Node-610-2" endpinid="Seven Segment-237-pin_c" pointList="-348,-4,-332,-4" />
+
+<item itemtype="Connector" uid="Connector-612" startpinid="Node-610-1" endpinid="Seven Segment-603-pin_c" pointList="-348,-4,-348,164,-312,164" />
+
+<item itemtype="Connector" uid="Connector-614" startpinid="Node-613-2" endpinid="Seven Segment-237-pin_d" pointList="-352,4,-332,4" />
+
+<item itemtype="Connector" uid="Connector-615" startpinid="Node-613-1" endpinid="Seven Segment-603-pin_d" pointList="-352,4,-352,172,-312,172" />
+
+<item itemtype="Connector" uid="Connector-617" startpinid="Node-616-2" endpinid="Seven Segment-237-pin_e" pointList="-356,12,-332,12" />
+
+<item itemtype="Connector" uid="Connector-618" startpinid="Node-616-1" endpinid="Seven Segment-603-pin_e" pointList="-356,12,-356,180,-312,180" />
+
+<item itemtype="Connector" uid="Connector-620" startpinid="Node-619-2" endpinid="Seven Segment-237-pin_f" pointList="-360,20,-332,20" />
+
+<item itemtype="Connector" uid="Connector-621" startpinid="Node-619-1" endpinid="Seven Segment-603-pin_f" pointList="-360,20,-360,188,-312,188" />
+
+<item itemtype="Connector" uid="Connector-623" startpinid="Node-622-2" endpinid="Seven Segment-237-pin_g" pointList="-364,28,-332,28" />
+
+<item itemtype="Connector" uid="Connector-624" startpinid="Node-622-1" endpinid="Seven Segment-603-pin_g" pointList="-364,28,-364,196,-312,196" />
+
+<item itemtype="Connector" uid="Connector-602" startpinid="Node-600-1" endpinid="Node-628-0" pointList="-420,36,-368,36" />
+
+<item itemtype="Connector" uid="Connector-629" startpinid="Node-628-2" endpinid="Seven Segment-237-pin_dot" pointList="-368,36,-316,36" />
+
+<item itemtype="Connector" uid="Connector-630" startpinid="Node-628-1" endpinid="Seven Segment-603-pin_dot" pointList="-368,36,-368,204,-296,204" />
+
+<item itemtype="Connector" uid="Connector-631" startpinid="ShiftReg-193-out4" endpinid="Seven Segment-603-pin_commond" pointList="-452,148,-376,148,-376,220,-184,220,-184,204" />
+
+<item itemtype="Connector" uid="Connector-632" startpinid="ShiftReg-193-out5" endpinid="Seven Segment-603-pin_commonc" pointList="-452,156,-380,156,-380,224,-216,224,-216,204" />
+
+<item itemtype="Connector" uid="Connector-633" startpinid="ShiftReg-193-out6" endpinid="Seven Segment-603-pin_commonb" pointList="-452,164,-384,164,-384,228,-248,228,-248,204" />
+
+<item itemtype="Connector" uid="Connector-635" startpinid="Node-634-2" endpinid="ShiftReg-159-in0" pointList="-444,172,-444,64,-532,64,-532,-4,-500,-4" />
+
+<item itemtype="Connector" uid="Connector-636" startpinid="Node-634-1" endpinid="Seven Segment-603-pin_commona" pointList="-444,172,-388,172,-388,232,-280,232,-280,204" />
+
+</circuit>

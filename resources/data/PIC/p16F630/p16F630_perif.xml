@@ -1,0 +1,36 @@
+<parts>
+  <port name="PORTA" pins="6" outreg="PORTA" dirreg="!TRISA"
+                     inpmask="00110111" 
+                     resetpin="PORTA3"
+                     pullups="WPUA" >
+                     
+    <interrupt name="PA_INT" mask="00111111"/>
+    <extint    name="INT" pin="PORTA2" configbits="INTEDG"/>
+  </port>
+
+  <port name="PORTC" pins="6" outreg="PORTC" dirreg="!TRISC" />
+  
+  <intosc name="intosc" type="00" clockpins="PORTA4,PORTA5" />
+
+  <timer name="TIMER0" type="800" configregsA="OPTION" clockpin="PORTA2"
+                       counter="TMR0"
+                       interrupt="T0_OVF"
+                       prescalers="2,4,8,16,32,64,128,256"/>
+
+  <timer name="TIMER1" type="160" configregsA="T1CON" clockpin="PORTA5"
+                       counter="TMR1L,TMR1H"
+                       interrupt="T1_OVF"
+                       prescalers="1,2,4,8"/>
+
+  <comp name="COMP"  type="03" configregsA="CMCON"
+                      interrupt="ACOMP"
+                      pins="PORTA0,PORTA1,PORTA2"/>
+
+  <wdt name="WDT" configregsA="OPTION"
+                  prescalers="1,2,4,8,16,32,64,128"/>
+
+  <configwords name="cfgWord" type="00">
+    <word name="COINFIG1" address="0x2007" value="0xFF" />
+    <word name="COINFIG2" address="0x2008" value="0xFF" />
+  </configwords>
+</parts>

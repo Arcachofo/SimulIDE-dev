@@ -1,0 +1,75 @@
+<circuit type="simulide_1.0" stepSize="1000000" stepsPS="1000000" NLsteps="100000" animate="1" >
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-1693" mainComp="false" Show_id="false" Show_Val="true" Pos="-900,-272" rotation="0" hflip="1" vflip="1" label="Fixed Voltage-1693" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
+
+<item itemtype="Clock" CircId="Clock-722" mainComp="false" Show_id="false" Show_Val="true" Pos="-908,-304" rotation="0" hflip="1" vflip="1" label="Clock-722" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="true" Running="true" Voltage="5 V" Freq="10000 Hz" Always_On="false" />
+
+<item itemtype="Subcircuit" CircId="74HC4040-484" mainComp="false" Show_id="true" Show_Val="false" Pos="-876,-320" rotation="0" hflip="1" vflip="1" label="74HC4040-484" idLabPos="0,-20" labelrot="0" valLabPos="13,35" valLabRot="-90" Logic_Symbol="true" />
+
+<item itemtype="Rail" CircId="Rail-243" mainComp="false" ShowProp="Voltage" Show_id="false" Show_Val="true" Pos="-780,-364" rotation="0" hflip="1" vflip="1" label="Rail-243" idLabPos="-16,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Voltage="-5 V" />
+
+<item itemtype="Ground" CircId="Ground-238" mainComp="false" Show_id="false" Show_Val="false" Pos="-744,-232" rotation="0" hflip="1" vflip="1" label="Ground-238" idLabPos="-16,8" labelrot="0" valLabPos="0,0" valLabRot="0" />
+
+<item itemtype="opAmp" CircId="opAmp-233" mainComp="false" Show_id="false" Show_Val="false" Pos="-704,-272" rotation="0" hflip="1" vflip="-1" label="opAmp-233" idLabPos="-16,-32" labelrot="0" valLabPos="0,0" valLabRot="0" Gain="100000" Out_Imped="1e-14 Ω" Volt_Pos="5 V" Volt_Neg="0 V" Power_Pins="false" Switch_Pins="false" />
+
+<item itemtype="Subcircuit" CircId="AD7521-1" mainComp="false" Show_id="true" Show_Val="false" Pos="-800,-320" rotation="0" hflip="1" vflip="1" label="AD7521-1" idLabPos="0,-20" labelrot="0" valLabPos="13,39" valLabRot="-90" Logic_Symbol="true" />
+
+<item itemtype="Oscope" CircId="Oscope-2184" mainComp="false" Show_id="false" Show_Val="false" Pos="-572,-264" rotation="0" hflip="1" vflip="1" label="Oscope-2184" idLabPos="-90,-100" labelrot="0" valLabPos="0,0" valLabRot="0" Basic_X="135 _Pixels" Basic_Y="135 _Pixels" TimDiv="50568427000" TimPos="0,0,0,0," VolDiv="0.737853,5.2301,1,1," Tunnels=",,,," Trigger="1" Filter="0 V" Trigger="1" AutoSC="4" Tracks="1" HideCh="false,false,false,false," VolPos="-2.21356,-25.9309,0,0," />
+
+<item itemtype="TextComponent" CircId="TextComponent-2191" mainComp="false" Show_id="false" Show_Val="false" Pos="-736,-376" rotation="0" hflip="1" vflip="1" label="TextComponent-2191" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Margin="5 _Pixels" Border="1 _Pixels" Opacity="1" Font="Helvetica [Cronyx]" Font_Size="10 _Pixels" Fixed_Width="false" Text="Асинхронный счетчик.&#xa;Наблюдаются сильные помехи" />
+
+<item itemtype="Node" CircId="Node-240" mainComp="false" Pos="-744,-264" />
+
+<item itemtype="Node" CircId="Node-2186" mainComp="false" Pos="-668,-296" />
+
+<item itemtype="Node" CircId="Node-2189" mainComp="false" Pos="-820,-224" />
+
+<item itemtype="Connector" uid="Connector-236" startpinid="opAmp-233-inputNinv" endpinid="Node-240-0" pointList="-728,-264,-744,-264" />
+
+<item itemtype="Connector" uid="Connector-239" startpinid="Ground-238-Gnd" endpinid="Node-240-1" pointList="-744,-248,-744,-264" />
+
+<item itemtype="Connector" uid="Connector-241" startpinid="Node-240-2" endpinid="AD7521-1-Iout2" pointList="-744,-264,-760,-264" />
+
+<item itemtype="Connector" uid="Connector-244" startpinid="Rail-243-outnod" endpinid="AD7521-1-Vref" pointList="-764,-364,-744,-364,-744,-312,-760,-312" />
+
+<item itemtype="Connector" uid="Connector-710" startpinid="74HC4040-484-Q0" endpinid="AD7521-1-D0" pointList="-836,-312,-808,-312" />
+
+<item itemtype="Connector" uid="Connector-711" startpinid="74HC4040-484-Q1" endpinid="AD7521-1-D1" pointList="-836,-304,-808,-304" />
+
+<item itemtype="Connector" uid="Connector-712" startpinid="74HC4040-484-Q2" endpinid="AD7521-1-D2" pointList="-836,-296,-808,-296" />
+
+<item itemtype="Connector" uid="Connector-713" startpinid="74HC4040-484-Q3" endpinid="AD7521-1-D3" pointList="-836,-288,-808,-288" />
+
+<item itemtype="Connector" uid="Connector-714" startpinid="74HC4040-484-Q4" endpinid="AD7521-1-D4" pointList="-836,-280,-808,-280" />
+
+<item itemtype="Connector" uid="Connector-715" startpinid="74HC4040-484-Q5" endpinid="AD7521-1-D5" pointList="-836,-272,-808,-272" />
+
+<item itemtype="Connector" uid="Connector-716" startpinid="74HC4040-484-Q6" endpinid="AD7521-1-D6" pointList="-836,-264,-808,-264" />
+
+<item itemtype="Connector" uid="Connector-717" startpinid="74HC4040-484-Q7" endpinid="AD7521-1-D7" pointList="-836,-256,-808,-256" />
+
+<item itemtype="Connector" uid="Connector-718" startpinid="74HC4040-484-Q8" endpinid="AD7521-1-D8" pointList="-836,-248,-808,-248" />
+
+<item itemtype="Connector" uid="Connector-719" startpinid="74HC4040-484-Q9" endpinid="AD7521-1-D9" pointList="-836,-240,-808,-240" />
+
+<item itemtype="Connector" uid="Connector-720" startpinid="74HC4040-484-Q10" endpinid="AD7521-1-D10" pointList="-836,-232,-808,-232" />
+
+<item itemtype="Connector" uid="Connector-1694" startpinid="Fixed Voltage-1693-outnod" endpinid="74HC4040-484-MR" pointList="-884,-272,-884,-272" />
+
+<item itemtype="Connector" uid="Connector-2172" startpinid="opAmp-233-inputInv" endpinid="AD7521-1-Iout1" pointList="-728,-280,-760,-280" />
+
+<item itemtype="Connector" uid="Connector-2176" startpinid="Clock-722-outnod" endpinid="74HC4040-484-!CP" pointList="-892,-304,-884,-304" />
+
+<item itemtype="Connector" uid="Connector-242" startpinid="opAmp-233-output" endpinid="Node-2186-0" pointList="-680,-272,-668,-272,-668,-296" />
+
+<item itemtype="Connector" uid="Connector-721" startpinid="74HC4040-484-Q11" endpinid="Node-2189-0" pointList="-836,-224,-820,-224" />
+
+<item itemtype="Connector" uid="Connector-2185" startpinid="Oscope-2184-Pin0" endpinid="Node-2186-1" pointList="-660,-312,-668,-312,-668,-296" />
+
+<item itemtype="Connector" uid="Connector-2187" startpinid="Node-2186-2" endpinid="AD7521-1-Rfeed" pointList="-668,-296,-760,-296" />
+
+<item itemtype="Connector" uid="Connector-2188" startpinid="Oscope-2184-Pin1" endpinid="Node-2189-1" pointList="-660,-280,-664,-280,-664,-248,-704,-248,-704,-212,-820,-212,-820,-224" />
+
+<item itemtype="Connector" uid="Connector-2190" startpinid="Node-2189-2" endpinid="AD7521-1-D11" pointList="-820,-224,-808,-224" />
+
+</circuit>

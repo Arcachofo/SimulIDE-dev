@@ -1,0 +1,26 @@
+rules: directives keyword1 number preprocessor lineComment htmlTag quotation
+
+
+directives-style: #326432 default true false
+directives: __badram config idlocs maxram bankisel banksel cblock code cblock constant da data db de dt dw endm endc endw equ error errorlevel extern exitm expand fill global idata list local macro messg noexpand nolist org page processor pagesel radix res set space subtitle title udata udata_acs udata_ovr udata_shr variable end 
+
+keyword1-style: #141446 default true false
+keyword1: addlw addwf andlw andwf bcf bov bsf btfsc btg btfss call clrf clrw clrwdt comf decf decfsz goto incf incfsz iorlw iorwf movf movlw movwf nop reset retfie retlw return rlf rrf sleep sublw subwf swapf xorlw xorwf
+
+preprocessor-style: #414164 default true false
+preprocessor: "#+[^\n]*"
+
+number-style: #3030B8 default false false
+number: "\b[0-9]+\b" "0[bB][0-1]+" "0[xX][0-9a-fA-F]+"
+
+htmlTag-style: #303078 default false false
+htmlTag: "<.*>" 
+
+quotation-style: #505050 default false false
+quotation: "\"(\\.|[^\"])*\""
+
+lineComment-style: #646464 default false true
+lineComment: ";[^\n]*"
+
+ 
+

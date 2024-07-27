@@ -1,0 +1,13 @@
+<!DOCTYPE SimulIDE>
+
+<compiler name="Avrgcc" type="avrgcc" buildPath="build_$fileName" >
+    <step 
+        command="avr-gcc"
+        arguments=" -mmcu=$device -Wall -g -Os -o $buildPath$fileName.elf $filePath"
+        argsDebug=" -mmcu=$device -Wall -g -Og -o $buildPath$fileName.elf $filePath"
+    />
+    <step 
+        command="avr-objcopy"
+        arguments=" -j .text -j .data -O ihex $buildPath$fileName.elf $buildPath$fileName.hex"
+    />
+</compiler>

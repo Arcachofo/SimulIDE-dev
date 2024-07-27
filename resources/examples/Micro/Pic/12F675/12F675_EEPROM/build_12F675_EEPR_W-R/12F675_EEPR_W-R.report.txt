@@ -1,0 +1,54 @@
+Compilation Report
+
+Compiler Version (YYYY-MM-DD): 0.98.<<>> 2021-<<>>-24 (Linux 64 bit) : Build 1005
+
+;********************************************************************************
+
+Compilation time:
+ (Compile time: 0 seconds)
+ (Assembly time: 0 seconds)
+ (Download time: 0 seconds)
+ (Total time: 0 seconds)
+
+;********************************************************************************
+
+Chip resource usage:
+Chip Model: 12F675
+Program Memory: 115/1024 words (11.23%)
+RAM: 2/64 bytes (3.12%)
+HS (Clock source is not a primary internal oscillator. Ensure the clock source is correctly setup)
+
+;********************************************************************************
+
+RAM Allocation
+;********************************************************************************
+
+Subroutines
+Main
+Code Size (lines): 14
+Compiled Size (words): 55
+Outgoing calls: Delay_S(2), Delay_MS(2), SYSEPREAD(1), EPWRITE(1), INITSYS(9)
+
+EPWRITE
+Code Size (lines): 55
+Compiled Size (words): 15
+
+SYSEPREAD
+Code Size (lines): 38
+Compiled Size (words): 6
+
+INITSYS
+Code Size (lines): 837
+Compiled Size (words): 17
+
+Delay_MS
+Code Size (lines): 0
+Compiled Size (words): 14
+
+Delay_S
+Code Size (lines): 0
+Compiled Size (words): 8
+Outgoing calls: Delay_MS(1)
+
+;********************************************************************************
+

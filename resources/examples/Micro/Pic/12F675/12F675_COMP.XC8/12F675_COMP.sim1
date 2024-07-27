@@ -1,0 +1,29 @@
+<circuit version="" rev="2224" stepSize="1000000" stepsPS="1000000" NLsteps="100000" reaStep="1000000" animate="1" >
+
+<item itemtype="MCU" CircId="p12F675-162" mainComp="false" Show_id="true" Show_Val="false" Pos="-228,-364" rotation="0" hflip="1" vflip="1" label="p12F675" idLabPos="-3.14704,41.2843" labelrot="0" valLabPos="-16,20" valLabRot="0" Frequency="20 MHz" Program="build/12F675_COMP.hex" Auto_Load="false" saveEepr="false" Rst_enabled="false" Ext_Osc="false" Wdt_enabled="false" Clk_Out="false" varList=",,,,,,,GPIO,TRISIO,,CMCON,,PIR1,PIE1" />
+
+<item itemtype="Voltage Source" CircId="Voltage Source-163" mainComp="false" Show_id="true" Show_Val="false" Pos="-216,-400" rotation="0" hflip="1" vflip="1" label="CIN+" idLabPos="-8,-42" labelrot="0" valLabPos="-36,0" valLabRot="0" Running="true" Value_Volt="0.095 V" MaxValue="5 V" MinValue="0 V" />
+
+<item itemtype="Voltage Source" CircId="Voltage Source-171" mainComp="false" Show_id="true" Show_Val="false" Pos="-152,-400" rotation="0" hflip="1" vflip="1" label="CIN-" idLabPos="-10,-41" labelrot="0" valLabPos="-35,-5" valLabRot="0" Running="true" Value_Volt="0.315 V" MaxValue="5 V" MinValue="0 V" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-177" mainComp="false" Show_id="true" Show_Val="false" Pos="-284,-332" rotation="0" hflip="1" vflip="1" label="CIS" idLabPos="-8,-21" labelrot="0" valLabPos="-16,8" valLabRot="0" Voltage="5 V" Out="false" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-179" mainComp="false" Show_id="true" Show_Val="false" Pos="-284,-372" rotation="0" hflip="1" vflip="1" label="CINV" idLabPos="-11,-22" labelrot="0" valLabPos="-16,8" valLabRot="0" Voltage="5 V" Out="false" />
+
+<item itemtype="Probe" CircId="Probe-180" mainComp="false" Show_id="true" Show_Val="false" Pos="-92,-348" rotation="-45" hflip="1" vflip="1" label="COUT" idLabPos="13,5" labelrot="45" valLabPos="16,0" valLabRot="45" ShowVolt="false" Threshold="2.5 V" />
+
+<item itemtype="Probe" CircId="Probe-182" mainComp="false" Show_id="true" Show_Val="false" Pos="-88,-316" rotation="-45" hflip="1" vflip="1" label="Interrupt" idLabPos="13,5" labelrot="45" valLabPos="16,0" valLabRot="45" ShowVolt="false" Threshold="2.5 V" />
+
+<item itemtype="Connector" uid="connector172" startpinid="Voltage Source-163-outPin" endpinid="p12F675-162-PORTP0" pointList="-188,-384,-180,-384,-180,-348,-188,-348" />
+
+<item itemtype="Connector" uid="Connector-172" startpinid="p12F675-162-PORTP1" endpinid="Voltage Source-171-outPin" pointList="-188,-340,-120,-340,-120,-384,-124,-384" />
+
+<item itemtype="Connector" uid="Connector-178" startpinid="Fixed Voltage-177-outnod" endpinid="p12F675-162-PORTP3" pointList="-268,-332,-236,-332" />
+
+<item itemtype="Connector" uid="Connector-180" startpinid="Fixed Voltage-179-outnod" endpinid="p12F675-162-PORTP5" pointList="-268,-372,-260,-372,-260,-348,-236,-348" />
+
+<item itemtype="Connector" uid="Connector-181" startpinid="Probe-180-inpin" endpinid="p12F675-162-PORTP2" pointList="-108,-332,-188,-332" />
+
+<item itemtype="Connector" uid="Connector-183" startpinid="p12F675-162-PORTP4" endpinid="Probe-182-inpin" pointList="-236,-340,-244,-340,-244,-300,-104,-300" />
+
+</circuit>

@@ -1,0 +1,6 @@
+<!DOCTYPE SimulIDE>
+
+<mcu name="MCS51" core="8051" data="256" prog="4096" progword="1" eeprom="0" 
+                  cpu_cycle="6" inst_cycle="12" freq="12000000">
+    <include file="MCS51.xml" />
+</mcu>

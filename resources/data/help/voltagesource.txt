@@ -1,0 +1,18 @@
+Variable Voltage Source.
+
+Turn On/Off with the letf button.
+Adjust voltage using the dial (0 to max voltage).
+Button shows current voltage output.
+
+Property: (default value)
+
+- Current value: (0 V)
+   Current voltage output.
+
+- Maximum Voltage: (5 V)
+   Maximum voltage (positive or negative value).
+   Must be > Minimum Voltage.
+
+- Minimum Voltage: (0 V)
+   Minimum voltage (positive or negative value).
+   Must be < Maximum Voltage.

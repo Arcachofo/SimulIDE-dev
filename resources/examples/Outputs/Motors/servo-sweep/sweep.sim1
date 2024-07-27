@@ -1,0 +1,25 @@
+<circuit version="" rev="2229" stepSize="1000000" stepsPS="1000000" NLsteps="100000" reaStep="1000000" animate="0" >
+
+<item itemtype="Servo" CircId="Servo-1" mainComp="false" Show_id="false" Show_Val="false" Pos="-356,-244" rotation="-90" hflip="1" vflip="1" label="Servo-1" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Speed="0.2 _s/60º" MinPulse="1000 _us" MaxPulse="2000 _us" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+09 Ω" />
+
+<item itemtype="Subcircuit" CircId="Uno-2" mainComp="false" Show_id="true" Show_Val="false" Pos="-268,-284" rotation="0" hflip="1" vflip="1" label="Arduino Uno" idLabPos="75,214" labelrot="0" valLabPos="0,0" valLabRot="0" Logic_Symbol="false">
+<mainCompProps MainCompId="mega328-109" Frequency="16 MHz" Program="Sweep.hex" Auto_Load="false" saveEepr="true" SerialMon="-1" />
+</item>
+
+<item itemtype="Oscope" CircId="Oscope-17" mainComp="false" Show_id="false" Show_Val="false" Pos="-172,-380" rotation="0" hflip="1" vflip="1" label="Oscope-17" idLabPos="-90,-100" labelrot="0" valLabPos="-16,20" valLabRot="0" Basic_X="135 _Px" Basic_Y="135 _Px" BufferSize="600000" connectGnd="true" InputImped="1e+07 Ω" TimDiv="4721145978" TimPos="0,0,0,0," VolDiv="1,1,1,1," Tunnels=",,,," Trigger="0" Filter="0.1 V" Trigger="0" AutoSC="4" Tracks="2" HideCh="false,false,false,false," VolPos="0,0,0,0," />
+
+<item itemtype="Node" CircId="Node-19" mainComp="false" Pos="-308,-188" />
+
+<item itemtype="Connector" uid="connector-11" startpinid="Servo-1-in1" endpinid="Uno-2-GND2" pointList="-356,-196,-356,-148,-260,-148" />
+
+<item itemtype="Connector" uid="connector-12" startpinid="Servo-1-in0" endpinid="Uno-2-5V0" pointList="-372,-196,-372,-44,-68,-44,-68,-188,-116,-188" />
+
+<item itemtype="Connector" uid="connector-13" startpinid="Servo-1-in2" endpinid="Node-19-0" pointList="-340,-196,-340,-188,-308,-188" />
+
+<item itemtype="Connector" uid="Connector-18" startpinid="Oscope-17-Pin0" endpinid="Node-19-1" pointList="-260,-428,-308,-428,-308,-188" />
+
+<item itemtype="Connector" uid="Connector-20" startpinid="Node-19-2" endpinid="Uno-2-9" pointList="-308,-188,-260,-188" />
+
+<item itemtype="Connector" uid="Connector-21" startpinid="Uno-2-13" endpinid="Oscope-17-Pin1" pointList="-260,-156,-284,-156,-284,-396,-260,-396" />
+
+</circuit>

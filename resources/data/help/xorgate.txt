@@ -1,0 +1,11 @@
+Configurable XOR Gate
+
+Property: (default value)
+
+Electric:
+Configurable Buffer Gate
+#include logicinputs
+#include gateinputs
+#include logicoutputs
+#include gateoutputs
+#include gatedelay

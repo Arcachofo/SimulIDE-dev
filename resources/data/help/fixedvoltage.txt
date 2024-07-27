@@ -1,0 +1,8 @@
+Simple voltage source.
+
+Turn On/Off with the letf button.
+
+Property: (default value)
+
+- Voltage: (5 V)
+   Output voltage.

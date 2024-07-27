@@ -1,0 +1,5 @@
+- Input Size: (2)
+   Number of input pins.
+   
+- Invert Inputs: (no)
+   Invert input pins.

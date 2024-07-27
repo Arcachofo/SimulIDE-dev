@@ -1,0 +1,12 @@
+<!DOCTYPE SimulIDE>
+
+<mcu name="mega2560" core="AVR" data="8704" prog="262144" progword="2" eeprom="4096" inst_cycle="1" freq="16000000" >
+
+    <include file="avr/avr_gpr.xml" />
+    <include file="m640_1280_2560/m640_regs.xml" />
+    <datablock name="RAM" start="0x0200" end="0x21FF"/>
+
+    <include file="m640_1280_2560/m640_int.xml" />
+    <include file="m640_1280_2560/m640_perif.xml" />
+    
+</mcu>

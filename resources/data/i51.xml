@@ -1,0 +1,11 @@
+<!DOCTYPE SimulIDE>
+
+<itemlib>
+    
+    <itemset category="I51" type="MCU" >
+        
+        <item name="8051" package="MCS51/MCS51" data="MCS51/MCS51"></item>
+    
+    </itemset>
+    
+</itemlib>

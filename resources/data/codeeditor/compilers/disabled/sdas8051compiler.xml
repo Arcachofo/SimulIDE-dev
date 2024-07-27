@@ -1,0 +1,8 @@
+<!DOCTYPE SimulIDE>
+
+<compiler name="Sdas8051" type="sdas8051">
+    <step 
+        command="sdas8051"
+        arguments=" -y $filePath"
+    />
+</compiler>

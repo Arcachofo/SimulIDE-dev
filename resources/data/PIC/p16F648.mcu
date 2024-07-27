@@ -1,0 +1,12 @@
+<!DOCTYPE SimulIDE>
+
+<mcu name="p16F648" core="Pic14" data="512" prog="4096" progword="2" eeprom="256" 
+            inst_cycle="4" freq="20000000">
+            
+    <include file="pic/pic14_regs.xml" />
+    <include file="p16F627/p16F627_regs.xml" />
+    <include file="p16F627/p16F627_int.xml" />
+    <include file="p16F627/p16F627_perif.xml" />
+    
+    <datablock name="GPR2" start="0x0120" end="0x016F"/>
+</mcu>

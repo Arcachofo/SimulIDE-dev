@@ -1,0 +1,50 @@
+Compilation Report
+
+Compiler Version (YYYY-MM-DD): 1.00.00 2022-12-01 (Linux 64 bit) : Build 1199
+
+;********************************************************************************
+
+Compilation time:
+ (Compile time: 0 seconds)
+ (Assembly time: 0 seconds)
+ (Download time: 0 seconds)
+ (Total time: 0 seconds)
+
+;********************************************************************************
+
+Chip resource usage:
+Chip Model: TINY13A
+Program Memory: 68/512 words (13.28%)
+RAM: 3/64 bytes (4.69%)
+
+
+;********************************************************************************
+
+RAM Allocation
+;********************************************************************************
+
+Subroutines
+Main
+Code Size (lines): 10
+Compiled Size (words): 28
+Outgoing calls: Delay_MS(1), READAD(1), INITSYS(1)
+
+READAD
+Code Size (lines): 74
+Compiled Size (words): 19
+Outgoing calls: Delay_10US(1)
+
+INITSYS
+Code Size (lines): 895
+Compiled Size (words): 3
+
+Delay_10US
+Code Size (lines): 0
+Compiled Size (words): 6
+
+Delay_MS
+Code Size (lines): 0
+Compiled Size (words): 12
+
+;********************************************************************************
+

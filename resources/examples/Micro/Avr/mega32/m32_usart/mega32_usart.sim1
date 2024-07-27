@@ -1,0 +1,15 @@
+<circuit version="" rev="2224" stepSize="1000000" stepsPS="1000000" NLsteps="100000" reaStep="1000000" animate="1" >
+
+<item itemtype="MCU" CircId="mega32-1" mainComp="false" Show_id="true" Show_Val="false" Pos="912,476" rotation="0" hflip="1" vflip="1" label="mega32-1" idLabPos="0,-20" labelrot="0" valLabPos="-16,20" valLabRot="0" Frequency="16 MHz" Program="mega32_usart.hex" Auto_Load="false" saveEepr="true" Logic_Symbol="false" Wdt_enabled="false" SerialMon="1" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-2" mainComp="false" Show_id="false" Show_Val="false" Pos="876,548" rotation="0" hflip="1" vflip="1" label="Fixed Voltage-2" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Voltage="5 V" Out="true" />
+
+<item itemtype="LAnalizer" CircId="LAnalizer-4" mainComp="false" Show_id="false" Show_Val="false" Pos="1016,736" rotation="0" hflip="1" vflip="1" label="LAnalizer-4" idLabPos="-90,-100" labelrot="0" valLabPos="-16,20" valLabRot="0" Basic_X="135 _Px" Basic_Y="135 _Px" BufferSize="100000 Samples" connectGnd="true" InputImped="1e+07 Ω" TimDiv="99032959979" TimPos="0" VolDiv="0.15" Tunnels=",,,,,,,," Trigger="9" TimeStep="1000 _ps" AutoExport="false" TresholdR="2.5 V" Bus="false,false,false,false,false,false,false,false," TresholdF="2.5 V" />
+
+<item itemtype="Connector" uid="connector-3" startpinid="Fixed Voltage-2-outnod" endpinid="mega32-1-RST" pointList="892,548,904,548" />
+
+<item itemtype="Connector" uid="Connector-5" startpinid="LAnalizer-4-Pin0" endpinid="mega32-1-PORTD1" pointList="928,672,876,672,876,596,904,596" />
+
+<item itemtype="Connector" uid="Connector-6" startpinid="mega32-1-PORTD2" endpinid="LAnalizer-4-Pin1" pointList="904,604,884,604,884,688,928,688" />
+
+</circuit>

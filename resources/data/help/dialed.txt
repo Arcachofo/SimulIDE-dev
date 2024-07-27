@@ -1,0 +1,7 @@
+Dial:
+- Slider: (false)
+   true: Slider control.
+   false: Knob control.
+
+- Scale: (1)
+   Determines the size of the dial.

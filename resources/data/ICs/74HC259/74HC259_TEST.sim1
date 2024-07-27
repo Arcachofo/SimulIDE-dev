@@ -1,0 +1,131 @@
+<circuit type="simulide_1.0" stepSize="1000000" stepsPS="1000000" NLsteps="100000" animate="0" >
+
+<item itemtype="Probe" CircId="Probe-681" mainComp="false" Show_id="false" Show_Val="true" Pos="-180,-236" rotation="-45" hflip="1" vflip="1" label="Probe-4" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
+
+<item itemtype="Probe" CircId="Probe-680" mainComp="false" Show_id="false" Show_Val="true" Pos="-84,-188" rotation="-45" hflip="1" vflip="1" label="Probe-4" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
+
+<item itemtype="Probe" CircId="Probe-679" mainComp="false" Show_id="false" Show_Val="true" Pos="-196,-244" rotation="-45" hflip="1" vflip="1" label="Probe-4" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
+
+<item itemtype="Probe" CircId="Probe-678" mainComp="false" Show_id="false" Show_Val="true" Pos="-164,-228" rotation="-45" hflip="1" vflip="1" label="Probe-4" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
+
+<item itemtype="Probe" CircId="Probe-677" mainComp="false" Show_id="false" Show_Val="true" Pos="-116,-204" rotation="-45" hflip="1" vflip="1" label="Probe-4" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
+
+<item itemtype="Probe" CircId="Probe-676" mainComp="false" Show_id="false" Show_Val="true" Pos="-148,-220" rotation="-45" hflip="1" vflip="1" label="Probe-4" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
+
+<item itemtype="Probe" CircId="Probe-675" mainComp="false" Show_id="false" Show_Val="true" Pos="-100,-196" rotation="-45" hflip="1" vflip="1" label="Probe-4" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
+
+<item itemtype="Probe" CircId="Probe-674" mainComp="false" Show_id="false" Show_Val="true" Pos="-132,-212" rotation="-45" hflip="1" vflip="1" label="Probe-4" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
+
+<item itemtype="Subcircuit" CircId="74HC259-358" mainComp="false" Show_id="true" Show_Val="false" Pos="-308,-304" rotation="0" hflip="1" vflip="1" label="74HC259-2" idLabPos="0,-20" labelrot="0" valLabPos="13,48" valLabRot="-90" Logic_Symbol="false" />
+
+<item itemtype="Subcircuit" CircId="74HC259-2" mainComp="false" Show_id="true" Show_Val="false" Pos="-308,-108" rotation="0" hflip="1" vflip="1" label="74HC259-2" idLabPos="0,-20" labelrot="0" valLabPos="13,48" valLabRot="-90" Logic_Symbol="true" />
+
+<item itemtype="Probe" CircId="Probe-4" mainComp="false" Show_id="false" Show_Val="true" Pos="-212,-116" rotation="-45" hflip="1" vflip="1" label="Probe-4" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
+
+<item itemtype="Probe" CircId="Probe-6" mainComp="false" Show_id="false" Show_Val="true" Pos="-196,-108" rotation="-45" hflip="1" vflip="1" label="Probe-4" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
+
+<item itemtype="Probe" CircId="Probe-8" mainComp="false" Show_id="false" Show_Val="true" Pos="-180,-100" rotation="-45" hflip="1" vflip="1" label="Probe-4" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
+
+<item itemtype="Probe" CircId="Probe-10" mainComp="false" Show_id="false" Show_Val="true" Pos="-164,-92" rotation="-45" hflip="1" vflip="1" label="Probe-4" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
+
+<item itemtype="Probe" CircId="Probe-12" mainComp="false" Show_id="false" Show_Val="true" Pos="-148,-84" rotation="-45" hflip="1" vflip="1" label="Probe-4" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
+
+<item itemtype="Probe" CircId="Probe-14" mainComp="false" Show_id="false" Show_Val="true" Pos="-132,-76" rotation="-45" hflip="1" vflip="1" label="Probe-4" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
+
+<item itemtype="Probe" CircId="Probe-16" mainComp="false" Show_id="false" Show_Val="true" Pos="-116,-68" rotation="-45" hflip="1" vflip="1" label="Probe-4" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
+
+<item itemtype="Probe" CircId="Probe-18" mainComp="false" Show_id="false" Show_Val="true" Pos="-100,-60" rotation="-45" hflip="1" vflip="1" label="Probe-4" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-20" mainComp="false" Show_id="false" Show_Val="true" Pos="-396,-116" rotation="0" hflip="1" vflip="1" label="Fixed Voltage-20" idLabPos="-64,-24" labelrot="0" valLabPos="-50,-4" valLabRot="0" Out="true" Voltage="5 V" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-22" mainComp="false" Show_id="false" Show_Val="true" Pos="-396,-100" rotation="0" hflip="1" vflip="1" label="Fixed Voltage-20" idLabPos="-64,-24" labelrot="0" valLabPos="-50,-4" valLabRot="0" Out="false" Voltage="5 V" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-24" mainComp="false" Show_id="false" Show_Val="true" Pos="-396,-84" rotation="0" hflip="1" vflip="1" label="Fixed Voltage-20" idLabPos="-64,-24" labelrot="0" valLabPos="-50,-4" valLabRot="0" Out="true" Voltage="5 V" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-26" mainComp="false" Show_id="false" Show_Val="true" Pos="-396,-20" rotation="0" hflip="1" vflip="1" label="Fixed Voltage-20" idLabPos="-64,-24" labelrot="0" valLabPos="-50,-4" valLabRot="0" Out="true" Voltage="5 V" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-27" mainComp="false" Show_id="false" Show_Val="true" Pos="-396,-52" rotation="0" hflip="1" vflip="1" label="Fixed Voltage-20" idLabPos="-64,-24" labelrot="0" valLabPos="-50,-4" valLabRot="0" Out="true" Voltage="5 V" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-28" mainComp="false" Show_id="false" Show_Val="true" Pos="-396,-36" rotation="0" hflip="1" vflip="1" label="Fixed Voltage-20" idLabPos="-64,-24" labelrot="0" valLabPos="-50,-4" valLabRot="0" Out="false" Voltage="5 V" />
+
+<item itemtype="Node" CircId="Node-712" mainComp="false" Pos="-332,-52" />
+
+<item itemtype="Node" CircId="Node-709" mainComp="false" Pos="-336,-60" />
+
+<item itemtype="Node" CircId="Node-706" mainComp="false" Pos="-344,-68" />
+
+<item itemtype="Node" CircId="Node-703" mainComp="false" Pos="-348,-84" />
+
+<item itemtype="Node" CircId="Node-700" mainComp="false" Pos="-352,-100" />
+
+<item itemtype="Node" CircId="Node-697" mainComp="false" Pos="-356,-116" />
+
+<item itemtype="Connector" uid="Connector-5" startpinid="Probe-4-inpin" endpinid="74HC259-2-Q0" pointList="-228,-100,-268,-100" />
+
+<item itemtype="Connector" uid="Connector-7" startpinid="Probe-6-inpin" endpinid="74HC259-2-Q1" pointList="-212,-92,-268,-92" />
+
+<item itemtype="Connector" uid="Connector-9" startpinid="Probe-8-inpin" endpinid="74HC259-2-Q2" pointList="-196,-84,-268,-84" />
+
+<item itemtype="Connector" uid="Connector-11" startpinid="Probe-10-inpin" endpinid="74HC259-2-Q3" pointList="-180,-76,-268,-76" />
+
+<item itemtype="Connector" uid="Connector-13" startpinid="Probe-12-inpin" endpinid="74HC259-2-Q4" pointList="-164,-68,-268,-68" />
+
+<item itemtype="Connector" uid="Connector-15" startpinid="Probe-14-inpin" endpinid="74HC259-2-Q5" pointList="-148,-60,-268,-60" />
+
+<item itemtype="Connector" uid="Connector-17" startpinid="Probe-16-inpin" endpinid="74HC259-2-Q6" pointList="-132,-52,-268,-52" />
+
+<item itemtype="Connector" uid="Connector-19" startpinid="Probe-18-inpin" endpinid="74HC259-2-Q7" pointList="-116,-44,-268,-44" />
+
+<item itemtype="Connector" uid="Connector-21" startpinid="Fixed Voltage-20-outnod" endpinid="Node-697-0" pointList="-380,-116,-356,-116" />
+
+<item itemtype="Connector" uid="Connector-23" startpinid="Fixed Voltage-22-outnod" endpinid="Node-700-0" pointList="-380,-100,-352,-100" />
+
+<item itemtype="Connector" uid="Connector-25" startpinid="Fixed Voltage-24-outnod" endpinid="Node-703-0" pointList="-380,-84,-348,-84" />
+
+<item itemtype="Connector" uid="Connector-29" startpinid="Fixed Voltage-27-outnod" endpinid="Node-706-0" pointList="-380,-52,-380,-68,-344,-68" />
+
+<item itemtype="Connector" uid="Connector-30" startpinid="Fixed Voltage-28-outnod" endpinid="Node-709-0" pointList="-380,-36,-356,-36,-356,-60,-336,-60" />
+
+<item itemtype="Connector" uid="Connector-31" startpinid="Fixed Voltage-26-outnod" endpinid="Node-712-0" pointList="-380,-20,-340,-20,-340,-52,-332,-52" />
+
+<item itemtype="Connector" uid="Connector-689" startpinid="Probe-679-inpin" endpinid="74HC259-358-Q0" pointList="-212,-228,-328,-228,-328,-272,-316,-272" />
+
+<item itemtype="Connector" uid="Connector-690" startpinid="Probe-681-inpin" endpinid="74HC259-358-Q1" pointList="-196,-220,-332,-220,-332,-264,-316,-264" />
+
+<item itemtype="Connector" uid="Connector-691" startpinid="Probe-678-inpin" endpinid="74HC259-358-Q2" pointList="-180,-212,-336,-212,-336,-256,-316,-256" />
+
+<item itemtype="Connector" uid="Connector-692" startpinid="Probe-676-inpin" endpinid="74HC259-358-Q3" pointList="-164,-204,-340,-204,-340,-248,-316,-248" />
+
+<item itemtype="Connector" uid="Connector-693" startpinid="Probe-674-inpin" endpinid="74HC259-358-Q4" pointList="-148,-196,-260,-196,-260,-240,-268,-240" />
+
+<item itemtype="Connector" uid="Connector-694" startpinid="Probe-677-inpin" endpinid="74HC259-358-Q5" pointList="-132,-188,-256,-188,-256,-248,-268,-248" />
+
+<item itemtype="Connector" uid="Connector-695" startpinid="Probe-675-inpin" endpinid="74HC259-358-Q6" pointList="-116,-180,-252,-180,-252,-256,-268,-256" />
+
+<item itemtype="Connector" uid="Connector-696" startpinid="Probe-680-inpin" endpinid="74HC259-358-Q7" pointList="-100,-172,-248,-172,-248,-264,-268,-264" />
+
+<item itemtype="Connector" uid="Connector-698" startpinid="Node-697-2" endpinid="74HC259-2-A0" pointList="-356,-116,-316,-116,-316,-100" />
+
+<item itemtype="Connector" uid="Connector-699" startpinid="Node-697-1" endpinid="74HC259-358-A0" pointList="-356,-116,-356,-296,-316,-296" />
+
+<item itemtype="Connector" uid="Connector-701" startpinid="Node-700-2" endpinid="74HC259-2-A1" pointList="-352,-100,-324,-100,-324,-92,-316,-92" />
+
+<item itemtype="Connector" uid="Connector-702" startpinid="Node-700-1" endpinid="74HC259-358-A1" pointList="-352,-100,-352,-288,-316,-288" />
+
+<item itemtype="Connector" uid="Connector-704" startpinid="Node-703-2" endpinid="74HC259-2-A2" pointList="-348,-84,-316,-84" />
+
+<item itemtype="Connector" uid="Connector-705" startpinid="Node-703-1" endpinid="74HC259-358-A2" pointList="-348,-84,-348,-280,-316,-280" />
+
+<item itemtype="Connector" uid="Connector-707" startpinid="Node-706-2" endpinid="74HC259-2-D" pointList="-344,-68,-316,-68" />
+
+<item itemtype="Connector" uid="Connector-708" startpinid="Node-706-1" endpinid="74HC259-358-D" pointList="-344,-68,-344,-164,-244,-164,-244,-272,-268,-272" />
+
+<item itemtype="Connector" uid="Connector-710" startpinid="Node-709-2" endpinid="74HC259-2-!E" pointList="-336,-60,-316,-60" />
+
+<item itemtype="Connector" uid="Connector-711" startpinid="Node-709-1" endpinid="74HC259-358-!E" pointList="-336,-60,-336,-160,-240,-160,-240,-280,-268,-280" />
+
+<item itemtype="Connector" uid="Connector-713" startpinid="Node-712-2" endpinid="74HC259-2-!CLR" pointList="-332,-52,-316,-52" />
+
+<item itemtype="Connector" uid="Connector-714" startpinid="Node-712-1" endpinid="74HC259-358-!CLR" pointList="-332,-52,-332,-156,-236,-156,-236,-288,-268,-288" />
+
+</circuit>

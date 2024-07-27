@@ -1,0 +1,53 @@
+<circuit version="" rev="2208" stepSize="1000000" stepsPS="1000000" NLsteps="100000" reaStep="1000000" animate="1" >
+
+<item itemtype="Rail" CircId="Rail-68" mainComp="false" ShowProp="Voltage" Show_id="false" Show_Val="true" Pos="-228,-12" rotation="90" hflip="1" vflip="1" label="Rail-68" idLabPos="-16,-24" labelrot="0" valLabPos="2.21557,15.1385" valLabRot="-90" Voltage="5 V" />
+
+<item itemtype="SwitchDip" CircId="SwitchDip-52" mainComp="false" Show_id="false" Show_Val="false" Pos="-212,36" rotation="0" hflip="1" vflip="1" label="SwitchDip-52" idLabPos="-16,-44" labelrot="0" valLabPos="0,0" valLabRot="0" Size="8" Exclusive="false" CommonPin="true" State="0" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-35" mainComp="false" Show_id="false" Show_Val="true" Pos="-180,-28" rotation="0" hflip="1" vflip="1" label="Fixed Voltage-35" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Voltage="5 V" Out="false" />
+
+<item itemtype="Mux" CircId="Mux-120" mainComp="false" Show_id="false" Show_Val="false" Pos="-164,44" rotation="0" hflip="1" vflip="1" label="Mux-120" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Address_Bits="3 _bits" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+09 Ω" Invert_Inputs="false" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" pd_n="1 _Gates" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
+
+<item itemtype="Probe" CircId="Probe-130" mainComp="false" Show_id="false" Show_Val="true" Pos="-108,4" rotation="-45" hflip="1" vflip="1" label="Probe-130" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
+
+<item itemtype="Probe" CircId="Probe-132" mainComp="false" Show_id="false" Show_Val="true" Pos="-108,20" rotation="-45" hflip="1" vflip="1" label="Probe-132" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
+
+<item itemtype="SwitchDip" CircId="SwitchDip-135" mainComp="false" Show_id="false" Show_Val="false" Pos="-212,124" rotation="0" hflip="1" vflip="1" label="SwitchDip-135" idLabPos="-16,-44" labelrot="0" valLabPos="0,0" valLabRot="0" Size="3" Exclusive="false" CommonPin="true" State="248" />
+
+<item itemtype="Node" CircId="Node-70" mainComp="false" Pos="-228,12" />
+
+<item itemtype="Connector" uid="Connector-69" startpinid="Rail-68-outnod" endpinid="Node-70-0" pointList="-228,4,-228,12" />
+
+<item itemtype="Connector" uid="Connector-71" startpinid="Node-70-2" endpinid="SwitchDip-52-switch0-pinP" pointList="-228,12,-220,12" />
+
+<item itemtype="Connector" uid="Connector-121" startpinid="Mux-120-in0" endpinid="SwitchDip-52-switch0-pinN" pointList="-188,12,-196,12" />
+
+<item itemtype="Connector" uid="Connector-122" startpinid="Mux-120-in1" endpinid="SwitchDip-52-switch1-pinN" pointList="-188,20,-196,20" />
+
+<item itemtype="Connector" uid="Connector-123" startpinid="Mux-120-in2" endpinid="SwitchDip-52-switch2-pinN" pointList="-188,28,-196,28" />
+
+<item itemtype="Connector" uid="Connector-124" startpinid="Mux-120-in3" endpinid="SwitchDip-52-switch3-pinN" pointList="-188,36,-196,36" />
+
+<item itemtype="Connector" uid="Connector-125" startpinid="Mux-120-in4" endpinid="SwitchDip-52-switch4-pinN" pointList="-188,44,-196,44" />
+
+<item itemtype="Connector" uid="Connector-126" startpinid="Mux-120-in5" endpinid="SwitchDip-52-switch5-pinN" pointList="-188,52,-196,52" />
+
+<item itemtype="Connector" uid="Connector-127" startpinid="Mux-120-in6" endpinid="SwitchDip-52-switch6-pinN" pointList="-188,60,-196,60" />
+
+<item itemtype="Connector" uid="Connector-128" startpinid="Mux-120-in7" endpinid="SwitchDip-52-switch7-pinN" pointList="-188,68,-196,68" />
+
+<item itemtype="Connector" uid="Connector-129" startpinid="Fixed Voltage-35-outnod" endpinid="Mux-120-in11" pointList="-164,-28,-156,-28,-156,-4" />
+
+<item itemtype="Connector" uid="Connector-131" startpinid="Probe-130-inpin" endpinid="Mux-120-out0" pointList="-124,20,-140,20" />
+
+<item itemtype="Connector" uid="Connector-133" startpinid="Probe-132-inpin" endpinid="Mux-120-out1" pointList="-124,36,-140,36,-140,28" />
+
+<item itemtype="Connector" uid="Connector-136" startpinid="SwitchDip-135-switch0-pinN" endpinid="Mux-120-in8" pointList="-196,100,-156,100,-156,92" />
+
+<item itemtype="Connector" uid="Connector-137" startpinid="Mux-120-in9" endpinid="SwitchDip-135-switch1-pinN" pointList="-164,92,-164,108,-196,108" />
+
+<item itemtype="Connector" uid="Connector-138" startpinid="Mux-120-in10" endpinid="SwitchDip-135-switch2-pinN" pointList="-172,92,-172,116,-196,116" />
+
+<item itemtype="Connector" uid="Connector-156" startpinid="Node-70-1" endpinid="SwitchDip-135-switch0-pinP" pointList="-228,12,-228,100,-220,100" />
+
+</circuit>

@@ -1,0 +1,35 @@
+Configurable electromagnetic relay.
+
+Property: (default value)
+
+Main:
+- Normally Closed: (no)
+   State with relay not active.
+
+- Double Throw: (no)
+   Yes: 2 throws per pole.
+   No: 1 throw per pole.
+
+- Poles: (1)
+   Number of poles controlled by this relay.
+
+
+Electric:
+- IOn: (20 mA)
+   Minimun current that activates the relay.
+
+- IOff: (10 mA)
+   Minimun current that holds the relay active.
+
+Coil:
+- Inductance: (100 mH)
+   Coil inductance.
+
+- Resistance: (100 Ω)
+   Coil resistance.
+
+- Reactive Step: (0 s)
+   Use a custom Reactive Step for this component.
+   This value overrides general Simulation Setings.
+   0 to use value set in Simulation Settings.
+

@@ -1,0 +1,47 @@
+<circuit type="simulide_1.0" stepSize="1000000" stepsPS="1000000" NLsteps="100000" animate="1" >
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-6" mainComp="false" Show_id="false" Show_Val="true" Pos="-244,52" rotation="0" hflip="1" vflip="1" label="Fixed Voltage-6" idLabPos="-64,-24" labelrot="0" valLabPos="-53,-3" valLabRot="0" Out="false" Voltage="5 V" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-5" mainComp="false" Show_id="false" Show_Val="true" Pos="-244,36" rotation="0" hflip="1" vflip="1" label="Fixed Voltage-3" idLabPos="-64,-24" labelrot="0" valLabPos="-52,-4" valLabRot="0" Out="false" Voltage="5 V" />
+
+<item itemtype="BcdToDec" CircId="BcdToDec-4" mainComp="false" Show_id="false" Show_Val="false" Pos="-172,44" rotation="0" hflip="1" vflip="1" label="BcdToDec-2" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" _16_Bits="false" Inverted="true" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-3" mainComp="false" Show_id="false" Show_Val="true" Pos="-244,68" rotation="0" hflip="1" vflip="1" label="Fixed Voltage-6" idLabPos="-64,-24" labelrot="0" valLabPos="-53,-3" valLabRot="0" Out="false" Voltage="5 V" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-2" mainComp="false" Show_id="false" Show_Val="true" Pos="-244,84" rotation="0" hflip="1" vflip="1" label="Fixed Voltage-6" idLabPos="-64,-24" labelrot="0" valLabPos="-53,-3" valLabRot="0" Out="false" Voltage="5 V" />
+
+<item itemtype="LedBar" CircId="LedBar-1" mainComp="false" Show_id="false" Show_Val="false" Pos="-100,36" rotation="0" hflip="1" vflip="1" label="LedBar-12" idLabPos="-16,-44" labelrot="0" valLabPos="0,0" valLabRot="0" Size="10 _Leds" Color="Yellow" Grounded="true" Threshold="2.4 V" MaxCurrent="0.03 A" Resistance="100 Ω" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-35" mainComp="false" Show_id="false" Show_Val="true" Pos="-252,-4" rotation="0" hflip="1" vflip="1" label="Fixed Voltage-35" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
+
+<item itemtype="Connector" uid="Connector-7" startpinid="Fixed Voltage-5-outnod" endpinid="BcdToDec-4-in0" pointList="-228,36,-196,36" />
+
+<item itemtype="Connector" uid="Connector-9" startpinid="Fixed Voltage-6-outnod" endpinid="BcdToDec-4-in1" pointList="-228,52,-220,52,-220,44,-196,44" />
+
+<item itemtype="Connector" uid="Connector-11" startpinid="Fixed Voltage-3-outnod" endpinid="BcdToDec-4-in2" pointList="-228,68,-212,68,-212,52,-196,52" />
+
+<item itemtype="Connector" uid="Connector-13" startpinid="Fixed Voltage-2-outnod" endpinid="BcdToDec-4-in3" pointList="-228,84,-204,84,-204,60,-196,60" />
+
+<item itemtype="Connector" uid="Connector-15" startpinid="LedBar-1-led0-pinP" endpinid="BcdToDec-4-out0" pointList="-116,12,-148,12" />
+
+<item itemtype="Connector" uid="Connector-17" startpinid="LedBar-1-led1-pinP" endpinid="BcdToDec-4-out1" pointList="-116,20,-148,20" />
+
+<item itemtype="Connector" uid="Connector-19" startpinid="LedBar-1-led2-pinP" endpinid="BcdToDec-4-out2" pointList="-116,28,-148,28" />
+
+<item itemtype="Connector" uid="Connector-21" startpinid="LedBar-1-led3-pinP" endpinid="BcdToDec-4-out3" pointList="-116,36,-148,36" />
+
+<item itemtype="Connector" uid="Connector-23" startpinid="LedBar-1-led4-pinP" endpinid="BcdToDec-4-out4" pointList="-116,44,-148,44" />
+
+<item itemtype="Connector" uid="Connector-25" startpinid="LedBar-1-led5-pinP" endpinid="BcdToDec-4-out5" pointList="-116,52,-148,52" />
+
+<item itemtype="Connector" uid="Connector-27" startpinid="LedBar-1-led6-pinP" endpinid="BcdToDec-4-out6" pointList="-116,60,-148,60" />
+
+<item itemtype="Connector" uid="Connector-29" startpinid="LedBar-1-led7-pinP" endpinid="BcdToDec-4-out7" pointList="-116,68,-148,68" />
+
+<item itemtype="Connector" uid="Connector-31" startpinid="LedBar-1-led8-pinP" endpinid="BcdToDec-4-out8" pointList="-116,76,-148,76" />
+
+<item itemtype="Connector" uid="Connector-33" startpinid="LedBar-1-led9-pinP" endpinid="BcdToDec-4-out9" pointList="-116,84,-148,84" />
+
+<item itemtype="Connector" uid="Connector-36" startpinid="Fixed Voltage-35-outnod" endpinid="BcdToDec-4-in4" pointList="-236,-4,-180,-4" />
+
+</circuit>

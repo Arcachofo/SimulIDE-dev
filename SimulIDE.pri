@@ -1,5 +1,5 @@
 
-VERSION = ""
+VERSION = "1.2.0"
 RELEASE = ""
 
 TEMPLATE = app
@@ -120,11 +120,20 @@ DEFINES += BUILDDATE=\\\"$$BUILD_DATE\\\"
 TARGET_NAME   = SimulIDE_$$VERSION$$RELEASE
 TARGET_PREFIX = $$BUILD_DIR/executables/$$TARGET_NAME
 
-DESTDIR = $$TARGET_PREFIX
-
 OBJECTS_DIR *= $$OUT_PWD/build/objects
 MOC_DIR     *= $$OUT_PWD/build/moc
 INCLUDEPATH += $$MOC_DIR
+
+DESTDIR = $$TARGET_PREFIX
+
+win32 | linux {
+    mkpath( $$TARGET_PREFIX/data )
+    mkpath( $$TARGET_PREFIX/examples )
+
+    copy2dest.commands = \
+        $(COPY_DIR) $$PWD/resources/data     $$TARGET_PREFIX; \
+        $(COPY_DIR) $$PWD/resources/examples $$TARGET_PREFIX; \
+}
 
 macx {
 QMAKE_CC   = /usr/local/Cellar/gcc@7/7.5.0_4/bin/gcc-7
@@ -133,7 +142,14 @@ QMAKE_LINK = /usr/local/Cellar/gcc@7/7.5.0_4/bin/g++-7
 
     QMAKE_CXXFLAGS -= -stdlib=libc++
     QMAKE_LFLAGS   -= -stdlib=libc++
+
     mkpath( $$TARGET_PREFIX/simulide.app )
+    mkpath( $$TARGET_PREFIX/simulide.app/Contents/MacOs/data )
+    mkpath( $$TARGET_PREFIX/simulide.app/Contents/MacOs/examples )
+
+    copy2dest.commands = \
+        $(COPY_DIR) $$PWD/resources/data     $$TARGET_PREFIX/simulide.app/Contents/MacOs; \
+        $(COPY_DIR) $$PWD/resources/examples $$TARGET_PREFIX/simulide.app/Contents/MacOs;
 }
 
 runLrelease.commands = \
@@ -143,7 +159,9 @@ runLrelease.commands = \
     $(MOVE) $$PWD/resources/translations/qt/*.qm $$PWD/resources/qm;
 
 QMAKE_EXTRA_TARGETS += runLrelease
+QMAKE_EXTRA_TARGETS += copy2dest
 PRE_TARGETDEPS      += runLrelease
+POST_TARGETDEPS     += copy2dest
 
 message( "-----------------------------------")
 message( "    "                               )

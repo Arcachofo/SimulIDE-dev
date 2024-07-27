@@ -1,0 +1,67 @@
+<circuit version="" rev="2224" stepSize="1000000" stepsPS="1000000" NLsteps="100000" reaStep="1000000" animate="1" >
+
+<item itemtype="Resistor" CircId="Resistor-1" mainComp="false" ShowProp="Resistance" Show_id="false" Show_Val="true" Pos="748,516" rotation="0" hflip="1" vflip="1" label="Resistor-1" idLabPos="-16,-24" labelrot="0" valLabPos="-10.9018,4.9328" valLabRot="0" Resistance="100 Ω" />
+
+<item itemtype="MCU" CircId="tiny85-2" mainComp="false" Show_id="true" Show_Val="false" Pos="644,484" rotation="0" hflip="1" vflip="1" label="Attiny85" idLabPos="-2.62445,-15.1885" labelrot="0" valLabPos="-16,20" valLabRot="0" Frequency="1 MHz" Program="build_pcint_001/pcint_001.hex" Auto_Load="false" saveEepr="true" Logic_Symbol="false" Rst_enabled="false" Ext_Osc="false" Wdt_enabled="false" Clk_Out="false" />
+
+<item itemtype="Led" CircId="Led-3" mainComp="false" Show_id="false" Show_Val="false" Pos="796,516" rotation="0" hflip="1" vflip="1" label="Led-3" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" Color="Yellow" Grounded="false" Threshold="2.4 V" MaxCurrent="0.02 A" Resistance="0.6 Ω" />
+
+<item itemtype="Ground" CircId="Ground-7" mainComp="false" Show_id="false" Show_Val="false" Pos="828,548" rotation="0" hflip="1" vflip="1" label="Ground-7" idLabPos="-16,8" labelrot="0" valLabPos="-16,20" valLabRot="0" />
+
+<item itemtype="LAnalizer" CircId="LAnalizer-9" mainComp="false" Show_id="false" Show_Val="false" Pos="740,332" rotation="0" hflip="1" vflip="1" label="LAnalizer-9" idLabPos="-90,-100" labelrot="0" valLabPos="-16,20" valLabRot="0" Basic_X="135 _Px" Basic_Y="135 _Px" BufferSize="100000 Samples" connectGnd="true" InputImped="1e+07 Ω" TimDiv="91810023591" TimPos="42698944707" VolDiv="0.15" Tunnels=",,,,,,,," Trigger="9" TimeStep="1000 _ps" AutoExport="false" TresholdR="2.5 V" Bus="false,false,false,false,false,false,false,false," TresholdF="2.5 V" />
+
+<item itemtype="Led" CircId="Led-18" mainComp="false" Show_id="false" Show_Val="false" Pos="796,484" rotation="0" hflip="1" vflip="1" label="Led-18" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" Color="Yellow" Grounded="false" Threshold="2.4 V" MaxCurrent="0.02 A" Resistance="0.6 Ω" />
+
+<item itemtype="Resistor" CircId="Resistor-19" mainComp="false" ShowProp="Resistance" Show_id="false" Show_Val="true" Pos="748,484" rotation="0" hflip="1" vflip="1" label="Resistor-19" idLabPos="-16,-24" labelrot="0" valLabPos="-12.0633,4.68777" valLabRot="0" Resistance="100 Ω" />
+
+<item itemtype="Push" CircId="Push-28" mainComp="false" Show_id="true" Show_Val="false" Pos="748,452" rotation="0" hflip="1" vflip="1" label="Interrupt" idLabPos="-19.8734,-23.1252" labelrot="0" valLabPos="-16,20" valLabRot="0" Norm_Close="false" Poles="1" />
+
+<item itemtype="Node" CircId="Node-11" mainComp="false" Pos="692,516" />
+
+<item itemtype="Node" CircId="Node-22" mainComp="false" Pos="828,516" />
+
+<item itemtype="Node" CircId="Node-25" mainComp="false" Pos="700,484" />
+
+<item itemtype="Node" CircId="Node-30" mainComp="false" Pos="828,484" />
+
+<item itemtype="Node" CircId="Node-33" mainComp="false" Pos="708,452" />
+
+<item itemtype="Connector" uid="connector-34" startpinid="Resistor-1-lPin" endpinid="Node-11-0" pointList="732,516,692,516" />
+
+<item itemtype="Connector" uid="connector-35" startpinid="Resistor-1-rPin" endpinid="Led-3-lPin" pointList="764,516,780,516" />
+
+<item itemtype="Connector" uid="connector-36" startpinid="Led-3-rPin" endpinid="Node-22-0" pointList="812,516,828,516" />
+
+<item itemtype="Connector" uid="connector-37" startpinid="LAnalizer-9-Pin0" endpinid="Node-11-1" pointList="652,268,628,268,628,452,692,452,692,516" />
+
+<item itemtype="Connector" uid="connector-38" startpinid="Node-11-2" endpinid="tiny85-2-PORTB0" pointList="692,516,684,516" />
+
+<item itemtype="Connector" uid="connector-39" startpinid="LAnalizer-9-Pin1" endpinid="Node-25-0" pointList="652,284,636,284,636,444,700,444,700,484" />
+
+<item itemtype="Connector" uid="connector-40" startpinid="tiny85-2-PORTB2" endpinid="Node-33-0" pointList="684,500,708,500,708,452" />
+
+<item itemtype="Connector" uid="connector-41" startpinid="LAnalizer-9-Pin3" endpinid="tiny85-2-PORTB5" pointList="652,316,620,316,620,492,636,492" />
+
+<item itemtype="Connector" uid="connector-42" startpinid="LAnalizer-9-Pin4" endpinid="tiny85-2-PORTB3" pointList="652,332,612,332,612,500,636,500" />
+
+<item itemtype="Connector" uid="connector-43" startpinid="LAnalizer-9-Pin5" endpinid="tiny85-2-PORTB4" pointList="652,348,604,348,604,508,636,508" />
+
+<item itemtype="Connector" uid="connector-44" startpinid="Resistor-19-rPin" endpinid="Led-18-lPin" pointList="764,484,780,484" />
+
+<item itemtype="Connector" uid="connector-45" startpinid="Led-18-rPin" endpinid="Node-30-0" pointList="812,484,828,484" />
+
+<item itemtype="Connector" uid="connector-46" startpinid="Node-22-2" endpinid="Ground-7-Gnd" pointList="828,516,828,532" />
+
+<item itemtype="Connector" uid="connector-47" startpinid="Resistor-19-lPin" endpinid="Node-25-1" pointList="732,484,700,484" />
+
+<item itemtype="Connector" uid="connector-48" startpinid="Node-25-2" endpinid="tiny85-2-PORTB1" pointList="700,484,700,508,684,508" />
+
+<item itemtype="Connector" uid="connector-49" startpinid="Push-28-switch0pinN" endpinid="Node-30-1" pointList="764,452,828,452,828,484" />
+
+<item itemtype="Connector" uid="connector-50" startpinid="Node-30-2" endpinid="Node-22-1" pointList="828,484,828,516" />
+
+<item itemtype="Connector" uid="connector-51" startpinid="Node-33-2" endpinid="LAnalizer-9-Pin2" pointList="708,452,708,436,644,436,644,300,652,300" />
+
+<item itemtype="Connector" uid="connector-52" startpinid="Push-28-pinP0" endpinid="Node-33-1" pointList="732,452,708,452" />
+
+</circuit>

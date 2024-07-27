@@ -1,0 +1,45 @@
+<!DOCTYPE SimulIDE>
+
+<itemlib>
+    <itemset category="AVR/attiny" type="MCU">
+        
+        <item name="tiny13"   package="AVR/tiny13/tiny13"     data="AVR/tiny13" />
+        <item name="tiny24"   package="AVR/tinyx4/tinyx4"     data="AVR/tiny24" />
+        <item name="tiny25"   package="AVR/tinyx5/tinyx5"     data="AVR/tiny25" />
+        <item name="tiny44"   package="AVR/tinyx4/tinyx4"     data="AVR/tiny44" />
+        <item name="tiny45"   package="AVR/tinyx5/tinyx5"     data="AVR/tiny45" />
+        <item name="tiny84"   package="AVR/tinyx4/tinyx4"     data="AVR/tiny84" />
+        <item name="tiny85"   package="AVR/tinyx5/tinyx5"     data="AVR/tiny85" />
+        <item name="tiny2313" package="AVR/tinyx313/tinyx313" data="AVR/tiny2313" />
+        <item name="tiny4313" package="AVR/tinyx313/tinyx313" data="AVR/tiny4313" />
+    </itemset>
+    <itemset category="AVR/atmega" type="MCU">
+        
+        <item name="mega8"     package="AVR/megax8/megax8"    data="AVR/mega8" />
+        <item name="m8 TQFP"   package="AVR/megax8/mx8_tqfp"  data="AVR/mega8" />
+        <item name="mega16"    package="AVR/mega32/mega32"    data="AVR/mega16" />
+        <item name="mega32"    package="AVR/mega32/mega32"    data="AVR/mega32" />
+        <item name="mega48"    package="AVR/megax8/megax8"    data="AVR/mega48" />
+        <item name="m48 TQFP"  package="AVR/megax8/mx8_tqfp"  data="AVR/mega48" />
+        <item name="mega64"    package="AVR/mega64_128/mega64" data="AVR/mega64" />
+        <item name="mega88"    package="AVR/megax8/megax8"    data="AVR/mega88" />
+        <item name="m88 TQFP"  package="AVR/megax8/mx8_tqfp"  data="AVR/mega88" />
+        <item name="mega128"   package="AVR/mega64_128/mega64" data="AVR/mega128" />
+        <item name="mega164"   package="AVR/mega32/mega32"    data="AVR/mega164" />
+        <item name="mega168"   package="AVR/megax8/megax8"    data="AVR/mega168" />
+        <item name="m168 TQFP" package="AVR/megax8/mx8_tqfp"  data="AVR/mega168" />
+        <item name="mega324"   package="AVR/mega32/mega32"    data="AVR/mega324" />
+        <item name="mega328"   package="AVR/megax8/megax8"    data="AVR/mega328" />
+        <item name="m328 TQFP" package="AVR/megax8/mx8_tqfp"  data="AVR/mega328" />
+        <item name="mega328PB" package="AVR/megax8/megax8pb"  data="AVR/mega328pb" />
+        
+        <item name="mega640"   package="AVR/m640_1280_2560/m640" data="AVR/mega640" />
+        <item name="mega644"   package="AVR/mega32/mega32"       data="AVR/mega644" />
+        <item name="mega1280"  package="AVR/m640_1280_2560/m640" data="AVR/mega1280" />
+        <item name="mega1281"  package="AVR/m1281_2561/m1281"    data="AVR/mega1281" />
+        <item name="mega1284"  package="AVR/mega32/mega32"       data="AVR/mega1284" />
+        <item name="mega2560"  package="AVR/m640_1280_2560/m640" data="AVR/mega2560" />
+        <item name="mega2561"  package="AVR/m1281_2561/m1281"    data="AVR/mega2561" />
+    </itemset>
+    
+</itemlib>

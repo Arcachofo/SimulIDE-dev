@@ -1,0 +1,23 @@
+<circuit version="" rev="2224" stepSize="1000000" stepsPS="1000000" NLsteps="100000" reaStep="1000000" animate="0" >
+
+<item itemtype="Subcircuit" CircId="Uno-2" mainComp="false" Show_id="true" Show_Val="false" Pos="-524,-348" rotation="0" hflip="1" vflip="1" label="Arduino Uno" idLabPos="47,-16" labelrot="0" valLabPos="0,0" valLabRot="0" Logic_Symbol="false">
+<mainCompProps MainCompId="mega328-109" Frequency="16 MHz" Program="HelloKeypad.hex" Auto_Load="false" saveEepr="true" SerialMon="-1" />
+</item>
+
+<item itemtype="KeyPad" CircId="Teclado-1" mainComp="false" Show_id="false" Show_Val="false" Pos="-604,-348" rotation="0" hflip="1" vflip="1" label="Teclado-2" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Rows="4" Cols="3" Key_Labels="123456789*0#" />
+
+<item itemtype="Connector" uid="Connector-4" startpinid="Teclado-1-Pin2" endpinid="Uno-2-4" pointList="-556,-308,-548,-308,-548,-300,-516,-300" />
+
+<item itemtype="Connector" uid="Connector-6" startpinid="Uno-2-5" endpinid="Teclado-1-Pin3" pointList="-516,-292,-556,-292" />
+
+<item itemtype="Connector" uid="Connector-8" startpinid="Teclado-1-Pin1" endpinid="Uno-2-3" pointList="-556,-324,-540,-324,-540,-308,-516,-308" />
+
+<item itemtype="Connector" uid="Connector-10" startpinid="Teclado-1-Pin0" endpinid="Uno-2-2" pointList="-556,-340,-532,-340,-532,-316,-516,-316" />
+
+<item itemtype="Connector" uid="Connector-12" startpinid="Teclado-1-Pin6" endpinid="Uno-2-6" pointList="-572,-276,-572,-268,-548,-268,-548,-284,-516,-284" />
+
+<item itemtype="Connector" uid="Connector-14" startpinid="Teclado-1-Pin5" endpinid="Uno-2-7" pointList="-588,-276,-588,-260,-540,-260,-540,-276,-516,-276" />
+
+<item itemtype="Connector" uid="Connector-16" startpinid="Teclado-1-Pin4" endpinid="Uno-2-8" pointList="-604,-276,-604,-252,-532,-252,-532,-260,-516,-260" />
+
+</circuit>

@@ -1,0 +1,23 @@
+Property: (default value)
+
+- Simulation Speed %: (100%)
+   Target simulation speed in percentage of real time. 
+
+- Steps per Second: (1e6 us)
+   Another way to set simulation speed.
+
+NonLinear
+- Max Iterations: (1e5)
+   Number of maximum iteations for Non Linear simulation.
+   0 for no limit.
+
+Reactive
+- Reactive Step (1 us)
+   Update step for reactive components.
+   Icrease: better simulation speed but less accuracy.
+
+Logic Output Edges
+- Slope Steps: (0)
+   Number of steps for Output Pins rising/falling edges.
+   0 for disabled.
+

@@ -1,0 +1,23 @@
+Property: (default value)
+
+Main:
+- Size X: (50 Pixels)
+   Horizontal size in pixels.
+
+- Size Y: (30 Pixels)
+   Vertical size in pixels.
+
+- Border: (2 Pixels)
+   Width of border line.
+
+- Z Value: (-1)
+   Negative values stack behind other components
+   Higher values stack on top of lower ones.
+
+Color:
+- Color: (#a0a0a4)
+   Click on the color box to choose a new color.
+
+- Opacity: (1)
+   Value from 0 to 1:
+   0 for transparent to 1 for 100% opaque.

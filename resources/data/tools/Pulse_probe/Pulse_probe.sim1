@@ -1,0 +1,25 @@
+<circuit type="simulide_1.0" stepSize="1000000" stepsPS="1000000" NLsteps="100000" animate="0" >
+
+<item itemtype="Package" CircId="Package-11" mainComp="false" Show_id="true" Show_Val="false" Pos="-448,-260" rotation="0" hflip="1" vflip="1" label="Package-11" idLabPos="0,-20" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" SubcType="Board" Width="5 _Cells" Height="2 _Cells" Package_File="Pulse_probe_LS.package" Logic_Symbol="true" />
+
+<item itemtype="Tunnel" CircId="Tunnel-9" mainComp="false" Show_id="false" Show_Val="false" Pos="-368,-236" rotation="0" hflip="1" vflip="1" label="Tunnel-9" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="80,24" circPos="-368,-236" boardRot="0" circRot="0" Name="i" Rotated="false" />
+
+<item itemtype="FlipFlopD" CircId="FlipFlopD-3" mainComp="false" Show_id="false" Show_Val="false" Pos="-336,-244" rotation="0" hflip="1" vflip="1" label="FlipFlopD-3" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="112,16" circPos="-336,-244" boardRot="0" circRot="0" UseRS="true" Reset_Inverted="false" Clock_Inverted="false" Trigger="Clock" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
+
+<item itemtype="Probe" CircId="Probe-2" mainComp="false" Show_id="false" Show_Val="false" Pos="-260,-236" rotation="-45" hflip="1" vflip="1" label="Probe-2" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" boardPos="32,8" circPos="-260,-236" boardRot="-45" circRot="-45" ShowVolt="false" Threshold="2.5 V" />
+
+<item itemtype="Probe" CircId="Probe-1" mainComp="false" Show_id="false" Show_Val="false" Pos="-260,-268" rotation="-45" hflip="1" vflip="1" label="Probe-1" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" boardPos="16,8" circPos="-260,-268" boardRot="-45" circRot="-45" ShowVolt="false" Threshold="2.5 V" />
+
+<item itemtype="Node" CircId="Node-6" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="-304,-236" />
+
+<item itemtype="Connector" uid="Connector-4" startpinid="FlipFlopD-3-out0" endpinid="Probe-1-inpin" pointList="-312,-244,-276,-244,-276,-252" />
+
+<item itemtype="Connector" uid="Connector-5" startpinid="FlipFlopD-3-out1" endpinid="Node-6-0" pointList="-312,-236,-304,-236" />
+
+<item itemtype="Connector" uid="Connector-7" startpinid="Node-6-2" endpinid="Probe-2-inpin" pointList="-304,-236,-276,-236,-276,-220" />
+
+<item itemtype="Connector" uid="Connector-8" startpinid="Node-6-1" endpinid="FlipFlopD-3-in0" pointList="-304,-236,-304,-272,-352,-272,-352,-244" />
+
+<item itemtype="Connector" uid="Connector-10" startpinid="Tunnel-9-pin" endpinid="FlipFlopD-3-in3" pointList="-368,-236,-352,-236" />
+
+</circuit>

@@ -1,0 +1,27 @@
+<circuit version="" rev="2208" stepSize="1000000" stepsPS="1000000" NLsteps="100000" reaStep="1000000" animate="0" >
+
+<item itemtype="Voltage Source" CircId="Voltage Source-1" mainComp="false" ShowProp="MaxValue" Show_id="false" Show_Val="true" Pos="688,628" rotation="0" hflip="1" vflip="1" label="Voltage Source-1" idLabPos="-32,-48" labelrot="0" valLabPos="-8,30" valLabRot="0" Running="false" Value_Volt="0 V" MaxValue="50 V" MinValue="0 V" />
+
+<item itemtype="Diac" CircId="Diac-2" mainComp="false" Show_id="false" Show_Val="false" Pos="764,644" rotation="0" hflip="1" vflip="1" label="Diac-2" idLabPos="-12,-30" labelrot="0" valLabPos="-16,20" valLabRot="0" ResOn="500 Ω" ResOff="1e+08 Ω" BrkVolt="30 V" HoldCurr="0.01 A" />
+
+<item itemtype="Ground" CircId="Ground-4" mainComp="false" Show_id="false" Show_Val="false" Pos="816,660" rotation="0" hflip="1" vflip="1" label="Ground-4" idLabPos="-16,8" labelrot="0" valLabPos="-16,20" valLabRot="0" />
+
+<item itemtype="Amperimeter" CircId="Amperimeter-5" mainComp="false" Show_id="false" Show_Val="false" Pos="808,616" rotation="0" hflip="1" vflip="1" label="Amperimeter-5" idLabPos="-24,-40" labelrot="0" valLabPos="-16,20" valLabRot="0" />
+
+<item itemtype="Oscope" CircId="Oscope-7" mainComp="false" Show_id="false" Show_Val="false" Pos="944,624" rotation="0" hflip="1" vflip="1" label="Oscope-7" idLabPos="-90,-100" labelrot="0" valLabPos="-16,20" valLabRot="0" Basic_X="135 _Px" Basic_Y="135 _Px" BufferSize="600000" connectGnd="true" InputImped="1e+07 Ω" TimDiv="1355271183972" TimPos="0,0,0,0," VolDiv="11.1991,0.0155804,1,1," Tunnels=",,,," Trigger="4" Filter="0.1 V" Trigger="4" AutoSC="4" Tracks="2" HideCh="false,false,false,false," VolPos="0,0,0,0," />
+
+<item itemtype="Node" CircId="Node-8" mainComp="false" Pos="732,644" />
+
+<item itemtype="Connector" uid="connector-10" startpinid="Diac-2-rPin" endpinid="Amperimeter-5-lPin" pointList="780,644,800,644,800,632" />
+
+<item itemtype="Connector" uid="connector-11" startpinid="Amperimeter-5-rPin" endpinid="Ground-4-Gnd" pointList="816,632,816,644" />
+
+<item itemtype="Connector" uid="connector-12" startpinid="Node-8-2" endpinid="Voltage Source-1-outPin" pointList="732,644,716,644" />
+
+<item itemtype="Connector" uid="connector-13" startpinid="Node-8-1" endpinid="Oscope-7-Pin0" pointList="732,644,732,576,856,576" />
+
+<item itemtype="Connector" uid="connector-14" startpinid="Amperimeter-5-outnod" endpinid="Oscope-7-Pin1" pointList="840,608,856,608" />
+
+<item itemtype="Connector" uid="connector-9" startpinid="Diac-2-lPin" endpinid="Node-8-0" pointList="748,644,732,644" />
+
+</circuit>

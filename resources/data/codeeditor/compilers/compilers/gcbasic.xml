@@ -1,0 +1,9 @@
+<!DOCTYPE SimulIDE>
+
+<compiler name="GcBasic" type="gcbasic" buildPath="build_$fileName">
+    <step 
+        command="gcbasic"
+        arguments=" -NP -A:GCASM -R:text -O:$buildPath$fileName.asm $filePath"
+        argsDebug=" -NP -K:L -A:GCASM -R:text -O:$buildPath$fileName.asm $filePath"
+    />
+</compiler>

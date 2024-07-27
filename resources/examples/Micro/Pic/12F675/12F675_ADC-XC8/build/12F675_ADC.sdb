@@ -1,0 +1,82 @@
+[p GLOBOPT AUTOSTATIC IEEE_DBL IEEE_FLT PIC14 PICREGULAR PICMID ]
+[d version 1.1 ]
+[d edition pro ]
+[d chip 12F675 ]
+[d frameptr 0 ]
+"11 /media/user/software/simulide/tests/MCU/pic/0_Test/12F675/12F675_ADC-XC8/12F675_ADC.c
+[v _myisr myisr `II(v  1 e 1 0 ]
+"20
+[v _main main `(v  1 e 1 0 ]
+"10 /opt/microchip/xc8/v2.32/pic/sources/c90/common/sprcadd.c
+[v ___fladd __fladd `(d  1 e 4 0 ]
+"4 /opt/microchip/xc8/v2.32/pic/sources/c90/common/Umul8_16.c
+[v __Umul8_16 _Umul8_16 `(ui  1 e 2 0 ]
+"6 /opt/microchip/xc8/v2.32/pic/sources/c90/pic/__eeprom.c
+[v ___eecpymem __eecpymem `(v  1 e 1 0 ]
+"39
+[v ___memcpyee __memcpyee `(v  1 e 1 0 ]
+"9 /media/user/software/simulide/tests/MCU/pic/0_Test/12F675/12F675_ADC-XC8/12F675_ADC.c
+[v _num_adc num_adc `i  1 e 2 0 ]
+"219 /opt/microchip/mplabx/v5.50/packs/Microchip/PIC10-12Fxxx_DFP/1.4.56/xc8/pic/include/proc/pic12f675.h
+[v _GPIO GPIO `VEuc  1 e 1 @5 ]
+"565
+[v _CMCON CMCON `VEuc  1 e 1 @25 ]
+"624
+[v _ADRESH ADRESH `VEuc  1 e 1 @30 ]
+[s S29 . 1 `uc 1 ADON 1 0 :1:0 
+`uc 1 GO_nDONE 1 0 :1:1 
+`uc 1 CHS 1 0 :2:2 
+`uc 1 . 1 0 :2:4 
+`uc 1 VCFG 1 0 :1:6 
+`uc 1 ADFM 1 0 :1:7 
+]
+"673
+[s S36 . 1 `uc 1 . 1 0 :1:0 
+`uc 1 GO_DONE 1 0 :1:1 
+`uc 1 CHS0 1 0 :1:2 
+`uc 1 CHS1 1 0 :1:3 
+]
+[s S41 . 1 `uc 1 . 1 0 :1:0 
+`uc 1 nDONE 1 0 :1:1 
+]
+[s S44 . 1 `uc 1 . 1 0 :1:0 
+`uc 1 GO 1 0 :1:1 
+]
+[u S47 . 1 `S29 1 . 1 0 `S36 1 . 1 0 `S41 1 . 1 0 `S44 1 . 1 0 ]
+[v _ADCON0bits ADCON0bits `VES47  1 e 1 @31 ]
+"798
+[v _TRISIO TRISIO `VEuc  1 e 1 @133 ]
+"1385
+[v _ADRESL ADRESL `VEuc  1 e 1 @158 ]
+"1405
+[v _ANSEL ANSEL `VEuc  1 e 1 @159 ]
+"1490
+[v _ADFM ADFM `VEb  1 e 0 @255 ]
+"1493
+[v _ADIE ADIE `VEb  1 e 0 @1126 ]
+"1496
+[v _ADIF ADIF `VEb  1 e 0 @102 ]
+"1499
+[v _ADON ADON `VEb  1 e 0 @248 ]
+"1574
+[v _GIE GIE `VEb  1 e 0 @95 ]
+"1580
+[v _GO_DONE GO_DONE `VEb  1 e 0 @249 ]
+"1619
+[v _GPIO3 GPIO3 `VEb  1 e 0 @43 ]
+"1625
+[v _GPIO5 GPIO5 `VEb  1 e 0 @45 ]
+"1676
+[v _PEIE PEIE `VEb  1 e 0 @94 ]
+"1766
+[v _VCFG VCFG `VEb  1 e 0 @254 ]
+"20 /media/user/software/simulide/tests/MCU/pic/0_Test/12F675/12F675_ADC-XC8/12F675_ADC.c
+[v _main main `(v  1 e 1 0 ]
+{
+"52
+} 0
+"11
+[v _myisr myisr `II(v  1 e 1 0 ]
+{
+"18
+} 0

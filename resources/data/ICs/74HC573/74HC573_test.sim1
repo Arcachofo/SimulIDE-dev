@@ -1,0 +1,77 @@
+<circuit type="simulide_1.0" stepSize="1000000" stepsPS="1000000" NLsteps="100000" animate="0" >
+
+<item itemtype="Subcircuit" CircId="74HC573-1" mainComp="false" Show_id="true" Show_Val="false" Pos="-244,-240" rotation="0" hflip="1" vflip="1" label="74HC573-1" idLabPos="0,-20" labelrot="0" valLabPos="-16,20" valLabRot="0" Logic_Symbol="true" />
+
+<item itemtype="LedBar" CircId="LedBar-20" mainComp="false" Show_id="false" Show_Val="false" Pos="-172,-208" rotation="0" hflip="1" vflip="1" label="LedBar-20" idLabPos="-16,-44" labelrot="0" valLabPos="-16,-56" valLabRot="0" Size="8 _Leds" Color="Yellow" Grounded="true" Threshold="2.4 V" MaxCurrent="0.03 A" Resistance="100 Ω" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-29" mainComp="false" Show_id="false" Show_Val="false" Pos="-300,-232" rotation="0" hflip="1" vflip="1" label="Fixed Voltage-29" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-52" mainComp="false" Show_id="false" Show_Val="false" Pos="-284,-160" rotation="0" hflip="1" vflip="1" label="Fixed Voltage-52" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-54" mainComp="false" Show_id="false" Show_Val="false" Pos="-288,-128" rotation="0" hflip="1" vflip="1" label="Fixed Voltage-54" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
+
+<item itemtype="Node" CircId="Node-31" mainComp="false" Pos="-264,-232" />
+
+<item itemtype="Node" CircId="Node-34" mainComp="false" Pos="-264,-224" />
+
+<item itemtype="Node" CircId="Node-37" mainComp="false" Pos="-264,-216" />
+
+<item itemtype="Node" CircId="Node-40" mainComp="false" Pos="-264,-208" />
+
+<item itemtype="Node" CircId="Node-43" mainComp="false" Pos="-264,-200" />
+
+<item itemtype="Node" CircId="Node-46" mainComp="false" Pos="-264,-192" />
+
+<item itemtype="Node" CircId="Node-49" mainComp="false" Pos="-264,-184" />
+
+<item itemtype="Connector" uid="Connector-21" startpinid="LedBar-20-led0-pinP" endpinid="74HC573-1-Q0" pointList="-188,-232,-204,-232" />
+
+<item itemtype="Connector" uid="Connector-22" startpinid="LedBar-20-led1-pinP" endpinid="74HC573-1-Q1" pointList="-188,-224,-204,-224" />
+
+<item itemtype="Connector" uid="Connector-23" startpinid="LedBar-20-led2-pinP" endpinid="74HC573-1-Q2" pointList="-188,-216,-204,-216" />
+
+<item itemtype="Connector" uid="Connector-24" startpinid="LedBar-20-led3-pinP" endpinid="74HC573-1-Q3" pointList="-188,-208,-204,-208" />
+
+<item itemtype="Connector" uid="Connector-25" startpinid="LedBar-20-led4-pinP" endpinid="74HC573-1-Q4" pointList="-188,-200,-204,-200" />
+
+<item itemtype="Connector" uid="Connector-26" startpinid="LedBar-20-led5-pinP" endpinid="74HC573-1-Q5" pointList="-188,-192,-204,-192" />
+
+<item itemtype="Connector" uid="Connector-27" startpinid="LedBar-20-led6-pinP" endpinid="74HC573-1-Q6" pointList="-188,-184,-204,-184" />
+
+<item itemtype="Connector" uid="Connector-28" startpinid="LedBar-20-led7-pinP" endpinid="74HC573-1-Q7" pointList="-188,-176,-204,-176" />
+
+<item itemtype="Connector" uid="Connector-30" startpinid="Fixed Voltage-29-outnod" endpinid="Node-31-0" pointList="-284,-232,-264,-232" />
+
+<item itemtype="Connector" uid="Connector-32" startpinid="Node-31-2" endpinid="74HC573-1-D0" pointList="-264,-232,-252,-232" />
+
+<item itemtype="Connector" uid="Connector-33" startpinid="Node-31-1" endpinid="Node-34-0" pointList="-264,-232,-264,-224" />
+
+<item itemtype="Connector" uid="Connector-35" startpinid="Node-34-2" endpinid="74HC573-1-D1" pointList="-264,-224,-252,-224" />
+
+<item itemtype="Connector" uid="Connector-36" startpinid="Node-34-1" endpinid="Node-37-0" pointList="-264,-224,-264,-216" />
+
+<item itemtype="Connector" uid="Connector-38" startpinid="Node-37-2" endpinid="74HC573-1-D2" pointList="-264,-216,-252,-216" />
+
+<item itemtype="Connector" uid="Connector-39" startpinid="Node-37-1" endpinid="Node-40-0" pointList="-264,-216,-264,-208" />
+
+<item itemtype="Connector" uid="Connector-41" startpinid="Node-40-2" endpinid="74HC573-1-D3" pointList="-264,-208,-252,-208" />
+
+<item itemtype="Connector" uid="Connector-42" startpinid="Node-40-1" endpinid="Node-43-0" pointList="-264,-208,-264,-200" />
+
+<item itemtype="Connector" uid="Connector-44" startpinid="Node-43-2" endpinid="74HC573-1-D4" pointList="-264,-200,-252,-200" />
+
+<item itemtype="Connector" uid="Connector-45" startpinid="Node-43-1" endpinid="Node-46-0" pointList="-264,-200,-264,-192" />
+
+<item itemtype="Connector" uid="Connector-47" startpinid="Node-46-2" endpinid="74HC573-1-D5" pointList="-264,-192,-252,-192" />
+
+<item itemtype="Connector" uid="Connector-48" startpinid="Node-46-1" endpinid="Node-49-0" pointList="-264,-192,-264,-184" />
+
+<item itemtype="Connector" uid="Connector-50" startpinid="Node-49-2" endpinid="74HC573-1-D6" pointList="-264,-184,-252,-184" />
+
+<item itemtype="Connector" uid="Connector-51" startpinid="Node-49-1" endpinid="74HC573-1-D7" pointList="-264,-184,-264,-176,-252,-176" />
+
+<item itemtype="Connector" uid="Connector-53" startpinid="Fixed Voltage-52-outnod" endpinid="74HC573-1-IE" pointList="-268,-160,-252,-160" />
+
+<item itemtype="Connector" uid="Connector-55" startpinid="Fixed Voltage-54-outnod" endpinid="74HC573-1-!OE" pointList="-272,-128,-204,-128,-204,-160" />
+
+</circuit>

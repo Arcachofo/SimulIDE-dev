@@ -1,0 +1,21 @@
+<circuit version="" rev="2224" stepSize="1000000" stepsPS="1000000" NLsteps="100000" reaStep="1000000" animate="0" >
+
+<item itemtype="Hd44780" CircId="Hd44780-2" mainComp="false" Show_id="true" Show_Val="false" Pos="-372,-316" rotation="0" hflip="1" vflip="1" label="Hd44780" idLabPos="62,-89" labelrot="0" valLabPos="0,0" valLabRot="0" Rows="2" Cols="16" />
+
+<item itemtype="Subcircuit" CircId="Uno-1" mainComp="false" Show_id="false" Show_Val="false" Pos="-268,-276" rotation="0" hflip="1" vflip="1" label="Arduino Uno" idLabPos="52,-22" labelrot="0" valLabPos="0,0" valLabRot="0" Logic_Symbol="false">
+<mainCompProps MainCompId="mega328-109" Frequency="16 MHz" Program="cursor.hex" Auto_Load="false" saveEepr="true" SerialMon="-1" />
+</item>
+
+<item itemtype="Connector" uid="Connector-3" startpinid="Hd44780-2-dataPin7" endpinid="Uno-1-2" pointList="-276,-308,-276,-244,-260,-244" />
+
+<item itemtype="Connector" uid="Connector-5" startpinid="Hd44780-2-dataPin6" endpinid="Uno-1-3" pointList="-284,-308,-284,-236,-260,-236" />
+
+<item itemtype="Connector" uid="Connector-7" startpinid="Hd44780-2-dataPin5" endpinid="Uno-1-4" pointList="-292,-308,-292,-228,-260,-228" />
+
+<item itemtype="Connector" uid="Connector-9" startpinid="Hd44780-2-dataPin4" endpinid="Uno-1-5" pointList="-300,-308,-300,-220,-260,-220" />
+
+<item itemtype="Connector" uid="Connector-11" startpinid="Hd44780-2-PinEn" endpinid="Uno-1-11" pointList="-340,-308,-340,-164,-260,-164" />
+
+<item itemtype="Connector" uid="Connector-13" startpinid="Hd44780-2-PinRS" endpinid="Uno-1-12" pointList="-356,-308,-356,-156,-260,-156" />
+
+</circuit>

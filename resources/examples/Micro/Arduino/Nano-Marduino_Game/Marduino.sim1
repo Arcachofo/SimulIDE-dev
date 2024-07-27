@@ -1,0 +1,79 @@
+<circuit version="" rev="2224" stepSize="1000000" stepsPS="1000000" NLsteps="100000" reaStep="1000000" animate="0" >
+
+<item itemtype="Pcd8544" CircId="Pcd8544-2" mainComp="false" Show_id="true" Show_Val="false" Pos="-300,-244" rotation="0" hflip="1" vflip="1" label="Pcd8544" idLabPos="-28,-67" labelrot="0" valLabPos="0,0" valLabRot="0" />
+
+<item itemtype="Subcircuit" CircId="Nano-3" mainComp="false" Show_id="true" Show_Val="false" Pos="-272,-200" rotation="90" hflip="1" vflip="1" label="Arduino Nano" idLabPos="67,137" labelrot="-90" valLabPos="0,0" valLabRot="0">
+<mainCompProps MainCompId="m328 TQFP-269" Frequency="16 MHz" Program="marduino.ino.hex" Auto_Load="false" saveEepr="true" SerialMon="-1" />
+</item>
+
+<item itemtype="Push" CircId="Push-4" mainComp="false" Show_id="true" Show_Val="false" Pos="-172,-252" rotation="0" hflip="1" vflip="1" label="Right" idLabPos="-11.2016,-22.7817" labelrot="0" valLabPos="0,0" valLabRot="0" Norm_Close="false" Poles="1" Key="0" />
+
+<item itemtype="Push" CircId="Push-5" mainComp="false" Show_id="true" Show_Val="false" Pos="-124,-252" rotation="-360" hflip="1" vflip="1" label="Jump" idLabPos="-12.3688,-23.3688" labelrot="-360" valLabPos="0,0" valLabRot="0" Norm_Close="false" Poles="1" Key="3" />
+
+<item itemtype="Push" CircId="Push-6" mainComp="false" Show_id="true" Show_Val="false" Pos="-220,-252" rotation="360" hflip="1" vflip="1" label="Left" idLabPos="-9.07537,-23.1938" labelrot="0" valLabPos="0,0" valLabRot="0" Norm_Close="false" Poles="1" Key="8" />
+
+<item itemtype="ResistorDip" CircId="ResistorDip-16" mainComp="false" ShowProp="Resistance" Show_id="false" Show_Val="true" Pos="-124,-140" rotation="-90" hflip="1" vflip="1" label="ResistorDip-16" idLabPos="-24,-40" labelrot="0" valLabPos="4,-26" valLabRot="90" Resistance="10 kΩ" Size="3" PullUp="false" PuVolt="5 V" />
+
+<item itemtype="Node" CircId="Node-9" mainComp="false" Pos="-148,-84" />
+
+<item itemtype="Node" CircId="Node-11" mainComp="false" Pos="-140,-84" />
+
+<item itemtype="Node" CircId="Node-14" mainComp="false" Pos="-108,-220" />
+
+<item itemtype="Node" CircId="Node-15" mainComp="false" Pos="-140,-188" />
+
+<item itemtype="Node" CircId="Node-24" mainComp="false" Pos="-236,-180" />
+
+<item itemtype="Node" CircId="Node-25" mainComp="false" Pos="-196,-252" />
+
+<item itemtype="Node" CircId="Node-26" mainComp="false" Pos="-148,-196" />
+
+<item itemtype="Connector" uid="Connector-16" startpinid="Pcd8544-2-PinScl" endpinid="Nano-3-8" pointList="-268,-204,-268,-196,-260,-196,-260,-148" />
+
+<item itemtype="Connector" uid="Connector-18" startpinid="Pcd8544-2-PinSi" endpinid="Nano-3-9" pointList="-284,-204,-284,-188,-268,-188,-268,-148" />
+
+<item itemtype="Connector" uid="Connector-20" startpinid="Pcd8544-2-PinDc" endpinid="Nano-3-10" pointList="-300,-204,-300,-180,-276,-180,-276,-148" />
+
+<item itemtype="Connector" uid="Connector-22" startpinid="Pcd8544-2-PinCs" endpinid="Nano-3-11" pointList="-316,-204,-316,-172,-284,-172,-284,-148" />
+
+<item itemtype="Connector" uid="Connector-24" startpinid="Pcd8544-2-PinRst" endpinid="Nano-3-12" pointList="-332,-204,-332,-164,-292,-164,-292,-148" />
+
+<item itemtype="Connector" uid="Connector-29" startpinid="Node-9-2" endpinid="Nano-3-5V0" pointList="-148,-84,-204,-84,-204,-100" />
+
+<item itemtype="Connector" uid="Connector-31" startpinid="Node-11-2" endpinid="Node-9-1" pointList="-140,-84,-148,-84" />
+
+<item itemtype="Connector" uid="Connector-43" startpinid="Nano-3-6" endpinid="Node-15-0" pointList="-244,-148,-244,-188,-140,-188" />
+
+<item itemtype="Connector" uid="Connector-45" startpinid="Nano-3-GND1" endpinid="Node-14-0" pointList="-188,-100,-188,-76,-108,-76,-108,-220" />
+
+<item itemtype="Connector" uid="Connector-46" startpinid="Push-5-switch0pinN" endpinid="Node-14-1" pointList="-108,-252,-108,-220" />
+
+<item itemtype="Connector" uid="Connector-48" startpinid="Push-5-pinP0" endpinid="Node-15-1" pointList="-140,-252,-140,-188" />
+
+<item itemtype="Connector" uid="Connector-69" startpinid="ResistorDip-16-resistor0-ePin0" endpinid="Node-9-0" pointList="-148,-124,-148,-84" />
+
+<item itemtype="Connector" uid="Connector-70" startpinid="Node-15-2" endpinid="ResistorDip-16-resistor1-ePin3" pointList="-140,-188,-140,-156" />
+
+<item itemtype="Connector" uid="Connector-71" startpinid="ResistorDip-16-resistor1-ePin2" endpinid="Node-11-0" pointList="-140,-124,-140,-84" />
+
+<item itemtype="Connector" uid="Connector-73" startpinid="ResistorDip-16-resistor2-ePin4" endpinid="Node-11-1" pointList="-132,-124,-132,-84,-140,-84" />
+
+<item itemtype="Connector" uid="Connector-79" startpinid="Push-6-pinP0" endpinid="Node-24-1" pointList="-236,-252,-236,-180" />
+
+<item itemtype="Connector" uid="Connector-80" startpinid="Nano-3-5" endpinid="Node-24-0" pointList="-236,-148,-236,-180" />
+
+<item itemtype="Connector" uid="Connector-81" startpinid="Node-24-2" endpinid="ResistorDip-16-resistor0-ePin1" pointList="-236,-180,-148,-180,-148,-156" />
+
+<item itemtype="Connector" uid="Connector-84" startpinid="Push-4-pinP0" endpinid="Node-25-1" pointList="-188,-252,-196,-252" />
+
+<item itemtype="Connector" uid="Connector-85" startpinid="Node-14-2" endpinid="Node-25-0" pointList="-108,-220,-196,-220,-196,-252" />
+
+<item itemtype="Connector" uid="Connector-86" startpinid="Node-25-2" endpinid="Push-6-switch0pinN" pointList="-196,-252,-204,-252" />
+
+<item itemtype="Connector" uid="Connector-87" startpinid="Push-4-switch0pinN" endpinid="Node-26-1" pointList="-156,-252,-148,-252,-148,-196" />
+
+<item itemtype="Connector" uid="Connector-88" startpinid="Nano-3-7" endpinid="Node-26-0" pointList="-252,-148,-252,-196,-148,-196" />
+
+<item itemtype="Connector" uid="Connector-89" startpinid="Node-26-2" endpinid="ResistorDip-16-resistor2-ePin5" pointList="-148,-196,-132,-196,-132,-156" />
+
+</circuit>

@@ -1,0 +1,9 @@
+Outputs:
+- Output High Voltage: (5 V)
+   Voltage of output High state.
+
+- Output Low Voltage: (0 V)
+   Voltage of output Low state.
+
+- Output Impedance: (40 Ω)
+   Impedance of digital output.

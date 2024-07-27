@@ -1,0 +1,13 @@
+<!DOCTYPE SimulIDE>
+
+<mcu name="mega324" core="AVR" data="2304" prog="32768" progword="2" eeprom="1024" inst_cycle="1" freq="16000000" >
+
+    <include file="avr/avr_gpr.xml" />
+    <include file="megaxx4/mxx4_regs.xml" />
+    
+    <datablock name="RAM" start="0x0100" end="0x08FF"/>
+
+    <include file="megaxx4/mxx4_int.xml" />
+    <include file="megaxx4/mxx4_perif.xml" />
+    
+</mcu>

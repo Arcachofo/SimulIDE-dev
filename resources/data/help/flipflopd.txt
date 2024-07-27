@@ -1,0 +1,3 @@
+Flipflop "D" type.
+
+#include flipflopfull

@@ -1,0 +1,10 @@
+Configurable Bus connector.
+
+Property: (default value)
+
+- Size: (8 Bits)
+   Number of pins.
+
+- Start bit: (0)
+   Bit number asigned to first pin..
+

@@ -1,0 +1,83 @@
+<circuit type="simulide_1.0" stepSize="1000000" stepsPS="1000000" NLsteps="100000" animate="0" >
+
+<item itemtype="Ground" CircId="Ground-52" mainComp="false" Show_id="false" Show_Val="false" Pos="60,-120" rotation="0" hflip="1" vflip="1" label="Ground-28" idLabPos="-16,8" labelrot="0" valLabPos="0,0" valLabRot="0" />
+
+<item itemtype="7-Seg BCD" CircId="7-51" mainComp="false" Show_id="false" Show_Val="false" Pos="112,-232" rotation="0" hflip="1" vflip="1" label="7-Seg BCD-21" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" />
+
+<item itemtype="Subcircuit" CircId="MM74C923-46" mainComp="false" Show_id="true" Show_Val="false" Pos="-72,-300" rotation="0" hflip="1" vflip="1" label="MM74C923-46" idLabPos="0,-20" labelrot="0" valLabPos="0,0" valLabRot="0" Logic_Symbol="true" />
+
+<item itemtype="KeyPad" CircId="KeyPad-9" mainComp="false" Show_id="false" Show_Val="false" Pos="-252,-260" rotation="0" hflip="1" vflip="1" label="KeyPad-2" idLabPos="-8,-16" labelrot="0" valLabPos="0,0" valLabRot="0" Rows="5 _Buttons" Cols="4 _Buttons" Key_Labels="0123456789ABCDEFGHIJ" />
+
+<item itemtype="Buffer" CircId="Buffer-8" mainComp="false" Show_id="false" Show_Val="false" Pos="0,-268" rotation="0" hflip="1" vflip="1" label="Buffer-14" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Tristate="false" Inverted="true" Open_Collector="false" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" rndPD="false" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
+
+<item itemtype="Probe" CircId="Probe-7" mainComp="false" Show_id="false" Show_Val="true" Pos="76,-284" rotation="-45" hflip="1" vflip="1" label="Probe-17" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
+
+<item itemtype="7-Seg BCD" CircId="7-5" mainComp="false" Show_id="false" Show_Val="false" Pos="72,-232" rotation="0" hflip="1" vflip="1" label="7-Seg BCD-21" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" />
+
+<item itemtype="Capacitor" CircId="Capacitor-4" mainComp="false" ShowProp="Capacitance" Show_id="false" Show_Val="true" Pos="28,-308" rotation="0" hflip="1" vflip="1" label="Capacitor-26" idLabPos="-16,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Capacitance="100 nF" />
+
+<item itemtype="Ground" CircId="Ground-3" mainComp="false" Show_id="false" Show_Val="false" Pos="44,-280" rotation="0" hflip="1" vflip="1" label="Ground-28" idLabPos="-16,8" labelrot="0" valLabPos="0,0" valLabRot="0" />
+
+<item itemtype="Clock" CircId="Clock-2" mainComp="false" Show_id="false" Show_Val="true" Pos="-40,-356" rotation="0" hflip="1" vflip="1" label="Clock-51" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="true" Running="true" Voltage="5 V" Freq="200 Hz" Always_On="false" />
+
+<item itemtype="Node" CircId="Node-65" mainComp="false" Pos="-8,-308" />
+
+<item itemtype="Node" CircId="Node-58" mainComp="false" Pos="68,-196" />
+
+<item itemtype="Node" CircId="Node-55" mainComp="false" Pos="60,-196" />
+
+<item itemtype="Node" CircId="Node-48" mainComp="false" Pos="20,-268" />
+
+<item itemtype="Connector" uid="Connector-41" startpinid="Clock-2-outnod" endpinid="Node-65-0" pointList="-24,-356,-8,-356,-8,-308" />
+
+<item itemtype="Connector" uid="Connector-13" startpinid="Buffer-8-out" endpinid="Node-48-0" pointList="16,-268,20,-268" />
+
+<item itemtype="Connector" uid="Connector-47" startpinid="MM74C923-46-DA" endpinid="Buffer-8-in0" pointList="-32,-268,-16,-268" />
+
+<item itemtype="Connector" uid="Connector-49" startpinid="Node-48-2" endpinid="Probe-7-inpin" pointList="20,-268,60,-268" />
+
+<item itemtype="Connector" uid="Connector-50" startpinid="Node-48-1" endpinid="MM74C923-46-!OE" pointList="20,-268,20,-260,-32,-260" />
+
+<item itemtype="Connector" uid="Connector-53" startpinid="Ground-52-Gnd" endpinid="Node-55-0" pointList="60,-136,60,-196" />
+
+<item itemtype="Connector" uid="Connector-54" startpinid="7-5-in2" endpinid="Node-58-0" pointList="68,-200,68,-196" />
+
+<item itemtype="Connector" uid="Connector-56" startpinid="Node-55-2" endpinid="7-5-in3" pointList="60,-196,60,-200" />
+
+<item itemtype="Connector" uid="Connector-57" startpinid="7-5-in1" endpinid="Node-58-1" pointList="76,-200,76,-196,68,-196" />
+
+<item itemtype="Connector" uid="Connector-59" startpinid="Node-58-2" endpinid="Node-55-1" pointList="68,-196,60,-196" />
+
+<item itemtype="Connector" uid="Connector-60" startpinid="7-5-in0" endpinid="MM74C923-46-E" pointList="84,-200,84,-184,-24,-184,-24,-212,-32,-212" />
+
+<item itemtype="Connector" uid="Connector-61" startpinid="MM74C923-46-D" endpinid="7-51-in3" pointList="-32,-220,-12,-220,-12,-180,100,-180,100,-200" />
+
+<item itemtype="Connector" uid="Connector-62" startpinid="MM74C923-46-C" endpinid="7-51-in2" pointList="-32,-228,-4,-228,-4,-172,108,-172,108,-200" />
+
+<item itemtype="Connector" uid="Connector-63" startpinid="MM74C923-46-B" endpinid="7-51-in1" pointList="-32,-236,4,-236,4,-168,116,-168,116,-200" />
+
+<item itemtype="Connector" uid="Connector-64" startpinid="MM74C923-46-A" endpinid="7-51-in0" pointList="-32,-244,12,-244,12,-164,124,-164,124,-200" />
+
+<item itemtype="Connector" uid="Connector-66" startpinid="Node-65-2" endpinid="Capacitor-4-lPin" pointList="-8,-308,12,-308" />
+
+<item itemtype="Connector" uid="Connector-67" startpinid="Node-65-1" endpinid="MM74C923-46-OSC" pointList="-8,-308,-8,-284,-32,-284" />
+
+<item itemtype="Connector" uid="Connector-68" startpinid="KeyPad-9-Pin0" endpinid="MM74C923-46-Y1" pointList="-188,-252,-80,-252,-80,-244" />
+
+<item itemtype="Connector" uid="Connector-69" startpinid="KeyPad-9-Pin1" endpinid="MM74C923-46-Y2" pointList="-188,-236,-80,-236" />
+
+<item itemtype="Connector" uid="Connector-70" startpinid="KeyPad-9-Pin2" endpinid="MM74C923-46-Y3" pointList="-188,-220,-176,-220,-176,-228,-80,-228" />
+
+<item itemtype="Connector" uid="Connector-71" startpinid="KeyPad-9-Pin3" endpinid="MM74C923-46-Y4" pointList="-188,-204,-168,-204,-168,-220,-80,-220" />
+
+<item itemtype="Connector" uid="Connector-72" startpinid="KeyPad-9-Pin4" endpinid="MM74C923-46-Y5" pointList="-188,-188,-156,-188,-156,-212,-80,-212" />
+
+<item itemtype="Connector" uid="Connector-73" startpinid="KeyPad-9-Pin5" endpinid="MM74C923-46-X1" pointList="-252,-172,-252,-164,-140,-164,-140,-292,-80,-292" />
+
+<item itemtype="Connector" uid="Connector-74" startpinid="KeyPad-9-Pin6" endpinid="MM74C923-46-X2" pointList="-236,-172,-236,-156,-132,-156,-132,-284,-80,-284" />
+
+<item itemtype="Connector" uid="Connector-75" startpinid="KeyPad-9-Pin7" endpinid="MM74C923-46-X3" pointList="-220,-172,-220,-148,-124,-148,-124,-276,-80,-276" />
+
+<item itemtype="Connector" uid="Connector-76" startpinid="KeyPad-9-Pin8" endpinid="MM74C923-46-X4" pointList="-204,-172,-204,-140,-116,-140,-116,-268,-80,-268" />
+
+</circuit>

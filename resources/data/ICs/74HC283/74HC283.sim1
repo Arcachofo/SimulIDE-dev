@@ -1,0 +1,77 @@
+<circuit type="simulide_1.0" stepSize="1000000" stepsPS="1000000" NLsteps="100000" animate="0" >
+
+<item itemtype="FullAdder" CircId="Full Adder-284" mainComp="false" Show_id="false" Show_Val="false" Pos="-212,-564" rotation="0" hflip="1" vflip="1" label="Full Adder-24" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
+
+<item itemtype="FullAdder" CircId="Full Adder-283" mainComp="false" Show_id="false" Show_Val="false" Pos="-212,-484" rotation="0" hflip="1" vflip="1" label="Full Adder-26" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
+
+<item itemtype="FullAdder" CircId="Full Adder-282" mainComp="false" Show_id="false" Show_Val="false" Pos="-212,-444" rotation="0" hflip="1" vflip="1" label="Full Adder-27" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
+
+<item itemtype="FullAdder" CircId="Full Adder-281" mainComp="false" Show_id="false" Show_Val="false" Pos="-212,-524" rotation="0" hflip="1" vflip="1" label="Full Adder-25" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
+
+<item itemtype="Package" CircId="Package-1" mainComp="false" Show_id="true" Show_Val="false" Pos="-412,-624" rotation="0" hflip="1" vflip="1" label="Package-306" idLabPos="-17,-16" labelrot="0" valLabPos="0,0" valLabRot="0" SubcType="None" Width="4 _Cells" Height="9 _Cells" Name="74HC283" Package_File="74HC283.package" Logic_Symbol="false" />
+
+<item itemtype="Package" CircId="Package-2" mainComp="false" Show_id="true" Show_Val="false" Pos="-416,-520" rotation="0" hflip="1" vflip="1" label="Package-305" idLabPos="-13,-16" labelrot="0" valLabPos="0,0" valLabRot="0" SubcType="None" Width="4 _Cells" Height="12 _Cells" Name="74HC283" Package_File="74HC283_LS.package" Logic_Symbol="true" />
+
+<item itemtype="Tunnel" CircId="Tunnel-45" mainComp="false" Show_id="true" Show_Val="false" Pos="-236,-596" rotation="0" hflip="1" vflip="1" label="PackagePin7" idLabPos="-85,-5" labelrot="0" valLabPos="-16,8" valLabRot="0" Name="Ci" Rotated="false" />
+
+<item itemtype="Tunnel" CircId="Tunnel-46" mainComp="false" Show_id="true" Show_Val="false" Pos="-172,-564" rotation="0" hflip="1" vflip="1" label="PackagePin4" idLabPos="22,-5" labelrot="0" valLabPos="16,0" valLabRot="45" Name="S0" Rotated="true" />
+
+<item itemtype="Tunnel" CircId="Tunnel-47" mainComp="false" Show_id="true" Show_Val="false" Pos="-172,-524" rotation="0" hflip="1" vflip="1" label="PackagePin1" idLabPos="23,-7" labelrot="0" valLabPos="16,0" valLabRot="45" Name="S1" Rotated="true" />
+
+<item itemtype="Tunnel" CircId="Tunnel-48" mainComp="false" Show_id="true" Show_Val="false" Pos="-172,-484" rotation="0" hflip="1" vflip="1" label="PackagePin13" idLabPos="21,-7" labelrot="0" valLabPos="16,0" valLabRot="45" Name="S2" Rotated="true" />
+
+<item itemtype="Tunnel" CircId="Tunnel-49" mainComp="false" Show_id="true" Show_Val="false" Pos="-172,-444" rotation="0" hflip="1" vflip="1" label="PackagePin10" idLabPos="22,-6" labelrot="0" valLabPos="16,0" valLabRot="45" Name="S3" Rotated="true" />
+
+<item itemtype="Tunnel" CircId="Tunnel-50" mainComp="false" Show_id="true" Show_Val="false" Pos="-172,-420" rotation="0" hflip="1" vflip="1" label="PackagePin9" idLabPos="23,-6" labelrot="0" valLabPos="16,0" valLabRot="45" Name="Co" Rotated="true" />
+
+<item itemtype="Tunnel" CircId="Tunnel-83" mainComp="false" Show_id="true" Show_Val="false" Pos="-236,-476" rotation="0" hflip="1" vflip="1" label="PackagePin15" idLabPos="-93,-7" labelrot="0" valLabPos="-16,8" valLabRot="0" Name="B2" Rotated="false" />
+
+<item itemtype="Tunnel" CircId="Tunnel-84" mainComp="false" Show_id="true" Show_Val="false" Pos="-236,-436" rotation="0" hflip="1" vflip="1" label="PackagePin11" idLabPos="-92,-5" labelrot="0" valLabPos="-16,8" valLabRot="0" Name="B3" Rotated="false" />
+
+<item itemtype="Tunnel" CircId="Tunnel-88" mainComp="false" Show_id="true" Show_Val="false" Pos="-236,-452" rotation="0" hflip="1" vflip="1" label="PackagePin12" idLabPos="-93,-5" labelrot="0" valLabPos="-16,8" valLabRot="0" Name="A3" Rotated="false" />
+
+<item itemtype="Tunnel" CircId="Tunnel-89" mainComp="false" Show_id="true" Show_Val="false" Pos="-236,-492" rotation="0" hflip="1" vflip="1" label="PackagePin14" idLabPos="-92,-6" labelrot="0" valLabPos="-16,8" valLabRot="0" Name="A2" Rotated="false" />
+
+<item itemtype="Tunnel" CircId="Tunnel-92" mainComp="false" Show_id="true" Show_Val="false" Pos="-236,-516" rotation="0" hflip="1" vflip="1" label="PackagePin2" idLabPos="-86,-6" labelrot="0" valLabPos="-16,8" valLabRot="0" Name="B1" Rotated="false" />
+
+<item itemtype="Tunnel" CircId="Tunnel-94" mainComp="false" Show_id="true" Show_Val="false" Pos="-236,-532" rotation="0" hflip="1" vflip="1" label="PackagePin3" idLabPos="-87,-5" labelrot="0" valLabPos="-16,8" valLabRot="0" Name="A1" Rotated="false" />
+
+<item itemtype="Tunnel" CircId="Tunnel-95" mainComp="false" Show_id="true" Show_Val="false" Pos="-236,-572" rotation="0" hflip="1" vflip="1" label="PackagePin5" idLabPos="-85,-6" labelrot="0" valLabPos="-16,8" valLabRot="0" Name="A0" Rotated="false" />
+
+<item itemtype="Tunnel" CircId="Tunnel-96" mainComp="false" Show_id="true" Show_Val="false" Pos="-236,-556" rotation="0" hflip="1" vflip="1" label="PackagePin6" idLabPos="-86,-5" labelrot="0" valLabPos="-16,8" valLabRot="0" Name="B0" Rotated="false" />
+
+<item itemtype="Connector" uid="Connector-285" startpinid="Tunnel-96-pin" endpinid="Full Adder-284-in1" pointList="-236,-556,-228,-556" />
+
+<item itemtype="Connector" uid="Connector-286" startpinid="Tunnel-95-pin" endpinid="Full Adder-284-in0" pointList="-236,-572,-228,-572" />
+
+<item itemtype="Connector" uid="Connector-287" startpinid="Tunnel-92-pin" endpinid="Full Adder-281-in1" pointList="-236,-516,-228,-516" />
+
+<item itemtype="Connector" uid="Connector-288" startpinid="Tunnel-94-pin" endpinid="Full Adder-281-in0" pointList="-236,-532,-228,-532" />
+
+<item itemtype="Connector" uid="Connector-289" startpinid="Tunnel-83-pin" endpinid="Full Adder-283-in1" pointList="-236,-476,-228,-476" />
+
+<item itemtype="Connector" uid="Connector-290" startpinid="Tunnel-89-pin" endpinid="Full Adder-283-in0" pointList="-236,-492,-228,-492" />
+
+<item itemtype="Connector" uid="Connector-291" startpinid="Tunnel-84-pin" endpinid="Full Adder-282-in1" pointList="-236,-436,-228,-436" />
+
+<item itemtype="Connector" uid="Connector-292" startpinid="Tunnel-88-pin" endpinid="Full Adder-282-in0" pointList="-236,-452,-228,-452" />
+
+<item itemtype="Connector" uid="Connector-293" startpinid="Tunnel-50-pin" endpinid="Full Adder-282-out1" pointList="-172,-420,-180,-420,-180,-436,-188,-436" />
+
+<item itemtype="Connector" uid="Connector-294" startpinid="Tunnel-45-pin" endpinid="Full Adder-284-in2" pointList="-236,-596,-180,-596,-180,-572,-188,-572" />
+
+<item itemtype="Connector" uid="Connector-295" startpinid="Tunnel-46-pin" endpinid="Full Adder-284-out0" pointList="-172,-564,-188,-564" />
+
+<item itemtype="Connector" uid="Connector-296" startpinid="Tunnel-47-pin" endpinid="Full Adder-281-out0" pointList="-172,-524,-188,-524" />
+
+<item itemtype="Connector" uid="Connector-297" startpinid="Tunnel-48-pin" endpinid="Full Adder-283-out0" pointList="-172,-484,-188,-484" />
+
+<item itemtype="Connector" uid="Connector-298" startpinid="Tunnel-49-pin" endpinid="Full Adder-282-out0" pointList="-172,-444,-188,-444" />
+
+<item itemtype="Connector" uid="Connector-299" startpinid="Full Adder-284-out1" endpinid="Full Adder-281-in2" pointList="-188,-556,-188,-532" />
+
+<item itemtype="Connector" uid="Connector-300" startpinid="Full Adder-281-out1" endpinid="Full Adder-283-in2" pointList="-188,-516,-188,-492" />
+
+<item itemtype="Connector" uid="Connector-301" startpinid="Full Adder-283-out1" endpinid="Full Adder-282-in2" pointList="-188,-476,-188,-452" />
+
+</circuit>
