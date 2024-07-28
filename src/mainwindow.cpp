@@ -361,6 +361,9 @@ QString MainWindow::getDataFilePath( QString file )
     }
     if( path.isEmpty() ) path = MainWindow::self()->getUserFilePath( file ); // File in user data folder
 
+    if( path.isEmpty() || !QFileInfo::exists( path ) )
+        path = getFilePath("data/"+file );                    // File in SimulIDE data folder
+
     return path;
 }
 QSettings* MainWindow::settings() { return m_settings; }
