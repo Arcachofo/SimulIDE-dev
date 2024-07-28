@@ -20,8 +20,6 @@ class ItemLibrary
 
         QList<LibraryItem*> items() { return m_items; }
 
-        LibraryItem* itemByName( const QString name );
-
         void addItem( LibraryItem* item );
         
         void loadItems();

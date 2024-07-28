@@ -17,11 +17,9 @@
 
 #include "gcbdebugger.h"
 #include "inodebugger.h"
-#include "b16asmdebugger.h"
 #include "avrgccdebugger.h"
 #include "xc8debugger.h"
 #include "sdccdebugger.h"
-#include "picasmdebugger.h"
 #include "asdebugger.h"
 
 
@@ -249,10 +247,7 @@ BaseDebugger* EditorWindow::createDebugger( QString name, CodeEditor* ce, QStrin
     else if( type == "sdcc" )    debugger = new SdccDebugger( ce, &m_outPane );
     else if( type == "gcbasic" ) debugger = new GcbDebugger( ce, &m_outPane );
     else if( type == "ascript" ) debugger = new asDebugger( ce, &m_outPane );
-    //else if( type == "gputils" ) debugger = new PicAsmDebugger( ce, &m_outPane );
-    //else if( type == "b16asm" )  debugger = new B16AsmDebugger( ce, &m_outPane );
-    else
-    {
+    else{
         debugger = new BaseDebugger( ce, &m_outPane );
         if( name != "None" ) code = type.right( 2 );
         debugger->setLstType( code.right( 1 ).toInt() );

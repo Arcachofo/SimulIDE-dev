@@ -77,7 +77,7 @@ void ComponentList::createList()
     addCategory( tr("Other IC")   ,"Other IC","Logic", ":/ic2.png");
     addCategory( tr("Keys")       ,"Keys"   , "Logic", ":/ic2.png" );
     addCategory( tr("Led display"),"Led display", "Logic", ":/7segbcd.png" );
-    addCategory( tr("Tools")      ,"Tools"  , "Logic", "subc.png");
+    addCategory( tr("Tools")      ,"Tools"  , "Logic", ":/subc.png");
 
     QString userDir = MainWindow::self()->userPath();
     if( !userDir.isEmpty() && QDir( userDir ).exists() )
