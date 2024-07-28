@@ -2,7 +2,7 @@
 
 <itemlib>
     
-  <itemset category="Logic/Digital Potentiometer" type="Subcircuit" folder="dig_pot" icon="ic2.png" >
+  <itemset category="Logic/Digipot" type="Subcircuit" folder="dig_pot" icon="ic2.png" >
         
     <item name="AD5160_100"  info="256-Tap Digital SPI Compatible Digital Potentiometer, 100 kOhm" /> 
     <item name="AD5160_50"   info="256-Tap Digital SPI Compatible Digital Potentiometer, 50 kOhm" /> 

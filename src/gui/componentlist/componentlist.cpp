@@ -69,6 +69,16 @@ void ComponentList::createList()
     LoadLibraryItems();
     m_customComp = true;
 
+    addCategory( tr("Ternary")    ,"Ternary", "Logic", ":/subc.png" );
+    addCategory( tr("Digipot")    ,"Digipot", "Logic", ":/ic2.png" );
+    addCategory( tr("IC 74")      ,"IC 74"  , "Logic", ":/ic2.png" );
+    addCategory( tr("IC CD")      ,"IC CD"  , "Logic", ":/ic2.png" );
+    addCategory( tr("USSR IC")    ,"USSR IC", "Logic", ":/ic2.png");
+    addCategory( tr("Other IC")   ,"Other IC","Logic", ":/ic2.png");
+    addCategory( tr("Keys")       ,"Keys"   , "Logic", ":/ic2.png" );
+    addCategory( tr("Led display"),"Led display", "Logic", ":/7segbcd.png" );
+    addCategory( tr("Tools")      ,"Tools"  , "Logic", "subc.png");
+
     QString userDir = MainWindow::self()->userPath();
     if( !userDir.isEmpty() && QDir( userDir ).exists() )
     {
