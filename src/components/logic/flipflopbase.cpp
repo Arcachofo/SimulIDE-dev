@@ -39,6 +39,18 @@ FlipFlopBase::FlipFlopBase( QString type, QString id )
 }
 FlipFlopBase::~FlipFlopBase(){}
 
+void FlipFlopBase::updateStep()
+{
+    if( !m_changed ) return;
+    m_changed = false;
+
+    m_setPin->setInverted( m_srInv );  // Set
+    m_rstPin->setInverted( m_srInv ); // Reset
+
+    voltChanged();
+    Circuit::self()->update();
+}
+
 void FlipFlopBase::stamp()
 {
     m_Q0 = (std::rand()%2);

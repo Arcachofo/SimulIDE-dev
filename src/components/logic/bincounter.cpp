@@ -107,9 +107,7 @@ void BinCounter::setSrInv( bool inv )
 {
     m_resetInv = inv;
     m_rstPin->setInverted( inv );
-
-    if( m_pinSet ) m_setPin->setInverted( inv );
-    else           m_setPin->setInverted( false );
+    m_setPin->setInverted( inv );
 }
 
 void BinCounter::useSetPin( bool set )
