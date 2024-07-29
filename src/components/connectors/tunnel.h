@@ -20,7 +20,6 @@ class Tunnel : public Component
 
  static Component* construct( QString type, QString id );
  static LibraryItem* libraryItem();
-        virtual bool setPropStr( QString prop, QString val ) override;
 
         QRectF boundingRect() const override;
 

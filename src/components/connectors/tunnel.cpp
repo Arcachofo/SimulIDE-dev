@@ -69,16 +69,6 @@ Tunnel::Tunnel( QString type, QString id )
 }
 Tunnel::~Tunnel() {}
 
-bool Tunnel::setPropStr( QString prop, QString val )
-{
-    if( prop =="Rotated" )       // Old: TODELETE
-    {
-        if( val == "true" ) { m_Hflip = -1; setflip(); }
-    }
-    else return Component::setPropStr( prop, val );
-    return true;
-}
-
 eNode* Tunnel::getEnode( QString n ) // Static
 {
     QList<Tunnel*>* list = m_tunnels.value( n );
@@ -124,6 +114,11 @@ void Tunnel::setName( QString name )
 
 void Tunnel::setGroupName( QString name, bool single )
 {
+    if( name.contains("&#x") )
+    {
+        name.replace("&#x3C;","<").replace("&#x3D;","=").replace("&#x3E;",">")
+            .replace("&#x3C","<").replace("&#x3D","=").replace("&#x3E",">");
+    }
     if( name == m_name ) return;
     if( single && Simulator::self()->isRunning() )  CircuitWidget::self()->powerCircOff();
 
