@@ -231,6 +231,11 @@ double IoPin::getVoltage()
 {
     if     ( m_enode )           return m_enode->getVolt();
     else if( m_pinMode > input ) return m_outVolt;
+    else{
+        double vddAdmit = m_vddAdmit + m_vddAdmEx;
+        double voltage = m_outHighV*vddAdmit/m_admit;
+        return voltage;
+    }
     return 0;
 }
 
