@@ -36,7 +36,7 @@ MainWindow::MainWindow()
     m_autoBck = 15;
     m_state = "■";
     m_revision = 2300; /// FIXME
-    m_version = "SimulIDE-"+QString( APP_VERSION )+" "+QString( REVNO );
+    m_version = "SimulIDE_"+QString( APP_VERSION )+"-"+QString( REVNO );
 
     this->setWindowTitle( m_version );
 
