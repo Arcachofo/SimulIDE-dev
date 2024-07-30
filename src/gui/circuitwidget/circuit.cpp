@@ -389,7 +389,6 @@ void Circuit::loadStrDoc( QString &doc )
         for( Component* comp : compList ){
             comp->setSelected( true );
             comp->move( m_deltaMove );
-
         }
         for( Node* nod : nodeList ){
             nod->setSelected( true );

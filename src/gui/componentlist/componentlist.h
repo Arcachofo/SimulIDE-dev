@@ -3,16 +3,12 @@
  *                                                                         *
  ***( see copyright.txt file at root folder )*******************************/
 
-#ifndef COMPONENTSELECTOR_H
-#define COMPONENTSELECTOR_H
+#ifndef COMPONENTLIST_H
+#define COMPONENTLIST_H
 
 #include <QDropEvent>
-#include <QDebug>
-
 #include <QDir>
 #include <QTreeWidget>
-
-#include <QMimeData>
 
 #include "managecomps.h"
 #include "itemlibrary.h"
@@ -57,8 +53,6 @@ class ComponentList : public QTreeWidget
 
     private:
  static ComponentList* m_pSelf;
-
-        QString convertMcuFile( QString file );
 
         void addItem( QString caption, TreeItem* catItem, QString icon, QString type );
         void addItem( QString caption, TreeItem* catItem, QIcon &icon, QString type );

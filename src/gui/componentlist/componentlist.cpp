@@ -35,10 +35,8 @@ ComponentList::ComponentList( QWidget* parent )
 
     m_mcDialog.setVisible( false );
 
-    //setSelectionMode( QAbstractItemView::SingleSelection );
     setDragEnabled( true );
     viewport()->setAcceptDrops( true );
-    //setDropIndicatorShown( true );
 
     setIndentation( 12 );
     setRootIsDecorated( true );
@@ -48,9 +46,9 @@ ComponentList::ComponentList( QWidget* parent )
     float scale = MainWindow::self()->fontScale();
     setIconSize( QSize( 30*scale, 24*scale ));
 
-    setContextMenuPolicy( Qt::CustomContextMenu );
-
     createList();
+
+    setContextMenuPolicy( Qt::CustomContextMenu );
 
     connect( this, &ComponentList::customContextMenuRequested,
              this, &ComponentList::slotContextMenu );
@@ -267,26 +265,6 @@ QString ComponentList::getIcon( QString folder, QString name )
     if( m_compSetDir.exists( icon ) ) icon = m_compSetDir.absoluteFilePath( icon );
     else                              icon = "";
     return icon;
-}
-
-QString ComponentList::convertMcuFile( QString file )
-{
-    QString converted;
-    QString folder = QFileInfo( file ).absolutePath();
-
-    QStringList lines = fileToStringList( file, "ComponentList::convertItem" );
-    for( QString line : lines )
-    {
-        if( line.contains("parts>") ) continue;
-        if( line.startsWith("<!") ) continue;
-        if( line.contains("<include") )
-        {
-            line = line.split("\"").at(1);
-            line = convertMcuFile( folder+"/"+line );
-        }
-        converted.append( line+"\n" );
-    }
-    return converted;
 }
 
 void ComponentList::addItem( QString caption, TreeItem* catItem, QString icon, QString type )
