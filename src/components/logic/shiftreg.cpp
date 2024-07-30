@@ -216,5 +216,5 @@ void ShiftReg::updatePins()
 void ShiftReg::setResetInv( bool inv )
 {
     m_resetInv = inv;
-    m_inPin[2]->setInverted( inv );
+    m_rstPin->setInverted( inv );
 }
