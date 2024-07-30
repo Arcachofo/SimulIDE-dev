@@ -35,10 +35,10 @@ ComponentList::ComponentList( QWidget* parent )
 
     m_mcDialog.setVisible( false );
 
-    setSelectionMode( QAbstractItemView::SingleSelection );
+    //setSelectionMode( QAbstractItemView::SingleSelection );
     setDragEnabled( true );
     viewport()->setAcceptDrops( true );
-    setDropIndicatorShown( true );
+    //setDropIndicatorShown( true );
 
     setIndentation( 12 );
     setRootIsDecorated( true );
@@ -62,8 +62,9 @@ ComponentList::~ComponentList(){}
 
 void ComponentList::createList()
 {
-    m_listFile = MainWindow::self()->getConfigPath("compList.xml");
-    m_insertItems = !QFile::exists( m_listFile ); // xml file doesn't exist: Insert items when created
+    m_listFile  = MainWindow::self()->getConfigPath("compList.xml");
+    m_oldConfig = !QFile::exists( m_listFile ); // xml file doesn't exist: read old config
+    m_restoreList = false; // Restore last List
 
     m_customComp = false;
     LoadLibraryItems();
@@ -127,7 +128,7 @@ void ComponentList::createList()
     QDir compSetDir = MainWindow::self()->getFilePath("data");
     if( compSetDir.exists() ) LoadCompSetAt( compSetDir );
 
-    if( !m_insertItems ) insertItems(); // Add items to tree widget from xml file
+    if( !m_oldConfig ) readConfig(); // Read new xml config file
 
     /*for( TreeItem* it : m_categories ) // Remove empty categories
     {
@@ -312,10 +313,10 @@ void ComponentList::addItem( QString caption, TreeItem* catItem, QIcon &icon, QS
 
     m_components.insert( name, item );
 
-    if( m_insertItems )
-    {
-        catItem->addChild( item );
+    if( !m_restoreList ) catItem->addChild( item );
 
+    if( m_oldConfig )
+    {
         bool hidden = MainWindow::self()->compSettings()->value( name+"/hidden" ).toBool();
         item->setItemHidden( hidden );
 
@@ -354,11 +355,13 @@ TreeItem* ComponentList::addCategory( QString nameTr, QString name, QString pare
         catItem = new TreeItem( catParent, name, nameTr, "", categ_CHILD, QIcon( QPixmap( icon ) ), m_customComp );
     }
 
-    if( m_insertItems )
+    if( !m_restoreList )
     {
         if( parent.isEmpty() ) addTopLevelItem( catItem ); // Is root category or root category doesn't exist
         else if( catParent )   catParent->addChild( catItem );
-
+    }
+    if( m_oldConfig )
+    {
         if( MainWindow::self()->compSettings()->contains(name+"/collapsed") )
             expanded = !MainWindow::self()->compSettings()->value( name+"/collapsed" ).toBool();
 
@@ -457,14 +460,14 @@ void ComponentList::search( QString filter )
     m_searchFilter = filter;
 }
 
-void ComponentList::insertItems()
+void ComponentList::readConfig()
 {
     QDomDocument domDoc = fileToDomDoc( m_listFile, "ComponentList::insertItems" );
     if( domDoc.isNull() ) return;
 
     QDomElement root = domDoc.documentElement();
     QDomNode    tree = root.firstChild();
-    insertItem( &domDoc, nullptr );               // Insert items as stored in file
+    readNodCfg( &domDoc, nullptr );               // Read items as stored in file
 
     for( TreeItem* item : m_categories.values() ) // Insert new categories
     {
@@ -481,7 +484,7 @@ void ComponentList::insertItems()
     }
 }
 
-void ComponentList::insertItem( QDomNode* node, TreeItem* parent )
+void ComponentList::readNodCfg( QDomNode* node, TreeItem* parent )
 {
     TreeItem* item = nullptr;
     bool expanded = false;
@@ -514,16 +517,17 @@ void ComponentList::insertItem( QDomNode* node, TreeItem* parent )
     }
 
     if( item ){
-        if( parent ) parent->addChild( item );
-        else         addTopLevelItem( item );
-
+        if( m_restoreList ){
+            if( parent ) parent->addChild( item );
+            else         addTopLevelItem( item );
+        }
         bool hidden = element.attribute("hidden") == "1";
         item->setItemHidden( hidden );
     }
 
-    QDomNode child = node->firstChild(); // Recursively add items
+    QDomNode child = node->firstChild(); // Recursively read items
     while( !child.isNull() ){
-        insertItem( &child, item );
+        readNodCfg( &child, item );
         child = child.nextSibling();
     }
     if( item ) item->setItemExpanded( expanded );
