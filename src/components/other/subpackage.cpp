@@ -523,13 +523,15 @@ void SubPackage::setPackageFile( QString package )
 
     QString pkgText = fileToString( fileNameAbs, "SubPackage::setPackageFile");
     QString pkgStr  = convertPackage( pkgText );
+    m_isLS = package.endsWith("_LS.package");
     initPackage( pkgStr );
+    setLogicSymbol( m_isLS );
 
     m_pkgePins += m_ncPins;
 
     m_label.setPlainText( m_name );
     
-    setLogicSymbol( package.endsWith("_LS.package") );
+    //setLogicSymbol( package.endsWith("_LS.package") );
     Circuit::self()->update();
     m_changed = false;
 }

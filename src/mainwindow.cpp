@@ -347,22 +347,25 @@ QString MainWindow::getFilePath( QString file )   { return m_filesDir.absoluteFi
 QString MainWindow::getConfigPath( QString file ) { return m_configDir.absoluteFilePath( file ); }
 QString MainWindow::getDataFilePath( QString file )
 {
-    QString path;
-    if( Circuit::self() )
-    {
-        QString circPath = Circuit::self()->getFilePath();
-        if( !circPath.isEmpty() )
-        {
-            QDir circuitDir = QFileInfo( circPath ).absoluteDir();
-            path = circuitDir.absoluteFilePath("data/"+file );
-            if( QFileInfo::exists( path ) ) return path;                     // File in Circuit data folder
-            path = "";
-        }
-    }
-    if( path.isEmpty() ) path = MainWindow::self()->getUserFilePath( file ); // File in user data folder
+    QString path = getUserFilePath( file ); // File in user data folder
 
     if( path.isEmpty() || !QFileInfo::exists( path ) )
-        path = getFilePath("data/"+file );                    // File in SimulIDE data folder
+        path = getFilePath("data/"+file );         // File in SimulIDE data folder
+
+    if( path.isEmpty() || !QFileInfo::exists( path ) ) return "";
+
+    return path;
+}
+QString MainWindow::getCircFilePath( QString file )
+{
+    if( !Circuit::self() ) return "";
+
+    QString circPath = Circuit::self()->getFilePath();
+    if( circPath.isEmpty() ) return "";
+
+    QDir circuitDir = QFileInfo( circPath ).absoluteDir();
+    QString path = circuitDir.absoluteFilePath("data/"+file );
+    if( !QFileInfo::exists( path ) ) return "";
 
     return path;
 }

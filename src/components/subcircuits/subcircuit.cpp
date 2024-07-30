@@ -49,6 +49,7 @@ Component* SubCircuit::construct( QString type, QString id )
     QString subcDoc;
     QString pkgeFile;
     QString subcFile;
+    QString dataFile;
 
     if( list.size() > 1 )  // Subcircuit inside Subcircuit: 1_74HC00 to 74HC00
     {
@@ -57,53 +58,52 @@ Component* SubCircuit::construct( QString type, QString id )
         n.toInt(&ok);
         if( ok ) name = list.at( 1 );
     }
-    QString dataFile = ComponentList::self()->getDataFile( name );
-    m_subcDir = ComponentList::self()->getFileDir( name );
 
-    if( dataFile.isEmpty() ) // Component not installed, search in Circuit folder
-    {
-        dataFile = MainWindow::self()->getDataFilePath( name+".sim1" );
-        if( !QFile::exists( dataFile ) ) dataFile = "";
-    }
+    m_subcDir = MainWindow::self()->getCircFilePath( name ); // Search subc folder in circuit/data folder
 
-    if( dataFile.isEmpty() ) // use old system
-    {
-        if( m_subcDir.isEmpty() )                                  // Try to find a "data" folder in Circuit folder
-            m_subcDir = MainWindow::self()->getDataFilePath( name );
-    }
+    if( m_subcDir.isEmpty() )
+        m_subcDir = ComponentList::self()->getFileDir( name ); // Get subc folder from list
+    else
+        dataFile = MainWindow::self()->getCircFilePath( name+"/"+name+".sim1" ); // Search sim1 in circuit/data/name folder
 
-    if( dataFile.endsWith(".sim1")) // Subcircuit in single file
-    {
-        subcFile = dataFile;
-        packageList = getPackages( subcFile );
+    if( dataFile.isEmpty() )
+        dataFile = MainWindow::self()->getCircFilePath( name+".sim1" ); // Search sim1 in circuit/data folder
+
+    if( dataFile.isEmpty() ) // Get sim1 from list
+        dataFile = ComponentList::self()->getDataFile( name );
+
+    if( dataFile.endsWith(".sim1")) subcFile = dataFile;
+    else if( !m_subcDir.isEmpty() ) subcFile = m_subcDir+"/"+name+".sim1";
+
+    if( !subcFile.isEmpty() ){
+        packageList = getPackages( subcFile ); // Try packages from sim1 file
         subcTyp = s_subcType;
-    }
 
-    if( packageList.isEmpty() && !m_subcDir.isEmpty() ) // Packages from package files
-    {
-        subcFile  = m_subcDir+"/"+name+".sim1";
-        pkgeFile  = m_subcDir+"/"+name+".package";
-        QString pkgFileLS = m_subcDir+"/"+name+"_LS.package";
-        QString pkgName   = "2- DIP";
-        QString pkgNameLS = "1- Logic Symbol";
+        if( packageList.isEmpty() ) // Packages from package files
+        {
+            pkgeFile  = m_subcDir+"/"+name+".package";
+            QString pkgFileLS = m_subcDir+"/"+name+"_LS.package";
+            QString pkgName   = "2- DIP";
+            QString pkgNameLS = "1- Logic Symbol";
 
-        bool dip = QFile::exists( pkgeFile );
-        bool ls  = QFile::exists( pkgFileLS );
-        if( !dip && !ls ){
-            qDebug() << "SubCircuit::construct: Error No package files found for "<<name<<endl;
-            return NULL;
-        }
+            bool dip = QFile::exists( pkgeFile );
+            bool ls  = QFile::exists( pkgFileLS );
+            if( !dip && !ls ){
+                qDebug() << "SubCircuit::construct: Error No package files found for "<<name<<endl;
+                return NULL;
+            }
 
-        Chip::s_subcType = "None";
-        if( dip ){
-            QString pkgStr = fileToString( pkgeFile, "SubCircuit::construct" );
-            packageList[pkgName] = convertPackage( pkgStr );
-            subcTyp = s_subcType;
-        }
-        if( ls ){
-            QString pkgStr = fileToString( pkgFileLS, "SubCircuit::construct" );
-            packageList[pkgNameLS] = convertPackage( pkgStr );
-            if( subcTyp == "None" ) subcTyp = s_subcType;
+            Chip::s_subcType = "None";
+            if( dip ){
+                QString pkgStr = fileToString( pkgeFile, "SubCircuit::construct" );
+                packageList[pkgName] = convertPackage( pkgStr );
+                subcTyp = s_subcType;
+            }
+            if( ls ){
+                QString pkgStr = fileToString( pkgFileLS, "SubCircuit::construct" );
+                packageList[pkgNameLS] = convertPackage( pkgStr );
+                if( subcTyp == "None" ) subcTyp = s_subcType;
+            }
         }
     }
 

@@ -85,7 +85,7 @@ bool Chip::setPropStr( QString prop, QString val )
     return Component::setPropStr( prop, val );
 }
 
-QMap<QString, QString> Chip::getPackages( QString compFile )
+QMap<QString, QString> Chip::getPackages( QString compFile ) // Static
 {
     QMap<QString, QString> packageList;
 
@@ -102,6 +102,8 @@ QMap<QString, QString> Chip::getPackages( QString compFile )
         if( itemType.name != "itemtype") continue;
         if( itemType.value != "Package") break;    // All packages processed
 
+        bool ls = false;
+        bool addPackage = false;
         QString pkgName;
         QString pkgStr = "Package; ";
 
@@ -111,14 +113,24 @@ QMap<QString, QString> Chip::getPackages( QString compFile )
             QString propValue = prop.value.toString();
             if     ( propName == "SubcType" && propValue != "None") s_subcType = propValue; // Only for Subcircuits
             else if( propName == "label") pkgName = propValue;
-
+            else if( propName == "Logic_Symbol") ls = ( propValue == "true");
             if( propName == "Pins"){
                 propValue.replace("&#xa;","\n"); ///.replace("&#x3D;", "=");
                 pkgStr += "\n"+propValue;
+                addPackage = true;         // Package contains Pin info (new circuits)
             }
             else pkgStr += propName+"="+propValue+"; ";
         }
-        if( !pkgName.isEmpty() ) packageList[pkgName] = pkgStr;
+        if( addPackage && !pkgName.isEmpty() )
+        {
+            if( s_subcType == "None" || s_subcType == "Logic" )
+            {
+                if( ls && !pkgName.startsWith("0") ) pkgName.prepend("0- ");
+            }
+            else if( !ls && !pkgName.startsWith("0") ) pkgName.prepend("0- ");
+
+            packageList[pkgName] = pkgStr;
+        }
         //qDebug() << pkgStr;
     }
     return packageList;
@@ -178,10 +190,11 @@ void Chip::setPackage( QString package )
 
     m_package = package;
 
-    setLogicSymbol( !package.endsWith("DIP") );
+    m_isLS = !package.endsWith("DIP");
 
     QString pkgStr = m_packageList.value( package );
     initPackage( pkgStr );
+    setLogicSymbol( m_isLS );
 }
 
 void Chip::initPackage( QString pkgStr )
@@ -207,15 +220,15 @@ void Chip::initPackage( QString pkgStr )
         {
             for( propStr_t property : properties )
             {
-                QStringRef name = property.name;  // Property_name
-                QStringRef val  = property.value; // Property value
+                QString   name = property.name.toString().toLower();  // Property_name
+                QStringRef val = property.value; // Property value
 
                 if     ( name == "width"       ) m_width  = val.toInt();
                 else if( name == "height"      ) m_height = val.toInt();
                 else if( name == "name"        ) embedName = val.toString();
                 else if( name == "background"  ) setBackground( val.toString() );
                 else if( name == "bckgnddata"  ) setBckGndData( val.toString() );
-                else if( name == "logic_symbol") setLogicSymbol( val == "true" );
+                else if( name == "logic_symbol") m_isLS = ( val == "true" );
             }
         }
         else if( item == "Pin" ) setPinStr( properties );
@@ -226,7 +239,6 @@ void Chip::initPackage( QString pkgStr )
         pin->setVisible( false );
         pin->setLabelText("");
     }
-
     m_initialized = true;
     m_area = QRect( 0, 0, 8*m_width, 8*m_height );
     if( m_subcType >= Board ) setTransformOriginPoint( toGrid( boundingRect().center()) );
