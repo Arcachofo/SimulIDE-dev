@@ -51,7 +51,7 @@ QVector<propStr_t> parseProps( QStringRef line )
     for( QStringRef token : tokens )
     {
         propStr_t property = parseProp( token );
-        properties.append( property );
+        if( property.name.size() ) properties.append( property );
     }
     return properties;
 }

@@ -136,6 +136,7 @@ void LogicFamily::getFamilies() // Static
     for( QStringRef line : docLines )
     {
         QVector<propStr_t> properties = parseProps( line );
+        if( properties.isEmpty() ) break;
         QString familyName = properties.takeFirst().name.toString();
         logicFamily_t family;
 
