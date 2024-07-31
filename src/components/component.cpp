@@ -4,6 +4,7 @@
  ***( see copyright.txt file at root folder )*******************************/
 
 #include <math.h>
+#include <QDebug>
 
 #include "component.h"
 #include "label.h"
@@ -122,6 +123,18 @@ new IntProp  <Component>("boardVflip","","",this, &Component::boardVflip, &Compo
     }, groupHidden | groupNoCopy } );
 }
 Component::~Component(){}
+
+bool Component::setPropStr( QString prop, QString val )
+{
+    bool ok = CompBase::setPropStr( prop, val );
+    if( prop == m_showProperty )
+    {
+        QString text = "";
+        if( !m_showProperty.isEmpty() ) text = getPropStr( m_showProperty );
+        setValLabelText( text );
+    }
+    return ok;
+}
 
 void Component::setup()
 {
