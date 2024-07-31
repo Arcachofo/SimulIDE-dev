@@ -72,6 +72,7 @@ class Chip : public Component, public eElement
         
         bool m_isLS;
         bool m_initialized;
+        bool m_customColor;
 
         subcType_t m_subcType;
 

@@ -200,6 +200,7 @@ void Chip::setPackage( QString package )
 void Chip::initPackage( QString pkgStr )
 {
     if( Simulator::self()->isRunning() ) CircuitWidget::self()->powerCircOff();
+    m_customColor = false;
     m_tempPins.clear();
     for( Pin* pin : m_ncPins ) m_tempPins.append( pin );
     for( Pin* pin : m_pin    ) m_tempPins.append( pin );
@@ -218,6 +219,7 @@ void Chip::initPackage( QString pkgStr )
         QStringRef item = properties.takeFirst().name;
         if( item == "Package" )
         {
+            //loadProperties( properties );
             for( propStr_t property : properties )
             {
                 QString   name = property.name.toString().toLower();  // Property_name
@@ -228,6 +230,7 @@ void Chip::initPackage( QString pkgStr )
                 else if( name == "name"        ) embedName = val.toString();
                 else if( name == "background"  ) setBackground( val.toString() );
                 else if( name == "bckgnddata"  ) setBckGndData( val.toString() );
+
                 else if( name == "logic_symbol") m_isLS = ( val == "true" );
             }
         }
@@ -325,9 +328,9 @@ void Chip::setLogicSymbol( bool ls )
     QColor labelColor = QColor( 0, 0, 0 );
 
     if( ls ){
-        m_color = m_lsColor;
+        if( !m_customColor ) m_color = m_lsColor;
     }else{
-        m_color = m_icColor;
+        if( !m_customColor ) m_color = m_icColor;
         labelColor = QColor( 250, 250, 200 );
     }
     for( Pin* pin : m_pin ) pin->setLabelColor( labelColor );
@@ -369,6 +372,7 @@ void Chip::setBackground( QString bck )
         if( rgb.size() < 3 ) return;
 
         m_color = QColor( rgb.at(0).toInt(), rgb.at(1).toInt(), rgb.at(2).toInt() );
+        m_customColor = true;
     }
     else if( bck != "" ){
         QDir dir = QFileInfo( m_dataFile ).absoluteDir();
