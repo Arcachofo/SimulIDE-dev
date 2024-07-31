@@ -82,11 +82,11 @@ void CompBase::remProperty( QString prop )
 bool CompBase::setPropStr( QString prop, QString val )
 {
     ComProperty* p = m_propMap.value( prop );
-    if( p ){
-        p->setValStr( val );
-        if( m_propDialog ) m_propDialog->updtValues();
-    }
-    else return false;
+    if( !p ) return false;
+
+    p->setValStr( val );
+    if( m_propDialog ) m_propDialog->updtValues();
+
     return true;
 }
 QString CompBase::getPropStr( QString prop )

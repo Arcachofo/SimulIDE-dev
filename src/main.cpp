@@ -72,13 +72,13 @@ int main( int argc, char *argv[] )
 
     MainWindow window;
     window.setLoc( locale );
+    window.show();
 
     if( argc > 1 )
     {
         QString circ = QString::fromStdString( argv[1] );
         if( circ.endsWith(".sim1") ) CircuitWidget::self()->loadCirc( circ );
     }
-    window.show();
 
     return app.exec();
 }

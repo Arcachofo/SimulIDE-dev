@@ -400,6 +400,7 @@ void Circuit::loadStrDoc( QString &doc )
         }
     }
     else for( Component* comp : compList ) { comp->moveSignal(); }
+
     m_nodeList += nodeList;
     m_connList += connList;
     m_compList += compList;
