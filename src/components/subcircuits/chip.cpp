@@ -216,6 +216,8 @@ void Chip::initPackage( QString pkgStr )
         if( line.isEmpty() ) continue;
 
         QVector<propStr_t> properties = parseProps( line );
+        if( properties.isEmpty() ) break;
+
         QStringRef item = properties.takeFirst().name;
         if( item == "Package" )
         {
@@ -225,8 +227,8 @@ void Chip::initPackage( QString pkgStr )
                 QString   name = property.name.toString().toLower();  // Property_name
                 QStringRef val = property.value; // Property value
 
-                if     ( name == "width"       ) m_width  = val.toInt();
-                else if( name == "height"      ) m_height = val.toInt();
+                if     ( name == "width"       ) m_width  = val.split(" ").first().toInt();
+                else if( name == "height"      ) m_height = val.split(" ").first().toInt();
                 else if( name == "name"        ) embedName = val.toString();
                 else if( name == "background"  ) setBackground( val.toString() );
                 else if( name == "bckgnddata"  ) setBckGndData( val.toString() );
