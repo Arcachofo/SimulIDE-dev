@@ -192,7 +192,9 @@ void Component::mousePressEvent( QGraphicsSceneMouseEvent* event )
         }
         QApplication::focusWidget()->clearFocus();
         CircuitView::self()->setFocus();
-}   }
+    }
+    else event->ignore();
+}
 
 void Component::mouseMoveEvent( QGraphicsSceneMouseEvent* event )
 {
@@ -204,7 +206,7 @@ void Component::mouseMoveEvent( QGraphicsSceneMouseEvent* event )
         return;
     }
     event->accept();
-    
+
     QPointF delta( 0, 0 );
     if( m_boardMode && event->modifiers() == Qt::ControlModifier )
          delta = event->scenePos() - event->lastScenePos();

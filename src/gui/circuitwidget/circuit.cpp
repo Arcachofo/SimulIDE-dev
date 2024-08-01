@@ -950,8 +950,11 @@ void Circuit::addComponent( Component* comp )
 
 void Circuit::mousePressEvent( QGraphicsSceneMouseEvent* event )
 {
+
     if( event->button() == Qt::LeftButton )
     {
+        if( event->modifiers() != Qt::NoModifier ) return;
+
         if( m_conStarted ) event->accept();
         QGraphicsScene::mousePressEvent( event );
 
@@ -962,8 +965,6 @@ void Circuit::mousePressEvent( QGraphicsSceneMouseEvent* event )
         if( m_conStarted ) event->accept();
         else               QGraphicsScene::mousePressEvent( event );
     }
-    else if( event->button() == Qt::MidButton )
-        QGraphicsScene::mousePressEvent( event );
 }
 
 void Circuit::mouseReleaseEvent( QGraphicsSceneMouseEvent* event )

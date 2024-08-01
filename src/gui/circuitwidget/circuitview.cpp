@@ -164,14 +164,10 @@ void CircuitView::mousePressEvent( QMouseEvent* event )
     }
     else if( event->button() == Qt::MidButton )
     {
-        event->accept();
         setDragMode( QGraphicsView::ScrollHandDrag );
 
-        QGraphicsView::mousePressEvent( event );
-        if( event->isAccepted() ) return;
-
         event = new QMouseEvent( QEvent::MouseButtonPress, event->pos(),
-                                 Qt::LeftButton, Qt::LeftButton, Qt::NoModifier );
+                                 Qt::LeftButton, Qt::LeftButton, Qt::ShiftModifier );
     }
     QGraphicsView::mousePressEvent( event );
 }
