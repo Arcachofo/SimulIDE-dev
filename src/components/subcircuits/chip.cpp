@@ -374,15 +374,17 @@ void Chip::setBackground( QString bck )
         m_color = QColor( rgb.at(0).toInt(), rgb.at(1).toInt(), rgb.at(2).toInt() );
         m_customColor = true;
     }
-    else if( bck != "" ){
-        QDir dir = QFileInfo( m_dataFile ).absoluteDir();
-        QString pixmapPath = dir.absoluteFilePath( bck );  // Image in subcircuit folder
+    else if( bck != "" )
+    {
+        QString pixmapPath = MainWindow::self()->getCircFilePath( bck ); // Image in circuit/data folder
 
         if( !QFile::exists( pixmapPath ) ){
-            dir = QFileInfo( Circuit::self()->getFilePath() ).absoluteDir();
-            pixmapPath = dir.absoluteFilePath( bck );    // Image in circuit/data folder
+            QDir dir = QFileInfo( m_dataFile ).absoluteDir();
+            pixmapPath = dir.absoluteFilePath( bck );              // Image in subcircuit folder
         }
-        if( !QFile::exists( pixmapPath ) ) pixmapPath = MainWindow::self()->getDataFilePath("images/"+bck );
+        if( !QFile::exists( pixmapPath ) )                    // Image in user/data/images or simulide/data/images
+                pixmapPath = MainWindow::self()->getDataFilePath("images/"+bck );
+
         if( QFile::exists( pixmapPath ) )
         {
             if( !m_backPixmap ) m_backPixmap = new QPixmap();
