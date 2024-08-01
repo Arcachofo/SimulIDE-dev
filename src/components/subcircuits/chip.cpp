@@ -115,7 +115,8 @@ QMap<QString, QString> Chip::getPackages( QString compFile ) // Static
             else if( propName == "label") pkgName = propValue;
             else if( propName == "Logic_Symbol") ls = ( propValue == "true");
             if( propName == "Pins"){
-                propValue.replace("&#xa;","\n"); ///.replace("&#x3D;", "=");
+                propValue.replace("&#xa;","\n");
+                if( propValue.contains("&") ) propValue = cleanPinName( propValue );
                 pkgStr += "\n"+propValue;
                 addPackage = true;         // Package contains Pin info (new circuits)
             }
@@ -156,21 +157,32 @@ QString Chip::convertPackage( QString pkgText ) // Static, converts xml to new f
             {
                 QString propName  = prop.name.toString();
                 QString propValue = prop.value.toString();
-                pkgStr += propName+"="+propValue+"; ";
-
                 if( propName == "type" ) s_subcType = propValue.remove("subc");
+                pkgStr += propName+"="+propValue+"; ";
             }
         }else if( !properties.isEmpty() )
         {
             pkgStr += "Pin; ";
             for( propStr_t prop : properties )
-                pkgStr += prop.name.toString()+"="+prop.value.toString()+"; ";
+            {
+                QString value = prop.value.toString();
+                if( value.contains("&") ) value = cleanPinName( value );
+                pkgStr += prop.name.toString()+"="+value+"; ";
+            }
         }
         pkgStr += "\n";
     }
     //qDebug() << pkgStr;
 
     return pkgStr;
+}
+
+QString Chip::cleanPinName( QString name )
+{
+    name.replace("&#x3D;", "=").replace("&#x3C;", "<").replace("&#x3E;", ">")
+        .replace("&#x3D" , "=").replace("&#x3C" , "<").replace("&#x3E" , ">")
+        .replace("&lt;", "<") ;
+    return name;
 }
 
 void Chip::setName( QString name )

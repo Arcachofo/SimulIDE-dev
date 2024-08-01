@@ -49,6 +49,7 @@ class Chip : public Component, public eElement
 
  static QMap<QString, QString> getPackages( QString compText );
  static QString convertPackage( QString pkgText );
+ static QString cleanPinName( QString name );
  static QString s_subcType;
 
     protected:
