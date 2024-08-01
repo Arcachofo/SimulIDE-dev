@@ -28,9 +28,9 @@ Rectangle::Rectangle( QString type, QString id )
 }
 Rectangle::~Rectangle(){}
 
-void Rectangle::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
+void Rectangle::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w )
 {
-    Component::paint( p, option, widget );
+    Component::paint( p, o, w );
 
     QPen pen(Qt::black, m_border, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
     p->setPen( pen );

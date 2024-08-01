@@ -6,7 +6,6 @@
 #include <QStringList>
 #include <QPointF>
 #include "proputils.h"
-//#include "utils.h"
 
 QPointF getPointF( QString p )
 {

@@ -953,7 +953,7 @@ void Circuit::mousePressEvent( QGraphicsSceneMouseEvent* event )
 
     if( event->button() == Qt::LeftButton )
     {
-        if( event->modifiers() != Qt::NoModifier ) return;
+        if( event->modifiers() != Qt::NoModifier ) return;  // CircuitView adds a modifier to implement Circuit panning
 
         if( m_conStarted ) event->accept();
         QGraphicsScene::mousePressEvent( event );
