@@ -60,17 +60,17 @@
 
 <item itemtype="Node" CircId="Node-977" mainComp="false" Pos="-384,-236" />
 
-<item itemtype="Connector" uid="Connector-331" startpinid="Probe-5-inpin" endpinid="74HC85-7-A&#x3DB" pointList="-220,-236,-232,-236,-232,-316,-344,-316,-344,-236,-332,-236" />
+<item itemtype="Connector" uid="Connector-331" startpinid="Probe-5-inpin" endpinid="74HC85-7-A=B" pointList="-220,-236,-232,-236,-232,-316,-344,-316,-344,-236,-332,-236" />
 
-<item itemtype="Connector" uid="Connector-333" startpinid="Probe-6-inpin" endpinid="74HC85-7-A&#x3CB" pointList="-220,-252,-228,-252,-228,-324,-348,-324,-348,-228,-332,-228" />
+<item itemtype="Connector" uid="Connector-333" startpinid="Probe-6-inpin" endpinid="74HC85-7-A<B" pointList="-220,-252,-228,-252,-228,-324,-348,-324,-348,-228,-332,-228" />
 
-<item itemtype="Connector" uid="Connector-335" startpinid="Probe-2-inpin" endpinid="74HC85-7-A&#x3EB" pointList="-220,-220,-236,-220,-236,-304,-340,-304,-340,-244,-332,-244" />
+<item itemtype="Connector" uid="Connector-335" startpinid="Probe-2-inpin" endpinid="74HC85-7-A>B" pointList="-220,-220,-236,-220,-236,-304,-340,-304,-340,-244,-332,-244" />
 
-<item itemtype="Connector" uid="Connector-947" startpinid="Probe-946-inpin" endpinid="74HC85-631-A&#x3CB" pointList="-244,-124,-268,-124" />
+<item itemtype="Connector" uid="Connector-947" startpinid="Probe-946-inpin" endpinid="74HC85-631-A<B" pointList="-244,-124,-268,-124" />
 
-<item itemtype="Connector" uid="Connector-949" startpinid="Probe-948-inpin" endpinid="74HC85-631-A&#x3DB" pointList="-244,-108,-268,-108" />
+<item itemtype="Connector" uid="Connector-949" startpinid="Probe-948-inpin" endpinid="74HC85-631-A=B" pointList="-244,-108,-268,-108" />
 
-<item itemtype="Connector" uid="Connector-951" startpinid="Probe-950-inpin" endpinid="74HC85-631-A&#x3EB" pointList="-244,-92,-268,-92" />
+<item itemtype="Connector" uid="Connector-951" startpinid="Probe-950-inpin" endpinid="74HC85-631-A>B" pointList="-244,-92,-268,-92" />
 
 <item itemtype="Connector" uid="Connector-978" startpinid="Node-964-1" endpinid="74HC85-7-A0" pointList="-332,-156,-332,-184,-276,-184,-276,-228,-284,-228" />
 
@@ -122,20 +122,20 @@
 
 <item itemtype="Connector" uid="Connector-1002" startpinid="Fixed Voltage-974-outnod" endpinid="Node-975-1" pointList="-408,-268,-376,-268" />
 
-<item itemtype="Connector" uid="Connector-1003" startpinid="74HC85-631-IA&#x3CB" endpinid="Node-975-0" pointList="-332,-116,-376,-116,-376,-268" />
+<item itemtype="Connector" uid="Connector-1003" startpinid="74HC85-631-IA<B" endpinid="Node-975-0" pointList="-332,-116,-376,-116,-376,-268" />
 
-<item itemtype="Connector" uid="Connector-1004" startpinid="Node-975-2" endpinid="74HC85-7-IA&#x3CB" pointList="-376,-268,-332,-268" />
+<item itemtype="Connector" uid="Connector-1004" startpinid="Node-975-2" endpinid="74HC85-7-IA<B" pointList="-376,-268,-332,-268" />
 
 <item itemtype="Connector" uid="Connector-1005" startpinid="Node-976-1" endpinid="Fixed Voltage-972-outnod" pointList="-380,-252,-408,-252" />
 
-<item itemtype="Connector" uid="Connector-1006" startpinid="74HC85-631-IA&#x3DB" endpinid="Node-976-0" pointList="-332,-108,-380,-108,-380,-252" />
+<item itemtype="Connector" uid="Connector-1006" startpinid="74HC85-631-IA=B" endpinid="Node-976-0" pointList="-332,-108,-380,-108,-380,-252" />
 
-<item itemtype="Connector" uid="Connector-1007" startpinid="Node-976-2" endpinid="74HC85-7-IA&#x3DB" pointList="-380,-252,-380,-260,-332,-260" />
+<item itemtype="Connector" uid="Connector-1007" startpinid="Node-976-2" endpinid="74HC85-7-IA=B" pointList="-380,-252,-380,-260,-332,-260" />
 
 <item itemtype="Connector" uid="Connector-1008" startpinid="Node-977-1" endpinid="Fixed Voltage-973-outnod" pointList="-384,-236,-408,-236" />
 
-<item itemtype="Connector" uid="Connector-1009" startpinid="74HC85-631-IA&#x3EB" endpinid="Node-977-0" pointList="-332,-100,-384,-100,-384,-236" />
+<item itemtype="Connector" uid="Connector-1009" startpinid="74HC85-631-IA>B" endpinid="Node-977-0" pointList="-332,-100,-384,-100,-384,-236" />
 
-<item itemtype="Connector" uid="Connector-1010" startpinid="Node-977-2" endpinid="74HC85-7-IA&#x3EB" pointList="-384,-236,-372,-236,-372,-252,-332,-252" />
+<item itemtype="Connector" uid="Connector-1010" startpinid="Node-977-2" endpinid="74HC85-7-IA>B" pointList="-384,-236,-372,-236,-372,-252,-332,-252" />
 
 </circuit>

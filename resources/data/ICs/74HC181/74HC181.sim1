@@ -182,7 +182,7 @@
 
 <item itemtype="And Gate" CircId="And Gate-191" mainComp="false" Show_id="false" Show_Val="false" Pos="-260,-232" rotation="0" hflip="1" vflip="1" label="And Gate-8" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Num_Inputs="4 _Inputs" Inverted="false" Open_Collector="false" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" initHigh="false" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
 
-<item itemtype="Tunnel" CircId="Tunnel-193" mainComp="false" Show_id="true" Show_Val="false" Pos="-196,-232" rotation="0" hflip="-1" vflip="1" label="PackagePin14" idLabPos="27,-6" labelrot="0" valLabPos="16,0" valLabRot="45" Name="A&#x3DB" />
+<item itemtype="Tunnel" CircId="Tunnel-193" mainComp="false" Show_id="true" Show_Val="false" Pos="-196,-232" rotation="0" hflip="-1" vflip="1" label="PackagePin14" idLabPos="27,-6" labelrot="0" valLabPos="16,0" valLabRot="45" Name="A=B" />
 
 <item itemtype="Buffer" CircId="Buffer-194" mainComp="false" Show_id="false" Show_Val="false" Pos="-220,-232" rotation="0" hflip="1" vflip="1" label="Buffer-5" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Tristate="false" Inverted="false" Open_Collector="false" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" initHigh="false" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
 

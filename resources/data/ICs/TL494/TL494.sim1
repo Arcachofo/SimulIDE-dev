@@ -14,7 +14,7 @@
 
 <item itemtype="Diode" CircId="Diode-753" mainComp="false" Show_id="false" Show_Val="false" Pos="-40,-168" rotation="0" hflip="1" vflip="1" label="Diode-753" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Model="Diode Default" Threshold="0.2 V" MaxCurrent="1 A" Resistance="1e-05 Ω" BrkDownV="0 V" SatCurrent="765854 nA" EmCoef="2" />
 
-<item itemtype="Function" CircId="Function-893" mainComp="false" Show_id="false" Show_Val="false" Pos="-56,-272" rotation="0" hflip="1" vflip="1" label="Function-893" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" Num_Inputs="1 Pins" Num_Outputs="1 _Pins" Functions="vo&#x3Dvi0+0.7" Input_High_V="0 V" Input_Low_V="0 V" Input_Imped="1e+09 Ω" Invert_Inputs="false" Out_High_V="0 V" Out_Low_V="0 V" Out_Imped="40 Ω" Inverted="false" Open_Collector="false" pd_n="1 _Gates" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
+<item itemtype="Function" CircId="Function-893" mainComp="false" Show_id="false" Show_Val="false" Pos="-56,-272" rotation="0" hflip="1" vflip="1" label="Function-893" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" Num_Inputs="1 Pins" Num_Outputs="1 _Pins" Functions="vo=vi0+0.7" Input_High_V="0 V" Input_Low_V="0 V" Input_Imped="1e+09 Ω" Invert_Inputs="false" Out_High_V="0 V" Out_Low_V="0 V" Out_Imped="40 Ω" Inverted="false" Open_Collector="false" pd_n="1 _Gates" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
 
 <item itemtype="Tunnel" CircId="Tunnel-385" mainComp="false" Show_id="false" Show_Val="false" Pos="344,-256" rotation="0" hflip="-1" vflip="1" label="Tunnel-377" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" Name="C2" IsBus="false" />
 
@@ -40,7 +40,7 @@
 
 <item itemtype="Rail" CircId="Rail-865" mainComp="false" ShowProp="Voltage" Show_id="false" Show_Val="true" Pos="160,-88" rotation="0" hflip="1" vflip="1" label="Rail-865" idLabPos="-16,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Voltage="5 V" />
 
-<item itemtype="Function" CircId="Function-886" mainComp="false" Show_id="false" Show_Val="false" Pos="-92,-336" rotation="0" hflip="1" vflip="1" label="Function-886" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" Num_Inputs="1 Pins" Num_Outputs="1 _Pins" Functions="vo&#x3Dvi0+0.12" Input_High_V="0 V" Input_Low_V="0 V" Input_Imped="1e+09 Ω" Invert_Inputs="false" Out_High_V="0 V" Out_Low_V="0 V" Out_Imped="40 Ω" Inverted="false" Open_Collector="false" pd_n="1 _Gates" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
+<item itemtype="Function" CircId="Function-886" mainComp="false" Show_id="false" Show_Val="false" Pos="-92,-336" rotation="0" hflip="1" vflip="1" label="Function-886" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" Num_Inputs="1 Pins" Num_Outputs="1 _Pins" Functions="vo=vi0+0.12" Input_High_V="0 V" Input_Low_V="0 V" Input_Imped="1e+09 Ω" Invert_Inputs="false" Out_High_V="0 V" Out_Low_V="0 V" Out_Imped="40 Ω" Inverted="false" Open_Collector="false" pd_n="1 _Gates" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
 
 <item itemtype="Tunnel" CircId="Tunnel-698" mainComp="false" Show_id="false" Show_Val="false" Pos="-384,-160" rotation="0" hflip="1" vflip="1" label="Tunnel-698" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" Name="CT" IsBus="false" />
 
