@@ -62,7 +62,7 @@ void ComponentList::createList()
 {
     m_listFile  = MainWindow::self()->getConfigPath("compList.xml");
     m_oldConfig = !QFile::exists( m_listFile ); // xml file doesn't exist: read old config
-    m_restoreList = false; // Restore last List
+    m_restoreList = !m_oldConfig; // Restore last List
 
     m_customComp = false;
     LoadLibraryItems();
