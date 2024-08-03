@@ -127,7 +127,7 @@ void MainWindow::readSettings()
 {
     restoreGeometry(                 m_settings->value("geometry" ).toByteArray());
     restoreState(                    m_settings->value("windowState" ).toByteArray());
-    m_Centralsplitter->restoreState( m_settings->value("Centralsplitter/geometry").toByteArray());
+    m_mainSplitter->restoreState( m_settings->value("Centralsplitter/geometry").toByteArray());
     CircuitWidget::self()->splitter()->restoreState( m_settings->value("Circsplitter/geometry").toByteArray());
 
     m_autoBck = 15;
@@ -142,7 +142,7 @@ void MainWindow::writeSettings()
     m_settings->setValue("fontScale", m_fontScale );
     m_settings->setValue("geometry",  saveGeometry() );
     m_settings->setValue("windowState", saveState() );
-    m_settings->setValue("Centralsplitter/geometry", m_Centralsplitter->saveState() );
+    m_settings->setValue("Centralsplitter/geometry", m_mainSplitter->saveState() );
     m_settings->setValue("Circsplitter/geometry", CircuitWidget::self()->splitter()->saveState() );
 
     ComponentList::self()->writeSettings();
@@ -222,19 +222,19 @@ void MainWindow::createWidgets()
     baseWidgetLayout->setSpacing(0);
     baseWidgetLayout->setContentsMargins(0, 0, 0, 0);
 
-    m_Centralsplitter = new QSplitter( this );
-    m_Centralsplitter->setOrientation( Qt::Horizontal );
+    m_mainSplitter = new QSplitter( this );
+    m_mainSplitter->setOrientation( Qt::Horizontal );
 
     m_sidepanel = new QTabWidget( this );
     m_sidepanel->setTabPosition( QTabWidget::West );
     QString fontSize = QString::number( int(11*m_fontScale) );
     m_sidepanel->tabBar()->setStyleSheet("QTabBar { font-size:"+fontSize+"px; }");
-    m_Centralsplitter->addWidget( m_sidepanel );
+    m_mainSplitter->addWidget( m_sidepanel );
 
-    m_componentWidget = new QWidget( this );
-    m_componentWidgetLayout = new QVBoxLayout( m_componentWidget );
-    m_componentWidgetLayout->setSpacing(0);
-    m_componentWidgetLayout->setContentsMargins(0, 0, 0, 0);
+    m_listWidget = new QWidget( this );
+    QVBoxLayout* listLayout = new QVBoxLayout( m_listWidget );
+    listLayout->setSpacing(0);
+    listLayout->setContentsMargins(0, 0, 0, 0);
 
     QHBoxLayout* searchLayout = new QHBoxLayout( this );
 
@@ -251,26 +251,26 @@ void MainWindow::createWidgets()
     connect( m_clearButton, SIGNAL( clicked() ),
              this,          SLOT(   clearSearch()) );
 
-    m_componentWidgetLayout->addLayout( searchLayout );
+    listLayout->addLayout( searchLayout );
 
-    m_fileSystemTree = new FileWidget( this );
+    m_fileTree = new FileWidget( this );
     m_circuitW = new CircuitWidget( this );
 
     m_components = new ComponentList( m_sidepanel );
-    m_componentWidgetLayout->addWidget( m_components );
+    listLayout->addWidget( m_components );
 
-    m_sidepanel->addTab( m_componentWidget, tr("Components") );
-    m_sidepanel->addTab( m_fileSystemTree, tr( "File explorer" ) );
+    m_sidepanel->addTab( m_listWidget, tr("Components") );
+    m_sidepanel->addTab( m_fileTree, tr( "File explorer" ) );
 
-    m_Centralsplitter->addWidget( m_circuitW );
+    m_mainSplitter->addWidget( m_circuitW );
 
     m_editor = new EditorWindow( this );
     m_editor->setObjectName(QString::fromUtf8("editor"));
-    m_Centralsplitter->addWidget( m_editor );
+    m_mainSplitter->addWidget( m_editor );
 
-    baseWidgetLayout->addWidget( m_Centralsplitter, 0, 0 );
+    baseWidgetLayout->addWidget( m_mainSplitter, 0, 0 );
 
-    m_Centralsplitter->setSizes( {150, 350, 500} );
+    m_mainSplitter->setSizes( {150, 350, 500} );
 
     this->showMaximized();
 }

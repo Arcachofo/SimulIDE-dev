@@ -58,7 +58,6 @@ Circuit::Circuit( int width, int height, CircuitView* parent )
     m_createSubc = false;
     m_acceptKeys = true;
     m_cicuitBatch = 0;
-    m_circRev = 1e6;          /// Fixme
 
     m_board = nullptr;
     m_newConnector = nullptr;
@@ -67,6 +66,7 @@ Circuit::Circuit( int width, int height, CircuitView* parent )
     m_maxUndoSteps = 100;
     m_undoIndex = -1;
 
+    m_circRev    = MainWindow::self()->revision();
     m_backupPath = MainWindow::self()->getConfigPath("backup.sim1");
     m_hideGrid   = MainWindow::self()->settings()->value( "Circuit/hideGrid" ).toBool();
     m_filePath   = "";//qApp->applicationDirPath()+"/new.simu"; // AppImage tries to write in read olny filesystem
@@ -364,7 +364,7 @@ void Circuit::loadStrDoc( QString &doc )
                 else mComp->setPropStr( prop.name.toString(), prop.value.toString() );
             }
         }
-        else if( line.startsWith("<circuit") || line.startsWith("<libitem") )
+        else if( line.startsWith("<circuit") )
         {
             if( m_pasting ) continue;
 
@@ -381,6 +381,8 @@ void Circuit::loadStrDoc( QString &doc )
             }
         }
         else if( line.startsWith("</circuit") ) break;
+
+        setSize( m_sceneWidth, m_sceneHeight );
     }
     if( m_pasting )
     {
@@ -412,7 +414,6 @@ void Circuit::loadStrDoc( QString &doc )
     for( Linker*     linker : linkList   ) linker->createLinks( &compList );
 
     setAnimate( m_animate ); // Force Pin update
-    setSize( m_sceneWidth, m_sceneHeight );
 
     m_busy = false;
     QApplication::restoreOverrideCursor();

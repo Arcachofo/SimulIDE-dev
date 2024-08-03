@@ -124,14 +124,13 @@ class MainWindow : public QMainWindow
         
         CircuitWidget* m_circuitW;
         ComponentList* m_components;
-        QWidget*       m_componentWidget;
-        QVBoxLayout*   m_componentWidgetLayout;
+        QWidget*       m_listWidget;
         QLineEdit*     m_searchComponent;
         QPushButton*   m_clearButton;
+        FileWidget*    m_fileTree;
         EditorWindow*  m_editor;
         
-        QSplitter*  m_Centralsplitter;
-        FileWidget* m_fileSystemTree;
+        QSplitter*  m_mainSplitter;
 };
 
 #endif

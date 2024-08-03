@@ -111,9 +111,11 @@ QMap<QString, QString> Chip::getPackages( QString compFile ) // Static
         {
             QString propName  = prop.name.toString();
             QString propValue = prop.value.toString();
-            if     ( propName == "SubcType" && propValue != "None") s_subcType = propValue; // Only for Subcircuits
-            else if( propName == "label") pkgName = propValue;
+
+            if     ( propName == "SubcType" ) { if( propValue != "None" ) s_subcType = propValue; } // Only for Subcircuits
+            else if( propName == "label"    ) pkgName = propValue;
             else if( propName == "Logic_Symbol") ls = ( propValue == "true");
+
             if( propName == "Pins"){
                 propValue.replace("&#xa;","\n");
                 if( propValue.contains("&") ) propValue = cleanPinName( propValue );
@@ -236,14 +238,14 @@ void Chip::initPackage( QString pkgStr )
             //loadProperties( properties );
             for( propStr_t property : properties )
             {
-                QString   name = property.name.toString().toLower();  // Property_name
-                QStringRef val = property.value; // Property value
+                QString   name = property.name.toString().toLower();  // Property name
+                QStringRef val = property.value;                      // Property value
 
-                if     ( name == "width"       ) m_width  = val.split(" ").first().toInt();
-                else if( name == "height"      ) m_height = val.split(" ").first().toInt();
-                else if( name == "name"        ) embedName = val.toString();
-                else if( name == "background"  ) setBackground( val.toString() );
-                else if( name == "bckgnddata"  ) setBckGndData( val.toString() );
+                if     ( name == "width"     ) m_width  = val.split(" ").first().toInt();
+                else if( name == "height"    ) m_height = val.split(" ").first().toInt();
+                else if( name == "name"      ) embedName = val.toString();
+                else if( name == "background") setBackground( val.toString() );
+                else if( name == "bckgnddata") setBckGndData( val.toString() );
 
                 else if( name == "logic_symbol") m_isLS = ( val == "true" );
             }
@@ -376,7 +378,6 @@ void Chip::setBckGndData( QString data )
 
 void Chip::setBackground( QString bck )
 {
-    /// TODO: mostly repeated in SubPackage::setBackground
     m_background = bck;
 
     if( bck.startsWith("color") )
@@ -397,7 +398,7 @@ void Chip::setBackground( QString bck )
             pixmapPath = dir.absoluteFilePath( bck );              // Image in subcircuit folder
         }
         if( !QFile::exists( pixmapPath ) )                    // Image in user/data/images or simulide/data/images
-                pixmapPath = MainWindow::self()->getDataFilePath("images/"+bck );
+            pixmapPath = MainWindow::self()->getDataFilePath("images/"+bck );
 
         if( QFile::exists( pixmapPath ) )
         {
