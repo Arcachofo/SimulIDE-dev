@@ -567,11 +567,32 @@ void Component::setHidden( bool hid, bool hidArea, bool hidLabel )
 
 void Component::setBackground( QString bck )
 {
-    m_background = MainWindow::self()->getDataFilePath("images")+"/"+bck;
-    if( !QFile::exists( m_background ) ) m_background = ":/"+bck; // Image not in simulide data folder, use hardcoded image
-
-    m_backPixmap = new QPixmap( m_background );
     m_background = bck;
+
+    if( bck.startsWith("color") )
+    {
+        bck.remove("color").remove("(").remove(")").remove(" ");
+        QStringList rgb = bck.split(",");
+        if( rgb.size() < 3 ) return;
+
+        delete m_backPixmap;
+        m_backPixmap = nullptr;
+
+        m_color = QColor( rgb.at(0).toInt(), rgb.at(1).toInt(), rgb.at(2).toInt() );
+    }
+    else if( bck != "" )
+    {
+        QString pixmapPath = MainWindow::self()->getCircFilePath( bck );
+        if( !QFile::exists( pixmapPath ) ) pixmapPath = MainWindow::self()->getDataFilePath("images")+"/"+bck;
+        if( !QFile::exists( pixmapPath ) ) pixmapPath = ":/"+bck; // Image not in simulide data folder, use hardcoded image
+
+        if( QFile::exists( pixmapPath ) )
+        {
+            if( !m_backPixmap ) m_backPixmap = new QPixmap();
+            m_backPixmap->load( pixmapPath );
+        }
+    }
+    update();
 }
 
 /*QString Component::print()

@@ -38,7 +38,16 @@ class Dial : public Dialed, public Linker
         bool slider() { return m_slider; }
         void setSlider( bool s );
 
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
+        int width() { return m_width; }
+        void setWidth( int width );
+
+        int height() { return m_height; }
+        void setHeight( int height );
+
+        int border() { return m_border; }
+        void setBorder( int border );
+
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w ) override;
 
     public slots:
         void slotLinkComp() { Linker::startLinking(); }
@@ -46,10 +55,15 @@ class Dial : public Dialed, public Linker
     protected:
         virtual void contextMenuEvent( QGraphicsSceneContextMenuEvent* event ) override;
         virtual void updateProxy() override;
+        void updateArea();
 
         int m_minVal;
         int m_maxVal;
         int m_steps;
+
+        int m_width;
+        int m_height;
+        int m_border;
 };
 
 #endif

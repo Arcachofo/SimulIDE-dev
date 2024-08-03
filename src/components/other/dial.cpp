@@ -38,8 +38,11 @@ Dial::Dial( QString type, QString id )
     : Dialed( type, id )
 {
     m_areaDial = QRectF(-11,-28 , 22, 22 );
-    m_areaComp = QRectF(-12,-4.5, 24, 12.5 );
-    m_area     = m_areaComp;
+
+    m_width  = 24;
+    m_height = 12;
+    m_border = 2;
+    updateArea();
 
     m_graphical = true;
     m_isLinker = true;
@@ -68,6 +71,21 @@ Dial::Dial( QString type, QString id )
     },0 } );
 
     addPropGroup( { tr("Dial"), Dialed::dialProps(), groupNoCopy } );
+
+
+    addPropGroup( { tr("Body"), {
+        new IntProp <Dial>("width", tr("Width"), "_px"
+                           , this, &Dial::width, &Dial::setWidth,0,"uint" ),
+
+        new IntProp <Dial>("height", tr("Height"), "_px"
+                           , this, &Dial::height, &Dial::setHeight,0,"uint" ),
+
+        new IntProp <Dial>("Border", tr("Border"), "_px"
+                           , this, &Dial::border, &Dial::setBorder ),
+
+        new StrProp <Dial>("Background", tr("Background"),""
+                           , this, &Dial::background, &Dial::setBackground ),
+    },0} );
 
     addPropGroup( { "Hidden",
     {
@@ -135,6 +153,39 @@ void Dial::setSteps( int s )
     m_dialW.setSingleStep( single );
 }
 
+void Dial::setWidth( int width )
+{
+    if( width < 1 ) width = 1;
+    if( m_width == width ) return;
+
+    m_width = width;
+    updateArea();
+    Circuit::self()->update();
+}
+
+void Dial::setHeight( int height )
+{
+    if( height < 1 ) height = 1;
+    if( m_height == height ) return;
+
+    m_height = height;
+    updateArea();
+    Circuit::self()->update();
+}
+
+void Dial::updateArea()
+{
+    m_area = m_areaComp = QRectF(-double(m_width)/2,-4, m_width, m_height);
+    update();
+}
+
+void Dial::setBorder( int border )
+{
+    if( border < 0 ) border = 0;
+    m_border = border;
+    update();
+}
+
 /*void Dial::compSelected( Component* comp )
 {
 
@@ -166,12 +217,17 @@ void Dial::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
     menu->deleteLater();
 }
 
-void Dial::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
+void Dial::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w )
 {
     if( m_hidden ) return;
 
-    Component::paint( p, option, widget );
-    p->drawRect( m_area );
+    Component::paint( p, o, w );
 
+    if( m_backPixmap ) p->drawPixmap( QRect(m_area.x(), m_area.y(), m_width, m_height), *m_backPixmap );
+    else{
+        QPen pen( Qt::black, m_border, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin );
+        p->setPen( pen );
+        p->drawRect( m_area );
+    }
     Component::paintSelected( p );
 }
