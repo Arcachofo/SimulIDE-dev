@@ -116,8 +116,8 @@ TextComponent::~TextComponent()
 
 void TextComponent::updateStep()
 {
-    //if( !m_changed ) return;
-    //m_changed = false;
+    if( !m_changed && !m_linkedComp.isEmpty() ) return;
+    m_changed = false;
 
     QString text = m_textString;
 
@@ -211,7 +211,8 @@ void TextComponent::setFixedW( bool fixedW )
 
 QString TextComponent::getText()
 {
-    return m_textString.replace("\n", "&#xa;").replace("\"", "&#x22;")
+    QString text = m_textString;
+    return text.replace("\n", "&#xa;").replace("\"", "&#x22;")
             .replace("=", "&#x3D").replace("<", "&#x3C").replace(">", "&#x3E");
 }
 
