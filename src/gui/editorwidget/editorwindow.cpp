@@ -264,10 +264,10 @@ void EditorWindow::loadCompilers()
     compilsPath = MainWindow::self()->getUserFilePath("codeeditor/compilers/assemblers");
     loadCompilerSet( compilsPath, &m_assemblers );
 
-    //compilsPath = MainWindow::self()->getFilePath("data/codeeditor/compilers/compilers");
-    //loadCompilerSet( compilsPath, &m_compilers );
-    //compilsPath = MainWindow::self()->getFilePath("data/codeeditor/compilers/assemblers");
-    //loadCompilerSet( compilsPath, &m_assemblers );
+    compilsPath = MainWindow::self()->getFilePath("data/codeeditor/compilers/compilers");
+    loadCompilerSet( compilsPath, &m_compilers );
+    compilsPath = MainWindow::self()->getFilePath("data/codeeditor/compilers/assemblers");
+    loadCompilerSet( compilsPath, &m_assemblers );
 }
 
 void EditorWindow::loadCompilerSet( QString compilsPath, QMap<QString, compilData_t>* compList )
