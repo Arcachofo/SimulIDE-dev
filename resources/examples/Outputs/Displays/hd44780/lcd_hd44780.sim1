@@ -1,10 +1,12 @@
-<circuit version="" rev="2224" stepSize="1000000" stepsPS="1000000" NLsteps="100000" reaStep="1000000" animate="0" >
+<circuit version="1.1.0-SR0" rev="1917" stepSize="1000000" stepsPS="1000000" NLsteps="100000" reaStep="1000000" animate="0" >
 
 <item itemtype="Hd44780" CircId="Hd44780-2" mainComp="false" Show_id="true" Show_Val="false" Pos="-372,-316" rotation="0" hflip="1" vflip="1" label="Hd44780" idLabPos="62,-89" labelrot="0" valLabPos="0,0" valLabRot="0" Rows="2" Cols="16" />
 
 <item itemtype="Subcircuit" CircId="Uno-1" mainComp="false" Show_id="false" Show_Val="false" Pos="-268,-276" rotation="0" hflip="1" vflip="1" label="Arduino Uno" idLabPos="52,-22" labelrot="0" valLabPos="0,0" valLabRot="0" Logic_Symbol="false">
-<mainCompProps MainCompId="mega328-109" Frequency="16 MHz" Program="cursor.hex" Auto_Load="false" saveEepr="true" SerialMon="-1" />
+<mainCompProps MainCompId="mega328-109" Frequency="16 MHz" Program="cursor.hex" Auto_Load="false" saveEepr="true" MainMcu="true" SerialMon="-1" />
 </item>
+
+<item itemtype="Ground" CircId="Ground-3" mainComp="false" Show_id="false" Show_Val="false" Pos="-348,-284" rotation="0" hflip="1" vflip="1" label="Ground-3" idLabPos="-16,8" labelrot="0" valLabPos="-16,20" valLabRot="0" />
 
 <item itemtype="Connector" uid="Connector-3" startpinid="Hd44780-2-dataPin7" endpinid="Uno-1-2" pointList="-276,-308,-276,-244,-260,-244" />
 
@@ -14,8 +16,10 @@
 
 <item itemtype="Connector" uid="Connector-9" startpinid="Hd44780-2-dataPin4" endpinid="Uno-1-5" pointList="-300,-308,-300,-220,-260,-220" />
 
-<item itemtype="Connector" uid="Connector-11" startpinid="Hd44780-2-PinEn" endpinid="Uno-1-11" pointList="-340,-308,-340,-164,-260,-164" />
-
 <item itemtype="Connector" uid="Connector-13" startpinid="Hd44780-2-PinRS" endpinid="Uno-1-12" pointList="-356,-308,-356,-156,-260,-156" />
+
+<item itemtype="Connector" uid="Connector-17" startpinid="Hd44780-2-PinEn" endpinid="Uno-1-11" pointList="-340,-308,-340,-164,-260,-164" />
+
+<item itemtype="Connector" uid="Connector-18" startpinid="Ground-3-Gnd" endpinid="Hd44780-2-PinRW" pointList="-348,-300,-348,-308" />
 
 </circuit>
