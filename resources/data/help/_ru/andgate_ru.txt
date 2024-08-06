@@ -1,0 +1,11 @@
+﻿Настраиваемый логический элемент "И"
+
+Свойства (значение по умолчанию):
+
+Электрические:
+
+#include logicinputs_ru
+#include gateinputs_ru
+#include logicoutputs_ru
+#include gateoutputs_ru
+#include gatedelay_ru

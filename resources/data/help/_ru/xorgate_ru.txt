@@ -1,0 +1,11 @@
+﻿Настраиваемый лог. элемент "Исключающее ИЛИ"  (XOR).
+
+Свойства: (значения по умолчанию)
+
+Электрические:
+#include logicinputs_ru
+#include gateinputs_ru
+#include logicoutputs_ru
+#include gateoutputs_ru
+#include gatedelay_ru
+

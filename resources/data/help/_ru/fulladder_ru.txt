@@ -1,0 +1,10 @@
+﻿Настраиваемый полный сумматор.
+
+Свойства: (значения по умолчанию)
+
+Электрический:
+
+#include logicinputs_ru
+#include logicoutputs_ru
+#include logicedges_ru
+
