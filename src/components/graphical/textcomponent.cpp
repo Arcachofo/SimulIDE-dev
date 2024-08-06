@@ -116,7 +116,7 @@ TextComponent::~TextComponent()
 
 void TextComponent::updateStep()
 {
-    if( !m_changed && !m_linkedComp.isEmpty() ) return;
+    if( !m_changed && m_linkedComp.isEmpty() ) return;
     m_changed = false;
 
     QString text = m_textString;
