@@ -193,6 +193,7 @@ void Component::mousePressEvent( QGraphicsSceneMouseEvent* event )
         QApplication::focusWidget()->clearFocus();
         CircuitView::self()->setFocus();
     }
+    else if( event->button() == Qt::MidButton ) event->setAccepted( false );
 }
 
 void Component::mouseMoveEvent( QGraphicsSceneMouseEvent* event )

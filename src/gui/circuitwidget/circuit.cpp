@@ -966,6 +966,7 @@ void Circuit::mousePressEvent( QGraphicsSceneMouseEvent* event )
         if( m_conStarted ) event->accept();
         else               QGraphicsScene::mousePressEvent( event );
     }
+    else QGraphicsScene::mousePressEvent( event );
 }
 
 void Circuit::mouseReleaseEvent( QGraphicsSceneMouseEvent* event )
