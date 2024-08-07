@@ -72,14 +72,16 @@ class ComponentList : public QTreeWidget
 
         QString m_searchFilter;
 
-        QHash<QString, TreeItem*> m_components;
-        QHash<QString, TreeItem*> m_categories;
-        QHash<QString, QString>   m_catNames;
+        QMap<QString, TreeItem*> m_components;
+        QMap<QString, TreeItem*> m_categories;
+        QMap<QString, QString>   m_catNames;
+
+        QList<TreeItem*> m_categoryList;
 
 
-        QHash<QString, QString> m_dataFileList;
-        QHash<QString, QString> m_dirFileList;
-        QHash<QString, QString> m_shortCuts;
+        QMap<QString, QString> m_dataFileList;
+        QMap<QString, QString> m_dirFileList;
+        QMap<QString, QString> m_shortCuts;
 
         QDir m_compSetDir;
 

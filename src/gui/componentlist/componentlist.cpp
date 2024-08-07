@@ -123,12 +123,12 @@ void ComponentList::createList()
 
     if( !m_oldConfig ) readConfig(); // Read new xml config file
 
-    /*for( TreeItem* it : m_categories ) // Remove empty categories
+    for( TreeItem* it : m_categoryList ) // Remove empty categories
     {
         if( it->childCount() ) continue;
         QTreeWidgetItem* pa = it->parent();
         if( pa ) pa->removeChild( it  );
-    }*/
+    }
 }
 
 void ComponentList::LoadLibraryItems()
@@ -456,6 +456,7 @@ void ComponentList::readConfig()
         if( parent ) parent->addChild( item );
         else         addTopLevelItem( item );
         item->setExpanded( item->isItemExpanded() );
+        m_categoryList.append( item );
     }
 
     for( TreeItem* item : m_components.values() ) // Insert new components
@@ -479,6 +480,7 @@ void ComponentList::readNodCfg( QDomNode* node, TreeItem* parent )
 
         if( item ){
             m_categories.remove( name );
+            m_categoryList.append( item );
             expanded = element.attribute("expanded") == "1";
 
             treItemType_t itemType = parent ? categ_CHILD : categ_MAIN;
