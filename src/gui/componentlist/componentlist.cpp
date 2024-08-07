@@ -48,11 +48,6 @@ ComponentList::ComponentList( QWidget* parent )
 
     createList();
 
-    setContextMenuPolicy( Qt::CustomContextMenu );
-
-    connect( this, &ComponentList::customContextMenuRequested,
-             this, &ComponentList::slotContextMenu );
-
     connect( this, &ComponentList::itemPressed,
              this, &ComponentList::slotItemClicked );
 }
@@ -357,11 +352,19 @@ TreeItem* ComponentList::addCategory( QString nameTr, QString name, QString pare
 
 void ComponentList::mousePressEvent( QMouseEvent* event )
 {
-    if( event->modifiers() & Qt::ControlModifier ) setDragDropMode( QAbstractItemView::InternalMove );
-    else                                           setDragDropMode( QAbstractItemView::DragOnly );
+    if( event->button() == Qt::LeftButton )
+    {
+        if( event->modifiers() & Qt::ControlModifier ) setDragDropMode( QAbstractItemView::InternalMove );
+        else                                           setDragDropMode( QAbstractItemView::DragOnly );
 
-    for( QTreeWidgetItem* item : selectedItems() ) item->setSelected( false );
-    QTreeWidget::mousePressEvent( event );
+        for( QTreeWidgetItem* item : selectedItems() ) item->setSelected( false );
+
+        QTreeWidget::mousePressEvent( event );
+    }
+    else if( event->button() == Qt::RightButton )
+    {
+        slotContextMenu( event->pos() );
+    }
 }
 
 void ComponentList::slotItemClicked( QTreeWidgetItem* item, int  )

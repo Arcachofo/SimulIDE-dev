@@ -42,14 +42,14 @@ class ComponentList : public QTreeWidget
 
         void writeSettings();
 
-        void mousePressEvent( QMouseEvent* event );
-
-        void dropEvent( QDropEvent* event );
-
-    private slots:
+    public slots:
         void slotItemClicked( QTreeWidgetItem* item, int );
         void slotContextMenu( const QPoint& );
         void slotManageComponents();
+
+    protected:
+        void mousePressEvent( QMouseEvent* event ) override;
+        void dropEvent( QDropEvent* event ) override;
 
     private:
  static ComponentList* m_pSelf;
