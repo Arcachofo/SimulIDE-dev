@@ -122,8 +122,6 @@ void NumVal::updtValues()
     double val = m_property->getValue()/multiplier;
     valueBox->setValue( val );
 
-    if( showVal->isChecked() ) m_component->setPropStr("ValLabelText", m_property->getValStr() );
-
     m_blocked = false;
 }
 

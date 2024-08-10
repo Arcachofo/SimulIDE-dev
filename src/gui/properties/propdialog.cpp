@@ -201,6 +201,7 @@ void PropDialog::adjustWidgets()
 void PropDialog::updtValues()
 {
     for( PropVal* prop : m_propList ) prop->updtValues();
+    m_component->setup();
 }
 
 void PropDialog::changed()

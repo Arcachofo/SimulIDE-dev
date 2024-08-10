@@ -106,9 +106,6 @@ void LogicComponent::setTriggerStr( QString t )
 {
     int index = getEnumIndex( t );
     setTrigger( (trigger_t)index );
-
-    if( m_showVal && (m_showProperty == "Trigger") )
-        setValLabelText( m_enumNames.at( index ) );
 }
 
 void LogicComponent::enableOutputs( bool en )
