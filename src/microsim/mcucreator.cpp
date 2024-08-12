@@ -79,6 +79,7 @@
 #include "scriptusart.h"
 #include "scriptspi.h"
 #include "scripttwi.h"
+#include "scripttcp.h"
 #include "scriptprop.h"
 #include "scriptdisplay.h"
 
@@ -178,6 +179,7 @@ int McuCreator::processFile( QString fileName )
         else if( part == "usart" )      createUsart( &el );
         else if( part == "twi" )        createTwi( &el );
         else if( part == "spi" )        createSpi( &el );
+        else if( part == "tcp" )        createTcp( &el );
         else if( part == "usi" )        createUsi( &el );
         else if( part == "adc" )        createAdc( &el );
         else if( part == "dac" )        createDac( &el );
@@ -1173,6 +1175,18 @@ void McuCreator::createSpi( QDomElement* e )
     m_spi->setMisoPin( mcu->getIoPin( pins.value(1) ) );
     m_spi->setSckPin(  mcu->getIoPin( pins.value(2) ) );
     m_spi->setSsPin(   mcu->getIoPin( pins.value(3) ) );
+}
+
+void McuCreator::createTcp( QDomElement* e )
+{
+    QString name = e->attribute( "name" );
+
+    if( m_core == "scripted"){
+        ScriptTcp* su = new ScriptTcp( mcu, name );
+        m_scriptPerif.push_back( su );
+        /// mcu->m_modules.emplace_back( su );
+    }
+    else return;
 }
 
 void McuCreator::createUsi( QDomElement* e )

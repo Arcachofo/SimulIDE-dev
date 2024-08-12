@@ -51,6 +51,7 @@ class McuCreator
         static void createUsart( QDomElement* u );
         static void createTwi( QDomElement* e );
         static void createSpi( QDomElement* e );
+        static void createTcp( QDomElement* e );
         static void createUsi( QDomElement* e );
         static void createAdc( QDomElement* e );
         static void createDac( QDomElement* e );
