@@ -443,9 +443,9 @@ void Esp01::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
     Component::contextMenu( event, menu );
 }
 
-void Esp01::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
+void Esp01::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w )
 {
-    Component::paint( p, option, widget );
+    Component::paint( p, o, w );
 
     p->drawRoundedRect( m_area, 2, 2 );
     p->drawPixmap( QRect(-28,-20, 56, 40 ), *m_backPixmap );

@@ -110,9 +110,9 @@ void SR04::runEvent()
     else m_echo->scheduleState( false, 0 );
 }
 
-void SR04::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
+void SR04::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w )
 {
-    Component::paint( p, option, widget );
+    Component::paint( p, o, w );
     
     p->drawRoundedRect( m_area, 2, 2 );
 
