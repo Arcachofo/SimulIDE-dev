@@ -27,25 +27,26 @@ AvrAdc* AvrAdc::createAdc( eMcu* mcu, QString name, int type )
 AvrAdc::AvrAdc( eMcu* mcu, QString name )
       : McuAdc( mcu, name )
 {
-    m_ADEN  = getRegBits( "ADEN", mcu );
-    m_ADSC  = getRegBits( "ADSC", mcu );
-    m_ADATE = getRegBits( "ADATE", mcu );
-    m_ADIF  = getRegBits( "ADIF", mcu );
-    m_ADPS  = getRegBits( "ADPS0,ADPS1,ADPS2", mcu );
+    m_ADEN  = getRegBits("ADEN", mcu );
+    m_ADSC  = getRegBits("ADSC", mcu );
+    m_ADATE = getRegBits("ADATE", mcu );
+    m_ADIF  = getRegBits("ADIF", mcu );
+    m_ADPS  = getRegBits("ADPS0,ADPS1,ADPS2", mcu );
 
-    m_ADTS  = getRegBits( "ADTS0,ADTS1,ADTS2", mcu );
-    m_ACME  = getRegBits( "ACME", mcu );
+    m_ADTS  = getRegBits("ADTS0,ADTS1,ADTS2", mcu );
+    m_ACME  = getRegBits("ACME", mcu );
 
-    m_ADLAR = getRegBits( "ADLAR", mcu );
-    m_REFS  = getRegBits( "REFS0,REFS1", mcu );
+    m_ADLAR = getRegBits("ADLAR", mcu );
+    m_REFS  = getRegBits("REFS0,REFS1", mcu );
 
     if( mcu->getMcuPort("PORTV") )
     {
-        m_aVccPin = mcu->getMcuPin( "PORTV0" );
-        m_aRefPin = mcu->getMcuPin( "PORTV1" );
+        m_aVccPin = mcu->getMcuPin("PORTV0");
+        m_aRefPin = mcu->getMcuPin("PORTV1");
+        if( m_aRefPin ) m_aRefPin->setInputImp( 32000 ); // Internal 32K resistor on the AREF pin
     }
 
-    m_timer0 = (AvrTimer800*)mcu->getTimer( "TIMER0" );
+    m_timer0 = (AvrTimer800*)mcu->getTimer("TIMER0");
     m_timer1 = NULL;
 
     m_t0OCA = m_timer0->getOcUnit("OCA");
@@ -129,6 +130,8 @@ void AvrAdc::setChannel( uint8_t newADMUX ) // ADMUX
     m_leftAdjust = getRegBitsBool( newADMUX, m_ADLAR );
     m_refSelect  = getRegBitsVal(  newADMUX, m_REFS );
 
+    updtVref();
+
     if( !m_mcu->comparator() ) return;
     if( m_acme && !m_enabled ) m_mcu->comparator()->setPinN( m_adcPin[m_channel] );
 }
@@ -171,12 +174,17 @@ void AvrAdc00::autotriggerConf()
 
 void AvrAdc00::updtVref()
 {
-    m_vRefP = m_mcu->vdd();
-    switch( m_refSelect ){
-        case 0: m_vRefP = m_aRefPin->getVoltage(); break; // AREF
-        case 1: m_vRefP = m_aVccPin->getVoltage(); break; // AVcc
-        case 3: m_vRefP = m_fixedVref;                 // Internal ref Volt
-}   }
+    double vRefP = 0;
+
+    if( m_refSelect & 1 ) // Connect aRefPin to multiplexer
+    {
+        if( m_refSelect & 2 ) vRefP = m_fixedVref;
+        else                  vRefP = m_aVccPin->getVoltage();
+    }
+    m_aRefPin->setVoltage( vRefP );
+
+    m_vRefP = m_aRefPin->getVoltage();
+}
 
 //------------------------------------------------------
 //-- AVR ADC Type 01 -----------------------------------
