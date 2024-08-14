@@ -55,7 +55,7 @@ class TcpModule : public eElement, public Updatable
 
         bool m_debug;
 
-        QMap<int, tcpConnection_t> m_tcpConnections;
+        QMap<int, tcpConnection_t*> m_tcpConnections;
 
         QSignalMapper* m_connectSM;
         QSignalMapper* m_discontSM;

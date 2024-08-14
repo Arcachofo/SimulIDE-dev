@@ -71,6 +71,7 @@ void ScriptTcp::sendMsgToHost( const string msg, int link )
 
 void ScriptTcp::received( QString msg, int link )
 {
+    TcpModule::received( msg, link );
     if( !m_received ) return;
 
     m_scriptCpu->prepare( m_received );
@@ -83,6 +84,7 @@ void ScriptTcp::received( QString msg, int link )
 
 void ScriptTcp::tcpConnected( int link )
 {
+    TcpModule::tcpConnected( link );
     if( !m_connected ) return;
 
     m_scriptCpu->prepare( m_connected );
@@ -92,6 +94,7 @@ void ScriptTcp::tcpConnected( int link )
 
 void ScriptTcp::tcpDisconnected( int link )
 {
+    TcpModule::tcpDisconnected( link );
     if( !m_closed ) return;
 
     m_scriptCpu->prepare( m_closed );

@@ -16,7 +16,7 @@
 TcpModule::TcpModule( QString name )
          : eElement( name )
 {
-    m_debug = true;
+    m_debug = false;
 
     m_connectSM = new QSignalMapper();
     QObject::connect( m_connectSM, QOverload<int>::of(&QSignalMapper::mapped),
@@ -24,99 +24,114 @@ TcpModule::TcpModule( QString name )
 
     m_discontSM = new QSignalMapper();
     QObject::connect( m_discontSM, QOverload<int>::of(&QSignalMapper::mapped),
-                     [=](int i){ tcpConnected(i); } );
+                     [=](int i){ tcpDisconnected(i); } );
 
     m_readyReSM = new QSignalMapper();
     QObject::connect( m_readyReSM, QOverload<int>::of(&QSignalMapper::mapped),
-                     [=](int i){ tcpConnected(i); } );
+                     [=](int i){ tcpReadyRead(i); } );
 
     Simulator::self()->addToUpdateList( this );
 
 }
-TcpModule::~TcpModule(){}
+TcpModule::~TcpModule()
+{
+    TcpModule::initialize();
+}
 
 void TcpModule::initialize()
 {
-    for( tcpConnection_t conn : m_tcpConnections ) conn.socket->disconnectFromHost();
+    for( tcpConnection_t* conn : m_tcpConnections )
+    {
+        conn->socket->disconnectFromHost();
+        conn->socket->waitForDisconnected( 1000 );
+        conn->socket->deleteLater();
+        delete conn;
+    }
     m_tcpConnections.clear();
 }
 
-
 void TcpModule::updateStep()
 {
-    for( tcpConnection_t conn : m_tcpConnections )
+    for( tcpConnection_t* conn : m_tcpConnections )
     {
-        switch( conn.action ) {
+        switch( conn->action ) {
             case tcpNone: break;
             case tcpConnect:
             {
-                QTcpSocket* tcpSocket = conn.socket;
+                QTcpSocket* tcpSocket = conn->socket;
                 if( tcpSocket->state() == QAbstractSocket::UnconnectedState )
                 {
-                    if( m_debug ) qDebug() << "TcpModule - Connecting Socket"<<conn.number<<"to"<<conn.host<< conn.port;
-                    tcpSocket->connectToHost( conn.host, conn.port );
+                    if( m_debug ) qDebug() << "TcpModule - Connecting Socket"<<conn->number<<"to"<<conn->host<< conn->port;
+                    tcpSocket->connectToHost( conn->host, conn->port );
                 }
-                else if( m_debug ) qDebug() << "TcpModule - Error Connecting Socket"<<conn.number<<"to"<<conn.host<<conn.port
+                else if( m_debug ) qDebug() << "TcpModule - Error Connecting Socket"<<conn->number<<"to"<<conn->host<<conn->port
                                             <<"\n              State = "<<tcpSocket->state();
             }break;
             case tcpSend:
             {
-                QTcpSocket* tcpSocket = conn.socket;
+                QTcpSocket* tcpSocket = conn->socket;
                 if( !tcpSocket ) continue;
 
                 if( tcpSocket->state() == QAbstractSocket::ConnectedState )
                 {
-                    if( m_debug ) qDebug() << "TcpModule - Sending data to Socket:"<<conn.number<<"\n"<<conn.toSend;
-                    int bytes = tcpSocket->write( conn.toSend );
-                    if( m_debug ) qDebug() << "TcpModule -"<<bytes<<"Bytes Written to Socket"<<conn.number;
-                    conn.toSend.clear();
+                    if( m_debug ) qDebug() << "TcpModule - Sending data to Socket:"<<conn->number<<"\n"<<conn->toSend;
+                    int bytes = tcpSocket->write( conn->toSend+"\n\0" );
+                    if( m_debug ) qDebug() << "TcpModule -"<<bytes<<"Bytes Written to Socket"<<conn->number;
+                    conn->toSend.clear();
                 }
-                else qDebug() << "TcpModule - Error Sending data: Socket"<<conn.number<<"not connected\n";
+                else if( m_debug ) qDebug() << "TcpModule - Error Sending data: Socket"<<conn->number<<"not connected\n";
             }break;
             case tcpClose:
             {
-                QTcpSocket* tcpSocket = conn.socket;
+                QTcpSocket* tcpSocket = conn->socket;
                 if( !tcpSocket ) return;
 
                 if( tcpSocket->state() == QAbstractSocket::ConnectedState )
                 {
-                    if( m_debug ) qDebug() << "TcpModule - Disconnecting Socket"<<conn.number<<"from"<<conn.host<< conn.port;
+                    if( m_debug ) qDebug() << "TcpModule - Disconnecting Socket"<<conn->number<<"from"<<conn->host<< conn->port;
                     tcpSocket->disconnectFromHost();
                 }
                 else if( m_debug )
-                    qDebug() << "TcpModule - Error Disconnecting Socket"<<conn.number<<"from"<<conn.host<< conn.port
+                    qDebug() << "TcpModule - Error Disconnecting Socket"<<conn->number<<"from"<<conn->host<< conn->port
                              <<"\n              State = "<<tcpSocket->state();
             }break;
         }
+        conn->action = tcpNone;
     }
 }
 
 void TcpModule::closeSocket( int link )
 {
     if( !m_tcpConnections.contains( link ) ) return;
-    tcpConnection_t conn = m_tcpConnections.value( link );
-    conn.action = tcpClose;
+    tcpConnection_t* conn = m_tcpConnections.value( link );
+    conn->action = tcpClose;
 }
 
 void TcpModule::sendMsg( QString msg, int link )
 {
     if( !m_tcpConnections.contains( link ) ) return;
-    tcpConnection_t conn = m_tcpConnections.value( link );
-    conn.toSend = msg.toUtf8();
-    conn.action = tcpSend;
+    tcpConnection_t* conn = m_tcpConnections.value( link );
+    conn->toSend = msg.toUtf8();
+    conn->action = tcpSend;
 }
 
 void TcpModule::connectTo( int link, QString host, int port )
 {
     if( m_tcpConnections.contains( link ) )
     {
-        tcpConnection_t conn = m_tcpConnections.value( link );
-        conn.action = tcpConnect;
-    }
-    else
-    {
+        tcpConnection_t* conn = m_tcpConnections.value( link );
+        conn->action = tcpConnect;
+    }else{
         QTcpSocket* tcpSocket = new QTcpSocket();
-        m_tcpConnections[link] = { tcpSocket, host, port, link, tcpConnect, "" };
+        tcpConnection_t* conn = new tcpConnection_t;
+
+        conn->socket = tcpSocket;
+        conn->host   = host;
+        conn->port   = port;
+        conn->number = link;
+        conn->action = tcpConnect;
+
+        m_tcpConnections[link] = conn;
 
         QObject::connect( tcpSocket, &QTcpSocket::connected ,
                         m_connectSM, QOverload<>::of(&QSignalMapper::map), Qt::UniqueConnection );
@@ -137,27 +152,27 @@ void TcpModule::connectTo( int link, QString host, int port )
 void TcpModule::tcpConnected( int link )
 {
     if( !m_debug ) return;
-    tcpConnection_t conn = m_tcpConnections.value( link );
-    qDebug() << "TcpModule - Socket"<<link<<"Connected to"<<conn.host<<conn.port;
+    tcpConnection_t* conn = m_tcpConnections.value( link );
+    qDebug() << "TcpModule - Socket"<<link<<"Connected to"<<conn->host<<conn->port;
 }
 void TcpModule::tcpDisconnected( int link )
 {
     if( !m_debug ) return;
-    tcpConnection_t conn = m_tcpConnections.value( link );
-    qDebug() << "TcpModule - Socket"<<link<<"Disconnected from"<<conn.host<<conn.port;
+    tcpConnection_t* conn = m_tcpConnections.value( link );
+    qDebug() << "TcpModule - Socket"<<link<<"Disconnected from"<<conn->host<<conn->port;
 }
 
 void TcpModule::tcpReadyRead( int link )
 {
-    tcpConnection_t conn = m_tcpConnections.value( link );
-    QTcpSocket* tcpSocket = conn.socket;
+    tcpConnection_t* conn = m_tcpConnections.value( link );
+    QTcpSocket* tcpSocket = conn->socket;
 
     QString msg = tcpSocket->readAll();
     received( msg, link ) ;
 
     if( !m_debug ) return;
     qDebug() << "TcpModule - Socket"<<link
-             <<"Received from Host:" << conn.host <<"Port:"<< conn.port
+             <<"Received from Host:" << conn->host <<"Port:"<< conn->port
              <<"\n"<< msg;
 }
 
