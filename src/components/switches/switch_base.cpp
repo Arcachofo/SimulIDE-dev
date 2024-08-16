@@ -92,6 +92,7 @@ void SwitchBase::onbuttonclicked()
 
 void SwitchBase::setKey( QString key )
 {
+    if( key.startsWith("&#x3") ) key.replace("&#x3D", "=").replace("&#x3C", "<").replace("&#x3E", ">");
     if( key.size()>1 ) key = key.left( 1 );
     m_key = key;
     m_button->setText( key );
