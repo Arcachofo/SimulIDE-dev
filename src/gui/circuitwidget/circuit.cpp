@@ -330,12 +330,13 @@ void Circuit::loadStrDoc( QString &doc )
                     comp->setup();
 
                     if( m_pasting ) comp->setIdLabel( newUid );
-                    comp->updtLabelPos();
-                    comp->updtValLabelPos();
+                    else            addItem( comp );
 
-                    addItem( comp );
                     if( type == "Package" ) compList.prepend( comp );
                     else                    compList.append( comp );
+
+                    comp->updtLabelPos();
+                    comp->updtValLabelPos();
 
                     if( comp->m_isLinker ){
                         Linker* l = dynamic_cast<Linker*>(comp);
@@ -391,6 +392,7 @@ void Circuit::loadStrDoc( QString &doc )
         for( Component* comp : compList ){
             comp->setSelected( true );
             comp->move( m_deltaMove );
+            addComponent( comp );
         }
         for( Node* nod : nodeList ){
             nod->setSelected( true );
@@ -401,11 +403,14 @@ void Circuit::loadStrDoc( QString &doc )
             con->move( m_deltaMove );
         }
     }
-    else for( Component* comp : compList ) { comp->moveSignal(); }
+    else
+    {
+        for( Component* comp : compList ) comp->moveSignal();
+        m_compList = compList;
+    }
 
     m_nodeList += nodeList;
     m_connList += connList;
-    m_compList += compList;
 
     if( !m_undo && !m_redo ) // Take care about unconnected Joints
         for( Node* joint : nodeList ) joint->checkRemove(); // Only removed if some missing connector
