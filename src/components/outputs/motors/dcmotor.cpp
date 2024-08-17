@@ -75,6 +75,15 @@ DcMotor::DcMotor( QString type, QString id )
 }
 DcMotor::~DcMotor(){}
 
+QString DcMotor::getPropStr( QString prop )
+{
+    if( prop.toLower() == "speed" ) // To be called from scripts
+    {
+        return QString::number( -m_speed );  // Speed: 1 = 100%
+    }
+    else return LinkerComponent::getPropStr( prop );
+}
+
 void DcMotor::initialize()
 {
     m_ang = 0;
@@ -109,7 +118,7 @@ void DcMotor::updateStep()
         double val = m_ang*1000/(16.0*360.0);
         if( val > 0 ) val = 1000-val;
         else          val = -val;
-        for( Component* comp : m_linkedComp ) comp->setLinkedValue( val ); // 0-1000
+        for( Component* comp : m_linkedComp ) comp->setLinkedValue( val ); // angle 0-1000
     }
     m_delta = 0;
     m_updtTime = 0;
@@ -138,10 +147,9 @@ void DcMotor::setRpm( int rpm )
     update();
 }
 
-
-void DcMotor::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
+void DcMotor::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w )
 {
-    Component::paint( p, option, widget );
+    Component::paint( p, o, w );
 
     p->setBrush( QColor(50, 70, 100) );
     p->drawEllipse(-32,-32, 64, 64 );

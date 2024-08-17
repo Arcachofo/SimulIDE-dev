@@ -18,6 +18,8 @@ class DcMotor : public LinkerComponent, public eResistor
         DcMotor( QString type, QString id );
         ~DcMotor();
 
+        virtual QString getPropStr( QString prop ) override;
+
  static Component* construct( QString type, QString id );
  static LibraryItem* libraryItem();
 
@@ -32,7 +34,7 @@ class DcMotor : public LinkerComponent, public eResistor
         double volt() { return m_voltNom; }
         void setVolt( double v ) { m_voltNom = v; }
 
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w ) override;
 
     protected:
         void updatePos();
