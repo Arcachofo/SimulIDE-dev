@@ -67,20 +67,6 @@ void TcpModule::updateStep()
                 else if( m_debug ) qDebug() << "TcpModule - Error Connecting Socket"<<conn->number<<"to"<<conn->host<<conn->port
                                             <<"\n              State = "<<tcpSocket->state();
             }break;
-            case tcpSend:
-            {
-                QTcpSocket* tcpSocket = conn->socket;
-                if( !tcpSocket ) continue;
-
-                if( tcpSocket->state() == QAbstractSocket::ConnectedState )
-                {
-                    if( m_debug ) qDebug() << "TcpModule - Sending data to Socket:"<<conn->number<<"\n"<<conn->toSend;
-                    int bytes = tcpSocket->write( conn->toSend+"\n\0" );
-                    if( m_debug ) qDebug() << "TcpModule -"<<bytes<<"Bytes Written to Socket"<<conn->number;
-                    conn->toSend.clear();
-                }
-                else if( m_debug ) qDebug() << "TcpModule - Error Sending data: Socket"<<conn->number<<"not connected\n";
-            }break;
             case tcpClose:
             {
                 QTcpSocket* tcpSocket = conn->socket;
@@ -111,8 +97,16 @@ void TcpModule::sendMsg( QString msg, int link )
 {
     if( !m_tcpConnections.contains( link ) ) return;
     tcpConnection_t* conn = m_tcpConnections.value( link );
-    conn->toSend = msg.toUtf8();
-    conn->action = tcpSend;
+    QTcpSocket* tcpSocket = conn->socket;
+
+    if( tcpSocket->state() == QAbstractSocket::ConnectedState )
+    {
+        QByteArray toSend = msg.toUtf8();
+        if( m_debug ) qDebug() << "TcpModule - Sending data to Socket:"<<conn->number<<"\n"<<toSend;
+        int bytes = tcpSocket->write( toSend+"\n\0" );
+        if( m_debug ) qDebug() << "TcpModule -"<<bytes<<"Bytes Written to Socket"<<conn->number;
+    }
+    else if( m_debug ) qDebug() << "TcpModule - Error Sending data: Socket"<<conn->number<<"not connected\n";
 }
 
 void TcpModule::connectTo( int link, QString host, int port )
@@ -165,9 +159,8 @@ void TcpModule::tcpDisconnected( int link )
 void TcpModule::tcpReadyRead( int link )
 {
     tcpConnection_t* conn = m_tcpConnections.value( link );
-    QTcpSocket* tcpSocket = conn->socket;
 
-    QString msg = tcpSocket->readAll();
+    QString msg = conn->socket->readAll();
     received( msg, link ) ;
 
     if( !m_debug ) return;

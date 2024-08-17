@@ -23,7 +23,6 @@ class TcpModule : public eElement, public Updatable
         enum tcpAction_t{
             tcpNone =0,
             tcpConnect,
-            tcpSend,
             tcpClose,
         };
 
