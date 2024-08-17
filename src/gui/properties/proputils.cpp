@@ -30,13 +30,13 @@ QVector<propStr_t> parseXmlProps( QStringRef line )
 
     for( QStringRef token : tokens )
     {
-        if( token.endsWith("=") )
-        {
+        if( name.isEmpty() ){
             int start = token.lastIndexOf(" ")+1;
             name = token.mid( start, token.length()-start-1 );
-            continue;
+        }else{
+            properties.append( { name, token } );
+            name.clear();
         }
-        else properties.append( { name, token } );
     }
     return properties;
 }
