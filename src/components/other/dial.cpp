@@ -48,7 +48,7 @@ Dial::Dial( QString type, QString id )
     m_isLinker = true;
 
     m_minVal = 0;
-    m_maxVal = 1000;
+    m_maxVal = 999;
     m_steps  = 1000;
 
     setValLabelPos( 15,-20, 0 );

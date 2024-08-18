@@ -600,7 +600,7 @@ void ScriptCpu::setLinkedStr( QString s, int i )
     if( !m_setLinkedStr ) return;
     if( !Simulator::self()->isRunning() ) return;
 
-    prepare( m_setLinkedStr);
+    prepare( m_setLinkedStr );
     std::string str = s.toStdString();
     m_context->SetArgObject( 0, &str );
     m_context->SetArgDWord( 1, i );

@@ -102,7 +102,6 @@ QMap<QString, QString> Chip::getPackages( QString compFile ) // Static
         if( itemType.name != "itemtype") continue;
         if( itemType.value != "Package") break;    // All packages processed
 
-        bool ls = false;
         bool addPackage = false;
         QString pkgName;
         QString pkgStr = "Package; ";
@@ -114,7 +113,7 @@ QMap<QString, QString> Chip::getPackages( QString compFile ) // Static
 
             if     ( propName == "SubcType" ) { if( propValue != "None" ) s_subcType = propValue; } // Only for Subcircuits
             else if( propName == "label"    ) pkgName = propValue;
-            else if( propName == "Logic_Symbol") ls = ( propValue == "true");
+            //else if( propName == "Logic_Symbol") ls = ( propValue == "true");
 
             if( propName == "Pins"){
                 propValue.replace("&#xa;","\n");
@@ -124,17 +123,7 @@ QMap<QString, QString> Chip::getPackages( QString compFile ) // Static
             }
             else pkgStr += propName+"="+propValue+"; ";
         }
-        if( addPackage && !pkgName.isEmpty() )
-        {
-            if( s_subcType == "None" || s_subcType == "Logic" )
-            {
-                if( ls && !pkgName.startsWith("0") ) pkgName.prepend("0- ");
-            }
-            else if( !ls && !pkgName.startsWith("0") ) pkgName.prepend("0- ");
-
-            packageList[pkgName] = pkgStr;
-        }
-        //qDebug() << pkgStr;
+        if( addPackage && !pkgName.isEmpty() ) packageList[pkgName] = pkgStr;
     }
     return packageList;
 }
@@ -246,7 +235,6 @@ void Chip::initPackage( QString pkgStr )
                 else if( name == "name"      ) embedName = val.toString();
                 else if( name == "background") setBackground( val.toString() );
                 else if( name == "bckgnddata") setBckGndData( val.toString() );
-
                 else if( name == "logic_symbol") m_isLS = ( val == "true" );
             }
         }
