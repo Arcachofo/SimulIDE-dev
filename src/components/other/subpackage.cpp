@@ -357,8 +357,8 @@ void SubPackage::addNewPin( QString id, QString type, QString label, int pos, in
     if( type == "nul" ) pin->setPinType( Pin::pinNull );
     if( type == "rst" ) pin->setPinType( Pin::pinRst );
 
-    m_ePin.emplace_back( pin );
-    m_pin.emplace_back( pin );
+    //m_ePin.emplace_back( pin );
+    //m_pin.emplace_back( pin );
     m_pkgePins.append( pin );
 }
 
@@ -517,9 +517,8 @@ void SubPackage::setPackageFile( QString package )
     m_pkgeFile = circuitDir.relativeFilePath( package );
     if( package.isEmpty() ) return;
 
+    for( Pin* pin : m_pkgePins ) deletePin( pin );
     m_pkgePins.clear();
-    for( Pin* pin : m_pin ) deletePin( pin );
-    m_pin.clear();
 
     QString pkgText = fileToString( fileNameAbs, "SubPackage::setPackageFile");
     QString pkgStr  = convertPackage( pkgText );
