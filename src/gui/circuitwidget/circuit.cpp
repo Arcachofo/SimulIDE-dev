@@ -115,13 +115,8 @@ QString Circuit::getSeqNumber( QString name )
 QString Circuit::replaceId( QString pinName )
 {
     QStringList words = pinName.split("-");
-    QString pinId = words.takeLast();
-    QString compNumber = words.takeLast();
-    bool ok;
-    compNumber.toInt( &ok );
-    if( ok ) return words.join("-")+"-"+compNumber+"-"+pinId;
 
-    /*for( int i=1; i<words.size(); ++i )    // Start at second word, first must be name
+    for( int i=1; i<words.size(); ++i )    // Start at second word, first must be name
     {
         QString word = words.at( i );
         bool ok;
@@ -131,7 +126,7 @@ QString Circuit::replaceId( QString pinName )
             break;
         }
     }
-    return words.join("-");*/
+    return words.join("-");
     return pinName;
 }
 
