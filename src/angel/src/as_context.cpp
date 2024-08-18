@@ -550,7 +550,9 @@ int asCContext::checkArgumentType( asUINT arg, int size )
 
     // Verify the type of the argument
     asCDataType *dt = &m_initialFunction->parameterTypes[arg];
-    if( dt->IsObject() || dt->IsFuncdef() || dt->IsReference()
+    if( dt->IsObject()
+     || dt->IsFuncdef()
+     || dt->IsReference()
      || dt->GetSizeInMemoryBytes() != size )
     {
         m_status = asEXECUTION_ERROR;
@@ -617,7 +619,7 @@ int asCContext::SetArgFloat(asUINT arg, float value)
 
 int asCContext::SetArgDouble( asUINT arg, double value )
 {
-    int offset = checkArgumentType( arg, 2 );
+    int offset = checkArgumentType( arg, 8 );
     if( offset < 0 ) return offset;
 
     *(double*)(&m_regs.stackFramePointer[offset]) = value; // Set the value
@@ -987,7 +989,7 @@ int asCContext::Prepare( asIScriptFunction *func )
     m_regs.stackPointer      = m_regs.stackFramePointer;
 
     // Set arguments to 0
-    memset(m_regs.stackPointer, 0, 4*m_argumentsSize);
+    memset( m_regs.stackPointer, 0, 4*m_argumentsSize );
 
     if( m_returnValueSize )
     {
