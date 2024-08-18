@@ -29,12 +29,14 @@ class SubPackage : public Chip, public Linker
         int height() { return m_height; }
         void setHeight( int height );
 
-        QString packageFile();
+        QString packageFile() { return m_pkgeFile; }
         void setPackageFile( QString package );
 
         QString bckGndData() { return m_BckGndData; }
         virtual void setBckGndData( QString data ) override;
         virtual void setBackground( QString bck ) override;
+
+        virtual void setLogicSymbol( bool ls ) override;
 
         QString packagePins();
         void setPackagePins( QString pinsStr );
