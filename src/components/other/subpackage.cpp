@@ -504,7 +504,7 @@ void SubPackage::setBackground( QString bck ) /// FIXME: almost a cpopy fromChip
 
 void SubPackage::setLogicSymbol( bool ls )
 {
-    QColor labelColor = ls ? QColor( 250, 250, 200 ) : QColor( 0, 0, 0 );
+    QColor labelColor = ls ?  QColor( 0, 0, 0 ) : QColor( 250, 250, 200 );
     for( Pin* pin : m_pkgePins ) pin->setLabelColor( labelColor );
 
     Chip::setLogicSymbol( ls );
@@ -527,8 +527,6 @@ void SubPackage::setPackageFile( QString package )
     m_isLS = package.endsWith("_LS.package");
     initPackage( pkgStr );
     setLogicSymbol( m_isLS );
-
-    m_pkgePins += m_ncPins;
 
     m_label.setPlainText( m_name );
 
@@ -701,7 +699,6 @@ void SubPackage::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget*
 {
     Chip::paint( p, o, w );
 
-    //if( m_background != "" )
     p->setBrush( Qt::transparent );
     p->drawRoundedRect( m_area, 1, 1);
 

@@ -224,7 +224,6 @@ void Chip::initPackage( QString pkgStr )
         QStringRef item = properties.takeFirst().name;
         if( item == "Package" )
         {
-            //loadProperties( properties );
             for( propStr_t property : properties )
             {
                 QString   name = property.name.toString().toLower();  // Property name
