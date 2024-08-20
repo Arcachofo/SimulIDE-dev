@@ -58,10 +58,11 @@ class Ssd1306 : public Component, public TwiModule
         void reset();
         void clearDDRAM();
         void updateSize();
+        void scroll();
 
         dispColor m_dColor;
 
-        unsigned char m_aDispRam[128][8]; //128x64 DDRAM
+        uint8_t m_aDispRam[128][16]; //128x128 DDRAM
 
         int m_cdr;       // Clock Divide Ratio
         int m_mr;        // Multiplex Ratio

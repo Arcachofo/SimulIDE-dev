@@ -40,7 +40,7 @@ Ssd1306::Ssd1306( QString type, QString id )
        //, m_pinCS ( 270, QPoint(-16, 48), id+"-PinCS"  , 0, this )
 {
     m_graphical = true;
-    m_width = 128;
+    m_width  = 128;
     m_height = 64;
     m_rows   = 8;
     m_area = QRectF(-70,-m_height/2-16, m_width+12, m_height+24 );
@@ -136,7 +136,7 @@ void Ssd1306::reset()
     m_startX = 0;
     m_endX   = 127;
     m_startY = 0;
-    m_endY   = 7; //m_rows-1;
+    m_endY   = m_rows-1;
 
     m_scrollStartPage  = 0;
     m_scrollEndPage    = 7;
@@ -157,30 +157,33 @@ void Ssd1306::reset()
 
 void Ssd1306::updateStep()
 {
-    if( m_scroll )
-    {
-        m_scrollCount--;
-        if( m_scrollCount <= 0 )
-        {
-            m_scrollCount = m_scrollInterval;
-
-            for( int row=m_scrollStartPage; row<=m_scrollEndPage; row++ )
-            {
-                unsigned char start = m_aDispRam[0][row];
-                unsigned char end   = m_aDispRam[127][row];
-
-                for( int col=0; col<128; col++ )
-                {
-                    if( m_scrollR ){
-                        int c = 127-col;
-                        if( c < 127  ) m_aDispRam[c][row] = m_aDispRam[c-1][row];
-                        if( col == 0 ) m_aDispRam[0][row] = end;
-                    }else{
-                        if( col < 127  ) m_aDispRam[col][row] = m_aDispRam[col+1][row];
-                        if( col == 127 ) m_aDispRam[col][row] = start;
-    }   }   }   }   }
+    if( m_scroll ) scroll();
 
     update();
+}
+
+void Ssd1306::scroll()
+{
+    m_scrollCount--;
+    if( m_scrollCount > 0 ) return;
+
+    m_scrollCount = m_scrollInterval;
+
+    for( int row=m_scrollStartPage; row<=m_scrollEndPage; row++ )
+    {
+        uint8_t start = m_aDispRam[0][row];
+        uint8_t end   = m_aDispRam[127][row];
+
+        for( int col=0; col<128; col++ )
+        {
+            if( m_scrollR ){
+                int c = 127-col;
+                if( c < 127  ) m_aDispRam[c][row] = m_aDispRam[c-1][row];
+                if( col == 0 ) m_aDispRam[0][row] = end;
+            }else{
+                if( col < 127  ) m_aDispRam[col][row] = m_aDispRam[col+1][row];
+                if( col == 127 ) m_aDispRam[col][row] = start;
+    }   }   }
 }
 
 void Ssd1306::startWrite()
@@ -361,7 +364,7 @@ void Ssd1306::proccessCommand()
 
 void Ssd1306::clearDDRAM() 
 {
-    for( int row=0; row<8; row++ )
+    for( int row=0; row<16; row++ )
         for( int col=0; col<128; col++ )
             m_aDispRam[col][row] = 0;
 }
@@ -413,8 +416,8 @@ void Ssd1306::setWidth( int w )
 
 void Ssd1306::setHeight( int h )
 {
-    if     ( h > 64 ) h = 64;
-    else if( h < 16 ) h = 16;
+    if     ( h > 128 ) h = 128;
+    else if( h < 16  ) h = 16;
     m_rows = h/8;
     m_height = m_rows*8;
     updateSize();
@@ -448,7 +451,7 @@ void Ssd1306::paint( QPainter* p, const QStyleOptionGraphicsItem*, QWidget* )
         bool scanInv = m_rotate ? !m_scanInv : m_scanInv;
 
         if( m_dispOn  ){
-            for( int row=0; row<8; row++ ){
+            for( int row=0; row<m_rows; row++ ){
                 for( int col=0; col<128; col++ )
                 {
                     uint8_t abyte = m_aDispRam[col][row];
