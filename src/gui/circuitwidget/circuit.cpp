@@ -1122,30 +1122,28 @@ void Circuit::keyReleaseEvent( QKeyEvent* event )
 
 void Circuit::dropEvent( QGraphicsSceneDragDropEvent* event )
 {
-    QString id   = event->mimeData()->text();
-    QString file = "file://";
-//qDebug() << "Circuit::dropEvent";
-    if( id.startsWith( file ) )
-    {
-        id.replace( file, "" ).replace("\r\n", "" ).replace("%20", " ");
+    QString file = event->mimeData()->text();
+    QString f = "file://";
+
+    if( file.startsWith( f ) ) file.replace( f, "" ).replace("\r\n", "" ).replace("%20", " ");
+
 #ifdef _WIN32
-        if( id.startsWith( "/" )) id.remove( 0, 1 );
+    if( file.startsWith( "/" )) file.remove( 0, 1 );
 #endif
-        QString loId = id.toLower();
-        if( loId.endsWith( ".jpg") || loId.endsWith( ".png") || loId.endsWith( ".gif"))
+
+    QString loId = file.toLower();
+    if( loId.endsWith( ".jpg") || loId.endsWith( ".png") || loId.endsWith( ".gif"))
+    {
+        Component* enterItem = createItem( "Image", newSceneId() );
+        if( enterItem )
         {
-            file = id;
-            Component* enterItem = createItem( "Image", newSceneId() );
-            if( enterItem )
-            {
-                QPoint cPos = QCursor::pos()-CircuitView::self()->mapToGlobal( QPoint(0,0));
-                enterItem->setPos( CircuitView::self()->mapToScene( cPos ) );
-                enterItem->setBackground( file );
-                addComponent( enterItem );
-                saveCompChange( enterItem->getUid(), COMP_STATE_NEW, "" );
-        }   }
-        else CircuitWidget::self()->loadCirc( id );
-}
+            QPoint cPos = QCursor::pos()-CircuitView::self()->mapToGlobal( QPoint(0,0));
+            enterItem->setPos( CircuitView::self()->mapToScene( cPos ) );
+            enterItem->setBackground( file );
+            addComponent( enterItem );
+            saveCompChange( enterItem->getUid(), COMP_STATE_NEW, "" );
+    }   }
+    else if( file.endsWith(".sim1") ) CircuitWidget::self()->loadCirc( file );
 }
 
 void Circuit::drawBackground( QPainter* painter, const QRectF &rect )

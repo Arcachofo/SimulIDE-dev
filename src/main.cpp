@@ -77,14 +77,14 @@ int main( int argc, char *argv[] )
     if( argc > 1 )
     {
         QString circ = QString::fromStdString( argv[1] );
-        QString file = "file://";
-        if( circ.endsWith(".sim1") && circ.startsWith( file ) )
-        {
-            circ.replace( file, "" ).replace("\r\n", "" ).replace("%20", " ");
-    #ifdef _WIN32
-            if( circ.startsWith( "/" )) circ.remove( 0, 1 );
-    #endif
 
+        if( circ.endsWith(".sim1") )
+        {
+            QString file = "file://";
+            if( circ.startsWith( file ) ) circ.replace( file, "" ).replace("\r\n", "" ).replace("%20", " ");
+        #ifdef _WIN32
+            if( circ.startsWith( "/" )) circ.remove( 0, 1 );
+        #endif
             QTimer::singleShot( 300, CircuitWidget::self()
                               , [circ]()->void{ CircuitWidget::self()->loadCirc( circ ); } );
         }
