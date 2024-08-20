@@ -83,13 +83,9 @@ void asCParser::Reset()
 
 	sourcePos = 0;
 
-	if( scriptNode )
-	{
-		scriptNode->Destroy(engine);
-	}
+    if( scriptNode ) scriptNode->Destroy(engine);
 
 	scriptNode = 0;
-
 	script = 0;
 
 	lastToken.pos = size_t(-1);
@@ -127,8 +123,7 @@ int asCParser::ParseFunctionDefinition(asCScriptCode *in_script, bool in_expectL
 		}
 	}
 
-	if( errorWhileParsing )
-		return -1;
+    if( errorWhileParsing ) return -1;
 
 	return 0;
 }
@@ -174,8 +169,7 @@ int asCParser::ParseDataType(asCScriptCode *in_script, bool in_isReturnType)
 		return -1;
 	}
 
-	if( errorWhileParsing )
-		return -1;
+    if( errorWhileParsing ) return -1;
 
 	return 0;
 }
@@ -204,8 +198,7 @@ int asCParser::ParseTemplateDecl(asCScriptCode *in_script)
 
 	// The class token is optional
 	GetToken(&t);
-	if( t.type != ttClass )
-		RewindTo(&t);
+    if( t.type != ttClass ) RewindTo(&t);
 
 	scriptNode->AddChildLast(ParseIdentifier());
 	if( isSyntaxError ) return -1;
@@ -217,8 +210,7 @@ int asCParser::ParseTemplateDecl(asCScriptCode *in_script)
 	while(t.type == ttListSeparator)
 	{
 		GetToken(&t);
-		if( t.type != ttClass )
-			RewindTo(&t);
+        if( t.type != ttClass ) RewindTo(&t);
 		scriptNode->AddChildLast(ParseIdentifier());
 
 		if( isSyntaxError ) return -1;
@@ -240,8 +232,7 @@ int asCParser::ParseTemplateDecl(asCScriptCode *in_script)
 		return -1;
 	}
 
-	if( errorWhileParsing )
-		return -1;
+    if( errorWhileParsing ) return -1;
 
 	return 0;
 }
@@ -262,8 +253,7 @@ int asCParser::ParsePropertyDeclaration(asCScriptCode *in_script)
 	sToken t;
 	GetToken(&t);
 	RewindTo(&t);
-	if( t.type == ttAmp )
-		scriptNode->AddChildLast(ParseToken(ttAmp));
+    if( t.type == ttAmp ) scriptNode->AddChildLast(ParseToken(ttAmp));
 
 	// Allow optional namespace to be defined before the identifier in case
 	// the declaration is to be used for searching for an existing property
@@ -353,10 +343,8 @@ void asCParser::ParseOptionalScope(asCScriptNode *node)
 	// The identifier is not part of the scope
 	RewindTo(&t1);
 
-    if( scope->lastChild)
-		node->AddChildLast(scope);
-	else
-		scope->Destroy(engine);
+    if( scope->lastChild) node->AddChildLast(scope);
+    else                  scope->Destroy(engine);
 }
 
 asCScriptNode *asCParser::ParseFunctionDefinition()
@@ -382,8 +370,7 @@ asCScriptNode *asCParser::ParseFunctionDefinition()
 	sToken t1;
 	GetToken(&t1);
 	RewindTo(&t1);
-	if( t1.type == ttConst )
-		node->AddChildLast(ParseToken(ttConst));
+    if( t1.type == ttConst ) node->AddChildLast(ParseToken(ttConst));
 
 	// Parse optional attributes
 	ParseMethodAttributes(node);
@@ -567,8 +554,7 @@ bool asCParser::ParseTemplTypeList(asCScriptNode *node, bool required)
 			Error(ExpectedToken(asCTokenizer::GetDefinition(ttGreaterThan)), &t);
 			Error(InsteadFound(t), &t);
 		}
-		else
-			isValid = false;
+        else isValid = false;
 	}
 	else
 	{
@@ -625,8 +611,7 @@ asCScriptNode *asCParser::ParseOneOf(int *tokens, int count)
 	int n;
 	for( n = 0; n < count; n++ )
 	{
-		if( tokens[n] == t1.type )
-			break;
+        if( tokens[n] == t1.type ) break;
 	}
 	if( n == count )
 	{
@@ -3032,8 +3017,7 @@ asCScriptNode *asCParser::ParseFunction(bool isMethod)
 		RewindTo(&t1);
 
 		// Is the method a const?
-		if( t1.type == ttConst )
-			node->AddChildLast(ParseToken(ttConst));
+        if( t1.type == ttConst ) node->AddChildLast(ParseToken(ttConst));
 	}
 	// TODO: Should support abstract methods, in which case no statement block should be provided
 	ParseMethodAttributes(node);
@@ -3303,8 +3287,7 @@ asCScriptNode *asCParser::ParseMixin()
 	}
 	node->SetToken(&t);
 
-	// A mixin token must be followed by a class declaration
-	node->AddChildLast(ParseClass());
+    node->AddChildLast( ParseClass() ); // A mixin token must be followed by a class declaration
 
 	return node;
 }
@@ -3748,9 +3731,7 @@ asCScriptNode *asCParser::ParseInitList()
 					Error(InsteadFound(t1), &t1);
 					return node;
 				}
-			}
-			else
-			{
+            }else{
 				RewindTo(&t1);
 				node->AddChildLast(ParseAssignment());
 				if( isSyntaxError ) return node;

@@ -137,11 +137,7 @@ asIScriptObject *ScriptObjectCopyFactory(const asCObjectType *objType, void *ori
 	{
 		// Request a context from the engine
 		ctx = engine->RequestContext();
-		if (ctx == 0)
-		{
-			// TODO: How to best report this failure?
-			return 0;
-		}
+        if (ctx == 0) return 0;
 	}
 
 	r = ctx->Prepare(engine->scriptFunctions[objType->beh.copyfactory]);
@@ -159,10 +155,8 @@ asIScriptObject *ScriptObjectCopyFactory(const asCObjectType *objType, void *ori
 	{
 		r = ctx->Execute();
 
-		// We can't allow this execution to be suspended 
-		// so resume the execution immediately
-		if (r != asEXECUTION_SUSPENDED)
-			break;
+        // We can't allow this execution to be suspended, so resume the execution immediately
+        if (r != asEXECUTION_SUSPENDED) break;
 	}
 
 	if (r != asEXECUTION_FINISHED)
@@ -174,9 +168,8 @@ asIScriptObject *ScriptObjectCopyFactory(const asCObjectType *objType, void *ori
 			// If the execution was aborted or an exception occurred,
 			// then we should forward that to the outer execution.
 			if (r == asEXECUTION_EXCEPTION)
-			{
-				// TODO: How to improve this exception
-				ctx->SetException(TXT_EXCEPTION_IN_NESTED_CALL);
+            {
+                ctx->SetException(TXT_EXCEPTION_IN_NESTED_CALL); // TODO: How to improve this exception
 			}
             else if (r == asEXECUTION_ABORTED) ctx->Abort();
 		}

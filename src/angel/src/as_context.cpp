@@ -516,7 +516,7 @@ void *asCContext::GetAddressOfReturnValue()
 	return &m_regs.valueRegister;
 }
 
-int asCContext::SetObject(void *obj)
+int asCContext::SetObject( void *obj )
 {
     if( m_status != asEXECUTION_PREPARED ) return asCONTEXT_NOT_PREPARED;
 
@@ -538,7 +538,7 @@ int asCContext::SetObject(void *obj)
 	return 0;
 }
 
-int asCContext::checkArgumentType( asUINT arg, int size )
+/*int asCContext::checkArgumentType( asUINT arg, int size )
 {
     if( m_status != asEXECUTION_PREPARED ) return asCONTEXT_NOT_PREPARED;
 
@@ -550,6 +550,7 @@ int asCContext::checkArgumentType( asUINT arg, int size )
 
     // Verify the type of the argument
     asCDataType *dt = &m_initialFunction->parameterTypes[arg];
+
     if( dt->IsObject()
      || dt->IsFuncdef()
      || dt->IsReference()
@@ -570,11 +571,26 @@ int asCContext::checkArgumentType( asUINT arg, int size )
         offset += m_initialFunction->parameterTypes[n].GetSizeOnStackDWords();
 
     return offset;
+}*/
+
+int asCContext::getOffset( asUINT arg )
+{
+    // Determine the position of the argument
+    int offset = 0;
+    if( m_initialFunction->objectType ) offset += AS_PTR_SIZE;
+
+    // If function returns object by value an extra pointer is pushed on the stack
+    if( m_returnValueSize ) offset += AS_PTR_SIZE;
+
+    for( asUINT n=0; n<arg; n++ )
+        offset += m_initialFunction->parameterTypes[n].GetSizeOnStackDWords();
+
+    return offset;
 }
 
 int asCContext::SetArgByte( asUINT arg, asBYTE value )
 {
-    int offset = checkArgumentType( arg, 1 );
+    int offset = getOffset( arg );
     if( offset < 0 ) return offset;
 
     *(asBYTE*)&m_regs.stackFramePointer[offset] = value; // Set the value
@@ -583,8 +599,8 @@ int asCContext::SetArgByte( asUINT arg, asBYTE value )
 
 int asCContext::SetArgWord(asUINT arg, asWORD value)
 {
-    int offset = checkArgumentType( arg, 2 );
-    if( offset < 0 ) return offset;
+    int offset = getOffset( arg );
+    //if( offset < 0 ) return offset;
 
     *(asWORD*)&m_regs.stackFramePointer[offset] = value; // Set the value
 	return 0;
@@ -592,8 +608,8 @@ int asCContext::SetArgWord(asUINT arg, asWORD value)
 
 int asCContext::SetArgDWord( asUINT arg, asDWORD value )
 {
-    int offset = checkArgumentType( arg, 4 );
-    if( offset < 0 ) return offset;
+    int offset = getOffset( arg );
+    //if( offset < 0 ) return offset;
 
     *(asDWORD*)&m_regs.stackFramePointer[offset] = value; // Set the value
 	return 0;
@@ -601,17 +617,17 @@ int asCContext::SetArgDWord( asUINT arg, asDWORD value )
 
 int asCContext::SetArgQWord( asUINT arg, asQWORD value )
 {
-    int offset = checkArgumentType( arg, 2 );
-    if( offset < 0 ) return offset;
+    int offset = getOffset( arg );
+    //if( offset < 0 ) return offset;
 
     *(asQWORD*)(&m_regs.stackFramePointer[offset]) = value; // Set the value
 	return 0;
 }
 
-int asCContext::SetArgFloat(asUINT arg, float value)
+int asCContext::SetArgFloat( asUINT arg, float value )
 {
-    int offset = checkArgumentType( arg, 1 );
-    if( offset < 0 ) return offset;
+    int offset = getOffset( arg );
+    //if( offset < 0 ) return offset;
 
     *(float*)(&m_regs.stackFramePointer[offset]) = value; // Set the value
 	return 0;
@@ -619,8 +635,8 @@ int asCContext::SetArgFloat(asUINT arg, float value)
 
 int asCContext::SetArgDouble( asUINT arg, double value )
 {
-    int offset = checkArgumentType( arg, 8 );
-    if( offset < 0 ) return offset;
+    int offset = getOffset( arg );
+    //if( offset < 0 ) return offset;
 
     *(double*)(&m_regs.stackFramePointer[offset]) = value; // Set the value
 	return 0;
@@ -661,8 +677,7 @@ int asCContext::SetArgAddress( asUINT arg, void *value )
 
 int asCContext::SetArgObject( asUINT arg, void *obj )
 {
-	if( m_status != asEXECUTION_PREPARED )
-		return asCONTEXT_NOT_PREPARED;
+    /*if( m_status != asEXECUTION_PREPARED ) return asCONTEXT_NOT_PREPARED;
 
 	if( arg >= (unsigned)m_initialFunction->parameterTypes.GetLength() )
 	{
@@ -703,15 +718,17 @@ int asCContext::SetArgObject( asUINT arg, void *obj )
     if( m_returnValueSize ) offset += AS_PTR_SIZE;
 
 	for( asUINT n = 0; n < arg; n++ )
-		offset += m_initialFunction->parameterTypes[n].GetSizeOnStackDWords();
+        offset += m_initialFunction->parameterTypes[n].GetSizeOnStackDWords();*/
 
-	// Set the value
-	*(asPWORD*)(&m_regs.stackFramePointer[offset]) = (asPWORD)obj;
+    int offset = getOffset( arg );
+    //if( offset < 0 ) return offset;
+
+    *(asPWORD*)(&m_regs.stackFramePointer[offset]) = (asPWORD)obj; // Set the value
 
 	return 0;
 }
 
-int asCContext::SetArgVarType(asUINT arg, void *ptr, int typeId)
+int asCContext::SetArgVarType( asUINT arg, void *ptr, int typeId )
 {
 	if( m_status != asEXECUTION_PREPARED )
 		return asCONTEXT_NOT_PREPARED;
@@ -751,7 +768,7 @@ int asCContext::SetArgVarType(asUINT arg, void *ptr, int typeId)
 // TODO: Instead of GetAddressOfArg, maybe we need a SetArgValue(int arg, void *value, bool takeOwnership) instead.
 
 // interface
-void *asCContext::GetAddressOfArg(asUINT arg)
+void *asCContext::GetAddressOfArg( asUINT arg )
 {
 	if( m_status != asEXECUTION_PREPARED )
 		return 0;
@@ -1143,9 +1160,7 @@ int asCContext::Execute()
             CallSystemFunction(m_currentFunction->id, this); // Call the function directly
 
             if( m_status == asEXECUTION_ACTIVE )  // Was the call successful?
-			{
-				m_status = asEXECUTION_FINISHED;
-			}
+                m_status = asEXECUTION_FINISHED;
 		}
         else // This shouldn't happen unless there was an error in which
         {    // case an exception should have been raised already
@@ -1194,12 +1209,10 @@ int asCContext::Execute()
 		return asEXECUTION_ABORTED;
 	}
 
-	if( m_status == asEXECUTION_SUSPENDED )
-		return asEXECUTION_SUSPENDED;
+    if( m_status == asEXECUTION_SUSPENDED ) return asEXECUTION_SUSPENDED;
 
     /// We don't use exceptions ???
-	if( m_status == asEXECUTION_EXCEPTION )
-		return asEXECUTION_EXCEPTION;
+    if( m_status == asEXECUTION_EXCEPTION ) return asEXECUTION_EXCEPTION;
 
 	return asERROR;
 }
@@ -1400,7 +1413,7 @@ asIScriptFunction *asCContext::GetFunction( asUINT stackLevel )
 }
 
 // interface
-int asCContext::GetLineNumber(asUINT stackLevel, int *column, const char **sectionName)
+int asCContext::GetLineNumber( asUINT stackLevel, int *column, const char **sectionName )
 {
 	if( stackLevel >= GetCallstackSize() ) return asINVALID_ARG;
 
@@ -1634,9 +1647,7 @@ void asCContext::CallInterfaceMethod(asCScriptFunction *func)
 	{
 		realFunc = objType->virtualFunctionTable[func->vfTableIdx];
 	}
-
-	// Then call the true script function
-	CallScriptFunction(realFunc);
+    CallScriptFunction(realFunc); // Then call the true script function
 }
 
 void asCContext::ExecuteNextJit() /// Not used, exectuted directly in executeJit0
@@ -2453,8 +2464,7 @@ void asCContext::ExecuteNext()
 			l_fp = m_regs.stackFramePointer;
 
 			// If status isn't active anymore then we must stop
-			if( m_status != asEXECUTION_ACTIVE )
-				return;
+            if( m_status != asEXECUTION_ACTIVE ) return;
 		}
 		break;
 
@@ -2613,10 +2623,8 @@ void asCContext::ExecuteNext()
 						m_engine->DestroyList((asBYTE*)(asPWORD)*a, objType);
 
 					m_engine->CallFree((void*)(asPWORD)*a);
-				}
-
-				// Clear the variable
-				*a = 0;
+                }
+                *a = 0; // Clear the variable
 			}
 		}
 		l_bc += 1+AS_PTR_SIZE;
