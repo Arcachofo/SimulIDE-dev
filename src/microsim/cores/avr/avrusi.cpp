@@ -35,7 +35,6 @@ AvrUsi::AvrUsi( eMcu* mcu, QString name )
 
     AvrTimer800* timer0 = (AvrTimer800*)mcu->getTimer("TIMER0");
     m_t0OCA  = timer0->getOcUnit("OCA");
-    m_t0OCB  = timer0->getOcUnit("OCB");
 
     watchRegNames("USIDR", R_WRITE, this, &AvrUsi::dataRegWritten, mcu );
 }
@@ -90,7 +89,7 @@ void AvrUsi::callBack()  // Called at Timer0 Compare Match
 {
     stepCounter();
     shiftData();
-    /// TODO: setOutput(); at opposite edge, We need a falling edge...
+    setOutput();
 }
 
 void AvrUsi::configureA( uint8_t newUSICR )
@@ -126,7 +125,6 @@ void AvrUsi::configureA( uint8_t newUSICR )
             if( m_CKpin ) m_CKpin->setOpenColl( twi );
         }
     }
-    if( !m_mode ) return; // Disabled
 
     uint8_t clockMode = getRegBitsVal( newUSICR, m_USICS );
     if( m_clockMode != clockMode )
@@ -149,25 +147,28 @@ void AvrUsi::configureA( uint8_t newUSICR )
         if( m_timer != timer ){
             m_timer = timer;
             m_t0OCA->getInterrupt()->callBack( this, timer );
-            m_t0OCB->getInterrupt()->callBack( this, timer );
         }
     }
-    bool usiTc = getRegBitsBool( newUSICR, m_USITC ); // toggles the USCK/SCL Pin
-    if( usiTc ) toggleClock();                        // USITC always toggles Clock (PORT Register)
+    if( m_mode )
+    {
+        bool usiTc = getRegBitsBool( newUSICR, m_USITC ); // toggles the USCK/SCL Pin
+        if( usiTc ) toggleClock();                        // USITC always toggles Clock (PORT Register)
 
-    m_usiClk = getRegBitsBool( newUSICR, m_USICLK );
+        m_usiClk = getRegBitsBool( newUSICR, m_USICLK );
 
-    if( m_timer ) return;
-
-    if( m_extClk ){        // USICS1 = 1
-        if( m_usiClk && usiTc ) stepCounter(); // Software counter strobe (USITC)
-    }
-    else{                  // USICS1 = 0
-        if( m_usiClk ){
-            stepCounter(); // Software counter strobe (USICLK)
-            shiftData();   // shiftData at Active edge
+        if( !m_timer )
+        {
+            if( m_extClk ){        // USICS1 = 1
+                if( m_usiClk && usiTc ) stepCounter(); // Software counter strobe (USITC)
+            }
+            else{                  // USICS1 = 0
+                if( m_usiClk ){
+                    stepCounter(); // Software counter strobe (USICLK)
+                    shiftData();   // shiftData at Active edge
+                }
+                else setOutput();  // setOutput at Opposite edge
+            }
         }
-        else setOutput();  // setOutput at Opposite edge
     }
     m_mcu->m_regOverride = newUSICR & 0b11111100; // USICLK & USITC always read as 0
 }
