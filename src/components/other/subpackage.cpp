@@ -536,6 +536,8 @@ void SubPackage::setPackageFile( QString package )
 
 QString SubPackage::packagePins()
 {
+    if( m_pkgePins.isEmpty() ) return " "; // Force to save Pins property even if empty
+
     QString pins;
     int pP = 1;
     for( Pin* pin : m_pkgePins ) { pins += pinStrEntry( pin ); pP++; }
