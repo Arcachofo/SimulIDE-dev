@@ -55,6 +55,10 @@
     <trunit type="rx" pin="PORTD0"                interrupt="USART_R" />
   </usart>
 
+  <comp name="COMP" configregsA="ACSR"
+                    interrupt="ACOMP" 
+                    pins="PORTB2,PORTB3" />
+
   <port name="PORTV" pins="2"/> <!-- Fake Port for aVcc, aRef -->
   <adc name="ADC" type="03" bits="10" configregsA="ADCSRA" configregsB="SFIOR"
                   dataregs="ADCL,ADCH"
@@ -85,8 +89,4 @@
                     dataregs="EEDR" 
                     addressreg="EEARL,EEARH" 
                     interrupt="EEPR" />
-
-  <comp name="COMP" configregsA="ACSR"
-                    interrupt="ACOMP" 
-                    pins="PORTB2,PORTB3" />
 </parts>

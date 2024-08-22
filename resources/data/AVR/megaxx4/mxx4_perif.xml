@@ -76,6 +76,9 @@
     <trunit type="rx" pin="PORTD2"                 interrupt="USART1_R" />
   </usart>
 
+  <comp name="COMP" configregsA="ACSR" configbitsB="AIN0D,AIN1D" 
+                    interrupt="ACOMP"
+
   <port name="PORTV" pins="2"/> <!-- Fake Port for aVcc and aRef -->
   <adc name="ADC" type="00" bits="10" configregsA="ADCSRA" configregsB="ADCSRB"
                   dataregs="ADCL,ADCH" 
@@ -100,8 +103,4 @@
 
   <rom  name="ROM"  dataregs="EEDR" addressreg="EEARL,EEARH" configregsA="EECR"
                     interrupt="EEPR" />
-
-  <comp name="COMP" configregsA="ACSR" configbitsB="AIN0D,AIN1D" 
-                    interrupt="ACOMP"
-                    pins="PORTB2,PORTB3"/>
 </parts>

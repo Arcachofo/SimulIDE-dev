@@ -105,13 +105,12 @@ class eMcu : public DataSpace, public eIou
 
         void wdr();
 
+        Interrupts* interrupts() { return &m_interrupts; }
         void enableInterrupts( uint8_t en );
 
         int cyclesDone;
 
         void setMain() { m_pSelf = this; }
-
-        Interrupts m_interrupts;
 
     protected:
  static eMcu* m_pSelf;
@@ -144,6 +143,8 @@ class eMcu : public DataSpace, public eIou
         McuWdt*     m_wdt;
         McuIntOsc*  m_intOsc;
         McuComp*    m_comparator;
+
+        Interrupts m_interrupts;
 
         double m_vdd;
 

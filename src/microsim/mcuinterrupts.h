@@ -7,7 +7,7 @@
 #define MCUINTERRUPTS_H
 
 #include <QString>
-#include <QHash>
+#include <QMap>
 #include <map>
 
 #include "mcutypes.h"
@@ -100,6 +100,8 @@ class Interrupts
         void addToPending( Interrupt* newInt );
         void remFromPending( Interrupt* remInt );
 
+        Interrupt* getInterrupt( QString name );
+
     protected:
         eMcu* m_mcu;
 
@@ -113,7 +115,7 @@ class Interrupts
         Interrupt* m_pending;  // First pending Interrupt (linked list)
         Interrupt* m_running;  // First running Interrupt (linked list)
 
-        QHash<QString, Interrupt*> m_intList;         // Access Interrupts by name
+        QMap<QString, Interrupt*> m_intList;         // Access Interrupts by name
 };
 
 #endif

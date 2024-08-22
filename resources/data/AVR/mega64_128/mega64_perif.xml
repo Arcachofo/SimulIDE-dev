@@ -66,6 +66,10 @@
     <ocunit name="OC3C" pin="PORTE5" ocreg="OCR3CL,OCR3CH" bits="COM3C0,COM3C1" interrupt="T3COC" />
   </timer>
 
+  <comp name="COMP" configregsA="ACSR"
+                    interrupt="ACOMP" 
+                    pins="PORTE2,PORTE3" />
+
   <port name="PORTV" pins="2"/> <!-- Fake Port for aVcc, aRef -->
   <adc name="ADC" type="03" bits="10" configregsA="ADCSRA" configregsB="ADCSRB"
                   dataregs="ADCL,ADCH"
@@ -96,8 +100,4 @@
                     dataregs="EEDR" 
                     addressreg="EEARL,EEARH" 
                     interrupt="EEPR" />
-
-  <comp name="COMP" configregsA="ACSR"
-                    interrupt="ACOMP" 
-                    pins="PORTE2,PORTE3" />
 </parts>

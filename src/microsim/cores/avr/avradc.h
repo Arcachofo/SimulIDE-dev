@@ -14,6 +14,8 @@ class IoPin;
 class AvrTimer800;
 class AvrTimer16bit;
 class McuOcUnit;
+class McuIcUnit;
+class McuComp;
 
 class AvrAdc : public McuAdc
 {
@@ -64,11 +66,17 @@ class AvrAdc : public McuAdc
         IoPin* m_aRefPin;
         IoPin* m_aVccPin;
 
-        AvrTimer800*   m_timer0;
-        AvrTimer16bit* m_timer1;
+        Interrupt* m_int0Ovf;
+        Interrupt* m_int0OCA;
+        Interrupt* m_intxOCB;
 
-        McuOcUnit* m_t0OCA;
-        McuOcUnit* m_txOCB;
+        Interrupt* m_int1Ovf;
+        Interrupt* m_int1Cap;
+
+        McuComp* m_aComp;
+        Interrupt* m_compInt;
+
+        Interrupt* m_intExt0;
 };
 
 class AvrAdc00 : public AvrAdc
@@ -80,18 +88,6 @@ class AvrAdc00 : public AvrAdc
     protected:
         virtual void autotriggerConf() override;
         virtual void updtVref() override;
-};
-
-class AvrAdc01 : public AvrAdc00
-{
-    public:
-        AvrAdc01( eMcu* mcu, QString name );
-        ~AvrAdc01();
-
-        virtual void configureB( uint8_t newSFIOR ) override;
-
-    protected:
-        virtual void autotriggerConf() override;
 };
 
 class AvrAdc02 : public AvrAdc00
@@ -139,6 +135,8 @@ class AvrAdc10 : public AvrAdc
     protected:
         virtual void autotriggerConf() override;
         virtual void updtVref() override;
+
+        Interrupt* m_intPinC;
 };
 
 class AvrAdc11 : public AvrAdc10
@@ -148,6 +146,20 @@ class AvrAdc11 : public AvrAdc10
         ~AvrAdc11();
 
     protected:
+        virtual void updtVref() override;
+};
+
+
+class AvrAdc20 : public AvrAdc
+{
+    public:
+        AvrAdc20( eMcu* mcu, QString name );
+        ~AvrAdc20();
+
+        virtual void configureB( uint8_t newSFIOR ) override;
+
+    protected:
+        virtual void autotriggerConf() override;
         virtual void updtVref() override;
 };
 #endif

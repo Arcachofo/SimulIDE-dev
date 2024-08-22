@@ -415,7 +415,7 @@ void AvrCore::runStep()
                     cycle++;
                 }    break;
                 case 0x9518:     // RETI -- Return from Interrupt -- 1001 0101 0001 1000
-                    m_mcu->m_interrupts.retI();// SREG flag managed in AvrInterrupt
+                    m_mcu->interrupts()->retI();// SREG flag managed in AvrInterrupt
                 case 0x9508: {   // RET -- Return -- 1001 0101 0000 1000
                     new_pc = POP_STACK();
                     cycle += 1 + m_progAddrSize;

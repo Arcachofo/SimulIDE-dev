@@ -249,3 +249,8 @@ void Interrupts::remFromPending( Interrupt* remInt )
         preInt = posInt;
         posInt = posInt->m_nextInt;
 }   }
+
+Interrupt* Interrupts::getInterrupt( QString name )
+{
+    return m_intList.value( name );
+}

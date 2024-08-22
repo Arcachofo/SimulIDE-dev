@@ -33,6 +33,10 @@
     <ocunit name="OC1B" pin="PORTB4" ocreg="OCR1B" bits="COM1B0,COM1B1" interrupt="T1COB" />
   </timer>
 
+  <comp name="COM" configregsA="ACSR" configbitsB="AIN0D,AIN1D"
+                   interrupt="ACOMP"
+                   pins="PORTB0,PORTB1"/>
+
   <adc name="ADC" type="11" bits="10" configregsA="ADCSRA" configregsB="ADCSRB"
                   dataregs="ADCL,ADCH"
                   multiplex="ADMUX"
@@ -49,10 +53,6 @@
                   dataregs="EEDR"
                   addressreg="EEARL"
                   interrupt="EEPR" />
-
-  <comp name="COM" configregsA="ACSR" configbitsB="AIN0D,AIN1D"
-                   interrupt="ACOMP"
-                   pins="PORTB0,PORTB1"/>
                    
   <usi name="USI" configregsA="USICR" configregsB="USISR"
                   interrupt="USIOVF"
