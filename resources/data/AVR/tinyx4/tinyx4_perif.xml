@@ -31,6 +31,7 @@
 
     <ocunit name="OC1A" pin="PORTA6" ocreg="OCR1AL,OCR1AH" bits="COM1A0,COM1A1" interrupt="T1COA" />
     <ocunit name="OC1B" pin="PORTA5" ocreg="OCR1BL,OCR1BH" bits="COM1B0,COM1B1" interrupt="T1COB" />
+    <icunit name="IC1"  pin="PORTA7" icreg="ICR1L,ICR1H"   bits="ICES1,ICNC1"   interrupt="T1CAP" />
   </timer>
     
   <comp name="COMP" configregsA="ACSR" configbitsB="AIN0D,AIN1D"

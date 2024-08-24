@@ -159,12 +159,12 @@ AvrAdc00::AvrAdc00( eMcu* mcu, QString name )
 
     McuTimer* timer1 = mcu->getTimer("TIMER1");
     m_int1Ovf = timer1->getInterrupt();
-    m_intxOCB = timer1->getOcUnit("OCB")->getInterrupt();
+    m_intxOCB = timer1->getOcUnit("OC1B")->getInterrupt();
     m_int1Cap = timer1->getIcUnit()->getInterrupt();
 
     McuTimer* timer0 = mcu->getTimer("TIMER0");
     m_int0Ovf = timer0->getInterrupt();
-    m_int0OCA = timer0->getOcUnit("OCA")->getInterrupt();
+    m_int0OCA = timer0->getOcUnit("OC0A")->getInterrupt();
 
     m_fixedVref = 1.1;
 }
@@ -300,8 +300,8 @@ AvrAdc10::AvrAdc10( eMcu* mcu, QString name )
 
     McuTimer* timer0 = mcu->getTimer("TIMER0");
     m_int0Ovf = timer0->getInterrupt();
-    m_int0OCA = timer0->getOcUnit("OCA")->getInterrupt();
-    m_intxOCB = timer0->getOcUnit("OCB")->getInterrupt();
+    m_int0OCA = timer0->getOcUnit("OC0A")->getInterrupt();
+    m_intxOCB = timer0->getOcUnit("OC0B")->getInterrupt();
 
     m_intPinC = m_mcu->interrupts()->getInterrupt("PCINT");
 }

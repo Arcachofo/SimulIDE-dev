@@ -52,6 +52,7 @@ void AvrTimer::addOcUnit( McuOcUnit* ocUnit )
     if     ( ocUnit->getId().endsWith("A") ) m_OCA = ocUnit;
     else if( ocUnit->getId().endsWith("B") ) m_OCB = ocUnit;
     else if( ocUnit->getId().endsWith("C") ) m_OCC = ocUnit;
+    else                                     m_OCA = ocUnit;
 }
 
 McuOcUnit* AvrTimer::getOcUnit( QString name )
@@ -59,7 +60,7 @@ McuOcUnit* AvrTimer::getOcUnit( QString name )
     if     ( name.endsWith("A") ) return m_OCA;
     else if( name.endsWith("B") ) return m_OCB;
     else if( name.endsWith("C") ) return m_OCC;
-    return NULL;
+    else                          return m_OCA;
 }
 
 void AvrTimer::configureA( uint8_t newTCCRXA ) // TCCRXA  // WGM00,WGM01
