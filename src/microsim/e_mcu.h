@@ -126,7 +126,7 @@ class eMcu : public DataSpace, public eIou
         uint32_t m_flashSize;
         uint8_t  m_wordSize; // Size of Program memory word in bytes
 
-        QHash<QString, int> m_regsTable;   // int max 32 bits
+        //QHash<QString, int> m_regsTable;   // int max 32 bits
 
         uint32_t m_romSize;
         QVector<int> m_eeprom;

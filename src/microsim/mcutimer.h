@@ -44,7 +44,7 @@ class McuTimer : public McuPrescaled, public eElement
         virtual void addOcUnit( McuOcUnit* ocUnit ) { m_ocUnit.emplace_back( ocUnit ); }
         virtual McuOcUnit* getOcUnit( QString name ) {return NULL;}
 
-        virtual McuIcUnit* getIcUnit() {return m_ICunit;}
+        virtual McuIcUnit* getIcUnit() { return m_ICunit; }
 
         virtual void topReg0Changed( uint8_t val ){;}
 

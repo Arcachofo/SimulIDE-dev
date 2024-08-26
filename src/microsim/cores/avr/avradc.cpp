@@ -81,8 +81,8 @@ void AvrAdc::configureA( uint8_t newADCSRA ) // ADCSRA
     bool enabled = getRegBitsBool( newADCSRA, m_ADEN );
     if( m_enabled != enabled )
     {
-        m_enabled = enabled;
         if( !m_enabled && enabled ) m_initCycles = 12; // First conversion after enabling ADC
+        m_enabled = enabled;
         toAdcMux();
     }
 

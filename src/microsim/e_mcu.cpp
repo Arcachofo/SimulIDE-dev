@@ -247,7 +247,7 @@ McuPin* eMcu::getMcuPin( QString pinName )
         pin = port->getPin( pinName );
         if( pin ) break;
     }
-    if( !pin ) qDebug() << "ERROR: eMcu::getPin NULL Pin:"<< pinName;
+    if( !pin ) qDebug() << "ERROR: eMcu::getMcuPin NULL Pin:"<< pinName;
     return pin;
 }
 
