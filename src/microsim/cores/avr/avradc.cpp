@@ -82,11 +82,12 @@ void AvrAdc::configureA( uint8_t newADCSRA ) // ADCSRA
     if( m_enabled != enabled )
     {
         m_enabled = enabled;
+        if( !m_enabled && enabled ) m_initCycles = 12; // First conversion after enabling ADC
         toAdcMux();
     }
 
     uint8_t prs = getRegBitsVal( newADCSRA, m_ADPS );
-    m_convTime = m_mcu->psInst()*13*m_prescList[prs];
+    m_convTime = m_mcu->psInst()*(13+m_initCycles)*m_prescList[prs];
 
     m_autoTrigger = getRegBitsBool( newADCSRA, m_ADATE );
     if( m_autoTrigger ) autotriggerConf();
