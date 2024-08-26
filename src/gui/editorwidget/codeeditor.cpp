@@ -689,9 +689,11 @@ void CodeEditor::keyPressEvent( QKeyEvent* event )
             }
         }else{
             QString text = event->text();
-            for( QPair<QString, QString> pair : pairs )  // Auto close pairs
+            for( int i=0; i<pairs.size(); ++i )  // Auto close pairs
             {
+                QPair<QString, QString> pair = pairs.at(i);
                 if( pair.first != text ) continue;
+                if( !(m_autoClose & 1<<i) ) continue;
                 insertPlainText( pair.second );
                 moveCursor( QTextCursor::MoveOperation::Left );
                 break;

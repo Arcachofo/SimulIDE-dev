@@ -53,6 +53,8 @@ class CodeEditor : public QPlainTextEdit, public CompBase
         QString fileList();
         void setFileList( QString fl );
 
+        void setAutoClose( uint8_t ac ) { m_autoClose = ac; }
+
         void addKeyWords( QStringList words );
         void setFunctions( QStringList words );
         void setMemberWords( QMap<QString, QStringList> mb );
@@ -147,6 +149,8 @@ class CodeEditor : public QPlainTextEdit, public CompBase
         int m_brkAction;    // 0 = no action, 1 = add brkpoint, 2 = rem brkpoint
         int m_debugLine;
         int m_numLines;
+
+        uint8_t m_autoClose;
 
         bool m_saveAtClose;
         bool m_openFiles;

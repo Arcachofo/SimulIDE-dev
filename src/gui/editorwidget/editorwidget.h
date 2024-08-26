@@ -38,6 +38,21 @@ class EditorWidget : public QWidget, public CompBase
         bool spaceTabs() { return m_spaceTabs; }
         void setSpaceTabs( bool on );
 
+        bool closeParenthesis() { return m_autoClose & 1<<0; }
+        void setCloseParenthesis( bool c );
+
+        bool closeBraces() { return m_autoClose & 1<<1; }
+        void setCloseBraces( bool c );
+
+        bool closeBrackets() { return m_autoClose & 1<<2; }
+        void setCloseBrackets( bool c );
+
+        bool closeQuotes() { return m_autoClose & 1<<3; }
+        void setCloseQuotes( bool c );
+
+        bool closeSquotes() { return m_autoClose & 1<<4; }
+        void setCloseSquotes( bool c );
+
         bool close();
 
        CodeEditor* getCodeEditor();
@@ -83,6 +98,8 @@ class EditorWidget : public QWidget, public CompBase
     protected:
         void docShowSpaces( CodeEditor* ce );
 
+        void setAutoClose( int ac ) { m_autoClose = ac; }
+
         QList<CodeEditor*> getCodeEditors();
 
         void dropEvent( QDropEvent* event );
@@ -118,6 +135,7 @@ class EditorWidget : public QWidget, public CompBase
 
         bool m_showSpaces;
         bool m_spaceTabs;
+        uint8_t m_autoClose;
 
         OutPanelText m_outPane;
 

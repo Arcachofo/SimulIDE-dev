@@ -54,6 +54,23 @@ EditorWidget::EditorWidget( QWidget* parent )
 
         new BoolProp<EditorWidget>("ShowSpaces", tr("Show Spaces and Tabs"),""
                                   , this, &EditorWidget::showSpaces, &EditorWidget::setShowSpaces ),
+
+        new ComProperty("", tr("Auto close pairs:"),"","",0),
+
+        new BoolProp<EditorWidget>("CloseParenthesis", tr("Auto close Parenthesis ( )"),""
+                                  , this, &EditorWidget::closeParenthesis, &EditorWidget::setCloseParenthesis ),
+
+        new BoolProp<EditorWidget>("CloseBraces", tr("Auto close Braces { }"),""
+                                  , this, &EditorWidget::closeBraces, &EditorWidget::setCloseBraces ),
+
+        new BoolProp<EditorWidget>("CloseBrackets", tr("Auto close Brackets [ ]"),""
+                                  , this, &EditorWidget::closeBrackets, &EditorWidget::setCloseBrackets ),
+
+        new BoolProp<EditorWidget>("CloseQuotes", tr("Auto close Quotes \" \""),""
+                                  , this, &EditorWidget::closeQuotes, &EditorWidget::setCloseQuotes ),
+
+        new BoolProp<EditorWidget>("CloseSquotes", tr("Auto close Single Quotes ' '"),""
+                                  , this, &EditorWidget::closeSquotes, &EditorWidget::setCloseSquotes ),
     }, 0} );
 }
 EditorWidget::~EditorWidget(){}
@@ -109,6 +126,46 @@ void EditorWidget::setSpaceTabs( bool on )
     else MainWindow::self()->settings()->setValue( "Editor_spaces_tabs", "false" );
 }
 
+void EditorWidget::setCloseParenthesis( bool c )
+{
+    if( c ) m_autoClose |= 1<<0;
+    else    m_autoClose &= !(1<<0);
+
+    for( CodeEditor* ce : getCodeEditors() ) ce->setAutoClose( m_autoClose );
+}
+
+void EditorWidget::setCloseBraces( bool c )
+{
+    if( c ) m_autoClose |= 1<<1;
+    else    m_autoClose &= !(1<<1);
+
+    for( CodeEditor* ce : getCodeEditors() ) ce->setAutoClose( m_autoClose );
+}
+
+void EditorWidget::setCloseBrackets( bool c )
+{
+    if( c ) m_autoClose |= 1<<2;
+    else    m_autoClose &= !(1<<2);
+
+    for( CodeEditor* ce : getCodeEditors() ) ce->setAutoClose( m_autoClose );
+}
+
+void EditorWidget::setCloseQuotes( bool c )
+{
+    if( c ) m_autoClose |= 1<<3;
+    else    m_autoClose &= !(1<<3);
+
+    for( CodeEditor* ce : getCodeEditors() ) ce->setAutoClose( m_autoClose );
+}
+
+void EditorWidget::setCloseSquotes( bool c )
+{
+    if( c ) m_autoClose |= 1<<4;
+    else    m_autoClose &= !(1<<4);
+
+    for( CodeEditor* ce : getCodeEditors() ) ce->setAutoClose( m_autoClose );
+}
+
 CodeEditor* EditorWidget::getCodeEditor()
 {
     return (CodeEditor*)m_docWidget->currentWidget();
@@ -148,6 +205,7 @@ void EditorWidget::addDocument(  QString file, bool main  )
     CodeEditor* ce = new CodeEditor( this, &m_outPane );
     ce->setVerticalScrollBar( new scrollWidget( ce, Qt::Vertical ) );
     ce->setTabStopWidth( calcTabstopWidth() );
+    ce->setAutoClose( m_autoClose );
     docShowSpaces( ce );
 
     QString tabString = file.isEmpty() ? tr("NEW") : getFileName(file);
@@ -487,6 +545,7 @@ void EditorWidget::readSettings()
 
     m_showSpaces = false;
     m_spaceTabs  = false;
+    m_autoClose = 0;
     m_fontSize = 14;
     m_tabSize = 4;
 
@@ -508,6 +567,9 @@ void EditorWidget::readSettings()
     if( settings->contains( "Editor_spaces_tabs" ) )
         spacesTab = settings->value( "Editor_spaces_tabs" ).toBool();
 
+    if( settings->contains( "Editor_autoclose" ) )
+        setAutoClose( settings->value( "Editor_autoclose" ).toInt() );
+
     setSpaceTabs( spacesTab );
 
     restoreGeometry( settings->value("geometry").toByteArray() );
@@ -521,6 +583,7 @@ void EditorWidget::writeSettings()
     settings->setValue( "geometry", saveGeometry() );
     settings->setValue( "docWidget/geometry", m_docWidget->saveGeometry() );
     settings->setValue( "lastDir", m_lastDir );
+    settings->setValue( "Editor_autoclose", QString::number( m_autoClose ) );
 }
 
 void EditorWidget::findReplaceDialog()
