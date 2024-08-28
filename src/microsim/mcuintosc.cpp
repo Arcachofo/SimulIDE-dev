@@ -40,6 +40,7 @@ void McuIntOsc::stamp()
         if( m_clkOut )
         {
             m_clkOutPin->setPinMode( output );
+            m_psInst = m_mcu->psInst()/2;
             Simulator::self()->addEvent( m_psInst, this );
         }
     }
