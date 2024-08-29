@@ -7,12 +7,12 @@
 #define INTOSC_H
 
 #include "e-element.h"
-#include "mcumodule.h"
+#include "mcuprescaled.h"
 
 class eMcu;
 class McuPin;
 
-class McuIntOsc : public McuModule, public eElement
+class McuIntOsc : public McuPrescaled, public eElement
 {
         //friend class McuCreator;
     public:

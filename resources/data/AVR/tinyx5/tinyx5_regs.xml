@@ -51,7 +51,7 @@
     <register  name="DTPS1"   addr="0x0023" mask="00000011" />
     <register  name="DT1B"    addr="0x0024" />
     <register  name="DT1A"    addr="0x0025" />
-    <register  name="CLKPR"   addr="0x0026" mask="10001111" 
+    <register  name="CLKPR"   addr="0x0026" mask="10001111" reset="00000011"
                bits="CLKPS0,CLKPS1,CLKPS2,CLKPS3,0,0,0,CLKPCE" />
                
     <register  name="PLLCSR"  addr="0x0027" mask="10000111" 
