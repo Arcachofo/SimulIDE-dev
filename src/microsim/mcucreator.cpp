@@ -40,6 +40,7 @@
 #include "avreeprom.h"
 #include "avrcomparator.h"
 #include "avrsleep.h"
+#include "avrintosc.h"
 
 #include "pic14core.h"
 #include "pic14ecore.h"
@@ -501,6 +502,7 @@ void McuCreator::createIntOsc( QDomElement* p )
 
     McuIntOsc* intOsc = NULL;
     if( m_core.startsWith("Pic14") ) intOsc = PicIntOsc::createIntOsc( mcu, name, type );
+    else if( m_core == "AVR")        intOsc = new AvrIntOsc( mcu, "intOsc");
     else                             intOsc = new McuIntOsc( mcu, "intOsc");
 
     mcu->m_modules.emplace_back( intOsc );
@@ -510,12 +512,13 @@ void McuCreator::createIntOsc( QDomElement* p )
 
     if( p->hasAttribute("clockpins") )
     {
+        /* Can be removed ?? Lines before always set intOsc
         if( !mcu->m_intOsc )
         {
             McuIntOsc* intOsc = new McuIntOsc( mcu, "intOsc");
             mcu->m_modules.emplace_back( intOsc );
             mcu->m_intOsc = intOsc;
-        }
+        }*/
         QStringList pins = p->attribute("clockpins").split(",");
         for( int i=0; i<pins.size(); ++i )
             mcu->m_intOsc->setPin( i, mcu->getMcuPin( pins.value(i) ) );
@@ -523,7 +526,7 @@ void McuCreator::createIntOsc( QDomElement* p )
     if( p->hasAttribute("clockoutpin") )
     {
         mcu->m_intOsc->setPin( 2, mcu->getMcuPin( p->attribute("clockoutpin") ) );
-    }
+    }    
 }
 
 void McuCreator::createIoPort( QDomElement* p )
