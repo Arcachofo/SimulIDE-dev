@@ -1,3 +1,8 @@
+/***************************************************************************
+ *   Copyright (C) 2024 by Coethium                                        *
+ *                                                                         *
+ ***( see copyright.txt file at root folder )*******************************/
+
 #include "avrintosc.h"
 #include "e_mcu.h" 
 //#include "mcudataspace.h"
