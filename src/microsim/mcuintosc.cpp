@@ -10,7 +10,7 @@
 #include "mcu.h"
 
 McuIntOsc::McuIntOsc( eMcu* mcu, QString name )
-         : McuModule( mcu, name )
+         : McuPrescaled( mcu, name )
          , eElement( name )
 {
     m_clkInIO  = true;
