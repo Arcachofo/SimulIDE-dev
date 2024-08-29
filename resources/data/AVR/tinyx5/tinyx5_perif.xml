@@ -9,7 +9,9 @@
     <extint    name="INT0" pin="PORTB2" configbits="ISC00,ISC01"/>
   </port>
   
-  <intosc name="intosc" clockpins="PORTB3" clockoutpin="PORTB4"/>
+  <intosc name="intosc" clockpins="PORTB3" clockoutpin="PORTB4"
+        configregsA="CLKPR"
+  />
 
   <timer name="TIMER0" type="800" configregsA="TCCR0A" configregsB="TCCR0B"
                        counter="TCNT0"
