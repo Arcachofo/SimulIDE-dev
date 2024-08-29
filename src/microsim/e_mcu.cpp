@@ -194,9 +194,9 @@ void eMcu::sleep( bool s )
     for( McuModule* module : m_modules ) module->sleep( mode );
 }
 
-void eMcu::setFreq( double freq )
+void eMcu::setFreq( double freq, bool force )
 {
-    double extFreq = m_component->extFreq(); // Mcu freq Property
+    double extFreq = force ? freq : m_component->extFreq(); // Mcu freq Property
     freq = extFreq ? extFreq : freq;         // Use property if Mcu freq Property is set
 
     if     ( freq < 0       ) freq = 0;
