@@ -7,9 +7,10 @@
 #define SCRIPTBASE_H
 
 #include "angelscript.h"
-#include "as_jit.h"
+#ifdef __x86_64__
+    #include "as_jit.h"
+#endif
 
-//#include "mcumodule.h"
 #include "e-element.h"
 
 class asDebugger;

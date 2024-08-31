@@ -61,8 +61,8 @@ ScriptBase::ScriptBase( QString name )
 
     m_aEngine->RegisterGlobalFunction("void print(const string &in)", asFUNCTION(print), asCALL_CDECL);
 
-    m_jit = NULL;
-#ifndef SIMULIDE_W32 // Defined in .pro file for win32
+    m_jit = nullptr;
+#ifdef __x86_64__
     m_jit = new asCJITCompiler( JIT_NO_SUSPEND | JIT_SYSCALL_NO_ERRORS );
     m_aEngine->SetEngineProperty( asEP_INCLUDE_JIT_INSTRUCTIONS, 1 );
     m_aEngine->SetJITCompiler( m_jit );
