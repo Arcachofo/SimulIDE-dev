@@ -7,9 +7,7 @@
 #define SCRIPTBASE_H
 
 #include "angelscript.h"
-#ifdef __x86_64__
-    #include "as_jit.h"
-#endif
+#include "as_jit.h"
 
 #include "e-element.h"
 
