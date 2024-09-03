@@ -187,9 +187,10 @@ void AvrTimer8bit::topReg0Changed( uint8_t val )
         if( m_bidirec ) m_ovfPeriod = m_ovfMatch;
         else            m_ovfPeriod = m_ovfMatch+1;
 
+        m_OCA->ocrWriteL( val );
         sheduleEvents();
     }
-    m_OCA->ocrWriteL( val );
+    else m_OCA->ocrWriteL( val );
 }
 
 //--------------------------------------------------
