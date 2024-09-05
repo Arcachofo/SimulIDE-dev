@@ -86,7 +86,8 @@ void CircuitView::setShowScroll( bool show )
 
 void CircuitView::wheelEvent( QWheelEvent* event )
 {
-    qreal scaleFactor = pow( 2.0, event->delta() / 700.0);
+    QPoint delta = event->angleDelta();
+    qreal scaleFactor = pow( 2.0, delta.y()/700.0 );
     scale( scaleFactor, scaleFactor );
     m_scale *= scaleFactor;
 }
@@ -162,7 +163,10 @@ void CircuitView::mousePressEvent( QMouseEvent* event )
             m_waitForDragStart = true;
         }
     }
-    else if( event->button() == Qt::MidButton )
+    if( event->button() == Qt::MidButton
+     || ( event->button() == Qt::LeftButton
+        && event->modifiers() & Qt::ShiftModifier
+        && !(event->modifiers() & Qt::ControlModifier) ) )
     {
         event->accept();
         setDragMode( QGraphicsView::ScrollHandDrag );
@@ -197,16 +201,21 @@ void CircuitView::mouseMoveEvent( QMouseEvent* event )
 
 void CircuitView::mouseReleaseEvent( QMouseEvent* event )
 {
-    if( event->button() == Qt::MidButton )
+    if( event->button() == Qt::MidButton
+     || ( event->button() == Qt::LeftButton
+        && event->modifiers() & Qt::ShiftModifier
+        && !(event->modifiers() & Qt::ControlModifier) ) )
     {
         event->accept();
         QMouseEvent eve( QEvent::MouseButtonRelease, event->pos(),
             Qt::LeftButton, Qt::LeftButton, Qt::NoModifier   );
 
         QGraphicsView::mouseReleaseEvent( &eve );
-        setDragMode( QGraphicsView::RubberBandDrag );
     }
     else QGraphicsView::mouseReleaseEvent( event );
+
+    if( dragMode() != QGraphicsView::RubberBandDrag )
+        setDragMode( QGraphicsView::RubberBandDrag );
 }
 
 void CircuitView::overrideCursor( const QCursor &cursor )
