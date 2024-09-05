@@ -41,7 +41,7 @@ void McuTimer::initialize()
     m_countStart = 0;
     m_ovfMatch   = 0;
     m_ovfPeriod  = 0;
-    m_ovfCycle   = 0;
+    m_ovfTime    = 0;
     m_mode       = 0;
 
     m_prescaler = 1;
@@ -122,17 +122,16 @@ void McuTimer::sheduleEvents()
     }else{
         uint64_t circTime = Simulator::self()->circTime();
         uint64_t ovfPeriod = m_ovfPeriod;
-        if( m_countVal > m_ovfPeriod ) ovfPeriod += m_maxCount;
+        if( m_countVal > m_ovfPeriod ) ovfPeriod += m_maxCount; // ??
 
-        uint64_t cycles = (ovfPeriod-m_countVal)*m_scale; // cycles in ps
-        uint64_t ovfCycle = circTime + cycles - m_circTimeOffset;// In simulation time (ps)
- 
+        uint64_t time2ovf = (ovfPeriod-m_countVal)*m_scale;        // time in ps from now to OVF
+        uint64_t ovfTime  = circTime + time2ovf - m_circTimeOffset;// Absolute simulation time (ps) when OVF will occur
 
-        if( m_ovfCycle != ovfCycle )
+        if( m_ovfTime != ovfTime )
         {
-            m_ovfCycle = ovfCycle;
+            m_ovfTime = ovfTime;
             Simulator::self()->cancelEvents( this );
-            Simulator::self()->addEvent( cycles, this );
+            Simulator::self()->addEvent( time2ovf, this );
         }
     }
     for( McuOcUnit* ocUnit : m_ocUnit ) ocUnit->sheduleEvents( m_ovfMatch, m_countVal );
@@ -175,13 +174,15 @@ void McuTimer::updtCount( uint8_t )       // Write counter values to Ram
 void McuTimer::calcCounter()
 {
     if( m_extClock ) return;
-    if (Simulator::self()->circTime() == m_circTime) return;
+
+    uint64_t circTime = Simulator::self()->circTime();
+    if( m_circTime == circTime ) return;
+    m_circTime = circTime;
  
-    uint64_t time2Ovf = m_ovfCycle-Simulator::self()->circTime(); // Next overflow time - current time
-    uint64_t cycles2Ovf = time2Ovf/m_scale;
-    m_circTimeOffset = time2Ovf%m_scale;
-    if( m_ovfMatch > cycles2Ovf ) m_countVal = m_ovfMatch-cycles2Ovf;
-    m_circTime = Simulator::self()->circTime();
+    uint64_t time2ovf = m_ovfTime-circTime; // Next overflow time - current time
+    uint64_t cycles2ovf = time2ovf/m_scale;
+    m_circTimeOffset = time2ovf%m_scale;
+    if( m_ovfMatch > cycles2ovf ) m_countVal = m_ovfMatch-cycles2ovf;
 }
 
 void McuTimer::updtCycles() // Recalculate ovf, comps, etc

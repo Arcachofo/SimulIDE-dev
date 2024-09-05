@@ -69,38 +69,38 @@ class McuTimer : public McuPrescaled, public eElement
 
         int m_number;
 
-        uint64_t m_scale;                   // Picoseconds per timer Tick
+        uint64_t m_scale;    // Picoseconds per timer Tick
 
-        uint64_t m_circTime; // last time m_Counter was updated
-        uint64_t m_circTimeOffset; // offset between "now" and theoric begin of timer tick
+        uint64_t m_circTime;       // Last time m_countVal was updated
+        uint64_t m_circTimeOffset; // Offset between "now" and theoric begin of timer tick
 
-        bool m_running;  // is Timer running?
-        bool m_bidirec;  // is Timer bidirectional?
-        bool m_reverse;  // is Timer counting backwards?
+        bool m_running;        // is Timer running?
+        bool m_bidirec;        // is Timer bidirectional?
+        bool m_reverse;        // is Timer counting backwards?
         bool m_extClock;
 
-        uint8_t* m_countL; // Actual ram for counter Low byte
-        uint8_t* m_countH; // Actual ram for counter High byte
+        uint8_t* m_countL;     // Actual ram for counter Low byte
+        uint8_t* m_countH;     // Actual ram for counter High byte
 
         uint32_t m_countVal;   // Value of counter
         uint32_t m_countStart; // Value of counter after ovf
 
         uint16_t m_maxCount;   // Maximum value of the counter
         uint16_t m_ovfMatch;   // counter vale to match an overflow
-        uint32_t m_ovfPeriod;  // overflow period
-        uint64_t m_ovfCycle;   // absolute cycle of next overflow
+        uint32_t m_ovfPeriod;  // Overflow period in Timer ticks ( max count+1 )
+        uint64_t m_ovfTime;    // Absolute simulation time of next overflow
 
         uint8_t m_mode;        // Can be used by each Timer as they want
 
         uint8_t* m_topReg0L;   // Register used as Top Low byte
         uint8_t* m_topReg0H;   // Register used as Top High byte
 
-        //clkSource_t m_clkSrc;   // Source of Timer clock
-        uint8_t     m_clkEdge;  // Clock edge in ext pin clock
-        bool        m_clkState; // Lask Clock state
-        McuPin*     m_clockPin; // External Clock pin
+        //clkSource_t m_clkSrc;  // Source of Timer clock
+        uint8_t m_clkEdge;     // Clock edge in ext pin clock
+        bool    m_clkState;    // Lask Clock state
+        McuPin* m_clockPin;    // External Clock pin
 
-        McuIcUnit* m_ICunit;    // Input Capture unit;
+        McuIcUnit* m_ICunit;              // Input Capture unit;
         std::vector<McuOcUnit*> m_ocUnit; // Output Compare Units
 };
 
