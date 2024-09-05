@@ -51,6 +51,8 @@ void McuTimer::initialize()
     m_clkEdge = 1;
 
     m_scale = m_prescaler*m_mcu->psInst();
+
+    m_circTime = 0;    
 }
 
 void McuTimer::voltChanged()  // External Clock Pin changed voltage
@@ -123,7 +125,8 @@ void McuTimer::sheduleEvents()
         if( m_countVal > m_ovfPeriod ) ovfPeriod += m_maxCount;
 
         uint64_t cycles = (ovfPeriod-m_countVal)*m_scale; // cycles in ps
-        uint64_t ovfCycle = circTime + cycles;// In simulation time (ps)
+        uint64_t ovfCycle = circTime + cycles - m_circTimeOffset;// In simulation time (ps)
+ 
 
         if( m_ovfCycle != ovfCycle )
         {
@@ -172,10 +175,13 @@ void McuTimer::updtCount( uint8_t )       // Write counter values to Ram
 void McuTimer::calcCounter()
 {
     if( m_extClock ) return;
-
+    if (Simulator::self()->circTime() == m_circTime) return;
+ 
     uint64_t time2Ovf = m_ovfCycle-Simulator::self()->circTime(); // Next overflow time - current time
     uint64_t cycles2Ovf = time2Ovf/m_scale;
+    m_circTimeOffset = time2Ovf%m_scale;
     if( m_ovfMatch > cycles2Ovf ) m_countVal = m_ovfMatch-cycles2Ovf;
+    m_circTime = Simulator::self()->circTime();
 }
 
 void McuTimer::updtCycles() // Recalculate ovf, comps, etc
