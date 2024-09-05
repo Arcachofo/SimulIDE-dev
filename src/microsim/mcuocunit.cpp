@@ -81,7 +81,7 @@ void McuOcUnit::sheduleEvents( uint32_t ovf, uint32_t countVal, int rot )
     if( m_timer->extClocked() ) m_extMatch = match; // Using external clock
     else{
         if( (match <= ovf )&&(match >= countVal) ) // be sure next comp match is still ahead
-            cycles = (match-countVal)*m_timer->scale() + m_mcu->psInst()/*run it 1 cycle after match*/; // cycles in ps
+            cycles = (match-countVal)*m_timer->scale() + m_mcu->psInst() - m_timer->getCircTimeOffset() /*run it 1 cycle after match*/; // cycles in ps
 
         if( cycles ) Simulator::self()->addEvent( cycles>>rot, this );
     }

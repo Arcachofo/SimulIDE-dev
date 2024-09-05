@@ -58,6 +58,8 @@ class McuTimer : public McuPrescaled, public eElement
         uint64_t scale()    { return m_scale; }
         uint16_t ovfMatch() { return m_ovfMatch; }
         bool     reverse()  { return m_reverse; }
+        uint64_t getCircTimeOffset() { return m_circTimeOffset; }
+        
 
     protected:
         virtual void sheduleEvents();
@@ -68,6 +70,9 @@ class McuTimer : public McuPrescaled, public eElement
         int m_number;
 
         uint64_t m_scale;                   // Picoseconds per timer Tick
+
+        uint64_t m_circTime; // last time m_Counter was updated
+        uint64_t m_circTimeOffset; // offset between "now" and theoric begin of timer tick
 
         bool m_running;  // is Timer running?
         bool m_bidirec;  // is Timer bidirectional?
