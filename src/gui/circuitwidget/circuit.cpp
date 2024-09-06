@@ -973,7 +973,7 @@ void Circuit::mouseReleaseEvent( QGraphicsSceneMouseEvent* event )
 {
     if( event->button() == Qt::LeftButton )
     {
-        if( m_conStarted )  m_newConnector->incActLine() ;
+        if( m_conStarted ) m_newConnector->incActLine() ;
         QGraphicsScene::mouseReleaseEvent( event );
     }
     else if( event->button() == Qt::RightButton )

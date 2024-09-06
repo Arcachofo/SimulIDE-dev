@@ -59,6 +59,41 @@ eMcu::~eMcu()
     if( m_pSelf == this ) m_pSelf = NULL;
 }
 
+void eMcu::reset()
+{
+    m_component->crash( false );
+    m_state = mcuStopped;
+    m_cycle = 0;
+    cyclesDone = 0;
+
+    for( McuModule* module : m_modules  ) { module->reset(); module->sleep(-1 ); }
+    for( IoPort*    ioPort : m_ioPorts  ) ioPort->reset();
+    for( McuPort*  mcuPort : m_mcuPorts ) mcuPort->reset();
+
+    m_interrupts.resetInts();
+    DataSpace::initialize();
+
+    if( m_cpu ) m_cpu->reset(); // Must be after all modules reset
+    else qDebug() << "ERROR: eMcu::reset NULL Cpu";
+
+    for( McuPort* mcuPort : m_mcuPorts ) mcuPort->readPort( 0 ); // Update Pin Input register
+
+    if( !m_saveEepr )
+        for( uint i=0; i<m_romSize; ++i ) setRomValue( i, 0xFF );
+}
+
+void eMcu::hardReset( bool r )
+{
+    bool isReset = (m_state == mcuStopped);
+    if( r == isReset ) return;
+
+    Simulator::self()->cancelEvents( this );
+    if( m_clkPin ) m_clkPin->changeCallBack( this, false );  // External clock
+
+    if( r ) reset();
+    else    start();
+}
+
 void eMcu::stamp()
 {
     //reset();
@@ -131,41 +166,6 @@ void eMcu::setDebugging( bool d )
     m_debugging = d;
 }
 
-void eMcu::reset()
-{
-    m_component->crash( false );
-    m_state = mcuStopped;
-    m_cycle = 0;
-    cyclesDone = 0;
-
-    for( McuModule* module : m_modules  ) { module->reset(); module->sleep(-1 ); }
-    for( IoPort*    ioPort : m_ioPorts  ) ioPort->reset();
-    for( McuPort*  mcuPort : m_mcuPorts ) mcuPort->reset();
-
-    m_interrupts.resetInts();
-    DataSpace::initialize();
-
-    if( m_cpu ) m_cpu->reset(); // Must be after all modules reset
-    else qDebug() << "ERROR: eMcu::reset NULL Cpu";
-
-    for( McuPort* mcuPort : m_mcuPorts ) mcuPort->readPort( 0 ); // Update Pin Input register
-
-    if( !m_saveEepr )
-        for( uint i=0; i<m_romSize; ++i ) setRomValue( i, 0xFF );
-}
-
-void eMcu::hardReset( bool r )
-{
-    bool isReset = (m_state == mcuStopped);
-    if( r == isReset ) return;
-
-    Simulator::self()->cancelEvents( this );
-    if( m_clkPin ) m_clkPin->changeCallBack( this, false );  // External clock
-
-    if( r ) reset();
-    else    start();
-}
-
 void eMcu::start()
 {
     if( m_state == mcuRunning ) return;
@@ -205,7 +205,7 @@ void eMcu::setFreq( double freq, bool force )
     if( freq > 0 )
     {
         m_psInst = 1e12*(m_cPerInst/freq); // Set Simulation cycles per Instruction cycle
-        m_psTick = 1e12*(m_cPerTick/freq); // Set Simulation cycles per Instruction cycle
+        m_psTick = 1e12*(m_cPerTick/freq); // Set Simulation cycles per Clock cycle
         if( m_freq == 0 && m_state >= mcuRunning )// Previously stopped by freq = 0
         {
             Simulator::self()->cancelEvents( this );

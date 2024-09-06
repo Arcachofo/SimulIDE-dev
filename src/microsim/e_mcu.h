@@ -152,7 +152,7 @@ class eMcu : public DataSpace, public eIou
         double m_cPerInst;     // Clock ticks per Instruction Cycle
         double m_cPerTick;     // Clock ticks  per cpu Cycle
         uint64_t m_psInst;     // picoseconds per Instruction Cycle
-        uint64_t m_psTick;     // picoseconds per Instruction Cycle
+        uint64_t m_psTick;     // picoseconds per Clock Cycle
 
         bool m_clkState;
 
