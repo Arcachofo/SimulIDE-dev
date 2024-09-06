@@ -25,7 +25,7 @@ class McuVref : public McuModule, public eElement
 
         double getVref() { return m_vref; }
 
-        void callBack( McuModule* mod, bool call );
+        void addCallBack( McuModule* mod, bool call );
 
     protected:
         //virtual void setMode( uint8_t mode );

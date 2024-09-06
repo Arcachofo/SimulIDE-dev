@@ -27,7 +27,7 @@ void McuVref::initialize()
     m_mode = mode;
 }*/
 
-void McuVref::callBack( McuModule* mod, bool call ) // Add Modules to be called at Interrupt raise
+void McuVref::addCallBack( McuModule* mod, bool call ) // Add Modules to be called at Interrupt raise
 {
     if( call )
     { if( !m_callBacks.contains( mod ) ) m_callBacks.append( mod ); }

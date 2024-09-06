@@ -25,7 +25,7 @@ PicComp::PicComp( eMcu* mcu, QString name )
        : McuComp( mcu, name )
 {
     McuVref* vref = mcu->vrefModule();
-    if( vref ) vref->callBack( this, true ); // Vref Module will update vref if changed.
+    if( vref ) vref->addCallBack( this, true ); // Vref Module will update vref if changed.
 }
 PicComp::~PicComp(){}
 
