@@ -65,7 +65,7 @@ void McuOcUnit::sheduleEvents( uint32_t ovf, uint32_t countVal, int rot )
 {
     ovf      <<= rot;  // Used by Pic CCP PWM mode: 8+2 bits (rot=2)
     countVal <<= rot;
-    uint64_t cycles = 0;
+
     uint64_t match;
 
     if( m_timer->reverse() )
@@ -80,10 +80,17 @@ void McuOcUnit::sheduleEvents( uint32_t ovf, uint32_t countVal, int rot )
 
     if( m_timer->extClocked() ) m_extMatch = match; // Using external clock
     else{
-        if( (match <= ovf )&&(match >= countVal) ) // be sure next comp match is still ahead
-            cycles = (match-countVal)*m_timer->scale() + m_mcu->psInst() - m_timer->getCircTimeOffset() /*run it 1 cycle after match*/; // cycles in ps
+        if( match <= ovf && match >= countVal ) // be sure next comp match is still ahead
+        {
+            uint64_t psPerTick  = m_timer->psPerTick();
+            uint64_t timeOffset = m_timer->timeOffset();
 
-        if( cycles ) Simulator::self()->addEvent( cycles>>rot, this );
+            /// Fixme: /*run it 1 cycle after match*/
+            uint64_t time2ovf = (match-countVal)*psPerTick;// + m_mcu->psInst(); // Time in ps
+            if( timeOffset ) time2ovf -= psPerTick-timeOffset;
+
+            Simulator::self()->addEvent( time2ovf, this );
+        }
     }
 }
 

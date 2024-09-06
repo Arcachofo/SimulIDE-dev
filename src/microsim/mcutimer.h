@@ -54,11 +54,11 @@ class McuTimer : public McuPrescaled, public eElement
         bool running() { return m_running; }
 
         uint32_t getCount();
-        QString  name()     { return m_name; }
-        uint64_t scale()    { return m_scale; }
-        uint16_t ovfMatch() { return m_ovfMatch; }
-        bool     reverse()  { return m_reverse; }
-        uint64_t getCircTimeOffset() { return m_circTimeOffset; }
+        QString  name()      { return m_name; }
+        uint64_t psPerTick() { return m_psPerTick; }
+        uint16_t ovfMatch()  { return m_ovfMatch; }
+        bool     reverse()   { return m_reverse; }
+        uint64_t timeOffset(){ return m_timeOffset; }
         
 
     protected:
@@ -69,10 +69,10 @@ class McuTimer : public McuPrescaled, public eElement
 
         int m_number;
 
-        uint64_t m_scale;    // Picoseconds per timer Tick
+        uint64_t m_psPerTick;  // Picoseconds per timer Tick
 
-        uint64_t m_circTime;       // Last time m_countVal was updated
-        uint64_t m_circTimeOffset; // Offset between "now" and theoric begin of timer tick
+        uint64_t m_circTime;   // Last time m_countVal was updated
+        uint64_t m_timeOffset; // Offset between "now" and theoric begin of timer tick
 
         bool m_running;        // is Timer running?
         bool m_bidirec;        // is Timer bidirectional?
@@ -87,7 +87,6 @@ class McuTimer : public McuPrescaled, public eElement
 
         uint16_t m_maxCount;   // Maximum value of the counter
         uint16_t m_ovfMatch;   // counter vale to match an overflow
-        uint32_t m_ovfPeriod;  // Overflow period in Timer ticks ( max count+1 )
         uint64_t m_ovfTime;    // Absolute simulation time of next overflow
 
         uint8_t m_mode;        // Can be used by each Timer as they want

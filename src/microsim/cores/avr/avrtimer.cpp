@@ -38,7 +38,6 @@ void AvrTimer::initialize()
     McuTimer::initialize();
 
     m_ovfMatch  = m_maxCount;
-    m_ovfPeriod = m_ovfMatch + 1;
 
     m_wgmMode = wgmNORM;
     m_wgm10Val = 0;
@@ -106,7 +105,7 @@ void AvrTimer::configureClock()
     }
     else enableExtClock( false );
 
-    m_scale = m_prescaler*m_mcu->psInst();
+    m_psPerTick = m_prescaler*m_mcu->psInst();
 }
 
 void AvrTimer::configureOcUnits( bool wgm3 )
@@ -149,9 +148,6 @@ void AvrTimer::configureOcUnits( bool wgm3 )
     if( m_OCA ) m_OCA->setOcActs( comActA, tovActA );
     if( m_OCB ) m_OCB->setOcActs( comActB, tovActB );
     if( m_OCC ) m_OCC->setOcActs( comActC, tovActC );
-
-    if( m_bidirec ) m_ovfPeriod = m_ovfMatch;
-    else            m_ovfPeriod = m_ovfMatch+1;
 }
 
 //--------------------------------------------------
@@ -186,9 +182,6 @@ void AvrTimer8bit::topReg0Changed( uint8_t val )
     if( m_ovfMatch != ovf ){
         m_ovfMatch = ovf;
 
-        if( m_bidirec ) m_ovfPeriod = m_ovfMatch;
-        else            m_ovfPeriod = m_ovfMatch+1;
-
         m_OCA->ocrWriteL( val );
         sheduleEvents();
     }
@@ -222,7 +215,6 @@ void AvrTimer801::initialize()
     McuTimer::initialize();
 
     m_ovfMatch  = m_maxCount;
-    m_ovfPeriod = m_ovfMatch + 1;
 }
 
 void AvrTimer801::configureA( uint8_t newTCCR0 )
@@ -249,7 +241,7 @@ void AvrTimer801::configureClock() // This Timer is not derived from AvrTimer
     }
     else enableExtClock( false );
 
-    m_scale = m_prescaler*m_mcu->psInst();
+    m_psPerTick = m_prescaler*m_mcu->psInst();
 }
 
 //--------------------------------------------------
@@ -332,7 +324,6 @@ void AvrTimer810::updateMode()
 {
     if( m_mode ) m_ovfMatch = *m_topReg0L;// Top = OCR1C
     else         m_ovfMatch = 0xFF;
-    m_ovfPeriod = m_ovfMatch+1;
 }
 
 void AvrTimer810::topReg0Changed( uint8_t val )

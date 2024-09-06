@@ -30,7 +30,6 @@ void PicTimer::initialize()
     McuTimer::initialize();
 
     m_ovfMatch  = m_maxCount;
-    m_ovfPeriod = m_ovfMatch + 1;
 }
 
 /*void PicTimer::addOcUnit( McuOcUnit* ocUnit )
@@ -104,7 +103,7 @@ void PicTimer0::configureA( uint8_t NewOPTION )
          m_prescaler = 1;                    // Prescaler asigned to Watchdog
     else m_prescaler = m_prescList.at( ps ); // Prescaler asigned to TIMER0
 
-    m_scale = m_prescaler*m_mcu->psInst();
+    m_psPerTick = m_prescaler*m_mcu->psInst();
 
     m_clkEdge = getRegBitsVal( NewOPTION, m_T0SE );
 
@@ -135,7 +134,7 @@ void PicTimer2::configureA( uint8_t NewT2CON )
     uint8_t presc = getRegBitsVal( NewT2CON, m_T2CKPS );
     uint8_t postc = getRegBitsVal( NewT2CON, m_TOUTPS );
     m_prescaler = m_prescList.at( presc ) * (postc+1);
-    m_scale     = m_prescaler*m_mcu->psInst();
+    m_psPerTick     = m_prescaler*m_mcu->psInst();
 
     bool en = getRegBitsBool( NewT2CON, m_TMR2ON );
     if( en != m_running ) enable( en );
@@ -144,7 +143,6 @@ void PicTimer2::configureA( uint8_t NewT2CON )
 void PicTimer2::configureB( uint8_t NewPR2 )
 {
     m_ovfMatch  = NewPR2;
-    m_ovfPeriod = m_ovfMatch + 1;
 }
 
 //--------------------------------------------------
@@ -186,16 +184,16 @@ void PicTimer16bit::sheduleEvents()
     if( m_running && m_t1Osc ) /// TODO: RC oscillator // 32.768 KHz Oscillator
     {
         uint64_t circTime = Simulator::self()->circTime();
-        m_scale = 30517578; // Sim cycs per Timer tick for 32.768 KHz
+        m_psPerTick = 30517578; // Sim cycs per Timer tick for 32.768 KHz
 
-        uint32_t ovfPeriod = m_ovfPeriod;
-        if( m_countVal > m_ovfPeriod ) ovfPeriod += m_maxCount;
+        uint32_t ovfPeriod = m_ovfMatch;
+        if( m_countVal > m_ovfMatch ) ovfPeriod += m_maxCount; // OVF before counter: next OVF missed
 
-        uint64_t cycles = (ovfPeriod-m_countVal)*m_scale; // cycles in ps
-        m_ovfCycle = circTime + cycles;// In simulation time (ps)
+        uint64_t time2ovf = (ovfPeriod-m_countVal)*m_psPerTick; // cycles in ps
+        m_ovfTime = circTime + time2ovf;// In simulation time (ps)
 
         Simulator::self()->cancelEvents( this );
-        Simulator::self()->addEvent( cycles, this );
+        Simulator::self()->addEvent( time2ovf, this );
     }
     else McuTimer::sheduleEvents();
 }
@@ -218,7 +216,7 @@ PicTimer160::~PicTimer160(){}
 
 void PicTimer160::configureClock()
 {
-    m_scale = m_prescaler*m_mcu->psInst();
+    m_psPerTick = m_prescaler*m_mcu->psInst();
     enableExtClock( m_mode == 1 );
 }
 
@@ -236,11 +234,11 @@ void PicTimer161::configureClock()
 {
     switch( m_mode ) {
     case 0:
-        m_scale = m_prescaler*m_mcu->psInst();
+        m_psPerTick = m_prescaler*m_mcu->psInst();
         enableExtClock( false );
         break;
     case 1:
-        m_scale = m_prescaler*m_mcu->psInst()/4;
+        m_psPerTick = m_prescaler*m_mcu->psInst()/4;
         enableExtClock( false );
         break;
     case 2:

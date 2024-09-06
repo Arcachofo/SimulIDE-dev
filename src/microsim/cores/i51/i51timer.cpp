@@ -35,7 +35,6 @@ void I51Timer::initialize()
     McuTimer::initialize();
     //configure( 0 );           // Defautl mode = 0
     m_ovfMatch = 0x1FFF;
-    m_ovfPeriod = m_ovfMatch + 1;
     m_gate = 0;
 }
 
@@ -76,7 +75,6 @@ void I51Timer::configureA( uint8_t newTMOD ) // TxM0,TxM1
                 }
             }
         }
-        m_ovfPeriod = m_ovfMatch+1;
     }
 
     bool extClock = getRegBitsBool( newTMOD, m_CTx );
