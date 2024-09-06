@@ -7,12 +7,12 @@
 #define INTOSC_H
 
 #include "e-element.h"
-#include "mcuprescaled.h"
+#include "mcumodule.h"
 
 class eMcu;
 class McuPin;
 
-class McuIntOsc : public McuPrescaled, public eElement
+class McuIntOsc : public McuModule, public eElement
 {
         //friend class McuCreator;
     public:
@@ -22,7 +22,7 @@ class McuIntOsc : public McuPrescaled, public eElement
         virtual void stamp() override;
         virtual void runEvent() override;
 
-        bool extClock();
+        bool extClock() { return m_extClock; }
         void enableExtOsc( bool en );
 
         bool clockOut() { return m_clkOut; }

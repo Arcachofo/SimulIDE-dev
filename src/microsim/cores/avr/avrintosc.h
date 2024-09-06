@@ -15,7 +15,9 @@ class AvrIntOsc : public McuIntOsc
         virtual ~AvrIntOsc();
 
         virtual void configureA(uint8_t newCLKPR) override;
-};
 
+    private:
+        uint8_t m_prIndex;
+};
 
 #endif

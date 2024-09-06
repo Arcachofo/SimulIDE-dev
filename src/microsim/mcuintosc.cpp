@@ -10,7 +10,7 @@
 #include "mcu.h"
 
 McuIntOsc::McuIntOsc( eMcu* mcu, QString name )
-         : McuPrescaled( mcu, name )
+         : McuModule( mcu, name )
          , eElement( name )
 {
     m_clkInIO  = true;
@@ -20,11 +20,11 @@ McuIntOsc::McuIntOsc( eMcu* mcu, QString name )
 
     m_multiplier = 1;
 
-    m_clkOutPin = NULL;
-    m_clkInPin  = NULL;
+    m_clkOutPin = nullptr;
+    m_clkInPin  = nullptr;
 
-    m_clkPin[0] = NULL;
-    m_clkPin[1] = NULL;
+    m_clkPin[0] = nullptr;
+    m_clkPin[1] = nullptr;
 }
 McuIntOsc::~McuIntOsc(){}
 
@@ -52,16 +52,11 @@ void McuIntOsc::runEvent()
     Simulator::self()->addEvent( m_psInst, this );
 }
 
-bool McuIntOsc::extClock()
-{
-    return m_extClock;
-}
-
 void McuIntOsc::enableExtOsc( bool en ) // From Mcu, AVR or PIC with no cfg word
 {
     m_extClock = en;
     /// if( m_mcu->cfgWord() ) return;     // Controlled by Config word.
-    if( m_clkPin[0] == NULL ) return;
+    if( m_clkPin[0] == nullptr ) return;
 
     for( int i=0; i<2; ++i )
         if( m_clkPin[i] ){
@@ -101,5 +96,5 @@ void McuIntOsc::setPin( int n, McuPin* p )
 /*McuPin* McuIntOsc::getClkPin( int n )
 {
     if( n < 2 ) return m_clkPin[n];
-    return NULL;
+    return nullptr;
 }*/
