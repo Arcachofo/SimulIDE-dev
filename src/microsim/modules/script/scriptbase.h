@@ -12,6 +12,7 @@
 #include "e-element.h"
 
 class asDebugger;
+class asCJITCompiler;
 
 class ScriptBase : public eElement
 {

@@ -1,3 +1,8 @@
+#ifdef __x86_64__
+
+#ifndef ASJIT_H
+#define ASJIT_H
+
 #pragma once
 #include "angelscript.h"
 #include <vector>
@@ -51,3 +56,5 @@ public:
     void ReleaseJITFunction(asJITFunction func);
 	void finalizePages();
 };
+#endif // ASJIT_H
+#endif // __x86_64__

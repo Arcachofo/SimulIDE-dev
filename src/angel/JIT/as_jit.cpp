@@ -1,3 +1,5 @@
+#ifdef __x86_64__
+
 #include "as_jit.h"
 #include <math.h>
 #include <string.h>
@@ -4377,3 +4379,4 @@ void stdcall returnScriptFunction(asCContext* ctx) {
 	}
 	ctx->PopCallState();
 }
+#endif // __x86_64__
