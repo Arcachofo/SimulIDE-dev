@@ -41,7 +41,7 @@
 
 #define tr(str) simulideTr("Mcu",str)
 
-Mcu* Mcu::m_pSelf = NULL;
+Mcu* Mcu::m_pSelf = nullptr;
 
 LibraryItem* Mcu::libraryItem()
 {
@@ -62,8 +62,8 @@ Component* Mcu::construct( QString type, QString id )
     if( m_error > 0 )
     {
         Circuit::self()->removeComp( mcu );
-        mcu = NULL;
-        m_pSelf = NULL;
+        mcu = nullptr;
+        m_pSelf = nullptr;
         m_error = 0;
     }
     return mcu;
@@ -75,10 +75,10 @@ Mcu::Mcu( QString type, QString id )
 {
     qDebug() << "        Initializing"<<id;
 
-    m_resetPin   = NULL;
-    m_portRstPin = NULL;
-    m_mcuMonitor = NULL;
-    m_scriptLink = NULL;
+    m_resetPin   = nullptr;
+    m_portRstPin = nullptr;
+    m_mcuMonitor = nullptr;
+    m_scriptLink = nullptr;
 
     m_savePGM  = false;
     m_autoLoad = false;
@@ -220,13 +220,13 @@ Mcu::Mcu( QString type, QString id )
 Mcu::~Mcu()
 {
     if( m_mcuMonitor ) delete m_mcuMonitor;
-    if( m_pSelf == this ) m_pSelf = NULL;
+    if( m_pSelf == this ) m_pSelf = nullptr;
     InfoWidget::self()->updtMcu();
 }
 
 void Mcu::setupMcu()
 {
-    if( m_pSelf == NULL ) slotmain();
+    if( m_pSelf == nullptr ) slotmain();
 
     // Main Property Group --------------------------------------
 
@@ -488,7 +488,7 @@ void Mcu::slotLoad()
     QDir dir( m_lastFirmDir );
     if( !dir.exists() ) m_lastFirmDir = Circuit::self()->getFilePath();
 
-    QString fileName = QFileDialog::getOpenFileName( NULL, tr("Load Firmware"), m_lastFirmDir,
+    QString fileName = QFileDialog::getOpenFileName( nullptr, tr("Load Firmware"), m_lastFirmDir,
                        tr("All files (*.*);;Hex Files (*.hex)"));
 
     if( fileName.isEmpty() ) return; // User cancels loading
@@ -539,17 +539,6 @@ bool Mcu::load( QString fileName )
 
     return true;
 }
-
-/*void Mcu::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
-{
-    if( !acceptedMouseButtons() ) event->ignore();
-    else{
-        event->accept();
-        QMenu* menu = new QMenu();
-        contextMenu( event, menu );
-        Component::contextMenu( event, menu );
-        menu->deleteLater();
-}   }*/
 
 void Mcu::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
 {
@@ -671,7 +660,7 @@ void Mcu::setLinkedString( QString str, int i )
 Pin* Mcu::addPin( QString id, QString type, QString label,
                   int pos, int xpos, int ypos, int angle, int length, int space )
 {
-    IoPin* pin = NULL;
+    IoPin* pin = nullptr;
     if( type.contains("rst") )
     {
         if( !m_resetPin )
@@ -681,7 +670,7 @@ Pin* Mcu::addPin( QString id, QString type, QString label,
     }
     else pin = m_eMcu.getIoPin( id ); // I/O Port
 
-    if( !pin ) return NULL;
+    if( !pin ) return nullptr;
 
     QColor color = Qt::black;
     if( !m_isLS ) color = QColor( 250, 250, 200 );
@@ -734,7 +723,7 @@ void Mcu::enableRstPin( bool en ) // Called from Property or cfg word
         m_resetPin = m_portRstPin;
         m_portRstPin->setPinMode( input );
     }
-    else m_resetPin = NULL;
+    else m_resetPin = nullptr;
 }
 
 bool Mcu::extOscEnabled()

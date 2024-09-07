@@ -10,9 +10,9 @@ McuComp::McuComp( eMcu* mcu, QString name )
        : McuModule( mcu, name )
        , eElement( mcu->getId()+"-"+name )
 {
-    m_pinP = NULL;
-    m_pinN = NULL;
-    m_pinOut = NULL;
+    m_pinP = nullptr;
+    m_pinN = nullptr;
+    m_pinOut = nullptr;
     m_enabled = false;
 }
 McuComp::~McuComp(){}

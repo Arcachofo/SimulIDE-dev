@@ -12,10 +12,10 @@ McuOcUnit::McuOcUnit( eMcu* mcu, QString name )
          : McuModule( mcu, name )
          , eElement( mcu->getId()+"-"+name )
 {
-    m_timer = NULL;
-    m_ocPin = NULL;
-    m_ocm = NULL;
-    m_ocPinInv = NULL;
+    m_timer = nullptr;
+    m_ocPin = nullptr;
+    m_ocm   = nullptr;
+    m_ocPinInv = nullptr;
 }
 McuOcUnit::~McuOcUnit( ){}
 

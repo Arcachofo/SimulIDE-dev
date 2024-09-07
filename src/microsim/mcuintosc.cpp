@@ -92,9 +92,3 @@ void McuIntOsc::setPin( int n, McuPin* p )
     else if( n == 1 ) m_clkPin[1] = m_clkInPin = p;
     else if( n == 2 ) m_clkOutPin = p;
 }
-
-/*McuPin* McuIntOsc::getClkPin( int n )
-{
-    if( n < 2 ) return m_clkPin[n];
-    return nullptr;
-}*/

@@ -6,8 +6,6 @@
 #ifndef MCU_H
 #define MCU_H
 
-//#include <QHash>
-
 #include "e_mcu.h"
 #include "chip.h"
 #include "linker.h"
@@ -113,7 +111,6 @@ class Mcu : public Chip, public Linker
 
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w ) override;
 
-    //public slots:
         void slotmain();
         void slotLoad();
         void slotReload();
@@ -131,7 +128,6 @@ class Mcu : public Chip, public Linker
         void setPGM( QString pgm );
 
         virtual void contextMenu( QGraphicsSceneContextMenuEvent* e, QMenu* m ) override;
-        //virtual void contextMenuEvent(QGraphicsSceneContextMenuEvent* e) override;
 
         QString findIdLabel();
 
@@ -162,5 +158,4 @@ class Mcu : public Chip, public Linker
 
         ScriptCpu* m_scriptLink;
 };
-
 #endif
