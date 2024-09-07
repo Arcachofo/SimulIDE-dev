@@ -85,8 +85,9 @@ Mcu::Mcu( QString type, QString id )
     m_scripted = false;
     m_resetPol = false;
     m_isLinker = true;
+    m_forceFreq = true;
 
-    m_extFreq = 0;
+    m_uiFreq = 0;
     m_serialMon = -1;
     m_icColor = QColor( 20, 30, 60 );
 
@@ -234,8 +235,12 @@ void Mcu::setupMcu()
                                             , this, &Mcu::package, &Mcu::setPackage,0,"enum" ) );
 
     if( m_eMcu.m_intOsc )
+    {
     addProperty(tr("Main"),new DoubProp<Mcu>("Frequency", tr("Frequency"),"MHz"
-                                            , this, &Mcu::extFreq, &Mcu::setExtFreq ));
+                                            , this, &Mcu::uiFreq, &Mcu::setUiFreq ));
+    addProperty(tr("Main"),new BoolProp<Mcu>("ForceFreq", tr("Force this frequency"),""
+                                            , this, &Mcu::forceFreq, &Mcu::setForceFreq ));
+    }
 
     if( m_eMcu.flashSize() )
     {
@@ -300,13 +305,13 @@ void Mcu::setupMcu()
     setPackage( m_packageList.keys().at( index ) );
 
     m_eMcu.getRamTable()->setRegisters( m_eMcu.m_regInfo.keys() );
-    setExtFreq( m_extFreq );
+    setUiFreq( m_uiFreq );
 }
 
 bool Mcu::setPropStr( QString prop, QString val )
 {
     if( prop =="program" ) setProgram( val ); //  Old: TODELETE
-    else if( prop =="Mhz" ) setExtFreq( val.toDouble()*1e6 );
+    else if( prop =="Mhz" ) setUiFreq( val.toDouble()*1e6 );
     else return Chip::setPropStr( prop, val );
     return true;
 }
@@ -700,10 +705,17 @@ Pin* Mcu::addPin( QString id, QString type, QString label,
     return pin;
 }
 
-void Mcu::setExtFreq( double freq )
+void Mcu::setUiFreq( double freq )
 {
-    m_extFreq = freq;
-    if( !m_eMcu.intOsc()->freqChanged() ) m_eMcu.setFreq( freq ); // McuIntOsc can reconfigure frequency, if not then set directly
+    m_uiFreq = freq;
+    if( m_forceFreq ) m_eMcu.forceFreq( freq );
+    else if( !m_eMcu.intOsc()->freqChanged() ) m_eMcu.forceFreq( freq ); // McuIntOsc can reconfigure frequency, if not then set directly
+}
+
+void Mcu::setForceFreq( bool f )
+{
+    m_forceFreq = f;
+    setUiFreq( m_uiFreq );
 }
 
 bool Mcu::rstPinEnabled()

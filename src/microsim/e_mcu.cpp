@@ -196,6 +196,13 @@ void eMcu::sleep( bool s )
 
 void eMcu::setFreq( double freq )
 {
+    if( m_component->forceFreq() ) return;
+
+    forceFreq( freq );
+}
+
+void eMcu::forceFreq( double freq )
+{
     if     ( freq < 0       ) freq = 0;
     else if( freq > 100*1e6 ) freq = 100*1e6;
 

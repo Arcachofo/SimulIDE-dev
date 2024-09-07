@@ -51,8 +51,11 @@ class Mcu : public Chip, public Linker
         bool savePGM() { return m_savePGM; }
         void setSavePGM( bool s ) { m_savePGM = s; }
 
-        double extFreq() { return m_extFreq; }
-        void setExtFreq( double freq );
+        double uiFreq() { return m_uiFreq; }
+        void setUiFreq( double freq );
+
+        bool forceFreq() { return m_forceFreq; }
+        void setForceFreq( bool f );
 
         bool rstPinEnabled();
         void enableRstPin( bool en );
@@ -139,8 +142,9 @@ class Mcu : public Chip, public Linker
         bool m_savePGM;
         bool m_scripted;
         bool m_resetPol;
+        bool m_forceFreq;
 
-        double m_extFreq;
+        double m_uiFreq;
 
         int m_serialMon;
 

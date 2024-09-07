@@ -55,7 +55,7 @@ void AvrIntOsc::configureA( uint8_t newCLKPR ) // it's faster to calculate bit s
 
 bool AvrIntOsc::freqChanged()
 {
-    double freq = m_mcu->component()->extFreq(); // Frequency set in UI
+    double freq = m_mcu->component()->uiFreq(); // Frequency set in UI
     m_intOscFreq = freq/(1 << m_prIndex);
     m_mcu->setFreq( m_intOscFreq );
     return true;

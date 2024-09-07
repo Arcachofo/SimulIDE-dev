@@ -74,7 +74,7 @@ void PicIntOsc00::configureA( uint8_t newOSCCON )
 bool PicIntOsc00::freqChanged()
 {
     bool intOsc = !m_cfgWordCtrl || m_clkInIO; // Not controlled by CONFIG1 or controlled and set to INTOSC
-    double freq = intOsc ? m_intOscFreq : m_mcu->component()->extFreq();
+    double freq = intOsc ? m_intOscFreq : m_mcu->component()->uiFreq();
     m_mcu->setFreq( freq );
     m_psInst = m_mcu->psInst()/2;
     //QString msg = intOsc ? "Internal" : "External";
@@ -101,7 +101,7 @@ void PicIntOsc01::configureA( uint8_t newOSCCON )
 
 bool PicIntOsc01::freqChanged()
 {
-    double freq = m_clkInIO ? m_intOscFreq : m_mcu->component()->extFreq(); // Not controlled by CONFIG1 or controlled and set to INTOSC
+    double freq = m_clkInIO ? m_intOscFreq : m_mcu->component()->uiFreq(); // Not controlled by CONFIG1 or controlled and set to INTOSC
     m_mcu->setFreq( freq );
     m_psInst = m_mcu->psInst()/2;
     return true;
@@ -151,7 +151,7 @@ void PicIntOsc02::configureA( uint8_t newOSCCON )
 bool PicIntOsc02::freqChanged()
 {
     bool intOsc = !m_cfgWordCtrl || m_clkInIO; // Not controlled by CONFIG1 or controlled and set to INTOSC
-    double freq = intOsc ? m_intOscFreq : m_mcu->component()->extFreq();
+    double freq = intOsc ? m_intOscFreq : m_mcu->component()->uiFreq();
 
     m_mcu->setFreq( freq );
     m_psInst = m_mcu->psInst()/2;
