@@ -1,3 +1,5 @@
+#ifdef __x86_64__
+
 # include <QtGlobal>
 
 #ifdef Q_OS_WIN
@@ -104,4 +106,5 @@ CriticalSection::~CriticalSection() {
 }
 
 };
-#endif
+#endif // Q_OS_WIN
+#endif // __x86_64__
