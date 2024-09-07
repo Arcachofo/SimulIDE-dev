@@ -3,12 +3,12 @@
  *                                                                         *
  ***( see copyright.txt file at root folder )*******************************/
 
+//#include <QDebug>
+
 #include "avrintosc.h"
 #include "e_mcu.h"
-//#include "mcudataspace.h"
-//#include "datautils.h"
-
-#include <QDebug>
+#include "mcu.h"
+#include "datautils.h"
 
 /*
   Logic behind is based on the usage of the internal RC Osc as set by Fuses by the constructor.
@@ -25,34 +25,38 @@
   TODO ? : adding fuses config
 */
 
-AvrIntOsc::AvrIntOsc( eMcu* mcu, QString name )
-    : McuIntOsc( mcu, name )
-{
-    regInfo_t regInfo = mcu->regInfo()->value("CLKPR");
-    m_prIndex = regInfo.resetVal;
-    m_intOscFreq = m_mcu->freq()*(1 << m_prIndex); // RC Osc
-}
+/// Problem:
+/// CKDIV8 fuse is programmed by default, setting div factor to 8
+/// So the frequency set in properties widget is always divided by 8
 
+AvrIntOsc::AvrIntOsc( eMcu* mcu, QString name )
+         : McuIntOsc( mcu, name )
+{
+    m_CLKPS = getRegBits("CLKPS0,CLKPS1,CLKPS2,CLKPS3", mcu );
+}
 AvrIntOsc::~AvrIntOsc(){}
 
-
-// it's faster to calculate bit shift than using prescalers list from XML
-void AvrIntOsc::configureA(uint8_t newCLKPR)
+void AvrIntOsc::reset()
 {
-    double freq = m_mcu->freq();
-
-    if (freq != m_intOscFreq/(1 << m_prIndex)) {
-        // frequency was modified in UI
-        // we adjust internal frequency, considering user knows what he does
-        // before effectively setting new CLKPR
-
-        m_intOscFreq = freq*(1 << m_prIndex);
-    }
-
-    if (newCLKPR >= 0x80) return; // ignore CKSEL bit. TODO: CLKPR can be modified only within 4 clock after CKSEL sets, not really important
-
-    m_prIndex = (newCLKPR & 0x0F);
-    /// Fixme m_mcu->setFreq(m_intOscFreq/(1 << m_prIndex), true);
-    m_psInst = m_mcu->psInst()/2; //update UI event tick
+    m_prIndex = 0;
 }
 
+void AvrIntOsc::configureA( uint8_t newCLKPR ) // it's faster to calculate bit shift than using prescalers list from XML
+{
+    /// TODO: CLKPR can be modified only within 4 clock after CKSEL sets, not really important
+
+    uint8_t prIndex = getRegBitsVal( newCLKPR, m_CLKPS );
+    if( m_prIndex != prIndex )
+    {
+        m_prIndex = prIndex;
+        freqChanged();
+    }
+}
+
+bool AvrIntOsc::freqChanged()
+{
+    double freq = m_mcu->component()->extFreq(); // Frequency set in UI
+    m_intOscFreq = freq/(1 << m_prIndex);
+    m_mcu->setFreq( m_intOscFreq );
+    return true;
+}

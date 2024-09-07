@@ -86,7 +86,7 @@ class eMcu : public DataSpace, public eIou
         double vdd() { return m_vdd; }
 
         double freq() { return m_freq; }
-        void setFreq( double freq, bool force=false );
+        void setFreq( double freq );
         uint64_t psInst() { return m_psInst; }  // picoseconds per instruction cycle
         void setInstCycle( double p ){ m_cPerInst = m_cPerTick = p; }
 

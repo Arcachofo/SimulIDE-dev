@@ -38,6 +38,8 @@ class McuIntOsc : public McuModule, public eElement
 
         virtual void setMultiplier( uint8_t m ) { m_multiplier = m; }
 
+        virtual bool freqChanged(){ return false; }
+
     protected:
         uint64_t m_psInst;
 

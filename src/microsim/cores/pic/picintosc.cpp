@@ -68,12 +68,18 @@ void PicIntOsc00::configureA( uint8_t newOSCCON )
     }
     m_cfgWordCtrl = !getRegBitsBool( newOSCCON, m_SCS );
 
+    freqChanged();
+}
+
+bool PicIntOsc00::freqChanged()
+{
     bool intOsc = !m_cfgWordCtrl || m_clkInIO; // Not controlled by CONFIG1 or controlled and set to INTOSC
     double freq = intOsc ? m_intOscFreq : m_mcu->component()->extFreq();
     m_mcu->setFreq( freq );
     m_psInst = m_mcu->psInst()/2;
     //QString msg = intOsc ? "Internal" : "External";
     //qDebug() << msg<< "Clock"<< freq << "Hz" <<"\n";
+    return true;
 }
 
 // -------------------------------------------
@@ -90,9 +96,15 @@ void PicIntOsc01::configureA( uint8_t newOSCCON )
     bool oscf = getRegBitsBool(  newOSCCON, m_OSCF );
     m_intOscFreq = oscf ? 4*1e6 : 48*1e3;
 
+    freqChanged();
+}
+
+bool PicIntOsc01::freqChanged()
+{
     double freq = m_clkInIO ? m_intOscFreq : m_mcu->component()->extFreq(); // Not controlled by CONFIG1 or controlled and set to INTOSC
     m_mcu->setFreq( freq );
     m_psInst = m_mcu->psInst()/2;
+    return true;
 }
 
 // -------------------------------------------
@@ -133,9 +145,15 @@ void PicIntOsc02::configureA( uint8_t newOSCCON )
     uint8_t scs = getRegBitsVal( newOSCCON, m_SCS );
     m_cfgWordCtrl = (scs == 0);
 
+    freqChanged();
+}
+
+bool PicIntOsc02::freqChanged()
+{
     bool intOsc = !m_cfgWordCtrl || m_clkInIO; // Not controlled by CONFIG1 or controlled and set to INTOSC
     double freq = intOsc ? m_intOscFreq : m_mcu->component()->extFreq();
 
     m_mcu->setFreq( freq );
     m_psInst = m_mcu->psInst()/2;
+    return true;
 }

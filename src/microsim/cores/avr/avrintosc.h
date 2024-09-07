@@ -14,10 +14,16 @@ class AvrIntOsc : public McuIntOsc
         AvrIntOsc(eMcu* mcu, QString name );
         virtual ~AvrIntOsc();
 
+        virtual void reset() override;
+
         virtual void configureA(uint8_t newCLKPR) override;
+
+        virtual bool freqChanged() override;
 
     private:
         uint8_t m_prIndex;
+
+        regBits_t m_CLKPS;
 };
 
 #endif

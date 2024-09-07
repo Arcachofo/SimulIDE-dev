@@ -55,7 +55,7 @@ void InfoWidget::updtMcu()
     if( Mcu::self() )
     {
         QString device = Mcu::self()->device();
-        QString freq = QString::number( Mcu::self()->freq()*1e-6 );
+        QString freq = QString::number( eMcu::self()->freq()*1e-6 );
         mainMcu->setText( "  "+device+" at "+freq+" MHz" );
 
         QString name;

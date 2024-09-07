@@ -300,12 +300,13 @@ void Mcu::setupMcu()
     setPackage( m_packageList.keys().at( index ) );
 
     m_eMcu.getRamTable()->setRegisters( m_eMcu.m_regInfo.keys() );
+    setExtFreq( m_extFreq );
 }
 
 bool Mcu::setPropStr( QString prop, QString val )
 {
     if( prop =="program" ) setProgram( val ); //  Old: TODELETE
-    else if( prop =="Mhz" ) setFreq( val.toDouble()*1e6 );
+    else if( prop =="Mhz" ) setExtFreq( val.toDouble()*1e6 );
     else return Chip::setPropStr( prop, val );
     return true;
 }
@@ -697,6 +698,12 @@ Pin* Mcu::addPin( QString id, QString type, QString label,
     pin->setLabelColor( color );
     pin->setFlag( QGraphicsItem::ItemStacksBehindParent, false );
     return pin;
+}
+
+void Mcu::setExtFreq( double freq )
+{
+    m_extFreq = freq;
+    if( !m_eMcu.intOsc()->freqChanged() ) m_eMcu.setFreq( freq ); // McuIntOsc can reconfigure frequency, if not then set directly
 }
 
 bool Mcu::rstPinEnabled()

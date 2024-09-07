@@ -52,10 +52,7 @@ class Mcu : public Chip, public Linker
         void setSavePGM( bool s ) { m_savePGM = s; }
 
         double extFreq() { return m_extFreq; }
-        void setExtFreq( double freq ) { m_extFreq = freq; setFreq( freq ); }
-
-        double freq() { return m_eMcu.m_freq; }
-        void setFreq( double freq ) { m_eMcu.setFreq( freq ); }
+        void setExtFreq( double freq );
 
         bool rstPinEnabled();
         void enableRstPin( bool en );

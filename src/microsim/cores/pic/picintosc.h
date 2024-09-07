@@ -32,6 +32,8 @@ class PicIntOsc00 : public PicIntOsc
 
         virtual void configureA( uint8_t newOSCCON ) override;
 
+        virtual bool freqChanged() override;
+
     protected:
         regBits_t m_SCS;
         regBits_t m_IRCF;
@@ -45,6 +47,8 @@ class PicIntOsc01 : public PicIntOsc
 
         virtual void configureA( uint8_t newOSCCON ) override;
 
+        virtual bool freqChanged() override;
+
     protected:
         regBits_t m_OSCF;
 };
@@ -56,6 +60,8 @@ class PicIntOsc02 : public PicIntOsc
         ~PicIntOsc02();
 
         virtual void configureA( uint8_t newOSCCON ) override;
+
+        virtual bool freqChanged() override;
 
     protected:
         regBits_t m_SCS;
