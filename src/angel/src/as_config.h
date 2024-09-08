@@ -421,16 +421,34 @@
             #define STDCALL
 
         #elif (defined(__aarch64__))
-            // The IPhone 5S+ uses an ARM64 processor
+// The IPhone 5S+ uses an ARM64 processor
 
-            // AngelScript currently doesn't support native calling
-            // for 64bit ARM processors so it's necessary to turn on
-            // portability mode
-            #define AS_MAX_PORTABILITY
+            #define AS_ARM64
 
-            // STDCALL is not available on ARM
             #undef STDCALL
             #define STDCALL
+
+            #undef GNU_STYLE_VIRTUAL_METHOD
+            #undef AS_NO_THISCALL_FUNCTOR_METHOD
+
+            #define HAS_128_BIT_PRIMITIVES
+
+            #define CDECL_RETURN_SIMPLE_IN_MEMORY
+            #define STDCALL_RETURN_SIMPLE_IN_MEMORY
+            #define THISCALL_RETURN_SIMPLE_IN_MEMORY
+
+            #undef THISCALL_RETURN_SIMPLE_IN_MEMORY_MIN_SIZE
+            #undef CDECL_RETURN_SIMPLE_IN_MEMORY_MIN_SIZE
+            #undef STDCALL_RETURN_SIMPLE_IN_MEMORY_MIN_SIZE
+
+            #define THISCALL_RETURN_SIMPLE_IN_MEMORY_MIN_SIZE 5
+            #define CDECL_RETURN_SIMPLE_IN_MEMORY_MIN_SIZE    5
+            #define STDCALL_RETURN_SIMPLE_IN_MEMORY_MIN_SIZE  5
+
+            #undef COMPLEX_MASK
+            #define COMPLEX_MASK (asOBJ_APP_CLASS_DESTRUCTOR | asOBJ_APP_CLASS_COPY_CONSTRUCTOR | asOBJ_APP_ARRAY)
+            #undef COMPLEX_RETURN_MASK
+            #define COMPLEX_RETURN_MASK (asOBJ_APP_CLASS_DESTRUCTOR | asOBJ_APP_CLASS_COPY_CONSTRUCTOR | asOBJ_APP_ARRAY)
 
         #elif (defined(i386) || defined(__i386) || defined(__i386__)) && !defined(__LP64__)
             // Support native calling conventions on Mac OS X + Intel 32bit CPU
@@ -537,9 +555,151 @@
             // STDCALL is not available on 64bit Linux
             #undef STDCALL
             #define STDCALL
+        #elif defined(__ARMEL__) || defined(__arm__) || defined(__aarch64__) || defined(__AARCH64EL__)
+            // arm
+
+            // The assembler code currently doesn't support arm v4
+            #if !defined(__ARM_ARCH_4__) && !defined(__ARM_ARCH_4T__) && !defined(__LP64__)
+                #define AS_ARM
+
+                // TODO: The stack unwind on exceptions currently fails due to the assembler code in as_callfunc_arm_gcc.S
+                #define AS_NO_EXCEPTIONS
+
+                #undef STDCALL
+                #define STDCALL
+
+                #define CDECL_RETURN_SIMPLE_IN_MEMORY
+                #define STDCALL_RETURN_SIMPLE_IN_MEMORY
+                #define THISCALL_RETURN_SIMPLE_IN_MEMORY
+
+                #undef THISCALL_RETURN_SIMPLE_IN_MEMORY_MIN_SIZE
+                #undef CDECL_RETURN_SIMPLE_IN_MEMORY_MIN_SIZE
+                #undef STDCALL_RETURN_SIMPLE_IN_MEMORY_MIN_SIZE
+
+                #define THISCALL_RETURN_SIMPLE_IN_MEMORY_MIN_SIZE 2
+                #define CDECL_RETURN_SIMPLE_IN_MEMORY_MIN_SIZE 2
+                #define STDCALL_RETURN_SIMPLE_IN_MEMORY_MIN_SIZE 2
+
+                #ifndef AS_MAX_PORTABILITY
+                // Make a few checks against incompatible ABI combinations
+                #if defined(__FAST_MATH__) && __FAST_MATH__ == 1
+                    #error -ffast-math is not supported with native calling conventions
+                #endif
+                #endif
+
+                // Verify if soft-float or hard-float ABI is used
+                #if (defined(__SOFTFP__) && __SOFTFP__ == 1) || defined(__ARM_PCS)
+                    // -ffloat-abi=softfp or -ffloat-abi=soft
+                    #define AS_SOFTFP
+                #endif
+
+                // Tested with both hard float and soft float abi
+                #undef AS_NO_THISCALL_FUNCTOR_METHOD
+            #elif defined(__LP64__) || defined(__aarch64__)
+                #define AS_ARM64
+
+                #undef STDCALL
+                #define STDCALL
+
+                #undef GNU_STYLE_VIRTUAL_METHOD
+                #undef AS_NO_THISCALL_FUNCTOR_METHOD
+
+                #define HAS_128_BIT_PRIMITIVES
+
+                #define CDECL_RETURN_SIMPLE_IN_MEMORY
+                #define STDCALL_RETURN_SIMPLE_IN_MEMORY
+                #define THISCALL_RETURN_SIMPLE_IN_MEMORY
+
+                #undef THISCALL_RETURN_SIMPLE_IN_MEMORY_MIN_SIZE
+                #undef CDECL_RETURN_SIMPLE_IN_MEMORY_MIN_SIZE
+                #undef STDCALL_RETURN_SIMPLE_IN_MEMORY_MIN_SIZE
+
+                #define THISCALL_RETURN_SIMPLE_IN_MEMORY_MIN_SIZE 5
+                #define CDECL_RETURN_SIMPLE_IN_MEMORY_MIN_SIZE    5
+                #define STDCALL_RETURN_SIMPLE_IN_MEMORY_MIN_SIZE  5
+            #endif
+
+        #elif defined(__mips__)
+            // mips
+            #define AS_MIPS
+            #undef STDCALL
+            #define STDCALL
+
+            #ifdef _ABIO32
+                // 32bit O32 ABI
+                #define AS_MIPS
+
+                // All structures are returned in memory regardless of size or complexity
+                #define THISCALL_RETURN_SIMPLE_IN_MEMORY
+                #define    THISCALL_RETURN_SIMPLE_IN_MEMORY_MIN_SIZE 0
+                #define CDECL_RETURN_SIMPLE_IN_MEMORY
+                #define CDECL_RETURN_SIMPLE_IN_MEMORY_MIN_SIZE 0
+                #define STDCALL_RETURN_SIMPLE_IN_MEMORY
+                #define CDECL_RETURN_SIMPLE_IN_MEMORY_MIN_SIZE 0
+                #undef AS_NO_THISCALL_FUNCTOR_METHOD
+            #else
+                // For other ABIs the native calling convention is not available (yet)
+                #define AS_MAX_PORTABILITY
+            #endif
+        #elif defined(__PPC64__)
+            // PPC 64bit
+
+            // The code in as_callfunc_ppc_64.cpp was built for PS3 and XBox 360, that
+            // although use 64bit PPC only uses 32bit pointers.
+            // TODO: Add support for native calling conventions on Linux with PPC 64bit
+            #define AS_MAX_PORTABILITY
+        #elif defined(__e2k__)
+            // 64bit MCST Elbrus 2000
+            // ref: https://en.wikipedia.org/wiki/Elbrus_2000
+            #define AS_E2K
+            // AngelScript currently doesn't support native calling
+            // for MCST Elbrus 2000 processor so it's necessary to turn on
+            // portability mode
+            #define AS_MAX_PORTABILITY
+            // STDCALL is not available on 64bit Linux
+            #undef STDCALL
+            #define STDCALL
+        #elif defined(__riscv)
+            // RISC-V CPU families
+            #if defined(__LP64__)
+                // 64-bit
+                #define AS_RISCV64
+
+                #define GNU_STYLE_VIRTUAL_METHOD
+                #undef AS_NO_THISCALL_FUNCTOR_METHOD
+
+                #define HAS_128_BIT_PRIMITIVES
+                #define SPLIT_OBJS_BY_MEMBER_TYPES
+
+                #define CDECL_RETURN_SIMPLE_IN_MEMORY
+                #define STDCALL_RETURN_SIMPLE_IN_MEMORY
+                #define THISCALL_RETURN_SIMPLE_IN_MEMORY
+
+                #undef THISCALL_RETURN_SIMPLE_IN_MEMORY_MIN_SIZE
+                #undef CDECL_RETURN_SIMPLE_IN_MEMORY_MIN_SIZE
+                #undef STDCALL_RETURN_SIMPLE_IN_MEMORY_MIN_SIZE
+
+                #define THISCALL_RETURN_SIMPLE_IN_MEMORY_MIN_SIZE 5
+                #define CDECL_RETURN_SIMPLE_IN_MEMORY_MIN_SIZE    5
+                #define STDCALL_RETURN_SIMPLE_IN_MEMORY_MIN_SIZE  5
+            #else
+                // 32-bit
+                #define AS_MAX_PORTABILITY
+            #endif
+
+            // STDCALL is not available on RISC-V Linux
+            #undef STDCALL
+            #define STDCALL
+        #else
+            #define AS_MAX_PORTABILITY
         #endif
         #define AS_LINUX
         #define AS_POSIX_THREADS
+
+        #if !( ( (__GNUC__ == 4) && (__GNUC_MINOR__ >= 1) || __GNUC__ > 4) )
+            // Only with GCC 4.1 was the atomic instructions available
+            #define AS_NO_ATOMIC
+        #endif
     #endif
 
     #define UNREACHABLE_RETURN
