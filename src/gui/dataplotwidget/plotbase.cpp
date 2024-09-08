@@ -10,6 +10,7 @@
 #include "circuitwidget.h"
 #include "propdialog.h"
 #include "iopin.h"
+#include "batchtest.h"
 #include "utils.h"
 
 #include "stringprop.h"
@@ -135,7 +136,10 @@ bool PlotBase::setPropStr( QString prop, QString val )
 void PlotBase::initialize()
 {
     if( m_testTime )
+    {
         Simulator::self()->addEvent( m_testTime*1e12, this );
+        if( BatchTest::isRunning() ) BatchTest::addTestUnit( this );
+    }
 }
 
 void PlotBase::runEvent() // Test time reached, make comparison
@@ -150,6 +154,8 @@ void PlotBase::runEvent() // Test time reached, make comparison
         }
     }
     if( testOk ) qDebug() << idLabel() << "Test passed" ;
+
+    if( BatchTest::isRunning() ) BatchTest::testCompleted( this, testOk );
 }
 
 QString PlotBase::testData()
