@@ -19,7 +19,7 @@ class TruthTable : public QDialog, private Ui::TruthTable
     public:
         TruthTable( TestUnit* tu, QWidget* parent=0 );
 
-        void setup( QString inputs, QString outputs, std::vector<uint>* samples, std::vector<uint>* truthT );
+        bool setup( QString inputs, QString outputs, std::vector<uint>* samples, std::vector<uint>* truthT );
 
     public slots:
         void on_saveButton_pressed();

@@ -16,7 +16,7 @@ TruthTable::TruthTable( TestUnit* tu, QWidget* parent )
     m_testUnit = tu;
 }
 
-void TruthTable::setup( QString inputs, QString outputs, std::vector<uint>* samples, std::vector<uint>* truthT )
+bool TruthTable::setup( QString inputs, QString outputs, std::vector<uint>* samples, std::vector<uint>* truthT )
 {
     QStringList inputList = inputs.split(",");
     int numInputs = inputList.size();
@@ -35,6 +35,7 @@ void TruthTable::setup( QString inputs, QString outputs, std::vector<uint>* samp
     //table->horizontalHeader()->setSectionResizeMode( QHeaderView::Stretch ); // QHeaderView::ResizeToContents
 
     bool testing = !(truthT->size() == 0);
+    bool ok = true;
 
     for( int row=0; row<rows; ++row )
     {
@@ -62,7 +63,9 @@ void TruthTable::setup( QString inputs, QString outputs, std::vector<uint>* samp
                     if( testing ){
                         truth = (truRow & bit);
                         if( value == truth ) it->setBackground( QColor( 100, 240, 100 ) );
-                        else                 it->setBackground( QColor( 255, 150,  10 ) );
+                        else{                it->setBackground( QColor( 255, 150,  10 ) );
+                            ok = false;
+                        }
                     }
                 }
                 QString valStr = value ? "H" : "L";
@@ -73,6 +76,7 @@ void TruthTable::setup( QString inputs, QString outputs, std::vector<uint>* samp
         }
     }
     table->setColumnWidth( numInputs, 6 );
+    return ok;
 }
 
 void TruthTable::on_saveButton_pressed()

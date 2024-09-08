@@ -10,6 +10,7 @@
 #include "truthtable.h"
 #include "circuitwidget.h"
 #include "simulator.h"
+#include "batchtest.h"
 #include "iopin.h"
 
 #include "stringprop.h"
@@ -76,6 +77,7 @@ void TestUnit::stamp()
     updtData();
 
     Simulator::self()->addEvent( m_interval, this );
+    if( BatchTest::isRunning() ) BatchTest::addTestUnit( this );
 }
 
 void TestUnit::updateStep()
@@ -88,8 +90,7 @@ void TestUnit::updateStep()
 
 void TestUnit::runEvent()
 {
-    if( m_read )
-    {
+    if( m_read ) {
         m_read = false;
 
         uint inputVal = 0;
@@ -100,8 +101,7 @@ void TestUnit::runEvent()
 
         if( ++m_outValue < (uint)m_steps )
             Simulator::self()->addEvent( m_interval, this );
-        else
-            m_changed = true;
+        else m_changed = true;
     }else{
         m_read = true;
         for( uint i=0; i<m_outPin.size(); ++i )
@@ -124,9 +124,12 @@ void TestUnit::createTable()
     if( !m_truthTable )
         m_truthTable = new TruthTable( this, CircuitView::self() );
 
-    m_truthTable->setup( m_inputStr, m_outputStr, &m_samples, &m_truthT );
+    bool testOk = m_truthTable->setup( m_inputStr, m_outputStr, &m_samples, &m_truthT );
     m_testing = !(m_truthT.size() == 0);
-    if( !m_testing ) m_truthT = m_samples; // save samples as truth
+    if( m_testing ) {
+        if( BatchTest::isRunning() ) BatchTest::testCompleted( this, testOk );
+    }
+    else m_truthT = m_samples; // save samples as truth
 
     m_truthTable->show();
 }
