@@ -40,11 +40,11 @@ class PlotBase : public Component, public ScriptBase
         double inputImped(){ return 1/m_inputAdmit; }
         void setInputImped( double i );
 
-        //bool doTest() { return m_doTest; }
-        //void setDoTest( bool t ) { m_doTest = t; }
+        bool doTest() { return m_doTest; }
+        void setDoTest( bool t ) { m_doTest = t; }
 
-        int testTime() { return m_testTime; }
-        void setTestTime( int t ) { m_testTime = t;}
+        double testTime() { return m_testTime; }
+        void setTestTime( double t ) { m_testTime = t;}
 
         QString testData();
         void setTestData( QString td );
@@ -127,8 +127,8 @@ class PlotBase : public Component, public ScriptBase
         int m_condCh8;
         bool m_pause;
 
-        //bool m_doTest;
-        uint64_t m_testTime;
+        bool m_doTest;
+        double m_testTime;
 
         int m_timeStep;    // For export
         bool m_autoExport;

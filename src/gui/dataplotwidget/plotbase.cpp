@@ -29,7 +29,7 @@ PlotBase::PlotBase( QString type, QString id )
     m_connectGnd = true;
     m_inputAdmit = 1e-7;
 
-    //m_doTest = false;
+    m_doTest = false;
     m_testTime = 0;
 
     m_color[0] = QColor( 240, 240, 100 );
@@ -88,8 +88,11 @@ PlotBase::PlotBase( QString type, QString id )
     }, groupNoCopy} );
 
     addPropGroup( { tr("Test"), {
-        new IntProp <PlotBase>("TestTime",tr("Test Time"),""
-                              , this, &PlotBase::testTime, &PlotBase::setTestTime,0,"uint" ),
+        new DoubProp<PlotBase>("TestTime",tr("Test Time"),"ns"
+                              , this, &PlotBase::testTime, &PlotBase::setTestTime,0  ),
+
+        new BoolProp<PlotBase>("DoTest",tr("Do Test"),""
+                              , this, &PlotBase::doTest, &PlotBase::setDoTest,0 ),
     }, 0 } );
 
     addPropGroup( {"Hidden", {
@@ -132,18 +135,21 @@ bool PlotBase::setPropStr( QString prop, QString val )
 void PlotBase::initialize()
 {
     if( m_testTime )
-        Simulator::self()->addEvent( m_testTime*1000, this );
+        Simulator::self()->addEvent( m_testTime*1e12, this );
 }
 
 void PlotBase::runEvent() // Test time reached, make comparison
 {
+    bool testOk = true;
     for( int i=0; i<m_numChannels; ++i )
     {
-        if( !m_channel[i]->doTest() )
+        if( !m_channel[i]->doTest( m_doTest ) )
         {
-            qDebug() << "PlotBase::runEvent Error: Test failed for Channel" << i;
+            testOk = false;
+            qDebug() << idLabel() << "Error: Test failed for Channel" << i;
         }
     }
+    if( testOk ) qDebug() << idLabel() << "Test passed" ;
 }
 
 QString PlotBase::testData()

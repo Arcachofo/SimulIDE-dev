@@ -43,7 +43,7 @@ class DataChannel : public eElement, public Updatable
 
         QString getChName() { return m_chTunnel; }
 
-        bool doTest();
+        bool doTest( bool test );
 
         QString testData();
         void setTestData( QString td );

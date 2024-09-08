@@ -3,6 +3,8 @@
  *                                                                         *
  ***( see copyright.txt file at root folder )*******************************/
 
+#include <QtMath>
+
 #include "datachannel.h"
 #include "plotdisplay.h"
 #include "plotbase.h"
@@ -47,22 +49,31 @@ bool DataChannel::isBus()
     return false;
 }
 
-bool DataChannel::doTest()
+bool DataChannel::doTest( bool test )
 {
     int dataSize = m_bufferTest.size();
-    bool compare = dataSize > 0;
-    if( compare && dataSize != m_bufferCounter ) return false;
+    bool compare = test && dataSize > 0;
+    if( compare ){
+        if( dataSize != m_bufferCounter ) return false;
+    }else{
+        m_timeTest.clear();
+        m_bufferTest.clear();
+    }
 
     bool ok = true;
     for( int n=0; n<m_bufferCounter; ++n )
     {
         uint64_t time = m_time.at(n);
         double  value = m_buffer.at(n);
+        if( qFabs(value) < 1e-12 ) value = 0;
+
         if( compare )
         {
             uint64_t cTime = m_timeTest.at(n);
             double  cValue = m_bufferTest.at(n);
-            if( time != cTime || value != cValue ) ok = false;
+            if( qFabs(cValue) < 1e-12 ) cValue = 0;
+            if( time != cTime || value != cValue )
+                ok = false;
         }else{
             m_timeTest.append( time );
             m_bufferTest.append( value );
@@ -92,7 +103,8 @@ void DataChannel::setTestData( QString td )
     for( int i=0; i<dataList.size(); ++i )
     {
         QStringList dataPair = dataList.at(i).split(" ");
-        m_timeTest.append( dataPair.first().toUInt(0,16) );
+        m_timeTest.append( dataPair.first().toULongLong(0,16) );
         m_bufferTest.append( dataPair.last().toDouble() );
     }
+    qDebug() << m_channel;
 }
