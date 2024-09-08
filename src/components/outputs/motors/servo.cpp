@@ -169,9 +169,9 @@ QPainterPath Servo::shape() const
     return path;
 }
 
-void Servo::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
+void Servo::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w )
 {
-    Component::paint( p, option, widget );
+    Component::paint( p, o, w );
     //p->drawPath( shape() );
     p->setBrush( QColor(50, 70, 100) );
     p->drawRoundedRect( QRect( -(m_width/2)*8,-(m_height/2)*8, m_width*8, m_height*8 ), 4, 4 );

@@ -62,5 +62,3 @@ class AudioOut : public Component, public eResistor
 };
 
 #endif
-
-

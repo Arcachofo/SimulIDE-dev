@@ -355,4 +355,3 @@ void Oscope::setVoltPos( int ch, double vp )
     m_display->setVPos( ch, vp );
     m_oscWidget->updateVoltPosBox( ch, vp );
 }
-

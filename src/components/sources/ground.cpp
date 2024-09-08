@@ -38,9 +38,9 @@ Ground::Ground( QString type, QString id )
 }
 Ground::~Ground() {}
 
-void Ground::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
+void Ground::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w )
 {
-    Component::paint( p, option, widget );
+    Component::paint( p, o, w );
 
     QPen pen = p->pen();
     pen.setWidthF( 2.5 );

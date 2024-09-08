@@ -42,19 +42,18 @@ PlotBase::PlotBase( QString type, QString id )
     m_baSizeX = 135;
     m_baSizeY = 135;
 
-    //int r;
     m_pauseFunc = NULL;
     m_aEngine->RegisterObjectType("PlotBase",0, asOBJ_REF | asOBJ_NOCOUNT );
     m_aEngine->RegisterGlobalProperty("PlotBase pb", this );
-    /*r = */m_aEngine->RegisterObjectProperty("PlotBase", "bool m_pause", asOFFSET(PlotBase,m_pause)); //assert( r >= 0 );
-    /*r = */m_aEngine->RegisterObjectProperty("PlotBase", "int ch1", asOFFSET(PlotBase,m_condCh1)); //assert( r >= 0 );
-    /*r = */m_aEngine->RegisterObjectProperty("PlotBase", "int ch2", asOFFSET(PlotBase,m_condCh2)); //assert( r >= 0 );
-    /*r = */m_aEngine->RegisterObjectProperty("PlotBase", "int ch3", asOFFSET(PlotBase,m_condCh3)); //assert( r >= 0 );
-    /*r = */m_aEngine->RegisterObjectProperty("PlotBase", "int ch4", asOFFSET(PlotBase,m_condCh4)); //assert( r >= 0 );
-    /*r = */m_aEngine->RegisterObjectProperty("PlotBase", "int ch5", asOFFSET(PlotBase,m_condCh5)); //assert( r >= 0 );
-    /*r = */m_aEngine->RegisterObjectProperty("PlotBase", "int ch6", asOFFSET(PlotBase,m_condCh6)); //assert( r >= 0 );
-    /*r = */m_aEngine->RegisterObjectProperty("PlotBase", "int ch7", asOFFSET(PlotBase,m_condCh7)); //assert( r >= 0 );
-    /*r = */m_aEngine->RegisterObjectProperty("PlotBase", "int ch8", asOFFSET(PlotBase,m_condCh8)); //assert( r >= 0 );
+    m_aEngine->RegisterObjectProperty("PlotBase", "bool m_pause", asOFFSET(PlotBase,m_pause));
+    m_aEngine->RegisterObjectProperty("PlotBase", "int ch1", asOFFSET(PlotBase,m_condCh1));
+    m_aEngine->RegisterObjectProperty("PlotBase", "int ch2", asOFFSET(PlotBase,m_condCh2));
+    m_aEngine->RegisterObjectProperty("PlotBase", "int ch3", asOFFSET(PlotBase,m_condCh3));
+    m_aEngine->RegisterObjectProperty("PlotBase", "int ch4", asOFFSET(PlotBase,m_condCh4));
+    m_aEngine->RegisterObjectProperty("PlotBase", "int ch5", asOFFSET(PlotBase,m_condCh5));
+    m_aEngine->RegisterObjectProperty("PlotBase", "int ch6", asOFFSET(PlotBase,m_condCh6));
+    m_aEngine->RegisterObjectProperty("PlotBase", "int ch7", asOFFSET(PlotBase,m_condCh7));
+    m_aEngine->RegisterObjectProperty("PlotBase", "int ch8", asOFFSET(PlotBase,m_condCh8));
 
     QString n;
     for( int i=1; i<9; ++i ) // Condition simple to script: ch1l to (ch1==1)
@@ -299,19 +298,6 @@ void PlotBase::conditonMet( int ch, cond_t cond )
         CircuitWidget::self()->pauseCirc();
         if( m_autoExport ) QTimer::singleShot( 50, [=](){ dump(); } );
     }
-
-    //if( m_trigger != 8 ) return;
-
-    /*if( m_conditions == m_condTarget ) // All conditions met
-    {                                  // Trigger Pause Simulation
-        m_risEdge = Simulator::self()->circTime();
-        CircuitWidget::self()->pauseSim();
-    }*/
-    /*else  // Rising will be High and Falling Low in next cycles
-    {
-        if     ( cond == C_RISING )  m_conditions[ch] = C_HIGH;
-        else if( cond == C_FALLING ) m_conditions[ch] = C_LOW;
-    }*/
 }
 
 void PlotBase::slotProperties()

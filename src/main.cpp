@@ -13,25 +13,25 @@
 
 void myMessageOutput( QtMsgType type, const QMessageLogContext &context, const QString &msg )
 {
-    QByteArray localMsg = msg.toLocal8Bit();
-    const char* file     = context.file ? context.file : "";
-    const char* function = context.function ? context.function : "";
+    const char* file = context.file ? context.file : "";
+    const char* func = context.function ? context.function : "";
+    const char* mesg = msg.toLocal8Bit().constData();
     switch (type) {
     case QtDebugMsg:
         if( CircuitWidget::self() ) CircuitWidget::self()->simDebugMessage( msg );
-        fprintf( stderr, "%s \n", localMsg.constData() );
+        fprintf( stderr, "%s \n", mesg );
         break;
     case QtInfoMsg:
-        fprintf(stderr, "Info: %s (%s:%u, %s)\n", localMsg.constData(), file, context.line, function);
+        fprintf(stderr, "Info: %s (%s:%u, %s)\n", mesg, file, context.line, func );
         break;
     case QtWarningMsg:
-        fprintf(stderr, "Warning: %s (%s:%u, %s)\n", localMsg.constData(), file, context.line, function);
+        fprintf(stderr, "Warning: %s (%s:%u, %s)\n", mesg, file, context.line, func );
         break;
     case QtCriticalMsg:
-        fprintf(stderr, "Critical: %s (%s:%u, %s)\n", localMsg.constData(), file, context.line, function);
+        fprintf(stderr, "Critical: %s (%s:%u, %s)\n", mesg, file, context.line, func );
         break;
     case QtFatalMsg:
-        fprintf(stderr, "Fatal: %s (%s:%u, %s)\n", localMsg.constData(), file, context.line, function);
+        fprintf(stderr, "Fatal: %s (%s:%u, %s)\n", mesg, file, context.line, func );
         break;
     }
 }

@@ -94,9 +94,9 @@ void Battery::setResistance( double resist )
     m_changed = true;
 }
 
-void Battery::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
+void Battery::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w )
 {
-    Component::paint( p, option, widget );
+    Component::paint( p, o, w );
 
     QPen pen = p->pen();
     pen.setWidth(3);

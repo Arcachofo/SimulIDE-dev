@@ -509,10 +509,10 @@ inline double WaveGen::normalize( double data )
     return data;
 }
 
-void WaveGen::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
+void WaveGen::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w )
 {
     if( m_hidden ) return;
-    Component::paint( p, option, widget );
+    Component::paint( p, o, w );
 
     if (  m_isRunning ) p->setBrush( QColor( 250, 200, 50 ) );
     else                p->setBrush( QColor( 230, 230, 255 ) );

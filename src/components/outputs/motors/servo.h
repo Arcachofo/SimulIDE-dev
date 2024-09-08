@@ -33,18 +33,18 @@ class Servo : public LogicComponent
         virtual void voltChanged() override;
 
         virtual QPainterPath shape() const override;
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w ) override;
 
     private:
         double m_pos;            // Actual Angular position 0-180
         double m_targetPos;      // Target Angular position 0-180
-        double m_speed;               // Angular speed sec/60º
-        double m_minPulse;        // Minimum pulse width,   0º
-        double m_maxPulse;        // Maximum pulse width, 180º
-        double m_minAngle;      // Angle to move evrey repaint
+        double m_speed;          // Angular speed sec/60º
+        double m_minPulse;       // Minimum pulse width,   0º
+        double m_maxPulse;       // Maximum pulse width, 180º
+        double m_minAngle;       // Angle to move evrey repaint
 
-        uint64_t m_pulseStart;              // Simulation step
-        uint64_t m_lastUpdate;              // Simulation step
+        uint64_t m_pulseStart;   // Simulation step
+        uint64_t m_lastUpdate;   // Simulation step
 };
 
 #endif

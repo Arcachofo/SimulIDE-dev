@@ -68,7 +68,6 @@ class DataChannel : public eElement, public Updatable
         int m_bufferCounter;
 
         bool m_pauseOnCond;
-        //cond_t m_cond;
         cond_t m_lastCond;
 
         QString m_chTunnel;

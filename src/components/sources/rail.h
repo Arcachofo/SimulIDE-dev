@@ -27,7 +27,7 @@ class Rail : public Component, public eElement
         virtual void stamp() override;
 
         virtual QPainterPath shape() const override;
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w ) override;
 
     private:
         double m_volt;

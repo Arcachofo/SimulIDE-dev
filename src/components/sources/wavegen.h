@@ -62,7 +62,7 @@ class WaveGen : public ClockBase
 
         virtual void setFreq( double freq ) override;
 
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )override;
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w )override;
         
         void slotLoad();
         virtual void contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu ) override;

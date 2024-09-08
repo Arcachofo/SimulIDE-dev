@@ -210,10 +210,10 @@ void Stepper::setHidden( bool hid, bool hidArea, bool hidLabel )
     m_pinCo.setVisible( !m_bipolar && !m_hidden );
 }
 
-void Stepper::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
+void Stepper::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w )
 {
     p->setRenderHint( QPainter::Antialiasing );
-    Component::paint( p, option, widget );
+    Component::paint( p, o, w );
 
     //p->setBrush( QColor(250, 210, 230) );
     if( !m_hidden ) p->drawRoundRect(-64,-40, 25, 80 );

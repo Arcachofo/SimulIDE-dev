@@ -123,9 +123,9 @@ void VarSource::setflip()
 bool VarSource::running() { return m_button->isChecked(); }
 void VarSource::setRunning( bool r ) { m_button->setChecked( r ); }
 
-void VarSource::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
+void VarSource::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w )
 {
-    Component::paint( p, option, widget );
+    Component::paint( p, o, w );
 
     p->setBrush(QColor( 230, 230, 230 ));
     p->drawRoundedRect( m_area, 2, 2 );

@@ -192,11 +192,6 @@ void AudioOut::runEvent()
     Simulator::self()->addEvent( nextEvent, this ); // 25 us
 }
 
-/*void AudioOut::stateChanged( QAudio::State state )
-{
-    qDebug() << state << m_audioOutput->bytesFree() ;
-}*/
-
 void AudioOut::setImpedance( double i )
 {
     m_impedance = i;

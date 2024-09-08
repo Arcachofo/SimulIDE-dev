@@ -186,14 +186,6 @@ void Dial::setBorder( int border )
     update();
 }
 
-/*void Dial::compSelected( Component* comp )
-{
-
-    Linkable::compSelected( comp );
-    if( !Simulator::self()->isRunning() ) updateStep();
-}*/
-
-
 void Dial::updateProxy()
 {
     m_proxy->setPos( QPoint(-m_dialW.width()/2,-m_dialW.height()-5) );

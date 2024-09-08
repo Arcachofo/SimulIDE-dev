@@ -85,9 +85,9 @@ QPainterPath Rail::shape() const
     return path;
 }
 
-void Rail::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
+void Rail::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w )
 {
-    Component::paint( p, option, widget );
+    Component::paint( p, o, w );
     p->setBrush( QColor( 255, 166, 0 ) );
     //p->drawRoundedRect( QRectF( -8, -8, 16, 16 ), 2, 2);
     static const QPointF points[4] = {
