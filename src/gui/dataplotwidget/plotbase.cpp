@@ -152,9 +152,9 @@ void PlotBase::runEvent() // Test time reached, make comparison
             qDebug() << idLabel() << "Error: Test failed for Channel" << i;
         }
     }
-    if( testOk ) qDebug() << idLabel() << "Test passed" ;
+    if( m_doTest && testOk ) qDebug() << idLabel() << "Test passed" ;
 
-    if( BatchTest::isRunning() ) BatchTest::testCompleted( this, testOk );
+    if( m_doTest && BatchTest::isRunning() ) BatchTest::testCompleted( this, testOk );
 }
 
 QString PlotBase::testData()

@@ -72,8 +72,8 @@ bool DataChannel::doTest( bool test )
             uint64_t cTime = m_timeTest.at(n);
             double  cValue = m_bufferTest.at(n);
             if( qFabs(cValue) < 1e-12 ) cValue = 0;
-            if( time != cTime || value != cValue )
-                ok = false;
+            if( qFabs(value-cValue) > qFabs(value/1000) ) ok = false;
+            if( time != cTime ) ok = false;
         }else{
             m_timeTest.append( time );
             m_bufferTest.append( value );

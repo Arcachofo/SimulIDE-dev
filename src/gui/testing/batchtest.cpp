@@ -74,12 +74,11 @@ void BatchTest::runNextCircuit()
     m_testUnits.clear();
     CircuitWidget::self()->powerCircOn();
     checkFinished();
-
 }
 
 void BatchTest::checkFinished()
 {
-    if( m_running ) QTimer::singleShot(100, BatchTest::checkFinished );
+    if( m_running ) QTimer::singleShot( 100, BatchTest::checkFinished );
     else            BatchTest::runNextCircuit();
 }
 
