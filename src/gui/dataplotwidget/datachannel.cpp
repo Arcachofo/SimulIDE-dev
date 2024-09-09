@@ -106,5 +106,4 @@ void DataChannel::setTestData( QString td )
         m_timeTest.append( dataPair.first().toULongLong(0,16) );
         m_bufferTest.append( dataPair.last().toDouble() );
     }
-    qDebug() << m_channel;
 }

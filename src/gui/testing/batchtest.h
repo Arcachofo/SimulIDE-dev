@@ -20,6 +20,8 @@ class BatchTest
         static void addTestUnit( Component* c );
         static void testCompleted( Component* c, bool ok );
 
+        static void checkFinished();
+
     private:
         static void prepareTest( QDir dir );
         static void runNextCircuit();
