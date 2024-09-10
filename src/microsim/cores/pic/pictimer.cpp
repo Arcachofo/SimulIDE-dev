@@ -30,6 +30,7 @@ void PicTimer::initialize()
     McuTimer::initialize();
 
     m_ovfMatch  = m_maxCount;
+    m_ovfPeriod = m_ovfMatch + 1;
 }
 
 /*void PicTimer::addOcUnit( McuOcUnit* ocUnit )

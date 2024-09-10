@@ -87,6 +87,7 @@ class McuTimer : public McuPrescaled, public eElement
 
         uint16_t m_maxCount;   // Maximum value of the counter
         uint16_t m_ovfMatch;   // counter vale to match an overflow
+        uint32_t m_ovfPeriod;  // overflow period
         uint64_t m_ovfTime;    // Absolute simulation time of next overflow
 
         uint8_t m_mode;        // Can be used by each Timer as they want

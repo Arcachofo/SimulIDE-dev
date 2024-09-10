@@ -46,7 +46,7 @@ eMcu::eMcu( Mcu* comp, QString id )
     m_firmware = "";
     m_debugger = NULL;
     m_debugging = false;
-    m_saveEepr = true;
+    m_saveEepr = false;
 
     m_ramTable = new RamTable( NULL, this, false );
 }

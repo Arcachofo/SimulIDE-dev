@@ -40,6 +40,7 @@ void McuTimer::initialize()
     m_countVal   = 0;
     m_countStart = 0;
     m_ovfMatch   = 0;
+    m_ovfPeriod  = 0;
     m_ovfTime    = 0;
     m_timeOffset = 0;
     m_mode       = 0;
@@ -123,8 +124,8 @@ void McuTimer::sheduleEvents()
         for( McuOcUnit* ocUnit : m_ocUnit ) Simulator::self()->cancelEvents( ocUnit );
     }else{
         uint64_t circTime = Simulator::self()->circTime();
-        uint64_t ovfPeriod = m_ovfMatch;
-        if( m_countVal > m_ovfMatch ) ovfPeriod += m_maxCount; // OVF before counter: next OVF missed
+        uint64_t ovfPeriod = m_ovfPeriod;
+        if( m_countVal > m_ovfPeriod ) ovfPeriod += m_maxCount; // OVF before counter: next OVF missed
 
         uint64_t time2ovf = (ovfPeriod-m_countVal)*m_psPerTick; // time in ps from now to OVF
         if( m_timeOffset ) time2ovf -= m_psPerTick-m_timeOffset;
