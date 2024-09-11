@@ -5,6 +5,7 @@
 
 #include "avrocunit.h"
 #include "datautils.h"
+#include "mcutimer.h"
 #include "mcupin.h"
 #include "mcuocm.h"
 
@@ -29,12 +30,12 @@ void AvrOcUnit::configure( uint8_t val ) // COMNX0,COMNX1
     else        m_ctrlPin = enabled;
 }
 
-void AvrOcUnit::setPinSate( bool state )
+void AvrOcUnit::setPinSate( bool state, uint64_t time )
 {
     if( m_ctrlPin )
     {
-        m_ocPin->setOutState( state );
-        if( m_ocPinInv ) m_ocPinInv->setOutState( !state );
+        m_ocPin->scheduleState( state, time );
+        if( m_ocPinInv ) m_ocPinInv->scheduleState( !state, time );
     }
     else if( m_ocm ) m_ocm->setState( this, state );
 }

@@ -48,8 +48,8 @@ class McuOcUnit : public McuModule, public eElement
         void setPinInnv( McuPin* p ) { m_ocPinInv = p; }
 
     protected:
-        virtual void drivePin( ocAct_t act );
-        virtual void setPinSate( bool state );
+        virtual void drivePin( ocAct_t act, uint64_t time=0 );
+        virtual void setPinSate( bool state, uint64_t time=0 );
 
         McuOcm*   m_ocm;
         McuTimer* m_timer;

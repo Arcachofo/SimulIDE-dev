@@ -19,7 +19,7 @@ class AvrOcUnit : public McuOcUnit
         virtual void configure( uint8_t val ) override;
 
     protected:
-        virtual void setPinSate( bool state );
+        virtual void setPinSate( bool state, uint64_t time ) override;
 };
 
 #endif
