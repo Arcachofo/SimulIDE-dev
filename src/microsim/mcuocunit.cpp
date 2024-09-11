@@ -85,8 +85,7 @@ void McuOcUnit::sheduleEvents( uint32_t ovf, uint32_t countVal, int rot )
             uint64_t psPerTick  = m_timer->psPerTick();
             uint64_t timeOffset = m_timer->timeOffset();
 
-            /// Fixme: /*run it 1 cycle after match*/
-            uint64_t time2ovf = (match-countVal)*psPerTick;// + m_mcu->psInst(); // Time in ps
+            uint64_t time2ovf = (match-countVal)*psPerTick; // Time in ps
             if( timeOffset ) time2ovf -= psPerTick-timeOffset;
 
             Simulator::self()->addEvent( time2ovf, this );
