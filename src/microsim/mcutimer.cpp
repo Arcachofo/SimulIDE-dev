@@ -94,13 +94,13 @@ void McuTimer::clockStep()  // Timer driven by external clock
     if( m_countVal == m_ovfMatch+1 ) runEvent();
 }
 
-void McuTimer::runEvent()            // Overflow
+void McuTimer::runEvent()           // Overflow
 {
     if( !m_running ) return;
 
     for( McuOcUnit* ocUnit : m_ocUnit ) ocUnit->tov();
 
-    m_countVal = m_countStart;             // Reset count value
+    m_countVal = m_countStart;      // Reset counter value
     m_timeOffset = 0;
     if( m_bidirec ) m_reverse = !m_reverse;
     if( !m_reverse && m_interrupt ) m_interrupt->raise();
@@ -110,7 +110,7 @@ void McuTimer::runEvent()            // Overflow
 
 void McuTimer::resetTimer()
 {
-    m_countVal = m_countStart; // Reset count value
+    m_countVal = m_countStart;      // Reset counter value
     m_timeOffset = 0;
     sheduleEvents();
 }
@@ -183,15 +183,17 @@ void McuTimer::calcCounter()
     uint64_t circTime = Simulator::self()->circTime();
     if( m_circTime == circTime ) return;
     m_circTime = circTime;
- 
-    uint64_t time2ovf = m_ovfTime-circTime; // Next overflow time - current time
+
+    uint64_t time2ovf   = m_ovfTime-circTime; // Next overflow time - current time
     uint64_t cycles2ovf = time2ovf/m_psPerTick; // Number of Timer ticks to OVF
 
     if( m_ovfMatch > cycles2ovf )
     {
-        m_countVal = m_ovfMatch-cycles2ovf;
+        m_countVal   = m_ovfMatch-cycles2ovf;
         m_timeOffset = time2ovf%m_psPerTick;
         if( m_timeOffset ) m_countVal--;
+
+        if( m_reverse ) m_countVal = m_maxCount - m_countVal;
     }
 }
 
@@ -199,7 +201,6 @@ void McuTimer::updtCycles() // Recalculate ovf, comps, etc
 {
     m_countVal = *m_countL;
     if( m_countH ) m_countVal |= *m_countH << 8;
-    /// m_countStart = 0;
     sheduleEvents();
 }
 
@@ -213,7 +214,7 @@ void McuTimer::enableExtClock( bool en )
 {
     if( m_extClock == en ) return;
     updtCount();
-    m_extClock = en; //m_clkSrc = en? clkEXT : clkMCU;
+    m_extClock = en;
     updtCycles();      // update & Reshedule
 
     if( m_clockPin ){
