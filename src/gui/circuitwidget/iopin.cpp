@@ -128,7 +128,11 @@ void IoPin::scheduleState( bool state, uint64_t time )
         Simulator::self()->cancelEvents( this );
         m_step = m_steps-m_step;
     }
-    if     ( time )    Simulator::self()->addEvent( time, this );
+    if( time )
+    {
+        Simulator::self()->cancelEvents( this );
+        Simulator::self()->addEvent( time, this );
+    }
     else if( m_steps ) IoPin::runEvent();
     else               IoPin::setOutState( m_nextState );
 }
