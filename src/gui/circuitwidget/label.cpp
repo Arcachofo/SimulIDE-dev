@@ -114,7 +114,6 @@ void Label::updtLabelPos()
     QPointF p = adjustPos( m_labelx, m_labely, width, height );
     setPos( p );
 
-    //setTransformOriginPoint( width/2, height/2 );
     setRotation( m_labelrot*vFlip()*hFlip() );
     adjustSize();
 }

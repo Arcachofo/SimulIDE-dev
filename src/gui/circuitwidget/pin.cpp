@@ -376,7 +376,7 @@ void Pin::updateStep()
     update();
 }
 
-void Pin::paint(QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w )
+void Pin::paint(QPainter* p, const QStyleOptionGraphicsItem*, QWidget* )
 {
     if( !isVisible() ) return;
 

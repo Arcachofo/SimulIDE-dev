@@ -24,7 +24,6 @@ class HeaderWidget : public QWidget, private Ui::HeaderWidget
         QString m_type;
 
         QString m_strVal;
-
 };
 
 #endif

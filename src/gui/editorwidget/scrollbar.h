@@ -19,6 +19,5 @@ class scrollWidget : public QScrollBar
         void paintEvent( QPaintEvent* event ) override;
 
         CodeEditor* m_editor;
-
 };
 #endif

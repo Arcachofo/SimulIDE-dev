@@ -24,10 +24,6 @@ class RamTable : public QWidget, private Ui::RamTable
 
         void updateValues();
 
-        //void setItemValue( int col, QString v ) { table->item( m_currentRow, col )->setData( 0, v ); }
-        //void setItemValue( int col, int32_t v ) { table->item( m_currentRow, col )->setData( 0, v ); }
-        //void setItemValue( int col, float v ) { table->item( m_currentRow, col )->setData( 0, v ); }
-
         void setRegisters( QStringList regs );
         void addRegister( QString name, QString type );
 
@@ -59,7 +55,6 @@ class RamTable : public QWidget, private Ui::RamTable
         void slotContextMenu( const QPoint& );
 
     private:
-        //void updateRamValue( QString name );
         void setAddress( int r, QString a );
         void setName( int r, QString n );
         void setValue( int r, QString v );

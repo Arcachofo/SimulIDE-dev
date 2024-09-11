@@ -141,7 +141,7 @@ class Pin : public QGraphicsItem, public ePin, public Updatable
         Connector* my_connector;
         Component* m_component;
         LaChannel* m_dataCannel;    // connect to Logic Analyzer
-        Pin*       m_conPin;          // Pin at the other side of connector
+        Pin*       m_conPin;        // Pin at the other side of connector
 
         QGraphicsSimpleTextItem m_label;
 };

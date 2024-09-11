@@ -30,7 +30,5 @@ SourceWidget::SourceWidget()
 
     m_verticalLayout->addWidget( pushButton );
     m_verticalLayout->setAlignment( pushButton, Qt::AlignHCenter );
-
-    //setFixedSize( 60, 90 );
 }
 SourceWidget::~SourceWidget() {}

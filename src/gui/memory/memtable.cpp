@@ -308,8 +308,6 @@ QString MemTable::valToHex( int val, int bytes )
     QString sval = QString::number( val, 16 ).toUpper();
     sval = sval.right( bytes*2 );
     while( sval.length() < bytes*2) sval.prepend( "0" );
-    //sval.prepend(" "); /// (2+m_cellBytes)*15*scale+2 );
-    //sval.append(" ");
 
     return sval;
 }
@@ -325,8 +323,7 @@ QVector<int> MemTable::toIntVector()
         for ( int col = 0; col < 16; col++ ) {
             data[i] = table->item( row, col )->data(0).toString().toInt( &ok, 16 );
             i++;
-            if ( i >= m_dataSize )
-                break;
+            if ( i >= m_dataSize ) break;
         }
     }
     return data;

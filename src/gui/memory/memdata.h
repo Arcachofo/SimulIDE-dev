@@ -28,7 +28,6 @@ class MemData
         static QString getMem( QVector<int>* data );
         static void setMem( QVector<int>* data, QString m );
 
-    //public slots:
         virtual void showTable( int dataSize=256, int wordBytes=1 );
 
     protected:

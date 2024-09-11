@@ -51,27 +51,26 @@ void Socket::updatePins( bool connect )
 {
     for( int i=0; i<m_size; i++ )
     {
-        if( !m_sockPins[i]->connector() )
-        {
-            Pin* pin = m_sockPins[i]->connectPin( false );
-            if( pin ){
-                if( connect )
-                {
-                    qDebug()<<"Connecting"<< m_sockPins[i]->pinId()<<"To"<<pin->pinId();
-                    m_connPins[i] = pin;
-                    m_sockPins[i]->setConPin( pin );
-                    pin->setConPin( m_sockPins[i] );
-                }
-                else if( !m_connPins[i] ) CircuitWidget::self()->powerCircOff();
+        if( m_sockPins[i]->connector() ) continue;
+
+        Pin* pin = m_sockPins[i]->connectPin( false );
+        if( pin ){
+            if( connect )
+            {
+                //qDebug()<<"Connecting"<< m_sockPins[i]->pinId()<<"To"<<pin->pinId();
+                m_connPins[i] = pin;
+                m_sockPins[i]->setConPin( pin );
+                pin->setConPin( m_sockPins[i] );
             }
-            else{
-                if( m_connPins[i] )
-                {
-                    m_sockPins[i]->setConPin( NULL );
-                    m_connPins[i]->setConPin( NULL );
-                    m_connPins[i] = NULL;
-                    CircuitWidget::self()->powerCircOff();
-                }
+            else if( !m_connPins[i] ) CircuitWidget::self()->powerCircOff();
+        }
+        else{
+            if( m_connPins[i] )
+            {
+                m_sockPins[i]->setConPin( NULL );
+                m_connPins[i]->setConPin( NULL );
+                m_connPins[i] = NULL;
+                CircuitWidget::self()->powerCircOff();
             }
         }
     }

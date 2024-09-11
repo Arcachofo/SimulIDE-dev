@@ -213,9 +213,6 @@ void MCUMonitor::createStatusPC()
     if( statusBits.size() )
         for( int i=7; i>=0; --i ) m_status.item( 0, i )->setText( statusBits.takeFirst() );
 
-    //horizontalLayout->insertWidget( 0, &m_status);
-    //horizontalLayout->setStretchFactor( &m_status, 65 );
-
     m_pc.setVerticalHeaderLabels( QStringList()<<" PC ");
     m_pc.verticalHeader()->setFixedWidth( round(31*scale) );
     m_pc.horizontalHeader()->hide();

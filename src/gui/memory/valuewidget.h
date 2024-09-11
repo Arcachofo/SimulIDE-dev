@@ -32,7 +32,6 @@ class ValueWidget : public QWidget, private Ui::ValueWidget
         int m_intVal;
 
         CoreBase* m_core;
-
 };
 
 #endif

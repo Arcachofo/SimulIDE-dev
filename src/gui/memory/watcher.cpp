@@ -89,7 +89,6 @@ void Watcher::addRegister( QString name, QString type )
 void Watcher::setVariables( QStringList vars )
 {
     vars.sort();
-   //m_varNames = vars;
     m_variableModel->clear();
     for( QString var : vars ) m_variableModel->appendRow( new QStandardItem(var) );
 }

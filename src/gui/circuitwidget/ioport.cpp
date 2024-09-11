@@ -38,12 +38,6 @@ void IoPort::reset()
 void IoPort::runEvent()
 {
     setOutState( m_nextState );
-    /*for( int i=0; i<m_numPins; ++i ){
-        IoPin* pin = m_pins[i];
-        bool nextState = (m_nextState & 1<<i)>0;
-        //if( pin->getOutState() != nextState )     // Pin changed
-            pin->setOutState( nextState );
-    }*/
     if( m_index > 0 ) nextStep();
 }
 
@@ -156,7 +150,6 @@ IoPin* IoPort::createPin( int i, QString id, Component* comp )
 {
     IoPin* pin = new IoPin( 0, QPoint(0,0), comp->getUid()+"-"+id, i, comp, input );
     pin->setOutHighV( 5 );
-    //pin->setPinState( input_low );
     return pin;
 }
 
@@ -183,8 +176,6 @@ IoPin* IoPort::getPin( QString pinName )
                 return ioPin;
         }
     }
-    //if( !pin )
-    //    qDebug() << "ERROR: IoPort::getPin NULL Pin:"<< pinName;
     return pin;
 }
 
