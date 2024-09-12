@@ -190,7 +190,7 @@ void Circuit::loadStrDoc( QString &doc )
 
     QList<Linker*>    linkList;   // Linked  Component list
     QList<Component*> compList;   // Pasting Component list
-    QList<Connector*> connList;    // Pasting Connector list
+    QList<Connector*> connList;   // Pasting Connector list
     QList<Node*>      nodeList;   // Pasting node list
 
     Component* lastComp = nullptr;
@@ -397,11 +397,9 @@ void Circuit::loadStrDoc( QString &doc )
             con->setSelected( true );
             con->move( m_deltaMove );
         }
-    }
-    else
-    {
+    }else{
         for( Component* comp : compList ) comp->moveSignal();
-        m_compList = compList;
+        m_compList += compList;
     }
 
     m_nodeList += nodeList;
