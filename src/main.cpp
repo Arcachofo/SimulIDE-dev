@@ -91,7 +91,7 @@ int main( int argc, char *argv[] )
             QString file = "file://";
             if( arg.startsWith( file ) ) arg.replace( file, "" ).replace("\r\n", "" ).replace("%20", " ");
         #ifdef _WIN32
-            if( arg.startsWith( "/" )) circ.remove( 0, 1 );
+            if( arg.startsWith( "/" )) arg.remove( 0, 1 );
         #endif
             QTimer::singleShot( 300, CircuitWidget::self()
                               , [arg]()->void{ CircuitWidget::self()->loadCirc( arg ); } );
