@@ -43,6 +43,7 @@ void McuTimer::initialize()
     m_ovfPeriod  = 0;
     m_ovfTime    = 0;
     m_timeOffset = 0;
+    m_circTime   = 0;
     m_mode       = 0;
 
     m_prescaler = 1;
@@ -53,7 +54,7 @@ void McuTimer::initialize()
 
     m_psPerTick = m_prescaler*m_mcu->psInst();
 
-    m_circTime = 0;    
+
 }
 
 void McuTimer::voltChanged()  // External Clock Pin changed voltage
@@ -124,8 +125,9 @@ void McuTimer::sheduleEvents()
         for( McuOcUnit* ocUnit : m_ocUnit ) Simulator::self()->cancelEvents( ocUnit );
     }else{
         uint64_t circTime = Simulator::self()->circTime();
+
         uint64_t ovfPeriod = m_ovfPeriod;
-        if( m_countVal > m_ovfPeriod ) ovfPeriod += m_maxCount; // OVF before counter: next OVF missed
+        if( m_countVal > m_ovfMatch ) ovfPeriod += m_maxCount; // OVF before counter: next OVF missed
 
         uint64_t time2ovf = (ovfPeriod-m_countVal)*m_psPerTick; // time in ps from now to OVF
         if( m_timeOffset ) time2ovf -= m_psPerTick-m_timeOffset;
@@ -156,6 +158,8 @@ void McuTimer::countWriteL( uint8_t val ) // Someone wrote to counter low byte
 {
     updtCount();
     *m_countL = val;
+    m_countVal &= 0xFFFFFF00;
+    m_countVal |= val;
     updtCycles();       // update & Reshedule
 }
 
@@ -163,17 +167,21 @@ void McuTimer::countWriteH( uint8_t val ) // Someone wrote to counter high byte
 {
     updtCount();
     *m_countH = val;
-    updtCycles();       // update & Reshedule
+    m_countVal &= 0x000000FF;
+    m_countVal |= uint32_t(val)<<8;
+    updtCycles();                   // update & Reshedule
 }
 
-void McuTimer::updtCount( uint8_t )       // Write counter values to Ram
+void McuTimer::updtCount( uint8_t ) // Someone is reading Counter Registers: Write values to Ram
 {
-    if( !m_running ) return;// If no running, values were already written at timer stop.
+    if( !m_running ) return; // If no running, values were already written at timer stop.
 
     calcCounter();
 
-    if( m_countL ) *m_countL = m_countVal & 0xFF;
-    if( m_countH ) *m_countH = (m_countVal>>8) & 0xFF;
+    uint32_t countVal = m_reverse ? (m_ovfMatch-m_countVal) : m_countVal;
+
+    if( m_countL ) *m_countL = countVal & 0xFF;
+    if( m_countH ) *m_countH = (countVal>>8) & 0xFF;
 }
 
 void McuTimer::calcCounter()
@@ -192,15 +200,13 @@ void McuTimer::calcCounter()
         m_countVal   = m_ovfMatch-cycles2ovf;
         m_timeOffset = time2ovf%m_psPerTick;
         if( m_timeOffset ) m_countVal--;
-
-        if( m_reverse ) m_countVal = m_maxCount - m_countVal;
     }
 }
 
 void McuTimer::updtCycles() // Recalculate ovf, comps, etc
 {
-    m_countVal = *m_countL;
-    if( m_countH ) m_countVal |= *m_countH << 8;
+    /// m_countVal = *m_countL;
+    /// if( m_countH ) m_countVal |= *m_countH << 8;
     sheduleEvents();
 }
 

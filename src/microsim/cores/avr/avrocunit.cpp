@@ -5,7 +5,6 @@
 
 #include "avrocunit.h"
 #include "datautils.h"
-#include "mcutimer.h"
 #include "mcupin.h"
 #include "mcuocm.h"
 

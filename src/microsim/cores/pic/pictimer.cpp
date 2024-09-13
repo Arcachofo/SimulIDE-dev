@@ -187,14 +187,20 @@ void PicTimer16bit::sheduleEvents()
         uint64_t circTime = Simulator::self()->circTime();
         m_psPerTick = 30517578; // Sim cycs per Timer tick for 32.768 KHz
 
-        uint32_t ovfPeriod = m_ovfMatch;
+        uint32_t ovfPeriod = m_ovfPeriod;
         if( m_countVal > m_ovfMatch ) ovfPeriod += m_maxCount; // OVF before counter: next OVF missed
 
         uint64_t time2ovf = (ovfPeriod-m_countVal)*m_psPerTick; // cycles in ps
-        m_ovfTime = circTime + time2ovf;// In simulation time (ps)
+        if( m_timeOffset ) time2ovf -= m_psPerTick-m_timeOffset;
 
-        Simulator::self()->cancelEvents( this );
-        Simulator::self()->addEvent( time2ovf, this );
+        uint64_t ovfTime = circTime + time2ovf;// Absolute simulation time (ps) when OVF will occur
+
+        if( m_ovfTime != ovfTime )
+        {
+            m_ovfTime = ovfTime;
+            Simulator::self()->cancelEvents( this );
+            Simulator::self()->addEvent( time2ovf, this );
+        }
     }
     else McuTimer::sheduleEvents();
 }
