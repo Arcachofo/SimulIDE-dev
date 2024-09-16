@@ -14,6 +14,7 @@
 #include "iopin.h"
 
 #include "stringprop.h"
+#include "doubleprop.h"
 
 #define tr(str) simulideTr("TestUnit",str)
 
@@ -39,7 +40,7 @@ TestUnit::TestUnit( QString type, QString id )
 
     m_testing = false;
 
-    m_interval = 100*1e3; // 100 ns
+    m_period = 1e-7; // 100 ns
     m_truthTable = nullptr;
 
     setInputs("O");
@@ -57,6 +58,14 @@ TestUnit::TestUnit( QString type, QString id )
         new StrProp<TestUnit>("Truth", "Truth",""
                              , this, &TestUnit::truth, &TestUnit::setTruth, propHidden ),
     },0} );
+
+    addPropGroup( { tr("Test"), {
+        new DoubProp<TestUnit>("Period",tr("Period"),"ns"
+                              , this, &TestUnit::period, &TestUnit::setPeriod,0  ),
+
+        //new BoolProp<TestUnit>("DoTest",tr("Do Test"),""
+        //                      , this, &TestUnit::doTest, &TestUnit::setDoTest,0 ),
+    }, 0 } );
 }
 TestUnit::~TestUnit()
 {
@@ -76,7 +85,7 @@ void TestUnit::stamp()
 
     updtData();
 
-    Simulator::self()->addEvent( m_interval, this );
+    Simulator::self()->addEvent( m_period*1e12/2, this );
     if( BatchTest::isRunning() ) BatchTest::addTestUnit( this );
 }
 
@@ -100,7 +109,7 @@ void TestUnit::runEvent()
         m_samples[m_outValue] = inputVal;
 
         if( ++m_outValue < (uint)m_steps )
-            Simulator::self()->addEvent( m_interval, this );
+            Simulator::self()->addEvent( m_period*1e12/2, this );
         else m_changed = true;
     }else{
         m_read = true;
@@ -109,7 +118,7 @@ void TestUnit::runEvent()
             bool state = m_outValue & (1<<i);
             m_outPin[i]->setOutState( state );
         }
-        Simulator::self()->addEvent( m_interval, this );
+        Simulator::self()->addEvent( m_period*1e12/2, this );
     }
 }
 
@@ -169,8 +178,10 @@ void TestUnit::setTruth( QString t )
 
 void TestUnit::setInputs( QString i )
 {
+    if( i.isEmpty() ) i = " "; // Force property save
     m_inputStr = i;
     QStringList inputList = i.split(",");
+    inputList.removeAll(" ");
 
     int size = inputList.size();
     IoComponent::setNumOuts( size, "I" );
@@ -184,8 +195,10 @@ void TestUnit::setInputs( QString i )
 
 void TestUnit::setOutputs( QString o )
 {
+    if( o.isEmpty() ) o = " "; // Force property save
     m_outputStr = o;
     QStringList outputList = o.split(",");
+    outputList.removeAll(" ");
 
     int size = outputList.size();
     IoComponent::setNumInps( size, "O" );

@@ -19,19 +19,26 @@ TruthTable::TruthTable( TestUnit* tu, QWidget* parent )
 bool TruthTable::setup( QString inputs, QString outputs, std::vector<uint>* samples, std::vector<uint>* truthT )
 {
     QStringList inputList = inputs.split(",");
+    inputList.removeAll(" ");
     int numInputs = inputList.size();
     int rows = pow( 2, numInputs );
 
     QStringList outputList = outputs.split(",");
+    outputList.removeAll(" ");
     int numOutputs = outputList.size();
 
     int columns = numInputs+numOutputs+1;
 
-    inputList.append("");
+    QStringList header;
+    for( QString output : outputList ) header.prepend( output );
+    header.prepend("");
+    for( QString input : inputList ) header.prepend( input );
+
     table->clear();
     table->setRowCount( rows );
     table->setColumnCount( columns );
-    table->setHorizontalHeaderLabels( inputList+outputList );
+    table->setHorizontalHeaderLabels( header );
+    table->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
     //table->horizontalHeader()->setSectionResizeMode( QHeaderView::Stretch ); // QHeaderView::ResizeToContents
 
     bool testing = !(truthT->size() == 0);
@@ -56,9 +63,9 @@ bool TruthTable::setup( QString inputs, QString outputs, std::vector<uint>* samp
 
                 if( col < numInputs )
                 {
-                    value = ( row & 1<<col);
+                    value = ( row & 1<<(numInputs-col-1));
                 }else{
-                    int bit = 1<<(col-1-numInputs);
+                    int bit = 1<<(numOutputs-(col-numInputs-1)-1);
                     value = (valRow & bit);
                     if( testing ){
                         truth = (truRow & bit);

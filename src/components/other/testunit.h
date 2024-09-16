@@ -31,6 +31,9 @@ class TestUnit: public IoComponent, public eElement
         QString outputs() { return m_outputStr; }
         void setOutputs( QString o );
 
+        double period() { return m_period; }
+        void setPeriod( double p ) { m_period = p; }
+
         QString truth();
         void setTruth( QString t );
 
@@ -44,7 +47,7 @@ class TestUnit: public IoComponent, public eElement
         void createTable();
         void updtData();
 
-        uint64_t m_interval;
+        double m_period;
 
         bool m_testing;
         bool m_read;
