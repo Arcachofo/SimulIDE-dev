@@ -29,7 +29,7 @@ class KY023 : public Component, public eElement
         
         virtual void updateStep() override;
 
-        virtual void paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget );
+        virtual void paint( QPainter *p, const QStyleOptionGraphicsItem *o, QWidget *w ) override;
         
     public slots:
         void onbuttonpressed();
@@ -51,4 +51,3 @@ class KY023 : public Component, public eElement
 };
 
 #endif
-

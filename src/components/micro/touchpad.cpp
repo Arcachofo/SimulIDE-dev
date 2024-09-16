@@ -49,8 +49,8 @@ TouchPad::TouchPad( QString type, QString id )
 {
     m_graphical = true;
 
-    m_eNodeX = NULL;
-    m_eNodeY = NULL;
+    m_eNodeX = nullptr;
+    m_eNodeY = nullptr;
 
     m_RxMin = 100;
     m_RxMax = 500;
@@ -267,9 +267,9 @@ QPainterPath TouchPad::shape() const
     return path;
 }
 
-void TouchPad::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
+void TouchPad::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w )
 {
-    Component::paint( p, option, widget );
+    Component::paint( p, o, w );
 
     p->setBrush( Qt::transparent );
     p->drawRoundedRect( QRect(-m_width/2,-m_height-2, m_width, m_height ), 2, 2 );
@@ -280,4 +280,3 @@ void TouchPad::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidg
     }
     Component::paintSelected( p );
 }
-

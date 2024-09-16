@@ -125,9 +125,9 @@ void KY023::updateStep()
     m_changed = false;
 }
 
-void KY023::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
+void KY023::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w )
 {
-    Component::paint( p, option, widget );
+    Component::paint( p, o, w );
     
     p->setBrush(QColor( 50, 50, 70 ));
     p->drawRoundedRect( m_area, 2, 2 );

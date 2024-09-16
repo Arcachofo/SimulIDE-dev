@@ -45,7 +45,7 @@ Oscope::Oscope( QString type, QString id )
     m_auto    = 4;
 
     m_oscWidget  = new OscWidget( CircuitWidget::self(), this );
-    m_dataWidget = new DataWidget( NULL, this );
+    m_dataWidget = new DataWidget( nullptr, this );
     m_proxy = Circuit::self()->addWidget( m_dataWidget );
     m_proxy->setParentItem( this );
     m_dataWidget->show();
@@ -103,10 +103,10 @@ Oscope::Oscope( QString type, QString id )
 }
 Oscope::~Oscope()
 {
-    m_proxy->setWidget( NULL );
+    m_proxy->setWidget( nullptr );
     delete m_dataWidget;
 
-    m_oscWidget->setParent( NULL );
+    m_oscWidget->setParent( nullptr );
     m_oscWidget->close();
     delete m_oscWidget;
 }

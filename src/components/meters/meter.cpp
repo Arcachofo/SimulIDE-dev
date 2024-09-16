@@ -109,9 +109,9 @@ void Meter::setflip()
     m_display.setTransform( QTransform::fromScale( m_Hflip, m_Vflip ) );
 }
 
-void Meter::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
+void Meter::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w )
 {
-    Component::paint( p, option, widget );
+    Component::paint( p, o, w );
     p->setBrush( Qt::black);
     p->drawRoundedRect( QRectF(-24,-24, 48, 32 ), 1, 1 );
 

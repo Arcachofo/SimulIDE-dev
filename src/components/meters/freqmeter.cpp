@@ -169,9 +169,9 @@ void FreqMeter::setflip()
     m_display.setTransform( QTransform::fromScale( m_Hflip, m_Vflip ) );
 }
 
-void FreqMeter::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
+void FreqMeter::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w )
 {
-    Component::paint( p, option, widget );
+    Component::paint( p, o, w );
     p->setBrush( Qt::black);
     p->drawRoundedRect( m_area, 1, 1);
 

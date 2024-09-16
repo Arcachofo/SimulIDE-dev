@@ -50,7 +50,7 @@ class TouchPad : public Component, public eElement
         void setRyMax( double max );
 
         virtual QPainterPath shape() const override;
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w ) override;
 
     private:
         void updateSize();

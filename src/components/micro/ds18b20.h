@@ -62,7 +62,7 @@ class Ds18b20 : public Component , public eElement
         virtual void voltChanged() override;
         virtual void runEvent() override;
 
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w );
 
     public slots:
         void upbuttonclicked();

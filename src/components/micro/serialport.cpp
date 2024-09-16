@@ -40,7 +40,7 @@ LibraryItem* SerialPort::libraryItem()
 
 SerialPort::SerialPort( QString type, QString id )
           : Component( type, id )
-          , UsartModule( NULL, id+"-Uart" )
+          , UsartModule( nullptr, id+"-Uart" )
           , eElement( (id+"-eElement") )
 {
     m_area = QRect(-32,-16, 160, 32 );
@@ -248,9 +248,9 @@ void SerialPort::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu
     Component::contextMenu( event, menu );
 }
 
-void SerialPort::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
+void SerialPort::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w )
 {
-    Component::paint( p, option, widget );
+    Component::paint( p, o, w );
     
     p->setBrush( Qt::darkBlue );
     p->drawRoundedRect( m_area, 4, 4 );
@@ -284,5 +284,3 @@ void SerialPort::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWi
 
     Component::paintSelected( p );
 }
-
-//#include "moc_serialport.cpp"

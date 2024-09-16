@@ -26,7 +26,7 @@ class SR04 : public Component, public eElement
         virtual void voltChanged() override;
         virtual void runEvent() override;
 
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w );
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w ) override;
 
     private:
         uint64_t m_lastStep;

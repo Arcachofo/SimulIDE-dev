@@ -47,23 +47,13 @@ void LaChannel::stamp()    // Called at Simulation Start
     }
 }
 
-/*void LaChannel::updateStep()
-{
-    //int counter = m_bufferCounter;
-    //voltChanged();
-    //if( counter == m_bufferCounter ) addReading( m_buffer[m_bufferCounter] );
-    //double dispMax = m_analizer->voltDiv()*10;
-    //double dispMin = 0;
-    //m_analizer->display()->setLimits( m_channel, dispMax, dispMin );
-}*/
-
 void LaChannel::setPin( Pin* p ) { m_ePin[0] = m_pin = p; }
 
 void LaChannel::setIsBus( bool b )
 {
     m_pin->removeConnector();
     m_pin->setIsBus( b );
-    m_pin->setDataChannel( b? this : NULL );
+    m_pin->setDataChannel( b? this : nullptr );
 }
 
 void LaChannel::registerEnode( eNode* enode, int n )
@@ -134,4 +124,3 @@ void LaChannel::voltChanged()
         }   }
     }
 }
-

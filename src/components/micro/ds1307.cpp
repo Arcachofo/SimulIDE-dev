@@ -188,9 +188,9 @@ char DS1307::decToBcd(char val) {
 char DS1307::bcdToDec(char val) {
     return( (val/16*10) + (val%16) ); }
 
-void DS1307::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
+void DS1307::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w )
 {
-    Component::paint( p, option, widget );
+    Component::paint( p, o, w );
 
     p->drawRoundedRect( m_area, 2, 2 );
     p->drawPixmap( QRect(-28,-20, 56, 40 ), *m_backPixmap );

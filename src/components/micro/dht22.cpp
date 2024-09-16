@@ -252,9 +252,9 @@ QString Dht22::model() { return m_DHT22 ? "DHT22" : "DHT11"; }
 
 double Dht22::trim( double data ) { return (double)(((int)(data*10)))/10; }
 
-void Dht22::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
+void Dht22::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w )
 {
-    Component::paint( p, option, widget );
+    Component::paint( p, o, w );
     QPen pen( Qt::black, 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin );
     p->setPen( pen );
     p->setBrush(QColor( 50, 50, 70 ));

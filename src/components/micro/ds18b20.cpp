@@ -526,9 +526,9 @@ void Ds18b20::downbuttonclicked()
     else updateStep();
 }
 
-void Ds18b20::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
+void Ds18b20::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w )
 {
-    Component::paint( p, option, widget );
+    Component::paint( p, o, w );
     QPen pen( Qt::black, 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin );
     p->setPen( pen );
     p->setBrush(QColor( 50, 50, 70 ));

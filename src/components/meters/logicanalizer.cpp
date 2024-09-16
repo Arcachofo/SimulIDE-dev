@@ -45,7 +45,7 @@ LAnalizer::LAnalizer( QString type, QString id )
     m_bufferSize = 100000;
 
     m_laWidget   = new LaWidget( CircuitWidget::self(), this );
-    m_dataWidget = new DataLaWidget( NULL, this );
+    m_dataWidget = new DataLaWidget( nullptr, this );
     m_proxy = Circuit::self()->addWidget( m_dataWidget );
     m_proxy->setParentItem( this );
     m_dataWidget->show();
@@ -113,10 +113,10 @@ LAnalizer::LAnalizer( QString type, QString id )
 }
 LAnalizer::~LAnalizer()
 {
-    m_proxy->setWidget( NULL );
+    m_proxy->setWidget( nullptr );
     delete m_dataWidget;
 
-    m_laWidget->setParent( NULL );
+    m_laWidget->setParent( nullptr );
     m_laWidget->close();
     delete m_laWidget;
 }

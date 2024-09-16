@@ -113,6 +113,9 @@ int McuCreator::createMcu( Mcu* mcuComp, QString name )
     m_scriptPerif.clear();
     m_displays.clear();
 
+    m_twi = NULL;
+    m_spi = NULL;
+
     mcu = &(mcuComp->m_eMcu);
     QString dataFile = mcuComp->m_dataFile;
     m_basePath = QFileInfo( dataFile ).absolutePath();

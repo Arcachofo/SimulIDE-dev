@@ -25,7 +25,7 @@ class Meter : public Component, public eResistor
         virtual void initialize() override { m_crashed = false;}
         virtual void updateStep() override;
 
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w ) override;
 
     protected:
         virtual void setflip() override;

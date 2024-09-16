@@ -36,7 +36,7 @@ LibraryItem* Esp01::libraryItem()
 
 Esp01::Esp01( QString type, QString id )
      : Component( type, id )
-     , UsartModule( NULL, id+"-Uart" )
+     , UsartModule( nullptr, id+"-Uart" )
      , eElement( id )
 {
     m_graphical = true;

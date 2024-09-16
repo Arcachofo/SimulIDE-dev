@@ -48,4 +48,3 @@ class OscopeChannel : public DataChannel
 };
 
 #endif
-

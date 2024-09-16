@@ -49,7 +49,6 @@ class SerialTerm : public Component, public UsartModule, public eElement
 
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w ) override;
 
-    //public slots:
         void onbuttonclicked();
         void slotOpenTerm();
 
@@ -68,4 +67,3 @@ class SerialTerm : public Component, public UsartModule, public eElement
 };
 
 #endif
-

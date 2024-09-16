@@ -53,8 +53,6 @@ void McuTimer::initialize()
     m_clkEdge = 1;
 
     m_psPerTick = m_prescaler*m_mcu->psInst();
-
-
 }
 
 void McuTimer::voltChanged()  // External Clock Pin changed voltage
@@ -103,6 +101,7 @@ void McuTimer::runEvent()           // Overflow
 
     m_countVal = m_countStart;      // Reset counter value
     m_timeOffset = 0;
+
     if( m_bidirec ) m_reverse = !m_reverse;
     if( !m_reverse && m_interrupt ) m_interrupt->raise();
 
@@ -228,4 +227,3 @@ void McuTimer::enableExtClock( bool en )
         m_clkState = m_clockPin->getInpState();
     }
 }
-
