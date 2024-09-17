@@ -228,18 +228,25 @@ void Ssd1306::proccessCommand()
 {
     if( m_readBytes > 0 )
     {
-        if( m_lastCommand == 0x20 ) m_addrMode = m_rxReg;
+        if( m_lastCommand == 0x20 )
+        {
+            m_addrMode = m_rxReg & 3;
+        }
         else if( m_lastCommand == 0x21 ) // 21 33 Set Column Address (Start-End)
         {
-            if( m_readBytes == 2 ) m_startX = m_rxReg & 0x7F; // 0b01111111
-            else                   m_endX   = m_rxReg & 0x7F; // 0b01111111
+            if( m_addrMode != PAGE_ADDR_MODE ){
+                if( m_readBytes == 2 ) m_startX = m_rxReg & 0x7F; // 0b01111111
+                else                   m_endX   = m_rxReg & 0x7F; // 0b01111111
+            }
         }
         else if( m_lastCommand == 0x22 ) // 22 34 Set Page Address (Start-End)
         {
-            if( m_readBytes == 2 ) m_startY = m_rxReg & 0x07; // 0b00000111
-            else{                                             // 0b00000111
-                m_endY = m_rxReg & 0x07;
-                //if( m_endY > m_rows-1 ) m_endY = m_rows-1;
+            if( m_addrMode != PAGE_ADDR_MODE ){
+                if( m_readBytes == 2 ) m_startY = m_rxReg & 0x07; // 0b00000111
+                else{                                             // 0b00000111
+                    m_endY = m_rxReg & 0x07;
+                    //if( m_endY > m_rows-1 ) m_endY = m_rows-1;
+                }
             }
         }
         else if( m_lastCommand == 0x26   // 26 36 Continuous Horizontal Scroll Setup
@@ -301,11 +308,11 @@ void Ssd1306::proccessCommand()
 
     if( m_rxReg < 0x10 ) // 00-0F 0-15 Set Lower Colum Start Address for Page Addresing mode
     {
-        m_addrX = (m_addrX & ~0xF) | (m_rxReg & 0xF);
+        if( m_addrMode == PAGE_ADDR_MODE ) m_addrX = (m_addrX & ~0xF) | (m_rxReg & 0xF);
     }
     else if( m_rxReg < 0x20 ) // 10-1F 16-31 Set Higher Colum Start Address for Page Addresing mode
     {
-        m_addrX = (m_addrX & 0xF) | ((m_rxReg & 0xF) << 4);
+        if( m_addrMode == PAGE_ADDR_MODE ) m_addrX = (m_addrX & 0xF) | ((m_rxReg & 0xF) << 4);
     }
     else if( m_rxReg == 0x20 ) m_readBytes = 1; // 20 32 Set Memory Addressing Mode
     else if( m_rxReg == 0x21 ) m_readBytes = 2; // 21 33 Set Column Address (Start-End)
@@ -347,7 +354,7 @@ void Ssd1306::proccessCommand()
 
     else if( (m_rxReg>=0xB0) && (m_rxReg<=0xB7) )   // B0-B7 176-183 Set Page Start Address for Page Addresing mode
     {
-        m_addrY = m_rxReg & 0x07; // 0b00000111
+        if( m_addrMode == PAGE_ADDR_MODE ) m_addrY = m_rxReg & 0x07; // 0b00000111
     }
     // C0-C8 192-200 Set COM Output Scan Direction
     else if( m_lastCommand == 0xC0 ) m_scanInv = false;
@@ -465,8 +472,8 @@ void Ssd1306::paint( QPainter* p, const QStyleOptionGraphicsItem*, QWidget* )
                         if( abyte & 1 ){
                             int y = row*8+bit;
                             if( y >= m_height ) continue;
-                            if( y > m_mr ) continue;
-                            if( scanInv ) y = 63-y;
+                            //if( y > m_mr ) continue;
+                            if( scanInv ) y = m_height-y;
                             painter.fillRect( x, y*3, 3, 3, m_foreground );
                        }
                        abyte >>= 1;
