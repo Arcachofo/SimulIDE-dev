@@ -134,7 +134,7 @@ void Ssd1306::reset()
     m_addrX  = 0;
     m_addrY  = 0;
     m_startX = 0;
-    m_endX   = 127;
+    m_endX   = m_width-1;
     m_startY = 0;
     m_endY   = m_rows-1;
 
@@ -169,22 +169,20 @@ void Ssd1306::scroll()
 
     m_scrollCount = m_scrollInterval;
 
+    int lastX = m_width-1;
+
     for( int row=m_scrollStartPage; row<=m_scrollEndPage; row++ )
     {
-        uint8_t start = m_aDispRam[0][row];
-        uint8_t end   = m_aDispRam[127][row];
-
-        for( int col=0; col<128; col++ )
+        if( m_scrollR )
         {
-            if( m_scrollR ){
-                int c = 127-col;
-                if( c < 127  ) m_aDispRam[c][row] = m_aDispRam[c-1][row];
-                if( col == 0 ) m_aDispRam[0][row] = end;
-            }else{
-                if( col < 127  ) m_aDispRam[col][row] = m_aDispRam[col+1][row];
-                if( col == 127 ) m_aDispRam[col][row] = start;
-    }   }   }
-}
+            uint8_t end = m_aDispRam[lastX][row];
+            for( int col=lastX; col>0; --col ) m_aDispRam[col][row] = m_aDispRam[col-1][row];
+            m_aDispRam[0][row] = end;
+        }else{
+            uint8_t start = m_aDispRam[0][row];
+            for( int col=0; col<lastX; ++col ) m_aDispRam[col][row] = m_aDispRam[col+1][row];
+            m_aDispRam[lastX][row] = start;
+}   }   }
 
 void Ssd1306::startWrite()
 {
@@ -456,16 +454,17 @@ void Ssd1306::paint( QPainter* p, const QStyleOptionGraphicsItem*, QWidget* )
         painter.fillRect( 0, 0, m_width*3, m_height*3, Qt::black );
 
         bool scanInv = m_rotate ? !m_scanInv : m_scanInv;
+        int lastX = m_width-1;
 
         if( m_dispOn  ){
             for( int row=0; row<m_rows; row++ ){
-                for( int col=0; col<128; col++ )
+                for( int col=0; col<m_width; col++ )
                 {
                     uint8_t abyte = m_aDispRam[col][row];
                     if( m_dispInv ) abyte = ~abyte;      // Display Inverted
 
                     int x = col*3;
-                    if( scanInv ) x = 127*3-x;
+                    if( scanInv ) x = lastX*3-x;
 
                     for( int bit=0; bit<8; bit++ )
                     {
