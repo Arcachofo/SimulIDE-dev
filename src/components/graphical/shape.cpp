@@ -32,7 +32,7 @@ Shape::Shape( QString type, QString id )
         new IntProp<Shape>("V_size", tr("Height"), "_px"
                            , this, &Shape::vSize, &Shape::setVSize,0,"uint" ),
 
-        new DoubProp<Component>("Angle", tr("Angle"),""
+        new DoubProp<Component>("Angle", tr("Angle"),"_º"
                            , this, &Component::getAngle,  &Component::setAngle ),
 
         new IntProp<Shape>("Border", tr("Border"), "_px"

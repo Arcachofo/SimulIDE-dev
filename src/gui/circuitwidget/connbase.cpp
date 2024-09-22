@@ -7,7 +7,6 @@
 #include "circuitwidget.h"
 #include "simulator.h"
 #include "circuit.h"
-//#include "pin.h"
 
 #include "intprop.h"
 
@@ -116,9 +115,9 @@ void ConnBase::setHidden( bool hid, bool hidArea, bool hidLabel )
     }
 }
 
-void ConnBase::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
+void ConnBase::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w )
 {
-    Component::paint( p, option, widget );
+    Component::paint( p, o, w );
     //p->drawRoundRect( m_area, 4, 4 );
 
     updatePixmap();

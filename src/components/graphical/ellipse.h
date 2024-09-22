@@ -6,8 +6,9 @@
 #ifndef ELLIPSE_H
 #define ELLIPSE_H
 
-#include "itemlibrary.h"
 #include "shape.h"
+
+class LibraryItem;
 
 class Ellipse : public Shape
 {
@@ -19,7 +20,7 @@ class Ellipse : public Shape
  static LibraryItem* libraryItem();
 
         virtual QPainterPath shape() const override;
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w ) override;
 };
 
 #endif

@@ -6,8 +6,9 @@
 #ifndef RECTANGLE_H
 #define RECTANGLE_H
 
-#include "itemlibrary.h"
 #include "shape.h"
+
+class LibraryItem;
 
 class Rectangle : public Shape
 {

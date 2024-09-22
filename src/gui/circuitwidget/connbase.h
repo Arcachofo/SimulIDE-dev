@@ -28,7 +28,7 @@ class ConnBase : public Component, public eElement
 
         virtual void updatePins(){;}
 
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w ) override;
 
     protected:
         virtual void updatePixmap(){;}

@@ -137,8 +137,6 @@ void TextComponent::updateGeometry(int, int, int)
     
     int margin = m_margin;
     if( margin < 0 ) margin = 0;
-    /// if( m_hidden ) m_area = QRect( 0, 0, 0, 0 );
-    /// else
     m_area = QRect(-margin,-margin, m_text->boundingRect().width()+margin*2, m_text->boundingRect().height()+margin*2 );
     
     Circuit::self()->update();
@@ -148,7 +146,6 @@ int TextComponent::margin() { return m_margin; }
 
 void TextComponent::setMargin( int margin )
 {
-    //if( margin < 0 ) margin = 0;
     // Maintain compatibility with older versions:
     if( margin < 0 ) m_text->document()->setDocumentMargin( m_docMargin+margin );
     else             m_text->document()->setDocumentMargin( m_docMargin );

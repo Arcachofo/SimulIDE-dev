@@ -7,8 +7,6 @@
 #include "itemlibrary.h"
 #include "circuitwidget.h"
 #include "simulator.h"
-//#include "circuit.h"
-//#include "e-node.h"
 
 #define tr(str) simulideTr("Socket",str)
 

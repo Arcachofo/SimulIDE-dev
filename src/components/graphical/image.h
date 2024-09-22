@@ -22,7 +22,7 @@ class Image : public Shape
         virtual void setBackground( QString bck ) override;
         virtual QString background() override;
 
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w ) override;
 
     public slots:
         void updateGif( const QRect &rect );

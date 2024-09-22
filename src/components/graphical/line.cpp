@@ -6,6 +6,7 @@
 #include <QPainter>
 
 #include "line.h"
+#include "itemlibrary.h"
 
 #define tr(str) simulideTr("Line",str)
 
@@ -40,9 +41,9 @@ QPainterPath Line::shape() const
     return path;
 }
 
-void Line::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
+void Line::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w )
 {
-    Component::paint( p, option, widget );
+    Component::paint( p, o, w );
 
     QPen pen( m_color, m_border, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
     p->setPen( pen );

@@ -73,7 +73,7 @@
     <icunit name="IC4"  pin="PORTB0" icreg="ICR4L,ICR4H"   bits="ICES4,ICNC4"   interrupt="T4CAP" />
   </timer>
 
-  <ocm name="OCM0" ocunits="OC3B,OC4B" configbitsA="PORTD2"/>
+  <ocm name="OCM0" ocunits="OC3B,OC4B" configRegsA="PORTD"/>
       
   <usart name="USART0"  number="1" configregsA="UCSR0A" configregsB="UCSR0B" configregsC="UCSR0C"
                         interrupt="USART0_U">

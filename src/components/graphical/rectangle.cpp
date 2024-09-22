@@ -6,6 +6,7 @@
 #include <QPainter>
 
 #include "rectangle.h"
+#include "itemlibrary.h"
 
 #define tr(str) simulideTr("Rectangle",str)
 
