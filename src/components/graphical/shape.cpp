@@ -26,13 +26,16 @@ Shape::Shape( QString type, QString id )
     setZValue( -1 );
 
     addPropGroup( { tr("Main"), {
-        new IntProp <Shape>("H_size", tr("Size X"), "_px"
+        new IntProp<Shape>("H_size", tr("Width"), "_px"
                            , this, &Shape::hSize, &Shape::setHSize,0,"uint" ),
 
-        new IntProp <Shape>("V_size", tr("Size Y"), "_px"
+        new IntProp<Shape>("V_size", tr("Height"), "_px"
                            , this, &Shape::vSize, &Shape::setVSize,0,"uint" ),
 
-        new IntProp <Shape>("Border", tr("Border"), "_px"
+        new DoubProp<Component>("Angle", tr("Angle"),""
+                           , this, &Component::getAngle,  &Component::setAngle ),
+
+        new IntProp<Shape>("Border", tr("Border"), "_px"
                            , this, &Shape::border, &Shape::setBorder ),
 
         new DoubProp<Shape>("Z_Value", tr("Z Value"), ""
