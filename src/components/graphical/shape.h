@@ -40,6 +40,8 @@ class Shape : public Component
         void setColorStr( QString n ) { setColor( QColor(n) ); }
         
     protected:
+        virtual bool freeMove( QGraphicsSceneMouseEvent* ) override { return true; }
+
         int m_hSize;
         int m_vSize;
         int m_border;

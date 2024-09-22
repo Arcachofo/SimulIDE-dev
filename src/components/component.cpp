@@ -152,6 +152,11 @@ QVariant Component::itemChange( GraphicsItemChange change, const QVariant &value
     return QGraphicsItem::itemChange( change, value );
 }
 
+bool Component::freeMove( QGraphicsSceneMouseEvent* event )
+{
+    return m_boardMode && event->modifiers() == Qt::ControlModifier;
+}
+
 void Component::mousePressEvent( QGraphicsSceneMouseEvent* event )
 {
     if( this->parentItem() )
@@ -208,9 +213,8 @@ void Component::mouseMoveEvent( QGraphicsSceneMouseEvent* event )
     event->accept();
 
     QPointF delta( 0, 0 );
-    if( m_boardMode && event->modifiers() == Qt::ControlModifier )
-         delta = event->scenePos() - event->lastScenePos();
-    else delta = toGrid( event->scenePos()) - toGrid(event->lastScenePos() );
+    if( freeMove( event ) ) delta = event->scenePos() - event->lastScenePos();
+    else                    delta = toGrid(event->scenePos()) - toGrid(event->lastScenePos());
 
     if( !(fabs( delta.x() )> 0) && !(fabs( delta.y() )> 0) ) return;
 

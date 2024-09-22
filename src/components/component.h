@@ -178,6 +178,8 @@ class Component : public CompBase, public QGraphicsItem, public Updatable
 
         void paintSelected( QPainter* );
 
+        virtual bool freeMove( QGraphicsSceneMouseEvent* event );
+
         virtual void findHelp(){;}
 
         bool m_isMainComp;
