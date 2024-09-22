@@ -21,7 +21,8 @@ class Socket : public ConnBase
 
         virtual void updateStep() override;
 
-        void updatePins( bool connect );
+        void updatePins() override { connectPins( false ); }
+        void connectPins( bool connect );
 
     private:
         virtual void updatePixmap() override;

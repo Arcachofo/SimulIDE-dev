@@ -7,8 +7,8 @@
 #include "itemlibrary.h"
 #include "circuitwidget.h"
 #include "simulator.h"
-#include "circuit.h"
-#include "e-node.h"
+//#include "circuit.h"
+//#include "e-node.h"
 
 #define tr(str) simulideTr("Socket",str)
 
@@ -44,10 +44,10 @@ Socket::~Socket()
 
 void Socket::updateStep()
 {
-    updatePins( false );
+    connectPins( false );
 }
 
-void Socket::updatePins( bool connect )
+void Socket::connectPins( bool connect )
 {
     for( int i=0; i<m_size; i++ )
     {
@@ -67,9 +67,9 @@ void Socket::updatePins( bool connect )
         else{
             if( m_connPins[i] )
             {
-                m_sockPins[i]->setConPin( NULL );
-                m_connPins[i]->setConPin( NULL );
-                m_connPins[i] = NULL;
+                m_sockPins[i]->setConPin( nullptr );
+                m_connPins[i]->setConPin( nullptr );
+                m_connPins[i] = nullptr;
                 CircuitWidget::self()->powerCircOff();
             }
         }

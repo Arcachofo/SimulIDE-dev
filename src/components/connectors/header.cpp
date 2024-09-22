@@ -5,11 +5,6 @@
 
 #include "header.h"
 #include "itemlibrary.h"
-//#include "circuitwidget.h"
-//#include "simulator.h"
-//#include "circuit.h"
-//#include "e-node.h"
-//#include "pin.h"
 
 #include "boolprop.h"
 

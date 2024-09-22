@@ -280,7 +280,7 @@ void Simulator::startSim( bool paused )
 
     qDebug() <<"\nStarting Circuit Simulation...\n";
 
-    for( Socket* sock : m_socketList ) sock->updatePins( true );
+    for( Socket* sock : m_socketList ) sock->connectPins( true );
 
     createNodes();
 
