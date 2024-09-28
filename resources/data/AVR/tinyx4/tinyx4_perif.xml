@@ -23,7 +23,7 @@
     <ocunit name="OC0B" pin="PORTA7" ocreg="OCR0B" bits="COM0B0,COM0B1" interrupt="T0COB" />
   </timer>
 
-  <timer name="TIMER1" type="160" configregsA="TCCR1A" configregsB="TCCR1B"
+  <timer name="TIMER1" type="160" configregsA="TCCR1A" configregsB="TCCR1B" configregsC="TCCR1C"
                        counter="TCNT1L,TCNT1H"
                        clockpin="PORTA4"
                        interrupt="T1_OVF"

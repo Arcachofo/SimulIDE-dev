@@ -205,10 +205,31 @@ AvrTimer800::AvrTimer800( eMcu* mcu, QString name)
            : AvrTimer8bit( mcu, name )
 {
     QString n = m_name.right(1);
+    m_FOCA  = getRegBits("FOC"+n+"A", mcu );
+    m_FOCB  = getRegBits("FOC"+n+"B", mcu );
+
     m_WGM10 = getRegBits( "WGM"+n+"0,WGM"+n+"1", mcu );
     m_WGM32 = getRegBits( "WGM"+n+"2", mcu );
 }
 AvrTimer800::~AvrTimer800(){}
+
+void AvrTimer800::configureB( uint8_t newTCCRXB ) // TCCRXB
+{
+    AvrTimer::configureB( newTCCRXB );
+
+    if( m_OCA && getRegBitsBool( newTCCRXB, m_FOCA ) )
+    {
+        m_OCA->comMatch();
+        newTCCRXB &= ~m_FOCA.mask;
+    }
+    if( m_OCB && getRegBitsBool( newTCCRXB, m_FOCB ) )
+    {
+        m_OCB->comMatch();
+        newTCCRXB &= ~m_FOCB.mask;
+    }
+
+    m_mcu->m_regOverride = newTCCRXB;
+}
 
 //--------------------------------------------------
 // TIMER 0 -----------------------------------------
@@ -228,9 +249,9 @@ void AvrTimer801::initialize()
     m_ovfPeriod = m_ovfMatch + 1;
 }
 
-void AvrTimer801::configureA( uint8_t newTCCR0 )
+void AvrTimer801::configureA(uint8_t newTCCRX )
 {
-    uint8_t prIndex = getRegBitsVal( newTCCR0, m_prSelBits ); // CSX0-n
+    uint8_t prIndex = getRegBitsVal( newTCCRX, m_prSelBits ); // CSX0-n
 
     if( prIndex != m_prIndex )
     {
@@ -262,6 +283,9 @@ AvrTimer810::AvrTimer810( eMcu* mcu, QString name)
            : AvrTimer( mcu, name )
 {
     m_maxCount = 0xFF;
+    QString n = m_name.right(1);
+    m_FOCA  = getRegBits("FOC"+n+"A", mcu );
+    m_FOCB  = getRegBits("FOC"+n+"B", mcu );
 
     m_CTC1  = getRegBits( "CTC1", mcu );
     m_PWM1A = getRegBits( "PWM1A", mcu );
@@ -299,6 +323,17 @@ void AvrTimer810::configureB( uint8_t newGTCCR ) // GTCCR
     if( m_OCB ){
         m_OCB->configure( newGTCCR ); // Done in ocunits
         updateOcUnit( m_OCB, pwm );
+
+        if( getRegBitsBool( newGTCCR, m_FOCB ) )
+        {
+            m_OCB->comMatch();
+            newGTCCR &= ~m_FOCB.mask;
+        }
+    }
+    if( m_OCA && getRegBitsBool( newGTCCR, m_FOCA ) )
+    {
+        m_OCA->comMatch();
+        newGTCCR &= ~m_FOCA.mask;
     }
     if( mode != m_mode ){ m_mode = mode; updateMode(); }
 
@@ -354,10 +389,32 @@ AvrTimer820::AvrTimer820( eMcu* mcu, QString name)
            : AvrTimer8bit( mcu, name )
 {
     QString n = m_name.right(1);
+
+    m_FOCA  = getRegBits("FOC"+n+"A", mcu );
+    m_FOCB  = getRegBits("FOC"+n+"B", mcu );
+
     m_WGM10 = getRegBits( "WGM"+n+"0,WGM"+n+"1", mcu );
     m_WGM32 = getRegBits( "WGM"+n+"2", mcu );
 }
 AvrTimer820::~AvrTimer820(){}
+
+void AvrTimer820::configureB( uint8_t newTCCRXB ) // TCCRXB
+{
+    AvrTimer::configureB( newTCCRXB );
+
+    if( m_OCA && getRegBitsBool( newTCCRXB, m_FOCA ) )
+    {
+        m_OCA->comMatch();
+        newTCCRXB &= ~m_FOCA.mask;
+    }
+    if( m_OCB && getRegBitsBool( newTCCRXB, m_FOCB ) )
+    {
+        m_OCB->comMatch();
+        newTCCRXB &= ~m_FOCB.mask;
+    }
+
+    m_mcu->m_regOverride = newTCCRXB;
+}
 
 //--------------------------------------------------
 // TIMER 2 -----------------------------------------
@@ -366,6 +423,9 @@ AvrTimer821::AvrTimer821( eMcu* mcu, QString name)
            : AvrTimer8bit( mcu, name )
 {
     m_wgm32Val = 0;
+
+    QString n = m_name.right(1);
+    m_FOCA = getRegBits("FOC"+n, mcu );
 }
 AvrTimer821::~AvrTimer821(){}
 
@@ -379,6 +439,12 @@ void AvrTimer821::configureA( uint8_t newTCCRx )
                    | (( newTCCRx & 1<<3) >> 2)); // WGM20 WGM21
 
     if( m_wgm10Val != WGM10 ){ m_wgm10Val = WGM10; updtWgm(); }
+
+    if( m_OCA && getRegBitsBool( newTCCRx, m_FOCA ) )
+    {
+        m_OCA->comMatch();
+        m_mcu->m_regOverride = newTCCRx & ~m_FOCA.mask;
+    }
 }
 
 //--------------------------------------------------
@@ -393,6 +459,10 @@ AvrTimer16bit::AvrTimer16bit( eMcu* mcu, QString name )
     m_maxCount = 0xFFFF;
 
     QString n = m_name.right(1);
+    m_FOCA  = getRegBits("FOC"+n+"A", mcu );
+    m_FOCB  = getRegBits("FOC"+n+"B", mcu );
+    m_FOCC  = getRegBits("FOC"+n+"C", mcu );
+
     m_WGM10 = getRegBits( "WGM"+n+"0,WGM"+n+"1", mcu );
     m_WGM32 = getRegBits( "WGM"+n+"2,WGM"+n+"3", mcu );
 
@@ -407,6 +477,27 @@ void AvrTimer16bit::runEvent()            // Overflow
 
     if( m_wgmMode == wgmFAST && m_useICR && m_ICunit ) m_ICunit->getInterrupt()->raise();
     McuTimer::runEvent();
+}
+
+void AvrTimer16bit::configureC( uint8_t newTCCRXC )
+{
+    /// TODO: optimize?
+    if( m_OCA && getRegBitsBool( newTCCRXC, m_FOCA ) )
+    {
+        m_OCA->comMatch();
+        newTCCRXC &= ~m_FOCA.mask;
+    }
+    if( m_OCB && getRegBitsBool( newTCCRXC, m_FOCB ) )
+    {
+        m_OCB->comMatch();
+        newTCCRXC &= ~m_FOCB.mask;
+    }
+    if( m_OCC && getRegBitsBool( newTCCRXC, m_FOCC ) )
+    {
+        m_OCC->comMatch();
+        newTCCRXC &= ~m_FOCC.mask;
+    }
+    m_mcu->m_regOverride = newTCCRXC;
 }
 
 void AvrTimer16bit::updtWgm()

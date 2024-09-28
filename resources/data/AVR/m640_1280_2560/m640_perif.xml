@@ -41,7 +41,8 @@
     <ocunit name="OC0B" pin="PORTG5" ocreg="OCR0B" bits="COM0B0,COM0B1" interrupt="T0COB" />
   </timer>
 
-  <timer name="TIMER1" type="160" counter="TCNT1L,TCNT1H" configregsA="TCCR1A" configregsB="TCCR1B"
+  <timer name="TIMER1" type="160"  configregsA="TCCR1A" configregsB="TCCR1B" configregsC="TCCR1C"
+                       counter="TCNT1L,TCNT1H"
                        clockpin="PORTD6"
                        interrupt="T1_OVF"
                        prescalers="0,1,8,64,256,1024,EXT_F,EXT_R" prselect="CS10,CS11,CS12" >
@@ -60,7 +61,8 @@
     <ocunit name="OC2B" pin="PORTH6" ocreg="OCR2B" bits="COM2B0,COM2B1" interrupt="T2COB" />
   </timer>
 
-  <timer name="TIMER3" type="160" counter="TCNT3L,TCNT3H" configregsA="TCCR3A" configregsB="TCCR3B"
+  <timer name="TIMER3" type="160" configregsA="TCCR3A" configregsB="TCCR3B" configregsC="TCCR31C"
+                       counter="TCNT3L,TCNT3H" 
                        clockpin="PORTE6" 
                        interrupt="T3_OVF"
                        prescalers="0,1,8,64,256,1024,EXT_F,EXT_R" prselect="CS30,CS31,CS32" >
@@ -71,7 +73,8 @@
     <icunit name="IC3"  pin="PORTE7" icreg="ICR3L,ICR3H"   bits="ICES3,ICNC3"   interrupt="T3CAP" />
   </timer>
 
-  <timer name="TIMER4" type="160" counter="TCNT4L,TCNT4H" configregsA="TCCR4A" configregsB="TCCR4B"
+  <timer name="TIMER4" type="160" configregsA="TCCR4A" configregsB="TCCR4B" configregsC="TCCR4C"
+                       counter="TCNT4L,TCNT4H" 
                        clockpin="PORTH7"
                        interrupt="T4_OVF"
                        prescalers="0,1,8,64,256,1024,EXT_F,EXT_R" prselect="CS40,CS41,CS42" >
@@ -82,7 +85,8 @@
     <icunit name="IC4"  pin="PORTL0" icreg="ICR4L,ICR4H"   bits="ICES4,ICNC4"   interrupt="T4CAP" />
   </timer>
 
-  <timer name="TIMER5" type="160" counter="TCNT5L,TCNT5H" configregsA="TCCR5A" configregsB="TCCR5B"
+  <timer name="TIMER5" type="160" configregsA="TCCR5A" configregsB="TCCR5B" configregsC="TCCR5C"
+                       counter="TCNT5L,TCNT5H" 
                        clockpin="PORTL2"
                        interrupt="T5_OVF"
                        prescalers="0,1,8,64,256,1024,EXT_F,EXT_R" prselect="CS50,CS51,CS52">

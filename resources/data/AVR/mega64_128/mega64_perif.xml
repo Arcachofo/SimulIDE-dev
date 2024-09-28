@@ -34,7 +34,7 @@
     <ocunit name="OC0" pin="PORTB4" ocreg="OCR0" bits="COM00,COM01" interrupt="T0CO" />
   </timer>
 
-  <timer name="TIMER1"  type="160" configregsA="TCCR1A" configregsB="TCCR1B"
+  <timer name="TIMER1"  type="160" configregsA="TCCR1A" configregsB="TCCR1B" configregsC="TCCR1C
                         counter="TCNT1L,TCNT1H"
                         clockpin="PORTD6"
                         interrupt="T1_OVF"
@@ -56,7 +56,8 @@
     <ocunit name="OC2" pin="PORTB7" ocreg="OCR2" bits="COM20,COM21" interrupt="T2CO" />
   </timer>
 
-  <timer name="TIMER3" type="160" counter="TCNT3L,TCNT3H" configregsA="TCCR3A" configregsB="TCCR3B"
+  <timer name="TIMER3" type="160" configregsA="TCCR3A" configregsB="TCCR3B" configregsC="TCCR3C"
+                       counter="TCNT3L,TCNT3H" 
                        clockpin="PORTE6"
                        interrupt="T3_OVF"
                        prescalers="0,1,8,64,256,1024,EXT_F,EXT_R" prselect="CS30,CS31,CS32" >

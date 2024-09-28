@@ -22,7 +22,7 @@
                        prselect="CS00,CS01,CS02" >
   </timer>
 
-  <timer name="TIMER1"  type="160" configregsA="TCCR1A" configregsB="TCCR1B"
+  <timer name="TIMER1"  type="160" configregsA="TCCR1A" configregsB="TCCR1B" configregsC="TCCR1C"
                         counter="TCNT1L,TCNT1H"
                         clockpin="PORTD5"
                         interrupt="T1_OVF"

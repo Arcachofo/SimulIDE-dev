@@ -44,6 +44,10 @@ class AvrTimer : public McuTimer
         regBits_t m_WGM10;
         regBits_t m_WGM32;
 
+        regBits_t m_FOCA;
+        regBits_t m_FOCB;
+        regBits_t m_FOCC;
+
         wgmMode_t m_wgmMode;
         uint8_t m_wgm10Val;
         uint8_t m_wgm32Val;
@@ -71,6 +75,8 @@ class AvrTimer800 : public AvrTimer8bit
     public:
         AvrTimer800( eMcu* mcu, QString name );
         ~AvrTimer800();
+
+        virtual void configureB( uint8_t newTCCRXB ) override;
 };
 
 class AvrTimer801 : public McuTimer
@@ -81,7 +87,7 @@ class AvrTimer801 : public McuTimer
 
         virtual void initialize() override;
 
-        virtual void configureA( uint8_t newTCCR0 ) override;
+        virtual void configureA( uint8_t newTCCRX ) override;
 
     protected:
         void configureClock();
@@ -116,6 +122,8 @@ class AvrTimer820 : public AvrTimer8bit
     public:
         AvrTimer820( eMcu* mcu, QString name );
         ~AvrTimer820();
+
+        virtual void configureB( uint8_t newTCCRXB ) override;
 };
 
 class AvrTimer821 : public AvrTimer8bit
@@ -135,6 +143,8 @@ class AvrTimer16bit : public AvrTimer
         ~AvrTimer16bit();
 
         virtual void runEvent() override;
+
+        virtual void configureC( uint8_t newTCCRXC ) override;
 
         virtual void topReg0Changed( uint8_t val ) override;
         void ICRXLchanged( uint8_t val );

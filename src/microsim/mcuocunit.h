@@ -35,6 +35,7 @@ class McuOcUnit : public McuModule, public eElement
         virtual void ocrWriteH( uint8_t val );
         virtual void sheduleEvents( uint32_t ovf, uint32_t countVal, int rot=0 );
         virtual void tov() { drivePin( m_tovAct ); }
+        virtual void comMatch();
 
         virtual void setOcActs( ocAct_t comAct, ocAct_t tovAct );
 
