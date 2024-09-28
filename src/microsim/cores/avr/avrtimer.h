@@ -15,6 +15,8 @@ enum wgmMode_t{
     wgmFAST,
 };
 
+class AvrOcUnit;
+
 class AvrTimer : public McuTimer
 {
     friend class McuCreator;
@@ -46,9 +48,9 @@ class AvrTimer : public McuTimer
         uint8_t m_wgm10Val;
         uint8_t m_wgm32Val;
 
-        McuOcUnit* m_OCA;
-        McuOcUnit* m_OCB;
-        McuOcUnit* m_OCC;
+        AvrOcUnit* m_OCA;
+        AvrOcUnit* m_OCB;
+        AvrOcUnit* m_OCC;
 };
 
 class AvrTimer8bit : public AvrTimer
@@ -143,6 +145,8 @@ class AvrTimer16bit : public AvrTimer
         void setICRX( QString reg );
 
         bool m_useICR;
+
+        uint8_t m_wgmVal;
 
         uint8_t* m_topReg1L;
         uint8_t* m_topReg1H;

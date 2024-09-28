@@ -67,7 +67,7 @@ class McuOcUnit : public McuModule, public eElement
         uint8_t m_mode;
 
         uint16_t m_comMatch;  // counter vale to match a comparation
-        uint16_t m_extMatch;  // counter vale to match a comparation
+        uint16_t m_extMatch;  // counter vale to match a comparation (external clock)
 
         bool m_pinSet;
 };

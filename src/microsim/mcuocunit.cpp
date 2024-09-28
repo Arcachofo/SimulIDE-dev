@@ -41,7 +41,7 @@ void McuOcUnit::clockStep( uint16_t count )
 void McuOcUnit::runEvent()  // Compare match
 {
     m_interrupt->raise();   // Trigger interrupt
-    if( m_enabled ) drivePin( m_comAct, m_timer->psPerTick() );
+    if( m_enabled ) drivePin( m_comAct, m_mcu->psInst() );
 }
 
 void McuOcUnit::drivePin( ocAct_t act, uint64_t time )

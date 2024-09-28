@@ -21,15 +21,15 @@ McuTimer* AvrTimer::createTimer( eMcu* mcu, QString name, int type ) // Static
     else if( type == 821 ) return new AvrTimer821( mcu, name );
     else if( type == 160 ) return new AvrTimer16bit( mcu, name );
 
-    return NULL;
+    return nullptr;
 }
 
 AvrTimer::AvrTimer(  eMcu* mcu, QString name )
         : McuTimer( mcu, name )
 {
-    m_OCA = NULL;
-    m_OCB = NULL;
-    m_OCC = NULL;
+    m_OCA = nullptr;
+    m_OCB = nullptr;
+    m_OCC = nullptr;
 }
 AvrTimer::~AvrTimer(){}
 
@@ -49,10 +49,10 @@ void AvrTimer::addOcUnit( McuOcUnit* ocUnit )
 {
     m_ocUnit.emplace_back( ocUnit );
 
-    if     ( ocUnit->getId().endsWith("A") ) m_OCA = ocUnit;
-    else if( ocUnit->getId().endsWith("B") ) m_OCB = ocUnit;
-    else if( ocUnit->getId().endsWith("C") ) m_OCC = ocUnit;
-    else                                     m_OCA = ocUnit;
+    if     ( ocUnit->getId().endsWith("A") ) m_OCA = (AvrOcUnit*)ocUnit;
+    else if( ocUnit->getId().endsWith("B") ) m_OCB = (AvrOcUnit*)ocUnit;
+    else if( ocUnit->getId().endsWith("C") ) m_OCC = (AvrOcUnit*)ocUnit;
+    else                                     m_OCA = (AvrOcUnit*)ocUnit;
 }
 
 McuOcUnit* AvrTimer::getOcUnit( QString name )
@@ -189,8 +189,7 @@ void AvrTimer8bit::topReg0Changed( uint8_t val )
     if( m_ovfMatch != ovf ){
         m_ovfMatch = ovf;
 
-        if( m_wgmMode == wgmCTC
-         || m_bidirec ) m_ovfPeriod = m_ovfMatch;
+        if( m_bidirec ) m_ovfPeriod = m_ovfMatch;
         else            m_ovfPeriod = m_ovfMatch+1;
 
         m_OCA->ocrWriteL( val );
@@ -324,7 +323,7 @@ void AvrTimer810::updateOcUnit( McuOcUnit* ocUnit, bool pwm )
         }
     }else if( iPin ){
         iPin->controlPin( false, false );
-        ocUnit->setPinInnv( NULL );
+        ocUnit->setPinInnv( nullptr );
     }
 
     if     ( comAct == ocCLR ) tovAct = ocSET;
@@ -370,7 +369,7 @@ AvrTimer821::AvrTimer821( eMcu* mcu, QString name)
 }
 AvrTimer821::~AvrTimer821(){}
 
-void AvrTimer821::configureA(uint8_t newTCCRx )
+void AvrTimer821::configureA( uint8_t newTCCRx )
 {
     if( m_OCA ) m_OCA->configure( newTCCRx ); // COM20 COM21 Done in ocunits
 
@@ -412,28 +411,29 @@ void AvrTimer16bit::runEvent()            // Overflow
 
 void AvrTimer16bit::updtWgm()
 {
-    uint8_t WGM = m_wgm32Val + m_wgm10Val;
+    m_wgmVal = m_wgm32Val + m_wgm10Val;
 
     wgmMode_t mode = wgmNORM;
     uint16_t  ovf  = 0xFFFF;
+    uint16_t mask = 0xFFFF;
     m_useICR = false;
 
-    switch( WGM ){
-        case 1:  mode = wgmPHAS; ovf = 0x00FF;    break; // PWM, Phase Correct, 8-bit
-        case 2:  mode = wgmPHAS; ovf = 0x01FF;    break; // PWM, Phase Correct, 9-bit
-        case 3:  mode = wgmPHAS; ovf = 0x03FF;    break; // PWM, Phase Correct, 10-bit
-        case 4:  mode = wgmCTC;  ovf = OCRXA16;   break; // CTC
-        case 5:  mode = wgmFAST; ovf = 0x00FF;    break; // Fast PWM, 8-bit
-        case 6:  mode = wgmFAST; ovf = 0x01FF;    break; // Fast PWM, 9-bit
-        case 7:  mode = wgmFAST; ovf = 0x03FF;    break; // Fast PWM, 10-bit
-        case 8:  mode = wgmPHAS; m_useICR = true; break; // PWM, Phase and Frequency Correct
-        case 9:  mode = wgmPHAS; ovf = OCRXA16;   break; // PWM, Phase and Frequency Correct
-        case 10: mode = wgmPHAS; m_useICR = true; break; // PWM, Phase Correct
-        case 11: mode = wgmPHAS; ovf = OCRXA16;   break; // PWM, Phase Correct
-        case 12: mode = wgmCTC;  m_useICR = true; break; // CTC
-        case 13:                                  break; // (Reserved)
-        case 14: mode = wgmFAST; m_useICR = true; break; // Fast PWM ICRX
-        case 15: mode = wgmFAST; ovf = OCRXA16;   break; // Fast PWM OCRXA
+    switch( m_wgmVal ){
+        case 1:  mode = wgmPHAS; ovf = mask = 0x00FF; break; // PWM, Phase Correct, 8-bit
+        case 2:  mode = wgmPHAS; ovf = mask = 0x01FF; break; // PWM, Phase Correct, 9-bit
+        case 3:  mode = wgmPHAS; ovf = mask = 0x03FF; break; // PWM, Phase Correct, 10-bit
+        case 4:  mode = wgmCTC;  ovf = OCRXA16;       break; // CTC
+        case 5:  mode = wgmFAST; ovf = mask = 0x00FF; break; // Fast PWM, 8-bit
+        case 6:  mode = wgmFAST; ovf = mask = 0x01FF; break; // Fast PWM, 9-bit
+        case 7:  mode = wgmFAST; ovf = mask = 0x03FF; break; // Fast PWM, 10-bit
+        case 8:  mode = wgmPHAS; m_useICR = true;     break; // PWM, Phase and Frequency Correct
+        case 9:  mode = wgmPHAS; ovf = OCRXA16;       break; // PWM, Phase and Frequency Correct
+        case 10: mode = wgmPHAS; m_useICR = true;     break; // PWM, Phase Correct
+        case 11: mode = wgmPHAS; ovf = OCRXA16;       break; // PWM, Phase Correct
+        case 12: mode = wgmCTC;  m_useICR = true;     break; // CTC
+        case 13:                                      break; // (Reserved)
+        case 14: mode = wgmFAST; m_useICR = true;     break; // Fast PWM ICRX
+        case 15: mode = wgmFAST; ovf = OCRXA16;       break; // Fast PWM OCRXA
     }
     if( m_useICR ) ovf = ICRX16;
     if( m_ICunit ) m_ICunit->enable( !m_useICR );
@@ -441,10 +441,15 @@ void AvrTimer16bit::updtWgm()
     m_wgmMode = mode;
     if( m_wgmMode != wgmPHAS ) m_reverse = false;
 
-    bool shedule = m_ovfMatch != ovf;
+    if( m_OCA ) m_OCA->setOcrMask( mask );
+    if( m_OCB ) m_OCB->setOcrMask( mask );
+    if( m_OCC ) m_OCC->setOcrMask( mask );
+
+    bool shedule = (m_ovfMatch != ovf);
     m_ovfMatch = ovf;
     bool wgm3 = (m_wgm32Val & 1<<3)==0;
     configureOcUnits( wgm3 );
+
     if( shedule ) sheduleEvents();
 }
 
@@ -453,6 +458,8 @@ void AvrTimer16bit::topReg0Changed( uint8_t val )
     if( *m_topReg0L == val ) return;
     *m_topReg0L = val;
     updtWgm();
+
+
     m_OCA->ocrWriteL( val );
 }
 

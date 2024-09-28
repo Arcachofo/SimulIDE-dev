@@ -16,10 +16,17 @@ class AvrOcUnit : public McuOcUnit
         AvrOcUnit( eMcu* mcu, QString name );
         ~AvrOcUnit();
 
+        virtual void initialize() override;
         virtual void configure( uint8_t val ) override;
+        virtual void ocrWriteL( uint8_t val ) override;
+        virtual void ocrWriteH( uint8_t val ) override;
+
+        void setOcrMask( uint16_t mask );
 
     protected:
         virtual void setPinSate( bool state, uint64_t time ) override;
+
+        uint16_t m_OCRXmask;
 };
 
 #endif
