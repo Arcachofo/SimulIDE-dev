@@ -13,28 +13,32 @@
 PicTwi::PicTwi( eMcu* mcu, QString name )
       : McuTwi( mcu, name )
 {
+}
+PicTwi::~PicTwi(){}
+
+void PicTwi::setup()
+{
     m_sleepMode = 0xFF;
 
     // SSPCON
-    m_WCOL    = getRegBits("WCOL"   , mcu );
+    m_WCOL    = getRegBits("WCOL"   , m_mcu );
 
     // SSPCON2
-    m_CGEN    = getRegBits("CGEN"   , mcu );
-    m_ACKSTAT = getRegBits("ACKSTAT", mcu );
-    m_ACKDT   = getRegBits("ACKDT"  , mcu );
-    m_ACKEN   = getRegBits("ACKEN"  , mcu );
-    m_RCEN    = getRegBits("RCEN"   , mcu );
-    m_PEN     = getRegBits("PEN"    , mcu );
-    m_RSEN    = getRegBits("RSEN"   , mcu );
-    m_SEN     = getRegBits("SEN"    , mcu );
+    m_CGEN    = getRegBits("CGEN"   , m_mcu );
+    m_ACKSTAT = getRegBits("ACKSTAT", m_mcu );
+    m_ACKDT   = getRegBits("ACKDT"  , m_mcu );
+    m_ACKEN   = getRegBits("ACKEN"  , m_mcu );
+    m_RCEN    = getRegBits("RCEN"   , m_mcu );
+    m_PEN     = getRegBits("PEN"    , m_mcu );
+    m_RSEN    = getRegBits("RSEN"   , m_mcu );
+    m_SEN     = getRegBits("SEN"    , m_mcu );
 
     //SSPSTAT
-    m_P  = getRegBits("P" , mcu );
-    m_S  = getRegBits("S" , mcu );
-    m_RW = getRegBits("RW", mcu );
-    m_BF = getRegBits("BF", mcu );
+    m_P  = getRegBits("P" , m_mcu );
+    m_S  = getRegBits("S" , m_mcu );
+    m_RW = getRegBits("RW", m_mcu );
+    m_BF = getRegBits("BF", m_mcu );
 }
-PicTwi::~PicTwi(){}
 
 void PicTwi::initialize()
 {

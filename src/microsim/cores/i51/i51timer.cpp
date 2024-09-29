@@ -15,20 +15,21 @@
 I51Timer::I51Timer( eMcu* mcu, QString name)
         : McuTimer( mcu, name )
 {
+}
+I51Timer::~I51Timer(){}
+
+void I51Timer::setup()
+{
     QString n = m_name.right(1);
-    m_TxM  = getRegBits( "T"+n+"M0,T"+n+"M1", mcu );
-    m_CTx  = getRegBits( "C/T"+n, mcu );
-    m_GATE = getRegBits( "GATE"+n, mcu );
+    m_TxM  = getRegBits("T"+n+"M0,T"+n+"M1", m_mcu );
+    m_CTx  = getRegBits("C/T"+n, m_mcu );
+    m_GATE = getRegBits("GATE"+n, m_mcu );
 
     m_trEnabled = false;
-    if( n == "0" ) m_gatePin = mcu->getMcuPin("P32");
-    else if( n == "1" ) m_gatePin = mcu->getMcuPin("P33");
-    else m_gatePin = NULL;
-    //Ensure gate pin ok;
-    Q_ASSERT( m_gatePin != NULL );
+    if     ( n == "0" ) m_gatePin = m_mcu->getMcuPin("P32");
+    else if( n == "1" ) m_gatePin = m_mcu->getMcuPin("P33");
+    else                m_gatePin = nullptr;
 }
-
-I51Timer::~I51Timer(){}
 
 void I51Timer::initialize()
 {

@@ -52,6 +52,8 @@ class eMcu : public DataSpace, public eIou
 
  static eMcu* self() { return m_pSelf; }
 
+        void setup();
+
         virtual void stamp() override;
         virtual void voltChanged() override;
         virtual void runEvent() override;

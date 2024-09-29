@@ -13,14 +13,18 @@
 AvrSleep::AvrSleep( eMcu* mcu, QString name )
         : McuSleep( mcu, name )
 {
-    m_SM = getRegBits( "SM0,SM1,SM2", mcu );
-    m_SE = getRegBits( "SE", mcu );
+}
+AvrSleep::~AvrSleep(){}
+
+void AvrSleep::setup()
+{
+    m_SM = getRegBits("SM0,SM1,SM2", m_mcu );
+    m_SE = getRegBits("SE", m_mcu );
 
     //Interrupt* inte = NULL;
 
     //m_wakeUps.emplace_back( m_mcu->watchDog()->getInterrupt() );
 }
-AvrSleep::~AvrSleep(){}
 
 void AvrSleep::initialize()
 {

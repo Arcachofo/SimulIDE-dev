@@ -28,8 +28,8 @@ class McuOcUnit : public McuModule, public eElement
         McuOcUnit( eMcu* mcu, QString name );
          ~McuOcUnit();
 
-        virtual void initialize();
-        virtual void runEvent();
+        virtual void initialize() override;
+        virtual void runEvent() override;
         virtual void configure( uint8_t ){;}
         virtual void ocrWriteL( uint8_t val );
         virtual void ocrWriteH( uint8_t val );

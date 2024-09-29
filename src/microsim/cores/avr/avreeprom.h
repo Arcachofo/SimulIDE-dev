@@ -16,6 +16,7 @@ class AvrEeprom : public McuEeprom
         AvrEeprom( eMcu* mcu, QString name );
         ~AvrEeprom();
 
+        virtual void setup() override;
         virtual void initialize() override;
         virtual void runEvent() override;
 

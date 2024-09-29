@@ -14,6 +14,8 @@ class PicComp : public McuComp
         PicComp( eMcu* mcu, QString name );
         ~PicComp();
 
+        virtual void setup() override;
+
         virtual void initialize() override;
         virtual void voltChanged() override;
 
@@ -34,6 +36,8 @@ class PicComp0 : public PicComp
         PicComp0( eMcu* mcu, QString name );
         ~PicComp0();
 
+        virtual void setup() override;
+
         virtual void configureA( uint8_t newCMCON ) override;
 
     protected:
@@ -49,8 +53,10 @@ class PicComp01 : public PicComp0
         PicComp01( eMcu* mcu, QString name );
         ~PicComp01();
 
+        virtual void setup() override;
+
     protected:
-        virtual void setMode( uint8_t mode );
+        virtual void setMode( uint8_t mode ) override;
 };
 
 class PicComp02 : public PicComp0
@@ -59,8 +65,10 @@ class PicComp02 : public PicComp0
         PicComp02( eMcu* mcu, QString name );
         ~PicComp02();
 
+        virtual void setup() override;
+
     protected:
-        virtual void setMode( uint8_t mode );
+        virtual void setMode( uint8_t mode ) override;
 };
 
 class PicComp03 : public PicComp0
@@ -69,8 +77,10 @@ class PicComp03 : public PicComp0
         PicComp03( eMcu* mcu, QString name );
         ~PicComp03();
 
+        virtual void setup() override;
+
     protected:
-        virtual void setMode( uint8_t mode );
+        virtual void setMode( uint8_t mode ) override;
 };
 
 
@@ -79,6 +89,9 @@ class PicComp1 : public PicComp
     public:
         PicComp1( eMcu* mcu, QString name );
         ~PicComp1();
+
+        virtual void setup() override;
+
         virtual void configureA( uint8_t newCMxCON0 ) override;
 
     protected:

@@ -25,6 +25,7 @@ class AvrAdc : public McuAdc
 
  static AvrAdc* createAdc( eMcu* mcu, QString name, int type );
 
+        virtual void setup() override;
         virtual void initialize() override;
 
         virtual void configureA( uint8_t newADCSRA ) override;
@@ -85,6 +86,8 @@ class AvrAdc00 : public AvrAdc
         AvrAdc00( eMcu* mcu, QString name );
         ~AvrAdc00();
 
+        virtual void setup() override;
+
     protected:
         virtual void autotriggerConf() override;
         virtual void updtVref() override;
@@ -96,6 +99,8 @@ class AvrAdc02 : public AvrAdc00
         AvrAdc02( eMcu* mcu, QString name );
         ~AvrAdc02();
 
+        virtual void setup() override;
+
     protected:
         virtual void updtVref() override;
 };
@@ -105,6 +110,8 @@ class AvrAdc03 : public AvrAdc00
     public:
         AvrAdc03( eMcu* mcu, QString name );
         ~AvrAdc03();
+
+        virtual void setup() override;
 
         virtual void startConversion() override;
 
@@ -117,6 +124,8 @@ class AvrAdc04 : public AvrAdc03
     public:
         AvrAdc04( eMcu* mcu, QString name );
         ~AvrAdc04();
+
+        virtual void setup() override;
 
         virtual void configureB( uint8_t newADCSRB ) override;
 
@@ -132,6 +141,8 @@ class AvrAdc10 : public AvrAdc
         AvrAdc10( eMcu* mcu, QString name );
         ~AvrAdc10();
 
+        virtual void setup() override;
+
     protected:
         virtual void autotriggerConf() override;
         virtual void updtVref() override;
@@ -145,6 +156,8 @@ class AvrAdc11 : public AvrAdc10
         AvrAdc11( eMcu* mcu, QString name );
         ~AvrAdc11();
 
+        virtual void setup() override;
+
     protected:
         virtual void updtVref() override;
 };
@@ -155,6 +168,8 @@ class AvrAdc20 : public AvrAdc
     public:
         AvrAdc20( eMcu* mcu, QString name );
         ~AvrAdc20();
+
+        virtual void setup() override;
 
         virtual void configureB( uint8_t newSFIOR ) override;
 

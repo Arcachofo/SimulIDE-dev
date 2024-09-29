@@ -27,6 +27,7 @@ class AvrSleep : public McuSleep
         AvrSleep( eMcu* mcu, QString name );
         ~AvrSleep();
 
+        virtual void setup() override;
         virtual void initialize() override;
         virtual void configureA( uint8_t newVal ) override;
 

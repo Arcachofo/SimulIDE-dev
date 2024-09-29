@@ -14,6 +14,7 @@ class PicWdt : public McuWdt
         PicWdt( eMcu* mcu, QString name );
         ~PicWdt();
 
+        virtual void setup() override;
         virtual void initialize() override;
         virtual void runEvent() override;
 

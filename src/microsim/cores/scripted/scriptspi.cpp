@@ -16,7 +16,7 @@ ScriptSpi::ScriptSpi( eMcu* mcu, QString name )
          : McuSpi( mcu, name )
          , ScriptPerif( name )
 {
-    m_byteReceived = NULL;
+    m_byteReceived = nullptr;
 
     m_type = "SPI";
 

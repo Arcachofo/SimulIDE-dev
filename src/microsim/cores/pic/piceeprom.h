@@ -16,6 +16,7 @@ class PicEeprom : public McuEeprom
         PicEeprom( eMcu* mcu, QString name );
         ~PicEeprom();
 
+        virtual void setup() override;
         virtual void initialize() override;
         virtual void runEvent() override;
 

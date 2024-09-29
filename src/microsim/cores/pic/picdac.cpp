@@ -14,20 +14,24 @@
 PicDac::PicDac( eMcu* mcu, QString name )
       : McuDac( mcu, name )
 {
-    m_dacReg = NULL;
-    m_outPin = NULL;
-
-    m_DACEN  = getRegBits( "DACEN", mcu );
-    m_DACLPS = getRegBits( "DACLPS", mcu );
-    m_DACOE  = getRegBits( "DACOE", mcu );
-    m_DACPSS = getRegBits( "DACPSS0,DACPSS1", mcu );
-    m_DACNSS = getRegBits( "DACNSS", mcu );
-
-    m_DACR = getRegBits( "DACR0,DACR1,DACR2,DACR3,DACR4", mcu );
-
-    m_fvr = (PicVrefE*)mcu->vrefModule();
 }
 PicDac::~PicDac(){}
+
+void PicDac::setup()
+{
+    m_dacReg = nullptr;
+    m_outPin = nullptr;
+
+    m_DACEN  = getRegBits("DACEN", m_mcu );
+    m_DACLPS = getRegBits("DACLPS", m_mcu );
+    m_DACOE  = getRegBits("DACOE", m_mcu );
+    m_DACPSS = getRegBits("DACPSS0,DACPSS1", m_mcu );
+    m_DACNSS = getRegBits("DACNSS", m_mcu );
+
+    m_DACR = getRegBits("DACR0,DACR1,DACR2,DACR3,DACR4", m_mcu );
+
+    m_fvr = (PicVrefE*)m_mcu->vrefModule();
+}
 
 void PicDac::initialize()
 {

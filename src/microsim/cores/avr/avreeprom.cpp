@@ -16,13 +16,17 @@
 AvrEeprom::AvrEeprom( eMcu* mcu, QString name )
          : McuEeprom( mcu, name )
 {
-    m_EECR  = mcu->getReg( "EECR" );
-    m_EEPM  = getRegBits( "EEPM0, EEPM1", mcu );
-    m_EEMPE = getRegBits( "EEMPE", mcu );
-    m_EEPE  = getRegBits( "EEPE", mcu );
-    m_EERE  = getRegBits( "EERE", mcu );
 }
 AvrEeprom::~AvrEeprom(){}
+
+void AvrEeprom::setup()
+{
+    m_EECR  = m_mcu->getReg( "EECR" );
+    m_EEPM  = getRegBits( "EEPM0, EEPM1", m_mcu );
+    m_EEMPE = getRegBits( "EEMPE", m_mcu );
+    m_EEPE  = getRegBits( "EEPE", m_mcu );
+    m_EERE  = getRegBits( "EERE", m_mcu );
+}
 
 void AvrEeprom::initialize()
 {

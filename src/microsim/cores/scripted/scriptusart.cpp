@@ -18,8 +18,8 @@ ScriptUsart::ScriptUsart( eMcu* mcu, QString name, int number )
 {
     m_name = name;
 
-    m_byteReceived = NULL;
-    m_frameSent = NULL;
+    m_byteReceived = nullptr;
+    m_frameSent = nullptr;
 
     m_type = "Uart";
 

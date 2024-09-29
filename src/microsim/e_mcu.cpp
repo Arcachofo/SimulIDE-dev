@@ -59,6 +59,11 @@ eMcu::~eMcu()
     if( m_pSelf == this ) m_pSelf = NULL;
 }
 
+void eMcu::setup()
+{
+    for( McuModule* module : m_modules ) module->setup();
+}
+
 void eMcu::reset()
 {
     m_component->crash( false );

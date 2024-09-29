@@ -14,6 +14,7 @@ class I51Timer : public McuTimer
         I51Timer( eMcu* mcu, QString name );
         ~I51Timer();
 
+        virtual void setup() override;
         virtual void voltChanged() override;
 
         virtual void enable( uint8_t en ) override;

@@ -21,10 +21,13 @@ PicOcUnit::PicOcUnit( eMcu* mcu, QString name )
 {
     m_enhanced = name.contains("+");
     m_resetTimer = false;
-
-    m_GODO = getRegBits( "GO/DONE", mcu );
 }
 PicOcUnit::~PicOcUnit( ){}
+
+void PicOcUnit::setup()
+{
+    m_GODO = getRegBits("GO/DONE", m_mcu );
+}
 
 void PicOcUnit::runEvent()  // Compare match
 {
@@ -147,12 +150,16 @@ void PicPwmUnit::ocrWriteL( uint8_t val ) // CCPRxL
 PicPwmUnit00::PicPwmUnit00( eMcu* mcu, QString name )
             : PicPwmUnit( mcu, name )
 {
-    QString n = name.right(1); // name="PWM+2" => n="2"
-
-    m_DCxB  = getRegBits( "DC"+n+"B0,DC"+n+"B1", mcu );
-    if( m_enhanced ) m_PxM = getRegBits( "P"+n+"M0,P"+n+"M1", mcu );
 }
 PicPwmUnit00::~PicPwmUnit00( ){}
+
+void PicPwmUnit00::setup()
+{
+    QString n = m_name.right(1); // name="PWM+2" => n="2"
+
+    m_DCxB  = getRegBits("DC"+n+"B0,DC"+n+"B1", m_mcu );
+    if( m_enhanced ) m_PxM = getRegBits("P"+n+"M0,P"+n+"M1", m_mcu );
+}
 
 //------------------------------------------------------
 //-- PIC 16f627 PWM Unit -------------------------------
@@ -160,10 +167,13 @@ PicPwmUnit00::~PicPwmUnit00( ){}
 PicPwmUnit01::PicPwmUnit01( eMcu* mcu, QString name )
             : PicPwmUnit( mcu, name )
 {
-    QString n = name.right(1); // name="PWM+2" => n="2"
-
-    m_DCxB  = getRegBits( "CCP"+n+"Y,CCP"+n+"X", mcu );
-    //if( m_enhanced ) m_PxM = getRegBits( "P"+n+"M0,P"+n+"M1", mcu );
 }
 PicPwmUnit01::~PicPwmUnit01( ){}
 
+void PicPwmUnit01::setup()
+{
+    QString n = m_name.right(1); // name="PWM+2" => n="2"
+
+    m_DCxB  = getRegBits( "CCP"+n+"Y,CCP"+n+"X", m_mcu );
+    //if( m_enhanced ) m_PxM = getRegBits( "P"+n+"M0,P"+n+"M1", mcu );
+}

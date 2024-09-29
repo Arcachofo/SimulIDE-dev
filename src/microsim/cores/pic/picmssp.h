@@ -21,6 +21,7 @@ class PicMssp : public McuModule, public eElement
         PicMssp( eMcu* mcu, QString name, int type );
         ~PicMssp();
 
+        virtual void setup() override;
         virtual void initialize() override;
 
         virtual void configureA( uint8_t SSPCON ) override;

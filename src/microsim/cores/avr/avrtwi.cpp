@@ -12,22 +12,26 @@
 AvrTwi::AvrTwi( eMcu* mcu, QString name )
       : McuTwi( mcu, name )
 {
+}
+AvrTwi::~AvrTwi(){}
+
+void AvrTwi::setup()
+{
     QString n = m_name.right(1);
     bool ok = false;
     n.toInt( &ok );
     if( !ok ) n = "";
 
-    m_TWCR = mcu->getReg( "TWCR"+n );
-    //m_TWSR = mcu->getReg( "TWSR" );
+    m_TWCR = m_mcu->getReg("TWCR"+n );
+    //m_TWSR = m_mcu->getReg( "TWSR" );
 
-    m_TWEN  = getRegBits( "TWEN"+n , mcu );
-    m_TWWC  = getRegBits( "TWWC"+n , mcu );
-    m_TWSTO = getRegBits( "TWSTO"+n, mcu );
-    m_TWSTA = getRegBits( "TWSTA"+n, mcu );
-    m_TWEA  = getRegBits( "TWEA"+n , mcu );
-    m_TWINT = getRegBits( "TWINT"+n, mcu );
+    m_TWEN  = getRegBits("TWEN"+n , m_mcu );
+    m_TWWC  = getRegBits("TWWC"+n , m_mcu );
+    m_TWSTO = getRegBits("TWSTO"+n, m_mcu );
+    m_TWSTA = getRegBits("TWSTA"+n, m_mcu );
+    m_TWEA  = getRegBits("TWEA"+n , m_mcu );
+    m_TWINT = getRegBits("TWINT"+n, m_mcu );
 }
-AvrTwi::~AvrTwi(){}
 
 void AvrTwi::initialize()
 {

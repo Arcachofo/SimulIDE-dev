@@ -15,21 +15,25 @@ AvrWdt* AvrWdt::createWdt( eMcu* mcu, QString name )
     switch ( type ){
         case 00: return new AvrWdt00( mcu, name ); break;
         case 01: return new AvrWdt01( mcu, name ); break;
-        default: return NULL;
+        default: return nullptr;
 }   }
 
 AvrWdt::AvrWdt( eMcu* mcu, QString name )
       : McuWdt( mcu, name )
 {
-    //m_WDTCSR = mcu->getReg( "WDTCSR" );
-
-    m_WDCE = getRegBits( "WDCE", mcu );
-    m_WDE  = getRegBits( "WDE", mcu );
-    m_WDP02 = getRegBits( "WDP0,WDP1,WDP2", mcu );
-
-    m_WDRF = getRegBits( "WDRF", mcu );
 }
 AvrWdt::~AvrWdt(){}
+
+void AvrWdt::setup()
+{
+    //m_WDTCSR = m_mcu->getReg( "WDTCSR" );
+
+    m_WDCE = getRegBits("WDCE", m_mcu );
+    m_WDE  = getRegBits("WDE", m_mcu );
+    m_WDP02 = getRegBits("WDP0,WDP1,WDP2", m_mcu );
+
+    m_WDRF = getRegBits("WDRF", m_mcu );
+}
 
 void AvrWdt::initialize()
 {
@@ -116,13 +120,19 @@ void AvrWdt::reset()
 AvrWdt00::AvrWdt00( eMcu* mcu, QString name )
         : AvrWdt( mcu, name )
 {
-    m_clkPeriod = 8.192*1e12; // 1048576 cycles * 7812500 ps (128 KHz)
-
-    m_WDIF = getRegBits( "WDIF", mcu );
-    m_WDIE = getRegBits( "WDIE", mcu );
-    m_WDP3 = getRegBits( "WDP3", mcu );
 }
 AvrWdt00::~AvrWdt00(){}
+
+void AvrWdt00::setup()
+{
+    AvrWdt::setup();
+
+    m_clkPeriod = 8.192*1e12; // 1048576 cycles * 7812500 ps (128 KHz)
+
+    m_WDIF = getRegBits("WDIF", m_mcu );
+    m_WDIE = getRegBits("WDIE", m_mcu );
+    m_WDP3 = getRegBits("WDP3", m_mcu );
+}
 
 void AvrWdt00::configureA( uint8_t newWDTCSR ) // WDTCSR Written
 {

@@ -14,6 +14,7 @@ class PicVref : public McuVref
         PicVref( eMcu* mcu, QString name );
         ~PicVref();
 
+        virtual void setup() override;
         virtual void initialize() override;
 
         virtual void configureA( uint8_t newVRCON ) override;
@@ -35,6 +36,8 @@ class PicVrefE : public McuVref
     public:
         PicVrefE( eMcu* mcu, QString name );
         ~PicVrefE();
+
+        virtual void setup() override;
 
         virtual void configureA( uint8_t newFVRCON ) override;
 

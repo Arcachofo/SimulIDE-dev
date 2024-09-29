@@ -15,6 +15,7 @@ class AvrComp : public McuComp
         AvrComp( eMcu* mcu, QString name );
         ~AvrComp();
 
+        virtual void setup() override;
         virtual void initialize() override;
         virtual void voltChanged() override;
 

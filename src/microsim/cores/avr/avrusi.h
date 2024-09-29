@@ -21,6 +21,7 @@ class AvrUsi : public McuModule, public eElement
         AvrUsi( eMcu* mcu, QString name );
         ~AvrUsi();
 
+        virtual void setup() override;
         virtual void reset() override;
         virtual void voltChanged() override;
 

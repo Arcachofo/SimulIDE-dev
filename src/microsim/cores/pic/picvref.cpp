@@ -11,12 +11,16 @@
 PicVref::PicVref( eMcu* mcu, QString name )
        : McuVref( mcu, name )
 {
-    m_VREN = getRegBits("VREN", mcu );
-    m_VROE = getRegBits("VROE", mcu );
-    m_VRR  = getRegBits("VRR" , mcu );
-    m_VR   = getRegBits("VR0,VR1,VR2,VR3", mcu );
 }
 PicVref::~PicVref(){}
+
+void PicVref::setup()
+{
+    m_VREN = getRegBits("VREN", m_mcu );
+    m_VROE = getRegBits("VROE", m_mcu );
+    m_VRR  = getRegBits("VRR" , m_mcu );
+    m_VR   = getRegBits("VR0,VR1,VR2,VR3", m_mcu );
+}
 
 void PicVref::initialize()
 {
@@ -72,11 +76,15 @@ void PicVref::configureA( uint8_t newVRCON )
 PicVrefE::PicVrefE( eMcu* mcu, QString name )
         : McuVref( mcu, name )
 {
-    m_FVREN  = getRegBits("FVREN", mcu );
-    m_ADFVR  = getRegBits("ADFVR0,ADFVR1", mcu );   // ADC Vref
-    m_CDAFVR = getRegBits("CDAFVR0,CDAFVR1", mcu ); // DAC Vref
 }
 PicVrefE::~PicVrefE(){}
+
+void PicVrefE::setup()
+{
+    m_FVREN  = getRegBits("FVREN", m_mcu );
+    m_ADFVR  = getRegBits("ADFVR0,ADFVR1", m_mcu );   // ADC Vref
+    m_CDAFVR = getRegBits("CDAFVR0,CDAFVR1", m_mcu ); // DAC Vref
+}
 
 void PicVrefE::configureA( uint8_t newFVRCON )
 {

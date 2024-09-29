@@ -18,6 +18,7 @@ class PicTwi : public McuTwi
         PicTwi( eMcu* mcu, QString name );
         ~PicTwi();
 
+        virtual void setup() override;
         virtual void initialize() override;
 
         virtual void configureA( uint8_t newSSPCON ) override;

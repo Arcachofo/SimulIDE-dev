@@ -32,9 +32,13 @@
 AvrIntOsc::AvrIntOsc( eMcu* mcu, QString name )
          : McuIntOsc( mcu, name )
 {
-    m_CLKPS = getRegBits("CLKPS0,CLKPS1,CLKPS2,CLKPS3", mcu );
 }
 AvrIntOsc::~AvrIntOsc(){}
+
+void AvrIntOsc::setup()
+{
+    m_CLKPS = getRegBits("CLKPS0,CLKPS1,CLKPS2,CLKPS3", m_mcu );
+}
 
 void AvrIntOsc::reset()
 {

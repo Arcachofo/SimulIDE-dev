@@ -13,10 +13,14 @@ PicMssp::PicMssp( eMcu* mcu, QString name, int type )
        : McuModule( mcu, name )
        , eElement( name )
 {
-    m_SSPMx = getRegBits( "SSPM0,SSPM1,SSPM2,SSPM3", mcu );
-    m_SSPEN = getRegBits( "SSPEN", mcu );
 }
 PicMssp::~PicMssp(){}
+
+void PicMssp::setup()
+{
+    m_SSPMx = getRegBits( "SSPM0,SSPM1,SSPM2,SSPM3", m_mcu );
+    m_SSPEN = getRegBits( "SSPEN", m_mcu );
+}
 
 void PicMssp::initialize()
 {

@@ -14,6 +14,7 @@ class AvrIntOsc : public McuIntOsc
         AvrIntOsc(eMcu* mcu, QString name );
         virtual ~AvrIntOsc();
 
+        virtual void setup() override;
         virtual void reset() override;
 
         virtual void configureA(uint8_t newCLKPR) override;

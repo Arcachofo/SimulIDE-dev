@@ -17,6 +17,8 @@ class PicUsart : public McuUsart
         PicUsart( eMcu* mcu, QString name, int number );
         ~PicUsart();
 
+        virtual void setup() override;
+
         virtual void configureA( uint8_t newTXSTA ) override;
         virtual void configureB( uint8_t newRCSTA ) override;
 

@@ -204,14 +204,18 @@ void AvrTimer8bit::topReg0Changed( uint8_t val )
 AvrTimer800::AvrTimer800( eMcu* mcu, QString name)
            : AvrTimer8bit( mcu, name )
 {
-    QString n = m_name.right(1);
-    m_FOCA  = getRegBits("FOC"+n+"A", mcu );
-    m_FOCB  = getRegBits("FOC"+n+"B", mcu );
-
-    m_WGM10 = getRegBits( "WGM"+n+"0,WGM"+n+"1", mcu );
-    m_WGM32 = getRegBits( "WGM"+n+"2", mcu );
 }
 AvrTimer800::~AvrTimer800(){}
+
+void AvrTimer800::setup()
+{
+    QString n = m_name.right(1);
+    m_FOCA  = getRegBits("FOC"+n+"A", m_mcu );
+    m_FOCB  = getRegBits("FOC"+n+"B", m_mcu );
+
+    m_WGM10 = getRegBits("WGM"+n+"0,WGM"+n+"1", m_mcu );
+    m_WGM32 = getRegBits("WGM"+n+"2", m_mcu );
+}
 
 void AvrTimer800::configureB( uint8_t newTCCRXB ) // TCCRXB
 {
@@ -282,20 +286,24 @@ void AvrTimer801::configureClock() // This Timer is not derived from AvrTimer
 AvrTimer810::AvrTimer810( eMcu* mcu, QString name)
            : AvrTimer( mcu, name )
 {
-    m_maxCount = 0xFF;
-    QString n = m_name.right(1);
-    m_FOCA  = getRegBits("FOC"+n+"A", mcu );
-    m_FOCB  = getRegBits("FOC"+n+"B", mcu );
-
-    m_CTC1  = getRegBits( "CTC1", mcu );
-    m_PWM1A = getRegBits( "PWM1A", mcu );
-    m_PWM1B = getRegBits( "PWM1B", mcu );
-    m_PSR1  = getRegBits( "PSR1", mcu );
-
-    m_oc1AiPin = mcu->getMcuPin("PORTB0");
-    m_oc1BiPin = mcu->getMcuPin("PORTB3");
 }
 AvrTimer810::~AvrTimer810(){}
+
+void AvrTimer810::setup()
+{
+    m_maxCount = 0xFF;
+    QString n = m_name.right(1);
+    m_FOCA  = getRegBits("FOC"+n+"A", m_mcu );
+    m_FOCB  = getRegBits("FOC"+n+"B", m_mcu );
+
+    m_CTC1  = getRegBits( "CTC1" , m_mcu );
+    m_PWM1A = getRegBits( "PWM1A", m_mcu );
+    m_PWM1B = getRegBits( "PWM1B", m_mcu );
+    m_PSR1  = getRegBits( "PSR1" , m_mcu );
+
+    m_oc1AiPin = m_mcu->getMcuPin("PORTB0");
+    m_oc1BiPin = m_mcu->getMcuPin("PORTB3");
+}
 
 void AvrTimer810::configureA( uint8_t newTCCR1 ) // TCCR1
 {
@@ -388,15 +396,19 @@ void AvrTimer810::topReg0Changed( uint8_t val )
 AvrTimer820::AvrTimer820( eMcu* mcu, QString name)
            : AvrTimer8bit( mcu, name )
 {
-    QString n = m_name.right(1);
-
-    m_FOCA  = getRegBits("FOC"+n+"A", mcu );
-    m_FOCB  = getRegBits("FOC"+n+"B", mcu );
-
-    m_WGM10 = getRegBits( "WGM"+n+"0,WGM"+n+"1", mcu );
-    m_WGM32 = getRegBits( "WGM"+n+"2", mcu );
 }
 AvrTimer820::~AvrTimer820(){}
+
+void AvrTimer820::setup()
+{
+    QString n = m_name.right(1);
+
+    m_FOCA  = getRegBits("FOC"+n+"A", m_mcu );
+    m_FOCB  = getRegBits("FOC"+n+"B", m_mcu );
+
+    m_WGM10 = getRegBits( "WGM"+n+"0,WGM"+n+"1", m_mcu );
+    m_WGM32 = getRegBits( "WGM"+n+"2", m_mcu );
+}
 
 void AvrTimer820::configureB( uint8_t newTCCRXB ) // TCCRXB
 {
@@ -422,12 +434,16 @@ void AvrTimer820::configureB( uint8_t newTCCRXB ) // TCCRXB
 AvrTimer821::AvrTimer821( eMcu* mcu, QString name)
            : AvrTimer8bit( mcu, name )
 {
+}
+AvrTimer821::~AvrTimer821(){}
+
+void AvrTimer821::setup()
+{
     m_wgm32Val = 0;
 
     QString n = m_name.right(1);
-    m_FOCA = getRegBits("FOC"+n, mcu );
+    m_FOCA = getRegBits("FOC"+n, m_mcu );
 }
-AvrTimer821::~AvrTimer821(){}
 
 void AvrTimer821::configureA( uint8_t newTCCRx )
 {
@@ -456,20 +472,23 @@ void AvrTimer821::configureA( uint8_t newTCCRx )
 AvrTimer16bit::AvrTimer16bit( eMcu* mcu, QString name )
              : AvrTimer( mcu, name )
 {
+}
+AvrTimer16bit::~AvrTimer16bit(){}
+
+void AvrTimer16bit::setup()
+{
     m_maxCount = 0xFFFF;
 
     QString n = m_name.right(1);
-    m_FOCA  = getRegBits("FOC"+n+"A", mcu );
-    m_FOCB  = getRegBits("FOC"+n+"B", mcu );
-    m_FOCC  = getRegBits("FOC"+n+"C", mcu );
+    m_FOCA  = getRegBits("FOC"+n+"A", m_mcu );
+    m_FOCB  = getRegBits("FOC"+n+"B", m_mcu );
+    m_FOCC  = getRegBits("FOC"+n+"C", m_mcu );
 
-    m_WGM10 = getRegBits( "WGM"+n+"0,WGM"+n+"1", mcu );
-    m_WGM32 = getRegBits( "WGM"+n+"2,WGM"+n+"3", mcu );
+    m_WGM10 = getRegBits( "WGM"+n+"0,WGM"+n+"1", m_mcu );
+    m_WGM32 = getRegBits( "WGM"+n+"2,WGM"+n+"3", m_mcu );
 
-    QString num = name.right(1);
-    setICRX( "ICR"+num+"L,ICR"+num+"H" );
+    setICRX( "ICR"+n+"L,ICR"+n+"H" );
 }
-AvrTimer16bit::~AvrTimer16bit(){}
 
 void AvrTimer16bit::runEvent()            // Overflow
 {

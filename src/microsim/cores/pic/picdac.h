@@ -19,6 +19,7 @@ class PicDac:  public McuDac
         PicDac( eMcu* mcu, QString name );
         ~PicDac();
 
+        virtual void setup() override;
         virtual void initialize() override;
         virtual void voltChanged() override;
 

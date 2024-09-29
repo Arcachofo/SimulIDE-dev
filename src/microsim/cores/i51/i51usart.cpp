@@ -15,23 +15,27 @@
 I51Usart::I51Usart( eMcu* mcu, QString name, int number )
         : McuUsart( mcu, name, number )
 {
+}
+I51Usart::~I51Usart(){}
+
+void I51Usart::setup()
+{
     m_receiver->setFifoSize( 1 );
     m_stopBits = 1;
     m_dataMask = 0xFF;
     m_parity   = parNONE;
 
-    m_timer1 = mcu->getTimer( "TIMER1" );
+    m_timer1 = m_mcu->getTimer( "TIMER1" );
 
-    m_scon = mcu->getReg( "SCON" );
+    m_scon = m_mcu->getReg( "SCON" );
 
-    m_SM     = getRegBits( "SM1,SM0", mcu );
-    m_bit9Tx = getRegBits( "TB8", mcu );
-    m_bit9Rx = getRegBits( "RB8", mcu );
-    m_SM2    = getRegBits( "SM2", mcu );
+    m_SM     = getRegBits( "SM1,SM0", m_mcu );
+    m_bit9Tx = getRegBits( "TB8", m_mcu );
+    m_bit9Rx = getRegBits( "RB8", m_mcu );
+    m_SM2    = getRegBits( "SM2", m_mcu );
 
-    m_SMOD = getRegBits( "SMOD", mcu );
+    m_SMOD = getRegBits( "SMOD", m_mcu );
 }
-I51Usart::~I51Usart(){}
 
 void I51Usart::reset()
 {

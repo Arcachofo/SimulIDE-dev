@@ -12,20 +12,24 @@
 AvrSpi::AvrSpi( eMcu* mcu, QString name )
       : McuSpi( mcu, name )
 {
+}
+AvrSpi::~AvrSpi(){}
+
+void AvrSpi::setup()
+{
     QString n = m_name.right(1);
     bool ok = false;
     n.toInt( &ok );
     if( !ok ) n = "";
 
-    m_SPR   = getRegBits( "SPR"+n+"0,SPR"+n+"1", mcu );
-    m_SPE   = getRegBits( "SPE"+n, mcu );
-    m_DODR  = getRegBits( "DODR"+n, mcu );
-    m_MSTR  = getRegBits( "MSTR"+n, mcu );
-    m_CPOL  = getRegBits( "CPOL"+n, mcu );
-    m_CPHA  = getRegBits( "CPHA"+n, mcu );
-    m_SPI2X = getRegBits( "SPI2X"+n, mcu );
+    m_SPR   = getRegBits( "SPR"+n+"0,SPR"+n+"1", m_mcu );
+    m_SPE   = getRegBits( "SPE"+n, m_mcu );
+    m_DODR  = getRegBits( "DODR"+n, m_mcu );
+    m_MSTR  = getRegBits( "MSTR"+n, m_mcu );
+    m_CPOL  = getRegBits( "CPOL"+n, m_mcu );
+    m_CPHA  = getRegBits( "CPHA"+n, m_mcu );
+    m_SPI2X = getRegBits( "SPI2X"+n, m_mcu );
 }
-AvrSpi::~AvrSpi(){}
 
 void AvrSpi::setMode( spiMode_t mode )
 {

@@ -11,13 +11,17 @@
 PicEeprom::PicEeprom( eMcu* mcu, QString name )
          : McuEeprom( mcu, name )
 {
-    //m_EECR  = mcu->getReg( "EECR" );
-    m_WRERR = getRegBits( "WRERR", mcu );
-    m_WREN  = getRegBits( "WREN", mcu );
-    m_WR    = getRegBits( "WR", mcu );
-    m_RD    = getRegBits( "RD", mcu );
 }
 PicEeprom::~PicEeprom(){}
+
+void PicEeprom::setup()
+{
+    //m_EECR  = mcu->getReg( "EECR" );
+    m_WRERR = getRegBits( "WRERR", m_mcu );
+    m_WREN  = getRegBits( "WREN", m_mcu );
+    m_WR    = getRegBits( "WR", m_mcu );
+    m_RD    = getRegBits( "RD", m_mcu );
+}
 
 void PicEeprom::initialize()
 {

@@ -12,20 +12,24 @@
 AvrComp::AvrComp( eMcu* mcu, QString name )
        : McuComp( mcu, name )
 {
-    m_ACD  = getRegBits( "ACD", mcu );
-    m_ACBG = getRegBits( "ACBG", mcu );
-    m_ACO  = getRegBits( "ACO", mcu );
-    m_ACI  = getRegBits( "ACI", mcu );
-    m_ACIE = getRegBits( "ACIE", mcu );
-    m_ACIC = getRegBits( "ACIC", mcu );
-    m_ACIS = getRegBits( "ACIS0,ACIS1", mcu );
-
-    m_AIN0D = getRegBits( "AIN0D", mcu );
-    m_AIN1D = getRegBits( "AIN1D", mcu );
-
-    watchRegNames( "ACSR", R_READ, this, &AvrComp::readACO, mcu ); // Trigger a compare when ACO or ACI is read (ACSR)
 }
 AvrComp::~AvrComp(){}
+
+void AvrComp::setup()
+{
+    m_ACD  = getRegBits("ACD" , m_mcu );
+    m_ACBG = getRegBits("ACBG", m_mcu );
+    m_ACO  = getRegBits("ACO" , m_mcu );
+    m_ACI  = getRegBits("ACI" , m_mcu );
+    m_ACIE = getRegBits("ACIE", m_mcu );
+    m_ACIC = getRegBits("ACIC", m_mcu );
+    m_ACIS = getRegBits("ACIS0,ACIS1", m_mcu );
+
+    m_AIN0D = getRegBits("AIN0D", m_mcu );
+    m_AIN1D = getRegBits("AIN1D", m_mcu );
+
+    watchRegNames("ACSR", R_READ, this, &AvrComp::readACO, m_mcu ); // Trigger a compare when ACO or ACI is read (ACSR)
+}
 
 void AvrComp::initialize()
 {

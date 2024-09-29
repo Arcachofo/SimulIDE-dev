@@ -17,6 +17,8 @@ class AvrUsart : public McuUsart
         AvrUsart( eMcu* mcu, QString name, int number );
         ~AvrUsart();
 
+        virtual void setup() override;
+
         virtual void configureA( uint8_t newUCSRnA ) override;
         virtual void configureB( uint8_t newUCSRnB ) override;
         virtual void configureC( uint8_t newUCSRnC ) override;

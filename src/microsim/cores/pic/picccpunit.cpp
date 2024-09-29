@@ -15,30 +15,35 @@ PicCcpUnit::PicCcpUnit( eMcu* mcu, QString name, int type )
           : McuModule( mcu, name )
           , eElement( name )
 {
-    QString n = name.right(1); // name="CCP1" => n="1"
-    QString e = name.contains("+") ? "+" : "";
+    QString n = m_name.right(1); // name="CCP1" => n="1"
+    QString e = m_name.contains("+") ? "+" : "";
 
-    McuTimer* timer1 = mcu->getTimer( "TIMER1" );
-    McuTimer* timer2 = mcu->getTimer( "TIMER2" );
+    m_capUnit = new PicIcUnit( m_mcu, "IC"+n );
+    m_comUnit = new PicOcUnit( m_mcu, "OC"+e+n );
+    m_pwmUnit = PicOcUnit::createPwmUnit( m_mcu, "PWM"+e+n, type  );
 
-    m_capUnit = new PicIcUnit( mcu, "IC"+n );
-    m_capUnit->m_timer = timer1;
-
-    m_comUnit = new PicOcUnit( mcu, "OC"+e+n );
-    m_comUnit->m_timer = timer1;
-    if( timer1 ) timer1->addOcUnit( m_comUnit );
-
-    m_pwmUnit = PicOcUnit::createPwmUnit( mcu, "PWM"+e+n, type  );
-    m_pwmUnit->m_timer = timer2;
-    if( timer2 ) timer2->addOcUnit( m_pwmUnit );
-
-    m_CCPxM = getRegBits( "CCP"+n+"M0,CCP"+n+"M1,CCP"+n+"M2,CCP"+n+"M3", mcu );
-
-    m_mode = 0;
 }
 PicCcpUnit::~PicCcpUnit()
 {
     delete m_capUnit;
+}
+
+void PicCcpUnit::setup()
+{
+    McuTimer* timer1 = m_mcu->getTimer("TIMER1");
+    McuTimer* timer2 = m_mcu->getTimer("TIMER2");
+
+    m_capUnit->m_timer = timer1;
+    m_comUnit->m_timer = timer1;
+    if( timer1 ) timer1->addOcUnit( m_comUnit );
+
+    m_pwmUnit->m_timer = timer2;
+    if( timer2 ) timer2->addOcUnit( m_pwmUnit );
+
+    QString n = m_name.right(1);
+    m_CCPxM = getRegBits( "CCP"+n+"M0,CCP"+n+"M1,CCP"+n+"M2,CCP"+n+"M3", m_mcu );
+
+    m_mode = 0;
 }
 
 void PicCcpUnit::initialize()

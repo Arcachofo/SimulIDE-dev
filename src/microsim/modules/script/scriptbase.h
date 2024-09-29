@@ -39,6 +39,7 @@ class ScriptBase : public eElement
 
     protected:
         void printError( asIScriptContext* context );
+        QString getIncludes( QString test );
 
         int m_status;
 

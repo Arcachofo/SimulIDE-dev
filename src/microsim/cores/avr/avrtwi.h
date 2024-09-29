@@ -18,6 +18,7 @@ class AvrTwi : public McuTwi
         AvrTwi( eMcu* mcu, QString name );
         ~AvrTwi();
 
+        virtual void setup() override;
         virtual void initialize() override;
 
         virtual void configureA( uint8_t newTWCR ) override;

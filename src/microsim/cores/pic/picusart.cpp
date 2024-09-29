@@ -15,53 +15,56 @@
 PicUsart::PicUsart( eMcu* mcu,  QString name, int number )
         : McuUsart( mcu, name, number )
 {
+}
+PicUsart::~PicUsart(){}
+
+void PicUsart::setup()
+{
     m_sleepMode = 0xFF;
     m_sender->setSleepMode( 0xFF );
     m_receiver->setSleepMode( 0xFF );
 
     m_enabled = false;
-    m_SPBRG  = NULL;
-    m_SPBRGL = NULL;
-    m_SPBRGH = NULL;
+    m_SPBRG  = nullptr;
+    m_SPBRGL = nullptr;
+    m_SPBRGH = nullptr;
 
-    m_PIR1  = mcu->getReg( "PIR1" );
-    m_TXSTA = mcu->getReg( "TXSTA" );
-    m_RCSTA = mcu->getReg( "RCSTA" );
+    m_PIR1  = m_mcu->getReg("PIR1");
+    m_TXSTA = m_mcu->getReg("TXSTA");
+    m_RCSTA = m_mcu->getReg("RCSTA");
 
-    if( mcu->regExist( "SPBRG") ){
-        m_SPBRGL = mcu->getReg( "SPBRG" );
-        watchRegNames( "SPBRG",  R_WRITE, this, &PicUsart::setSPBRGL, mcu );
+    if( m_mcu->regExist("SPBRG") ){
+        m_SPBRGL = m_mcu->getReg("SPBRG");
+        watchRegNames( "SPBRG",  R_WRITE, this, &PicUsart::setSPBRGL, m_mcu );
     }
-    if( mcu->regExist( "SPBRGL") ){
-        m_SPBRGL = mcu->getReg( "SPBRGL" );
-        watchRegNames( "SPBRGL", R_WRITE, this, &PicUsart::setSPBRGL, mcu );
+    if( m_mcu->regExist("SPBRGL") ){
+        m_SPBRGL = m_mcu->getReg("SPBRGL");
+        watchRegNames( "SPBRGL", R_WRITE, this, &PicUsart::setSPBRGL, m_mcu );
     }
-    if( mcu->regExist( "SPBRGH") ){
-        m_SPBRGH = mcu->getReg( "SPBRGH" );
-        watchRegNames( "SPBRGH", R_WRITE, this, &PicUsart::setSPBRGH, mcu );
+    if( m_mcu->regExist("SPBRGH") ){
+        m_SPBRGH = m_mcu->getReg("SPBRGH");
+        watchRegNames("SPBRGH", R_WRITE, this, &PicUsart::setSPBRGH, m_mcu );
     }
 
-    m_SPEN = getRegBits( "SPEN", mcu );
-    m_BRGH = getRegBits( "BRGH", mcu );
+    m_SPEN = getRegBits("SPEN", m_mcu );
+    m_BRGH = getRegBits("BRGH", m_mcu );
 
-    m_bit9Tx = getRegBits( "TX9D", mcu );
-    m_bit9Rx = getRegBits( "RX9D", mcu );
+    m_bit9Tx = getRegBits("TX9D", m_mcu );
+    m_bit9Rx = getRegBits("RX9D", m_mcu );
 
-    m_txEn = getRegBits( "TXEN", mcu );
-    m_rxEn = getRegBits( "CREN", mcu );
-    m_TX9  = getRegBits( "TX9", mcu );
-    m_RX9  = getRegBits( "RX9", mcu );
-    m_ADDEN = getRegBits( "ADDEN", mcu );
+    m_txEn = getRegBits("TXEN", m_mcu );
+    m_rxEn = getRegBits("CREN", m_mcu );
+    m_TX9  = getRegBits("TX9", m_mcu );
+    m_RX9  = getRegBits("RX9", m_mcu );
+    m_ADDEN = getRegBits("ADDEN", m_mcu );
 
-    m_TXIF = getRegBits( "TXIF", mcu );
-    m_TRMT = getRegBits( "TMRT", mcu );
-    m_RCIF = getRegBits( "RCIF", mcu );
-    m_FERR = getRegBits( "FERR", mcu );
-    m_OERR = getRegBits( "OERR", mcu );
-    m_SYNC = getRegBits( "SYNC", mcu );
-
+    m_TXIF = getRegBits("TXIF", m_mcu );
+    m_TRMT = getRegBits("TMRT", m_mcu );
+    m_RCIF = getRegBits("RCIF", m_mcu );
+    m_FERR = getRegBits("FERR", m_mcu );
+    m_OERR = getRegBits("OERR", m_mcu );
+    m_SYNC = getRegBits("SYNC", m_mcu );
 }
-PicUsart::~PicUsart(){}
 
 void PicUsart::configureA( uint8_t newTXSTA ) // TXSTA changed
 {

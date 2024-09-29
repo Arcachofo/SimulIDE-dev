@@ -17,6 +17,7 @@ class I51Usart : public McuUsart
         I51Usart( eMcu* mcu, QString name, int number );
         ~I51Usart();
 
+        virtual void setup() override;
         virtual void reset() override;
 
         virtual void configureA( uint8_t newSCON ) override;

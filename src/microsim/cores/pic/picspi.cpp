@@ -13,13 +13,17 @@
 PicSpi::PicSpi( eMcu* mcu, QString name )
       : McuSpi( mcu, name )
 {
-    m_sleepMode = 0xFF;
-
-    m_SSPEN = getRegBits( "SSPEN", mcu );
-    m_CKP   = getRegBits( "CKP", mcu );
-    m_CKE   = getRegBits( "CKE", mcu );
 }
 PicSpi::~PicSpi(){}
+
+void PicSpi::setup()
+{
+    m_sleepMode = 0xFF;
+
+    m_SSPEN = getRegBits("SSPEN", m_mcu );
+    m_CKP   = getRegBits("CKP", m_mcu );
+    m_CKE   = getRegBits("CKE", m_mcu );
+}
 
 void PicSpi::setMode( spiMode_t mode )
 {

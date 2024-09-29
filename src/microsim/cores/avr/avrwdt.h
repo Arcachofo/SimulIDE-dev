@@ -18,6 +18,7 @@ class AvrWdt : public McuWdt
 
   static AvrWdt* createWdt( eMcu* mcu, QString name );
 
+        virtual void setup() override;
         virtual void initialize() override;
         virtual void runEvent() override;
 
@@ -48,6 +49,8 @@ class AvrWdt00 : public AvrWdt
     public:
         AvrWdt00( eMcu* mcu, QString name );
         ~AvrWdt00();
+
+        virtual void setup() override;
 
         virtual void configureA( uint8_t newWDTCSR ) override;
 

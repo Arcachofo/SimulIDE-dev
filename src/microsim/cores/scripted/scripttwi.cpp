@@ -11,7 +11,7 @@ ScriptTwi::ScriptTwi( eMcu* mcu, QString name )
          : McuTwi( mcu, name )
          , ScriptPerif( name )
 {
-    m_byteReceived = NULL;
+    m_byteReceived = nullptr;
 
     m_type = "TWI";
 

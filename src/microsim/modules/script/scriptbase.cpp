@@ -9,6 +9,7 @@
 #include "scriptstdstring.h"
 #include "scriptarray.h"
 #include "circuitwidget.h"
+#include "mainwindow.h"
 #include "utils.h"
 #include "asdebugger.h"
 
@@ -77,7 +78,7 @@ ScriptBase::~ScriptBase()
 
 void ScriptBase::setScriptFile( QString scriptFile, bool )
 {
-    m_script = fileToString( scriptFile, "ScriptBase::setScriptFile" );
+    setScript( fileToString( scriptFile, "ScriptBase::setScriptFile" ) );
 }
 
 void ScriptBase::setScript( QString script )
@@ -89,8 +90,12 @@ int ScriptBase::compileScript()
 {
     if( !m_aEngine ) return -1;
 
-    std::string script = m_script.toStdString();
-    int len = m_script.size();
+    QString scriptStr = getIncludes( m_script );
+
+    //qDebug() << scriptStr;
+
+    std::string script = scriptStr.toStdString();
+    int len = scriptStr.size();
 
     m_aEngine->GarbageCollect( asGC_FULL_CYCLE );
 
@@ -103,6 +108,25 @@ int ScriptBase::compileScript()
 
     //qDebug() << "\nScriptBase::compileScript: Build() Success\n";
     return 0;
+}
+
+QString ScriptBase::getIncludes( QString text )
+{
+    QString scriptStr;
+    QStringList lines = text.split("\n");
+    for( QString line : lines )                // Get includes
+    {
+        if( line.contains("#include") )
+        {
+            QString file = line.remove("#include").remove("\"").remove(" ");
+            file.prepend( MainWindow::self()->getDataFilePath("scriptlib")+"/" );
+
+            line = fileToString( file, "ScriptBase::compileScript" );
+            line = getIncludes( line );
+        }
+        scriptStr.append( line+"\n");
+    }
+    return scriptStr;
 }
 
 /*int ScriptBase::SaveBytecode(asIScriptEngine *engine, const char *outputFile)

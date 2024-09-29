@@ -16,6 +16,8 @@ class AvrSpi : public McuSpi
         AvrSpi( eMcu* mcu, QString name );
         ~AvrSpi();
 
+        virtual void setup() override;
+
         virtual void setMode( spiMode_t mode ) override;
         virtual void configureA( uint8_t newSPCR ) override;
         virtual void writeStatus( uint8_t newSPSR ) override;

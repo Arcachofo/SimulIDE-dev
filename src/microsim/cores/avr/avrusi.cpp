@@ -18,27 +18,31 @@ AvrUsi::AvrUsi( eMcu* mcu, QString name )
       : McuModule( mcu, name )
       , eElement( name )
 {
+}
+AvrUsi::~AvrUsi(){}
+
+void AvrUsi::setup()
+{
     m_DOpin = nullptr;
     m_DIpin = nullptr;
     m_CKpin = nullptr;
 
-    m_dataReg   = mcu->getReg("USIDR");
-    m_bufferReg = mcu->getReg("USIBR");
+    m_dataReg   = m_mcu->getReg("USIDR");
+    m_bufferReg = m_mcu->getReg("USIBR");
 
-    m_USITC  = getRegBits("USITC", mcu );
-    m_USICLK = getRegBits("USICLK", mcu );
-    m_USICS  = getRegBits("USICS0,USICS1", mcu );
-    m_USIWM  = getRegBits("USIWM0,USIWM1", mcu );
+    m_USITC  = getRegBits("USITC", m_mcu );
+    m_USICLK = getRegBits("USICLK", m_mcu );
+    m_USICS  = getRegBits("USICS0,USICS1", m_mcu );
+    m_USIWM  = getRegBits("USIWM0,USIWM1", m_mcu );
 
-    m_USICNT = getRegBits("USICNT0,USICNT1,USICNT2,USICNT3", mcu );
-    m_USIPF  = getRegBits("USIPF", mcu );
+    m_USICNT = getRegBits("USICNT0,USICNT1,USICNT2,USICNT3", m_mcu );
+    m_USIPF  = getRegBits("USIPF", m_mcu );
 
-    AvrTimer800* timer0 = (AvrTimer800*)mcu->getTimer("TIMER0");
+    AvrTimer800* timer0 = (AvrTimer800*)m_mcu->getTimer("TIMER0");
     m_t0OCA  = timer0->getOcUnit("OCA");
 
-    watchRegNames("USIDR", R_WRITE, this, &AvrUsi::dataRegWritten, mcu );
+    watchRegNames("USIDR", R_WRITE, this, &AvrUsi::dataRegWritten, m_mcu );
 }
-AvrUsi::~AvrUsi(){}
 
 void AvrUsi::reset()
 {

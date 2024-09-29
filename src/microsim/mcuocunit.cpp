@@ -44,6 +44,11 @@ void McuOcUnit::runEvent()  // Compare match
     if( m_enabled ) drivePin( m_comAct, m_mcu->psInst() );
 }
 
+void McuOcUnit::comMatch()
+{
+    drivePin( m_comAct, m_mcu->psInst() );
+}
+
 void McuOcUnit::drivePin( ocAct_t act, uint64_t time )
 {
     if( !act ) return;

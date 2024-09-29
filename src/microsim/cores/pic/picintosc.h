@@ -30,6 +30,8 @@ class PicIntOsc00 : public PicIntOsc
         PicIntOsc00( eMcu* mcu, QString name );
         ~PicIntOsc00();
 
+        virtual void setup() override;
+
         virtual void configureA( uint8_t newOSCCON ) override;
 
         virtual bool freqChanged() override;
@@ -45,6 +47,8 @@ class PicIntOsc01 : public PicIntOsc
         PicIntOsc01( eMcu* mcu, QString name );
         ~PicIntOsc01();
 
+        virtual void setup() override;
+
         virtual void configureA( uint8_t newOSCCON ) override;
 
         virtual bool freqChanged() override;
@@ -58,6 +62,8 @@ class PicIntOsc02 : public PicIntOsc
     public:
         PicIntOsc02( eMcu* mcu, QString name );
         ~PicIntOsc02();
+
+        virtual void setup() override;
 
         virtual void configureA( uint8_t newOSCCON ) override;
 

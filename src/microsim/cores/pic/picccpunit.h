@@ -29,7 +29,8 @@ class PicCcpUnit : public McuModule, public eElement
         PicCcpUnit( eMcu* mcu, QString name, int type );
         ~PicCcpUnit();
 
-        virtual void initialize();
+        virtual void setup() override;
+        virtual void initialize() override;
 
         virtual void ccprWriteL( uint8_t val );
         virtual void ccprWriteH( uint8_t val );

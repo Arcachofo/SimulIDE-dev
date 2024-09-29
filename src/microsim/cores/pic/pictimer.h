@@ -42,6 +42,7 @@ class PicTimer0 : public PicTimer8bit
         PicTimer0( eMcu* mcu, QString name );
         ~PicTimer0();
 
+        virtual void setup() override;
         virtual void initialize() override;
         virtual void configureA( uint8_t NewOPTION ) override;
 
@@ -58,6 +59,8 @@ class PicTimer2 : public PicTimer8bit
     public:
         PicTimer2( eMcu* mcu, QString name );
         ~PicTimer2();
+
+        virtual void setup() override;
 
         virtual void configureA( uint8_t NewT2CON ) override;
         virtual void configureB( uint8_t NewPR2 ) override;
@@ -77,6 +80,8 @@ class PicTimer16bit : public PicTimer
     public:
         PicTimer16bit( eMcu* mcu, QString name );
         ~PicTimer16bit();
+
+        virtual void setup() override;
 
         virtual void configureA( uint8_t NewT1CON ) override;
 
@@ -103,6 +108,8 @@ class PicTimer160 : public PicTimer16bit
         PicTimer160( eMcu* mcu, QString name );
         ~PicTimer160();
 
+        virtual void setup() override;
+
     protected:
         virtual void configureClock() override;
 };
@@ -112,6 +119,8 @@ class PicTimer161 : public PicTimer16bit
     public:
         PicTimer161( eMcu* mcu, QString name );
         ~PicTimer161();
+
+        virtual void setup() override;
 
         //virtual void configureA( uint8_t NewT1CON ) override;
 

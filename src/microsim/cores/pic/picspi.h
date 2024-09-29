@@ -18,6 +18,7 @@ class PicSpi : public McuSpi
         PicSpi( eMcu* mcu, QString name );
         ~PicSpi();
 
+        virtual void setup() override;
         //virtual void initialize() override;
 
         virtual void setMode( spiMode_t mode ) override;

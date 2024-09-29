@@ -23,6 +23,7 @@ class PicAdc : public McuAdc
 
  static PicAdc* createAdc( eMcu* mcu, QString name, int type );
 
+        virtual void setup() override;
         virtual void initialize() override;
 
         virtual void configureA( uint8_t newADCON0 ) override;
@@ -51,6 +52,7 @@ class PicAdc00 : public PicAdc
         PicAdc00( eMcu* mcu, QString name );
         ~PicAdc00();
 
+        virtual void setup() override;
         //virtual void initialize() override;
 
         //virtual void configureA( uint8_t newADCSRA ) override;
@@ -67,6 +69,8 @@ class PicAdc1 : public PicAdc
     public:
         PicAdc1( eMcu* mcu, QString name );
         ~PicAdc1();
+
+        virtual void setup() override;
 
         virtual void setANSEL( uint8_t newANSEL );
         void updtANSEL();
@@ -86,6 +90,8 @@ class PicAdc10 : public PicAdc1
         PicAdc10( eMcu* mcu, QString name );
         ~PicAdc10();
 
+        virtual void setup() override;
+
         virtual void configureB( uint8_t newADCSRB ) override;
 
         void setANSELH( uint8_t newANSELH );
@@ -96,6 +102,8 @@ class PicAdc11 : public PicAdc1
     public:
         PicAdc11( eMcu* mcu, QString name );
         ~PicAdc11();
+
+        virtual void setup() override;
 
         virtual void configureA( uint8_t newADCON0 ) override;
         //virtual void configureB( uint8_t newADCSRB ) override;
@@ -109,6 +117,8 @@ class PicAdc20 : public PicAdc
     public:
         PicAdc20( eMcu* mcu, QString name );
         ~PicAdc20();
+
+        virtual void setup() override;
 
         virtual void configureA( uint8_t newADCON0 ) override;
         virtual void configureB( uint8_t newADCON1 ) override;

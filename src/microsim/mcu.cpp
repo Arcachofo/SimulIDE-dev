@@ -226,6 +226,8 @@ Mcu::~Mcu()
 
 void Mcu::setupMcu()
 {
+    m_eMcu.setup();
+
     if( m_pSelf == nullptr ) slotmain();
 
     // Main Property Group --------------------------------------

@@ -21,6 +21,7 @@ class McuModule
         McuModule( eMcu* mcu, QString name );
         virtual ~McuModule();
 
+        virtual void setup(){;}
         virtual void reset(){;}
 
         virtual void configureA( uint8_t ){;}

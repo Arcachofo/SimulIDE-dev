@@ -24,16 +24,20 @@ PicAdc* PicAdc::createAdc( eMcu* mcu, QString name, int type )
 PicAdc::PicAdc( eMcu* mcu, QString name )
       : McuAdc( mcu, name )
 {
-    m_sleepMode = 0xFF;
-
-    m_ADON = getRegBits( "ADON", mcu );
-    m_GODO = getRegBits( "GO/DONE", mcu );
-    m_ADFM = getRegBits( "ADFM", mcu );
-
-    m_pRefPin = NULL;
-    m_nRefPin = NULL;
 }
 PicAdc::~PicAdc(){}
+
+void PicAdc::setup()
+{
+    m_sleepMode = 0xFF;
+
+    m_ADON = getRegBits("ADON", m_mcu );
+    m_GODO = getRegBits("GO/DONE", m_mcu );
+    m_ADFM = getRegBits("ADFM", m_mcu );
+
+    m_pRefPin = nullptr;
+    m_nRefPin = nullptr;
+}
 
 void PicAdc::initialize()
 {
@@ -82,11 +86,17 @@ void PicAdc::sleep( int mode )
 PicAdc00::PicAdc00( eMcu* mcu, QString name )
         : PicAdc( mcu, name )
 {
-    m_ADSC = getRegBits( "ADSC0,ADCS1", mcu );
-    m_CHS  = getRegBits( "CHS0,CHS1,CHS2", mcu );
-    m_PCFG = getRegBits( "PCFG0,PCFG1,PCFG2,PCFG3", mcu );
 }
 PicAdc00::~PicAdc00(){}
+
+void PicAdc00::setup()
+{
+    PicAdc::setup();
+
+    m_ADSC = getRegBits("ADSC0,ADCS1", m_mcu );
+    m_CHS  = getRegBits("CHS0,CHS1,CHS2", m_mcu );
+    m_PCFG = getRegBits("PCFG0,PCFG1,PCFG2,PCFG3", m_mcu );
+}
 
 void PicAdc00::configureB( uint8_t newADCON1 ) // ADCON1
 {
@@ -142,11 +152,17 @@ void PicAdc00::updtVref()
 PicAdc1::PicAdc1( eMcu* mcu, QString name )
        : PicAdc( mcu, name )
 {
-    m_ANSELH = NULL;
-    m_ANSEL  = mcu->getReg( "ANSEL" );
-    watchRegNames( "ANSEL" , R_WRITE, this, &PicAdc1::setANSEL , mcu );
 }
 PicAdc1::~PicAdc1(){}
+
+void PicAdc1::setup()
+{
+    PicAdc::setup();
+
+    m_ANSELH = nullptr;
+    m_ANSEL  = m_mcu->getReg( "ANSEL" );
+    watchRegNames( "ANSEL" , R_WRITE, this, &PicAdc1::setANSEL , m_mcu );
+}
 
 void PicAdc1::setANSEL( uint8_t newANSEL )
 {
@@ -174,14 +190,20 @@ void PicAdc1::updtVref()
 PicAdc10::PicAdc10( eMcu* mcu, QString name )
         : PicAdc1( mcu, name )
 {
-    m_ADSC = getRegBits( "ADSC0,ADCS1", mcu );
-    m_CHS  = getRegBits( "CHS0,CHS1,CHS2,CHS3", mcu );
-    m_VCFG = getRegBits( "VCFG0,VCFG1", mcu );
-
-    m_ANSELH = mcu->getReg( "ANSELH" );
-    watchRegNames( "ANSELH", R_WRITE, this, &PicAdc10::setANSELH, mcu );
 }
 PicAdc10::~PicAdc10(){}
+
+void PicAdc10::setup()
+{
+    PicAdc1::setup();
+
+    m_ADSC = getRegBits("ADSC0,ADCS1", m_mcu );
+    m_CHS  = getRegBits("CHS0,CHS1,CHS2,CHS3", m_mcu );
+    m_VCFG = getRegBits("VCFG0,VCFG1", m_mcu );
+
+    m_ANSELH = m_mcu->getReg("ANSELH" );
+    watchRegNames("ANSELH", R_WRITE, this, &PicAdc10::setANSELH, m_mcu );
+}
 
 void PicAdc10::configureB( uint8_t newADCON1 ) // ADCON1
 {
@@ -201,11 +223,17 @@ void PicAdc10::setANSELH( uint8_t newANSELH )
 PicAdc11::PicAdc11( eMcu* mcu, QString name )
         : PicAdc1( mcu, name )
 {
-    m_ADSC = getRegBits( "ADSC0,ADCS1,ADCS2", mcu );
-    m_CHS  = getRegBits( "CHS0,CHS1", mcu );
-    m_VCFG = getRegBits( "VCFG", mcu );
 }
 PicAdc11::~PicAdc11(){}
+
+void PicAdc11::setup()
+{
+    PicAdc1::setup();
+
+    m_ADSC = getRegBits("ADSC0,ADCS1,ADCS2", m_mcu );
+    m_CHS  = getRegBits("CHS0,CHS1", m_mcu );
+    m_VCFG = getRegBits("VCFG", m_mcu );
+}
 
 void PicAdc11::configureA( uint8_t newADCON0 )
 {
@@ -231,13 +259,19 @@ void PicAdc11::setANSEL( uint8_t newANSEL )
 PicAdc20::PicAdc20( eMcu* mcu, QString name )
         : PicAdc( mcu, name )
 {
-    m_ADSC = getRegBits( "ADCS0,ADCS1,ADCS2", mcu );
-    m_CHS  = getRegBits( "CHS0,CHS1,CHS2,CHS3,CHS4", mcu );
-    m_ADXREF = getRegBits( "ADPREF0,ADPREF1,ADNREF", mcu );
-
-    m_fvr = (PicVrefE*)mcu->vrefModule();
 }
 PicAdc20::~PicAdc20(){}
+
+void PicAdc20::setup()
+{
+    PicAdc::setup();
+
+    m_ADSC = getRegBits("ADCS0,ADCS1,ADCS2", m_mcu );
+    m_CHS  = getRegBits("CHS0,CHS1,CHS2,CHS3,CHS4", m_mcu );
+    m_ADXREF = getRegBits("ADPREF0,ADPREF1,ADNREF", m_mcu );
+
+    m_fvr = (PicVrefE*)m_mcu->vrefModule();
+}
 
 void PicAdc20::configureA (uint8_t newADCON0 )
 {
