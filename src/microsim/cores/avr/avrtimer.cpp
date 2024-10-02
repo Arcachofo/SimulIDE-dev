@@ -150,8 +150,7 @@ void AvrTimer::configureOcUnits( bool wgm3 )
     if( m_OCB ) m_OCB->setOcActs( comActB, tovActB );
     if( m_OCC ) m_OCC->setOcActs( comActC, tovActC );
 
-    if( m_wgmMode == wgmCTC
-     || m_bidirec ) m_ovfPeriod = m_ovfMatch;
+    if( m_bidirec ) m_ovfPeriod = m_ovfMatch;
     else            m_ovfPeriod = m_ovfMatch+1;
 }
 

@@ -140,8 +140,6 @@ Component* SubCircuit::construct( QString type, QString id )
 
         subcircuit->setPackage( pkges.first() );
         if( m_error == 0 ) subcircuit->loadSubCircuitFile( subcFile );
-
-        //Circuit::self()->m_createSubc = false;
     }
     if( m_error > 0 )
     {
