@@ -427,13 +427,14 @@ QString ScriptCpu::getStrReg( QString val )
     return QString::fromStdString( str );
 }
 
-void ScriptCpu::addProperty( QString group, QString name, QString type, QString unit )
+ComProperty* ScriptCpu::addProperty( QString group, QString name, QString type, QString unit )
 {
     ComProperty* p = new ScriptProp<ScriptCpu>( name, name, unit, this
                                               , &ScriptCpu::getProp, &ScriptCpu::setProp, type );
     m_scriptProps.push_back( p );
 
-    m_mcu->component()->addProperty( group, p );
+    //m_mcu->component()->addProperty( group, p );
+    return p;
 }
 
 QString ScriptCpu::getProp( ComProperty* p )

@@ -55,7 +55,6 @@ Circuit::Circuit( int width, int height, CircuitView* parent )
     m_deleting   = false;
     m_loading    = false;
     m_conStarted = false;
-    m_createSubc = false;
     m_acceptKeys = true;
     m_cicuitBatch = 0;
 
@@ -193,7 +192,6 @@ void Circuit::loadStrDoc( QString &doc )
     QList<Connector*> connList;   // Pasting Connector list
     QList<Node*>      nodeList;   // Pasting node list
 
-    Component* lastComp = nullptr;
     QList<ShieldSubc*> shieldList;
 
     m_circRev = 0;
@@ -307,7 +305,7 @@ void Circuit::loadStrDoc( QString &doc )
                 }
                 else{
                     if( type == "Frequencimeter" ) type = "FreqMeter";
-                    lastComp = nullptr;
+                    m_subCircuit= nullptr;  // SUbcircuits set this value at
                     Component* comp = createItem( type, newUid );
 
                     if( !comp ){ qDebug() << " ERROR Creating Component: "<< type << uid;
@@ -315,9 +313,11 @@ void Circuit::loadStrDoc( QString &doc )
 
                     if( type == "Subcircuit")
                     {
-                        lastComp  = comp;
-                        ShieldSubc* shield = static_cast<ShieldSubc*>(comp);
-                        if( shield->subcType() >= Chip::Shield ) shieldList.append( shield );
+                        if( m_subCircuit->subcType() >= Chip::Shield )
+                        {
+                            ShieldSubc* shield = static_cast<ShieldSubc*>(comp);
+                            shieldList.append( shield );
+                        }
                     }
                     /// Why?? // comp->setPropStr("label", label ); //setIdLabel( label );
 
@@ -344,9 +344,8 @@ void Circuit::loadStrDoc( QString &doc )
         }
         else if( line.contains("<mainCompProps") )
         {
-            if( !lastComp ) continue;
-            SubCircuit* subci = static_cast<SubCircuit*>(lastComp);
-            Component*  mComp = subci->getMainComp();      // Old circuits with only 1 MainComp
+            if( !m_subCircuit ) continue;
+            Component* mComp = m_subCircuit->getMainComp();      // Old circuits with only 1 MainComp
             if( !mComp ) continue;
 
             for( propStr_t prop : properties )
@@ -354,7 +353,7 @@ void Circuit::loadStrDoc( QString &doc )
                 if( prop.name == "MainCompId")  // If more than 1 mainComp then get Component
                 {
                     QString compName = prop.value.toString();
-                    mComp = subci->getMainComp( compName );
+                    mComp = m_subCircuit->getMainComp( compName );
                     if( !mComp ) qDebug() << "ERROR: Could not get Main Component:"<< compName;
                 }
                 else mComp->setPropStr( prop.name.toString(), prop.value.toString() );

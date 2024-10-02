@@ -13,14 +13,14 @@ CompBase::CompBase( QString type, QString id )
     m_id   = id;
     m_type = type;
 
-    m_propDialog = NULL;
+    m_propDialog = nullptr;
 }
 CompBase::~CompBase()
 {
     for( ComProperty* p : m_propMap.values() ) delete p;
     if( m_propDialog )
     {
-        m_propDialog->setParent( NULL );
+        m_propDialog->setParent( nullptr );
         m_propDialog->close();
         delete m_propDialog;
     }
@@ -51,7 +51,7 @@ void CompBase::addPropGroup( propGroup pg, bool list )
         for( ComProperty* p : pg.propList ) m_propMap[p->name()] = p;
 }
 
-void CompBase::addProperty( QString group, ComProperty* p )
+void CompBase::addProperty( QString group, ComProperty* p, bool list )
 {
     for( int i=0; i<m_propGroups.size(); ++i )
     {
@@ -60,7 +60,7 @@ void CompBase::addProperty( QString group, ComProperty* p )
 
         pg.propList.append( p );
         m_propGroups.replace( i, pg );
-        m_propMap[p->name()] = p;
+        if( list ) m_propMap[p->name()] = p;
         return;
 }   }
 

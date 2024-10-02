@@ -38,7 +38,7 @@ class CompBase
 
         void addPropGroup( propGroup pg, bool list=true );
         void remPropGroup( QString name );
-        void addProperty( QString group, ComProperty* p );
+        void addProperty( QString group, ComProperty* p, bool list=true );
         void remProperty( QString prop );
         QList<propGroup>* properties() { return &m_propGroups; } // Circuit needs pointer bcos properties can change (ex: loadHex changes Config)
 

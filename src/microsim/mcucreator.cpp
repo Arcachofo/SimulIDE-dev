@@ -11,6 +11,8 @@
 
 #include "mcucreator.h"
 #include "circuitwidget.h"
+#include "circuit.h"
+#include "subcircuit.h"
 #include "datautils.h"
 #include "regwatcher.h"
 #include "e_mcu.h"
@@ -233,6 +235,7 @@ int McuCreator::processFile( QString fileName )
 
                 if( part == "propertygroup" )
                 {
+                    SubCircuit* subC = Circuit::self()->getSubcircuit();
                     QString group = e.attribute("name");
 
                     QList<ComProperty*> propList;
@@ -249,7 +252,13 @@ int McuCreator::processFile( QString fileName )
                             QString type = el.attribute("type");
                             QString unit = el.attribute("unit");
 
-                            cpu->addProperty( group, name, type, unit );
+                            ComProperty* p = cpu->addProperty( group, name, type, unit );
+                            m_mcuComp->addProperty( group, p );
+
+                            if( el.attribute("add") == "true" )
+                            {
+                                subC->addProperty( group, p, false ); // Dont list property: avoid deleting it in Subcircuit
+                            }
                         }
                         node = node.nextSibling();
                     }

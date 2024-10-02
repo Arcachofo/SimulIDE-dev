@@ -90,7 +90,7 @@ Component* SubCircuit::construct( QString type, QString id )
             bool ls  = QFile::exists( pkgFileLS );
             if( !dip && !ls ){
                 qDebug() << "SubCircuit::construct: Error No package files found for "<<name<<endl;
-                return NULL;
+                return nullptr;
             }
 
             Chip::s_subcType = "None";
@@ -109,10 +109,10 @@ Component* SubCircuit::construct( QString type, QString id )
 
     if( packageList.isEmpty() ){
         qDebug() << "SubCircuit::construct: No Packages found for"<<name<<endl;
-        return NULL;
+        return nullptr;
     }
 
-    SubCircuit* subcircuit = NULL;
+    SubCircuit* subcircuit = nullptr;
     if     ( subcTyp == "Logic"  ) subcircuit = new LogicSubc( type, id );
     else if( subcTyp == "Board"  ) subcircuit = new BoardSubc( type, id );
     else if( subcTyp == "Shield" ) subcircuit = new ShieldSubc( type, id );
@@ -123,9 +123,9 @@ Component* SubCircuit::construct( QString type, QString id )
     {
         subcircuit->remove();
         m_error = 0;
-        return NULL;
+        return nullptr;
     }else{
-        Circuit::self()->m_createSubc = true;
+        Circuit::self()->setSubcircuit( subcircuit );
 
         QStringList pkges = packageList.keys();
         subcircuit->m_packageList = packageList;
@@ -141,14 +141,14 @@ Component* SubCircuit::construct( QString type, QString id )
         subcircuit->setPackage( pkges.first() );
         if( m_error == 0 ) subcircuit->loadSubCircuitFile( subcFile );
 
-        Circuit::self()->m_createSubc = false;
+        //Circuit::self()->m_createSubc = false;
     }
     if( m_error > 0 )
     {
         Circuit::self()->compList()->removeOne( subcircuit );
         delete subcircuit;
         m_error = 0;
-        return NULL;
+        return nullptr;
     }
     return subcircuit;
 }
@@ -239,7 +239,7 @@ void SubCircuit::loadSubCircuit( QString doc )
                     if( !endPin )   qDebug()<<"\n   ERROR!!  SubCircuit::loadSubCircuit: "<<m_name<<m_id+" null endPin in "  <<type<<endPinId;
             }   }
             else{
-                Component* comp = NULL;
+                Component* comp = nullptr;
 
                 propStr_t circId = properties.takeFirst();
                 if( circId.name != "CircId") continue; /// ERROR
@@ -355,7 +355,7 @@ Pin* SubCircuit::addPin( QString id, QString type, QString label, int, int xpos,
 
 Pin* SubCircuit::updatePin( QString id, QString type, QString label, int xpos, int ypos, int angle, int length, int space )
 {
-    Pin* pin = NULL;
+    Pin* pin = nullptr;
     Tunnel* tunnel = m_pinTunnels.value( m_id+"-"+id );
     if( !tunnel ){
         //qDebug() <<"SubCircuit::updatePin Pin Not Found:"<<id<<type<<label;
@@ -470,7 +470,7 @@ void SubCircuit::addMainCompsMenu( QMenu* menu )
     {
         QString name = mainComp->idLabel();
         QMenu* submenu = menu->addMenu( QIcon(":/subc.png"), name );
-        mainComp->contextMenu( NULL, submenu );
+        mainComp->contextMenu( nullptr, submenu );
     }
     menu->addSeparator();
 }
