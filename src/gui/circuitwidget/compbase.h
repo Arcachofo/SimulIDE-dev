@@ -36,6 +36,7 @@ class CompBase
         CompBase( QString type, QString id );
         virtual ~CompBase();
 
+        propGroup* getPropGroup( QString name );
         void addPropGroup( propGroup pg, bool list=true );
         void remPropGroup( QString name );
         void addProperty( QString group, ComProperty* p, bool list=true );
