@@ -41,6 +41,8 @@ class SubPackage : public Chip, public Linker
         QString packagePins();
         void setPackagePins( QString pinsStr );
 
+        virtual std::vector<Pin*> getPins() override { std::vector<Pin*> p; return p; } // Used to access wires (we have no wires)
+
         void setEventPin( Pin* pin ) { m_eventPin = pin; }
 
         void savePackage( QString fileName );
@@ -49,6 +51,8 @@ class SubPackage : public Chip, public Linker
         void setSubcTypeStr( QString s );
 
         virtual void compSelected( Component* comp ) override;  // Use link mechanism to select main components
+
+        virtual void moveSignal() override {;}
 
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w ) override;
 

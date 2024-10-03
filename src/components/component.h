@@ -111,7 +111,7 @@ class Component : public CompBase, public QGraphicsItem, public Updatable
         void setMainComp( bool m ) { m_isMainComp = m; }
 
         virtual std::vector<Pin*> getPins() { return m_pin; }
-        virtual Pin* getPin( QString pinName ){ return nullptr;}
+        virtual Pin* getPin( QString pinName ){ return nullptr; }
 
         //QString print();
 
@@ -128,7 +128,7 @@ class Component : public CompBase, public QGraphicsItem, public Updatable
         virtual void move( QPointF delta ) { setPos( pos() + delta ); moveSignal(); }//emit moved(); }
         void moveTo( QPointF pos ){ setPos( pos ); moveSignal(); }//emit moved(); }
 
-        void moveSignal();
+        virtual void moveSignal();
 
         virtual void rotateAngle( double a );
 
