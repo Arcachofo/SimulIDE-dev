@@ -40,9 +40,11 @@ Component* SubCircuit::construct( QString type, QString id )
         list.takeLast();
     }
 
-    int rev = Circuit::self()->circuitRev();
-    if( rev >= 2220 ){ if( name.contains("@") ) list = name.split("@");}
-    else if( name.contains("_") ) list = name.split("_");
+    if( Circuit::self()->getSubcircuit() ){
+        int rev = Circuit::self()->circuitRev();
+        if( rev >= 2220 ){ if( name.contains("@") ) list = name.split("@");}
+        else if( name.contains("_") ) list = name.split("_");
+    }
 
     QMap<QString, QString> packageList;
     QString subcTyp = "None";
