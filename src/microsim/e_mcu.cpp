@@ -19,19 +19,19 @@
 #include "basedebugger.h"
 #include "editorwindow.h"
 
-eMcu* eMcu::m_pSelf = NULL;
+eMcu* eMcu::m_pSelf = nullptr;
 
 eMcu::eMcu( Mcu* comp, QString id )
     : DataSpace()
     , eIou( comp, id )
     , m_interrupts( this )
 {
-    m_wdt        = NULL;
-    m_intOsc     = NULL;
-    m_comparator = NULL;
-    m_cfgWord    = NULL;
-    m_vrefModule = NULL;
-    m_sleepModule = NULL;
+    m_wdt        = nullptr;
+    m_intOsc     = nullptr;
+    m_comparator = nullptr;
+    m_cfgWord    = nullptr;
+    m_vrefModule = nullptr;
+    m_sleepModule = nullptr;
 
     m_vdd= 5;
 
@@ -44,11 +44,11 @@ eMcu::eMcu( Mcu* comp, QString id )
     m_ramSize   = 0;
 
     m_firmware = "";
-    m_debugger = NULL;
+    m_debugger = nullptr;
     m_debugging = false;
     m_saveEepr = false;
 
-    m_ramTable = new RamTable( NULL, this, false );
+    m_ramTable = new RamTable( nullptr, this, false );
 }
 
 eMcu::~eMcu()
@@ -56,7 +56,7 @@ eMcu::~eMcu()
     if( m_cpu ) delete m_cpu;
     m_interrupts.remove();
     for( McuModule* module : m_modules ) delete module;
-    if( m_pSelf == this ) m_pSelf = NULL;
+    if( m_pSelf == this ) m_pSelf = nullptr;
 }
 
 void eMcu::setup()
@@ -248,8 +248,8 @@ McuPort* eMcu::getMcuPort( QString name )
 
 McuPin* eMcu::getMcuPin( QString pinName )
 {
-    if( pinName.isEmpty() ) return NULL;
-    McuPin* pin = NULL;
+    if( pinName.isEmpty() ) return nullptr;
+    McuPin* pin = nullptr;
 
     for( McuPort* port : m_mcuPorts )
     {
@@ -262,7 +262,7 @@ McuPin* eMcu::getMcuPin( QString pinName )
 
 IoPin*  eMcu::getIoPin( QString pinName )
 {
-    if( pinName.isEmpty() || pinName == "0" ) return NULL;
+    if( pinName.isEmpty() || pinName == "0" ) return nullptr;
     IoPin* pin = eIou::getIoPin( pinName );
 
     if( !pin ) pin = getMcuPin( pinName );

@@ -19,7 +19,7 @@
 #include "e-element.h"
 #include "socket.h"
 
-Simulator* Simulator::m_pSelf = NULL;
+Simulator* Simulator::m_pSelf = nullptr;
 
 Simulator::Simulator( QObject* parent )
          : QObject( parent )
@@ -163,7 +163,7 @@ void Simulator::runCircuit()
         {
             m_circTime = event->eventTime;
             m_firstEvent = event->nextEvent;    // free Event
-            event->nextEvent = NULL;
+            event->nextEvent = nullptr;
             event->eventTime = 0;
             event->runEvent();                  // Run event callback
             event = m_firstEvent;
@@ -184,7 +184,7 @@ void Simulator::solveCircuit()
     {
         if( m_changedNode ) solveMatrix();
 
-        if( m_converged ) m_converged = m_nonLinear==NULL;
+        if( m_converged ) m_converged = m_nonLinear==nullptr;
         while( !m_converged )              // Non Linear Components
         {
             m_converged = true;
@@ -228,9 +228,9 @@ void Simulator::resetSim()
 
     InfoWidget::self()->setCircTime( 0 );
     clearEventList();
-    m_changedNode = NULL;
-    m_voltChanged = NULL;
-    m_nonLinear = NULL;
+    m_changedNode = nullptr;
+    m_voltChanged = nullptr;
+    m_nonLinear = nullptr;
 }
 
 void Simulator::createNodes()
@@ -350,7 +350,7 @@ void Simulator::stopSim()
     for( Updatable* el : m_updateList ) el->updateStep();
 
     clearEventList();
-    m_changedNode = NULL;
+    m_changedNode = nullptr;
 }
 
 void Simulator::pauseSim() // Only pause simulation, don't update UI
@@ -423,7 +423,7 @@ void Simulator::setPsPerSec( uint64_t psPs )
 
 void Simulator::clearEventList()
 {
-    m_firstEvent = NULL;
+    m_firstEvent = nullptr;
 }
 void Simulator::addEvent( uint64_t time, eElement* el )
 {
@@ -433,7 +433,7 @@ void Simulator::addEvent( uint64_t time, eElement* el )
     { qDebug() << "Warning: Simulator::addEvent Repeated event"<<el->getId(); return; }
 
     time += m_circTime;
-    eElement* last  = NULL;
+    eElement* last  = nullptr;
     eElement* event = m_firstEvent;
 
     while( event ){
@@ -453,8 +453,8 @@ void Simulator::cancelEvents( eElement* el )
 {
     if( el->eventTime == 0 ) return;
     eElement* event = m_firstEvent;
-    eElement* last  = NULL;
-    eElement* next  = NULL;
+    eElement* last  = nullptr;
+    eElement* next  = nullptr;
     el->eventTime = 0;
 
     while( event ){
@@ -463,7 +463,7 @@ void Simulator::cancelEvents( eElement* el )
         {
             if( last ) last->nextEvent = next;
             else       m_firstEvent = next;
-            event->nextEvent = NULL;
+            event->nextEvent = nullptr;
         }
         else last = event;
         event = next;

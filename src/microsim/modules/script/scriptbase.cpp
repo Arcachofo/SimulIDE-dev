@@ -42,8 +42,8 @@ void print( string &msg )
 ScriptBase::ScriptBase( QString name )
           : eElement( name )
 {
-    m_aEngine = nullptr;
-    m_context = nullptr;
+    m_aEngine  = nullptr;
+    m_context  = nullptr;
     m_debugger = nullptr;
 
     m_aEngine = asCreateScriptEngine();
