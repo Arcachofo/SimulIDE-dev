@@ -75,7 +75,7 @@ void ClockBase::setFreq( double freq )
     m_freq = freq;
     m_remainder = 0;
 
-    setRunning( m_isRunning && (freq>0) );
+    setRunning( (m_isRunning || m_alwaysOn) && (freq>0) );
 }
 
 void ClockBase::setRunning( bool running )
