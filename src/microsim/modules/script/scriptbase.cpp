@@ -82,6 +82,7 @@ ScriptBase::~ScriptBase()
 void ScriptBase::setScriptFile( QString scriptFile, bool )
 {
     m_scriptFile = scriptFile;
+    m_scriptFolder = QFileInfo( scriptFile ).absolutePath();
     setScript( fileToString( scriptFile, "ScriptBase::setScriptFile" ) );
 }
 
@@ -117,9 +118,20 @@ int ScriptBase::compileSection( QString sriptFile, QString text )
     {
         if( line.contains("#include") )
         {
-            QString file = line.remove("#include").remove("\"").remove(" ");
-            file.prepend( MainWindow::self()->getDataFilePath("scriptlib")+"/" );
-/// TODO: #include "file" vs #include <file>
+            QString file = line.remove("#include").remove(" ");
+            while( file.startsWith(" ") ) file = file.right( file.length()-1 );
+
+            if( file.startsWith("\"") )
+            {
+                file = file.right( file.length()-1 );
+                file = file.split("\"").first();
+                file.prepend( m_scriptFolder+"/" );
+            }
+            else if( file.startsWith("<") )
+            {
+                file = file.remove("<").split(">").first();
+                file.prepend( MainWindow::self()->getDataFilePath("scriptlib")+"/" );
+            }
             line = fileToString( file, "ScriptBase::compileScript" );
             int r = compileSection( file, line );
             if( r < 0 ) ok = r;
@@ -127,12 +139,9 @@ int ScriptBase::compileSection( QString sriptFile, QString text )
         }
         text.append( line+"\n");
     }
-qDebug() << endl << "ScriptBase::compileSection" << sriptFile<< endl;
-qDebug() << endl << text << endl;
     std::string script = text.toStdString();
-    int len = script.size();
 
-    int r = m_asModule->AddScriptSection( sriptFile.toLocal8Bit().data(), &script[0], len );
+    int r = m_asModule->AddScriptSection( sriptFile.toLocal8Bit().data(), &script[0], script.size() );
     if( r < 0 ) { qDebug() << "\nScriptBase::compileSection: AddScriptSection() failed\n"; return -1; }
 
     return ok;

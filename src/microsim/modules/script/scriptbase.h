@@ -45,6 +45,7 @@ class ScriptBase : public eElement
 
         QString m_script;
         QString m_scriptFile;
+        QString m_scriptFolder;
 
         asCJITCompiler* m_jit;
         asIScriptEngine* m_aEngine;
