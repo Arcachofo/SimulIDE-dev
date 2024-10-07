@@ -18,6 +18,10 @@
 
 eNode LedBase::m_gndEnode("");
 int   LedBase::m_overBright = 0;
+QString LedBase::getColorList() {
+    return "Yellow,Red,Green,Blue,Orange,Purple,White;"
+           +tr("Yellow")+","+tr("Red")+","+tr("Green")+","+tr("Blue")
+          +","+tr("Orange")+","+tr("Purple")+","+tr("White");}
 
 LedBase::LedBase( QString type, QString id )
        : Component( type, id )
@@ -26,24 +30,6 @@ LedBase::LedBase( QString type, QString id )
     m_graphical = true;
     m_grounded  = false;
     m_intensity = 0;
-
-    m_enumUids = QStringList()
-        << "Yellow"
-        << "Red"
-        << "Green"
-        << "Blue"
-        << "Orange"
-        << "Purple"
-        << "White";
-
-    m_enumNames = QStringList()
-        << tr("Yellow")
-        << tr("Red")
-        << tr("Green")
-        << tr("Blue")
-        << tr("Orange")
-        << tr("Purple")
-        << tr("White");
 
     m_color = QColor( Qt::black );
     setColorStr("Yellow");
@@ -120,27 +106,26 @@ void LedBase::setGrounded( bool grounded )
     else           pin1->setEnode( NULL );
 }
 
-void LedBase::setColorStr( QString foreColor )
+void LedBase::setColorStr( QString color )
 {
-    int ledColor = getEnumIndex( foreColor );
-    m_ledColor = (LedColor)ledColor;
-    double thr;
-    switch( m_ledColor ) {
-        case yellow: thr = 2.4; break;
-        case red:    thr = 1.8; break;
-        case green:  thr = 3.5; break;
-        case blue:   thr = 3.6; break;
-        case orange: thr = 2.0; break;
-        case purple: thr = 3.5; break;
-        case white:  thr = 4.0; break;
-        default:     thr = 2.4; break;
-    }
+    m_ledColorStr = color;
+    double thr = 2.4;
+
+    if     ( color == "Yellow") { thr = 2.4; m_ledColor = yellow; }
+    else if( color == "Red"   ) { thr = 1.8; m_ledColor = red; }
+    else if( color == "Green" ) { thr = 3.5; m_ledColor = green; }
+    else if( color == "Blue"  ) { thr = 3.6; m_ledColor = blue;}
+    else if( color == "Orange") { thr = 2.0; m_ledColor = orange; }
+    else if( color == "Purple") { thr = 3.5; m_ledColor = purple; }
+    else if( color == "White" ) { thr = 4.0; m_ledColor = white; }
+
     eLed::setThreshold( thr );
+
     if( m_showVal && (m_showProperty == "Color") )
-        setValLabelText( m_enumNames.at( ledColor ) );
+        setValLabelText( color );
 }
 
-QColor LedBase::getColor(LedColor c, int bright )
+QColor LedBase::getColor( ledColor_t c, int bright )
 {
     m_overBright = 0;
     int secL = bright/3;

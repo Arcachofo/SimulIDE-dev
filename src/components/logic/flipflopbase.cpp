@@ -30,7 +30,7 @@ FlipFlopBase::FlipFlopBase( QString type, QString id )
         new BoolProp<FlipFlopBase>("Clock_Inverted", tr("Clock Inverted"),""
                                   , this, &FlipFlopBase::clockInv, &FlipFlopBase::setClockInv, propNoCopy ),
 
-        new StrProp <FlipFlopBase>("Trigger", tr("Trigger Type"),""
+        new StrProp <FlipFlopBase>("Trigger", tr("Trigger Type"), LogicComponent::m_triggerList
                                   , this, &FlipFlopBase::triggerStr,&FlipFlopBase::setTriggerStr, propNoCopy,"enum" ),
     }, groupNoCopy } );
 

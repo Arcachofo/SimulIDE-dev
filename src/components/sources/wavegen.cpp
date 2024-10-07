@@ -49,27 +49,11 @@ WaveGen::WaveGen( QString type, QString id )
     m_voltMid  = 0;
     m_lastVout = 0;
     m_waveType = Sine;
-    m_wavePixmap = NULL;
+    m_wavePixmap = nullptr;
 
     m_pin.resize(2);
     m_pin[1] = m_gndpin = new IoPin( 0, QPoint(16,4), id+"-gndnod", 0, this, source );
     m_gndpin->setVisible( false );
-
-    m_enumUids = QStringList()
-        << "Sine"
-        << "Saw"
-        << "Triangle"
-        << "Square"
-        << "Random"
-        << "Wav";
-
-    m_enumNames = QStringList()
-        <<tr("Sine")
-        <<tr("Saw")
-        <<tr("Triangle")
-        <<tr("Square")
-        <<tr("Random")
-        <<   "Wav";
     
     setSteps( 100 );
     setDuty( 50 );
@@ -78,8 +62,11 @@ WaveGen::WaveGen( QString type, QString id )
 
     remPropGroup( tr("Main") );
 
+    QString waves = "Sine,Saw,Triangle,Square,Random,Wav;"
+            +tr("Sine")+","+tr("Saw")+","+tr("Triangle")+","+tr("Square")+","+tr("Random")+",Wav";
+
     addPropGroup( { tr("Main"), {
-        new StrProp <WaveGen>("Wave_Type", tr("Wave Type"), ""
+        new StrProp <WaveGen>("Wave_Type", tr("Wave Type"), waves
                              , this, &WaveGen::waveType, &WaveGen::setWaveType,0,"enum" ),
 
         new DoubProp<WaveGen>("Freq", tr("Frequency"), "kHz"
@@ -162,12 +149,14 @@ void WaveGen::runEvent()
 {
     m_time = fmod( (Simulator::self()->circTime()-m_lastTime) - m_stepsPC*m_phaseShift/360, m_fstepsPC );
     
-    if     ( m_waveType == Sine )     genSine();
-    else if( m_waveType == Saw )      genSaw();
-    else if( m_waveType == Triangle ) genTriangle();
-    else if( m_waveType == Square )   genSquare();
-    else if( m_waveType == Random )   genRandom();
-    else if( m_waveType == Wav )      genWav();
+    switch( m_waveType ) {
+        case Sine:     genSine(); break;
+        case Saw:      genSaw(); break;
+        case Triangle: genTriangle(); break;
+        case Square:   genSquare(); break;
+        case Random:   genRandom(); break;
+        case Wav:      genWav(); break;
+    }
 
     if( m_vOut != m_lastVout )
     {
@@ -293,22 +282,21 @@ void WaveGen::setFloating( bool f )
     updtProperties();
 }
 
-void WaveGen::setWaveType( QString t )
+void WaveGen::setWaveType( QString type )
 {
-    int type = getEnumIndex( t );
-    m_waveType = (wave_type)type;
+    m_waveTypeStr = type;
     if( m_showVal && (m_showProperty == "Wave_Type") )
-        setValLabelText( m_enumNames.at( type ) );
+        setValLabelText( type );
 
     QString pixmapPath;
-    switch( m_waveType ) {
-    case Sine:     pixmapPath = ":/sin.png"; break;
-    case Saw:      pixmapPath = ":/saw.png"; break;
-    case Triangle: pixmapPath = ":/tri.png"; break;
-    case Square:   pixmapPath = ":/sqa.png"; break;
-    case Random:   pixmapPath = ":/rnd.png"; break;
-    case Wav:      pixmapPath = ":/wav.png"; break;
-    }
+
+    if     ( type == "Sine"    ) { pixmapPath = ":/sin.png"; m_waveType = Sine;}
+    else if( type == "Saw"     ) { pixmapPath = ":/saw.png"; m_waveType = Saw;}
+    else if( type == "Triangle") { pixmapPath = ":/tri.png"; m_waveType = Triangle;}
+    else if( type == "Square"  ) { pixmapPath = ":/sqa.png"; m_waveType = Square;}
+    else if( type == "Random"  ) { pixmapPath = ":/rnd.png"; m_waveType = Random;}
+    else if( type == "Wav"     ) { pixmapPath = ":/wav.png"; m_waveType = Wav;}
+
     if( m_wavePixmap ) delete m_wavePixmap;
     m_wavePixmap = new QPixmap( pixmapPath );
     updtProperties();
@@ -323,12 +311,10 @@ void WaveGen::updtProperties()
     bool showDuty = false;
     bool showSteps = true;
 
-    switch( m_waveType ) {
-    case Triangle: showDuty = true; break;
-    case Square:   showDuty = true; showSteps = false; break;
-    case Wav:      showFile = true; showSteps = false; break;
-    default: break;
-    }
+    if     ( m_waveType == Triangle) { showDuty = true; }
+    else if( m_waveType == Square  ) { showDuty = true; showSteps = false; }
+    else if( m_waveType == Wav     ) { showFile = true; showSteps = false; }
+
     m_propDialog->showProp("File", showFile );
     m_propDialog->showProp("Duty", showDuty );
     m_propDialog->showProp("Steps", showSteps );

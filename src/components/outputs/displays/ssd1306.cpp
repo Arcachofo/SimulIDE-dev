@@ -46,16 +46,6 @@ Ssd1306::Ssd1306( QString type, QString id )
     m_area = QRectF(-70,-m_height/2-16, m_width+12, m_height+24 );
     m_address = m_cCode = 0b00111100; // 0x3A - 60
 
-    m_enumUids = QStringList()
-        << "White"
-        << "Blue"
-        << "Yellow";
-
-    m_enumNames = QStringList()
-        << tr("White")
-        << tr("Blue")
-        << tr("Yellow");
-
     m_pin.resize( 2 );
     m_clkPin = new IoPin( 270, QPoint(-48, 48), id+"-PinSck" , 0, this, openCo );
     m_clkPin->setLabelText( "SCL" );
@@ -71,7 +61,7 @@ Ssd1306::Ssd1306( QString type, QString id )
     //m_pinDC.setLabelText(  "DC" );
     //m_pinCS.setLabelText(  "CS" );
 
-    m_dColor = White;
+    setColorStr("White");
     m_rotate = true;
     
     Simulator::self()->addToUpdateList( this );
@@ -82,7 +72,7 @@ Ssd1306::Ssd1306( QString type, QString id )
     Ssd1306::initialize();
 
     addPropGroup( { tr("Main"), {
-        new StrProp <Ssd1306>("Color",tr("Color"), ""
+        new StrProp <Ssd1306>("Color",tr("Color"), "White,Blue,Yellow;"+tr("White")+","+tr("Blue")+","+tr("Yellow")
                              ,this, &Ssd1306::colorStr, &Ssd1306::setColorStr,0,"enum" ),
 
         new IntProp <Ssd1306>("Width", tr("Width"), "_px"
@@ -399,15 +389,14 @@ void Ssd1306::incrementPointer()
 
 void Ssd1306::setColorStr( QString color )
 {
-    int c = getEnumIndex(  color );
-    m_dColor = (dispColor)c;
+    m_dColor = color;
 
-    if( c == White )  m_foreground = QColor(245, 245, 245);
-    if( c == Blue  )  m_foreground = QColor(200, 200, 255);
-    if( c == Yellow ) m_foreground = QColor(245, 245, 100);
+    if( color == "White"  ) m_foreground = QColor(245, 245, 245);
+    if( color == "Blue"   ) m_foreground = QColor(200, 200, 255);
+    if( color == "Yellow" ) m_foreground = QColor(245, 245, 100);
 
     if( m_showVal && (m_showProperty == "Color") )
-        setValLabelText( m_enumNames.at( c ) );
+        setValLabelText( color );
 }
 
 void Ssd1306::setWidth( int w )

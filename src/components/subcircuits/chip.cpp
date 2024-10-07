@@ -25,7 +25,9 @@ Chip::Chip( QString type, QString id )
     QStringList list = id.split("-");
     if( list.size() > 1 ) m_name = list.at( list.size()-2 ); // for example: "atmega328-1" to: "atmega328"
 
-    m_subcType = None;
+    m_subcType = "None";
+    m_isBoard = false;
+
     m_isLS = false;
     m_initialized = false;
     m_package  = "";
@@ -247,7 +249,7 @@ void Chip::initPackage( QString pkgStr )
     }
     m_initialized = true;
     m_area = QRect( 0, 0, 8*m_width, 8*m_height );
-    if( m_subcType >= Board ) setTransformOriginPoint( toGrid( boundingRect().center()) );
+    if( this->isBoard() ) setTransformOriginPoint( toGrid( boundingRect().center()) );
 
     if( embedName == "Package" ) embedName = m_name;
     setName( embedName );
@@ -438,7 +440,7 @@ void Chip::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w )
             painter.end();
             p->drawImage( m_area, img );
         }
-        else if( m_subcType < Board && !m_isLS /*&& m_background.isEmpty()*/ )
+        else if( !this->isBoard() && !m_isLS /*&& m_background.isEmpty()*/ )
         {
             p->setPen( QColor( 170, 170, 150 ) );
             if( m_width == m_height ) p->drawEllipse( 4, 4, 4, 4);

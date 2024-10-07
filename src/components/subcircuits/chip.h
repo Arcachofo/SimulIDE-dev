@@ -15,15 +15,9 @@ class Chip : public Component, public eElement
         Chip( QString type, QString id );
         ~Chip();
 
-        enum subcType_t{
-            None=0,
-            Logic,
-            Board,
-            Shield,
-            Module
-        };
-
         virtual bool setPropStr( QString prop, QString val ) override;
+
+        bool isBoard() { return m_isBoard; }
 
         QString package() { return m_package; }
         virtual void setPackage( QString package );
@@ -37,7 +31,9 @@ class Chip : public Component, public eElement
         QString name() { return m_name; }
         void setName( QString name );
 
-        subcType_t subcType() { return m_subcType; }
+        //subcType_t subcType() { return m_subcType; }
+        QString subcTypeStr() { return m_subcType; }
+        virtual void setSubcTypeStr( QString s ){ m_subcType = s; }
 
         int pkgWidth() { return m_width; }
 
@@ -74,8 +70,9 @@ class Chip : public Component, public eElement
         bool m_isLS;
         bool m_initialized;
         bool m_customColor;
+        bool m_isBoard;
 
-        subcType_t m_subcType;
+        QString m_subcType;
 
         QColor m_lsColor;
         QColor m_icColor;

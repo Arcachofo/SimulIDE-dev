@@ -25,9 +25,6 @@ IoComponent::IoComponent( QString type, QString id)
     m_openCol    = false;
     m_invInputs  = false;
     m_invOutputs = false;
-    //m_familyAdded = false;
-
-    m_enumUids = m_enumNames = m_families.keys();
 }
 IoComponent::~IoComponent(){}
 
@@ -35,7 +32,7 @@ QList<ComProperty*> IoComponent::inputProps()
 {
     QList<ComProperty*> props =
     {
-        new StrProp<IoComponent>("Family", tr("Logic Family"),""
+        new StrProp<IoComponent>("Family", tr("Logic Family"), m_families.keys().join(",")
                                 , this, &IoComponent::family, &IoComponent::setFamily, 0,"enum" ),
 
         new DoubProp<IoComponent>("SupplyV", tr("Supply Voltage"), "V"

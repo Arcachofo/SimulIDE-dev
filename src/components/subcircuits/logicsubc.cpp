@@ -13,7 +13,7 @@
 LogicSubc::LogicSubc( QString type, QString id )
          : SubCircuit( type, id )
 {
-    m_subcType = Chip::Logic;
+    m_subcType = "Logic";
 
     m_inHighV = 2.5;
     m_inLowV  = 2.5;

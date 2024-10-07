@@ -53,14 +53,12 @@ ULA_ZX48k::ULA_ZX48k( eMcu* mcu )
     m_type = ula6c001e7;                                            // default type
     setParameters(m_type);
 
-    m_enumUids = QStringList() // initialization list of types
+    m_types = QStringList() // initialization list of types
         <<"ULA 5C102E"
         <<"ULA 5C112E"
         <<"ULA 6C001E6"
         <<"ULA 6C001E7"
         <<"ULA 6C011E";
-
-    m_enumNames = m_enumUids;
 
     mcu->createWatcher( this );
     Watcher* watcher = mcu->getWatcher();
@@ -97,10 +95,12 @@ ULA_ZX48k::ULA_ZX48k( eMcu* mcu )
     m_kbPort0  = m_kbPort->getPinN(0);
 
     mcu->component()->addProperty( QObject::tr("Main"),
-new StrProp <ULA_ZX48k>( "Type"  , QObject::tr("Type")  , "", this, &ULA_ZX48k::type     , &ULA_ZX48k::setType,0,"enum" ) );
+        new StrProp <ULA_ZX48k>("Type", QObject::tr("Type"), m_types.join(",")
+                               , this, &ULA_ZX48k::type, &ULA_ZX48k::setType, 0, "enum" ) );
 
     mcu->component()->addProperty( QObject::tr("Main"),
-new BoolProp<ULA_ZX48k>( "Screen", QObject::tr("Screen"), "", this, &ULA_ZX48k::isScreen , &ULA_ZX48k::setScreen, 0 ) );
+        new BoolProp<ULA_ZX48k>("Screen", QObject::tr("Screen"), ""
+                               , this, &ULA_ZX48k::isScreen, &ULA_ZX48k::setScreen, 0 ) );
 }
 ULA_ZX48k::~ULA_ZX48k(){ }
 
@@ -118,7 +118,7 @@ int ULA_ZX48k::getCpuReg( QString reg ) // Called by Mcu Monitor to get Integer 
 
 void ULA_ZX48k::setType( QString type ) // Setter for type
 {
-    int p = m_enumUids.indexOf( type );
+    int p = m_types.indexOf( type );
     m_type = (eType)p;
 
     // When the type of ULA is changed then set default frequency of that type

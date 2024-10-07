@@ -38,7 +38,7 @@ class ULA_ZX48k : public CpuBase, public eElement
 
         virtual int getCpuReg( QString reg ) override;
 
-        QString type() { return m_enumUids.at((int)m_type); }
+        QString type() { return m_types.at((int)m_type); }
         void setType( QString producer );
 
         bool isScreen() { return m_isSrceen; }
@@ -47,6 +47,7 @@ class ULA_ZX48k : public CpuBase, public eElement
     private:
         enum eType { ula5c102e = 0, ula5c112e, ula6c001e6, ula6c001e7, ula6c011e };
         eType m_type;
+        QStringList m_types;
 
         void setParameters(eType type);
         void clk7FallingEdge();

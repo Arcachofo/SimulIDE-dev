@@ -131,8 +131,6 @@ Component* SubCircuit::construct( QString type, QString id )
 
         QStringList pkges = packageList.keys();
         subcircuit->m_packageList = packageList;
-        subcircuit->m_enumUids = pkges;
-        subcircuit->m_enumNames = subcircuit->m_enumUids;
         subcircuit->m_dataFile = subcFile;
 
         if( packageList.size() > 1 ) // Add package list if there is more than 1 to choose
@@ -198,116 +196,119 @@ void SubCircuit::loadSubCircuit( QString doc )
     QVector<QStringRef> docLines = doc.splitRef("\n");
     for( QStringRef line : docLines )
     {
-        if( line.startsWith("<item") )
+        if( !line.startsWith("<item") ) continue;
+
+        QVector<propStr_t> properties = parseXmlProps( line );
+
+        propStr_t itemType = properties.takeFirst();
+        if( itemType.name != "itemtype") continue;
+        QString type = itemType.value.toString();
+
+        if( type == "Package" || type == "Subcircuit" ) continue;
+
+        if( type == "Connector" )
         {
-            QVector<propStr_t> properties = parseXmlProps( line );
+            QString startPinId, endPinId, enodeId;
+            QStringList pointList;
 
-            propStr_t itemType = properties.takeFirst();
-            if( itemType.name != "itemtype") continue;
-            QString type = itemType.value.toString();
-
-            if( type == "Package" || type == "Subcircuit" ) continue;
-
-            if( type == "Connector" )
+            for( propStr_t prop : properties )
             {
-                QString startPinId, endPinId, enodeId;
-                QStringList pointList;
+                if     ( prop.name == "startpinid") startPinId = numId+"@"+prop.value.toString();
+                else if( prop.name == "endpinid"  ) endPinId   = numId+"@"+prop.value.toString();
+                else if( prop.name == "pointList" ) pointList  = prop.value.toString().split(",");
+            }
 
-                for( propStr_t prop : properties )
+            Pin* startPin = circ->m_LdPinMap.value( startPinId );
+            Pin* endPin   = circ->m_LdPinMap.value( endPinId );
+
+            if( !startPin ) startPin = findPin( startPinId );
+            if( !endPin   ) endPin   = findPin( endPinId );
+
+            if( startPin && endPin ) // Create Connection
+            {
+                startPin->setConPin( endPin );
+                endPin->setConPin( startPin );
+            }
+            else // Start or End pin not found
+            {
+                if( !startPin ) qDebug()<<"\n   ERROR!!  SubCircuit::loadSubCircuit: "<<m_name<<m_id+" null startPin in "<<type<<startPinId;
+                if( !endPin )   qDebug()<<"\n   ERROR!!  SubCircuit::loadSubCircuit: "<<m_name<<m_id+" null endPin in "  <<type<<endPinId;
+        }   }
+        else{
+            Component* comp = nullptr;
+
+            propStr_t circId = properties.takeFirst();
+            if( circId.name != "CircId") continue; /// ERROR
+            QString uid = circId.value.toString();
+            QString newUid = numId+"@"+uid;
+
+            if( type == "Node" ) comp = new Node( type, newUid );
+            else                 comp = circ->createItem( type, newUid, false );
+
+            if( !comp ){
+                qDebug() << "SubCircuit:"<<m_name<<m_id<< "ERROR Creating Component: "<<type<<uid;
+                continue;
+            }
+            comp->setIdLabel( uid ); // Avoid parent Uids in label
+
+            Mcu* mcu = nullptr;
+            if( comp->itemType() == "MCU" )
+            {
+                comp->remProperty("Logic_Symbol");
+                mcu = (Mcu*)comp;
+                mcu->m_subcFolder = m_subcDir+"/";
+            }
+
+            for( propStr_t prop : properties )
+            {
+                QString propName = prop.name.toString();
+                if( !s_graphProps.contains( propName ) ) comp->setPropStr( propName, prop.value.toString() );
+            }
+            if( mcu ) mcu->m_subcFolder = "";
+
+            comp->setup();
+            comp->setParentItem( this );
+
+            if( this->isBoard() && comp->isGraphical() )
+            {
+                QPointF pos = comp->boardPos();
+
+                comp->moveTo( pos );
+                comp->setRotation( comp->boardRot() );
+                comp->setHflip( comp->boardHflip() );
+                comp->setVflip( comp->boardVflip() );
+
+                if( !this->collidesWithItem( comp ) ) // Don't show Components out of Board
                 {
-                    if     ( prop.name == "startpinid") startPinId = numId+"@"+prop.value.toString();
-                    else if( prop.name == "endpinid"  ) endPinId   = numId+"@"+prop.value.toString();
-                    else if( prop.name == "pointList" ) pointList  = prop.value.toString().split(",");
+                    comp->setBoardPos( QPointF(-1e6,-1e6 ) ); // Used in setLogicSymbol to identify Components not visible
+                    comp->moveTo( QPointF( 0, 0 ) );
+                    comp->setVisible( false );
                 }
-                //startPinId = startPinId.replace("Pin-", "Pin_"); // Old TODELETE
-                //endPinId   =   endPinId.replace("Pin-", "Pin_"); // Old TODELETE
-
-                Pin* startPin = circ->m_LdPinMap.value( startPinId );
-                Pin* endPin   = circ->m_LdPinMap.value( endPinId );
-
-                if( !startPin ) startPin = findPin( startPinId );
-                if( !endPin   ) endPin   = findPin( endPinId );
-
-                if( startPin && endPin ) // Create Connection
-                {
-                    startPin->setConPin( endPin );
-                    endPin->setConPin( startPin );
-                }
-                else // Start or End pin not found
-                {
-                    if( !startPin ) qDebug()<<"\n   ERROR!!  SubCircuit::loadSubCircuit: "<<m_name<<m_id+" null startPin in "<<type<<startPinId;
-                    if( !endPin )   qDebug()<<"\n   ERROR!!  SubCircuit::loadSubCircuit: "<<m_name<<m_id+" null endPin in "  <<type<<endPinId;
-            }   }
+                comp->setHidden( true, true, true ); // Boards: hide non graphical
+                if( m_isLS && m_packageList.size() > 1 ) comp->setVisible( false ); // Don't show any component if Logic Symbol
+            }
             else{
-                Component* comp = nullptr;
+                comp->moveTo( QPointF(20, 20) );
+                comp->setVisible( false );     // Not Boards: Don't show any component
+            }
 
-                propStr_t circId = properties.takeFirst();
-                if( circId.name != "CircId") continue; /// ERROR
-                QString uid = circId.value.toString();
-                QString newUid = numId+"@"+uid;
+            if( comp->isMainComp() ) m_mainComponents[uid] = comp; // This component will add it's Context Menu and properties
 
-                if( type == "Node" ) comp = new Node( type, newUid );
-                else                 comp = circ->createItem( type, newUid, false );
+            m_compList.append( comp );
 
-                if( comp ){
-                    comp->setIdLabel( uid ); // Avoid parent Uids in label
+            if( comp->m_isLinker ){
+                Linker* l = dynamic_cast<Linker*>(comp);
+                if( l->hasLinks() ) linkList.append( l );
+            }
 
-                    for( propStr_t prop : properties )
-                    {
-                        QString propName = prop.name.toString();
-                        if( !s_graphProps.contains( propName ) ) comp->setPropStr( propName, prop.value.toString() );
-                    }
-                    comp->setup();
-                    comp->setParentItem( this );
-
-                    if( m_subcType >= Board && comp->isGraphical() )
-                    {
-                        QPointF pos = comp->boardPos();
-
-                        comp->moveTo( pos );
-                        comp->setRotation( comp->boardRot() );
-                        comp->setHflip( comp->boardHflip() );
-                        comp->setVflip( comp->boardVflip() );
-
-                        if( !this->collidesWithItem( comp ) ) // Don't show Components out of Board
-                        {
-                            comp->setBoardPos( QPointF(-1e6,-1e6 ) ); // Used in setLogicSymbol to identify Components not visible
-                            comp->moveTo( QPointF( 0, 0 ) );
-                            comp->setVisible( false );
-                        }
-                        comp->setHidden( true, true, true ); // Boards: hide non graphical
-                        if( m_isLS && m_packageList.size() > 1 ) comp->setVisible( false ); // Don't show any component if Logic Symbol
-                    }
-                    else{
-                        comp->moveTo( QPointF(20, 20) );
-                        comp->setVisible( false );     // Not Boards: Don't show any component
-                    }
-
-                    if( comp->itemType() == "MCU" )
-                    {
-                        comp->remProperty("Logic_Symbol");
-                        Mcu* mcu = (Mcu*)comp;
-                        QString program = mcu->program();
-                        if( !program.isEmpty() ) mcu->load( m_subcDir+"/"+program );
-                    }
-                    if( comp->isMainComp() ) m_mainComponents[uid] = comp; // This component will add it's Context Menu and properties
-
-                    m_compList.append( comp );
-
-                    if( comp->m_isLinker ){
-                        Linker* l = dynamic_cast<Linker*>(comp);
-                        if( l->hasLinks() ) linkList.append( l );
-                    }
-
-                    if( type == "Tunnel" ) // Make Circuit Tunnel names unique for this subcircuit
-                    {
-                        Tunnel* tunnel = static_cast<Tunnel*>( comp );
-                        tunnel->setTunnelUid( tunnel->name() );
-                        tunnel->setName( m_id+"-"+tunnel->name() );
-                        m_subcTunnels.append( tunnel );
-                }   }
-                else qDebug() << "SubCircuit:"<<m_name<<m_id<< "ERROR Creating Component: "<<type<<uid;
-    }   }   }
+            if( type == "Tunnel" ) // Make Circuit Tunnel names unique for this subcircuit
+            {
+                Tunnel* tunnel = static_cast<Tunnel*>( comp );
+                tunnel->setTunnelUid( tunnel->name() );
+                tunnel->setName( m_id+"-"+tunnel->name() );
+                m_subcTunnels.append( tunnel );
+            }
+    }   }
     for( Linker* l : linkList ) l->createLinks( &m_compList );
 }
 
@@ -426,7 +427,7 @@ void SubCircuit::setLogicSymbol( bool ls )
     for( Component* comp : m_compList ) // Don't show graphical components in LS if Board
     {
         if( !comp->isGraphical() ) continue;
-        if( m_subcType >= Board )
+        if( this->isBoard() )
         {
             comp->setVisible( !m_isLS && comp->boardPos() != QPointF(-1e6,-1e6 ) );
         }

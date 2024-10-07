@@ -12,23 +12,15 @@
 
 #define tr(str) simulideTr("LogicComponent",str)
 
+const QString LogicComponent::m_triggerList = "None,Clock,Enable;"+tr("None")+","+tr("Clock")+","+tr("Enable");
+
 LogicComponent::LogicComponent( QString type, QString id )
               : IoComponent( type, id )
               , eClockedDevice( id )
 {
-    m_oePin     = NULL;
+    m_oePin     = nullptr;
     m_tristate  = false;
     m_outEnable = true;
-
-    m_enumUids = QStringList()
-        << "None"
-        << "Clock"
-        << "Enable";
-
-    m_enumNames = QStringList()
-        << tr("None")
-        << tr("Clock")
-        << tr("Enable");
 }
 LogicComponent::~LogicComponent(){}
 
@@ -38,18 +30,6 @@ void LogicComponent::stamp()
     eClockedDevice::stamp();
     if( m_oePin ) m_oePin->changeCallBack( this );
     m_outEnable = true;
-}
-
-QStringList LogicComponent::getEnumUids( QString property )
-{
-    if( property == "Family" ) return LogicFamily::getEnumUids( property );
-    else                       return m_enumUids;
-}
-
-QStringList LogicComponent::getEnumNames( QString  property )
-{
-    if( property == "Family" ) return LogicFamily::getEnumNames( property );
-    else                       return m_enumNames;
 }
 
 std::vector<Pin*> LogicComponent::getPins()
@@ -104,8 +84,14 @@ void LogicComponent::setTristate( bool t )  // Activate or deactivate OE Pin
 
 void LogicComponent::setTriggerStr( QString t )
 {
-    int index = getEnumIndex( t );
-    setTrigger( (trigger_t)index );
+    m_triggerStr = t;
+
+    trigger_t trigger;
+    if     ( t == "None"    ) trigger = None;
+    else if( t == "Clock"   ) trigger = Clock;
+    else if( t == "InEnable") trigger = InEnable;
+
+    eClockedDevice::setTrigger( trigger );
 }
 
 void LogicComponent::enableOutputs( bool en )

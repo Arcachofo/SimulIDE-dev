@@ -11,8 +11,9 @@ BoardSubc::BoardSubc( QString type, QString id )
          : SubCircuit( type, id )
 {
     m_graphical = true;
-    m_subcType = Chip::Board;
-    m_parentBoard = NULL;
+    m_isBoard = true;
+    m_subcType = "Board";
+    m_parentBoard = nullptr;
 }
 BoardSubc::~BoardSubc(){}
 

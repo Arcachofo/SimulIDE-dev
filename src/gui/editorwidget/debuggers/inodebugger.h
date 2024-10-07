@@ -12,8 +12,6 @@
 
 class InoDebugger : public AvrGccDebugger
 {
-    //Q_OBJECT
-
     public:
         InoDebugger( CodeEditor* parent, OutPanelText* outPane );
         ~InoDebugger();
@@ -36,8 +34,6 @@ class InoDebugger : public AvrGccDebugger
         virtual bool postProcess() override;
         
     private:
-        void initializeBoards();
-
         int m_version;
         int m_lastInoLine;
         int m_loopInoLine;
@@ -47,6 +43,8 @@ class InoDebugger : public AvrGccDebugger
         QString m_sketchBook;
         QString m_customBoard;
         QString m_board;
+        QString m_defaultBoards;
+        QStringList m_userBoards;
 
         QMap<QString, QString> m_boardMap;
 };

@@ -233,7 +233,7 @@ void Mcu::setupMcu()
     // Main Property Group --------------------------------------
 
     if( m_packageList.size() > 1 )
-    addProperty(tr("Main"), new StrProp<Mcu>("Package", tr("Package"),""
+    addProperty(tr("Main"), new StrProp<Mcu>("Package", tr("Package"), m_packageList.keys().join(",")
                                             , this, &Mcu::package, &Mcu::setPackage,0,"enum" ) );
 
     if( m_eMcu.m_intOsc )
@@ -370,8 +370,7 @@ void Mcu::setProgram( QString pro )
 {
     if( m_savePGM ) return;
     if( pro == "" ) return;
-    if( Circuit::self()->getSubcircuit() ) m_eMcu.m_firmware = pro; // Let Subcircuit load firmware with path to subc dir
-    else load( pro );
+    load( m_subcFolder+pro );
 }
 
 QString Mcu::varList()
@@ -754,18 +753,6 @@ bool Mcu::clockOut()
 }
 
 void Mcu::setClockOut( bool clkOut ) { if( m_eMcu.m_intOsc ) m_eMcu.m_intOsc->setClockOut( clkOut ); }
-
-QStringList Mcu::getEnumUids( QString prop )
-{
-    if( prop == "Package") return m_packageList.keys();
-    return m_eMcu.m_cpu->getEnumUids( prop );
-}
-
-QStringList Mcu::getEnumNames( QString prop )
-{
-    if( prop == "Package") return m_packageList.keys();
-    return m_eMcu.m_cpu->getEnumNames( prop );
-}
 
 void Mcu::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
 {

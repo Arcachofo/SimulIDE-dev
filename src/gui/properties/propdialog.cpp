@@ -125,6 +125,14 @@ void PropDialog::setComponent( CompBase* comp, bool isComp )
     if( tabList->count() == 0 ) tabList->setVisible( false ); // Hide tab widget if empty
 }
 
+PropVal* PropDialog::getPropWidget( QString propName )
+{
+    for( PropVal* widget : m_propList )
+        if( widget->propName() == propName ) return widget;
+
+    return nullptr;
+}
+
 void PropDialog::showProp( QString name, bool show )
 {
     for( PropVal* prop : m_propList )

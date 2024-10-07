@@ -45,8 +45,6 @@ Dht22::Dht22( QString type, QString id )
     m_humiInc = 5;
     m_set = true;
 
-    m_enumUids = m_enumNames = QStringList()<<"DHT11"<<"DHT22";
-
     m_pin.resize(4);
     m_pin[0] = m_inpin = new IoPin( 180, QPoint(-36,-4), id+"-inPin", 0, this );
     m_inpin->setOutHighV( 5 );
@@ -101,7 +99,7 @@ Dht22::Dht22( QString type, QString id )
     QObject::connect( d_button, &QPushButton::pressed, [=](){ downbuttonclicked(); } );
 
     addPropGroup( { tr("Main"), {
-        new StrProp <Dht22>("DHT22", tr("Model"),""
+        new StrProp <Dht22>("DHT22", tr("Model"),"DHT11,DHT22"
                            , this, &Dht22::model, &Dht22::setModel, propNoCopy,"enum"  ),
 
         new DoubProp<Dht22>("TempInc", tr("Temp. increment") ,"°C"

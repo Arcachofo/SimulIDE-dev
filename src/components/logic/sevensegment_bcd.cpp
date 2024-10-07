@@ -153,7 +153,7 @@ void SevenSegmentBCD::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWi
 
     QPen pen;
     pen.setWidth( tk );
-    QColor color = LedBase::getColor( (LedBase::LedColor)0, 255 );
+    QColor color = LedBase::getColor( (LedBase::ledColor_t)0, 255 );
     pen.setColor( color );
     pen.setCapStyle( Qt::RoundCap );
     p->setPen( pen );

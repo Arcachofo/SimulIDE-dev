@@ -70,7 +70,7 @@ SevenSegment::SevenSegment( QString type, QString id )
     setNumDisplays( 1 );
 
     addPropGroup( { tr("Main"), {
-        new StrProp <SevenSegment>("Color", tr("Color"), ""
+        new StrProp <SevenSegment>("Color", tr("Color"), LedBase::getColorList()
                                   , this, &SevenSegment::colorStr, &SevenSegment::setColorStr,0,"enum" ),
 
         new IntProp <SevenSegment>("NumDisplays"  , tr("Size"), ""
@@ -126,11 +126,8 @@ void SevenSegment::setColorStr( QString color )
 {
     for( LedSmd* segment : m_segment ) segment->setColorStr( color );
     if( m_showVal && (m_showProperty == "Color") )
-        setValLabelText( m_enumNames.at( m_segment[0]->getEnumIndex( color ) ) );
+        setValLabelText( color );
 }
-
-QStringList SevenSegment::getEnumUids( QString ) { return m_segment[0]->getEnumUids(""); }
-QStringList SevenSegment::getEnumNames( QString ){ return m_segment[0]->getEnumNames(""); }
 
 void SevenSegment::setNumDisplays( int displays )
 {

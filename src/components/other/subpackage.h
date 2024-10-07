@@ -47,8 +47,7 @@ class SubPackage : public Chip, public Linker
 
         void savePackage( QString fileName );
 
-        QString subcTypeStr() { return m_enumUids.at( (int)m_subcType ); }
-        void setSubcTypeStr( QString s );
+        virtual void setSubcTypeStr( QString s ) override;
 
         virtual void compSelected( Component* comp ) override;  // Use link mechanism to select main components
 

@@ -43,8 +43,6 @@ Diode::Diode( QString type, QString id, bool zener )
     setValLabelPos(-16, 6, 0 );
     setLabelPos(-16,-24, 0 );
 
-    m_enumUids = m_enumNames = m_diodes.keys();
-
     // Pin0--eDiode--ePin1--midEnode--ePin2--eResistor--Pin1
     m_ePin[0] = m_pin[0];
     setNumEpins( 3 );
@@ -64,7 +62,7 @@ Diode::Diode( QString type, QString id, bool zener )
     Simulator::self()->addToUpdateList( this );
 
     addPropGroup( { tr("Main"), {
-        new StrProp<Diode>("Model", tr("Model"),""
+        new StrProp<Diode>("Model", tr("Model"), m_diodes.keys().join(",")
                           , this, &Diode::model, &Diode::setModel, 0,"enum" ),
     },0} );
 

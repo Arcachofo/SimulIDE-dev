@@ -44,7 +44,7 @@ LedBar::LedBar( QString type, QString id )
     setValLabelPos(-16,-44-12, 0);
 
     addPropGroup( { tr("Main"), {
-        new StrProp<LedBar>("Color", tr("Color"), ""
+        new StrProp<LedBar>("Color", tr("Color"), LedBase::getColorList()
                            , this, &LedBar::colorStr, &LedBar::setColorStr,0,"enum" ),
 
         new IntProp<LedBar>("Size" , tr("Size"), "_Leds"
@@ -126,11 +126,8 @@ void LedBar::setColorStr( QString color )
 {
     for( LedSmd* led : m_led ) led->setColorStr( color );
     if( m_showVal && (m_showProperty == "Color") )
-        setValLabelText( m_enumNames.at( m_led[0]->getEnumIndex( color ) ) );
+        setValLabelText( color );
 }
-
-QStringList LedBar::getEnumUids( QString ) { return m_led[0]->getEnumUids(""); }
-QStringList LedBar::getEnumNames( QString ){ return m_led[0]->getEnumNames(""); }
 
 void LedBar::setSize( int size )
 {

@@ -21,7 +21,7 @@
 ShieldSubc::ShieldSubc( QString type, QString id )
           : BoardSubc( type, id )
 {
-    m_subcType = Chip::Shield;
+    m_subcType = "Shield";
     m_boardId = "";
     setZValue( 1 );
 
@@ -37,7 +37,7 @@ void ShieldSubc::setBoard( BoardSubc* board )
     m_parentBoard = board;
     m_boardId = board->getUid();
     board->attachShield( this );
-    if( m_subcType == Shield ) attachToBoard();
+    if( m_subcType == "Shield" ) attachToBoard();
     setParentItem( board );
     Circuit::self()->compList()->removeOne( this );
 }
@@ -68,7 +68,7 @@ void ShieldSubc::slotAttach()
         if( !(comp->itemType() == "Subcircuit") ) continue;  // Not a Subcircuit
 
         BoardSubc* board = (BoardSubc*)comp;
-        if( board->subcType() != Board ) continue;           // Not a Board
+        if( board->subcTypeStr() != "Board") continue;           // Not a Board
 
         if( board->logicSymbol() ) continue;                 // Don't attach to logic symbol
 

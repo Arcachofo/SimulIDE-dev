@@ -36,23 +36,7 @@ Max72xx_matrix::Max72xx_matrix( QString type, QString id )
     m_numDisplays = 4;
     m_area = QRectF(-36, -44, 4+64*m_numDisplays+4, 88 );
 
-    m_enumUids = QStringList()
-        << "Yellow"
-        << "Red"
-        << "Green"
-        << "Blue"
-        << "Orange"
-        << "Purple"
-        << "White";
-
-    m_enumNames = QStringList()
-        << tr("Yellow")
-        << tr("Red")
-        << tr("Green")
-        << tr("Blue")
-        << tr("Orange")
-        << tr("Purple")
-        << tr("White");
+    m_colorList << "Yellow"<<"Red"<<"Green"<<"Blue"<<"Orange"<<"Purple"<<"White";
 
     m_colors[0] = QColor( 255-25, 255-25,   0    ); // Yellow
     m_colors[1] = QColor( 255-25, 140-25, 100-25 ); // Red
@@ -196,9 +180,9 @@ void Max72xx_matrix::setNumDisplays( int displays )
 
 void Max72xx_matrix::setColorStr( QString color )
 {
-    m_ledColor = getEnumIndex( color );
+    m_ledColor = m_colorList.indexOf( color );
     if( m_showVal && (m_showProperty == "Color") )
-        setValLabelText( m_enumNames.at( m_ledColor ) );
+        setValLabelText( color );
 }
 
 void Max72xx_matrix::setHidden( bool hid, bool hidArea, bool hidLabel )

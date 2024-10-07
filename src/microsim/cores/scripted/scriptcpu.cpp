@@ -484,6 +484,11 @@ QString ScriptCpu::getProp( ComProperty* p )
         QString retStr = ret ? "true" : "false";
         return retStr;
     }
+    else if( type == "enum" )
+    {
+        std::string str = *(string*)m_context->GetReturnObject();
+        return QString::fromStdString( str );
+    }
     return "";
 }
 
@@ -497,6 +502,11 @@ void ScriptCpu::setProp( ComProperty* p, QString val )
     if( !asFunc ) return; // Repeated in command(), create a function for this
     prepare( asFunc );
     if( type == "string" )
+    {
+        std::string str = val.toStdString();
+        m_context->SetArgObject( 0, &str );
+    }
+    else if( type == "enum" )
     {
         std::string str = val.toStdString();
         m_context->SetArgObject( 0, &str );

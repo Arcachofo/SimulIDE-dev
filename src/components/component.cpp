@@ -37,7 +37,7 @@ Component::Component( QString type, QString id )
     m_Vflip  = 1;
     m_color  = QColor( Qt::white );
 
-    m_backPixmap = NULL;
+    m_backPixmap = nullptr;
     //m_group = NULL;
 
     m_showId     = false;

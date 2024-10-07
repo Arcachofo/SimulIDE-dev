@@ -60,6 +60,7 @@ Circuit::Circuit( int width, int height, CircuitView* parent )
 
     m_board = nullptr;
     m_newConnector = nullptr;
+    m_subCircuit = nullptr;
     m_seqNumber = 0;
     m_conNumber = 0;
     m_maxUndoSteps = 100;
@@ -313,7 +314,8 @@ void Circuit::loadStrDoc( QString &doc )
 
                     if( type == "Subcircuit")
                     {
-                        if( m_subCircuit->subcType() >= Chip::Shield )
+                        QString subcType = m_subCircuit->subcTypeStr();
+                        if( subcType == "Shield" || subcType == "Module" )
                         {
                             ShieldSubc* shield = static_cast<ShieldSubc*>(comp);
                             shieldList.append( shield );
@@ -412,6 +414,7 @@ void Circuit::loadStrDoc( QString &doc )
 
     setAnimate( m_animate ); // Force Pin update
 
+    m_subCircuit = nullptr;
     m_busy = false;
     QApplication::restoreOverrideCursor();
     update();

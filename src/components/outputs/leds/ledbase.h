@@ -17,8 +17,8 @@ class LedBase : public Component, public eLed
     public:
         LedBase( QString type, QString id );
         ~LedBase();
-        
-        enum LedColor {
+
+        enum ledColor_t {
             yellow = 0,
             red,
             green,
@@ -28,7 +28,7 @@ class LedBase : public Component, public eLed
             white
         };
 
-        QString colorStr() { return m_enumUids.at((int)m_ledColor ); }
+        QString colorStr() { return m_ledColorStr; }
         void setColorStr( QString color );
 
         bool grounded() { return m_grounded; }
@@ -37,7 +37,8 @@ class LedBase : public Component, public eLed
         virtual void initialize() override;
         virtual void updateStep() override;
 
- static QColor getColor( LedColor c, int bright );
+ static QColor getColor( ledColor_t c, int bright );
+ static QString getColorList();
 
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w ) override;
 
@@ -49,7 +50,8 @@ class LedBase : public Component, public eLed
 
  static int m_overBright;
         
-        LedColor m_ledColor;
+        QString m_ledColorStr;
+        ledColor_t m_ledColor;
 
         static eNode m_gndEnode;
 };

@@ -6,6 +6,8 @@
 #include "zener.h"
 #include "itemlibrary.h"
 
+#include "stringprop.h"
+
 #define tr(str) simulideTr("Zener",str)
 
 Component* Zener::construct( QString type, QString id )
@@ -24,6 +26,9 @@ LibraryItem* Zener::libraryItem()
 Zener::Zener( QString type, QString id )
      : Diode( type, id, true )
 {
-    m_enumUids = m_enumNames = m_zeners.keys();
+    remProperty("Model");
+    addProperty( tr("Main"),
+        new StrProp<Diode>("Model", tr("Model"), m_zeners.keys().join(",")
+                           , this, &Diode::model, &Diode::setModel, 0,"enum" ) );
 }
 Zener::~Zener(){}

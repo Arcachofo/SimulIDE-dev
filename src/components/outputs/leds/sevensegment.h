@@ -44,9 +44,6 @@ class SevenSegment : public Component, public eElement
 
         virtual void stamp() override;
 
-        virtual QStringList getEnumUids( QString ) override;
-        virtual QStringList getEnumNames( QString ) override;
-
         virtual void setHidden( bool hid, bool hidArea=false, bool hidLabel=false ) override;
 
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w ) override;

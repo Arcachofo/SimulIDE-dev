@@ -23,6 +23,8 @@ class EnumVal : public PropVal, private Ui::EnumVal
         virtual void setup( bool isComp ) override;
         virtual void updtValues() override;
 
+        void setEnums( QString e );
+
     public slots:
         void on_showVal_toggled( bool checked );
         void on_valueBox_currentIndexChanged( QString val );

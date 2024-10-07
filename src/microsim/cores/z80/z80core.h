@@ -51,7 +51,7 @@ class Z80Core : public CpuBase, public eElement
         QString getStrReg16( uint8_t reg = 4 );
         QString showProp() { return ""; }
         void setValLabelText( QString ) {;}
-        QString producer() { return m_enumUids.at((int)m_producer); }
+        QString producer() { return m_producers.at((int)m_producer); }
         void setProducer( QString producer );
         bool cmos() { return m_cmos; }
         void setCmos( bool cmos );
@@ -68,6 +68,7 @@ class Z80Core : public CpuBase, public eElement
         // Setting of Z80Core
         enum eProducer { pZilog = 0, pNec, pSt };
         eProducer m_producer;
+        QStringList m_producers;
 
         enum eRegs { rB = 0, rC = 1, rD = 2, rE = 3, rH = 4, rL = 5, rXH = 6, rXL = 7, rYH = 8, rYL = 9 };      // don't change register numbers
         enum eRegPairs { rBC = rB, rDE = rD, rHL = rH, rIX = rXH, rIY = rYH, rAF = rIY + 2 };      // don't change register numbers

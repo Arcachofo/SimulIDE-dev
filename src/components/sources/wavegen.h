@@ -16,7 +16,7 @@ class WaveGen : public ClockBase
         WaveGen( QString type, QString id );
         ~WaveGen();
         
-        enum wave_type {
+        enum waveType_t {
             Sine = 0,
             Saw,
             Triangle,
@@ -42,8 +42,8 @@ class WaveGen : public ClockBase
         double phaseShift() { return m_phaseShift; }
         void setPhaseShift( double p ) { m_phaseShift = p; }
 
-        QString waveType() { return m_enumUids.at((int)m_waveType); }
-        void setWaveType( QString t );
+        QString waveType() { return m_waveTypeStr; }
+        void setWaveType( QString type );
 
         double semiAmpli() { return m_voltage/2; }
         void setSemiAmpli( double v );
@@ -85,7 +85,9 @@ class WaveGen : public ClockBase
         bool m_bipolar;
         bool m_floating;
 
-        wave_type m_waveType;
+        QString m_waveTypeStr;
+        waveType_t m_waveType;
+
         double m_duty;
         double m_vOut;
         double m_voltMid;

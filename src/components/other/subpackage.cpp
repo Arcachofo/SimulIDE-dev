@@ -54,21 +54,6 @@ SubPackage::SubPackage( QString type, QString id )
 {
     m_linkCursor = QCursor( QPixmap(":/expose.png"), 10, 10 );
 
-    m_enumUids = QStringList()
-        << "None"
-        << "Logic"
-        << "Board"
-        << "Shield"
-        << "Module";
-
-    m_enumNames = QStringList()
-        << tr("None")
-        << tr("Logic")
-        << tr("Board")
-        << tr("Shield")
-        << tr("Module");
-
-    m_subcType = Chip::None;
     m_width  = 4;
     m_height = 8;
     m_area = QRect(0, 0, m_width*8, m_height*8);
@@ -94,8 +79,11 @@ SubPackage::SubPackage( QString type, QString id )
     
     m_pkgeFile = "";
 
+    QString enums = "None,Logic,Board,Shield,Module;"
+      +tr("None")+","+tr("Logic")+","+tr("Board")+","+tr("Shield")+","+tr("Module");
+
     addPropGroup( { tr("Main"), {
-        new StrProp <SubPackage>("SubcType", tr("Type"),""
+        new StrProp <SubPackage>("SubcType", tr("Type"), enums
                                 , this, &SubPackage::subcTypeStr, &SubPackage::setSubcTypeStr,0,"enum" ),
 
         new IntProp <SubPackage>("Width", tr("Width"),""
@@ -154,12 +142,10 @@ void SubPackage::setHeight( int height )
 
 void SubPackage::setSubcTypeStr( QString s )
 {
-    int index = getEnumIndex( s.remove("subc") );
-    subcType_t type = (subcType_t)index;
-    if( m_subcType == type ) return;
+    if( m_subcType == s ) return;
 
     SubPackage* currentBoard = Circuit::self()->getBoard();
-    if( type >= Board )
+    if( s =="Board" || s =="Shield" || s =="Module" )
     {
         if( currentBoard && currentBoard != this ) // Only one board Package can be in the circuit
         {
@@ -167,13 +153,14 @@ void SubPackage::setSubcTypeStr( QString s )
             return;
         }
         Circuit::self()->setBoard( this );
+        m_isBoard = true;
     }
     else if( currentBoard == this ) Circuit::self()->setBoard( NULL );
 
-    m_subcType = type;
+    m_subcType = s;
 
     if( m_showVal && (m_showProperty == "SubcType") )
-        setValLabelText( m_enumNames.at( index ) );
+        setValLabelText( m_subcType );
 }
 
 void SubPackage::hoverMoveEvent( QGraphicsSceneHoverEvent* event ) 
@@ -272,7 +259,7 @@ void SubPackage::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu
 
     menu->addSeparator();
 
-    if( m_subcType >= Board )
+    if( this->isBoard() )
     {
         m_boardModeAction->setChecked( m_boardMode );
         menu->addAction( m_boardModeAction );

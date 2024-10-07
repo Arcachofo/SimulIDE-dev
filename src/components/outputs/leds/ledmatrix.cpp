@@ -48,7 +48,7 @@ LedMatrix::LedMatrix( QString type, QString id )
     createMatrix();
 
     addPropGroup( { tr("Main"), {
-        new StrProp <LedMatrix>("Color", tr("Color"), ""
+        new StrProp <LedMatrix>("Color", tr("Color"), LedBase::getColorList()
                                , this, &LedMatrix::colorStr, &LedMatrix::setColorStr,0,"enum" ),
 
         new IntProp <LedMatrix>("Rows", tr("Rows"), ""
@@ -175,11 +175,8 @@ void LedMatrix::setColorStr( QString color )
             m_led[row][col]->setColorStr( color );
 
     if( m_showVal && (m_showProperty == "Color") )
-        setValLabelText( m_enumNames.at( m_led[0][0]->getEnumIndex( color ) ) );
+        setValLabelText( color );
 }
-
-QStringList LedMatrix::getEnumUids( QString ){ return m_led[0][0]->getEnumUids(""); }
-QStringList LedMatrix::getEnumNames( QString ){ return m_led[0][0]->getEnumNames(""); }
 
 void LedMatrix::setRows( int rows )
 {
