@@ -43,8 +43,11 @@ ScriptBase::ScriptBase( QString name )
           : eElement( name )
 {
     m_aEngine  = nullptr;
+    m_asModule = nullptr;
     m_context  = nullptr;
     m_debugger = nullptr;
+
+    m_scriptFile = "script";
 
     m_aEngine = asCreateScriptEngine();
     if( m_aEngine == 0 ) { qDebug() << "Failed to create script engine."; return; }
@@ -78,6 +81,7 @@ ScriptBase::~ScriptBase()
 
 void ScriptBase::setScriptFile( QString scriptFile, bool )
 {
+    m_scriptFile = scriptFile;
     setScript( fileToString( scriptFile, "ScriptBase::setScriptFile" ) );
 }
 
@@ -90,43 +94,48 @@ int ScriptBase::compileScript()
 {
     if( !m_aEngine ) return -1;
 
-    QString scriptStr = getIncludes( m_script );
-
-    //qDebug() << scriptStr;
-
-    std::string script = scriptStr.toStdString();
-    int len = scriptStr.size();
-
     m_aEngine->GarbageCollect( asGC_FULL_CYCLE );
+    m_asModule = m_aEngine->GetModule( 0, asGM_ALWAYS_CREATE );
 
-    asIScriptModule* mod = m_aEngine->GetModule( 0, asGM_ALWAYS_CREATE );
-    int r = mod->AddScriptSection("script", &script[0], len );
-    if( r < 0 ) { qDebug() << "\nScriptBase::compileScript: AddScriptSection() failed\n"; return -1; }
+    int r = compileSection( m_scriptFile, m_script );
+    if( r < 0 ) return -1;
 
-    r = mod->Build();
+    r = m_asModule->Build();
     if( r < 0 ) { qDebug() << endl << m_elmId+" ScriptBase::compileScript Error"<< endl; return -1; }
 
     //qDebug() << "\nScriptBase::compileScript: Build() Success\n";
     return 0;
 }
 
-QString ScriptBase::getIncludes( QString text )
+int ScriptBase::compileSection( QString sriptFile, QString text )
 {
-    QString scriptStr;
+    int ok = 0;
+
     QStringList lines = text.split("\n");
+    text.clear();
     for( QString line : lines )                // Get includes
     {
         if( line.contains("#include") )
         {
             QString file = line.remove("#include").remove("\"").remove(" ");
             file.prepend( MainWindow::self()->getDataFilePath("scriptlib")+"/" );
-
+/// TODO: #include "file" vs #include <file>
             line = fileToString( file, "ScriptBase::compileScript" );
-            line = getIncludes( line );
+            int r = compileSection( file, line );
+            if( r < 0 ) ok = r;
+            line.clear();
         }
-        scriptStr.append( line+"\n");
+        text.append( line+"\n");
     }
-    return scriptStr;
+qDebug() << endl << "ScriptBase::compileSection" << sriptFile<< endl;
+qDebug() << endl << text << endl;
+    std::string script = text.toStdString();
+    int len = script.size();
+
+    int r = m_asModule->AddScriptSection( sriptFile.toLocal8Bit().data(), &script[0], len );
+    if( r < 0 ) { qDebug() << "\nScriptBase::compileSection: AddScriptSection() failed\n"; return -1; }
+
+    return ok;
 }
 
 /*int ScriptBase::SaveBytecode(asIScriptEngine *engine, const char *outputFile)

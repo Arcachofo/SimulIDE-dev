@@ -39,14 +39,16 @@ class ScriptBase : public eElement
 
     protected:
         void printError( asIScriptContext* context );
-        QString getIncludes( QString test );
+        int compileSection( QString sriptFile, QString text );
 
         int m_status;
 
         QString m_script;
+        QString m_scriptFile;
 
         asCJITCompiler* m_jit;
         asIScriptEngine* m_aEngine;
+        asIScriptModule* m_asModule;
         asIScriptContext* m_context;
 
         asDebugger* m_debugger;
