@@ -35,10 +35,6 @@ class SubCircuit : public Chip, public EmbedCircuit
 
         virtual Pin* updatePin( QString id, QString type, QString label,
                                 int xpos, int ypos, int angle, int length=8, int space=0 ) override;
-
-        void loadGraphProps();
-
-
 };
-#endif
 
+#endif

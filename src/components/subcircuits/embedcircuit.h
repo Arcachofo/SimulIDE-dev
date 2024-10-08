@@ -23,6 +23,8 @@ class EmbedCircuit
         QList<Tunnel*> getPinTunnels() { return m_pinTunnels.values(); }
         Component* getMainComp( QString uid="" );
 
+        QString toString();
+
     protected:
         void loadSubCircuitFile( QString file );
         void loadSubCircuit( QString doc );
@@ -42,8 +44,7 @@ class EmbedCircuit
         QList<Tunnel*>         m_subcTunnels;
         QMap<QString, Tunnel*> m_pinTunnels;
 
-
-
+        void loadGraphProps();
  static QStringList s_graphProps;
 };
 #endif

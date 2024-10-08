@@ -35,10 +35,19 @@ Component* SubCircuit::construct( QString type, QString id )
         list.takeLast();
     }
 
-    if( Circuit::self()->getSubcircuit() ){
+    if( Circuit::self()->getSubcircuit() )
+    {
         int rev = Circuit::self()->circuitRev();
         if( rev >= 2220 ){ if( name.contains("@") ) list = name.split("@");}
         else if( name.contains("_") ) list = name.split("_");
+
+        if( list.size() > 1 )  // Subcircuit inside Subcircuit: 1_74HC00 to 74HC00
+        {
+            QString n = list.first();
+            bool ok = false;
+            n.toInt(&ok);
+            if( ok ) name = list.at( 1 );
+        }
     }
 
     QMap<QString, QString> packageList;
@@ -47,14 +56,6 @@ Component* SubCircuit::construct( QString type, QString id )
     QString pkgeFile;
     QString subcFile;
     QString dataFile;
-
-    if( list.size() > 1 )  // Subcircuit inside Subcircuit: 1_74HC00 to 74HC00
-    {
-        QString n = list.first();
-        bool ok = false;
-        n.toInt(&ok);
-        if( ok ) name = list.at( 1 );
-    }
 
     m_subcDir = MainWindow::self()->getCircFilePath( name ); // Search subc folder in circuit/data folder
 
@@ -164,8 +165,6 @@ SubCircuit::SubCircuit( QString type, QString id )
     m_icColor = QColor( 20, 30, 60 );
 
     addPropGroup( { tr("Main"), {},0} );
-
-    if( s_graphProps.isEmpty() ) loadGraphProps();
 }
 SubCircuit::~SubCircuit(){}
 
@@ -298,40 +297,6 @@ void SubCircuit::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu
 QString SubCircuit::toString()
 {
     QString item = CompBase::toString();
-    QString end = " />\n";
-
-    if( !m_mainComponents.isEmpty() )
-    {
-        item.remove( end );
-        item += ">";
-
-        for( QString uid : m_mainComponents.keys() )
-        {
-            Component* mainComponent = m_mainComponents.value( uid );
-            item += "\n<mainCompProps MainCompId=\""+uid+"\" ";
-            for( propGroup pg : *mainComponent->properties() )
-            {
-                if( pg.flags & groupNoCopy ) continue;
-
-                for( ComProperty* prop : pg.propList )
-                {
-                    QString val = prop->toString();
-                    if( val.isEmpty() ) continue;
-                    item += prop->name() + "=\""+val+"\" ";
-            }   }
-            item += "/>\n";
-        }
-        item += "</item>\n";
-    }
+    item.append( EmbedCircuit::toString() );
     return item;
-}
-
-void SubCircuit::loadGraphProps()
-{
-    for( propGroup pg : m_propGroups ) // Create list of "Graphical" poperties (We don't need them)
-    {
-        if( (pg.name != "CompGraphic") ) continue;
-        for( ComProperty* prop : pg.propList ) s_graphProps.append( prop->name() );
-        break;
-    }
 }

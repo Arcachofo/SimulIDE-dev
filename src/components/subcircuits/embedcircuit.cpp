@@ -8,6 +8,7 @@
 
 #include "embedcircuit.h"
 #include "component.h"
+#include "comproperty.h"
 #include "circuit.h"
 #include "tunnel.h"
 #include "node.h"
@@ -22,6 +23,8 @@ EmbedCircuit::EmbedCircuit( QString name, QString id, Chip *component)
     m_component = component;
     m_ecName = name;
     m_ecId = id;
+
+    if( s_graphProps.isEmpty() ) loadGraphProps();
 }
 EmbedCircuit::~EmbedCircuit(){}
 
@@ -199,4 +202,41 @@ Component* EmbedCircuit::getMainComp( QString uid )
         return m_mainComponents.values().first(); // Not found by type, return the first one
 
     return nullptr;                               // Not found at all
+}
+
+QString EmbedCircuit::toString()
+{
+    QString item;
+    QString end = " />\n";
+
+    if( !m_mainComponents.isEmpty() )
+    {
+        item.remove( end );
+        item += ">";
+
+        for( QString uid : m_mainComponents.keys() )
+        {
+            Component* mainComponent = m_mainComponents.value( uid );
+            item += "\n<mainCompProps MainCompId=\""+uid+"\" ";
+            for( propGroup pg : *mainComponent->properties() )
+            {
+                if( pg.flags & groupNoCopy ) continue;
+
+                for( ComProperty* prop : pg.propList )
+                {
+                    QString val = prop->toString();
+                    if( val.isEmpty() ) continue;
+                    item += prop->name() + "=\""+val+"\" ";
+            }   }
+            item += "/>\n";
+        }
+        item += "</item>\n";
+    }
+    return item;
+}
+
+void EmbedCircuit::loadGraphProps()
+{
+    propGroup* pg = m_component->getPropGroup( "CompGraphic" ); // Create list of "Graphical" poperties (We don't need them)
+    for( ComProperty* prop : pg->propList ) s_graphProps.append( prop->name() );
 }
