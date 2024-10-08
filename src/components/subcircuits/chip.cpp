@@ -31,8 +31,8 @@ Chip::Chip( QString type, QString id )
     m_isLS = false;
     m_initialized = false;
     m_package  = "";
-    m_backPixmap = NULL;
-    m_backData   = NULL;
+    m_backPixmap = nullptr;
+    m_backData   = nullptr;
     
     m_lsColor = QColor( 255, 255, 255 );
     m_icColor = QColor( 50, 50, 70 );
@@ -419,10 +419,11 @@ void Chip::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w )
 {
     Component::paint( p, o, w );
 
-    if( m_backPixmap ) p->drawPixmap( QRect(m_area.x(), m_area.y(), m_width*8, m_height*8), *m_backPixmap );
+    if( m_backPixmap ) p->drawPixmap( m_area.toRect(), *m_backPixmap );
     else{
         p->drawRoundedRect( m_area, 1, 1);
-        if( m_backData  )
+
+        if( m_backData  )  // Used by ScriptCpu
         {
             double w = m_backData->size();
             double h = m_backData->at(0).size();
@@ -440,7 +441,7 @@ void Chip::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w )
             painter.end();
             p->drawImage( m_area, img );
         }
-        else if( !this->isBoard() && !m_isLS /*&& m_background.isEmpty()*/ )
+        else if( !this->isBoard() && !m_isLS ) // Is IC
         {
             p->setPen( QColor( 170, 170, 150 ) );
             if( m_width == m_height ) p->drawEllipse( 4, 4, 4, 4);

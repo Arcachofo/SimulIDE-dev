@@ -24,7 +24,7 @@ class ScriptCpu;
 class Mcu : public Chip, public Linker
 {
         friend class McuCreator;
-        friend class SubCircuit;
+        friend class EmbedCircuit;
 
     public:
         Mcu( QString type, QString id );

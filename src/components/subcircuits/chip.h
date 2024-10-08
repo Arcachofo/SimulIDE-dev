@@ -11,6 +11,8 @@
 
 class Chip : public Component, public eElement
 {
+    friend class EmbedCircuit;
+
     public:
         Chip( QString type, QString id );
         ~Chip();
@@ -37,7 +39,7 @@ class Chip : public Component, public eElement
 
         int pkgWidth() { return m_width; }
 
-        void setBackData( std::vector<std::vector<int>>* d ) { m_backData = d; }
+        void setBackData( std::vector<std::vector<int>>* d ) { m_backData = d; }  // Used by ScriptCpu
 
         virtual void setflip() override;
 
@@ -87,7 +89,7 @@ class Chip : public Component, public eElement
         QList<Pin*> m_tempPins;
         QMap<QString, Pin*> m_pinMap;
 
-        std::vector<std::vector<int>>* m_backData;
+        std::vector<std::vector<int>>* m_backData; // Used by ScriptCpu
 
         QGraphicsTextItem m_label;
 };
