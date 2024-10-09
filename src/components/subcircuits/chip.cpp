@@ -31,8 +31,8 @@ Chip::Chip( QString type, QString id )
     m_isLS = false;
     m_initialized = false;
     m_package  = "";
-    m_backPixmap = nullptr;
-    m_backData   = nullptr;
+    m_backPixmap = NULL;
+    m_backData   = NULL;
     
     m_lsColor = QColor( 255, 255, 255 );
     m_icColor = QColor( 50, 50, 70 );
@@ -188,12 +188,6 @@ void Chip::setName( QString name )
     setflip();
 }
 
-void Chip::setSubcTypeStr( QString s )
-{
-    m_subcType = s;
-    if( s == "Board" || s == "Shield" || s == "Module") m_isBoard = true;
-}
-
 void Chip::setPackage( QString package )
 {
     if( !m_packageList.contains( package) ) package = m_packageList.keys().first();
@@ -240,8 +234,6 @@ void Chip::initPackage( QString pkgStr )
                 if     ( name == "width"     ) m_width  = val.split(" ").first().toInt();
                 else if( name == "height"    ) m_height = val.split(" ").first().toInt();
                 else if( name == "name"      ) embedName = val.toString();
-                else if( name == "type"
-                      || name == "SubcType"  ) setSubcTypeStr( val.toString() );
                 else if( name == "background") setBackground( val.toString() );
                 else if( name == "bckgnddata") setBckGndData( val.toString() );
                 else if( name == "logic_symbol") m_isLS = ( val == "true" );
@@ -427,11 +419,10 @@ void Chip::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w )
 {
     Component::paint( p, o, w );
 
-    if( m_backPixmap ) p->drawPixmap( m_area.toRect(), *m_backPixmap );
+    if( m_backPixmap ) p->drawPixmap( QRect(m_area.x(), m_area.y(), m_width*8, m_height*8), *m_backPixmap );
     else{
         p->drawRoundedRect( m_area, 1, 1);
-
-        if( m_backData  )  // Used by ScriptCpu
+        if( m_backData  )
         {
             double w = m_backData->size();
             double h = m_backData->at(0).size();
@@ -449,7 +440,7 @@ void Chip::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w )
             painter.end();
             p->drawImage( m_area, img );
         }
-        else if( !this->isBoard() && !m_isLS ) // Is IC
+        else if( !this->isBoard() && !m_isLS /*&& m_background.isEmpty()*/ )
         {
             p->setPen( QColor( 170, 170, 150 ) );
             if( m_width == m_height ) p->drawEllipse( 4, 4, 4, 4);

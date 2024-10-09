@@ -23,7 +23,7 @@ class Node;
 
 class Circuit : public QGraphicsScene
 {
-    friend class EmbedCircuit;
+    friend class SubCircuit;
     friend class Simulator;
 
     Q_OBJECT

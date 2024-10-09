@@ -99,7 +99,6 @@
 #include "socket.h"
 #include "sr04.h"
 #include "scr.h"
-#include "scriptsubc.h"
 #include "ssd1306.h"
 #include "stepper.h"
 #include "strain.h"
@@ -281,7 +280,6 @@ void ItemLibrary::loadItems()
     addItem( Lm555::libraryItem() );
     // Subcircuits
     addItem( SubCircuit::libraryItem() );
-    addItem( ScriptSubc::libraryItem() );
     // Connectors
     addItem( new LibraryItem( QObject::tr("Connectors"), "", "","Connectors", NULL ) );
     addItem( Bus::libraryItem() );

@@ -92,24 +92,21 @@ void ComponentList::createList()
                 for( QString compName : dirList )
                 {
                     QString path = compName+"/"+compName;
-                    QString icon = getIcon("test", compName );
+                    QString icon = getIcon( "test", compName );
                     QString compFile;
                     QString type;
 
-                    if( compSetDir.exists( path+".mcu") )
-                    {
-                        if( icon.isEmpty() ) icon = ":/ic2.png";
-
-                        if( compSetDir.exists( path+".sim1") ) type = "ScriptSubc";
-                        else                                   type = "MCU";
-                    }
-                    else if( compSetDir.exists( path+".sim1") )
+                    if( compSetDir.exists( path+".sim1") )
                     {
                         if( icon.isEmpty() ) icon = ":/subc.png";
                         type = "Subcircuit";
                         compFile = compSetDir.absoluteFilePath( path+".sim1" );
                     }
-
+                    else if( compSetDir.exists( path+".mcu") )
+                    {
+                        if( icon.isEmpty() ) icon = ":/ic2.png";
+                        type = "MCU";
+                    }
                     if( !type.isEmpty() && !m_components.contains( compName ) )
                     {
                         addItem( compName, catItem, icon, type );
@@ -281,7 +278,7 @@ void ComponentList::addItem( QString caption, TreeItem* catItem, QIcon &icon, QS
     QString info = "";
     if( nameFull.size() > 1 ) info = "   "+nameFull.last();
 
-    QString name = ( type == "Subcircuit" || type == "MCU" || type == "ScriptSubc") ? nameTr : type;
+    QString name = ( type == "Subcircuit" || type == "MCU" ) ? nameTr : type;
 
     TreeItem* item = new TreeItem( catItem, name, nameTr, type, component, icon, m_customComp );
 
