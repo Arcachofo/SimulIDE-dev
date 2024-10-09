@@ -188,6 +188,12 @@ void Chip::setName( QString name )
     setflip();
 }
 
+void Chip::setSubcTypeStr( QString s )
+{
+    m_subcType = s;
+    if( s == "Board" || s == "Shield" || s == "Module") m_isBoard = true;
+}
+
 void Chip::setPackage( QString package )
 {
     if( !m_packageList.contains( package) ) package = m_packageList.keys().first();
@@ -234,6 +240,8 @@ void Chip::initPackage( QString pkgStr )
                 if     ( name == "width"     ) m_width  = val.split(" ").first().toInt();
                 else if( name == "height"    ) m_height = val.split(" ").first().toInt();
                 else if( name == "name"      ) embedName = val.toString();
+                else if( name == "type"
+                      || name == "SubcType"  ) setSubcTypeStr( val.toString() );
                 else if( name == "background") setBackground( val.toString() );
                 else if( name == "bckgnddata") setBckGndData( val.toString() );
                 else if( name == "logic_symbol") m_isLS = ( val == "true" );

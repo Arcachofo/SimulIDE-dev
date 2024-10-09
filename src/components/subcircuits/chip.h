@@ -35,7 +35,7 @@ class Chip : public Component, public eElement
 
         //subcType_t subcType() { return m_subcType; }
         QString subcTypeStr() { return m_subcType; }
-        virtual void setSubcTypeStr( QString s ){ m_subcType = s; }
+        virtual void setSubcTypeStr( QString s );
 
         int pkgWidth() { return m_width; }
 

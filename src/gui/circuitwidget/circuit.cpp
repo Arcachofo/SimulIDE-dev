@@ -282,7 +282,7 @@ void Circuit::loadStrDoc( QString &doc )
                 if( m_pasting ) // Create new id
                 {
                     QString newNum = newSceneId();
-                    if( type == "Subcircuit" || type == "MCU" )
+                    if( type == "Subcircuit" || type == "MCU" || type == "ScriptSubc")
                         newUid = uid.split("-").first()+"-"+newNum;
                     else newUid = type+"-"+newNum;
 

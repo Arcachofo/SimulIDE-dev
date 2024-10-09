@@ -177,6 +177,84 @@ void EmbedCircuit::addMainCompsMenu( QMenu* menu )
     menu->addSeparator();
 }
 
+Pin* EmbedCircuit::addPin( QString id, QString type, QString label, int, int xpos, int ypos, int angle, int length, int space )
+{
+    QColor color = Qt::black;
+    if( !m_component->m_isLS ) color = QColor( 250, 250, 200 );
+
+    QString pId = m_ecId+"-"+id;
+    Tunnel* tunnel = new Tunnel("Tunnel", pId );
+    m_compList.append( tunnel );
+
+    tunnel->setParentItem( m_component );
+    tunnel->setAcceptedMouseButtons( Qt::NoButton );
+    tunnel->setShowId( false );
+    tunnel->setTunnelUid( id );
+    tunnel->setName( pId );           // Make Pin Tunel names unique for this component
+    tunnel->setPos( xpos, ypos );
+    tunnel->setPacked( true );
+    if( type == "bus" ) tunnel->setIsbus( true );
+    m_pinTunnels.insert( pId, tunnel );
+
+    Pin* pin = tunnel->getPin();
+    pin->setId( pId );
+    pin->setInverted( type == "inverted" || type == "inv" );
+    m_component->addSignalPin( pin );
+
+    tunnel->setRotated( angle >= 180 );      // Our Pins at left side
+    if     ( angle == 180) tunnel->setRotation( 0 );
+    else if( angle == 90 ) tunnel->setRotation(-90 ); // QGraphicsItem 0º i at right side
+    else                   tunnel->setRotation( angle );
+
+    pin->setLength( length );
+    pin->setSpace( space );
+    pin->setLabelColor( color );
+    pin->setLabelText( label );
+    pin->setFlag( QGraphicsItem::ItemStacksBehindParent, false );
+    return pin;
+}
+
+Pin* EmbedCircuit::updatePin( QString id, QString type, QString label, int xpos, int ypos, int angle, int length, int space )
+{
+    Pin* pin = nullptr;
+    Tunnel* tunnel = m_pinTunnels.value( m_ecId+"-"+id );
+    if( !tunnel ){
+        //qDebug() <<"SubCircuit::updatePin Pin Not Found:"<<id<<type<<label;
+        return nullptr;
+    }
+    tunnel->setPos( xpos, ypos );
+    tunnel->setRotated( angle >= 180 );      // Our Pins at left side
+    tunnel->setIsbus( type == "bus" );
+
+    if     ( angle == 180) tunnel->setRotation( 0 );
+    else if( angle == 90 ) tunnel->setRotation(-90 ); // QGraphicsItem 0º i at right side
+    else                   tunnel->setRotation( angle );
+
+    pin  = tunnel->getPin();
+    type = type.toLower();
+
+    bool unused = type == "unused" || type == "nc";
+    pin->setUnused( unused );
+    if( unused && m_component->m_isLS )
+    {
+        pin->setVisible( false );
+        pin->setLabelText( "" );
+        return pin;
+    }
+    if( m_component->m_isLS ) pin->setLabelColor( QColor( 0, 0, 0 ) );
+    else                      pin->setLabelColor( QColor( 250, 250, 200 ) );
+
+    pin->setInverted( type == "inverted" || type == "inv" );
+    pin->setLength( length );
+    pin->setSpace( space );
+    pin->setLabelText( label );
+    pin->setVisible( true );
+    pin->setFlag( QGraphicsItem::ItemStacksBehindParent, (length<8) );
+    pin->isMoved();
+
+    return pin;
+}
+
 Pin* EmbedCircuit::findPin( QString pinId )
 {
     QStringList words = pinId.split("-");

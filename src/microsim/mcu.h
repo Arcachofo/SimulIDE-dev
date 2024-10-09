@@ -99,9 +99,6 @@ class Mcu : public Chip, public Linker
 
         bool load( QString fileName );
 
-        virtual Pin* addPin( QString id, QString type, QString label,
-                             int pos, int xpos, int ypos, int angle , int length=8, int space=0 ) override;
-
         void setScriptLinker( ScriptCpu* l) { m_scriptLink = l; } // Called from script
 
         virtual void setLinkedValue( double v, int i=0  ) override;
@@ -121,6 +118,9 @@ class Mcu : public Chip, public Linker
 
     protected:
  static Mcu* m_pSelf;
+
+        virtual Pin* addPin( QString id, QString type, QString label,
+                             int pos, int xpos, int ypos, int angle , int length=8, int space=0 ) override;
 
         QString getPGM();
         void setPGM( QString pgm );
