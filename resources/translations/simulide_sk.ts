@@ -83,14 +83,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Feri</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>       kellneka.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Sergey Roenko.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -116,14 +108,6 @@
     </message>
     <message>
         <source>Jan K. S.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>acebrian.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>       bjacquot.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -224,6 +208,26 @@
     </message>
     <message>
         <source>tomas714</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Main contributors:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>       Bastien Jacquot.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Giordano.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>       Kai Kellner.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A. Cebrian.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -499,6 +503,22 @@ p, li { white-space: pre-wrap; }
         <source>Font</source>
         <translation type="unfinished">Písmo</translation>
     </message>
+    <message>
+        <source>Restart required to apply new settings.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Canvas Width</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>pixels</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Canvas Height</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AudioOut</name>
@@ -517,6 +537,10 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Impedance</source>
         <translation>Impedancia</translation>
+    </message>
+    <message>
+        <source>Frequency</source>
+        <translation type="unfinished">Frekvencia</translation>
     </message>
 </context>
 <context>
@@ -660,6 +684,10 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Timing</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tristate</source>
+        <translation type="unfinished">Trojstavový</translation>
     </message>
 </context>
 <context>
@@ -812,23 +840,19 @@ p, li { white-space: pre-wrap; }
     <name>Chip</name>
     <message>
         <source>None</source>
-        <translation type="unfinished">Žiadny</translation>
+        <translation type="obsolete">Žiadny</translation>
     </message>
     <message>
         <source>Logic</source>
-        <translation type="unfinished">Logické</translation>
+        <translation type="obsolete">Logické</translation>
     </message>
     <message>
         <source>Board</source>
-        <translation type="unfinished">Doska</translation>
+        <translation type="obsolete">Doska</translation>
     </message>
     <message>
         <source>Shield</source>
-        <translation type="unfinished">Nadstavba</translation>
-    </message>
-    <message>
-        <source>Module</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Nadstavba</translation>
     </message>
 </context>
 <context>
@@ -845,7 +869,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Circuits (*.sim*);;All files (*.*)</source>
-        <translation>Obvody (*.sim*);;Všetky súbory (*.*)</translation>
+        <translation type="vanished">Obvody (*.sim*);;Všetky súbory (*.*)</translation>
     </message>
     <message>
         <source>Bill Of Materials</source>
@@ -854,6 +878,10 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Import Circuit</source>
         <translation type="unfinished">Importovať obvod</translation>
+    </message>
+    <message>
+        <source>Circuits (*.sim1);;All files (*.*)</source>
+        <translation type="unfinished">Obvody (*.sim1);;Všetky súbory (*.*)</translation>
     </message>
 </context>
 <context>
@@ -981,7 +1009,7 @@ Chcete uložiť zmeny?
     </message>
     <message>
         <source>Circuits (*.sim*);;All files (*.*)</source>
-        <translation>Obvody (*.sim*);;Všetky súbory (*.*)</translation>
+        <translation type="vanished">Obvody (*.sim*);;Všetky súbory (*.*)</translation>
     </message>
     <message>
         <source>Save Circuit</source>
@@ -1197,6 +1225,21 @@ Nemožno nájsť súbor:
     </message>
 </context>
 <context>
+    <name>Comparator</name>
+    <message>
+        <source>Comparator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Electric</source>
+        <translation type="unfinished">Elektrické</translation>
+    </message>
+    <message>
+        <source>Timing</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Compiler</name>
     <message>
         <source> Compiler successfully loaded.
@@ -1404,30 +1447,81 @@ Nemožno nájsť súbor:
     </message>
 </context>
 <context>
+    <name>ComponentList</name>
+    <message>
+        <source>Ternary</source>
+        <translation type="unfinished">Ternárna logika</translation>
+    </message>
+    <message>
+        <source>Digipot</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>IC 74</source>
+        <translation type="unfinished">IO 74</translation>
+    </message>
+    <message>
+        <source>IC CD</source>
+        <translation type="unfinished">IO CD</translation>
+    </message>
+    <message>
+        <source>USSR IC</source>
+        <translation type="unfinished">USSR IO</translation>
+    </message>
+    <message>
+        <source>Other IC</source>
+        <translation type="unfinished">Ostatné IO</translation>
+    </message>
+    <message>
+        <source>Keys</source>
+        <translation type="unfinished">Analógové spínače</translation>
+    </message>
+    <message>
+        <source>Led display</source>
+        <translation type="unfinished">Led displeje</translation>
+    </message>
+    <message>
+        <source>Tools</source>
+        <translation type="unfinished">Nástroje</translation>
+    </message>
+    <message>
+        <source>    Loading Component sets at:</source>
+        <translation type="unfinished">    Načítavam skupinu komponentov z:</translation>
+    </message>
+    <message>
+        <source>        Loaded Component set:           </source>
+        <translation type="unfinished">        Načítaná skupina komponentov:           </translation>
+    </message>
+    <message>
+        <source>Manage Components</source>
+        <translation type="unfinished">Spravovať komponenty</translation>
+    </message>
+</context>
+<context>
     <name>ComponentSelector</name>
     <message>
         <source>    Loading Component sets at:</source>
-        <translation>    Načítavam skupinu komponentov z:</translation>
+        <translation type="vanished">    Načítavam skupinu komponentov z:</translation>
     </message>
     <message>
         <source>Cannot read file %1:
 %2.</source>
-        <translation>Nie je možné načítať súbor %1:
+        <translation type="vanished">Nie je možné načítať súbor %1:
 %2.</translation>
     </message>
     <message>
         <source>Error parsing file (itemlib):
 %1.</source>
-        <translation>Chyba pri spracovávaní súboru (itemlib):
+        <translation type="vanished">Chyba pri spracovávaní súboru (itemlib):
 %1.</translation>
     </message>
     <message>
         <source>        Loaded Component set:           </source>
-        <translation>        Načítaná skupina komponentov:           </translation>
+        <translation type="vanished">        Načítaná skupina komponentov:           </translation>
     </message>
     <message>
         <source>Manage Components</source>
-        <translation>Spravovať komponenty</translation>
+        <translation type="vanished">Spravovať komponenty</translation>
     </message>
 </context>
 <context>
@@ -1500,6 +1594,10 @@ Nemožno nájsť súbor:
     <message>
         <source>Current Value</source>
         <translation>Hodnota prúdu</translation>
+    </message>
+    <message>
+        <source>Min. Current</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1646,6 +1744,10 @@ Nemožno nájsť súbor:
         <source>Timing</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Tristate</source>
+        <translation type="unfinished">Trojstavový</translation>
+    </message>
 </context>
 <context>
     <name>Demux</name>
@@ -1676,6 +1778,10 @@ Nemožno nájsť súbor:
     <message>
         <source>Timing</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tristate</source>
+        <translation type="unfinished">Trojstavový</translation>
     </message>
 </context>
 <context>
@@ -1753,6 +1859,26 @@ Nemožno nájsť súbor:
     <message>
         <source>Steps</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Body</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Width</source>
+        <translation type="unfinished">Šírka</translation>
+    </message>
+    <message>
+        <source>Height</source>
+        <translation type="unfinished">Výška</translation>
+    </message>
+    <message>
+        <source>Border</source>
+        <translation type="unfinished">Hrúbka rámčeka</translation>
+    </message>
+    <message>
+        <source>Background</source>
+        <translation type="unfinished">Pozadie</translation>
     </message>
 </context>
 <context>
@@ -2225,6 +2351,30 @@ Súbor nemožno nájsť:
         <source>File Settings</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Auto close pairs:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto close Parenthesis ( )</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto close Braces { }</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto close Brackets [ ]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto close Quotes &quot; &quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto close Single Quotes &apos; &apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>EditorWindow</name>
@@ -2410,6 +2560,10 @@ Súbor nemožno nájsť:
         <source>Fixed Voltage</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Small size</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FlipFlopBase</name>
@@ -2513,6 +2667,14 @@ Súbor nemožno nájsť:
     </message>
     <message>
         <source>Timing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Main</source>
+        <translation type="unfinished">Základné</translation>
+    </message>
+    <message>
+        <source>Size</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2790,10 +2952,6 @@ Súbor nemožno nájsť:
         <translation type="vanished">Nájdená definícia dosky v súbore: </translation>
     </message>
     <message>
-        <source>custom</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Compiler Settings</source>
         <translation type="unfinished">Nastavenia prekladača</translation>
     </message>
@@ -2812,6 +2970,10 @@ Súbor nemožno nájsť:
     <message>
         <source>Custom Library Path</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Custom</source>
+        <translation type="unfinished">Vlastná</translation>
     </message>
 </context>
 <context>
@@ -2869,11 +3031,19 @@ Súbor nemožno nájsť:
         <translation type="unfinished">Otvorený kolektor</translation>
     </message>
     <message>
-        <source>Propagation delay</source>
+        <source>Logic Family</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Gate Delay</source>
+        <source>Supply Voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delay Multiplier</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Family Delay</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2932,6 +3102,14 @@ Súbor nemožno nájsť:
     <message>
         <source>_Buttons</source>
         <translation type="vanished">_tlačidiel</translation>
+    </message>
+    <message>
+        <source>Diodes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Diodes Direction</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3128,6 +3306,10 @@ Súbor nemožno nájsť:
     </message>
     <message>
         <source>Timing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reset Pin</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3484,6 +3666,29 @@ Súbor nemožno nájsť:
     </message>
 </context>
 <context>
+    <name>MagnitudeComp</name>
+    <message>
+        <source>Magnitude Comparator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Main</source>
+        <translation type="unfinished">Základné</translation>
+    </message>
+    <message>
+        <source>Size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Electric</source>
+        <translation type="unfinished">Elektrické</translation>
+    </message>
+    <message>
+        <source>Timing</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>MainWindow</name>
     <message>
         <source>Looks like SimulIDE crashed...</source>
@@ -3527,6 +3732,10 @@ Súbor nemožno nájsť:
         <source>Select User data directory</source>
         <translation>Vyberte priečinok používateľa</translation>
     </message>
+    <message>
+        <source>Clear search</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Max72xx_matrix</name>
@@ -3544,31 +3753,31 @@ Súbor nemožno nájsť:
     </message>
     <message>
         <source>Yellow</source>
-        <translation type="unfinished">Žltá</translation>
+        <translation type="obsolete">Žltá</translation>
     </message>
     <message>
         <source>Red</source>
-        <translation type="unfinished">Červená</translation>
+        <translation type="obsolete">Červená</translation>
     </message>
     <message>
         <source>Green</source>
-        <translation type="unfinished">Zelená</translation>
+        <translation type="obsolete">Zelená</translation>
     </message>
     <message>
         <source>Blue</source>
-        <translation type="unfinished">Modrá</translation>
+        <translation type="obsolete">Modrá</translation>
     </message>
     <message>
         <source>Orange</source>
-        <translation type="unfinished">Oranžová</translation>
+        <translation type="obsolete">Oranžová</translation>
     </message>
     <message>
         <source>Purple</source>
-        <translation type="unfinished">Fialová</translation>
+        <translation type="obsolete">Fialová</translation>
     </message>
     <message>
         <source>White</source>
-        <translation type="unfinished">Biela</translation>
+        <translation type="obsolete">Biela</translation>
     </message>
     <message>
         <source>Color</source>
@@ -3666,16 +3875,12 @@ Súbor nemožno nájsť:
         <translation type="vanished">Vlastnosti</translation>
     </message>
     <message>
-        <source>Files not found for: %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>EEPROM persitent</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Logic Symbol</source>
-        <translation type="unfinished">Logický symbol</translation>
+        <translation type="obsolete">Logický symbol</translation>
     </message>
     <message>
         <source>Changes applied after Simulation Restart</source>
@@ -3691,6 +3896,18 @@ Súbor nemožno nájsť:
     </message>
     <message>
         <source>Link to Component</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Package</source>
+        <translation type="unfinished">Puzdro</translation>
+    </message>
+    <message>
+        <source>Force this frequency</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PGM persitent</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3889,6 +4106,10 @@ Súbor nemožno nájsť:
     <message>
         <source>Timing</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tristate</source>
+        <translation type="unfinished">Trojstavový</translation>
     </message>
 </context>
 <context>
@@ -4097,10 +4318,6 @@ Súbor nemožno nájsť:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>_Px</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Screen Height</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4111,6 +4328,18 @@ Súbor nemožno nájsť:
     <message>
         <source>Impedance</source>
         <translation type="unfinished">Impedancia</translation>
+    </message>
+    <message>
+        <source>Test</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Test Time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do Test</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4153,6 +4382,10 @@ Súbor nemožno nájsť:
     <message>
         <source>Threshold</source>
         <translation>Prahové napätie</translation>
+    </message>
+    <message>
+        <source>Small size</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4234,7 +4467,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Cannot write file %1:
 %2.</source>
-        <translation>Nemožno zapísať súbor %1:
+        <translation type="vanished">Nemožno zapísať súbor %1:
 %2.</translation>
     </message>
     <message>
@@ -4375,23 +4608,23 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Other IC</source>
-        <translation>Ostatné IO</translation>
+        <translation type="vanished">Ostatné IO</translation>
     </message>
     <message>
         <source>Keys</source>
-        <translation>Analógové spínače</translation>
+        <translation type="vanished">Analógové spínače</translation>
     </message>
     <message>
         <source>Ternary</source>
-        <translation>Ternárna logika</translation>
+        <translation type="vanished">Ternárna logika</translation>
     </message>
     <message>
         <source>Tools</source>
-        <translation>Nástroje</translation>
+        <translation type="vanished">Nástroje</translation>
     </message>
     <message>
         <source>Led display</source>
-        <translation>Led displeje</translation>
+        <translation type="vanished">Led displeje</translation>
     </message>
     <message>
         <source>Warning: elf file doesn&apos;t exist:</source>
@@ -4427,15 +4660,15 @@ Neplatný súbor balíka:
     </message>
     <message>
         <source>IC 74</source>
-        <translation>IO 74</translation>
+        <translation type="vanished">IO 74</translation>
     </message>
     <message>
         <source>IC CD</source>
-        <translation>IO CD</translation>
+        <translation type="vanished">IO CD</translation>
     </message>
     <message>
         <source>USSR IC</source>
-        <translation>USSR IO</translation>
+        <translation type="vanished">USSR IO</translation>
     </message>
     <message>
         <source>Connectors</source>
@@ -4507,10 +4740,6 @@ Neplatný súbor balíka:
     </message>
     <message>
         <source>Other Outputs</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Digital Potentiometer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5074,11 +5303,11 @@ Neplatný súbor balíka:
     </message>
     <message>
         <source>Size X</source>
-        <translation>Šírka X</translation>
+        <translation type="vanished">Šírka X</translation>
     </message>
     <message>
         <source>Size Y</source>
-        <translation>Výška Y</translation>
+        <translation type="vanished">Výška Y</translation>
     </message>
     <message>
         <source>Border</source>
@@ -5095,6 +5324,18 @@ Neplatný súbor balíka:
     <message>
         <source>Opacity</source>
         <translation>Priehľadnosť</translation>
+    </message>
+    <message>
+        <source>Width</source>
+        <translation type="unfinished">Šírka</translation>
+    </message>
+    <message>
+        <source>Height</source>
+        <translation type="unfinished">Výška</translation>
+    </message>
+    <message>
+        <source>Angle</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5141,6 +5382,22 @@ Neplatný súbor balíka:
     <message>
         <source>Timing</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Parallel Input</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bidirectional</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tristate</source>
+        <translation type="unfinished">Trojstavový</translation>
     </message>
 </context>
 <context>
@@ -5218,10 +5475,6 @@ Neplatný súbor balíka:
     <message>
         <source>I2C</source>
         <translation type="unfinished">I2C</translation>
-    </message>
-    <message>
-        <source>_px</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5313,7 +5566,7 @@ Neplatný súbor balíka:
     </message>
     <message>
         <source>Logic Symbol</source>
-        <translation>Logický symbol</translation>
+        <translation type="vanished">Logický symbol</translation>
     </message>
     <message>
         <source>Detach</source>
@@ -5322,6 +5575,10 @@ Neplatný súbor balíka:
     <message>
         <source>Attach</source>
         <translation type="vanished">Pripojiť</translation>
+    </message>
+    <message>
+        <source>Package</source>
+        <translation type="unfinished">Puzdro</translation>
     </message>
 </context>
 <context>
@@ -5395,7 +5652,7 @@ Neplatný súbor balíka:
 Package has been modified.
 Do you want to save your changes?
 </source>
-        <translation>
+        <translation type="vanished">
 Balík bol upravený.
 Chcete uložiť zmeny?
 </translation>
@@ -5416,6 +5673,26 @@ Chcete uložiť zmeny?
     </message>
     <message>
         <source>Select Exposed Components</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation type="unfinished">Žiadny</translation>
+    </message>
+    <message>
+        <source>Logic</source>
+        <translation type="unfinished">Logické</translation>
+    </message>
+    <message>
+        <source>Board</source>
+        <translation type="unfinished">Doska</translation>
+    </message>
+    <message>
+        <source>Shield</source>
+        <translation type="unfinished">Nadstavba</translation>
+    </message>
+    <message>
+        <source>Module</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5474,6 +5751,33 @@ Chcete uložiť zmeny?
     </message>
     <message>
         <source>Common Pin</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>TestUnit</name>
+    <message>
+        <source>Test Unit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Main</source>
+        <translation type="unfinished">Základné</translation>
+    </message>
+    <message>
+        <source>Inputs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Outputs</source>
+        <translation type="unfinished">Výstupné</translation>
+    </message>
+    <message>
+        <source>Test</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Period</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5656,6 +5960,21 @@ Chcete uložiť zmeny?
     </message>
 </context>
 <context>
+    <name>TruthTable</name>
+    <message>
+        <source>Truth Table</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Run test</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save as correct</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Tunnel</name>
     <message>
         <source>Main</source>
@@ -5815,6 +6134,30 @@ Chcete uložiť zmeny?
         <source>_Leds</source>
         <translation type="vanished">_lediek</translation>
     </message>
+    <message>
+        <source>Timing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Minimum Reset pulse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>0, High time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>0, Low time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>1, High time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>1, Low time</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Watcher</name>
@@ -5962,6 +6305,14 @@ Chcete uložiť zmeny?
     <message>
         <source>Zener Diode</source>
         <translation>Zenerová dióda</translation>
+    </message>
+    <message>
+        <source>Main</source>
+        <translation type="unfinished">Základné</translation>
+    </message>
+    <message>
+        <source>Model</source>
+        <translation type="unfinished">Model</translation>
     </message>
 </context>
 <context>

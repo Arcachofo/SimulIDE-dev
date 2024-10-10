@@ -79,14 +79,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Feri</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>       kellneka.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Sergey Roenko.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -112,14 +104,6 @@
     </message>
     <message>
         <source>Jan K. S.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>acebrian.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>       bjacquot.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -220,6 +204,26 @@
     </message>
     <message>
         <source>tomas714</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Main contributors:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>       Bastien Jacquot.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Giordano.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>       Kai Kellner.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A. Cebrian.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -465,6 +469,22 @@ p, li { white-space: pre-wrap; }
         <source>Font</source>
         <translation type="unfinished">Lettertype</translation>
     </message>
+    <message>
+        <source>Restart required to apply new settings.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Canvas Width</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>pixels</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Canvas Height</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AudioOut</name>
@@ -487,6 +507,10 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Impedance</source>
         <translation type="unfinished">Impedantie</translation>
+    </message>
+    <message>
+        <source>Frequency</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -622,6 +646,10 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Timing</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tristate</source>
+        <translation type="unfinished">Tristate</translation>
     </message>
 </context>
 <context>
@@ -759,23 +787,11 @@ p, li { white-space: pre-wrap; }
     <name>Chip</name>
     <message>
         <source>Logic</source>
-        <translation type="unfinished">Logica</translation>
+        <translation type="obsolete">Logica</translation>
     </message>
     <message>
         <source>Board</source>
-        <translation type="unfinished">Bord</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Shield</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Module</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Bord</translation>
     </message>
 </context>
 <context>
@@ -791,16 +807,16 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Laad schakeling</translation>
     </message>
     <message>
-        <source>Circuits (*.sim*);;All files (*.*)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Bill Of Materials</source>
         <translation type="obsolete">Materiaallijst</translation>
     </message>
     <message>
         <source>Import Circuit</source>
         <translation type="unfinished">Schakeling importeren</translation>
+    </message>
+    <message>
+        <source>Circuits (*.sim1);;All files (*.*)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -929,10 +945,6 @@ Wijzigingen opslaan?
     <message>
         <source>Load Circuit</source>
         <translation type="unfinished">Laad schakeling</translation>
-    </message>
-    <message>
-        <source>Circuits (*.sim*);;All files (*.*)</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Save Circuit</source>
@@ -1133,6 +1145,21 @@ Can&apos;t find file:
     </message>
 </context>
 <context>
+    <name>Comparator</name>
+    <message>
+        <source>Comparator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Electric</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Timing</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Compiler</name>
     <message>
         <source> Compiler successfully loaded.
@@ -1263,6 +1290,57 @@ Can&apos;t find file:
     </message>
 </context>
 <context>
+    <name>ComponentList</name>
+    <message>
+        <source>Ternary</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Digipot</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>IC 74</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>IC CD</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>USSR IC</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Other IC</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Keys</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Led display</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tools</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>    Loading Component sets at:</source>
+        <translation type="unfinished">    Laden van componenten-sets op:</translation>
+    </message>
+    <message>
+        <source>        Loaded Component set:           </source>
+        <translation type="unfinished">        Geladen componenten-set:           </translation>
+    </message>
+    <message>
+        <source>Manage Components</source>
+        <translation type="unfinished">Componenten beheren</translation>
+    </message>
+</context>
+<context>
     <name>ComponentPlugins</name>
     <message>
         <source>Manage Components</source>
@@ -1273,26 +1351,21 @@ Can&apos;t find file:
     <name>ComponentSelector</name>
     <message>
         <source>    Loading Component sets at:</source>
-        <translation type="unfinished">    Laden van componenten-sets op:</translation>
+        <translation type="obsolete">    Laden van componenten-sets op:</translation>
     </message>
     <message>
         <source>Cannot read file %1:
 %2.</source>
-        <translation type="unfinished">Kan bestand niet lezen: %1
+        <translation type="obsolete">Kan bestand niet lezen: %1
 %2.</translation>
     </message>
     <message>
-        <source>Error parsing file (itemlib):
-%1.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>        Loaded Component set:           </source>
-        <translation type="unfinished">        Geladen componenten-set:           </translation>
+        <translation type="obsolete">        Geladen componenten-set:           </translation>
     </message>
     <message>
         <source>Manage Components</source>
-        <translation type="unfinished">Componenten beheren</translation>
+        <translation type="obsolete">Componenten beheren</translation>
     </message>
 </context>
 <context>
@@ -1372,6 +1445,10 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Current Value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Min. Current</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1515,6 +1592,10 @@ Can&apos;t find file:
         <source>Timing</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Tristate</source>
+        <translation type="unfinished">Tristate</translation>
+    </message>
 </context>
 <context>
     <name>Demux</name>
@@ -1545,6 +1626,10 @@ Can&apos;t find file:
     <message>
         <source>Timing</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tristate</source>
+        <translation type="unfinished">Tristate</translation>
     </message>
 </context>
 <context>
@@ -1621,6 +1706,26 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Steps</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Body</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Width</source>
+        <translation type="unfinished">Breedte</translation>
+    </message>
+    <message>
+        <source>Height</source>
+        <translation type="unfinished">Hoogte</translation>
+    </message>
+    <message>
+        <source>Border</source>
+        <translation type="unfinished">Rand</translation>
+    </message>
+    <message>
+        <source>Background</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2071,6 +2176,30 @@ Can&apos;t find file:
         <source>File Settings</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Auto close pairs:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto close Parenthesis ( )</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto close Braces { }</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto close Brackets [ ]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto close Quotes &quot; &quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto close Single Quotes &apos; &apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>EditorWindow</name>
@@ -2262,6 +2391,10 @@ Can&apos;t find file:
         <source>Fixed Voltage</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Small size</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FlipFlopBase</name>
@@ -2398,6 +2531,14 @@ Can&apos;t find file:
     <message>
         <source>Timing</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Main</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Size</source>
+        <translation type="unfinished">Grootte</translation>
     </message>
 </context>
 <context>
@@ -2666,10 +2807,6 @@ Can&apos;t find file:
 <context>
     <name>InoDebugger</name>
     <message>
-        <source>custom</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Compiler Settings</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2684,6 +2821,10 @@ Can&apos;t find file:
     <message>
         <source>Custom Library Path</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Custom</source>
+        <translation type="unfinished">Maatwerk</translation>
     </message>
 </context>
 <context>
@@ -2729,19 +2870,27 @@ Can&apos;t find file:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Propagation delay</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Gate Delay</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Invert Outputs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Open Drain</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logic Family</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Supply Voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delay Multiplier</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Family Delay</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2792,6 +2941,14 @@ Can&apos;t find file:
     <message>
         <source>Key Labels</source>
         <translation type="unfinished">Toetslabels</translation>
+    </message>
+    <message>
+        <source>Diodes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Diodes Direction</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2977,6 +3134,10 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Timing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reset Pin</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3336,6 +3497,29 @@ Can&apos;t find file:
     </message>
 </context>
 <context>
+    <name>MagnitudeComp</name>
+    <message>
+        <source>Magnitude Comparator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Main</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Size</source>
+        <translation type="unfinished">Grootte</translation>
+    </message>
+    <message>
+        <source>Electric</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Timing</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>MainWindow</name>
     <message>
         <source>Looks like SimulIDE crashed...</source>
@@ -3378,6 +3562,10 @@ Can&apos;t find file:
         <source>Select User data directory</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Clear search</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Max72xx_matrix</name>
@@ -3392,34 +3580,6 @@ Can&apos;t find file:
     <message>
         <source>Color</source>
         <translation type="unfinished">Kleur</translation>
-    </message>
-    <message>
-        <source>Yellow</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Red</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Green</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Blue</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Orange</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Purple</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>White</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Max72xx matrix</source>
@@ -3510,14 +3670,10 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Logic Symbol</source>
-        <translation type="unfinished">Logisch symbool</translation>
+        <translation type="obsolete">Logisch symbool</translation>
     </message>
     <message>
         <source>EEPROM persitent</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Files not found for: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3534,6 +3690,18 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Reload hex at Simulation Start</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Package</source>
+        <translation type="unfinished">Pakket</translation>
+    </message>
+    <message>
+        <source>Force this frequency</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PGM persitent</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3714,6 +3882,10 @@ Can&apos;t find file:
     <message>
         <source>Timing</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tristate</source>
+        <translation type="unfinished">Tristate</translation>
     </message>
 </context>
 <context>
@@ -3897,10 +4069,6 @@ Can&apos;t find file:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>_Px</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Screen Height</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3911,6 +4079,18 @@ Can&apos;t find file:
     <message>
         <source>Impedance</source>
         <translation type="unfinished">Impedantie</translation>
+    </message>
+    <message>
+        <source>Test</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Test Time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do Test</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3957,6 +4137,10 @@ Can&apos;t find file:
     <message>
         <source>Threshold</source>
         <translation type="unfinished">Drempel</translation>
+    </message>
+    <message>
+        <source>Small size</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4034,7 +4218,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Cannot write file %1:
 %2.</source>
-        <translation type="unfinished">Kan niet schrijven naar bestand %1:
+        <translation type="obsolete">Kan niet schrijven naar bestand %1:
 %2.</translation>
     </message>
     <message>
@@ -4208,42 +4392,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Other</source>
         <translation type="unfinished">Overig</translation>
-    </message>
-    <message>
-        <source>Ternary</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Digital Potentiometer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>IC 74</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>IC CD</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>USSR IC</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Other IC</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Keys</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Led display</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Tools</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Transistors</source>
@@ -4798,14 +4946,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Size X</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Size Y</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Border</source>
         <translation type="unfinished">Rand</translation>
     </message>
@@ -4820,6 +4960,18 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Opacity</source>
         <translation type="unfinished">Doorschijnendheid</translation>
+    </message>
+    <message>
+        <source>Width</source>
+        <translation type="unfinished">Breedte</translation>
+    </message>
+    <message>
+        <source>Height</source>
+        <translation type="unfinished">Hoogte</translation>
+    </message>
+    <message>
+        <source>Angle</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4870,6 +5022,22 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Timing</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Size</source>
+        <translation type="unfinished">Grootte</translation>
+    </message>
+    <message>
+        <source>Parallel Input</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bidirectional</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tristate</source>
+        <translation type="unfinished">Tristate</translation>
     </message>
 </context>
 <context>
@@ -4938,10 +5106,6 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>I2C</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>_px</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5030,11 +5194,15 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Logic Symbol</source>
-        <translation type="unfinished">Logisch symbool</translation>
+        <translation type="obsolete">Logisch symbool</translation>
     </message>
     <message>
         <source>Main</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Package</source>
+        <translation type="unfinished">Pakket</translation>
     </message>
 </context>
 <context>
@@ -5108,7 +5276,7 @@ p, li { white-space: pre-wrap; }
 Package has been modified.
 Do you want to save your changes?
 </source>
-        <translation type="unfinished">
+        <translation type="obsolete">
 Pakket is gewijzigd. 
 Wijzigingen opslaan?
 </translation>
@@ -5129,6 +5297,26 @@ Wijzigingen opslaan?
     </message>
     <message>
         <source>Select Exposed Components</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logic</source>
+        <translation type="unfinished">Logica</translation>
+    </message>
+    <message>
+        <source>Board</source>
+        <translation type="unfinished">Bord</translation>
+    </message>
+    <message>
+        <source>Shield</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Module</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5187,6 +5375,33 @@ Wijzigingen opslaan?
     </message>
     <message>
         <source>Common Pin</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>TestUnit</name>
+    <message>
+        <source>Test Unit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Main</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inputs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Outputs</source>
+        <translation type="unfinished">Uitgangen</translation>
+    </message>
+    <message>
+        <source>Test</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Period</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5369,6 +5584,21 @@ Wijzigingen opslaan?
     </message>
 </context>
 <context>
+    <name>TruthTable</name>
+    <message>
+        <source>Truth Table</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Run test</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save as correct</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Tunnel</name>
     <message>
         <source>Tunnel.</source>
@@ -5520,6 +5750,30 @@ Wijzigingen opslaan?
         <source>Columns</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Timing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Minimum Reset pulse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>0, High time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>0, Low time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>1, High time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>1, Low time</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Watcher</name>
@@ -5658,6 +5912,14 @@ Wijzigingen opslaan?
     <name>Zener</name>
     <message>
         <source>Zener Diode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Main</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Model</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

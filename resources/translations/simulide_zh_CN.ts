@@ -83,14 +83,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Feri</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>       kellneka.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Sergey Roenko.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -116,14 +108,6 @@
     </message>
     <message>
         <source>Jan K. S.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>acebrian.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>       bjacquot.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -224,6 +208,26 @@
     </message>
     <message>
         <source>tomas714</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Main contributors:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>       Bastien Jacquot.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Giordano.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>       Kai Kellner.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A. Cebrian.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -503,6 +507,22 @@ p, li { white-space: pre-wrap; }
         <source>Font</source>
         <translation type="unfinished">字体</translation>
     </message>
+    <message>
+        <source>Restart required to apply new settings.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Canvas Width</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>pixels</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Canvas Height</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AudioOut</name>
@@ -521,6 +541,10 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Impedance</source>
         <translation>阻抗</translation>
+    </message>
+    <message>
+        <source>Frequency</source>
+        <translation type="unfinished">频率</translation>
     </message>
 </context>
 <context>
@@ -663,6 +687,10 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Timing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tristate</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -816,23 +844,23 @@ p, li { white-space: pre-wrap; }
     <name>Chip</name>
     <message>
         <source>None</source>
-        <translation>无(None)</translation>
+        <translation type="vanished">无(None)</translation>
     </message>
     <message>
         <source>Logic</source>
-        <translation>逻辑芯片(Logic)</translation>
+        <translation type="vanished">逻辑芯片(Logic)</translation>
     </message>
     <message>
         <source>Board</source>
-        <translation>板(Board)</translation>
+        <translation type="vanished">板(Board)</translation>
     </message>
     <message>
         <source>Shield</source>
-        <translation>Shield</translation>
+        <translation type="vanished">Shield</translation>
     </message>
     <message>
         <source>Module</source>
-        <translation>模块(Module)</translation>
+        <translation type="vanished">模块(Module)</translation>
     </message>
 </context>
 <context>
@@ -848,7 +876,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Circuits (*.sim*);;All files (*.*)</source>
-        <translation>电路文件 (*.sim*);;全部文件 (*.*)</translation>
+        <translation type="vanished">电路文件 (*.sim*);;全部文件 (*.*)</translation>
     </message>
     <message>
         <source>Bill Of Materials</source>
@@ -857,6 +885,10 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Import Circuit</source>
         <translation type="unfinished">导入电路</translation>
+    </message>
+    <message>
+        <source>Circuits (*.sim1);;All files (*.*)</source>
+        <translation type="unfinished">电路文件 (*.sim1);;全部文件 (*.*)</translation>
     </message>
 </context>
 <context>
@@ -983,7 +1015,7 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Circuits (*.sim*);;All files (*.*)</source>
-        <translation>电路文件 (*.sim*);;全部文件 (*.*)</translation>
+        <translation type="vanished">电路文件 (*.sim*);;全部文件 (*.*)</translation>
     </message>
     <message>
         <source>Save Circuit</source>
@@ -1198,6 +1230,21 @@ Can&apos;t find file:
     </message>
 </context>
 <context>
+    <name>Comparator</name>
+    <message>
+        <source>Comparator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Electric</source>
+        <translation type="unfinished">电气特性</translation>
+    </message>
+    <message>
+        <source>Timing</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Compiler</name>
     <message>
         <source> Compiler successfully loaded.
@@ -1405,30 +1452,81 @@ Can&apos;t find file:
     </message>
 </context>
 <context>
+    <name>ComponentList</name>
+    <message>
+        <source>Ternary</source>
+        <translation type="unfinished">三值逻辑</translation>
+    </message>
+    <message>
+        <source>Digipot</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>IC 74</source>
+        <translation type="unfinished">IC 74</translation>
+    </message>
+    <message>
+        <source>IC CD</source>
+        <translation type="unfinished">IC CD</translation>
+    </message>
+    <message>
+        <source>USSR IC</source>
+        <translation type="unfinished">USSR IC</translation>
+    </message>
+    <message>
+        <source>Other IC</source>
+        <translation type="unfinished">其他集成电路</translation>
+    </message>
+    <message>
+        <source>Keys</source>
+        <translation type="unfinished">Keys</translation>
+    </message>
+    <message>
+        <source>Led display</source>
+        <translation type="unfinished">LED显示器</translation>
+    </message>
+    <message>
+        <source>Tools</source>
+        <translation type="unfinished">工具</translation>
+    </message>
+    <message>
+        <source>    Loading Component sets at:</source>
+        <translation type="unfinished">    正在载入组件集:</translation>
+    </message>
+    <message>
+        <source>        Loaded Component set:           </source>
+        <translation type="unfinished">        已加载组件集:           </translation>
+    </message>
+    <message>
+        <source>Manage Components</source>
+        <translation type="unfinished">管理组件</translation>
+    </message>
+</context>
+<context>
     <name>ComponentSelector</name>
     <message>
         <source>    Loading Component sets at:</source>
-        <translation>    正在载入组件集:</translation>
+        <translation type="vanished">    正在载入组件集:</translation>
     </message>
     <message>
         <source>Cannot read file %1:
 %2.</source>
-        <translation>无法读取文件%1:
+        <translation type="vanished">无法读取文件%1:
 %2.</translation>
     </message>
     <message>
         <source>Error parsing file (itemlib):
 %1.</source>
-        <translation>解析文件错误(itemlib):
+        <translation type="vanished">解析文件错误(itemlib):
 %1.</translation>
     </message>
     <message>
         <source>        Loaded Component set:           </source>
-        <translation>        已加载组件集:           </translation>
+        <translation type="vanished">        已加载组件集:           </translation>
     </message>
     <message>
         <source>Manage Components</source>
-        <translation>管理组件</translation>
+        <translation type="vanished">管理组件</translation>
     </message>
 </context>
 <context>
@@ -1501,6 +1599,10 @@ Can&apos;t find file:
     <message>
         <source>Current Value</source>
         <translation>当前值</translation>
+    </message>
+    <message>
+        <source>Min. Current</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1647,6 +1749,10 @@ Can&apos;t find file:
         <source>Timing</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Tristate</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Demux</name>
@@ -1676,6 +1782,10 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Timing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tristate</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1754,6 +1864,26 @@ Can&apos;t find file:
     <message>
         <source>Steps</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Body</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Width</source>
+        <translation type="unfinished">宽度</translation>
+    </message>
+    <message>
+        <source>Height</source>
+        <translation type="unfinished">高度</translation>
+    </message>
+    <message>
+        <source>Border</source>
+        <translation type="unfinished">边框</translation>
+    </message>
+    <message>
+        <source>Background</source>
+        <translation type="unfinished">背景</translation>
     </message>
 </context>
 <context>
@@ -2229,6 +2359,30 @@ Can&apos;t find file:
         <source>File Settings</source>
         <translation>文件设置</translation>
     </message>
+    <message>
+        <source>Auto close pairs:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto close Parenthesis ( )</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto close Braces { }</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto close Brackets [ ]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto close Quotes &quot; &quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto close Single Quotes &apos; &apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>EditorWindow</name>
@@ -2414,6 +2568,10 @@ Can&apos;t find file:
         <source>Fixed Voltage</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Small size</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FlipFlopBase</name>
@@ -2517,6 +2675,14 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Timing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Main</source>
+        <translation type="unfinished">主要特性</translation>
+    </message>
+    <message>
+        <source>Size</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2799,7 +2965,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>custom</source>
-        <translation>自定义</translation>
+        <translation type="vanished">自定义</translation>
     </message>
     <message>
         <source>Compiler Settings</source>
@@ -2820,6 +2986,10 @@ Can&apos;t find file:
     <message>
         <source>Custom Library Path</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Custom</source>
+        <translation type="unfinished">自定义</translation>
     </message>
 </context>
 <context>
@@ -2878,11 +3048,27 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Propagation delay</source>
-        <translation>传播延迟</translation>
+        <translation type="vanished">传播延迟</translation>
     </message>
     <message>
         <source>Gate Delay</source>
-        <translation>门延迟</translation>
+        <translation type="vanished">门延迟</translation>
+    </message>
+    <message>
+        <source>Logic Family</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Supply Voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delay Multiplier</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Family Delay</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2940,6 +3126,14 @@ Can&apos;t find file:
     <message>
         <source>_Buttons</source>
         <translation type="vanished">_Buttons</translation>
+    </message>
+    <message>
+        <source>Diodes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Diodes Direction</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3136,6 +3330,10 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Timing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reset Pin</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3506,6 +3704,29 @@ Can&apos;t find file:
     </message>
 </context>
 <context>
+    <name>MagnitudeComp</name>
+    <message>
+        <source>Magnitude Comparator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Main</source>
+        <translation type="unfinished">主要特性</translation>
+    </message>
+    <message>
+        <source>Size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Electric</source>
+        <translation type="unfinished">电气特性</translation>
+    </message>
+    <message>
+        <source>Timing</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>MainWindow</name>
     <message>
         <source>Looks like SimulIDE crashed...</source>
@@ -3549,6 +3770,10 @@ Can&apos;t find file:
         <source>Select User data directory</source>
         <translation>选择用户数据文件夹</translation>
     </message>
+    <message>
+        <source>Clear search</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Max72xx_matrix</name>
@@ -3566,31 +3791,31 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Yellow</source>
-        <translation>黄</translation>
+        <translation type="vanished">黄</translation>
     </message>
     <message>
         <source>Red</source>
-        <translation>红</translation>
+        <translation type="vanished">红</translation>
     </message>
     <message>
         <source>Green</source>
-        <translation>绿</translation>
+        <translation type="vanished">绿</translation>
     </message>
     <message>
         <source>Blue</source>
-        <translation>蓝</translation>
+        <translation type="vanished">蓝</translation>
     </message>
     <message>
         <source>Orange</source>
-        <translation>桔黄</translation>
+        <translation type="vanished">桔黄</translation>
     </message>
     <message>
         <source>Purple</source>
-        <translation>紫</translation>
+        <translation type="vanished">紫</translation>
     </message>
     <message>
         <source>White</source>
-        <translation>白</translation>
+        <translation type="vanished">白</translation>
     </message>
     <message>
         <source>Color</source>
@@ -3689,7 +3914,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Files not found for: %1</source>
-        <translation>未找到文件: %1</translation>
+        <translation type="vanished">未找到文件: %1</translation>
     </message>
     <message>
         <source>EEPROM persitent</source>
@@ -3697,7 +3922,7 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Logic Symbol</source>
-        <translation>逻辑符号</translation>
+        <translation type="vanished">逻辑符号</translation>
     </message>
     <message>
         <source>Changes applied after Simulation Restart</source>
@@ -3714,6 +3939,18 @@ Can&apos;t find file:
     <message>
         <source>Link to Component</source>
         <translation>连接到组件</translation>
+    </message>
+    <message>
+        <source>Package</source>
+        <translation type="unfinished">包(Package)</translation>
+    </message>
+    <message>
+        <source>Force this frequency</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PGM persitent</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3910,6 +4147,10 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Timing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tristate</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4119,10 +4360,6 @@ Can&apos;t find file:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>_Px</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Screen Height</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4133,6 +4370,18 @@ Can&apos;t find file:
     <message>
         <source>Impedance</source>
         <translation type="unfinished">阻抗</translation>
+    </message>
+    <message>
+        <source>Test</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Test Time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do Test</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4175,6 +4424,10 @@ Can&apos;t find file:
     <message>
         <source>Threshold</source>
         <translation>阈值</translation>
+    </message>
+    <message>
+        <source>Small size</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4256,7 +4509,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Cannot write file %1:
 %2.</source>
-        <translation>无法写入文件%1:
+        <translation type="vanished">无法写入文件%1:
 %2.</translation>
     </message>
     <message>
@@ -4397,23 +4650,23 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Other IC</source>
-        <translation>其他集成电路</translation>
+        <translation type="vanished">其他集成电路</translation>
     </message>
     <message>
         <source>Keys</source>
-        <translation>Keys</translation>
+        <translation type="vanished">Keys</translation>
     </message>
     <message>
         <source>Ternary</source>
-        <translation>三值逻辑</translation>
+        <translation type="vanished">三值逻辑</translation>
     </message>
     <message>
         <source>Tools</source>
-        <translation>工具</translation>
+        <translation type="vanished">工具</translation>
     </message>
     <message>
         <source>Led display</source>
-        <translation>LED显示器</translation>
+        <translation type="vanished">LED显示器</translation>
     </message>
     <message>
         <source>Warning: elf file doesn&apos;t exist:</source>
@@ -4449,15 +4702,15 @@ Not valid Package file:
     </message>
     <message>
         <source>IC 74</source>
-        <translation>IC 74</translation>
+        <translation type="vanished">IC 74</translation>
     </message>
     <message>
         <source>IC CD</source>
-        <translation>IC CD</translation>
+        <translation type="vanished">IC CD</translation>
     </message>
     <message>
         <source>USSR IC</source>
-        <translation>USSR IC</translation>
+        <translation type="vanished">USSR IC</translation>
     </message>
     <message>
         <source>Connectors</source>
@@ -4529,7 +4782,7 @@ Not valid Package file:
     </message>
     <message>
         <source>Digital Potentiometer</source>
-        <translation>数字电位器</translation>
+        <translation type="vanished">数字电位器</translation>
     </message>
     <message>
         <source>Edit Pin </source>
@@ -5112,11 +5365,11 @@ Not valid Package file:
     </message>
     <message>
         <source>Size X</source>
-        <translation>宽度</translation>
+        <translation type="vanished">宽度</translation>
     </message>
     <message>
         <source>Size Y</source>
-        <translation>高度</translation>
+        <translation type="vanished">高度</translation>
     </message>
     <message>
         <source>Border</source>
@@ -5133,6 +5386,18 @@ Not valid Package file:
     <message>
         <source>Opacity</source>
         <translation>不透明度</translation>
+    </message>
+    <message>
+        <source>Width</source>
+        <translation type="unfinished">宽度</translation>
+    </message>
+    <message>
+        <source>Height</source>
+        <translation type="unfinished">高度</translation>
+    </message>
+    <message>
+        <source>Angle</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5178,6 +5443,22 @@ Not valid Package file:
     </message>
     <message>
         <source>Timing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Parallel Input</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bidirectional</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tristate</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5260,10 +5541,6 @@ Not valid Package file:
     <message>
         <source>I2C</source>
         <translation type="unfinished">I2C</translation>
-    </message>
-    <message>
-        <source>_px</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5362,7 +5639,7 @@ Not valid Package file:
     </message>
     <message>
         <source>Logic Symbol</source>
-        <translation>逻辑符号</translation>
+        <translation type="vanished">逻辑符号</translation>
     </message>
     <message>
         <source>Detach</source>
@@ -5371,6 +5648,10 @@ Not valid Package file:
     <message>
         <source>Attach</source>
         <translation type="vanished">装上</translation>
+    </message>
+    <message>
+        <source>Package</source>
+        <translation type="unfinished">包(Package)</translation>
     </message>
 </context>
 <context>
@@ -5444,7 +5725,7 @@ Not valid Package file:
 Package has been modified.
 Do you want to save your changes?
 </source>
-        <translation>
+        <translation type="vanished">
 包已被修改.
 要保存改动吗?
 </translation>
@@ -5470,6 +5751,26 @@ Do you want to save your changes?
     <message>
         <source>Select Exposed Components</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Board</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Shield</source>
+        <translation type="unfinished">Shield</translation>
+    </message>
+    <message>
+        <source>Module</source>
+        <translation type="unfinished">模块(Module)</translation>
     </message>
 </context>
 <context>
@@ -5527,6 +5828,33 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Common Pin</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>TestUnit</name>
+    <message>
+        <source>Test Unit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Main</source>
+        <translation type="unfinished">主要特性</translation>
+    </message>
+    <message>
+        <source>Inputs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Outputs</source>
+        <translation type="unfinished">输出</translation>
+    </message>
+    <message>
+        <source>Test</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Period</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5713,6 +6041,21 @@ Do you want to save your changes?
     </message>
 </context>
 <context>
+    <name>TruthTable</name>
+    <message>
+        <source>Truth Table</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Run test</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save as correct</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Tunnel</name>
     <message>
         <source>Main</source>
@@ -5872,6 +6215,30 @@ Do you want to save your changes?
         <source>_Leds</source>
         <translation type="vanished">_Leds</translation>
     </message>
+    <message>
+        <source>Timing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Minimum Reset pulse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>0, High time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>0, Low time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>1, High time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>1, Low time</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Watcher</name>
@@ -6019,6 +6386,14 @@ Do you want to save your changes?
     <message>
         <source>Zener Diode</source>
         <translation>稳压二极管</translation>
+    </message>
+    <message>
+        <source>Main</source>
+        <translation type="unfinished">主要特性</translation>
+    </message>
+    <message>
+        <source>Model</source>
+        <translation type="unfinished">型号</translation>
     </message>
 </context>
 <context>
