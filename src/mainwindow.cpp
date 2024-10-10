@@ -239,10 +239,14 @@ void MainWindow::createWidgets()
     QHBoxLayout* searchLayout = new QHBoxLayout( this );
 
     m_searchComponent = new QLineEdit( this );
+    QFont font = m_searchComponent->font();
+    font.setPixelSize( 12*m_fontScale );
+    m_searchComponent->setFont( font );
+    m_searchComponent->setFixedHeight( 24*m_fontScale );
     m_searchComponent->setPlaceholderText( tr("Search Components"));
     searchLayout->addWidget( m_searchComponent );
     connect( m_searchComponent, SIGNAL( editingFinished() ),
-             this,              SLOT(   searchChanged()) );
+             this,              SLOT(   searchChanged() ) );
 
     m_clearButton = new QPushButton( this );
     m_clearButton->setIcon( QIcon(":/remove.svg") );
