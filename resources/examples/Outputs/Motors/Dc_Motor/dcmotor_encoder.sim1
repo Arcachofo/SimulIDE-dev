@@ -1,0 +1,31 @@
+<circuit version="1.1.0-SR0" rev="1981" stepSize="1000000" stepsPS="1000000" NLsteps="100000" reaStep="1000000" animate="0" >
+
+<item itemtype="DcMotor" CircId="DcMotor-1" mainComp="false" Show_id="true" Show_Val="false" Pos="-424,-368" rotation="0" hflip="1" vflip="1" label="DcMotor" idLabPos="-21.9513,36.2009" labelrot="0" valLabPos="0,0" valLabRot="0" Links="KY040-12," RPM_Nominal="60 _RPM" Volt_Nominal="5 V" Resistance="100 Ω" />
+
+<item itemtype="Ground" CircId="Ground-3" mainComp="false" Show_id="false" Show_Val="false" Pos="-368,-328" rotation="0" hflip="1" vflip="1" label="Ground-4" idLabPos="-16,8" labelrot="0" valLabPos="0,0" valLabRot="0" />
+
+<item itemtype="Rail" CircId="Rail-9" mainComp="false" ShowProp="Voltage" Show_id="false" Show_Val="true" Pos="-528,-400" rotation="90" hflip="1" vflip="1" label="Rail-9" idLabPos="-16,-24" labelrot="0" valLabPos="-13.8964,5.89643" valLabRot="-90" Voltage="5 V" />
+
+<item itemtype="Rail" CircId="Rail-10" mainComp="false" ShowProp="Voltage" Show_id="false" Show_Val="true" Pos="-528,-328" rotation="-90" hflip="1" vflip="1" label="Rail-10" idLabPos="-16,-24" labelrot="0" valLabPos="-3.37856,-8.30269" valLabRot="90" Voltage="-5 V" />
+
+<item itemtype="Switch" CircId="Switch-11" mainComp="false" Show_id="false" Show_Val="false" Pos="-496,-368" rotation="-180" hflip="1" vflip="1" label="Switch-11" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Norm_Close="false" DT="true" Poles="1" />
+
+<item itemtype="KY040" CircId="KY040-12" mainComp="false" Show_id="false" Show_Val="false" Pos="-424,-472" rotation="-630" hflip="1" vflip="1" label="KY040-12" idLabPos="-34,20" labelrot="-90" valLabPos="-16,20" valLabRot="0" Steps="20" />
+
+<item itemtype="Oscope" CircId="Oscope-13" mainComp="false" Show_id="false" Show_Val="false" Pos="-268,-436" rotation="0" hflip="1" vflip="1" label="Oscope-13" idLabPos="-90,-100" labelrot="0" valLabPos="-16,20" valLabRot="0" Basic_X="135 _px" Basic_Y="135 _px" BufferSize="600000" connectGnd="true" InputImped="10 MΩ" TimDiv="88654683068" TimPos="0,0,0,0," VolDiv="1,1,1,1," Tunnels=",,,," Trigger="4" Filter="0.1 V" AutoSC="4" Tracks="2" HideCh="false,false,false,false," VolPos="0,0,0,0," />
+
+<item itemtype="TextComponent" CircId="TextComponent-15" mainComp="false" Show_id="false" Show_Val="false" Pos="-472,-440" rotation="0" hflip="1" vflip="1" label="TextComponent-15" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" Margin="2 _px" Border="1 _px" Color="#ffffdc" Opacity="1" Font="Helvetica [Cronyx]" Font_Color="#000080" Font_Size="9 _px" Fixed_Width="false" Text="Motor is linked to&#xa;Rotary encoder" />
+
+<item itemtype="Connector" uid="Connector-6" startpinid="DcMotor-1-rPin" endpinid="Ground-3-Gnd" pointList="-384,-368,-368,-368,-368,-344" />
+
+<item itemtype="Connector" uid="Connector-12" startpinid="Switch-11-pinP0" endpinid="DcMotor-1-lPin" pointList="-480,-368,-464,-368" />
+
+<item itemtype="Connector" uid="Connector-13" startpinid="Rail-9-outnod" endpinid="Switch-11-switch0pinN" pointList="-528,-384,-528,-368,-512,-368" />
+
+<item itemtype="Connector" uid="Connector-14" startpinid="Switch-11-switch1pinN" endpinid="Rail-10-outnod" pointList="-512,-360,-528,-360,-528,-344" />
+
+<item itemtype="Connector" uid="Connector-17" startpinid="KY040-12-dt" endpinid="Oscope-13-Pin0" pointList="-460,-476,-468,-476,-468,-508,-364,-508,-364,-484,-356,-484" />
+
+<item itemtype="Connector" uid="Connector-18" startpinid="KY040-12-clk" endpinid="Oscope-13-Pin1" pointList="-460,-468,-476,-468,-476,-500,-372,-500,-372,-452,-356,-452" />
+
+</circuit>

@@ -1,0 +1,21 @@
+<circuit version="1.1.0-SR0" rev="1981" stepSize="1000000" stepsPS="1000000" NLsteps="100000" reaStep="1000000" animate="0" >
+
+<item itemtype="Oscope" CircId="Oscope-2" mainComp="false" Show_id="false" Show_Val="false" Pos="-308,-412" rotation="0" hflip="1" vflip="1" label="Oscope-2" idLabPos="-80,-130" labelrot="0" valLabPos="0,0" valLabRot="0" Basic_X="135 _px" Basic_Y="135 _px" BufferSize="600000" connectGnd="true" InputImped="10 MΩ" TimDiv="121533722864" TimPos="0,0,0,0," VolDiv="1,1,1,1," Tunnels=",,,," Trigger="4" Filter="0.5 V" AutoSC="4" Tracks="1" HideCh="false,false,false,false," VolPos="0,0,0,0," />
+
+<item itemtype="WaveGen" CircId="WaveGen-1" mainComp="false" Show_id="true" Show_Val="true" Pos="-500,-428" rotation="0" hflip="1" vflip="1" label="wav" idLabPos="-22,-21" labelrot="0" valLabPos="-11,10" valLabRot="0" Out="true" Running="true" Wave_Type="Wav" Freq="44100 Hz" Phase="0 _º" Steps="1 _Steps" Duty="50 _%" File="plop_float32b.wav" Always_On="false" Bipolar="false" Floating="false" Semi_Ampli="2.5 V" Mid_Volt="0 V" />
+
+<item itemtype="AudioOut" CircId="AudioOut-4" mainComp="false" Show_id="false" Show_Val="false" Pos="-436,-396" rotation="0" hflip="1" vflip="1" label="AudioOut-4" idLabPos="-20,-36" labelrot="0" valLabPos="-16,20" valLabRot="0" Buzzer="false" Impedance="inf Ω" Frequency="1 kHz" />
+
+<item itemtype="Ground" CircId="Ground-8" mainComp="false" Show_id="false" Show_Val="false" Pos="-468,-364" rotation="0" hflip="1" vflip="1" label="Ground-8" idLabPos="-16,8" labelrot="0" valLabPos="-16,20" valLabRot="0" />
+
+<item itemtype="Node" CircId="Node-5" mainComp="false" Pos="-468,-428" />
+
+<item itemtype="Connector" uid="connector-9" startpinid="Oscope-2-Pin0" endpinid="Node-5-0" pointList="-396,-460,-468,-460,-468,-428" />
+
+<item itemtype="Connector" uid="connector-10" startpinid="Node-5-2" endpinid="WaveGen-1-outnod" pointList="-468,-428,-484,-428" />
+
+<item itemtype="Connector" uid="connector-11" startpinid="Node-5-1" endpinid="AudioOut-4-lPin" pointList="-468,-428,-468,-404,-452,-404" />
+
+<item itemtype="Connector" uid="connector-12" startpinid="Ground-8-Gnd" endpinid="AudioOut-4-rPin" pointList="-468,-380,-468,-396,-452,-396" />
+
+</circuit>

@@ -1,0 +1,77 @@
+<circuit version="1.1.0-SR0" rev="1981" stepSize="1000000" stepsPS="1000000" NLsteps="100000" reaStep="1000000" animate="0" >
+
+<item itemtype="Bus" CircId="Bus-1" mainComp="false" Show_id="false" Show_Val="false" Pos="-196,-4" rotation="0" hflip="1" vflip="1" label="Bus-1" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" Num_Bits="12 _bits" Start_Bit="0" />
+
+<item itemtype="Bus" CircId="Bus-2" mainComp="false" Show_id="false" Show_Val="false" Pos="-116,-100" rotation="-90" hflip="1" vflip="1" label="Bus-2" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" Num_Bits="4 _bits" Start_Bit="0" />
+
+<item itemtype="Bus" CircId="Bus-3" mainComp="false" Show_id="false" Show_Val="false" Pos="-68,-100" rotation="-90" hflip="1" vflip="1" label="Bus-3" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" Num_Bits="4 _bits" Start_Bit="4" />
+
+<item itemtype="Bus" CircId="Bus-4" mainComp="false" Show_id="false" Show_Val="false" Pos="-20,-100" rotation="-90" hflip="1" vflip="1" label="Bus-4" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" Num_Bits="4 _bits" Start_Bit="8" />
+
+<item itemtype="LedBar" CircId="LedBar-5" mainComp="false" Show_id="false" Show_Val="false" Pos="-140,-68" rotation="90" hflip="1" vflip="1" label="LedBar-5" idLabPos="-16,-44" labelrot="0" valLabPos="-16,-56" valLabRot="0" Color="Yellow" Size="4 _Leds" Grounded="true" Threshold="2.4 V" MaxCurrent="30 mA" Resistance="100 Ω" />
+
+<item itemtype="LedBar" CircId="LedBar-6" mainComp="false" Show_id="false" Show_Val="false" Pos="-92,-68" rotation="90" hflip="1" vflip="1" label="LedBar-6" idLabPos="-16,-44" labelrot="0" valLabPos="-16,-56" valLabRot="0" Color="Yellow" Size="4 _Leds" Grounded="true" Threshold="2.4 V" MaxCurrent="30 mA" Resistance="100 Ω" />
+
+<item itemtype="LedBar" CircId="LedBar-7" mainComp="false" Show_id="false" Show_Val="false" Pos="-44,-68" rotation="90" hflip="1" vflip="1" label="LedBar-7" idLabPos="-16,-44" labelrot="0" valLabPos="-16,-56" valLabRot="0" Color="Yellow" Size="4 _Leds" Grounded="true" Threshold="2.4 V" MaxCurrent="30 mA" Resistance="100 Ω" />
+
+<item itemtype="SwitchDip" CircId="SwitchDip-8" mainComp="false" Show_id="false" Show_Val="false" Pos="-228,-68" rotation="0" hflip="1" vflip="1" label="SwitchDip-8" idLabPos="-16,-44" labelrot="0" valLabPos="-16,20" valLabRot="0" Size="12" Exclusive="false" CommonPin="true" State="273" />
+
+<item itemtype="Rail" CircId="Rail-9" mainComp="false" ShowProp="Voltage" Show_id="false" Show_Val="true" Pos="-244,-116" rotation="90" hflip="1" vflip="1" label="Rail-9" idLabPos="-5,-10" labelrot="-90" valLabPos="-12,6" valLabRot="-90" Voltage="5 V" />
+
+<item itemtype="Connector" uid="Connector-1" startpinid="Bus-1-busPinI" endpinid="Bus-2-busPinI" pointList="-196,-92,-196,-100,-140,-100" />
+
+<item itemtype="Connector" uid="Connector-2" startpinid="Bus-2-ePin0" endpinid="Bus-3-busPinI" pointList="-116,-100,-92,-100" />
+
+<item itemtype="Connector" uid="Connector-3" startpinid="Bus-3-ePin0" endpinid="Bus-4-busPinI" pointList="-68,-100,-44,-100" />
+
+<item itemtype="Connector" uid="Connector-4" startpinid="LedBar-5-led0-pinP" endpinid="Bus-2-ePin4" pointList="-116,-84,-116,-92" />
+
+<item itemtype="Connector" uid="Connector-5" startpinid="LedBar-5-led1-pinP" endpinid="Bus-2-ePin3" pointList="-124,-84,-124,-92" />
+
+<item itemtype="Connector" uid="Connector-6" startpinid="LedBar-5-led2-pinP" endpinid="Bus-2-ePin2" pointList="-132,-84,-132,-92" />
+
+<item itemtype="Connector" uid="Connector-7" startpinid="LedBar-5-led3-pinP" endpinid="Bus-2-ePin1" pointList="-140,-84,-140,-92" />
+
+<item itemtype="Connector" uid="Connector-8" startpinid="LedBar-6-led0-pinP" endpinid="Bus-3-ePin4" pointList="-68,-84,-68,-92" />
+
+<item itemtype="Connector" uid="Connector-9" startpinid="LedBar-6-led1-pinP" endpinid="Bus-3-ePin3" pointList="-76,-84,-76,-92" />
+
+<item itemtype="Connector" uid="Connector-10" startpinid="LedBar-6-led2-pinP" endpinid="Bus-3-ePin2" pointList="-84,-84,-84,-92" />
+
+<item itemtype="Connector" uid="Connector-11" startpinid="LedBar-6-led3-pinP" endpinid="Bus-3-ePin1" pointList="-92,-84,-92,-92" />
+
+<item itemtype="Connector" uid="Connector-12" startpinid="LedBar-7-led0-pinP" endpinid="Bus-4-ePin4" pointList="-20,-84,-20,-92" />
+
+<item itemtype="Connector" uid="Connector-13" startpinid="LedBar-7-led1-pinP" endpinid="Bus-4-ePin3" pointList="-28,-84,-28,-92" />
+
+<item itemtype="Connector" uid="Connector-14" startpinid="LedBar-7-led2-pinP" endpinid="Bus-4-ePin2" pointList="-36,-84,-36,-92" />
+
+<item itemtype="Connector" uid="Connector-15" startpinid="LedBar-7-led3-pinP" endpinid="Bus-4-ePin1" pointList="-44,-84,-44,-92" />
+
+<item itemtype="Connector" uid="Connector-16" startpinid="SwitchDip-8-switch0-pinN" endpinid="Bus-1-ePin1" pointList="-212,-92,-204,-92" />
+
+<item itemtype="Connector" uid="Connector-17" startpinid="SwitchDip-8-switch1-pinN" endpinid="Bus-1-ePin2" pointList="-212,-84,-204,-84" />
+
+<item itemtype="Connector" uid="Connector-18" startpinid="SwitchDip-8-switch2-pinN" endpinid="Bus-1-ePin3" pointList="-212,-76,-204,-76" />
+
+<item itemtype="Connector" uid="Connector-19" startpinid="SwitchDip-8-switch3-pinN" endpinid="Bus-1-ePin4" pointList="-212,-68,-204,-68" />
+
+<item itemtype="Connector" uid="Connector-20" startpinid="SwitchDip-8-switch4-pinN" endpinid="Bus-1-ePin5" pointList="-212,-60,-204,-60" />
+
+<item itemtype="Connector" uid="Connector-21" startpinid="SwitchDip-8-switch5-pinN" endpinid="Bus-1-ePin6" pointList="-212,-52,-204,-52" />
+
+<item itemtype="Connector" uid="Connector-22" startpinid="SwitchDip-8-switch6-pinN" endpinid="Bus-1-ePin7" pointList="-212,-44,-204,-44" />
+
+<item itemtype="Connector" uid="Connector-23" startpinid="SwitchDip-8-switch7-pinN" endpinid="Bus-1-ePin8" pointList="-212,-36,-204,-36" />
+
+<item itemtype="Connector" uid="Connector-24" startpinid="SwitchDip-8-switch8-pinN" endpinid="Bus-1-ePin9" pointList="-212,-28,-204,-28" />
+
+<item itemtype="Connector" uid="Connector-25" startpinid="SwitchDip-8-switch9-pinN" endpinid="Bus-1-ePin10" pointList="-212,-20,-204,-20" />
+
+<item itemtype="Connector" uid="Connector-26" startpinid="SwitchDip-8-switch10-pinN" endpinid="Bus-1-ePin11" pointList="-212,-12,-204,-12" />
+
+<item itemtype="Connector" uid="Connector-27" startpinid="SwitchDip-8-switch11-pinN" endpinid="Bus-1-ePin12" pointList="-212,-4,-204,-4" />
+
+<item itemtype="Connector" uid="Connector-28" startpinid="Rail-9-outnod" endpinid="SwitchDip-8-switch0-pinP" pointList="-244,-100,-244,-92,-236,-92" />
+
+</circuit>

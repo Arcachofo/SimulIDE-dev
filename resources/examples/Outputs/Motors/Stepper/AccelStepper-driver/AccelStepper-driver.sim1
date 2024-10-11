@@ -1,0 +1,97 @@
+<circuit version="1.1.0-SR0" rev="1981" stepSize="1000000" stepsPS="1000000" NLsteps="100000" reaStep="1000000" animate="0" >
+
+<item itemtype="Subcircuit" CircId="Uno-1" mainComp="false" Show_id="true" Show_Val="false" Pos="-304,-60" rotation="0" hflip="1" vflip="1" label="Uno-1" idLabPos="6.07249,-7.85502" labelrot="0" valLabPos="-16,20" valLabRot="0" Logic_Symbol="false">
+<mainCompProps MainCompId="mega328-109" Frequency="16 MHz" Program="AccelStepper.hex" Auto_Load="false" saveEepr="true" MainMcu="true" SerialMon="-1" />
+</item>
+
+<item itemtype="Stepper" CircId="Stepper-2" mainComp="false" Show_id="true" Show_Val="false" Pos="-132,-132" rotation="0" hflip="1" vflip="1" label="Stepper" idLabPos="-23.2288,-66.9338" labelrot="0" valLabPos="-14,36" valLabRot="0" Bipolar="false" Steps="64" Resistance="100 Ω" />
+
+<item itemtype="Subcircuit" CircId="ULN2803-3" mainComp="false" Show_id="true" Show_Val="false" Pos="-324,-172" rotation="0" hflip="1" vflip="1" label="ULN2803" idLabPos="-4.3614,-14.5884" labelrot="0" valLabPos="-16,20" valLabRot="0" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+09 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" Tpd_ps="10 ns" Tr_ps="3 ns" Tf_ps="4 ns" Logic_Symbol="true" />
+
+<item itemtype="Rail" CircId="Rail-11" mainComp="false" ShowProp="Voltage" Show_id="false" Show_Val="true" Pos="-268,-244" rotation="90" hflip="1" vflip="1" label="Rail-11" idLabPos="-5,-10" labelrot="-90" valLabPos="-15.4017,4.05616" valLabRot="-90" Voltage="5 V" />
+
+<item itemtype="LedBar" CircId="LedBar-14" mainComp="false" Show_id="false" Show_Val="false" Pos="-244,-196" rotation="90" hflip="1" vflip="1" label="LedBar-14" idLabPos="-16,-44" labelrot="0" valLabPos="-16,-56" valLabRot="0" Color="Yellow" Size="4 _Leds" Grounded="false" Threshold="2.4 V" MaxCurrent="30 mA" Resistance="100 Ω" />
+
+<item itemtype="LatchD" CircId="LatchD-26" mainComp="false" Show_id="true" Show_Val="false" Pos="-364,-148" rotation="0" hflip="1" vflip="1" label="Inverter" idLabPos="-17.6446,-38.8013" labelrot="0" valLabPos="-16,20" valLabRot="0" Channels="4 _bits" Trigger="None" Tristate="false" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1000 MΩ" Invert_Inputs="false" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" Inverted="true" Open_Collector="false" pd_n="1 _Gates" Tpd_ps="10 ns" Tr_ps="3 ns" Tf_ps="4 ns" />
+
+<item itemtype="Node" CircId="Node-13" mainComp="false" Pos="-268,-132" />
+
+<item itemtype="Node" CircId="Node-15" mainComp="false" Pos="-268,-220" />
+
+<item itemtype="Node" CircId="Node-16" mainComp="false" Pos="-228,-220" />
+
+<item itemtype="Node" CircId="Node-17" mainComp="false" Pos="-236,-220" />
+
+<item itemtype="Node" CircId="Node-18" mainComp="false" Pos="-244,-220" />
+
+<item itemtype="Node" CircId="Node-19" mainComp="false" Pos="-220,-164" />
+
+<item itemtype="Node" CircId="Node-20" mainComp="false" Pos="-228,-156" />
+
+<item itemtype="Node" CircId="Node-21" mainComp="false" Pos="-236,-148" />
+
+<item itemtype="Node" CircId="Node-22" mainComp="false" Pos="-244,-140" />
+
+<item itemtype="Connector" uid="Connector-39" startpinid="Node-13-1" endpinid="ULN2803-3-Com" pointList="-268,-132,-268,-100,-284,-100" />
+
+<item itemtype="Connector" uid="Connector-41" startpinid="Node-13-2" endpinid="Stepper-2-PinCo" pointList="-268,-132,-204,-132" />
+
+<item itemtype="Connector" uid="Connector-43" startpinid="Rail-11-outnod" endpinid="Node-15-0" pointList="-268,-228,-268,-220" />
+
+<item itemtype="Connector" uid="Connector-44" startpinid="Node-15-2" endpinid="Node-13-0" pointList="-268,-220,-268,-132" />
+
+<item itemtype="Connector" uid="Connector-45" startpinid="LedBar-14-led1-pinP" endpinid="Node-16-1" pointList="-228,-212,-228,-220" />
+
+<item itemtype="Connector" uid="Connector-47" startpinid="Node-16-2" endpinid="LedBar-14-led0-pinP" pointList="-228,-220,-220,-220,-220,-212" />
+
+<item itemtype="Connector" uid="Connector-48" startpinid="LedBar-14-led2-pinP" endpinid="Node-17-1" pointList="-236,-212,-236,-220" />
+
+<item itemtype="Connector" uid="Connector-50" startpinid="Node-17-2" endpinid="Node-16-0" pointList="-236,-220,-228,-220" />
+
+<item itemtype="Connector" uid="Connector-51" startpinid="LedBar-14-led3-pinP" endpinid="Node-18-1" pointList="-244,-212,-244,-220" />
+
+<item itemtype="Connector" uid="Connector-52" startpinid="Node-15-1" endpinid="Node-18-0" pointList="-268,-220,-244,-220" />
+
+<item itemtype="Connector" uid="Connector-53" startpinid="Node-18-2" endpinid="Node-17-0" pointList="-244,-220,-236,-220" />
+
+<item itemtype="Connector" uid="Connector-54" startpinid="LedBar-14-led0-pinN" endpinid="Node-19-1" pointList="-220,-180,-220,-164" />
+
+<item itemtype="Connector" uid="Connector-55" startpinid="ULN2803-3-Out1" endpinid="Node-19-0" pointList="-284,-164,-220,-164" />
+
+<item itemtype="Connector" uid="Connector-56" startpinid="Node-19-2" endpinid="Stepper-2-PinA1" pointList="-220,-164,-204,-164" />
+
+<item itemtype="Connector" uid="Connector-57" startpinid="LedBar-14-led1-pinN" endpinid="Node-20-1" pointList="-228,-180,-228,-156" />
+
+<item itemtype="Connector" uid="Connector-58" startpinid="ULN2803-3-Out2" endpinid="Node-20-0" pointList="-284,-156,-228,-156" />
+
+<item itemtype="Connector" uid="Connector-59" startpinid="Node-20-2" endpinid="Stepper-2-PinB1" pointList="-228,-156,-228,-148,-204,-148" />
+
+<item itemtype="Connector" uid="Connector-60" startpinid="LedBar-14-led2-pinN" endpinid="Node-21-1" pointList="-236,-180,-236,-148" />
+
+<item itemtype="Connector" uid="Connector-61" startpinid="ULN2803-3-Out3" endpinid="Node-21-0" pointList="-284,-148,-236,-148" />
+
+<item itemtype="Connector" uid="Connector-62" startpinid="Node-21-2" endpinid="Stepper-2-PinA2" pointList="-236,-148,-236,-116,-204,-116" />
+
+<item itemtype="Connector" uid="Connector-63" startpinid="LedBar-14-led3-pinN" endpinid="Node-22-1" pointList="-244,-180,-244,-140" />
+
+<item itemtype="Connector" uid="Connector-64" startpinid="ULN2803-3-Out4" endpinid="Node-22-0" pointList="-284,-140,-244,-140" />
+
+<item itemtype="Connector" uid="Connector-65" startpinid="Node-22-2" endpinid="Stepper-2-PinB2" pointList="-244,-140,-244,-100,-204,-100" />
+
+<item itemtype="Connector" uid="Connector-98" startpinid="Uno-1-3" endpinid="LatchD-26-in1" pointList="-296,-20,-412,-20,-412,-156,-388,-156" />
+
+<item itemtype="Connector" uid="Connector-99" startpinid="LatchD-26-out1" endpinid="ULN2803-3-In2" pointList="-340,-156,-332,-156" />
+
+<item itemtype="Connector" uid="Connector-100" startpinid="Uno-1-5" endpinid="LatchD-26-in3" pointList="-296,-4,-396,-4,-396,-140,-388,-140" />
+
+<item itemtype="Connector" uid="Connector-101" startpinid="LatchD-26-out3" endpinid="ULN2803-3-In4" pointList="-340,-140,-332,-140" />
+
+<item itemtype="Connector" uid="Connector-102" startpinid="Uno-1-2" endpinid="LatchD-26-in0" pointList="-296,-28,-420,-28,-420,-164,-388,-164" />
+
+<item itemtype="Connector" uid="Connector-103" startpinid="LatchD-26-out0" endpinid="ULN2803-3-In1" pointList="-340,-164,-332,-164" />
+
+<item itemtype="Connector" uid="Connector-104" startpinid="Uno-1-4" endpinid="LatchD-26-in2" pointList="-296,-12,-404,-12,-404,-148,-388,-148" />
+
+<item itemtype="Connector" uid="Connector-105" startpinid="LatchD-26-out2" endpinid="ULN2803-3-In3" pointList="-340,-148,-332,-148" />
+
+</circuit>

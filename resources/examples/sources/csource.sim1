@@ -1,0 +1,237 @@
+<circuit version="1.1.0-SR0" rev="1981" stepSize="1000000" stepsPS="1000000" NLsteps="100000" reaStep="1000000" animate="0" >
+
+<item itemtype="Ground" CircId="Ground-8" mainComp="false" Show_id="false" Show_Val="false" Pos="-220,-32" rotation="0" hflip="1" vflip="1" label="Ground-8" idLabPos="-16,8" labelrot="0" valLabPos="-16,20" valLabRot="0" />
+
+<item itemtype="Amperimeter" CircId="Amperimeter-44" mainComp="false" Show_id="false" Show_Val="false" Pos="36,-164" rotation="0" hflip="-1" vflip="1" label="Amperimeter-44" idLabPos="-24,-40" labelrot="0" valLabPos="-16,20" valLabRot="0" />
+
+<item itemtype="Current Source" CircId="Current Source-54" mainComp="false" ShowProp="MaxValue" Show_id="false" Show_Val="true" Pos="-104,92" rotation="0" hflip="1" vflip="1" label="Current Source-54" idLabPos="-32,-48" labelrot="0" valLabPos="-8.65701,30" valLabRot="0" Running="true" Value_Amp="4.19 A" MaxValue="5 A" />
+
+<item itemtype="Ground" CircId="Ground-10" mainComp="false" Show_id="false" Show_Val="false" Pos="-316,-52" rotation="0" hflip="1" vflip="1" label="Ground-10" idLabPos="-16,8" labelrot="0" valLabPos="-16,20" valLabRot="0" />
+
+<item itemtype="Led" CircId="Led-40" mainComp="false" Show_id="false" Show_Val="false" Pos="28,-68" rotation="0" hflip="1" vflip="1" label="Led-40" idLabPos="-16,-24" labelrot="0" valLabPos="-10.7439,7.51673" valLabRot="0" Color="Yellow" Grounded="false" Threshold="2.4 V" MaxCurrent="10 mA" Resistance="0.6 Ω" />
+
+<item itemtype="Rail" CircId="Rail-43" mainComp="false" ShowProp="Voltage" Show_id="false" Show_Val="true" Pos="108,-180" rotation="90" hflip="1" vflip="1" label="Rail-43" idLabPos="-5,-10" labelrot="-90" valLabPos="-13.0869,6" valLabRot="-90" Voltage="5 V" />
+
+<item itemtype="Led" CircId="Led-51" mainComp="false" Show_id="false" Show_Val="false" Pos="44,84" rotation="180" hflip="-1" vflip="1" label="Led-51" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" Color="Yellow" Grounded="false" Threshold="2.4 V" MaxCurrent="20 mA" Resistance="0.6 Ω" />
+
+<item itemtype="Current Source" CircId="Current Source-28" mainComp="false" ShowProp="MaxValue" Show_id="false" Show_Val="true" Pos="-96,-124" rotation="0" hflip="1" vflip="1" label="Current Source-28" idLabPos="-32,-48" labelrot="0" valLabPos="-8,30" valLabRot="0" Running="true" Value_Amp="0.00664 A" MaxValue="10 mA" />
+
+<item itemtype="Amperimeter" CircId="Amperimeter-11" mainComp="false" Show_id="false" Show_Val="false" Pos="-252,-172" rotation="0" hflip="-1" vflip="1" label="Amperimeter-11" idLabPos="-24,-40" labelrot="0" valLabPos="-16,20" valLabRot="0" />
+
+<item itemtype="Ground" CircId="Ground-42" mainComp="false" Show_id="false" Show_Val="false" Pos="64,-48" rotation="0" hflip="1" vflip="1" label="Ground-42" idLabPos="-16,8" labelrot="0" valLabPos="-16,20" valLabRot="0" />
+
+<item itemtype="Csource" CircId="Csource-1" mainComp="false" ShowProp="Current" Show_id="true" Show_Val="true" Pos="212,-96" rotation="0" hflip="1" vflip="-1" label="Constant Current" idLabPos="14.6133,-5.04236" labelrot="0" valLabPos="6.67695,7.66865" valLabRot="0" Control_Pins="false" CurrSource="true" CurrControl="true" Gain="1" Voltage="5 V" Current="10 mA" />
+
+<item itemtype="Amperimeter" CircId="Amperimeter-55" mainComp="false" Show_id="false" Show_Val="false" Pos="-52,36" rotation="0" hflip="1" vflip="1" label="Amperimeter-55" idLabPos="-24,-40" labelrot="0" valLabPos="-16,20" valLabRot="0" />
+
+<item itemtype="Rail" CircId="Rail-12" mainComp="false" ShowProp="Voltage" Show_id="false" Show_Val="true" Pos="-180,-180" rotation="90" hflip="1" vflip="1" label="Rail-12" idLabPos="-5,-10" labelrot="-90" valLabPos="-12.0579,7.62806" valLabRot="-90" Voltage="5 V" />
+
+<item itemtype="Led" CircId="Led-4" mainComp="false" Show_id="false" Show_Val="false" Pos="164,-100" rotation="-630" hflip="1" vflip="1" label="Led-4" idLabPos="-16,-24" labelrot="0" valLabPos="-14,-28" valLabRot="0" Color="Yellow" Grounded="false" Threshold="2.4 V" MaxCurrent="10 mA" Resistance="0.6 Ω" />
+
+<item itemtype="Led" CircId="Led-13" mainComp="false" Show_id="false" Show_Val="false" Pos="-212,-132" rotation="0" hflip="-1" vflip="1" label="Led-13" idLabPos="-16,-24" labelrot="0" valLabPos="-12,-27" valLabRot="0" Color="Yellow" Grounded="false" Threshold="2.4 V" MaxCurrent="10 mA" Resistance="0.6 Ω" />
+
+<item itemtype="Led" CircId="Led-39" mainComp="false" Show_id="false" Show_Val="false" Pos="76,-132" rotation="0" hflip="-1" vflip="1" label="Led-39" idLabPos="-16,-24" labelrot="0" valLabPos="-9,-29" valLabRot="0" Color="Yellow" Grounded="false" Threshold="2.4 V" MaxCurrent="10 mA" Resistance="0.6 Ω" />
+
+<item itemtype="Ground" CircId="Ground-49" mainComp="false" Show_id="false" Show_Val="false" Pos="-4,172" rotation="0" hflip="1" vflip="1" label="Ground-49" idLabPos="-16,8" labelrot="0" valLabPos="-16,20" valLabRot="0" />
+
+<item itemtype="Led" CircId="Led-6" mainComp="false" Show_id="false" Show_Val="false" Pos="-252,-60" rotation="0" hflip="1" vflip="-1" label="Led-6" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" Color="Yellow" Grounded="false" Threshold="2.4 V" MaxCurrent="10 mA" Resistance="0.6 Ω" />
+
+<item itemtype="Amperimeter" CircId="Amperimeter-29" mainComp="false" Show_id="false" Show_Val="false" Pos="-44,-164" rotation="0" hflip="1" vflip="1" label="Amperimeter-29" idLabPos="-24,-40" labelrot="0" valLabPos="-16,20" valLabRot="0" />
+
+<item itemtype="Voltage Source" CircId="Voltage Source-9" mainComp="false" ShowProp="MaxValue" Show_id="false" Show_Val="true" Pos="-376,-124" rotation="0" hflip="1" vflip="1" label="Voltage Source-9" idLabPos="-32,-48" labelrot="0" valLabPos="-8,30" valLabRot="0" Running="true" Value_Volt="3.495 V" MaxValue="5 V" MinValue="0 V" />
+
+<item itemtype="Ground" CircId="Ground-56" mainComp="false" Show_id="false" Show_Val="false" Pos="-44,164" rotation="0" hflip="1" vflip="1" label="Ground-56" idLabPos="-16,8" labelrot="0" valLabPos="-16,20" valLabRot="0" />
+
+<item itemtype="Csource" CircId="Csource-45" mainComp="false" Show_id="true" Show_Val="false" Pos="-4,116" rotation="0" hflip="1" vflip="1" label="CCVS" idLabPos="23.3638,-7.00823" labelrot="0" valLabPos="4,18" valLabRot="0" Control_Pins="true" CurrSource="false" CurrControl="true" Gain="1" Voltage="5 V" Current="1 A" />
+
+<item itemtype="Ground" CircId="Ground-3" mainComp="false" Show_id="false" Show_Val="false" Pos="212,-44" rotation="0" hflip="1" vflip="1" label="Ground-3" idLabPos="-16,8" labelrot="0" valLabPos="-16,20" valLabRot="0" />
+
+<item itemtype="Ground" CircId="Ground-30" mainComp="false" Show_id="false" Show_Val="false" Pos="-36,-52" rotation="0" hflip="1" vflip="1" label="Ground-30" idLabPos="-16,8" labelrot="0" valLabPos="-16,20" valLabRot="0" />
+
+<item itemtype="Csource" CircId="Csource-7" mainComp="false" Show_id="true" Show_Val="false" Pos="-276,-100" rotation="0" hflip="1" vflip="1" label="VCCS" idLabPos="23.0534,-6.97555" labelrot="0" valLabPos="20,-2" valLabRot="0" Control_Pins="true" CurrSource="true" CurrControl="false" Gain="0.001" Voltage="5 V" Current="1 A" />
+
+<item itemtype="Csource" CircId="Csource-19" mainComp="false" Show_id="true" Show_Val="false" Pos="-4,-100" rotation="0" hflip="1" vflip="1" label="CCCS" idLabPos="22.6495,-7.79639" labelrot="0" valLabPos="18,-4" valLabRot="0" Control_Pins="true" CurrSource="true" CurrControl="true" Gain="1" Voltage="5 V" Current="1 A" />
+
+<item itemtype="Voltimeter" CircId="Voltimeter-66" mainComp="false" Show_id="false" Show_Val="false" Pos="-324,-172" rotation="0" hflip="1" vflip="1" label="Voltimeter-66" idLabPos="-24,-40" labelrot="0" valLabPos="-16,20" valLabRot="0" />
+
+<item itemtype="Voltimeter" CircId="Voltimeter-69" mainComp="false" Show_id="false" Show_Val="false" Pos="20,36" rotation="0" hflip="1" vflip="1" label="Voltimeter-69" idLabPos="-24,-40" labelrot="0" valLabPos="-16,20" valLabRot="0" />
+
+<item itemtype="Led" CircId="Led-71" mainComp="false" Show_id="false" Show_Val="false" Pos="-220,84" rotation="180" hflip="-1" vflip="1" label="Led-71" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" Color="Yellow" Grounded="false" Threshold="2.4 V" MaxCurrent="20 mA" Resistance="0.6 Ω" />
+
+<item itemtype="Voltimeter" CircId="Voltimeter-72" mainComp="false" Show_id="false" Show_Val="false" Pos="-244,36" rotation="0" hflip="1" vflip="1" label="Voltimeter-72" idLabPos="-24,-40" labelrot="0" valLabPos="-16,20" valLabRot="0" />
+
+<item itemtype="Ground" CircId="Ground-73" mainComp="false" Show_id="false" Show_Val="false" Pos="-268,172" rotation="0" hflip="1" vflip="1" label="Ground-73" idLabPos="-16,8" labelrot="0" valLabPos="-16,20" valLabRot="0" />
+
+<item itemtype="Ground" CircId="Ground-75" mainComp="false" Show_id="false" Show_Val="false" Pos="-308,164" rotation="0" hflip="1" vflip="1" label="Ground-75" idLabPos="-16,8" labelrot="0" valLabPos="-16,20" valLabRot="0" />
+
+<item itemtype="Csource" CircId="Csource-76" mainComp="false" Show_id="true" Show_Val="false" Pos="-268,116" rotation="0" hflip="1" vflip="1" label="VCVS" idLabPos="23.7723,-7.20431" labelrot="0" valLabPos="4,18" valLabRot="0" Control_Pins="true" CurrSource="false" CurrControl="false" Gain="1" Voltage="5 V" Current="1 A" />
+
+<item itemtype="Voltage Source" CircId="Voltage Source-77" mainComp="false" ShowProp="MaxValue" Show_id="false" Show_Val="true" Pos="-368,92" rotation="0" hflip="1" vflip="1" label="Voltage Source-77" idLabPos="-32,-48" labelrot="0" valLabPos="-8,30" valLabRot="0" Running="true" Value_Volt="3.165 V" MaxValue="5 V" MinValue="0 V" />
+
+<item itemtype="Voltimeter" CircId="Voltimeter-78" mainComp="false" Show_id="false" Show_Val="false" Pos="-316,36" rotation="0" hflip="1" vflip="1" label="Voltimeter-78" idLabPos="-24,-40" labelrot="0" valLabPos="-16,20" valLabRot="0" />
+
+<item itemtype="Led" CircId="Led-79" mainComp="false" Show_id="false" Show_Val="false" Pos="188,84" rotation="-180" hflip="1" vflip="1" label="Led-79" idLabPos="-16,-24" labelrot="0" valLabPos="-14,-28" valLabRot="0" Color="Yellow" Grounded="false" Threshold="2.4 V" MaxCurrent="20 mA" Resistance="0.6 Ω" />
+
+<item itemtype="Csource" CircId="Csource-80" mainComp="false" ShowProp="Voltage" Show_id="true" Show_Val="true" Pos="212,120" rotation="0" hflip="1" vflip="1" label="Constant Voltage" idLabPos="15.1314,-6.59649" labelrot="0" valLabPos="6.51646,-17.8266" valLabRot="0" Control_Pins="false" CurrSource="false" CurrControl="true" Gain="1" Voltage="5 V" Current="10 mA" />
+
+<item itemtype="Ground" CircId="Ground-82" mainComp="false" Show_id="false" Show_Val="false" Pos="212,172" rotation="0" hflip="1" vflip="1" label="Ground-82" idLabPos="-16,8" labelrot="0" valLabPos="-16,20" valLabRot="0" />
+
+<item itemtype="Resistor" CircId="Resistor-85" mainComp="false" ShowProp="Resistance" Show_id="false" Show_Val="true" Pos="164,116" rotation="-90" hflip="1" vflip="1" label="Resistor-85" idLabPos="-16,-24" labelrot="0" valLabPos="-11.8337,-17.3315" valLabRot="0" Resistance="150 Ω" />
+
+<item itemtype="Resistor" CircId="Resistor-91" mainComp="false" ShowProp="Resistance" Show_id="false" Show_Val="true" Pos="76,116" rotation="-90" hflip="1" vflip="1" label="Resistor-91" idLabPos="-16,-24" labelrot="0" valLabPos="-11.8337,-17.3315" valLabRot="0" Resistance="150 Ω" />
+
+<item itemtype="Resistor" CircId="Resistor-96" mainComp="false" ShowProp="Resistance" Show_id="false" Show_Val="true" Pos="-188,116" rotation="-90" hflip="1" vflip="1" label="Resistor-96" idLabPos="-16,-24" labelrot="0" valLabPos="-11.8337,-17.3315" valLabRot="0" Resistance="150 Ω" />
+
+<item itemtype="Voltimeter" CircId="Voltimeter-102" mainComp="false" Show_id="false" Show_Val="false" Pos="188,36" rotation="0" hflip="-1" vflip="1" label="Voltimeter-102" idLabPos="-24,-40" labelrot="0" valLabPos="-16,20" valLabRot="0" />
+
+<item itemtype="Amperimeter" CircId="Amperimeter-105" mainComp="false" Show_id="false" Show_Val="false" Pos="188,-156" rotation="0" hflip="-1" vflip="1" label="Amperimeter-105" idLabPos="-24,-40" labelrot="0" valLabPos="-16,20" valLabRot="0" />
+
+<item itemtype="Node" CircId="Node-67" mainComp="false" Pos="-332,-108" />
+
+<item itemtype="Node" CircId="Node-68" mainComp="false" Pos="-316,-92" />
+
+<item itemtype="Node" CircId="Node-86" mainComp="false" Pos="212,148" />
+
+<item itemtype="Node" CircId="Node-87" mainComp="false" Pos="12,84" />
+
+<item itemtype="Node" CircId="Node-88" mainComp="false" Pos="-4,148" />
+
+<item itemtype="Node" CircId="Node-94" mainComp="false" Pos="76,148" />
+
+<item itemtype="Node" CircId="Node-95" mainComp="false" Pos="-252,84" />
+
+<item itemtype="Node" CircId="Node-97" mainComp="false" Pos="-268,148" />
+
+<item itemtype="Node" CircId="Node-98" mainComp="false" Pos="-188,148" />
+
+<item itemtype="Node" CircId="Node-100" mainComp="false" Pos="-324,108" />
+
+<item itemtype="Node" CircId="Node-101" mainComp="false" Pos="-308,124" />
+
+<item itemtype="Node" CircId="Node-103" mainComp="false" Pos="212,84" />
+
+<item itemtype="Node" CircId="Node-104" mainComp="false" Pos="164,148" />
+
+<item itemtype="Node" CircId="Node-107" mainComp="false" Pos="212,-68" />
+
+<item itemtype="Connector" uid="Connector-75" startpinid="Amperimeter-29-rPin" endpinid="Csource-19-cpPin" pointList="-36,-148,-36,-108,-28,-108" />
+
+<item itemtype="Connector" uid="Connector-129" startpinid="Csource-19-s2Pin" endpinid="Led-40-lPin" pointList="-4,-80,-4,-68,12,-68" />
+
+<item itemtype="Connector" uid="Connector-138" startpinid="Ground-42-Gnd" endpinid="Led-40-rPin" pointList="64,-64,64,-68,44,-68" />
+
+<item itemtype="Connector" uid="Connector-140" startpinid="Amperimeter-55-lPin" endpinid="Current Source-54-outPin" pointList="-60,52,-60,108,-76,108" />
+
+<item itemtype="Connector" uid="Connector-74" startpinid="Current Source-28-outPin" endpinid="Amperimeter-29-lPin" pointList="-68,-108,-52,-108,-52,-148" />
+
+<item itemtype="Connector" uid="Connector-141" startpinid="Amperimeter-55-rPin" endpinid="Csource-45-cpPin" pointList="-44,52,-44,108,-28,108" />
+
+<item itemtype="Connector" uid="Connector-142" startpinid="Ground-56-Gnd" endpinid="Csource-45-cmPin" pointList="-44,148,-44,124,-28,124" />
+
+<item itemtype="Connector" uid="Connector-139" startpinid="Led-39-lPin" endpinid="Rail-43-outnod" pointList="92,-132,108,-132,108,-164" />
+
+<item itemtype="Connector" uid="Connector-22" startpinid="Led-6-rPin" endpinid="Ground-8-Gnd" pointList="-236,-60,-220,-60,-220,-48" />
+
+<item itemtype="Connector" uid="Connector-108" startpinid="Ground-30-Gnd" endpinid="Csource-19-cmPin" pointList="-36,-68,-36,-92,-28,-92" />
+
+<item itemtype="Connector" uid="Connector-161" startpinid="Amperimeter-44-lPin" endpinid="Led-39-rPin" pointList="44,-148,44,-132,60,-132" />
+
+<item itemtype="Connector" uid="Connector-162" startpinid="Amperimeter-44-rPin" endpinid="Csource-19-s1Pin" pointList="28,-148,28,-132,-4,-132,-4,-120" />
+
+<item itemtype="Connector" uid="Connector-163" startpinid="Rail-12-outnod" endpinid="Led-13-lPin" pointList="-180,-164,-180,-132,-196,-132" />
+
+<item itemtype="Connector" uid="Connector-164" startpinid="Csource-7-s2Pin" endpinid="Led-6-lPin" pointList="-276,-80,-276,-60,-268,-60" />
+
+<item itemtype="Connector" uid="Connector-171" startpinid="Led-13-rPin" endpinid="Amperimeter-11-lPin" pointList="-228,-132,-244,-132,-244,-156" />
+
+<item itemtype="Connector" uid="Connector-172" startpinid="Amperimeter-11-rPin" endpinid="Csource-7-s1Pin" pointList="-260,-156,-260,-132,-276,-132,-276,-120" />
+
+<item itemtype="Connector" uid="Connector-174" startpinid="Voltimeter-66-lPin" endpinid="Node-67-1" pointList="-332,-156,-332,-108" />
+
+<item itemtype="Connector" uid="Connector-175" startpinid="Voltage Source-9-outPin" endpinid="Node-67-0" pointList="-348,-108,-332,-108" />
+
+<item itemtype="Connector" uid="Connector-176" startpinid="Node-67-2" endpinid="Csource-7-cpPin" pointList="-332,-108,-300,-108" />
+
+<item itemtype="Connector" uid="Connector-177" startpinid="Voltimeter-66-rPin" endpinid="Node-68-1" pointList="-316,-156,-316,-92" />
+
+<item itemtype="Connector" uid="Connector-178" startpinid="Ground-10-Gnd" endpinid="Node-68-0" pointList="-316,-68,-316,-92" />
+
+<item itemtype="Connector" uid="Connector-179" startpinid="Node-68-2" endpinid="Csource-7-cmPin" pointList="-316,-92,-300,-92" />
+
+<item itemtype="Connector" uid="Connector-207" startpinid="Led-79-rPin" endpinid="Resistor-85-rPin" pointList="172,84,164,84,164,100" />
+
+<item itemtype="Connector" uid="Connector-209" startpinid="Csource-80-s2Pin" endpinid="Node-86-0" pointList="212,140,212,148" />
+
+<item itemtype="Connector" uid="Connector-210" startpinid="Node-86-2" endpinid="Ground-82-Gnd" pointList="212,148,212,156" />
+
+<item itemtype="Connector" uid="Connector-211" startpinid="Node-87-1" endpinid="Led-51-lPin" pointList="12,84,28,84" />
+
+<item itemtype="Connector" uid="Connector-212" startpinid="Voltimeter-69-lPin" endpinid="Node-87-0" pointList="12,52,12,84" />
+
+<item itemtype="Connector" uid="Connector-213" startpinid="Node-87-2" endpinid="Csource-45-s1Pin" pointList="12,84,-4,84,-4,96" />
+
+<item itemtype="Connector" uid="Connector-215" startpinid="Ground-49-Gnd" endpinid="Node-88-0" pointList="-4,156,-4,148" />
+
+<item itemtype="Connector" uid="Connector-216" startpinid="Node-88-2" endpinid="Csource-45-s2Pin" pointList="-4,148,-4,136" />
+
+<item itemtype="Connector" uid="Connector-232" startpinid="Resistor-91-rPin" endpinid="Led-51-rPin" pointList="76,100,76,84,60,84" />
+
+<item itemtype="Connector" uid="Connector-233" startpinid="Voltimeter-69-rPin" endpinid="Node-94-1" pointList="28,52,28,60,92,60,92,148,76,148" />
+
+<item itemtype="Connector" uid="Connector-234" startpinid="Node-88-1" endpinid="Node-94-0" pointList="-4,148,76,148" />
+
+<item itemtype="Connector" uid="Connector-235" startpinid="Node-94-2" endpinid="Resistor-91-lPin" pointList="76,148,76,132" />
+
+<item itemtype="Connector" uid="Connector-236" startpinid="Node-95-1" endpinid="Led-71-lPin" pointList="-252,84,-236,84" />
+
+<item itemtype="Connector" uid="Connector-237" startpinid="Voltimeter-72-lPin" endpinid="Node-95-0" pointList="-252,52,-252,84" />
+
+<item itemtype="Connector" uid="Connector-238" startpinid="Node-95-2" endpinid="Csource-76-s1Pin" pointList="-252,84,-268,84,-268,96" />
+
+<item itemtype="Connector" uid="Connector-239" startpinid="Led-71-rPin" endpinid="Resistor-96-rPin" pointList="-204,84,-188,84,-188,100" />
+
+<item itemtype="Connector" uid="Connector-241" startpinid="Ground-73-Gnd" endpinid="Node-97-0" pointList="-268,156,-268,148" />
+
+<item itemtype="Connector" uid="Connector-242" startpinid="Node-97-2" endpinid="Csource-76-s2Pin" pointList="-268,148,-268,136" />
+
+<item itemtype="Connector" uid="Connector-243" startpinid="Voltimeter-72-rPin" endpinid="Node-98-1" pointList="-236,52,-236,60,-172,60,-172,148,-188,148" />
+
+<item itemtype="Connector" uid="Connector-244" startpinid="Resistor-96-lPin" endpinid="Node-98-0" pointList="-188,132,-188,148" />
+
+<item itemtype="Connector" uid="Connector-245" startpinid="Node-98-2" endpinid="Node-97-1" pointList="-188,148,-268,148" />
+
+<item itemtype="Connector" uid="Connector-246" startpinid="Node-100-1" endpinid="Csource-76-cpPin" pointList="-324,108,-292,108" />
+
+<item itemtype="Connector" uid="Connector-247" startpinid="Voltimeter-78-lPin" endpinid="Node-100-0" pointList="-324,52,-324,108" />
+
+<item itemtype="Connector" uid="Connector-248" startpinid="Node-100-2" endpinid="Voltage Source-77-outPin" pointList="-324,108,-340,108" />
+
+<item itemtype="Connector" uid="Connector-249" startpinid="Voltimeter-78-rPin" endpinid="Node-101-1" pointList="-308,52,-308,124" />
+
+<item itemtype="Connector" uid="Connector-250" startpinid="Ground-75-Gnd" endpinid="Node-101-0" pointList="-308,148,-308,124" />
+
+<item itemtype="Connector" uid="Connector-251" startpinid="Node-101-2" endpinid="Csource-76-cmPin" pointList="-308,124,-292,124" />
+
+<item itemtype="Connector" uid="Connector-252" startpinid="Voltimeter-102-lPin" endpinid="Node-103-1" pointList="196,52,196,60,212,60,212,84" />
+
+<item itemtype="Connector" uid="Connector-253" startpinid="Led-79-lPin" endpinid="Node-103-0" pointList="204,84,212,84" />
+
+<item itemtype="Connector" uid="Connector-254" startpinid="Node-103-2" endpinid="Csource-80-s1Pin" pointList="212,84,212,100" />
+
+<item itemtype="Connector" uid="Connector-255" startpinid="Voltimeter-102-rPin" endpinid="Node-104-1" pointList="180,52,180,60,140,60,140,148,164,148" />
+
+<item itemtype="Connector" uid="Connector-256" startpinid="Resistor-85-lPin" endpinid="Node-104-0" pointList="164,132,164,148" />
+
+<item itemtype="Connector" uid="Connector-257" startpinid="Node-104-2" endpinid="Node-86-1" pointList="164,148,212,148" />
+
+<item itemtype="Connector" uid="Connector-261" startpinid="Node-107-1" endpinid="Ground-3-Gnd" pointList="212,-68,212,-60" />
+
+<item itemtype="Connector" uid="Connector-262" startpinid="Led-4-rPin" endpinid="Node-107-0" pointList="164,-84,164,-68,212,-68" />
+
+<item itemtype="Connector" uid="Connector-263" startpinid="Node-107-2" endpinid="Csource-1-s1Pin" pointList="212,-68,212,-76" />
+
+<item itemtype="Connector" uid="Connector-266" startpinid="Led-4-lPin" endpinid="Amperimeter-105-rPin" pointList="164,-116,164,-132,180,-132,180,-140" />
+
+<item itemtype="Connector" uid="Connector-267" startpinid="Amperimeter-105-lPin" endpinid="Csource-1-s2Pin" pointList="196,-140,196,-132,212,-132,212,-116" />
+
+</circuit>
