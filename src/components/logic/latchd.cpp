@@ -50,7 +50,7 @@ LatchD::LatchD( QString type, QString id )
 
     m_channels = 0;
     setChannels( 8 );
-    LatchD::setTrigger( InEnable );
+    setTriggerStr("Enable");
 
     addPropGroup( { tr("Main"), {
         new IntProp <LatchD>("Channels", tr("Size"),"_bits"
