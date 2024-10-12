@@ -47,7 +47,7 @@ class ScriptCpu : public ScriptBase, public McuCpu
         QString getProp( ComProperty* p );
         void setProp( ComProperty* p, QString val );
 
-        void addEvent( uint time );
+        void addEvent( uint64_t time );
         void cancelEvents();
         uint64_t circTime();
 

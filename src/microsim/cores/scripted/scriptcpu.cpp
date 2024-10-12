@@ -93,8 +93,8 @@ ScriptCpu::ScriptCpu( eMcu* mcu )
                                    , asCALL_THISCALL );
 
     memberList << "addEvent( uint time )";
-    m_aEngine->RegisterObjectMethod("ScriptCpu", "void addEvent(uint t)"
-                                   , asMETHODPR( ScriptCpu, addEvent, (uint), void)
+    m_aEngine->RegisterObjectMethod("ScriptCpu", "void addEvent(uint64 t)"
+                                   , asMETHODPR( ScriptCpu, addEvent, (uint64_t), void)
                                    , asCALL_THISCALL );
 
     memberList << "cancelEvents()";
@@ -524,7 +524,7 @@ void ScriptCpu::setProp( ComProperty* p, QString val )
     execute();
 }
 
-void ScriptCpu::addEvent( uint time ) { Simulator::self()->addEvent( time, this ); }
+void ScriptCpu::addEvent( uint64_t time ) { Simulator::self()->addEvent( time, this ); }
 void ScriptCpu::cancelEvents()        { Simulator::self()->cancelEvents( this ); }
 uint64_t ScriptCpu::circTime()        { return Simulator::self()->circTime(); }
 
