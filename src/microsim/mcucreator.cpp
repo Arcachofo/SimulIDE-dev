@@ -1297,7 +1297,7 @@ void McuCreator::createDisplay( QDomElement* e )
     if( e->hasAttribute("embeed") )
         m_mcuComp->setBackData( display->getBackData() );
 
-    if( e->hasAttribute("monitorscale") )
+    else if( e->hasAttribute("monitorscale") )
     {
         double scale = e->attribute("monitorscale").toDouble();
         display->setMonitorScale( scale );
