@@ -66,12 +66,20 @@ void ScriptDisplay::registerScriptMetods( asIScriptEngine* engine ) // Static: r
     //                               , asMETHODPR( ScriptDisplay, setNextPixel, (int), void)
     //                               , asCALL_THISCALL );
 
+    engine->RegisterObjectMethod("Display", "void drawLine( uint x0, uint y0, uint x1, uint y1, int color )"
+                                   , asMETHODPR( ScriptDisplay, drawLine, (uint,uint,uint,uint,int), void)
+                                   , asCALL_THISCALL );
+
     engine->RegisterObjectMethod("Display", "void setData( array<array<int>> &data )"
                                    , asMETHODPR( ScriptDisplay, setData, (CScriptArray*), void)
                                    , asCALL_THISCALL );
 
     engine->RegisterObjectMethod("Display", "void setPalette( array<int> &data )"
                                    , asMETHODPR( ScriptDisplay, setPalette, (CScriptArray*), void)
+                                   , asCALL_THISCALL );
+
+    engine->RegisterObjectMethod("Display", "void clear()"
+                                   , asMETHODPR( ScriptDisplay, clear, (), void)
                                    , asCALL_THISCALL );
 }
 

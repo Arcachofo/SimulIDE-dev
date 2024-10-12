@@ -27,9 +27,10 @@ class Display : public QWidget, public Updatable, public eElement
         void setSize( uint w, uint h );
         void setBackground( int b );
         void setPixel( uint x, uint y, int color );
+        void clear();
 
         //void setNextPixel( int color );
-        //void setLine( std::vector<int> line );
+        void drawLine( uint x0, uint y0, uint x1, uint y1, int color );
         //void setStart( int x, int y ) { m_x = x; m_y = y; }
 
         void setMonitorScale( double scale );
