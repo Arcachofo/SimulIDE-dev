@@ -41,13 +41,17 @@ void EnumVal::setEnums( QString e )
 {
     QStringList list = e.split(";");
     m_enums = list.takeFirst().split(",");
+    m_enums.removeAll("");
 
     QStringList enumNames;
     if( list.size() ) enumNames = list.first().split(",");
     else              enumNames = m_enums;
+    enumNames.removeAll("");
 
+    m_blocked = true;
     valueBox->clear();
     for( QString val : enumNames ) valueBox->addItem( val );
+    m_blocked = false;
 }
 
 void EnumVal::on_showVal_toggled( bool checked )
