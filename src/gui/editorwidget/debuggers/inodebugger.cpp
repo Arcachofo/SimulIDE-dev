@@ -214,6 +214,7 @@ void InoDebugger::setToolPath( QString path )
 
                 QString sign = boardData.takeLast();
                 QString name = boardData.join(" ");
+                name.remove(",").remove(";");
 
                 if( !m_boardMap.contains( name ) )
                 {
