@@ -19,6 +19,7 @@ Display::Display( uint w, uint h, QString name, QWidget* parent )
 
     m_background= 0;
     m_changed = false;
+    m_embed   = true;
 
     updtImageSize();
 }
@@ -85,30 +86,10 @@ void Display::setBackground( int b )
 
 void Display::clear()
 {
-    for( int x=0; x<m_width; ++x )
-        for( int y=0; y<m_height; ++y )
+    for( uint x=0; x<m_width; ++x )
+        for( uint y=0; y<m_height; ++y )
             setPixel( x, y, m_background );
 }
-
-/*void Display::setLine( std::vector<int> line )
-{
-    for( uint x=0; x<line.size(); x++ )
-    {
-        setNextPixel( line.at( x ) );
-    }
-}*/
-
-/*void Display::setNextPixel( int color )
-{
-    m_x++;
-    if( m_x >= m_width )
-    {
-        m_x = 0;
-        m_y++;
-        if( m_y >= m_height ) m_y = 0;
-    }
-    setPixel( m_x, m_y, color );
-}*/
 
 void Display::drawLine( uint x0, uint y0, uint x1, uint y1, int color )
 {
@@ -156,6 +137,7 @@ void Display::updtImageSize()
 
 void Display::paintEvent( QPaintEvent* )
 {
+    if( m_embed ) return;
     QPainter p(this);
 
     for( uint x=0; x<m_width; x++ )

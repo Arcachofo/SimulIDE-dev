@@ -28,12 +28,10 @@ class Display : public QWidget, public Updatable, public eElement
         void setBackground( int b );
         void setPixel( uint x, uint y, int color );
         void clear();
-
-        //void setNextPixel( int color );
         void drawLine( uint x0, uint y0, uint x1, uint y1, int color );
-        //void setStart( int x, int y ) { m_x = x; m_y = y; }
 
         void setMonitorScale( double scale );
+        void setEmbed( bool e ) { m_embed = e; }
 
         std::vector<std::vector<int>>* getBackData() { return &m_data; }
 
@@ -43,6 +41,7 @@ class Display : public QWidget, public Updatable, public eElement
         void updtImageSize();
 
         bool m_changed;
+        bool m_embed;
 
         uint m_width;
         uint m_height;

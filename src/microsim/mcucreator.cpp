@@ -1294,9 +1294,10 @@ void McuCreator::createDisplay( QDomElement* e )
     }
     else display = new Display( width, height, name, CircuitWidget::self() );
 
-    bool embeed = e->attribute("embeed") == "true";
-    if( embeed ) m_mcuComp->setBackData( display->getBackData() ); // Display in Package
-    else         m_displays.append( display );                     // Display in Mcu Monitor
+    bool embed = e->attribute("embeed") == "true";
+    display->setEmbed( embed );
+    if( embed ) m_mcuComp->setBackData( display->getBackData() ); // Display in Package
+    else        m_displays.append( display );                     // Display in Mcu Monitor
 
     if( e->hasAttribute("scale") ){
         double scale = e->attribute("scale").toDouble();
