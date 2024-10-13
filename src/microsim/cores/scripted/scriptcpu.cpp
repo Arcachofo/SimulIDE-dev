@@ -37,6 +37,7 @@ ScriptCpu::ScriptCpu( eMcu* mcu )
     // Script functions
     m_initialize  = nullptr;
     m_reset       = nullptr;
+    m_updateStep  = nullptr;
     m_voltChanged = nullptr;
     m_runEvent    = nullptr;
     m_extClock    = nullptr;
