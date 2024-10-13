@@ -102,7 +102,7 @@ CodeEditor::CodeEditor( QWidget* parent, OutPanelText* outPane )
     QString enums = EditorWindow::self()->compilers().join(",")
             +EditorWindow::self()->assemblers().join(",");
 
-    enums = "None"+enums+";"+tr("None")+enums;
+    enums = "None,"+enums+";"+","+tr("None")+enums;
 
     addPropGroup( { tr("File Settings"), {
         new StrProp <CodeEditor>("Compiler", tr("Compiler"), enums

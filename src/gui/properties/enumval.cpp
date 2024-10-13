@@ -48,10 +48,11 @@ void EnumVal::setEnums( QString e )
     else              enumNames = m_enums;
     enumNames.removeAll("");
 
+    bool isBlocked = m_blocked;
     m_blocked = true;
     valueBox->clear();
     for( QString val : enumNames ) valueBox->addItem( val );
-    m_blocked = false;
+    m_blocked = isBlocked;
 }
 
 void EnumVal::on_showVal_toggled( bool checked )
