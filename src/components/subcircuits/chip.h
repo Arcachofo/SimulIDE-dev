@@ -39,6 +39,9 @@ class Chip : public Component, public eElement
 
         void setBackData( std::vector<std::vector<int>>* d ) { m_backData = d; }
 
+        void setMargins( QString margins );
+        QString getMargins() { return m_margins; }
+
         virtual void setflip() override;
 
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w ) override;
@@ -66,6 +69,11 @@ class Chip : public Component, public eElement
 
         int m_width;
         int m_height;
+        int m_topMargin;
+        int m_bottomMargin;
+        int m_rightMargin;
+        int m_leftMargin;
+        QString m_margins;
         
         bool m_isLS;
         bool m_initialized;

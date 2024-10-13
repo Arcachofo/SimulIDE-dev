@@ -33,6 +33,12 @@ Chip::Chip( QString type, QString id )
     m_package  = "";
     m_backPixmap = NULL;
     m_backData   = NULL;
+
+    m_topMargin    = 0;
+    m_bottomMargin = 0;
+    m_rightMargin  = 0;
+    m_leftMargin   = 0;
+    m_margins = "0,0,0,0";
     
     m_lsColor = QColor( 255, 255, 255 );
     m_icColor = QColor( 50, 50, 70 );
@@ -415,15 +421,34 @@ void Chip::findHelp()
     else                                m_help = MainWindow::self()->getHelp( m_name, false );
 }
 
+void Chip::setMargins( QString margins )
+{
+    m_margins = margins;
+
+    QStringList mList = margins.split(",");
+    mList.removeAll("");
+    if( margins.size() ) m_topMargin    = mList.takeFirst().toInt();
+    if( margins.size() ) m_bottomMargin = mList.takeFirst().toInt();
+    if( margins.size() ) m_rightMargin  = mList.takeFirst().toInt();
+    if( margins.size() ) m_leftMargin   = mList.takeFirst().toInt();
+}
+
 void Chip::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w )
 {
     Component::paint( p, o, w );
 
-    if( m_backPixmap ) p->drawPixmap( QRect(m_area.x(), m_area.y(), m_width*8, m_height*8), *m_backPixmap );
+    QRect imgArea = QRect( m_area.x()+m_leftMargin
+                         , m_area.y()+m_topMargin
+                         , m_area.width()-m_leftMargin-m_rightMargin
+                         , m_area.height()-m_topMargin-m_bottomMargin );
+
+    if( m_backPixmap ) p->drawPixmap( imgArea, *m_backPixmap );
     else{
         p->drawRoundedRect( m_area, 1, 1);
         if( m_backData  )
         {
+            p->setRenderHint( QPainter::Antialiasing, true );
+
             double w = m_backData->size();
             double h = m_backData->at(0).size();
 
@@ -438,7 +463,7 @@ void Chip::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w )
                     painter.fillRect( QRectF( x, y*3, 3, 3 ), QColor(m_backData->at(col).at(y) ) );
             }
             painter.end();
-            p->drawImage( m_area, img );
+            p->drawImage( imgArea, img );
         }
         else if( !this->isBoard() && !m_isLS /*&& m_background.isEmpty()*/ )
         {
