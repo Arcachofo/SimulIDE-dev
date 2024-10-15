@@ -287,6 +287,7 @@ static void RegisterScriptArray_Native( asIScriptEngine *engine )
 	// TODO: Register as size() for consistency with other types
 #if AS_USE_ACCESSORS != 1
 	r = engine->RegisterObjectMethod("array<T>", "uint length() const", asMETHOD(CScriptArray, GetSize), asCALL_THISCALL); assert( r >= 0 );
+    r = engine->RegisterObjectMethod("array<T>", "uint size() const", asMETHOD(CScriptArray, GetSize), asCALL_THISCALL); assert( r >= 0 );
 #endif
 	r = engine->RegisterObjectMethod("array<T>", "void reserve(uint length)", asMETHOD(CScriptArray, Reserve), asCALL_THISCALL); assert( r >= 0 );
 	r = engine->RegisterObjectMethod("array<T>", "void resize(uint length)", asMETHODPR(CScriptArray, Resize, (asUINT), void), asCALL_THISCALL); assert( r >= 0 );
@@ -1957,6 +1958,7 @@ static void RegisterScriptArray_Generic(asIScriptEngine *engine)
 	r = engine->RegisterObjectMethod("array<T>", "void removeRange(uint start, uint count)", asFUNCTION(ScriptArrayRemoveRange_Generic), asCALL_GENERIC); assert(r >= 0);
 #if AS_USE_ACCESSORS != 1
 	r = engine->RegisterObjectMethod("array<T>", "uint length() const", asFUNCTION(ScriptArrayLength_Generic), asCALL_GENERIC); assert( r >= 0 );
+    r = engine->RegisterObjectMethod("array<T>", "uint size() const", asFUNCTION(ScriptArrayLength_Generic), asCALL_GENERIC); assert( r >= 0 );
 #endif
 	r = engine->RegisterObjectMethod("array<T>", "void reserve(uint length)", asFUNCTION(ScriptArrayReserve_Generic), asCALL_GENERIC); assert( r >= 0 );
 	r = engine->RegisterObjectMethod("array<T>", "void resize(uint length)", asFUNCTION(ScriptArrayResize_Generic), asCALL_GENERIC); assert( r >= 0 );
