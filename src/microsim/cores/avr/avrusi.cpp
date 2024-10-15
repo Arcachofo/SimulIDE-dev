@@ -18,15 +18,14 @@ AvrUsi::AvrUsi( eMcu* mcu, QString name )
       : McuModule( mcu, name )
       , eElement( name )
 {
+    m_DOpin = nullptr;
+    m_DIpin = nullptr;
+    m_CKpin = nullptr;
 }
 AvrUsi::~AvrUsi(){}
 
 void AvrUsi::setup()
 {
-    m_DOpin = nullptr;
-    m_DIpin = nullptr;
-    m_CKpin = nullptr;
-
     m_dataReg   = m_mcu->getReg("USIDR");
     m_bufferReg = m_mcu->getReg("USIBR");
 
@@ -57,9 +56,9 @@ void AvrUsi::reset()
     m_mode = 0;
     m_counter = 0;
 
-    if( !m_DOpin ) qDebug() << "AvrUsi::configureA: Error: null DO Pin";
-    if( !m_DIpin ) qDebug() << "AvrUsi::configureA: Error: null DI Pin";
-    if( !m_CKpin ) qDebug() << "AvrUsi::configureA: Error: null CK Pin";
+    if( !m_DOpin ) qDebug() << "AvrUsi::reset: Error: null DO Pin";
+    if( !m_DIpin ) qDebug() << "AvrUsi::reset: Error: null DI Pin";
+    if( !m_CKpin ) qDebug() << "AvrUsi::reset: Error: null CK Pin";
 }
 
 void AvrUsi::voltChanged()  // Clk Pin changed
