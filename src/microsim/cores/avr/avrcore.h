@@ -20,7 +20,7 @@ class AvrCore : public McuCpu
         AvrCore( eMcu* mcu );
         ~AvrCore();
 
-        //virtual void reset();
+        virtual void reset() override;
         virtual void runStep() override;
 
     private:

@@ -30,10 +30,14 @@ AvrCore::AvrCore( eMcu* mcu )
 }
 AvrCore::~AvrCore() {}
 
-/*void AvrCore::reset()
+void AvrCore::reset()
 {
-    CpuBase::reset();
-}*/
+    McuCpu::reset();
+
+    uint16_t ramEnd = m_dataMemEnd-1;
+    if( m_spl ) *m_spl = ramEnd;
+    if( m_sph ) *m_sph = ramEnd >> 8;
+}
 
 inline void AvrCore::flags_ns( uint8_t res )
 {
