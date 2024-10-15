@@ -17,9 +17,9 @@ void setup()
   delay(2000);
   
   // WRITE EEPROM
-  /*lcd.setCursor( 0, 0 );
+  lcd.setCursor( 0, 0 );
   lcd.print("Writting EEPROM...\n");
-  for( int i=0; i<EEPROM.length(); i++ )
+  for( int i=0; i<5; i++ )
   {
     lcd.setCursor(0, 1);
     EEPROM.put( i, val );
@@ -28,8 +28,8 @@ void setup()
     lcd.print( val );
     lcd.print("\n");
     val++;
-    //delay(200);
-  }*/
+    delay(500);
+  }
   
   lcd.setCursor(0, 0);
   lcd.print("Reading EEPROM...\n");

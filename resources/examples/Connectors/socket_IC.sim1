@@ -1,12 +1,12 @@
-<circuit version="1.1.0-SR0" rev="1981" stepSize="1000000" stepsPS="1000000" NLsteps="100000" reaStep="1000000" animate="0" >
+<circuit version="1.1.0-SR0" rev="1998" stepSize="1000000" stepsPS="1000000" NLsteps="100000" reaStep="1000000" animate="0" >
 
 <item itemtype="Socket" CircId="Socket-1" mainComp="false" Show_id="false" Show_Val="false" Pos="-108,-20" rotation="0" hflip="1" vflip="1" label="Socket-1" idLabPos="-16,-44" labelrot="0" valLabPos="-16,20" valLabRot="0" Size="7 _Pins" />
 
 <item itemtype="Socket" CircId="Socket-2" mainComp="false" Show_id="false" Show_Val="false" Pos="-60,-20" rotation="0" hflip="-1" vflip="1" label="Socket-2" idLabPos="-16,-44" labelrot="0" valLabPos="-16,20" valLabRot="0" Size="7 _Pins" />
 
-<item itemtype="Subcircuit" CircId="74HC00-3" mainComp="false" Show_id="true" Show_Val="false" Pos="20,-28" rotation="0" hflip="1" vflip="1" label="74HC00" idLabPos="-3.77526,-14.5087" labelrot="0" valLabPos="-16,20" valLabRot="0" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+09 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" Tpd_ps="10 ns" Tr_ps="3 ns" Tf_ps="4 ns" Logic_Symbol="false" />
+<item itemtype="Subcircuit" CircId="74HC00-3" mainComp="false" Show_id="true" Show_Val="false" Pos="20,-12" rotation="0" hflip="1" vflip="1" label="74HC00" idLabPos="-3.77526,-14.5087" labelrot="0" valLabPos="-16,20" valLabRot="0" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+09 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" Tpd_ps="10 ns" Tr_ps="3 ns" Tf_ps="4 ns" Logic_Symbol="false" />
 
-<item itemtype="Subcircuit" CircId="74HC08-5" mainComp="false" Show_id="true" Show_Val="false" Pos="20,-116" rotation="0" hflip="1" vflip="1" label="74HC08" idLabPos="-2.74564,-14.1655" labelrot="0" valLabPos="-16,20" valLabRot="0" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+09 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" Tpd_ps="10 ns" Tr_ps="3 ns" Tf_ps="4 ns" Logic_Symbol="false" />
+<item itemtype="Subcircuit" CircId="74HC08-5" mainComp="false" Show_id="true" Show_Val="false" Pos="20,-100" rotation="0" hflip="1" vflip="1" label="74HC08" idLabPos="-2.74564,-14.1655" labelrot="0" valLabPos="-16,20" valLabRot="0" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+09 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" Tpd_ps="10 ns" Tr_ps="3 ns" Tf_ps="4 ns" Logic_Symbol="false" />
 
 <item itemtype="LedBar" CircId="LedBar-6" mainComp="false" Show_id="false" Show_Val="false" Pos="-64,-80" rotation="0" hflip="1" vflip="1" label="LedBar-6" idLabPos="-16,-44" labelrot="0" valLabPos="-16,-56" valLabRot="0" Color="Yellow" Size="4 _Leds" Grounded="true" Threshold="2.4 V" MaxCurrent="30 mA" Resistance="50 Ω" />
 
@@ -67,6 +67,8 @@
 <item itemtype="SwitchDip" CircId="SwitchDip-34" mainComp="false" Show_id="false" Show_Val="false" Pos="-212,-12" rotation="0" hflip="1" vflip="1" label="SwitchDip-34" idLabPos="-16,-44" labelrot="0" valLabPos="-16,20" valLabRot="0" Size="2" Exclusive="false" CommonPin="true" State="252" />
 
 <item itemtype="Rail" CircId="Rail-35" mainComp="false" ShowProp="Voltage" Show_id="false" Show_Val="true" Pos="-228,-116" rotation="90" hflip="1" vflip="1" label="Rail-35" idLabPos="-5,-10" labelrot="-90" valLabPos="-12,6" valLabRot="-90" Voltage="5 V" />
+
+<item itemtype="TextComponent" CircId="TextComponent-39" mainComp="false" Show_id="false" Show_Val="false" Pos="-128,28" rotation="0" hflip="1" vflip="1" label="TextComponent-39" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" Margin="3 _px" Border="1 _px" Color="#ffffdc" Opacity="1" Font="Ubuntu" Font_Color="#000080" Font_Size="10 _px" Fixed_Width="false" Text="Put an IC on top&#xa;of the socket and&#xa;run the simulation." />
 
 <item itemtype="Node" CircId="Node-36" mainComp="false" Pos="-228,-36" />
 
