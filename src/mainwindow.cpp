@@ -219,7 +219,7 @@ void MainWindow::createWidgets()
     setCentralWidget(centralWidget);
 
     QGridLayout *baseWidgetLayout = new QGridLayout( centralWidget );
-    baseWidgetLayout->setSpacing(0);
+    baseWidgetLayout->setSpacing( 0 );
     baseWidgetLayout->setContentsMargins(0, 0, 0, 0);
 
     m_mainSplitter = new QSplitter( this );
@@ -233,24 +233,27 @@ void MainWindow::createWidgets()
 
     m_listWidget = new QWidget( this );
     QVBoxLayout* listLayout = new QVBoxLayout( m_listWidget );
-    listLayout->setSpacing(0);
-    listLayout->setContentsMargins(0, 0, 0, 0);
+    listLayout->setSpacing( 6 );
+    listLayout->setContentsMargins(0, 2, 0, 0);
 
     QHBoxLayout* searchLayout = new QHBoxLayout( this );
+    searchLayout->setSpacing(1);
 
     m_searchComponent = new QLineEdit( this );
     QFont font = m_searchComponent->font();
     font.setPixelSize( 12*m_fontScale );
     m_searchComponent->setFont( font );
     m_searchComponent->setFixedHeight( 24*m_fontScale );
-    m_searchComponent->setPlaceholderText( tr("Search Components"));
+    m_searchComponent->setPlaceholderText( " "+tr("Search Components"));
     searchLayout->addWidget( m_searchComponent );
     connect( m_searchComponent, SIGNAL( editingFinished() ),
              this,              SLOT(   searchChanged() ) );
 
     m_clearButton = new QPushButton( this );
+    m_clearButton->setFixedSize( 24*m_fontScale,24*m_fontScale );
     m_clearButton->setIcon( QIcon(":/remove.svg") );
     m_clearButton->setToolTip( tr("Clear search"));
+
     searchLayout->addWidget( m_clearButton );
     connect( m_clearButton, SIGNAL( clicked() ),
              this,          SLOT(   clearSearch()) );
