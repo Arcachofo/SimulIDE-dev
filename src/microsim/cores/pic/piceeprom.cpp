@@ -35,6 +35,7 @@ void PicEeprom::runEvent() // Write cycle end reached
 {
     writeEeprom();
     clearRegBits( m_WR );
+    m_interrupt->raise();
     m_wrMask = 0;
 }
 
@@ -69,9 +70,10 @@ void PicEeprom::configureB( uint8_t newEECON2 )
     if     ( newEECON2 == 0x55 ) m_nextCycle = m_mcu->cycle()+2;
     else if( newEECON2 == 0xAA )
     {
-        if( m_mcu->cycle() == m_nextCycle )
+        uint64_t cycle = m_mcu->cycle();
+        if( cycle == m_nextCycle )
         {
-            m_nextCycle = m_mcu->cycle()+1;
+            m_nextCycle = cycle+1;
             m_writeEnable = true;
         }
     }
