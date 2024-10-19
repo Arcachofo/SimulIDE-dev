@@ -57,9 +57,18 @@ void AvrSpi::setMode( spiMode_t mode )
         m_clkPin->controlPin( true, true );
         m_SS->setPinMode( input );
         m_SS->controlPin( true, true );
-        m_MISO->controlPin( true, false );
+        ssChanged( !m_SS->getInpState() ); // SS active LOW
     }
     SpiModule::setMode( mode );
+}
+
+void AvrSpi::ssChanged( bool enable )
+{
+    if( enable ) m_MISO->controlPin( true, false );
+    else{
+        m_MISO->setPinMode( input );
+        m_MISO->controlPin( true, true );
+    }
 }
 
 void AvrSpi::configureA( uint8_t newSPCR ) // SPCR is being written

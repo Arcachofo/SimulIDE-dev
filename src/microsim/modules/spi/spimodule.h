@@ -28,6 +28,7 @@ class SpiModule : public eClockedDevice
         virtual void voltChanged() override;
 
         virtual void setMode( spiMode_t mode );
+        virtual void ssChanged( bool enable ){;}
 
         virtual void endTransaction();
         virtual void StartTransaction();

@@ -78,6 +78,7 @@ void SpiModule::voltChanged() // Called in Slave mode on SCK or SS changes
             m_clkPin->changeCallBack( this, false );
             m_srReg = 0;// Reset SPI Logic
         }
+        if( m_useSS && m_SS ) ssChanged( enabled ); // Used by AVR
         m_enabled = enabled;
     }
     if( !enabled ) return;
