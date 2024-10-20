@@ -102,7 +102,6 @@ void Ssd1306::initialize()
     m_continue = false;
     m_command  = false;
     m_data     = false;
-    m_addrMode = HORI_ADDR_MODE;
 
     clearDDRAM();
     reset() ;
@@ -143,6 +142,8 @@ void Ssd1306::reset()
     m_scroll   = false;
     m_scrollR  = false;
     m_scrollV  = false;
+
+    m_addrMode = PAGE_ADDR_MODE;
 }
 
 void Ssd1306::updateStep()
@@ -230,9 +231,9 @@ void Ssd1306::proccessCommand()
         else if( m_lastCommand == 0x22 ) // 22 34 Set Page Address (Start-End)
         {
             if( m_addrMode != PAGE_ADDR_MODE ){
-                if( m_readBytes == 2 ) m_startY = m_rxReg & 0x07; // 0b00000111
-                else{                                             // 0b00000111
-                    m_endY = m_rxReg & 0x07;
+                if( m_readBytes == 2 ) m_startY = m_rxReg & 0x0F; // 0b00001111
+                else{                                             // 0b00001111
+                    m_endY = m_rxReg & 0x0F;
                     //if( m_endY > m_rows-1 ) m_endY = m_rows-1;
                 }
             }
@@ -296,11 +297,11 @@ void Ssd1306::proccessCommand()
 
     if( m_rxReg < 0x10 ) // 00-0F 0-15 Set Lower Colum Start Address for Page Addresing mode
     {
-        m_addrX = (m_addrX & ~0xF) | (m_rxReg & 0xF);
+        if( m_addrMode == PAGE_ADDR_MODE ) m_addrX = (m_addrX & ~0xF) | (m_rxReg & 0xF);
     }
     else if( m_rxReg < 0x20 ) // 10-1F 16-31 Set Higher Colum Start Address for Page Addresing mode
     {
-        m_addrX = (m_addrX & 0xF) | ((m_rxReg & 0xF) << 4);
+        if( m_addrMode == PAGE_ADDR_MODE ) m_addrX = (m_addrX & 0xF) | ((m_rxReg & 0xF) << 4);
     }
     else if( m_rxReg == 0x20 ) m_readBytes = 1; // 20 32 Set Memory Addressing Mode
     else if( m_rxReg == 0x21 ) m_readBytes = 2; // 21 33 Set Column Address (Start-End)
@@ -340,9 +341,9 @@ void Ssd1306::proccessCommand()
     else if( m_rxReg == 0xAE ) reset();             // 174 // AE-AF Set Display ON/OFF
     else if( m_rxReg == 0xAF ) m_dispOn = true;     // 175
 
-    else if( (m_rxReg>=0xB0) && (m_rxReg<=0xB7) )   // B0-B7 176-183 Set Page Start Address for Page Addresing mode
+    else if( m_rxReg >= 0xB0 && m_rxReg <= 0xBF )   // B0-B7 176-183 Set Page Start Address for Page Addresing mode
     {
-        m_addrY = m_rxReg & 0x07; // 0b00000111
+        if( m_addrMode == PAGE_ADDR_MODE ) m_addrY = m_rxReg & 0x0F; // 0b00001111
     }
     // C0-C8 192-200 Set COM Output Scan Direction
     else if( m_lastCommand == 0xC0 ) m_scanInv = false;
