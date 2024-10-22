@@ -63,7 +63,6 @@ CodeEditor::CodeEditor( QWidget* parent, OutPanelText* outPane )
 
     m_tab = EditorWindow::self()->tabString();
 
-
     setFont( EditorWindow::self()->getFont() );
 
     setAcceptDrops( false );
@@ -102,7 +101,7 @@ CodeEditor::CodeEditor( QWidget* parent, OutPanelText* outPane )
     QString enums = EditorWindow::self()->compilers().join(",")
             +EditorWindow::self()->assemblers().join(",");
 
-    enums = "None,"+enums+";"+","+tr("None")+enums;
+    enums = "None,"+enums+";"+tr("None")+","+enums;
 
     addPropGroup( { tr("File Settings"), {
         new StrProp <CodeEditor>("Compiler", tr("Compiler"), enums
