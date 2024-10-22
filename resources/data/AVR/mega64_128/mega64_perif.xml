@@ -24,17 +24,16 @@
 
   <intosc name="intosc" />
 
-  <!-- timer0-2 8 bit, 1-2 16bit -->
   <timer name="TIMER0"  type="821" configregsA="TCCR0"
                         counter="TCNT0"
                         interrupt="T0_OVF"
                         prescalers="0,1,8,32,64,128,256,1024" 
                         prselect="CS00,CS01,CS02" >
 
-    <ocunit name="OC0" pin="PORTB4" ocreg="OCR0" bits="COM00,COM01" interrupt="T0CO" />
+    <ocunit name="OC0A" pin="PORTB4" ocreg="OCR0" bits="COM00,COM01" interrupt="T0CO" />
   </timer>
 
-  <timer name="TIMER1"  type="160" configregsA="TCCR1A" configregsB="TCCR1B" configregsC="TCCR1C
+  <timer name="TIMER1"  type="160" configregsA="TCCR1A" configregsB="TCCR1B"
                         counter="TCNT1L,TCNT1H"
                         clockpin="PORTD6"
                         interrupt="T1_OVF"
@@ -53,11 +52,10 @@
                         prescalers="0,1,8,32,64,128,256,1024"
                         prselect="CS20,CS21,CS22" >
 
-    <ocunit name="OC2" pin="PORTB7" ocreg="OCR2" bits="COM20,COM21" interrupt="T2CO" />
+    <ocunit name="OC2A" pin="PORTB7" ocreg="OCR2" bits="COM20,COM21" interrupt="T2CO" />
   </timer>
 
-  <timer name="TIMER3" type="160" configregsA="TCCR3A" configregsB="TCCR3B" configregsC="TCCR3C"
-                       counter="TCNT3L,TCNT3H" 
+  <timer name="TIMER3" type="160" counter="TCNT3L,TCNT3H" configregsA="TCCR3A" configregsB="TCCR3B"
                        clockpin="PORTE6"
                        interrupt="T3_OVF"
                        prescalers="0,1,8,64,256,1024,EXT_F,EXT_R" prselect="CS30,CS31,CS32" >
@@ -66,10 +64,6 @@
     <ocunit name="OC3B" pin="PORTE4" ocreg="OCR3BL,OCR3BH" bits="COM3B0,COM3B1" interrupt="T3COB" />
     <ocunit name="OC3C" pin="PORTE5" ocreg="OCR3CL,OCR3CH" bits="COM3C0,COM3C1" interrupt="T3COC" />
   </timer>
-
-  <comp name="COMP" configregsA="ACSR"
-                    interrupt="ACOMP" 
-                    pins="PORTE2,PORTE3" />
 
   <port name="PORTV" pins="2"/> <!-- Fake Port for aVcc, aRef -->
   <adc name="ADC" type="03" bits="10" configregsA="ADCSRA" configregsB="ADCSRB"
@@ -101,4 +95,8 @@
                     dataregs="EEDR" 
                     addressreg="EEARL,EEARH" 
                     interrupt="EEPR" />
+
+  <comp name="COMP" configregsA="ACSR"
+                    interrupt="ACOMP" 
+                    pins="PORTE2,PORTE3" />
 </parts>
