@@ -135,7 +135,7 @@ Component* SubCircuit::construct( QString type, QString id )
 
         if( packageList.size() > 1 ) // Add package list if there is more than 1 to choose
         subcircuit->addProperty( tr("Main"),
-        new StrProp <SubCircuit>("Package", tr("Package"),""
+        new StrProp <SubCircuit>("Package", tr("Package"), pkges.join(",")
                                 , subcircuit, &SubCircuit::package, &SubCircuit::setPackage,0,"enum" ));
 
         subcircuit->setPackage( pkges.first() );
