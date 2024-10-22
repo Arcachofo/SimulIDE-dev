@@ -52,11 +52,6 @@ class EditorWindow : public EditorWidget, public Updatable
 
         OutPanelText* outPane() { return &m_outPane; }
 
-        QString tabString() { return m_tab; }
-
-        QFont getFont() { return m_font; }
-        void scaleFont( int s ) { m_fontSize += s;}
-
     public slots:
         virtual void pause() override;
         virtual void stop() override;

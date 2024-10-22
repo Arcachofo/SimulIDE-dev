@@ -57,6 +57,11 @@ class EditorWidget : public QWidget, public CompBase
 
        CodeEditor* getCodeEditor();
 
+       QString tabString() { return m_tab; }
+
+       QFont getFont() { return m_font; }
+       void scaleFont( int s ) { m_fontSize += s;}
+
        QStringList getFiles() { return m_fileList.keys(); }
        void restoreFile( QString filePath );
 

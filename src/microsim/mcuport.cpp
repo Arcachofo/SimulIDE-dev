@@ -170,7 +170,7 @@ McuPin* McuPort::createPin( int i, QString id , Component* mcu )
 
 McuPin* McuPort::getPinN( uint8_t i )
 {
-    if( i >= m_pins.size() ) return NULL;
+    if( i >= m_pins.size() ) return nullptr;
     return m_pins[i];
 }
 
