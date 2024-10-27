@@ -129,7 +129,7 @@ void EditorWidget::setSpaceTabs( bool on )
 void EditorWidget::setCloseParenthesis( bool c )
 {
     if( c ) m_autoClose |= 1<<0;
-    else    m_autoClose &= !(1<<0);
+    else    m_autoClose &= ~(1<<0);
 
     for( CodeEditor* ce : getCodeEditors() ) ce->setAutoClose( m_autoClose );
 }
@@ -137,7 +137,7 @@ void EditorWidget::setCloseParenthesis( bool c )
 void EditorWidget::setCloseBraces( bool c )
 {
     if( c ) m_autoClose |= 1<<1;
-    else    m_autoClose &= !(1<<1);
+    else    m_autoClose &= ~(1<<1);
 
     for( CodeEditor* ce : getCodeEditors() ) ce->setAutoClose( m_autoClose );
 }
@@ -145,7 +145,7 @@ void EditorWidget::setCloseBraces( bool c )
 void EditorWidget::setCloseBrackets( bool c )
 {
     if( c ) m_autoClose |= 1<<2;
-    else    m_autoClose &= !(1<<2);
+    else    m_autoClose &= ~(1<<2);
 
     for( CodeEditor* ce : getCodeEditors() ) ce->setAutoClose( m_autoClose );
 }
@@ -153,7 +153,7 @@ void EditorWidget::setCloseBrackets( bool c )
 void EditorWidget::setCloseQuotes( bool c )
 {
     if( c ) m_autoClose |= 1<<3;
-    else    m_autoClose &= !(1<<3);
+    else    m_autoClose &= ~(1<<3);
 
     for( CodeEditor* ce : getCodeEditors() ) ce->setAutoClose( m_autoClose );
 }
@@ -161,7 +161,7 @@ void EditorWidget::setCloseQuotes( bool c )
 void EditorWidget::setCloseSquotes( bool c )
 {
     if( c ) m_autoClose |= 1<<4;
-    else    m_autoClose &= !(1<<4);
+    else    m_autoClose &= ~(1<<4);
 
     for( CodeEditor* ce : getCodeEditors() ) ce->setAutoClose( m_autoClose );
 }
