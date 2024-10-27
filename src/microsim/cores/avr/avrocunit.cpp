@@ -48,27 +48,21 @@ void AvrOcUnit::setPinSate( bool state, uint64_t time )
 
 void AvrOcUnit::ocrWriteL( uint8_t val )
 {
-    val &= m_OCRXmask;
     McuOcUnit::ocrWriteL( val );
-    m_mcu->m_regOverride = val;
+    m_comMatch &= m_OCRXmask;
 }
 
 void AvrOcUnit::ocrWriteH( uint8_t val )
 {
-    val &= (m_OCRXmask>>8);
     McuOcUnit::ocrWriteH( val );
-    m_mcu->m_regOverride = val;
+    m_comMatch &= m_OCRXmask;
 }
 
 void AvrOcUnit::setOcrMask( uint16_t mask )
 {
     m_OCRXmask = mask;
 
-    *m_ocRegL &= mask;
     m_comMatch = *m_ocRegL;
-    if( m_ocRegH )
-    {
-        *m_ocRegH &= (mask>>8);
-        m_comMatch |= (uint16_t)*m_ocRegH<<8;
-    }
+    if( m_ocRegH ) m_comMatch |= (uint16_t)*m_ocRegH<<8;
+    m_comMatch &= m_OCRXmask;
 }
