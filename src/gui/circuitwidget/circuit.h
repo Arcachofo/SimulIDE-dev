@@ -46,6 +46,9 @@ class Circuit : public QGraphicsScene
         int sceneHeight() { return m_sceneHeight; }
         void setSceneHeight( int h );
 
+        int undoSteps() { return m_maxUndoSteps; }
+        void setUndoSteps( int steps );
+
         int autoBck();
         void setAutoBck( int secs );
 

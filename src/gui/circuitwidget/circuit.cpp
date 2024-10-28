@@ -63,12 +63,13 @@ Circuit::Circuit( int width, int height, CircuitView* parent )
     m_subCircuit = nullptr;
     m_seqNumber = 0;
     m_conNumber = 0;
-    m_maxUndoSteps = 100;
     m_undoIndex = -1;
 
     m_circRev    = MainWindow::self()->revision();
     m_backupPath = MainWindow::self()->getConfigPath("backup.sim1");
-    m_hideGrid   = MainWindow::self()->settings()->value( "Circuit/hideGrid" ).toBool();
+    m_hideGrid   = MainWindow::self()->settings()->value("Circuit/hideGrid" ).toBool();
+    m_maxUndoSteps = MainWindow::self()->settings()->value("Circuit/undoSteps" ).toInt();
+    if( m_maxUndoSteps == 0 ) m_maxUndoSteps = 100;
     m_filePath   = "";//qApp->applicationDirPath()+"/new.simu"; // AppImage tries to write in read olny filesystem
 
     connect( &m_bckpTimer, &QTimer::timeout,
@@ -635,7 +636,7 @@ void Circuit::saveChanges()
     while( m_undoStack.size() > (m_undoIndex+1) ) m_undoStack.removeLast();
 
     m_undoStack.append( m_circChange );
-    if( m_undoStack.size() > m_maxUndoSteps )
+    while( m_undoStack.size() > m_maxUndoSteps )
     {
         m_undoStack.takeFirst();
         m_undoIndex--;
@@ -1239,6 +1240,14 @@ void Circuit::setAutoBck( int secs )
     else           m_bckpTimer.start( secs*1000 );
 
     MainWindow::self()->setAutoBck( secs );
+}
+
+void Circuit::setUndoSteps( int steps )
+{
+    if     ( steps < 5    ) steps = 5;
+    else if( steps > 1000 ) steps = 5000;
+    m_maxUndoSteps = steps;
+    MainWindow::self()->settings()->setValue( "Circuit/undoSteps", QString::number(steps) );
 }
 
 #include "moc_circuit.cpp"

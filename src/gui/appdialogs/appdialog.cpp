@@ -35,6 +35,7 @@ AppDialog::AppDialog( QWidget* parent )
     canvasHeight->setValue( Circuit::self()->sceneHeight() );
     fps->setValue( Simulator::self()->fps() );
     backup->setValue( Circuit::self()->autoBck() );
+    undo_steps->setValue( Circuit::self()->undoSteps() );
 
     // Simulation Settings
     m_blocked = true;
@@ -162,6 +163,11 @@ void AppDialog::on_fps_valueChanged( int fps )
 void AppDialog::on_backup_valueChanged( int secs )
 {
     Circuit::self()->setAutoBck( secs );
+}
+
+void AppDialog::on_undo_steps_valueChanged( int steps )
+{
+    Circuit::self()->setUndoSteps( steps );
 }
 
 // Simulation Settings ----------------------
