@@ -46,20 +46,23 @@ void PicVref::configureA( uint8_t newVRCON )
         else m_vref = 0;
     }
     bool vroe = getRegBitsBool( newVRCON, m_VROE );
-    if( vroe != m_vroe )    // VDD-┬-8R-R-..16 Stages..-R-8R-┬-GND
-    {                       // VrP-┘                     -VRR┴-VrN
-        m_vroe = vroe;      /// TODO: Add VrefP/VrefN option to ladder
-        if( m_pinOut ){
-            double vddAdmit = 0;
-            double gndAdmit = 0;
-            if( vroe && m_enabled )
-            {
-                vddAdmit = 8+16-m_mode;
-                if( !vrr ) gndAdmit = 8;
-                gndAdmit += m_mode;
-            }
-            m_pinOut->setExtraSource( vddAdmit, gndAdmit );
+    m_vroe = vroe;
+    if( m_pinOut )     /// TODO: Add VrefP/VrefN option to ladder
+    {
+        // VDD-┬-8R-R-..16 Stages..-R-8R-┬-GND
+        // VrP-┘                     -VRR┴-VrN
+        double vddResist = 0;
+        double gndResist = 0;
+
+        if( vroe && m_enabled )
+        {
+            float R = 2e3;
+            vddResist = R*(8+16-m_mode);
+            if( vrr ) gndResist = vrr ? 1e-3 : 8;
+            gndResist += m_mode;
+            gndResist *= R;
         }
+        m_pinOut->setExtraSource( 1/vddResist, 1/gndResist );
     }
     if( !m_callBacks.isEmpty() )
     { for( McuModule* mod : m_callBacks ) mod->callBackDoub( m_vref ); }

@@ -23,7 +23,7 @@ class McuVref : public McuModule, public eElement
 
         virtual void initialize() override;
 
-        double getVref() { return m_vref; }
+        //double getVref() { return m_vref; }
 
         void addCallBack( McuModule* mod, bool call );
 
