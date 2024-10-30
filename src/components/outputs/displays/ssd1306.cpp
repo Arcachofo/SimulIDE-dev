@@ -40,7 +40,7 @@ Ssd1306::Ssd1306( QString type, QString id )
        //, m_pinCS ( 270, QPoint(-16, 48), id+"-PinCS"  , 0, this )
 {
     m_graphical = true;
-    m_width  = 128;
+    m_width = 128;
     m_height = 64;
     m_rows   = 8;
     m_area = QRectF(-70,-m_height/2-16, m_width+12, m_height+24 );
@@ -63,12 +63,12 @@ Ssd1306::Ssd1306( QString type, QString id )
 
     setColorStr("White");
     m_rotate = true;
-    
+
     Simulator::self()->addToUpdateList( this );
-    
+
     setLabelPos(-32,-60, 0);
     setShowId( true );
-    
+
     Ssd1306::initialize();
 
     addPropGroup( { tr("Main"), {
@@ -123,9 +123,9 @@ void Ssd1306::reset()
     m_addrX  = 0;
     m_addrY  = 0;
     m_startX = 0;
-    m_endX   = m_width-1;
+    m_endX   = 127;
     m_startY = 0;
-    m_endY   = m_rows-1;
+    m_endY   = 7; //m_rows-1;
 
     m_scrollStartPage  = 0;
     m_scrollEndPage    = 7;
@@ -148,32 +148,30 @@ void Ssd1306::reset()
 
 void Ssd1306::updateStep()
 {
-    if( m_scroll ) scroll();
+    if( m_scroll )
+    {
+        m_scrollCount--;
+        if( m_scrollCount > 0 ) return;
+
+        m_scrollCount = m_scrollInterval;
+
+        int lastX = m_width-1;
+
+        for( int row=m_scrollStartPage; row<=m_scrollEndPage; row++ )
+        {
+            if( m_scrollR )
+            {
+                uint8_t end = m_aDispRam[lastX][row];
+                for( int col=lastX; col>0; --col ) m_aDispRam[col][row] = m_aDispRam[col-1][row];
+                m_aDispRam[0][row] = end;
+            }else{
+                uint8_t start = m_aDispRam[0][row];
+                for( int col=0; col<lastX; ++col ) m_aDispRam[col][row] = m_aDispRam[col+1][row];
+                m_aDispRam[lastX][row] = start;
+    }   }   }
 
     update();
 }
-
-void Ssd1306::scroll()
-{
-    m_scrollCount--;
-    if( m_scrollCount > 0 ) return;
-
-    m_scrollCount = m_scrollInterval;
-
-    int lastX = m_width-1;
-
-    for( int row=m_scrollStartPage; row<=m_scrollEndPage; row++ )
-    {
-        if( m_scrollR )
-        {
-            uint8_t end = m_aDispRam[lastX][row];
-            for( int col=lastX; col>0; --col ) m_aDispRam[col][row] = m_aDispRam[col-1][row];
-            m_aDispRam[0][row] = end;
-        }else{
-            uint8_t start = m_aDispRam[0][row];
-            for( int col=0; col<lastX; ++col ) m_aDispRam[col][row] = m_aDispRam[col+1][row];
-            m_aDispRam[lastX][row] = start;
-}   }   }
 
 void Ssd1306::startWrite()
 {
@@ -231,9 +229,9 @@ void Ssd1306::proccessCommand()
         else if( m_lastCommand == 0x22 ) // 22 34 Set Page Address (Start-End)
         {
             if( m_addrMode != PAGE_ADDR_MODE ){
-                if( m_readBytes == 2 ) m_startY = m_rxReg & 0x0F; // 0b00001111
-                else{                                             // 0b00001111
-                    m_endY = m_rxReg & 0x0F;
+                if( m_readBytes == 2 ) m_startY = m_rxReg & 0x07; // 0b00000111
+                else{                                             // 0b00000111
+                    m_endY = m_rxReg & 0x07;
                     //if( m_endY > m_rows-1 ) m_endY = m_rows-1;
                 }
             }
@@ -341,9 +339,9 @@ void Ssd1306::proccessCommand()
     else if( m_rxReg == 0xAE ) reset();             // 174 // AE-AF Set Display ON/OFF
     else if( m_rxReg == 0xAF ) m_dispOn = true;     // 175
 
-    else if( m_rxReg >= 0xB0 && m_rxReg <= 0xBF )   // B0-B7 176-183 Set Page Start Address for Page Addresing mode
+    else if( (m_rxReg>=0xB0) && (m_rxReg<=0xB7) )   // B0-B7 176-183 Set Page Start Address for Page Addresing mode
     {
-        if( m_addrMode == PAGE_ADDR_MODE ) m_addrY = m_rxReg & 0x0F; // 0b00001111
+        if( m_addrMode == PAGE_ADDR_MODE ) m_addrY = m_rxReg & 0x07; // 0b00000111
     }
     // C0-C8 192-200 Set COM Output Scan Direction
     else if( m_lastCommand == 0xC0 ) m_scanInv = false;
@@ -358,14 +356,14 @@ void Ssd1306::proccessCommand()
     else if( m_rxReg == 0xDB ) m_readBytes = 1; // DB 219 SET VCOM DETECT
 }
 
-void Ssd1306::clearDDRAM() 
+void Ssd1306::clearDDRAM()
 {
-    for( int row=0; row<16; row++ )
+    for( int row=0; row<8; row++ )
         for( int col=0; col<128; col++ )
             m_aDispRam[col][row] = 0;
 }
 
-void Ssd1306::incrementPointer() 
+void Ssd1306::incrementPointer()
 {
     if( m_addrMode == VERT_ADDR_MODE )
     {
@@ -411,8 +409,8 @@ void Ssd1306::setWidth( int w )
 
 void Ssd1306::setHeight( int h )
 {
-    if     ( h > 128 ) h = 128;
-    else if( h < 16  ) h = 16;
+    if     ( h > 64 ) h = 64;
+    else if( h < 16 ) h = 16;
     m_rows = h/8;
     m_height = m_rows*8;
     updateSize();
@@ -432,7 +430,7 @@ void Ssd1306::paint( QPainter* p, const QStyleOptionGraphicsItem*, QWidget* )
 {
     QPen pen( Qt::black, 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin );
     p->setPen( pen );
-    
+
     p->setBrush( QColor( 50, 70, 100 ) );
     p->drawRoundedRect( m_area, 2, 2 );
 
@@ -444,25 +442,24 @@ void Ssd1306::paint( QPainter* p, const QStyleOptionGraphicsItem*, QWidget* )
         painter.fillRect( 0, 0, m_width*3, m_height*3, Qt::black );
 
         bool scanInv = m_rotate ? !m_scanInv : m_scanInv;
-        int lastX = m_width-1;
 
         if( m_dispOn  ){
-            for( int row=0; row<m_rows; row++ ){
-                for( int col=0; col<m_width; col++ )
+            for( int row=0; row<8; row++ ){
+                for( int col=0; col<128; col++ )
                 {
                     uint8_t abyte = m_aDispRam[col][row];
                     if( m_dispInv ) abyte = ~abyte;      // Display Inverted
 
                     int x = col*3;
-                    if( scanInv ) x = lastX*3-x;
+                    if( scanInv ) x = 127*3-x;
 
                     for( int bit=0; bit<8; bit++ )
                     {
                         if( abyte & 1 ){
                             int y = row*8+bit;
                             if( y >= m_height ) continue;
-                            //if( y > m_mr ) continue;
-                            if( scanInv ) y = m_height-y;
+                            if( y > m_mr ) continue;
+                            if( scanInv ) y = 63-y;
                             painter.fillRect( x, y*3, 3, 3, m_foreground );
                        }
                        abyte >>= 1;

@@ -53,7 +53,6 @@ class Ssd1306 : public Component, public TwiModule
         void reset();
         void clearDDRAM();
         void updateSize();
-        void scroll();
 
         QString m_dColor;
 
