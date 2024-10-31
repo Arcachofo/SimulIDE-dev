@@ -20,6 +20,7 @@
         <file alias="simulide_ru.qm">../resources/qm/simulide_ru.qm</file>
         <file alias="simulide_tr.qm">../resources/qm/simulide_tr.qm</file>
         <file alias="simulide_zh_CN.qm">../resources/qm/simulide_zh_CN.qm</file>
+        <file alias="simulide_zh_TW.qm">../resources/qm/simulide_zh_TW.qm</file>
         <file alias="simulide_sk.qm">../resources/qm/simulide_sk.qm</file>
     
         <file alias="qt_cz.qm">../resources/qm/qt_cz.qm</file>
@@ -34,6 +35,7 @@
         <file alias="qt_ru.qm">../resources/qm/qt_ru.qm</file>
         <file alias="qt_tr.qm">../resources/qm/qt_tr.qm</file>
         <file alias="qt_zh_CN.qm">../resources/qm/qt_zh_CN.qm</file>
+        <file alias="qt_zh_TW.qm">../resources/qm/qt_zh_TW.qm</file>
         <file alias="qt_sk.qm">../resources/qm/qt_sk.qm</file>
         
         <file alias="simulide.png">../resources/icons/simulide.png</file>
