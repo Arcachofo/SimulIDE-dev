@@ -163,6 +163,7 @@ QString MainWindow::loc()
     if( m_lang == Pt_Brasil )  return "pt_BR";
     if( m_lang == Slovak )     return "sk";
     if( m_lang == Turkish )    return "tr";
+    if( m_lang == Traditional_Chinese ) return "zh_TW";
 
     return "en";
 }
@@ -171,6 +172,7 @@ void MainWindow::setLoc( QString loc )
 {
     Langs lang = English;
     if     ( loc == "zh_CN" ) lang = Chinese;
+    else if( loc == "zh_TW" ) lang = Traditional_Chinese;
     else if( loc == "cz" )    lang = Czech;
     else if( loc == "nl" )    lang = Dutch;
     else if( loc == "fr" )    lang = French;
