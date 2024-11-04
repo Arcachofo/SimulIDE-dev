@@ -55,6 +55,11 @@
   <wdt name="WDT" configregsA="OPTION"
                   prescalers="1,2,4,8,16,32,64,128"/>
 
+  <rom name="ROM" configregsA="EECON1" configregsB="EECON2"
+                  dataregs="EEDATA" 
+                  addressreg="EEADR" 
+                  interrupt="EEPR" />
+
   <configwords name="cfgWord" type="01">
     <word name="COINFIG1" address="0x2007" value="0xFF" />
   </configwords>
