@@ -189,11 +189,12 @@ void Dht22::calcData()
         uint64_t humi = m_humi*10;
         humiI = humi >> 8;
         humiD = humi & 0xFF;
-    }else{
+    }else{                          // Using ASAIR DHT11 specifications
         tempI = m_temp;
-        tempD = 0;//(m_temp-tempI)*10;
+        tempD = (m_temp-tempI)*10;
+        if( m_temp < 0 ) tempD |= 1<<8;
         humiI = m_humi;
-        humiD = 0;//(m_humi-humiI)*10;
+        humiD = 0; //(m_humi-humiI)*10;
     }
     uint8_t checksum = tempI+tempD+humiI+humiD;
     m_data = (humiI<<32)+(humiD<<24)+(tempI<<16)+(tempD<<8)+checksum;
@@ -215,9 +216,9 @@ void Dht22::upbuttonclicked()
     if( m_DHT22) {
        if( m_temp > 80 )  m_temp = 80;
        if( m_humi > 100 ) m_humi = 100;
-    }else{
-        if( m_temp > 50 ) m_temp = 50;
-        if( m_humi > 90 ) m_humi = 90;
+    }else{                             // Using ASAIR DHT11 specifications
+        if( m_temp > 60 ) m_temp = 60;
+        if( m_humi > 95 ) m_humi = 95;
     }
     calcData();
 }
@@ -230,9 +231,9 @@ void Dht22::downbuttonclicked()
     if( m_DHT22) {
         if( m_temp < -40 ) m_temp = -40;
         if( m_humi < 0  )  m_humi = 0;
-    }else{
-        if( m_temp < 0 )  m_temp = 0;
-        if( m_humi < 20 ) m_humi = 20;
+    }else{                             // Using ASAIR DHT11 specifications
+        if( m_temp < -20 ) m_temp = -20;
+        if( m_humi < 5   ) m_humi = 5;
     }
     calcData();
 }
