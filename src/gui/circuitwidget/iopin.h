@@ -52,9 +52,6 @@ class IoPin : public Pin, public eElement
         double outLowV() { return m_outLowV; }
         void  setOutLowV( double v ) { m_outLowV = v; }
 
-        void startLH();
-        void startHL();
-
         virtual void setOutputImp( double imp );
         virtual void setImpedance( double imp );
 
@@ -134,7 +131,6 @@ class IoPin : public Pin, public eElement
         bool m_stateZ;
         bool m_nextState;
         bool m_skipStamp;
-        bool m_userInvert;
 
         int m_steps;
         uint64_t m_timeRis;  // Time for Output voltage to switch from 0% to 100%

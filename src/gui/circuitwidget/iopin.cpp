@@ -19,7 +19,6 @@ IoPin::IoPin( int angle, const QPoint pos, QString id, int index, Component* par
     m_outState = false;
     m_stateZ   = false;
     m_skipStamp = false;
-    m_userInvert = true;
 
     m_inpHighV = 2.5;
     m_inpLowV  = 2.5;
@@ -135,18 +134,6 @@ void IoPin::scheduleState( bool state, uint64_t time )
     }
     else if( m_steps ) IoPin::runEvent();
     else               IoPin::setOutState( m_nextState );
-}
-
-void IoPin::startLH()
-{
-    m_step = 0;
-    stampVolt( m_outLowV+(m_outLowV+m_outHighV)/100 );
-
-}
-void IoPin::startHL()
-{
-    m_step = 0;
-    stampVolt( m_outHighV-(m_outLowV+m_outHighV)/100 );
 }
 
 void IoPin::setPinMode( pinMode_t mode )
