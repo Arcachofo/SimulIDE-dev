@@ -34,6 +34,7 @@ class ScriptBase : public eElement
         int callFunction0( asIScriptFunction* func, asIScriptContext* context );
         inline void prepare( asIScriptFunction* func ) { m_context->Prepare( func ); }
         void execute();
+        int getExeStatus() { return m_status; }
 
         void setDebugger( asDebugger* d ) { m_debugger = d; }
 

@@ -12,6 +12,7 @@ ScriptTwi::ScriptTwi( eMcu* mcu, QString name )
          , ScriptPerif( name )
 {
     m_byteReceived = nullptr;
+    m_writeByte    = nullptr;
 
     m_type = "TWI";
 
@@ -52,6 +53,7 @@ void ScriptTwi::startScript()
 {
     asIScriptEngine* aEngine = m_scriptCpu->engine();
     m_byteReceived = aEngine->GetModule(0)->GetFunctionByDecl("void byteReceived( uint d )");
+    m_writeByte    = aEngine->GetModule(0)->GetFunctionByDecl("uint byteReceived()");
 }
 
 void ScriptTwi::reset()
@@ -72,6 +74,15 @@ void ScriptTwi::readByte()
     m_scriptCpu->execute();
 
     TwiModule::readByte();
+}
+
+void ScriptTwi::writeByte() // Master is reading, we send byte m_txReg
+{
+    if( !m_writeByte ) { m_txReg = 0; return; }
+
+    m_scriptCpu->prepare( m_writeByte);
+    m_scriptCpu->execute();
+    m_txReg = m_scriptCpu->context()->GetReturnDWord();
 }
 
 void ScriptTwi::sendByte( uint8_t data )

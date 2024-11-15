@@ -417,7 +417,6 @@ int ScriptCpu::getCpuReg( QString reg )
     m_context->SetArgObject( 0, &str );
     execute();
 
-    if( m_status != asEXECUTION_FINISHED ) return 0;
     asQWORD ret = m_context->GetReturnQWord();
     return ret;
 }

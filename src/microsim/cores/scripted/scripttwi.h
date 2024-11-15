@@ -22,6 +22,8 @@ class ScriptTwi : public McuTwi, public ScriptPerif
         void setAddress( uint8_t a );
 
         virtual void readByte() override;
+
+        virtual void writeByte() override;
         void sendByte( uint8_t data );
 
         virtual QStringList registerScript( ScriptCpu* cpu ) override;
@@ -31,7 +33,7 @@ class ScriptTwi : public McuTwi, public ScriptPerif
         uint8_t getStaus() { return *m_statReg &= 0b11111000; }
 
         asIScriptFunction* m_byteReceived;
-
+        asIScriptFunction* m_writeByte;
 };
 
 #endif
