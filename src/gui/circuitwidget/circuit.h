@@ -83,8 +83,6 @@ class Circuit : public QGraphicsScene
         void loadCircuit( QString filePath );
         bool saveCircuit( QString filePath );
 
-        Component* createItem( QString name, QString id, bool map=true );
-
         QString newSceneId() { return QString::number(++m_seqNumber); }
         QString newConnectorId() { return QString::number(++m_conNumber); }
 
@@ -94,8 +92,11 @@ class Circuit : public QGraphicsScene
         //void updateConnectors();
         Connector* getNewConnector() { return m_newConnector; }
 
-        void addNode( Node* node );
+        Component* createItem( QString type, QString id, bool map=true );
+        Component* createComponent( QString type, QString name, QPoint pos, bool map=true );
         void addComponent( Component* comp );
+
+        void addNode( Node* node );
 
         QList<Component*>* compList() { return &m_compList; }
         QList<Connector*>* conList()  { return &m_connList; }

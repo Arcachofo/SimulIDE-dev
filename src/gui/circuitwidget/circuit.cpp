@@ -507,6 +507,32 @@ void Circuit::importCircuit()
     paste( QPointF(0,0) );
 }
 
+void Circuit::addNode( Node* node )
+{
+    addItem( node );
+    m_nodeList.append( node );
+    m_compMap.insert( node->getUid(), node );
+}
+
+void Circuit::addComponent( Component* comp )
+{
+    addItem( comp );
+    if( comp->itemType() == "Package" ) m_compList.prepend( comp );
+    else                                m_compList.append( comp );
+}
+
+Component* Circuit::createComponent( QString type, QString name, QPoint pos, bool map )
+{
+    Component* comp = createItem( type, name+"-"+newSceneId(), map );
+    if( !comp ) return nullptr;
+
+    comp->setPos( toGrid( pos ) );
+    addComponent( comp );
+    saveCompChange( comp->getUid(), COMP_STATE_NEW, "" );
+
+    return comp;
+}
+
 Component* Circuit::createItem( QString type, QString id, bool map )
 {
     Component* comp = nullptr;
@@ -518,7 +544,7 @@ Component* Circuit::createItem( QString type, QString id, bool map )
         comp = item->createItemFnPtr()( type, id );
         break;
     }
-    if( map ) m_compMap[id] = comp;
+    if( comp && map ) m_compMap[id] = comp;
     return comp;
 }
 
@@ -904,20 +930,6 @@ void Circuit::deleteNewConnector()
     cancelUndoStep();
 }
 
-void Circuit::addNode( Node* node )
-{
-    addItem( node );
-    m_nodeList.append( node );
-    m_compMap.insert( node->getUid(), node );
-}
-
-void Circuit::addComponent( Component* comp )
-{
-    addItem( comp );
-    if( comp->itemType() == "Package" ) m_compList.prepend( comp );
-    else                                m_compList.append( comp );
-}
-
 /*void Circuit::bom()
 {
     if( m_conStarted ) return;
@@ -1024,14 +1036,8 @@ void Circuit::keyPressEvent( QKeyEvent* event )
         QString compNam = ComponentList::self()->getComponent( str );
         if( !compNam.isEmpty() )
         {
-            Component* enterItem = createItem( compNam, compNam+"-"+newSceneId() );
-            if( enterItem )
-            {
-                QPoint cPos = QCursor::pos()-CircuitView::self()->mapToGlobal( QPoint(0,0));
-                enterItem->setPos( toGrid( CircuitView::self()->mapToScene( cPos ) ) );
-                addComponent( enterItem );
-                saveCompChange( enterItem->getUid(), COMP_STATE_NEW, "" );
-            }
+            QPoint cPos = QCursor::pos()-CircuitView::self()->mapToGlobal( QPoint(0,0) );
+            createComponent( compNam, compNam, cPos );
         }
     }
     if( event->modifiers() & Qt::ControlModifier )
@@ -1132,19 +1138,19 @@ void Circuit::dropEvent( QGraphicsSceneDragDropEvent* event )
     if( file.startsWith( "/" )) file.remove( 0, 1 );
 #endif
 
+    QPoint cPos = event->scenePos().toPoint(); // QCursor::pos()-CircuitView::self()->mapToGlobal( QPoint(0,0) );
     QString loId = file.toLower();
-    if( loId.endsWith( ".jpg") || loId.endsWith( ".png") || loId.endsWith( ".gif"))
+    if( loId.endsWith(".jpg") || loId.endsWith(".png") || loId.endsWith(".gif"))
     {
-        Component* enterItem = createItem( "Image", newSceneId() );
-        if( enterItem )
-        {
-            QPoint cPos = QCursor::pos()-CircuitView::self()->mapToGlobal( QPoint(0,0));
-            enterItem->setPos( CircuitView::self()->mapToScene( cPos ) );
-            enterItem->setBackground( file );
-            addComponent( enterItem );
-            saveCompChange( enterItem->getUid(), COMP_STATE_NEW, "" );
-    }   }
+        Component* image = createComponent("Image", "", cPos );
+        if( image ) image->setBackground( file );
+    }
     else if( file.endsWith(".sim1") ) CircuitWidget::self()->loadCirc( file );
+    else if( file.endsWith(".package") )
+    {
+        Component* pkg = createComponent("Package", "Package", cPos );
+        if( pkg ) static_cast<SubPackage*>( pkg )->setPackageFile( file );
+    }
 }
 
 void Circuit::drawBackground( QPainter* painter, const QRectF &rect )

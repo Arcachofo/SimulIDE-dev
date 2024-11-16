@@ -114,16 +114,11 @@ void CircuitView::dragEnterEvent( QDragEnterEvent* event )
 
     event->accept(); // Not moving items in the list (this will prevent removing items from the list)
 
-    m_enterItem = m_circuit->createItem( type, name+"-"+m_circuit->newSceneId() );
+    m_enterItem = m_circuit->createComponent( type, name, mapToScene( event->pos() ).toPoint() );
     if( m_enterItem )
     {
         m_circuit->clearSelection();
-        m_circuit->addComponent( m_enterItem );
-        m_circuit->saveCompChange( m_enterItem->getUid(), COMP_STATE_NEW, "" );
-
-        m_enterItem->setPos( mapToScene( event->pos() ) );
         m_enterItem->setSelected( true );
-
         this->setFocus();
     }
 }
