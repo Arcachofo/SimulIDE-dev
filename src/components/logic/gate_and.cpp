@@ -3,8 +3,6 @@
  *                                                                         *
  ***( see copyright.txt file at root folder )*******************************/
 
-#include <QPainter>
-
 #include "gate_and.h"
 #include "itemlibrary.h"
 
@@ -29,6 +27,8 @@ LibraryItem* AndGate::libraryItem()
 AndGate::AndGate( QString type, QString id )
        : Gate( type, id, 2 )
 {
+    AndGate::updatePath();
+
     addPropGroup( { tr("Electric"),
         IoComponent::inputProps()
         +QList<ComProperty*>({
@@ -45,27 +45,14 @@ AndGate::AndGate( QString type, QString id )
 }
 AndGate::~AndGate(){}
 
-QPainterPath AndGate::shape() const
+void AndGate::updatePath()
 {
-    int size = (int)m_inPin.size()*4;
-    QPainterPath path;
-    QVector<QPointF> points;
-    points << QPointF( -9,-size )
-           << QPointF( -9, size )
-           << QPointF(  0, size-2 )
-           << QPointF( 10, 8 )
-           << QPointF( 10,-8 )
-           << QPointF(  0,-size+2 );
-        
-    path.addPolygon( QPolygonF(points) );
-    path.closeSubpath();
-    return path;
-}
+    int endY = m_area.height()/2;
+    int endX = m_area.width()/2;
 
-void AndGate::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w )
-{
-    Component::paint( p, o, w );
-    p->drawChord( -27, m_area.y(), 36, m_area.height(), -1440/*-16*90*/, 2880/*16*180*/ );
-
-    Component::paintSelected( p );
+    m_path.clear();
+    m_path.moveTo(-9,-endY );
+    m_path.quadTo( QPoint( endX,-endY ), QPoint( endX, 0 ) );
+    m_path.quadTo( QPoint( endX, endY ), QPoint(-9, endY ) );
+    m_path.lineTo(-9,-endY );
 }

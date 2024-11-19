@@ -3,6 +3,8 @@
  *                                                                         *
  ***( see copyright.txt file at root folder )*******************************/
 
+#include <QPainter>
+
 #include "gate.h"
 #include "connector.h"
 #include "circuit.h"
@@ -73,4 +75,20 @@ void Gate::setNumInputs( int inputs )
     IoComponent::setNumInps( inputs, "" );
     m_outPin[0]->setY( 0 );
     m_area = QRect( -11, -4*m_inPin.size(), 19, 4*2*m_inPin.size() );
+
+    updatePath();
+}
+
+QPainterPath Gate::shape() const
+{
+    return m_path;
+}
+
+void Gate::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w )
+{
+    Component::paint( p, o, w );
+
+    p->drawPath( m_path );
+
+    Component::paintSelected( p );
 }

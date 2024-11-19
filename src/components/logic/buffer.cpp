@@ -3,8 +3,6 @@
  *                                                                         *
  ***( see copyright.txt file at root folder )*******************************/
 
-#include <QPainter>
-
 #include "buffer.h"
 #include "itemlibrary.h"
 #include "iopin.h"
@@ -30,6 +28,7 @@ Buffer::Buffer( QString type, QString id )
       : Gate( type, id, 1 )
 {
     m_area = QRect(-8, -8, 16, 16 );
+    Buffer::updatePath();
     
     setOePin( new IoPin( 90, QPoint( 0,-12 ), m_id+"-Pin_outEnable", 0, this, input ) );
     Buffer::setTristate( false );
@@ -61,32 +60,13 @@ void Buffer::setTristate( bool t )  // Activate or deactivate OE Pin
     m_oePin->setLabelText( "" );
 }
 
-QPainterPath Buffer::shape() const
+void Buffer::updatePath()
 {
-    QPainterPath path;
-    QVector<QPointF> points;
-    
-    points << QPointF(-9,-9 )
-           << QPointF(-9, 9 )
-           << QPointF( 9, 1 )
-           << QPointF( 9,-1 );
-        
-    path.addPolygon( QPolygonF(points) );
-    path.closeSubpath();
-    return path;
+    m_path.clear();
+    m_path.moveTo(-8,-8 );
+    m_path.lineTo(-8, 8 );
+    m_path.lineTo( 8, 1);
+    m_path.lineTo( 8,-1 );
+    m_path.lineTo(-8,-8 );
 }
 
-void Buffer::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w )
-{
-    Component::paint( p, o, w );
-
-    static const QPointF points[4] = {
-        QPointF(-8,-8 ),
-        QPointF(-8, 8 ),
-        QPointF( 8, 1 ),
-        QPointF( 8,-1 )             };
-
-    p->drawPolygon( points, 4 );
-
-    Component::paintSelected( p );
-}

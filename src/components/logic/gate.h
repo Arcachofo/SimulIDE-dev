@@ -27,12 +27,19 @@ class Gate : public LogicComponent
 
         void setNumInputs( int pins );
 
+        QPainterPath shape() const override;
+
+        void paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w ) override;
+
     protected:
         virtual bool calcOutput( int inputs );
+        virtual void updatePath(){;}
 
         bool m_initState;
 
         int m_minInputs;
+
+        QPainterPath m_path;
 };
 
 #endif

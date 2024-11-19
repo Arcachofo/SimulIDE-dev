@@ -17,14 +17,12 @@ class OrGate : public Gate
         OrGate( QString type, QString id );
         ~OrGate();
 
-        static Component* construct( QString type, QString id );
-        static LibraryItem* libraryItem();
+ static Component* construct( QString type, QString id );
+ static LibraryItem* libraryItem();
 
-        virtual QPainterPath shape() const override;
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
-        
     protected:
-        virtual bool calcOutput( int inputs ) override;
+        bool calcOutput( int inputs ) override;
+        void updatePath() override;
 };
 
 #endif
