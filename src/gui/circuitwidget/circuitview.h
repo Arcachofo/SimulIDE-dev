@@ -26,15 +26,6 @@ class CircuitView : public QGraphicsView
         bool showScroll() { return m_showScroll; }
         void setShowScroll( bool show );
 
-        void wheelEvent( QWheelEvent* event );
-        void dragMoveEvent( QDragMoveEvent* event );
-        void dragEnterEvent( QDragEnterEvent* event );
-        void dragLeaveEvent( QDragLeaveEvent* event );
-
-        void mousePressEvent( QMouseEvent* event );
-        void mouseMoveEvent( QMouseEvent *event );
-        void mouseReleaseEvent( QMouseEvent* event );
-
         void overrideCursor( const QCursor &cursor );
 
         qreal getScale() { return m_scale; }
@@ -48,8 +39,16 @@ class CircuitView : public QGraphicsView
         void zoomOne();
         
     protected:
-        void contextMenuEvent( QContextMenuEvent* event );
-        void drawBackground( QPainter* painter, const QRectF &rect );
+        void wheelEvent( QWheelEvent* event ) override;
+        void dragMoveEvent( QDragMoveEvent* event ) override;
+        void dragEnterEvent( QDragEnterEvent* event ) override;
+        void dragLeaveEvent( QDragLeaveEvent* event ) override;
+
+        void mousePressEvent( QMouseEvent* event ) override;
+        void mouseMoveEvent( QMouseEvent *event ) override;
+        void mouseReleaseEvent( QMouseEvent* event ) override;
+        void contextMenuEvent( QContextMenuEvent* event ) override;
+        void drawBackground( QPainter* painter, const QRectF &rect ) override;
 
     private:
  static CircuitView*  m_pSelf;

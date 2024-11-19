@@ -159,9 +159,9 @@ void CircuitView::mousePressEvent( QMouseEvent* event )
         }
     }
     if( event->button() == Qt::MidButton
-     || ( event->button() == Qt::LeftButton
+     /*|| ( event->button() == Qt::LeftButton
         && event->modifiers() & Qt::ShiftModifier
-        && !(event->modifiers() & Qt::ControlModifier) ) )
+        && !(event->modifiers() & Qt::ControlModifier) )*/ )
     {
         event->accept();
         setDragMode( QGraphicsView::ScrollHandDrag );
