@@ -53,7 +53,7 @@ void ScriptTwi::startScript()
 {
     asIScriptEngine* aEngine = m_scriptCpu->engine();
     m_byteReceived = aEngine->GetModule(0)->GetFunctionByDecl("void byteReceived( uint d )");
-    m_writeByte    = aEngine->GetModule(0)->GetFunctionByDecl("uint byteReceived()");
+    m_writeByte    = aEngine->GetModule(0)->GetFunctionByDecl("uint slaveWrite()");
 }
 
 void ScriptTwi::reset()
