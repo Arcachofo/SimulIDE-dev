@@ -69,6 +69,7 @@ INCLUDEPATH += $$PWD/src \
     $$PWD/src/microsim/modules \
     $$PWD/src/microsim/modules/memory \
     $$PWD/src/microsim/modules/usart \
+    $$PWD/src/microsim/modules/onewire\
     $$PWD/src/microsim/modules/twi \
     $$PWD/src/microsim/modules/tcp\
     $$PWD/src/microsim/modules/spi\
