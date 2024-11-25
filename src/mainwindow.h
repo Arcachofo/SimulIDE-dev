@@ -100,8 +100,6 @@ class MainWindow : public QMainWindow
         bool m_blocked;
 
         void createWidgets();
-        void createMenus();
-        void createToolBars();
         void writeSettings();
         
         QString m_fontName;

@@ -70,7 +70,7 @@
         <locale language="C" country="AnyCountry"/>
        </property>
        <property name="currentIndex">
-        <number>1</number>
+        <number>0</number>
        </property>
        <property name="usesScrollButtons">
         <bool>false</bool>
@@ -225,22 +225,7 @@
              </item>
              <item>
               <property name="text">
-               <string notr="true">Nederlands</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string notr="true">Français</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
                <string notr="true">Deutsch</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string notr="true">Italiano</string>
               </property>
              </item>
              <item>
@@ -255,22 +240,7 @@
              </item>
              <item>
               <property name="text">
-               <string notr="true">Português</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
                <string notr="true">Brasileiro</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string notr="true">Slovenčina</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string notr="true">Türkçe</string>
               </property>
              </item>
             </widget>
@@ -860,7 +830,7 @@
               </size>
              </property>
              <property name="text">
-              <string notr="true"> </string>
+              <string notr="true"/>
              </property>
             </widget>
            </item>

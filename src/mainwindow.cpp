@@ -125,8 +125,8 @@ void MainWindow::closeEvent( QCloseEvent *event )
 
 void MainWindow::readSettings()
 {
-    restoreGeometry(                 m_settings->value("geometry" ).toByteArray());
-    restoreState(                    m_settings->value("windowState" ).toByteArray());
+    restoreGeometry( m_settings->value("geometry" ).toByteArray());
+    restoreState(    m_settings->value("windowState" ).toByteArray());
     m_mainSplitter->restoreState( m_settings->value("Centralsplitter/geometry").toByteArray());
     CircuitWidget::self()->splitter()->restoreState( m_settings->value("Circsplitter/geometry").toByteArray());
 
@@ -153,16 +153,16 @@ QString MainWindow::loc()
 {
     if( m_lang == Chinese )    return "zh_CN";
     if( m_lang == Czech )      return "cz";
-    if( m_lang == Dutch )      return "nl";
-    if( m_lang == French )     return "fr";
+    //if( m_lang == Dutch )      return "nl";
+    //if( m_lang == French )     return "fr";
     if( m_lang == German )     return "de";
-    if( m_lang == Italian )    return "it";
+    //if( m_lang == Italian )    return "it";
     if( m_lang == Russian )    return "ru";
     if( m_lang == Spanish )    return "es";
-    if( m_lang == Portuguese ) return "pt_PT";
+    //if( m_lang == Portuguese ) return "pt_PT";
     if( m_lang == Pt_Brasil )  return "pt_BR";
-    if( m_lang == Slovak )     return "sk";
-    if( m_lang == Turkish )    return "tr";
+    //if( m_lang == Slovak )     return "sk";
+    //if( m_lang == Turkish )    return "tr";
     if( m_lang == Traditional_Chinese ) return "zh_TW";
 
     return "en";
@@ -174,16 +174,16 @@ void MainWindow::setLoc( QString loc )
     if     ( loc == "zh_CN" ) lang = Chinese;
     else if( loc == "zh_TW" ) lang = Traditional_Chinese;
     else if( loc == "cz" )    lang = Czech;
-    else if( loc == "nl" )    lang = Dutch;
-    else if( loc == "fr" )    lang = French;
+    //else if( loc == "nl" )    lang = Dutch;
+    //else if( loc == "fr" )    lang = French;
     else if( loc == "de" )    lang = German;
-    else if( loc == "it" )    lang = Italian;
+    //else if( loc == "it" )    lang = Italian;
     else if( loc == "ru" )    lang = Russian;
     else if( loc == "es" )    lang = Spanish;
-    else if( loc == "pt_PT" ) lang = Portuguese;
+    //else if( loc == "pt_PT" ) lang = Portuguese;
     else if( loc == "pt_BR" ) lang = Pt_Brasil;
-    else if( loc == "sk" )    lang = Slovak;
-    else if( loc == "tr" )    lang = Turkish;
+    //else if( loc == "sk" )    lang = Slovak;
+    //else if( loc == "tr" )    lang = Turkish;
 
     m_lang = lang;
 }
