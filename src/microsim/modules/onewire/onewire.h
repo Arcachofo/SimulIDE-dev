@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2018 by Santiago González                               *
+ *   Copyright (C) 2024 by Santiago González                               *
  *                                                                         *
  ***( see copyright.txt file at root folder )*******************************/
 

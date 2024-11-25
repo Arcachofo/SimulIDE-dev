@@ -52,7 +52,9 @@ void AndGate::updatePath()
 
     m_path.clear();
     m_path.moveTo(-9,-endY );
+    m_path.lineTo(-4,-endY );
     m_path.quadTo( QPoint( endX,-endY ), QPoint( endX, 0 ) );
-    m_path.quadTo( QPoint( endX, endY ), QPoint(-9, endY ) );
+    m_path.quadTo( QPoint( endX, endY ), QPoint(-4, endY ) );
+    m_path.lineTo(-9, endY );
     m_path.lineTo(-9,-endY );
 }

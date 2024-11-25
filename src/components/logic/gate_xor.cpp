@@ -51,8 +51,8 @@ void XorGate::updatePath()
 
     m_path.clear();
     m_path.moveTo(-7,-endY );
-    m_path.quadTo( QPoint( endX,-endY ), QPoint( endX, 0   ) );
-    m_path.quadTo( QPoint( endX, endY ), QPoint( -7 , endY ) );
+    m_path.quadTo( QPoint( endX-2,-endY ), QPoint( endX, 0   ) );
+    m_path.quadTo( QPoint( endX-2, endY ), QPoint( -7 , endY ) );
     m_path.quadTo( QPoint( -3  , 0    ), QPoint( -7 ,-endY ) );
 }
 

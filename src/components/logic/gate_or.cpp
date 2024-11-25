@@ -54,7 +54,7 @@ void OrGate::updatePath()
 
     m_path.clear();
     m_path.moveTo(-10,-endY );
-    m_path.quadTo( QPoint( endX,-endY ), QPoint( endX, 0    ) );
-    m_path.quadTo( QPoint( endX, endY ), QPoint( -10 , endY ) );
-    m_path.quadTo( QPoint( -6  , 0    ), QPoint( -10 ,-endY ) );
+    m_path.quadTo( QPoint( endX-2,-endY ), QPoint( endX, 0    ) );
+    m_path.quadTo( QPoint( endX-2, endY ), QPoint( -10 , endY ) );
+    m_path.quadTo( QPoint(     -6, 0    ), QPoint( -10 ,-endY ) );
 }

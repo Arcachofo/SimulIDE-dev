@@ -50,7 +50,7 @@ class TwiModule : public eClockedDevice
         virtual void bufferEmpty(){;}
         virtual void readByte();
 
-        uint8_t byteReceived() { return m_rxReg; }
+        //uint8_t byteReceived() { return m_rxReg; }
 
         void setSdaPin( IoPin* pin );
         void setSclPin( IoPin* pin );

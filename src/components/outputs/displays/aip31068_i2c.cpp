@@ -100,11 +100,11 @@ void Aip31068_i2c::readByte()
     else if( m_phase == 1 )
     {
         m_phase++;
-        int data = TwiModule::byteReceived();
+        int data = m_rxReg;
         int rs = m_controlByte & 0x40;
 
-        if( rs ) writeData(data);
-        else     proccessCommand(data);
+        if( rs ) writeData( data );
+        else     proccessCommand( data );
     }
     TwiModule::readByte();
 }
