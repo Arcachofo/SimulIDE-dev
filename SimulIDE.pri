@@ -1,6 +1,6 @@
 
 VERSION = "1.2.0"
-RELEASE = ""
+RELEASE = "RC1"
 
 TEMPLATE = app
 TARGET = simulide
@@ -116,12 +116,12 @@ CONFIG *= c++11
 REV_NO = $$system($(which date) +\"\\\"%m%d\\\"\")
 #$$system( git rev-parse --short HEAD )
 DEFINES += REVNO=\\\"$$REV_NO\\\"
-DEFINES += APP_VERSION=\\\"$$VERSION$$RELEASE\\\"
+DEFINES += APP_VERSION=\\\"$$VERSION-$$RELEASE\\\"
 
 BUILD_DATE = $$system($(which date) +\"\\\"%d-%m-%y\\\"\")
 DEFINES += BUILDDATE=\\\"$$BUILD_DATE\\\"
 
-TARGET_NAME   = SimulIDE_$$VERSION$$RELEASE
+TARGET_NAME   = SimulIDE_$$VERSION-$$RELEASE
 TARGET_PREFIX = $$BUILD_DIR/executables/$$TARGET_NAME
 
 OBJECTS_DIR *= $$OUT_PWD/build/objects
