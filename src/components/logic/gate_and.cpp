@@ -50,7 +50,7 @@ void AndGate::updatePath()
     int endY = m_area.height()/2;
     int endX = m_area.width()/2;
 
-    m_path.clear();
+    m_path = QPainterPath();
     m_path.moveTo(-9,-endY );
     m_path.lineTo(-4,-endY );
     m_path.quadTo( QPoint( endX,-endY ), QPoint( endX, 0 ) );

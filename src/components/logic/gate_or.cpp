@@ -52,7 +52,7 @@ void OrGate::updatePath()
     int endY = m_area.height()/2;
     int endX = m_area.width()/2;
 
-    m_path.clear();
+    m_path = QPainterPath();
     m_path.moveTo(-10,-endY );
     m_path.quadTo( QPoint( endX-2,-endY ), QPoint( endX, 0    ) );
     m_path.quadTo( QPoint( endX-2, endY ), QPoint( -10 , endY ) );

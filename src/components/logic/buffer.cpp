@@ -62,7 +62,7 @@ void Buffer::setTristate( bool t )  // Activate or deactivate OE Pin
 
 void Buffer::updatePath()
 {
-    m_path.clear();
+    m_path = QPainterPath();
     m_path.moveTo(-8,-8 );
     m_path.lineTo(-8, 8 );
     m_path.lineTo( 8, 1);
