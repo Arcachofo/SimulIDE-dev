@@ -232,9 +232,11 @@ void WaveGen::setDuty( double duty )
     m_halfW = m_fstepsPC*m_duty/100;
 }
 
-void WaveGen::setSteps(int steps )
+void WaveGen::setSteps( int steps )
 {
-    if( steps < 1 ) steps = 1;
+    if( steps > m_stepsPC ) steps = m_stepsPC;
+    else if( steps < 1 ) steps = 1;
+
     m_steps = steps;
     m_qSteps  = m_stepsPC/steps;
 }
