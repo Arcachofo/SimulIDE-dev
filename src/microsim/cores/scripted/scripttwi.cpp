@@ -18,8 +18,7 @@ ScriptTwi::ScriptTwi( eMcu* mcu, QString name )
 
     m_methods << "setMode( int mode )"
               << "sendByte( uint8 byte )"
-              << "setAddress( uint8 address )"
-                 ;
+              << "setAddress( uint8 address )";
 }
 ScriptTwi::~ScriptTwi(){}
 
@@ -80,7 +79,7 @@ void ScriptTwi::writeByte() // Master is reading, we send byte m_txReg
 {
     if( !m_writeByte ) { m_txReg = 0; return; }
 
-    m_scriptCpu->prepare( m_writeByte);
+    m_scriptCpu->prepare( m_writeByte );
     m_scriptCpu->execute();
     m_txReg = m_scriptCpu->context()->GetReturnDWord();
 }

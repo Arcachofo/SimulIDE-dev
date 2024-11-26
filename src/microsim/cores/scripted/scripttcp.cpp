@@ -11,6 +11,10 @@ ScriptTcp::ScriptTcp( eMcu* mcu, QString name )
          : TcpModule( name )
          , ScriptPerif( name )
 {
+    m_received  = nullptr;
+    m_connected = nullptr;
+    m_closed    = nullptr;
+
     m_type = "TCP";
 
     m_methods << "connectToHost( int link, string host, int port )"
