@@ -74,6 +74,8 @@ ScriptBase::ScriptBase( QString name )
 }
 ScriptBase::~ScriptBase()
 {
+    m_aEngine->GarbageCollect( asGC_FULL_CYCLE );  // Automatic garbage collection is disabled, doing it manually
+
     if( m_context ) m_context->Release();
     if( m_aEngine ) m_aEngine->ShutDownAndRelease();
     if( m_jit )     delete m_jit;

@@ -56,9 +56,10 @@ QStringList ScriptTcp::registerScript( ScriptCpu* cpu )
 void ScriptTcp::startScript()
 {
     asIScriptEngine* aEngine = m_scriptCpu->engine();
-    m_received  = aEngine->GetModule(0)->GetFunctionByDecl("void received( string msg, int link )");
-    m_connected = aEngine->GetModule(0)->GetFunctionByDecl("void tcpConnected( int link )");
-    m_closed    = aEngine->GetModule(0)->GetFunctionByDecl("void tcpDisconnected( int link )");
+    asIScriptModule* module = aEngine->GetModule( 0, asGM_ONLY_IF_EXISTS );
+    m_received  = module->GetFunctionByDecl("void received( string msg, int link )");
+    m_connected = module->GetFunctionByDecl("void tcpConnected( int link )");
+    m_closed    = module->GetFunctionByDecl("void tcpDisconnected( int link )");
 }
 
 void ScriptTcp::connectToHost( int link, const string host, int port )

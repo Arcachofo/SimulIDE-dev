@@ -261,11 +261,11 @@ int ScriptCpu::compileScript()
         QString type = p->type();
 
         QString getter = type+" get"+propName+"()";
-        asIScriptFunction* asFunc = m_aEngine->GetModule(0)->GetFunctionByDecl( getter.toLocal8Bit().constData() );
+        asIScriptFunction* asFunc = module->GetFunctionByDecl( getter.toLocal8Bit().constData() );
         m_propGetters[propName] = asFunc;
 
         QString setter = "void set"+propName+"("+type+")";
-        asFunc = m_aEngine->GetModule(0)->GetFunctionByDecl( setter.toLocal8Bit().constData() );
+        asFunc = module->GetFunctionByDecl( setter.toLocal8Bit().constData() );
         m_propSetters[propName] = asFunc;
     }
 
@@ -276,7 +276,7 @@ int ScriptCpu::compileScript()
 
     for( ScriptPerif* perif : m_periferals ) perif->startScript();
 
-    asIScriptFunction* func = m_aEngine->GetModule(0)->GetFunctionByDecl("void setup()");
+    asIScriptFunction* func = module->GetFunctionByDecl("void setup()");
     if( func ) callFunction( func );
 
     return 0;
