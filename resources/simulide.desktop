@@ -2,8 +2,9 @@
 Name=SimulIDE
 GenericName=SimulIDE
 Comment=Electronic Circuit Simulator Software
-Exec=simulide
+Exec=simulide %F
 Icon=simulide.png
 Terminal=false
 Type=Application
 Categories=Education;Electronics;
+MimeType=application/x-simulide-circuit;
