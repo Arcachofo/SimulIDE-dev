@@ -137,8 +137,7 @@ public:
 //protected:
 	friend class asCScriptEngine;
 
-    //inline int checkArgumentType( asUINT arg, int size );
-    inline int getOffset( asUINT arg );
+    inline int checkArgumentType( asUINT arg, int size );
 
 	void CallLineCallback();
 	void CallExceptionCallback();
