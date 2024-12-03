@@ -4,3 +4,10 @@ Edit SimulIDE.desktop in this folder.
 Set the proper path to SimulIDE folder.
 
 Then you can copy it to your desktop or any other place to lauch SimulIDE.
+
+To allow opening circuits from your file manager put simulide-mime.xml file into
+~/.local/share/mime/packages/ folder and then launch
+
+update-mime-database ~/.local/share/mime/
+
+in your command line.
