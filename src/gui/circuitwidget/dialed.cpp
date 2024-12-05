@@ -42,8 +42,10 @@ Dialed::~Dialed() {}
 QList<ComProperty*> Dialed::dialProps()
 {
     return {
-new BoolProp<Dialed>( "Slider", tr("Slider"),"", this, &Dialed::slider, &Dialed::setSlider ),
-new DoubProp<Dialed>( "Scale" , tr("Scale") ,"", this, &Dialed::scale , &Dialed::setScale )
+        new BoolProp<Dialed>( "Slider", tr("Slider"),""
+                            , this, &Dialed::slider, &Dialed::setSlider ),
+        new DoubProp<Dialed>( "Scale" , tr("Scale") ,""
+                            , this, &Dialed::scale , &Dialed::setScale )
     };
 }
 
