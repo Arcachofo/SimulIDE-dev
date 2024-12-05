@@ -73,6 +73,21 @@
                   prescalers="2,2,4,8,16,32,64,128"
                   adcpins="PORTF0,PORTF1,PORTF2,PORTF3,PORTF4,PORTF5,PORTF6,PORTF7" />
 
+  
+  <usart name="USART0" number="1" configregsA="UCSR0A" configregsB="UCSR0B" configregsC="UCSR0C"
+                       interrupt="USART0_U">
+                     
+    <trunit type="tx" pin="PORTE1" register="UDR0" interrupt="USART0_T" />
+    <trunit type="rx" pin="PORTE0"                 interrupt="USART0_R" />
+  </usart>
+
+  <usart name="USART1" number="2" configregsA="UCSR1A" configregsB="UCSR1B" configregsC="UCSR1C"
+                       interrupt="USART1_U">
+                     
+    <trunit type="tx" pin="PORTD3" register="UDR1" interrupt="USART1_T" />
+    <trunit type="rx" pin="PORTD2"                 interrupt="USART1_R" />
+  </usart>
+
   <twi name="TWI"  configregsA="TWCR" configregsB="TWBR" 
                    dataregs="TWDR" 
                    addressreg="TWAR"
