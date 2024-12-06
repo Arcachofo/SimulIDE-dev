@@ -5,6 +5,7 @@
 
 #include "shape.h"
 #include "circuit.h"
+#include "simulator.h"
 
 #include "stringprop.h"
 #include "doubleprop.h"
@@ -24,6 +25,10 @@ Shape::Shape( QString type, QString id )
     m_color  = QColor( Qt::gray );
     m_area   = QRectF( -m_hSize/2, -m_vSize/2, m_hSize, m_vSize );
     setZValue( -1 );
+
+    m_changed = true;
+
+    Simulator::self()->addToUpdateList( this );
 
     addPropGroup( { tr("Main"), {
         new IntProp<Shape>("H_size", tr("Width"), "_px"
@@ -52,31 +57,44 @@ Shape::Shape( QString type, QString id )
 }
 Shape::~Shape(){}
 
+void Shape::updateStep()
+{
+    if( !m_changed ) return;
+    m_changed = false;
+
+    update();
+
+    m_area = QRectF( -m_hSize/2, -m_vSize/2, m_hSize, m_vSize );
+    Circuit::self()->update();
+}
+
 void Shape::setHSize( int size )
 {
     m_hSize = size;
-    m_area = QRectF( -m_hSize/2, -m_vSize/2, m_hSize, m_vSize );
-    Circuit::self()->update();
+    m_changed = true;
+    if( !Simulator::self()->isRunning() ) updateStep();
 }
 
 void Shape::setVSize( int size )
 {
     m_vSize = size;
-    m_area = QRectF( -m_hSize/2, -m_vSize/2, m_hSize, m_vSize );
-    Circuit::self()->update();
+    m_changed = true;
+    if( !Simulator::self()->isRunning() ) updateStep();
 }
 
 void Shape::setBorder( int border ) 
 { 
     if( border < 0 ) border = 0;
     m_border = border; 
-    update();
+    m_changed = true;
+    if( !Simulator::self()->isRunning() ) updateStep();
 }
 
 void Shape::setColor( QColor color )
 {
     m_color = color;
-    update();
+    m_changed = true;
+    if( !Simulator::self()->isRunning() ) updateStep();
 }
 
 void Shape::setOpac( qreal op )
@@ -84,6 +102,7 @@ void Shape::setOpac( qreal op )
     if     ( op > 1 ) op = 1;
     else if( op < 0 ) op = 0;
     m_opac = op;
-    update();
+    m_changed = true;
+    if( !Simulator::self()->isRunning() ) updateStep();
 }
 
