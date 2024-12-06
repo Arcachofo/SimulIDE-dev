@@ -70,31 +70,29 @@ void Shape::updateStep()
 
 void Shape::setHSize( int size )
 {
+    if( size < 1 ) size = 1;
     m_hSize = size;
-    m_changed = true;
-    if( !Simulator::self()->isRunning() ) updateStep();
+    changed();
 }
 
 void Shape::setVSize( int size )
 {
+    if( size < 1 ) size = 1;
     m_vSize = size;
-    m_changed = true;
-    if( !Simulator::self()->isRunning() ) updateStep();
+    changed();
 }
 
 void Shape::setBorder( int border ) 
 { 
     if( border < 0 ) border = 0;
     m_border = border; 
-    m_changed = true;
-    if( !Simulator::self()->isRunning() ) updateStep();
+    changed();
 }
 
 void Shape::setColor( QColor color )
 {
     m_color = color;
-    m_changed = true;
-    if( !Simulator::self()->isRunning() ) updateStep();
+    changed();
 }
 
 void Shape::setOpac( qreal op )
@@ -102,7 +100,11 @@ void Shape::setOpac( qreal op )
     if     ( op > 1 ) op = 1;
     else if( op < 0 ) op = 0;
     m_opac = op;
+    changed();
+}
+
+void Shape::changed()
+{
     m_changed = true;
     if( !Simulator::self()->isRunning() ) updateStep();
 }
-

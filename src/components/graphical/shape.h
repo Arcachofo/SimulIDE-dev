@@ -43,6 +43,7 @@ class Shape : public Component
         
     protected:
         virtual bool freeMove( QGraphicsSceneMouseEvent* ) override { return true; }
+        void changed();
 
         int m_hSize;
         int m_vSize;
