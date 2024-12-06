@@ -35,15 +35,6 @@ class SerialPort : public Component, public UsartModule, public eElement
         QString port(){return m_portName;}
         void setPort( QString name ){ m_portName = name; update();}
 
-        int dataBits(){ return m_dataBits; }
-        void setDataBits( int db ){ m_dataBits = db; }
-
-        int parity() { return (int)m_parity; }
-        void setParity( int par ) { m_parity = (parity_t)par; }
-
-        int stopBits() { return m_stopBits; }
-        void setStopBits( int sb ) { m_stopBits = sb; }
-
         QSerialPort::FlowControl flowControl() { return m_flowControl; }
         void setFlowControl( QSerialPort::FlowControl fc ) { m_flowControl = fc; }
 

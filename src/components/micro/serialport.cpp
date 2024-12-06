@@ -153,7 +153,7 @@ void SerialPort::open()
 
     m_serial->setPortName( m_portName );
     m_serial->setBaudRate( m_baudRate );
-    m_serial->setDataBits( (QSerialPort::DataBits)m_dataBits );
+    m_serial->setDataBits( (QSerialPort::DataBits)dataBits() );
     m_serial->setParity( (QSerialPort::Parity)m_parity );
     m_serial->setStopBits( (QSerialPort::StopBits)m_stopBits );
     m_serial->setFlowControl( QSerialPort::NoFlowControl/*m_flowControl*/ );

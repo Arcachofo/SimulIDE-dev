@@ -20,9 +20,10 @@ I51Usart::~I51Usart(){}
 
 void I51Usart::setup()
 {
+    setDataBits( 8 );
+
     m_receiver->setFifoSize( 1 );
     m_stopBits = 1;
-    m_dataMask = 0xFF;
     m_parity   = parNONE;
 
     m_timer1 = m_mcu->getTimer( "TIMER1" );
@@ -70,16 +71,16 @@ void I51Usart::configureA( uint8_t newSCON ) //SCON
             break;
         case 1:             // Asynchronous Timer1 8 bits
             useTimer = true;
-            m_dataBits = 8;
+            setDataBits( 8 );
             sm2 = 0;
             break;
         case 2:             // Asynchronous MCU Clock 9 bits
             setPeriod( m_mcu->psInst() );// Fixed baudrate 32 or 64
-            m_dataBits = 9;
+            setDataBits( 9 );
             break;
         case 3:             // Asynchronous Timer1 9 bits
             useTimer = true;
-            m_dataBits = 9;
+            setDataBits( 9 );
             break;
     }
     m_receiver->ignoreData( sm2 );

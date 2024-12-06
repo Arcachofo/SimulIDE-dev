@@ -56,7 +56,7 @@ void UsartModule::setBaudRate( int br )
     setPeriod( 1e12/br );
 }
 
-void UsartModule::setDataBits( uint8_t b )
+void UsartModule::setDataBits( int b )
 {
     m_dataBits = b;
     m_dataMask = pow( 2, b )-1;

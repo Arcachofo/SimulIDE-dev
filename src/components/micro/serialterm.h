@@ -27,15 +27,6 @@ class SerialTerm : public Component, public UsartModule, public eElement
         virtual void updateStep() override;
         virtual void runEvent() override;
 
-        int dataBits(){ return m_dataBits; }
-        void setDataBits( int db ){ m_dataBits = db; }
-
-        int parity() { return (int)m_parity; }
-        void setParity( int par ) { m_parity = (parity_t)par; }
-
-        int stopBits() { return m_stopBits; }
-        void setStopBits( int sb ) { m_stopBits = sb; }
-
         void setSerialMon( bool s );
 
         virtual void sendByte( uint8_t data ) override;

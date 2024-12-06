@@ -87,7 +87,7 @@ void PicUsart::configureA( uint8_t newTXSTA ) // TXSTA changed
             m_sender->enable( txEn );
         }
     }
-    m_dataBits = getRegBitsVal( newTXSTA, m_TX9 )+8;
+    setDataBits( getRegBitsVal( newTXSTA, m_TX9 )+8 );
 
     m_speedx2 = getRegBitsBool( newTXSTA, m_BRGH ); // Double Speed?
     setBaurrate();
@@ -151,7 +151,7 @@ void PicUsart::bufferEmpty()
 
 void PicUsart::setRxFlags( uint16_t frame )
 {
-    if( m_dataBits == 9 ) setBit9Rx( ( frame & (1<<8) ) ? 1 : 0 );
+    if( dataBits() == 9 ) setBit9Rx( ( frame & (1<<8) ) ? 1 : 0 );
 
     writeRegBits( m_FERR, frame & frameError );  // frameError
     writeRegBits( m_OERR, frame & dataOverrun ); // overrun error
