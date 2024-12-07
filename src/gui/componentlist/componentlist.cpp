@@ -57,7 +57,6 @@ void ComponentList::createList()
 {
     m_listFile  = MainWindow::self()->getConfigPath("compList.xml");
     m_oldConfig = !QFile::exists( m_listFile ); // xml file doesn't exist: read old config
-    m_restoreList = !m_oldConfig; // Restore last List
 
     m_customComp = false;
     LoadLibraryItems();
@@ -77,47 +76,8 @@ void ComponentList::createList()
     if( !userDir.isEmpty() && QDir( userDir ).exists() )
     {
         LoadCompSetAt( userDir );
-
-        QDir compSetDir( userDir );
-        if( compSetDir.cd("test") )  // Load Test Components
-        {
-            QStringList dirList = compSetDir.entryList( {"*"}, QDir::Dirs );
-            if( !dirList.isEmpty() )
-            {
-                qDebug() << "\n" << tr("    Loading Component sets at:")<< "\n" << compSetDir.absolutePath()<<"\n";
-
-                TreeItem* catItem = getCategory("test");
-                if( !catItem ) catItem = addCategory("test","test","","" );
-
-                for( QString compName : dirList )
-                {
-                    QString path = compName+"/"+compName;
-                    QString icon = getIcon( "test", compName );
-                    QString compFile;
-                    QString type;
-
-                    if( compSetDir.exists( path+".sim1") )
-                    {
-                        if( icon.isEmpty() ) icon = ":/subc.png";
-                        type = "Subcircuit";
-                        compFile = compSetDir.absoluteFilePath( path+".sim1" );
-                    }
-                    else if( compSetDir.exists( path+".mcu") )
-                    {
-                        if( icon.isEmpty() ) icon = ":/ic2.png";
-                        type = "MCU";
-                    }
-                    if( !type.isEmpty() && !m_components.contains( compName ) )
-                    {
-                        addItem( compName, catItem, icon, type );
-                        m_dirFileList[ compName ] = compSetDir.absoluteFilePath( compName );
-                        if( !compFile.isEmpty() ) m_dataFileList[ compName ] = compFile;   // Save sim1 File used to create this item
-                    }
-                }
-            }
-        }
+        loadTest( userDir );
     }
-
     QDir compSetDir = MainWindow::self()->getFilePath("data");
     if( compSetDir.exists() ) LoadCompSetAt( compSetDir );
 
@@ -128,6 +88,46 @@ void ComponentList::createList()
         if( it->childCount() ) continue;
         QTreeWidgetItem* pa = it->parent();
         if( pa ) pa->removeChild( it  );
+    }
+}
+
+void ComponentList::loadTest( QString userDir )
+{
+    QDir compSetDir( userDir );
+    if( !compSetDir.cd("test") ) return;
+
+    QStringList dirList = compSetDir.entryList( {"*"}, QDir::Dirs );
+    if( dirList.isEmpty() ) return;
+
+    qDebug() << "\n" << tr("    Loading Component sets at:")<< "\n" << compSetDir.absolutePath()<<"\n";
+
+    TreeItem* catItem = getCategory("test");
+    if( !catItem ) catItem = addCategory("test","test","","" );
+
+    for( QString compName : dirList )
+    {
+        QString path = compName+"/"+compName;
+        QString icon = getIcon( "test", compName );
+        QString compFile;
+        QString type;
+
+        if( compSetDir.exists( path+".sim1") )
+        {
+            if( icon.isEmpty() ) icon = ":/subc.png";
+            type = "Subcircuit";
+            compFile = compSetDir.absoluteFilePath( path+".sim1" );
+        }
+        else if( compSetDir.exists( path+".mcu") )
+        {
+            if( icon.isEmpty() ) icon = ":/ic2.png";
+            type = "MCU";
+        }
+        if( !type.isEmpty() && !m_components.contains( compName ) )
+        {
+            addItem( compName, catItem, icon, type );
+            m_dirFileList[ compName ] = compSetDir.absoluteFilePath( compName );
+            if( !compFile.isEmpty() ) m_dataFileList[ compName ] = compFile;   // Save sim1 File used to create this item
+        }
     }
 }
 
@@ -285,8 +285,7 @@ void ComponentList::addItem( QString caption, TreeItem* catItem, QIcon &icon, QS
     item->setText( 0, nameTr+info );
 
     m_components.insert( name, item );
-
-    if( !m_restoreList ) catItem->addChild( item );
+    catItem->addChild( item );
 
     if( m_oldConfig )
     {
@@ -301,13 +300,8 @@ void ComponentList::addItem( QString caption, TreeItem* catItem, QIcon &icon, QS
 
 TreeItem* ComponentList::getCategory( QString category )
 {
-    TreeItem* catItem = NULL;
+    TreeItem* catItem = nullptr;
     if( m_categories.contains( category ) ) catItem = m_categories.value( category );
-    else{
-        category = m_catNames.value( category );
-        if( !category.isEmpty() && m_categories.contains( category ) )
-            catItem = m_categories.value( category );
-    }
     return catItem;
 }
 
@@ -328,11 +322,10 @@ TreeItem* ComponentList::addCategory( QString nameTr, QString name, QString pare
         catItem = new TreeItem( catParent, name, nameTr, "", categ_CHILD, QIcon( QPixmap( icon ) ), m_customComp );
     }
 
-    if( !m_restoreList )
-    {
-        if( parent.isEmpty() ) addTopLevelItem( catItem ); // Is root category or root category doesn't exist
-        else if( catParent )   catParent->addChild( catItem );
-    }
+    if( parent.isEmpty() ) addTopLevelItem( catItem ); // Is root category or root category doesn't exist
+    else if( catParent )   catParent->addChild( catItem );
+    m_categories.insert( name, catItem );
+
     if( m_oldConfig )
     {
         if( MainWindow::self()->compSettings()->contains(name+"/collapsed") )
@@ -344,8 +337,6 @@ TreeItem* ComponentList::addCategory( QString nameTr, QString name, QString pare
     catItem->setText( 0, nameTr );
     catItem->setItemHidden( hidden );
     catItem->setItemExpanded( expanded );
-    m_categories.insert( name, catItem );
-    m_catNames.insert( nameTr, name );
 
     return catItem;
 }
@@ -450,7 +441,7 @@ void ComponentList::readConfig()
     QDomNode    tree = root.firstChild();
     readNodCfg( &domDoc, nullptr );               // Read items as stored in file
 
-    for( TreeItem* item : m_categories.values() ) // Insert new categories
+    /*for( TreeItem* item : m_categories.values() ) // Insert new categories
     {
         TreeItem* parent = item->parentItem();
         if( parent ) parent->addChild( item );
@@ -463,7 +454,7 @@ void ComponentList::readConfig()
     {
         TreeItem* catItem = item->parentItem();
         if( catItem ) catItem->addChild( item );
-    }
+    }*/
 }
 
 void ComponentList::readNodCfg( QDomNode* node, TreeItem* parent )
@@ -500,15 +491,16 @@ void ComponentList::readNodCfg( QDomNode* node, TreeItem* parent )
     }
 
     if( item ){
-        if( m_restoreList ){
+        /*if( !m_oldConfig )
+        {
             if( parent ) parent->addChild( item );
             else         addTopLevelItem( item );
-        }
+        }*/
         bool hidden = element.attribute("hidden") == "1";
         item->setItemHidden( hidden );
     }
 
-    QDomNode child = node->firstChild(); // Recursively read items
+    QDomNode child = node->firstChild(); // Recursively read child items
     while( !child.isNull() ){
         readNodCfg( &child, item );
         child = child.nextSibling();

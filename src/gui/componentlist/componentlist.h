@@ -58,6 +58,7 @@ class ComponentList : public QTreeWidget
         void addItem( QString caption, TreeItem* catItem, QIcon &icon, QString type );
 
         void LoadLibraryItems();
+        void loadTest( QString userDir );
         void readConfig();
         void readNodCfg( QDomNode* node, TreeItem* parent );
 
@@ -67,17 +68,14 @@ class ComponentList : public QTreeWidget
 
         bool m_customComp;
         bool m_oldConfig;
-        bool m_restoreList;
         QString m_listFile;
 
         QString m_searchFilter;
 
         QMap<QString, TreeItem*> m_components;
         QMap<QString, TreeItem*> m_categories;
-        QMap<QString, QString>   m_catNames;
 
         QList<TreeItem*> m_categoryList;
-
 
         QMap<QString, QString> m_dataFileList;
         QMap<QString, QString> m_dirFileList;
