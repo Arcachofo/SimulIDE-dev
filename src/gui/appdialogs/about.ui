@@ -82,7 +82,7 @@
           </sizepolicy>
          </property>
          <property name="text">
-          <string>TextLabel</string>
+          <string notr="true">TextLabel</string>
          </property>
          <property name="textInteractionFlags">
           <set>Qt::NoTextInteraction</set>
@@ -120,7 +120,7 @@
           </sizepolicy>
          </property>
          <property name="text">
-          <string>TextLabel</string>
+          <string notr="true">TextLabel</string>
          </property>
          <property name="textInteractionFlags">
           <set>Qt::NoTextInteraction</set>
@@ -280,7 +280,7 @@
         </sizepolicy>
        </property>
        <property name="text">
-        <string>Santiago González</string>
+        <string notr="true">Santiago González</string>
        </property>
       </widget>
      </item>
@@ -358,7 +358,7 @@
             </sizepolicy>
            </property>
            <property name="text">
-            <string>       Bastien Jacquot.</string>
+            <string notr="true">       Bastien Jacquot.</string>
            </property>
           </widget>
          </item>
@@ -371,7 +371,7 @@
             </sizepolicy>
            </property>
            <property name="text">
-            <string>n3645.</string>
+            <string notr="true">n3645.</string>
            </property>
           </widget>
          </item>
@@ -384,7 +384,7 @@
             </sizepolicy>
            </property>
            <property name="text">
-            <string>       Coethium.</string>
+            <string notr="true">       Coethium.</string>
            </property>
           </widget>
          </item>
@@ -397,7 +397,7 @@
             </sizepolicy>
            </property>
            <property name="text">
-            <string>tfrei.</string>
+            <string notr="true">tfrei.</string>
            </property>
           </widget>
          </item>
@@ -410,7 +410,7 @@
             </sizepolicy>
            </property>
            <property name="text">
-            <string>Roy Qu</string>
+            <string notr="true">Roy Qu</string>
            </property>
           </widget>
          </item>
@@ -423,7 +423,7 @@
             </sizepolicy>
            </property>
            <property name="text">
-            <string>Jan K. S.</string>
+            <string notr="true">Jan K. S.</string>
            </property>
           </widget>
          </item>
@@ -436,7 +436,7 @@
             </sizepolicy>
            </property>
            <property name="text">
-            <string>Giordano.</string>
+            <string notr="true">Giordano.</string>
            </property>
           </widget>
          </item>
@@ -449,7 +449,7 @@
             </sizepolicy>
            </property>
            <property name="text">
-            <string>       Kai Kellner.</string>
+            <string notr="true">       Kai Kellner.</string>
            </property>
           </widget>
          </item>
@@ -462,7 +462,7 @@
             </sizepolicy>
            </property>
            <property name="text">
-            <string>       Benoit ZERR.</string>
+            <string notr="true">       Benoit ZERR.</string>
            </property>
           </widget>
          </item>
@@ -475,7 +475,7 @@
             </sizepolicy>
            </property>
            <property name="text">
-            <string>       Tim Fischer.</string>
+            <string notr="true">       Tim Fischer.</string>
            </property>
           </widget>
          </item>
@@ -488,7 +488,7 @@
             </sizepolicy>
            </property>
            <property name="text">
-            <string>A. Cebrian.</string>
+            <string notr="true">A. Cebrian.</string>
            </property>
           </widget>
          </item>
@@ -501,7 +501,7 @@
             </sizepolicy>
            </property>
            <property name="text">
-            <string>       Jarda Vrana</string>
+            <string notr="true">       Jarda Vrana</string>
            </property>
           </widget>
          </item>
@@ -514,7 +514,7 @@
             </sizepolicy>
            </property>
            <property name="text">
-            <string>Sergey Roenko.</string>
+            <string notr="true">Sergey Roenko.</string>
            </property>
           </widget>
          </item>
@@ -527,7 +527,7 @@
             </sizepolicy>
            </property>
            <property name="text">
-            <string>       P. de Francisco</string>
+            <string notr="true">       P. de Francisco</string>
            </property>
           </widget>
          </item>
@@ -551,7 +551,7 @@
             </sizepolicy>
            </property>
            <property name="text">
-            <string>Jarda Vrana</string>
+            <string notr="true">Jarda Vrana</string>
            </property>
           </widget>
          </item>
@@ -564,7 +564,7 @@
             </sizepolicy>
            </property>
            <property name="text">
-            <string>Roy Qu</string>
+            <string notr="true">Roy Qu</string>
            </property>
           </widget>
          </item>
@@ -577,7 +577,7 @@
             </sizepolicy>
            </property>
            <property name="text">
-            <string>Tim Fischer.</string>
+            <string notr="true">Tim Fischer.</string>
            </property>
           </widget>
          </item>
@@ -590,7 +590,7 @@
             </sizepolicy>
            </property>
            <property name="text">
-            <string notr="true">T_Chinese:       </string>
+            <string>T_Chinese:       </string>
            </property>
            <property name="alignment">
             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -606,7 +606,7 @@
             </sizepolicy>
            </property>
            <property name="text">
-            <string>Sergio NA.</string>
+            <string notr="true">Sergio NA.</string>
            </property>
           </widget>
          </item>
@@ -632,7 +632,7 @@
             </sizepolicy>
            </property>
            <property name="text">
-            <string>Santiago Gonzalez.</string>
+            <string notr="true">Santiago Gonzalez.</string>
            </property>
           </widget>
          </item>
@@ -677,7 +677,7 @@
             </sizepolicy>
            </property>
            <property name="text">
-            <string>Sergey Roenko.</string>
+            <string notr="true">Sergey Roenko.</string>
            </property>
           </widget>
          </item>

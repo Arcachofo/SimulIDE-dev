@@ -17,7 +17,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string notr="true">Dialog</string>
   </property>
   <layout class="QHBoxLayout" name="mainLayout">
    <property name="leftMargin">
@@ -1472,6 +1472,17 @@
  <resources/>
  <connections/>
  <buttongroups>
+  <buttongroup name="trackGroup"/>
+  <buttongroup name="autoGroup">
+   <property name="exclusive">
+    <bool>true</bool>
+   </property>
+  </buttongroup>
+  <buttongroup name="channelGroup">
+   <property name="exclusive">
+    <bool>true</bool>
+   </property>
+  </buttongroup>
   <buttongroup name="triggerGroup">
    <property name="exclusive">
     <bool>true</bool>
@@ -1482,16 +1493,5 @@
     <bool>false</bool>
    </property>
   </buttongroup>
-  <buttongroup name="channelGroup">
-   <property name="exclusive">
-    <bool>true</bool>
-   </property>
-  </buttongroup>
-  <buttongroup name="autoGroup">
-   <property name="exclusive">
-    <bool>true</bool>
-   </property>
-  </buttongroup>
-  <buttongroup name="trackGroup"/>
  </buttongroups>
 </ui>

@@ -70,7 +70,7 @@
         <locale language="C" country="AnyCountry"/>
        </property>
        <property name="currentIndex">
-        <number>0</number>
+        <number>2</number>
        </property>
        <property name="usesScrollButtons">
         <bool>false</bool>
@@ -279,6 +279,9 @@
              <property name="editable">
               <bool>false</bool>
              </property>
+             <property name="currentText">
+              <string notr="true">Ubuntu</string>
+             </property>
              <property name="sizeAdjustPolicy">
               <enum>QComboBox::AdjustToMinimumContentsLength</enum>
              </property>
@@ -315,6 +318,9 @@
                <height>16777215</height>
               </size>
              </property>
+             <property name="specialValueText">
+              <string notr="true"/>
+             </property>
              <property name="minimum">
               <double>0.200000000000000</double>
              </property>
@@ -348,7 +354,11 @@
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout_3">
            <item>
-            <widget class="QLineEdit" name="userPath"/>
+            <widget class="QLineEdit" name="userPath">
+             <property name="placeholderText">
+              <string notr="true"/>
+             </property>
+            </widget>
            </item>
            <item>
             <widget class="QPushButton" name="setPathButton">
@@ -519,6 +529,9 @@
                <height>16777215</height>
               </size>
              </property>
+             <property name="suffix">
+              <string notr="true"/>
+             </property>
              <property name="minimum">
               <number>1</number>
              </property>
@@ -580,6 +593,9 @@
                <height>16777215</height>
               </size>
              </property>
+             <property name="suffix">
+              <string notr="true"/>
+             </property>
              <property name="minimum">
               <number>1</number>
              </property>
@@ -640,6 +656,9 @@
                <width>75</width>
                <height>16777215</height>
               </size>
+             </property>
+             <property name="suffix">
+              <string notr="true"/>
              </property>
              <property name="minimum">
               <number>1</number>
@@ -743,6 +762,9 @@
                <height>16777215</height>
               </size>
              </property>
+             <property name="suffix">
+              <string notr="true"/>
+             </property>
              <property name="minimum">
               <number>0</number>
              </property>
@@ -800,6 +822,9 @@
                <width>75</width>
                <height>16777215</height>
               </size>
+             </property>
+             <property name="suffix">
+              <string notr="true"/>
              </property>
              <property name="minimum">
               <number>0</number>
@@ -1046,7 +1071,7 @@
               <string notr="true">font: 12pt &quot;Ubuntu&quot;; color: rgb(85, 0, 127)</string>
              </property>
              <property name="text">
-              <string> 0%</string>
+              <string notr="true"> 0%</string>
              </property>
              <property name="alignment">
               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -1076,14 +1101,14 @@
            <item>
             <widget class="QLabel" name="label_7">
              <property name="text">
-              <string>0%</string>
+              <string notr="true">0%</string>
              </property>
             </widget>
            </item>
            <item>
             <widget class="QLabel" name="label_9">
              <property name="text">
-              <string>50%</string>
+              <string notr="true">50%</string>
              </property>
              <property name="alignment">
               <set>Qt::AlignCenter</set>
@@ -1093,7 +1118,7 @@
            <item>
             <widget class="QLabel" name="label_10">
              <property name="text">
-              <string>100%</string>
+              <string notr="true">100%</string>
              </property>
              <property name="alignment">
               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -1183,6 +1208,9 @@
                <height>16777215</height>
               </size>
              </property>
+             <property name="suffix">
+              <string notr="true"/>
+             </property>
              <property name="minimum">
               <number>1</number>
              </property>
@@ -1209,37 +1237,37 @@
               </size>
              </property>
              <property name="currentText">
-              <string notr="true">µs</string>
+              <string notr="true">ps</string>
              </property>
              <property name="currentIndex">
-              <number>2</number>
+              <number>0</number>
              </property>
              <property name="maxCount">
               <number>10</number>
              </property>
              <item>
               <property name="text">
-               <string>ps</string>
+               <string notr="true">ps</string>
               </property>
              </item>
              <item>
               <property name="text">
-               <string>ns</string>
+               <string notr="true">ns</string>
               </property>
              </item>
              <item>
               <property name="text">
-               <string>µs</string>
+               <string notr="true">µs</string>
               </property>
              </item>
              <item>
               <property name="text">
-               <string>ms</string>
+               <string notr="true">ms</string>
               </property>
              </item>
              <item>
               <property name="text">
-               <string>s</string>
+               <string notr="true">s</string>
               </property>
              </item>
             </widget>
@@ -1322,6 +1350,9 @@
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
+             <property name="suffix">
+              <string notr="true"/>
+             </property>
              <property name="minimum">
               <number>1</number>
              </property>
@@ -1339,37 +1370,37 @@
               </sizepolicy>
              </property>
              <property name="currentText">
-              <string notr="true">µs</string>
+              <string notr="true">ps</string>
              </property>
              <property name="currentIndex">
-              <number>2</number>
+              <number>0</number>
              </property>
              <property name="maxCount">
               <number>10</number>
              </property>
              <item>
               <property name="text">
-               <string>ps</string>
+               <string notr="true">ps</string>
               </property>
              </item>
              <item>
               <property name="text">
-               <string>ns</string>
+               <string notr="true">ns</string>
               </property>
              </item>
              <item>
               <property name="text">
-               <string>µs</string>
+               <string notr="true">µs</string>
               </property>
              </item>
              <item>
               <property name="text">
-               <string>ms</string>
+               <string notr="true">ms</string>
               </property>
              </item>
              <item>
               <property name="text">
-               <string>s</string>
+               <string notr="true">s</string>
               </property>
              </item>
             </widget>
@@ -1455,6 +1486,9 @@
                <height>16777215</height>
               </size>
              </property>
+             <property name="suffix">
+              <string notr="true"/>
+             </property>
              <property name="maximum">
               <number>100000</number>
              </property>
@@ -1535,6 +1569,9 @@
                <height>0</height>
               </size>
              </property>
+             <property name="suffix">
+              <string notr="true"/>
+             </property>
              <property name="maximum">
               <number>100</number>
              </property>
@@ -1578,11 +1615,14 @@
      <property name="acceptDrops">
       <bool>false</bool>
      </property>
+     <property name="documentTitle">
+      <string notr="true"/>
+     </property>
      <property name="undoRedoEnabled">
       <bool>false</bool>
      </property>
      <property name="html">
-      <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+      <string notr="true">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Ubuntu'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
