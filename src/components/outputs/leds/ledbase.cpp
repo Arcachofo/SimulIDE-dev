@@ -37,7 +37,7 @@ LedBase::LedBase( QString type, QString id )
     Simulator::self()->addToUpdateList( this );
 
     addPropGroup( { tr("Main"), {
-        new StrProp <LedBase>("Color", tr("Color"), ""
+        new StrProp <LedBase>("Color", tr("Color"), getColorList()
                              , this, &LedBase::colorStr, &LedBase::setColorStr,0,"enum" ),
 
         new BoolProp<LedBase>("Grounded", tr("Grounded"), ""
