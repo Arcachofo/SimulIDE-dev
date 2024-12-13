@@ -72,7 +72,6 @@
 #include "i51port.h"
 
 #include "mcs65core.h"
-#include "intmemcore.h"
 
 #include "z80core.h"
 #include "ula_zx48k.h"

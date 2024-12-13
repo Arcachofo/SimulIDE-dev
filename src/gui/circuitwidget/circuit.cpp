@@ -307,7 +307,7 @@ void Circuit::loadStrDoc( QString &doc )
                 }
                 else{
                     if( type == "Frequencimeter" ) type = "FreqMeter";
-                    m_subCircuit= nullptr;  // Subcircuits set this value at
+                    m_subCircuit = nullptr;  // Subcircuits set this value at
                     Component* comp = createItem( type, newUid );
 
                     if( !comp ){ qDebug() << " ERROR Creating Component: "<< type << uid;
