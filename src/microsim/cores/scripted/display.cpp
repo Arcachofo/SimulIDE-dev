@@ -4,6 +4,7 @@
  ***( see copyright.txt file at root folder )*******************************/
 
 #include <QPainter>
+#include <math.h>
 
 #include "display.h"
 #include "simulator.h"
@@ -91,34 +92,32 @@ void Display::clear()
             setPixel( x, y, m_background );
 }
 
-void Display::drawLine( uint x0, uint y0, uint x1, uint y1, int color )
+void Display::drawLine( int x0, int y0, int x1, int y1, int color )
 {
-    if( x0 > x1 ) {
-        uint temp = x0;
-        x0 = x1;
-        x1 = temp;
-    }
-    if( y0 > y1 ) {
-        uint temp = y0;
-        y0 = y1;
-        y1 = temp;
-    }
-    uint xDelta = x1-x0;
-    uint yDelta = y1-y0;
+    int dx = fabs( x1-x0 );
+    int dy = fabs( y1-y0 );
 
-    uint stepY = xDelta ? yDelta/xDelta : yDelta;
-    uint endX  = xDelta ? x1-1 : x1;
+    int stepX = x0 < x1 ? 1 : -1;
+    int stepY = y0 < y1 ? 1 : -1;
 
-    uint y;
-    for( uint x=x0; x<=endX; ++x )
+    int err = dx - dy;
+
+    while( true )
     {
-        if( x >= m_width ) break;
-        for( y=y0; y<=y0+stepY; ++y )
-        {
-            if( y >= m_height ) break;
-            setPixel( x, y, color );
+        setPixel( x0, y0, color );
+
+        if( x0 == x1 && y0 == y1 ) break;
+
+        int e2 = 2 * err;
+
+        if( e2 > -dy ){
+            err -= dy;
+            x0 += stepX;
         }
-        if( yDelta > 0 ) y0 = y;
+        if( e2 < dx ){
+            err += dx;
+            y0 += stepY;
+        }
     }
 }
 

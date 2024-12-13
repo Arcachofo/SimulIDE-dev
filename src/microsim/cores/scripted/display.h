@@ -28,7 +28,7 @@ class Display : public QWidget, public Updatable, public eElement
         void setBackground( int b );
         void setPixel( uint x, uint y, int color );
         void clear();
-        void drawLine( uint x0, uint y0, uint x1, uint y1, int color );
+        void drawLine( int x0, int y0, int x1, int y1, int color );
 
         void setMonitorScale( double scale );
         void setEmbed( bool e ) { m_embed = e; }
