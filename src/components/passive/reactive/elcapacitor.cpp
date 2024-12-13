@@ -42,9 +42,9 @@ void elCapacitor::updateStep()
         update();
 }   }
 
-void elCapacitor::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
+void elCapacitor::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w )
 {
-    Component::paint( p, option, widget );
+    Component::paint( p, o, w );
 
     QPen pen = p->pen();
     pen.setWidth(3);

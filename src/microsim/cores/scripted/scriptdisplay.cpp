@@ -62,10 +62,6 @@ void ScriptDisplay::registerScriptMetods( asIScriptEngine* engine ) // Static: r
                                    , asMETHODPR( ScriptDisplay, setPixel, (uint,uint,int), void)
                                    , asCALL_THISCALL );
 
-    //engine->RegisterObjectMethod("Display", "void setNextPixel(int color)"
-    //                               , asMETHODPR( ScriptDisplay, setNextPixel, (int), void)
-    //                               , asCALL_THISCALL );
-
     engine->RegisterObjectMethod("Display", "void drawLine( int x0, int y0, int x1, int y1, int color )"
                                    , asMETHODPR( ScriptDisplay, drawLine, (int,int,int,int,int), void)
                                    , asCALL_THISCALL );
@@ -88,7 +84,6 @@ void ScriptDisplay::startScript()
     asIScriptEngine* aEngine = m_scriptCpu->engine();
 
     m_clear = aEngine->GetModule(0)->GetFunctionByDecl("void clear()");
-    //m_frameSent    = aEngine->GetModule(0)->GetFunctionByDecl("void frameSent( uint data )");
 }
 
 void ScriptDisplay::initialize()

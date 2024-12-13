@@ -83,11 +83,11 @@ void Ldr::setGamma( double ga )
     m_needUpdate = true;
 }
 
-void Ldr::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
+void Ldr::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w )
 {
     if( m_hidden ) return;
 
-    Component::paint( p, option, widget );
+    Component::paint( p, o, w );
 
     p->drawRect( QRectF(-11,-4.5, 22, 9 ));
     

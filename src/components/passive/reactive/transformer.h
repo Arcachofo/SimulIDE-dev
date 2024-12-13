@@ -49,7 +49,7 @@ class Transformer : public Component, public eElement
         double coupCoeff() { return m_coupCoeff; }
         void setCoupCoeff( double c );
 
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w ) override;
 
     private:
         void setupInducts( winding_t* w );

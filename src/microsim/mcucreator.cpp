@@ -195,8 +195,6 @@ int McuCreator::processFile( QString fileName )
         else if( part == "sleep" )      createSleep( &el );
         else if( part == "configwords") createCfgWord( &el );
         else if( part == "intosc")      createIntOsc( &el );
-        //else if( part == "extmem" )     createExtMem( &el );
-        //else if( part == "intmem" )     createIntMem( &el );
         else if( part == "display" )    createDisplay( &el );
         else if( part == "console" )    m_console = true;
 
@@ -536,13 +534,6 @@ void McuCreator::createIntOsc( QDomElement* p )
 
     if( p->hasAttribute("clockpins") )
     {
-        /* Can be removed ?? Lines before always set intOsc
-        if( !mcu->m_intOsc )
-        {
-            McuIntOsc* intOsc = new McuIntOsc( mcu, "intOsc");
-            mcu->m_modules.emplace_back( intOsc );
-            mcu->m_intOsc = intOsc;
-        }*/
         QStringList pins = p->attribute("clockpins").split(",");
         for( int i=0; i<pins.size(); ++i )
             mcu->m_intOsc->setPin( i, mcu->getMcuPin( pins.value(i) ) );
@@ -561,21 +552,6 @@ void McuCreator::createIoPort( QDomElement* p )
     mcu->m_ioPorts.insert( name, port );
 
     port->createPins( m_mcuComp, p->attribute("pins"), 0xFFFFFFFF );
-
-    /// Scripts register outVectors by now
-    /*QDomNode node = p->firstChild();
-    while( !node.isNull() )
-    {
-        QDomElement el = node.toElement();
-        if( el.tagName() == "outstate" )
-        {
-            uint64_t  time = el.attribute("time").toUInt();
-            uint     state = el.attribute("state").toUInt();
-
-            port->addOutState( time, state );
-        }
-        node = node.nextSibling();
-    }*/
 }
 
 void McuCreator::createMcuPort( QDomElement* p )
@@ -598,7 +574,6 @@ void McuCreator::createMcuPort( QDomElement* p )
     }
     mcu->m_mcuPorts.insert( name, port );
     mcu->m_modules.emplace_back( port );
-    /// if( name.startsWith("C") ) mcu->m_ctrlPort = port;
 
     uint32_t pinMask=0xFFFFFFFF;
     if( p->hasAttribute("pinmask") ) pinMask = p->attribute("pinmask").toUInt( 0, 2 );
