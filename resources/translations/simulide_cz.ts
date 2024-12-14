@@ -49,7 +49,7 @@
     <message>
         <location filename="../../src/gui/appdialogs/about.ui" line="593"/>
         <source>T_Chinese:       </source>
-        <translation type="unfinished"></translation>
+        <translation>Čínština:       </translation>
     </message>
     <message>
         <location filename="../../src/gui/appdialogs/about.ui" line="107"/>
@@ -304,7 +304,7 @@
     <message>
         <location filename="../../src/gui/appdialogs/appdialog.ui" line="808"/>
         <source>Undo Steps</source>
-        <translation type="unfinished"></translation>
+        <translation>Počet kroků zpět</translation>
     </message>
     <message>
         <location filename="../../src/gui/appdialogs/appdialog.ui" line="881"/>
@@ -1633,7 +1633,7 @@ Nemohu najít soubor:
     <message>
         <location filename="../../src/components/other/dial.cpp" line="76"/>
         <source>Body</source>
-        <translation type="unfinished"></translation>
+        <translation>Symbol</translation>
     </message>
     <message>
         <location filename="../../src/components/other/dial.cpp" line="77"/>
@@ -4243,17 +4243,17 @@ Chcete uložit změny?
     <message>
         <location filename="../../src/gui/dataplotwidget/plotbase.cpp" line="90"/>
         <source>Test</source>
-        <translation type="unfinished">Test</translation>
+        <translation>Test</translation>
     </message>
     <message>
         <location filename="../../src/gui/dataplotwidget/plotbase.cpp" line="91"/>
         <source>Test Time</source>
-        <translation type="unfinished"></translation>
+        <translation>Okamžik testu</translation>
     </message>
     <message>
         <location filename="../../src/gui/dataplotwidget/plotbase.cpp" line="94"/>
         <source>Do Test</source>
-        <translation type="unfinished"></translation>
+        <translation>Provedení testu</translation>
     </message>
     <message>
         <location filename="../../src/gui/dataplotwidget/plotbase.cpp" line="80"/>
