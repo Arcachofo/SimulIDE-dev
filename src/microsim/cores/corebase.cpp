@@ -7,7 +7,7 @@
 
 CoreBase::CoreBase()
 {
-    m_display = NULL;
+    m_display = nullptr;
 }
 CoreBase::~CoreBase() {}
 

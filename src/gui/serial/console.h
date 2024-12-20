@@ -10,7 +10,7 @@ class CoreBase;
 class Console : public QPlainTextEdit, public Updatable
 {
     public:
-        Console( CoreBase* cpu, QWidget* parent=NULL );
+        Console( CoreBase* cpu, QWidget* parent=nullptr );
 
         virtual void updateStep() override;
 

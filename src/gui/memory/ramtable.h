@@ -20,7 +20,7 @@ class RamTable : public QWidget, private Ui::RamTable
     Q_OBJECT
 
     public:
-        RamTable( QWidget* parent=0, eMcu* processor=NULL, bool cpuMonitor=false );
+        RamTable( QWidget* parent=0, eMcu* processor=nullptr, bool cpuMonitor=false );
 
         void updateValues();
 
@@ -28,7 +28,7 @@ class RamTable : public QWidget, private Ui::RamTable
         void addRegister( QString name, QString type );
 
         void setDebugger( BaseDebugger* deb ) { m_debugger = deb; }
-        void remDebugger( BaseDebugger* deb ) { if( m_debugger == deb ) m_debugger = NULL; }
+        void remDebugger( BaseDebugger* deb ) { if( m_debugger == deb ) m_debugger = nullptr; }
 
         void setVariables( QStringList vars );
         void addVariable( QString name, int address, QString type );

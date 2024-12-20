@@ -13,9 +13,9 @@ eIou::eIou( Mcu* comp, QString id )
 {
     m_component = comp;
 
-    m_cpu     = NULL;
-    m_clkPin  = NULL;
-    m_watcher = NULL;
+    m_cpu     = nullptr;
+    m_clkPin  = nullptr;
+    m_watcher = nullptr;
 }
 eIou::~eIou()
 {}
@@ -28,8 +28,8 @@ IoPort* eIou::getIoPort( QString name )
 
 IoPin* eIou::getIoPin( QString pinName )
 {
-    if( pinName.isEmpty() ) return NULL;
-    IoPin* pin = NULL;
+    if( pinName.isEmpty() ) return nullptr;
+    IoPin* pin = nullptr;
 
     for( IoPort* port : m_ioPorts )
     {
@@ -41,5 +41,5 @@ IoPin* eIou::getIoPin( QString pinName )
 
 void eIou::createWatcher( CpuBase* cpu )
 {
-    if( !m_watcher ) m_watcher = new Watcher( NULL, cpu );
+    if( !m_watcher ) m_watcher = new Watcher( nullptr, cpu );
 }

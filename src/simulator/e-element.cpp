@@ -10,8 +10,8 @@
 eElement::eElement( QString id )
 {
     m_elmId = id;
-    nextChanged = NULL;
-    nextEvent  = NULL;
+    nextChanged = nullptr;
+    nextEvent  = nullptr;
     eventTime = 0;
     m_pendingTime = 0;
     added = false;
@@ -32,7 +32,7 @@ void eElement::setNumEpins( int n )
     m_ePin.resize(n);
     for( int i=0; i<n; ++i )
     {
-        if( m_ePin[i] == NULL )
+        if( m_ePin[i] == nullptr )
             m_ePin[i] = new ePin( m_elmId+"-ePin"+QString::number(i), i );
 }   }
 

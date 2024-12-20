@@ -64,8 +64,8 @@ bool Node::checkRemove() // Only remove if there are less than 3 connectors
             Pin* coPin = m_pin[i]->conPin();
             if( coPin->component() == this ) // Connector betwen 2 Pins of this node
             {
-                co->setStartPin( NULL );
-                co->setEndPin( NULL );
+                co->setStartPin( nullptr );
+                co->setEndPin( nullptr );
                 Circuit::self()->removeConnector( co );
                 continue;
             }
@@ -124,12 +124,12 @@ void Node::joinConns( int c0, int c1 )
         con->closeCon( pin1->conPin() );
         if( this->isSelected() ) con->setSelected( true );
     }
-    con0->setStartPin( NULL );
-    con0->setEndPin( NULL );
+    con0->setStartPin( nullptr );
+    con0->setEndPin( nullptr );
     Circuit::self()->removeConnector( con0 );
 
-    con1->setStartPin( NULL );
-    con1->setEndPin( NULL );
+    con1->setStartPin( nullptr );
+    con1->setEndPin( nullptr );
     Circuit::self()->removeConnector( con1 );
 }
 

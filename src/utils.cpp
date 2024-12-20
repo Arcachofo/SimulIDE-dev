@@ -116,7 +116,7 @@ QString changeExt( QString filepath, QString ext )
 
 QString getDirDialog( QString msg, QString oldPath )
 {
-    QString path = QFileDialog::getExistingDirectory( NULL
+    QString path = QFileDialog::getExistingDirectory( nullptr
                          , msg
                          , oldPath
                          , QFileDialog::ShowDirsOnly

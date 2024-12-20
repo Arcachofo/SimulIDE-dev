@@ -35,8 +35,8 @@ CircuitWidget::CircuitWidget( QWidget *parent  )
     setObjectName( "CircuitWidget" );
     m_pSelf = this;
 
-    m_appPropW = NULL;
-    m_about = NULL;
+    m_appPropW = nullptr;
+    m_about = nullptr;
 
     m_verticalLayout.setObjectName( "verticalLayout" );
     m_verticalLayout.setContentsMargins(0, 0, 0, 0);
@@ -88,10 +88,10 @@ void CircuitWidget::clear()
 {
     if( m_appPropW )
     {
-        m_appPropW->setParent( NULL );
+        m_appPropW->setParent( nullptr );
         m_appPropW->close();
         m_appPropW->deleteLater();
-        m_appPropW = NULL;
+        m_appPropW = nullptr;
     }
     m_circView.clear();
     m_infoWidget->setCircTime( 0 );

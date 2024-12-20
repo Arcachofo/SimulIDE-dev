@@ -13,7 +13,7 @@ eClockedDevice::eClockedDevice( QString id )
               : eElement( id )
 {
     m_clock   = false;
-    m_clkPin  = NULL;
+    m_clkPin  = nullptr;
     m_trigger = Clock;
 }
 eClockedDevice::~eClockedDevice(){}

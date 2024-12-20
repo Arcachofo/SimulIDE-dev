@@ -13,7 +13,7 @@ ScriptDisplay::ScriptDisplay( int w, int h, QString name, QWidget* parent )
              : Display( w, h, name, parent )
              , ScriptPerif( name )
 {
-    m_clear = NULL;
+    m_clear = nullptr;
 
     m_type = "Display";
 

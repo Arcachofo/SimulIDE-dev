@@ -48,7 +48,7 @@ Potentiometer::Potentiometer( QString type, QString id )
     m_area     = m_areaComp;
     m_graphical = true;
 
-    m_midEnode = NULL;
+    m_midEnode = nullptr;
 
     m_pin.resize(3);
     m_pin[0] = &m_pinA;

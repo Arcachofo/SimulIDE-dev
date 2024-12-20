@@ -25,7 +25,7 @@ PropDialog::PropDialog( QWidget* parent, QString help )
     setupUi( this );
     //this->setWindowFlags( Qt::Dialog | Qt::WindowTitleHint );
 
-    m_component = NULL;
+    m_component = nullptr;
 
     m_helpExpanded = false;
     mainLayout->removeWidget( helpText );
@@ -97,7 +97,7 @@ void PropDialog::setComponent( CompBase* comp, bool isComp )
                     continue;
                 }
                 QString type = prop->type();
-                PropVal* mp = NULL;
+                PropVal* mp = nullptr;
 
                 if     ( type == "double"  ) mp = new NumVal( this, comp, prop );
                 else if( type == "color"   ) mp = new ColorVal( this, comp, prop );

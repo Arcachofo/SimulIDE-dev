@@ -10,8 +10,8 @@ ePin::ePin( QString id, int index )
 {
     m_id    = id;
     m_index = index;
-    m_enode = NULL;
-    m_enodeComp = NULL;
+    m_enode = nullptr;
+    m_enodeComp = nullptr;
     m_inverted = false;
 }
 ePin::~ePin()

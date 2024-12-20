@@ -11,8 +11,8 @@ McuSpi::McuSpi( eMcu* mcu, QString name )
       : McuPrescaled( mcu, name )
       , SpiModule( mcu->getId()+"-"+name )
 {
-    m_dataReg = NULL;
-    m_statReg = NULL;
+    m_dataReg = nullptr;
+    m_statReg = nullptr;
 }
 
 McuSpi::~McuSpi()

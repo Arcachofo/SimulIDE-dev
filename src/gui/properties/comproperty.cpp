@@ -15,7 +15,7 @@ ComProperty::ComProperty( QString name, QString caption, QString unit, QString t
     m_type  = type;
     m_flags = flags;
 
-    //m_widget = NULL;
+    //m_widget = nullptr;
 }
 QString ComProperty::name() { return m_name; }
 QString ComProperty::capt() { return m_capt; }

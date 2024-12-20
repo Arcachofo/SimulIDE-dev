@@ -21,8 +21,8 @@ ConnectorLine::ConnectorLine( int x1, int y1, int x2, int y2, Connector* connect
 {
     m_pConnector = connector;
     
-    m_prevLine = NULL;
-    m_nextLine = NULL;
+    m_prevLine = nullptr;
+    m_nextLine = nullptr;
 
     m_p1X = x1;
     m_p1Y = y1;

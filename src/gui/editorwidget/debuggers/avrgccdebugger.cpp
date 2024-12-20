@@ -64,7 +64,7 @@ bool AvrGccDebugger::getVariables()
     m_outPane->appendText( "\nSearching for variables... " );
     objdump = addQuotes( objdump );
 
-    QProcess getBss( NULL );      // Get var addresses from .bss section
+    QProcess getBss( nullptr );      // Get var addresses from .bss section
     QString command  = objdump+" -t -j.bss "+m_elfPath;
     getBss.start( command );
     getBss.waitForFinished(-1);
@@ -131,7 +131,7 @@ bool AvrGccDebugger::getFunctions()
     m_outPane->appendText( "\nSearching for Functions... " );
     readelf = addQuotes( readelf );
 
-    QProcess getFunctions( NULL );      //
+    QProcess getFunctions( nullptr );      //
     QString command  = readelf+" -s "+m_elfPath;
     getFunctions.start( command );
     getFunctions.waitForFinished(-1);

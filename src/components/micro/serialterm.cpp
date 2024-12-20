@@ -40,7 +40,7 @@ LibraryItem* SerialTerm::libraryItem()
 
 SerialTerm::SerialTerm( QString type, QString id )
           : Component( type, id )
-          , UsartModule( NULL, id+"-Uart" )
+          , UsartModule( nullptr, id+"-Uart" )
           , eElement( (id+"-eElement") )
 {
     m_graphical = true;

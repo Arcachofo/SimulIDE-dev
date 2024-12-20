@@ -11,9 +11,9 @@ McuEeprom::McuEeprom( eMcu* mcu, QString name )
          : McuModule( mcu, name )
          , eElement( mcu->getId()+"-"+name )
 {
-    m_addressL = NULL;
-    m_addressH = NULL;
-    m_dataReg  = NULL;
+    m_addressL = nullptr;
+    m_addressH = nullptr;
+    m_dataReg  = nullptr;
 }
 
 McuEeprom::~McuEeprom()

@@ -19,7 +19,7 @@ class ePin
         ePin( QString id, int index );
         virtual ~ePin();
 
-        bool isConnected() { return (m_enode!=NULL); }
+        bool isConnected() { return (m_enode!=nullptr); }
 
         virtual double getVoltage();
 

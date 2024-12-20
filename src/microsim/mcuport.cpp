@@ -19,9 +19,9 @@ McuPort::McuPort( eMcu* mcu, QString name )
 
     m_shortName = "P"+ name.right(1);
 
-    m_outReg = NULL;
-    m_dirReg = NULL;
-    m_inReg  = NULL;
+    m_outReg = nullptr;
+    m_dirReg = nullptr;
+    m_inReg  = nullptr;
 
     m_intMask = 0;
     m_outAddr = 0;
@@ -176,7 +176,7 @@ McuPin* McuPort::getPinN( uint8_t i )
 
 McuPin* McuPort::getPin( QString pinName )
 {
-    McuPin* pin = NULL;
+    McuPin* pin = nullptr;
 
     if( pinName.startsWith( m_name ) || pinName.startsWith( m_shortName ) )
     {

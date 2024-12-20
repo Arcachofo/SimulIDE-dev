@@ -16,12 +16,12 @@ eNode::eNode( QString id )
     m_id = id;
     m_nodeNum = 0;
 
-    m_voltChEl     = NULL;
-    m_nonLinEl     = NULL;
-    m_firstAdmit   = NULL;
-    m_firstSingAdm = NULL;
-    m_firstCurrent = NULL;
-    m_nodeAdmit    = NULL;
+    m_voltChEl     = nullptr;
+    m_nonLinEl     = nullptr;
+    m_firstAdmit   = nullptr;
+    m_firstSingAdm = nullptr;
+    m_firstCurrent = nullptr;
+    m_nodeAdmit    = nullptr;
 
     if( !id.isEmpty() ) Simulator::self()->addToEnodeList( this );
 }
@@ -44,26 +44,26 @@ void eNode::initialize()
     m_currChanged  = false;
     m_admitChanged = false;
     m_nodeGroup = -1;
-    nextCH = NULL;
+    nextCH = nullptr;
     m_volt = 0;
 
     clearElmList( m_voltChEl );
-    m_voltChEl = NULL;
+    m_voltChEl = nullptr;
 
     clearElmList( m_nonLinEl );
-    m_nonLinEl = NULL;
+    m_nonLinEl = nullptr;
 
     clearConnList( m_firstAdmit );
-    m_firstAdmit = NULL;
+    m_firstAdmit = nullptr;
 
     clearConnList( m_firstSingAdm );
-    m_firstSingAdm = NULL;
+    m_firstSingAdm = nullptr;
 
     clearConnList( m_firstCurrent );
-    m_firstCurrent = NULL;
+    m_firstCurrent = nullptr;
 
     clearConnList( m_nodeAdmit );
-    m_nodeAdmit = NULL;
+    m_nodeAdmit = nullptr;
 
     m_nodeList.clear();
 }
@@ -113,7 +113,7 @@ void eNode::addSingAdm( ePin* epin, int node, double admit )
     m_firstSingAdm = conn;
     conn->value = admit;
 
-    conn = NULL;
+    conn = nullptr;
     Connection* first = m_nodeAdmit;   // Create list of admitances to nodes (reusing Connection class)
     while( first ){
         if( first->node == node )  { conn = first; break; }// Node already in the list
@@ -289,8 +289,8 @@ void eNode::remEpin( ePin* epin )
 void eNode::clear()
 {
     for( ePin* epin : m_ePinList ){
-        epin->setEnode( NULL );
-        epin->setEnodeComp( NULL );
+        epin->setEnode( nullptr );
+        epin->setEnodeComp( nullptr );
 }   }
 
 QList<int> eNode::getConnections()
@@ -312,8 +312,8 @@ void eNode::voltChangedCallback( eElement* el )
 void eNode::remFromChangedCallback( eElement* el )
 {
     CallBackElement* changed = m_voltChEl;
-    CallBackElement* last  = NULL;
-    CallBackElement* next  = NULL;
+    CallBackElement* last  = nullptr;
+    CallBackElement* next  = nullptr;
 
     while( changed ){
         next = changed->next;
@@ -321,7 +321,7 @@ void eNode::remFromChangedCallback( eElement* el )
         {
             if( last ) last->next = next;
             else       m_voltChEl = next;
-            delete changed;//changed->next = NULL;
+            delete changed;//changed->next = nullptr;
         }
         else last = changed;
         changed = next;

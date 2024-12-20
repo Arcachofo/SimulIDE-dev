@@ -10,7 +10,7 @@ McuVref::McuVref( eMcu* mcu, QString name )
        : McuModule( mcu, name )
        , eElement( mcu->getId()+"-"+name )
 {
-    m_pinOut = NULL;
+    m_pinOut = nullptr;
 }
 McuVref::~McuVref(){}
 

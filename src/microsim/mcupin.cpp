@@ -20,7 +20,7 @@ McuPin::McuPin( McuPort* port, int i, QString id, Component* mcu )
 
     m_pinMask = 1<<i;
 
-    m_extInt = NULL;
+    m_extInt = nullptr;
     m_extIntTrigger = pinLow;
 
     m_outState = false;

@@ -13,8 +13,8 @@ McuAdc::McuAdc( eMcu* mcu, QString name )
       : McuPrescaled( mcu, name )
       , eElement( mcu->getId()+"-"+name )
 {
-    m_ADCL = NULL;
-    m_ADCH = NULL;
+    m_ADCL = nullptr;
+    m_ADCH = nullptr;
 
     m_fixedVref = 0;
 }

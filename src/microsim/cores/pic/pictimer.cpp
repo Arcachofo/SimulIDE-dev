@@ -15,7 +15,7 @@ McuTimer* PicTimer::createTimer( eMcu* mcu, QString name, int type  ) // Static
     //else if( type == 821 ) return new AvrTimer821( mcu, name );
     else if( type == 160 ) return new PicTimer160( mcu, name );
     else if( type == 161 ) return new PicTimer161( mcu, name );
-    return NULL;
+    return nullptr;
 }
 
 PicTimer::PicTimer(  eMcu* mcu, QString name )
@@ -39,7 +39,7 @@ void PicTimer::initialize()
 
 McuOcUnit* PicTimer::getOcUnit( QString name )
 {
-    return NULL;
+    return nullptr;
 }*/
 
 void PicTimer::configureA( uint8_t val )

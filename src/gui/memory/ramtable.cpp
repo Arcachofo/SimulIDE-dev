@@ -27,7 +27,7 @@ RamTable::RamTable( QWidget* parent, eMcu* processor ,bool cpuMonitor )
 
     m_processor = processor;
     m_cpuMonitor = cpuMonitor;
-    m_debugger  = NULL;
+    m_debugger  = nullptr;
     m_numRegs   = 60;
     m_loadingVars = false;
 
@@ -289,7 +289,7 @@ uint16_t RamTable::getCurrentAddr()
     if( row < 0 ) return 0;
     QString text = table->item( row, 0 )->text();
     if( text == "---" ) return -1;
-    return  text.toUInt(NULL,16);
+    return  text.toUInt(nullptr,16);
 }
 
 void RamTable::updateItems()

@@ -12,7 +12,7 @@ class CustomButton : public QToolButton
 {
     Q_OBJECT
     public:
-        CustomButton( QWidget* parent=NULL );
+        CustomButton( QWidget* parent=nullptr );
 
     private:
         virtual void paintEvent( QPaintEvent* ) override;

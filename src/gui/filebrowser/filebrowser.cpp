@@ -13,7 +13,7 @@
 #include "editorwindow.h"
 #include "componentlist.h"
 
-FileBrowser* FileBrowser::m_pSelf = NULL;
+FileBrowser* FileBrowser::m_pSelf = nullptr;
 
 FileBrowser::FileBrowser( QWidget *parent ) 
            : QTreeView( parent )

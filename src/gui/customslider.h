@@ -12,7 +12,7 @@ class CustomSlider : public QSlider
 {
     Q_OBJECT
     public:
-        CustomSlider( QWidget* parent=NULL );
+        CustomSlider( QWidget* parent=nullptr );
 
     private:
         virtual void paintEvent( QPaintEvent* ) override;

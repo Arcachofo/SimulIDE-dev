@@ -10,11 +10,11 @@ McuDac::McuDac( eMcu* mcu, QString name )
       : McuModule( mcu, name )
       , eElement( mcu->getId()+"-"+name )
 {
-    m_dacReg = NULL;
+    m_dacReg = nullptr;
 
-    m_pRefPin = NULL;
-    m_nRefPin = NULL;
-    m_outPin  = NULL;
+    m_pRefPin = nullptr;
+    m_nRefPin = nullptr;
+    m_outPin  = nullptr;
 }
 McuDac::~McuDac(){}
 

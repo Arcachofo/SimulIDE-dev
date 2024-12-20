@@ -42,7 +42,7 @@ class McuTimer : public McuPrescaled, public eElement
         virtual void updtCount( uint8_t val=0 );
 
         virtual void addOcUnit( McuOcUnit* ocUnit ) { m_ocUnit.emplace_back( ocUnit ); }
-        virtual McuOcUnit* getOcUnit( QString name ) {return NULL;}
+        virtual McuOcUnit* getOcUnit( QString name ) {return nullptr;}
 
         virtual McuIcUnit* getIcUnit() { return m_ICunit; }
 

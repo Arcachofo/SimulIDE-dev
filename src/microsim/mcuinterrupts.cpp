@@ -19,8 +19,8 @@ Interrupt::Interrupt( QString name, uint16_t vector, eMcu* mcu )
     m_wakeup = 0;
     m_autoClear = true;
     m_remember  = true;      /// Remember by deafult: find out exceptions
-    m_nextInt = NULL;
-    m_intPin  = NULL;
+    m_nextInt = nullptr;
+    m_intPin  = nullptr;
 
     m_ram = mcu->getRam();
 }
@@ -148,9 +148,9 @@ void Interrupts::resetInts()
 {
     m_enabled = 0;
     m_reti    = false;
-    m_active  = NULL;
-    m_pending = NULL;
-    m_running = NULL;
+    m_active  = nullptr;
+    m_pending = nullptr;
+    m_running = nullptr;
 
     for( QString inte : m_intList.keys() ) m_intList.value( inte )->reset();
 }
@@ -172,7 +172,7 @@ void Interrupts::runInterrupts()
         }
         else{
             if( m_active->isContinuous() && m_active->raised() ) addToPending( m_active );
-            m_active = NULL;
+            m_active = nullptr;
         }
         writeGlobalFlag( 1 );                   // Enable Global Interrupts
         return;
@@ -215,7 +215,7 @@ void Interrupts::remove()
 
 void Interrupts::addToPending( Interrupt* newInt )
 {
-    Interrupt* preInt = NULL;
+    Interrupt* preInt = nullptr;
     Interrupt* posInt = m_pending;
     while( posInt )
     {
@@ -236,7 +236,7 @@ void Interrupts::addToPending( Interrupt* newInt )
 
 void Interrupts::remFromPending( Interrupt* remInt )
 {
-    Interrupt* preInt = NULL;
+    Interrupt* preInt = nullptr;
     Interrupt* posInt = m_pending;
     while( posInt )
     {

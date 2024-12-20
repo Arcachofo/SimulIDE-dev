@@ -26,7 +26,7 @@
 
 #define tr(str) QCoreApplication::translate("CircuitView",str)
 
-CircuitView*  CircuitView::m_pSelf = NULL;
+CircuitView*  CircuitView::m_pSelf = nullptr;
 
 CircuitView::CircuitView( QWidget *parent )
            : QGraphicsView( parent )
@@ -38,8 +38,8 @@ CircuitView::CircuitView( QWidget *parent )
 
     m_scale = 1;
     m_help = "";
-    m_circuit   = NULL;
-    m_enterItem = NULL;
+    m_circuit   = nullptr;
+    m_enterItem = nullptr;
 
     //viewport()->setFixedSize( 3200, 2400 );
     bool scrollBars = MainWindow::self()->settings()->value( "Circuit/showScroll" ).toBool();
@@ -67,7 +67,7 @@ void CircuitView::clear()
     setScene( m_circuit );
     resetMatrix();
     m_scale = 1;
-    m_enterItem = NULL;
+    m_enterItem = nullptr;
     centerOn( 0, 0 );
 }
 
@@ -94,7 +94,7 @@ void CircuitView::wheelEvent( QWheelEvent* event )
 
 void CircuitView::dragEnterEvent( QDragEnterEvent* event )
 {
-    m_enterItem = NULL;
+    m_enterItem = nullptr;
 
     QString text  = event->mimeData()->text();
 
@@ -136,7 +136,7 @@ void CircuitView::dragLeaveEvent( QDragLeaveEvent* event )
 
     m_circuit->removeComp( m_enterItem );
     Circuit::self()->removeLastUndo();
-    m_enterItem = NULL;
+    m_enterItem = nullptr;
 }
 
 void CircuitView::mousePressEvent( QMouseEvent* event )

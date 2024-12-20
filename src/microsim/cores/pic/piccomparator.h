@@ -22,7 +22,7 @@ class PicComp : public McuComp
  static PicComp* createComparator( eMcu* mcu, QString name, int type );
 
     protected:
-        void connect( McuPin* pinN, McuPin* pinP=NULL, McuPin* pinOut=NULL );
+        void connect( McuPin* pinN, McuPin* pinP=nullptr, McuPin* pinOut=nullptr );
 
         bool m_inv;
 

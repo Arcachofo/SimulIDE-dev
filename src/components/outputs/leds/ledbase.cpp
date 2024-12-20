@@ -103,7 +103,7 @@ void LedBase::setGrounded( bool grounded )
     pin1->setEnabled( !grounded );
     pin1->setVisible( !grounded );
     if( grounded ) pin1->removeConnector();
-    else           pin1->setEnode( NULL );
+    else           pin1->setEnode( nullptr );
 }
 
 void LedBase::setColorStr( QString color )

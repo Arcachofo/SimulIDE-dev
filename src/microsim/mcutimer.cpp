@@ -17,10 +17,10 @@ McuTimer::McuTimer( eMcu* mcu, QString name )
 {
     m_number = name.right(1).toInt();
 
-    m_clockPin = NULL;
-    m_countL = NULL;
-    m_countH = NULL;
-    m_ICunit = NULL;
+    m_clockPin = nullptr;
+    m_countL = nullptr;
+    m_countH = nullptr;
+    m_ICunit = nullptr;
     McuTimer::initialize();
 }
 

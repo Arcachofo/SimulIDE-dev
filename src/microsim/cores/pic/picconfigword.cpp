@@ -20,7 +20,7 @@ ConfigWord* PicConfigWord::createCfgWord( eMcu* mcu, QString name, QString type 
     else if( type == "02" ) return new PicConfigWord02( mcu, name ); // 16F87x
     else if( type == "03" ) return new PicConfigWord03( mcu, name ); // 10F20x
     else if( type == "04" ) return new PicConfigWord04( mcu, name ); // 16F182x
-    return NULL;
+    return nullptr;
 }
 
 PicConfigWord::PicConfigWord( eMcu* mcu, QString name )

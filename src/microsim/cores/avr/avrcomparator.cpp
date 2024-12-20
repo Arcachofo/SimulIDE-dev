@@ -73,7 +73,7 @@ void AvrComp::configureC( uint8_t newACOE ) // mega328PB
     if( m_pins.size() < 3 ) return;
 
     if( newACOE ) m_pinOut = m_pins[2];
-    else          m_pinOut = NULL;
+    else          m_pinOut = nullptr;
     m_pins[2]->controlPin( newACOE, newACOE );
 
     m_acoe = newACOE;

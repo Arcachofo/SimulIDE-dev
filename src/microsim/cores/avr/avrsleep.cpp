@@ -21,7 +21,7 @@ void AvrSleep::setup()
     m_SM = getRegBits("SM0,SM1,SM2", m_mcu );
     m_SE = getRegBits("SE", m_mcu );
 
-    //Interrupt* inte = NULL;
+    //Interrupt* inte = nullptr;
 
     //m_wakeUps.emplace_back( m_mcu->watchDog()->getInterrupt() );
 }

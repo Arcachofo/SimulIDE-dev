@@ -15,7 +15,7 @@ DialWidget::DialWidget( QWidget* parent )
 {
     m_size = 24;
     m_scale = 1;
-    m_slider = NULL;
+    m_slider = nullptr;
 
     m_knob = new CustomDial( this );
     m_dial = m_knob;

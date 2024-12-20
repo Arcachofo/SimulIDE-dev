@@ -21,7 +21,7 @@ class Watcher : public QWidget, private Ui::Watcher
     Q_OBJECT
 
     public:
-        Watcher( QWidget* parent=0, CoreBase* cpu=NULL );
+        Watcher( QWidget* parent=0, CoreBase* cpu=nullptr );
 
         void updateValues();
 

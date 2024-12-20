@@ -10,12 +10,12 @@
 SpiModule::SpiModule( QString name )
          : eClockedDevice( name )
 {
-    m_MOSI = NULL;
-    m_MISO = NULL;
-    m_SS   = NULL;
+    m_MOSI = nullptr;
+    m_MISO = nullptr;
+    m_SS   = nullptr;
 
-    m_dataOutPin = NULL;
-    m_dataInPin  = NULL;
+    m_dataOutPin = nullptr;
+    m_dataInPin  = nullptr;
 }
 SpiModule::~SpiModule( ){}
 
@@ -141,8 +141,8 @@ void SpiModule::setMode( spiMode_t mode )
     if( mode == m_mode ) return;
     m_mode = mode;
 
-    m_dataOutPin = NULL;
-    m_dataInPin  = NULL;
+    m_dataOutPin = nullptr;
+    m_dataInPin  = nullptr;
 
     if( mode == SPI_OFF )
     {

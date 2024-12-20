@@ -29,7 +29,7 @@ PlotDisplay::PlotDisplay( QWidget* parent )
         m_vMaxVal[i] = 5;
         m_vMinVal[i] = 0;
         m_vMin[i] = 0;
-        m_channel[i] = NULL;
+        m_channel[i] = nullptr;
         m_hideCh[i] = false;
     }
     m_sizeX = 135;

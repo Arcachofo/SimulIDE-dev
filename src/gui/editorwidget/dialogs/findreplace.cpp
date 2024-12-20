@@ -11,7 +11,7 @@ FindReplace::FindReplace( QWidget* parent )
            : QDialog( parent )
 {
     setupUi(this);
-    m_editor = NULL;
+    m_editor = nullptr;
 }
 
 void FindReplace::on_prevButton_clicked()

@@ -21,7 +21,7 @@ Watcher::Watcher( QWidget* parent, CoreBase* cpu )
     setupUi(this);
 
     m_core = cpu;
-    m_console= NULL;
+    m_console= nullptr;
     m_header = false;
 
     QFont font;

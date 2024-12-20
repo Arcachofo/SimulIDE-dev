@@ -44,7 +44,7 @@ void ShieldSubc::setBoard( BoardSubc* board )
 
 void ShieldSubc::connectBoard()
 {
-    m_parentBoard = NULL;
+    m_parentBoard = nullptr;
     if( m_boardId == "" ) return;
 
     QString name = Circuit::self()->origId( m_boardId );
@@ -99,8 +99,8 @@ void ShieldSubc::slotDetach()
     this->moveTo( this->scenePos()+QPointF( 8,-8 ) );
     m_parentBoard->detachShield( this );
     m_boardId = "";
-    m_parentBoard = NULL;
-    setParentItem( NULL );
+    m_parentBoard = nullptr;
+    setParentItem( nullptr );
     Circuit::self()->compList()->append( this );
     renameTunnels();
 }

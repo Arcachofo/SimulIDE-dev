@@ -155,7 +155,7 @@ void SubPackage::setSubcTypeStr( QString s )
         Circuit::self()->setBoard( this );
         m_isBoard = true;
     }
-    else if( currentBoard == this ) Circuit::self()->setBoard( NULL );
+    else if( currentBoard == this ) Circuit::self()->setBoard( nullptr );
 
     m_subcType = s;
 
@@ -354,7 +354,7 @@ void SubPackage::editPin()
     if( !m_eventPin ) return;
     m_angle = m_eventPin->pinAngle();
 
-    EditDialog* editDialog = new EditDialog( this, m_eventPin, NULL );
+    EditDialog* editDialog = new EditDialog( this, m_eventPin, nullptr );
     QObject::connect( editDialog, &EditDialog::finished, [=](int r){ editFinished(r); } );
 
     editDialog->exec();
@@ -374,7 +374,7 @@ void SubPackage::deleteEventPin()
     m_pkgePins.removeOne( m_eventPin );
 
     delete m_eventPin;
-    m_eventPin = NULL;
+    m_eventPin = nullptr;
     
     Circuit::self()->update();
 }

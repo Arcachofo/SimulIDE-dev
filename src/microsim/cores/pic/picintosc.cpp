@@ -17,7 +17,7 @@ PicIntOsc* PicIntOsc::createIntOsc( eMcu* mcu, QString name, QString type )
     else if( type == "00" ) return new PicIntOsc00( mcu, name ); //
     else if( type == "01" ) return new PicIntOsc01( mcu, name ); // 16F627
     else if( type == "02" ) return new PicIntOsc02( mcu, name ); // 16F1825
-    return NULL;
+    return nullptr;
 }
 
 PicIntOsc::PicIntOsc( eMcu* mcu, QString name )

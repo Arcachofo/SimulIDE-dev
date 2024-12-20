@@ -14,7 +14,7 @@ class Pin;
 class Connector : public CompBase
 {
     public:
-        Connector( QString type, QString id, Pin* startpin, Pin* endpin = NULL );
+        Connector( QString type, QString id, Pin* startpin, Pin* endpin = nullptr );
         ~Connector();
 
         QString pListStr() { return m_pointList.join(","); }

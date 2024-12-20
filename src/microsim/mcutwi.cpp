@@ -10,9 +10,9 @@ McuTwi::McuTwi( eMcu* mcu, QString name )
       : McuPrescaled( mcu, name )
       , TwiModule( mcu->getId()+"-"+name )
 {
-    m_dataReg = NULL;
-    m_addrReg = NULL;
-    m_statReg = NULL;
+    m_dataReg = nullptr;
+    m_addrReg = nullptr;
+    m_statReg = nullptr;
 }
 
 McuTwi::~McuTwi()

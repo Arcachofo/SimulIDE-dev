@@ -16,17 +16,17 @@
 #include "e_mcu.h"
 #include "utils.h"
 
-eMcu* MemData::m_eMcu = NULL;
+eMcu* MemData::m_eMcu = nullptr;
 
 MemData::MemData()
 {
-    m_memTable = NULL;
+    m_memTable = nullptr;
 }
 MemData::~MemData()
 {
     if( !m_memTable ) return;
 
-    m_memTable->setParent( NULL );
+    m_memTable->setParent( nullptr );
     m_memTable->deleteLater();
 }
 
@@ -46,7 +46,7 @@ bool MemData::loadData( QVector<int>* toData, bool resize, int bits )
     Simulator::self()->pauseSim();
 
     QString dir = changeExt( Circuit::self()->getFilePath(), ".data" );
-    QString fileName = QFileDialog::getOpenFileName( NULL,
+    QString fileName = QFileDialog::getOpenFileName( nullptr,
                                                     "MemData::loadData", dir,
                        simulideTr( "MemData", "All files (*.*);;.data (*.data);;.bin (*.bin)"));
 
@@ -73,7 +73,7 @@ bool MemData::loadFile( QVector<int>* toData, QString file, bool resize, int bit
           || ext == ".ihx" )  ok = loadHex( toData, file, resize, bits ); // Intel Hex Format
     else                      ok = loadBin( toData, file, resize, bits ); // Binary Format
 
-    m_eMcu = NULL;
+    m_eMcu = nullptr;
     return ok;
 }
 
@@ -250,7 +250,7 @@ void MemData::saveData( QVector<int>* data, int bits )
 
     QString dir = changeExt( Circuit::self()->getFilePath(), ".data" );
 
-    QString fileName = QFileDialog::getSaveFileName( NULL,
+    QString fileName = QFileDialog::getSaveFileName( nullptr,
                        simulideTr( "MemData", "Save Data" ), dir,
                        simulideTr( "MemData", "All files (*.*);;.data (*.data);;.bin (*.bin)"));
 
@@ -274,7 +274,7 @@ void MemData::saveData( QVector<int>* data, int bits )
         }
         if( !outFile.open( QFile::WriteOnly | QFile::Text ) )
         {
-             QMessageBox::warning(NULL, "MemData::saveData",
+             QMessageBox::warning(nullptr, "MemData::saveData",
              simulideTr( "MemData", "Cannot write file %1:\n%2.").arg(fileName).arg(outFile.errorString()));
         }else{
             QTextStream toFile( &outFile );
@@ -285,7 +285,7 @@ void MemData::saveData( QVector<int>* data, int bits )
     {
         if( !outFile.open( QFile::WriteOnly ) )
         {
-              QMessageBox::warning(NULL, "MemData::saveData",
+              QMessageBox::warning(nullptr, "MemData::saveData",
               simulideTr( "MemData", "Cannot write file %1:\n%2.").arg(fileName).arg(outFile.errorString()));
         }else{
             for( int val : *data ){

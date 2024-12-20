@@ -18,13 +18,13 @@ AvrCore::AvrCore( eMcu* mcu )
        : McuCpu( mcu )
 {
     if( mcu->regExist("EIND") ) EIND = m_mcu->getReg( "EIND" );
-    else EIND = NULL;
+    else EIND = nullptr;
     if( mcu->regExist("RAMPZ") )
     {
         RAMPZ = m_mcu->getReg( "RAMPZ" );
         m_rampzAddr = m_mcu->getRegAddress( "RAMPZ" );
     }
-    else RAMPZ = NULL;
+    else RAMPZ = nullptr;
 
     m_retCycles = 4; // In AVR only used for Jump to ISR
 }

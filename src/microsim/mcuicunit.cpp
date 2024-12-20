@@ -13,10 +13,10 @@ McuIcUnit::McuIcUnit( eMcu* mcu, QString name )
          : McuModule( mcu, name )
          , eElement( mcu->getId()+"-"+name )
 {
-    m_timer  = NULL;
-    m_icPin  = NULL;
-    m_icRegL = NULL;
-    m_icRegH = NULL;
+    m_timer  = nullptr;
+    m_icPin  = nullptr;
+    m_icRegL = nullptr;
+    m_icRegH = nullptr;
 }
 McuIcUnit::~McuIcUnit( ){}
 

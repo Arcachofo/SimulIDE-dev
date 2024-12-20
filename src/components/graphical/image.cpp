@@ -39,7 +39,7 @@ Image::Image( QString type, QString id )
     m_vSize = 80;
     m_area = QRectF(-40,-40, 80, 80 );
 
-    m_movie = NULL;
+    m_movie = nullptr;
 
     addPropGroup( {"Hidden", {
         new StrProp<Image>("Image_File", tr("Image File"),""

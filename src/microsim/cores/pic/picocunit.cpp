@@ -13,7 +13,7 @@ PicPwmUnit* PicOcUnit::createPwmUnit( eMcu* mcu, QString name, int type ) // Sta
 {
     if( type == 00 ) return new PicPwmUnit00( mcu, name );
     if( type == 01 ) return new PicPwmUnit01( mcu, name );
-    return NULL;
+    return nullptr;
 }
 
 PicOcUnit::PicOcUnit( eMcu* mcu, QString name )

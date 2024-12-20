@@ -47,7 +47,7 @@ bool GputilsDebug::getVariables( BaseDebugger* debugger )
     gpvc    = addQuotes( gpvc );
     codPath = addQuotes( QDir::toNativeSeparators( codPath ) );
 
-    QProcess getVars( NULL );      // Get var addresses from Symbol Table
+    QProcess getVars( nullptr );      // Get var addresses from Symbol Table
     getVars.setWorkingDirectory( debugger->buildPath() );
     QString command  = gpvc+" -s "+codPath;
     getVars.start( command );
@@ -110,7 +110,7 @@ bool GputilsDebug::mapFlashToSource( BaseDebugger* debugger )
     gpvc    = addQuotes( gpvc );
     codPath = addQuotes( QDir::toNativeSeparators( codPath ) );
 
-    QProcess flashToLine( NULL );      // Get var addresses from Symbol Table
+    QProcess flashToLine( nullptr );      // Get var addresses from Symbol Table
     flashToLine.setWorkingDirectory( debugger->buildPath() );
     QString command  = gpvc+" -l "+codPath;
     flashToLine.start( command );
@@ -177,7 +177,7 @@ bool GputilsDebug::mapFlashToSource( BaseDebugger* debugger )
     gpvc    = addQuotes( gpvc );
     codPath = addQuotes( QDir::toNativeSeparators( codPath ) );
 
-    QProcess flashToLine( NULL );      // Get var addresses from Symbol Table
+    QProcess flashToLine( nullptr );      // Get var addresses from Symbol Table
     flashToLine.setWorkingDirectory( debugger->buildPath() );
     QString command  = gpvc+" -l "+codPath;
     flashToLine.start( command );

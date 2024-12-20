@@ -31,8 +31,8 @@ Chip::Chip( QString type, QString id )
     m_isLS = false;
     m_initialized = false;
     m_package  = "";
-    m_backPixmap = NULL;
-    m_backData   = NULL;
+    m_backPixmap = nullptr;
+    m_backData   = nullptr;
 
     m_topMargin    = 0;
     m_bottomMargin = 0;

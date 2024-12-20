@@ -22,7 +22,7 @@
 #include "chip.h"
 #include "utils.h"
 
-ComponentList* ComponentList::m_pSelf = NULL;
+ComponentList* ComponentList::m_pSelf = nullptr;
 
 ComponentList::ComponentList( QWidget* parent )
              : QTreeWidget( parent )
@@ -202,7 +202,7 @@ void ComponentList::loadXml( QString xmlFile )
             catFull.replace( "IC 74", "Logic/IC 74");
             QStringList catPath = catFull.split("/");
 
-            TreeItem* catItem = NULL;
+            TreeItem* catItem = nullptr;
             QString parent   = "";
             QString category = "";
             while( !catPath.isEmpty() )

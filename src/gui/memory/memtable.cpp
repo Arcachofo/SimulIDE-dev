@@ -23,8 +23,8 @@ MemTable::MemTable( QWidget* parent, int dataSize, int wordBytes )
     m_cellBytes = wordBytes;
     m_byteRatio = 1;
     m_updtCount = 0;
-    m_data = NULL;
-    m_hoverItem = NULL;
+    m_data = nullptr;
+    m_hoverItem = nullptr;
 
     m_canSaveLoad = true;
 

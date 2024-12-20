@@ -171,7 +171,7 @@ void CodeEditor::setCompName( QString name )
 {
     if( !name .isEmpty() )
     {
-        if( m_compiler != NULL )
+        if( m_compiler != nullptr )
         {
             if( m_compiler->compName() == name  ) return ;
             delete m_compiler;
@@ -393,7 +393,7 @@ void CodeEditor::setFile( QString filePath )
     m_numLines = document()->blockCount();
 
     if( m_compiler ) delete m_compiler;
-    m_compiler = NULL;
+    m_compiler = nullptr;
     loadConfig();
 
     m_outPane->appendLine( "-------------------------------------------------------" );
@@ -771,7 +771,7 @@ void CodeEditor::loadConfig()
         if( !compiler.isEmpty() )
         {
             m_outPane->appendLine( tr("Found Compiler definition in file: ") + compiler );
-            if( m_compiler != NULL )
+            if( m_compiler != nullptr )
             {
                 if( m_compiler->compName() == compiler ) return ;
                 delete m_compiler;

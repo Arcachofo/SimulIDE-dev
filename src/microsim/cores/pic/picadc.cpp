@@ -18,7 +18,7 @@ PicAdc* PicAdc::createAdc( eMcu* mcu, QString name, int type )
         case 10: return new PicAdc10( mcu, name ); break;
         case 11: return new PicAdc11( mcu, name ); break;
         case 20: return new PicAdc20( mcu, name ); break;
-        default: return NULL;
+        default: return nullptr;
 }   }
 
 PicAdc::PicAdc( eMcu* mcu, QString name )

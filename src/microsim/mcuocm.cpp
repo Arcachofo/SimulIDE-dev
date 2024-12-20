@@ -12,9 +12,9 @@ McuOcm::McuOcm( eMcu* mcu, QString name )
       : McuPrescaled( mcu, name )
       , eElement( mcu->getId()+"-"+name )
 {
-    m_OC1 = NULL;
-    m_OC2 = NULL;
-    m_oPin = NULL;
+    m_OC1 = nullptr;
+    m_OC2 = nullptr;
+    m_oPin = nullptr;
 }
 McuOcm::~McuOcm(){}
 

@@ -12,11 +12,11 @@ ScriptModule::ScriptModule( eMcu* mcu, QString name )
             : ScriptBase( mcu->getId()+"-"+"ScriptModule" )
             , McuModule( mcu, name )
 {
-    m_configureA   = NULL;
-    m_configureB   = NULL;
-    m_configureC   = NULL;
-    m_callBackDoub = NULL;
-    m_callBack     = NULL;
+    m_configureA   = nullptr;
+    m_configureB   = nullptr;
+    m_configureC   = nullptr;
+    m_callBackDoub = nullptr;
+    m_callBack     = nullptr;
 }
 ScriptModule::~ScriptModule()
 {
@@ -46,7 +46,7 @@ int ScriptModule::compileScript()
     m_callBackDoub = m_aEngine->GetModule(0)->GetFunctionByDecl("void callBackDoub( double v )");
     m_callBack     = m_aEngine->GetModule(0)->GetFunctionByDecl("void callBack()");
 
-    //m_vChangedCtx = m_voltChanged ? m_aEngine->CreateContext() : NULL;
+    //m_vChangedCtx = m_voltChanged ? m_aEngine->CreateContext() : nullptr;
 
     asIScriptFunction* func = m_aEngine->GetModule(0)->GetFunctionByDecl("void setup()");
     if( func ) callFunction( func );

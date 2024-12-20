@@ -12,7 +12,7 @@ Pic14eCore::Pic14eCore( eMcu* mcu )
 {
     m_stackSize = 16;
 
-    m_OPTION = NULL;
+    m_OPTION = nullptr;
 
     m_Wreg  = mcu->getReg( "WREG" );
     m_FSR0L = mcu->getReg( "FSR0L" );

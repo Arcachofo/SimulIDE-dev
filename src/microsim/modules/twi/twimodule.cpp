@@ -10,8 +10,8 @@
 TwiModule::TwiModule( QString name )
          : eClockedDevice( name )
 {
-    m_sda = NULL;
-    m_scl = NULL;
+    m_sda = nullptr;
+    m_scl = nullptr;
     m_addrBits = 7;
     m_address = m_cCode = 0;
     m_enabled = true;

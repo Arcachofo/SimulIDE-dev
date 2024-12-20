@@ -85,7 +85,7 @@ Lm555::Lm555( QString type, QString id )
     m_Vcc->setLabelText( "Vcc" );
     m_pin[7] = m_Vcc;
 
-    m_thrEnode = NULL;
+    m_thrEnode = nullptr;
     m_resA.setEpin( 0, m_Vcc );
     m_resA.setEpin( 1, &m_ePinA );
 

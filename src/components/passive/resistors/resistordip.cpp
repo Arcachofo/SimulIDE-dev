@@ -168,7 +168,7 @@ void ResistorDip::setPullUp( bool p )
         m_pin[index]->setEnabled( !p );
         m_pin[index]->setVisible( !p );
         if( p ) m_pin[index]->removeConnector();
-        else    m_pin[index]->setEnode( NULL );
+        else    m_pin[index]->setEnode( nullptr );
     }
     update();
 }

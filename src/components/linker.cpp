@@ -10,14 +10,14 @@
 #include "component.h"
 #include "circuit.h"
 
-Linker* Linker::m_selecComp = NULL;
+Linker* Linker::m_selecComp = nullptr;
 
 Linker::Linker()
       : m_linkCursor( QPixmap(":/link.png"), 10, 10 )
 {}
 Linker::~Linker()
 {
-    if( m_selecComp == this ) Linker::compSelected( NULL ); // Cancel link to components
+    if( m_selecComp == this ) Linker::compSelected( nullptr ); // Cancel link to components
     for( Component* comp : m_linkedComp ) comp->setLinkedTo( nullptr );
 }
 
@@ -53,7 +53,7 @@ void Linker::createLinks( QList<Component*>* compList )
 
 void Linker::startLinking()  // Start linking Components
 {
-    if( m_selecComp ) m_selecComp->compSelected( NULL ); // Finish previous linking
+    if( m_selecComp ) m_selecComp->compSelected( nullptr ); // Finish previous linking
     m_selecComp = this;
 
     showLinked( true );
@@ -64,7 +64,7 @@ void Linker::startLinking()  // Start linking Components
 void Linker::stopLinking() // Static
 {
      if( !m_selecComp ) return;
-     m_selecComp->compSelected( NULL );
+     m_selecComp->compSelected( nullptr );
 
      QGuiApplication::restoreOverrideCursor();
 }
@@ -87,7 +87,7 @@ void Linker::compSelected( Component* comp )
     }
     else       // End of linking Components
     {
-        m_selecComp = NULL;
+        m_selecComp = nullptr;
         showLinked( false );
     }
 }

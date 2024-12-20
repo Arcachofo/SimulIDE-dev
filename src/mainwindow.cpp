@@ -25,14 +25,14 @@
 #include "filewidget.h"
 #include "utils.h"
 
-MainWindow* MainWindow::m_pSelf = NULL;
+MainWindow* MainWindow::m_pSelf = nullptr;
 
 MainWindow::MainWindow()
           : QMainWindow()
 {
     setWindowIcon( QIcon(":/simulide.png") );
     m_pSelf   = this;
-    m_circuitW = NULL;
+    m_circuitW = nullptr;
     m_autoBck = 15;
     m_state = "■";
     m_revision = 2300; /// FIXME
