@@ -211,6 +211,9 @@ void TftController::dataReceived()
             }
         }break;
         case 0x2C: writeRam(); break;  // RAMWR: Memory Write. Overriden by displays
+        case 0x30:                     // Partial Area
+             /// TODO
+             break;
         case 0x33:                     // Vertical Scrolling Definition
         {
             if     ( m_readBytes == 6 ) m_TFA  = buffer << 8; // TFA [15:8]
@@ -225,7 +228,6 @@ void TftController::dataReceived()
             if( m_readBytes == 2 ) m_VSP = buffer << 8; // VSP [15:8]
             else                   m_VSP |= buffer;     // VSP [7:0]
         }break;
-        case 0x3A: setPixelMode(); break; // COLMOD: Pixel Format Set
         case 0x36:{                       // MADCTL: Memory Access Control
             //m_BGR     = buffer & 1<<3;
             m_swapXY  = buffer & 1<<5;
@@ -242,6 +244,7 @@ void TftController::dataReceived()
             //    //m_mirrorX = (buffer & 1<<6) == 0;
             //}
         }break;
+        case 0x3A: setPixelMode(); break; // COLMOD: Pixel Format Set
         case 0xF6:   // Interface Control m_readBytes = 3;
         {
             //if(  m_isILI ) // value of MADCTL is derived as exclusive OR
@@ -280,29 +283,29 @@ void TftController::writeRam() // Memory Write. Overriden by displays
 void TftController::setStartX( uint16_t sx )
 {
     m_startX = sx;
-    if( m_startX > m_maxX ) m_startX = m_maxX;
+    //if( m_startX > m_maxX ) m_startX = m_maxX;
     m_addrX = m_startX;
 }
 
 void TftController::setEndX( uint16_t ex )
 {
     m_endX = ex;
-    if     ( m_endX > m_maxX   ) m_endX = m_maxX;
-    else if( m_endX < m_startX ) m_endX = m_startX;
+    //if     ( m_endX > m_maxX   ) m_endX = m_maxX;
+    //else if( m_endX < m_startX ) m_endX = m_startX;
 }
 
 void TftController::setStartY( uint16_t sy )
 {
     m_startY = sy;
-    if( m_startY > m_maxY ) m_startY = m_maxY;
+    //if( m_startY > m_maxY ) m_startY = m_maxY;
     m_addrY = m_startY;
 }
 
 void TftController::setEndY( uint16_t ey )
 {
     m_endY = ey;
-    if     ( m_endY > m_maxY   ) m_endY = m_maxY;
-    else if( m_endY < m_startY ) m_endY = m_startY;
+    //if     ( m_endY > m_maxY   ) m_endY = m_maxY;
+    //else if( m_endY < m_startY ) m_endY = m_startY;
 }
 
 uint32_t TftController::getPixel( int col, int row )
