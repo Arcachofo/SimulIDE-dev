@@ -118,6 +118,7 @@ void MainWindow::hideGui()
     m_sidepanel->hide();
     m_editor->hide();
     m_circuitW->hideGui();
+    Circuit::self()->setAutoBck( -1 );
 }
 
 void MainWindow::keyPressEvent( QKeyEvent* event)

@@ -460,9 +460,10 @@ void SubCircuit::openCircuit()
 #ifndef Q_OS_UNIX
     executable += ".exe";
 #endif
-    executable += " "+m_dataFile+" -nogui";
+    QStringList args = {"-nogui", m_dataFile };
     QProcess openProc;
-    openProc.startDetached( executable );
+    qDebug() << executable << args;
+    openProc.startDetached( executable, args );
 }
 
 void SubCircuit::addMainCompsMenu( QMenu* menu )

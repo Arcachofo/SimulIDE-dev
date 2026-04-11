@@ -83,6 +83,8 @@ int main( int argc, char *argv[] )
     window.setLoc( locale );
     window.show();
 
+    bool noGui = false;
+
     for( int i=1; i<argc; ++i )
     {
         QString arg = QString::fromStdString( argv[i] );
@@ -90,6 +92,7 @@ int main( int argc, char *argv[] )
         if( arg == "-nogui")
         {
             window.hideGui();
+            noGui = true;
         }
         else if( arg == "-test" )
         {
@@ -115,7 +118,8 @@ int main( int argc, char *argv[] )
             if( arg.endsWith(".sim2") || arg.endsWith(".sim1"))
             {
                 QTimer::singleShot( 500, CircuitWidget::self()
-                                  , [arg]()->void{ CircuitWidget::self()->loadCirc( arg ); } );
+                                  , [arg,noGui]()->void{ CircuitWidget::self()->loadCirc( arg );
+                                                   if( noGui ) MainWindow::self()->hideGui(); } );
             }
             else{
                 QTimer::singleShot( 500, CircuitWidget::self()
