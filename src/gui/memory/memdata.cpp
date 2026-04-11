@@ -161,6 +161,7 @@ bool MemData::loadHex( QVector<int>* toData, QString file, bool resize, int bits
 
         type = line.mid( 6, 2 ).toInt( &ok, 16 );
         if     ( type == 1 ) return true; // Reached End Of File
+        else if( type == 2 );             // Extended Segment Address
         else if( type == 4 );             // Extended Linear Address
         else if( type != 0 )
         {
@@ -178,6 +179,12 @@ bool MemData::loadHex( QVector<int>* toData, QString file, bool resize, int bits
                 hiByte = line.mid( i+2, 2 ).toInt( &ok, 16 );
                 data += (hiByte<<8);
                 checksum += hiByte;
+            }
+            if( type == 2 )
+            {
+                addrBase = (line.mid( 8, 4 ).toInt( &ok, 16 ))*16;
+                qDebug() <<"    Extended Segment Address:"<< "0x"+QString::number( addrBase, 16 ).toUpper();
+                continue;
             }
             if( type == 4 )
             {
