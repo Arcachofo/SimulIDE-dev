@@ -107,7 +107,7 @@ void ComponentList::loadTest( QString userDir )
     QStringList dirList = compSetDir.entryList( {"*"}, QDir::Dirs );
     if( dirList.isEmpty() ) return;
 
-    qDebug() << "\n" << tr("    Loading Component sets at:")<< "\n" << compSetDir.absolutePath()<<"\n";
+    qDebug() << "\n" << tr("    Loading Tests at:")<< "\n" << compSetDir.absolutePath()<<"\n";
 
     TreeItem* catItem = getCategory("test");
     if( !catItem ) catItem = addCategory("test","test","","" );

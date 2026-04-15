@@ -29,7 +29,7 @@ LibraryItem* Sh1107::libraryItem()
 }
 
 Sh1107::Sh1107( QString type, QString id )
-       : OledController( type, id )
+      : OledController( type, id )
 {
     m_address = m_cCode = 0b00111100; // 0x3A - 60
 
@@ -123,7 +123,7 @@ void Sh1107::parameter()
             uint8_t muxRatio = m_rxReg & m_lineMask;
             if( muxRatio > 14 ) m_mr = muxRatio;
         }break;
-        case 0xD3: m_dispOffset = m_rxReg & m_lineMask; break; // Display Offset Set vertical shift by COM from 0d~63d
+        case 0xD3: m_dispOffset = m_rxReg & m_lineMask; break; // Display Offset Set vertical shift by COM from 0d~127d
         case 0xDC: m_ramOffset  = m_rxReg & m_lineMask; break; // Display Start Line
     }
 }

@@ -110,7 +110,7 @@ void Installer::loadList()
         float scale = MainWindow::self()->fontScale();
 
         if( item->m_file.isEmpty() ) installTable->setRowHeight( row, 25*scale );
-        else                         installTable->setRowHeight( row, 50*scale );
+        else                         installTable->setRowHeight( row, 60*scale );
 
         row++;
     }
