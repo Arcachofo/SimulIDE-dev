@@ -10,6 +10,7 @@
 #include "comproperty.h"
 #include "propdialog.h"
 #include "mainwindow.h"
+#include "circuit.h"
 #include "utils.h"
 
 PathVal::PathVal( PropDialog* parent, CompBase* comp, ComProperty* prop, bool isFile )
@@ -40,10 +41,15 @@ void PathVal::on_value_editingFinished()
 
 void PathVal::on_setPathButton_clicked()
 {
-    QString path;
-    if( m_isFile ) path = QFileDialog::getOpenFileName( 0l, tr("Select file"), value->text() );
-    else           path = getDirDialog( tr("Select directory"), value->text() );
+    QString filePath = value->text();
+    QDir circuitDir  = QFileInfo( Circuit::self()->getFilePath() ).absoluteDir();
+    QString absPath  = circuitDir.absoluteFilePath( filePath );
 
+    QString path;
+    if( m_isFile ) path = QFileDialog::getOpenFileName( 0l, tr("Select file"), absPath );
+    else           path = getDirDialog( tr("Select directory"), absPath );
+
+    if( path.isEmpty() ) return;
     value->setText( path );
     on_value_editingFinished();
 }
