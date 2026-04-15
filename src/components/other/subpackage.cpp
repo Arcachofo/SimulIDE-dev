@@ -480,7 +480,10 @@ void SubPackage::setBackground( QString bck )
     m_background = circuitDir.relativeFilePath( bck );
 
     if( bck.isEmpty() ) setBckGndData("");
-    else                Chip::setBackground( m_background );
+    else{
+        m_hasBckGndData = false;
+        Chip::setBackground( m_background );
+    }
     update();
 }
 

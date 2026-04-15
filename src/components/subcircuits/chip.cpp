@@ -436,9 +436,12 @@ void Chip::setBackground( QString bck )
     {
         QString pixmapPath;
 
-        if( QFile::exists( bck ) )// full path to image
+        QDir circuitDir  = QFileInfo( Circuit::self()->getFilePath() ).absoluteDir();
+        QString absPath = circuitDir.absoluteFilePath( bck );
+
+        if( QFile::exists( absPath ) )// full path to image
         {
-             pixmapPath = bck;
+             pixmapPath = absPath;
         }
         else pixmapPath = MainWindow::self()->getCircFilePath( bck ); // Image in circuit/data folder
 
