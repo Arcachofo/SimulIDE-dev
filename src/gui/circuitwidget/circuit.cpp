@@ -512,7 +512,7 @@ void Circuit::importCircuit()
     QString filePath = QFileDialog::getOpenFileName( 0l, tr("Import Circuit"), m_filePath,
                                           tr("Circuits (*.sim*);;All files (*.*)"));
 
-    if( !filePath.endsWith(".sim2") || !filePath.endsWith(".sim1")) return;
+    if( !filePath.endsWith(".sim2") && !filePath.endsWith(".sim1")) return;
 
     QString doc = fileToString( filePath, "Circuit::importCirc" );
     QApplication::clipboard()->setText( doc );
