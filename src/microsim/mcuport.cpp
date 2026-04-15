@@ -124,7 +124,7 @@ void McuPort::setPinMode( pinMode_t mode )
 void McuPort::setPullups( uint8_t puMask )
 {
     for( int i=0; i<m_numPins; ++i )
-        m_pins[i]->setPullup( (puMask & 1<<i) ? 1e5 : 0 );
+        if( m_pins[i] ) m_pins[i]->setPullup( (puMask & 1<<i) ? 1e5 : 0 );
 }
 
 void McuPort::setAllPullups( uint8_t val )
