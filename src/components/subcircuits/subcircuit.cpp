@@ -4,6 +4,7 @@
  ***( see copyright.txt file at root folder )*******************************/
 
 #include <QProcess>
+#include <QThread>
 
 #include "subcircuit.h"
 #include "itemlibrary.h"
@@ -456,14 +457,22 @@ void SubCircuit::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu
 
 void SubCircuit::openCircuit()
 {
+    QString backPath  = MainWindow::self()->getConfigPath("backup.sim2");
+    QString backPath2 = MainWindow::self()->getConfigPath("backup_2.sim2");
+    if( QFile::exists( backPath ) ) QFile::rename( backPath, backPath2 );
+    QThread::msleep( 100 );
+
     QString executable = QCoreApplication::applicationDirPath()+"/simulide";
 #ifndef Q_OS_UNIX
     executable += ".exe";
 #endif
     QStringList args = {"-nogui", m_dataFile };
     QProcess openProc;
-    qDebug() << executable << args;
     openProc.startDetached( executable, args );
+    openProc.waitForStarted( 1000 );
+
+    QThread::msleep( 500 );
+    if( QFile::exists( backPath2 ) ) QFile::rename( backPath2, backPath );
 }
 
 void SubCircuit::addMainCompsMenu( QMenu* menu )
