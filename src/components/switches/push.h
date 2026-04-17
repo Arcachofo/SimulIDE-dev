@@ -15,6 +15,10 @@ class Push : public PushBase
         Push( QString type, QString id );
         ~Push();
 
+        void stamp() override;
+
+        void  SetupSwitches( int poles, int throws ) override;
+
  static Component* construct( QString type, QString id );
  static LibraryItem* libraryItem();
 

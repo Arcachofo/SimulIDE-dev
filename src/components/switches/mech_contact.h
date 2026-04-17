@@ -27,7 +27,7 @@ class MechContact : public Component, public eElement
         void remove() override;
         void updateStep() override { if( m_changed ) { m_changed = false; update(); } }
 
-        void  SetupSwitches( int poles, int throws );
+        virtual void  SetupSwitches( int poles, int throws );
         void  SetupButton();
 
     protected:
