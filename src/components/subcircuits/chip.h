@@ -47,7 +47,7 @@ class Chip : public Component, public eElement
         void setWidth( int w );
         void setHeight( int h );
 
-        void setBackData( std::vector<std::vector<int>>* d ) { m_backData = d; }
+        void setBackData( std::vector<std::vector<int>>* d );
 
         void setMargins( int top, int bottom, int right, int left );
         void setMargins( QString margins );

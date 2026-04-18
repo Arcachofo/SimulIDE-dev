@@ -418,6 +418,12 @@ void Chip::embeedBackground( QString pixmapPath )
     m_backPixmap->load( pixmapPath );
 }
 
+void Chip::setBackData( std::vector<std::vector<int>>* d )
+{
+    m_backData = d;
+    m_graphical = m_backPixmap || m_backData;
+}
+
 void Chip::setBackground( QString bck )
 {
     m_background = bck;
@@ -455,6 +461,7 @@ void Chip::setBackground( QString bck )
 
         if( QFile::exists( pixmapPath ) ) embeedBackground( pixmapPath );
     }
+    m_graphical = m_backPixmap || m_backData;
     update();
 }
 
