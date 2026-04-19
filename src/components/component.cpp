@@ -445,6 +445,7 @@ QString Component::invertedPins()
         if( pin->inverted() ) //  userInverted() )
             pinListStr += pin->pinId().split("-").last()+",";
 
+    if( pinListStr.isEmpty() ) pinListStr = " "; // Always save
     return pinListStr;
 }
 
