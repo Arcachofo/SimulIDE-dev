@@ -181,6 +181,7 @@ void BinCounter::voltChanged()
         }
         m_nextOutVal = m_counter;
     }
+    //qDebug() << "BinCounter::voltChanged" << m_counter;
     IoComponent::scheduleOutPuts( this );
 }
 

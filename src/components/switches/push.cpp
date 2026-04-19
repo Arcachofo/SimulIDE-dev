@@ -45,7 +45,7 @@ Push::Push( QString type, QString id )
                           , this, &Push::nClose, &Push::setNClose ),
 
         new BoolProp<Push>("DT", tr("Double Throw"), ""
-                           , this, &Push::dt, &Push::setDt, propNoCopy ),
+                          , this, &Push::dt, &Push::setDt, propNoCopy ),
 
         new IntProp <Push>("Poles", tr("Poles"), ""
                           , this, &Push::poles, &Push::setPoles, propNoCopy,"uint" ),

@@ -20,7 +20,7 @@ class UartRx : public UartTR
         virtual void runEvent() override;
         virtual uint8_t getData() override;
 
-        void ignoreData( bool i ) {m_ignoreData = i; }
+        void ignoreData( bool i ) { m_ignoreData = i; }
         void setFifoSize( uint8_t s ) { m_fifoSize = s; }
 
     protected:

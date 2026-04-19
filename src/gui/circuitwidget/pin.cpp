@@ -68,7 +68,7 @@ Pin::Pin( int angle, const QPoint pos, QString id, int index, Component* parent,
     m_label.setBrush( QColor( 250, 250, 200 ) );
 
     /// setObjectName( id );
-    setConnector( NULL );
+    setConnector( nullptr );
     setPos( pos );
     setRotation( 180-angle );
     Pin::setLength( length );
@@ -87,7 +87,7 @@ Pin::~Pin()
 
 void Pin::connectorRemoved()
 {
-    setConnector( NULL );
+    setConnector( nullptr );
     if( !Circuit::self()->undoRedo() ) m_component->pinMessage( 1 ); // Used by node to remove
 }
 
@@ -136,7 +136,7 @@ void  Pin::setConnector( Connector* connector )
         setCursor( Qt::ArrowCursor );
         if( m_isBus ) my_connector->setIsBus( true );
     }else{
-        m_conPin = NULL;
+        m_conPin = nullptr;
         setCursor( Qt::CrossCursor );
     }
 }
@@ -144,12 +144,12 @@ void  Pin::setConnector( Connector* connector )
 void Pin::removeConnector()
 {
     if( my_connector ) Circuit::self()->removeConnector( my_connector );
-    setConnector( NULL );
+    setConnector( nullptr );
 }
 
 Pin* Pin::connectPin( bool connect )      // Auto-Connect
 {
-    Pin* _pin = NULL;
+    Pin* _pin = nullptr;
     QList<QGraphicsItem*> list = this->collidingItems();
     while( !list.isEmpty() )
     {
