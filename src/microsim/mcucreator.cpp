@@ -224,9 +224,9 @@ int McuCreator::processFile( QString fileName )
             mcu->m_cpu = cpu;
             m_mcuComp->m_scripted = true;
 
-            if( root.attribute("linkable") == "true"
-             || root.attribute("linker"  ) == "true" )
-                m_mcuComp->setScriptLinker( cpu );
+            //if( root.attribute("linkable") == "true"
+            // || root.attribute("linker"  ) == "true" )
+                m_mcuComp->setScriptCpu( cpu );
 
             node = root.firstChild();
             while( !node.isNull() )

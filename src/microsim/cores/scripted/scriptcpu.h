@@ -16,6 +16,8 @@ class Mcu;
 
 class ScriptCpu : public ScriptBase, public Mcu8bits
 {
+    friend class McuCreator;
+
     public:
         ScriptCpu( eMcu* mcu );
         ~ScriptCpu();
@@ -29,7 +31,6 @@ class ScriptCpu : public ScriptBase, public Mcu8bits
         virtual void extClock( bool clkState ) override;
         virtual void updateStep() override;
 
-        void setPeriferals( std::vector<ScriptPerif*> p);
         virtual void setScriptFile( QString scriptFile, bool compile=true ) override;
         virtual int compileScript() override;
 
@@ -42,6 +43,21 @@ class ScriptCpu : public ScriptBase, public Mcu8bits
         virtual int getIntReg( QString reg ) override;
         virtual QString getStrReg( QString ) override;
 
+        void setLinkedVal( double v, int i=0 );                       // Called from C++
+        void setLinkedStr( QString s, int i );                        // Called from C++
+
+        void RETI();
+        virtual void INTERRUPT( uint vector ) override;
+
+        void mousePress  ( int x, int y, int button );
+        void mouseRelease( int x, int y, int button );
+        void mouseMoved  ( int x, int y );
+
+        QStringList getTypes() { return m_types; }
+        QMap<QString, QStringList> getMemberWords() { return m_memberWords; }
+
+    protected:
+        void setPeriferals( std::vector<ScriptPerif*> p);
         ComProperty* addProperty( QString name, QString label, QString type, QString unit );
         QString getProp( ComProperty* p );
         void setProp( ComProperty* p, QString val );
@@ -64,23 +80,14 @@ class ScriptCpu : public ScriptBase, public Mcu8bits
         McuPin*  getMcuPin( const string pinName );
 
         void setPackageSize( int width, int height );                 // Called from script: Set Package size
-        void setMargins( int top, int bottom, int right, int left );
+        void setMargins( int top, int bottom, int right, int left );  // Called from script: set Margins for display
+        void setBackground( const string b );
 
         string getPropStr( int index, const string p );               // Called from script: Get property p from linked component at index
         void setPropStr( int index, const string p, const string v ); // Called from script: Set property p with value v in linked component at index
         void setLinkedValue( int index, double v, int i=0  );         // Called from script
         void setLinkedString( int index, const string str, int i=0 ); // Called from script
 
-        void setLinkedVal( double v, int i=0 );                       // Called from C++
-        void setLinkedStr( QString s, int i );                        // Called from C++
-
-        void RETI();
-        virtual void INTERRUPT( uint vector ) override;
-
-        QStringList getTypes() { return m_types; }
-        QMap<QString, QStringList> getMemberWords() { return m_memberWords; }
-
-    protected:
         uint m_progWordMask;
 
         Mcu* m_mcuComp;
@@ -100,6 +107,10 @@ class ScriptCpu : public ScriptBase, public Mcu8bits
 
         asIScriptFunction* m_setLinkedVal;
         asIScriptFunction* m_setLinkedStr;
+
+        asIScriptFunction* m_mousePress;
+        asIScriptFunction* m_mouseRelease;
+        asIScriptFunction* m_mouseMoved;
 
         asIScriptContext* m_vChangedCtx;
         asIScriptContext* m_runEventCtx;

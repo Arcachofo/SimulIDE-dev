@@ -198,6 +198,11 @@ ScriptCpu::ScriptCpu( eMcu* mcu )
                                     , asMETHODPR( ScriptCpu, setMargins, (int,int,int,int), void)
                                     , asCALL_THISCALL );
 
+    memberList << "setBackground( string b )";
+    m_aEngine->RegisterObjectMethod("ScriptCpu", "void setBackground( string b )"
+                                    , asMETHODPR( ScriptCpu, setBackground, (string), void)
+                                    , asCALL_THISCALL );
+
     m_typeWords.insert("ScriptCpu", memberList );
 }
 ScriptCpu::~ScriptCpu()
@@ -262,6 +267,9 @@ int ScriptCpu::compileScript()
     m_command     = module->GetFunctionByDecl("void command( string c )");
     m_setLinkedVal= module->GetFunctionByDecl("void setLinkedValue( double v, int i )");
     m_setLinkedStr= module->GetFunctionByDecl("void setLinkedString( string str, int i )");
+    m_mousePress  = module->GetFunctionByDecl("void mousePress( int x, int y, int button )");
+    m_mouseRelease= module->GetFunctionByDecl("void mouseRelease( int x, int y, int button )");
+    m_mouseMoved  = module->GetFunctionByDecl("void mouseMoved( int x, int y )");
 
     m_vChangedCtx = m_voltChanged ? m_aEngine->CreateContext() : nullptr;
     m_runEventCtx = m_runEvent    ? m_aEngine->CreateContext() : nullptr;
@@ -597,7 +605,11 @@ void ScriptCpu::setMargins( int top, int bottom, int right, int left )
     this->m_mcuComp->setMargins( top, bottom, right, left );
 }
 
-//---- Linked --------------------------------------------
+void ScriptCpu::setBackground( const string b )
+{
+    QString bck = QString::fromStdString( b );
+    this->m_mcuComp->setBackground( bck );
+}
 
 string ScriptCpu::getPropStr( int index, const string p  )
 {
@@ -652,5 +664,34 @@ void ScriptCpu::setLinkedStr( QString s, int i )
     std::string str = s.toStdString();
     m_context->SetArgObject( 0, &str );
     m_context->SetArgDWord( 1, i );
+    execute();
+}
+
+void ScriptCpu::mousePress( int x, int y, int button )
+{
+    if( !m_mousePress ) return;
+    prepare( m_mousePress );
+    m_context->SetArgDWord( 0, x );
+    m_context->SetArgDWord( 1, y );
+    m_context->SetArgDWord( 2, button );
+    execute();
+}
+
+void ScriptCpu::mouseRelease( int x, int y, int button )
+{
+    if( !m_mouseRelease ) return;
+    prepare( m_mouseRelease );
+    m_context->SetArgDWord( 0, x );
+    m_context->SetArgDWord( 1, y );
+    m_context->SetArgDWord( 2, button );
+    execute();
+}
+
+void ScriptCpu::mouseMoved( int x, int y )
+{
+    if( !m_mouseMoved ) return;
+    prepare( m_mouseMoved );
+    m_context->SetArgDWord( 0, x );
+    m_context->SetArgDWord( 1, y );
     execute();
 }

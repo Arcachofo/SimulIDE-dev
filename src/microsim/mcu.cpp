@@ -78,7 +78,7 @@ Mcu::Mcu( QString type, QString id, QString device )
     m_resetPin   = nullptr;
     m_portRstPin = nullptr;
     m_mcuMonitor = nullptr;
-    m_scriptLink = nullptr;
+    m_scriptCpu = nullptr;
 
     m_savePGM  = false;
     m_autoLoad = false;
@@ -86,6 +86,7 @@ Mcu::Mcu( QString type, QString id, QString device )
     m_resetPol = false;
     m_isLinker = true;
     m_forceFreq = true;
+    //this->m_graphical = true;
 
     m_uiFreq = 0;
     m_serialMon = -1;
@@ -547,7 +548,7 @@ void Mcu::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
     QAction* mainAction = menu->addAction( QIcon(":/subc.png"),tr("Main Mcu") );
     QObject::connect( mainAction, &QAction::triggered, [=](){ slotmain(); } );
 
-    if( m_scriptLink && !parentItem() )
+    if( m_scriptCpu && !parentItem() )
     {
         QAction* linkCompAction = menu->addAction( QIcon(":/subcl.png"),tr("Link to Component") );
         QObject::connect( linkCompAction, &QAction::triggered, [=](){ slotLinkComp(); } );
@@ -638,12 +639,12 @@ void Mcu::setSerialMon( int s ) { if( s>=0 ) slotOpenTerm( s ); }
 
 void Mcu::setLinkedValue( double v, int i )
 {
-    if( m_scriptLink ) m_scriptLink->setLinkedVal( v, i );
+    if( m_scriptCpu ) m_scriptCpu->setLinkedVal( v, i );
 }
 
 void Mcu::setLinkedString( QString str, int i )
 {
-    if( m_scriptLink ) m_scriptLink->setLinkedStr( str, i );
+    if( m_scriptCpu ) m_scriptCpu->setLinkedStr( str, i );
 }
 
 Pin* Mcu::addPin( QString id, QString type, QString label,
@@ -755,3 +756,43 @@ void Mcu::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* w
         else                      p->drawRoundedRect( m_area.width()/2-2, -1, 4, 4 , 2, 2);
 }   }
 
+void Mcu::mousePressEvent( QGraphicsSceneMouseEvent* event )
+{
+    if( m_scriptCpu
+     && Simulator::self()->isRunning()
+     && event->button() != Qt::RightButton )
+    {
+        QPointF c = event->pos();
+        m_scriptCpu->mousePress( c.x(), c.y(), event->button() );
+        event->accept();
+        return;
+    }
+    Chip::mousePressEvent( event );
+}
+
+void Mcu::mouseReleaseEvent( QGraphicsSceneMouseEvent* event )
+{
+    if( m_scriptCpu
+     && Simulator::self()->isRunning()
+     && event->button() != Qt::RightButton )
+    {
+        QPointF c = event->pos();
+        m_scriptCpu->mouseRelease( c.x(), c.y(), event->button() );
+        event->accept();
+        return;
+    }
+    Chip::mouseReleaseEvent( event );
+}
+
+void Mcu::mouseMoveEvent( QGraphicsSceneMouseEvent* event )
+{
+    if( m_scriptCpu
+     && Simulator::self()->isRunning() )
+    {
+        QPointF c = event->pos();
+        m_scriptCpu->mouseMoved( c.x(), c.y() );
+        event->accept();
+        return;
+    }
+    Chip::mouseMoveEvent( event );
+}

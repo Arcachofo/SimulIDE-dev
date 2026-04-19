@@ -101,7 +101,7 @@ class Mcu : public Chip, public Linker
         Pin* addPin( QString id, QString type, QString label,
                              int pos, int xpos, int ypos, int angle , int length=8, int space=0 ) override;
 
-        void setScriptLinker( ScriptCpu* l) { m_scriptLink = l; } // Called from script
+        void setScriptCpu( ScriptCpu* l) { m_scriptCpu = l; } // Called from script
 
         void setLinkedValue( double v, int i=0  ) override;
         void setLinkedString( QString str, int i=0 ) override;
@@ -117,6 +117,10 @@ class Mcu : public Chip, public Linker
 
         void loadEEPROM();
         void saveEEPROM();
+
+        void mousePressEvent      ( QGraphicsSceneMouseEvent* event ) override;
+        void mouseReleaseEvent    ( QGraphicsSceneMouseEvent* event ) override;
+        void mouseMoveEvent       ( QGraphicsSceneMouseEvent* event ) override;
 
     protected:
  static Mcu* m_pSelf;
@@ -152,5 +156,5 @@ class Mcu : public Chip, public Linker
 
         MCUMonitor* m_mcuMonitor;
 
-        ScriptCpu* m_scriptLink;
+        ScriptCpu* m_scriptCpu;
 };
