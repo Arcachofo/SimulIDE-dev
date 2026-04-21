@@ -18,6 +18,7 @@ class QLineEdit;
 class QPushButton;
 class QSplitter;
 class QSettings;
+class ThemeManager;
 
 enum Langs {
     English = 0,
@@ -72,6 +73,8 @@ class MainWindow : public QMainWindow
         int autoupdate() { return m_autoUpdt; }
         void setAutoUpdate( int a ) { m_autoUpdt = a; }
 
+        void updateIcons();
+
         int revision() { return m_revision; }
 
         QString getHelp( QString name, bool save=true );
@@ -125,6 +128,7 @@ class MainWindow : public QMainWindow
 
         QHash<QString, QString> m_help;
 
+        ThemeManager*  m_themeManager;
         Installer*     m_installer;
         CircuitWidget* m_circuitW;
         ComponentList* m_components;

@@ -5,8 +5,9 @@
 
 #include "treeitem.h"
 #include "mainwindow.h"
+#include "thememanager.h"
 
-TreeItem::TreeItem( TreeItem* parent, QString name, QString nameTr, QString compType, treItemType_t itemType, const QIcon &icon, bool custom  )
+TreeItem::TreeItem( TreeItem* parent, QString name, QString nameTr, QString compType, treItemType_t itemType, QPixmap &pixmap, bool custom  )
         : QTreeWidgetItem()
 {
     m_parent   = parent;
@@ -20,7 +21,9 @@ TreeItem::TreeItem( TreeItem* parent, QString name, QString nameTr, QString comp
     m_expanded = false;
     //m_hidden   = false;
 
-    setIcon( 0, icon );
+    m_pixmap = pixmap;
+
+    setIcon( 0, QIcon(pixmap) );
     setItemType( itemType );
 }
 TreeItem::~TreeItem(){}
@@ -40,10 +43,6 @@ void TreeItem::setItemType( treItemType_t itemType )
         setFlags( QFlag( Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled ) );
 
         if( icon( 0 ).isNull() ) setSizeHint( 0, QSize( 100, 14*scale ) );
-
-        if( m_isCustom ) setForeground( 0, QColor( 80, 90, 110 ) );
-        else             setForeground( 0, QColor( 100, 90, 60 ) );
-
         font.setPixelSize( 11*scale );
     }
     else   // Is Category
@@ -53,31 +52,19 @@ void TreeItem::setItemType( treItemType_t itemType )
 
         if( itemType == categ_MAIN )
         {
-            if( m_isCustom ){
-                setForeground( 0, QColor( 50, 60, 80 ) );
-                setBackground( 0, QBrush(QColor(220, 235, 240)) );
-            }else{
-                setForeground( 0, QColor( 75, 70, 10 ) );
-                setBackground( 0, QBrush(QColor(220, 240, 235)) );
-            }
             setSizeHint( 0, QSize(100, 30*scale) );
             font.setPixelSize( 13*scale );
         }
         else if( itemType == categ_CHILD )
         {
-            if( m_isCustom ){
-                setForeground( 0, QColor( 70, 80, 100 ) );
-                setBackground( 0, QBrush(QColor( 230, 245, 250)) );
-            }else{
-                setForeground( 0, QColor( 90, 80, 50 ) );
-                setBackground( 0, QBrush(QColor( 230, 250, 245)) );
-            }
             if( icon( 0 ).isNull() ) setSizeHint( 0, QSize(100, 16*scale) );
             else                     setSizeHint( 0, QSize(100, 20*scale) );
             font.setPixelSize( 12*scale );
         }
     }
     setFont( 0, font );
+
+    updateColors();
 }
 
 void TreeItem::setItemExpanded( bool e )
@@ -91,6 +78,46 @@ void TreeItem::setItemExpanded( bool e )
 //    m_hidden = h;
 //    setHidden( h );
 //}
+
+void TreeItem::setTheme( bool dark )
+{
+    if( dark ) setIcon( 0, QIcon( ThemeManager::self()->invertPixmap(m_pixmap)) );
+    else       setIcon( 0, QIcon( m_pixmap ) );
+
+    updateColors( dark );
+}
+
+void TreeItem::updateColors( bool dark )
+{
+    if( m_itemType == component )
+    {
+        if( m_isCustom ) setForeground( 0, QColor( 80, 90, 110 ) );
+        else             setForeground( 0, QColor( 100, 90, 60 ) );
+    }
+    else   // Is Category
+    {
+        if( m_itemType == categ_MAIN )
+        {
+            if( m_isCustom ){
+                setForeground( 0, QColor( 50, 60, 80 ) );
+                setBackground( 0, dark ?  QColor(0, 15, 40) : QColor(220, 235, 240) );
+            }else{
+                setForeground( 0, QColor( 75, 70, 10 ) );
+                setBackground( 0, dark ? QColor(0, 20, 35) : QColor(220, 240, 235) );
+            }
+        }
+        else if( m_itemType == categ_CHILD )
+        {
+            if( m_isCustom ){
+                setForeground( 0, QColor( 70, 80, 100 ) );
+                setBackground( 0, dark ? QColor( 0, 15, 50) : QColor( 230, 245, 250) );
+            }else{
+                setForeground( 0, QColor( 90, 80, 50 ) );
+                setBackground( 0, dark ? QColor( 0, 20, 45) : QColor( 230, 250, 245) );
+            }
+        }
+    }
+}
 
 QString TreeItem::toString( QString indent )
 {

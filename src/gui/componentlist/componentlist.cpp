@@ -215,12 +215,12 @@ void ComponentList::loadXml( QString xmlFile )
     {
         if( reader.name() != QString("itemset") ) { reader.skipCurrentElement(); continue;}
 
-        QString icon = "";
+        QString iconStr = "";
         if( reader.attributes().hasAttribute("icon") )
         {
-            icon = reader.attributes().value("icon").toString();
-            if( !icon.startsWith(":/") )
-                icon = MainWindow::self()->getDataFilePath("images/"+icon);
+            iconStr = reader.attributes().value("icon").toString();
+            if( !iconStr.startsWith(":/") )
+                iconStr = MainWindow::self()->getDataFilePath("images/"+iconStr);
         }
 
         QString catFull = reader.attributes().value("category").toString();
@@ -238,7 +238,7 @@ void ComponentList::loadXml( QString xmlFile )
             if( !catItem /*&& !parent.isEmpty()*/ )
             {
                 QString catTr = QObject::tr( category.toLocal8Bit() );
-                catItem = addCategory( catTr, category, parent, icon );
+                catItem = addCategory( catTr, category, parent, iconStr );
             }
         }
         if( !catItem ) continue;
@@ -266,14 +266,15 @@ void ComponentList::loadXml( QString xmlFile )
             }
             else
             {
-                QIcon ico;
+                //QIcon ico;
+                QPixmap ic;
                 if( reader.attributes().hasAttribute("icon") )
                 {
-                    icon = reader.attributes().value("icon").toString();
-                    if( !icon.startsWith(":/") )
-                        icon = MainWindow::self()->getDataFilePath("images/"+icon);
+                    iconStr = reader.attributes().value("icon").toString();
+                    if( !iconStr.startsWith(":/") )
+                        iconStr = MainWindow::self()->getDataFilePath("images/"+iconStr);
                 }
-                else icon = getIcon( folder, name );
+                else iconStr = getIcon( folder, name );
 
                 if( type == "Subcircuit" )
                 {
@@ -282,7 +283,7 @@ void ComponentList::loadXml( QString xmlFile )
                     if( !QFile::exists( nameFolder+".sim2" )
                      && !QFile::exists( nameFolder+".sim1" ) ) compFolder = nameFolder;
 
-                    if( icon.isEmpty() )  // Get icon from Image in Circuit
+                    if( iconStr.isEmpty() )  // Get icon from Image in Circuit
                     {
                         QString subC = compFolder+"/"+name+".sim2";
                         if( QFile::exists( subC ) )
@@ -304,9 +305,9 @@ void ComponentList::loadXml( QString xmlFile )
                                         QStringView ch = dataRef.mid( i, 2 );
                                         ba.append( ch.toInt( &ok, 16 ) );
                                     }
-                                    QPixmap ic;
+                                    //QPixmap ic;
                                     ic.loadFromData( ba );
-                                    ico = QIcon( ic );
+                                    //ico = QIcon( ic );
                                     break;
                                 }
                             }
@@ -319,13 +320,14 @@ void ComponentList::loadXml( QString xmlFile )
                 if( reader.attributes().hasAttribute("info") )
                     name += "???"+reader.attributes().value("info").toString();
 
-                if( !icon.isEmpty() )
+                if( !iconStr.isEmpty() )
                 {
-                    QPixmap ic( icon );
-                    ico = QIcon( ic );
+                    ic = QPixmap( iconStr );
+                    //QPixmap ic( iconStr );
+                    //ico = QIcon( ic );
                 }
 
-                addItem( name, catItem, ico, type );
+                addItem( name, catItem, ic, type );
                 m_xmlItems.append( name );
             }
             reader.skipCurrentElement();
@@ -347,11 +349,11 @@ QString ComponentList::getIcon( QString folder, QString name )
 void ComponentList::addItem( QString caption, TreeItem* catItem, QString icon, QString type )
 {
     QPixmap ic( icon );
-    QIcon ico( ic );
-    addItem( caption, catItem, ico, type );
+    //QIcon ico( ic );
+    addItem( caption, catItem, ic, type );
 }
 
-void ComponentList::addItem( QString caption, TreeItem* catItem, QIcon &icon, QString type )
+void ComponentList::addItem( QString caption, TreeItem* catItem, QPixmap &icon, QString type )
 {
     if( !catItem ) return;
 
@@ -396,13 +398,15 @@ TreeItem* ComponentList::addCategory( QString nameTr, QString name, QString pare
     bool expanded = false;
     //bool hidden   = false;
 
+    QPixmap pixMap = QPixmap( icon );
+
     if( parent.isEmpty() )                              // Is Main Category
     {
-        catItem = new TreeItem( nullptr, name, nameTr, "", categ_MAIN, QIcon( QPixmap( icon ) )/*QIcon(":/null-0.png")*/, m_customComp );
+        catItem = new TreeItem( nullptr, name, nameTr, "", categ_MAIN, pixMap/*QIcon(":/null-0.png")*/, m_customComp );
         expanded = true;
     }else{
         if( m_categories.contains( parent ) ) catParent = m_categories.value( parent );
-        catItem = new TreeItem( catParent, name, nameTr, "", categ_CHILD, QIcon( QPixmap( icon ) ), m_customComp );
+        catItem = new TreeItem( catParent, name, nameTr, "", categ_CHILD, pixMap, m_customComp );
     }
 
     if( parent.isEmpty() ) addTopLevelItem( catItem ); // Is root category or root category doesn't exist
@@ -615,4 +619,12 @@ void ComponentList::writeSettings()
     treeStr += "</comptree>\n";
 
     Circuit::self()->saveString( m_listFile, treeStr );
+}
+
+void ComponentList::setTheme( bool dark )
+{
+    for( TreeItem* catItem : m_categoryList ) catItem->setTheme( dark );
+    for( TreeItem* compItem : m_components ) compItem->setTheme( dark );
+
+    viewport()->update();
 }

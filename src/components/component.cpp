@@ -16,6 +16,7 @@
 #include "utils.h"
 #include "propdialog.h"
 #include "linker.h"
+#include "thememanager.h"
 
 #include "doubleprop.h"
 #include "boolprop.h"
@@ -36,6 +37,9 @@ Component::Component( QString type, QString id )
     m_Hflip  = 1;
     m_Vflip  = 1;
     m_color  = QColor( Qt::white );
+
+    m_backColor = ThemeManager::self()->getColorPtr( 2 );
+    m_foreColor = ThemeManager::self()->getColorPtr( 3 );
 
     m_backPixmap = nullptr;
     //m_group = NULL;
@@ -693,9 +697,10 @@ void Component::paintSelected( QPainter* p )
 
 void Component::paint( QPainter* p, const QStyleOptionGraphicsItem*, QWidget* )
 {
-    QPen pen( Qt::black, 1.5, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin );
+    QPen pen( QColor( *m_foreColor), 1.5, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin );
 
     //p->drawPath( shape() );
-    p->setBrush( m_color );
+    ///p->setBrush( m_color );
+    p->setBrush( QColor( *m_backColor) );
     p->setPen( pen );
 }

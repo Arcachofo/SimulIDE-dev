@@ -19,6 +19,7 @@
 #include "filebrowser.h"
 #include "currentwidget.h"
 #include "infowidget.h"
+#include "thememanager.h"
 #include "about.h"
 #include "utils.h"
 
@@ -211,12 +212,12 @@ void CircuitWidget::createToolBars()
     m_circToolBar.addSeparator();//..........................
 
     for( int i=0; i<MaxRecentFiles; i++ ) m_fileMenu.addAction( recentFileActs[i] );
-    QToolButton* fileButton = new QToolButton( this );
-    fileButton->setToolTip( tr("Last Circuits") );
-    fileButton->setMenu( &m_fileMenu );
-    fileButton->setIcon( QIcon(":/lastfiles.svg") );
-    fileButton->setPopupMode( QToolButton::InstantPopup );
-    m_circToolBar.addWidget( fileButton );
+    m_fileButton = new QToolButton( this );
+    m_fileButton->setToolTip( tr("Last Circuits") );
+    m_fileButton->setMenu( &m_fileMenu );
+    m_fileButton->setIcon( QIcon(":/lastfiles.svg") );
+    m_fileButton->setPopupMode( QToolButton::InstantPopup );
+    m_circToolBar.addWidget( m_fileButton );
 
     m_circToolBar.addAction( newCircAct );
 
@@ -254,12 +255,12 @@ void CircuitWidget::createToolBars()
     m_infoMenu.addAction( aboutAct );
     m_infoMenu.addAction( aboutQtAct );
 
-    QToolButton* infoButton = new QToolButton( this );
-    infoButton->setToolTip( tr("Info") );
-    infoButton->setMenu( &m_infoMenu );
-    infoButton->setIcon( QIcon(":/help.svg") );
-    infoButton->setPopupMode( QToolButton::InstantPopup );
-    m_circToolBar.addWidget( infoButton );
+    m_infoButton = new QToolButton( this );
+    m_infoButton->setToolTip( tr("Info") );
+    m_infoButton->setMenu( &m_infoMenu );
+    m_infoButton->setIcon( QIcon(":/help.svg") );
+    m_infoButton->setPopupMode( QToolButton::InstantPopup );
+    m_circToolBar.addWidget( m_infoButton );
     
     m_circToolBar.addSeparator();//..........................
 }
@@ -551,4 +552,31 @@ void CircuitWidget::updateRecentFileActions()
     for( int i=numRecentFiles; i<MaxRecentFiles; i++ ) recentFileActs[i]->setVisible(false);
 }
 
+void CircuitWidget::updateIcons()
+{
+    newCircAct->setIcon(    ThemeManager::self()->icon(":/new.svg") );
+    openCircAct->setIcon(   ThemeManager::self()->icon(":/open.svg") );
+    saveCircAct->setIcon(   ThemeManager::self()->icon(":/save.svg") );
+    saveCircAsAct->setIcon( ThemeManager::self()->icon(":/saveas.svg") );
+    zoomFitAct->setIcon(    ThemeManager::self()->icon(":/zoomfit.svg") );
+    zoomSelAct->setIcon(    ThemeManager::self()->icon(":/zoomsel.svg") );
+    zoomOneAct->setIcon(    ThemeManager::self()->icon(":/zoomone.svg") );
+    settAppAct->setIcon(    ThemeManager::self()->icon(":/config.svg") );
+    infoAct->setIcon(       ThemeManager::self()->icon(":/help.svg") );
+    aboutAct->setIcon(      ThemeManager::self()->icon(":/about.svg") );
+    aboutQtAct->setIcon(    ThemeManager::self()->icon(":/about.svg") );
+
+    m_fileButton->setIcon( ThemeManager::self()->icon(":/lastfiles.svg") );
+    m_infoButton->setIcon( ThemeManager::self()->icon(":/help.svg") );
+
+    // Restore power/pause icons based on current simulation state
+    ///QString state = powerCircAct->iconText();
+    ///if     ( state == "On"    ) powerCircAct->setIcon( ThemeManager::self()->icon("/:poweron.png") );
+    ///else if( state == "Debug" ) powerCircAct->setIcon( ThemeManager::self()->icon("/:powerdeb.png") );
+    ///else                        powerCircAct->setIcon( ThemeManager::self()->icon("/:poweroff.png") );
+    ///
+    ///if( Simulator::self()->isPaused() )
+    ///    pauseSimAct->setIcon( ThemeManager::self()->icon("simpaused.png") );
+    ///else pauseSimAct->setIcon( ThemeManager::self()->icon("pausesim.png") );
+}
 #include "moc_circuitwidget.cpp"

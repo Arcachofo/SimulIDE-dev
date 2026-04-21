@@ -12,6 +12,7 @@
 #include "circuitwidget.h"
 #include "componentlist.h"
 #include "analogclock.h"
+#include "thememanager.h"
 
 AppDialog::AppDialog( QWidget* parent )
          : QDialog( parent )
@@ -25,6 +26,8 @@ AppDialog::AppDialog( QWidget* parent )
     m_scale = MainWindow::self()->fontScale();
     language->setCurrentIndex( (int)MainWindow::self()->lang() );
     language->setFixedWidth( 80*m_scale );
+    theme->setCurrentIndex( (int)ThemeManager::self()->theme() );
+    theme->setFixedWidth( 80*m_scale );
     fontName->setCurrentText( MainWindow::self()->defaultFontName() );
     fontName->setFixedWidth( 80*m_scale );
     fontScale->setValue( m_scale );
@@ -93,15 +96,9 @@ AppDialog::AppDialog( QWidget* parent )
     this->adjustSize();
 }
 
-void AppDialog::on_tabList_currentChanged( int tab )
+void AppDialog::on_tabList_currentChanged( int )
 {
     if( helpText->isVisible() ) updtHelp();
-
-    switch( tab ) {
-        case 0: setMinimumHeight( 250*m_scale ); setMaximumHeight( 350*m_scale ); break;
-        case 1: setMinimumHeight( 300*m_scale ); setMaximumHeight( 500*m_scale ); break;
-        case 2: setMinimumHeight( 350*m_scale ); setMaximumHeight( 450*m_scale ); break;
-    }
     adjustSize();
 }
 void AppDialog::updtHelp()
@@ -133,6 +130,11 @@ void AppDialog::updtValues()
 void AppDialog::on_language_currentIndexChanged( int index )
 {
     MainWindow::self()->setLang( (Langs)index );
+}
+
+void AppDialog::on_theme_currentIndexChanged( int index )
+{
+    ThemeManager::self()->setTheme( (Theme)index );
 }
 
 void AppDialog::on_fontScale_valueChanged( double scale )

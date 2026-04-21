@@ -22,6 +22,7 @@
 #include "basedebugger.h"
 #include "mainwindow.h"
 #include "simulator.h"
+#include "thememanager.h"
 #include "utils.h"
 
 #include "intprop.h"
@@ -663,9 +664,9 @@ void EditorWidget::createWidgets()
     m_docWidget->setTabsClosable ( true );
     m_docWidget->setContextMenuPolicy( Qt::CustomContextMenu );
 
-    double fontScale = MainWindow::self()->fontScale();
-    QString fontSize = QString::number( int(10*fontScale) );
-    m_docWidget->tabBar()->setStyleSheet("QTabBar { font-size:"+fontSize+"px; }");
+    //double fontScale = MainWindow::self()->fontScale();
+    //QString fontSize = QString::number( int(10*fontScale) );
+    //m_docWidget->tabBar()->setStyleSheet("QTabBar { font-size:"+fontSize+"px; }");
     m_docWidget->setMovable( true );
 
     splitter0->addWidget( m_docWidget );
@@ -806,29 +807,29 @@ void EditorWidget::createToolBars()
     m_settingsMenu.addAction( confFileAct );
     m_settingsMenu.addAction( confCompAct );
 
-    QToolButton* settingsButton = new QToolButton( this );
-    settingsButton->setToolTip( tr("Settings") );
-    settingsButton->setMenu( &m_settingsMenu );
-    settingsButton->setIcon( QIcon(":/config.svg") );
-    settingsButton->setPopupMode( QToolButton::InstantPopup );
+    m_settingsButton = new QToolButton( this );
+    m_settingsButton->setToolTip( tr("Settings") );
+    m_settingsButton->setMenu( &m_settingsMenu );
+    m_settingsButton->setIcon( QIcon(":/config.svg") );
+    m_settingsButton->setPopupMode( QToolButton::InstantPopup );
 
     for( int i=0; i<MaxRecentFiles; i++ ) m_fileMenu.addAction( recentFileActs[i] );
-    QToolButton* fileButton = new QToolButton( this );
-    fileButton->setToolTip( tr("Last Files") );
-    fileButton->setMenu( &m_fileMenu );
-    fileButton->setIcon( QIcon(":/lastfiles.svg") );
-    fileButton->setPopupMode( QToolButton::InstantPopup );
+    m_fileButton = new QToolButton( this );
+    m_fileButton->setToolTip( tr("Last Files") );
+    m_fileButton->setMenu( &m_fileMenu );
+    m_fileButton->setIcon( QIcon(":/lastfiles.svg") );
+    m_fileButton->setPopupMode( QToolButton::InstantPopup );
 
     double fs = MainWindow::self()->fontScale()*20;
 
     m_editorToolBar = new QToolBar( this );
     m_editorToolBar->setIconSize( QSize( fs, fs ) );
-    m_editorToolBar->addWidget( settingsButton );
+    m_editorToolBar->addWidget( m_settingsButton );
     QWidget* spacer = new QWidget();
     spacer->setFixedWidth( 15 );
     m_editorToolBar->addWidget( spacer );
     m_editorToolBar->addSeparator();//..........................
-    m_editorToolBar->addWidget( fileButton );
+    m_editorToolBar->addWidget( m_fileButton );
 
     m_editorToolBar->addAction(newAct);
     m_editorToolBar->addAction(openAct);
@@ -858,6 +859,36 @@ void EditorWidget::createToolBars()
     m_debuggerToolBar->addSeparator();
     m_debuggerToolBar->addAction(stopAct);
     m_debuggerToolBar->setVisible( false );
+}
+
+void EditorWidget::updateIcons()
+{
+    newAct->setIcon(      ThemeManager::self()->icon(":/new.svg") );
+    openAct->setIcon(     ThemeManager::self()->icon(":/open.svg") );
+    saveAct->setIcon(     ThemeManager::self()->icon(":/save.svg") );
+    saveAsAct->setIcon(   ThemeManager::self()->icon(":/saveas.svg") );
+
+    cutAct->setIcon(      ThemeManager::self()->icon(":/cut.svg") );
+    copyAct->setIcon(     ThemeManager::self()->icon(":/copy.svg") );
+    pasteAct->setIcon(    ThemeManager::self()->icon(":/paste.svg") );
+
+    undoAct->setIcon(     ThemeManager::self()->icon(":/undo.svg") );
+    redoAct->setIcon(     ThemeManager::self()->icon(":/redo.svg") );
+
+    runAct->setIcon(      ThemeManager::self()->icon(":/runtobk.png") );
+    stepAct->setIcon(     ThemeManager::self()->icon(":/step.svg") );
+    stepOverAct->setIcon( ThemeManager::self()->icon(":/rotatecw.svg") );
+    pauseAct->setIcon(    ThemeManager::self()->icon(":/pause.svg") );
+    resetAct->setIcon(    ThemeManager::self()->icon(":/reset.svg") );
+    stopAct->setIcon(     ThemeManager::self()->icon(":/stop.svg") );
+
+    compileAct->setIcon(  ThemeManager::self()->icon(":/verify.svg") );
+    loadAct->setIcon(     ThemeManager::self()->icon(":/upload.svg") );
+    findQtAct->setIcon(   ThemeManager::self()->icon(":/find.svg") );
+    debugAct->setIcon(    ThemeManager::self()->icon(":/debug.svg") );
+
+    m_settingsButton->setIcon( ThemeManager::self()->icon(":/config.svg") );
+    m_fileButton->setIcon(     ThemeManager::self()->icon(":/lastfiles.svg") );
 }
 
 #include  "moc_editorwidget.cpp"

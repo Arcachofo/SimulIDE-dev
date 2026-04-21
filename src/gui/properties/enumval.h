@@ -26,7 +26,7 @@ class EnumVal : public PropVal, private Ui::EnumVal
 
     public slots:
         void on_showVal_toggled( bool checked );
-        void on_valueBox_currentIndexChanged( QString val );
+        void on_valueBox_currentIndexChanged( int index );
 
     protected:
         QStringList m_enums;

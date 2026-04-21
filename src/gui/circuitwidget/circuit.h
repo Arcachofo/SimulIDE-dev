@@ -250,4 +250,7 @@ class Circuit : public QGraphicsScene
         QList<Component*> m_oldComps;
         QList<Node*>      m_oldNodes;
         QMap<CompBase*, QString> m_compStrMap;
+
+        uint32_t* m_background;
+        uint32_t* m_foreground;
 };

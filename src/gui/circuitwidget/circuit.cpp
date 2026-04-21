@@ -28,6 +28,7 @@
 #include "linker.h"
 #include "tunnel.h"
 #include "currentwidget.h"
+#include "thememanager.h"
 
 Circuit* Circuit::m_pSelf = nullptr;
 
@@ -45,6 +46,9 @@ Circuit::Circuit( int width, int height, CircuitView* parent )
     m_sceneWidth  = width;
     m_sceneHeight = height;
     setSize( width, height );
+
+    m_background = ThemeManager::self()->getColorPtr( 0 );
+    m_foreground = ThemeManager::self()->getColorPtr( 1 );
 
     m_busy       = false;
     m_undo       = false;
@@ -1169,8 +1173,10 @@ void Circuit::drawBackground( QPainter* painter, const QRectF &rect )
     painter->drawRect( m_scenerect );
     return;*/
 
-    painter->fillRect( m_scenerect, QColor( 240, 240, 210 ) );
-    painter->setPen( QColor( 210, 210, 210 ) );
+    painter->fillRect( m_scenerect, QColor( *m_background ) );
+    painter->setPen( QColor( *m_foreground ) );
+    //painter->fillRect( m_scenerect, QColor( 240, 240, 210 ) );
+    //painter->setPen( QColor( 210, 210, 210 ) );
 
     if( m_hideGrid ) return;
 

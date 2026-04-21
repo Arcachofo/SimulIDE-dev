@@ -18,6 +18,7 @@ class AboutDialog;
 class AppDialog;
 class InfoWidget;
 class CurrentWidget;
+class QToolButton;
 
 class CircuitWidget : public QWidget
 {
@@ -43,6 +44,8 @@ class CircuitWidget : public QWidget
         void debugPaused();
         void resumeDebug();
         void updtAppDialog();
+
+        void updateIcons();
 
         void simDebugMessage( QString msg ) { m_outPane.appendLine( msg.remove("\"") ); }
 
@@ -106,6 +109,9 @@ class CircuitWidget : public QWidget
         QAction* infoAct;
         QAction* aboutAct;
         QAction* aboutQtAct;
+
+        QToolButton* m_fileButton;
+        QToolButton* m_infoButton;
         
         QMenu m_fileMenu;
         QMenu m_infoMenu;

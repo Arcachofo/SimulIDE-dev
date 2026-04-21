@@ -17,7 +17,7 @@ enum treItemType_t{
 class TreeItem : public QTreeWidgetItem
 {
     public:
-        TreeItem( TreeItem* parent, QString name, QString nameTr, QString compType, treItemType_t itemType, const QIcon &icon, bool custom );
+        TreeItem( TreeItem* parent, QString name, QString nameTr, QString compType, treItemType_t itemType, QPixmap &pixmap, bool custom );
         ~TreeItem();
 
         QString name()     { return m_name; }
@@ -39,7 +39,10 @@ class TreeItem : public QTreeWidgetItem
 
         QString toString( QString indent="" );
 
+        void setTheme( bool dark );
+
     private:
+        void updateColors( bool dark=false );
 
         QString m_name;
         QString m_nameTr;
@@ -49,6 +52,8 @@ class TreeItem : public QTreeWidgetItem
         bool m_isCustom;
         bool m_expanded;
         //bool m_hidden;
+
+        QPixmap m_pixmap;
 
         treItemType_t m_itemType;
 

@@ -70,15 +70,16 @@ void EnumVal::on_showVal_toggled( bool checked )
     m_blocked = false;
 }
 
-void EnumVal::on_valueBox_currentIndexChanged( QString val )
+void EnumVal::on_valueBox_currentIndexChanged( int index )
 {
     if( m_blocked ) return;
 
     prepareChange();
-    int index = valueBox->currentIndex();
-    m_property->setValStr( m_enums.at( index ) );
+    //int index = valueBox->currentIndex();
+    QString valStr = m_enums.at( index );
+    m_property->setValStr( valStr );
 
-    if( showVal->isChecked() ) m_component->setPropStr("ValLabelText", val ); //setValLabelText( val );
+    if( showVal->isChecked() ) m_component->setPropStr("ValLabelText", valStr ); //setValLabelText( val );
     saveChanges();
 }
 

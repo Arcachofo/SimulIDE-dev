@@ -16,6 +16,7 @@ class QTabWidget;
 class QToolBar;
 class CodeEditor;
 class FindReplace;
+class QToolButton;
 
 class EditorWidget : public QWidget, public CompBase
 {
@@ -63,6 +64,8 @@ class EditorWidget : public QWidget, public CompBase
 
        QStringList getFiles() { return m_fileList.keys(); }
        void restoreFile( QString filePath );
+
+       void updateIcons();
 
     public slots:
        void loadFile( QString filePath );
@@ -156,6 +159,9 @@ class EditorWidget : public QWidget, public CompBase
         QToolBar* m_findToolBar;
         QToolBar* m_compileToolBar;
         QToolBar* m_debuggerToolBar;
+
+        QToolButton* m_settingsButton;
+        QToolButton* m_fileButton;
 
         QAction* confEditAct;
         QAction* confFileAct;

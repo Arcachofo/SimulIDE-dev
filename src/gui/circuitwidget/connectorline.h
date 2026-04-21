@@ -92,6 +92,8 @@ class ConnectorLine : public QGraphicsItem
         bool m_moveP2;
         bool m_moving;
 
+        uint32_t* m_foreColor;
+
         Connector*     m_pConnector;
         ConnectorLine* m_prevLine;
         ConnectorLine* m_nextLine;

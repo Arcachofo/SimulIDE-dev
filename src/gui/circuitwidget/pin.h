@@ -134,7 +134,8 @@ class Pin : public QGraphicsItem, public ePin, public Updatable
         double  m_opCount;
 
         QString m_labelText;
-        
+
+        uint32_t* m_foreColor;
         QColor m_color[8];
         QRectF     m_area;
         Connector* my_connector;

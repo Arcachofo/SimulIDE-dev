@@ -221,6 +221,8 @@ class Component : public CompBase, public QGraphicsItem, public Updatable
         QPixmap* m_backPixmap;  // Background Pixmap
 
         QColor  m_color;
+        uint32_t* m_backColor;
+        uint32_t* m_foreColor;
 
         QRectF  m_area;         // bounding rect
         QPointF m_eventpoint;

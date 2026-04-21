@@ -38,6 +38,8 @@ class ComponentList : public QTreeWidget
 
         void writeSettings();
 
+        void setTheme( bool dark );
+
     public slots:
         void slotItemClicked( QTreeWidgetItem* item, int );
         void slotContextMenu( const QPoint& );
@@ -50,7 +52,7 @@ class ComponentList : public QTreeWidget
     private:
         void loadXml( QString xmlFile );
         void addItem( QString caption, TreeItem* catItem, QString icon, QString type );
-        void addItem( QString caption, TreeItem* catItem, QIcon &icon, QString type );
+        void addItem( QString caption, TreeItem* catItem, QPixmap &icon, QString type );
         void addLibraryItem( LibraryItem* item );
 
         void LoadLibraryItems();

@@ -14,6 +14,7 @@
 #include "circuit.h"
 #include "node.h"
 #include "currentwidget.h"
+#include "thememanager.h"
 #include "utils.h"
 
 #define tr(str) simulideTr("ConnectorLine",str)
@@ -22,6 +23,8 @@ ConnectorLine::ConnectorLine( int x1, int y1, int x2, int y2, Connector* connect
              : QGraphicsItem()
 {
     m_pConnector = connector;
+
+    m_foreColor = ThemeManager::self()->getColorPtr( 3 );
     
     m_prevLine = nullptr;
     m_nextLine = nullptr;
@@ -405,7 +408,7 @@ void ConnectorLine::paint( QPainter* p, const QStyleOptionGraphicsItem*, QWidget
         if( m_pConnector->getVoltage() > 2.5 ) color = QColor( 200, 50, 50  );
         else                                   color = QColor( 50,  50, 200 );
     }
-    else color = QColor( 40, 40, 60 );
+    else color = QColor( *m_foreColor );
 
     QPen pen( color, 1.6, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin );
     //p->setBrush( Qt::green );

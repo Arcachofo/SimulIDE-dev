@@ -16,6 +16,7 @@
 #include "connectorline.h"
 #include "circuit.h"
 #include "simulator.h"
+#include "thememanager.h"
 #include "utils.h"
 
 Pin::Pin( int angle, const QPoint pos, QString id, int index, Component* parent, int length )
@@ -24,6 +25,8 @@ Pin::Pin( int angle, const QPoint pos, QString id, int index, Component* parent,
    , m_label( parent )
 {
     m_area = QRect(-3, -3, 11, 6);
+
+    m_foreColor = ThemeManager::self()->getColorPtr( 3 );
 
     m_component = parent;
     m_pinState = undef_state;
@@ -417,7 +420,8 @@ void Pin::paint( QPainter* p, const QStyleOptionGraphicsItem*, QWidget* )
         p->setPen( pen );
         p->drawLine( QPointF( x, y ), QPointF( x+width, y ) );
     }
-    QPen pen( m_color[0], 3, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin );
+    QPen pen( QColor( *m_foreColor ), 3, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin );
+    //QPen pen( m_color[0], 3, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin );
 
     if     ( m_unused  ) pen.setColor( QColor( 75, 120, 170 ));
     else if( m_isBus   ) pen.setColor( Qt::darkGreen );

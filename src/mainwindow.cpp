@@ -26,6 +26,7 @@
 #include "circuitwidget.h"
 #include "filewidget.h"
 #include "installer.h"
+#include "thememanager.h"
 #include "utils.h"
 
 MainWindow* MainWindow::m_pSelf = nullptr;
@@ -34,6 +35,7 @@ MainWindow::MainWindow()
           : QMainWindow()
 {
     setWindowIcon( QIcon(":/simulide.png") );
+
     m_pSelf   = this;
     m_circuitW = nullptr;
     m_autoBck = 15;
@@ -85,6 +87,7 @@ MainWindow::MainWindow()
     //----------------------------------------------
 
     QApplication::setStyle( QStyleFactory::create("Fusion") ); //applyStyle();
+    m_themeManager = new ThemeManager();
 
     createWidgets();
     m_circuitW->newCircuit();
@@ -310,6 +313,14 @@ void MainWindow::createWidgets()
     m_mainSplitter->setSizes( {150, 350, 500} );
 
     this->showMaximized();
+}
+
+void MainWindow::updateIcons()
+{
+    m_clearButton->setIcon( ThemeManager::self()->icon(":/remove.svg") );
+    m_sidepanel->setTabIcon( 0, ThemeManager::self()->icon(":/ic2.png") );
+    m_sidepanel->setTabIcon( 1, ThemeManager::self()->icon(":/complib.svg") );
+    m_sidepanel->setTabIcon( 2, ThemeManager::self()->icon(":/files.svg") );
 }
 
 void MainWindow::clearSearch()
