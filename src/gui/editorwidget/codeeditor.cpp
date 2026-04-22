@@ -20,6 +20,7 @@
 #include "editorwindow.h"
 #include "propdialog.h"
 #include "circuit.h"
+#include "thememanager.h"
 #include "utils.h"
 
 #include "stringprop.h"
@@ -67,10 +68,10 @@ CodeEditor::CodeEditor( QWidget* parent, OutPanelText* outPane )
 
     setAcceptDrops( false );
 
-    QPalette p = palette();
-    p.setColor( QPalette::Base, QColor( 255, 255, 249) );
-    p.setColor( QPalette::Text, QColor( 0, 0, 0) );
-    setPalette( p );
+    //QPalette p = palette();
+    //p.setColor( QPalette::Base, QColor( 255, 255, 249) );
+    //p.setColor( QPalette::Text, QColor( 0, 0, 0) );
+    //setPalette( p );
 
     m_completer = new QCompleter( this );
     m_completer->setWidget( this );
@@ -145,9 +146,11 @@ CodeEditor::~CodeEditor()
 
 void CodeEditor::setSyntaxFile( QString file )
 {
+    m_syntaxFile = file;
     QStringList keyWords = m_hlighter->readSyntaxFile( file );
     addKeyWords( keyWords );
 }
+void CodeEditor::reloadSyntax() { m_hlighter->readSyntaxFile( m_syntaxFile ); }
 
 void CodeEditor::fileProps()
 {
@@ -320,7 +323,7 @@ void CodeEditor::complete( QKeyEvent* e )
     }
     QString word = wordUnderCursor();
 
-    QString lastChar = text.right(1);
+    //QString lastChar = text.right(1);
     if( word.contains(".") )                // Check if we should match members
     {
         QStringList words = word.split(".");
@@ -713,29 +716,29 @@ void CodeEditor::contextMenuEvent( QContextMenuEvent* event )
 {
     QMenu menu;
 
-    QAction* undoAction = menu.addAction(QIcon(":/undo.svg"),tr("Undo")+"\tCtrl+Z");
+    QAction* undoAction = menu.addAction(ThemeManager::self()->icon(":/undo.svg"),tr("Undo")+"\tCtrl+Z");
     connect( undoAction, &QAction::triggered,
               this, &CodeEditor::undo, Qt::UniqueConnection );
 
-    QAction* redoAction = menu.addAction(QIcon(":/redo.svg"),tr("Redo")+"\tCtrl+Y");
+    QAction* redoAction = menu.addAction(ThemeManager::self()->icon(":/redo.svg"),tr("Redo")+"\tCtrl+Y");
     connect( redoAction, &QAction::triggered,
               this, &CodeEditor::redo, Qt::UniqueConnection );
 
     menu.addSeparator();
 
-    QAction* cutAction = menu.addAction(QIcon(":/cut.svg"),tr("Cut")+"\tCtrl+X");
+    QAction* cutAction = menu.addAction(ThemeManager::self()->icon(":/cut.svg"),tr("Cut")+"\tCtrl+X");
     connect( cutAction, &QAction::triggered,
                   this, &CodeEditor::cut, Qt::UniqueConnection );
 
-    QAction* copyAction = menu.addAction(QIcon(":/copy.svg"),tr("Copy")+"\tCtrl+C");
+    QAction* copyAction = menu.addAction(ThemeManager::self()->icon(":/copy.svg"),tr("Copy")+"\tCtrl+C");
     connect( copyAction, &QAction::triggered,
                    this, &CodeEditor::copy, Qt::UniqueConnection );
 
-    QAction* pasteAction = menu.addAction(QIcon(":/paste.svg"),tr("Paste")+"\tCtrl+V");
+    QAction* pasteAction = menu.addAction(ThemeManager::self()->icon(":/paste.svg"),tr("Paste")+"\tCtrl+V");
     connect( pasteAction, &QAction::triggered,
                     this, &CodeEditor::paste, Qt::UniqueConnection );
 
-    QAction* removeAction = menu.addAction( QIcon( ":/remove.svg"),tr("Remove") );
+    QAction* removeAction = menu.addAction( ThemeManager::self()->icon( ":/remove.svg"),tr("Remove") );
     connect( removeAction, &QAction::triggered,
                      this, &CodeEditor::deleteSelected, Qt::UniqueConnection );
 
@@ -743,7 +746,7 @@ void CodeEditor::contextMenuEvent( QContextMenuEvent* event )
 
     menu.addSeparator();
 
-    QAction* reloadAction = menu.addAction(QIcon(":/reload.svg"), tr("Reload Document")+"\tCtrl+R");
+    QAction* reloadAction = menu.addAction(ThemeManager::self()->icon(":/reload.svg"), tr("Reload Document")+"\tCtrl+R");
     connect( reloadAction, &QAction::triggered,
              EditorWindow::self(), &EditorWindow::reload, Qt::UniqueConnection );
 
@@ -872,8 +875,10 @@ void CodeEditor::highlightCurrentLine()
 
     if( !isReadOnly() )
     {
+        bool dark = ThemeManager::self()->isDark();
+
         QTextEdit::ExtraSelection selection;
-        QColor lineColor = QColor( 250, 240, 220 );
+        QColor lineColor = dark ? QColor( 20, 20, 30 ) : QColor( 250, 240, 220 );
 
         selection.format.setBackground( lineColor );
         selection.format.setProperty( QTextFormat::FullWidthSelection, true );
@@ -886,7 +891,8 @@ void CodeEditor::highlightCurrentLine()
 void CodeEditor::lineNumberAreaPaintEvent( QPaintEvent* event )
 {
     QPainter painter( m_lNumArea );
-    painter.fillRect( event->rect(), Qt::lightGray );
+    bool dark = ThemeManager::self()->isDark();
+    if( !dark ) painter.fillRect( event->rect(), Qt::lightGray );
 
     QTextBlock block = firstVisibleBlock();
 
@@ -1003,7 +1009,8 @@ void CodeEditor::lineNumberAreaPaintEvent( QPaintEvent* event )
                 }
             }
             QString number = QString::number( lineNumber ); // Draw line number
-            painter.setPen( Qt::black );
+            if( dark ) painter.setPen( 0xF0F0F0 );
+            else       painter.setPen( Qt::black );
             painter.drawText( 0, top, m_lNumArea->width(), fontSize, Qt::AlignRight, number );
         }
         block = block.next();
@@ -1081,17 +1088,17 @@ void LineNumberArea::contextMenuEvent( QContextMenuEvent *event)
     
     QMenu menu;
 
-    QAction* addBrkAction = menu.addAction( QIcon(":/breakpoint.png"),tr( "Add BreakPoint" ) );
+    QAction* addBrkAction = menu.addAction( ThemeManager::self()->icon(":/breakpoint.png"),tr( "Add BreakPoint" ) );
     connect( addBrkAction, &QAction::triggered,
                m_codeEditor, &CodeEditor::slotAddBreak, Qt::UniqueConnection );
 
-    QAction* remBrkAction = menu.addAction( QIcon(":/nobreakpoint.png"),tr( "Remove BreakPoint" ) );
+    QAction* remBrkAction = menu.addAction( ThemeManager::self()->icon(":/nobreakpoint.png"),tr( "Remove BreakPoint" ) );
     connect( remBrkAction, &QAction::triggered,
                m_codeEditor, &CodeEditor::slotRemBreak, Qt::UniqueConnection );
 
     menu.addSeparator();
 
-    QAction* clrBrkAction = menu.addAction( QIcon(":/remove.svg"),tr( "Clear All BreakPoints" ) );
+    QAction* clrBrkAction = menu.addAction( ThemeManager::self()->icon(":/remove.svg"),tr( "Clear All BreakPoints" ) );
     connect( clrBrkAction, &QAction::triggered,
                m_codeEditor, &CodeEditor::slotClearBreak, Qt::UniqueConnection );
 

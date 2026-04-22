@@ -11,6 +11,7 @@
 #include "installinfo.h"
 #include "installer.h"
 #include "mainwindow.h"
+#include "thememanager.h"
 
 InstallItem::InstallItem( Installer* parent, QString item )
            : QWidget( (QWidget*)parent )
@@ -45,14 +46,14 @@ void InstallItem::setItem( QString itemStr )
     font.setPixelSize( 11*scale );
     textEdit->setFont( font );
 
-    infoButton->setIcon(QIcon(":/help.svg"));
+    infoButton->setIcon(ThemeManager::self()->icon(":/help.svg"));
     infoButton->setToolTip( tr("Information") );
     QPalette pi = infoButton->palette();
     pi.setColor( QPalette::Button, "#DDDDDD" );
     infoButton->setPalette( pi );
     //infoButton->setStyleSheet( "background-color:#CCCCCC" );
 
-    updtButton->setIcon(QIcon(":/reset.svg"));
+    updtButton->setIcon(ThemeManager::self()->icon(":/reset.svg"));
     updtButton->setToolTip( tr("Update") );
 
     QStringList set = itemStr.split("; ");
@@ -173,13 +174,13 @@ void InstallItem::setButtonState( buttonState_t state )
     if( installed )
     {
         installButton->setToolTip( tr("Uninstall") );
-        installButton->setIcon( QIcon(":/remove.svg") );
+        installButton->setIcon( ThemeManager::self()->icon(":/remove.svg") );
         pb.setColor( QPalette::Button, "#FF8070" );
         if( update ) color = "#CCFFCC";
         else         color = "#EAFFEA";
     }else{
         installButton->setToolTip( tr("Install") );
-        installButton->setIcon( QIcon(":/load.svg") );
+        installButton->setIcon( ThemeManager::self()->icon(":/load.svg") );
         pb.setColor( QPalette::Button, "#30DD40" );
         color = "#F8F8FF";
     }

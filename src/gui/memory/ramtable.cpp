@@ -18,6 +18,7 @@
 #include "circuit.h"
 #include "basedebugger.h"
 #include "mainwindow.h"
+#include "thememanager.h"
 #include "utils.h"
 
 RamTable::RamTable( QWidget* parent, eMcu* processor ,bool cpuMonitor )
@@ -142,18 +143,18 @@ void RamTable::slotContextMenu( const QPoint& point )
 {
     QMenu menu;
 
-    QAction *clearSelected = menu.addAction( QIcon(":/remove.svg"),tr("Clear Selected") );
+    QAction *clearSelected = menu.addAction( ThemeManager::self()->icon(":/remove.svg"),tr("Clear Selected") );
     connect( clearSelected, SIGNAL(triggered()), this, SLOT(clearSelected()), Qt::UniqueConnection );
 
-    QAction *clearTable = menu.addAction( QIcon(":/remove.svg"),tr("Clear Table") );
+    QAction *clearTable = menu.addAction( ThemeManager::self()->icon(":/remove.svg"),tr("Clear Table") );
     connect( clearTable, SIGNAL(triggered()), this, SLOT(clearTable()), Qt::UniqueConnection );
 
     menu.addSeparator();
 
-    QAction *loadVarSet = menu.addAction( QIcon(":/open.png"),tr("Load VarSet") );
+    QAction *loadVarSet = menu.addAction( ThemeManager::self()->icon(":/open.png"),tr("Load VarSet") );
     connect( loadVarSet, SIGNAL(triggered()), this, SLOT(loadVarSet()), Qt::UniqueConnection );
 
-    QAction *saveVarSet = menu.addAction( QIcon(":/save.png"),tr("Save VarSet") );
+    QAction *saveVarSet = menu.addAction( ThemeManager::self()->icon(":/save.png"),tr("Save VarSet") );
     connect( saveVarSet, SIGNAL(triggered()), this, SLOT(saveVarSet()), Qt::UniqueConnection );
 
     menu.exec( mapToGlobal(point) );

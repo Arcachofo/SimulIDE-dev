@@ -260,10 +260,10 @@ void SubPackage::mousePressEvent( QGraphicsSceneMouseEvent* event )
 
 void SubPackage::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
 {
-    QAction* loadAction = menu->addAction( QIcon(":/open.svg"),tr("Load Package") );
+    QAction* loadAction = menu->addAction( m_theme->icon(":/open.svg"),tr("Load Package") );
     QObject::connect( loadAction, &QAction::triggered, [=](){ loadPackage(); } );
 
-    QAction* saveAction = menu->addAction( QIcon(":/save.svg"),tr("Save Package") );
+    QAction* saveAction = menu->addAction( m_theme->icon(":/save.svg"),tr("Save Package") );
     QObject::connect( saveAction, &QAction::triggered, [=](){ slotSave(); } );
 
     menu->addSeparator();
@@ -273,7 +273,7 @@ void SubPackage::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu
         m_boardModeAction->setChecked( m_boardMode );
         menu->addAction( m_boardModeAction );
     }
-    QAction* mainCompAction = menu->addAction( QIcon(":/subcl.png"),tr("Select Exposed Components") );
+    QAction* mainCompAction = menu->addAction( m_theme->icon(":/subcl.png"),tr("Select Exposed Components") );
     QObject::connect( mainCompAction, &QAction::triggered, [=](){ mainComp(); } );
 
     Component::contextMenu( event, menu );

@@ -9,6 +9,7 @@
 #include "componentlist.h"
 #include "treeitem.h"
 #include "mainwindow.h"
+#include "thememanager.h"
 
 manCompDialog::manCompDialog( QWidget* parent )
              : QDialog( parent )
@@ -61,7 +62,7 @@ void manCompDialog::addItem( TreeItem* treeItem )
 
         for( int i=0; i<childCount; i++ ) addItem( (TreeItem*)treeItem->child( i ) );
     }
-    else listItem->setIcon( QIcon(":/blanc.png") );
+    else listItem->setIcon( ThemeManager::self()->icon(":/blanc.png") );
 }
 
 void manCompDialog::initialize( TreeItem* treeItem )

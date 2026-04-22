@@ -185,7 +185,7 @@ double DcMotor::getDblReg( QString reg )
 
 void DcMotor::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
 {
-    QAction* watcherAction = menu->addAction( QIcon(":/terminal.svg"),tr("Open Monitor") );
+    QAction* watcherAction = menu->addAction( m_theme->icon(":/terminal.svg"),tr("Open Monitor") );
     QObject::connect( watcherAction, &QAction::triggered, [=](){ openWatcher(); } );
 
     menu->addSeparator();

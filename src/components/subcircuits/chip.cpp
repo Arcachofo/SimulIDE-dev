@@ -558,6 +558,7 @@ void Chip::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w )
             else                p->setBrush( QColor( 0, 0, 0, 0 ) );
             if( !m_border ) p->setPen( Qt::NoPen );
         }
+        else if( !m_isLS ) p->setBrush( m_color );
         p->drawRoundedRect( m_area, 1, 1 );
 
         if( m_backPixmap ) p->drawPixmap( imgArea, *m_backPixmap );

@@ -44,6 +44,9 @@ void TreeItem::setItemType( treItemType_t itemType )
 
         if( icon( 0 ).isNull() ) setSizeHint( 0, QSize( 100, 14*scale ) );
         font.setPixelSize( 11*scale );
+
+        if( m_isCustom ) m_foreColor = 0xFF505A6E;
+        else             m_foreColor = 0xFF645A3C;
     }
     else   // Is Category
     {
@@ -54,12 +57,28 @@ void TreeItem::setItemType( treItemType_t itemType )
         {
             setSizeHint( 0, QSize(100, 30*scale) );
             font.setPixelSize( 13*scale );
+
+            if( m_isCustom ){
+                m_foreColor = 0xFF323C50;
+                m_backColor = 0xFFDCEBF0;
+            }else{
+                m_foreColor = 0xFF4B460A;
+                m_backColor = 0xFFDCF0EB;
+            }
         }
         else if( itemType == categ_CHILD )
         {
             if( icon( 0 ).isNull() ) setSizeHint( 0, QSize(100, 16*scale) );
             else                     setSizeHint( 0, QSize(100, 20*scale) );
             font.setPixelSize( 12*scale );
+
+            if( m_isCustom ){
+                m_foreColor = 0xFF465064;
+                m_backColor = 0xFFE6F5FA;
+            }else{
+                m_foreColor = 0xFF5A5032;
+                m_backColor = 0xFFE6FAF5;
+            }
         }
     }
     setFont( 0, font );
@@ -89,34 +108,9 @@ void TreeItem::setTheme( bool dark )
 
 void TreeItem::updateColors( bool dark )
 {
-    if( m_itemType == component )
-    {
-        if( m_isCustom ) setForeground( 0, QColor( 80, 90, 110 ) );
-        else             setForeground( 0, QColor( 100, 90, 60 ) );
-    }
-    else   // Is Category
-    {
-        if( m_itemType == categ_MAIN )
-        {
-            if( m_isCustom ){
-                setForeground( 0, QColor( 50, 60, 80 ) );
-                setBackground( 0, dark ?  QColor(0, 15, 40) : QColor(220, 235, 240) );
-            }else{
-                setForeground( 0, QColor( 75, 70, 10 ) );
-                setBackground( 0, dark ? QColor(0, 20, 35) : QColor(220, 240, 235) );
-            }
-        }
-        else if( m_itemType == categ_CHILD )
-        {
-            if( m_isCustom ){
-                setForeground( 0, QColor( 70, 80, 100 ) );
-                setBackground( 0, dark ? QColor( 0, 15, 50) : QColor( 230, 245, 250) );
-            }else{
-                setForeground( 0, QColor( 90, 80, 50 ) );
-                setBackground( 0, dark ? QColor( 0, 20, 45) : QColor( 230, 250, 245) );
-            }
-        }
-    }
+    setForeground( 0, dark ? QColor(m_foreColor).lighter(170) : QColor(m_foreColor) );
+    if( m_itemType != component )
+        setBackground( 0, dark ? QColor(m_backColor).darker(500)  : QColor(m_backColor) );
 }
 
 QString TreeItem::toString( QString indent )

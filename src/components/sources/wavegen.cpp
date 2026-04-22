@@ -377,7 +377,7 @@ void WaveGen::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
 {
     if( m_waveType == Wav )
     {
-        QAction* loadAction = menu->addAction( QIcon(":/load.svg"),tr("Load Wav File") );
+        QAction* loadAction = menu->addAction( m_theme->icon(":/load.svg"),tr("Load Wav File") );
         QObject::connect( loadAction, &QAction::triggered, [=](){ slotLoad(); } );
 
         menu->addSeparator();

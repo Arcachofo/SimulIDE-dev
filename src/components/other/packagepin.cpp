@@ -9,6 +9,7 @@
 
 #include "packagepin.h"
 #include "subpackage.h"
+#include "thememanager.h"
 #include "utils.h"
 
 PackagePin::PackagePin( int angle, const QPoint pos, QString id, int index, SubPackage* parent )
@@ -55,11 +56,11 @@ void PackagePin::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
     m_package->setEventPin( this );
 
     QMenu* menu = new QMenu();
-    QAction* editAction = menu->addAction( QIcon(":/rename.svg"),QObject::tr("Edit Pin "));
+    QAction* editAction = menu->addAction( ThemeManager::self()->icon(":/rename.svg"),QObject::tr("Edit Pin "));
     QObject::connect( editAction, &QAction::triggered,
                       [=](){ m_package->editPin(); } );
 
-    QAction* deleteAction = menu->addAction( QIcon(":/remove.svg"),QObject::tr("Delete Pin ") );
+    QAction* deleteAction = menu->addAction( ThemeManager::self()->icon(":/remove.svg"),QObject::tr("Delete Pin ") );
     QObject::connect( deleteAction, &QAction::triggered,
                       [=](){ m_package->deleteEventPin(); } );
 

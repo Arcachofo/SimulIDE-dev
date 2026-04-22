@@ -53,6 +53,9 @@ class TreeItem : public QTreeWidgetItem
         bool m_expanded;
         //bool m_hidden;
 
+        int m_foreColor;
+        int m_backColor;
+
         QPixmap m_pixmap;
 
         treItemType_t m_itemType;

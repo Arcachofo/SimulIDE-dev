@@ -545,21 +545,21 @@ bool Mcu::load( QString fileName )
 
 void Mcu::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
 {
-    QAction* mainAction = menu->addAction( QIcon(":/subc.png"),tr("Main Mcu") );
+    QAction* mainAction = menu->addAction( m_theme->icon(":/subc.png"),tr("Main Mcu") );
     QObject::connect( mainAction, &QAction::triggered, [=](){ slotmain(); } );
 
     if( m_scriptCpu && !parentItem() )
     {
-        QAction* linkCompAction = menu->addAction( QIcon(":/subcl.png"),tr("Link to Component") );
+        QAction* linkCompAction = menu->addAction( m_theme->icon(":/subcl.png"),tr("Link to Component") );
         QObject::connect( linkCompAction, &QAction::triggered, [=](){ slotLinkComp(); } );
     }
 
     if( m_eMcu.flashSize() )
     {
-        QAction* loadAction = menu->addAction( QIcon(":/load.svg"),tr("Load firmware") );
+        QAction* loadAction = menu->addAction( m_theme->icon(":/load.svg"),tr("Load firmware") );
         QObject::connect( loadAction, &QAction::triggered, [=](){ slotLoad(); } );
 
-        QAction* reloadAction = menu->addAction( QIcon(":/reload.svg"),tr("Reload firmware") );
+        QAction* reloadAction = menu->addAction( m_theme->icon(":/reload.svg"),tr("Reload firmware") );
         QObject::connect( reloadAction, &QAction::triggered, [=](){ slotReload(); } );
 
         menu->addSeparator();
@@ -567,20 +567,20 @@ void Mcu::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
 
     if( m_eMcu.romSize() )
     {
-        QAction* loadDaAction = menu->addAction( QIcon(":/open.svg"),tr("Load EEPROM data from file") );
+        QAction* loadDaAction = menu->addAction( m_theme->icon(":/open.svg"),tr("Load EEPROM data from file") );
         QObject::connect( loadDaAction, &QAction::triggered, [=](){ loadEEPROM(); } );
 
-        QAction* saveDaAction = menu->addAction(QIcon(":/save.svg"), tr("Save EEPROM data to file") );
+        QAction* saveDaAction = menu->addAction(m_theme->icon(":/save.svg"), tr("Save EEPROM data to file") );
         QObject::connect( saveDaAction, &QAction::triggered, [=](){ saveEEPROM(); } );
     }
     menu->addSeparator();
 
-    QAction* openRamTab = menu->addAction( QIcon(":/terminal.svg"),tr("Open Mcu Monitor.") );
+    QAction* openRamTab = menu->addAction( m_theme->icon(":/terminal.svg"),tr("Open Mcu Monitor.") );
     QObject::connect( openRamTab, &QAction::triggered, [=](){ slotOpenMcuMonitor(); } );
 
     if( m_eMcu.m_transModules.size() )
     {
-        QMenu* serMonMenu = menu->addMenu( QIcon(":/serialterm.png"),tr("Open Monitor.") );
+        QMenu* serMonMenu = menu->addMenu( m_theme->icon(":/serialterm.png"),tr("Open Monitor.") );
 
         for( uint i=0; i<m_eMcu.m_transModules.size(); ++i )
         {

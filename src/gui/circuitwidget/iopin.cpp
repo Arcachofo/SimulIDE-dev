@@ -10,6 +10,7 @@
 #include "iopin.h"
 #include "simulator.h"
 #include "circuit.h"
+#include "thememanager.h"
 
 eNode IoPin::m_gndEnode("");
 
@@ -329,7 +330,7 @@ void IoPin::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
 {
     QMenu* menu = new QMenu();
 
-    QAction* editAction = menu->addAction( QIcon(":/invert.png"),QObject::tr("Invert Pin"));
+    QAction* editAction = menu->addAction( ThemeManager::self()->icon(":/invert.png"),QObject::tr("Invert Pin"));
     QObject::connect( editAction, &QAction::triggered,
                      [=](){ setUserInverted( !m_inverted ); } );
 

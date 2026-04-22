@@ -156,6 +156,10 @@ void MainWindow::readSettings()
 
     m_autoUpdt = 1;
     if( m_settings->contains("autoUpdt") ) m_autoUpdt = m_settings->value("autoUpdt").toInt();
+
+    Theme theme = Theme::Light;
+    if ( m_settings->contains("theme") ) theme = (Theme)m_settings->value("theme").toInt();
+    ThemeManager::self()->setTheme( theme );
 }
 
 void MainWindow::writeSettings()
@@ -168,6 +172,7 @@ void MainWindow::writeSettings()
     m_settings->setValue("windowState", saveState() );
     m_settings->setValue("Centralsplitter/geometry", m_mainSplitter->saveState() );
     m_settings->setValue("Circsplitter/geometry", CircuitWidget::self()->splitter()->saveState() );
+    m_settings->setValue( "theme", (int)ThemeManager::self()->theme() );
 
     m_installer->writeSettings();
     ComponentList::self()->writeSettings();

@@ -393,21 +393,21 @@ void QemuDevice::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu
 {
     //if( m_eMcu.flashSize() )
     {
-        QAction* loadAction = menu->addAction( QIcon(":/load.svg"),tr("Load firmware") );
+        QAction* loadAction = menu->addAction( m_theme->icon(":/load.svg"),tr("Load firmware") );
         QObject::connect( loadAction, &QAction::triggered, [=](){ slotLoad(); } );
 
-        QAction* reloadAction = menu->addAction( QIcon(":/reload.svg"),tr("Reload firmware") );
+        QAction* reloadAction = menu->addAction( m_theme->icon(":/reload.svg"),tr("Reload firmware") );
         QObject::connect( reloadAction, &QAction::triggered, [=](){ slotReload(); } );
 
         menu->addSeparator();
     }
 
-    //QAction* openRamTab = menu->addAction( QIcon(":/terminal.svg"),tr("Open Mcu Monitor.") );
+    //QAction* openRamTab = menu->addAction( m_theme->icon(":/terminal.svg"),tr("Open Mcu Monitor.") );
     //QObject::connect( openRamTab, &QAction::triggered, [=](){ slotOpenMcuMonitor(); } );
 
     if( m_usarts.size() )
     {
-        QMenu* serMonMenu = menu->addMenu( QIcon(":/serialterm.png"),tr("Open Serial Monitor.") );
+        QMenu* serMonMenu = menu->addMenu( m_theme->icon(":/serialterm.png"),tr("Open Serial Monitor.") );
 
         for( uint i=0; i<m_usarts.size(); ++i )
         {

@@ -7,6 +7,7 @@
 
 #include "highlighter.h"
 #include "mainwindow.h"
+#include "thememanager.h"
 #include "utils.h"
 
 Highlighter::Highlighter( QTextDocument* parent )
@@ -24,7 +25,16 @@ QStringList Highlighter::readSyntaxFile( QString fileName )
     if( !QDir( path ).exists() ) return keyWords;
 
     fileName = path+fileName;
-
+    bool dark = ThemeManager::self()->isDark();
+    if( dark )                                  // Search for file_dark.syntax
+    {
+        QString darkFile = fileName;
+        darkFile.replace(".syntax","_dark.syntax");
+        if( QFile::exists( darkFile ) ){
+            fileName = darkFile;
+            dark = false;
+        }
+    }
     m_rules.clear();
 
     QTextCharFormat format;
@@ -61,8 +71,16 @@ QStringList Highlighter::readSyntaxFile( QString fileName )
                 first = words.takeFirst();          // Foregraund color
                 if( first != "default" )
                 {
-                    uint color = first.remove("#").toUInt( &ok, 16 );
-                    if( ok ) format.setForeground( QColor(color) );
+                    uint colVal = first.remove("#").toUInt( &ok, 16 );
+                    if( ok ){
+                        QColor color( colVal );
+                        if( dark ){
+                            int h,s,l;
+                            color.getHsl( &h, &s, &l);
+                            color.setHsl( h, s, 255-l );
+                        }
+                        format.setForeground( color );
+                    }
                 }
                 first = words.takeFirst();          // Backgraund color
                 if( first != "default" )
@@ -105,7 +123,7 @@ QStringList Highlighter::readSyntaxFile( QString fileName )
             }
             break;
     }   }
-    format.setForeground( QColor(12303291) ); // Show Spaces color
+    format.setForeground( QColor(0xBBBBBB) ); // Show Spaces color
     addRule( format, QString( " " ) );
     addRule( format, QString( "\t" ) );
 

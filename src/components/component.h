@@ -10,6 +10,7 @@
 
 #include "compbase.h"
 #include "updatable.h"
+#include "thememanager.h"
 
 class Pin;
 class eNode;
@@ -17,6 +18,7 @@ class Label;
 class Connector;
 class ConnectorLine;
 class Linker;
+class ThemeManager;
 
 class Component : public CompBase, public QGraphicsItem, public Updatable
 {
@@ -238,6 +240,8 @@ class Component : public CompBase, public QGraphicsItem, public Updatable
         QList<Pin*> m_signalPin;
 
         QString m_invertedPins;
+
+        ThemeManager* m_theme;
 
         //QGraphicsItemGroup* m_group;
 };

@@ -201,7 +201,7 @@ void Probe::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
     if( m_inputPin->connector() )
     {
         QString iconStr = m_pauseState ? ":/nobreakpoint.png" : ":/breakpoint.png";
-        QAction* breakAction = menu->addAction( QIcon( iconStr ),tr("Pause at state change") );
+        QAction* breakAction = menu->addAction( m_theme->icon( iconStr ),tr("Pause at state change") );
         QObject::connect( breakAction, &QAction::triggered, [=](){ slotBreakpoint(); } );
     }
     menu->addSeparator();

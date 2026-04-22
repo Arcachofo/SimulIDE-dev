@@ -200,7 +200,7 @@ void Dial::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
 
     if( !parentItem() )
     {
-        QAction* linkCompAction = menu->addAction( QIcon(":/subcl.png"),tr("Link to Component") );
+        QAction* linkCompAction = menu->addAction( m_theme->icon(":/subcl.png"),tr("Link to Component") );
         QObject::connect( linkCompAction, &QAction::triggered, [=](){ slotLinkComp(); } );
 
         menu->addSeparator();

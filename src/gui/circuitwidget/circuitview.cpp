@@ -17,6 +17,7 @@
 #include "circuitwidget.h"
 #include "circuit.h"
 #include "componentlist.h"
+#include "thememanager.h"
 #include "mainwindow.h"
 #include "component.h"
 #include "subcircuit.h"
@@ -250,29 +251,29 @@ void CircuitView::contextMenuEvent( QContextMenuEvent* event )
 
         menu.addSeparator();
 
-        QAction* pasteAction = menu.addAction(QIcon(":/paste.svg"),tr("Paste")+"\tCtrl+V");
+        QAction* pasteAction = menu.addAction( ThemeManager::self()->icon(":/paste.svg"),tr("Paste")+"\tCtrl+V");
         connect( pasteAction, &QAction::triggered,
                         this, &CircuitView::slotPaste, Qt::UniqueConnection );
 
-        QAction* undoAction = menu.addAction(QIcon(":/undo.svg"),tr("Undo")+"\tCtrl+Z");
+        QAction* undoAction = menu.addAction( ThemeManager::self()->icon(":/undo.svg"),tr("Undo")+"\tCtrl+Z");
         connect( undoAction, &QAction::triggered,
                   m_circuit, &Circuit::undo, Qt::UniqueConnection );
 
-        QAction* redoAction = menu.addAction(QIcon(":/redo.svg"),tr("Redo")+"\tCtrl+Y");
+        QAction* redoAction = menu.addAction( ThemeManager::self()->icon(":/redo.svg"),tr("Redo")+"\tCtrl+Y");
         connect( redoAction, &QAction::triggered,
                   m_circuit, &Circuit::redo, Qt::UniqueConnection );
 
         menu.addSeparator();
 
-        QAction* importCircAct = menu.addAction(QIcon(":/open.svg"), tr("Import Circuit") );
+        QAction* importCircAct = menu.addAction( ThemeManager::self()->icon(":/open.svg"), tr("Import Circuit") );
         connect(importCircAct, &QAction::triggered,
                          this, &CircuitView::importCirc, Qt::UniqueConnection );
 
-        QAction* saveImgAct = menu.addAction( QIcon(":/saveimage.svg"), tr("Save Circuit as Image") );
+        QAction* saveImgAct = menu.addAction( ThemeManager::self()->icon(":/saveimage.svg"), tr("Save Circuit as Image") );
         connect( saveImgAct, &QAction::triggered,
                        this, &CircuitView::saveImage, Qt::UniqueConnection );
 
-        /*QAction* createBomAct = menu.addAction(QIcon(":/savecirc.png"), tr("Bill of Materials") );
+        /*QAction* createBomAct = menu.addAction( ThemeManager::self()->icon(":/savecirc.png"), tr("Bill of Materials") );
         connect(createBomAct, &QAction::triggered,
                    m_circuit, &Circuit::bom, Qt::UniqueConnection );*/
 

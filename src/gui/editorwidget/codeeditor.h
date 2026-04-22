@@ -60,6 +60,7 @@ class CodeEditor : public QPlainTextEdit, public CompBase
         void setExtraTypes( QStringList types );
 
         void setSyntaxFile( QString file );
+        void reloadSyntax();
 
         void loadConfig();
         void saveConfig();
@@ -159,6 +160,8 @@ class CodeEditor : public QPlainTextEdit, public CompBase
 
         QString m_tab;
         QFont m_font;
+
+        QString m_syntaxFile;
 
  static QStringList m_picInstr;
  static QStringList m_avrInstr;

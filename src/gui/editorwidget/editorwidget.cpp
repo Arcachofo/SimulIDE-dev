@@ -889,6 +889,8 @@ void EditorWidget::updateIcons()
 
     m_settingsButton->setIcon( ThemeManager::self()->icon(":/config.svg") );
     m_fileButton->setIcon(     ThemeManager::self()->icon(":/lastfiles.svg") );
+
+    for( CodeEditor* ce : getCodeEditors() ) ce->reloadSyntax();
 }
 
 #include  "moc_editorwidget.cpp"

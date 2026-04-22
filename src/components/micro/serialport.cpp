@@ -241,7 +241,7 @@ void SerialPort::setSerialMon( bool s )
 
 void SerialPort::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
 {
-    QAction* openSerMon = menu->addAction( QIcon(":/terminal.svg"),tr("Open Serial Monitor.") );
+    QAction* openSerMon = menu->addAction( m_theme->icon(":/terminal.svg"),tr("Open Serial Monitor.") );
     QObject::connect( openSerMon, &QAction::triggered, [=](){ slotOpenTerm(); } );
 
     menu->addSeparator();

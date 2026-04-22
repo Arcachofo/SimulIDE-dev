@@ -13,8 +13,9 @@
 
 #include "filewidget.h"
 #include "mainwindow.h"
+#include "thememanager.h"
 
-FileWidget* FileWidget::m_pSelf = 0l;
+FileWidget* FileWidget::m_pSelf = nullptr;
 
 FileWidget::FileWidget( QWidget* parent )
           : QSplitter( parent )
@@ -31,7 +32,7 @@ FileWidget::FileWidget( QWidget* parent )
     QHBoxLayout* hLayout = new QHBoxLayout( pathWidget );
     hLayout->setContentsMargins(0,0,0,0);
     m_cdUpButton = new QPushButton( this );
-    m_cdUpButton->setIcon( QIcon(":/cdup.png") );
+    m_cdUpButton->setIcon( ThemeManager::self()->icon(":/cdup.png") );
     m_cdUpButton->setToolTip( tr("cd Up") );
     hLayout->addWidget( m_cdUpButton );
     m_path = new QLineEdit( this );
@@ -112,7 +113,7 @@ void FileWidget::addEntry( QString name, QString path, bool force )
     font.setPixelSize( 11*MainWindow::self()->fontScale() );
     font.setWeight( QFont::DemiBold );
     item->setFont( font );
-    item->setIcon( QIcon(":/open.png") );
+    item->setIcon( ThemeManager::self()->icon(":/open.png") );
 }
 
 void FileWidget::addBookMark( QString path )
@@ -178,7 +179,7 @@ void FileWidget::contextMenuEvent( QContextMenuEvent* event )
         QPoint eventPos = event->globalPos();
         QMenu menu;
 
-        QAction* remBookMarkAction = menu.addAction(QIcon(":/remove.svg"),tr("Remove Bookmark"));
+        QAction* remBookMarkAction = menu.addAction(ThemeManager::self()->icon(":/remove.svg"),tr("Remove Bookmark"));
         connect( remBookMarkAction, SIGNAL( triggered()), 
                  this,              SLOT(   remBookMark() ) );
                  

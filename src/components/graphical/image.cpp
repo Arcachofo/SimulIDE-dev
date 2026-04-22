@@ -64,11 +64,11 @@ Image::~Image()
 
 void Image::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
 {
-    QAction* loadAction = menu->addAction( QIcon(":/load.svg"),tr("Load Image") );
+    QAction* loadAction = menu->addAction( m_theme->icon(":/load.svg"),tr("Load Image") );
     QObject::connect( loadAction, &QAction::triggered, [=](){ slotLoad(); } );
 
     if( !m_bckGndData.isEmpty() ){
-        QAction* saveAction = menu->addAction( QIcon(":/save.svg"),tr("Save Image") );
+        QAction* saveAction = menu->addAction( m_theme->icon(":/save.svg"),tr("Save Image") );
         QObject::connect( saveAction, &QAction::triggered, [=](){ slotSave(); } );
     }
     menu->addSeparator();

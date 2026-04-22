@@ -225,7 +225,7 @@ void TestUnit::resizeVectors() // Vector size is nº of combinations, bits in ui
 
 void TestUnit::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
 {
-    QAction* tableAction = menu->addAction( QIcon(":/list.svg"),tr("Show Table") );
+    QAction* tableAction = menu->addAction( m_theme->icon(":/list.svg"),tr("Show Table") );
     QObject::connect( tableAction, &QAction::triggered, [=](){ createTable(); } );
 
     menu->addSeparator();

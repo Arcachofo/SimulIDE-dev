@@ -40,43 +40,38 @@ ThemeManager::ThemeManager()
 
 
     QPalette palette( QColor( 0xff2d2d2d ) );
-    //
     //qDebug() << palette;
-    //
-    //
-    ////palette.setColor( QPalette::Light          , QColor( 0xff404040 ) );
-    ////palette.setColor( QPalette::Midlight       , QColor( 0xff3c3c3c ) );
-    ////palette.setColor( QPalette::Mid            , QColor( 0xff1b1b1b ) );
-    ////palette.setColor( QPalette::Dark           , QColor( 0xff121212 ) );
-    //
-    //palette.setColor( QPalette::Active, QPalette::WindowText     , QColor( 0xfff0f0f0 ) );
-    //palette.setColor( QPalette::Inactive, QPalette::WindowText     , QColor( 0xffd0d0d0 ) );
-    ////palette.setColor( QPalette::Disabled, QPalette::WindowText     , QColor( 0xff505050 ) );
-    //palette.setColor( QPalette::Active, QPalette::Text           , QColor( 0xfff0f0e0 ) );
-    //palette.setColor( QPalette::Inactive, QPalette::Text           , QColor( 0xffd0d0c0 ) );
-    //palette.setColor( QPalette::Disabled, QPalette::Text           , QColor( 0xff606060 ) );
-    ////palette.setColor( QPalette::Active, QPalette::BrightText     , QColor( 0xffff0000 ) );
-    //palette.setColor( QPalette::Active, QPalette::ButtonText     , QColor( 0xfff0f0e0 ) );
-    //palette.setColor( QPalette::Inactive, QPalette::ButtonText     , QColor( 0xffe0e0d0 ) );
-    //palette.setColor( QPalette::Disabled, QPalette::ButtonText     , QColor( 0xff808080 ) );
-    //
-    //
-    //palette.setColor( QPalette::Inactive, QPalette::Base           , QColor( 0xff25252E ) );
-    //palette.setColor( QPalette::Active, QPalette::Base           , QColor( 0xff1E1E28 ) );
-    //palette.setColor( QPalette::Active, QPalette::Window         , QColor( 0xff282828 ) );
-    //palette.setColor( QPalette::Active, QPalette::Button         , QColor( 0xff323232 ) );
-    //
-    ////palette.setColor( QPalette::Shadow         , QColor( 0xff000000 ) );
-    ////palette.setColor( QPalette::AlternateBase  , QColor( 0xff141414 ) );
-    ////palette.setColor( QPalette::ToolTipBase    , QColor( 0xffffffdc ) );
-    ////palette.setColor( QPalette::ToolTipText    , QColor( 0xff000000 ) );
-    ////palette.setColor( QPalette::PlaceholderText, QColor( 0xffffffff ) );
-    //
-    ////palette.setColor( QPalette::Active, QPalette::Highlight, QColor( 0xff2828ff ) );
-    ////palette.setColor( QPalette::Disabled, QPalette::Window, QColor( 0xff282828 ) ); // Disabled icons
-    //
-    //
-    //QApplication::setPalette( palette );
+
+    //palette.setColor( QPalette::Light          , QColor( 0xff404040 ) );
+    //palette.setColor( QPalette::Midlight       , QColor( 0xff3c3c3c ) );
+    //palette.setColor( QPalette::Mid            , QColor( 0xff1b1b1b ) );
+    //palette.setColor( QPalette::Dark           , QColor( 0xff121212 ) );
+
+    palette.setColor( QPalette::Active  , QPalette::WindowText  , QColor( 0xfff0f0f0 ) );
+    palette.setColor( QPalette::Inactive, QPalette::WindowText  , QColor( 0xffd0d0d0 ) );
+    //palette.setColor( QPalette::Disabled, QPalette::WindowText  , QColor( 0xff505050 ) );
+    palette.setColor( QPalette::Active  , QPalette::Text        , QColor( 0xfff0f0e0 ) );
+    palette.setColor( QPalette::Inactive, QPalette::Text        , QColor( 0xffd0d0c0 ) );
+    palette.setColor( QPalette::Disabled, QPalette::Text        , QColor( 0xff606060 ) );
+    //palette.setColor( QPalette::Active, QPalette::BrightText  , QColor( 0xffff0000 ) );
+    palette.setColor( QPalette::Active  , QPalette::ButtonText  , QColor( 0xfff0f0e0 ) );
+    palette.setColor( QPalette::Inactive, QPalette::ButtonText  , QColor( 0xffe0e0d0 ) );
+    palette.setColor( QPalette::Disabled, QPalette::ButtonText  , QColor( 0xff808080 ) );
+
+
+    palette.setColor( QPalette::Inactive, QPalette::Base        , QColor( 0xff25252E ) );
+    palette.setColor( QPalette::Active  , QPalette::Base        , QColor( 0xff1E1E28 ) );
+    palette.setColor( QPalette::Active  , QPalette::Window      , QColor( 0xff282828 ) );
+    palette.setColor( QPalette::Active  , QPalette::Button      , QColor( 0xff323232 ) );
+
+    //palette.setColor( QPalette::Shadow         , QColor( 0xff000000 ) );
+    //palette.setColor( QPalette::AlternateBase  , QColor( 0xff141414 ) );
+    //palette.setColor( QPalette::ToolTipBase    , QColor( 0xffffffdc ) );
+    //palette.setColor( QPalette::ToolTipText    , QColor( 0xff000000 ) );
+    //palette.setColor( QPalette::PlaceholderText, QColor( 0xffffffff ) );
+
+    //palette.setColor( QPalette::Active, QPalette::Highlight, QColor( 0xff2828ff ) );
+    //palette.setColor( QPalette::Disabled, QPalette::Window, QColor( 0xff282828 ) ); // Disabled icons
 
     m_darkPalette = palette;
 }
@@ -99,8 +94,6 @@ void ThemeManager::setTheme( Theme theme )
         m_colors[i] = m_isDark? m_darkColors[i] : m_lightColors[i];
 
     Circuit::self()->update();
-
-    //emit themeChanged( m_isDark );
 }
 
 uint32_t* ThemeManager::getColorPtr( uint index )
@@ -135,4 +128,3 @@ QPixmap ThemeManager::invertPixmap( QPixmap pixmap )
     if( ok ) return QPixmap::fromImage( image ) ;
     else     return pixmap;
 }
-

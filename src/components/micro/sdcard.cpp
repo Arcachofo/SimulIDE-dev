@@ -228,7 +228,7 @@ void SdCard::command()
     case 59: m_doCRC = m_arg;     break; // CRC_OFF  - Set CRC checking
     default:
         //m_reply[0] |= 0x04;  // R1 |0|ParameterE|AddressE|EraseE|CRCE|IllegalC|EraseR|idle|
-        qDebug() << "sdcard command CMD%1 not implemented" << m_command;
+        qDebug() << "SDcard command not implemented:" << m_command;
         break;
     }
 }
@@ -405,11 +405,11 @@ void SdCard::removeCard()
 
 void SdCard::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
 {
-    QAction* loadAction = menu->addAction( QIcon(":/load.svg"),tr("Load .img File") );
+    QAction* loadAction = menu->addAction( m_theme->icon(":/load.svg"),tr("Load .img File") );
     QObject::connect( loadAction, &QAction::triggered, [=](){ LoadFile(); } );
 
     if( m_diskImage ){
-        QAction* loadAction = menu->addAction( QIcon(":/detach.png"),tr("Eject SD card") );
+        QAction* loadAction = menu->addAction( m_theme->icon(":/detach.png"),tr("Eject SD card") );
         QObject::connect( loadAction, &QAction::triggered, [=](){ removeCard(); } );
     }
     menu->addSeparator();

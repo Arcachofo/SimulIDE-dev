@@ -9,7 +9,8 @@
 
 #include "label.h"
 #include "component.h"
-#include "QDebug"
+#include "thememanager.h"
+//#include "QDebug"
 
 Label::Label()
      : QGraphicsTextItem()
@@ -67,15 +68,15 @@ void Label::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
         event->accept();
         QMenu menu;
 
-        QAction* rotateCWAction = menu.addAction(QIcon(":/rotatecw.svg"),"Rotate CW");
+        QAction* rotateCWAction = menu.addAction( ThemeManager::self()->icon(":/rotatecw.svg"),"Rotate CW");
         connect(rotateCWAction, &QAction::triggered,
                           this, &Label::rotateCW, Qt::UniqueConnection );
 
-        QAction* rotateCCWAction = menu.addAction(QIcon(":/rotateccw.svg"),"Rotate CCW");
+        QAction* rotateCCWAction = menu.addAction( ThemeManager::self()->icon(":/rotateccw.svg"),"Rotate CCW");
         connect(rotateCCWAction, &QAction::triggered,
                            this, &Label::rotateCCW, Qt::UniqueConnection );
 
-        QAction* rotate180Action = menu.addAction(QIcon(":/rotate180.svg"),"Rotate 180º");
+        QAction* rotate180Action = menu.addAction( ThemeManager::self()->icon(":/rotate180.svg"),"Rotate 180º");
         connect(rotate180Action, &QAction::triggered,
                            this, &Label::rotate180, Qt::UniqueConnection );
 

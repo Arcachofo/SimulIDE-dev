@@ -448,7 +448,7 @@ void SubCircuit::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu
     if( event ) event->accept();
     addMainCompsMenu( menu );
 
-    QAction* openAction = menu->addAction( QIcon(":/upload.svg"),tr("Open Subcircuit") );
+    QAction* openAction = menu->addAction( m_theme->icon(":/upload.svg"),tr("Open Subcircuit") );
     QObject::connect( openAction, &QAction::triggered, [=](){ openCircuit(); } );
 
     menu->addSeparator();
@@ -480,7 +480,7 @@ void SubCircuit::addMainCompsMenu( QMenu* menu )
     for( Component* mainComp : m_mainComponents.values() )
     {
         QString name = mainComp->idLabel();
-        QMenu* submenu = menu->addMenu( QIcon(":/subc.png"), name );
+        QMenu* submenu = menu->addMenu( m_theme->icon(":/subc.png"), name );
         mainComp->contextMenu( nullptr, submenu );
     }
     menu->addSeparator();

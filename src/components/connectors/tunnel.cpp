@@ -204,13 +204,13 @@ void Tunnel::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
 {
     if( m_show )
     {
-        QAction* hideAction = menu->addAction( QIcon(":nobreakpoint.png"),tr("Hide group") );
+        QAction* hideAction = menu->addAction( m_theme->icon(":nobreakpoint.png"),tr("Hide group") );
         QObject::connect( hideAction, &QAction::triggered, [=](){ hideGroup(); } );
     }else{
-        QAction* showAction = menu->addAction( QIcon(":/breakpoint.png"),tr("Show group") );
+        QAction* showAction = menu->addAction( m_theme->icon(":/breakpoint.png"),tr("Show group") );
         QObject::connect( showAction, &QAction::triggered, [=](){ showGroup(); } );
     }
-    QAction* nameAction = menu->addAction( QIcon(":/rename.svg"),tr("Rename group") );
+    QAction* nameAction = menu->addAction( m_theme->icon(":/rename.svg"),tr("Rename group") );
     QObject::connect( nameAction, &QAction::triggered, [=](){ renameGroup(); } );
 
     menu->addSeparator();

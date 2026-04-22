@@ -361,13 +361,13 @@ void DynamicMemory::deleteDataBits( int bits )
 
 void DynamicMemory::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
 {
-    QAction* loadAction = menu->addAction( QIcon(":/load.svg"),tr("Load data") );
+    QAction* loadAction = menu->addAction( m_theme->icon(":/load.svg"),tr("Load data") );
     QObject::connect( loadAction, &QAction::triggered, [=](){ loadData(); } );
 
-    QAction* saveAction = menu->addAction(QIcon(":/save.png"), tr("Save data") );
+    QAction* saveAction = menu->addAction( m_theme->icon(":/save.png"), tr("Save data") );
     QObject::connect( saveAction, &QAction::triggered, [=](){ saveData(); } );
 
-    QAction* showEepAction = menu->addAction(QIcon(":/save.png"), tr("Show Memory Table") );
+    QAction* showEepAction = menu->addAction( m_theme->icon(":/save.png"), tr("Show Memory Table") );
     QObject::connect( showEepAction, &QAction::triggered, [=](){ slotShowTable(); } );
 
     menu->addSeparator();

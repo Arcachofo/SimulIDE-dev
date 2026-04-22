@@ -237,10 +237,10 @@ void Function::createScript()
 void Function::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
 {
     menu->addSeparator();
-    QAction* loadDaAction = menu->addAction( QIcon(":/load.svg"),tr("Load Functions") );
+    QAction* loadDaAction = menu->addAction( m_theme->icon(":/load.svg"),tr("Load Functions") );
     QObject::connect( loadDaAction, &QAction::triggered, [=](){ loadData(); } );
 
-    QAction* saveDaAction = menu->addAction(QIcon(":/save.png"), tr("Save Functions") );
+    QAction* saveDaAction = menu->addAction( m_theme->icon(":/save.png"), tr("Save Functions") );
     QObject::connect( saveDaAction, &QAction::triggered, [=](){ saveData(); } );
     menu->addSeparator();
     Component::contextMenu( event, menu );

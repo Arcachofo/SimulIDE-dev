@@ -23,7 +23,7 @@ class ThemeManager
 
         void setTheme( Theme theme );
         Theme theme() { return m_currentTheme; }
-        //bool isDark() { return m_isDark; }
+        bool isDark() { return m_isDark; }
 
         uint32_t* getColorPtr( uint index );
 

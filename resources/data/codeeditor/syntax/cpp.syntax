@@ -7,7 +7,7 @@ data: uint8_t uint16_t uint32_t uint64_t uint8 uint16 uint32 uint64 int8_t int16
 keyword1-style: #202060 default true false
 keyword1: class explicit friend inline namespace operator private protected public signals slots template typedef typename
 
-keyword2-style: #300050 default true false
+keyword2-style: #301040 default true false
 keyword2: for if else do while continue break switch case default return true false this new delete
 
 preprocessor-style: #505090 default true false

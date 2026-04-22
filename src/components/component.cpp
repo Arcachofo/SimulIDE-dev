@@ -16,7 +16,6 @@
 #include "utils.h"
 #include "propdialog.h"
 #include "linker.h"
-#include "thememanager.h"
 
 #include "doubleprop.h"
 #include "boolprop.h"
@@ -38,8 +37,10 @@ Component::Component( QString type, QString id )
     m_Vflip  = 1;
     m_color  = QColor( Qt::white );
 
-    m_backColor = ThemeManager::self()->getColorPtr( 2 );
-    m_foreColor = ThemeManager::self()->getColorPtr( 3 );
+    m_theme = ThemeManager::self();
+
+    m_backColor =  m_theme->getColorPtr( 2 );
+    m_foreColor =  m_theme->getColorPtr( 3 );
 
     m_backPixmap = nullptr;
     //m_group = NULL;
@@ -331,42 +332,42 @@ void Component::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu 
 {
     if( !event && m_isMainComp ) // Main Component in Subcircuit
     {
-        QAction* propertiesAction = menu->addAction( QIcon( ":/properties.svg"),tr("Properties") );
+        QAction* propertiesAction = menu->addAction( m_theme->icon( ":/properties.svg"),tr("Properties") );
         QObject::connect( propertiesAction, &QAction::triggered, [=](){ slotProperties(); } );
         menu->addSeparator();
         return;
     }
     m_eventpoint = mapToScene( toGrid(event->pos()) );
 
-    QAction* copyAction = menu->addAction(QIcon(":/copy.svg"),tr("Copy")+"\tCtrl+C");
+    QAction* copyAction = menu->addAction( m_theme->icon(":/copy.svg"),tr("Copy")+"\tCtrl+C");
     QObject::connect( copyAction, &QAction::triggered, [=](){ slotCopy(); } );
 
-    QAction* cutAction = menu->addAction(QIcon(":/cut.svg"),tr("Cut")+"\tCtrl+X");
+    QAction* cutAction = menu->addAction( m_theme->icon(":/cut.svg"),tr("Cut")+"\tCtrl+X");
     QObject::connect( cutAction, &QAction::triggered, [=](){ slotCut(); } );
 
-    QAction* removeAction = menu->addAction( QIcon( ":/remove.svg"),tr("Remove")+"\tDel" );
+    QAction* removeAction = menu->addAction( m_theme->icon(":/remove.svg"),tr("Remove")+"\tDel" );
     QObject::connect( removeAction, &QAction::triggered, [=](){ slotRemove(); } );
 
-    /*QAction* groupAction = menu->addAction( QIcon( ":/group.png"),tr("Group") );
+    /*QAction* groupAction = menu->addAction( m_theme->icon(":/group.png"),tr("Group") );
     QObject::connect( groupAction, &QAction::triggered, [=](){ slotGroup())(); } );*/
     
-    QAction* propertiesAction = menu->addAction( QIcon( ":/properties.svg"),tr("Properties") );
+    QAction* propertiesAction = menu->addAction( m_theme->icon(":/properties.svg"),tr("Properties") );
     QObject::connect( propertiesAction, &QAction::triggered, [=](){ slotProperties(); } );
     menu->addSeparator();
 
-    QAction* rotateCWAction = menu->addAction( QIcon( ":/rotatecw.svg"),tr("Rotate CW")+"\tCtrl+R" );
+    QAction* rotateCWAction = menu->addAction( m_theme->icon(":/rotatecw.svg"),tr("Rotate CW")+"\tCtrl+R" );
     QObject::connect( rotateCWAction, &QAction::triggered, [=](){ rotateCW(); } );
 
-    QAction* rotateCCWAction = menu->addAction(QIcon( ":/rotateccw.svg"),tr("Rotate CCW")+"\tCtrl+Shift+R" );
+    QAction* rotateCCWAction = menu->addAction( m_theme->icon(":/rotateccw.svg"),tr("Rotate CCW")+"\tCtrl+Shift+R" );
     QObject::connect( rotateCCWAction, &QAction::triggered, [=](){ rotateCCW(); } );
 
-    QAction* rotateHalfAction = menu->addAction(QIcon(":/rotate180.svg"),tr("Rotate 180") );
+    QAction* rotateHalfAction = menu->addAction( m_theme->icon(":/rotate180.svg"),tr("Rotate 180") );
     QObject::connect( rotateHalfAction, &QAction::triggered, [=](){ rotateHalf(); } );
     
-    QAction* H_flipAction = menu->addAction(QIcon(":/hflip.svg"),tr("Horizontal Flip")+"\tCtrl+L" );
+    QAction* H_flipAction = menu->addAction( m_theme->icon(":/hflip.svg"),tr("Horizontal Flip")+"\tCtrl+L" );
     QObject::connect( H_flipAction, &QAction::triggered, [=](){ slotH_flip(); } );
     
-    QAction* V_flipAction = menu->addAction(QIcon(":/vflip.svg"),tr("Vertical Flip")+"\tCtrl+Shift+L" );
+    QAction* V_flipAction = menu->addAction( m_theme->icon(":/vflip.svg"),tr("Vertical Flip")+"\tCtrl+Shift+L" );
     QObject::connect( V_flipAction, &QAction::triggered, [=](){ slotV_flip(); } );
 
     menu->exec(event->screenPos());

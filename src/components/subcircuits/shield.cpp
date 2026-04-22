@@ -124,16 +124,16 @@ void ShieldSubc::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu
 
     if( m_parentBoard )
     {
-        QAction* detachAction = menu->addAction( QIcon(":/detach.png"),tr("Detach") );
+        QAction* detachAction = menu->addAction( m_theme->icon(":/detach.png"),tr("Detach") );
         QObject::connect( detachAction, &QAction::triggered, [=](){ slotDetach(); } );
 
         addMainCompsMenu( menu ); // My main comps
 
-        menu->addAction( QIcon(":/null-0.png"), "" );
+        menu->addAction( m_theme->icon(":/null-0.png"), "" );
         menu->addSection( m_parentBoard->idLabel()+" (parent)" ); // Parent section
         m_parentBoard->contextMenu( event, menu );
     }else{
-        QAction* attachAction = menu->addAction( QIcon(":/attach.png"),tr("Attach") );
+        QAction* attachAction = menu->addAction( m_theme->icon(":/attach.png"),tr("Attach") );
         QObject::connect( attachAction, &QAction::triggered, [=](){ slotAttach(); } );
         SubCircuit::contextMenu( event, menu );
     }
