@@ -359,7 +359,7 @@ void SdCard::setFile( QString fileName )
         removeCard();
         return;
     }
-    m_fileName = fileNameAbs;
+    m_fileName = circuitDir.relativeFilePath( fileNameAbs );
 
     m_diskKb = m_diskImage->size() >> 10;  // Size in KB
 
@@ -400,6 +400,7 @@ void SdCard::removeCard()
     if( m_diskImage->isOpen() ) m_diskImage->close();
     delete m_diskImage;
     m_diskImage = nullptr;
+    m_fileName = "";
     update();
 }
 
