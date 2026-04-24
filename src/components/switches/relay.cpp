@@ -124,6 +124,8 @@ void Relay::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w )
 {
     Component::paint( p, o, w );
 
+    p->setBrush( QColor( *m_backColor ) );
+
     p->drawRect( m_area );
 
     MechContact::paint( p, o, w );

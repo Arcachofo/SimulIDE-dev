@@ -1,12 +1,9 @@
 /***************************************************************************
- *   Copyright (C) 2025 by SimulIDE Team                                   *
+ *   Copyright (C) 2025 by Santiago González                               *
  *                                                                         *
  ***( see copyright.txt file at root folder )*******************************/
 
-#include <QApplication>
-#include <QFile>
-#include <QStyleHints>
-#include <QPalette>
+//#include <QDebug>
 
 #include "thememanager.h"
 #include "mainwindow.h"
@@ -25,10 +22,10 @@ ThemeManager::ThemeManager()
     m_lightColors.resize( 4 );
     m_colors.resize( 4 );
 
-    m_darkColors[0] = 0xFF1E1E28;  // Circuit back
-    m_darkColors[1] = 0xFF25252E;  // Circuit fore
-    m_darkColors[2] = 0xFFD0D0D0;  // Comp back
-    m_darkColors[3] = 0xFFF0F0F0;  // Comp fore, Pin, Conn
+    m_darkColors[0] = 0xFF1E1E28;  // Circuit back, Comp back
+    m_darkColors[1] = 0xFF30303A;  // Circuit fore
+    m_darkColors[2] = 0xFF000000;  // Comp back
+    m_darkColors[3] = 0xFFD0D0C5;  // Comp fore, Pin, Conn
 
     m_lightColors[0] = 0xFFF0F0D2;
     m_lightColors[1] = 0xFFD2D2D2;
@@ -40,7 +37,7 @@ ThemeManager::ThemeManager()
 
 
     QPalette palette( QColor( 0xff2d2d2d ) );
-    //qDebug() << palette;
+    //qDebug() << palette.window().color().name();
 
     //palette.setColor( QPalette::Light          , QColor( 0xff404040 ) );
     //palette.setColor( QPalette::Midlight       , QColor( 0xff3c3c3c ) );

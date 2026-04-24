@@ -1,14 +1,11 @@
 /***************************************************************************
- *   Copyright (C) 2025 by SimulIDE Team                                   *
+ *   Copyright (C) 2025 by Santiago González                               *
  *                                                                         *
  ***( see copyright.txt file at root folder )*******************************/
 
 #pragma once
 
-#include <QObject>
-#include <QColor>
 #include <QIcon>
-//#include <QTimer>
 #include <QPalette>
 
 enum class Theme { Light, Dark };
@@ -19,7 +16,7 @@ class ThemeManager
         ThemeManager();
         ~ThemeManager();
 
-        static ThemeManager* self() { return m_pSelf; }
+ static ThemeManager* self() { return m_pSelf; }
 
         void setTheme( Theme theme );
         Theme theme() { return m_currentTheme; }
@@ -34,8 +31,6 @@ class ThemeManager
 
         Theme m_currentTheme = Theme::Light;
         bool  m_isDark = false;
-
-        QTimer* m_monitorTimer = nullptr;
 
         std::vector<uint32_t> m_darkColors;
         std::vector<uint32_t> m_lightColors;

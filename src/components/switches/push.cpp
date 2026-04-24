@@ -115,6 +115,7 @@ void Push::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* 
     
     QPen pen = p->pen();
     pen.setWidth(3);
+    //QPen pen( QColor( *m_foreColor), 3, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin );
     p->setPen(pen);
 
     for( int i=0; i<m_numPoles; i++ )                           // Draw Switches

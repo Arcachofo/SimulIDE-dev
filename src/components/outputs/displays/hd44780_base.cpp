@@ -212,7 +212,7 @@ void Hd44780_Base::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidge
 {
     Component::paint( p, o, w );
 
-    QPen pen(Qt::black, 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
+    QPen pen( Qt::black, 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin );
     p->setPen( pen );
 
     p->setBrush( QColor(50, 70, 100) );

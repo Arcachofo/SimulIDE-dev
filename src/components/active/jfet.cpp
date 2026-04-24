@@ -73,7 +73,7 @@ void Jfet::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w )
     Component::paint( p, o, w);
     
     if( Circuit::self()->animateCurr() && m_gateV > 0 ) p->setBrush( Qt::yellow );
-    else                                                p->setBrush( Qt::white );
+    else                                                p->setBrush( QColor( *m_backColor ) );
 
     p->drawEllipse( m_area );
     
@@ -86,7 +86,7 @@ void Jfet::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w )
     p->drawLine( 8,-12, 8,-7 );
     p->drawLine( 8, 12, 8, 8 );
     
-    p->setBrush( Qt::black );
+    p->setBrush( QColor( *m_foreColor ) );
 
     QPointF points[3] = {
         QPointF( -1, 0 ),

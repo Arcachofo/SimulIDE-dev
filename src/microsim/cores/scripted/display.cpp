@@ -10,9 +10,9 @@
 #include "simulator.h"
 
 DisplayArea::DisplayArea( uint w, uint h, QString name, QWidget* parent )
-       : QWidget( parent )
-       , Updatable()
-       , eElement( name )
+           : QWidget( parent )
+           , Updatable()
+           , eElement( name )
 {
     m_width  = m_newWidth  = w;
     m_height = m_newHeight = h;

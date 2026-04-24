@@ -154,7 +154,7 @@ void Triac::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w )
 {
     Component::paint( p, o, w );
 
-    p->setBrush( Qt::black );
+    p->setBrush( QColor( *m_foreColor ) );
 
  static const QPointF points1[3] = {
        QPointF(-7,-8  ),

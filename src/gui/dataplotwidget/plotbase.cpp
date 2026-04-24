@@ -325,14 +325,15 @@ void PlotBase::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w
     Component::paint( p, o, w );
     
     //p->setBrush( Qt::darkGray );
-    p->setBrush(QColor( 230, 230, 230 ));
+    QColor color = QApplication::palette().window().color();
+    p->setBrush( color );
     p->drawRoundedRect( m_area, 4, 4 );
     
-    p->setBrush( Qt::white );
-    QPen pen = p->pen();
-    pen.setWidth( 0 );
-    pen.setColor( Qt::white );
-    p->setPen(pen);
+    //p->setBrush( Qt::white );
+    //QPen pen = p->pen();
+    //pen.setWidth( 0 );
+    //pen.setColor( Qt::white );
+    //p->setPen(pen);
 
     Component::paintSelected( p );
 }

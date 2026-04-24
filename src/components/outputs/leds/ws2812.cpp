@@ -179,7 +179,7 @@ void WS2812::updateLeds()
 {
     m_leds = m_rows*m_cols;
     m_led.resize( m_leds );
-    m_area = QRect( -6, -6, m_cols*12, m_rows*12 );
+    m_area = QRect( -7, -7, m_cols*12+2, m_rows*12+2 );
     m_output->setPos( 12*m_cols, 12*m_rows-12);
     Circuit::self()->update();
 }
@@ -193,12 +193,14 @@ void WS2812::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w )
 
     if( !m_hidden )
     {
+        p->setBrush( QColor( *m_foreColor ) );
         QPointF points[3] = {
-        QPointF( -8,-2 ),
-        QPointF( -8+3,0 ),
-        QPointF( -8, 2 )     };
+        QPointF( -9,-2 ),
+        QPointF( -9+3,0 ),
+        QPointF( -9, 2 )     };
         p->drawPolygon(points, 3);
     }
+    p->setPen( Qt::NoPen );
     for( int row=0; row<m_rows; row++ ){
         for( int col=0; col<m_cols; col++ ){
             p->setBrush( m_led[row*m_cols+col] );

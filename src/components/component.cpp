@@ -39,6 +39,7 @@ Component::Component( QString type, QString id )
 
     m_theme = ThemeManager::self();
 
+    m_circColor =  m_theme->getColorPtr( 0 );
     m_backColor =  m_theme->getColorPtr( 2 );
     m_foreColor =  m_theme->getColorPtr( 3 );
 
@@ -694,14 +695,24 @@ void Component::paintSelected( QPainter* p )
             p->fillRect( boundingRect(), Qt::yellow  );
         }
     }
+    bool dark = ThemeManager::self()->isDark();
+    if( m_showVal ){
+        QColor color = dark ? QColor( 255, 120, 120 ) : QColor( Qt::darkRed );
+        m_valLabel->setDefaultTextColor( color );
+    }
+    if( m_showId ){
+        QColor color = dark ? QColor( 130, 130, 255 ) : QColor( Qt::darkBlue );
+        m_idLabel->setDefaultTextColor( color );
+    }
 }
 
 void Component::paint( QPainter* p, const QStyleOptionGraphicsItem*, QWidget* )
 {
-    QPen pen( QColor( *m_foreColor), 1.5, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin );
+    QPen pen( QColor( *m_foreColor ), 1.5, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin );
+    //QPen pen( Qt::black, 1.5, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin );
 
     //p->drawPath( shape() );
-    ///p->setBrush( m_color );
-    p->setBrush( QColor( *m_backColor) );
+    p->setBrush( m_color );
+    //p->setBrush( QColor( *m_backColor ) );
     p->setPen( pen );
 }

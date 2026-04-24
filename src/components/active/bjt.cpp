@@ -74,7 +74,7 @@ void BJT::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w )
     
     if( Circuit::self()->animateCurr()
      && fabs(m_baseCurr) > 1e-9 ) p->setBrush( Qt::yellow );
-    else                          p->setBrush( Qt::white );
+    else                          p->setBrush( QColor( *m_backColor ) );
 
     p->drawEllipse( m_area );
     p->drawLine(-12, 0,-4,  0 );
@@ -82,7 +82,7 @@ void BJT::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w )
     p->drawLine( -4,-4, 8,-12 );
     p->drawLine( -4, 4, 8, 12 );
     
-    p->setBrush( Qt::black );
+    p->setBrush( QColor( *m_foreColor ) );
     if( m_PNP ){
         QPointF points[3] = {
         QPointF( 0.1, 6.8 ),

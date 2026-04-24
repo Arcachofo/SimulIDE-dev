@@ -47,7 +47,7 @@ Csource::Csource( QString type, QString id )
     m_pin[1]->setFontSize( 9 );
     m_pin[1]->setSpace( 1.7 );
     m_pin[1]->setLabelText("–");  // U+2013
-    m_pin[1]->setLabelColor( QColor( 0, 0, 0 ) );
+    m_pin[1]->setLabelColor( QColor( 90, 90, 90 ) );
     m_ePin[0] = m_pin[0];
     m_ePin[1] = m_pin[1];
     // Source Pins
@@ -268,7 +268,7 @@ void Csource::slotProperties()
 void Csource::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w )
 {
     Component::paint( p, o, w);
-
+p->setBrush( QColor( *m_backColor ) );
     QPen pen = p->pen();
 
     if( m_controlPins && !m_linkedTo )

@@ -155,7 +155,7 @@ void Diode::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget*
 {
     Component::paint( p, option, widget );
 
-    p->setBrush( Qt::black );
+    p->setBrush( QColor( *m_foreColor ) );
 
  static const QPointF points[3] = {
         QPointF( 7, 0 ),
