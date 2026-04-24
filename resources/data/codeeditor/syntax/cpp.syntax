@@ -32,4 +32,4 @@ multiLineComment-style: #FA5A5A default false true
 multiLineComment: "/\\*" "\\*/"
 
 function-style: #202030 default false true
-function: "\b[A-Za-z0-9_]+(?=\\()"
+function: "\b[A-Za-z0-9_]+(?=\\())"

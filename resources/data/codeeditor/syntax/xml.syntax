@@ -4,7 +4,7 @@ elEnd-style: #101080 default true false
 elEnd: ">"
 
 elName-style: #801010 default true false
-elName: "\b[A-Za-z0-9_]+[ *](?=\=)"
+elName: "\b[A-Za-z0-9_]+(?=\=)"
 
 element-style: #101080 default true false
 element: "<[/!A-Za-z0-9_]+\b"
