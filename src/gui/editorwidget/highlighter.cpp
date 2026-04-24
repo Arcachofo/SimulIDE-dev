@@ -116,7 +116,8 @@ QStringList Highlighter::readSyntaxFile( QString fileName )
                             if( exp.length() > 2 ) keyWords.append( exp );
                             exp = "\\b"+exp+"\\b";
                         }
-                        addRule( format, exp );
+                        if( QRegularExpression( exp ).isValid() ) addRule( format, exp );
+                        else qDebug() << "Highlighter::readSyntaxFile REGEXP ERROR:\n   "<< fileName << rule << exp;
                 }   }
                 format.setFontWeight( QFont::Normal );         // Reset to Defaults
                 format.setForeground( Qt::black );             // Reset to Defaults
@@ -175,6 +176,8 @@ void Highlighter::setExtraTypes( QStringList patterns )
 
 void Highlighter::highlightBlock( const QString &text )
 {
+    if( text.isEmpty() ) return;
+
     QString lcText = text;
     lcText = lcText.toLower(); // Do case insensitive
 
