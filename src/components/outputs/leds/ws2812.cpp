@@ -200,7 +200,8 @@ void WS2812::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w )
         QPointF( -9, 2 )     };
         p->drawPolygon(points, 3);
     }
-    p->setPen( Qt::NoPen );
+    QPen pen( Qt::black, 1.5, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin );
+    p->setPen( pen );
     for( int row=0; row<m_rows; row++ ){
         for( int col=0; col<m_cols; col++ ){
             p->setBrush( m_led[row*m_cols+col] );
