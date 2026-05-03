@@ -45,9 +45,8 @@ KY023::KY023( QString type, QString id )
 
     m_area = QRect( -WIDTH/2, -HEIGHT/2, WIDTH, HEIGHT );
 
-    m_joystickW.setupWidget();
-    m_joystickW.setFixedSize( JOYSTICK_SIZE, JOYSTICK_SIZE );
-    
+    m_joystickW.setupWidget( JOYSTICK_SIZE );
+
     m_proxy = Circuit::self()->addWidget( &m_joystickW );
     m_proxy->setParentItem( this );
     m_proxy->setPos( QPoint(-JOYSTICK_SIZE/2,-JOYSTICK_SIZE/2-8 ) );
@@ -78,7 +77,7 @@ KY023::KY023( QString type, QString id )
     m_sw->setLabelText( "SW" );
     m_pin[2] = m_sw;
 
-    setAngle( 90 );
+    //setAngle( 90 );
     setLabelPos(-34, 20,-90 );
     
     Simulator::self()->addToUpdateList( this );
@@ -117,10 +116,12 @@ void KY023::updateStep()
 
     if( !m_joystickW.changed() ) return;
 
-    m_vrx->setOutHighV( VIN*m_joystickW.getXValue()/1000 );
+    QPointF pos = m_joystickW.getPos();
+
+    m_vrx->setOutHighV( VIN*pos.x()/1000 );
     m_vrx->setOutState( true );
 
-    m_vry->setOutHighV( VIN*m_joystickW.getYValue()/1000 );
+    m_vry->setOutHighV( VIN*pos.y()/1000 );
     m_vry->setOutState( true );
 
     m_changed = false;
@@ -132,6 +133,14 @@ void KY023::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w )
     
     p->setBrush( QColor( 58, 60, 52 ) );
     p->drawRoundedRect( m_area, 2, 2 );
+
+    QFont font = p->font();
+    font.setPixelSize( 5 );
+    p->setFont( font );
+    p->setPen( QColor( 200, 200, 200 ) );
+    p->drawText( QPointF( 2-WIDTH/2, 6-HEIGHT/2 ),"0");
+    p->drawText( QPointF( WIDTH/2-6, 6-HEIGHT/2 ),"X");
+    p->drawText( QPointF( 2-WIDTH/2, WIDTH/2-10 ),"Y");
 
     Component::paintSelected( p );
 }
