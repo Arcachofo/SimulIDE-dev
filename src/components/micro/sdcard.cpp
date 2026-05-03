@@ -121,7 +121,7 @@ void SdCard::endTransaction()
     m_rxReg = m_srReg;
     m_srReg = 0xFF;
     m_rxBytes++;
-
+    qDebug() << "SdCard::endTransaction Command" << m_rxReg << m_rxBytes;
     switch( m_rxBytes ) {
         case 1:{                               // command
             if( m_replyBytes )
@@ -158,7 +158,7 @@ void SdCard::endTransaction()
             if( m_doCRC && m_rxReg != (( CRC7(m_cmdBuff, 5) << 1) | 1) )
                 m_R1 |= 1<<3;  /// FIXME???     // R1 |0|ParameterE|AddressE|EraseE|CRCE|IllegalC|EraseR|idle|
 
-            //qDebug() << "SdCard::endTransaction Command" << m_command;
+            qDebug() << "SdCard::endTransaction Command" << m_command;
 
             m_repply = nullptr;
             m_bytesToWrite = 0;
@@ -223,6 +223,7 @@ void SdCard::command()
     case 32: m_start = m_arg/512; break; // ERASE_WR_BLK_START - sets the address of the first block to be erased
     case 33: m_end   = m_arg/512; break; // ERASE_WR_BLK_END - sets the address of the last block of the continuous range to be erased
     case 38: eraseBlocks();       break; // ERASE    - previously selected blocks
+    case 41:                      break; // shouldn't happen but it does (should be an appCommand)
     case 55: m_appCom = 1;        break; // APP_CMD  - Set app command
     case 58: m_repply = d_OCR;    break; // READ_OCR - Read OCR register
     case 59: m_doCRC = m_arg;     break; // CRC_OFF  - Set CRC checking
