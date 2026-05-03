@@ -17,29 +17,30 @@ class JoystickWidget : public QWidget
         JoystickWidget();
         ~JoystickWidget();
 
-        void setupWidget();
+        void setupWidget( int size );
         
-        double getXValue() { return m_xValue; }
-        double getYValue() { return m_yValue; }
-        bool   changed()   { return m_changed; }
-        
-        void mousePressEvent( QMouseEvent* event );
+        QPointF getPos() { return QPointF( m_xValue, m_yValue ); m_changed = false; }
+        bool   changed() { return m_changed; }
+
         void mouseMoveEvent( QMouseEvent* event );
         void mouseReleaseEvent( QMouseEvent* event );
         void paintEvent( QPaintEvent* event );
 
     private:
-        bool eventFilter(QObject *object, QEvent *event) override;
+        bool eventFilter( QObject* object, QEvent* event ) override;
+        void updateOutputValues();
+
+        bool m_changed;
+
+        int m_size;
+        int m_maxDistance;
 
         double m_xValue;
         double m_yValue;
 
-        bool m_changed;
+        QPointF m_center;
         
-        QPointF m_movingOffset;
+        QRectF m_knobArea;
+        QPointF m_knobCenter;
         bool m_grabCenter;
-        
-        QRectF centerEllipse();
-        QPointF center();
-        void updateOutputValues();
 };
