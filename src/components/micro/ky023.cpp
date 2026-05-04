@@ -79,12 +79,12 @@ KY023::KY023( QString type, QString id )
 
     //setAngle( 90 );
     setLabelPos(-34, 20,-90 );
-    
+
     Simulator::self()->addToUpdateList( this );
 
     QObject::connect( m_button, &QToolButton::pressed , [=](){ onbuttonpressed(); });
     QObject::connect( m_button, &QToolButton::released, [=](){ onbuttonreleased(); });
-    
+
     initialize();
 }
 KY023::~KY023(){}
@@ -93,7 +93,7 @@ void KY023::onbuttonpressed()
 {
     m_closed = true;
     m_changed = true;
-    
+
     update();
 }
 

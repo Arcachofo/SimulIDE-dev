@@ -105,11 +105,13 @@ void JoystickWidget::paintEvent( QPaintEvent* )
     painter.setBrush( lg0 );
     painter.drawEllipse( bounds );
 
-    painter.setBrush( Qt::black );
-    painter.drawEllipse( QRectF(-7,-7, 14, 14 ).translated( m_center ) );
+    QLineF knobLine = QLineF( m_knobCenter, m_center );
+    knobLine.setLength( knobLine.length() * 0.7 );
+    QPointF center = knobLine.p2();
 
-    painter.setPen( QPen( QColor( 20, 20, 20 ), 12, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin ) );
-    painter.drawLine( m_center, m_knobCenter );
+    painter.setBrush( QColor( 30, 30, 30 ) );
+    painter.setPen( QPen( QColor( Qt::black ), 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin ) );
+    painter.drawEllipse( QRectF(-7,-7, 14, 14 ).translated( center ) );
 
     painter.setPen( QPen( QColor( Qt::black ), 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin ) );
 
