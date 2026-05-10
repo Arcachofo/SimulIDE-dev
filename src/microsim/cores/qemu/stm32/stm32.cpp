@@ -164,10 +164,10 @@ bool Stm32::createArgs()
     m_arguments << "stm32-f10xx";
 
     m_arguments << "-drive";
-    m_arguments << "file="+m_firmware+",if=pflash,format=raw";
+    m_arguments << "file="+m_firmPath+",if=pflash,format=raw";
 
     //m_arguments << "-kernel";  // Does not work
-    //m_arguments <<  m_firmware ;
+    //m_arguments <<  m_firmPath ;
 
     //m_arguments << "-accel";
     //m_arguments << "tcg,tb-size=100";

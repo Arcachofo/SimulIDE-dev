@@ -124,7 +124,7 @@ void Stm32Twi::reset()
 void Stm32Twi::writeRegister()
 {
     uint64_t offset = m_eventAddress - m_memStart;
-    //qDebug() << "Stm32Twi::wrriteRegister"<< offset;
+    qDebug() << "Stm32Twi::writeRegister"<< offset << m_eventValue;
 
     switch (offset) {
     case CR1_OFFSET: writeCR1( m_eventValue ); break;
@@ -143,11 +143,12 @@ void Stm32Twi::writeRegister()
 void Stm32Twi::readRegister()
 {
     uint64_t offset = m_eventAddress - m_memStart;
-    //qDebug() << "Stm32Twi::readRegister"<< offset;
 
-    switch (offset) {
-        case CR1_OFFSET: m_arena->regData = m_CR1; break;
-        case CR2_OFFSET: m_arena->regData = m_CR2; break;
+    uint64_t value = 0;
+
+    switch( offset ) {
+        case CR1_OFFSET: value = m_CR1; break;
+        case CR2_OFFSET: value = m_CR2; break;
         case DR_OFFSET:
             if( m_SR1 & BTF_bit ){
                 if( m_sr1Read ){
@@ -163,27 +164,27 @@ void Stm32Twi::readRegister()
                 }
             }
             m_sr1Read = 0;
-            m_arena->regData = m_DR;
+            value = m_DR;
             if( !m_needStop ) updateIrq();
             break;
-        case SR1_OFFSET: m_arena->regData = m_SR1;
+        case SR1_OFFSET: value = m_SR1;
             m_sr1Read = 1;
             break;
-        case SR2_OFFSET:
+        case SR2_OFFSET: value = m_SR2;
             if( m_sr1Read ){
                 m_SR1 &= ~ADDR_bit;
                 updateIrq();
                 m_sr1Read = 0;
             }
-            m_arena->regData = m_SR2;
             break;
 
         default:
             m_sr1Read = 0;
-            m_arena->regData = read();
+            value = read();
     }
-    /// if( m_needStop ) stm32_i2c_stop(s);
 
+    //qDebug() <<"Stm32Twi::readRegister"<< offset << value;
+    m_arena->regData    = value;
     m_arena->qemuAction = SIM_READ;
 }
 
@@ -202,6 +203,7 @@ void Stm32Twi::writeCR1( uint16_t newCR1 )
             //m_sda->controlPin( true, true ); // Get control of MCU PIns
             m_scl->setPinMode( openCo );
             //m_scl->controlPin( true, true );
+
         }
         else                      /// Disable TWI
         {
@@ -228,10 +230,10 @@ void Stm32Twi::writeCR1( uint16_t newCR1 )
         /// TODO: if transmitting, shedule a restart
         /// if( m_SR2 & MSL_bit ) m_needStart = true;
 
-        //qDebug() << "Stm32Twi::writeCR1 Start";
+        qDebug() << "Stm32Twi::writeCR1 Start";
         m_CR1 &= ~START_bit;
 
-        m_SR2 |= MSL_bit;
+        //m_SR2 |= MSL_bit;
         m_SR2 |= BUSY_bit;
 
         if( m_mode == TWI_MASTER ) masterStart();
@@ -240,10 +242,10 @@ void Stm32Twi::writeCR1( uint16_t newCR1 )
     {
         if( m_mode == TWI_MASTER )
         {
-            if( m_SR1 & TxE_bit ) masterStop();   // Stop now
+            if( m_SR1 & BTF_bit ) masterStop();   // Stop now
             else                  m_needStop = 1; // Stop after current operation.
         }
-        //qDebug() << "Stm32Twi::writeCR1 Stop";
+        qDebug() << "Stm32Twi::writeCR1 Stop" << m_needStop;
     }
 
     m_sendACK = newCR1 & ACK_bit;   // Bit 10 ACK:      Acknowledge enable
@@ -270,6 +272,9 @@ void Stm32Twi::writeCR1( uint16_t newCR1 )
     {
         // Reset
     }
+    if( m_mode == TWI_MASTER ) m_SR2 |=  MSL_bit;
+    else                       m_SR2 &= ~MSL_bit;
+
 }
 
 void Stm32Twi::writeCR2( uint16_t newCR2 )
@@ -277,40 +282,44 @@ void Stm32Twi::writeCR2( uint16_t newCR2 )
     //if( m_CR2 == newCR2 ) return;
     m_CR2 = newCR2;
 
+    // Bit 10 ITBUFEN: Buffer interrupt enable
+    // Bit 9  ITEVTEN: Event  interrupt enable
+    // Bit 8  ITERREN: Error  interrupt enable
+
     double freqMHz = newCR2 & 0b111111;   // Bits 5:0 FREQ[5:0]: Peripheral clock frequency
     if( freqMHz < 2 ) freqMHz = 2;        // Minimum allowed frequency is 2 MHz
 
+    if( m_freq == freqMHz*1e6 ) return;
     TwiModule::setFreqKHz( freqMHz*1000.0 );
-    //qDebug() << "Stm32Twi::writeCR2 Frequency:" << freqMHz*1000.0 << "KHz";
+    qDebug() << "Stm32Twi::writeCR2 Frequency:" << freqMHz << "MHz";
 }
 
 void Stm32Twi::writeDR( uint16_t newDR )
 {
-    if( m_SR1 & SB_bit ) // Start sent, send Address
+    if( m_SR1 & SB_bit )          // Start sent, send Address
     {
         if( !m_sr1Read ) return;
         m_sr1Read = 0;
         m_SR1 &= ~SB_bit;
 
-        //qDebug() << "Stm32Twi::writeDR send Address";
+        qDebug() << "Stm32Twi::writeDR send Address";
         bool write = (newDR & 1) == 0;
         if( write ){             // I2C_START_WRITE
             m_SR2 |= TRA_bit;
             m_SR1 &= ~RxNE_bit;
-        }else{                  // I2C_START_READ
+        }else{                   // I2C_START_READ
             m_SR2 &= ~TRA_bit;
             m_SR1 |= RxNE_bit;
         }
         masterWrite( newDR, true, write );
     }
-    else //if( !(m_SR1 & ADDR_bit) ) // Address sent & SR1-read+SR2-read: send data
+    else // Address sent & SR1-read+SR2-read: send data
     {
-        //qDebug() << "Stm32Twi::writeDR send Data";
+        qDebug() << "Stm32Twi::writeDR send Data";
         m_nextData = 0;
         if( m_SR1 & TxE_bit )       // Data Reg empty: send data
         {
-            m_SR1 &= ~RxNE_bit; // ????
-
+            //m_SR1 &= ~RxNE_bit; // ????
             masterWrite( newDR, false, true ); // I2C_WRITE
         }
         else m_nextData = 1;
@@ -327,12 +336,14 @@ void Stm32Twi::i2cStop()
     m_SR2 &= ~BUSY_bit;
     m_SR2 &= ~TRA_bit;
     m_needStop = 0;
+
+    qDebug() << "Stm32Twi::i2cStop -------------------------------------"<<m_SR1<<m_SR2;
 }
 
 void Stm32Twi::setTwiState( twiState_t state )
 {
     TwiModule::setTwiState( state );
-    //qDebug() << "Stm32Twi::setTwiState"<< state;
+    qDebug() << "Stm32Twi::setTwiState"<< state;
     uint8_t ackT = 1;
     uint8_t ackR = 1;
 
@@ -351,15 +362,14 @@ void Stm32Twi::setTwiState( twiState_t state )
             m_SR1 |= ADDR_bit;
             //fall through
         case TWI_MTX_ADR_NACK :                          // SLA+W transmitted, NACK received
-            //m_SR1 |= BTF_bit;
             m_SR1 |= TxE_bit;
-            if( m_nextData ) masterWrite( m_DR, false, true ); // I2C_WRITE
-            else             m_SR1 |= BTF_bit;
             break;
         case TWI_MTX_DATA_ACK : ackT = 0;                // Data transmitted, ACK  received
+            m_SR1 |= TxE_bit;
             //fall through
         case TWI_MTX_DATA_NACK:                          // Data transmitted, NACK received
-            m_SR1 |= TxE_bit;
+            if( m_nextData ) masterWrite( m_DR, false, true ); // I2C_WRITE
+            else m_SR1 |= BTF_bit;
             break;
         case TWI_MRX_ADR_ACK  : ackT = 0;                // SLA+R transmitted, ACK  received
             m_SR1 |= ADDR_bit;
@@ -408,6 +418,7 @@ void Stm32Twi::updateIrq()
         if( m_errIrqLevel != errIrqLevel ){
             m_errIrqLevel = errIrqLevel;
             setInterrupt( m_errInterrupt, errIrqLevel );
+            qDebug() << "Stm32Twi::updateIrq err" << m_errInterrupt << errIrqLevel;
         }
     }
 
@@ -423,6 +434,7 @@ void Stm32Twi::updateIrq()
         if( m_evtIrqLevel != evtIrqLevel ){
             m_evtIrqLevel = evtIrqLevel;
             setInterrupt( m_evtInterrupt, evtIrqLevel );
+            qDebug() << "Stm32Twi::updateIrq evt" << m_evtInterrupt << evtIrqLevel;
         }
     }
 }
