@@ -43,6 +43,9 @@ ComponentList::ComponentList( QWidget* parent )
     setDragEnabled( true );
     viewport()->setAcceptDrops( true );
 
+    setMouseTracking( true );
+    viewport()->setMouseTracking( true );
+
     float scale = MainWindow::self()->fontScale();
     setIndentation( 6*scale );
     setRootIsDecorated( true );
@@ -442,11 +445,27 @@ void ComponentList::mousePressEvent( QMouseEvent* event )
         for( QTreeWidgetItem* item : selectedItems() ) item->setSelected( false );
 
         QTreeWidget::mousePressEvent( event );
+
+        if( selectedItems().size() ){                             // Expand category by clicking on it
+            TreeItem* item = (TreeItem*)selectedItems().first();
+            if( item->childCount() )
+                item->setItemExpanded( !item->isExpanded() );
+        }
     }
     else if( event->button() == Qt::RightButton )
     {
         slotContextMenu( event->pos() );
     }
+}
+
+void ComponentList::mouseMoveEvent( QMouseEvent *event )
+{
+    QModelIndex index = indexAt(event->pos());
+    if( index.isValid() ) {
+        for( QTreeWidgetItem* item : selectedItems() ) item->setSelected( false );
+        selectionModel()->select( index, QItemSelectionModel::Select | QItemSelectionModel::Rows);
+    }
+    QTreeWidget::mouseMoveEvent(event);
 }
 
 void ComponentList::slotItemClicked( QTreeWidgetItem* item, int  )

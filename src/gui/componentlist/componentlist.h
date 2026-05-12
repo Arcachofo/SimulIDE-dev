@@ -47,6 +47,7 @@ class ComponentList : public QTreeWidget
 
     protected:
         void mousePressEvent( QMouseEvent* event ) override;
+        void mouseMoveEvent( QMouseEvent *event ) override;
         void dropEvent( QDropEvent* event ) override;
 
     private:
