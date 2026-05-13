@@ -9,6 +9,7 @@
 #include "tftcontroller.h"
 #include "simulator.h"
 #include "circuitwidget.h"
+#include "utils.h"
 
 TftController::TftController( QString type, QString id )
              : Component( type, id )
@@ -171,7 +172,9 @@ void TftController::commandReceived()
     case 0xFA: m_readBytes = 4; break;   // Program Mode Enable
     case 0xFC: m_readBytes = 2; break;   // NVM Setting
     case 0xFE: m_readBytes = 2; break;   // Program action
-    default: qDebug() << "TftController::proccessCommand: Not implemented" << m_lastCommand;
+    default:
+        //qDebug() << "TftController::proccessCommand: Not implemented" << toHex32(m_lastCommand);
+        break;
     }
 }
 
