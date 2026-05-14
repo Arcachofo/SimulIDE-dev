@@ -49,7 +49,7 @@ ComponentList::ComponentList( QWidget* parent )
     float scale = MainWindow::self()->fontScale();
     setIndentation( 6*scale );
     setRootIsDecorated( true );
-    setCursor( Qt::OpenHandCursor );
+
     headerItem()->setHidden( true );
     setIconSize( QSize( 30*scale, 24*scale ));
 
@@ -442,7 +442,7 @@ void ComponentList::mousePressEvent( QMouseEvent* event )
         if( event->modifiers() & Qt::ControlModifier ) setDragDropMode( QAbstractItemView::InternalMove );
         else                                           setDragDropMode( QAbstractItemView::DragOnly );
 
-        for( QTreeWidgetItem* item : selectedItems() ) item->setSelected( false );
+        //for( QTreeWidgetItem* item : selectedItems() ) item->setSelected( false );
 
         QTreeWidget::mousePressEvent( event );
 
@@ -460,10 +460,20 @@ void ComponentList::mousePressEvent( QMouseEvent* event )
 
 void ComponentList::mouseMoveEvent( QMouseEvent *event )
 {
-    QModelIndex index = indexAt(event->pos());
+    QModelIndex index = indexAt( event->pos() );
+
     if( index.isValid() ) {
         for( QTreeWidgetItem* item : selectedItems() ) item->setSelected( false );
         selectionModel()->select( index, QItemSelectionModel::Select | QItemSelectionModel::Rows);
+    }
+
+    TreeItem* item = (TreeItem*)itemAt( event->pos() );
+    if( m_clickedItem != item )
+    {
+        for( QTreeWidgetItem* item : selectedItems() ) item->setSelected( false );
+        item->setSelected( true );
+        if( item->childCount() ) setCursor( Qt::ArrowCursor );
+        else                     setCursor( Qt::OpenHandCursor );
     }
     QTreeWidget::mouseMoveEvent(event);
 }
