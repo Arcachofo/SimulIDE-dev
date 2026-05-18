@@ -60,8 +60,6 @@ WaveGen::WaveGen( QString type, QString id )
     //setSteps( 100 );
     setDuty( 50 );
 
-    Simulator::self()->addToUpdateList( this );
-
     remPropGroup( tr("Main") );
 
     QString waves = "Sine,Saw,Triangle,Square,Random,Wav;"
@@ -128,7 +126,8 @@ void WaveGen::initialize()
     else if( m_waveType == Random ) m_eventTime = m_psPerCycleInt/3;
     else{
         m_eventTime = 0;
-        if( m_isRunning ) AnalogClock::self()->addClkElement( this );
+        //if( m_isRunning )
+            AnalogClock::self()->addClkElement( this );
     }
     if( m_isRunning && m_eventTime ) Simulator::self()->addEvent( m_eventTime, this );
 }
@@ -161,10 +160,14 @@ void WaveGen::stamp()
         m_outpin->setImpedance( low_imp );
         m_gndpin->setImpedance( low_imp );
     }
+
+    WaveGen::setFreq( m_freq ); // Update steps to minSteps
 }
 
 void WaveGen::runEvent()
 {
+    if( !m_isRunning ) return;
+
     m_time = fmod( Simulator::self()->circTime() - m_phaseTime, m_psPerCycleDbl );
 
     switch( m_waveType ) {
@@ -261,11 +264,11 @@ void WaveGen::setFreq( double freq )
 
     double psPerCycleDbl = 1e6*1e6/freq;
 
-    uint64_t minimum = AnalogClock::self()->getStep()*m_minSteps; // Minimum 100 steps per wave cycle
+    uint64_t minimum = psPerCycleDbl/m_minSteps; // Minimum steps per wave cycle
 
-    if( psPerCycleDbl < minimum ) // Scale Step
+    if( minimum < AnalogClock::self()->getStep() ) // Scale Step
     {
-        double divider = minimum/psPerCycleDbl;
+        double divider = AnalogClock::self()->getPeriod()/minimum;
         AnalogClock::self()->setDivider( std::ceil( divider ) );
     }
 

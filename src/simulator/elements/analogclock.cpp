@@ -23,7 +23,7 @@ AnalogClock::~AnalogClock(){}
 void AnalogClock::stamp()
 {
     setDivider( 1 );
-    if( m_clkElement ) Simulator::self()->addEvent( m_period, this );
+    if( m_clkElement ) Simulator::self()->addEvent( m_step, this );
 }
 
 void AnalogClock::updateStep()

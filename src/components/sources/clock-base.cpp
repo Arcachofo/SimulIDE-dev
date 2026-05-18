@@ -22,8 +22,6 @@ ClockBase::ClockBase( QString type, QString id )
     m_psPerCycleInt = 0;
     ClockBase::setFreq( 1000 );
 
-    Simulator::self()->addToUpdateList( this );
-
     addPropGroup( { "Hidden1", {
         new BoolProp<ClockBase>("Running", "",""
                                , this, &ClockBase::running, &ClockBase::setRunning ),

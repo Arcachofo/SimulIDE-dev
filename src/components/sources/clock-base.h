@@ -46,7 +46,6 @@ class ClockBase : public FixedVolt
 
         bool m_isRunning;
         bool m_alwaysOn;
-
         uint64_t m_psPerCycleInt;
         double m_psPerCycleDbl;
 

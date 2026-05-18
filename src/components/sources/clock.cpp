@@ -33,6 +33,8 @@ Clock::Clock( QString type, QString id )
 {
     remPropGroup( tr("Main") );
 
+    Simulator::self()->addToUpdateList( this );
+
     addPropGroup( { tr("Main"), {
         new DoubProp<Clock>("Voltage", tr("Voltage"), "V"
                            , this, &Clock::volt, &Clock::setVolt ),

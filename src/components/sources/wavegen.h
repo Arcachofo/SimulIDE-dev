@@ -29,7 +29,7 @@ class WaveGen : public ClockBase
 
         bool propNotFound( QString prop, QString val ) override;
 
-        void updateStep() override{;}
+        //void updateStep() override{;}
         void initialize() override;
         void stamp() override;
         void runEvent() override;
