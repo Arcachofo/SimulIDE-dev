@@ -164,20 +164,29 @@ void Csource::updateStep()
     bool connected = m_pin[0]->isConnected() && m_pin[1]->isConnected();
     m_pin[0]->changeCallBack( this, connected && m_controlPins );
     m_pin[1]->changeCallBack( this, connected && m_controlPins );
+
+    if( m_pin[0]->isConnected() ) m_pin[0]->getEnode()->addToNoLinList(this);
+    if( m_pin[1]->isConnected() ) m_pin[1]->getEnode()->addToNoLinList(this);
+    if( m_pin[2]->isConnected() ) m_pin[2]->getEnode()->addToNoLinList(this);
+    if( m_pin[3]->isConnected() ) m_pin[3]->getEnode()->addToNoLinList(this);
+
     update();
 }
 
 void Csource::setVoltage( double v )
 {
     double curr = v;
-    //if( qFabs( curr - m_lastCurr ) < 1e-5 ) return;
-    m_lastCurr = curr;
 
     if( m_currSource   ) curr = -curr;      // Current source
-    else if( curr != 0 ) curr /= low_imp; // Voltage source
+    else if( curr != 0 ) curr /= low_imp;   // Voltage source
     if( m_currControl  ) curr *= m_admit;   // Current controlled
 
     curr *= m_gain;
+
+    if( qFabs( curr - m_lastCurr ) < 1e-7 ) return;
+    m_lastCurr = curr;
+
+    Simulator::self()->notCorverged();
 
 
     m_pin[2]->stampCurrent( curr );
