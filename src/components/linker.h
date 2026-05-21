@@ -22,6 +22,7 @@ class Linker
         void removeLinked( Component* comp ) { m_linkedComp.removeOne( comp ); }
 
         Component* getLinkedComp( int i ) { return m_linkedComp.value( i ); }
+        void emitLinkedValue( double v, int i=0 );
 
         bool hasLinks() { return !m_linkedStr.isEmpty(); }
 

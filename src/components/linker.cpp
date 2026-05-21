@@ -107,3 +107,9 @@ void Linker::showLinked( bool show )
     }
     Circuit::self()->update();
 }
+
+void Linker::emitLinkedValue( double v, int i )
+{
+    for( Component* comp : m_linkedComp ) comp->setLinkedValue( v, i );
+}
+

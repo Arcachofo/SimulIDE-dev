@@ -106,11 +106,8 @@ void Dial::updateStep()
     double v = m_dialW.value();
     double range = m_maxVal - m_minVal;
     v = m_minVal + v*range/(m_steps-1);
-    for( int i=0; i<m_linkedComp.size(); ++i )
-    {
-        Component* comp = m_linkedComp.at( i );
-        comp->setLinkedValue( v );  //update();
-    }
+
+    emitLinkedValue( v );
 }
 
 int Dial::value()

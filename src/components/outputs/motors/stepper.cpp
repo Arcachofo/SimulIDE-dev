@@ -119,7 +119,7 @@ void Stepper::updateStep()
     if(  m_linkedComp.size() )
     {
         double val = (16.0*360.0-m_ang)*1000/(16.0*360.0);
-        for( Component* comp : m_linkedComp ) comp->setLinkedValue( val ); // 0-1000
+        emitLinkedValue( val ); // 0-1000
     }
     if( m_changed )
     {

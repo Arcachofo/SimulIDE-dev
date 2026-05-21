@@ -123,7 +123,8 @@ void DcMotor::updateStep()
         double val = m_ang*1000/(16.0*360.0);
         if( val > 0 ) val = 1000-val;
         else          val = -val;
-        for( Component* comp : m_linkedComp ) comp->setLinkedValue( val ); // angle 0-1000
+
+        emitLinkedValue( val ); // angle 0-1000
     }
     if( m_watcher ) m_watcher->updateValues();
 

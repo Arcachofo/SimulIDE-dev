@@ -144,11 +144,7 @@ void Diode::voltChanged()
     eDiode::voltChanged();
     if( !m_converged ) return;
 
-    if( !m_linkedComp.isEmpty() )
-    {
-        double current = m_resistor->current();
-        for( Component* comp : m_linkedComp ) comp->setLinkedValue( current );
-    }
+    if( !m_linkedComp.isEmpty() ) emitLinkedValue( m_resistor->current() );
 }
 
 void Diode::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
