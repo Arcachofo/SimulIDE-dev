@@ -907,12 +907,12 @@ void CodeEditor::lineNumberAreaPaintEvent( QPaintEvent* event )
         bool found = false;
         QTextBlock cBlock = textCursor().block().next();
 
-        QList<int> errors    = m_errors;  // Copy lists to make substitutions
-        QList<int> warnings  = m_warnings;
-        QList<int> brkPoints = m_brkPoints;
-
         while( block.isValid() )
         {
+            QList<int> errors    = m_errors;  // Copy lists to make substitutions
+            QList<int> warnings  = m_warnings;
+            QList<int> brkPoints = m_brkPoints;
+
             int newLine = block.blockNumber() + 1;
             int oldLine = newLine + delta;
             if( oldLine > numLines )
@@ -933,16 +933,16 @@ void CodeEditor::lineNumberAreaPaintEvent( QPaintEvent* event )
             }
             if( found ) // Replace lines
             {
+                //  brkPoints, errors, warnings might not contain oldLine and crash
                 if( m_brkPoints.contains( oldLine ) ) brkPoints.replace( m_brkPoints.indexOf( oldLine ), newLine ); // Replace breakpoint line
                 if( m_errors.contains( oldLine )    ) errors.replace(    m_errors.indexOf( oldLine )   , newLine ); // Replace error line
                 if( m_warnings.contains( oldLine )  ) warnings.replace(  m_warnings.indexOf( oldLine ) , newLine ); // Replace warning line
             }
             block = block.next();
+            m_errors    = errors;      // Replace old lists with new ones
+            m_warnings  = warnings;
+            m_brkPoints = brkPoints;
         }
-        m_errors    = errors;      // Replace old lists with new ones
-        m_warnings  = warnings;
-        m_brkPoints = brkPoints;
-
         block = firstVisibleBlock();
     }
     while( block.isValid()  && top <= event->rect().bottom() )
