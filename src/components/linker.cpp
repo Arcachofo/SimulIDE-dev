@@ -90,6 +90,9 @@ void Linker::compSelected( Component* comp )
         m_selecComp = nullptr;
         showLinked( false );
     }
+
+    if( m_linkedComp.size() ) Circuit::self()->addLinkerComp( dynamic_cast<Component*>(this) );
+    else                      Circuit::self()->remLinkerComp( dynamic_cast<Component*>(this) );
 }
 
 void Linker::showLinked( bool show )

@@ -127,6 +127,9 @@ class Circuit : public QGraphicsScene
         void updatePin( ePin* epin, QString oldId, QString newId );
         Pin* getPin( QString pin ){ return m_pinMap.value( pin ); }
 
+        void addLinkerComp( Component* c ) { if( !m_linkers.contains(c) ) m_linkers.append(c); }
+        void remLinkerComp( Component* c ) { m_linkers.removeOne(c); }
+
         QString getSeqNumber( QString name );
         QString replaceId( QString pinName );
 
@@ -250,6 +253,8 @@ class Circuit : public QGraphicsScene
         QList<Component*> m_oldComps;
         QList<Node*>      m_oldNodes;
         QMap<CompBase*, QString> m_compStrMap;
+
+        QList<Component*> m_linkers;
 
         uint32_t* m_background;
         uint32_t* m_foreground;

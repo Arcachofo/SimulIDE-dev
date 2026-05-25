@@ -176,7 +176,7 @@ bool Component::freeMove( bool ctrlMod )
 
 void Component::mousePressEvent( QGraphicsSceneMouseEvent* event )
 {
-    if( this->parentItem() )
+    if( this->parentItem() && !Linker::m_selecComp )
     {
         Component* parentComp = static_cast<Component*>( this->parentItem() );
         parentComp->mousePressEvent( event );
@@ -187,6 +187,7 @@ void Component::mousePressEvent( QGraphicsSceneMouseEvent* event )
         event->accept();
         if( Linker::m_selecComp ){
             Linker::m_selecComp->compSelected( this );
+
         }
         else if( event->modifiers() & Qt::ControlModifier )
         {
@@ -285,6 +286,8 @@ void Component::mouseMoveEvent( QGraphicsSceneMouseEvent* event )
     for( ConnectorLine* line : m_lineMoveList ) line->moveSimple( delta ); // Move ConnectorLine
     for( Component* comp : m_compMoveList ) comp->move( delta );    // Move Components selected
     for( Connector* con  : m_conMoveList  ) con->isMoved();         // Update Connectors
+
+    Circuit::self()->update();
 }
 
 void Component::mouseReleaseEvent( QGraphicsSceneMouseEvent* event )

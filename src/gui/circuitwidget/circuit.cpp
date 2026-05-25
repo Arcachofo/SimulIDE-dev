@@ -178,6 +178,8 @@ void Circuit::loadCircuit( QString filePath )
     m_filePath = filePath;
     m_error = 0;
 
+    m_linkers.clear();
+
     QString doc = fileToString( filePath, "Circuit::loadCircuit" );
     loadStrDoc( doc );
 
@@ -343,7 +345,10 @@ void Circuit::loadStrDoc( QString &doc )
 
                     if( comp->m_isLinker ){
                         Linker* l = dynamic_cast<Linker*>(comp);
-                        if( l->hasLinks() ) linkList.append( l );
+                        if( l->hasLinks() ){
+                            linkList.append( l );
+                            m_linkers.append( comp ) ;
+                        }
                     }
                 }
                 int number = newUid.split("-").last().toInt();
@@ -426,7 +431,7 @@ void Circuit::loadStrDoc( QString &doc )
         for( Node* joint : nodeList ) joint->checkRemove(); // Only removed if some missing connector
 
     for( ShieldSubc* shield : shieldList ) shield->connectBoard();
-    for( Linker*     linker : linkList   ) linker->createLinks( &compList );
+    for( Linker*     linker : linkList   )linker->createLinks( &compList );
 
     setAnimateLogic( m_animateLogic ); // Force Pin update
 
@@ -1204,13 +1209,24 @@ void Circuit::drawBackground( QPainter* painter, const QRectF &rect )
     }
     for( int i=4; i<endy; i+=8 ){
         if( i > scnEndY && -i < scnStrY) break;
-        if(  i < scnEndY ) painter->drawLine( scnStrX, i, scnEndX, i);
-        if( -i > scnStrY ) painter->drawLine( scnStrX,-i, scnEndX,-i);
+        if( i < scnEndY ) painter->drawLine( scnStrX, i, scnEndX, i);
+        if(-i > scnStrY ) painter->drawLine( scnStrX,-i, scnEndX,-i);
     }
     QPen pen( QColor( 60, 60, 70 ), 2, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin );
     painter->setPen( pen );
     painter->setBrush( Qt::transparent );
     painter->drawRect( m_scenerect );
+
+    if( m_linkers.isEmpty() ) return;
+    painter->setOpacity( 0.3 );
+    QPen pen2( QColor( 80, 80, 200 ), 2, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin );
+    painter->setPen( pen2 );
+    for( Component* linker : m_linkers )
+    {
+        Linker* l = dynamic_cast<Linker*>(linker);
+        for( Component* comp : l->m_linkedComp )
+            painter->drawLine( linker->pos(), comp->pos() );
+    }
 }
 
 void Circuit::updatePin( ePin* epin, QString oldId, QString newId )

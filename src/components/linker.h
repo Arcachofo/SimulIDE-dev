@@ -12,6 +12,8 @@ class Component;
 
 class Linker
 {
+    friend class Circuit;
+
     public:
         Linker();
         ~Linker();
