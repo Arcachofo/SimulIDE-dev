@@ -210,6 +210,13 @@ void PropDialog::adjustWidgets()
     this->setMaximumHeight( h+70*m_scale );
 }
 
+void PropDialog::showEvent( QShowEvent* event )
+{
+    QDialog::showEvent( event );
+
+    activateWindow();
+}
+
 void PropDialog::updtValues()
 {
     for( PropVal* prop : m_propList ) prop->updtValues();

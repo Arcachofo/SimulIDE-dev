@@ -35,6 +35,9 @@ class PropDialog : public QDialog, private Ui::PropDialog
         void on_helpButton_clicked();
         void adjustWidgets();
 
+    protected:
+        void showEvent( QShowEvent* event ) override;
+
     private:
         CompBase* m_component;
 
