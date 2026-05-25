@@ -85,6 +85,7 @@ class ScriptCpu : public ScriptBase, public Mcu8bits
 
         string getPropStr( int index, const string p );               // Called from script: Get property p from linked component at index
         void setPropStr( int index, const string p, const string v ); // Called from script: Set property p with value v in linked component at index
+        void emitLinkedValue( double v, int i=0  );                   // Called from script
         void setLinkedValue( int index, double v, int i=0  );         // Called from script
         void setLinkedString( int index, const string str, int i=0 ); // Called from script
 

@@ -178,6 +178,11 @@ ScriptCpu::ScriptCpu( eMcu* mcu )
                                    , asMETHODPR( ScriptCpu, setPropStr, (int,const string,const string), void)
                                    , asCALL_THISCALL );
 
+    memberList << "emitLinkedValue( double value, int i )";
+    m_aEngine->RegisterObjectMethod("ScriptCpu", "void emitLinkedValue( double v, int i )"
+                                   , asMETHODPR( ScriptCpu, emitLinkedValue, (double,int), void)
+                                   , asCALL_THISCALL );
+
     memberList << "setLinkedValue( int index, double value, int i )";
     m_aEngine->RegisterObjectMethod("ScriptCpu", "void setLinkedValue( int index, double v, int i )"
                                    , asMETHODPR( ScriptCpu, setLinkedValue, (int,double,int), void)
@@ -626,6 +631,11 @@ void ScriptCpu::setPropStr( int index, const string p, const string v ) // Scrip
     if( !comp ) return;
 
     comp->setPropStr( QString::fromStdString(p), QString::fromStdString(v) );
+}
+
+void ScriptCpu::emitLinkedValue( double v, int i )
+{
+    m_mcuComp->emitLinkedValue( v, i );
 }
 
 void ScriptCpu::setLinkedValue( int index, double v, int i )
