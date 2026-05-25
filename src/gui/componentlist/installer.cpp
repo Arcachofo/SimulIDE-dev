@@ -287,4 +287,4 @@ void Installer::writeSettings()
     QSettings* settings = MainWindow::self()->settings();
     settings->setValue("library/installed", installed );
 }
-//#include moc_installer.cpp
+

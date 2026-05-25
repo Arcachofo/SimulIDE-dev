@@ -266,7 +266,7 @@ void WaveGen::setFreq( double freq )
 
     uint64_t minimum = psPerCycleDbl/m_minSteps; // Minimum steps per wave cycle
 
-    if( minimum < AnalogClock::self()->getStep() ) // Scale Step
+    if( minimum && minimum < AnalogClock::self()->getStep() ) // Scale Step
     {
         double divider = AnalogClock::self()->getPeriod()/minimum;
         AnalogClock::self()->setDivider( std::ceil( divider ) );

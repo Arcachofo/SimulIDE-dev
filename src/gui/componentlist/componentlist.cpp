@@ -462,18 +462,16 @@ void ComponentList::mouseMoveEvent( QMouseEvent *event )
 {
     QModelIndex index = indexAt( event->pos() );
 
-    if( index.isValid() ) {
-        for( QTreeWidgetItem* item : selectedItems() ) item->setSelected( false );
-        selectionModel()->select( index, QItemSelectionModel::Select | QItemSelectionModel::Rows);
-    }
-
-    TreeItem* item = (TreeItem*)itemAt( event->pos() );
-    if( m_clickedItem != item )
+    if( index.isValid() )
     {
-        for( QTreeWidgetItem* item : selectedItems() ) item->setSelected( false );
-        item->setSelected( true );
-        if( item->childCount() ) setCursor( Qt::ArrowCursor );
-        else                     setCursor( Qt::OpenHandCursor );
+        TreeItem* hoverItem = (TreeItem*) itemAt( event->pos() );
+        if( m_clickedItem != hoverItem ){
+            m_clickedItem = hoverItem;
+            for( QTreeWidgetItem* item : selectedItems() ) item->setSelected( false );
+            hoverItem->setSelected( true );
+            if( hoverItem->childCount() ) setCursor( Qt::ArrowCursor );
+            else                          setCursor( Qt::OpenHandCursor );
+        }
     }
     QTreeWidget::mouseMoveEvent(event);
 }
