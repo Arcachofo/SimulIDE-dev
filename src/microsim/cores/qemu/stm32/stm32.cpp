@@ -232,12 +232,13 @@ void Stm32::updtFrequency()
 {
     m_apb1 = m_arena->regAddr;
     m_apb2 = m_arena->regData;
+    qDebug() << "Stm32::updtFrequency APB1:" << m_apb1 << "APB2:" << m_apb2;
 
     for( QemuModule* module : m_modules ) module->freqChanged();
 }
 
-Pin* Stm32::addPin( QString id, QString type, QString label,
-                   int n, int x, int y, int angle, int length, int space )
+Pin* Stm32::addPin(QString id, QString type, QString label,
+                   int n, int x, int y, int angle, int length, double space )
 {
     IoPin* pin = nullptr;
     //qDebug() << "Stm32::addPin" << id;

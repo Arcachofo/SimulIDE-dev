@@ -335,7 +335,7 @@ void SubPackage::setBoardMode( bool mode )
     }
 }
 
-void SubPackage::addNewPin( QString id, QString type, QString label, int pos, int xpos, int ypos, int angle, int length, int space )
+void SubPackage::addNewPin(QString id, QString type, QString label, int pos, int xpos, int ypos, int angle, int length, double space )
 {
     PackagePin* pin = new PackagePin( angle, QPoint(xpos, ypos), m_id+"-"+id, pos-1, this ); // pos in package starts at 1
 

@@ -313,7 +313,7 @@ void Chip::setPinStr( QVector<propStr_t> properties )
     int xpos   = -m_width/2-length;
     int ypos   = 8;
     int angle  = 0;
-    int space  = 0;
+    double space  = 0;
     QString id;
     QString label;
     QString type;
@@ -327,7 +327,7 @@ void Chip::setPinStr( QVector<propStr_t> properties )
         else if( name == "ypos"  ) ypos   = val.toInt();
         else if( name == "angle" ) angle  = val.toInt();
         else if( name == "length") length = val.toInt();
-        else if( name == "space" ) space  = val.toInt();
+        else if( name == "space" ) space  = val.toDouble();
         else if( name == "id"    ) id     = val;
         else if( name == "label" ) label  = val;
         else if( name == "type"  ) type   = val;
@@ -335,7 +335,7 @@ void Chip::setPinStr( QVector<propStr_t> properties )
     addNewPin( id, type, label, 0, xpos, ypos, angle, length, space );
 }
 
-void Chip::addNewPin( QString id, QString type, QString label, int pos, int xpos, int ypos, int angle, int length, int space )
+void Chip::addNewPin( QString id, QString type, QString label, int pos, int xpos, int ypos, int angle, int length, double space )
 {
     Pin* pin = nullptr;
 

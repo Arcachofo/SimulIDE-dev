@@ -24,7 +24,7 @@ class Stm32 : public QemuDevice
         bool createArgs() override;
 
         Pin* addPin( QString id, QString type, QString label,
-                    int n, int x, int y, int angle, int length=8, int space=0 ) override;
+                    int n, int x, int y, int angle, int length=8, double space=0 ) override;
 
         void createPorts();
         //void doAction() override;

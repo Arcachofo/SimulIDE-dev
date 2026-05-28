@@ -148,8 +148,8 @@ void Esp32::stamp()
     QemuDevice::stamp();
 }
 
-Pin* Esp32::addPin( QString id, QString type, QString label,
-                   int n, int x, int y, int angle, int length, int space )
+Pin* Esp32::addPin(QString id, QString type, QString label,
+                   int n, int x, int y, int angle, int length, double space )
 {
     IoPin* pin = nullptr;
 

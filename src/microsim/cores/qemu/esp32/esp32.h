@@ -25,7 +25,7 @@ class Esp32 : public QemuDevice
 
     protected:
         Pin* addPin( QString id, QString type, QString label,
-                    int n, int x, int y, int angle, int length=8, int space=0 ) override;
+                    int n, int x, int y, int angle, int length=8, double space=0 ) override;
 
         bool createArgs() override;
 

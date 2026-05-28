@@ -648,7 +648,7 @@ void Mcu::setLinkedString( QString str, int i )
 }
 
 Pin* Mcu::addPin( QString id, QString type, QString label,
-                  int pos, int xpos, int ypos, int angle, int length, int space )
+                  int pos, int xpos, int ypos, int angle, int length, double space )
 {
     IoPin* pin = nullptr;
     if( type.contains("rst") )

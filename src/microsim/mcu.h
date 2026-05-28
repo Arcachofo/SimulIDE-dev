@@ -99,7 +99,7 @@ class Mcu : public Chip, public Linker
         bool load( QString fileName );
 
         Pin* addPin( QString id, QString type, QString label,
-                             int pos, int xpos, int ypos, int angle , int length=8, int space=0 ) override;
+                             int pos, int xpos, int ypos, int angle , int length=8, double space=0 ) override;
 
         void setScriptCpu( ScriptCpu* l) { m_scriptCpu = l; } // Called from script
 

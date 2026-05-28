@@ -302,7 +302,7 @@ void SubCircuit::loadSubCircuit( QString doc )
     for( Linker* l : linkList ) l->createLinks( &m_compList );
 }
 
-Pin* SubCircuit::addPin( QString id, QString type, QString label, int, int xpos, int ypos, int angle, int length, int space )
+Pin* SubCircuit::addPin( QString id, QString type, QString label, int, int xpos, int ypos, int angle, int length, double space )
 {
     if( m_initialized && m_pinTunnels.contains( m_id+"-"+id ) )
     {
@@ -344,7 +344,7 @@ Pin* SubCircuit::addPin( QString id, QString type, QString label, int, int xpos,
     }
 }
 
-Pin* SubCircuit::updatePin( QString id, QString type, QString label, int xpos, int ypos, int angle, int length, int space )
+Pin* SubCircuit::updatePin( QString id, QString type, QString label, int xpos, int ypos, int angle, int length, double space )
 {
     Pin* pin = nullptr;
     Tunnel* tunnel = m_pinTunnels.value( m_id+"-"+id );

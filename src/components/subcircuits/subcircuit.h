@@ -50,10 +50,10 @@ class SubCircuit : public Chip
         Pin* findPin( QString pinId );
 
         virtual Pin* addPin( QString id, QString type, QString label,
-                            int pos, int xpos, int ypos, int angle, int length=8, int space=0 ) override;
+                            int pos, int xpos, int ypos, int angle, int length=8, double space=0 ) override;
 
         virtual Pin* updatePin( QString id, QString type, QString label,
-                                int xpos, int ypos, int angle, int length=8, int space=0 ) override;
+                                int xpos, int ypos, int angle, int length=8, double space=0 ) override;
 
         QMap<QString, Component*> m_mainComponents;
  static QString s_subcDir;      // Subcircuit Path

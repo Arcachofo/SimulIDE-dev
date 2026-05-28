@@ -47,6 +47,22 @@ QStringList ScriptTwi::registerScript( ScriptCpu* cpu )
                                    , asMETHODPR( ScriptTwi, setAddress, (uint8_t), void)
                                    , asCALL_THISCALL );
 
+    engine->RegisterObjectMethod("TWI", "void masterStart()"
+                                 , asMETHODPR( ScriptTwi, masterStart, (), void)
+                                 , asCALL_THISCALL );
+
+    engine->RegisterObjectMethod("TWI", "void masterWrite( uint8_t d, bool isAddr, bool write )"
+                                 , asMETHODPR( ScriptTwi, masterWrite, (uint8_t,bool,bool), void)
+                                 , asCALL_THISCALL );
+
+    engine->RegisterObjectMethod("TWI", "void masterRead( bool ack )"
+                                 , asMETHODPR( ScriptTwi, masterRead, (bool), void)
+                                 , asCALL_THISCALL );
+
+    engine->RegisterObjectMethod("TWI", "void masterStop()"
+                                 , asMETHODPR( ScriptTwi, masterStop, (), void)
+                                 , asCALL_THISCALL );
+
     return m_methods;
 }
 

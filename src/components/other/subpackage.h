@@ -81,7 +81,7 @@ class SubPackage : public Chip, public Linker
         void contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu ) override;
 
         void addNewPin( QString id, QString type, QString label,
-                            int pos, int xpos, int ypos, int angle, int length=8, int space=0 ) override;
+                            int pos, int xpos, int ypos, int angle, int length=8, double space=0 ) override;
 
         void embeedBackground( QString pixmapPath ) override;
         void setBackground( QString bck ) override;
