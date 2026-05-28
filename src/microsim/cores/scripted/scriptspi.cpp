@@ -55,7 +55,11 @@ QStringList ScriptSpi::registerScript( ScriptCpu* cpu )
 void ScriptSpi::startScript()
 {
     asIScriptEngine* aEngine = m_scriptCpu->engine();
-    m_byteReceived = aEngine->GetModule(0)->GetFunctionByDecl("void byteReceived( uint d )");
+
+    QString funcName = "void "+m_perifName+"_byteReceived( uint d )";
+    m_byteReceived = aEngine->GetModule(0)->GetFunctionByDecl( funcName.toLocal8Bit().constData() );
+    if( !m_byteReceived )
+        m_byteReceived = aEngine->GetModule(0)->GetFunctionByDecl("void byteReceived( uint d )");
 }
 
 void ScriptSpi::byteReceived( uint8_t data )

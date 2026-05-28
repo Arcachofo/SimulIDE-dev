@@ -57,9 +57,21 @@ void ScriptTcp::startScript()
 {
     asIScriptEngine* aEngine = m_scriptCpu->engine();
     asIScriptModule* module = aEngine->GetModule( 0, asGM_ONLY_IF_EXISTS );
+
+    QString funcName = "void "+m_perifName+"_received( string msg, int link )";
+    m_received = module->GetFunctionByDecl( funcName.toLocal8Bit().constData() );
+    if( !m_received )
     m_received  = module->GetFunctionByDecl("void received( string msg, int link )");
+
+    funcName = "void "+m_perifName+"_tcpConnected( int link )";
+    m_connected = module->GetFunctionByDecl( funcName.toLocal8Bit().constData() );
+    if( !m_connected )
     m_connected = module->GetFunctionByDecl("void tcpConnected( int link )");
-    m_closed    = module->GetFunctionByDecl("void tcpDisconnected( int link )");
+
+    funcName = "void "+m_perifName+"_tcpDisconnected( int link )";
+    m_closed = module->GetFunctionByDecl( funcName.toLocal8Bit().constData() );
+    if( !m_closed )
+        m_closed = module->GetFunctionByDecl("void tcpDisconnected( int link )");
 }
 
 void ScriptTcp::connectToHost( int link, const string host, int port )

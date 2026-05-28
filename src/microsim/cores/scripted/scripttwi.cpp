@@ -53,8 +53,16 @@ QStringList ScriptTwi::registerScript( ScriptCpu* cpu )
 void ScriptTwi::startScript()
 {
     asIScriptEngine* aEngine = m_scriptCpu->engine();
-    m_byteReceived = aEngine->GetModule(0)->GetFunctionByDecl("void byteReceived( uint d )");
-    m_writeByte    = aEngine->GetModule(0)->GetFunctionByDecl("uint slaveWrite()");
+
+    QString funcName = "void "+m_perifName+"_byteReceived( uint d )";
+    m_byteReceived = aEngine->GetModule(0)->GetFunctionByDecl( funcName.toLocal8Bit().constData() );
+    if( !m_byteReceived )
+        m_byteReceived = aEngine->GetModule(0)->GetFunctionByDecl("void byteReceived( uint d )");
+
+    funcName =  "void "+m_perifName+"_slaveWrite()";
+    m_writeByte = aEngine->GetModule(0)->GetFunctionByDecl( funcName.toLocal8Bit().constData() );
+    if( !m_writeByte )
+        m_writeByte = aEngine->GetModule(0)->GetFunctionByDecl("uint slaveWrite()");
 }
 
 void ScriptTwi::reset()
