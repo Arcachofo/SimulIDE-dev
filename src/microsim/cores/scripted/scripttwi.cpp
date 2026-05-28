@@ -20,7 +20,11 @@ ScriptTwi::ScriptTwi( eMcu* mcu, QString name )
 
     m_methods << "setMode( int mode )"
               << "sendByte( uint8 byte )"
-              << "setAddress( uint8 address )";
+              << "setAddress( uint8 address )"
+              << "masterStart()"
+              << "masterWrite( uint8 data, bool isAddr, bool write )"
+              << "masterRead( bool ack )"
+              << "masterStop()";
 }
 ScriptTwi::~ScriptTwi(){}
 
@@ -51,7 +55,7 @@ QStringList ScriptTwi::registerScript( ScriptCpu* cpu )
                                  , asMETHODPR( ScriptTwi, masterStart, (), void)
                                  , asCALL_THISCALL );
 
-    engine->RegisterObjectMethod("TWI", "void masterWrite( uint8_t d, bool isAddr, bool write )"
+    engine->RegisterObjectMethod("TWI", "void masterWrite( uint8 d, bool isAddr, bool write )"
                                  , asMETHODPR( ScriptTwi, masterWrite, (uint8_t,bool,bool), void)
                                  , asCALL_THISCALL );
 
