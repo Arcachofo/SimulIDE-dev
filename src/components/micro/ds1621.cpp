@@ -12,6 +12,7 @@
 
 #include "ds1621.h"
 #include "itemlibrary.h"
+#include "propdialog.h"
 #include "dialed.h"
 #include "circuit.h"
 #include "iopin.h"
@@ -97,7 +98,7 @@ DS1621::DS1621( QString type, QString id )
     m_font.setPixelSize( 9 );
     m_font.setBold( true );
     m_font.setLetterSpacing( QFont::PercentageSpacing, 100 );
-    setLabelPos(-24,-28 );
+    setLabelPos(-24,-40 );
 
     setTemp( 22.5 );
     setTempInc( 0.5 );
@@ -246,7 +247,11 @@ void DS1621::doConvert()
     m_tempSlope = 16;          // compute high resolution
     m_tempCount = m_tempSlope * (0.75 + m_tempReg[1] - temp_abs);
 
-    if( m_temp < 0.0) m_tempReg[1] = -m_tempReg[1]; // take sign into account
+    if( m_temp < 0.0)  // take sign into account
+    {
+        m_tempReg[1] = -m_tempReg[1];
+        if( m_tempReg[0] ) m_tempReg[1] -= 1;
+    }
 
     if( m_temp > m_Th ){
         m_config |= 1<<6;  // Set THF bit
@@ -273,6 +278,7 @@ void  DS1621::setTemp( double temp )
     m_temp = temp;
     if( m_temp > 125 ) m_temp = 125;
     if( m_temp < -55 ) m_temp = -55;
+    if( m_propDialog ) m_propDialog->updtValues();
     m_changed = true;
     update();
 }
