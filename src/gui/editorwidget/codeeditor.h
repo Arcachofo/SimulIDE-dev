@@ -123,6 +123,7 @@ class CodeEditor : public QPlainTextEdit, public CompBase
         void indentSelection( bool unIndent );
         void complete( QKeyEvent* e );
         QString wordUnderCursor();
+        void updtNumbers( QList<int>* list, int delta, int line );
 
         BaseDebugger* m_compiler;
         OutPanelText* m_outPane;

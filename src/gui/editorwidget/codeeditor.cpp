@@ -888,6 +888,18 @@ void CodeEditor::highlightCurrentLine()
     setExtraSelections( extraSelections );
 }
 
+void CodeEditor::updtNumbers( QList<int>* list, int delta, int line )
+{
+    QList<int> newList;
+    for( int nLine : *list )
+    {
+        if( delta < 0 && nLine > line+delta && nLine <= line ) continue;
+        else if( nLine > line ) newList.append( nLine+delta );
+        else                    newList.append( nLine);
+    }
+    *list = newList;
+}
+
 void CodeEditor::lineNumberAreaPaintEvent( QPaintEvent* event )
 {
     QPainter painter( m_lNumArea );
@@ -902,48 +914,15 @@ void CodeEditor::lineNumberAreaPaintEvent( QPaintEvent* event )
     int numLines = document()->blockCount();
     if( m_numLines != numLines )                 // Line added or removed: move or remove points
     {
-        int delta = m_numLines - numLines;
+        int delta = numLines - m_numLines;
         m_numLines = numLines;
-        bool found = false;
-        QTextBlock cBlock = textCursor().block().next();
 
-        while( block.isValid() )
-        {
-            QList<int> errors    = m_errors;  // Copy lists to make substitutions
-            QList<int> warnings  = m_warnings;
-            QList<int> brkPoints = m_brkPoints;
+        int currentLine = textCursor().block().blockNumber()+1;
+        int startEdit = currentLine - delta;
 
-            int newLine = block.blockNumber() + 1;
-            int oldLine = newLine + delta;
-            if( oldLine > numLines )
-            {
-                if( brkPoints.contains( oldLine ) ) brkPoints.removeOne( oldLine );
-                if( errors.contains(    oldLine ) ) errors.removeOne(    oldLine );
-                if( warnings.contains(  oldLine ) ) warnings.removeOne(  oldLine );
-            }
-            if( block == cBlock )
-            {
-                if( delta > 0 ) // Line removed, check if point at cursor line and remove it
-                {
-                    if( m_brkPoints.contains( newLine ) ) brkPoints.removeOne( newLine );
-                    if( m_errors.contains( newLine )    ) errors.removeOne( newLine );
-                    if( m_warnings.contains( newLine )  ) warnings.removeOne( newLine );
-                }
-                found = true;
-            }
-            if( found ) // Replace lines
-            {
-                //  brkPoints, errors, warnings might not contain oldLine and crash
-                if( m_brkPoints.contains( oldLine ) ) brkPoints.replace( m_brkPoints.indexOf( oldLine ), newLine ); // Replace breakpoint line
-                if( m_errors.contains( oldLine )    ) errors.replace(    m_errors.indexOf( oldLine )   , newLine ); // Replace error line
-                if( m_warnings.contains( oldLine )  ) warnings.replace(  m_warnings.indexOf( oldLine ) , newLine ); // Replace warning line
-            }
-            block = block.next();
-            m_errors    = errors;      // Replace old lists with new ones
-            m_warnings  = warnings;
-            m_brkPoints = brkPoints;
-        }
-        block = firstVisibleBlock();
+        updtNumbers( &m_errors   , delta, startEdit );
+        updtNumbers( &m_warnings , delta, startEdit );
+        updtNumbers( &m_brkPoints, delta, startEdit );
     }
     while( block.isValid()  && top <= event->rect().bottom() )
     {
