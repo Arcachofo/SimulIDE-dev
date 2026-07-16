@@ -130,8 +130,12 @@ void LAnalizer::updateStep()
         if( m_trigger < 9 )
         {
             uint64_t risEdge;
-            if( m_trigger == 8 ) risEdge = m_risEdge;
-            else                 risEdge = m_channel[m_trigger]->m_risEdge;
+            if( m_trigger == 8 ) // Pause on Condition
+            {
+                risEdge = m_risEdge;
+                if( m_pauseFunc && m_autoExport && m_pause ) dump();
+            }
+            else risEdge = m_channel[m_trigger]->m_risEdge;
 
             if( risEdge > 0 ) // We have a Trigger
             {
