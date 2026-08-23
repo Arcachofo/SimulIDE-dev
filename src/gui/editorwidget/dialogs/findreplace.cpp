@@ -10,13 +10,13 @@
 #include "basedebugger.h"
 
 FindReplace::FindReplace( QWidget* parent )
-           : QDialog( parent )
+           : QWidget( parent )
 {
     setupUi(this);
     m_editor = nullptr;
 
-    setWindowFlags( Qt::Window | Qt::WindowTitleHint | Qt::Tool
-                   | Qt::WindowSystemMenuHint | Qt::WindowCloseButtonHint );
+    //setWindowFlags( Qt::Window | Qt::WindowTitleHint | Qt::Tool
+    //               | Qt::WindowSystemMenuHint | Qt::WindowCloseButtonHint );
 }
 
 void FindReplace::on_prevButton_clicked()
@@ -25,6 +25,7 @@ void FindReplace::on_prevButton_clicked()
     m_editor->setFound( extraSelections );
     find( false );
 }
+
 void FindReplace::on_nextButton_clicked()
 {
     QList<QTextEdit::ExtraSelection> extraSelections;

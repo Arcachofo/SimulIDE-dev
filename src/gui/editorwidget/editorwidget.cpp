@@ -653,11 +653,6 @@ void EditorWidget::createWidgets()
     hLayout->addStretch();
     vLayout->addLayout( hLayout );
 
-    QSplitter* splitter0 = new QSplitter( this );
-    splitter0->setObjectName("splitter0");
-    splitter0->setOrientation( Qt::Vertical );
-    vLayout->addWidget( splitter0 );
-
     m_docWidget = new QTabWidget( this );
     m_docWidget->setObjectName("docWidget");
     m_docWidget->setTabPosition( QTabWidget::North );
@@ -669,17 +664,25 @@ void EditorWidget::createWidgets()
     //m_docWidget->tabBar()->setStyleSheet("QTabBar { font-size:"+fontSize+"px; }");
     m_docWidget->setMovable( true );
 
+    m_findRepDialog = new FindReplace( this );
+    m_findRepDialog->hide();
+
+    QSplitter* splitter0 = new QSplitter( this );
+    splitter0->setObjectName("splitter0");
+    splitter0->setOrientation( Qt::Vertical );
+
+
     splitter0->addWidget( m_docWidget );
     splitter0->addWidget( &m_outPane );
     splitter0->setSizes( {300, 100} );
+
+    vLayout->addWidget( splitter0 );
+    vLayout->addWidget( m_findRepDialog);
 
     connect( m_docWidget, SIGNAL( tabCloseRequested(int)),
              this,        SLOT(   closeTab(int)), Qt::UniqueConnection);
 
     connect( m_docWidget, SIGNAL(currentChanged(int)), this, SLOT(updateDoc(int)), Qt::UniqueConnection);
-
-    m_findRepDialog = new FindReplace( this );
-    m_findRepDialog->setModal( false );
 }
 
 void EditorWidget::createActions()

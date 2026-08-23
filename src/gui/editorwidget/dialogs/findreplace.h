@@ -5,13 +5,13 @@
 
 #pragma once
 
-#include <QDialog>
+#include <QWidget>
 
 #include "ui_findreplace.h"
 
 class CodeEditor;
 
-class FindReplace : public QDialog, private Ui::FindReplace
+class FindReplace : public QWidget, private Ui::FindReplace
 {
     Q_OBJECT
 
