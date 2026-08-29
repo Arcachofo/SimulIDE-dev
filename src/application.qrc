@@ -35,6 +35,7 @@
         <file alias="codeeditor/syntax/i51asm.syntax">../resources/data/codeeditor/syntax/i51asm.syntax</file>
         <file alias="codeeditor/syntax/js.syntax">../resources/data/codeeditor/syntax/js.syntax</file>
         <file alias="codeeditor/syntax/makef.syntax">../resources/data/codeeditor/syntax/makef.syntax</file>
+        <file alias="codeeditor/syntax/md.syntax">../resources/data/codeeditor/syntax/md.syntax</file>
         <file alias="codeeditor/syntax/pic14asm.syntax">../resources/data/codeeditor/syntax/pic14asm.syntax</file>
         <file alias="codeeditor/syntax/readme_syntax">../resources/data/codeeditor/syntax/readme_syntax</file>
         <file alias="codeeditor/syntax/xml.syntax">../resources/data/codeeditor/syntax/xml.syntax</file>

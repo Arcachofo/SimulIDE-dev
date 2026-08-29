@@ -241,7 +241,7 @@ void EditorWidget::open()
 {
     QString dir = m_lastDir;
     QString fileName = QFileDialog::getOpenFileName( this, tr("Load File"), dir,
-                       tr("All files")+" (*);;Arduino (*.ino);;Asm (*.asm);;GcBasic (*.gcb)" );
+                       tr("All files")+" (*);;Markdown (*.md *.markdown);;Arduino (*.ino);;Asm (*.asm);;GcBasic (*.gcb)" );
 
     if( !fileName.isEmpty() ) loadFile( fileName );
 }
@@ -370,7 +370,7 @@ bool EditorWidget::saveAs()
     if( path == "" ) path = m_lastDir;
 
     QString extensions = "";
-    if( ext == "" ) extensions = tr("All files")+" (*);;Arduino (*.ino);;Asm (*.asm);;GcBasic (*.gcb)";
+    if( ext == "" ) extensions = tr("All files")+" (*);;Markdown (*.md *.markdown);;Arduino (*.ino);;Asm (*.asm);;GcBasic (*.gcb)";
     else            extensions = "."+ext+"(*."+ext+");;"+tr("All files")+" (*.*)";
 
     QString fileName = QFileDialog::getSaveFileName( MainWindow::self(), tr("Save Document As"), path, extensions );

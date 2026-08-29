@@ -1,0 +1,40 @@
+rules: header hrule blockquote list link image boldItalic bold italic strike inlineCode html multiLineComment
+
+header-style: #000080 default true false
+header: "^#{1,6}.*$"
+
+hrule-style: #808080 default false false
+hrule: "^(---|\*\*\*|___)+$"
+
+blockquote-style: #909090 default false true
+blockquote: "^>.*$"
+
+list-style: #800000 default true false
+list: "^\s*[-+*]\s" "^\s*\d+\.\s"
+
+link-style: #0000FF default false false
+link: "\[[^\]]*\]\([^\)]*\)" "<[a-zA-Z][a-zA-Z0-9+.-]*://[^>]+>"
+
+image-style: #704090 default false false
+image: "!\[[^\]]*\]\([^\)]*\)"
+
+boldItalic-style: #802080 default true true
+boldItalic: "\*\*\*[^*\n]+\*\*\*"
+
+bold-style: #000000 default true false
+bold: "\*\*[^*\n]+\*\*" "__[^_\n]+__"
+
+italic-style: #202060 default false true
+italic: "\*[^*\n]+\*" "_[^_\n]+_"
+
+strike-style: #808080 default false false
+strike: "~~[^~\n]+~~"
+
+inlineCode-style: #206410 default true false
+inlineCode: "`[^`\n]+`"
+
+html-style: #303078 default false false
+html: "<[a-zA-Z!/][^>]*>"
+
+multiLineComment-style: #505050 default false false
+multiLineComment: "```" "```"

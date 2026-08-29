@@ -480,6 +480,11 @@ void CodeEditor::setFile( QString filePath )
     {
         setSyntaxFile("js.syntax");
     }
+    else if( extension == ".md"
+         ||  extension == ".markdown" )
+    {
+        setSyntaxFile("md.syntax");
+    }
     /*else if( extension == ".sac" )
     {
         //m_compiler = new B16AsmDebugger( this, m_outPane );
