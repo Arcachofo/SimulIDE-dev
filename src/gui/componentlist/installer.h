@@ -42,12 +42,12 @@ class Installer : public QWidget, private Ui::installer
         void loadList();
 
         bool m_checkUpdates;
-        bool m_updated;
+        bool m_listLoaded;
         bool m_changed;
 
         QDir m_compsDir;
         QString m_compsUrl;
-        QString m_version;
+        uint64_t m_version;
 
         QString m_nextItem;
 

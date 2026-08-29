@@ -20,7 +20,7 @@ Installer::Installer( QWidget* parent )
     setupUi(this);
 
     m_checkUpdates = true; //false;
-    m_updated = false;
+    m_listLoaded = false;
     m_changed = false;
 
     m_installItem = nullptr;
@@ -67,6 +67,7 @@ void Installer::loadList()
     QStringList setList = replyStr.split("\n"); // List of Component Sets
 
     m_changed = false;
+    m_version = 0;
     int row = 0;
     for( QString itemStr : setList )
     {
@@ -83,11 +84,13 @@ void Installer::loadList()
             item = m_items.value( name );
 
             if( item && list.size() > 3 ) {
-                QString v = list.at(3);
-                v.remove(0,1);
+                QString versionStr = list.at(3);
+                versionStr.remove(0,1);
                 //qDebug() << "Installer::loadList updated" << name << v << item->m_version;
 
-                if( item->shouldUpdate( v.toLongLong() ) ) m_changed = true;
+                uint64_t version = versionStr.toLongLong();
+                if( item->shouldUpdate( version ) ) m_changed = true;
+                if( version > m_version ) m_version = version;
             }
         }
         else if( m_items.contains( name ) )
@@ -115,7 +118,7 @@ void Installer::loadList()
         row++;
     }
     installTable->setRowCount( row );
-    m_updated = true;
+    m_listLoaded = true;
 }
 
 void Installer::loadInstalled()
