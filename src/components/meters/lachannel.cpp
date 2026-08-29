@@ -22,7 +22,6 @@ void LaChannel::initialize()
     m_rising  = false;
     m_risEdge = 0;
     m_busValue = 0;
-
     m_bufferCounter = 0;
     m_buffer.fill(0);
     m_time.fill(0);
@@ -37,13 +36,17 @@ void LaChannel::stamp()    // Called at Simulation Start
     m_analizer->conditonMet( m_channel, C_LOW );
     addReading( 0 );
 
+    m_bitLength = 1;
     if( m_pin->isBus() )
     {
         bool connected = m_pin->connector();
         m_plotBase->display()->connectChannel( m_channel, connected );
 
-        for( eNode* node : m_busNodes )
+        for( eNode* node : m_busNodes ){
             node->voltChangedCallback( this );
+            int bit = m_busNodes.key( node );
+            if( m_bitLength <= bit ) m_bitLength = bit+1;
+        }
     }
 }
 
