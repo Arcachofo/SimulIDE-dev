@@ -1,26 +1,239 @@
-First line must be a list of rules.
-Then a rule-style and a rule RegExp or Word List for each rule.
+================================================================================
+ SimulIDE Code Editor - Syntax Highlighting File Reference
+================================================================================
+ File type : .syntax
+ Location : resources/data/codeeditor/syntax/
+ Loaded by: Highlighter::readSyntaxFile()  (src/gui/editorwidget/highlighter.cpp)
 
-rules: list of rules
+A .syntax file is a plain text file that tells the SimulIDE editor how to
+color the source code of a given language. Each file defines a set of
+"rules" (e.g. keywords, numbers, comments, strings). The editor applies the
+rules line by line, painting matching text with the colors and styles you
+declare.
 
-rule-style: foregroundColor backgroundColor bold italic
-rule: in a single line 
-
-____________________________________________________________
-
-Special case is "multiLineComment" rule.
-It needs start and end RegExps, for example:
-
-multiLineComment-style: #00a651 default false true
-multiLineComment: "/\\*" "\\*/"
+This file is a comment/cookbook only. It is not parsed as a syntax file.
+Use "#" freely at the start of any line for your own notes -- the parser
+simply ignores lines that do not match a rule definition.
 
 
+--------------------------------------------------------------------------------
+ 1. OVERALL STRUCTURE
+--------------------------------------------------------------------------------
+A syntax file has three kinds of lines:
 
-##############  AVAILABLE OPTIONS:  ################################
+  1. A rule list header   (required, must be near the top)
+  2. A "-style:" line     (defines the colors/style for one rule)
+  3. A "rule:" line       (lists the words or RegExps that rule matches)
 
-Colors:  { default | #RRGGBB }
-Bold:    { true | false }
-Italic:  { true | false }
+A file can declare MANY rules. The order of the rules matters (see section 6).
+Blank lines and "#" comment lines are ignored.
 
-RegExp: must be quotated, example: "#[a-zA-Z]+\b"
+Layout template:
 
+    # Comment lines (optional)
+    rules: ruleA ruleB ruleC
+
+    ruleA-style: <fgColor> <bgColor> <bold> <italic>
+    ruleA: <pattern> <pattern> ...
+
+    ruleB-style: <fgColor> <bgColor> <bold> <italic>
+    ruleB: <pattern> <pattern> ...
+
+    ... and so on ...
+
+
+--------------------------------------------------------------------------------
+ 2. THE "rules:" HEADER
+--------------------------------------------------------------------------------
+The "rules:" line lists every rule this file defines, in the order you want
+them, separated by spaces.
+
+    rules: data keyword1 keyword2 lineComment
+
+This tells the parser which rule names to look for. Any rule you define in
+the "-style:"/"rule:" pairs below must also be named here (The two files
+naming them are normally the same). Rules are matched and applied in the
+order they appear in this list.
+
+
+--------------------------------------------------------------------------------
+ 3. THE "-style:" LINE  (visual appearance)
+--------------------------------------------------------------------------------
+For every rule you must describe how matched text looks:
+
+    <ruleName>-style: <foreground> <background> <bold> <italic>
+
+    ruleName     - must be one of the names listed in "rules:".
+    foreground   - text color:  default  or  #RRGGBB
+    background   - fill color:  default  or  #RRGGBB
+    bold         - true | false
+    italic       - true | false
+
+Using "default" for a color leaves that channel unchanged (handy when you
+only want, say, a background highlight and nothing else).
+
+Example:
+
+    keyword-style: #202060 default true false
+    #              ^foreground ^background ^bold ^italic
+    #              (dark blue)  (left alone) (bold)(not italic)
+
+
+--------------------------------------------------------------------------------
+ 4. THE "rule:" LINE  (what gets matched)
+--------------------------------------------------------------------------------
+The rule line holds one or more patterns separated by spaces. A pattern is
+either:
+
+   (a) a PLAIN WORD  -> matched as a whole keyword
+   (b) a QUOTED RegExp -> matched as a regular expression
+
+Example mixing both in one rule line:
+
+    number: 255 128 \b[0-9]+ \b0[xX][0-9a-fA-F]+
+
+--------------------------------------------------------------------------------
+ 4.1 Plain words (keywords / identifiers)
+--------------------------------------------------------------------------------
+A token that does NOT start with a double-quote is treated as a literal word.
+The editor automatically wraps it with word boundaries (\b), so it only
+matches the whole word and not text inside longer words.
+
+    data: uint8_t uint16_t int long char void
+
+    # "uint8_t" is highlighted only when it appears as a whole word.
+    # It will NOT match the "uint8_t" inside "my_uint8_t_count".
+
+Plain keywords are also collected into the editor autocomplete/completion
+list automatically (see CodeEditor::addKeyWords).
+
+--------------------------------------------------------------------------------
+ 4.2 Quoted RegExp patterns
+--------------------------------------------------------------------------------
+A token that STARTS with a double-quote is taken as a raw Qt/QRegularExpression.
+The surrounding quotes are stripped before use. Quotes do NOT need to be
+closed specially -- but for valid signatures enclose each start and end
+with " and ".
+
+    quotation: "\"(\\.|[^\"])*\"" "\'(\\.|[^\'])*\'"
+
+Quoted RegExps are NOT added to the autocomplete list (they are not words).
+Note: inside the .syntax file, backslashes that appear inside a quoted
+pattern are read literally, so to build a \b or \w in the final regex you
+write it normally as it appears.
+
+Example (uppercase hex numbers):
+
+    hexNumber: "\b0[xX][0-9a-fA-F]+\b"
+
+--------------------------------------------------------------------------------
+ 4.3 Escaping inside quoted RegExps
+--------------------------------------------------------------------------------
+Remember that a "." , "*" , "+" , "(" etc. are special RegExp characters.
+To match them literally you must escape them with a backslash (\\ inside the
+quoted string). Some useful idioms:
+
+    Line-end anchor  : "\...$"
+    Column start     : "^..."                      (matches at line start)
+    Word boundary    : "\bword\b"
+    Non-digit        : "\D+"
+
+Because the pattern is quoted, a literal backslash is written as "\\\\"
+in the file so the parser stores a single "\".
+
+
+--------------------------------------------------------------------------------
+ 5. THE SPECIAL "multiLineComment" RULE
+--------------------------------------------------------------------------------
+Most rules only match within a single line. To color a comment that can
+span several lines (for example C-style /* ... */ ) you must use a rule
+named EXACTLY "multiLineComment". It takes exactly TWO quoted RegExps:
+the start delimiter and the end delimiter.
+
+    multiLineComment-style: #00a651 default false true
+    multiLineComment: "/\\*" "\\*/"
+
+How it behaves:
+   - Matches from the START marker to the END marker.
+   - If the END marker is not found on the same line, the highlight carries
+     over to the following lines until the END marker is found.
+   - This is the only built-in rule that spans multiple lines.
+
+You should generally name a plain single-line comment rule differently
+(e.g. "lineComment") instead of reusing this one for single-line comments.
+
+
+--------------------------------------------------------------------------------
+ 6. RULE ORDERING / OVERLAY
+--------------------------------------------------------------------------------
+The editor applies rules one after another, painting over previous matches.
+Later rules / later matches are drawn ON TOP of earlier ones. If two patterns
+match the same text, the last applied one wins.
+
+Because of this, put the broadest or least specific rules first and the most
+specific rules last if you need a particular one to win. Priority follows the
+order in the "rules:" header.
+
+Also note that rules read from the file are matched case-insensitively.
+(Device object/member/type rules injected by the simulator at runtime are
+matched case-sensitively, but that is handled internally -- you do not need
+to worry about it when writing a .syntax file.)
+
+
+--------------------------------------------------------------------------------
+ 7. COLORS
+--------------------------------------------------------------------------------
+Colors are in HTML/CSS hex form: #RRGGBB
+
+    Black   : #000000
+    White   : #FFFFFF
+    Red     : #FF0000
+    Green   : #00A651
+    Blue    : #0000FF
+
+Use "default" to leave the foreground or background color untouched. This is
+useful for column-oriented files where you only want to tint the background.
+
+Dark themes: if the current theme is dark, the editor first looks for a file
+with the same name but "_dark.syntax" (e.g. cpp_dark.syntax). If that file
+exists it is used as-is; otherwise the normal colors are used with their
+lightness inverted automatically as a fallback.
+
+
+--------------------------------------------------------------------------------
+ 8. AVAILABLE OPTIONS (QUICK REFERENCE)
+--------------------------------------------------------------------------------
+    Colors : default | #RRGGBB
+    Bold   : true | false
+    Italic : true | false
+
+    Pattern kinds:
+        Plain word   -> whole-word keyword (auto \b...\b), added to completion
+        Quoted RegExp->, raw regular expression, not added to completion
+
+    Special rule: multiLineComment  -> "<startRegExp>" "<endRegExp>"
+
+
+--------------------------------------------------------------------------------
+ 9. MINIMAL WORKING EXAMPLE
+--------------------------------------------------------------------------------
+Below is a complete, tiny syntax file you can copy and extend.
+
+    # --- tiny.syntax -----------------------------------------------
+    rules: comment keyword number string
+
+    comment-style: #646464 default false true
+    comment: "#[^\n]*"
+
+    keyword-style: #202060 default true false
+    keyword: for if else while return
+
+    number-style: #3030B8 default false false
+    number: "\b[0-9]+\b"
+
+    string-style: #206410 default false false
+    string: "\"(\\.|[^\"])*\""
+    # -----------------------------------------------------------------
+
+For a broader set of examples, look at the shipped files in this folder
+(cpp.syntax, xml.syntax, hex.syntax, gcbasic.syntax, etc.).
