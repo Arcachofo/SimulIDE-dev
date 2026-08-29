@@ -92,18 +92,69 @@ Csource::~Csource() {}
 
 void Csource::stamp()
 {
-    if( m_currControl ) m_admit = 1/low_imp;
-    else                m_admit = low_imp;
+    if( m_currControl ) m_admit = 1/cero_doub;
+    else                m_admit = cero_doub;
     eResistor::stamp();
 
-    m_pin[2]->setEnodeComp( m_pin[3]->getEnode() );
-    m_pin[3]->setEnodeComp( m_pin[2]->getEnode() );
-    m_pin[2]->createCurrent();
-    m_pin[3]->createCurrent();
+    if( !m_currSource || !m_controlPins || m_linkedTo ) // No control pins
+    {
+        m_pin[2]->setEnodeComp( m_pin[3]->getEnode() );
+        m_pin[3]->setEnodeComp( m_pin[2]->getEnode() );
+        m_pin[2]->createCurrent();
+        m_pin[3]->createCurrent();
+    }
+    else{
+        eNode* en0 = m_pin[0]->getEnode();
+        eNode* en1 = m_pin[1]->getEnode();
+
+        if( en0 && en1 ){
+
+            double g = m_gain;
+
+            if( m_currSource ) g = -g;         // Current source
+            //else if( g != 0  ) g /= cero_doub; // Voltage source
+
+            if( m_currControl ) g *= m_admit;  // Current controlled
+
+            m_pin[2]->addSingAdm( en0, g );
+            m_pin[2]->addSingAdm( en1,-g );
+            m_pin[3]->addSingAdm( en0,-g );
+            m_pin[3]->addSingAdm( en1, g );
+        }
+    }
+
+    if( m_currSource ){
+        m_pin[2]->stampAdmitance( 0 );
+        m_pin[3]->stampAdmitance( 0 );
+    }else{
+        m_pin[2]->stampAdmitance( 1/cero_doub );
+        m_pin[3]->stampAdmitance( 1/cero_doub );
+    }
+
+    if( !m_controlPins && !m_linkedTo ) // fixed value
+    {
+        if( m_currSource )
+        {
+            m_pin[2]->stampCurrent(-m_curr );
+            m_pin[3]->stampCurrent( m_curr );
+        }else{
+            m_pin[2]->stampCurrent( m_volt/cero_doub );
+            m_pin[3]->stampCurrent(-m_volt/cero_doub );
+        }
+    }
+    //else if( !m_currSource ) //voltChanged();
+    //{
+    //    if( m_pin[0]->isConnected() ) m_pin[0]->getEnode()->addToNoLinList(this);
+    //    if( m_pin[1]->isConnected() ) m_pin[1]->getEnode()->addToNoLinList(this);
+    //}
+
+    bool connected = m_pin[0]->isConnected() && m_pin[1]->isConnected();
+    m_pin[0]->changeCallBack( this, connected && m_controlPins && !m_linkedTo );
+    m_pin[1]->changeCallBack( this, connected && m_controlPins && !m_linkedTo );
 
     m_lastCurr = 0;
-    m_changed = true;
-    updateStep();
+    m_lastTime = 0;
+    m_step = 1;
 }
 
 void Csource::voltChanged()
@@ -126,49 +177,20 @@ void Csource::updateStep()
 
     if( m_currControl )
     {
-        m_admit = 1/low_imp;
         m_pin[0]->setLabelText( "" );
         m_pin[1]->setLabelText( "" );
     }else{
-        m_admit = low_imp;
         m_pin[0]->setLabelText("+");
         m_pin[1]->setLabelText("–");  // U+2013
     }
-    eResistor::stampAdmit();
 
-    if( m_currSource )
-    {
-        m_pin[2]->stampAdmitance( 0 );
-        m_pin[3]->stampAdmitance( 0 );
-    }else{
-        m_pin[2]->stampAdmitance( 1/low_imp );
-        m_pin[3]->stampAdmitance( 1/low_imp );
-    }
-
-    if( !m_controlPins && !m_linkedTo )
+    if( !m_controlPins || m_linkedTo ) // No control pins
     {
         m_pin[0]->removeConnector();
         m_pin[1]->removeConnector();
-
-        if( m_currSource )
-        {
-            m_pin[2]->stampCurrent(-m_curr );
-            m_pin[3]->stampCurrent( m_curr );
-        }else{
-            m_pin[2]->stampCurrent( m_volt/low_imp );
-            m_pin[3]->stampCurrent(-m_volt/low_imp );
-        }
     }
-    else voltChanged();
 
-    bool connected = m_pin[0]->isConnected() && m_pin[1]->isConnected();
-    m_pin[0]->changeCallBack( this, connected && m_controlPins );
-    m_pin[1]->changeCallBack( this, connected && m_controlPins );
-
-    if( m_pin[0]->isConnected() ) m_pin[0]->getEnode()->addToNoLinList(this);
-    if( m_pin[1]->isConnected() ) m_pin[1]->getEnode()->addToNoLinList(this);
-    if( m_pin[2]->isConnected() ) m_pin[2]->getEnode()->addToNoLinList(this);
-    if( m_pin[3]->isConnected() ) m_pin[3]->getEnode()->addToNoLinList(this);
+    if( Simulator::self()->isRunning() ) stamp();
 
     update();
 }
@@ -176,18 +198,37 @@ void Csource::updateStep()
 void Csource::setVoltage( double v )
 {
     double curr = v;
+    if( qIsNaN(v) ) return;
 
+    if( !m_linkedTo ){
+        if( m_currControl) curr *= m_admit; // Current controlled
+        curr *= m_gain;
+    }
+    static int steps =0;
     if( m_currSource   ) curr = -curr;      // Current source
-    else if( curr != 0 ) curr /= low_imp;   // Voltage source
-    if( m_currControl  ) curr *= m_admit;   // Current controlled
+    else{
+        if( curr != 0 ) curr /= cero_doub; // Voltage source
 
-    curr *= m_gain;
-
-    if( qFabs( curr - m_lastCurr ) < 1e-7 ) return;
-    m_lastCurr = curr;
-
-    Simulator::self()->notCorverged();
-
+        uint64_t time = Simulator::self()->circTime();
+        if( m_lastTime == time ){
+            curr = m_lastCurr + (curr-m_lastCurr)/m_step;
+            m_step *= 1.8;
+            steps++;
+        }else{
+            m_lastTime = time;
+            m_step = 1;
+            steps = 0;
+        }
+        if( qFabs( curr - m_lastCurr ) < 1e-7 )
+        {
+            //qDebug() <<"Csource::setVoltage"<< steps;
+            m_step = 1;
+            steps = 0;
+            return;
+        }
+        m_lastCurr = curr;
+    }
+    //qDebug() <<"Csource::setVoltage"<< v << m_lastCurr << curr << qFabs( curr - m_lastCurr ) ;
 
     m_pin[2]->stampCurrent( curr );
     m_pin[3]->stampCurrent(-curr );
