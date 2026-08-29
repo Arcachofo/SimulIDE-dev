@@ -324,7 +324,7 @@ void TwiModule::masterStart()
     runEvent();               // Start Clock
 }
 
-void TwiModule::masterWrite( uint8_t data , bool isAddr, bool write )
+void TwiModule::masterWrite( uint8_t data, bool isAddr, bool write )
 {
     m_isAddr = isAddr;
     m_write  = write;

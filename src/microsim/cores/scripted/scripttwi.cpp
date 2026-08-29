@@ -15,6 +15,7 @@ ScriptTwi::ScriptTwi( eMcu* mcu, QString name )
 {
     m_byteReceived = nullptr;
     m_writeByte    = nullptr;
+    m_setTwiState  = nullptr;
 
     m_type = "TWI";
 
@@ -83,6 +84,11 @@ void ScriptTwi::startScript()
     m_writeByte = aEngine->GetModule(0)->GetFunctionByDecl( funcName.toLocal8Bit().constData() );
     if( !m_writeByte )
         m_writeByte = aEngine->GetModule(0)->GetFunctionByDecl("uint slaveWrite()");
+
+    funcName =  "void "+m_perifName+"_setTwiState( int s )";
+    m_setTwiState = aEngine->GetModule(0)->GetFunctionByDecl( funcName.toLocal8Bit().constData() );
+    if( !m_setTwiState )
+        m_setTwiState = aEngine->GetModule(0)->GetFunctionByDecl("void setTwiState( int s )");
 }
 
 void ScriptTwi::reset()
@@ -96,18 +102,20 @@ void ScriptTwi::setAddress( uint8_t a )
 
 void ScriptTwi::readByte()
 {
+    TwiModule::readByte();
+
     if( !m_byteReceived ) return;
 
     m_scriptCpu->prepare( m_byteReceived );
     m_scriptCpu->context()->SetArgDWord( 0, m_rxReg );
     m_scriptCpu->execute();
-
-    TwiModule::readByte();
 }
 
 void ScriptTwi::writeByte() // Master is reading, we send byte m_txReg
 {
     TwiModule::writeByte();
+
+    if( m_mode != TWI_SLAVE ) return;
     if( !m_writeByte ) { m_txReg = 0; return; }
 
     m_scriptCpu->prepare( m_writeByte );
@@ -127,4 +135,15 @@ void ScriptTwi::sendByte( uint8_t data )
     if( isAddr ) write = (data & 1) == 0;        // Sending address for Read or Write?
 
     masterWrite( data, isAddr, write );         /// Write data or address to Slave
+}
+
+void ScriptTwi::setTwiState( twiState_t state )
+{
+    TwiModule::setTwiState( state );
+
+    if( !m_setTwiState ) return;
+
+    m_scriptCpu->prepare( m_setTwiState );
+    m_scriptCpu->context()->SetArgDWord( 0, (int)state );
+    m_scriptCpu->execute();
 }

@@ -268,6 +268,8 @@ int ScriptCpu::compileScript()
     m_extClock    = module->GetFunctionByDecl("void extClock( bool clkState )");
     m_extClockF   = module->GetFunctionByDecl("void extClock()");
     m_getIntReg   = module->GetFunctionByDecl("int getIntReg( string reg )");
+    if( !m_getIntReg )
+        m_getIntReg = module->GetFunctionByDecl("int getCpuReg( string reg )");   // Copatibility v_1.1.0
     m_getStrReg   = module->GetFunctionByDecl("string getStrReg( string reg )");
     m_command     = module->GetFunctionByDecl("void command( string c )");
     m_setLinkedVal= module->GetFunctionByDecl("void setLinkedValue( double v, int i )");

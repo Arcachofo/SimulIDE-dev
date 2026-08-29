@@ -16,21 +16,24 @@ class ScriptTwi : public McuTwi, public ScriptPerif
         ScriptTwi( eMcu* mcu, QString name );
         ~ScriptTwi();
 
-        virtual void reset() override;
+        void reset() override;
 
         void setAddress( uint8_t a );
 
-        virtual void readByte() override;
+        void readByte() override;
 
-        virtual void writeByte() override;
+        void writeByte() override;
         void sendByte( uint8_t data );
 
-        virtual QStringList registerScript( ScriptCpu* cpu ) override;
-        virtual void startScript() override;
+        void setTwiState( twiState_t state ) override;
+
+        QStringList registerScript( ScriptCpu* cpu ) override;
+        void startScript() override;
 
     private:
         uint8_t getStaus() { return *m_statReg &= 0b11111000; }
 
         asIScriptFunction* m_byteReceived;
         asIScriptFunction* m_writeByte;
+        asIScriptFunction* m_setTwiState;
 };
