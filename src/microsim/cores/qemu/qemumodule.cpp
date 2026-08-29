@@ -22,7 +22,7 @@ QemuModule::QemuModule( QemuDevice* mcu, QString name, int n, uint32_t* clk, uin
     m_arena = m_device->getArena();
 
     m_device->addModule( this );
-    //qDebug() << "QemuModule::QemuModule" << m_name << toHex32( memStart ) << toHex32( memEnd );
+    //qDebug() << "QemuModule::QemuModule" << m_name << toHex32( memStart ) << toHex32( memEnd ) << clk;
 }
 QemuModule::~QemuModule(){}
 

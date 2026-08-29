@@ -35,7 +35,7 @@ void Stm32Port::reset()
 
 void Stm32Port::readRegister()
 {
-    //qDebug() <<"Stm32Port::readRegister"<< m_name << m_eventAddress << m_eventValue;
+    qDebug() <<"Stm32Port::readRegister"<< m_name << m_eventAddress << m_eventValue;
 
     uint64_t offset = m_eventAddress - m_memStart;
     uint32_t val = 0;
@@ -61,41 +61,42 @@ void Stm32Port::writeRegister()
     switch( offset )
     {
         case CRL_OFFSET:
-            if( m_eventValue == read() ) break;
-            write();
+            //if( m_eventValue == read() ) break;
+            //write();
             cofigPort( m_eventValue, 0 );
             break;
         case CRH_OFFSET:
-            if( m_eventValue == read() ) break;
-            write();
+            //if( m_eventValue == read() ) break;
+            //write();
             cofigPort( m_eventValue, 8 ); // shift Pin number by 8
             break;
         case IDR_OFFSET:                 break; // Read only;
 
         case ODR_OFFSET:
-            if( m_eventValue == read() ) break;
-            write();
+            //if( m_eventValue == read() ) break;
+            //write();
             setPortState( m_eventValue );
             break;
         case BSRR_OFFSET:{
-            uint32_t set_mask = m_eventValue & 0x0000FFFF;
-            uint32_t reset_mask = ~(m_eventValue >> 16) & 0x0000FFFF;
-            uint32_t ODR = readMem( m_memStart+ODR_OFFSET );
-            m_eventValue = ( ODR & reset_mask) | set_mask; // Sets take priority over resets, so we do
-            if( m_eventValue == ODR ) break;
-            writeMem( m_memStart+ODR_OFFSET, m_eventValue );
-            setPortState( m_eventValue );
+            //uint32_t set_mask = m_eventValue & 0x0000FFFF;
+            //uint32_t reset_mask = ~(m_eventValue >> 16) & 0x0000FFFF;
+            //uint32_t ODR = readMem( m_memStart+ODR_OFFSET );
+            //m_eventValue = ( ODR & reset_mask) | set_mask; // Sets take priority over resets, so we do
+            //if( m_eventValue == ODR ) break;
+            //writeMem( m_memStart+ODR_OFFSET, m_eventValue );
+            //setPortState( m_eventValue );
         } break;
         case BRR_OFFSET:{
-            uint32_t reset_mask = ~m_eventValue & 0x0000FFFF;
-            uint32_t ODR = readMem( m_memStart+ODR_OFFSET );
-            m_eventValue = ODR & reset_mask;
-            if( m_eventValue == ODR ) break;
-            writeMem( m_memStart+ODR_OFFSET, m_eventValue );
-            setPortState( m_eventValue );
+            //uint32_t reset_mask = ~m_eventValue & 0x0000FFFF;
+            //uint32_t ODR = readMem( m_memStart+ODR_OFFSET );
+            //m_eventValue = ODR & reset_mask;
+            //if( m_eventValue == ODR ) break;
+            //writeMem( m_memStart+ODR_OFFSET, m_eventValue );
+            //setPortState( m_eventValue );
         } break;
-        case LCKR_OFFSET: write(); break; /// TODO: Locking is not implemented
-
+        case LCKR_OFFSET: /// TODO: Locking is not implemented
+         //write();
+            break;
         default: write(); break;
     }
 }
@@ -150,7 +151,7 @@ void Stm32Port::cofigPort( uint32_t config, uint8_t shift )
 
 void Stm32Port::setPortState( uint16_t state )
 {
-    //qDebug() << "   Stm32Port::setPortState:               " << m_name << state<< Simulator::self()->circTime();
+    //qDebug() << "   Stm32Port::setPortState:               " << m_name << state; //<< Simulator::self()->circTime();
 
     for( uint8_t i=0; i<m_pins.size(); ++i )
     {

@@ -286,7 +286,7 @@ void QemuDevice::runEvent()
     uint64_t nextTime = 0;
     while( true )
     {
-        m_arena->simuTime = 0;
+        //m_arena->simuTime = 0;
         while( !m_arena->simuTime )   // Wait for next event from Qemu
         {
             if( Simulator::self()->simState() < SIM_RUNNING ) //
@@ -304,6 +304,7 @@ void QemuDevice::runEvent()
 
         if( m_arena->simuAction )
         {
+            //qDebug() << "   QemuDevice::runEvent"<< now << m_arena->simuAction;
             if     ( m_arena->simuAction == SIM_FREQ  ) updtFrequency();
             else if( m_arena->simuAction != SIM_EVENT ) doAction();
             m_arena->simuAction = 0;
@@ -311,7 +312,8 @@ void QemuDevice::runEvent()
             if( nextTime == now ) runModuleEvent();
             else break;
         }
-        else qDebug() << "QemuDevice::runEvent No action";
+        //else qDebug() << "QemuDevice::runEvent No action";
+        m_arena->simuTime = 0;
     }
     //qDebug() << "QemuDevice::runEvent Next"<< nextTime;
 

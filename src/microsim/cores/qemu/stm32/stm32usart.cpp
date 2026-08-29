@@ -75,7 +75,7 @@ void Stm32Usart::writeRegister()
     {
         case SR_OFFSET:   writeSR(  m_eventValue ); break;
         case DR_OFFSET:   writeDR(  m_eventValue ); break;
-        case BRR_OFFSET:  writeBRR( m_eventValue ); break;
+        case BRR_OFFSET:  setBaudRate( m_eventValue ); break; //writeBRR( m_eventValue ); break;
         case CR1_OFFSET:  writeCR1( m_eventValue ); break;
         case CR2_OFFSET:  writeCR2( m_eventValue ); break;
         case CR3_OFFSET:  writeCR3( m_eventValue ); break;
@@ -162,14 +162,17 @@ void Stm32Usart::writeSR(  uint16_t newSR )
 void Stm32Usart::writeDR(  uint16_t newDR )
 {
     //qDebug() <<"Stm32Usart::writeDR"<< m_name << newDR << m_enabled << m_sender->isEnabled();
-    m_DR = newDR;
-    if( m_SR & 1<<SR_TC_BIT ) sendNext();                // Transmission Completed, start.
-    else                      m_SR &= ~(1<<SR_TXE_BIT);  // Mark buffer as not empty
+    /// m_DR = newDR;
+    /// if( m_SR & 1<<SR_TC_BIT ) sendNext();                // Transmission Completed, start.
+    /// else                      m_SR &= ~(1<<SR_TXE_BIT);  // Mark buffer as not empty
 
-    updateIrq();
+    /// updateIrq();
 
-    //writeMem( m_eventAddress, newDR & 0x01FF );
+    /// //writeMem( m_eventAddress, newDR & 0x01FF );
+
+    sendByte( newDR );
 }
+
 void Stm32Usart::writeBRR( uint16_t newBRR )
 {
     write();
@@ -195,13 +198,13 @@ void Stm32Usart::frameSent( uint8_t data )
 {
     UsartModule::frameSent( data );
 
-    if( m_SR & 1<<SR_TXE_BIT ) { // Buffer is empty
-        m_SR |= 1<<SR_TC_BIT;    // Set the transmit complete
-    }
-    else {                       // Buffer not empty.
-        sendNext();              // start transmitting
-    }
-    updateIrq();
+    //if( m_SR & 1<<SR_TXE_BIT ) { // Buffer is empty
+    //    m_SR |= 1<<SR_TC_BIT;    // Set the transmit complete
+    //}
+    //else {                       // Buffer not empty.
+    //    sendNext();              // start transmitting
+    //}
+    //updateIrq();
 }
 
 void Stm32Usart::byteReceived( uint8_t data )

@@ -55,7 +55,7 @@ void Stm32Timer::writeRegister()
 
     if( offset != 0 ) return;
 
-    int ch = m_eventValue & 0xFF;
+    int ch = m_eventValue & 0x03;
     int state = m_eventValue & 1<<8;
 
     m_channel[ch]->m_pin->setOutState( state );

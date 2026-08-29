@@ -85,7 +85,7 @@ class QemuDevice : public Chip
         virtual bool createArgs(){ return false;}
 
         virtual void doAction();
-        virtual void updtFrequency(){;}
+        virtual void updtFrequency()=0;
 
         void runModuleEvent();
 
