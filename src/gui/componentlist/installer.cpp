@@ -260,10 +260,12 @@ void Installer::itemDataReady()
         {
             QDir compSetDir = m_compsDir;
             compSetDir.cd( m_installItem->m_name );
-            ComponentList::self()->LoadCompSetAt( compSetDir );
+            //ComponentList::self()->LoadCompSetAt( compSetDir );
 
             m_installed.insert( m_installItem->m_name, m_installItem->m_versionNext );
             qDebug() << m_installItem->m_name <<"Installed";
+
+            ComponentList::self()->createList();
         }
         else qDebug() << "Installer::itemDataReady ERROR extracting" << zipFile ;
 
