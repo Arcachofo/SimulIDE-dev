@@ -60,7 +60,7 @@ class EditorWidget : public QWidget, public CompBase
        QString tabString() { return m_tab; }
 
        QFont getFont() { return m_font; }
-       void scaleFont( int s ) { setFontSize( m_fontSize+s );}
+       void scaleFont( int s ) { setFontSize( qBound( 3, m_fontSize+s, 60 ) ); }
 
        QStringList getFiles() { return m_fileList.keys(); }
        void restoreFile( QString filePath );
