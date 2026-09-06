@@ -3,7 +3,6 @@
  *                                                                         *
  ***( see copyright.txt file at root folder )*******************************/
 
-#include <QWidget>
 #include <QTabWidget>
 #include <QTabBar>
 #include <QToolBar>
@@ -14,8 +13,11 @@
 #include <QSplitter>
 #include <QToolButton>
 #include <QSettings>
+#include <QFileSystemWatcher>
+#include <QFileInfo>
 
 #include "editorwidget.h"
+#include "docpage.h"
 #include "findreplace.h"
 #include "propdialog.h"
 #include "scrollbar.h"
@@ -36,6 +38,11 @@ EditorWidget::EditorWidget( QWidget* parent )
             , m_fileMenu( this )
 {
     setAcceptDrops( true );
+
+    m_savingFile = false;
+    m_fileWatcher = new QFileSystemWatcher( this );
+    connect( m_fileWatcher, &QFileSystemWatcher::fileChanged,
+             this, &EditorWidget::fileChangedOnDisk, Qt::UniqueConnection );
 
     createActions();
     createToolBars();
@@ -169,13 +176,15 @@ void EditorWidget::setCloseSquotes( bool c )
 
 CodeEditor* EditorWidget::getCodeEditor()
 {
-    return (CodeEditor*)m_docWidget->currentWidget();
+    DocPage* page = (DocPage*)m_docWidget->currentWidget();
+    return page ? page->editor() : nullptr;
 }
 
 QList<CodeEditor*> EditorWidget::getCodeEditors()
 {
     QList<CodeEditor*> list;
-    for( QWidget* widget : m_fileList.values() ) list.append( (CodeEditor*)widget );
+    for( QWidget* widget : m_fileList.values() )
+        list.append( ((DocPage*)widget)->editor() );
     return list;
 }
 
@@ -209,8 +218,9 @@ void EditorWidget::addDocument(  QString file, bool main  )
     ce->setAutoClose( m_autoClose );
     docShowSpaces( ce );
 
+    DocPage* page = new DocPage( ce, this );
     QString tabString = file.isEmpty() ? tr("NEW") : getFileName(file);
-    m_docWidget->addTab( ce, tabString );
+    m_docWidget->addTab( page, tabString );
 
     if( !file.isEmpty() ){
         ce->setPlainText( fileToString( file, "EditorWidget::addDocument" ) );
@@ -219,9 +229,10 @@ void EditorWidget::addDocument(  QString file, bool main  )
     connect( ce->document(), &QTextDocument::contentsChanged,
                        this, &EditorWidget::documentWasModified, Qt::UniqueConnection);
 
-    m_fileList[file] = ce;
+    m_fileList[file] = page;
+    if( !file.isEmpty() ) syncWatchedFiles();
     if( main ){
-        m_docWidget->setCurrentWidget( ce );
+        m_docWidget->setCurrentWidget( page );
         if( file.isEmpty() ) ce->document()->setModified( true ); // New
         documentWasModified();
         enableFileActs( true );
@@ -230,7 +241,7 @@ void EditorWidget::addDocument(  QString file, bool main  )
     }
 }
 
-int EditorWidget::calcTabstopWidth() 
+int EditorWidget::calcTabstopWidth()
 {
     QFontMetrics fm( m_font );
     QString spaces( m_tabSize, QChar(' ') );
@@ -351,6 +362,32 @@ void EditorWidget::reload()
     ce->setPlainText( fileToString( file, "EditorWidget::reload" ) );
     ce->document()->setModified( false );
     documentWasModified();
+    m_fileWatcher->addPath( file ); // Re-arm in case the watch was dropped
+}
+
+void EditorWidget::syncWatchedFiles()
+{
+    if( !m_fileWatcher->files().isEmpty() ) m_fileWatcher->removePaths( m_fileWatcher->files() );
+    for( QString file : m_fileList.keys() )
+        if( !file.isEmpty() ) m_fileWatcher->addPath( file );
+}
+
+void EditorWidget::fileChangedOnDisk( const QString& path )
+{
+    if( m_savingFile ) return;
+
+    DocPage* page = (DocPage*)m_fileList.value( path );
+    if( !page ) return;
+
+    CodeEditor* ce = page->editor();
+    if( ce->getFile() != path ) return;
+
+    if( QFileInfo::exists( path ) )
+        page->showModifiedBar( path, ce->document()->isModified() );
+    else
+        page->showDeletedBar( path );
+
+    m_fileWatcher->addPath( path ); // Re-arm in case the watch was dropped
 }
 
 bool EditorWidget::save()
@@ -376,17 +413,23 @@ bool EditorWidget::saveAs()
     QString fileName = QFileDialog::getSaveFileName( MainWindow::self(), tr("Save Document As"), path, extensions );
     if( fileName.isEmpty() ) return false;
 
+    DocPage* page = (DocPage*)m_docWidget->currentWidget();
     m_fileList.remove( ce->getFile() );
-    m_fileList[fileName] = ce;
+    m_fileList[fileName] = page;
 
     return saveFile( fileName );
 }
 
 bool EditorWidget::saveFile( QString fileName )
 {
+    m_savingFile = true;
+    if( !m_fileWatcher->files().isEmpty() ) m_fileWatcher->removePaths( m_fileWatcher->files() );
+
     QFile file( fileName );
     if( !file.open( QFile::WriteOnly | QFile::Text) )
     {
+        m_savingFile = false;
+        syncWatchedFiles();
         QMessageBox::warning(this, "EditorWindow::saveFile",
                              tr("Cannot write file %1:\n%2.")
                              .arg(fileName)
@@ -408,6 +451,9 @@ bool EditorWidget::saveFile( QString fileName )
 
     m_docWidget->setTabText( m_docWidget->currentIndex(), getFileName(fileName) );
     ce->setFile( fileName );
+
+    m_savingFile = false;
+    syncWatchedFiles();
 
     QApplication::restoreOverrideCursor();
     return true;
@@ -466,11 +512,15 @@ void EditorWidget::closeTab( int index )
     m_docWidget->setCurrentIndex( index );
     if( !maybeSave() ) return;
 
-    CodeEditor* ce = getCodeEditor();
+    DocPage* page = (DocPage*)m_docWidget->currentWidget();
+    CodeEditor* ce = page->editor();
     ce->closing();
-    m_fileList.remove( m_fileList.key( ce ) );
+    QString file = m_fileList.key( page );
+    m_fileList.remove( file );
     m_docWidget->removeTab( index );
-    delete ce;
+    delete page;
+
+    syncWatchedFiles();
 
     if( m_fileList.isEmpty() )  // disable file actions
     {
@@ -486,6 +536,12 @@ void EditorWidget::closeTab( int index )
     m_docWidget->setCurrentIndex( index );
 
     m_findRepDialog->setEditor( getCodeEditor() );
+}
+
+void EditorWidget::closePage( QWidget* page )
+{
+    int index = m_docWidget->indexOf( page );
+    if( index >= 0 ) closeTab( index );
 }
 
 void EditorWidget::confEditor()

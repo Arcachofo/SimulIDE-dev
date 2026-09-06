@@ -8,6 +8,7 @@
 #include <QTimer>
 
 #include "editorwindow.h"
+#include "docpage.h"
 #include "circuitwidget.h"
 #include "mainwindow.h"
 #include "mcu.h"
@@ -207,7 +208,7 @@ void EditorWindow::lineReached( codeLine_t line ) // Processor reached PC relate
     {
         if( m_fileList.contains( line.file ) )
         {
-            CodeEditor* ce = (CodeEditor*)m_fileList.value( line.file );
+            CodeEditor* ce = ((DocPage*)m_fileList.value( line.file ))->editor();
             if( ce && !ce->getBreakPoints()->contains( line.lineNumber ) ) return;
         }
         else return;

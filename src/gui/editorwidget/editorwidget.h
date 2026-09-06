@@ -7,6 +7,7 @@
 
 #include <QWidget>
 #include <QMenu>
+#include <QHash>
 
 #include "compbase.h"
 #include "codeeditor.h"
@@ -15,8 +16,10 @@
 class QTabWidget;
 class QToolBar;
 class CodeEditor;
+class DocPage;
 class FindReplace;
 class QToolButton;
+class QFileSystemWatcher;
 
 class EditorWidget : public QWidget, public CompBase
 {
@@ -65,6 +68,8 @@ class EditorWidget : public QWidget, public CompBase
        QStringList getFiles() { return m_fileList.keys(); }
        void restoreFile( QString filePath );
 
+       void closePage( QWidget* page );
+
        void updateIcons();
 
     public slots:
@@ -87,6 +92,8 @@ class EditorWidget : public QWidget, public CompBase
         bool saveAs();
         void closeTab(int);
         void documentWasModified();
+
+        void fileChangedOnDisk( const QString& path );
 
         void cut()   { getCodeEditor()->cut(); }
         void copy()  { getCodeEditor()->copy(); }
@@ -134,6 +141,8 @@ class EditorWidget : public QWidget, public CompBase
         void addDocument( QString file, bool main );
         int calcTabstopWidth();
 
+        void syncWatchedFiles();
+
         QFont m_font;
         int m_fontSize;
         int m_tabSize;
@@ -151,6 +160,9 @@ class EditorWidget : public QWidget, public CompBase
 
         QTabWidget*  m_docWidget;
         FindReplace* m_findRepDialog;
+
+        QFileSystemWatcher* m_fileWatcher;
+        bool m_savingFile;
 
         QMenu m_settingsMenu;
         QMenu m_fileMenu;
@@ -180,9 +192,9 @@ class EditorWidget : public QWidget, public CompBase
         QAction* cutAct;
         QAction* copyAct;
         QAction* pasteAct;
-        
+
         QAction* debugAct;
-        
+
         QAction* stepAct;
         QAction* stepOverAct;
         QAction* runAct;
