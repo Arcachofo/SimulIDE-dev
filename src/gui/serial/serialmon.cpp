@@ -16,6 +16,9 @@ SerialMonitor::SerialMonitor( QWidget* parent, TransModule* module, bool send )
 {
     setupUi(this);
 
+    setWindowFlags( Qt::Window | Qt::WindowTitleHint | Qt::Tool | Qt::WindowSystemMenuHint
+                   | Qt::WindowCloseButtonHint );
+
     m_uartInPanel.setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding );
     m_uartOutPanel.setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding );
     m_uartInPanel.setReadOnly( true );
