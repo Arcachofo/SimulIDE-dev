@@ -240,6 +240,15 @@ void IoPin::setPullup( double p ) // previous 1e5
     update();
 }
 
+void IoPin::setPulldown( double p )
+{
+    if( p > 0 ) m_gndAdmEx = 1 / p;
+    else        m_gndAdmEx = 0;
+
+    if( m_pinMode < output || m_stateZ ) updtState();
+    update();
+}
+
 void IoPin::setImpedance( double imp )
 {
     m_admit = 1/imp;

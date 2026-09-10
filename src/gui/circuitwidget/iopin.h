@@ -76,6 +76,7 @@ class IoPin : public Pin, public eElement
 
         void setStateZ( bool z );
         virtual void setPullup( double p );
+        void setPulldown( double p );
 
         void setInverted( bool invert ) override;
 
