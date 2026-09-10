@@ -80,21 +80,44 @@ Esp32::~Esp32(){}
 
 bool Esp32::createArgs()
 {
-    QFileInfo fi = QFileInfo( m_firmPath );
-
-    if( fi.size() != 4194304 )
-    {
-        qDebug() << "Error firmware file size:" << fi.size() << "must be 4194304";
-        qDebug() << m_firmPath;
-        return false;
-    }
-
     int index = m_firmPath.lastIndexOf(".");
     QString firmware = m_firmPath.left( index );
+
     QString efuses = firmware+".efuse";
 
     if( !QFileInfo::exists( efuses ) )
         efuses = "./data/bin/esp32/esp32.efuse";
+
+    QFileInfo fi = QFileInfo( m_firmPath );
+    int size = fi.size();
+
+    if( size == 0 || size > 4194304 ) {
+        qDebug() << "Error firmware file size:" << size << "must be 4194304";
+        qDebug() << m_firmPath;
+        return false;
+    }
+    if( size < 4194304 ) {
+        QString padPath = QDir::tempPath() + fi.baseName() + "-flash.bin";
+        QFile pad( padPath );
+        if( pad.exists() ) pad.remove();
+
+        if( !pad.open( QIODevice::WriteOnly ) ) {
+            qDebug() << "Error: cannot create padded firmware file:" << padPath;
+            return false;
+        }
+        QFile fw( m_firmPath );
+        if( !fw.open( QIODevice::ReadOnly ) ) {
+            qDebug() << "Error: cannot open firmware file:" << m_firmPath;
+            pad.close();
+            return false;
+        }
+        pad.write( fw.readAll() );
+        pad.write( QByteArray( int( 4194304 - size ), char( 0xFF ) ) );
+        fw.close();
+        pad.close();
+        qDebug() << "Padded firmware" << m_firmPath << "to 4194304 bytes ->" << padPath;
+        firmware = padPath.left( padPath.lastIndexOf( "." ) );
+    }
 
     m_arguments.clear();
 
