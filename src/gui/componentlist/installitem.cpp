@@ -112,6 +112,7 @@ void InstallItem::setItem( QString itemStr )
     setNameEdit->setMarkdown( header+m_name );
 
     QObject::connect( installButton, &QPushButton::clicked, [=](){ installClicked(); } );
+    QObject::connect( updtButton   , &QPushButton::clicked, [=](){ installClicked(); } );
     QObject::connect( infoButton   , &QPushButton::clicked, [=](){ infoClicked(); } );
 }
 
