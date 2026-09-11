@@ -412,11 +412,7 @@ void SubCircuit::setLogicSymbol( bool ls )
     for( Component* comp : m_compList ) // Don't show graphical components in LS if Board
     {
         if( !comp->isGraphical() ) continue;
-        if( this->isBoard() )
-        {
-            comp->setVisible( !m_isLS && comp->boardPos() != QPointF(-1e6,-1e6 ) );
-        }
-        else if( m_isLS )  comp->setVisible( false );
+        comp->setVisible( m_isBoard && !m_isLS && comp->boardPos() != QPointF(-1e6,-1e6 ) );
     }
 }
 

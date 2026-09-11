@@ -36,7 +36,7 @@ class SubPackage : public Chip, public Linker
 
         void setCustomColor( bool c ) override;
 
-        void setLogicSymbol( bool ls ) override;
+        void updateColor() override;
 
         QString packagePins();
         void setPackagePins( QString pinsStr );

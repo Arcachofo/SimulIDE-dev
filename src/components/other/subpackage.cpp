@@ -105,7 +105,10 @@ SubPackage::SubPackage( QString type, QString id )
                                 , this, &SubPackage::customColor, &SubPackage::setCustomColor ),
 
         new StrProp<SubPackage>("BckGndColor", tr("Background Color"), ""
-                         , this, &SubPackage::pkgColorStr, &SubPackage::setPkgColorStr,0,"color" ),
+                                , this, &SubPackage::pkgColorStr, &SubPackage::setPkgColorStr,0,"color" ),
+
+        new StrProp<SubPackage>("PinLabColor", tr("Pin Label Color"), ""
+                               , this, &SubPackage::pinColorStr, &SubPackage::setPinColorStr,0,"color" ),
 
         new StrProp <SubPackage>("Background", tr("Background image"),""
                                 , this, &SubPackage::background, &SubPackage::setBackground, 0,"file" ),
@@ -487,12 +490,16 @@ void SubPackage::setBackground( QString bck )
     update();
 }
 
-void SubPackage::setLogicSymbol( bool ls )
+void SubPackage::updateColor()
 {
-    QColor labelColor = ls ? QColor( 0, 0, 0 ) : QColor( 250, 250, 200 );
-    for( Pin* pin : m_pkgePins ) pin->setLabelColor( labelColor );
+    bool custom = m_customColor && m_pinColor.isValid();
 
-    Chip::setLogicSymbol( ls );
+    QColor pinColor;
+    if( custom ) pinColor = m_pinColor;
+    else         pinColor = m_isLS ? QColor( 0, 0, 0 ) : QColor( 250, 250, 200 );
+    for( Pin* pin : m_pkgePins ) pin->setLabelColor( pinColor );
+
+    Chip::updateColor();
 }
 
 void SubPackage::setPackageFile( QString package )
@@ -542,6 +549,7 @@ void SubPackage::setPackagePins( QString pinsStr )
         QString item = properties.takeFirst().name;
         if( item == "Pin" ) setPinStr( properties );
     }
+    updateColor();
 }
 
 QString SubPackage::pinStrEntry( Pin* pin )
@@ -698,6 +706,7 @@ void SubPackage::updtProperties()
     if( !m_propDialog ) return;
 
     m_propDialog->showProp("BckGndColor", m_customColor );
+    m_propDialog->showProp("PinLabColor", m_customColor );
     m_propDialog->showProp("Border", m_hasBckGndData );
     m_propDialog->adjustWidgets();
 }

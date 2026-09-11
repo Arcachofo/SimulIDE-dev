@@ -128,7 +128,7 @@ QMap<QString, QString> Chip::getPackages( QString compFile ) // Static
             QString propName  = prop.name;
             QString propValue = prop.value;
 
-            if     ( propName == "SubcType" ) { if( propValue != "None" ) s_subcType = propValue; } // Only for Subcircuits
+            if     ( propName == "SubcType" ) { if( propValue != "None" ) s_subcType = propValue; qDebug() << propValue << s_subcType; } // Only for Subcircuits
             else if( propName == "label"    ) pkgName = propValue;
             //else if( propName == "Logic_Symbol") ls = ( propValue == "true");
 
@@ -259,7 +259,9 @@ void Chip::initPackage( QString pkgStr )
                 else if( name == "background"  ) background = val;
                 else if( name == "bckgnddata"  ) bckgndData = val;
                 else if( name == "bckgndcolor" ) setPkgColorStr( val );
+                else if( name == "pinlabcolor" ) setPinColorStr( val );
                 else if( name == "logic_symbol") m_isLS = ( val == "true" );
+                else if( name == "subctype"    ) m_isBoard = ( val == "Board" );
             }
             setBckGndData( bckgndData );
             if( !m_hasBckGndData ) setBackground( background );
@@ -381,8 +383,6 @@ void Chip::setLogicSymbol( bool ls )
     m_isLS = ls;
 
     updateColor();
-    QColor labelColor = ls ? QColor( 0, 0, 0 ) : QColor( 250, 250, 200 );
-    for( Pin* pin : m_pin ) pin->setLabelColor( labelColor );
 
     Circuit::self()->update();
 }
@@ -471,17 +471,30 @@ void Chip::setPkgColorStr( QString color )
     updateColor();
 }
 
+void Chip::setPinColorStr( QString color )
+{
+    m_pinColor = QColor( color );
+    updateColor();
+}
+
 void Chip::updateColor()
 {
     if( m_customColor ) m_color = m_pkgColor;
-    else if( m_isLS   )
-    {
-        m_color = m_lsColor;
-        m_label.setDefaultTextColor( QColor( 135, 135, 120 ) );
-    }else{
-        m_color = m_icColor;
-        m_label.setDefaultTextColor( QColor( 160, 160, 180 ) );
-    }
+    else if( m_isLS )   m_color = m_lsColor;
+    else                m_color = m_icColor;
+
+    bool custom = m_customColor && m_pinColor.isValid();
+
+    QColor pinColor;
+    if( custom ) pinColor = m_pinColor;
+    else         pinColor = m_isLS ? QColor( 0, 0, 0 ) : QColor( 250, 250, 200 );
+    for( Pin* pin : m_pin ) pin->setLabelColor( pinColor );
+
+    QColor labelColor;
+    if( custom ) labelColor = m_pinColor;
+    else         labelColor = m_isLS ? QColor( 135, 135, 120 ) : QColor( 160, 160, 180 );
+    m_label.setDefaultTextColor( labelColor );
+
     update();
 }
 
