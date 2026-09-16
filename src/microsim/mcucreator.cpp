@@ -1005,6 +1005,7 @@ void McuCreator::createAdc( QDomElement* e )
     int type = e->attribute("type").toInt();
 
     if     ( m_core == "AVR" )   adc = AvrAdc::createAdc( mcu, name, type );
+    else if( m_core == "Pic12")  adc = PicAdc::createAdc( mcu, name, type );
     else if( m_core == "Pic14")  adc = PicAdc::createAdc( mcu, name, type );
     else if( m_core == "Pic14e") adc = PicAdc::createAdc( mcu, name, type );
     if( !adc ) return;
@@ -1016,8 +1017,8 @@ void McuCreator::createAdc( QDomElement* e )
     if( e->hasAttribute("bits") )
     {
         bool ok = false;
-        int bits = e->attribute("bits").toInt( &ok );
-        if( ok ) adc->m_maxValue = pow( 2, bits )-1;
+        adc->m_bits = e->attribute("bits").toInt( &ok );
+        if( ok ) adc->m_maxValue = pow( 2, adc->m_bits )-1;
     }
     if( e->hasAttribute("dataregs") )
     {
@@ -1033,8 +1034,14 @@ void McuCreator::createAdc( QDomElement* e )
         QString configRegs = e->attribute("multiplex");
         watchRegNames( configRegs, R_WRITE, adc, &McuAdc::setChannel, mcu );
     }
-    setInterrupt( e->attribute("interrupt"), adc );
-    setPrescalers( e->attribute("prescalers"), adc );
+    if( e->hasAttribute("interrupt") )
+    {
+        setInterrupt( e->attribute("interrupt"), adc );
+    }
+    if( e->hasAttribute("prescalers") )
+    {
+        setPrescalers( e->attribute("prescalers"), adc );
+    }
 
     QStringList pins = e->attribute("adcpins").remove(" ").split(",");
     for( QString pinName : pins )
