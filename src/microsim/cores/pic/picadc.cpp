@@ -16,11 +16,13 @@ PicAdc* PicAdc::createAdc( eMcu* mcu, QString name, int type )
     switch( type ){
         case 00: return new PicAdc00( mcu, name ); break;
         case 01: return new PicAdc01( mcu, name ); break;
+        case 02: return new PicAdc02( mcu, name ); break;
         case 10: return new PicAdc10( mcu, name ); break;
         case 11: return new PicAdc11( mcu, name ); break;
         case 20: return new PicAdc20( mcu, name ); break;
         default: return nullptr;
-}   }
+   }
+}
 
 PicAdc::PicAdc( eMcu* mcu, QString name )
       : McuAdc( mcu, name )
@@ -43,8 +45,10 @@ void PicAdc::setup()
 void PicAdc::initialize()
 {
     McuAdc::initialize();
-    m_pRefPin = m_refPin.at(0);
-    if( m_refPin.size() > 1 ) m_nRefPin = m_refPin.at(1);
+    if( m_refPin.size() > 0 ) {
+        m_pRefPin = m_refPin.at(0);
+        if( m_refPin.size() > 1 ) m_nRefPin = m_refPin.at(1);
+    }
 }
 
 void PicAdc::configureA( uint8_t newADCON0 ) // ADCON0
@@ -198,6 +202,59 @@ void PicAdc01::updtVref()
     case 3:
     case 5: m_vRefP = m_pRefPin->getVoltage(); break;
     }
+}
+
+//------------------------------------------------------
+//-- PIC ADC Type 02 -----------------------------------
+
+PicAdc02::PicAdc02( eMcu* mcu, QString name )
+    : PicAdc( mcu, name )
+{
+}
+PicAdc02::~PicAdc02(){}
+
+void PicAdc02::setup()
+{
+    PicAdc::setup();
+
+    m_leftAdjust = false; // 8 bits
+    m_convTime = m_mcu->psInst()*12;
+
+    m_CHS  = getRegBits( "CHS0,CHS1", m_mcu );
+    m_ANS = getRegBits( "ANS0,ANS1", m_mcu );
+}
+
+void PicAdc02::configureA( uint8_t newADCON0 ) // ADCON0
+{
+    m_enabled    = getRegBitsBool(  newADCON0, m_ADON );
+    m_channel    = getRegBitsVal(   newADCON0, m_CHS );
+
+    int ansel = getRegBitsVal( newADCON0, m_ANS );
+    m_adcPin[0]->setAnalog( ansel & 0b01 ? true : false );
+    m_adcPin[1]->setAnalog( ansel & 0b10 ? true : false );
+
+    bool convert = getRegBitsBool( newADCON0, m_GODO );
+    if( !m_converting && convert ) startConversion();
+}
+
+void PicAdc02::startConversion()
+{
+    if( !m_enabled ) return;
+    if( m_channel > 1 ) specialConv();
+    else                McuAdc::startConversion();
+}
+
+void PicAdc02::specialConv()
+{
+    m_converting = true;
+    updtVref();
+
+    double volt = 0.6;
+
+    m_adcValue = (double)m_maxValue*volt/(m_vRefP-m_vRefN);
+    if( m_adcValue > m_maxValue ) m_adcValue = m_maxValue;
+
+    Simulator::self()->addEvent( m_convTime, this );
 }
 
 //------------------------------------------------------

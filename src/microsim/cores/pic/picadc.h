@@ -77,6 +77,23 @@ class PicAdc01 : public PicAdc
         regBits_t m_PCFG;
 };
 
+class PicAdc02 : public PicAdc
+{
+    public:
+        PicAdc02( eMcu* mcu, QString name );
+        ~PicAdc02();
+
+        virtual void setup() override;
+
+        virtual void configureA( uint8_t newADCON0 ) override;
+
+    protected:
+        virtual void startConversion() override;
+        virtual void specialConv() override;
+
+        regBits_t m_ANS;
+};
+
 class PicAdc1 : public PicAdc
 {
     public:
