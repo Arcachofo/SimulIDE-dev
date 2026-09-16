@@ -1016,8 +1016,8 @@ void McuCreator::createAdc( QDomElement* e )
     if( e->hasAttribute("bits") )
     {
         bool ok = false;
-        int bits = e->attribute("bits").toInt( &ok );
-        if( ok ) adc->m_maxValue = pow( 2, bits )-1;
+        adc->m_bits = e->attribute("bits").toInt( &ok );
+        if( ok ) adc->m_maxValue = pow( 2, adc->m_bits )-1;
     }
     if( e->hasAttribute("dataregs") )
     {
