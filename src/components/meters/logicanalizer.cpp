@@ -345,26 +345,30 @@ void LAnalizer::dumpData( QString fn )
     QString dumpVars = "\n$dumpvars\n";
     uint64_t gcd = 1;  // Problems in Pulseview using gcd
 
+    int bitLength[8];
     for( uint ch=0; ch<8; ++ch )
     {
-        if( !m_channel[ch]->m_connected ) continue;
+        LaChannel* laChannel = static_cast<LaChannel*>( m_channel[ch] );
+        if( !laChannel->m_connected ) continue;
 
-        QString name = m_channel[ch]->getChName();             // Get channel name
+        QString name = laChannel->getChName();             // Get channel name
         if( name.isEmpty() ) name = "D"+QString::number( ch ); // If name is empty set name = Dn
 
-        varDef += "$var wire 1 " + QString( identifiers[ch] )+" "+name+" $end\n";
+        bitLength[ch] = laChannel->bitLength();
+
+        varDef += "$var wire "+QString::number( bitLength[ch] )+" "+ QString( identifiers[ch] )+" "+name+" $end\n";
 
         bool init = false;
         double initVal = 0;
-        int index = m_channel[ch]->m_bufferCounter; // Start with the first sample (circular buffer)
+        int index = laChannel->m_bufferCounter; // Start with the first sample (circular buffer)
 
         for( int i=0; i<m_bufferSize; ++i )
         {
             index++;
             if( index >= m_bufferSize ) index -= m_bufferSize; // It's a circular buffer
 
-            double   val  = m_channel[ch]->m_buffer[index];
-            uint64_t time = m_channel[ch]->m_time[index];
+            double   val  = laChannel->m_buffer[index];
+            uint64_t time = laChannel->m_time[index];
 
             if( pTime == time ) continue;                      // Avoid repeated times
             pTime = time;
@@ -400,7 +404,11 @@ void LAnalizer::dumpData( QString fn )
         timeStamp = time/gcd;
         out << Qt::endl <<"#"<< timeStamp;
         for( sample_t sample : samples.values( time ) )
-            out <<" "<< sample.value <<identifiers[sample.channel];
+        {
+            QString value = QString::number( (uint)sample.value, 2 );
+            if( bitLength[sample.channel] > 1 ) value = "b"+value.rightJustified( bitLength[sample.channel], '0')+" ";
+            out <<" "<<value<<identifiers[sample.channel];
+        }
     }
     out << Qt::endl <<"#"<< timeStamp+1; // last time stamp
     file.close();
