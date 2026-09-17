@@ -253,8 +253,7 @@ void Installer::itemDataReady()
         }
         QString itemName = m_installItem->m_name;
         QDir compSetDir = m_compsDir;
-        compSetDir.cd( itemName );
-        compSetDir.removeRecursively();
+        if( compSetDir.cd( itemName ) ) compSetDir.removeRecursively();
 
         //QString setDir =m_compsDir.absolutePath()+ itemName;
         qZipReader qZip( zipFile );
