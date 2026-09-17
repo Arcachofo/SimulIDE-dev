@@ -21,6 +21,8 @@
 #include "esp32pin.h"
 #include "utils.h"
 
+#include "stringprop.h"
+
 #define tr(str) simulideTr("Esp32",str)
 
 #define IOMEM_BASE 0x3FF00000
@@ -35,6 +37,8 @@ Esp32::Esp32( QString type, QString id, QString device )
 
     m_executable = "./data/bin/qemu-system-xtensa";
     m_firmware   = "";
+
+    m_extraCh = 6;
 
     m_ioMem.resize( IOMEM_SIZE, 0 );
     m_ioMemStart = IOMEM_BASE;
@@ -75,6 +79,13 @@ Esp32::Esp32( QString type, QString id, QString device )
 
     createMatrix();
     m_gpio->createIoMux();
+
+    addPropGroup( { tr("Wifi"),{
+        new StrProp<Esp32>("Args", tr("SSID"),""
+                              , this, &Esp32::extraAP, &Esp32::setExtraAP )
+
+
+    }, 0 } );
 }
 Esp32::~Esp32(){}
 
@@ -119,6 +130,9 @@ bool Esp32::createArgs()
         firmware = padPath.left( padPath.lastIndexOf( "." ) );
     }
 
+    // read GPIO strap mode
+    uint32_t strapMode = m_gpio->strapMode();
+
     m_arguments.clear();
 
     m_arguments << m_shMemKey;          // Shared Memory key
@@ -127,6 +141,9 @@ bool Esp32::createArgs()
 
     //m_arguments << "-d";
     //m_arguments << "in_asm";
+
+    //m_arguments << "-machine";
+    //m_arguments << "help";
 
     m_arguments << "-M";
     m_arguments << "esp32-simul";
@@ -146,9 +163,15 @@ bool Esp32::createArgs()
     m_arguments << "-nic";
     m_arguments << "user,model=esp32_wifi,id=u1,net=192.168.4.0/24";
 
+    if( !m_extraAP.isEmpty() ){
+        m_arguments << "-wifi-ap";
+        m_arguments << "ssid="+m_extraAP+",channel="+QString::number(m_extraCh);
+    }
     m_arguments << "-global";
     m_arguments << "driver=timer.esp32.timg,property=wdt_disable,value=true";
 
+    m_arguments << "-global";
+    m_arguments << "driver=esp32.gpio,property=strap_mode,value=0x"+QString::number( strapMode, 16 );
     m_arguments << "-icount";
     m_arguments <<"shift=4,align=off,sleep=off";
 
@@ -770,4 +793,3 @@ void Esp32::createMatrix()
     m_gpio->m_matrixOut[254] = { nullptr, nullptr, "---" }; // (not assigned)
     m_gpio->m_matrixOut[255] = { nullptr, nullptr, "---" }; // (not assigned)
 }
-

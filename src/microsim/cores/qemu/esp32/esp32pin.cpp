@@ -105,13 +105,6 @@ void Esp32Pin::setPinMode( pinMode_t mode )
     changeCallBack( this, mode == input );
 }
 
-//void Esp32Pin::setPull( bool p )
-//{
-//    if( m_pull == p ) return;
-//    m_pull = p;
-//    setOutState( m_outState );
-//}
-//
 //bool Esp32Pin::setAlternate( bool a ) // If changing to Not Alternate, return false
 //{
 //    if( m_alternate == a ) return true;

@@ -23,6 +23,9 @@ class Esp32 : public QemuDevice
 
         void stamp() override;
 
+        QString extraAP()  { return m_extraAP; }
+        void setExtraAP( QString a ){ m_extraAP = a; }
+
     protected:
         Pin* addPin( QString id, QString type, QString label,
                     int n, int x, int y, int angle, int length=8, double space=0 ) override;
@@ -32,6 +35,9 @@ class Esp32 : public QemuDevice
          void updtFrequency() override;
 
         void createMatrix();
+
+        QString m_extraAP;
+        int     m_extraCh;
 
         uint32_t m_cpuFreq;
         uint32_t m_apbFreq;

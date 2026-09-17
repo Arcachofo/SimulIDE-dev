@@ -21,6 +21,8 @@ class Esp32Gpio : public QemuModule, public eElement
 
         uint32_t readPort( int in );
 
+        uint32_t strapMode();
+
         void writeIoMuxReg( uint8_t pin, uint16_t value );
 
         //Esp32Pin* getPin( int i ) { return m_pins.at(i); }
