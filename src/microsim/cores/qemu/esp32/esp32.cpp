@@ -21,6 +21,8 @@
 #include "esp32pin.h"
 #include "utils.h"
 
+#include "stringprop.h"
+
 #define tr(str) simulideTr("Esp32",str)
 
 #define IOMEM_BASE 0x3FF00000
@@ -35,6 +37,8 @@ Esp32::Esp32( QString type, QString id, QString device )
 
     m_executable = "./data/bin/qemu-system-xtensa";
     m_firmware   = "";
+
+    m_extraCh = 6;
 
     m_ioMem.resize( IOMEM_SIZE, 0 );
     m_ioMemStart = IOMEM_BASE;
@@ -75,26 +79,59 @@ Esp32::Esp32( QString type, QString id, QString device )
 
     createMatrix();
     m_gpio->createIoMux();
+
+    addPropGroup( { tr("Wifi"),{
+        new StrProp<Esp32>("Args", tr("SSID"),""
+                              , this, &Esp32::extraAP, &Esp32::setExtraAP )
+
+
+    }, 0 } );
 }
 Esp32::~Esp32(){}
 
 bool Esp32::createArgs()
 {
-    QFileInfo fi = QFileInfo( m_firmPath );
-
-    if( fi.size() != 4194304 )
-    {
-        qDebug() << "Error firmware file size:" << fi.size() << "must be 4194304";
-        qDebug() << m_firmPath;
-        return false;
-    }
-
     int index = m_firmPath.lastIndexOf(".");
     QString firmware = m_firmPath.left( index );
+
     QString efuses = firmware+".efuse";
 
     if( !QFileInfo::exists( efuses ) )
         efuses = "./data/bin/esp32/esp32.efuse";
+
+    QFileInfo fi = QFileInfo( m_firmPath );
+    int size = fi.size();
+
+    if( size == 0 || size > 4194304 ) {
+        qDebug() << "Error firmware file size:" << size << "must be 4194304";
+        qDebug() << m_firmPath;
+        return false;
+    }
+    if( size < 4194304 ) {
+        QString padPath = QDir::tempPath() + fi.baseName() + "-flash.bin";
+        QFile pad( padPath );
+        if( pad.exists() ) pad.remove();
+
+        if( !pad.open( QIODevice::WriteOnly ) ) {
+            qDebug() << "Error: cannot create padded firmware file:" << padPath;
+            return false;
+        }
+        QFile fw( m_firmPath );
+        if( !fw.open( QIODevice::ReadOnly ) ) {
+            qDebug() << "Error: cannot open firmware file:" << m_firmPath;
+            pad.close();
+            return false;
+        }
+        pad.write( fw.readAll() );
+        pad.write( QByteArray( int( 4194304 - size ), char( 0xFF ) ) );
+        fw.close();
+        pad.close();
+        qDebug() << "Padded firmware" << m_firmPath << "to 4194304 bytes ->" << padPath;
+        firmware = padPath.left( padPath.lastIndexOf( "." ) );
+    }
+
+    // read GPIO strap mode
+    uint32_t strapMode = m_gpio->strapMode();
 
     m_arguments.clear();
 
@@ -104,6 +141,9 @@ bool Esp32::createArgs()
 
     //m_arguments << "-d";
     //m_arguments << "in_asm";
+
+    //m_arguments << "-machine";
+    //m_arguments << "help";
 
     m_arguments << "-M";
     m_arguments << "esp32-simul";
@@ -123,9 +163,15 @@ bool Esp32::createArgs()
     m_arguments << "-nic";
     m_arguments << "user,model=esp32_wifi,id=u1,net=192.168.4.0/24";
 
+    if( !m_extraAP.isEmpty() ){
+        m_arguments << "-wifi-ap";
+        m_arguments << "ssid="+m_extraAP+",channel="+QString::number(m_extraCh);
+    }
     m_arguments << "-global";
     m_arguments << "driver=timer.esp32.timg,property=wdt_disable,value=true";
 
+    m_arguments << "-global";
+    m_arguments << "driver=esp32.gpio,property=strap_mode,value=0x"+QString::number( strapMode, 16 );
     m_arguments << "-icount";
     m_arguments <<"shift=4,align=off,sleep=off";
 
@@ -747,4 +793,3 @@ void Esp32::createMatrix()
     m_gpio->m_matrixOut[254] = { nullptr, nullptr, "---" }; // (not assigned)
     m_gpio->m_matrixOut[255] = { nullptr, nullptr, "---" }; // (not assigned)
 }
-

@@ -35,6 +35,9 @@ class Esp32Pin : public IoPin//, public QemuModule
 
         void setPortState( bool high );
 
+        void cfgPullup( uint8_t on );
+        void cfgPulldo( uint8_t on );
+
         //void setPull( bool p );
         //bool setAlternate( bool a );
         //void setAnalog( bool a );
@@ -58,7 +61,7 @@ class Esp32Pin : public IoPin//, public QemuModule
         //bool m_analog;
         //bool m_alternate;
 
-        double m_pullAdmit;
+        double m_pullResist;
 
         uint64_t m_pinMask;
         uint8_t m_pullUp;

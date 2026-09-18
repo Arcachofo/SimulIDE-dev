@@ -33,6 +33,9 @@ class Chip : public Component, public eElement
         QString pkgColorStr() { return m_pkgColor.name(); }
         void setPkgColorStr( QString color );
 
+        QString pinColorStr() { return m_pinColor.name(); }
+        void setPinColorStr( QString color );
+
         bool border() { return m_border; }
         void setBorder( bool b ) { m_border = b; update(); }
 
@@ -81,7 +84,7 @@ class Chip : public Component, public eElement
 
         void findHelp() override;
 
-        void updateColor();
+        virtual void updateColor();
 
         int m_width;
         int m_height;
@@ -103,6 +106,7 @@ class Chip : public Component, public eElement
         QColor m_lsColor;
         QColor m_icColor;
         QColor m_pkgColor;
+        QColor m_pinColor;
 
         QString m_name;
         QString m_device;

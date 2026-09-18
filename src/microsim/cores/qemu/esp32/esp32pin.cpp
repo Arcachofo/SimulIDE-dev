@@ -16,7 +16,7 @@ Esp32Pin::Esp32Pin( int i, QString id, QemuDevice* mcu, IoPin* dummyPin )
 {
     //m_id     = id;
 
-    m_pullAdmit = 1e5; // 10k
+    m_pullResist = 4.5e4; // Nominal ESP weak pull resistance. 45k
 
     double vdd = 3.3; //m_port->getMcu()->vdd();
     m_outHighV = vdd;
@@ -105,13 +105,6 @@ void Esp32Pin::setPinMode( pinMode_t mode )
     changeCallBack( this, mode == input );
 }
 
-//void Esp32Pin::setPull( bool p )
-//{
-//    if( m_pull == p ) return;
-//    m_pull = p;
-//    setOutState( m_outState );
-//}
-//
 //bool Esp32Pin::setAlternate( bool a ) // If changing to Not Alternate, return false
 //{
 //    if( m_alternate == a ) return true;
@@ -228,8 +221,6 @@ void Esp32Pin::setMatrixFunc( uint16_t val, funcPin func ) // Set Function for G
 
 void Esp32Pin::writeIoMuxReg( uint16_t value )
 {
-    uint64_t puld = (value >> 7) & 1;
-
     // Sleep bits 0-6
     // PD bit 7
     // PU bit 8
@@ -237,23 +228,33 @@ void Esp32Pin::writeIoMuxReg( uint16_t value )
     // Drive bits 10-11
     // function bits 12-14
 
-    if( m_pullDown != puld ){
-        m_pullDown = puld;
-        /// TODO: iplement IoPin::setPulldown
-    }
+    uint8_t puld = (value >> 7) & 1;
+    cfgPulldo( puld );
 
     uint8_t pulu = (value >> 8) & 1;
-    if( m_pullUp != pulu ){
-        m_pullUp = pulu;
-        double pullup = pulu ? m_pullAdmit : 0;
-        IoPin::setPullup( pullup );
-    }
+    cfgPullup( pulu );
 
     m_inputEn = (value >> 9) & 1;
 
     uint8_t func = (value >> 12) & 7;
     if( m_iomuxIndex == func ) return;
     selectIoMuxFunc( func );
+}
+
+void Esp32Pin::cfgPullup( uint8_t on )
+{
+    if( m_pullUp == on ) return;
+    m_pullUp = on;
+    double pullup = on ? m_pullResist : 0;
+    IoPin::setPullup( pullup );
+}
+
+void Esp32Pin::cfgPulldo( uint8_t on )
+{
+    if( m_pullDown == on ) return;
+    m_pullDown = on;
+    double pulldo = on ? m_pullResist : 0;
+    IoPin::setPulldown( pulldo );
 }
 
 void Esp32Pin::writePinReg( uint32_t value )

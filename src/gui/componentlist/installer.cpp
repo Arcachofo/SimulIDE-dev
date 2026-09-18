@@ -251,23 +251,27 @@ void Installer::itemDataReady()
             m_installItem = nullptr;
             return;
         }
+        QString itemName = m_installItem->m_name;
+        QDir compSetDir = m_compsDir;
+        if( compSetDir.cd( itemName ) ) compSetDir.removeRecursively();
 
-        //QString setDir =m_compsDir.absolutePath()+ m_installItem->m_name;
+        //QString setDir =m_compsDir.absolutePath()+ itemName;
         qZipReader qZip( zipFile );
         bool isExtracted = qZip.extractAll( m_compsDir.absolutePath() );
 
         if( isExtracted )
         {
-            QDir compSetDir = m_compsDir;
-            compSetDir.cd( m_installItem->m_name );
+            compSetDir.cd( itemName );
             //ComponentList::self()->LoadCompSetAt( compSetDir );
 
-            m_installed.insert( m_installItem->m_name, m_installItem->m_versionNext );
-            qDebug() << m_installItem->m_name <<"Installed";
+            m_installed.insert( itemName, m_installItem->m_versionNext );
+            qDebug() << itemName <<"Installed";
 
             ComponentList::self()->createList();
+        }else{
+            qDebug() << itemName << "Installer::itemDataReady ERROR extracting" << zipFile ;
+            m_installed.remove( itemName );
         }
-        else qDebug() << "Installer::itemDataReady ERROR extracting" << zipFile ;
 
         QFile::remove( zipFile );
     }

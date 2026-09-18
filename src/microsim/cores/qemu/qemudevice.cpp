@@ -171,6 +171,7 @@ void QemuDevice::stamp()
 {
     if( m_shMemId == -1 ) return;
 
+    m_qemuLaunched = false;
     m_eventModule = nullptr;
 
     //m_lastTime = 0;
@@ -188,51 +189,57 @@ void QemuDevice::stamp()
 
     if( m_rstPin ) m_rstPin->changeCallBack( this );
 
-    if( createArgs() )
-    {
-        QString executable = m_executable;
+    Simulator::self()->addEvent( 1, this );
+    //runQemu(); // wait 1ps to read strap pins or whatever
+}
+
+void QemuDevice::runQemu()
+{
+    if( !createArgs() ) return;
+
+    QString executable = m_executable;
 #ifdef _WIN32
-        executable += ".exe";
+    executable += ".exe";
 #endif
-        if( !QFileInfo::exists( executable ) )
+    if( !QFileInfo::exists( executable ) )
+    {
+        qDebug() << "Error: QemuDevice::stamp executable does not exist:" << Qt::endl << executable;
+        return;
+    }
+    m_qemuProcess.start( executable, m_arguments );
+
+    uint64_t timeout = 0;
+    while( !m_arena->running )   // Wait for Qemu running
+    {
+        //sleep( 10 );
+        if( timeout++ > 2e9 ) // Don't wait forever
         {
-            qDebug() << "Error: QemuDevice::stamp executable does not exist:" << Qt::endl << executable;
+            qDebug() << "Error: QemuDevice::stamp timeout";
+
+            m_qemuProcess.waitForFinished( 500 );
+
+            if( m_qemuProcess.exitStatus() != QProcess::NormalExit )
+            {
+                QString output = m_qemuProcess.readAllStandardError();
+                if( !output.isEmpty() )
+                {
+                    QStringList lines = output.split("\n");
+                    for( QString line : lines ) qDebug() << line.remove("\"");
+                }
+
+                qDebug() << m_qemuProcess.exitStatus();
+                qDebug() << m_qemuProcess.error();
+                qDebug() << m_qemuProcess.exitCode();
+                qDebug() << m_qemuProcess.state();
+            }
+            //                    m_qemuProcess.kill();
             return;
         }
-        m_qemuProcess.start( executable, m_arguments );
-
-        uint64_t timeout = 0;
-        while( !m_arena->running )   // Wait for Qemu running
-        {
-            //sleep( 10 );
-            if( timeout++ > 2e9 ) // Don't wait forever
-            {
-                qDebug() << "Error: QemuDevice::stamp timeout";
-
-                m_qemuProcess.waitForFinished( 500 );
-
-                if( m_qemuProcess.exitStatus() != QProcess::NormalExit )
-                {
-                    QString output = m_qemuProcess.readAllStandardError();
-                    if( !output.isEmpty() )
-                    {
-                        QStringList lines = output.split("\n");
-                        for( QString line : lines ) qDebug() << line.remove("\"");
-                    }
-
-                    qDebug() << m_qemuProcess.exitStatus();
-                    qDebug() << m_qemuProcess.error();
-                    qDebug() << m_qemuProcess.exitCode();
-                    qDebug() << m_qemuProcess.state();
-                }
-//                    m_qemuProcess.kill();
-                return;
-            }
-        }
-        qDebug() << "\nQemuDevice::stamp started";
-
-        Simulator::self()->addEvent( 1, this );
     }
+    m_qemuLaunched = true;
+    qDebug() << "\nQemuDevice::stamp started";
+
+    Simulator::self()->addEvent( 1, this );
 }
 
 //void QemuDevice::updateStep()
@@ -278,6 +285,10 @@ void QemuDevice::runModuleEvent()
 
 void QemuDevice::runEvent()
 {
+    if( !m_qemuLaunched ){
+        runQemu();
+        return;
+    }
     uint64_t now = Simulator::self()->circTime();
     //qDebug() << "   QemuDevice::runEvent"<< now;
 

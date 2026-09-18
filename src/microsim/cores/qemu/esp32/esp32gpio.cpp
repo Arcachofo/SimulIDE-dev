@@ -132,6 +132,21 @@ void Esp32Gpio::matrixOutChanged( int pin )
     espPin->setMatrixFunc( m_eventValue, fp );
 }
 
+uint32_t Esp32Gpio::strapMode()
+{
+    uint32_t GPIO = readPort( 0 ); // Pins 0-32
+
+    // GPIO_STRAP uses a different bit order than the physical GPIO numbers.
+    m_strapMode = (((GPIO >> 5)  & 1) << 0)  // GPIO5
+                | (((GPIO >> 15) & 1) << 1)  // GPIO15 / MTDO
+                | (((GPIO >> 4)  & 1) << 2)  // GPIO4
+                | (((GPIO >> 2)  & 1) << 3)  // GPIO2
+                | (((GPIO >> 0)  & 1) << 4)  // GPIO0
+                | (((GPIO >> 12) & 1) << 5); // GPIO12 / MTDI
+
+    return m_strapMode;
+}
+
 uint32_t Esp32Gpio::readPort( int in )
 {
     uint32_t data = 0;

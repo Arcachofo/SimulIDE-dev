@@ -82,6 +82,7 @@ class QemuDevice : public Chip
     protected:
  static QemuDevice* m_pSelf;
 
+        void runQemu();
         virtual bool createArgs(){ return false;}
 
         virtual void doAction();
@@ -125,6 +126,8 @@ class QemuDevice : public Chip
         uint8_t m_timerN;
         uint8_t m_i2cN;
         uint8_t m_spiN;
+
+        bool m_qemuLaunched;
 
         std::vector<QemuTwi*>   m_i2cs;
         std::vector<QemuSpi*>   m_spis;
