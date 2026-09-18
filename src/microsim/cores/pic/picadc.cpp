@@ -407,7 +407,7 @@ void PicAdc20::updtVref()
     m_vRefP = m_mcu->vdd();  // VREF+ is connected to VDD
     switch ( m_mode ) {
     case 2: m_vRefP = m_pRefPin->getVoltage(); break; // VREF+ is connected to external VREF+ pin
-    case 3: m_vRefP = m_fvr->getDacVref();     break; // VREF+ is connected to internal Fixed Voltage Reference (FVR) module
+    case 3: m_vRefP = m_fvr->getAdcVref();     break; // VREF+ is connected to internal Fixed Voltage Reference (FVR) module
     }
     m_vRefN = (m_mode & 0b00000100) ? m_nRefPin->getVoltage() : 0;
 }
