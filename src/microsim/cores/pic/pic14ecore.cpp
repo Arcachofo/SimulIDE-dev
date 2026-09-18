@@ -19,12 +19,37 @@ Pic14eCore::Pic14eCore( eMcu* mcu )
     m_FSR0H = mcu->getReg( "FSR0H" );
     m_FSR1L = mcu->getReg( "FSR1L" );
     m_FSR1H = mcu->getReg( "FSR1H" );
+    m_PCLATH = mcu->getReg("PCLATH");
+
+    m_WREG_SHAD   = mcu->getReg("WREG_SHAD");
+    m_STATUS_SHAD = mcu->getReg("STATUS_SHAD" );
+    m_BSR_SHAD    = mcu->getReg("BSR_SHAD" );
+    m_PCLATH_SHAD = mcu->getReg("PCLATH_SHAD" );
 
     m_BSR = mcu->getReg( "BSR" );
     m_bankBits = getRegBits( "BSR0,BSR1,BSR2,BSR3,BSR4", mcu );
     watchBitNames( "BSR0,BSR1,BSR2,BSR3,BSR4", R_WRITE, this, &Pic14eCore::setBank, mcu );
 }
 Pic14eCore::~Pic14eCore() {}
+
+void Pic14eCore::saveContext()
+{
+    *m_WREG_SHAD   = *m_Wreg;
+    *m_STATUS_SHAD = *m_STATUS;
+    *m_BSR_SHAD    = *m_BSR;
+    *m_PCLATH_SHAD = *m_PCLATH;
+}
+
+void Pic14eCore::restoreContext()
+{
+    if( *m_BSR != *m_BSR_SHAD ){
+        *m_BSR = *m_BSR_SHAD;
+        setBank( *m_BSR_SHAD );
+    }
+    *m_Wreg   = *m_WREG_SHAD;
+    *m_STATUS = *m_STATUS_SHAD;
+    *m_PCLATH = *m_PCLATH_SHAD;
+}
 
 // Miscellaneous instructions
 

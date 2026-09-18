@@ -14,15 +14,4 @@ class Pic14eInterrupt : public PicInterrupt
 
         virtual void execute() override;
         virtual void exitInt() override;
-
-    protected:
-        uint8_t* m_wReg;
-        uint8_t* m_status;
-        uint8_t* m_bsr;
-        uint8_t* m_pclath;
-
-        uint8_t m_wRegSaved;
-        uint8_t m_statusSaved;
-        uint8_t m_bsrSaved;
-        uint8_t m_pclathSaved;
 };

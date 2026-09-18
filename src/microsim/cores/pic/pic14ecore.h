@@ -15,6 +15,9 @@ class Pic14eCore : public PicMrCore
 
         //virtual void reset();
 
+        void saveContext();
+        void restoreContext();
+
     protected:
         virtual void decode( uint16_t instr ) override;
         virtual void setBank( uint8_t bank ) override { PicMrCore::setBank( bank ); }
@@ -24,6 +27,12 @@ class Pic14eCore : public PicMrCore
         uint8_t* m_FSR1L;
         uint8_t* m_FSR1H;
         uint8_t* m_BSR;
+        uint8_t* m_PCLATH;
+
+        uint8_t* m_WREG_SHAD;
+        uint8_t* m_STATUS_SHAD;
+        uint8_t* m_BSR_SHAD;
+        uint8_t* m_PCLATH_SHAD;
 
         uint16_t getFSR0() { return *m_FSR0L+(*m_FSR0H<<8); }
         void setFSR0( uint16_t fsr0 )
