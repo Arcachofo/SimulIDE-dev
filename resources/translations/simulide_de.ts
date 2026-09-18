@@ -4020,7 +4020,7 @@ Can&apos;t find file:
     <message>
         <location filename="../../src/mainwindow.cpp" line="102"/>
         <source>Looks like SimulIDE crashed...</source>
-        <translation>Es scheint als wäre SimulIDE gechrasht 😢...</translation>
+        <translation>Es scheint als wäre SimulIDE gecrasht 😢...</translation>
     </message>
     <message>
         <location filename="../../src/mainwindow.cpp" line="103"/>
