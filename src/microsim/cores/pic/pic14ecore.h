@@ -104,7 +104,7 @@ class Pic14eCore : public PicMrCore
         // Operations with literal k
         inline void ADDFSR( uint8_t n, uint8_t k );
         inline void MOVLP( uint8_t k );
-        inline void BRA( uint8_t k );
+        inline void BRA( int16_t k );
         inline void MOVIW( uint8_t n, uint8_t k );
         inline void MOVWI( uint8_t n, uint8_t k );
 };

@@ -65,7 +65,8 @@ inline void Pic14eCore::CALLW()
 
 inline void Pic14eCore::BRW()
 {
-    setPC( *m_Wreg | ((uint16_t)(m_dataMem[m_PCHaddr] & 0b00011000)<<8) );
+    setPC( getPC() + *m_Wreg );
+//    setPC( *m_Wreg | ((uint16_t)(m_dataMem[m_PCHaddr] & 0b00011000)<<8) );
     m_mcu->cyclesDone = 2;
 }
 
@@ -215,9 +216,11 @@ inline void Pic14eCore::MOVLP( uint8_t k )
     m_dataMem[m_PCHaddr] = k;
 }
 
-inline void Pic14eCore::BRA( uint8_t k )
+inline void Pic14eCore::BRA( int16_t k )
 {
-    setPC( k | ((uint16_t)(m_dataMem[m_PCHaddr] & 0b00011000)<<8) );
+    if( k & 0x0100 ) k |= 0xFE00;
+    setPC( getPC() + k );
+//    setPC( k | ((uint16_t)(m_dataMem[m_PCHaddr] & 0b00011000)<<8) );
     m_mcu->cyclesDone = 2;
 }
 
@@ -293,7 +296,7 @@ void Pic14eCore::decode( uint16_t instr )
             case 0x3F00: MOVIW( n, instr & 0x7F );  return; // MOVIW k[FSRn] 11 1111 0nkk kkkk
             case 0x3F80: MOVWI( n, instr & 0x7F );  return; // MOVWI k[FSRn] 11 1111 1nkk kkkk
         }
-        if( (instr & 0x3C00) == 0x3200 ){ BRA( instr & 0x1FF); return; }// BRA k 11 001k kkkk kkkk
+        if( (instr & 0x3E00) == 0x3200 ){ BRA( instr & 0x1FF); return; }// BRA k 11 001k kkkk kkkk
     }
     PicMrCore::decode( instr );
 }
