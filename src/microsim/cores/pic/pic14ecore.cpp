@@ -38,6 +38,10 @@ Pic14eCore::~Pic14eCore() {}
 
 void Pic14eCore::saveContext()
 {
+    qDebug()<<"SaveContext()";
+    qDebug()<<m_STATUS;
+    qDebug()<<*m_STATUS;
+
     *m_WREG_SHAD   = *m_Wreg;
     *m_STATUS_SHAD = *m_STATUS;
     *m_BSR_SHAD    = *m_BSR;
