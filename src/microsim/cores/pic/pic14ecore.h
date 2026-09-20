@@ -33,6 +33,10 @@ class Pic14eCore : public PicMrCore
         uint8_t* m_STATUS_SHAD;
         uint8_t* m_BSR_SHAD;
         uint8_t* m_PCLATH_SHAD;
+        uint8_t* m_FSR0L_SHAD;
+        uint8_t* m_FSR0H_SHAD;
+        uint8_t* m_FSR1L_SHAD;
+        uint8_t* m_FSR1H_SHAD;
 
         uint16_t getFSR0() { return *m_FSR0L+(*m_FSR0H<<8); }
         void setFSR0( uint16_t fsr0 )
