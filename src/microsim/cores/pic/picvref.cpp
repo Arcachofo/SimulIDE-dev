@@ -91,11 +91,14 @@ void PicVrefE::setup()
     m_FVREN  = getRegBits("FVREN", m_mcu );
     m_ADFVR  = getRegBits("ADFVR0,ADFVR1", m_mcu );   // ADC Vref
     m_CDAFVR = getRegBits("CDAFVR0,CDAFVR1", m_mcu ); // DAC Vref
+    m_TSEN   = getRegBits("TSEN", m_mcu );
+    m_TSRNG  = getRegBits("TSRNG", m_mcu );
 }
 
 void PicVrefE::configureA( uint8_t newFVRCON )
 {
     m_enabled = getRegBitsVal( newFVRCON, m_FVREN );
+    m_tsenabled = getRegBitsVal( newFVRCON, m_TSEN );
 
     double vdd = m_mcu->vdd();
     uint8_t adfvr = getRegBitsVal( newFVRCON, m_ADFVR );
@@ -116,6 +119,11 @@ void PicVrefE::configureA( uint8_t newFVRCON )
     }
     if( m_dacVref > vdd ) m_dacVref = vdd;
 
+    bool tsrange = getRegBitsVal( newFVRCON, m_TSRNG );
+    if( tsrange ) m_Temp = vdd - 4 * 0.5732;
+    else          m_Temp = vdd - 2 * 0.5732;
+    if( m_Temp < 0 ) m_Temp = 0;
+
     if( !m_callBacks.isEmpty() )
     { for( McuModule* mod : m_callBacks ) mod->callBack(); }
 }
@@ -130,4 +138,10 @@ double PicVrefE::getDacVref()
 {
     if( m_enabled ) return m_dacVref;
     else            return 0;
+}
+
+double PicVrefE::getTemp()
+{
+    if( m_tsenabled ) return m_Temp;
+    else              return 0;
 }

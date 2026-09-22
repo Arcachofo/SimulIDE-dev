@@ -34,6 +34,7 @@ class Mcu;
 class McuIntOsc;
 class McuPort;
 class McuVref;
+class McuDac;
 class Component;
 class ConfigWord;
 class McuComp;
@@ -101,6 +102,7 @@ class eMcu : public DataSpace, public eIou
 
         McuWdt* watchDog() { return m_wdt; }
         McuVref* vrefModule();
+        McuDac* dacModule();
 
         bool setCfgWord( uint16_t addr, uint16_t data );
         McuIntOsc* intOsc() { return m_intOsc; }
@@ -145,6 +147,7 @@ class eMcu : public DataSpace, public eIou
         ConfigWord* m_cfgWord;
         McuSleep*   m_sleepModule;
         McuVref*    m_vrefModule;
+        McuDac*     m_dacModule;
         McuWdt*     m_wdt;
         McuIntOsc*  m_intOsc;
         McuComp*    m_comparator;
