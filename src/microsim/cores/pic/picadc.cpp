@@ -5,6 +5,7 @@
 
 #include "picadc.h"
 #include "picvref.h"
+#include "picdac.h"
 #include "mcupin.h"
 #include "e_mcu.h"
 #include "datautils.h"
@@ -382,6 +383,7 @@ void PicAdc20::setup()
     m_ADXREF = getRegBits("ADPREF0,ADPREF1,ADNREF", m_mcu );
 
     m_fvr = (PicVrefE*)m_mcu->vrefModule();
+    m_dac = (PicDac*)m_mcu->dacModule();
 }
 
 void PicAdc20::configureA (uint8_t newADCON0 )
@@ -405,11 +407,40 @@ void PicAdc20::configureB( uint8_t newADCON1 )
 void PicAdc20::updtVref()
 {
     m_vRefP = m_mcu->vdd();  // VREF+ is connected to VDD
-    switch ( m_mode ) {
-    case 2: m_vRefP = m_pRefPin->getVoltage(); break; // VREF+ is connected to external VREF+ pin
-    case 3: m_vRefP = m_fvr->getAdcVref();     break; // VREF+ is connected to internal Fixed Voltage Reference (FVR) module
+    switch ( m_mode & 0b00000011 ) {
+        case 2: m_vRefP = m_pRefPin->getVoltage(); break; // VREF+ is connected to external VREF+ pin
+        case 3: m_vRefP = m_fvr->getAdcVref();     break; // VREF+ is connected to internal Fixed Voltage Reference (FVR) module
     }
     m_vRefN = (m_mode & 0b00000100) ? m_nRefPin->getVoltage() : 0;
+}
+
+void PicAdc20::startConversion()
+{
+    if( !m_enabled ) return;
+    if( m_channel > 28 ) specialConv();
+    else                 McuAdc::startConversion();
+}
+
+void PicAdc20::specialConv()
+{
+    double volt = 0;
+
+    m_converting = true;
+    updtVref();
+
+    switch ( m_channel ) {
+        case 29:    // Temp indicator
+            volt = m_fvr->getTemp(); break;
+        case 30:    // DAC output
+            volt = m_dac->getDacVolt(); break;
+        case 31:    // FVR buffer 1
+            volt = m_fvr->getAdcVref(); break;
+    }
+
+    m_adcValue = (double)m_maxValue*volt/(m_vRefP-m_vRefN);
+    if( m_adcValue > m_maxValue ) m_adcValue = m_maxValue;
+
+    Simulator::self()->addEvent( m_convTime, this );
 }
 
 //------------------------------------------------------

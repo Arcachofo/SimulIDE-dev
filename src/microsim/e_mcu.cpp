@@ -15,6 +15,7 @@
 #include "usartmodule.h"
 #include "usartrx.h"
 #include "mcuvref.h"
+#include "mcudac.h"
 #include "simulator.h"
 #include "basedebugger.h"
 #include "editorwindow.h"
@@ -31,6 +32,7 @@ eMcu::eMcu( Mcu* comp, QString id )
     m_comparator = nullptr;
     m_cfgWord    = nullptr;
     m_vrefModule = nullptr;
+    m_dacModule  = nullptr;
     m_sleepModule = nullptr;
 
     m_vdd= 5;
@@ -286,5 +288,5 @@ bool eMcu::setCfgWord( uint16_t addr, uint16_t data )
 }
 
 McuVref* eMcu::vrefModule() { return m_vrefModule; }
+McuDac*  eMcu::dacModule()  { return m_dacModule; }
 //McuSleep* eMcu::sleepModule() { return m_sleepModule; }
-

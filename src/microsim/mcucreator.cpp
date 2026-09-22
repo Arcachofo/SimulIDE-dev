@@ -1068,6 +1068,7 @@ void McuCreator::createDac( QDomElement* e )
     else return;
 
     mcu->m_modules.emplace_back( dac );
+    mcu->m_dacModule = dac;
 
     setConfigRegs( e, dac );
 

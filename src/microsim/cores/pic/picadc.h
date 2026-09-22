@@ -141,6 +141,7 @@ class PicAdc11 : public PicAdc1
 };
 
 class PicVrefE;
+class PicDac;
 
 class PicAdc20 : public PicAdc
 {
@@ -155,10 +156,13 @@ class PicAdc20 : public PicAdc
 
     protected:
         virtual void updtVref() override;
+        virtual void startConversion() override;
+        virtual void specialConv() override;
 
         regBits_t m_ADXREF;
 
         PicVrefE* m_fvr;
+        PicDac*   m_dac;
 };
 
 class PicAdc3 : public PicAdc

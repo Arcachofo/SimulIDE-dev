@@ -27,6 +27,8 @@ class PicDac:  public McuDac
 
         virtual void callBack() override;
 
+        double getDacVolt();
+
     protected:
         void updtOutVolt();
 

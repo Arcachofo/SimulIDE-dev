@@ -42,12 +42,19 @@ class PicVrefE : public McuVref
 
         double getAdcVref();
         double getDacVref();
+        double getTemp();
 
     private:
+        bool m_tsenabled;
+
         double m_adcVref;
         double m_dacVref;
+        double m_Temp;
 
         regBits_t m_FVREN;
         regBits_t m_CDAFVR;
         regBits_t m_ADFVR;
+        regBits_t m_TSEN;
+        regBits_t m_TSRNG;
+
 };

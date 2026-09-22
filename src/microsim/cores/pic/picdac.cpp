@@ -105,6 +105,11 @@ void PicDac::updtOutVolt()
     if( m_outPin && m_outVoltEn ) m_outPin->setVoltage( m_outVolt );
 }
 
+double PicDac::getDacVolt()
+{
+    return m_outVolt;
+}
+
 void PicDac::callBack() // Called by FVR
 {
     updtOutVolt();
