@@ -36,6 +36,7 @@ void PicCcpUnit::setup()
     m_capUnit->m_timer = timer1;
     m_comUnit->m_timer = timer1;
     if( timer1 ) timer1->addOcUnit( m_comUnit );
+    m_comUnit->setup();
 
     m_pwmUnit->m_timer = timer2;
     if( timer2 ) timer2->addOcUnit( m_pwmUnit );
