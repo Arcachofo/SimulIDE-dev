@@ -59,7 +59,7 @@ void PicUsart::setup()
     m_ADDEN = getRegBits("ADDEN", m_mcu );
 
     m_TXIF = getRegBits("TXIF", m_mcu );
-    m_TRMT = getRegBits("TMRT", m_mcu );
+    m_TRMT = getRegBits("TRMT", m_mcu );
     m_RCIF = getRegBits("RCIF", m_mcu );
     m_FERR = getRegBits("FERR", m_mcu );
     m_OERR = getRegBits("OERR", m_mcu );
@@ -138,15 +138,15 @@ void PicUsart::frameSent( uint8_t data ) // TSR is empty
     printOut( data );
 
     if( getRegBitsBool( *m_PIR1, m_TXIF ) )  // TXREG is empty, no data to load
-        clearRegBits( m_TRMT );              // Clear TMRT bit
+        setRegBits( m_TRMT );                // Set TMRT bit
     else
         m_sender->startTransmission();       // TXREG contains data, send it
 }
 
 void PicUsart::bufferEmpty()
 {
-    m_interrupt->raise(); // USART Data Register Empty Interrupt
-    setRegBits( m_TRMT ); // Set TMRT bit
+    m_interrupt->raise();   // USART Data Register Empty Interrupt
+    clearRegBits( m_TRMT ); // Clear TMRT bit
 }
 
 void PicUsart::setRxFlags( uint16_t frame )
