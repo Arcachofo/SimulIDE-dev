@@ -77,14 +77,14 @@ void PicUsart::configureA( uint8_t newTXSTA ) // TXSTA changed
     else{
         if( txEn != m_sender->isEnabled() )
         {
-            setRegBits( m_TXIF );
-            setRegBits( m_TRMT );
             if( txEn ){
                 m_sender->getPin()->controlPin( true, true );
                 m_sender->getPin()->setPinMode( output );
             }
             else m_sender->getPin()->controlPin( false, false );
             m_sender->enable( txEn );
+            setRegBits( m_TRMT );
+            m_interrupt->raise();   // USART Data Register Empty Interrupt
         }
     }
     setDataBits( getRegBitsVal( newTXSTA, m_TX9 )+8 );
@@ -127,11 +127,9 @@ void PicUsart::setBaurrate( uint8_t )
 
 void PicUsart::sendByte(  uint8_t data )
 {
-    if( getRegBitsBool( *m_PIR1, m_TXIF ) )  // TXREG is empty
-    {
-        m_interrupt->clearFlag();            // TXREG full: Clear TXIF bit
-        m_sender->processData( data );
-}   }
+    m_interrupt->clearFlag();            // TXREG full: Clear TXIF bit
+    m_sender->processData( data );
+}
 
 void PicUsart::frameSent( uint8_t data ) // TSR is empty
 {
@@ -145,8 +143,8 @@ void PicUsart::frameSent( uint8_t data ) // TSR is empty
 
 void PicUsart::bufferEmpty()
 {
-    m_interrupt->raise();   // USART Data Register Empty Interrupt
     clearRegBits( m_TRMT ); // Clear TMRT bit
+    m_interrupt->raise();   // USART Data Register Empty Interrupt
 }
 
 void PicUsart::setRxFlags( uint16_t frame )
