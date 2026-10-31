@@ -43,6 +43,7 @@ void PropVal::prepareChange()
     m_undo = m_property->flags() & propNoCopy;
     if( !m_undo ) return;
     m_oldValue = m_property->getValStr();
+    Circuit::self()->deleteNewConnector();
     Circuit::self()->beginUndoStep();
 }
 
