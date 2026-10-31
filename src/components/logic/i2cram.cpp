@@ -140,7 +140,7 @@ void I2CRam::readByte() // Write to RAM
         
         if( m_addrPtr >= m_size ) m_addrPtr = 0;
     }
-   TwiModule::readByte();
+    TwiModule::readByte();
 }
 
 void I2CRam::startWrite()
@@ -195,7 +195,17 @@ void I2CRam::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
     QObject::connect( showEepAction, &QAction::triggered, [=](){ slotShowTable(); } );
 
     menu->addSeparator();
+
+    QAction* openSerMon = menu->addAction( m_theme->icon(":/terminal.svg"),tr("Open I2C Monitor.") );
+    QObject::connect( openSerMon, &QAction::triggered, [=](){ slotOpenMon(); } );
+
+    menu->addSeparator();
     Component::contextMenu( event, menu );
+}
+
+void I2CRam::slotOpenMon()
+{
+    openMonitor( idLabel(), 0 );
 }
 
 void I2CRam::slotShowTable()

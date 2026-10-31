@@ -4,6 +4,7 @@
  ***( see copyright.txt file at root folder )*******************************/
 
 #include <QPainter>
+#include <QMenu>
 
 #include "oledcontroller.h"
 #include "simulator.h"
@@ -15,6 +16,8 @@
 #include "stringprop.h"
 #include "boolprop.h"
 #include "intprop.h"
+
+#define tr(str) simulideTr("OledController",str)
 
 OledController::OledController( QString type, QString id )
               : Component( type, id )
@@ -268,6 +271,20 @@ void OledController::updateSize()
     m_pinSda->isMoved();
 
     Circuit::self()->update();
+}
+
+void OledController::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
+{
+    QAction* openSerMon = menu->addAction( m_theme->icon(":/terminal.svg"),tr("Open I2C Monitor.") );
+    QObject::connect( openSerMon, &QAction::triggered, [=](){ slotOpenMon(); } );
+
+    menu->addSeparator();
+    Component::contextMenu( event, menu );
+}
+
+void OledController::slotOpenMon()
+{
+    openMonitor( idLabel(), 0 );
 }
 
 void OledController::paint( QPainter* p, const QStyleOptionGraphicsItem*, QWidget* )

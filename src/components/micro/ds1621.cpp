@@ -4,7 +4,7 @@
  ***( see copyright.txt file at root folder )*******************************/
 
 #include <QPainter>
-
+#include <QMenu>
 #include <QDial>
 #include <QGraphicsProxyWidget>
 
@@ -287,6 +287,20 @@ void DS1621::setTempInc( double inc )
 {
     m_tempInc = trim( inc );
     update();
+}
+
+void DS1621::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
+{
+    QAction* openSerMon = menu->addAction( m_theme->icon(":/terminal.svg"),tr("Open I2C Monitor.") );
+    QObject::connect( openSerMon, &QAction::triggered, [=](){ slotOpenMon(); } );
+
+    menu->addSeparator();
+    Component::contextMenu( event, menu );
+}
+
+void DS1621::slotOpenMon()
+{
+    openMonitor( idLabel(), 0 );
 }
 
 void DS1621::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w )

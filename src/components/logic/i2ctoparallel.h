@@ -25,7 +25,12 @@ class I2CToParallel : public IoComponent, public TwiModule
         void readByte() override;
         void startWrite() override;
 
+    public slots:
+        void slotOpenMon();
+
     protected:
+        void contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu ) override;
+
         IoPin* m_int;
 
         uint8_t m_portState;

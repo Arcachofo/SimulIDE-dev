@@ -44,7 +44,12 @@ class OledController : public Component, public TwiModule
         
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w ) override;
 
+    public slots:
+        void slotOpenMon();
+
     protected:
+        void contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu ) override;
+
         virtual void proccessCommand(){;}
         virtual void parameter(){;}
         virtual void writeData();

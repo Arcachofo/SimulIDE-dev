@@ -5,6 +5,8 @@
 
 #include <math.h>
 
+#include <QMenu>
+
 #include "i2ctoparallel.h"
 #include "itemlibrary.h"
 #include "iopin.h"
@@ -147,4 +149,18 @@ void I2CToParallel::writeByte()   // Writting to I2C from Parallel (master is re
     m_portState = m_txReg;      // Load reference value for reset
 
     TwiModule::writeByte();
+}
+
+void I2CToParallel::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
+{
+    QAction* openSerMon = menu->addAction( m_theme->icon(":/terminal.svg"),tr("Open I2C Monitor.") );
+    QObject::connect( openSerMon, &QAction::triggered, [=](){ slotOpenMon(); } );
+
+    menu->addSeparator();
+    Component::contextMenu( event, menu );
+}
+
+void I2CToParallel::slotOpenMon()
+{
+    openMonitor( idLabel(), 0 );
 }

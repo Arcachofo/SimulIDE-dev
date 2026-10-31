@@ -4,6 +4,7 @@
  ***( see copyright.txt file at root folder )*******************************/
 
 #include <QPainter>
+#include <QMenu>
 
 #include "ds1307.h"
 #include "itemlibrary.h"
@@ -187,6 +188,21 @@ char DS1307::decToBcd(char val) {
     return( (val/10*16) + (val%10) ); }
 char DS1307::bcdToDec(char val) {
     return( (val/16*10) + (val%16) ); }
+
+
+void DS1307::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
+{
+    QAction* openSerMon = menu->addAction( m_theme->icon(":/terminal.svg"),tr("Open I2C Monitor.") );
+    QObject::connect( openSerMon, &QAction::triggered, [=](){ slotOpenMon(); } );
+
+    menu->addSeparator();
+    Component::contextMenu( event, menu );
+}
+
+void DS1307::slotOpenMon()
+{
+    openMonitor( idLabel(), 0 );
+}
 
 void DS1307::paint( QPainter* p, const QStyleOptionGraphicsItem* o, QWidget* w )
 {

@@ -3,6 +3,8 @@
  *                                                                         *
  ***( see copyright.txt file at root folder )*******************************/
 
+#include <QMenu>
+
 #include "aip31068_i2c.h"
 #include "itemlibrary.h"
 #include "simulator.h"
@@ -113,4 +115,18 @@ void Aip31068_i2c::showPins( bool show )
 {
     m_pinSda->setVisible( show );
     m_clkPin->setVisible( show );
+}
+
+void Aip31068_i2c::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
+{
+    QAction* openSerMon = menu->addAction( m_theme->icon(":/terminal.svg"),tr("Open I2C Monitor.") );
+    QObject::connect( openSerMon, &QAction::triggered, [=](){ slotOpenMon(); } );
+
+    menu->addSeparator();
+    Component::contextMenu( event, menu );
+}
+
+void Aip31068_i2c::slotOpenMon()
+{
+    openMonitor( idLabel(), 0 );
 }

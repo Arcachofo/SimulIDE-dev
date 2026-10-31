@@ -38,6 +38,12 @@ class DS1621 : public IoComponent, public TwiModule
  static Component* construct( QString type, QString id );
  static LibraryItem* libraryItem();
 
+    public slots:
+        void slotOpenMon();
+
+    protected:
+        void contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu ) override;
+
     private:
         double trim( double data ) { return (double)((int)(data*10))/10; }
         void doConvert();

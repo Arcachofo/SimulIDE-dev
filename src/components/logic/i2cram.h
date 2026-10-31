@@ -42,6 +42,7 @@ class I2CRam : public IoComponent, public TwiModule, public MemData
         void loadData() { MemData::loadData( &m_ram ); }
         void saveData() { MemData::saveData( &m_ram ); }
         void slotShowTable();
+        void slotOpenMon();
 
 
     protected:

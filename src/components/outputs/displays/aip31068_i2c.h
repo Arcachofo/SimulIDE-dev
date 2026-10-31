@@ -30,6 +30,12 @@ class Aip31068_i2c : public Hd44780_Base, public TwiModule
 
         void showPins( bool show );
 
+    public slots:
+        void slotOpenMon();
+
+    protected:
+        void contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu ) override;
+
     private:
         int m_controlByte;
         int m_phase;
