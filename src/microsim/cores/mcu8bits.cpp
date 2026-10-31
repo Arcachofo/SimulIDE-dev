@@ -23,9 +23,9 @@ Mcu8bits::Mcu8bits( eMcu* mcu )
         uint16_t sregAddr = mcu->m_sregAddr;
         if( sregAddr ) m_STATUS = &m_dataMem[sregAddr];
     }
-    if     ( m_progSize <= 0xFF )     m_progAddrSize = 1;
-    else if( m_progSize <= 0xFFFF )   m_progAddrSize = 2;
-    else if( m_progSize <= 0xFFFFFF ) m_progAddrSize = 3;
+    if     ( m_progSize <= 0x100 )     m_progAddrSize = 1;
+    else if( m_progSize <= 0x10000 )   m_progAddrSize = 2;
+    else if( m_progSize <= 0x1000000 ) m_progAddrSize = 3;
 }
 Mcu8bits::~Mcu8bits() {}
 
