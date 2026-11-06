@@ -20,8 +20,6 @@
 #include "socket.h"
 #include "node.h"
 
-#include "qemudevice.h"
-
 Simulator* Simulator::m_pSelf = nullptr;
 
 Simulator::Simulator( QObject* parent )

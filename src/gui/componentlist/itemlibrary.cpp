@@ -39,7 +39,6 @@
 #include "elcapacitor.h"
 #include "ellipse.h"
 #include "esp01.h"
-#include "esp32.h"
 #include "fixedvolt.h"
 #include "flipflopd.h"
 #include "flipflopjk.h"
@@ -249,7 +248,6 @@ void ItemLibrary::loadItems()
     addItem( Lamp::libraryItem() );
     // Micro
     addItem( new LibraryItem( QObject::tr("Micro"), "", "","Micro", nullptr ) );
-    addItem( QemuDevice::libraryItem() );
     addItem( new LibraryItem("Arduino", "Micro", "board.png", "Arduino", nullptr) );
     addItem( new LibraryItem("AVR"    , "Micro", "ic2.png", "AVR"  , nullptr) );
     addItem( new LibraryItem("PIC"    , "Micro", "ic2.png", "PIC"  , nullptr) );

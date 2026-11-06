@@ -24,8 +24,6 @@
 #include "proputils.h"
 #include "utils.h"
 
-#include "esp32.h"
-
 ComponentList* ComponentList::m_pSelf = nullptr;
 
 ComponentList::ComponentList( QWidget* parent )
@@ -81,8 +79,8 @@ void ComponentList::createList()
     QDir compSetDir = MainWindow::self()->getConfigPath("data");
     if( compSetDir.exists() ) LoadCompSetAt( compSetDir );
 
-    compSetDir.setPath("./data");          // FIXME: provisional, used by QemuDevice
-    LoadCompSetAt( compSetDir );
+    //compSetDir.setPath("./data");          // FIXME: provisional, used by QemuDevice
+    //LoadCompSetAt( compSetDir );
 
     MainWindow::self()->installer()->loadInstalled(); // Load Installed components
 
